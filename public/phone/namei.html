@@ -68,7 +68,7 @@ function user_info(user) {
   }
 avatar_info(user.profile_image_url, user.screen_name, user.avatar_large);
   document.getElementById("screen_name").innerText=user.screen_name;
-  document.getElementById("description").innerText="<span class="h">个性签名</span><br />"+user.description;
+  document.getElementById("description").innerText="<span class=\'h\'>个性签名</span><br />"+user.description;
 if (user.status) {
 status_info(user.status);
 }
