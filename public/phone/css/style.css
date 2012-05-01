@@ -160,3 +160,5 @@ h1, #header h1 {text-shadow: #3E2C25 5px 5px 1px;text-align: center;}
 .btn3{width:35px;height:36px;background:url(../images/btn3.png) left top no-repeat;border:none;cursor:pointer;}
 .btn4{float:left; width:89px;height:52px; background:url(../images/btn1.gif) left top no-repeat;cursor:pointer;border:none; }
 /** form over **/
+
+.Shake{width:100%; text-align:center;overflow:hidden;margin-top:10px;}
