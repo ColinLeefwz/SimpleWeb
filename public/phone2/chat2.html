@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+	<meta content="no-cache" http-equiv="Pragma"/>
+	<meta content="no-cache" http-equiv="Cache-Control"/>
+	<meta content="0" http-equiv="Expires"/>	
+	<meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+	<meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+	<title>聊天  |脸脸</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+	<script src="js/jquery-1.6.2.min.js"></script>
+</head>
+<body>
+<div id="main" >
+	<div id="header">
+		<h1>G+酒吧保俶路店</h1>	<a href="talk.html" class="tbtn pl15">返回</a>			
+	</div>
+	<div id="time" class="ch_t">13:25</div>
+	
+	<dl class="ch">
+		<dt class="ch_img"><img src="images/namei.gif" alt="娜美"></dt>
+		<dd class="ch_con">
+			<div class="ch_fl">
+				<span title="arrow"></span>
+				亲╭(╯3╰)╮  ~在干嘛呢？
+			</div>
+		</dd>
+	</dl>		
+	<dl class="ch">
+		<dt class="ch_img"><img src="images/namei.gif" alt="娜美"></dt>
+		<dd class="ch_con">
+			<div class="ch_fl">
+				<span title="arrow"></span>
+				怎么不说话  <img src="images/bq.gif" />
+			</div>
+		</dd>
+	</dl>
+			
+	<dl class="ch">
+		<dt class="ch_img2"><img src="images/kaopu.jpg" alt="靠谱"></dt>
+		<dd class="ch_con2">
+			<div class="ch_fr">
+				<span title="arrow"></span>
+				刚在忙呢  
+			</div>
+		</dd>
+	</dl>
+			
+	<dl class="ch">
+		<dt class="ch_img"><img src="images/namei.gif" alt="娜美"></dt>
+		<dd class="ch_con">
+			<div class="ch_fl">
+				<span title="arrow"></span>
+				- -#
+			</div>
+		</dd>
+	</dl>
+	
+	<dl class="ch">
+		<dt class="ch_img2"><img src="images/kaopu.jpg" alt="靠谱"></dt>
+		<dd class="ch_con2">
+			<div class="ch_fr">
+				<span title="arrow"></span>
+				- -#
+			</div>
+		</dd>
+	</dl>
+
+<div id="ch_foot">
+	<script>
+		$(document).ready(function(){
+			$("#add").toggle(function(){
+				$("#pic").animate({"width":57,"height":45,"top":-55,"left":5},250);
+				$("#photo").animate({"width":57,"height":45,"top":-55,"left":72},250);
+				$("#word").animate({"width":57,"height":45,"top":-55,"left":139},250);
+			},
+			function(){
+				$("#pic, #photo, #word").fadeOut(300,function(){
+					$("#pic, #photo, #word").css({"width":0, "height":0, "left":35, "top":39, "display":"block" });
+				});
+			});
+		});
+	</script>
+	<div class="search" id="Search">
+		<img src="images/sign3.png" alt="图片" id="pic"/>
+		<img src="images/sign4.png" alt="照片" id="photo"/>
+		<img src="images/sign5.png" alt="文字" id="word"/>
+		<form method="post" action="">
+			<img src="images/sign1.png" alt="增加" id="add" class="ml8 mr13"/>
+			<img src="images/sign2.png" alt="摇一摇" id="shake" class="mr15"/>
+			<input type="text" class="text4" />
+			<input type="submit" class="btn4 ml15" value=" " />
+		</form>
+	</div>
+	
+</div>
+
+</div>
+</body>
+</html>
