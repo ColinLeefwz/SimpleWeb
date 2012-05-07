@@ -1,0 +1,1 @@
+../../../../android_origin/example/assets/www/cordova-1.5.0.js

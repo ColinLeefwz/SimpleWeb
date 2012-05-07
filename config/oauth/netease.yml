@@ -1,0 +1,11 @@
+development:
+  key: "Yd4TTtkb95tMQjlT"
+  secret: "QR0X0zdMWFHa446Z4sxosNREklgeUB0j"
+  url: "http://localhost:3000"
+  callback: "http://localhost:3000/syncs/netease_callback"
+
+production:
+  key: "Yd4TTtkb95tMQjlT"
+  secret: "QR0X0zdMWFHa446Z4sxosNREklgeUB0j"
+  url: "http://www.1dooo.com"
+  callback: "http://www.1dooo.com/syncs/netease_callback"

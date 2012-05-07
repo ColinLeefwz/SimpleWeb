@@ -1,0 +1,17 @@
+test:
+  key: "1005047411"
+  secret: "4e2ffcc81ec9a02ffef445c5fef222c3"
+  url: "http://localhost:3000"
+  callback: "http://localhost:3000/syncs/sina_callback"
+
+development:
+  key: "1005047411"
+  secret: "4e2ffcc81ec9a02ffef445c5fef222c3"
+  url: "http://localhost:3000"
+  callback: "http://localhost:3000/syncs/sina_callback"
+
+production:
+  key: "1005047411"
+  secret: "4e2ffcc81ec9a02ffef445c5fef222c3"
+  url: "http://www.1dooo.com"
+  callback: "http://www.1dooo.com/syncs/sina_callback"
