@@ -1,0 +1,85 @@
+/*Css Reset*/
+* {
+	font-family:"微软雅黑",Sans-Serif;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	outline: none;
+	list-style-type: none;
+	border: 0;
+	color: #5F4536;
+}
+
+/*Lianlian Style*/
+
+body {
+	background: url(../images/background.jpg) repeat 0 0;
+	overflow: hidden;
+	font-size: 14px;
+}
+.w75{width:75px;height:75px}
+.fr{float:right;}
+.f12{font-size:12px}
+.h{color:#666}
+.red{color:#f030b5}
+.blue{color:#009cff}
+h1, #header h1 {
+	text-shadow: 1px 1px 1px #333;
+	text-align: center;
+}
+#header {
+	height:45px;
+	background: url(../images/header.jpg) repeat-x 0 0;
+}
+
+.tbtn{text-align: center;background: url(../images/tbtn-bg.jpg) no-repeat 0 0;width:42px;height:31px;margin:5px;}
+.tbtn a{font-family:"宋体";line-height:31px;color:#fff;font-size:13px; text-shadow: 1px 1px 1px #333;}
+.pl{position: absolute;}
+.pr{position: absolute;right:0}
+
+#header h1 {
+	color: white;
+	font-size: 28px;
+    line-height: 39px;font-weight: normal;
+}
+
+#foot {
+	height:47px;
+	background: url(../images/foot.jpg) repeat-x 0 0;
+	position: relative;z-index: 99997;
+	bottom:0}
+}
+#foot .fbtn{height:47px;position: relative;position: relative;bottom:0;z-index: 105;}
+#foot .fbtn li{width: 64px;float: left;}
+
+/*site Style*/
+#content {height:367px}
+.site{background:#f3f2ee url(../images/site.jpg) repeat-x 0 bottom;height:158px;padding:10px 0}
+.site h2{text-align: center;background: url(../images/sitename.jpg) no-repeat center 0;font-size: 19px;line-height: 31px;}
+.Shake{text-align: center;padding:20px 0 }
+.people {margin:2px;height: 230px;overflow: hidden;}
+.people li{width: 75px;float: left;padding:1px 2px 0}
+
+/*talk Style*/
+.ta_list{border-bottom: 1px #999 dotted;text-align: left;height: 75px;padding: 4px 5px;font-size:12px;}
+.ta_list a{}
+.talk .hover{background:#ccc}
+.ta_list p{line-height: 22px;color:#5f4536}
+.ta_photo{float:left;margin: 0 8px 0 0;}
+.ta_time{float:right;color:#05900e;font-weight: normal;font-size:12px;}
+.ta_name{font-size:15px;font-weight: bold;padding: 0 0 5px;}
+
+/*nely Style*/
+.ne_list{text-align: left;height:64px;background:url(../images/ne.jpg) repeat-x 0 0;}
+.ne_list a{}
+.ne_list p{line-height: 22px;color:#5f4536}
+.ne_photo{float:left;margin: 3px 8px 0 0;}
+.ne_name{font-size:16px;font-weight: bold;padding: 7px 0 5px;}
+.ne_piont{float:right;background: url(../images/nepiont.jpg) no-repeat 0 0;width: 21px;height:28px;margin: 15px 0 0 0;}
+
+/*nely Style*/
+.Pe_top{background:#ceb692;border-bottom:1px #b49b7d solid;height:162px;overflow: hidden;}
+.c{line-height: 1.5em;margin:0 5px}
+.fb{height:30px;line-height:30px;}
+.s {border-bottom: 1px dotted #666;margin:3px;clear: both;}
+.pms{clear: both;background:#ceb692;color:#fff;padding: 3px;margin:3px 0;overflow: hidden;border-bottom:1px #b2997b solid}
