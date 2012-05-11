@@ -53,7 +53,7 @@ ul.appendChild(li);
               }
             }, 
             {
-              uid: user_id
+              id: user_id
             },
             {
               method: 'get'
@@ -67,30 +67,8 @@ function user_info(user) {
   //  document.getElementById("avatar_large").src=user.avatar_large;
   }
 avatar_info(user.profile_image_url, user.screen_name, user.avatar_large);
-  // document.getElementById("user_id").value=user.id;
   document.getElementById("screen_name").innerText=user.screen_name;
-  // document.getElementById("name").value=user.name;
-  // document.getElementById("province").value=user.province;
-  // document.getElementById("city").value=user.city;
-  // document.getElementById("location").value=user.location;
   document.getElementById("description").innerText=user.description;
-  // document.getElementById("url").value=user.url;
-  // document.getElementById("domain").value=user.domain;
-  // document.getElementById("gender").value=user.gender;
-  // document.getElementById("followers_count").value=user.followers_count;
-  // document.getElementById("friends_count").value=user.friends_count;
-  // document.getElementById("statuses_count").value=user.statuses_count;
-  // document.getElementById("favourites_count").value=user.favourites_count;
-  // document.getElementById("created_at").value=user.created_at;
-  // document.getElementById("following").value=user.following;
-  // document.getElementById("allow_all_act_msg").value=user.allow_all_act_msg;
-  // document.getElementById("verified_reason").value=user.verified_reason;
-  // document.getElementById("follow_me").value=user.follow_me;
-  // document.getElementById("online_status").value=user.online_status;
-  // document.getElementById("bi_followers_count").value=user.bi_followers_count;
-
-  // document.getElementById("verified").value=user.verified;
-  // document.getElementById("geo_enabled").value=user.geo_enabled;
 if (user.status) {
 status_info(user.status);
 }
