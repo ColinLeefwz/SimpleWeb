@@ -10,12 +10,16 @@
 	<meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
 	<title>聊天  |脸脸</title>
 	<link href="css/style.css" rel="stylesheet" type="text/css">
+<!--
 <script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2054816412" type="text/javascript" charset="utf-8"></script>
+-->
+<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8" ></script>
 <script type="text/javascript">
 function login() {
-WB2.login(function(){
+WB.connect.login(function() {
+   
 // 跳转之前，在此通知服务器用户已登录
-window.location.href="photo.html";
+window.location.href="/phone/photo.html";
 });
 }
 
@@ -33,4 +37,14 @@ window.location.href="photo.html";
 </body>
 
 </body>
+<script type="text/javascript">
+WB.core.load(['connect', 'client'], function() {
+    var cfg = {
+        key: '2054816412',
+xdpath: 'http://192.168.8.113/xd.html'  // JS默认调用80端口，不能指定其它端口
+    };
+    WB.connect.init(cfg);
+    WB.client.init(cfg); 
+}); 
+</script>
 </html>

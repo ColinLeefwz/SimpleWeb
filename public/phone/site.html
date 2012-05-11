@@ -11,9 +11,46 @@
 	<title>脸脸|手机站</title>
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 	<script src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8" ></script>
+ <script type="text/javascript">
+ function user_friends(user_id) {
+  WB.client.parseCMD("/statuses/followers.json", 
+            function(users, bStatus) {
+              console.log(bStatus);
+              if(bStatus == true){           
+                console.log(users);
+var ul = document.getElementById('friends');
+                for (var i=0; i < users.length; i++) {
+                  if (users[i].profile_image_url) {
+var li = document.createElement('li');
+var a = document.createElement('a');
+a.href = "javascript:;";
+var img = document.createElement('img');
+img.src = users[i].profile_image_url;
+img.setAttribute('class', 'w75');
+img.setAttribute('onclick', 'show_user(' + users[i].id + ')');
+a.appendChild(img);
+li.appendChild(a);
+ul.appendChild(li);
+}
+}
+              }
+            }, 
+            {
+              uid: user_id
+            },
+            {
+              method: 'get'
+            }
+       );
+     }
+
+function body_load() {
+  user_friends(sessionStorage.getItem("search_id"));
+}
+</script>
 </head>
-<body>
- <body>
+<body onload="body_load();">
 <!--Home Start-->
 <div id="home" class="area">
 		<div id="header">
@@ -50,59 +87,10 @@
 				<div class="Shake">
 				<a href="chat2.html"><img src="images/shake1.gif" alt="摇一摇"><img src="images/shake_pic.jpg"></a></div>
 				</div>
-
-			<ul class="people">
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="namei.html"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-
+使用粉丝列表测试，实际应根据当前位置算出周围用户
+			<ul class="people" id="friends">
 			</ul>
-          
-
-
-		</div>
+	</div>
 		<div id="foot">
         <ul class="fbtn">
 		<li>
@@ -128,8 +116,21 @@
 </div>
 <!--Home End--> 
 
-
+<script type="text/javascript">
+function show_user(user_id) {
+sessionStorage.setItem("search_id", user_id);
+window.location.href="/phone/namei.html";
+}
+</script>
 </body>
-
-</body>
+<script type="text/javascript">
+WB.core.load(['connect', 'client'], function() {
+    var cfg = {
+        key: '2054816412',
+xdpath: 'http://192.168.8.113/xd.html'  // JS默认调用80端口，不能指定其它端口
+    };
+    WB.connect.init(cfg);
+    WB.client.init(cfg); 
+}); 
+</script>
 </html>

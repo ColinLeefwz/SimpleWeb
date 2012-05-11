@@ -1,91 +1,197 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
-	<meta content="no-cache" http-equiv="Pragma"/>
-	<meta content="no-cache" http-equiv="Cache-Control"/>
-	<meta content="0" http-equiv="Expires"/>	
-	<meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
-	<meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
-	<title>个人 |脸脸</title>
-	<link href="css/style.css" rel="stylesheet" type="text/css">
+  <head>
+    <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="no-cache" http-equiv="Cache-Control"/>
+    <meta content="0" http-equiv="Expires"/>	
+    <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+    <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+    <title>个人 |脸脸</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8" ></script>
+    <script type="text/javascript">
+      function user_by_id(user_id) {
+// 先清空图片列表
+var ul = document.getElementById('pic_ul');
+ul.innerHTML = null;
+        WB.client.parseCMD("/users/show.json", 
+            function(user, bStatus) {
+ console.log('show ' + user_id);
+              if(bStatus == true){           
+                console.log(user);
+                user_info(user);
+              }
+            }, 
+            {
+              id: user_id
+            },
+            {
+              method: 'get'
+            }
+       );
+       WB.client.parseCMD("/statuses/user_timeline.json",
+            function(statuses, bStatus) {
+ console.log('timeline ' + user_id);
+              if(bStatus == true){  
+var ul = document.getElementById('pic_ul');
+                for (var i=0; i < statuses.length; i++) {
+console.log(statuses[i]);
+                  if (statuses[i].thumbnail_pic) {
+var li = document.createElement('li');
+var a = document.createElement('a');
+a.href = statuses[i].original_pic;
+var img = document.createElement('img');
+img.src = statuses[i].thumbnail_pic;
+img.setAttribute('class', 'w75');
+a.appendChild(img);
+li.appendChild(a);
+ul.appendChild(li);
+}
+}
+              }
+            }, 
+            {
+              uid: user_id
+            },
+            {
+              method: 'get'
+            }
+       );
+     }
+//
+function user_info(user) {
+  // document.getElementById("profile_image").src=user.profile_image_url;
+  if (user.avatar_large && user.avatar_large != '') {
+  //  document.getElementById("avatar_large").src=user.avatar_large;
+  }
+avatar_info(user.profile_image_url, user.screen_name, user.avatar_large);
+  // document.getElementById("user_id").value=user.id;
+  document.getElementById("screen_name").innerText=user.screen_name;
+  // document.getElementById("name").value=user.name;
+  // document.getElementById("province").value=user.province;
+  // document.getElementById("city").value=user.city;
+  // document.getElementById("location").value=user.location;
+  document.getElementById("description").innerText=user.description;
+  // document.getElementById("url").value=user.url;
+  // document.getElementById("domain").value=user.domain;
+  // document.getElementById("gender").value=user.gender;
+  // document.getElementById("followers_count").value=user.followers_count;
+  // document.getElementById("friends_count").value=user.friends_count;
+  // document.getElementById("statuses_count").value=user.statuses_count;
+  // document.getElementById("favourites_count").value=user.favourites_count;
+  // document.getElementById("created_at").value=user.created_at;
+  // document.getElementById("following").value=user.following;
+  // document.getElementById("allow_all_act_msg").value=user.allow_all_act_msg;
+  // document.getElementById("verified_reason").value=user.verified_reason;
+  // document.getElementById("follow_me").value=user.follow_me;
+  // document.getElementById("online_status").value=user.online_status;
+  // document.getElementById("bi_followers_count").value=user.bi_followers_count;
+
+  // document.getElementById("verified").value=user.verified;
+  // document.getElementById("geo_enabled").value=user.geo_enabled;
+if (user.status) {
+status_info(user.status);
+}
+
+}
+function avatar_info(avatar, screen_name, avatar_large) {
+var li = document.createElement('li');
+var a = document.createElement('a');
+if (avatar_large) {
+a.href = avatar_large;
+} else {
+a.href = avatar;
+}
+var img = document.createElement('img');
+img.src = avatar;
+img.alt = screen_name;
+img.setAttribute('class', 'w75');
+a.appendChild(img);
+li.appendChild(a);
+document.getElementById('pic_ul').appendChild(li);
+}
+function show_avatar_large(avatar_large) {
+
+}
+function status_info(status) {
+document.getElementById("status_text").innerText=status.text;
+// document.getElementById("status_id").value=status.id;
+// document.getElementById("status_idstr").value=status.idstr;
+// document.getElementById("status_created_at").value=status.created_at;
+}
+
+
+function body_load() {
+  user_by_id(sessionStorage.getItem("search_id"));
+}
+</script>
 </head>
-<body>
- <body>
-<!--Home Start-->
-<div id="home" class="area">
-		<div id="header">
-		        <div class="tbtn pl" ><a href="site.html">返回</a></div>
-				<div class="tbtn pr" style="display:none;"><a href="#">删除</a></div>
-				<h1>娜美</h1>
-				</div>
-		<div id="content">
-            <div class="Personal">
-			<div class="Pe_top">
-			<ul class="people">
-			<li>
-			<a href="#"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="#"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="#"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="#"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="#"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			<li>
-			<a href="#"><img class="w75" src="images/namei.jpg" alt="娜美"></a>
-			</li>
-			</ul>
-            </div>
-			<div class="c fb">
-			<span class="fr f12">距离：0.92km 1天前</span>双鱼座 19岁  
-            </div>
-			<div class="s"></div>
-			<div class="c h">个性签名</div>
-			<div class="c">我还在原地等你</div>
+<body onload="body_load();">
+  <!--Home Start-->
+  <div id="home" class="area">
+    <div id="header">
+      <div class="tbtn pl" ><a href="site.html">返回</a></div>
+      <div class="tbtn pr" style="display:none;"><a href="#">删除</a></div>
+      <h1 id="screen_name"></h1>
+    </div>
+    <div id="content">
+      <div class="Personal">
+        <div class="Pe_top">
+          <ul class="people" id="pic_ul">
+            <li id="avatar_li">
+            </li>
+          </ul>
+        </div>
+        <div class="c fb">
+          <span class="fr f12">距离：0.92km 1天前</span>双鱼座 19岁  
+        </div>
+        <div class="s"></div>
+        <div class="c h">个性签名</div>
+        <div class="c" id="description"></div>
 
-			<div class="Pe_weibo">
-			<div class="pms">微博信息</div>
-			<div class="c">
-			#不可避免地，你在创业路上会犯下许多错误，你身为老板并不意味着你就总是对的。如果身边满是唯唯诺诺随声附和的人的话...
-			</div>
-			<div class="c h f12">1分钟前
-			</div>
+        <div class="Pe_weibo">
+          <div class="pms">微博信息</div>
+          <div class="c" id="status_text">
+          </div>
+          <div class="c h f12"></div>
 
-			
-			</div>
-            <!--Pe_weibo End--> 
-            </div>
-            <!--Personal End--> 
-		</div>
-		<div id="foot">
-        <ul class="fbtn">
-		<li>
-	    <a href="chat.html"><img  src="images/send.jpg" alt="加好友"></a>
-		</li>
-		<li>
-	    <a href="friend.html"><img  src="images/add.jpg" alt="加好友"></a>
-		</li>
-		<li>
-	    <a href="#"><img  src="images/black.jpg" alt="加好友"></a>
-		</li>
 
-			</ul>
+        </div>
+        <!--Pe_weibo End--> 
+      </div>
+      <!--Personal End--> 
+    </div>
+    <div id="foot">
+      <ul class="fbtn">
+        <li>
+          <a href="chat.html"><img  src="images/send.jpg" alt="加好友"></a>
+        </li>
+        <li>
+          <a href="friend.html"><img  src="images/add.jpg" alt="加好友"></a>
+        </li>
+        <li>
+          <a href="#"><img  src="images/black.jpg" alt="加好友"></a>
+        </li>
 
-		</div>
+      </ul>
 
-</div>
-<!--Home End--> 
+    </div>
+
+  </div>
+  <!--Home End--> 
 
 
 </body>
-
-</body>
+<script type="text/javascript">
+  WB.core.load(['connect', 'client'], function() {
+      var cfg = {
+key: '2054816412',
+xdpath: 'http://192.168.8.113/xd.html'  // JS默认调用80端口，不能指定其它端口
+};
+WB.connect.init(cfg);
+WB.client.init(cfg); 
+}); 
+</script>
 </html>
