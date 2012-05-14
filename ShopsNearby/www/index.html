@@ -57,8 +57,7 @@ function aroundme() {
     alert('无法定位当前位置，请稍后再摇！');
     return;
   }
-  // var url2="http://www.1dooo.com/mshop/aroundme?lat="+lat_cur+"&lng="+lng_cur;
-  var url2="http://127.0.0.1:3000/mshop/aroundme?lat="+lat_cur+"&lng="+lng_cur;
+  var url2="http://" + window.location.host + "/mshop/aroundme?lat="+lat_cur+"&lng="+lng_cur;
   //alert(url2);
   console.log(url2);
   var jqxhr = $.ajax({
