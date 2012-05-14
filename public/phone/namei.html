@@ -144,7 +144,7 @@ function body_load() {
   WB.core.load(['connect', 'client'], function() {
       var cfg = {
 key: '2054816412',
-xdpath: 'http://' + window.location.host + '/xd.html'  // JS默认调用80端口，不能指定其它端口
+xdpath: 'http://' + window.location.host + '/phone/xd.html'  // JS默认调用80端口，不能指定其它端口
 };
 WB.connect.init(cfg);
 WB.client.init(cfg); 
