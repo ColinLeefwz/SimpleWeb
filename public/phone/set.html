@@ -10,8 +10,30 @@
 	<meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
 	<title>聊天  |脸脸</title>
 	<link href="css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8" ></script>
+<script type="text/javascript">
+function logout() {
+WB.connect.logout(function() {
+   // 跳转之前，在此通知服务器用户已退出
+   window.location.href="/phone/index.html";
+});
+}
+
+function body_load() {
+  if (WB.connect.checkLogin()) {
+  var div = document.getElementById('header');
+  var a = document.createElement('a');
+  a.href = 'javascript:;';
+  a.innerText = '退出';
+  a.setAttribute('class', 'tbtn pl15');
+  a.setAttribute('onclick', 'logout()');
+  div.appendChild(a);
+}
+}
+</script>
 </head>
-<body>
+<body onload="body_load();">
+
 <div id="main">
 	<div id="header">
 		<h1>设置</h1>
@@ -36,4 +58,14 @@
 	</div>
 </div>
 </body>
+<script type="text/javascript">
+WB.core.load(['connect', 'client'], function() {
+    var cfg = {
+        key: '2054816412',
+xdpath: 'http://' + window.location.host + '/phone/xd.html'  // JS默认调用80端口，不能指定其它端口
+    };
+    WB.connect.init(cfg);
+    WB.client.init(cfg); 
+}); 
+</script>
 </html>
