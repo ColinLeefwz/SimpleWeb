@@ -40,7 +40,7 @@
 		352B8AF11521CB5D0018C296 /* verify.sh in Resources */ = {isa = PBXBuildFile; fileRef = 352B8AF01521CB5D0018C296 /* verify.sh */; };
 		352B8AF81521CBE30018C296 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 352B8AF71521CBE30018C296 /* Default.png */; };
 		352B8AFA1521CBFA0018C296 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 352B8AF91521CBFA0018C296 /* Default@2x.png */; };
-		352B8AFC1521CD550018C296 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 352B8AFB1521CD550018C296 /* www */; };
+		3546F7891560FC40003C7C99 /* phone in Resources */ = {isa = PBXBuildFile; fileRef = 3546F7881560FC40003C7C99 /* phone */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,7 +83,7 @@
 		352B8AF01521CB5D0018C296 /* verify.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = verify.sh; sourceTree = "<group>"; };
 		352B8AF71521CBE30018C296 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		352B8AF91521CBFA0018C296 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		352B8AFB1521CD550018C296 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		3546F7881560FC40003C7C99 /* phone */ = {isa = PBXFileReference; lastKnownFileType = folder; name = phone; path = ../public/phone; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +121,7 @@
 		352B8A8D1521CB5D0018C296 = {
 			isa = PBXGroup;
 			children = (
-				352B8AFB1521CD550018C296 /* www */,
+				3546F7881560FC40003C7C99 /* phone */,
 				352B8AF91521CBFA0018C296 /* Default@2x.png */,
 				352B8AF71521CBE30018C296 /* Default.png */,
 				352B8AB91521CB5D0018C296 /* ShopsNearby */,
@@ -340,7 +340,7 @@
 				352B8AF11521CB5D0018C296 /* verify.sh in Resources */,
 				352B8AF81521CBE30018C296 /* Default.png in Resources */,
 				352B8AFA1521CBFA0018C296 /* Default@2x.png in Resources */,
-				352B8AFC1521CD550018C296 /* www in Resources */,
+				3546F7891560FC40003C7C99 /* phone in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,6 +556,7 @@
 				352B8AF61521CB5D0018C296 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
