@@ -183,7 +183,7 @@ function clear_sessionStorage() {
   load_js("jquery.tmpl.js");
   $(function() {
       $('#content').scrollPagination({
-        'contentPage': 'http://192.168.8.113:3000/mshop/aroundme', // the page where you are searching for results
+        'contentPage': 'http://' + window.location.host +  '/mshop/aroundme', // the page where you are searching for results
         'contentData': { 'lat': sessionStorage.getItem("lat_cur"), 'lng': sessionStorage.getItem("lng_cur"), 'page': (parseInt(sessionStorage.getItem("page")) >= 1 ? parseInt(sessionStorage.getItem("page")) : 0) + 1 }, // you can pass the children().size() to know where is the pagination
         'scrollTarget': $(window), // who gonna scroll? in this example, the full window
         'heightOffset': 10, // how many pixels before reaching end of the page would loading start? positives numbers only please
