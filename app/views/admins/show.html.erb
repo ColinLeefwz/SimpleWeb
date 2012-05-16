@@ -1,0 +1,12 @@
+<p>
+  <b>帐户名：</b>
+  <%=h @admin.name %>
+</p>
+
+<p>
+  <b>密码：</b>
+  <%=h @admin.pass2 %>
+</p>
+
+<%= link_to '编辑', edit_admin_path(@admin) %> |
+<%= link_to '返回列表', admins_path %>

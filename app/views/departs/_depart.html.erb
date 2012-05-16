@@ -1,0 +1,15 @@
+<% form_for(@depart) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :duty %><br />
+    <%= f.text_field :duty %>
+  </p>
+  <p>
+    <%= f.submit '保存' %>
+  </p>
+<% end %>

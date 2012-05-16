@@ -1,0 +1,32 @@
+<h1>操作权限列表</h1>
+
+<%= link_to '新建操作权限', new_right_path %>
+<table>
+  <tr>
+    <th>管理员</th>
+    <th>部门</th>
+    <th>角色</th>
+    <th>数据表</th>
+    <th>操作权限</th>
+  </tr>
+
+<% @rights.each do |right| %>
+  <tr>
+    <td><%=h right.admin_name %></td>
+    <td><%=h right.depart_name %></td>
+    <td><%=h right.role_name %></td>
+    <td><%=h right.model_names_trim %></td>
+    <td><%=h right.operate %></td>
+    <td><%= link_to '浏览', right %></td>
+    <td><%= link_to '编辑', edit_right_path(right) %></td>
+    <td><%= link_to '删除', right, :confirm => '确定要删除吗?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+
+<div id="paginate" style="text-align: center">
+  <%= generate_paginate @rights %>
+</div>

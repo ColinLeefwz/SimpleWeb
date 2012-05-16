@@ -1,0 +1,27 @@
+
+<% form_for(@admin) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    帐户名<br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    密码<br />
+    <%= f.text_field :password %>
+  </p>
+  <p>
+    部门<br />
+    <%= f.select :depart_id, depart_select_opt %>
+  </p>
+
+  <p>
+    角色<br />
+    TODO: 管理用户拥有的角色
+  </p>
+
+
+  <p>
+    <%= f.submit "保存" %>
+  </p>
+<% end %>

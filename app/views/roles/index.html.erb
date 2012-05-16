@@ -1,0 +1,24 @@
+<h1>角色列表</h1>
+
+<%= link_to '创建新角色', new_role_path %>
+<table>
+  <tr>
+    <th>角色名称</th>
+    <th>职责说明</th>
+  </tr>
+
+<% @roles.each do |role| %>
+  <tr>
+    <td><%=h role.name %></td>
+    <td><%=h role.duty %></td>
+    <td><%= link_to '浏览', role %></td>
+    <td><%= link_to '编辑', edit_role_path(role) %></td>
+    <td><%= link_to '删除', role, :confirm => '确定要删除吗?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<div id="paginate" style="text-align: center">
+  <%= generate_paginate @roles %>
+</div>
