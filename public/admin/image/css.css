@@ -1,0 +1,10 @@
+body {margin: 0px;}
+body, td, p, li, input, select{  font-family:  "ËÎÌו"; font-size: 14px;  letter-spacing:0px; line-height: 22px}
+
+A {
+	TEXT-ALIGN: center; TEXT-DECORATION: none ;padding:3px;; COLOR: white
+}
+A:hover {
+	BACKGROUND: #E6EEFA; COLOR: #000
+}
+

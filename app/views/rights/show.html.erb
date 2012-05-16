@@ -1,0 +1,28 @@
+<p>
+  <b>管理员：</b>
+  <%=h @right.admin_name %>
+</p>
+
+<p>
+  <b>部门：</b>
+  <%=h @right.depart_name %>
+</p>
+
+<p>
+  <b>角色：</b>
+  <%=h @right.role_name %>
+</p>
+
+<p>
+  <b>数据表：</b>
+  <%=h @right.model_names %>
+</p>
+
+<p>
+  <b>操作权限：</b>
+  <%=h @right.operate %>
+</p>
+
+
+<%= link_to '编辑', edit_right_path(@right) %> |
+<%= link_to '返回列表', rights_path %>

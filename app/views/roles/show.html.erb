@@ -1,0 +1,13 @@
+<p>
+  <b>角色名称：</b>
+  <%=h @role.name %>
+</p>
+
+<p>
+  <b>职责说明：</b>
+  <%=h @role.duty %>
+</p>
+
+
+<%= link_to '编辑', edit_role_path(@role) %> |
+<%= link_to '返回列表', roles_path %>
