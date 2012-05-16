@@ -25,7 +25,6 @@ class MshopController < ApplicationController
     if lat != 0 && lng != 0
       mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => params[:page], :per_page =>10)
     end
-    mshops << {'offset_lat' => lat, 'offset_lng' => lng}
     respond_to do |format|
       format.js {render :json => mshops.to_json}
     end
