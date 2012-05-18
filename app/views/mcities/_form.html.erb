@@ -1,0 +1,15 @@
+
+<% form_for(@mcity) do |f| %>
+  <%= f.error_messages %>
+    <p>
+    城市名称<br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    英文名称<br />
+    <%= f.text_field :eng_name %>
+  </p>
+  <p>
+    <%= f.submit '保存' %>
+  </p>
+<% end %>

@@ -1,0 +1,51 @@
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    用户ID<br />
+    <%= f.text_field :id %>
+  </p>
+  <p>
+    所属商家ID<br />
+    <%= f.text_field :shop_id, {:size => 8}%><%= text_field_with_auto_complete_1dooo :shop %>
+  </p>
+  <p>
+    手机号码<br />
+    <%= f.text_field :phone %>
+  </p>
+  <p>
+    用户名<br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    密码<br />
+    <%= f.text_field :password %>
+  </p>
+  <p>
+    积分<br />
+    <%= f.text_field :score %>
+  </p>
+  <p>
+    电子邮件<br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    性别<br />
+    <%= f.radio_button :sex, "男" %>男
+    <%= f.radio_button :sex, "女" %>女
+  </p>
+  <p>
+    职业<br />
+    <%= f.text_field :occupation %>
+  </p>
+  <p>
+    创建时间<br />
+    <%= f.datetime_select :created_at %>
+  </p>
+  <p>
+    <%= f.submit "提交" %>
+  </p>
+<% end %>
+
+<%= link_to '返回列表', users_path %>

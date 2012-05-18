@@ -1,0 +1,48 @@
+
+  <%= f.error_messages %>
+
+  <p>
+    商家ID<br />
+    <%= f.text_field :id %>
+  </p>
+  <p>
+    商家名称<br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    商家全称<br />
+    <%= f.text_field :fullname %>
+  </p>
+  <p>
+    联系人<br />
+    <%= f.text_field :linkman %>
+  </p>
+  <p>
+    联系方式<br />
+    <%= f.text_field :phone %>
+  </p>
+  <p>
+    地址<br />
+    <%= f.text_field :address %>
+  </p>
+  <p>
+    所属城市id<br />
+    <%= f.text_field :mcity_id %>
+  </p>
+  <p>
+    经度<br />
+    <%= f.text_field :lng %>
+  </p>
+  <p>
+    纬度<br />
+    <%= f.text_field :lat %>
+  </p>
+  <p>
+    创建时间<br />
+    <%= f.datetime_select :created_at %>
+  </p>
+  <p>
+    <%= f.submit "提交" %>
+  </p>
+
+

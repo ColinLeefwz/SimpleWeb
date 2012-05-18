@@ -1,0 +1,48 @@
+<p>
+  <b>Id:</b>
+  <%=h @user.id %>
+</p>
+
+<p>
+  <b>手机:</b>
+  <%=h @user.phone %>
+</p>
+
+<p>
+  <b>注册名:</b>
+  <%=h @user.name %>
+</p>
+
+<p>
+  <b>密码:</b>
+  <%=h @user.password %>
+</p>
+
+<p>
+  <b>积分:</b>
+  <%=h @user.score %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @user.email %>
+</p>
+
+<p>
+  <b>性别:</b>
+  <%=h @user.sex %>
+</p>
+
+<p>
+  <b>职业:</b>
+  <%=h @user.occupation %>
+</p>
+
+<p>
+  <b>注册时间:</b>
+  <%=h @user.created_at %>
+</p>
+
+
+<%= link_to '编辑', edit_user_path(@user) %> |
+<%= link_to '返回列表', users_path %>

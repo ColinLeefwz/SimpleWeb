@@ -3,6 +3,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :feedbacks
 
+  map.resources :mcities
+
+  map.resources :mcategories
+
   map.resources :movie_releases
 
   map.resources :shop_index_structures

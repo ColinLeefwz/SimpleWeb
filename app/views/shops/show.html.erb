@@ -1,0 +1,48 @@
+<p>
+  <b>Id:</b>
+  <%=h @shop.id %>
+</p>
+
+<p>
+  <b>商家名称:</b>
+  <%=h @shop.name %>
+</p>
+
+<p>
+  <b>联系人:</b>
+  <%=h @shop.linkman %>
+</p>
+
+<p>
+  <b>联系方式:</b>
+  <%=h @shop.phone %>
+</p>
+
+<p>
+  <b>地址:</b>
+  <%=h @shop.address %>
+</p>
+
+<p>
+  <b>城市:</b>
+  <%=h @shop.mcity.try(:name) %>
+</p>
+
+<p>
+  <b>经度:</b>
+  <%=h @shop.lng %>
+</p>
+
+<p>
+  <b>纬度:</b>
+  <%=h @shop.lat %>
+</p>
+
+<p>
+  <b>注册时间:</b>
+  <%=h @shop.created_at.try(:strftime,"%Y-%m-%d %H:%M:%S") %>
+</p>
+
+
+<%= link_to '编辑', edit_shop_path(@shop) %> |
+<%= link_to '返回列表', shops_path %>
