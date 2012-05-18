@@ -68,9 +68,9 @@ class User < ActiveRecord::Base
   end
 
   def after_validation_on_create
-    unless Shop.find_by_name(self.name).nil?
-      raise( "注册用户名已经被使用")
-    end
+#    unless Shop.find_by_name(self.name).nil?
+#      raise( "注册用户名已经被使用")
+#    end
   end
 
   #个人用户升级为商家用户。此时商家表中的user_id为个人用户的id
@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
 
   #个人类型商家的商家账户
   def my_shop
-    Shop.find_by_user_id(self.id)
+#    Mshop.find_by_user_id(self.id)
   end
 
   def self.find_in_user_or_shop(name)

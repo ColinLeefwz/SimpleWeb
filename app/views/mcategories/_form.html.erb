@@ -1,0 +1,11 @@
+
+<% form_for(@mcategory) do |f| %>
+  <%= f.error_messages %>
+    <p>
+    城市名称<br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit '保存' %>
+  </p>
+<% end %>

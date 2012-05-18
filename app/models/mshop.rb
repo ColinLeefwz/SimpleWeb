@@ -14,6 +14,7 @@ class Mshop < ActiveRecord::Base
   has_many :mcategories, :through => :mshop_mcategories
   has_many :mshop_mdistricts
   has_many :mdistricts, :through => :mshop_mdistricts
+  belongs_to :mcity
 
   def kb_url
     kb_id.blank? ? "" : "http://detail.koubei.com/store/detail-storeId-%s" % kb_id

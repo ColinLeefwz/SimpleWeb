@@ -1,0 +1,49 @@
+<script type="text/javascript" src="/javascripts/My97DatePicker/WdatePicker.js" ></script>
+
+<h1>商家列表</h1>
+<%= link_to '添加商家', new_shop_path %>
+<% form_tag shops_path,:method =>:get do %>
+  <p>
+    商家ID:<%= text_field_tag :id, params[:id] %>
+    联系方式:<%= text_field_tag :phone, params[:phone] %>
+    商家名称:<%= text_field_tag :name, params[:name] %>
+    联系人:<%= text_field_tag :linkman, params[:linkman] %>
+    创建日期: <%= text_field_tag :created_at, params[:created_at],:onclick=>"WdatePicker()" , :readonly=>"readonly"%>
+    <%= submit_tag "查 找", :name => nil %>
+  </p>
+<% end %>
+<table border="1">
+  <tr>
+  <th>Id</th>
+    <th>商家名称</th>
+    <th>联系人</th>
+    <th>联系方式</th>
+    <th>创建时间</th>
+    <th>城市</th>
+    <th>经度</th>
+    <th>纬度</th>
+    <th>预览</th>
+    <th>编辑</th>
+    
+  </tr>
+
+<% for shop in @shops %>
+  <tr>
+    <td><%=h shop.id   %></td>
+    <td><%=h shop.name  %></td>
+    <td><%=h shop.linkman   %></td>
+     <td><%=h shop.phone  %></td>
+     <td><%=h shop.created_at.try(:strftime,"%Y-%m-%d %H:%M:%S")   %></td>
+     <td><%=h shop.mcity.try(:name)   %></td>
+     <td><%=h shop.lng   %></td>
+     <td><%=h shop.lat %></td>
+     <td><%=link_to "预览", shop_path(shop) %></td>
+     <td><%=link_to "编辑", edit_shop_path(shop) %></td>
+  </tr>
+<% end %>
+</table>
+<hr />
+
+<div id="paginate" style="text-align: center">
+  <%= generate_paginate @shops %>
+</div>

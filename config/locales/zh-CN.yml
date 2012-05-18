@@ -134,6 +134,10 @@
       depart: "部门管理"
       role: "角色管理"
       right: "权限管理"
+      shop: "商家管理"
+      user: "用户管理"
+      mcity: "城市列表"
+      mcategory: "分类列表"
     attributes:
       account_in:
         admin_id: "发布者ID"
