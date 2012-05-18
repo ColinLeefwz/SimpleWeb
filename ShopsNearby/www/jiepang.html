@@ -16,8 +16,6 @@
                 <script type="text/javascript" charset="utf-8" src="y1y.js"></script>
                 
                 <script type="text/javascript">
-var shops = [{"mshop":{"name":"新紫轩花店","address":"文一路266号","created_at":"2012-03-06T18:34:43+08:00","linkman":"","updated_at":"2012-03-06T19:10:48+08:00","dp_id":5097101,"fullname":"","lng":120.12763,"kb_id":"","id":40056,"phone":"","lat":30.28691}}];                    
-                    
   
                     function rad(d)
                     {
@@ -45,7 +43,7 @@ var shops = [{"mshop":{"name":"新紫轩花店","address":"文一路266号","cre
                             alert("无法定位当前位置，请稍后再摇！");
                             return;
                         }
-                        var url2="http://www.dface.cn/mshop/aroundme?lat="+lat_cur+"&lng="+lng_cur;
+                        var url2="http://api.jiepang.com/v1/locations/search?lat="+lat_cur+"&lon="+lng_cur;
                         //alert(url2);
                         console.log(url2);
                         var jqxhr = $.ajax({
@@ -55,11 +53,7 @@ var shops = [{"mshop":{"name":"新紫轩花店","address":"文一路266号","cre
                                            })
                         .success(function(data, textStatus, jqXHR) { 
                                  sessionStorage.setItem("cur_shops",jqXHR.responseText);
-                                 //alert(data[0].mshop.name);
-                                 if(data.length>0) shops=data;
-                                 for(var i=0;i<shops.length;i++){
-                                    shops[i].diff=GetDistance(lat_cur,lng_cur,shops[i].mshop.lat,shops[i].mshop.lng);
-                                 }
+                                 if(data.items.length>0) shops=data.items;
                                  $( "#shopTemplate" ).tmpl( shops ).appendTo( "#shopList" );
                                  $("#map_button").show();
                         })
@@ -140,17 +134,17 @@ var shops = [{"mshop":{"name":"新紫轩花店","address":"文一路266号","cre
         <div data-role="page" class="type-interior">
             
             <div data-role="header" data-theme="f">
-                <h1>附近的商家</h1>
-                <a href="#" onclick="aroundme();" data-role="button">获取</a>
-                <a id="map_button" href="map.htm" style="display:none">地图</a>
+                <h1>街旁－附近商家</h1>
+                <a href="#" onclick="aroundme();" data-role="button">街旁</a>
+                <a id="map_button" href="map_jiepang.html" style="display:none">地图</a>
             </div><!-- /header -->
             
             <div data-role="content">
                 <div class="content-primary">
-                    当前位置：经度<span id="gps_lat"></span>,纬度<span id="gps_lng"></span>, 误差：<span id="gps_diff"></span>米 <a onclick="get_gps_location();">刷新</a> &nbsp; <a href="jiepang.html">街旁网</a>
+                    当前位置：经度<span id="gps_lat"></span>,纬度<span id="gps_lng"></span>, 误差：<span id="gps_diff"></span>米 <a onclick="get_gps_location();">刷新</a>
                     <ul data-role="listview" id="shopList">
                         <script id="shopTemplate" type="text/x-jquery-tmpl">
-                            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-inline="false" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-btn-icon-right ui-li-has-arrow ui-li"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="map.htm" class="ui-link-inherit">${mshop.name} ${diff}米</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span></div></li>
+                            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-inline="false" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-btn-icon-right ui-li-has-arrow ui-li"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="map.htm" class="ui-link-inherit">${name} ${diff}米</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span></div></li>
                          </script>
                     </ul>
                 </div><!--/content-primary -->		

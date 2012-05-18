@@ -37,16 +37,18 @@
                                })
             .success(function(data, textStatus, jqXHR) {  
                  initialize_marker(data[0],data[1], true, true, false, icon='flag.png');
+                 var diff_lat = data[0]-lat_cur;
+                 var diff_lng = data[1]-lng_cur;
+                 eval("shops="+sessionStorage.getItem("cur_shops"));
+                     shops = shops.items;
+                 for(var i=0;i<shops.length;i++){
+                     initialize_marker(shops[i].lat,shops[i].lon);
+                 }
             })
             .fail(function(jqXHR0, textStatus) {
                   alert( "获取商家信息失败!"+ textStatus);
                   });            
-            var shops = sessionStorage.getItem("cur_shops");
-            console.log(shops);
-            shops = eval(shops);
-            for(var i=0;i<shops.length;i++){
-                initialize_marker(shops[i].mshop.lat,shops[i].mshop.lng);
-            }
+
             
         </script>
         
