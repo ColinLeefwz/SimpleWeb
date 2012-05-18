@@ -49,7 +49,7 @@
 \includegraphics[scale=0.5]{./2.png}
 \end{figure}
 
-上传照片时要以异步的方式在后台上传，不影响用户点完成。在此页面，附近的脸提供静态的虚拟脸即可，以刺激用户上传头像。
+上传照片时要以异步的方式在后台上传，不影响用户点完成。在此页面，附近的脸提供静态的虚拟脸即可，以刺激用户上传头像。当应用达到一定规模后，提供动态的附近的受欢迎的头像。
 
 \subsection{现场}
 
@@ -172,7 +172,7 @@
 只有认证过的商家才能登录。认证后给商家提供登录名和密码。
 
 \subsection{关联个人帐户}
-商家可以自行关联多个个人帐户。关联后的个人帐户可以以商家的身份在脸脸应用中发言。
+商家可以自行关联多个个人帐户。关联后的个人帐户可以以商家的身份在脸脸应用中发言。目前只提供关联一个帐户的能力。
 
 \subsection{管理滚动广告}
 商家可以管理现场群聊页顶部的滚动广告。给商家提供最多3条滚动广告发布的权限。
@@ -197,32 +197,171 @@
 
 \subsection{用户登录}
 手机用户经过新浪认证登录后，要在回调函数中通知脸脸网该用户登录了。
-http://www.dface.cn/user/login
-id 还是name？ 调研新浪微博的回调接口
+如果采用Xauth，登录成功后调用下面的链接（目前采用http协议，正式版会采用https协议）。
 
-返回给用户的token
+
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline\multicolumn{2}{|c|}{http://www.dface.cn/user/login} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ username  &  用户名\\
+\hline
+ password  &  微博密码\\ 
+\hline
+ hash  &  hash码，采用SHA-1算法并取前16位。
+ 
+  待hash串为：username+password+AppKey+AppSecret+date
+  
+  \\
+\hline
+\end{tabular}
+\caption{用户登录接口}\label{tab0}
+   \end{center}
+\end{table}
+
+
+其中，AppKey和AppSecret为脸脸网在新浪微博的key和secret，分别为：
+
+AppKey: "2054816412"
+
+AppSecret: "75487227b4ada206214904bb7ecc2ae1"
+  
+
+HASH的计算例子：
+比如用户名“name”，密码“123456”，当前日期“2012-05-18”,那么待hash字符串为“name123456205481641275487227b4ada206214904bb7
+ecc2ae12012-05-18”。hash后的值为 " 833660667c6d9c3a "。
+
+ruby计算代码为：
+Digest::SHA1.hexdigest(str)[0,16]
+
+
+
+服务器的返回结果为json串，格式为：
+\{code : 1, user\_id: 123, desc: "name登录成功"\}
+
+其中，code的可能取值为：1登录成功，2重复登录，3Hash不匹配，4其它错误。user\_id表示该用户在脸脸网的id。
+
+
 
 
 \subsection{用户退出}
 手机用户退出时要先调用新浪的退出，然后通知脸脸网该用户退出了。
-http://www.dface.cn/user/logout
-id 还是name？
-token
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline\multicolumn{2}{|c|}{http://www.dface.cn/user/logout} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ username  &  用户名\\
+\hline
+ password  &  微博密码\\ 
+\hline
+ hash  &  同上\\
+\hline
+\end{tabular}
+\caption{用户退出接口}
+   \end{center}
+\end{table}
+
 
 \subsection{上传个人头像}
-参考http://open.weibo.com/wiki/2/statuses/upload
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline\multicolumn{2}{|c|}{http://www.dface.cn/user/\#\{user\_id\}/user\_logos} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ user\_logo[uploaded\_data]  &  上传的文件\\
+\hline
+ lng  &  纬度\\ 
+\hline
+\end{tabular}
+\caption{上传个人头像}
+   \end{center}
+\end{table}
+
+请求必须用POST方式提交，并且注意采用multipart/form-data编码方式
+
+enctype="multipart/form-data" method="post"
 
 \subsection{设置个人信息}
-设置生日（星座、年龄）信息。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline\multicolumn{2}{|c|}{http://www.dface.cn/user\_info} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ user\_id  &  用户id\\
+\hline
+ ...  &  \\ 
+\hline
+\end{tabular}
+\caption{设置个人信息}
+   \end{center}
+\end{table}
+
+请求必须用POST方式提交。
+
+\subsection{获得个人信息}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline\multicolumn{2}{|c|}{http://www.dface.cn/user\_info} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ user\_id  &  用户id\\
+\hline
+\end{tabular}
+\caption{设置个人信息}
+   \end{center}
+\end{table}
+
+
+
+\subsection{根据经纬度获得附近的商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline\multicolumn{2}{|c|}{http://www.dface.cn/mshop/aroundme} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ lat  &  经度\\
+\hline
+ lng  &  纬度\\ 
+\hline
+\end{tabular}
+\caption{根据经纬度获得附近的商家}
+   \end{center}
+\end{table}
+
+
+
+\subsection{根据经纬度获得附近的用户}
+本条目及以下部分待细化
+
+\subsection{获取给定商家的信息}
+
 
 \subsection{获得登录用户的好友信息}
+
 \subsection{获得登录用户的会话信息}
+
 \subsection{添加好友}
-\subsection{根据经纬度获得附近的商家}
-\subsection{根据经纬度获得附近的用户}
+
 \subsection{向给定用户发送信息}
-\subsection{获取给定商家的信息}
-\subsection{设置个人信息}
+
 
 
 
