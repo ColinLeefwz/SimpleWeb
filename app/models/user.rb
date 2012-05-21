@@ -37,12 +37,11 @@ class User < ActiveRecord::Base
     UserApplyIshop.find_by_user_id_and_flag(id, 2)
   end
 
-
-  validates_presence_of :name, :password
-  validates_uniqueness_of :name
-  validates_confirmation_of :password
-  validates_length_of :name, :in => 3..20
-  validates_length_of :password, :in => 5..20
+#
+#  validates_presence_of :name
+#  validates_uniqueness_of :name
+#  validates_confirmation_of 
+#  validates_length_of :name, :in => 3..20
   #  validates_length_of :phone, :in => 11..12
   #  validates_numericality_of :phone, :only_integer => true
   validate :valid_upuserid
@@ -52,16 +51,16 @@ class User < ActiveRecord::Base
     self.money_journals.each {|x| self.balance+=x.money}
   end
 
-  def validate
-    if PhoneCompare.form(name)
-      errors.add(:name, "注册用户名不能是手机号码") if phone.nil? || name != phone
-    end
-    return if phone.blank?
-    self.phone = PhoneCompare.normalize(self.phone)
-    if self.phone.length < 11
-      errors.add(:phone, "手机号码长度必须大于10位")
-    end
-  end
+#  def validate
+#    if PhoneCompare.form(name)
+#      errors.add(:name, "注册用户名不能是手机号码") if phone.nil? || name != phone
+#    end
+#    return if phone.blank?
+#    self.phone = PhoneCompare.normalize(self.phone)
+#    if self.phone.length < 11
+#      errors.add(:phone, "手机号码长度必须大于10位")
+#    end
+#  end
 
   def phones
     self.other_phones.to_s.split(',')
@@ -78,7 +77,7 @@ class User < ActiveRecord::Base
     raise "'#{self.name}'已有对应的商家帐号" if my_shop
     shop          = Shop.new
     shop.name     = self.name
-    shop.password = self.password
+#    shop.password = self.password
     shop.address  = "请补充地址信息！"
     shop.tel      = self.phone.blank? ? '00000000' : self.phone
     shop.t        = 'b'

@@ -3,41 +3,35 @@
   <%= f.error_messages %>
 
   <p>
-    用户ID<br />
-    <%= f.text_field :id %>
+    UID<br />
+    <%= f.text_field :wb_uid %>
   </p>
   <p>
-    所属商家ID<br />
-    <%= f.text_field :shop_id, {:size => 8}%><%= text_field_with_auto_complete_1dooo :shop %>
+    昵称 <br />
+    <%= f.text_field :screen_name  %>
   </p>
   <p>
-    手机号码<br />
-    <%= f.text_field :phone %>
-  </p>
-  <p>
-    用户名<br />
+    友好显示名称<br />
     <%= f.text_field :name %>
   </p>
-  <p>
-    密码<br />
-    <%= f.text_field :password %>
-  </p>
-  <p>
-    积分<br />
-    <%= f.text_field :score %>
-  </p>
-  <p>
-    电子邮件<br />
-    <%= f.text_field :email %>
-  </p>
+
   <p>
     性别<br />
-    <%= f.radio_button :sex, "男" %>男
-    <%= f.radio_button :sex, "女" %>女
+    <%= f.radio_button :gender, "男" %>男
+    <%= f.radio_button :gender, "女" %>女
+  </p>
+
+  <p>
+    所在地<br />
+    <%= f.text_field :location %>
   </p>
   <p>
-    职业<br />
-    <%= f.text_field :occupation %>
+    博客地址 <br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    个性化域名 <br />
+    <%= f.text_field :domain %>
   </p>
   <p>
     创建时间<br />
