@@ -64,10 +64,10 @@ h2.tit2{width:98%;color:#fff;margin-left:50px;padding-top:30px;line-height: 25px
 .sina{background: url(../images/sina.gif) no-repeat 0 center;padding-left:75px;}
 .book{background: url(../images/book.gif) no-repeat 0 center;padding-left:75px;}
 
-h1, #header h1 {text-shadow: #3E2C25 3px -3px 1px;text-align: center;}
+h1, #header h1 {text-shadow: #3E2C25 3px -3px 1px ;text-align: center;}
 #header {background: url(../images/header.jpg) repeat-x 0 0;height:90px; position:relative;}
 
-.tbtn, .tbtn1, .tbtn2, .tbtn3, .tbtn4{color:#fff;font-size:27px; text-shadow: #3E2C25 2px -2px 1px;text-align: center;background: url(../images/tbtn-bg.jpg) no-repeat 0 0;width:84px;height:51px;display:block;top:10px; letter-spacing:2px;padding-top:10px;}
+.tbtn, .tbtn1, .tbtn2, .tbtn3, .tbtn4{color:#fff;font-size:27px; text-shadow: #3E2C25 1px 1px 1px;text-align: center;background: url(../images/tbtn-bg.jpg) no-repeat 0 0;width:84px;height:51px;display:block;top:10px; letter-spacing:2px;padding-top:10px;}
 .tbtn1{background-image: url(../images/tbtn1.jpg);}
 .tbtn2{background-image: url(../images/tbtn2.jpg);}
 .tbtn3{background-image: url(../images/tbtn-bg2.jpg);width:120px;}
