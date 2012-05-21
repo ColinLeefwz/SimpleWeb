@@ -20,7 +20,7 @@ module RightsHelper
   
   def lang_file
     if ENV["RAILS_ENV"] == "production"
-      '/home/dooo/bodu_server/config/locales/zh-CN.yml'
+      '/home/dooo/lianlian/config/locales/zh-CN.yml'
     else
       './config/locales/zh-CN.yml'
     end
