@@ -5,3 +5,14 @@ db/schema.rb
 *.log
 *.bak
 *.swp
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/en.js
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/zh-cn.js
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/zh-tw.js
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/readme.txt
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/datePicker.gif
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/default/datepicker.css
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/default/img.gif
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/WdatePicker.css
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/bg.jpg
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/datepicker.css
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/img.gif
