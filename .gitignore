@@ -6,8 +6,8 @@ db/schema.rb
 *.bak
 *.swp
 DFace/DerivedData/*
-DFace/DFace/DerivedData/*/xcuserdata/*
-DFace/DFace/DerivedData/project.xcworkspace/xcuserdata/*
+DFace/DFace.xcodeproj/xcuserdata/*
+DFace/DFace.xcodeproj/project.xcworkspace/xcuserdata/*
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/en.js
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/zh-cn.js
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/zh-tw.js
