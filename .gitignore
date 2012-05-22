@@ -5,6 +5,9 @@ db/schema.rb
 *.log
 *.bak
 *.swp
+DFace/DerivedData/*
+DFace/DFace/DerivedData/*/xcuserdata/*
+DFace/DFace/DerivedData/project.xcworkspace/xcuserdata/*
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/en.js
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/zh-cn.js
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/zh-tw.js
@@ -16,4 +19,3 @@ public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/WdatePicker.css
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/bg.jpg
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/datepicker.css
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/img.gif
-DFace/DerivedData/*
