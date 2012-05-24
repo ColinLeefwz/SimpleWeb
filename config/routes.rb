@@ -3,6 +3,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :feedbacks
 
+  map.resources :user_logos
+
   map.resources :mcities
 
   map.resources :mcategories
