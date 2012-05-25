@@ -1,6 +1,6 @@
 require 'mime/types'
 class UserLogosController < ApplicationController
-#  before_filter :user_authorize, :except => [:update]
+  before_filter :user_authorize, :except => [:update]
   layout "user"
 
   def initialize
@@ -9,7 +9,8 @@ class UserLogosController < ApplicationController
   end
 
   def index
-    render :json => {:aaa => 111}
+    @user_logo = UserLogo.find_by_user_id(session_user.id, :order => "id desc")
+    @user_logo = UserLogo.new unless @user_logo
   end
 
   def new
@@ -23,13 +24,13 @@ class UserLogosController < ApplicationController
   end
 
   def create
-    @user_logo = UserLogo.new(:uploaded_data => params[:up_logo])
-    @user_logo.user_id= 1
+    @user_logo = UserLogo.new(params[:user_logo])
+    @user_logo.user_id=params[:user_id]
     if @user_logo.save
-      render :js => "#{@user_logo.public_filename}"
+      flash[:notice] = 'User Logo was successfully created.'
+      redirect_to(:action => "index", :menu_id => params[:menu_id])
     else
       render :action => :new
     end
   end
-
 end

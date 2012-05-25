@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>商家管理 | 一渡网 一渡网团购-杭州精品团购|杭州团购|杭州团购网|杭州团购网站|杭州打折|团购导航|杭州团购大全|团购网|团购优惠券|团购网址大全</title>
+    <meta name="description" content="一渡网团购-杭州本地精品生活指南。为您精选杭州的餐厅、酒吧、KTV、摄影、SPA、美发、电影票等杭州团购鲜活信息。聚合省钱的力量，享受超低折扣，比优惠券更划算！" />
+    <meta name="keywords" content="杭州团购,杭州团购导航,杭州团购网址大全,杭州团购网,杭州团购网站大全,团购,团购网,团购导航,团购大全,团购网站,团购网址,团购网大全,杭州团购网站，优惠券,杭州优惠券,杭州餐饮团购,杭州美食团购,杭州休闲娱乐团购,杭州生活团购,其它团购,精品消费,精品团购,限时团购,每日团购,每天团购,折扣券,杭州打折,一渡网!" />
+    <style type="text/css">
+      <!--
+      #dialog {
+        z-index:9999;
+        border:4px solid #CCC;
+        display:none;
+        font-size: 14px;
+        width: 380px;
+      }
+      #dialog a {
+        color: #333333;
+        text-decoration: none;
+      }
+      #pagemarker { position:absolute; left:0; top:0; background-color:#FFF; opacity:;filter:alpha(opacity=0); opacity:0; z-index:1; }
+      #order-pay-dialog .bd{padding:1px;background:#fff;}
+      #order-pay-dialog h3{
+        height:40px;
+        line-height:40px;
+        padding:0 10px;
+        background:#f1f2ff;
+        text-align:left;
+        font-size: 14px;
+        margin:0;
+      }
+      #order-pay-dialog h3 span{float:right;}
+      #order-pay-dialog .close{float:right;width:70px;padding-right:20px;background:url(/img/bg-newbie-close.gif) no-repeat 100% 50%;*background-position:100% 45%;color:#2f2f2f;cursor:pointer;font-weight:normal;}
+      #order-pay-dialog .info{
+        margin:20px 15px 20px 30px;
+        min-height:56px;
+        background:url(/img/bg-sys-icon-info.gif) no-repeat 0 0;
+        font-size:16px;
+        font-family:'黑体',arial,sans-serif;
+        display:block;
+        padding: 10px 0 0 80px;
+      }
+      #order-pay-dialog .notice{padding-left:35px; margin:5px 0;}
+      #order-pay-dialog .notice input{width:180px;}
+      #order-pay-dialog .act{margin:15px 35px 20px;}
+      #order-pay-dialog .retry{margin:10px 35px 20px;}
+      input.formbutton{padding:4px 1em;*padding:5px 1.5em 0;border:2px solid;border-color:#fccb9d #e87a11 #e87a11 #fccb9d;background:#ff932c;color:#fff;letter-spacing:.1em;cursor:pointer;*width:auto;_width:0;*overflow:visible;}
+      input.disabled{border:1px solid #ccc;background:#eee;color:#999;cursor:default;}
+      button.formbutton{height:23px;padding:0 1.5em;border:1px solid;border-color:#82D0D4 #92D6D9 #54A3A7 #4D989B;background:#63C5C8;color:#fff;letter-spacing:.3em;cursor:pointer;line-height:23px;}
+      #mydiv {
+        font-size: 14px;
+        text-align: center;
+        margin: 10px 0;
+        color: #FF0000;
+      }
+      /*end*/
+      -->
+    </style>
+    <%= javascript_include_tag "prototype" %>
+  </head>
+  <body>
+    <!-- <a href="/">一渡网首页</a>
+    <a href="#" onclick="history.back();return false;">返回</a>
+    <a href="/shop_cash/register">团购券</a>
+    -->
+    <div id="dialog" style="display: block; background-color: rgb(255, 255, 255); z-index: 9999; margin: 0 auto;">
+      <div class="order-pay-dialog-c" id="order-pay-dialog">
+        <h3><span id="order-pay-dialog-close"><a href="/shop_ddowns/register">查看优惠券</a></span>一渡团购券验证(<a href="/about/xiaofei" title="查看团购券验证操作步骤" target="_blank" style="color: #DECF03">查看团购券验证操作步骤</a>)</h3>
+        <p class="info" id="coupon-dialog-display-id">请您输入团购券编号和密码<br>进行操作（查询免输密码）</p>
+        <p class="notice">团购券编号：<input id="id" type="text" name="id" class="f-input" style="text-transform:uppercase;" maxlength="12" onkeyup="X.coupon.dialoginputkeyup(this);"></p>
+        <p class="notice">团购券密码：<input type="text" name="pass" id="pass" style="text-transform:uppercase;" class="f-input" maxlength="8" onkeyup="X.coupon.dialoginputkeyup(this);"></p>
+        <p class="notice" <%= "style='display:none'" unless session_shop && session_shop.has_car_discount? %> >洗车车牌号：<input type="text" name="comment" id="comment" style="text-transform:uppercase;" class="f-input" maxlength="8"></p>
+        <p class="act"><input id="coupon-dialog-query" class="formbutton" value="查询" name="query" type="submit" onclick="var url='/shop_cash/search?dcash='+$('id').value;new Ajax.Updater('mydiv',url, {asynchronous:true}); return false;">&nbsp;&nbsp;&nbsp;<input id="coupon-dialog-consume" name="consume" class="formbutton" value="消费（需密码）" type="submit" onclick="var url='/shop_cash/search?xf=1&dcash='+$('id').value+'&pass='+$('pass').value;new Ajax.Updater('mydiv',url, {asynchronous:true}); return false;">
+          <% if session_shop %>
+            <a href="/shop_dcash_xfs">查看消费记录</a>
+          <% end %>
+        </p>
+        <div id="mydiv"></div>
+      </div>
+    </div>
+  </body>
+</html>

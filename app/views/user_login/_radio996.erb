@@ -1,0 +1,8 @@
+<% unless session_user.radio996_order.nil? %>
+<div id="radio996">
+    <% session_user.radio996_order.each do |order| %>
+        <h3>您已成功秒杀<span>“<%= order.line_items[0].discount.name %> ”</span>，请点击以下地址，<a href="/t_cart/order/<%= order.id %> ">购买</a>后即可使用！</h3>
+        <h4><a href="/t_cart/order/<%= order.id %> ">http://www.1dooo.com/t_cart/order/<%= order.id %> </a></h4>
+    <% end %>
+</div>
+<% end %>
