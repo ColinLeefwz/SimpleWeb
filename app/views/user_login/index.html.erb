@@ -1,0 +1,91 @@
+<%= javascript_include_tag :defaults %>
+<%@user = session_user%>
+<div id="myindex_left">
+  <h1>基本信息</h1>
+  <% if session_user.name_is_phone? %>
+    <span>你的用户名目前就是手机号码，推荐<a href='/user_name'><strong style="font-size: 12px; color:#0281ca">立即更改用户名</strong></a>。</span><br/>
+  <% end %>
+  <% unless session_user.oauth_t.blank? %>
+    <% unless weibo_related(session_user.id) %>
+		<script>
+
+			function bindElement(i){
+				if(i==1){
+					document.getElementById('bindSpan').style.display="none";
+					document.getElementById('bindDiv').style.display='block';
+				}else if(i==2){
+					document.getElementById('bindSpan').style.display="block";
+					document.getElementById('bindDiv').style.display='none';
+				}
+			}		
+
+		</script>
+      <span id="bindSpan"><a href="javascript:;" class="orange" onclick="bindElement(1)">我已有一渡帐号,现在与一渡帐号绑定</a></span>
+      <div id="bindDiv" style="display: none">
+        <% form_tag :action => "binduser" do %>
+				<ul>
+					<li class="bold f14">请输入您在一渡网的帐号信息</li>
+					<li>用户名：<input type="text" name="bindname" id="bindname" class="w100"></li>
+					<li>密&nbsp;&nbsp;&nbsp;码：<input type="password" name="bindpass" id="bindpass" class="w100"></li>
+					<li><input type="submit" value="绑 定" class="bindDiv_button"><input type="button" class="bindDiv_button ml20" value="取 消" class="ml20" onclick="bindElement(2)"></li>
+				</ul>
+			<% end %>
+      </div>
+  <% end %>
+  <% end %>
+  <div id="user_main_t">
+    <div class="myhard">
+      <% if session_user.user_logo && session_user.user_logo.public_filename %>
+        <%= image_tag(UserLogo.find_by_user_id(session_user.id, :order => "id desc").public_filename) %>
+      <% else %>
+        <img src="/user_logos/___small.jpg" />
+      <% end %>
+    </div>
+    <div >我的账号：<strong style="font-size: 12px; color:#0281ca"><%= session_user_name %></strong>   
+    &nbsp;昵称：<%= in_place_editor_field :user, :nickname %></div>
+    <div class="f12">您现在的会员状态: 
+      <% if !session_user.confirmed? %>
+        <img src="/img/icon3.png" />  <a href="/user_reg/phone" class="red1">未绑定手机</a>
+      <% else %>
+        <img src="/img/icon4.png" />  <a href="/user_reg/phone" class="green1">已绑定手机</a><%= session_user.phone %>
+      <% end %>
+      <% if session_user.email.blank? %>
+        <img src="/img/icon5.png" />  <a href="/user_reg/email" class="red1">未绑定邮箱</a>
+      <% else %>
+        <img src="/img/icon6.png" />  <a href="/user_reg/email" class="green1">已绑定邮箱</a><%= session_user.email %>
+      <% end %>
+    </div>
+    <div class="main_tp">我的一渡余额：<span style=" color:#FF0000; font-size: 16px; font-weight:bold"><%=session_user.balance%></span> 元&nbsp;
+      | &nbsp; 我的一渡积分：<span style=" color:#FF0000; font-size: 16px; font-weight:bold"><%=session_user.score%></span> 分</div>
+  </div>
+  <div id="cols_comments2">
+    <ul><li><%= link_to "已下载优惠券", :controller => "user_discounts", :action => "index" %>：<span style=" color:#FF0000;  font-weight:bold"><%=session_user.ddowns.size%></span> 张</li>
+      <li><%= link_to "可推广返现团购", :controller => "tuangou_promotion", :action => "index" %>：<span style=" color:#FF0000;  font-weight:bold"><%= tuangou_promotion_size%></span> 个</li>
+      <li><%= link_to "已下载团购券", :controller => "user_orders", :action => "index" %>：<span style=" color:#FF0000;  font-weight:bold"><%=session_user.dcashes.size%></span> 张</li>
+      <li><%= link_to "已成功返现金额", :controller => "user_promotion_records", :action => "index" %>：<span style=" color:#FF0000;  font-weight:bold"><%=promotion_price(session_user.id)%></span> 元</li>
+    </ul>
+  </div>
+  <div id="user_main_b">
+    <h4>最新通知</h4>
+    <ul>     
+      <li> 
+        <% if !session_user.confirmed? %>
+          <div class="l check_icon1">&nbsp;</div>
+          <div class="r">马上激活手机，免费下载优惠券<br />
+            随时享受折扣体验<br /><a href="javascript:window.location.replace('/user_reg/phone');" class="check_btn">验证手机</a>
+          </div>
+        <% else %>
+          <div class="l check_icon1">&nbsp;</div>
+          <div class="r">更改手机号码，免费下载优惠券<br />
+            随时享受折扣体验<br /><a href="javascript:window.location.replace('/user_reg/phone');" class="check_btn">更改手机</a>
+          </div>
+        <% end %>
+      </li>
+      <li>
+        <div class="l check_icon2">&nbsp;</div>
+<div class="r">邀请好友购买，获得返现奖励<br>           不限次数，可提现！<br><a class="check_btn" href="javascript:window.location.replace('/user_promotion_records');">推广返现</a>         </div>
+      </li>
+    </ul>
+    <div class="main_b_bottom"></div>
+  </div>
+</div>

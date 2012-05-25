@@ -1,0 +1,26 @@
+<% if session_user.confirmed? && session_user.have_phone? && session_user.push_ksf? %>
+  <%= javascript_include_tag "checkUtil" %>
+  <div id="myindex_right">
+    <h1>输入《省钱攻略》上标注的特服号码，“立即获取”免费获得优惠券</h1>
+    <% if flash[:notice] != "suc" && flash[:notice] != "err" %>
+      <div id="pushDiv">
+        <form id="pushForm" name="pushForm" action="user_push">
+          <input type="text" id="push_phone" name="push_phone" maxlength="11" onKeyPress="return onlyInNum()" />
+          <%= submit_tag "立即获取", :class=>"now_ksf" %>
+        </form>
+      </div>
+    <% end %>
+    <% if flash[:notice] == "suc" %>
+      <div id="sucDiv">您已成功获取免费优惠券，请查收短信！</div>
+    <% end %>
+    <% if flash[:notice] == "err" %>
+      <div id="errDiv">获取免费优惠券的人太多啦，请过5秒后再试！</div>
+    <% end %>
+    <% if flash[:notice] == "phone_err" %>
+      <div id="phoneErrDiv">特服号错误</div>
+    <% end %>
+    <% if flash[:notice] == "derr" %>
+      <div id="dErrDiv">很抱歉，优惠券已经被下载完了！</div>
+    <% end %>
+  </div>
+<% end %>
