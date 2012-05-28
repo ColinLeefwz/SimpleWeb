@@ -41,6 +41,7 @@
 		352B8AF81521CBE30018C296 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 352B8AF71521CBE30018C296 /* Default.png */; };
 		352B8AFA1521CBFA0018C296 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 352B8AF91521CBFA0018C296 /* Default@2x.png */; };
 		3546F79A1563A910003C7C99 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 3546F7991563A910003C7C99 /* www */; };
+		35A1B8AB156A4203002CA15A /* phone2 in Resources */ = {isa = PBXBuildFile; fileRef = 35A1B8AA156A4203002CA15A /* phone2 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		352B8AF71521CBE30018C296 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		352B8AF91521CBFA0018C296 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		3546F7991563A910003C7C99 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		35A1B8AA156A4203002CA15A /* phone2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = phone2; path = ../public/phone2; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 		352B8A8D1521CB5D0018C296 = {
 			isa = PBXGroup;
 			children = (
+				35A1B8AA156A4203002CA15A /* phone2 */,
 				3546F7991563A910003C7C99 /* www */,
 				352B8AF91521CBFA0018C296 /* Default@2x.png */,
 				352B8AF71521CBE30018C296 /* Default.png */,
@@ -341,6 +344,7 @@
 				352B8AF81521CBE30018C296 /* Default.png in Resources */,
 				352B8AFA1521CBFA0018C296 /* Default@2x.png in Resources */,
 				3546F79A1563A910003C7C99 /* www in Resources */,
+				35A1B8AB156A4203002CA15A /* phone2 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
