@@ -13,5 +13,5 @@ development:
 production:
   key: "2054816412"
   secret: "75487227b4ada206214904bb7ecc2ae1"
-  url: "http://www.1dooo.com"
-  callback: "http://www.1dooo.com/syncs/sina_callback"
+  url: "http://www.dface.cn"
+  callback: "http://www.dface.cn/syncs/sina_callback"
