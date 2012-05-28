@@ -204,7 +204,8 @@
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|p{12cm}|}
-\hline\multicolumn{2}{|c|}{http://www.dface.cn/user/login} \\
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/user/login} \\
 \hline\hline
  \  参数  &  说明  \\
 \hline
@@ -254,7 +255,8 @@ Digest::SHA1.hexdigest(str)[0,16]
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|p{12cm}|}
-\hline\multicolumn{2}{|c|}{http://www.dface.cn/user/logout} \\
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/user/logout} \\
 \hline\hline
  \  参数  &  说明  \\
 \hline
@@ -275,7 +277,8 @@ Digest::SHA1.hexdigest(str)[0,16]
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|p{12cm}|}
-\hline\multicolumn{2}{|c|}{http://www.dface.cn/user/\#\{user\_id\}/user\_logos} \\
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/user/\#\{user\_id\}/user\_logos} \\
 \hline\hline
  \  参数  &  说明  \\
 \hline
@@ -296,7 +299,8 @@ enctype="multipart/form-data" method="post"
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|p{12cm}|}
-\hline\multicolumn{2}{|c|}{http://www.dface.cn/user\_info} \\
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/user\_info} \\
 \hline\hline
  \  参数  &  说明  \\
 \hline
@@ -315,7 +319,8 @@ enctype="multipart/form-data" method="post"
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|p{12cm}|}
-\hline\multicolumn{2}{|c|}{http://www.dface.cn/user\_info} \\
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/user\_info} \\
 \hline\hline
  \  参数  &  说明  \\
 \hline
@@ -333,7 +338,8 @@ enctype="multipart/form-data" method="post"
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|p{12cm}|}
-\hline\multicolumn{2}{|c|}{http://www.dface.cn/mshop/aroundme} \\
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/mshop/aroundme} \\
 \hline\hline
  \  参数  &  说明  \\
 \hline
@@ -362,6 +368,42 @@ enctype="multipart/form-data" method="post"
 
 \subsection{向给定用户发送信息}
 
+lianlian用户系统和openfire用户系统如何整合，如何sso。
+ofUser
+聊天室和商家如何整合。
+ofMucService
+ofMucRoom
+
+自己管理头像还是使用 (vCard-Based Avatars 目前广泛采用)？应该自己管理。
+
+不需要成为好友就可以聊天。不需要roster好友管理功能。脸脸的好友是单向的。
+
+状态: XMPP presence，只有online－offline，没有away,busy等其它状态。
+
+切换应用后，不需要offline，只有用户手动退出时，才主动offline。
+服务器端保持online是否消耗资源。如果保持online，但是客户端其实不可用，这时候是否会有消息丢失。
+
+商家聊天室采用MUC方案，进入商家群聊页面就加入room，切换到其它页面时不主动退出，只有当主动加入另一个商家才从当前商家退出。用户永远处在唯一的一个room中。
+
+因为不主动offline，不主动从room退出，如何计算当前room的用户数量？
+
+聊天历史记录功能是否有？
+http://community.igniterealtime.org/message/219002#219002
+安装Monitoring Service 插件，然后保存在
+
+
+新加入用户是否可以看到聊天室的历史信息？
+
+聊天室的三种用户，主持者   参与者   访客, 聊天室管理。
+黑名单管理。
+
+可靠性。一条信息publish了客户是否能收到了，进一步处理比如说保存或重发等业务逻辑。
+
+Presence处理是IM Server的核心，也是一个IM Server最复杂的部分。一个用户的状态发生变化，需要通过服务器自动投递给他所有在线的好友。openfire是否是自动投送，lianlian是否需要自动投送的能力？
+
+
+
+ofPubsubNode什么用途？
 
 
 
