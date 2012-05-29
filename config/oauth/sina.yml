@@ -1,17 +1,17 @@
 test:
-  key: "1005047411"
-  secret: "4e2ffcc81ec9a02ffef445c5fef222c3"
+  key: "2054816412"
+  secret: "75487227b4ada206214904bb7ecc2ae1"
   url: "http://localhost:3000"
   callback: "http://localhost:3000/syncs/sina_callback"
 
 development:
-  key: "1005047411"
-  secret: "4e2ffcc81ec9a02ffef445c5fef222c3"
+  key: "2054816412"
+  secret: "75487227b4ada206214904bb7ecc2ae1"
   url: "http://localhost:3000"
   callback: "http://localhost:3000/syncs/sina_callback"
 
 production:
-  key: "1005047411"
-  secret: "4e2ffcc81ec9a02ffef445c5fef222c3"
-  url: "http://www.1dooo.com"
-  callback: "http://www.1dooo.com/syncs/sina_callback"
+  key: "2054816412"
+  secret: "75487227b4ada206214904bb7ecc2ae1"
+  url: "http://www.dface.cn"
+  callback: "http://www.dface.cn/syncs/sina_callback"

@@ -1,0 +1,74 @@
+\documentclass[cs4size]{ctexartutf8} 
+\usepackage[unicode={true}]{hyperref}
+\hypersetup{colorlinks,%
+                 citecolor=black,%
+                 filecolor=black,%
+                 linkcolor=black,%
+                 urlcolor=blue,%
+                 pdftex}
+
+\usepackage{graphicx}
+\usepackage{float}
+
+				
+\author{YXY}
+\title{脸脸网服务器与手机端的开发接口}
+
+\begin{document} 
+
+\maketitle
+\tableofcontents
+
+
+\section{根据经纬度获得附近的商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/mshop/aroundme} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ lat  &  经度\\
+\hline
+ lng  &  纬度\\ 
+\hline
+ accuracy  &  精确度\\ 
+\hline
+\end{tabular}
+\caption{根据经纬度获得附近的商家}
+   \end{center}
+\end{table}
+
+
+返回值例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+
+[
+{"mshop":
+	{"name":"新紫轩花店",
+	"address":"文一路266号",
+	"linkman":"",
+	"dp_id":5097101,
+	"fullname":"",
+	"lng":120.12763,
+	"kb_id":"",
+	"id":40056,
+	"phone":"",
+	"lat":30.28691}
+}
+]
+
+\end{verbatim}
+\end{figure}
+     
+
+TODO: 是否同时返回商家在线（男女）人数
+
+\newpage
+
+
+\end{document}

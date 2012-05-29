@@ -1,6 +1,13 @@
 class MuserController < ApplicationController
   def index
   end
+  
+  def login
+    respond_to do |format|
+      #debugger
+      format.js {render :json => request.env['HTTP_USER_AGENT'].to_json}
+    end
+  end
 
   # 根据ID读取用户头像
   def logo
