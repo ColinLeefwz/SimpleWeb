@@ -5,6 +5,11 @@ require 'logger'
 module Spider
 
   $LOG = Logger.new('job_log/spider.log', 0, 100 * 1024 * 1024)
+
+  @Request_Headers = {"User-Agent" => "Mozilla/5.0 (X11; Linux i686; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"}
+
+
+
   @DP = 'http://www.dianping.com'
   @DP_STR = "http://www.dianping.com/search/category/%d/0"
   @DP_HANGZHOU = 'http://www.dianping.com/search/category/3/0'
@@ -13,6 +18,14 @@ module Spider
   @D_URLS = []
 
   def self.koubei
+  end
+
+
+  def self.suspend
+    begin
+      sleep(3 + rand(5))
+    rescue
+    end
   end
 
   # 读取城市ID下所有分类对应的URL
@@ -29,7 +42,7 @@ module Spider
   def self.dp_category(url, mcity_id)
     $LOG.info "def dp_category(url=#{url}, mcity_id=#{mcity_id})"
     begin
-      doc = Hpricot(open(url))
+      doc = Hpricot(open(url,@Request_Headers))
       all_category = false
       nest_id = 0
       doc.search("ul[@class='navBlock']").each do |current|
@@ -84,7 +97,7 @@ module Spider
     $LOG.info "def dp_district(url=#{url}, mcity_id=#{mcity_id})"
     mcity = Mcity.find_by_id(mcity_id)
     begin
-      doc = Hpricot(open(url))
+      doc = Hpricot(open(url,@Request_Headers))
       nest_id = 0
       md = Mdistrict.find_by_name(mcity.name.split('站')[0])
       if md
@@ -139,7 +152,8 @@ module Spider
   def self.dp_shop(city_category_url, mcity_id)
     $LOG.info "def dp_shop(city_category_url=#{city_category_url}, mcity_id=#{mcity_id})"
     begin
-      doc = Hpricot(open(city_category_url))
+      suspend
+      doc = Hpricot(open(city_category_url,@Request_Headers))
       dds = doc.search("#searchList")[0].search("dd")
       dds.each do |dd|
         detail = dd.search("ul[@class='detail']")
@@ -156,6 +170,7 @@ module Spider
               shop.address = dt[0][dt[0].index(detail.search("li[@class='address']").search("a")[0].inner_text) + detail.search("li[@class='address']").search('a')[0].inner_text.length, dt[0].length] # address
             end
             shop.phone = dt[2].to_s        # phone
+            shop.comment_count = dd.search("ul[@class=remark]/li").last.inner_text.to_i
             shop.mcity_id = mcity_id
             shop.save!
             @I = @I + 1
@@ -266,7 +281,7 @@ module Spider
     shop = Mshop.find_by_id(shop_id)
     if shop and shop.dp_id.to_i > 0
       begin
-        open(shop.dp_url) { |f|
+        open(shop.dp_url,@Request_Headers) { |f|
           f.each_line do |line|
             return self.decode_poi(line.split(/'/)[1]) if line.index('poi')
           end
@@ -318,7 +333,7 @@ module Spider
               category_urls << m.dp_url
             else
               # category 下的 districts
-              doc = Hpricot(open(m.dp_url))
+              doc = Hpricot(open(m.dp_url,@Request_Headers))
               current = doc.search("ul[@class='navBlock navTab-cont navTab-cont-on']/li/ul[@class='bigCurrent']")
               current = doc.search("ul[@class='navBlock']/li/ul[@class='current']") if current.empty?
               current.search("li/ul/li").each do |cur_li|
@@ -326,7 +341,7 @@ module Spider
                   if cur_li.search("a/span[@class='num']").inner_text.strip.split('(')[1].split(')')[0].to_i <= 750
                     category_urls << ("%s%s" % [@DP, cur_li.search("a")[0].get_attribute('href')])
                   else
-                    doc = Hpricot(open(m.dp_url))
+                    doc = Hpricot(open(m.dp_url,@Request_Headers))
                     current = doc.search("ul[@class='navBlock']/li/ul[@class='current']") if current.empty?
                     current.search("li/ul/li").each do |cur_li|
                       category_urls << ("%s%s" % [@DP, cur_li.search("a")[0].get_attribute('href')]) if cur_li.search("a")[0]
@@ -405,7 +420,7 @@ module Spider
       mcity.id = dp_id
       mcity.dp_id = dp_id
       begin
-        doc = Hpricot(open(url))
+        doc = Hpricot(open(url,@Request_Headers))
         if not doc.search("div[@class='aboutBox errorMessage']").empty?
           i_err += 1
           dp_id += 1
@@ -474,9 +489,21 @@ if __FILE__ == $0 or $0 == 'script/runner'
   $LOG.info "__FILE__"
   $LOG.info "$0 %s " % $0
   if ARGV && ARGV.count > 0
-    $LOG.info ARGV
-    puts "ARGV    %s" % ARGV 
-    Spider.dp(ARGV[0].to_i)
+    if ARGV[0].to_s == "latlng"
+      Mshop.find(:all).each do |shop|
+        latlng = Spider.dp_shop_latlng(shop.id)
+        if latlng
+          shop.lat = latlng[0]
+          shop.lng = latlng[1]
+          shop.save!
+        end
+      end
+    else
+      $LOG.info ARGV
+      puts "ARGV    %s" % ARGV
+      Spider.dp(ARGV[0].to_i)
+    end
+ 
   else
     $LOG.info "ARGV is nil"
     Spider.dp()

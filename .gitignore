@@ -19,3 +19,7 @@ public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/WdatePicker.css
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/bg.jpg
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/datepicker.css
 public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/img.gif
+
+nbproject/*
+tmp/*
+
