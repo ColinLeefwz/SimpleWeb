@@ -12,7 +12,8 @@ class MshopController < ApplicationController
       mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => params[:page], :per_page =>10)
     end
     respond_to do |format|
-      format.js {render :json => mshops.to_json}
+      format.json {render :json => mshops.to_json}
+      format.html {render :json => mshops.to_json}
     end
   end
   
