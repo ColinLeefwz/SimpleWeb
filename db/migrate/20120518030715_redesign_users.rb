@@ -6,7 +6,7 @@ class RedesignUsers < ActiveRecord::Migration
       t.string :screen_name
       t.string :name
       t.integer :province
-      t.intergr :city
+      t.integr :city
       t.string :location
       t.string :description
       t.string :url 
