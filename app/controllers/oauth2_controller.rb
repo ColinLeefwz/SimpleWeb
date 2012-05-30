@@ -4,7 +4,7 @@ $sina_api_key = "2054816412"
 $sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  
 $sina_callback = "http://www.dface.cn/oauth2/sina_callback"
 
-$login_users = []
+$login_users = [] if $login_users.nil?
 
 class Oauth2Controller < ApplicationController
   
