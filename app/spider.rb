@@ -1,3 +1,5 @@
+
+require File.dirname(__FILE__) + '/../config/environment'
 require 'hpricot'
 require 'open-uri'
 require 'logger'
@@ -115,7 +117,7 @@ module Spider
       current = doc.search("ul[@class='navBlock']/li/ul[@class='current']") if current.empty?
       current = doc.search("ul[@class='navBlock']/li/ul/li/ul[@class='current']") if current.empty?
       current.search("li/ul/li").each do |cur_li|
-        if cur_li.search("a")[0] 
+        if cur_li.search("a")[0]
           district = Mdistrict.find_by_id(cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('r')[-1].to_i)
           district = Mdistrict.new if district.nil?
           district.id = cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('r')[-1].to_i
@@ -253,7 +255,7 @@ module Spider
     h = 0
     b = ""
     j = poi.length
-    g = poi[-1].ord  
+    g = poi[-1].ord
     poi = poi[0, j - 1]
     j -= 1
     0.upto(j - 1).each do |j_i|
@@ -337,7 +339,7 @@ module Spider
               current = doc.search("ul[@class='navBlock navTab-cont navTab-cont-on']/li/ul[@class='bigCurrent']")
               current = doc.search("ul[@class='navBlock']/li/ul[@class='current']") if current.empty?
               current.search("li/ul/li").each do |cur_li|
-                if cur_li.search("a")[0] and !cur_li.search("a/span[@class='num']").empty? 
+                if cur_li.search("a")[0] and !cur_li.search("a/span[@class='num']").empty?
                   if cur_li.search("a/span[@class='num']").inner_text.strip.split('(')[1].split(')')[0].to_i <= 750
                     category_urls << ("%s%s" % [@DP, cur_li.search("a")[0].get_attribute('href')])
                   else
@@ -351,7 +353,7 @@ module Spider
                 end
               end
             end
-          end 
+          end
         end
       end
     rescue Timeout::Error
@@ -386,7 +388,7 @@ module Spider
       end
       # 商家的地址latlng
       cs.flatten.each do |cat|
-        cat.mshops.each do |shop| 
+        cat.mshops.each do |shop|
           if shop.mcity_id > 0 and shop.mcity_id == mcity_id
             latlng = Spider.dp_shop_latlng(shop.id)
             if latlng
@@ -491,6 +493,7 @@ if __FILE__ == $0 or $0 == 'script/runner'
   if ARGV && ARGV.count > 0
     if ARGV[0].to_s == "latlng"
       Mshop.find(:all).each do |shop|
+        suspend
         latlng = Spider.dp_shop_latlng(shop.id)
         if latlng
           shop.lat = latlng[0]
@@ -503,9 +506,10 @@ if __FILE__ == $0 or $0 == 'script/runner'
       puts "ARGV    %s" % ARGV
       Spider.dp(ARGV[0].to_i)
     end
- 
+
   else
     $LOG.info "ARGV is nil"
     Spider.dp()
   end
 end
+
