@@ -37,15 +37,16 @@
  accuracy  &  精确度\\ 
 \hline
 \end{tabular}
-\caption{根据经纬度获得附近的商家}
    \end{center}
 \end{table}
 
 
-返回值例子：
+例子：
 
 \begin{figure}[H]
 \begin{verbatim}
+访问：/mshop/aroundme.json?lat=30.2829754&lng=120.1337336
+返回值：
 
 [
 {"mshop":
@@ -67,6 +68,50 @@
      
 
 TODO: 是否同时返回商家在线（男女）人数
+
+
+\section{新浪微博登录后的回调页}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/oauth2/sina\_callback} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ code  &  新浪返回的code\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：http://www.dface.cn/oauth2/sina_callback?code=...
+该访问由新浪微博通过302转向发起。
+返回值：
+
+{
+"id":1,
+"password":"15c663b8ff620502",
+"sina_uid":"1884834632",
+"expires_in":75693,
+"token":"2.00aaZYDCMcnDPCb4dc439e06i2m_GC",
+"expires_at":1338431259
+}
+
+其中，id和password是该用户在脸脸网的id和密码，在首次新浪授权时创建。该id加上"@dface.cn"就是openfire的jid。（目前还没有和jid关联上。）
+
+后面几个字段都是新浪提供的，其中sina_uid是该用户的新浪的uid，token是授权的access_token，其它几个是授权有效期信息。
+
+\end{verbatim}
+\end{figure}
+
+
 
 \newpage
 
