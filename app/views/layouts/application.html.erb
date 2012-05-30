@@ -1,14 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <%= yield :html_header %>
-    <%= yield :google_map_header %>
-  </head>
-  <body>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lianlian</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
 
+<%= yield %>
 
-    <%= yield  %>
-
-  </body>
+</body>
 </html>

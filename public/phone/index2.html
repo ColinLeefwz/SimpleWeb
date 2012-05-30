@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+	<title>聊天  |脸脸</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery-1.6.2.min.js" charset="utf-8" ></script>
+<script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2054816412" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+function login(){
+	WB2.login(
+		function() { alert("ok:"+WB2.checkLogin()); test();}
+	);
+}
+
+function test(){
+	WB2.anyWhere(function(W){
+	W.parseCMD("/account/get_uid.json", function(sResult, bStatus){
+	    alert(sResult);
+	},{},{
+	    method: 'GET'
+	});
+	});
+}
+
+</script>
+</head>
+<body>
+
+<div class="area">
+	<a href="javascript:;" onclick="login();"><img  src="images/index1.jpg" class="fl"><img  src="images/index2.jpg" class="fl"></a>
+</div>
+
+</body>
+
+</html>
