@@ -113,6 +113,45 @@ TODO: 是否同时返回商家在线（男女）人数
 
 
 
+
+\section{根据经纬度获得附近的用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/aroundme/users} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ lat  &  经度\\
+\hline
+ lng  &  纬度\\ 
+\hline
+ accuracy  &  精确度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/aroundme/users.json?lat=30.2829754&lng=120.1337336&accuracy=100
+返回值：
+
+[
+{"id":2,
+"logo":"/phone2/images/namei2.gif",
+"sina_uid":1743108103}
+]
+
+\end{verbatim}
+\end{figure}
+
+
 \newpage
 
 
