@@ -1,5 +1,4 @@
 
-require File.dirname(__FILE__) + '/../config/environment'
 require 'hpricot'
 require 'open-uri'
 require 'logger'
@@ -44,6 +43,7 @@ module Spider
   def self.dp_category(url, mcity_id)
     $LOG.info "def dp_category(url=#{url}, mcity_id=#{mcity_id})"
     begin
+      suspend
       doc = Hpricot(open(url,@Request_Headers))
       all_category = false
       nest_id = 0
@@ -99,6 +99,7 @@ module Spider
     $LOG.info "def dp_district(url=#{url}, mcity_id=#{mcity_id})"
     mcity = Mcity.find_by_id(mcity_id)
     begin
+      suspend
       doc = Hpricot(open(url,@Request_Headers))
       nest_id = 0
       md = Mdistrict.find_by_name(mcity.name.split('站')[0])
@@ -335,6 +336,7 @@ module Spider
               category_urls << m.dp_url
             else
               # category 下的 districts
+              suspend
               doc = Hpricot(open(m.dp_url,@Request_Headers))
               current = doc.search("ul[@class='navBlock navTab-cont navTab-cont-on']/li/ul[@class='bigCurrent']")
               current = doc.search("ul[@class='navBlock']/li/ul[@class='current']") if current.empty?
