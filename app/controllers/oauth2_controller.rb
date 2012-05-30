@@ -25,7 +25,6 @@ class Oauth2Controller < ApplicationController
 
   def sina_callback
     token = @@client.auth_code.get_token(params[:code], :redirect_uri => 'http://www.dface.cn/oauth2/sina_callback', :parse => :json )
-    debugger
     data = {:token=> token.token, :expires_in => token.expires_in, :expires_at => token.expires_at, :sina_uid => token.params["uid"] }
 	  render :json => data.to_json
   end
