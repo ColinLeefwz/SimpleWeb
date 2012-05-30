@@ -4,20 +4,6 @@ class MshopController < ApplicationController
   def index
   end
 
-  def around
-    mshop = Mshop.find_by_id(params[:id])
-    l = params[:l].blank? ? 2 : params[:l].to_i
-    mshops = []
-    if mshop && mshop.lat != 0 && mshop.lng != 0
-      mshops = Mshop.paginate(:conditions => genCondition(mshop.lat, mshop.lng, l), :order => genOrder(mshop.lat, mshop.lng), :page => params[:page], :per_page =>20)
-    end
-    puts "#{mshop.lat} ******************** #{mshop.lng}"
-    mshops.each { |m| puts "#{m.lat} -------------- #{m.lng} ------------ #{((m.lat - mshop.lat).abs - (m.lng - mshop.lng)).abs}"}
-    respond_to do |format|
-      format.js {render :json => mshops.to_json}
-    end
-  end
-
   # 根据latlng获取周围商家，10 per
   def aroundme
     lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)

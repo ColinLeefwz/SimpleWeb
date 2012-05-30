@@ -1,5 +1,8 @@
 Thumbs.db
+/tmp
 .DS_Store
+*.xcuserstate
+*.rails2
 database.yml
 db/schema.rb
 # git update-index --assume-unchanged /home/dooo/bodu_server/config/environment.rb
