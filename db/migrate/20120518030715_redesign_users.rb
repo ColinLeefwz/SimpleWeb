@@ -6,7 +6,7 @@ class RedesignUsers < ActiveRecord::Migration
       t.string :screen_name
       t.string :name
       t.integer :province
-      t.integr :city
+      t.integer :city
       t.string :location
       t.string :description
       t.string :url 
@@ -25,8 +25,8 @@ class RedesignUsers < ActiveRecord::Migration
       t.string :avatar_large
       t.string :verified_reason
       t.boolean :follow_me
-      t.interer :online_status
-      t.interer :bi_followers_count
+      t.integer :online_status
+      t.integer :bi_followers_count
 
 
 
