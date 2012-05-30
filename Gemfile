@@ -36,3 +36,7 @@ gem 'ruby-debug'
 gem "hpricot"
 gem "oauth2"
 gem "will_paginate"
+gem "in_place_editing"
+gem "tdd-attachment_fu"
+gem "system_timer", "~> 1.2.4"
+
