@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-	<meta name="viewport" content="width=device-width, minimum-scale=0.5, maximum-scale=1, user-scalable=yes">
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
 	
 	<meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
 	<meta content="no-cache" http-equiv="Pragma"/>
@@ -21,41 +21,42 @@
 	<div id="header">
 		<h1>搜索</h1> <a href="nely.html" class="tbtn3 pl15">返回</a>
 	</div>
-	
-	<div class="tit mt25">按名称搜索</div>
-	<div class="text5 mt25">
-		<form method="post" action="">
-			<input id="text3" type="text" class="text6" value="搜索"/>
-		</form>
-	</div>
-	<script>
-		$("#text3").focus(function(){
-			inputs_mes=$("#text3").val();
-			$("#text3").val("");
-		}).blur(function(){
-			var i=$("#text3").val();
-			if(i==""||i==null){
-				$("#text3").val(inputs_mes)
-			}
-		});
-	</script>
-	<div class="dashed h4 mt25"></div>
-	<div class="tit mt25">按类型搜索</div>
-	<div class="set mt25">
-		<a href="#"><span>酒吧 &#8226; 活动</span></a>
-		<a href="#"><span>咖啡 &#8226; 茶馆</span></a>
-		<a href="#"><span>餐饮 &#8226; 酒店</span></a>
-		<a href="#"><span>运动 &#8226; 休闲</span></a>
-		<a href="#" class="nborder"><span>购物 &#8226; 广场</span></a>
+	<div id="con">
+		<div class="tit mt25">按名称搜索</div>
+		<div class="text5 mt25">
+			<form method="post" action="">
+				<input id="text3" type="text" class="text6" value="搜索"/>
+			</form>
+		</div>
+		<script>
+			$("#text3").focus(function(){
+				inputs_mes=$("#text3").val();
+				$("#text3").val("");
+			}).blur(function(){
+				var i=$("#text3").val();
+				if(i==""||i==null){
+					$("#text3").val(inputs_mes)
+				}
+			});
+		</script>
+		<div class="dashed h4 mt25"></div>
+		<div class="tit mt25">按类型搜索</div>
+		<div class="set mt25 mb25">
+			<a href="#"><span>酒吧 &#8226; 活动</span></a>
+			<a href="#"><span>咖啡 &#8226; 茶馆</span></a>
+			<a href="#"><span>餐饮 &#8226; 酒店</span></a>
+			<a href="#"><span>运动 &#8226; 休闲</span></a>
+			<a href="#" class="nborder"><span>购物 &#8226; 广场</span></a>
+		</div>
 	</div>
 	<div id="foot">
 		<div class="inner_foot">
 			<span class="num">22</span>
-			<a href="site.html"><img  src="images/foot-Site.jpg" alt="现场"></a>
-			<a href="nely.html"><img  src="images/foot-Nearbyh.jpg" alt="附近"></a>
-			<a href="talk.html"><img  src="images/foot-Talk.jpg" alt="对话"></a>
-			<a href="friend.html"><img  src="images/foot-Friend.jpg" alt="好友"></a>
-			<a href="set.html"><img  src="images/foot-Set.jpg" alt="设置"></a>
+			<a href="site.html"><img  src="images/foot-Site.png" alt="现场"></a>
+			<a href="nely.html"><img  src="images/foot-Nearbyh.png" alt="附近"></a>
+			<a href="talk.html"><img  src="images/foot-Talk.png" alt="对话"></a>
+			<a href="friend.html"><img  src="images/foot-Friend.png" alt="好友"></a>
+			<a href="set.html"><img  src="images/foot-Set.png" alt="设置"></a>
 		</div>
 	</div>
 </div>
