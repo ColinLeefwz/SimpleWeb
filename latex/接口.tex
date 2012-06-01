@@ -271,6 +271,106 @@ TODO: 是否同时返回商家在线（男女）人数
 
 
 
+\section{添加我关注的人}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/follows} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ user\_id  &  当前登录用户的id\\
+\hline
+ follow\_id  &  关注用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&follow_id=1" http://www.dface.cn/follows
+
+返回值：
+
+{
+"id":1,
+"user_id":2,
+"follow_id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\section{粉丝列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/follow\_info/followers} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ id  &  用户的id\\
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/follow_info/followers?id=2
+
+返回值：
+
+[{"user":
+{"id":1,
+"name":"name23",
+"wb_uid":1884834632,
+"gender":null,
+"birthday":null}
+}]
+
+\end{verbatim}
+\end{figure}
+
+
+
+
+
+\section{关注列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/follow\_info/friends} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ id  &  用户的id\\
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的内容格式同粉丝列表一样
+
+
 \newpage
 
 
