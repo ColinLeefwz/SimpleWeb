@@ -40,7 +40,14 @@ class CheckinsController < ApplicationController
   # POST /checkins
   # POST /checkins.json
   def create
-    @checkin = Checkin.new(params[:checkin])
+    @checkin = Checkin.new
+    @checkin.lat = params[:lat]
+    @checkin.lng = params[:lng]
+    @checkin.user_id = params[:user_id]
+    @checkin.mshop_id = params[:mshop_id]
+    @checkin.shop_name = params[:shop_name]
+    @checkin.ip = request.ip
+    @checkin.time = Time.now
 
     respond_to do |format|
       if @checkin.save
