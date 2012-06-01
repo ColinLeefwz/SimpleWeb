@@ -4,7 +4,7 @@ class AroundmeController < ApplicationController
     lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)
     mshops = []
     if lat != 0 && lng != 0
-      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => params[:page], :per_page =>10)
+      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => params[:page], :per_page =>100)
     end
     respond_to do |format|
       format.json {render :json => mshops.to_json}

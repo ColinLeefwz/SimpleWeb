@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  mshop_id: 
+  user_id: 
+  ip: 
+  time: 
+  lat: 1.5
+  lng: 1.5
+  shop_name: 
+
+two:
+  mshop_id: 
+  user_id: 
+  ip: 
+  time: 
+  lat: 1.5
+  lng: 1.5
+  shop_name: 
