@@ -1,15 +1,21 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <%= yield :html_header %>
-    <%= stylesheet_link_tag :all %>
-    <%= javascript_include_tag :defaults %>
-    <%= csrf_meta_tag %>
-   
+    <%= yield :google_map_header %>
   </head>
-  <body>
+  <%= (yield :body_tag) || "<body>"  %>
 
-    <%= yield %>
 
-  </body>
+  <%= (yield :nav) || %Q{
+   #{render :partial => '/subnav'}
+  }
+%>
+
+  <%= yield  %>
+    <script language="javascript">
+      SetDefault(<%= @menu_tag_id %>);
+    </script>
+</body>
 </html>
