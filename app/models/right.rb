@@ -5,8 +5,8 @@ class Right < ActiveRecord::Base
   end
 
   def admin_name
-	return "" if admin_id.nil?
-	admin.name
+    return "" if admin_id.nil?
+    admin.name
   end
  
   def depart
@@ -14,43 +14,52 @@ class Right < ActiveRecord::Base
   end
 
   def depart_name
-	return "" if depart_id.nil?
-	depart.name
+    return "" if depart_id.nil?
+    depart.name
   end
 
   def role_name
-	return "" if role_id.nil?
-	role.name
+    return "" if role_id.nil?
+    role.name
   end
 
   def role
     Role.find_by_id(role_id)
   end 
   
-#  def self.extra_models
-#	[['团购销售数据','tuangou_datas']]
-#  end
+  #  def self.extra_models
+  #	[['团购销售数据','tuangou_datas']]
+  #  end
 
   def model_name(s)
-#    Right.extra_models.each do |x|
-#     return x[0] if s==x[1]
-#    end
+    #    Right.extra_models.each do |x|
+    #     return x[0] if s==x[1]
+    #    end
     begin
-	eval("#{s.singularize.camelcase}.human_name")
+      eval("#{s.singularize.camelcase}.human_name")
     rescue   Exception => error
-        ""
+      ""
     end
   end
 
   def tables_s
-	self.tables.split(";")
+    self.tables.split(";")
   end
 
   def model_names
-    ret = ""
-    tables_s.each {|x| ret << model_name(x)+";"}
-    ret
-  end  
+    File.open(lang_file) do |yf|
+      ms = YAML::load(yf)["zh-CN"]["activerecord"]["models"]
+      tables_s.map{|x| ms[x]}.join(";")
+    end
+  end
+
+  def lang_file
+    if ENV["RAILS_ENV"] == "production"
+      '/home/dooo/lianlian/config/locales/zh-CN.yml'
+    else
+      './config/locales/zh-CN.yml'
+    end
+  end
 
   def model_names_trim
     

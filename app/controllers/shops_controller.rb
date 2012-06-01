@@ -3,7 +3,7 @@ class ShopsController < ApplicationController
   layout "admin"
 
   def index
-    @shops = Mshop.paginate :all, :page => params[:page], :per_page => 20, :conditions => genCondition, :order => genOrder
+    @shops = Mshop.paginate :page => params[:page], :per_page => 20, :conditions => genCondition, :order => genOrder
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @shops }
