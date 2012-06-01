@@ -1,11 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
-	<meta name="viewport" content="width=device-width, minimum-scale=0.5, maximum-scale=1, user-scalable=yes">
-	
-	<meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+	<meta name="viewport" content="width=device-width, initial-scale=0.5">
 	<meta content="no-cache" http-equiv="Pragma"/>
 	<meta content="no-cache" http-equiv="Cache-Control"/>
 	<meta content="0" http-equiv="Expires"/>	
@@ -17,11 +13,14 @@
 	<script src="js/public.js"></script>
 </head>
 <body>
+<div id="BG" class="bg"></div>
+<img src="images/shake3.png" id="BGImg" class="bgimg"/>
 <div id="main" >
 	<div id="header">
 		<h1>G+酒吧保俶路店</h1>	<a href="site2.html" class="tbtn3 pl15">返回</a>	<a  href="chat3.html" class="tbtn4 pr15">16</a>		
-	</div>
-	<div class="ch_p" id="SC">
+	</div>	
+	<div id="con">
+		<div class="ch_p" id="SC">
 		<marquee direction="left" behavior="scroll" scrollamount="5" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="0">
 			<a href="#">G+酒吧：每日限时推出5元特价小吃，先到先得</a>
 			<a href="#">A+酒吧：每日限时推出1元特价小吃，先到先得</a>
@@ -76,9 +75,9 @@
 			</div>
 		</dd>
 	</dl>
-<br /><br /><br /><br /><br /><br /><br /><br />
-<div class="clear"></div>
-<div id="ch_foot">
+	</div>
+	
+	<div id="ch_foot">
 	<script>
 		$(document).ready(function(){
 			$("#add").toggle(function(){
@@ -101,12 +100,12 @@
 			<img src="images/sign1.png" alt="增加" id="add" class="ml8 mr13"/>
 			<img src="images/sign2.png" alt="摇一摇" id="shake" class="mr15"/>
 			<input type="text" class="text4" />
-			<input type="submit" class="btn4 ml15" value=" " />
+			<input type="submit" class="btn4 ml15 mt4" value=" " />
 		</form>
 	</div>
 	
 </div>
-
+	
 </div>
 </body>
 </html>

@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Mshop:</b>
+  <%= @checkin.mshop_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @checkin.user_id %>
+</p>
+
+<p>
+  <b>Ip:</b>
+  <%= @checkin.ip %>
+</p>
+
+<p>
+  <b>Time:</b>
+  <%= @checkin.time %>
+</p>
+
+<p>
+  <b>Lat:</b>
+  <%= @checkin.lat %>
+</p>
+
+<p>
+  <b>Lng:</b>
+  <%= @checkin.lng %>
+</p>
+
+<p>
+  <b>Shop name:</b>
+  <%= @checkin.shop_name %>
+</p>
+
+
+<%= link_to 'Edit', edit_checkin_path(@checkin) %> |
+<%= link_to 'Back', checkins_path %>
