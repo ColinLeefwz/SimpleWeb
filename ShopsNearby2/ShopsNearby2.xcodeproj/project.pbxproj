@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35A7CFEA1578C0B700EF3C4C /* www in Resources */ = {isa = PBXBuildFile; fileRef = 35A7CFE91578C0B700EF3C4C /* www */; };
 		35E061C21578A4400094E0D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E061C11578A4400094E0D2 /* Foundation.framework */; };
 		35E061C41578A4400094E0D2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E061C31578A4400094E0D2 /* UIKit.framework */; };
 		35E061C61578A4400094E0D2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E061C51578A4400094E0D2 /* CoreGraphics.framework */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		35A7CFE91578C0B700EF3C4C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		35E061BD1578A4400094E0D2 /* ShopsNearby2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShopsNearby2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35E061C11578A4400094E0D2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		35E061C31578A4400094E0D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -117,6 +119,7 @@
 		35E061AF1578A4400094E0D2 = {
 			isa = PBXGroup;
 			children = (
+				35A7CFE91578C0B700EF3C4C /* www */,
 				35E061DB1578A4400094E0D2 /* ShopsNearby2 */,
 				35E061C01578A4400094E0D2 /* Frameworks */,
 				35E061BE1578A4400094E0D2 /* Products */,
@@ -333,6 +336,7 @@
 				35E0620F1578A4410094E0D2 /* MainViewController.xib in Resources */,
 				35E062131578A4410094E0D2 /* verify.sh in Resources */,
 				35E0621A1578A4830094E0D2 /* phone2 in Resources */,
+				35A7CFEA1578C0B700EF3C4C /* www in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +550,7 @@
 				35E062181578A4410094E0D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

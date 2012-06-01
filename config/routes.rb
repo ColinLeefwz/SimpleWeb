@@ -1,4 +1,8 @@
 Lianlian::Application.routes.draw do
+  get "user_info/get"
+
+  get "user_info/set"
+
   resources :checkins
 
   get "aroundme/shops"
