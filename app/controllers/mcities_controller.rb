@@ -2,7 +2,7 @@ class McitiesController < ApplicationController
   before_filter :admin_authorize
   layout "admin"
   def index
-    @mcities = Mcity.paginate :all, :page => params[:page], :per_page => 20, :conditions => genCondition, :order => genOrder
+    @mcities = Mcity.paginate :page => params[:page], :per_page => 20, :conditions => genCondition, :order => genOrder
   end
 
   def new
