@@ -130,14 +130,14 @@
         even: "必须为双数"
         record_invalid: "是无效的"
     models:
-      admin: "管理员管理"
-      depart: "部门管理"
-      role: "角色管理"
-      right: "权限管理"
-      shop: "商家管理"
-      user: "用户管理"
-      mcity: "城市列表"
-      mcategory: "分类列表"
+      admins: "管理员管理"
+      departs: "部门管理"
+      roles: "角色管理"
+      rights: "权限管理"
+      shops: "商家管理"
+      users: "用户管理"
+      mcities: "城市列表"
+      mcategories: "分类列表"
     attributes:
       account_in:
         admin_id: "发布者ID"
