@@ -2,11 +2,6 @@ class UserLoginController < ApplicationController
   before_filter :user_authorize, :except => ['login','logout','bokee','shop', 'has_login', 'loginjs', 'send_password']
   in_place_edit_for :user, :nickname
 
-  def initialize
-    @menu_tag_id = 1
-    @menu_tag2_id = 1
-  end
-
   def index
     redirect_to user_user_logos_path(:user_id => session[:user_id])
   end
