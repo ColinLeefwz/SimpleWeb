@@ -16,6 +16,14 @@ class Mshop < ActiveRecord::Base
   has_many :mdistricts, :through => :mshop_mdistricts
   belongs_to :mcity
 
+  def mcategory_join_name
+    mcategories.map{|m| m.name}.join(',')
+  end
+
+  def mdistrict_join_name
+    mdistricts.map{|m| m.name}.join(",")
+  end
+
   def kb_url
     kb_id.blank? ? "" : "http://detail.koubei.com/store/detail-storeId-%s" % kb_id
   end

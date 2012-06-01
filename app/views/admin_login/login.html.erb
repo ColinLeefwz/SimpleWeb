@@ -16,7 +16,6 @@
     <body onload="$('name').focus();">
 <% end %>
 
-<% no_nav %>
 
 <div id="main">
   <div class="step-nav">
@@ -29,7 +28,9 @@
       <%= flash.now[:notice] if flash.now[:notice] %>
     </div>
 
-    <% form_tag do %>
+
+    <form action="/admin_login/login" method="post" >
+
         <table width="200" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td height="45"></td>
@@ -60,7 +61,7 @@
             </td>
           </tr>
         </table>
-    <% end %>
+    </form>
   </div>
   <div class="bottom"></div>
 </div>

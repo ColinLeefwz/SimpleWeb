@@ -1,7 +1,5 @@
 
-<% form_for(@right) do |f| %>
-  <%= f.error_messages %>
-
+<%= form_for(@right) do |f| %>
   <p>
     管理员 <%= f.select :admin_id, admin_select_opt %>
   </p>
@@ -12,35 +10,35 @@
     角色 <%= f.select :role_id, role_select_opt %>
   </p>
 
-<script>
-function revertAll(name){
-	var ss=document.getElementsByName(name);
-	for(var i=0;i<ss.length;i++){
-		ss[i].click();
-	}
-}
-function selectAll(name){
-	var ss=document.getElementsByName(name);
-	for(var i=0;i<ss.length;i++){
-		if(!ss[i].checked) ss[i].click();
-	}
-}
-</script>
+  <script>
+    function revertAll(name){
+      var ss=document.getElementsByName(name);
+      for(var i=0;i<ss.length;i++){
+        ss[i].click();
+      }
+    }
+    function selectAll(name){
+      var ss=document.getElementsByName(name);
+      for(var i=0;i<ss.length;i++){
+        if(!ss[i].checked) ss[i].click();
+      }
+    }
+  </script>
 
   <p>
     数据表 (<a onclick="selectAll('tables[]')" href="#">全选</a>&nbsp; <a onclick="revertAll('tables[]')" href="#">反选</a>)<br />
-    <table>
+  <table>
     <% count=0 %>
-    <% for ms in model_select %>  
-      <%= "</tr>" if count%3==0 %>
+    <% for ms in model_select %>
+      <%= raw("<tr>") if count%3==0 %>
       <td>
-    <% count = count+1 %>
-      <%= check_box_tag "tables[]", ms[1], (!@right.tables.nil? && !@right.tables_s.index(ms[1]).nil?) %>  
-      <%= ms[0] %>  
+        <% count = count+1 %>
+        <%= check_box_tag "tables[]", ms[1], (!@right.tables.nil? && !@right.tables_s.index(ms[1]).nil?) %>
+        <%= ms[0] %>
       </td>
-      <%= "</tr>" if count%3==0 %>
+      <%= raw("</tr>") if count%3==0 %>
     <% end %>
-    </table>
+  </table>
   </p>
   <p>
     操作权限<br />
