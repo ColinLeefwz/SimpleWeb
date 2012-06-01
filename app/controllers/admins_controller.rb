@@ -1,10 +1,6 @@
 class AdminsController < ApplicationController
   before_filter :admin_authorize
   layout "admin"
-  def initialize
-    @menu_tag_id = 9
-  end
-
   # GET /admins
   # GET /admins.xml
   def index

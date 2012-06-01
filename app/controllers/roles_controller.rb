@@ -1,10 +1,6 @@
 class RolesController < ApplicationController
   before_filter :admin_authorize
   layout "admin"
-  def initialize
-    @menu_tag_id = 9
-  end
-  
   # GET /roles
   # GET /roles.xml
   def index

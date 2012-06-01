@@ -3,7 +3,7 @@ class McategoriesController < ApplicationController
   layout "admin"
 
   def index
-   @mcategories =  Mcategory.paginate :all, :page => params[:page], :per_page => 20, :conditions => genCondition, :order => genOrder
+   @mcategories =  Mcategory.paginate  :page => params[:page], :per_page => 20, :conditions => genCondition, :order => genOrder
   end
 
   def edit

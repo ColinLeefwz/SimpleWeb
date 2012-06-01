@@ -1,9 +1,6 @@
 class DepartsController < ApplicationController
   before_filter :admin_authorize
   layout "admin"
-  def initialize
-    @menu_tag_id = 9
-  end
   
   # GET /departs
   # GET /departs.xml

@@ -17,6 +17,15 @@ Lianlian::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
+  resources :users
+  resources :rights
+  resources :admins
+  resources :departs
+  resources :roles
+  resources :shops
+  resources :mcities
+  resources :mcategories  
+
   # Sample resource route with options:
   #   resources :products do
   #     member do
@@ -60,6 +69,7 @@ Lianlian::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   #match ':controller(/:action(/:id(.:format)))'
   match ':controller/:action' => ":controller#:action"
+  match ':controller/:action(.:format)'  => ":controller#:action"
 
   
 end
