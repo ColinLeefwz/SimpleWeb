@@ -12,63 +12,22 @@
 
 				
 \author{YXY}
-\title{脸脸网服务器与手机端的开发接口}
+\title{脸脸网服务器与手机端的开发接口API}
 
 \begin{document} 
 
 \maketitle
 \tableofcontents
 
+\newpage
 
-\section{根据经纬度获得附近的商家}
+\textbf{注意事项}：
+\begin{enumerate}
+\item 所有的链接，如果要获得json格式的数据，最好带上".json"的后缀。因为同一个链接以后可能返回多种格式的数据，比如xml/html/json等。
+\item API2（获得附近的商家）的链接有变更，从http://www.dface.cn/mshop/aroundme变更为http://www.dface.cn/aroundme/shops
+\end{enumerate}
 
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|p{12cm}|}
-\hline
-\multicolumn{2}{|c|}{http://www.dface.cn/mshop/aroundme} \\
-\hline\hline
- \  参数  &  说明  \\
-\hline
- lat  &  经度\\
-\hline
- lng  &  纬度\\ 
-\hline
- accuracy  &  精确度\\ 
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/mshop/aroundme.json?lat=30.2829754&lng=120.1337336
-返回值：
-
-[
-{"mshop":
-	{"name":"新紫轩花店",
-	"address":"文一路266号",
-	"linkman":"",
-	"dp_id":5097101,
-	"fullname":"",
-	"lng":120.12763,
-	"kb_id":"",
-	"id":40056,
-	"phone":"",
-	"lat":30.28691}
-}
-]
-
-\end{verbatim}
-\end{figure}
-     
-
-TODO: 是否同时返回商家在线（男女）人数
-
+\newpage
 
 \section{新浪微博登录后的回调页}
 
@@ -112,6 +71,56 @@ TODO: 是否同时返回商家在线（男女）人数
 \end{figure}
 
 
+\section{根据经纬度获得附近的商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/aroundme/shops} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ lat  &  经度\\
+\hline
+ lng  &  纬度\\ 
+\hline
+ accuracy  &  精确度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/aroundme/shops.json?lat=30.2829754&lng=120.1337336
+返回值：
+
+[
+{"mshop":
+	{"name":"新紫轩花店",
+	"address":"文一路266号",
+	"linkman":"",
+	"dp_id":5097101,
+	"fullname":"",
+	"lng":120.12763,
+	"kb_id":"",
+	"id":40056,
+	"phone":"",
+	"lat":30.28691}
+}
+]
+
+\end{verbatim}
+\end{figure}
+     
+
+TODO: 是否同时返回商家在线（男女）人数
+
+
 
 
 \section{根据经纬度获得附近的用户}
@@ -150,6 +159,34 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \end{verbatim}
 \end{figure}
+
+
+\section{进入现场签到}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\multicolumn{2}{|c|}{http://www.dface.cn/checkins} \\
+\hline\hline
+ \  参数  &  说明  \\
+\hline
+ lat  &  经度\\
+\hline
+ lng  &  纬度\\ 
+\hline
+ accuracy  &  精确度\\ 
+\hline
+ mshop\_id  &  现场商家id\\ 
+\hline
+ user\_id  &  签到用户id\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。如果是GET请求，获得的是签到列表。
+
 
 
 \newpage
