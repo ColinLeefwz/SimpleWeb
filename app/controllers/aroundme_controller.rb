@@ -7,8 +7,8 @@ class AroundmeController < ApplicationController
       mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => params[:page], :per_page =>100)
     end
     respond_to do |format|
-      format.json {render :json => mshops.to_json}
-      format.html {render :json => mshops.to_json}
+      format.json {render :json => mshops.map {|u| u.safe_output}.to_json}
+      format.html {render :json => mshops.map {|u| u.safe_output}.to_json}
     end
   end
 
@@ -16,9 +16,7 @@ class AroundmeController < ApplicationController
     ret = []
     logger.info("login user count: #{$login_users.size} ")
     $login_users.each do |id|
-      user = User.find_by_id(id)
-      uh = {:id => user.id, :sina_uid => user.wb_uid, :logo => '/phone2/images/namei2.gif'}
-      ret << uh
+      ret << User.find_by_id(id).safe_output
     end
     render :json => ret.to_json
   end

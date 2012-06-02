@@ -4,8 +4,7 @@ class FollowInfoController < ApplicationController
   def followers
     fs = Follow.find_all_by_follow_id params[:id]
     ret = []
-    fs.each {|f| ret << User.find_by_id(f.user_id)}
-    #TODO: 不发送password
+    fs.each {|f| ret << f.user.safe_output }
     ret << {:count => fs.size}
     render :json => ret.to_json
   end
@@ -13,7 +12,7 @@ class FollowInfoController < ApplicationController
   def friends
     fs = Follow.find_all_by_user_id params[:id]
     ret = []
-    fs.each {|f| ret << User.find_by_id(f.follow_id)}
+    fs.each {|f| ret << f.follow.safe_output }
     ret << {:count => fs.size}
     render :json => ret.to_json
   end

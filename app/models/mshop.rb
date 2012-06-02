@@ -39,5 +39,9 @@ class Mshop < ActiveRecord::Base
   def o_lng
     Offset.pixel2lng(Offset.lng2pixel(lng, 18) - (4 * 256 - 2 * 72), 18)
   end
+  
+  def safe_output
+    self.attributes.slice("id", "name", "address", "lat", "lng" , "phone")
+  end
 
 end
