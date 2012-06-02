@@ -27,7 +27,6 @@
 \item 获得附近的商家的链接有变更，从http://www.dface.cn/mshop/aroundme变更为http://www.dface.cn/aroundme/shops
 \item 除了前两个API，后面的API调用时都需要登录。目前登录信息通过cookie中的“\_session\_id”获得。
 \item 当调用出错时，会在返回的json中包含"error"信息。
-\item 目前一些API响应中会包含一些冗余的信息，比如linkman/password/created\_at等，直接忽略即可。
 \end{enumerate}
 
 \newpage
@@ -61,18 +60,14 @@
 返回值：
 
 [
-{"mshop":
-	{"name":"新紫轩花店",
+	{
+	"name":"新紫轩花店",
 	"address":"文一路266号",
-	"linkman":"",
-	"dp_id":5097101,
-	"fullname":"",
 	"lng":120.12763,
-	"kb_id":"",
 	"id":40056,
 	"phone":"",
-	"lat":30.28691}
-}
+	"lat":30.28691
+	}
 ]
 
 \end{verbatim}
@@ -113,9 +108,12 @@ TODO: 是否同时返回商家在线（男女）人数
 返回值：
 
 [
-{"id":2,
+{"id":1,
 "logo":"/phone2/images/namei2.gif",
-"sina_uid":1743108103}
+"name":"name23",
+"wb_uid":1884834632,
+"gender":0,
+"birthday":null}
 ]
 
 \end{verbatim}
@@ -340,13 +338,14 @@ TODO: 是否同时返回商家在线（男女）人数
 
 返回值：
 
-[{"user":
+[
 {"id":1,
 "name":"name23",
 "wb_uid":1884834632,
-"gender":null,
+"gender":0,
 "birthday":null}
-}]
+,{"count":1}
+]
 
 \end{verbatim}
 \end{figure}
