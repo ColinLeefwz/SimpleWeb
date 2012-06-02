@@ -26,6 +26,7 @@
 \item 所有的链接，如果要获得json格式的数据，最好带上".json"的后缀。因为同一个链接以后可能返回多种格式的数据，比如xml/html/json等。
 \item 获得附近的商家的链接有变更，从http://www.dface.cn/mshop/aroundme变更为http://www.dface.cn/aroundme/shops
 \item 除了前两个API，后面的API调用时都需要登录。目前登录信息通过cookie中的“\_session\_id”获得。
+\item 当调用出错时，会在返回的json中包含"error"信息。
 \end{enumerate}
 
 \newpage

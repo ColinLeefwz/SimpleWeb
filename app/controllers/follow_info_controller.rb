@@ -5,6 +5,8 @@ class FollowInfoController < ApplicationController
     fs = Follow.find_all_by_follow_id params[:id]
     ret = []
     fs.each {|f| ret << User.find_by_id(f.user_id)}
+    //TODO: 不发送password
+    ret << {:count => fs.size}
     render :json => ret.to_json
   end
   
@@ -12,6 +14,7 @@ class FollowInfoController < ApplicationController
     fs = Follow.find_all_by_user_id params[:id]
     ret = []
     fs.each {|f| ret << User.find_by_id(f.follow_id)}
+    ret << {:count => fs.size}
     render :json => ret.to_json
   end
   
