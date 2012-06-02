@@ -27,6 +27,7 @@
 \item 获得附近的商家的链接有变更，从http://www.dface.cn/mshop/aroundme变更为http://www.dface.cn/aroundme/shops
 \item 除了前两个API，后面的API调用时都需要登录。目前登录信息通过cookie中的“\_session\_id”获得。
 \item 当调用出错时，会在返回的json中包含"error"信息。
+\item 目前一些API响应中会包含一些冗余的信息，比如linkman/password/created\_at等，直接忽略即可。
 \end{enumerate}
 
 \newpage
@@ -35,17 +36,17 @@
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/aroundme/shops} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- lat  &  经度\\
+ lat  & 浮点数 & 必须 & 经度\\
 \hline
- lng  &  纬度\\ 
+ lng  &  浮点数 & 必须 & 纬度\\ 
 \hline
- accuracy  &  精确度\\ 
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
 \hline
 \end{tabular}
    \end{center}
@@ -56,7 +57,7 @@
 
 \begin{figure}[H]
 \begin{verbatim}
-访问：/aroundme/shops.json?lat=30.2829754&lng=120.1337336
+访问：/aroundme/shops.json?lat=30.2829754&lng=120.1337336&accuracy=50
 返回值：
 
 [
@@ -87,17 +88,17 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/aroundme/users} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/users} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- lat  &  经度\\
+ lat  & 浮点数 & 必须 & 经度\\
 \hline
- lng  &  纬度\\ 
+ lng  &  浮点数 & 必须 & 纬度\\ 
 \hline
- accuracy  &  精确度\\ 
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
 \hline
 \end{tabular}
    \end{center}
@@ -125,13 +126,13 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/oauth2/sina\_callback} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/oauth2/sina\_callback} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- code  &  新浪返回的code\\
+ code  & 字符串 & 必须 &  新浪返回的code\\
 \hline
 \end{tabular}
    \end{center}
@@ -167,21 +168,21 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/checkins} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/checkins} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- lat  &  经度\\
+ lat  & 浮点数 & 必须 & 经度\\
 \hline
- lng  &  纬度\\ 
+ lng  &  浮点数 & 必须 & 纬度\\ 
 \hline
- accuracy  &  精确度\\ 
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
 \hline
- mshop\_id  &  现场商家id\\ 
+ mshop\_id  & 整数 & 必须 &  现场商家id\\ 
 \hline
- user\_id  &  签到用户id\\ 
+ user\_id  & 整数 & 必须 &  签到用户id\\ 
 \hline
 \end{tabular}
    \end{center}
@@ -195,13 +196,13 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/user\_info/get} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/get} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- id  &  用户id\\
+ id  & 整数 & 必须 &  用户id\\
 \hline
 \end{tabular}
    \end{center}
@@ -232,23 +233,25 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/user\_info/set} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/set} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- name  &  用户的名字\\
+ name  & 字符串 & 选填 &  用户的名字\\
 \hline
- gender  &  用户的性别\\
+ gender  & 数字 & 选填 &  用户的性别，未设置0男1女2\\
 \hline
- birthday  &  用户的生日\\
+ birthday  & 字符串 & 选填 &  用户的生日,格式如2012-06-01\\
 \hline
 \end{tabular}
    \end{center}
 \end{table}
 
 注意：该请求必须是POST请求。
+
+用户初次登录时获取这些信息并提交到服务端。以后更新时可以只更新其中的某个字段。
 
 例子：
 
@@ -276,15 +279,15 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/follows} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/follows} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- user\_id  &  当前登录用户的id\\
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
 \hline
- follow\_id  &  关注用户的id\\
+ follow\_id  & 整数 & 必须 &  关注用户的id\\
 \hline
 \end{tabular}
    \end{center}
@@ -316,13 +319,13 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/follow\_info/followers} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/follow\_info/followers} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- id  &  用户的id\\
+ id  & 整数 & 必须 & 用户的id\\
 \hline
 
 \end{tabular}
@@ -356,13 +359,13 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/follow\_info/friends} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/follow\_info/friends} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- id  &  用户的id\\
+ id  & 整数 & 必须 &  用户的id\\
 \hline
 
 \end{tabular}
