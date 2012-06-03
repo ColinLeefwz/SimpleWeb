@@ -42,7 +42,7 @@ class OfProperty < ActiveRecord::Base
   end
   
   def self.user_integrate_production
-    OfProperty.user_integrate "dface.cn", "lianlian"
+    OfProperty.user_integrate "dface.cn", "lianlian?user=lianlian&password=???"
   end 
   
 end
