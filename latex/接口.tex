@@ -148,7 +148,7 @@ TODO: 是否同时返回商家在线（男女）人数
 {
 "id":1,
 "password":"15c663b8ff620502",
-"sina_uid":"1884834632",
+"wb_uid":"1884834632",
 "expires_in":75693,
 "token":"2.00aaZYDCMcnDPCb4dc439e06i2m_GC",
 "expires_at":1338431259
@@ -156,7 +156,10 @@ TODO: 是否同时返回商家在线（男女）人数
 
 其中，id和password是该用户在脸脸网的id和密码，在首次新浪授权时创建。该id加上"@dface.cn"就是openfire的jid。（目前还没有和jid关联上。）
 
-后面几个字段都是新浪提供的，其中sina_uid是该用户的新浪的uid，token是授权的access_token，其它几个是授权有效期信息。
+后面几个字段都是新浪提供的，其中wb_uid是该用户的新浪微博的uid，token是授权的access_token，其它几个是授权有效期信息。
+
+在首次登录获得用户的id和password以后，可以缓存到本地。以后用户每次登录，返回的id和password是不会改变的，除非服务器端重置密码（比如出现密码泄漏等安全情况）。
+
 
 \end{verbatim}
 \end{figure}
@@ -216,6 +219,7 @@ TODO: 是否同时返回商家在线（男女）人数
 
 {
 "name":null,
+wb_uid:1884834632
 "gender":null,
 "logo":"/phone2/images/namei2.gif",
 "birthday":null,

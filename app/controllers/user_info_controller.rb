@@ -7,7 +7,7 @@ class UserInfoController < ApplicationController
       if user.nil?
         render :json => {:error => "user #{params[:id]} not found"}.to_json
       else
-        render :json => {:id => user.id, :name => user.name, :gender => user.gender, :birthday => user.birthday, :logo => '/phone2/images/namei2.gif'}.to_json
+        render :json => user.safe_output.to_json
       end
     end
   end
@@ -24,7 +24,7 @@ class UserInfoController < ApplicationController
       hash[:gender] = params[:gender] unless params[:gender].nil?
       hash[:birthday] = params[:birthday]  unless params[:birthday].nil?
       if user.update_attributes hash
-        render :json => user.to_json
+        render :json => user.safe_output.to_json
       else
         render :json => {:error => "update user info failed"}.to_json
       end
