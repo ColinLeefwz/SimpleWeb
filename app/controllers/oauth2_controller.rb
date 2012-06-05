@@ -31,6 +31,7 @@ class Oauth2Controller < ApplicationController
       render :json => params.to_json
       return
     end
+    @@client ||= sina_client
     token = @@client.auth_code.get_token(params[:code], :redirect_uri => $sina_callback, :parse => :json )
     data = {:token=> token.token, :expires_in => token.expires_in, :expires_at => token.expires_at, :wb_uid => token.params["uid"] }
     user = User.find_by_wb_uid token.params["uid"]
