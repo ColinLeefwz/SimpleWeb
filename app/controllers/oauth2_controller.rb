@@ -40,7 +40,7 @@ class Oauth2Controller < ApplicationController
       user.wb_uid = token.params["uid"]
       user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
       unless user.save
-        render :json => "user create error.".to_json
+        render :json => {:error => "user create error" }.to_json   
         return
       end
     end

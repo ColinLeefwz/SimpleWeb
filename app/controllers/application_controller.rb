@@ -158,7 +158,7 @@ class ApplicationController < ActionController::Base
   
   def real_ip
     if ENV["RAILS_ENV"] == "production"
-      request.headers["HTTP_X_FORWARDED_FOR"] #action_dispatch.remote_ip
+      request.headers["HTTP_X_FORWARDED_FOR"] || request.headers["action_dispatch.remote_ip"]
     else
       request.ip
     end
