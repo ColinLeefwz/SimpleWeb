@@ -2,6 +2,9 @@ class CheckinsController < ApplicationController
   # GET /checkins
   # GET /checkins.json
   def index
+    #request.headers.keys.each do |key|
+    #      logger.debug "#{key} : #{request.headers[key]}"
+    #end
     @checkins = Checkin.all
 
     respond_to do |format|
