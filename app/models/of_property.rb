@@ -16,6 +16,7 @@ class OfProperty < ActiveRecord::Base
   end
   
   def self.user_integrate(host, db_name)
+    OfProperty.create_or_update  "xmpp.client.roster.active", false
     OfProperty.create_or_update  "admin.authorizedJIDs","1@#{host}"
     OfProperty.create_or_update  "hybridAuthProvider.primaryProvider.className","org.jivesoftware.openfire.auth.JDBCAuthProvider"
     OfProperty.create_or_update  "hybridAuthProvider.secondaryProvider.className","org.jivesoftware.openfire.auth.DefaultAuthProvider"

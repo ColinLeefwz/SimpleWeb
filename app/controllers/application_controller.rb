@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
     alog.pid            = $$.to_i
     alog.url            = request.url[0,255]
     url = url[0,url.length-1] if !url.nil? && url[url.length-1,1]=='/'
-    alog.ip             = request.ip
+    alog.ip             = real_ip
     alog.referer        = request.referer
     alog.time           = ((Time.now.to_f-time1)*1000).to_i
     user_agent_log(alog)
@@ -155,6 +155,14 @@ class ApplicationController < ActionController::Base
     TransactionFilter.new.filter(self, &block)
   end
   #around_filter :transaction_filter
+  
+  def real_ip
+    if ENV["RAILS_ENV"] == "production"
+      request.headers["X-Forwarded-For"]
+    else
+      request.ip
+    end
+  end
 
 
   def has_value(s)
