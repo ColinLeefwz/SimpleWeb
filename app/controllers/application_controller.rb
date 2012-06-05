@@ -33,10 +33,9 @@ class ApplicationController < ActionController::Base
       yield
     rescue  Exception => err
       logger.error "Internal Server Error: #{err.class.name}"
-      err.backtrace[0,10].each {|x| logger.error x}
+      err.backtrace.each {|x| logger.error x}
       err_str = err.to_s
-      err_str = "抱歉,此页面不存在!" if err.class.name == "ActiveRecord::RecordNotFound"
-      render(:file => "500.html.erb", :use_full_path => true, :locals => {:error_msg => err_str})
+      render :json => {:error => err_str }.to_json   
     end
   end
 
