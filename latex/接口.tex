@@ -46,6 +46,10 @@
  lng  &  浮点数 & 必须 & 纬度\\ 
 \hline
  accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+ \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
 \hline
 \end{tabular}
    \end{center}
@@ -77,6 +81,26 @@
 TODO: 是否同时返回商家在线（男女）人数
 
 
+\section{根据IP地址获得附近的商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops\_by\_ip} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ ip  & 字符串 & 可选 & 默认为访问者的IP地址\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值格式和根据经纬度获得附近的商家的返回值格式一样。
+
+最多返回100条数据，同一个IP地址商家应该不多。
+
 
 
 \section{根据经纬度获得附近的用户}
@@ -94,6 +118,10 @@ TODO: 是否同时返回商家在线（男女）人数
  lng  &  浮点数 & 必须 & 纬度\\ 
 \hline
  accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+  \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
 \hline
 \end{tabular}
    \end{center}
@@ -115,6 +143,7 @@ TODO: 是否同时返回商家在线（男女）人数
 "gender":0,
 "birthday":null}
 ]
+
 
 \end{verbatim}
 \end{figure}
@@ -380,9 +409,19 @@ wb_uid:1884834632
 
 \section{Openfire聊天服务器接口}
 
-脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。
 
-商家的id加上"@conference.dface.cn"就是现场聊天室的jid。
+
+
+\begin{enumerate}
+\item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。
+\item 商家的id加上"@conference.dface.cn"就是现场聊天室的jid。
+\item 脸脸中的关注和粉丝关系是单向的，和xmpp中的好友roster关系无关。
+\item 只要用户登录，其xmpp协议中的presence就是在线，没有其它状态。
+\item 脸脸中的隐身也和xmpp中的隐身状态无关。
+\item xmpp中的任意两个用户可以发送消息，不管对方是否隐身，只要对方未设置黑名单即可。如果对方未登录，那么就是离线消息。
+\end{enumerate}
+
+
 
 \newpage
 
