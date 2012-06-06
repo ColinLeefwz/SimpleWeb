@@ -39,48 +39,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  around_filter :access_log if ENV["RAILS_ENV"] == "production"
-
-  def user_agent_log(alog)
-    begin
-      if request.env['HTTP_USER_AGENT']
-        agent              = Agent.new(request.env['HTTP_USER_AGENT'])
-        alog.agent_name    = agent.name.to_s
-        alog.agent_version = agent.version.to_s
-        alog.agent_engine  = agent.engine.to_s
-        alog.agent_os      = agent.os.to_s
-        alog.agent = request.env['HTTP_USER_AGENT'] #if alog.agent_name.downcase=="unknown" || alog.agent_os.nil? || alog.agent_os.downcase=="unknown"
-        alog.parse_unknown_agent if alog.agent_name.downcase=="unknown"
-      end
-    rescue Exception => err
-      puts err
-    end
-  end
-
-  def access_log
-    alog = AccessLog.new
-    alog.admin_id = session[:admin_id]
-    alog.shop_id = session[:shop_id]
-    alog.user_id = session[:user_id]
-    alog.session_id = session[:session_id]
-    alog.session_id = cookies["1dooo"] if session[:session_id].nil?
-    time1 = Time.now.to_f
-    rss_before = `ps -o rss= -p #{$$}`.to_i  if ENV["RAILS_ENV"] == "production"
-    yield
-    if ENV["RAILS_ENV"] == "production"
-      rss_after        = `ps -o rss= -p #{$$}`.to_i
-      alog.mem_consume = rss_after -rss_before
-      alog.mem_now     = rss_after
-    end
-    alog.pid            = $$.to_i
-    alog.url            = request.url[0,255]
-    url = url[0,url.length-1] if !url.nil? && url[url.length-1,1]=='/'
-    alog.ip             = real_ip
-    alog.referer        = request.referer
-    alog.time           = ((Time.now.to_f-time1)*1000).to_i
-    user_agent_log(alog)
-    alog.save
-  end
 
   def memo_original_url
     session[:o_uri] = request.request_uri unless request.request_uri =~ /\/login/
