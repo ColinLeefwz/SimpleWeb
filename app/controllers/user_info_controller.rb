@@ -11,6 +11,15 @@ class UserInfoController < ApplicationController
       end
     end
   end
+  
+  def get_self
+    user = session_user
+    if user.nil?
+      render :json => {:error => "not login"}.to_json
+    else
+      render :json => user.attributes.to_json
+    end
+  end
 
   def set
     if session_user.nil?
@@ -23,8 +32,9 @@ class UserInfoController < ApplicationController
       hash[:name] = params[:name] unless params[:name].nil?
       hash[:gender] = params[:gender] unless params[:gender].nil?
       hash[:birthday] = params[:birthday]  unless params[:birthday].nil?
+      hash[:invisible] = params[:invisible]  unless params[:invisible].nil?
       if user.update_attributes hash
-        render :json => user.safe_output.to_json
+        render :json => user.attributes.to_json
       else
         render :json => {:error => "update user info failed"}.to_json
       end

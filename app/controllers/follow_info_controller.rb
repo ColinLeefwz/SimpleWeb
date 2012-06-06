@@ -19,8 +19,8 @@ class FollowInfoController < ApplicationController
     pcount = pcount.to_i
     fs2 = fs[(page-1)*pcount,pcount]
     fs2.each {|f| users << f.user.safe_output } if fs2
-    ret = [{:count => fs.size}]
-    ret << {:data => users} 
+    ret = {:count => fs.size}
+    ret.merge!( {:data => users})
     render :json => ret.to_json
   end
   

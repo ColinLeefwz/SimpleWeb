@@ -260,6 +260,43 @@ wb_uid:1884834632
 
 
 
+\section{获得当前登录用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/get\_self} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get_self
+返回值：
+
+{
+"name":null,
+wb_uid:1884834632
+"gender":null,
+"logo":"/phone2/images/namei2.gif",
+"birthday":null,
+"invisible":0,
+"password":"c84dad462d5b7282",
+"id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
 \section{设置当前登录用户基本信息}
 
 \begin{table}[H]
@@ -275,6 +312,8 @@ wb_uid:1884834632
  gender  & 数字 & 选填 &  用户的性别，未设置0男1女2\\
 \hline
  birthday  & 字符串 & 选填 &  用户的生日,格式如2012-06-01\\
+ \hline
+ invisible  & 数字 & 选填 &  0：不隐身,1：对陌生人隐身,2：全部隐身\\
 \hline
 \end{tabular}
    \end{center}
