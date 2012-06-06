@@ -12,14 +12,15 @@ class FollowInfoController < ApplicationController
   
   private 
   def output_users(fs)
-    ret = []
+    users = []
     page = params[:page] || 1
     pcount = params[:pcount] || 50
     page = page.to_i
     pcount = pcount.to_i
     fs2 = fs[(page-1)*pcount,pcount]
-    fs2.each {|f| ret << f.user.safe_output } if fs2
-    ret << {:count => fs.size}
+    fs2.each {|f| users << f.user.safe_output } if fs2
+    ret = [{:count => fs.size}]
+    ret << {:data => users} 
     render :json => ret.to_json
   end
   
