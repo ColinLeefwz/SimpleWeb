@@ -30,11 +30,18 @@ class AroundmeController < ApplicationController
     ret = []
     page = params[:page] || 1
     pcount = params[:pcount] || 20
+    page = page.to_i
+    pcount = pcount.to_i
     logger.info("login user count: #{$login_users.size} ")
     $login_users.each do |id|
       ret << User.find_by_id(id).safe_output
     end
-    render :json => ret[(page-1)*pcount,pcount].to_json
+    ret = ret[(page-1)*pcount,pcount]
+    if ret
+      render :json => ret.to_json
+    else
+      render :json => [].to_json
+    end
   end
 
 
