@@ -20,6 +20,8 @@ class AroundmeController < ApplicationController
       else
         shop = Mshop.new
         shop.name = ckin.shop_name
+        shop.lat = ckin.lat
+        shop.lng = ckin.lng
         ret << shop
       end
     end
