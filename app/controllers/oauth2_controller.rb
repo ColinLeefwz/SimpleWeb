@@ -40,11 +40,7 @@ class Oauth2Controller < ApplicationController
       user = User.new
       user.wb_uid = uid
       user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
-      begin 
-        user.save!
-      rescue ActiveRecord::RecordNotUnique  => err
-        logger.error "uid #{uid}: #{User.find_by_wb_uid uid}"
-      end
+      user.save!
     end
     session[:user_id] = user.id
     $login_users << user.id

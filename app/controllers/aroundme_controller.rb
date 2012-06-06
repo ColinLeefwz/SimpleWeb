@@ -1,7 +1,7 @@
 class AroundmeController < ApplicationController
   
   def shops
-    mshop = []
+    mshops = []
     page = params[:page] || 1
     pcount = params[:pcount] || 20
     if params[:lat] && params[:lng]
