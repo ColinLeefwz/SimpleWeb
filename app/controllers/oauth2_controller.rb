@@ -33,15 +33,17 @@ class Oauth2Controller < ApplicationController
     end
     @@client ||= sina_client
     token = @@client.auth_code.get_token(params[:code], :redirect_uri => $sina_callback, :parse => :json )
-    data = {:token=> token.token, :expires_in => token.expires_in, :expires_at => token.expires_at, :wb_uid => token.params["uid"] }
-    user = User.find_by_wb_uid token.params["uid"]
+    uid = token.params["uid"]
+    data = {:token=> token.token, :expires_in => token.expires_in, :expires_at => token.expires_at, :wb_uid => uid }
+    user = User.find_by_wb_uid uid
     if user.nil?
       user = User.new
-      user.wb_uid = token.params["uid"]
+      user.wb_uid = uid
       user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
-      unless user.save
-        render :json => {:error => "user create error" }.to_json   
-        return
+      begin 
+        user.save!
+      rescue ActiveRecord::RecordNotUnique  => err
+        logger.error "uid #{uid}: #{User.find_by_wb_uid uid}"
       end
     end
     session[:user_id] = user.id
