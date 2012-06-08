@@ -1,12 +1,6 @@
-require 'mime/types'
 class UserLogosController < ApplicationController
   before_filter :user_authorize, :except => [:update]
   layout "user"
-
-  def initialize
-    @menu_tag_id = 1
-    @menu_tag2_id = 6
-  end
 
   def index
     @user_logo = UserLogo.find_by_user_id(session_user.id, :order => "id desc")
@@ -24,11 +18,14 @@ class UserLogosController < ApplicationController
   end
 
   def create
+    
     @user_logo = UserLogo.new(params[:user_logo])
-    @user_logo.user_id=params[:user_id]
+    @user_logo.user_id=session[:user_id]
     if @user_logo.save
-      flash[:notice] = 'User Logo was successfully created.'
-      redirect_to(:action => "index", :menu_id => params[:menu_id])
+      user = @user_logo.user
+      render :json => {:id => user.id,:wb_uid => user.wb_uid, :photo_url => @user_logo.avatar.url }
+#      flash[:notice] = 'User Logo was successfully created.'
+#      redirect_to(:action => "index", :menu_id => params[:menu_id])
     else
       render :action => :new
     end
