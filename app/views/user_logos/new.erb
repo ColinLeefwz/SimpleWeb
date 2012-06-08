@@ -3,14 +3,12 @@
   <div class="content-box-header"><h3>上传用户头像</h3></div>
   <div class="content-box-content">	
     <table>
-      <caption>
-        <%= error_messages_for :user_logo %>
-        <% form_for(:user_logo, :url => { :action => "create" } ,:html => { :multipart => true }) do |f| -%>
-        </caption>
+      <%= form_for(:user_logo, :url => { :action => "create" } ,:html => { :multipart => true }) do |f| -%>
+
         <tr class="bgcolor">
           <td class="td_300">
             <label for="uploaded_data">请选择一张图片</label><br />
-            <%= f.file_field :uploaded_data ,:value=>"浏览"%>
+             <%= f.file_field :avatar %>
           </td>
         </tr>
         <tr class="bgcolor">
