@@ -25,7 +25,9 @@ Lianlian::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  resources :users
+  resources :users do
+    resources :user_logos
+  end
   resources :rights
   resources :admins
   resources :departs
@@ -33,7 +35,6 @@ Lianlian::Application.routes.draw do
   resources :shops
   resources :mcities
   resources :mcategories  
-
   # Sample resource route with options:
   #   resources :products do
   #     member do
