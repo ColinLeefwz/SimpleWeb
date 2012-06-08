@@ -1,26 +1,49 @@
 class AroundmeController < ApplicationController
   
   def shops
-    lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)
     mshops = []
-    if lat != 0 && lng != 0
-      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => params[:page], :per_page =>100)
+    page = params[:page] || 1
+    pcount = params[:pcount] || 20
+    if params[:lat] && params[:lng]
+      lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)      
+      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => page, :per_page =>pcount )
     end
-    respond_to do |format|
-      format.json {render :json => mshops.to_json}
-      format.html {render :json => mshops.to_json}
+    render :json => mshops.map {|u| u.safe_output}.to_json
+  end
+  
+  def shops_by_ip
+    ret = []
+    ip = params[:ip] || real_ip
+    Checkin.find_all_by_ip(ip).each do |ckin|
+      if ckin.mshop
+        ret << ckin.mshop
+      else
+        shop = Mshop.new
+        shop.name = ckin.shop_name
+        shop.lat = ckin.lat
+        shop.lng = ckin.lng
+        ret << shop
+      end
     end
+    render :json => ret[0,100].map {|u| u.safe_output}.to_json
   end
 
   def users
     ret = []
+    page = params[:page] || 1
+    pcount = params[:pcount] || 20
+    page = page.to_i
+    pcount = pcount.to_i
     logger.info("login user count: #{$login_users.size} ")
     $login_users.each do |id|
-      user = User.find_by_id(id)
-      uh = {:id => user.id, :sina_uid => user.wb_uid, :logo => '/phone2/images/namei2.gif'}
-      ret << uh
+      ret << User.find_by_id(id).safe_output
     end
-    render :json => ret.to_json
+    ret = ret[(page-1)*pcount,pcount]
+    if ret
+      render :json => ret.to_json
+    else
+      render :json => [].to_json
+    end
   end
 
 

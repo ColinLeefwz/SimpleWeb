@@ -15,6 +15,11 @@ class Mshop < ActiveRecord::Base
   has_many :mshop_mdistricts
   has_many :mdistricts, :through => :mshop_mdistricts
   belongs_to :mcity
+  
+  after_create do |shop|
+    logger.info "Mshop #{shop.id} created"
+    OfRoom.gen_from_shop shop
+  end
 
   def mcategory_join_name
     mcategories.map{|m| m.name}.join(',')
@@ -39,5 +44,19 @@ class Mshop < ActiveRecord::Base
   def o_lng
     Offset.pixel2lng(Offset.lng2pixel(lng, 18) - (4 * 256 - 2 * 72), 18)
   end
+  
+  def safe_output
+    self.attributes.slice("id", "name", "address", "lat", "lng" , "phone")
+  end
+  
+  def after_create
+    puts "in after create"
+    OfRoom.gen_from_shop self
+  end
+  
+  def before_save
+    puts "before save"
+  end
+
 
 end

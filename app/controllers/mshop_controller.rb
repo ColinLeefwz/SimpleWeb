@@ -6,15 +6,8 @@ class MshopController < ApplicationController
 
   # 根据latlng获取周围商家，10 per
   def aroundme
-    lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)
-    mshops = []
-    if lat != 0 && lng != 0
-      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => params[:page], :per_page =>10)
-    end
-    respond_to do |format|
-      format.json {render :json => mshops.to_json}
-      format.html {render :json => mshops.to_json}
-    end
+    render :text => "请访问/aroundme/shops接口"
+    return
   end
   
   def map1
