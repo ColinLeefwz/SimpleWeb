@@ -24,12 +24,81 @@
 \textbf{注意事项}：
 \begin{enumerate}
 \item 所有的链接，如果要获得json格式的数据，最好带上".json"的后缀。因为同一个链接以后可能返回多种格式的数据，比如xml/html/json等。
-\item 获得附近的商家的链接有变更，从http://www.dface.cn/mshop/aroundme变更为http://www.dface.cn/aroundme/shops
-\item 除了前两个API，后面的API调用时都需要登录。目前登录信息通过cookie中的“\_session\_id”获得。
+\item 获得附近的商家分解为三个API，对应三种情况。
+\item 新浪微博登录回调以后的API调用时都需要登录。目前登录信息通过cookie中的“\_session\_id”获得。
 \item 当调用出错时，会在返回的json中包含"error"信息。
 \end{enumerate}
 
 \newpage
+
+
+\section{根据IP地址获得可能的现场商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops\_by\_ip} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ ip  & 字符串 & 可选 & 默认为访问者的IP地址\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+最多返回10条数据，同一个IP地址商家应该不多。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/aroundme/shops_by_ip.json
+返回值：
+
+[
+	{
+	"name":"新紫轩花店",
+	"address":"文一路266号",
+	"lng":120.12763,
+	"id":40056,
+	"phone":"",
+	"lat":30.28691
+	}
+]
+
+\end{verbatim}
+\end{figure}
+
+
+
+\section{根据经纬度获得可能的现场商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值格式和根据IP地址获得可能的现场商家的返回值格式一样。
+
+最多返回10条数据。
+
+
 
 \section{根据经纬度获得附近的商家}
 
@@ -37,7 +106,7 @@
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/mshop/nearby} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -55,51 +124,11 @@
    \end{center}
 \end{table}
 
+用户当前所在的现场只有一个，但是由于定位有误差，所以服务器返回最有可能的几个商家让用户选择；而附近的商家有很多，按距离由近到远排序，且支持查询、分类筛选和分页。
 
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/aroundme/shops.json?lat=30.2829754&lng=120.1337336&accuracy=50
-返回值：
-
-[
-	{
-	"name":"新紫轩花店",
-	"address":"文一路266号",
-	"lng":120.12763,
-	"id":40056,
-	"phone":"",
-	"lat":30.28691
-	}
-]
-
-\end{verbatim}
-\end{figure}
      
 
 TODO: 是否同时返回商家在线（男女）人数
-
-
-\section{根据IP地址获得附近的商家}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops\_by\_ip} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
- ip  & 字符串 & 可选 & 默认为访问者的IP地址\\
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-返回值格式和根据经纬度获得附近的商家的返回值格式一样。
-
-最多返回100条数据，同一个IP地址商家应该不多。
 
 
 
@@ -400,6 +429,8 @@ wb_uid:1884834632
  page  & 整数 & 可选 & 分页，缺省值为1\\ 
  \hline
  pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+    \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
 \hline
 
 \end{tabular}
@@ -449,6 +480,8 @@ wb_uid:1884834632
  page  & 整数 & 可选 & 分页，缺省值为1\\ 
  \hline
  pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+     \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
 \hline
 
 \end{tabular}
