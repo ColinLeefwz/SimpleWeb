@@ -18,16 +18,21 @@ class UserLogosController < ApplicationController
   end
 
   def create
-    
     @user_logo = UserLogo.new(params[:user_logo])
     @user_logo.user_id=session[:user_id]
     if @user_logo.save
       user = @user_logo.user
       render :json => {:id => user.id,:wb_uid => user.wb_uid, :photo_url => @user_logo.avatar.url }
-#      flash[:notice] = 'User Logo was successfully created.'
-#      redirect_to(:action => "index", :menu_id => params[:menu_id])
     else
-      render :action => :new
+      render :json => {:error => "photo upload failed"}
+    end
+  end
+
+
+  private
+  def user_authorize
+    if session_user.nil?
+      render :json => {:error => "not login"}
     end
   end
 end

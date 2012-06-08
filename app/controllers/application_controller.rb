@@ -75,7 +75,6 @@ class ApplicationController < ActionController::Base
   def user_authorize
     if session_user.nil?
       flash[:notice] = "请登录"
-      memo_original_url()
       redirect_to( :controller => "user_login" , :action => "login")
     end
   end
