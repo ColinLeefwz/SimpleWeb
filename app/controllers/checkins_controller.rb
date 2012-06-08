@@ -2,6 +2,9 @@ class CheckinsController < ApplicationController
   # GET /checkins
   # GET /checkins.json
   def index
+    #request.headers.keys.each do |key|
+    #      logger.debug "#{key} : #{request.headers[key]}"
+    #end
     @checkins = Checkin.all
 
     respond_to do |format|
@@ -46,7 +49,7 @@ class CheckinsController < ApplicationController
     @checkin.user_id = params[:user_id]
     @checkin.mshop_id = params[:mshop_id]
     @checkin.shop_name = params[:shop_name]
-    @checkin.ip = request.ip
+    @checkin.ip = real_ip
     @checkin.time = Time.now
 
     respond_to do |format|

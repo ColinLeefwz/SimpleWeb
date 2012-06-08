@@ -24,22 +24,142 @@
 \textbf{注意事项}：
 \begin{enumerate}
 \item 所有的链接，如果要获得json格式的数据，最好带上".json"的后缀。因为同一个链接以后可能返回多种格式的数据，比如xml/html/json等。
-\item API2（获得附近的商家）的链接有变更，从http://www.dface.cn/mshop/aroundme变更为http://www.dface.cn/aroundme/shops
+\item 获得附近的商家的链接有变更，从http://www.dface.cn/mshop/aroundme变更为http://www.dface.cn/aroundme/shops
+\item 除了前两个API，后面的API调用时都需要登录。目前登录信息通过cookie中的“\_session\_id”获得。
+\item 当调用出错时，会在返回的json中包含"error"信息。
 \end{enumerate}
 
 \newpage
+
+\section{根据经纬度获得附近的商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+ \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/aroundme/shops.json?lat=30.2829754&lng=120.1337336&accuracy=50
+返回值：
+
+[
+	{
+	"name":"新紫轩花店",
+	"address":"文一路266号",
+	"lng":120.12763,
+	"id":40056,
+	"phone":"",
+	"lat":30.28691
+	}
+]
+
+\end{verbatim}
+\end{figure}
+     
+
+TODO: 是否同时返回商家在线（男女）人数
+
+
+\section{根据IP地址获得附近的商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops\_by\_ip} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ ip  & 字符串 & 可选 & 默认为访问者的IP地址\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值格式和根据经纬度获得附近的商家的返回值格式一样。
+
+最多返回100条数据，同一个IP地址商家应该不多。
+
+
+
+\section{根据经纬度获得附近的用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/users} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+  \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/aroundme/users.json?lat=30.2829754&lng=120.1337336&accuracy=100
+返回值：
+
+[
+{"id":1,
+"logo":"/phone2/images/namei2.gif",
+"name":"name23",
+"wb_uid":1884834632,
+"gender":0,
+"birthday":null}
+]
+
+
+\end{verbatim}
+\end{figure}
+
 
 \section{新浪微博登录后的回调页}
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/oauth2/sina\_callback} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/oauth2/sina\_callback} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- code  &  新浪返回的code\\
+ code  & 字符串 & 必须 &  新浪返回的code\\
 \hline
 \end{tabular}
    \end{center}
@@ -57,7 +177,7 @@
 {
 "id":1,
 "password":"15c663b8ff620502",
-"sina_uid":"1884834632",
+"wb_uid":"1884834632",
 "expires_in":75693,
 "token":"2.00aaZYDCMcnDPCb4dc439e06i2m_GC",
 "expires_at":1338431259
@@ -65,97 +185,10 @@
 
 其中，id和password是该用户在脸脸网的id和密码，在首次新浪授权时创建。该id加上"@dface.cn"就是openfire的jid。（目前还没有和jid关联上。）
 
-后面几个字段都是新浪提供的，其中sina_uid是该用户的新浪的uid，token是授权的access_token，其它几个是授权有效期信息。
+后面几个字段都是新浪提供的，其中wb_uid是该用户的新浪微博的uid，token是授权的access_token，其它几个是授权有效期信息。
 
-\end{verbatim}
-\end{figure}
+在首次登录获得用户的id和password以后，可以缓存到本地。以后用户每次登录，返回的id和password是不会改变的，除非服务器端重置密码（比如出现密码泄漏等安全情况）。
 
-
-\section{根据经纬度获得附近的商家}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|p{12cm}|}
-\hline
-\multicolumn{2}{|c|}{http://www.dface.cn/aroundme/shops} \\
-\hline\hline
- \  参数  &  说明  \\
-\hline
- lat  &  经度\\
-\hline
- lng  &  纬度\\ 
-\hline
- accuracy  &  精确度\\ 
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/aroundme/shops.json?lat=30.2829754&lng=120.1337336
-返回值：
-
-[
-{"mshop":
-	{"name":"新紫轩花店",
-	"address":"文一路266号",
-	"linkman":"",
-	"dp_id":5097101,
-	"fullname":"",
-	"lng":120.12763,
-	"kb_id":"",
-	"id":40056,
-	"phone":"",
-	"lat":30.28691}
-}
-]
-
-\end{verbatim}
-\end{figure}
-     
-
-TODO: 是否同时返回商家在线（男女）人数
-
-
-
-
-\section{根据经纬度获得附近的用户}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|p{12cm}|}
-\hline
-\multicolumn{2}{|c|}{http://www.dface.cn/aroundme/users} \\
-\hline\hline
- \  参数  &  说明  \\
-\hline
- lat  &  经度\\
-\hline
- lng  &  纬度\\ 
-\hline
- accuracy  &  精确度\\ 
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/aroundme/users.json?lat=30.2829754&lng=120.1337336&accuracy=100
-返回值：
-
-[
-{"id":2,
-"logo":"/phone2/images/namei2.gif",
-"sina_uid":1743108103}
-]
 
 \end{verbatim}
 \end{figure}
@@ -165,27 +198,279 @@ TODO: 是否同时返回商家在线（男女）人数
 
 \begin{table}[H]
    \begin{center}
-\begin{tabular}{|c|p{12cm}|}
+\begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{2}{|c|}{http://www.dface.cn/checkins} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/checkins} \\
 \hline\hline
- \  参数  &  说明  \\
+ \  参数  & 类型 & 必填 &  说明  \\
 \hline
- lat  &  经度\\
+ lat  & 浮点数 & 必须 & 经度\\
 \hline
- lng  &  纬度\\ 
+ lng  &  浮点数 & 必须 & 纬度\\ 
 \hline
- accuracy  &  精确度\\ 
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
 \hline
- mshop\_id  &  现场商家id\\ 
+ mshop\_id  & 整数 & 必须 &  现场商家id\\ 
 \hline
- user\_id  &  签到用户id\\ 
+ user\_id  & 整数 & 必须 &  签到用户id\\ 
 \hline
 \end{tabular}
    \end{center}
 \end{table}
 
 注意：该请求必须是POST请求。如果是GET请求，获得的是签到列表。
+
+
+
+\section{获得用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/get} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get?id=1
+返回值：
+
+{
+"name":null,
+wb_uid:1884834632
+"gender":null,
+"logo":"/phone2/images/namei2.gif",
+"birthday":null,
+"id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\section{获得当前登录用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/get\_self} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get_self
+返回值：
+
+{
+"name":null,
+wb_uid:1884834632
+"gender":null,
+"logo":"/phone2/images/namei2.gif",
+"birthday":null,
+"invisible":0,
+"password":"c84dad462d5b7282",
+"id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\section{设置当前登录用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/set} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ name  & 字符串 & 选填 &  用户的名字\\
+\hline
+ gender  & 数字 & 选填 &  用户的性别，未设置0男1女2\\
+\hline
+ birthday  & 字符串 & 选填 &  用户的生日,格式如2012-06-01\\
+ \hline
+ invisible  & 数字 & 选填 &  0：不隐身,1：对陌生人隐身,2：全部隐身\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+用户初次登录时获取这些信息并提交到服务端。以后更新时可以只更新其中的某个字段。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=ead9ac4f6291c55bb467ad4138eca2ed" 
+        -F "name=newname" http://www.dface.cn/user_info/set
+
+返回值：
+
+{
+"name":newname,
+"gender":null,
+"logo":"/phone2/images/namei2.gif",
+"birthday":null,
+"id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\section{添加我关注的人}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/follows} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ follow\_id  & 整数 & 必须 &  关注用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&follow_id=1" http://www.dface.cn/follows
+
+返回值：
+
+{
+"id":1,
+"user_id":2,
+"follow_id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\section{粉丝列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/follow\_info/followers} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/follow_info/followers?id=2
+
+返回值：
+
+[
+{"count":1}
+{"data":
+{"id":1,
+"name":"name23",
+"wb_uid":1884834632,
+"gender":0,
+"birthday":null}
+}
+]
+
+其中count是粉丝的总数。
+
+\end{verbatim}
+\end{figure}
+
+
+
+
+
+\section{关注列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/follow\_info/friends} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的内容格式同粉丝列表一样
+
+
+\section{Openfire聊天服务器接口}
+
+
+
+
+\begin{enumerate}
+\item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。
+\item 商家的id加上"@conference.dface.cn"就是现场聊天室的jid。
+\item 脸脸中的关注和粉丝关系是单向的，和xmpp中的好友roster关系无关。
+\item 只要用户登录，其xmpp协议中的presence就是在线，没有其它状态。
+\item 脸脸中的隐身也和xmpp中的隐身状态无关。
+\item xmpp中的任意两个用户可以发送消息，不管对方是否隐身，只要对方未设置黑名单即可。如果对方未登录，那么就是离线消息。
+\end{enumerate}
 
 
 

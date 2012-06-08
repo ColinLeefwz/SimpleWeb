@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+
+
   def self.auth(name,password)
     admin = self.find_by_name(name)
     if admin
@@ -8,8 +10,10 @@ class User < ActiveRecord::Base
     end
     admin
   end
-
-  def pass2
-    password[0,1]+"***"+password[password.length-1,1]
+  
+  def safe_output
+    self.attributes.slice("id", "name", "wb_uid", "gender", "birthday").merge!( {:logo => '/phone2/images/namei2.gif'} )
   end
+
+
 end

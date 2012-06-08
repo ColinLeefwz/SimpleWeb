@@ -1,8 +1,14 @@
 Lianlian::Application.routes.draw do
+  resources :follows
+  get "follows/followers"
+  get "follows/friends"
+
+  get "user_info/get"
+  get "user_info/set"
+
   resources :checkins
 
   get "aroundme/shops"
-
   get "aroundme/users"
 
   # The priority is based upon order of creation:
