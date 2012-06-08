@@ -2,11 +2,9 @@ class AroundmeController < ApplicationController
   
   def shops
     mshops = []
-    page = params[:page] || 1
-    pcount = params[:pcount] || 20
     if params[:lat] && params[:lng]
       lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)      
-      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => page, :per_page =>pcount )
+      mshops = Mshop.where(genCondition(lat, lng)).order(genOrder(lat, lng)).limit(10)
     end
     render :json => mshops.map {|u| u.safe_output}.to_json
   end
@@ -25,7 +23,7 @@ class AroundmeController < ApplicationController
         ret << shop
       end
     end
-    render :json => ret[0,100].map {|u| u.safe_output}.to_json
+    render :json => ret[0,10].map {|u| u.safe_output}.to_json
   end
 
   def users

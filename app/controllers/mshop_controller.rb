@@ -3,12 +3,19 @@ class MshopController < ApplicationController
   layout nil
   def index
   end
-
-  # 根据latlng获取周围商家，10 per
-  def aroundme
-    render :text => "请访问/aroundme/shops接口"
-    return
+  
+  def nearby
+    mshops = []
+    page = params[:page] || 1
+    pcount = params[:pcount] || 20
+    if params[:lat] && params[:lng]
+      lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)      
+      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => page, :per_page =>pcount )
+    end
+    render :json => mshops.map {|u| u.safe_output}.to_json
   end
+  
+  
   
   def map1
     @mshop = Mshop.find_by_dp_id(params[:id])
@@ -34,7 +41,7 @@ class MshopController < ApplicationController
 
   private
   def genCondition(lat, lng)
-    return ["mshops.lat < ? and mshops.lat > ? and mshops.lng < ? and mshops.lng > ?", lat+0.005, lat-0.005, lng+0.005, lng-0.005]
+    return ["mshops.lat < ? and mshops.lat > ? and mshops.lng < ? and mshops.lng > ?", lat+0.1, lat-0.1, lng+0.1, lng-0.1]
   end
 
   def genOrder(lat, lng)
