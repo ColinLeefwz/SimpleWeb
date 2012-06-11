@@ -41,6 +41,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                     var lat_cur=null, lng_cur=null;
                     
                     function aroundme(){	
+                        get_shops_around_me("http://www.dface.cn/aroundme/shops_by_ip");
                         if(lat_cur==null){
                             alert("无法定位当前位置，请稍后再摇！");
                             return;
@@ -48,7 +49,6 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                         var url2="http://www.dface.cn/aroundme/shops?lat="+lat_cur+"&lng="+lng_cur;
                         //alert(url2);
                         console.log(url2);
-                        get_shops_around_me("http://www.dface.cn/aroundme/shops_by_ip");
                         get_shops_around_me(url2);
                     }
                     
