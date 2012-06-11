@@ -20,7 +20,11 @@ class UserInfoController < ApplicationController
       if user.nil?
         render :json => {:error => "user #{params[:id]} not found"}.to_json
       else
-        redirect_to user.latest_logo.avatar.url
+        if params[:size]==0
+          send_file user.latest_logo.avatar.path, :disposition => 'inline'
+        else
+          send_file user.latest_logo.avatar.path(:thumb), :disposition => 'inline'
+        end
       end
     end
   end
