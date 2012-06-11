@@ -7,7 +7,11 @@ class User < ActiveRecord::Base
   
   def latest_logo_hash
     logo = latest_logo
-    {:logo => logo.avatar.url, :logo_thumb => logo.avatar.url(:thumb) }
+    if logo
+      {:logo => logo.avatar.url, :logo_thumb => logo.avatar.url(:thumb) }
+    else
+      {:logo => "", :logo_thumb => ""}
+    end
   end
   
   def safe_output
