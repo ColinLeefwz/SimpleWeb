@@ -17,7 +17,7 @@ class UserInfoController < ApplicationController
     if user.nil?
       render :json => {:error => "not login"}.to_json
     else
-      render :json => user.attributes.to_json
+      render :json => user.attributes.merge(user.latest_logo_hash).to_json
     end
   end
 
