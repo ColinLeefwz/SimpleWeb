@@ -22,7 +22,7 @@ class UserLogosController < ApplicationController
     @user_logo.user_id=session[:user_id]
     if @user_logo.save
       user = @user_logo.user
-      render :json => {:id => user.id,:wb_uid => user.wb_uid, :photo_url => @user_logo.avatar.url }
+      render :json => user.safe_output.to_json
     else
       render :json => {:error => "photo upload failed"}
     end
