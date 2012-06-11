@@ -12,6 +12,19 @@ class UserInfoController < ApplicationController
     end
   end
   
+  def logo
+    if session_user.nil?
+      render :json => {:error => "not login"}.to_json
+    else
+      user = User.find_by_id params[:id]
+      if user.nil?
+        render :json => {:error => "user #{params[:id]} not found"}.to_json
+      else
+        redirect_to user.latest_logo.avatar.url
+      end
+    end
+  end
+  
   def get_self
     user = session_user
     if user.nil?
