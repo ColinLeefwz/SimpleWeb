@@ -22,6 +22,7 @@ class UserInfoController < ApplicationController
       else
         if params[:size].to_i==0
           redirect_to user.latest_logo.avatar.url
+          #采用send_file输出响应的长度为0？
         else
           redirect_to user.latest_logo.avatar.url(:thumb)
         end
