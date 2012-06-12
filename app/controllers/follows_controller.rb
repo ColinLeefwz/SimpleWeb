@@ -10,32 +10,6 @@ class FollowsController < ApplicationController
     end
   end
 
-  # GET /follows/1
-  # GET /follows/1.json
-  def show
-    @follow = Follow.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @follow }
-    end
-  end
-
-  # GET /follows/new
-  # GET /follows/new.json
-  def new
-    @follow = Follow.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @follow }
-    end
-  end
-
-  # GET /follows/1/edit
-  def edit
-    @follow = Follow.find(params[:id])
-  end
 
   # POST /follows
   # POST /follows.json
@@ -54,22 +28,19 @@ class FollowsController < ApplicationController
     end
   end
 
-
-  # PUT /follows/1
-  # PUT /follows/1.json
-  def update
-    @follow = Follow.find(params[:id])
-
-    respond_to do |format|
-      if @follow.update_attributes(params[:follow])
-        format.html { redirect_to @follow, :notice => 'Follow was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @follow.errors, :status => :unprocessable_entity }
-      end
+  def delete
+    if params[:user_id].to_i != session[:user_id]
+      render :json => {:error => "user #{params[:user_id]} != session user #{session[:user_id]}"}.to_json
+      return
+    end
+    follow = Follow.find_by_user_id_and_follow_id(session[:user_id],params[:follow_id])
+    if follow.destroy
+      render :json => {:deleted => params[:follow_id]}.to_json
+    else
+      render :json => {:error => "follow #{params[:id]} delete failed"}.to_json
     end
   end
+
 
   # DELETE /follows/1
   # DELETE /follows/1.json
