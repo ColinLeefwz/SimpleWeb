@@ -476,6 +476,46 @@ http://www.dface.cn/user_logos
 
 
 
+\section{删除我的关注的人}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/follows/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ follow\_id  & 整数 & 必须 &  关注用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&follow_id=3" http://www.dface.cn/follows/delete
+
+返回值：
+
+{
+"deleted":3
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+
+
 \section{粉丝列表}
 
 \begin{table}[H]
