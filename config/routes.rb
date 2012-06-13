@@ -11,6 +11,8 @@ Lianlian::Application.routes.draw do
   get "aroundme/shops"
   get "aroundme/users"
 
+  post "shops/manual"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
