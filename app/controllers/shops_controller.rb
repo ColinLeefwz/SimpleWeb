@@ -11,6 +11,12 @@ class ShopsController < ApplicationController
     end
   end
 
+  def manual
+    Mshop.find_all_by_id(params[:manuals]).each{|m| m.update_attribute(:manual, true)}
+    Mshop.find_all_by_id(params[:all] - params[:manuals]).each{|m| m.update_attribute(:manual, false)}
+    redirect_to request.env["HTTP_REFERER"]
+  end
+
   def new
     @shop = Mshop.new
   end
@@ -31,7 +37,7 @@ class ShopsController < ApplicationController
   def update
     @shop = Mshop.find_by_id(params[:id])
     if @shop.update_attributes(params[:shop])
-       redirect_to :action => :show, :id => @shop
+      redirect_to :action => :show, :id => @shop
     else
       render :action => :edit
     end
@@ -43,6 +49,10 @@ class ShopsController < ApplicationController
 
   def destory
     
+  end
+
+  def check
+     @shops = Mshop.paginate :page => params[:page], :per_page => 20, :conditions => genCondition, :order => genOrder
   end
 
 
@@ -89,6 +99,6 @@ class ShopsController < ApplicationController
   end
 
   def genOrder
-    
+    ["id DESC", "id ASC", "comment_count DESC", "comment_count ASC"][params[:order_by].to_i]
   end
 end

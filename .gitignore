@@ -9,6 +9,7 @@ db/schema.rb
 *.log
 *.bak
 *.swp
+*.lock
 DFace/DerivedData/*
 DFace/DFace.xcodeproj/xcuserdata/*
 DFace/DFace.xcodeproj/project.xcworkspace/xcuserdata/*
@@ -26,4 +27,5 @@ public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/img.gif
 
 nbproject/*
 tmp/*
+public/system/*
 
