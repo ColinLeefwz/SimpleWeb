@@ -10,7 +10,7 @@ class MshopController < ApplicationController
     pcount = params[:pcount] || 20
     if params[:lat] && params[:lng]
       lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)      
-      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :page => page, :per_page =>pcount )
+      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :include => :mcategories, :page => page, :per_page =>pcount )
     end
     render :json => mshops.map {|u| u.safe_output}.to_json
   end
@@ -41,7 +41,23 @@ class MshopController < ApplicationController
 
   private
   def genCondition(lat, lng)
-    return ["mshops.lat < ? and mshops.lat > ? and mshops.lng < ? and mshops.lng > ?", lat+0.1, lat-0.1, lng+0.1, lng-0.1]
+    sql = "mshops.lat < ? and mshops.lat > ? and mshops.lng < ? and mshops.lng > ?"
+    a = [lat+0.1, lat-0.1, lng+0.1, lng-0.1]
+
+
+    unless params[:name].blank?
+      sql += " and mshops.name like ? "
+      a << "%#{params[:name]}%"
+    end
+
+    unless params[:mcategory_id].blank?
+      sql += " and mcategories.id = ?"
+      a << params[:mcategory_id]
+    end
+    
+    return a.unshift(sql)
+
+    #    return ["mshops.lat < ? and mshops.lat > ? and mshops.lng < ? and mshops.lng > ?", lat+0.1, lat-0.1, lng+0.1, lng-0.1]
   end
 
   def genOrder(lat, lng)
