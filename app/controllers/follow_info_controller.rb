@@ -2,11 +2,11 @@ class FollowInfoController < ApplicationController
   
   
   def followers
-    output_users Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :follow)
+    output_users Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :user)
   end
   
   def friends
-    output_users Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :user)
+    output_users Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :follow)
   end
   
   private
