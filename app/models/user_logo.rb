@@ -1,5 +1,7 @@
 class UserLogo < ActiveRecord::Base
   belongs_to :user
+  validates_presence_of :user_id
+  
   has_attached_file :avatar, :styles => { :thumb => "75x75>", :thumb2 => "150x150>"  }
 
   validates_attachment_presence :avatar
