@@ -21,10 +21,14 @@ class UserInfoController < ApplicationController
         render :json => {:error => "user #{params[:id]} not found"}.to_json
       else
         if params[:size].to_i==0
-          redirect_to user.latest_logo.avatar.url
-          #采用send_file输出响应的长度为0？
+          response.headers['IMG_URL'] = user.latest_logo.avatar.url
+          send_file user.latest_logo.avatar.path
+        elsif params[:size].to_i==2
+          response.headers['IMG_URL'] = user.latest_logo.avatar.url(:thumb2)
+          send_file user.latest_logo.avatar.path(:thumb2)
         else
-          redirect_to user.latest_logo.avatar.url(:thumb)
+          response.headers['IMG_URL'] = user.latest_logo.avatar.url(:thumb)
+          send_file user.latest_logo.avatar.path(:thumb)
         end
       end
     end
