@@ -1,5 +1,7 @@
 class Right < ActiveRecord::Base
-  
+   validates_presence_of :tables, :operate
+
+
   def admin
     Admin.find_by_id(admin_id)
   end
