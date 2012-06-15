@@ -301,12 +301,18 @@ wb_uid:1884834632
 \hline
  id  & 整数 & 必须 &  用户id\\
 \hline
- size  & 整数 & 可选 &  目前0代表原图，1代表thumb缩略图。默认为获得缩略图。以后可能有多种大小的缩略图\\ 
+ size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为75*75；2代表thumb2缩略图，大小为150*150。默认为1。\\ 
 \hline
 \end{tabular}
    \end{center}
 \end{table}
 
+
+输出的Response Header中包含“Img\_url”头，这个头就是查看用户信息时显示的用户头像的路径。
+
+例如：“Img\_url:/system/avatars/1/thumb2/1.png?1339649979”
+
+Response Body中包含头像的二进制信息。
 
 
 \section{获得当前登录用户基本信息}
@@ -601,6 +607,7 @@ http://www.dface.cn/user_logos
 \begin{enumerate}
 \item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。
 \item 商家的id加上"@conference.dface.cn"就是现场聊天室的jid。
+\item 脸脸的用户名就是openfire的用户名，且也就是聊天时的用户名。Xmpp协议允许用户在加入聊天室时取一个名字，脸脸的聊天室应该忽略该名字。
 \item 脸脸中的关注和粉丝关系是单向的，和xmpp中的好友roster关系无关。
 \item 只要用户登录，其xmpp协议中的presence就是在线，没有其它状态。
 \item 脸脸中的隐身也和xmpp中的隐身状态无关。

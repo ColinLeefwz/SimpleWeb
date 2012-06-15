@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
   def latest_logo_hash
     logo = latest_logo
     if logo
-      {:logo => logo.avatar.url, :logo_thumb => logo.avatar.url(:thumb) }
+      {:logo => logo.avatar.url, :logo_thumb => logo.avatar.url(:thumb), :logo_thumb2 => logo.avatar.url(:thumb2)  }
     else
-      {:logo => "", :logo_thumb => ""}
+      {:logo => "", :logo_thumb => "", :logo_thumb2 => ""}
     end
   end
   
