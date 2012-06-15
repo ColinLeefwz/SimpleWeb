@@ -1,7 +1,9 @@
 class Admin < ActiveRecord::Base
   has_and_belongs_to_many :roles
   belongs_to :depart
-  
+
+  validates_length_of :name, :maximum => 32
+  validates_length_of :password, :within => 3..32
   validates_presence_of :name, :password
   validates_uniqueness_of :name
   validates_confirmation_of :password
@@ -17,7 +19,7 @@ class Admin < ActiveRecord::Base
   end
 
   def pass2
-	password[0,1]+"***"+password[password.length-1,1]
+    password[0,1]+"***"+password[password.length-1,1]
   end
 
 end
