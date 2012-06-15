@@ -1,5 +1,13 @@
 class User < ActiveRecord::Base
   has_many :user_logos
+  validates_presence_of :wb_uid
+  validates_uniqueness_of :wb_uid
+
+  validates_length_of :name, :maximum => 64
+  validates_length_of :wb_uid, :maximum => 64
+  validates_length_of :birthday, :maximum => 32
+  validates_length_of :password, :maximum => 32
+  
   
   def latest_logo
     UserLogo.where("user_id=#{self.id}").order("id asc").limit(1)[0]
