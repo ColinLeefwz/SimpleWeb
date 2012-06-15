@@ -119,6 +119,10 @@
  page  & 整数 & 可选 & 分页，缺省值为1\\ 
  \hline
  pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+  \hline
+ name  & 字符串 & 可选 & 商家的名称\\ 
+  \hline
+ type  & 整数 & 可选 & 1酒吧 • 活动2咖啡 • 茶馆3餐饮 • 酒店4运动 • 休闲5购物 • 广场\\  
 \hline
 \end{tabular}
    \end{center}
@@ -538,6 +542,8 @@ http://www.dface.cn/user_logos
  \hline
  pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
     \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+    \hline    
  hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
 \hline
 
@@ -564,7 +570,7 @@ http://www.dface.cn/user_logos
 }
 ]
 
-其中count是粉丝的总数。
+其中count是符合条件的粉丝的总数。
 
 \end{verbatim}
 \end{figure}
@@ -588,6 +594,8 @@ http://www.dface.cn/user_logos
  page  & 整数 & 可选 & 分页，缺省值为1\\ 
  \hline
  pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+     \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
      \hline
  hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
 \hline
