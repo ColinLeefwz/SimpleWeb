@@ -11,7 +11,7 @@ class RefinAllTables < ActiveRecord::Migration
 
     change_column :roles, :name, :string, :limit => 32, :null => false
     
-    change_column :users, :wb_uid, :string, :limit => 64, :null => false
+    change_column :users, :wb_uid, :string, :limit => 64
     change_column :users, :name, :string, :limit => 64
     change_column :users, :birthday, :string, :limit => 32
     #    add_index :users,:wb_uid # 已经存在
