@@ -25,6 +25,22 @@ class User < ActiveRecord::Base
   def safe_output
     self.attributes.slice("id", "name", "wb_uid", "gender", "birthday", "logo").merge!( latest_logo_hash)
   end
+  
+  def safe_output_with_relation( user_id )
+    if user_id.nil?
+      safe_output
+    else
+      safe_output.merge!( {:friend => follower?(user_id), :follower => friend?(user_id)} )
+    end
+  end
+  
+  def friend?(user_id)
+    Follow.find_by_user_id_and_follow_id(self.id, user_id) !=nil
+  end
+  
+  def follower?(user_id)
+    Follow.find_by_user_id_and_follow_id(user_id,self.id) !=nil
+  end
 
 
 end
