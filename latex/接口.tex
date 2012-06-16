@@ -174,8 +174,14 @@ TODO: 是否同时返回商家在线（男女）人数
 "name":"name23",
 "wb_uid":1884834632,
 "gender":0,
+"friend":true,
+"follower":false,
 "birthday":null}
 ]
+
+如果用户登录后访问该API，那么返回的属性中包括"friend"和"follower"。
+
+"friend"表示该用户是否是当前用户的朋友；"follower"代表该用户是否关注了当前用户。
 
 
 \end{verbatim}
@@ -286,6 +292,8 @@ wb_uid:1884834632
 "logo":"/system/avatars/1/original/clojure.png?1339398140",
 "logo_thumb":"/system/avatars/1/thumb/clojure.png?1339398140"
 "birthday":null,
+"friend":true,
+"follower":false,
 "id":1
 }
 

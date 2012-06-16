@@ -7,7 +7,7 @@ class UserInfoController < ApplicationController
       if user.nil?
         render :json => {:error => "user #{params[:id]} not found"}.to_json
       else
-        render :json => user.safe_output.to_json
+        render :json => user.safe_output_with_relation(session[:user_id]).to_json
       end
     end
   end
