@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   has_many :user_logos
-  validates_presence_of :wb_uid
   validates_uniqueness_of :wb_uid
 
   validates_length_of :name, :maximum => 64
