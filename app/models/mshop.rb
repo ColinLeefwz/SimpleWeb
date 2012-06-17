@@ -70,7 +70,7 @@ class Mshop < ActiveRecord::Base
   end
   
   def users
-    User.where("name is not null").order("id asc").limit(50)
+    User.where("name is not null and id<60").order("id asc")
   end
 
 
