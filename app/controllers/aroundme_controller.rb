@@ -6,7 +6,7 @@ class AroundmeController < ApplicationController
       lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)      
       mshops = Mshop.where(genCondition(lat, lng)).order(genOrder(lat, lng)).limit(10)
     end
-    render :json => mshops.map {|u| u.safe_output}.to_json
+    render :json => mshops.map {|s| s.safe_output_with_users}.to_json
   end
   
   def shops_by_ip
@@ -23,7 +23,7 @@ class AroundmeController < ApplicationController
         ret << shop
       end
     end
-    render :json => ret[0,10].map {|u| u.safe_output}.to_json
+    render :json => ret[0,10].map {|s| s.safe_output_with_users}.to_json
   end
 
   def users
