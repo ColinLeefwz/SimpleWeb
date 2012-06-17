@@ -15,6 +15,10 @@ class MshopController < ApplicationController
     render :json => mshops.map {|u| u.safe_output}.to_json
   end
   
+  def users
+    shop = Mshop.find(params[:id])
+    render :json => shop.users.map {|u| u.safe_output_with_relation(session[:user_id])}.to_json
+  end
   
   
   def map1

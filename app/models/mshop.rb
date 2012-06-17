@@ -64,9 +64,9 @@ class Mshop < ActiveRecord::Base
   end
   
   def users_count
-    us = users
-    female = us.delete_if {|x| x.gender!=2 } 
-    [us.size,us.size-female.size,female.size]
+    us = users.size
+    female = users.where("gender=2").size
+    [us,us-female,female]
   end
   
   def users
