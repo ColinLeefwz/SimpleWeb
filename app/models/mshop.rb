@@ -49,6 +49,11 @@ class Mshop < ActiveRecord::Base
     self.attributes.slice("id", "name", "address", "lat", "lng" , "phone")
   end
   
+  def safe_output_with_users
+    a,b,c = users_count
+    safe_output.merge!( {"user"=>a, "male"=>b, "female"=>c} )
+  end
+  
   def after_create
     puts "in after create"
     OfRoom.gen_from_shop self
@@ -56,6 +61,16 @@ class Mshop < ActiveRecord::Base
   
   def before_save
     puts "before save"
+  end
+  
+  def users_count
+    us = users
+    female = us.delete_if {|x| x.gender!=2 } 
+    [us.size,us.size-female.size,female.size]
+  end
+  
+  def users
+    User.where("name is not null").order("id asc").limit(50)
   end
 
 
