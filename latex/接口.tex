@@ -191,6 +191,34 @@
 \end{figure}
 
 
+
+\section{根据商家ID获得当前在该商家的所有用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/mshop/users} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值格式和“根据经纬度获得附近的用户”一致。
+
+在商家的用户的统计数据根据签到来统计，而签到则是当用户进入商家聊天室时自动后台发送。当用户进入下一个商家时，自动判定为离开上一个商家。如果用户没有退出，那么默认12小时后用户离开商家。
+
+在商家的用户的集合要保证大于在该商家聊天室的用户的集合。
+
+当前的商家用户数据则完全是基于方便测试的目的构造的。
+
+
+
+
 \section{新浪微博登录后的回调页}
 
 \begin{table}[H]
