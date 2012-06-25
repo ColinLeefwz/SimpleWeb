@@ -2,11 +2,11 @@ class FollowInfoController < ApplicationController
   
   
   def followers
-    output_users Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :user)
+    output_users Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :user).map {|x| x.user}
   end
   
   def friends
-    output_users Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :follow)
+    output_users Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :follow).map {|x| x.follow}
   end
   
   private
@@ -40,7 +40,7 @@ class FollowInfoController < ApplicationController
     pcount = pcount.to_i
     
     fs2 = fs[(page-1)*pcount,pcount]
-    fs2.each {|f| users << f.user.safe_output } if fs2
+    fs2.each {|f| users << f.safe_output_with_relation(params[:id].to_i) } if fs2
     if params[:hash]
       ret = {:count => fs.size}
       ret.merge!( {:data => users})
