@@ -53,9 +53,19 @@ module Spider
             if cur_li.search("a")[0] and cur_li.search("a")[0].inner_text.index(/«/).nil?
               category = Mcategory.find_by_id(cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('g')[-1].to_i)
               category = Mcategory.new if category.nil?
+
+              # 新的抓取 开始
+              category_url = cur_li.search("a")[0].get_attribute('href')
+              sp_url = category_url.split('/')[-2,2]
+              category.nest_id = sp_url.first
+              category.url= "http://www.dianping.com" + category_url
+              # 新的抓取结束
+              
+
+
               category.id = cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('g')[-1].to_i
               category.name = cur_li.search("a")[0].inner_text.strip.split(/\302\240/)[0].to_s
-              category.nest_id = cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('g').length >= 3 ? cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('g')[-2].to_i : nest_id
+              #category.nest_id = cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('g').length >= 3 ? cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('g')[-2].to_i : nest_id
               category.save!
               mcity_mcategory = category.mcity_mcategory(mcity_id)
               mcity_mcategory = McityMcategory.new if mcity_mcategory.nil?
@@ -486,6 +496,41 @@ module Spider
     $LOG.info "#{Time.now}, spider dp is completed!"
     exit
   end
+
+
+
+
+  def self.categroies_capch(city_id)
+    return nil unless city = Mcity.find_by_id(city_id)
+    categroy_url =  "http://www.dianping.com/search/category/#{city.id}/0"
+    doc = Hpricot(open(categroy_url,@Request_Headers))
+    categroy_doc = doc.search("div[@class='asideContainer'] ul[@class='navBlock'] ul[@class='bigCurrent']").first
+    categroy_doc.search('ul li').each do |li|
+      category_capch(li.search("a").first.get_attribute('href'),nil)
+    end
+  end
+
+  def self.category_capch(url,nest_id)
+    url = "http://www.dianping.com" + url
+    doc = Hpricot(open(url,@Request_Headers))
+    $LOG.info "open url #{url}"
+    ul = doc.search("div[@class='asideContainer'] ul[@class='current']")
+    sp_url = url.split("/")[-2,2]
+    if cate= Mcategory.find_by_id(sp_url.last.gsub('g','').to_i)
+      cate.nest_id = nest_id || 0
+      cate.kb_url = url
+      cate.save!
+      $LOG.info "id:#{cate.id}被更新"
+    end
+    
+    sub_categroy = ul.search("li/ul")
+    unless sub_categroy.empty?
+      sub_categroy.search("li").each{|li| category_capch(li.search("a").first.get_attribute('href'),cate.id)}
+    end
+  end
+
+
+
 end
 
 # 文件被执行时运行 def self.dp(id=0)
@@ -502,6 +547,12 @@ if __FILE__ == $0 or $0 == 'script/runner'
           shop.lng = latlng[1]
           shop.save!
         end
+      end
+    elsif ARGV[0].to_s == "cate"
+      # rails r app/spider.rb cate 1 2 3
+      ARGV.shift
+      ARGV.each do |a|
+        Spider::categroies_capch(a.to_i)
       end
     else
       $LOG.info ARGV
