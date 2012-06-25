@@ -55,8 +55,8 @@ class MshopController < ApplicationController
     end
 
     unless params[:mcategory_id].blank?
-      sql += " and mcategories.id = ?"
-      a << params[:mcategory_id]
+      sql += " and mcategories.id in (?)"
+      a << Mcategory.unfold(params[:mcategory_id].to_i)
     end
     
     return a.unshift(sql)
