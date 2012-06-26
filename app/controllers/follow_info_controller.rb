@@ -3,12 +3,14 @@ class FollowInfoController < ApplicationController
   
   def followers
     @followers = Follow.paginate(:conditions => genCondition(params[:id].to_i), :include => :user,:page => params[:page], :per_page => 20)
+    @all_length = Follow.count(:all,:conditions => genCondition(params[:id].to_i), :include => :user)
     @users = @followers.map {|x| x.user}
     puts_users(@users)
   end
   
   def friends
     @friends = Follow.paginate(:page => params[:page], :per_page => 20, :conditions => genCondition(params[:id].to_i), :include => :follow)
+    @all_length = Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :follow).length
     @users = @friends.map {|x| x.follow}
     puts_users(@users)
   end
@@ -32,6 +34,7 @@ class FollowInfoController < ApplicationController
 
     a.unshift(sql)
 
+
   end
 
 
@@ -39,10 +42,10 @@ class FollowInfoController < ApplicationController
     users = []
     fs.each {|f| users << f.safe_output_with_relation(params[:id].to_i) } if fs
     if params[:hash]
-      ret = {:count => fs.size}
+      ret = {:count => @all_length}
       ret.merge!( {:data => users})
     else
-      ret = [{:count => fs.size}]
+      ret = [{:count => @all_length}]
       ret << {:data => users}
     end
     render :json => ret.to_json
