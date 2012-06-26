@@ -4,6 +4,4 @@ one:
   user_id: 2
   follow_id: 1
 
-two:
-  user_id: 1
-  follow_id: 2
+
