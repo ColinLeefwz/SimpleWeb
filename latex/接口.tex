@@ -247,6 +247,7 @@
 {
 "id":1,
 "password":"15c663b8ff620502",
+"logo":"",
 "wb_uid":"1884834632",
 "expires_in":75693,
 "token":"2.00aaZYDCMcnDPCb4dc439e06i2m_GC",
@@ -258,6 +259,8 @@
 后面几个字段都是新浪提供的，其中wb_uid是该用户的新浪微博的uid，token是授权的access_token，其它几个是授权有效期信息。
 
 在首次登录获得用户的id和password以后，可以缓存到本地。以后用户每次登录，返回的id和password是不会改变的，除非服务器端重置密码（比如出现密码泄漏等安全情况）。
+
+logo可以得知用户是否成功上传头像。对于第一次登录的用户，其logo为空，此时需要引导用户上传头像。
 
 
 \end{verbatim}
@@ -468,7 +471,7 @@ wb_uid:1884834632
 \item 该请求必须是POST请求，enctype="multipart/form-data"。
 \item 所上传文件的type必须是image/jpeg', 'image/gif' 或者'image/png'。
 \item 图片文件必须小于5M。
-\item 图片名为logo；缩略图为logo\_thumb,且统一转换为110*110的png。
+\item 图片名为logo；缩略图分为两种大小，logo\_thumb为75*75的png，logo\_thumb2为150*150的png。
 \end{enumerate}
 
 例子：
