@@ -45,6 +45,7 @@ class Oauth2Controller < ApplicationController
     session[:user_id] = user.id
     $login_users << user.id
     data.merge!( {:id => user.id, :password => user.password} )
+    data.merge!( user.latest_logo_hash  )
 	  render :json => data.to_json
   end
   
