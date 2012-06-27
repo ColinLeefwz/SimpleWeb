@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  name: 美食 
+  nest_id: 0
+
+two:
+  id: 2
+  name: 购物
+  nest_id: 0
+
+three:
+  id: 3
+  name: 川菜
+  nest_id: 1
+
+four:
+  id: 4
+  name: 珠宝饰品
+  nest_id: 2
+
+five:
+  id: 5
+  name: 家常川菜
+  nest_id: 3
+
+six:
+  id: 6
+  name: 珠宝
+  nest_id: 4
