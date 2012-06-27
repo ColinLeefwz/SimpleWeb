@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :user_logos
+  has_many :user_logos, :order => 'ord asc'
   validates_uniqueness_of :wb_uid
 
   validates_length_of :name, :maximum => 64
@@ -8,21 +8,21 @@ class User < ActiveRecord::Base
   validates_length_of :password, :maximum => 32
   
   
-  def latest_logo
-    UserLogo.where("user_id=#{self.id}").order("id asc").limit(1)[0]
+  def head_logo
+    self.user_logos.first
   end
   
-  def latest_logo_hash
-    logo = latest_logo
+  def head_logo_hash
+    logo = head_logo
     if logo
-      {:logo => logo.avatar.url, :logo_thumb => logo.avatar.url(:thumb), :logo_thumb2 => logo.avatar.url(:thumb2)  }
+      logo.logo_thumb_hash
     else
       {:logo => "", :logo_thumb => "", :logo_thumb2 => ""}
     end
   end
   
   def safe_output
-    self.attributes.slice("id", "name", "wb_uid", "gender", "birthday", "logo").merge!( latest_logo_hash)
+    self.attributes.slice("id", "name", "wb_uid", "gender", "birthday", "logo").merge!( head_logo_hash)
   end
   
   def safe_output_with_relation( user_id )
