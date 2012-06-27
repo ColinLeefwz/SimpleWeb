@@ -21,16 +21,25 @@ class UserInfoController < ApplicationController
         render :json => {:error => "user #{params[:id]} not found"}.to_json
       else
         if params[:size].to_i==0
-          response.headers['IMG_URL'] = user.latest_logo.avatar.url
-          send_file user.latest_logo.avatar.path
+          response.headers['IMG_URL'] = user.head_logo.avatar.url
+          send_file user.head_logo.avatar.path
         elsif params[:size].to_i==2
-          response.headers['IMG_URL'] = user.latest_logo.avatar.url(:thumb2)
-          send_file user.latest_logo.avatar.path(:thumb2)
+          response.headers['IMG_URL'] = user.head_logo.avatar.url(:thumb2)
+          send_file user.head_logo.avatar.path(:thumb2)
         else
-          response.headers['IMG_URL'] = user.latest_logo.avatar.url(:thumb)
-          send_file user.latest_logo.avatar.path(:thumb)
+          response.headers['IMG_URL'] = user.head_logo.avatar.url(:thumb)
+          send_file user.head_logo.avatar.path(:thumb)
         end
       end
+    end
+  end
+  
+  def photos
+    user = User.find_by_id params[:id]
+    if user.nil?
+      render :json => {:error => "user #{params[:id]} not found"}.to_json
+    else
+      render :json => user.user_logos.map{|x| x.output_hash}.to_json
     end
   end
   
@@ -39,7 +48,7 @@ class UserInfoController < ApplicationController
     if user.nil?
       render :json => {:error => "not login"}.to_json
     else
-      render :json => user.attributes.merge(user.latest_logo_hash).to_json
+      render :json => user.attributes.merge(user.head_logo_hash).to_json
     end
   end
 
