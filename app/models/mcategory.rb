@@ -25,18 +25,31 @@ class Mcategory < ActiveRecord::Base
     categories = []
     case type_id
     when 1
-      categories =  self.where(['name like ? or name like ?', '%酒吧%', '%活动%'])
+      categories =  self.where(["name = ? or name = ?", "酒吧", "活动"])
     when 2
-      categories =  self.where(['name like ? or name like ?', '%咖啡%', '%茶馆%'])
+      categories =  self.where(["name = ? or name = ?", "咖啡厅", "茶馆"])
     when 3
-      categories =  self.where(['name like ? or name like ?', '%餐饮%', '%酒店%'])
+      categories =  self.where(["name = ? or name = ?", "美食", "酒店"])
     when 4
-      categories =  self.where(['name like ? or name like ?', '%运动%', '%休闲%'])
+      categories =  self.where(["name = ? or name = ?", "运动健身", "休闲娱乐"])
     when 5
-      categories =  self.where(['name like ? or name like ?', '%购物%', '%广场%'])
+      categories =  self.where(["name = ? or name = ?", "购物", "广场"])
     end
     
-    categories.map{|m| m.id }
+    categories.inject([]) { |f, s| f + s.leafs.map(&:id) }
 
   end
+
+
+  def leafs(s=[])
+    sub = sub_categories
+    unless sub.blank?
+      s << self
+      sub.each{|sb| sb.leafs(s)}
+      s
+    else
+      s << self
+    end
+  end
+
 end
