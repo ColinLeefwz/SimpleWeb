@@ -26,8 +26,11 @@ Lianlian::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resources :user_logos
 
+  post "user_logos/delete" 
+  post "user_logos/position" 
+  resources :user_logos
+  
   resources :users do
     resources :user_logos
   end
