@@ -13,6 +13,7 @@ class AroundmeController < ApplicationController
     ret = []
     ip = params[:ip] || real_ip
     Checkin.find_all_by_ip(ip).each do |ckin|
+      #TODO: 去重复
       if ckin.mshop
         ret << ckin.mshop
       else
@@ -23,6 +24,7 @@ class AroundmeController < ApplicationController
         ret << shop
       end
     end
+    ret.uniq!
     render :json => ret[0,10].map {|s| s.safe_output_with_users}.to_json
   end
 

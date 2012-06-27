@@ -55,6 +55,10 @@ class UserInfoController < ApplicationController
       hash[:gender] = params[:gender] unless params[:gender].nil?
       hash[:birthday] = params[:birthday]  unless params[:birthday].nil?
       hash[:invisible] = params[:invisible]  unless params[:invisible].nil?
+      hash[:signature] = params[:signature]  unless params[:signature].nil?
+      hash[:job] = params[:job]  unless params[:job].nil?
+      hash[:jobtype] = params[:jobtype]  unless params[:jobtype].nil?
+      hash[:hobby] = params[:hobby]  unless params[:hobby].nil?
       if user.update_attributes hash
         render :json => user.attributes.to_json
       else
