@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  mshop_id: 1
+  mcategory_id: 3
+
+2:
+  mshop_id: 2
+  mcategory_id: 5
+
+
