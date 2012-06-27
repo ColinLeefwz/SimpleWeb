@@ -503,6 +503,7 @@ module Spider
   def self.categroies_capch(city_id)
     return nil unless city = Mcity.find_by_id(city_id)
     categroy_url =  "http://www.dianping.com/search/category/#{city.id}/0"
+    suspend
     doc = Hpricot(open(categroy_url,@Request_Headers))
     categroy_doc = doc.search("div[@class='asideContainer'] ul[@class='navBlock'] ul[@class='bigCurrent']").first
     categroy_doc.search('ul li').each do |li|
@@ -512,6 +513,7 @@ module Spider
 
   def self.category_capch(url,nest_id)
     url = "http://www.dianping.com" + url
+    suspend
     doc = Hpricot(open(url,@Request_Headers))
     $LOG.info "open url #{url}"
     ul = doc.search("div[@class='asideContainer'] ul[@class='current']")
