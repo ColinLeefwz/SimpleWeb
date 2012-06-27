@@ -10,9 +10,9 @@ class MshopController < ApplicationController
     pcount = params[:pcount] || 20
     if params[:lat] && params[:lng]
       lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)      
-      mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :include => :mcategories, :page => page, :per_page =>pcount )
+      @mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :include => :mcategories, :page => page, :per_page =>pcount )
     end
-    render :json => mshops.map {|u| u.safe_output_with_users}.to_json
+    render :json => @mshops.map {|u| u.safe_output_with_users}.to_json
   end
   
   def users
