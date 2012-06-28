@@ -834,6 +834,85 @@ http://www.dface.cn/user_logos/delete
 这里返回的所有用户，其"friend"值一定为true。
 
 
+
+\section{添加黑名单}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/blacklists} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ block\_id  & 整数 & 必须 &  加黑阻止的用户的id\\
+ \hline
+ report  & 整数 & 可选 &  是否同时举报被加黑的用户，0不举报1举报\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+\begin{figure}[H]
+\begin{verbatim}
+
+返回值：
+
+{
+"id":1,
+"user_id":2,
+"report":false,
+"block_id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\section{删除黑名单}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/blacklists/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ block\_id  & 整数 & 必须 &  加黑用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&block_id=3" http://www.dface.cn/blacklists/delete
+
+返回值：
+
+{
+"deleted":3
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+
 \section{Openfire聊天服务器接口}
 
 
