@@ -13,6 +13,10 @@ class UserLogosController < ApplicationController
     render :json => user_logo.output_hash.to_json
   end
   
+  def replace
+    # TODO: 图片替换
+  end
+  
   def position
     user_logo = UserLogo.find(params[:id])
     if user_logo.user_id != session[:user_id]
@@ -21,6 +25,18 @@ class UserLogosController < ApplicationController
     end
     user_logo.change_ord(params[:order].to_i)
     render :json => user_logo.output_hash.to_json
+  end
+  
+  def change_all_position
+    ids = params[:ids].split(",")
+    UserLogo.transaction do
+    ids.each_with_index do |id,index|
+      user_logo = UserLogo.find(id)
+      raise "photo#{id}'s owner #{user_logo.user_id} != session user #{session[:user_id]}" if user_logo.user_id != session[:user_id]
+      user_logo.update_attribute("ord",index*10)
+    end
+    end
+    render :json => session_user.user_logos.map{|x| x.output_hash}.to_json
   end
 
 
