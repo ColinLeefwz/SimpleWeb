@@ -570,6 +570,43 @@ http://www.dface.cn/user_logos/position
 \end{figure}
 
 
+\section{当前登录用户批量调整所有图片的位置}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_logos/change\_all\_position} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ ids  & 逗号分割的整数 & 必须 &  所有图片的id按新的循序排列\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+说明：
+当只有一到两张图片更改位置时，不能调用本接口，需要调用单独修改图片位置的接口。
+
+比如原有图片的循序是2468，新的循序是2846，此时需要调用前一个接口，传递id=8&order=1。此时服务器只需要更新一条记录。如果调用本接口，会导致服务器端所有图片都被更新。
+
+比如原有图片的循序是2468，新的循序是8642，此时需要调用本接口，传递ids=8,6,4,2。此时服务器会更新所有图片的排序，而客户端只需要发送一个请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "ids=3,1,4" 
+http://www.dface.cn/user_logos/position
+
+
+
+
+\end{verbatim}
+\end{figure}
+
+
 
 \section{当前登录用户删除图片}
 
