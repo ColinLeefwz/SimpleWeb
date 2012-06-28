@@ -1,4 +1,7 @@
 Lianlian::Application.routes.draw do
+  post "blacklists/delete" 
+  resources :blacklists
+
   resources :shop_notices
 
   post "follows/delete" 
