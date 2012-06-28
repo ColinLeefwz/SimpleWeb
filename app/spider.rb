@@ -294,6 +294,7 @@ module Spider
     shop = Mshop.find_by_id(shop_id)
     if shop and shop.dp_id.to_i > 0
       begin
+        suspend
         open(shop.dp_url,@Request_Headers) { |f|
           f.each_line do |line|
             return self.decode_poi(line.split(/'/)[1]) if line.index('poi')
