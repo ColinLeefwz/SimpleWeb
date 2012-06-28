@@ -542,7 +542,6 @@ if __FILE__ == $0 or $0 == 'script/runner'
   if ARGV && ARGV.count > 0
     if ARGV[0].to_s == "latlng"
       Mshop.find(:all).each do |shop|
-        suspend
         latlng = Spider.dp_shop_latlng(shop.id)
         if latlng
           shop.lat = latlng[0]
