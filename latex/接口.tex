@@ -363,6 +363,43 @@ wb_uid:1884834632
 Response Body中包含头像的二进制信息。
 
 
+\section{获得用户的图片列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/photos} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/photos?id=1
+返回值：
+
+[
+{"logo_thumb2":"/system/avatars/2/thumb2/2.png.png?1340616951","updated_at":"2012-06-25T09:35:51Z","id":2,"logo":"/system/avatars/2/original/2.png.png?1340616951","avatar_file_size":81881,"user_id":1,"logo_thumb":"/system/avatars/2/thumb/2.png.png?1340616951"},
+{"logo_thumb2":"/system/avatars/4/thumb2/2.png.png?1340617039","updated_at":"2012-06-25T09:37:20Z","id":4,"logo":"/system/avatars/4/original/2.png.png?1340617039","avatar_file_size":81881,"user_id":1,"logo_thumb":"/system/avatars/4/thumb/2.png.png?1340617039"}
+]
+
+图片列表中的第一张图片就是用户的头像。
+
+
+\end{verbatim}
+\end{figure}
+
+
+
 \section{获得当前登录用户基本信息}
 
 \begin{table}[H]
@@ -411,19 +448,19 @@ wb_uid:1884834632
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
- name  & 字符串 & 选填 &  用户的名字\\
+ name  & 字符串 & 选填 &  用户的名字. 长度小于64\\
 \hline
  gender  & 数字 & 选填 &  用户的性别，未设置0男1女2\\
 \hline
  birthday  & 字符串 & 选填 &  用户的生日,格式如2012-06-01\\
  \hline
- signature  & 字符串 & 选填 &  签名档\\
+ signature  & 字符串 & 选填 &  签名档. 长度小于255\\
  \hline
  job  & 字符串 & 选填 &  职业\\
  \hline
  job type  & 整数 & 选填 &  职业类别\\
  \hline
- hobby  & 字符串 & 选填 &  爱好\\
+ hobby  & 字符串 & 选填 &  爱好. 长度小于255\\
  \hline
  invisible  & 数字 & 选填 &  0：不隐身,1：对陌生人隐身,2：全部隐身\\
 \hline
@@ -457,7 +494,7 @@ wb_uid:1884834632
 \end{figure}
 
 
-\section{设置当前登录用户的头像}
+\section{当前登录用户上传图片}
 
 \begin{table}[H]
    \begin{center}
@@ -489,12 +526,79 @@ wb_uid:1884834632
 访问：curl -F "user_logo[avatar]=@firefox.png;type=image/png" 
 http://www.dface.cn/user_logos
 
-返回值和设置个人信息一样。
+
+{"logo_thumb2":"/system/avatars/6/thumb2/csky2.png?1340779488",
+"updated_at":"2012-06-27T06:44:48Z"
+,"id":6,
+"logo":"/system/avatars/6/original/csky2.png?1340779488",
+"avatar_file_size":156604,
+"user_id":3,
+"logo_thumb":"/system/avatars/6/thumb/csky2.png?1340779488"}
 
 \end{verbatim}
 \end{figure}
 
 
+
+\section{当前登录用户调整图片位置}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_logos/position} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  图片的id\\
+ \hline
+ order  & 整数 & 必须 &  新的位置，从0开始\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "id=2;order=0" 
+http://www.dface.cn/user_logos/position
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\section{当前登录用户删除图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/user\_logos/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  图片的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "id=2" 
+http://www.dface.cn/user_logos/delete
+
+输出：
+{"deleted":"2"}
+
+\end{verbatim}
+\end{figure}
 
 
 
