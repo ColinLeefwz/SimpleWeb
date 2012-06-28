@@ -1,4 +1,6 @@
 Lianlian::Application.routes.draw do
+  resources :shop_notices
+
   post "follows/delete" 
   resources :follows
 
@@ -29,6 +31,7 @@ Lianlian::Application.routes.draw do
 
   post "user_logos/delete" 
   post "user_logos/position" 
+  post "user_logos/change_all_position" 
   resources :user_logos
   
   resources :users do
