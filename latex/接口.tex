@@ -218,6 +218,29 @@
 
 
 
+\section{根据商家ID获得商家的公告}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/shop\_notices} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值:
+\begin{verbatim}
+[
+{"id":1,"title":"asdf"},
+{"id":2,"title":"a title"}
+]
+\end{verbatim}
 
 \section{新浪微博登录后的回调页}
 
@@ -388,8 +411,10 @@ Response Body中包含头像的二进制信息。
 返回值：
 
 [
-{"logo_thumb2":"/system/avatars/2/thumb2/2.png.png?1340616951","updated_at":"2012-06-25T09:35:51Z","id":2,"logo":"/system/avatars/2/original/2.png.png?1340616951","avatar_file_size":81881,"user_id":1,"logo_thumb":"/system/avatars/2/thumb/2.png.png?1340616951"},
-{"logo_thumb2":"/system/avatars/4/thumb2/2.png.png?1340617039","updated_at":"2012-06-25T09:37:20Z","id":4,"logo":"/system/avatars/4/original/2.png.png?1340617039","avatar_file_size":81881,"user_id":1,"logo_thumb":"/system/avatars/4/thumb/2.png.png?1340617039"}
+{"logo_thumb2":"/system/avatars/2/thumb2/2.png.png?1340616951","updated_at":"2012-06-25T09:35:51Z",
+"id":2,"logo":"/system/avatars/2/original/2.png.png?1340616951","avatar_file_size":81881,"user_id":1,"logo_thumb":"/system/avatars/2/thumb/2.png.png?1340616951"},
+{"logo_thumb2":"/system/avatars/4/thumb2/2.png.png?1340617039","updated_at":"2012-06-25T09:37:20Z",
+"id":4,"logo":"/system/avatars/4/original/2.png.png?1340617039","avatar_file_size":81881,"user_id":1,"logo_thumb":"/system/avatars/4/thumb/2.png.png?1340617039"}
 ]
 
 图片列表中的第一张图片就是用户的头像。
@@ -589,7 +614,7 @@ http://www.dface.cn/user_logos/position
 说明：
 当只有一到两张图片更改位置时，不能调用本接口，需要调用单独修改图片位置的接口。
 
-比如原有图片的循序是2468，新的循序是2846，此时需要调用前一个接口，传递id=8&order=1。此时服务器只需要更新一条记录。如果调用本接口，会导致服务器端所有图片都被更新。
+比如原有图片的循序是2468，新的循序是2846，此时需要调用前一个接口，传递id=8\&order=1。此时服务器只需要更新一条记录。如果调用本接口，会导致服务器端所有图片都被更新。
 
 比如原有图片的循序是2468，新的循序是8642，此时需要调用本接口，传递ids=8,6,4,2。此时服务器会更新所有图片的排序，而客户端只需要发送一个请求。
 
