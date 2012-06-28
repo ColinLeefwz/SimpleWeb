@@ -294,6 +294,7 @@ module Spider
     shop = Mshop.find_by_id(shop_id)
     if shop and shop.dp_id.to_i > 0
       begin
+        suspend
         open(shop.dp_url,@Request_Headers) { |f|
           f.each_line do |line|
             return self.decode_poi(line.split(/'/)[1]) if line.index('poi')
@@ -542,7 +543,6 @@ if __FILE__ == $0 or $0 == 'script/runner'
   if ARGV && ARGV.count > 0
     if ARGV[0].to_s == "latlng"
       Mshop.find(:all).each do |shop|
-        suspend
         latlng = Spider.dp_shop_latlng(shop.id)
         if latlng
           shop.lat = latlng[0]
