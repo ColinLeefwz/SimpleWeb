@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  shop_id: 1
+  title: MyString
+  begin: 2012-06-28 11:52:59
+  end: 2012-06-28 11:52:59
+  ord: 9.99
+
+two:
+  shop_id: 1
+  title: MyString
+  begin: 2012-06-28 11:52:59
+  end: 2012-06-28 11:52:59
+  ord: 9.99
