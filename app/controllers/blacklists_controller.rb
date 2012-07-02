@@ -2,12 +2,9 @@ class BlacklistsController < ApplicationController
   # GET /blacklists
   # GET /blacklists.json
   def index
-    @blacklists = Blacklist.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @blacklists }
-    end
+    @blacklists = Blacklist.paginate(:conditions => genCondition(params[:id].to_i), :include => :user,:page => params[:page], :per_page => 20)
+    @all_length = Blacklist.count(:all,:conditions => genCondition(params[:id].to_i), :include => :user)
+    puts_users
   end
 
   # POST /follows
@@ -50,4 +47,31 @@ class BlacklistsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+
+  def genCondition(id)
+    sql = "blacklists.user_id = ?"
+    a = [id]
+    unless  params[:name].blank?
+      sql += " and users.name like ? "
+      a << "%#{params[:name]}%"
+    end
+    a.unshift(sql)
+  end
+  
+  def puts_users
+    users = []
+    @blacklists.each {|f| users << f.block.safe_output } if @blacklists
+    if params[:hash]
+      ret = {:count => @all_length}
+      ret.merge!( {:data => users})
+    else
+      ret = [{:count => @all_length}]
+      ret << {:data => users}
+    end
+    render :json => ret.to_json
+  end
+  
+  
 end
