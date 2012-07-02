@@ -834,6 +834,32 @@ http://www.dface.cn/user_logos/delete
 这里返回的所有用户，其"friend"值一定为true。
 
 
+\section{黑名单列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/blacklists} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+     \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+     \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的内容格式和好友列表一样。
+
 
 \section{添加黑名单}
 
