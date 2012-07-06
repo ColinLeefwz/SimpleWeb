@@ -18,15 +18,16 @@ class OfRoom < ActiveRecord::Base
   end
   
   def self.gen_from_shop0(mshop)
-    room = OfRoom.order(:roomID).last.dup
+    room = OfRoom.find_by_serviceID_and_roomID(1,99999999).dup
     room.name = mshop.id
     room.naturalName = mshop.name
-    room.roomID += 1
+    room.roomID = mshop.id
+    room.subject = ""
     room.save!
   end
     
   def self.sync
-    Mshop.all.each {|shop| OfRoom.gen_from_shop(shop)}
+    Mshop.all.each_with_index {|shop,i| OfRoom.gen_from_shop(shop);i}
   end
   
 end
