@@ -271,6 +271,8 @@
 "id":1,
 "password":"15c663b8ff620502",
 "logo":"",
+"name" : "name"
+"gender" : 1
 "wb_uid":"1884834632",
 "expires_in":75693,
 "token":"2.00aaZYDCMcnDPCb4dc439e06i2m_GC",
@@ -953,6 +955,18 @@ http://www.dface.cn/user_logos/delete
 \item 脸脸中的隐身也和xmpp中的隐身状态无关。
 \item xmpp中的任意两个用户可以发送消息，不管对方是否隐身，只要对方未设置黑名单即可。如果对方未登录，那么就是离线消息。
 \end{enumerate}
+
+
+
+脸脸中的聊天用户有三种类型：
+\begin{enumerate}
+\item管理员，其jid固定为"1@dface.cn";
+\item商家，其jid为's+商家id@dface.cn';
+\item个人，其jid为'个人id@dface.cn'。
+\end{enumerate}
+如果一个jid以字母s开头，那么它一定是商家。
+
+
 
 
 
