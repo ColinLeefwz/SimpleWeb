@@ -35,9 +35,9 @@ class AroundmeController < ApplicationController
     page = page.to_i
     pcount = pcount.to_i
     logger.info("login user count: #{$login_users.size} ")
-    $login_users.each do |id|
-      ret << User.find_by_id(id).safe_output_with_relation(session[:user_id])
-    end
+#    $login_users.each do |id|
+#      ret << User.find_by_id(id).safe_output_with_relation(session[:user_id])
+#    end
     User.where("name is not null").order("id asc").limit(50).each {|u| ret << u.safe_output_with_relation(session[:user_id])}
     ret = ret[(page-1)*pcount,pcount]
     if ret
