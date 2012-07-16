@@ -941,10 +941,11 @@ http://www.dface.cn/user_logos/delete
 
 
 
-\section{Openfire聊天服务器接口}
+\section{XMPP协议接口}
 
 
-
+\subsection{与Openfire聊天服务器接口}
+脸脸网的XMPP服务器采用的是Openfire。
 
 \begin{enumerate}
 \item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。
@@ -957,14 +958,31 @@ http://www.dface.cn/user_logos/delete
 \end{enumerate}
 
 
+\subsection{脸脸中的聊天用户的三种类型}
 
-脸脸中的聊天用户有三种类型：
 \begin{enumerate}
 \item管理员，其jid固定为"1@dface.cn";
 \item商家，其jid为's+商家id@dface.cn';
 \item个人，其jid为'个人id@dface.cn'。
 \end{enumerate}
 如果一个jid以字母s开头，那么它一定是商家。
+
+
+\subsection{摇一摇及其消息格式}
+目前，用户在聊天室摇一摇时，客户端发送“用户名 摇了摇手机和大家say hello~”给服务器。这导致要分析摇一摇数据很困难，所以要为摇一摇定义特殊的消息格式。
+
+\begin{verbatim}
+摇一摇的消息格式为：
+<handshake name="用户名" xmlns="http://dface.cn"  />
+
+如果是用户第一次进店的时候摇一摇，那么增加first属性，如：
+<handshake name="用户名" first="true" xmlns="http://dface.cn" />
+\end{verbatim}
+
+用户第一次进店摇一摇的时候可以参与抽奖，其后的摇一摇不行。
+用户在12小时后只能在一个商家参与抽奖一次，也就是在首页的进店摇一摇只有12小时内的第一次发送first属性。
+
+其它客户端收到摇一摇的XML格式消息后，再将其转换为文字描述。
 
 
 
