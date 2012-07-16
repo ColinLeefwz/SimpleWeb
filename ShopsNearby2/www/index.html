@@ -90,8 +90,10 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                         //show_gps_info(position);
                         lat_cur = position.coords.latitude;
                         lng_cur = position.coords.longitude;
+                        acc_cur = position.coords.accuracy;
                         sessionStorage.setItem("lat_cur",lat_cur);
                         sessionStorage.setItem("lng_cur",lng_cur);
+                        sessionStorage.setItem("acc_cur",acc_cur);
                         $("#gps_lat").html(lat_cur);
                         $("#gps_lng").html(lng_cur);
                         $("#gps_diff").html(position.coords.accuracy);
@@ -149,7 +151,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                     }
                     
                     function check_in_done(shop_name,shop_id){
-                        var url_checkin = 'http://www.dface.cn/checkins.json?user_id=1&shop_id=345&shop_name='+shop_name+'&lat='+lat_cur+'&lng='+lng_cur;
+                        var url_checkin = 'http://www.dface.cn/checkins.json?user_id=1&shop_id=345&shop_name='+shop_name+'&lat='+lat_cur+'&lng='+lng_cur+'&accuracy='+acc_cur;
                         console.log(url_checkin);
                         var jqxhr = $.ajax({
                                            type: 'POST',
