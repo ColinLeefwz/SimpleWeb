@@ -39,4 +39,7 @@ gem "will_paginate"
 gem "in_place_editing"
 gem "system_timer", "~> 1.2.4"
 gem 'paperclip', '~> 2.3.6' 
+gem 'mongo'
+gem 'bson_ext'
+
 
