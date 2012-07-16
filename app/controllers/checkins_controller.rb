@@ -46,6 +46,7 @@ class CheckinsController < ApplicationController
     @checkin = Checkin.new
     @checkin.lat = params[:lat]
     @checkin.lng = params[:lng]
+    @checkin.accuracy = params[:accuracy]
     @checkin.user_id = params[:user_id]
     @checkin.mshop_id = params[:mshop_id]
     @checkin.shop_name = params[:shop_name]
