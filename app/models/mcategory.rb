@@ -40,12 +40,37 @@ class Mcategory < ActiveRecord::Base
 
   end
 
-
+  #所有的节点
   def leafs(s=[])
     sub = sub_categories
     unless sub.blank?
       s << self
       sub.each{|sb| sb.leafs(s)}
+      s
+    else
+      s << self
+    end
+  end
+
+  def parent
+    self.class.find_by_id(self.nest_id)
+  end
+
+  #根节点
+  def root
+    pa = parent
+    if pa.nil?
+      return self
+    else
+      pa.root
+    end
+  end
+
+  # 尖端节点
+  def sleaf(s=[])
+    sub= sub_categories
+    unless sub.blank?
+      sub.each{|sb| sb.sleaf(s)}
       s
     else
       s << self
