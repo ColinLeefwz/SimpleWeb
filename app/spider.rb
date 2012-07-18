@@ -58,7 +58,7 @@ module Spider
               category_url = cur_li.search("a")[0].get_attribute('href')
               sp_url = category_url.split('/')[-2,2]
               category.nest_id = sp_url.first
-              category.url= "http://www.dianping.com" + category_url
+              category.kb_url= "http://www.dianping.com" + category_url
               # 新的抓取结束
               
 
@@ -127,13 +127,16 @@ module Spider
       current = doc.search("ul[@class='navBlock navTab-cont navTab-cont-on']/li/ul[@class='bigCurrent']")
       current = doc.search("ul[@class='navBlock']/li/ul[@class='current']") if current.empty?
       current = doc.search("ul[@class='navBlock']/li/ul/li/ul[@class='current']") if current.empty?
+      cdn = current.search("li").first.inner_text if current.empty?
+      pmd = Mdistrict.find_by_name(cdn)
       current.search("li/ul/li").each do |cur_li|
         if cur_li.search("a")[0]
           district = Mdistrict.find_by_id(cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('r')[-1].to_i)
           district = Mdistrict.new if district.nil?
           district.id = cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('r')[-1].to_i
           district.name = cur_li.search("a")[0].inner_text.strip.split(/\302\240/)[0].to_s
-          district.nest_id = cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('r').length >= 3 ? cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('r')[-2].to_i : nest_id
+          district.nest_id = pmd.try(:id) || nest_id
+          #          district.nest_id = cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('r').length >= 3 ? cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('r')[-2].to_i : nest_id
           district.save!
           mcity_mdistrict = district.mcity_mdistrict(mcity_id)
           mcity_mdistrict = McityMdistrict.new if mcity_mdistrict.nil?
@@ -307,7 +310,8 @@ module Spider
       rescue OpenURI::HTTPError => e
         $LOG.error "dp_shop_latlng open #{shop.dp_url} returned an error. 1 minute later and try again. #{e.message}"
         sleep 1 * 60
-        dp_shop_latlng(shop_id)
+        next
+        #        dp_shop_latlng(shop_id)
       rescue
         $LOG.error "dp_shop_latlng open #{shop.dp_url} returned an error. Ignored. #{$!}"
       else
@@ -532,6 +536,31 @@ module Spider
     end
   end
 
+  def self.cate_shop(city_id,category_ids=[])
+    # 全部频道
+    Spider.dp_cs_by_mcity_id(city_id)
+    #纠正分类
+    Spider::categroies_capch(city_id)
+    # 全部行政区
+    Spider.dp_ds_by_mcity_id(city_id)
+
+    category_ids =  category_ids.empty? ? Mcategory.find_all_by_nest_id(0).map{|m| m.id} : category_ids
+    category_ids.each{|cate|  c_shop(cate.to_i,city_id) }
+  end
+
+  def self.c_shop(category_id,city_id)
+    cate = Mcategory.find_by_id(category_id)
+    mcity = Mcity.find_by_id(city_id)
+    root = cate.root
+    mc_leafs = cate.sleaf
+    md_leafs = Mdistrict.find_by_name(mcity.name.split('站').first).sleaf
+    mc_leafs.each do |mcl|
+      md_leafs.each do |mdl|
+        Spider.dp_shop("http://www.dianping.com/search/category/#{mcity.id}/#{root.id}/g#{mcl.id}r#{mdl.id}",city_id)
+      end
+    end
+  end
+
 
 
 end
@@ -541,7 +570,9 @@ if __FILE__ == $0 or $0 == 'script/runner'
   $LOG.info "__FILE__"
   $LOG.info "$0 %s " % $0
   if ARGV && ARGV.count > 0
-    if ARGV[0].to_s == "latlng"
+
+    case ARGV[0].to_s
+    when 'latlng'
       Mshop.where("lat =0").each do |shop|
         latlng = Spider.dp_shop_latlng(shop.id)
         if latlng
@@ -550,12 +581,15 @@ if __FILE__ == $0 or $0 == 'script/runner'
           shop.save!
         end
       end
-    elsif ARGV[0].to_s == "cate"
-      # rails r app/spider.rb cate 1 2 3
+      #纠正分类的数据
+    when 'cate'
       ARGV.shift
       ARGV.each do |a|
         Spider::categroies_capch(a.to_i)
       end
+      #按分类抓取城市的商家
+    when 'cate_shop'
+      Spider.cate_shop(ARGV[1].to_i,ARGV[2,ARGV.length-2])
     else
       $LOG.info ARGV
       puts "ARGV    %s" % ARGV
