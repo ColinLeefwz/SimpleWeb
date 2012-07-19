@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails', '~> 3.2.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -15,8 +15,7 @@ gem "mysql", '~> 2.8.1'
 # gem 'capistrano'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-gem 'ruby-debug'
-# gem 'ruby-debug19', :require => 'ruby-debug'
+# gem 'ruby-debug'
 
 # Bundle the extra gems:
 # gem 'bj'
@@ -37,7 +36,7 @@ gem "hpricot"
 gem "oauth2"
 gem "will_paginate"
 gem "in_place_editing"
-gem "system_timer", "~> 1.2.4"
+# gem "system_timer", "~> 1.2.4"
 gem 'paperclip', '~> 2.3.6' 
 gem 'mongo'
 gem 'bson_ext'
