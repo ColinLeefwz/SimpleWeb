@@ -117,7 +117,7 @@ module Spider
         nest_id = md.id
       else
         district = Mdistrict.new
-        district.id = mcity_id
+#        district.id = mcity_id  
         district.name = mcity.name.split('站')[0]
         district.nest_id = nest_id
         district.save!
