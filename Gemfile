@@ -40,5 +40,5 @@ gem "in_place_editing"
 gem 'paperclip', '~> 2.3.6' 
 gem 'mongo'
 gem 'bson_ext'
-
+gem 'mongoid'
 

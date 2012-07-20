@@ -1,13 +1,8 @@
 class AroundmeController < ApplicationController
   
   def shops
-    mshops = []
     count = params[:count] || 10
-    if params[:lat] && params[:lng]
-      lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)      
-      mshops = Mshop.where(genCondition(lat, lng)).order(genOrder(lat, lng)).limit(count)
-    end
-    render :json => mshops.map {|s| s.safe_output_with_users}.to_json
+    render :json =>  Shop.where({ loc: { "$near" => [params[:lat].to_i , params[:lng].to_i]}}).limit(count).map {|s| s.safe_output_with_users}.to_json
   end
   
   def shops_by_ip
@@ -46,16 +41,6 @@ class AroundmeController < ApplicationController
     else
       render :json => [].to_json
     end
-  end
-
-
-  private
-  def genCondition(lat, lng)
-    return ["mshops.lat < ? and mshops.lat > ? and mshops.lng < ? and mshops.lng > ?", lat+0.005, lat-0.005, lng+0.005, lng-0.005]
-  end
-
-  def genOrder(lat, lng)
-    return "abs(abs(mshops.lat - #{lat}) + abs(mshops.lng - #{lng}))"
   end
   
 end
