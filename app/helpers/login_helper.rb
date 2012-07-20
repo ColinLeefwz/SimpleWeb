@@ -1,3 +1,5 @@
+# coding: utf-8
+
 module LoginHelper
 
   def session_admin_name
