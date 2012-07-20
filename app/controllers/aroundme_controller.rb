@@ -2,9 +2,10 @@ class AroundmeController < ApplicationController
   
   def shops
     mshops = []
+    count = params[:count] || 10
     if params[:lat] && params[:lng]
       lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)      
-      mshops = Mshop.where(genCondition(lat, lng)).order(genOrder(lat, lng)).limit(10)
+      mshops = Mshop.where(genCondition(lat, lng)).order(genOrder(lat, lng)).limit(count)
     end
     render :json => mshops.map {|s| s.safe_output_with_users}.to_json
   end
