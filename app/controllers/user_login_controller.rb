@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class UserLoginController < ApplicationController
   before_filter :user_authorize, :except => ['login','logout','bokee','shop', 'has_login', 'loginjs', 'send_password']
   in_place_edit_for :user, :nickname
