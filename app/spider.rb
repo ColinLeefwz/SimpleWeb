@@ -117,7 +117,7 @@ module Spider
         nest_id = md.id
       else
         district = Mdistrict.new
-#        district.id = mcity_id  
+        #        district.id = mcity_id
         district.name = mcity.name.split('站')[0]
         district.nest_id = nest_id
         district.save!
@@ -127,7 +127,8 @@ module Spider
       current = doc.search("ul[@class='navBlock navTab-cont navTab-cont-on']/li/ul[@class='bigCurrent']")
       current = doc.search("ul[@class='navBlock']/li/ul[@class='current']") if current.empty?
       current = doc.search("ul[@class='navBlock']/li/ul/li/ul[@class='current']") if current.empty?
-      cdn = current.search("li").first.inner_text if current.empty?
+      current = doc.search("div[@class='asideContainer']/ul[@class='navBlock']")[1].search("ul[@class='current']") if  current.empty?
+      cdn = current.search("li").first.inner_text
       pmd = Mdistrict.find_by_name(cdn)
       current.search("li/ul/li").each do |cur_li|
         if cur_li.search("a")[0]
@@ -148,6 +149,7 @@ module Spider
           @D_URLS << mcity_mdistrict.dp_url
         end
       end
+      
     rescue Timeout::Error
       $LOG.error "dp_district open #{url} timed out... 5 minutes later and try again."
       sleep 5 * 60
@@ -544,7 +546,11 @@ module Spider
     # 全部行政区
     Spider.dp_ds_by_mcity_id(city_id)
 
-    category_ids =  category_ids.empty? ? Mcategory.find_all_by_nest_id(0).map{|m| m.id} : category_ids
+    if category_ids.empty?
+      rmc = Mcategory.find_all_by_nest_id(0).map{|m| m.id}
+      category_ids = Mcategory.find_by_sql("SELECT m.id FROM mcategories m left join mcity_mcategories mm on m.id = mm.mcategory_id where mcity_id=#{city_id} and m.nest_id in (#{rmc.join(',')})").map{|m| m.id}
+    end
+
     category_ids.each{|cate|  c_shop(cate.to_i,city_id) }
   end
 
@@ -556,6 +562,7 @@ module Spider
     md_leafs = Mdistrict.find_by_name(mcity.name.split('站').first).sleaf
     mc_leafs.each do |mcl|
       md_leafs.each do |mdl|
+        $LOG.info "root = #{root}, mcategory_id = #{mcl.id}"
         Spider.dp_shop("http://www.dianping.com/search/category/#{mcity.id}/#{root.id}/g#{mcl.id}r#{mdl.id}",city_id)
       end
     end
