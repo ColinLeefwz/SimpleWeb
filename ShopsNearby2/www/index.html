@@ -46,7 +46,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                             alert("无法定位当前位置，请稍后再摇！");
                             return;
                         }
-                        var url2="http://www.dface.cn/aroundme/shops?lat="+lat_cur+"&lng="+lng_cur;
+                        var url2="http://www.dface.cn/aroundme/shops?count=30&lat="+lat_cur+"&lng="+lng_cur;
                         //alert(url2);
                         console.log(url2);
                         get_shops_around_me(url2);
@@ -141,7 +141,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                     }
                     
                     function check_in(shop_name,shop_id){
-						if(!confirm("你确定在"+shop_name+"签到吗？")) return;
+						if(!confirm("你确定在"+shop_name+"("+shop_id+")签到吗？")) return;
                         check_in_done(shop_name,shop_id);
                     }
  
@@ -151,8 +151,9 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                     }
                     
                     function check_in_done(shop_name,shop_id){
-                        var url_checkin = 'http://www.dface.cn/checkins.json?user_id=1&shop_id=345&shop_name='+shop_name+'&lat='+lat_cur+'&lng='+lng_cur+'&accuracy='+acc_cur;
+                        var url_checkin = 'http://www.dface.cn/checkins.json?user_id=1&mshop_id='+shop_id+'&shop_name='+shop_name+'&lat='+lat_cur+'&lng='+lng_cur+'&accuracy='+acc_cur;
                         console.log(url_checkin);
+                        //alert(url_checkin);
                         var jqxhr = $.ajax({
                                            type: 'POST',
                                            url: url_checkin,
@@ -184,7 +185,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                     当前位置：经度<span id="gps_lat"></span>,纬度<span id="gps_lng"></span>, 误差：<span id="gps_diff"></span>米 <a onclick="get_gps_location();">刷新</a> &nbsp; <a href="jiepang.html">街旁网</a>
                     <ul data-role="listview" id="shopList">
                         <script id="shopTemplate" type="text/x-jquery-tmpl">
-                            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-inline="false" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-btn-icon-right ui-li-has-arrow ui-li"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="#" onclick="check_in(this.firstChild.innerText)" class="ui-link-inherit"><span>${name}</span> ${diff}米</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span></div></li>
+                            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-inline="false" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-btn-icon-right ui-li-has-arrow ui-li"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="#" onclick="check_in(this.firstChild.innerText,this.firstChild.nextSibling.innerText)" class="ui-link-inherit"><span>${name}</span><span style="display:none">${id}</span> ${diff}米</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span></div></li>
                          </script>
                     </ul>
                 </div><!--/content-primary -->		
