@@ -1,0 +1,6 @@
+
+zh-CN:
+  hello: "Hello 世界"
+  mongoid: 
+      inspection: 
+          criteria: "criteria"

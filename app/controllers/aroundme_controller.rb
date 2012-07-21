@@ -8,15 +8,14 @@ class AroundmeController < ApplicationController
   def shops_by_ip
     ret = []
     ip = params[:ip] || real_ip
-    Checkin.find_all_by_ip(ip).each do |ckin|
-      #TODO: 去重复
+    Checkin.where(ip: ip).each do |ckin|
       if ckin.mshop
         ret << ckin.mshop
       else
         shop = Mshop.new
         shop.name = ckin.shop_name
-        shop.lat = ckin.lat
-        shop.lng = ckin.lng
+        shop.lat = ckin.loc[0]
+        shop.lng = ckin.loc[1]
         ret << shop
       end
     end
