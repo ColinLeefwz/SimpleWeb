@@ -41,4 +41,5 @@ gem 'paperclip', '~> 2.3.6'
 gem 'mongo'
 gem 'bson_ext'
 gem 'mongoid'
+gem 'rails-i18n'
 
