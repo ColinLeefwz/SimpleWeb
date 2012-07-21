@@ -17,17 +17,17 @@
 
 <p>
   <b>Time:</b>
-  <%= @checkin.time %>
+  <%= @checkin.cat %>
 </p>
 
 <p>
   <b>Lat:</b>
-  <%= @checkin.lat %>
+  <%= @checkin.loc[0] %>
 </p>
 
 <p>
   <b>Lng:</b>
-  <%= @checkin.lng %>
+  <%= @checkin.loc[1] %>
 </p>
 
 <p>
@@ -36,5 +36,4 @@
 </p>
 
 
-<%= link_to 'Edit', edit_checkin_path(@checkin) %> |
 <%= link_to 'Back', checkins_path %>

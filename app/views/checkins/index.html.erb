@@ -6,11 +6,8 @@
     <th>User</th>
     <th>Ip</th>
     <th>Time</th>
-    <th>Lat</th>
-    <th>Lng</th>
+    <th>Lat,Lng</th>
     <th>Shop name</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
@@ -19,12 +16,9 @@
     <td><%= checkin.mshop_id %></td>
     <td><%= checkin.user_id %></td>
     <td><%= checkin.ip %></td>
-    <td><%= checkin.time %></td>
-    <td><%= checkin.lat %></td>
-    <td><%= checkin.lng %></td>
+    <td><%= checkin.cat %></td>
+    <td><%= checkin.loc %></td>
     <td><%= checkin.shop_name %></td>
-    <td><%= link_to 'Show', checkin %></td>
-    <td><%= link_to 'Edit', edit_checkin_path(checkin) %></td>
     <td><%= link_to 'Destroy', checkin, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
