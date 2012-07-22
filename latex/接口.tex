@@ -986,6 +986,29 @@ http://www.dface.cn/user_logos/delete
 
 
 
+\subsection{个人之间聊天的消息发送状态确认}
+XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extensions/xep-0022.html}{XEP-0022: Message Events}”。其定义了四种消息事件：Offline、Delivered、Displayed、Composing。Dface只需要其中的两种。
+
+\begin{verbatim}
+当接收端收到消息时，发送delivered确认消息，例如：
+<message id="Kk98S-16" to="s6@dface.cn/ylt">
+<x xmlns="jabber:x:event"><delivered/><id>purplea5e6669c</id></x>
+</message>
+
+当接收端展示消息时，发送displayed确认消息，例如：
+<message id="Kk98S-17" to="s6@dface.cn/ylt">
+<x xmlns="jabber:x:event"><displayed/><id>purplea5e6669c</id></x>
+</message>
+
+发送端根据从接收端获得的状态通知更改单条消息的发送状态。
+
+只有类型是message,且body不为空的消息需要确认状态。
+
+\end{verbatim}
+
+
+
+
 
 
 \newpage
