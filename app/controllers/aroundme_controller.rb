@@ -2,7 +2,8 @@ class AroundmeController < ApplicationController
   
   def shops
     count = params[:count] || 10
-    render :json =>  Shop.where({ loc: { "$near" => [params[:lat].to_i , params[:lng].to_i]}}).limit(count).map {|s| s.safe_output_with_users}.to_json
+    loc = Offset.offset(params[:lat].to_f , params[:lng].to_f)
+    render :json =>  Shop.where({ loc: { "$near" => loc }}).limit(count).map {|s| s.safe_output_with_users}.to_json
   end
   
   def shops_by_ip
