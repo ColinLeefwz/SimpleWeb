@@ -31,16 +31,12 @@ class MshopController < ApplicationController
 
   def offset
     @latlng = Offset.offset(params['lat'].to_f, params['lng'].to_f)
-    respond_to do |format|
-      format.js {render :json => @latlng.to_json}
-    end
+    render :json => @latlng.to_json
   end
 
   def antioffset
     @latlng = Offset.antioffset(params['lat'].to_f, params['lng'].to_f)
-    respond_to do |format|
-      format.js {render :json => @latlng.to_json}
-    end
+    render :json => @latlng.to_json
   end
 
   private
