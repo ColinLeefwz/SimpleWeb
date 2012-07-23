@@ -113,6 +113,7 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
     will_paginate (3.0.3)
+    xmpp4r (0.5)
 
 PLATFORMS
   ruby
@@ -129,3 +130,4 @@ DEPENDENCIES
   rails (~> 3.2.1)
   rails-i18n
   will_paginate
+  xmpp4r
