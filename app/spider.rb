@@ -1,4 +1,4 @@
-
+# coding: utf-8
 require 'hpricot'
 require 'open-uri'
 require 'logger'
@@ -60,7 +60,7 @@ module Spider
               category.nest_id = sp_url.first
               category.kb_url= "http://www.dianping.com" + category_url
               # 新的抓取结束
-              
+
 
 
               category.id = cur_li.search("a")[0].get_attribute('href').split('/')[-1].split('g')[-1].to_i
@@ -112,13 +112,13 @@ module Spider
       suspend
       doc = Hpricot(open(url,@Request_Headers))
       nest_id = 0
-      md = Mdistrict.find_by_name(mcity.name.split('站')[0])
+      md = Mdistrict.find_by_name(mcity.name.force_encoding("UTF-8").split('站')[0])
       if md
         nest_id = md.id
       else
         district = Mdistrict.new
         #        district.id = mcity_id
-        district.name = mcity.name.split('站')[0]
+        district.name = mcity.name.force_encoding("UTF-8").split('站')[0]
         district.nest_id = nest_id
         district.save!
         nest_id = district.id
@@ -149,7 +149,7 @@ module Spider
           @D_URLS << mcity_mdistrict.dp_url
         end
       end
-      
+
     rescue Timeout::Error
       $LOG.error "dp_district open #{url} timed out... 5 minutes later and try again."
       sleep 5 * 60
@@ -312,7 +312,7 @@ module Spider
       rescue OpenURI::HTTPError => e
         $LOG.error "dp_shop_latlng open #{shop.dp_url} returned an error. 1 minute later and try again. #{e.message}"
         sleep 1 * 60
-        next
+        return nil
         #        dp_shop_latlng(shop_id)
       rescue
         $LOG.error "dp_shop_latlng open #{shop.dp_url} returned an error. Ignored. #{$!}"
@@ -531,7 +531,7 @@ module Spider
       cate.save!
       $LOG.info "id:#{cate.id}被更新"
     end
-    
+
     sub_categroy = ul.search("li/ul")
     unless sub_categroy.empty?
       sub_categroy.search("li").each{|li| category_capch(li.search("a").first.get_attribute('href'),cate.id)}
@@ -559,10 +559,9 @@ module Spider
     mcity = Mcity.find_by_id(city_id)
     root = cate.root
     mc_leafs = cate.sleaf
-    md_leafs = Mdistrict.find_by_name(mcity.name.split('站').first).sleaf
+    md_leafs = Mdistrict.find_by_name(mcity.name.force_encoding("UTF-8").split('站').first).sleaf
     mc_leafs.each do |mcl|
       md_leafs.each do |mdl|
-        $LOG.info "root = #{root}, mcategory_id = #{mcl.id}"
         Spider.dp_shop("http://www.dianping.com/search/category/#{mcity.id}/#{root.id}/g#{mcl.id}r#{mdl.id}",city_id)
       end
     end
