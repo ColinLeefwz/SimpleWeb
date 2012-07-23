@@ -42,4 +42,5 @@ gem 'mongo'
 gem 'bson_ext'
 gem 'mongoid'
 gem 'rails-i18n'
+gem 'xmpp4r'
 
