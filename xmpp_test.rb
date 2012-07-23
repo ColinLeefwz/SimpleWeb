@@ -1,7 +1,9 @@
 require 'rubygems'
 require 'xmpp4r/client'
+require 'xmpp4r/muc'
 include Jabber
 
+#Jabber::debug = true
 
 client = Client.new(JID::new("38@dface.cn"))
 client.connect
@@ -12,14 +14,28 @@ msg = Message::new("1@dface.cn", "Hello, 世界!")
 msg.type=:chat
 client.send(msg)
 
+
+my_muc = Jabber::MUC::SimpleMUCClient.new(client)
+my_muc.join(Jabber::JID.new('77524@conference.dface.cn/38'))
+my_muc.say("hello from ruby")
+
+
+muc = Jabber::MUC::MUCClient.new(client)
+muc.join(Jabber::JID.new('77524@conference.dface.cn/38'))
+muc.add_message_callback do |m|
+     puts "[NEW MESSAGE]" + m.to_s
+end
+
+
 #测试摇一摇
-msg2 = Message::new("1@dface.cn")
+msg2 = Message::new("77524@conference.dface.cn")
 h = REXML::Element::new("handshake")
 h.add_namespace('http://dface.cn')
 h.add_attribute("name","38 from ruby")
 msg2.add_element(h)
-msg2.type=:chat
-client.send(msg2)
+msg2.type=:groupchat
+muc.send(msg2)
+
 
 
 pres = Presence.new.set_type(:subscribe).set_to("s6@dface.cn")
