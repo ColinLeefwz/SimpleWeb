@@ -1,0 +1,15 @@
+现系统有两个ruby版本 1.8.7 和 1.9.3.
+
+其中一渡使用的是1.8.7. 脸脸使用的是1.9.3. 系统默认的是1.8.7. 那么该怎么样使用1.9.3呢？
+
+有2种方案。
+ 
+   1. 直接使用ruby 1.9.3. 其路径是: /home/dooo/.rvm/bin/ruby.
+
+      eg: 脸脸运行consle, /home/dooo/.rvm/bin/ruby script/rails c
+
+   2. 修改PATH， 把/home/dooo/.rvm/bin/ruby 加在PATH前面. 现系统已经把修改PATH 的shell写入~/.bash_profile 文件. 因此 source ~/.bash_profile
+
+就能切换到ruby1.9.3. ruby -v => ruby 1.9.3p194.
+
+       eg: 脸脸运行consle, rails c
