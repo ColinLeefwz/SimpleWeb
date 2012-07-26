@@ -1,4 +1,8 @@
-use dface
-db.mapabc2.find({city:"0571"}).forEach(function(x){
-db.mapabc2.find({loc : { $near : x.loc , $maxDistance : 0.05 },name:x.name}).forEach(function(xx){printjson(xx);})
+db.mapabc2.find().forEach(function(x){
+  var flag=false;
+  db.mapabc2.find({loc : { $near : x.loc , $maxDistance : 0.05 },name:x.name, _id:{$ne : x._id}}).forEach(function(xx){
+    printjson(xx);
+    flag=true;
+  });
+  if(flag) printjson(x);
 })
