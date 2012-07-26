@@ -41,12 +41,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                     var lat_cur=null, lng_cur=null;
                     
                     function aroundme(){	
-                        get_shops_around_me("http://www.dface.cn/aroundme/shops_by_ip");
-                        if(lat_cur==null){
-                            alert("无法定位当前位置，请稍后再摇！");
-                            return;
-                        }
-                        var url2="http://www.dface.cn/aroundme/shops?count=50&lat="+lat_cur+"&lng="+lng_cur;
+                        var url2="http://www.dface.cn/aroundme/mapabc?count=100&lat="+lat_cur+"&lng="+lng_cur;
                         //alert(url2);
                         console.log(url2);
                         get_shops_around_me(url2);
@@ -175,18 +170,18 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
         <div data-role="page" class="type-interior">
             
             <div data-role="header" data-theme="f">
-                <h1>附近的商家<a href="javascript:check_in2()">签到</a></h1>
+                <h1>Mapabc</h1>
                 <a href="#" onclick="aroundme();" data-role="button">获取</a>
-                <a id="map_button" href="mapabc.html">Mapabc</a>
+                <a id="map_button" href="map.htm" style="display:none">地图</a>
             </div><!-- /header -->
             
             <div data-role="content">
                 <div class="content-primary">
-                    <a onclick="get_gps_location();">刷新位置</a>：经度<span id="gps_lat"></span>,纬度<span id="gps_lng"></span>, 误差：<span id="gps_diff"></span>米  &nbsp; <a href="map.htm">地图</a>
-                    <br>
+                    当前位置：经度<span id="gps_lat"></span>,纬度<span id="gps_lng"></span>, 误差：<span id="gps_diff"></span>米 <a onclick="get_gps_location();">刷新</a> &nbsp; 
+                    
                     <ul data-role="listview" id="shopList">
                         <script id="shopTemplate" type="text/x-jquery-tmpl">
-                            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-inline="false" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-btn-icon-right ui-li-has-arrow ui-li"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="#" onclick="check_in(this.firstChild.innerText,this.firstChild.nextSibling.innerText)" class="ui-link-inherit"><span>${name}</span><span style="display:none">${id}</span> ${diff}米</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span></div></li>
+                            <li data-corners="false" data-shadow="false" data-iconshadow="true" data-inline="false" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-btn-icon-right ui-li-has-arrow ui-li"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"><a href="#" onclick="return false;check_in(this.firstChild.innerText,this.firstChild.nextSibling.innerText)" class="ui-link-inherit"><span>${name}</span><span style="display:none">${id}</span> ${diff}米</a></div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span></div></li>
                          </script>
                     </ul>
                 </div><!--/content-primary -->		
