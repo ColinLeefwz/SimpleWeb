@@ -18,6 +18,7 @@ class Mcategory < ActiveRecord::Base
   def sub_categories()
     return Mcategory.find_all_by_nest_id(self.id)
   end
+  
 
   def mcity_mcategory(mcity_id)
     return McityMcategory.find_by_mcity_id_and_mcategory_id(mcity_id, self.id)
