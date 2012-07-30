@@ -7,9 +7,9 @@ class AroundmeController < ApplicationController
   end
   
   def mapabc
-    count = params[:count] || 10
+    count = params[:count] || 100
     loc = Offset.offset(params[:lat].to_f , params[:lng].to_f)
-    render :json =>  Mapabc.where({ loc: { "$near" => loc }}).limit(count).map {|s| s.safe_output_with_users}.to_json
+    render :json =>  Mapabc.where({ loc: { "$within" => { "$center" => [loc, 0.003]} }}).limit(count).map {|s| s.safe_output_with_users}.to_json
   end
   
   def shops_by_ip
