@@ -6,6 +6,12 @@ class AroundmeController < ApplicationController
     render :json =>  Shop.where({ loc: { "$near" => loc }}).limit(count).map {|s| s.safe_output_with_users}.to_json
   end
   
+  def mapabc
+    count = params[:count] || 10
+    loc = Offset.offset(params[:lat].to_f , params[:lng].to_f)
+    render :json =>  Mapabc.where({ loc: { "$near" => loc }}).limit(count).map {|s| s.safe_output_with_users}.to_json
+  end
+  
   def shops_by_ip
     ret = []
     ip = params[:ip] || real_ip
