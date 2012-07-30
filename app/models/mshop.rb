@@ -59,5 +59,24 @@ class Mshop < ActiveRecord::Base
     User.where("name is not null and id<60").order("id asc")
   end
 
+  def fill_lian_cate
+
+  end
+
+
+  def second_mcategory
+    mcategory = nil
+    rmcs = Mcategory.find_all_by_nest_id(0)
+    mcs = rmcs.map { |mc| mc.sub_categories  }.flatten
+    mcategories.each{|s| (mcategory =  get_second_mcategory(s,mcs); break) if get_second_mcategory(s,mcs) }
+    mcategory
+  end
+
+  def get_second_mcategory(mcategory,mcs)
+    if mp = mcategory.parent
+      return mp if mcs.include?(mp)
+      get_second_mcategory(mp,mcs)
+    end
+  end
 
 end
