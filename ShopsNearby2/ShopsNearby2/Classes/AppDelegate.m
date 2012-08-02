@@ -36,6 +36,7 @@
     #import "CDVURLProtocol.h"
 #endif
 
+#import <SystemConfiguration/CaptiveNetwork.h>
 
 @implementation AppDelegate
 
@@ -61,6 +62,16 @@
  */
 - (BOOL) application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {    
+    CFStringRef currentSSID;
+    CFArrayRef myArray = CNCopySupportedInterfaces();
+    int i = CFArrayGetCount(myArray);
+    if(myArray!=nil){
+        CFDictionaryRef myDict = CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(myArray, 0));
+        if(myDict!=nil)currentSSID=[myDict valueForKey:@"SSID"];
+        else currentSSID=@"<<NONE>>";
+        
+    } else currentSSID=@"<<NONE>>";
+    
     NSURL* url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
     NSString* invokeString = nil;
     
