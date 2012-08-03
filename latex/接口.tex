@@ -129,13 +129,27 @@
   \hline
  name  & 字符串 & 可选 & 商家的名称\\ 
   \hline
- type  & 整数 & 可选 & 1酒吧 • 活动2咖啡 • 茶馆3餐饮 • 酒店4运动 • 休闲5购物 • 广场\\  
+ type  & 整数 & 可选 & 商家类型\\  
 \hline
 \end{tabular}
    \end{center}
 \end{table}
 
+商家类型：
+\begin{enumerate}
+\item 酒吧• 活动
+\item 咖啡• 茶馆   
+\item 餐饮• 酒店
+\item 休闲• 娱乐
+\item 购物• 广场
+\item 楼宇• 社区
+\end{enumerate}
+
+
 用户当前所在的现场只有一个，但是由于定位有误差，所以服务器返回最有可能的几个商家让用户选择；而附近的商家有很多，按距离由近到远排序，且支持查询、分类筛选和分页。
+
+
+
 
 
 
