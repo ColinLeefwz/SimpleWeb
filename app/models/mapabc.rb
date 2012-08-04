@@ -12,9 +12,9 @@ class Mapabc
   
   def safe_output
     if self.loc[0].class==Array #一个地点多个经纬度
-      self.attributes.slice("id", "name", "phone").merge!( {"lat"=>self.loc[0][0], "lng"=>self.loc[0][1], "address"=>self.addr} )
+      self.attributes.slice("name", "phone").merge!( {"lat"=>self.loc[0][0], "lng"=>self.loc[0][1], "address"=>self.addr, "id" => self.id} )
     else
-      self.attributes.slice("id", "name", "phone").merge!( {"lat"=>self.loc[0], "lng"=>self.loc[1], "address"=>self.addr} )
+      self.attributes.slice("id", "name", "phone").merge!( {"lat"=>self.loc[0], "lng"=>self.loc[1], "address"=>self.addr, "id" => self.id} )
     end
   end
   
