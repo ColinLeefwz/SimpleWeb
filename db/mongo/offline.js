@@ -1,4 +1,3 @@
-use dface;
 var sum_reduce = function(key, cols){
     var count=0;
     cols.forEach(function(v) {
