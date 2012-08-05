@@ -13,3 +13,14 @@ File.open("offset.csv").each_line do |x|
   coll.insert(hash)
   id+=1
 end
+
+=begin   
+
+db.shops.find().forEach(function(x){
+  var str = "gcj02_to_real(["+x.loc+"])";
+  var loc2 = db.eval(str);
+  db.shops.update({_id:x._id},{$set:{lo:loc2}});
+})
+ 
+=end
+
