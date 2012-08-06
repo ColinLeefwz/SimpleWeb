@@ -3,16 +3,16 @@ class Shop
   field :id, type: Integer
   field :name
   field :loc, type:Array
+  field :lo, type:Array
   field :phone
   field :city, type: Integer
-  field :cc, type:Integer
-  field :man, type:Boolean
+  #field :cc, type:Integer
   field :addr
   
   
   
   def safe_output
-    self.attributes.slice("id", "name", "phone").merge!( {"lat"=>self.loc[0], "lng"=>self.loc[1], "address"=>self.addr} )
+    self.attributes.slice("name", "phone", "lo").merge!( {"lat"=>self.loc[0], "lng"=>self.loc[1], "address"=>self.addr, "id"=>self.id} )
   end
   
   def safe_output_with_users
