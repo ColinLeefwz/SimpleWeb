@@ -1,6 +1,6 @@
 class Mapabc
   include Mongoid::Document
-  store_in collection: "mapabc2"
+  store_in collection: "mapabc"
   field :name
   field :loc, type:Array
   field :phone
