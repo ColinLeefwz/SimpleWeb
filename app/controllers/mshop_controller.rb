@@ -5,14 +5,17 @@ class MshopController < ApplicationController
   end
   
   def nearby
-    mshops = []
-    page = params[:page] || 1
-    pcount = params[:pcount] || 20
-    if params[:lat] && params[:lng]
-      lat,lng = Offset.offset(params[:lat].to_f,params[:lng].to_f)      
-      @mshops = Mshop.paginate(:conditions => genCondition(lat, lng), :order => genOrder(lat, lng), :include => :mcategories, :page => page, :per_page =>pcount )
-    end
-    render :json => @mshops.map {|u| u.safe_output_with_users}.to_json
+    page = params[:page].to_i
+    pcount = params[:pcount].to_i
+    page = 1 if page==0
+    pcount = 20 if pcount==0
+    skip = (page-1)*pcount
+    loc = Offset.offset(params[:lat].to_f , params[:lng].to_f)
+    hash = { loc: { "$within" => { "$center" => [loc, 0.1]} }}
+    hash.merge!( {name: /#{params[:name]}/ }  )  if params[:name]
+    hash.merge!( {t: params[:type].to_i }  )  if params[:type]
+    shops = Shop.where(hash).skip(skip).limit(pcount)
+    render :json =>  shops.map {|s| s.safe_output_with_users}.to_json
   end
   
   def users
@@ -37,31 +40,6 @@ class MshopController < ApplicationController
   def antioffset
     @latlng = Offset.antioffset(params['lat'].to_f, params['lng'].to_f)
     render :json => @latlng.to_json
-  end
-
-  private
-  def genCondition(lat, lng)
-    sql = "mshops.lat < ? and mshops.lat > ? and mshops.lng < ? and mshops.lng > ?"
-    a = [lat+0.1, lat-0.1, lng+0.1, lng-0.1]
-
-
-    unless params[:name].blank?
-      sql += " and mshops.name like ? "
-      a << "%#{params[:name]}%"
-    end
-
-    unless params[:mcategory_id].blank?
-      sql += " and mcategories.id in (?)"
-      a << Mcategory.unfold(params[:mcategory_id].to_i)
-    end
-    
-    return a.unshift(sql)
-
-    #    return ["mshops.lat < ? and mshops.lat > ? and mshops.lng < ? and mshops.lng > ?", lat+0.1, lat-0.1, lng+0.1, lng-0.1]
-  end
-
-  def genOrder(lat, lng)
-    return "abs(abs(mshops.lat - #{lat}) + abs(mshops.lng - #{lng}))"
   end
 
 end
