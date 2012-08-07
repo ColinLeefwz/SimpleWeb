@@ -19,6 +19,7 @@ class AroundmeController < ApplicationController
   
   def shops_by_ip
     ret = []
+    render :json => [].to_json    #取消该接口
     ip = params[:ip] || real_ip
     Checkin.where(ip: ip).each do |ckin|
     # TODO: 使用Shop而不是Mshop类
