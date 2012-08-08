@@ -23,7 +23,6 @@ class AroundmeController < ApplicationController
     return
     ip = params[:ip] || real_ip
     Checkin.where(ip: ip).each do |ckin|
-    # TODO: 使用Shop而不是Mshop类
       if ckin.mshop
         ret << ckin.mshop
       else
