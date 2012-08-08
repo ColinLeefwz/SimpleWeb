@@ -45,17 +45,20 @@ class Mshop < ActiveRecord::Base
   end
   
   def safe_output_with_users
+    Rails.logger.warn "safe_output_with_users deprecate"  
     a,b,c = users_count
     safe_output.merge!( {"user"=>a, "male"=>b, "female"=>c} )
   end
   
   def users_count
+    Rails.logger.warn "safe_output_with_users deprecate"  
     us = users.size
     female = users.where("gender=2").size
     [us,us-female,female]
   end
   
   def users
+    Rails.logger.warn "safe_output_with_users deprecate"  
     User.where("name is not null and id<60").order("id asc")
   end
 
