@@ -1,4 +1,4 @@
-class Checkin < ActiveRecord::Base
+class Checkin
   include Mongoid::Document
   field :mshop_id, type: Integer
   field :user_id, type: Integer
