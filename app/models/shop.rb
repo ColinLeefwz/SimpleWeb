@@ -27,6 +27,7 @@ class Shop
   end
   
   def users
+    # TODO: 获得现场的用户列表、最后出现时间、以及男女的数量
     User.where("name is not null and id<60").order("id asc")
   end
   
