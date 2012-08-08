@@ -29,8 +29,18 @@ class User < ActiveRecord::Base
     if user_id.nil?
       safe_output
     else
-      safe_output.merge!( {:friend => follower?(user_id), :follower => friend?(user_id)} )
+      safe_output.merge!( relation_hash(user_id) )
     end
+  end
+  
+  def output_with_relation( user_id )
+    hash = self.attributes
+    hash.delete("password")
+    hash.merge!( head_logo_hash).merge!( relation_hash(user_id) )
+  end
+  
+  def relation_hash( user_id )
+    {:friend => follower?(user_id), :follower => friend?(user_id)}
   end
   
   def friend?(user_id)
