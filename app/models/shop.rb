@@ -12,7 +12,7 @@ class Shop
   
   
   def safe_output
-    self.attributes.slice("name", "phone", "lo").merge!( {"lat"=>self.loc[0], "lng"=>self.loc[1], "address"=>self.addr, "id"=>self.id} )
+    self.attributes.slice("name", "phone", "lo", "t").merge!( {"lat"=>self.loc[0], "lng"=>self.loc[1], "address"=>self.addr, "id"=>self.id} )
   end
   
   def safe_output_with_users
