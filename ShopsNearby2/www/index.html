@@ -63,7 +63,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                                  //alert(data[0].name);
                                  if(data.length>0) shops=data;
                                  for(var i=0;i<shops.length;i++){
-                                 shops[i].diff=GetDistance(lat_cur,lng_cur,shops[i].lat,shops[i].lng);
+                                 shops[i].diff=GetDistance(lat_cur,lng_cur,shops[i].lo[0],shops[i].lo[1]);
                                  }
                                  $( "#shopTemplate" ).tmpl( shops ).appendTo( "#shopList" );
                                  $("#map_button").show();
@@ -177,6 +177,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
             <div data-role="header" data-theme="f">
                 <h1>附近的商家<a href="javascript:check_in2()">签到</a></h1>
                 <a href="#" onclick="aroundme();" data-role="button">获取</a>
+                <a id="map_button" href="map.htm">地图</a>
                 <a id="map_button" href="mapabc.html">Mapabc</a>
             </div><!-- /header -->
             
