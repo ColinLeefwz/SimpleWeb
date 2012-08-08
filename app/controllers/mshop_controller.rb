@@ -19,8 +19,9 @@ class MshopController < ApplicationController
   end
   
   def users
-    shop = Mshop.find(params[:id])
-    render :json => shop.users.map {|u| u.safe_output_with_relation(session[:user_id])}.to_json
+    shop = Shop.find(params[:id].to_i)
+    # TODO: 实际计算最后出现时间
+    render :json => shop.users.map {|u| u.safe_output_with_relation(session[:user_id]).merge!({time:"1 minute"})}.to_json
   end
   
   
