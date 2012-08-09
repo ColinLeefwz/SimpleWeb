@@ -1,14 +1,37 @@
 class Shop
   include Mongoid::Document
-  field :id, type: Integer
+  field :_id, type: Integer
   field :name
-  field :loc, type:Array
-  field :lo, type:Array
-  field :phone
-  field :city, type: Integer
-  #field :cc, type:Integer
+  field :loc, type:Array #地图上的经纬度
+  field :lo, type:Array #实际的经纬度
+  field :tel
+  field :city
   field :addr
+  field :t                #脸脸的商家类型
+  #field :cc, type:Integer  #点评的评论数
+  #field :type              #从mapabc导入的商家类型
   
+  def self.import_form(mshop) #从Mshop导入点评商家
+    begin
+      city = Mcity.find(mshop.mcity_id).code
+    rescue  Exception => error
+    end
+    city = "0571" if city.nil?
+    id = Shop.count+1
+    lo = Mongoid.default_session.command(eval:"gcj02_to_real([#{mshop.lat}, #{mshop.lng}])")["retval"]
+    hash = {
+      _id: id,
+      city: city,
+      name: mshop.name,
+      addr: mshop.address,
+      tel: mshop.phone,
+      loc: [mshop.lat.to_f,mshop.lng.to_f],
+      lo: lo,
+      cc: mshop.comment_count
+    }
+    #TODO: 点评的商家类型映射到脸脸的商家类型
+    Shop.collection.insert hash
+  end
   
   
   def safe_output
