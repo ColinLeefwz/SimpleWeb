@@ -29,6 +29,16 @@ Server version		5.0.51a-24+lenny2+spu1-log
 配置文件/home/dooo/config/database.yml
 
 短信服务：
+短信分为两类：移动短信和电信短信。移动短信通过信息机收发，编程的接口是数据库。电信短信通过java代理程序收发。
+
+对于移动短信：
+在config/database.yml文件中的sqlserver节配置的就是移动的信息机。
+发送短信调用SmsOutH.send_sms
+app/check_sms.rb 定时从数据库检查新接收的短信
+
+对于电信短信：
+只能发短信。java代理程序启动脚本/home/dooo/bodu_server/qxt/bin/start_qxt.sh。ruby端通过数据库和其交互。
+
 
 
 
