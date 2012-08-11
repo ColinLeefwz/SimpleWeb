@@ -7,6 +7,7 @@ class Checkin
   field :shop_name
   field :cat, type:DateTime
   field :accuracy, type:Float
+  field :od, type: Integer
   
   def mshop
     if mshop_id
