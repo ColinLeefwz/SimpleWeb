@@ -44,9 +44,6 @@ var get_distance = function( loc1,loc2){
     return get_distance4(loc1[0],loc1[1],loc2[0],loc2[1]);
 }
 
-db.system.js.save({ "_id" : "num_to_rad", "value" : num_to_rad });
-db.system.js.save({ "_id" : "get_distance4", "value" : get_distance4 });
-db.system.js.save({ "_id" : "get_distance", "value" : get_distance });
 
 
 var real_to_gcj02 = function(loc){
@@ -58,27 +55,38 @@ var real_to_gcj02_distance = function(loc){
     return get_distance(real_to_gcj02(loc),loc);
 };
 
-db.system.js.save({ "_id" : "real_to_gcj02", "value" : real_to_gcj02 });
-db.system.js.save({ "_id" : "real_to_gcj02_distance", "value" : real_to_gcj02_distance });
 
 var gcj02_to_real = function(loc){
     var tmp = db.offsets.findOne({loc: {$near : loc} });
     return [loc[0]-tmp.d[0],loc[1]-tmp.d[1]];
 };
 
-db.system.js.save({ "_id" : "gcj02_to_real", "value" : gcj02_to_real });
 
 var find_shops = function(loc,accuracy,ip){
 	var loc2 = real_to_gcj02(loc);
     var cursor = db.shops.find({loc:{$within:{$center:[loc2,0.003]}}}).limit(100);
 	var ret = [];
 	while ( cursor.hasNext() ) ret.push(cursor.next());
+	var special;
+	for(var i=5;i<ret.length;i++){if(ret[i]._id==9597685) special=ret[i]}
+	if(special) ret.unshift(special);
     if(ret.length>=7) return ret;
 	ret = [];
 	cursor = db.shops.find({loc:{$within:{$center:[loc2,0.3]}}}).limit(7);
 	while ( cursor.hasNext() ) ret.push(cursor.next());
 	return ret;
 };
+
+
+db.system.js.save({ "_id" : "num_to_rad", "value" : num_to_rad });
+db.system.js.save({ "_id" : "get_distance4", "value" : get_distance4 });
+db.system.js.save({ "_id" : "get_distance", "value" : get_distance });
+
+db.system.js.save({ "_id" : "real_to_gcj02", "value" : real_to_gcj02 });
+db.system.js.save({ "_id" : "real_to_gcj02_distance", "value" : real_to_gcj02_distance });
+
+db.system.js.save({ "_id" : "gcj02_to_real", "value" : gcj02_to_real });
+
 
 db.system.js.save({ "_id" : "find_shops", "value" : find_shops });
 

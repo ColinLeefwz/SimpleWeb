@@ -33,9 +33,16 @@ class Shop
     Shop.collection.insert hash
   end
   
+  def loc_first
+    if self["loc"][0].class==Array
+        self["loc"][0]
+    else
+        self["loc"]
+    end
+  end
   
   def safe_output
-    self.attributes.slice("name", "phone", "lo", "t").merge!( {"lat"=>self.loc[0], "lng"=>self.loc[1], "address"=>self.addr, "id"=>self.id} )
+    self.attributes.slice("name", "phone", "lo", "t").merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>self.addr, "id"=>self.id} )
   end
   
   def safe_output_with_users
