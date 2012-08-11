@@ -120,7 +120,7 @@
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/mshop/nearby} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/shop/nearby} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -219,7 +219,7 @@
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/mshop/users} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/shop/users} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -332,15 +332,19 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
 \hline
  accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
 \hline
- mshop\_id  & 整数 & 必须 &  现场商家id\\ 
+ shop\_id  & 整数 & 必须 &  现场商家id\\ 
 \hline
  user\_id  & 整数 & 必须 &  签到用户id\\ 
+\hline
+ od  & 整数 & 必须 &  实际签到的商家的排序\\  
 \hline
 \end{tabular}
    \end{center}
 \end{table}
 
 注意：该请求必须是POST请求。如果是GET请求，获得的是签到列表。
+
+[2012－8－10] 新增od字段，表示用户实际签到的商家在现场商家列表中的循序位置，从1开始。
 
 
 
