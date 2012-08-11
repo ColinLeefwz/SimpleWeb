@@ -344,7 +344,7 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
 
 注意：该请求必须是POST请求。如果是GET请求，获得的是签到列表。
 
-[2012－8－10] 新增od字段，表示用户实际签到的商家在现场商家列表中的循序位置，从1开始。
+[2012－8－10] 新增od字段，表示用户实际签到的商家在现场商家列表中的顺序位置，从1开始，也就是从/aroundme/shops中获得的商家列表中，那个被用户选中了。
 
 
 
@@ -983,7 +983,7 @@ http://www.dface.cn/user_logos/delete
 
 \begin{enumerate}
 \item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。
-\item 商家的id加上"@conference.dface.cn"就是现场聊天室的jid。
+\item 商家的id加上"@c.dface.cn"就是现场聊天室的jid。
 \item 脸脸的用户名就是openfire的用户名，且也就是聊天时的用户名。Xmpp协议允许用户在加入聊天室时取一个名字，脸脸的聊天室应该忽略该名字。
 \item 脸脸中的关注和粉丝关系是单向的，和xmpp中的好友roster关系无关。
 \item 只要用户登录，其xmpp协议中的presence就是在线，没有其它状态。
