@@ -1,6 +1,6 @@
 class Checkin
   include Mongoid::Document
-  field :mshop_id, type: Integer
+  field :shop_id, type: Integer
   field :user_id, type: Integer
   field :loc, type:Array
   field :ip
@@ -15,4 +15,5 @@ class Checkin
       nil
     end
   end
+  
 end
