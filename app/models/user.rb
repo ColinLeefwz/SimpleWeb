@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
     else "1天以前"
     end
     dstr = loc.shop_name
-    dstr = Shop.find(loc.mshop_id).name if dstr.nil?
+    dstr = Shop.find(loc.shop_id).name if dstr.nil?
      #TODO: 使用redis保存用户最后出现的地点和时间
     {:last => "#{tstr} #{dstr}"}
   end

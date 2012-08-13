@@ -16,19 +16,19 @@ client.send(msg)
 
 
 my_muc = Jabber::MUC::SimpleMUCClient.new(client)
-my_muc.join(Jabber::JID.new('77524@conference.dface.cn/38'))
+my_muc.join(Jabber::JID.new('77524@c.dface.cn/38'))
 my_muc.say("hello from ruby")
 
 
 muc = Jabber::MUC::MUCClient.new(client)
-muc.join(Jabber::JID.new('77524@conference.dface.cn/38'))
+muc.join(Jabber::JID.new('77524@c.dface.cn/38'))
 muc.add_message_callback do |m|
      puts "[NEW MESSAGE]" + m.to_s
 end
 
 
 #测试摇一摇
-msg2 = Message::new("77524@conference.dface.cn")
+msg2 = Message::new("77524@c.dface.cn")
 h = REXML::Element::new("handshake")
 h.add_namespace('http://dface.cn')
 h.add_attribute("name","38 from ruby")
