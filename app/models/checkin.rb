@@ -9,12 +9,4 @@ class Checkin
   field :accuracy, type:Float
   field :od, type: Integer
   
-  def mshop
-    if mshop_id
-      Mshop.find_by_id(mshop_id)
-    else
-      nil
-    end
-  end
-  
 end
