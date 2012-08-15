@@ -441,6 +441,7 @@ module Spider
       mcity.id = dp_id
       mcity.dp_id = dp_id
       begin
+        suspend
         doc = Hpricot(open(url,@Request_Headers))
         if not doc.search("div[@class='aboutBox errorMessage']").empty?
           i_err += 1
@@ -596,6 +597,8 @@ if __FILE__ == $0 or $0 == 'script/runner'
       #按分类抓取城市的商家
     when 'cate_shop'
       Spider.cate_shop(ARGV[1].to_i,ARGV[2,ARGV.length-2])
+    when "cate_shops"
+      ARGV[1,ARGV.length-1].each { |city| Spider.cate_shop(city) }
     else
       $LOG.info ARGV
       puts "ARGV    %s" % ARGV
