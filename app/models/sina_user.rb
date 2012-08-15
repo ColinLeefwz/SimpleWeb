@@ -1,2 +1,3 @@
-class SinaUser < ActiveRecord::Base
+class SinaUser
+    include Mongoid::Document
 end
