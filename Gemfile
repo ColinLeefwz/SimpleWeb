@@ -45,6 +45,6 @@ gem 'bson_ext'
 gem 'mongoid'
 gem 'rails-i18n'
 gem 'xmpp4r'
-#gem "nokogiri", "~> 1.5.5"
+gem "nokogiri", "~> 1.5.5"
 gem 'redis'
 
