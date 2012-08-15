@@ -29,8 +29,9 @@ class CheckinsController < ApplicationController
     @checkin.loc = [params[:lat].to_f, params[:lng].to_f]
     @checkin.accuracy = params[:accuracy]
     @checkin.user_id = params[:user_id]
-    @checkin.mshop_id = params[:mshop_id]
+    @checkin.shop_id = params[:shop_id]
     @checkin.shop_name = params[:shop_name]
+    @checkin.od = params[:od]
     @checkin.ip = real_ip
     @checkin.cat = Time.now
 
