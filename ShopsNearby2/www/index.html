@@ -41,12 +41,11 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                     var lat_cur=null, lng_cur=null;
                     
                     function aroundme(){	
-                        get_shops_around_me("http://www.dface.cn/aroundme/shops_by_ip");
                         if(lat_cur==null){
                             alert("无法定位当前位置，请稍后再摇！");
                             return;
                         }
-                        var url2="http://www.dface.cn/aroundme/shops?count=50&lat="+lat_cur+"&lng="+lng_cur;
+                        var url2="http://60.191.119.190/aroundme/shops?count=50&lat="+lat_cur+"&lng="+lng_cur;
                         //alert(url2);
                         console.log(url2);
                         get_shops_around_me(url2);
@@ -63,7 +62,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                                  //alert(data[0].name);
                                  if(data.length>0) shops=data;
                                  for(var i=0;i<shops.length;i++){
-                                 shops[i].diff=GetDistance(lat_cur,lng_cur,shops[i].lat,shops[i].lng);
+                                 shops[i].diff=GetDistance(lat_cur,lng_cur,shops[i].lo[0],shops[i].lo[1]);
                                  }
                                  $( "#shopTemplate" ).tmpl( shops ).appendTo( "#shopList" );
                                  $("#map_button").show();
@@ -151,7 +150,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
                     }
                     
                     function check_in_done(shop_name,shop_id){
-                        var url_checkin = 'http://www.dface.cn/checkins.json?user_id=1&mshop_id='+shop_id+'&shop_name='+shop_name+'&lat='+lat_cur+'&lng='+lng_cur+'&accuracy='+acc_cur;
+                        var url_checkin = 'http://60.191.119.190/checkins.json?user_id=1&mshop_id='+shop_id+'&shop_name='+shop_name+'&lat='+lat_cur+'&lng='+lng_cur+'&accuracy='+acc_cur;
                         console.log(url_checkin);
                         //alert(url_checkin);
                         var jqxhr = $.ajax({
@@ -177,6 +176,7 @@ var shops = [{"name":"新紫轩花店","address":"文一路266号","created_at":
             <div data-role="header" data-theme="f">
                 <h1>附近的商家<a href="javascript:check_in2()">签到</a></h1>
                 <a href="#" onclick="aroundme();" data-role="button">获取</a>
+                <a id="map_button" href="map.htm">地图</a>
                 <a id="map_button" href="mapabc.html">Mapabc</a>
             </div><!-- /header -->
             
