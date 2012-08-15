@@ -1,6 +1,6 @@
 class Mapabc
   include Mongoid::Document
-  store_in collection: "mapabc2"
+  store_in collection: "mapabc"
   field :name
   field :loc, type:Array
   field :phone
@@ -11,7 +11,11 @@ class Mapabc
   
   
   def safe_output
-    self.attributes.slice("id", "name", "phone").merge!( {"lat"=>self.loc[0], "lng"=>self.loc[1], "address"=>self.addr} )
+    if self.loc[0].class==Array #一个地点多个经纬度
+      self.attributes.slice("name", "phone").merge!( {"lat"=>self.loc[0][0], "lng"=>self.loc[0][1], "address"=>self.addr, "id" => self.id} )
+    else
+      self.attributes.slice("id", "name", "phone").merge!( {"lat"=>self.loc[0], "lng"=>self.loc[1], "address"=>self.addr, "id" => self.id} )
+    end
   end
   
   def safe_output_with_users

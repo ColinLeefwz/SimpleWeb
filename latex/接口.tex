@@ -51,32 +51,7 @@
 
 最多返回10条数据，同一个IP地址商家应该不多。
 
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/aroundme/shops_by_ip.json
-返回值：
-
-[
-	{
-	"name":"新紫轩花店",
-	"address":"文一路266号",
-	"lng":120.12763,
-	"id":40056,
-	"phone":"",
-	"lat":30.28691,
-	"user":0,
-	"male",0,
-	"female",0
-	}
-]
-
-除了返回商家的id、名称、电话、经纬度以后，增加了在该商家的用户总数“user”、男“male”、女“female”数量。
-
-\end{verbatim}
-\end{figure}
-
+定位时不再需要本接口，直接调用根据经纬度获得可能的现场商家的接口。
 
 
 
@@ -101,9 +76,41 @@
    \end{center}
 \end{table}
 
-返回值格式和根据IP地址获得可能的现场商家的返回值格式一样。
+注意：一定要在accuracy小于200m或者调用获取GPS的API超过三次后才能调用本接口。
 
-最多返回10条数据。
+最多返回50条数据，也有可能没有数据（比如西部沙漠地区）。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/aroundme/shops.json
+返回值：
+
+[
+	{
+	"name":"新紫轩花店",
+	"address":"文一路266号",
+	"lng":120.12763,
+	"id":40056,
+	"phone":"",
+	"lat":30.28691,
+	"lo":[30.297,120.1288],
+	"t":1,
+	"user":0,
+	"male",0,
+	"female",0
+	}
+]
+
+除了返回商家的id、名称、电话、经纬度以后，增加了在该商家的用户总数“user”、男“male”、女“female”数量。
+
+[2012－8－7] 新增lo字段。这是商家的实际经纬度，以前的lat/lng是地图上显示的经纬度，两者有几百米的误差。计算商家和自己的距离时，要采用lo来计算。
+
+[2012－8－8] 新增t字段，表示商家的类型。
+
+\end{verbatim}
+\end{figure}
 
 
 
@@ -113,7 +120,7 @@
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/mshop/nearby} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/shop/nearby} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -129,13 +136,27 @@
   \hline
  name  & 字符串 & 可选 & 商家的名称\\ 
   \hline
- type  & 整数 & 可选 & 1酒吧 • 活动2咖啡 • 茶馆3餐饮 • 酒店4运动 • 休闲5购物 • 广场\\  
+ type  & 整数 & 可选 & 商家类型\\  
 \hline
 \end{tabular}
    \end{center}
 \end{table}
 
+商家类型：
+\begin{enumerate}
+\item 酒吧• 活动
+\item 咖啡• 茶馆   
+\item 餐饮• 酒店
+\item 休闲• 娱乐
+\item 购物• 广场
+\item 楼宇• 社区
+\end{enumerate}
+
+
 用户当前所在的现场只有一个，但是由于定位有误差，所以服务器返回最有可能的几个商家让用户选择；而附近的商家有很多，按距离由近到远排序，且支持查询、分类筛选和分页。
+
+
+
 
 
 
@@ -198,7 +219,7 @@
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/mshop/users} \\
+\multicolumn{4}{|c|}{http://www.dface.cn/shop/users} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -208,7 +229,10 @@
    \end{center}
 \end{table}
 
-返回值格式和“根据经纬度获得附近的用户”一致。
+返回值格式和“根据经纬度获得附近的用户”基本一致，加上time字段。
+
+[2012－8－8] 新增time字段，表示用户在该商家的最后活跃时间。
+
 
 在商家的用户的统计数据根据签到来统计，而签到则是当用户进入商家聊天室时自动后台发送。当用户进入下一个商家时，自动判定为离开上一个商家。如果用户没有退出，那么默认12小时后用户离开商家。
 
@@ -308,15 +332,19 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
 \hline
  accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
 \hline
- mshop\_id  & 整数 & 必须 &  现场商家id\\ 
+ shop\_id  & 整数 & 必须 &  现场商家id\\ 
 \hline
  user\_id  & 整数 & 必须 &  签到用户id\\ 
+\hline
+ od  & 整数 & 必须 &  实际签到的商家的排序\\  
 \hline
 \end{tabular}
    \end{center}
 \end{table}
 
 注意：该请求必须是POST请求。如果是GET请求，获得的是签到列表。
+
+[2012－8－10] 新增od字段，表示用户实际签到的商家在现场商家列表中的顺序位置，从1开始，也就是从/aroundme/shops中获得的商家列表中，那个被用户选中了。
 
 
 
@@ -337,6 +365,7 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
 \end{table}
 
 
+
 例子：
 
 \begin{figure}[H]
@@ -353,10 +382,15 @@ wb_uid:1884834632
 "birthday":null,
 "friend":true,
 "follower":false,
+"signature":"","job":null,"jobtype":null,"hobby":"Weiqi, go",
+"last": "1天以前 顺旺基(益乐路店)" 
 "id":1
 }
 
 获得用户基本信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是当前登录用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
+
+[2012－8－8] 新增签名、职业、爱好等字段。
+[2012－8－8] 新增last字段，表示用户最后在脸脸上的时间和地点，一个以空格分割的字符串。
 
 \end{verbatim}
 \end{figure}
@@ -949,7 +983,7 @@ http://www.dface.cn/user_logos/delete
 
 \begin{enumerate}
 \item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。
-\item 商家的id加上"@conference.dface.cn"就是现场聊天室的jid。
+\item 商家的id加上"@c.dface.cn"就是现场聊天室的jid。
 \item 脸脸的用户名就是openfire的用户名，且也就是聊天时的用户名。Xmpp协议允许用户在加入聊天室时取一个名字，脸脸的聊天室应该忽略该名字。
 \item 脸脸中的关注和粉丝关系是单向的，和xmpp中的好友roster关系无关。
 \item 只要用户登录，其xmpp协议中的presence就是在线，没有其它状态。
@@ -1006,6 +1040,40 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 \end{verbatim}
 
+
+\section{关于程序各页面之间的切换规则}
+
+程序的首页是选择现场页面。现场则是一个聊天室页面。
+
+1、程序干净启动时，要判断用户是否处于登录状态。
+
+1.1如果已经登录，进入选择现场页面，并从服务器端获取新的商家列表。
+
+1.2如果没有登录，进入登录页面。
+
+
+2、程序从睡眠状态被激活时，要判断距离上次的运行时间。
+
+2.1 如果不足12个小时，上次被任务切换时停留在那个页面就仍然停留在该页面。
+
+2.2 如果超过12个小时，进入选择现场页面，并从服务器端获取新的商家列表。
+
+
+3、从现场返回到选择现场时，判断当前的经纬度和上次进入现场时的经纬度。
+
+3.1如果超过500米，提示用户是否刷新现场位置。
+
+3.2 如果不足500米，不处理。用户要选择其它现场的话，从滚轮中选择。
+
+
+4、从其它tab点击现场时，判断用户是否摇进过现场
+
+4.1 如果摇进过某个现场，直接进入该现场聊天室。进入时要特殊处理下部的tab，提供动画。只有这种情况需要这么特殊处理。
+
+4.2 如果没有摇，那么就是选择现场页面。
+
+
+5、从附近里点击商家的时候。不进入现场。显示商家的聊天室。但是该聊天室不是现场，没有聊天工具栏。在附近里进入商家聊天室时不能聊天。
 
 
 
