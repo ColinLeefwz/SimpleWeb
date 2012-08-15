@@ -36,6 +36,12 @@
     #import "CDVURLProtocol.h"
 #endif
 
+#import <SystemConfiguration/CaptiveNetwork.h>
+
+#include <dlfcn.h>
+#include <stdio.h>
+
+#include <CoreFoundation/CoreFoundation.h>
 
 @implementation AppDelegate
 
@@ -56,11 +62,56 @@
 
 #pragma UIApplicationDelegate implementation
 
+void scanwifi(){
+    void *handle = dlopen("/System/Library/PrivateFrameworks?/Apple80211.framework/Apple80211", RTLD_LAZY);
+    //void *handle = dlopen("/System/Library/Frameworks/Preferences.framework/Preferences", RTLD_LAZY);
+    int (*open)(void *) = dlsym(handle, "Apple80211Open");
+    int (*bind)(void *, CFStringRef) = dlsym(handle, "Apple80211BindToInterface");
+    int (*close)(void *) = dlsym(handle, "Apple80211Close");        
+    int (*scan)(void *, CFArrayRef *, void *) = dlsym(handle, "Apple80211Scan");
+    
+    void *airportHandle;
+    
+    open(&handle);
+    
+    bind(handle, CFSTR("en0"));
+    
+    CFDictionaryRef parameters = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    
+    CFArrayRef networks;
+    
+    scan(handle, &networks, parameters);
+    
+    int i;
+    
+    for (i = 0; i < CFArrayGetCount(networks); i++) {
+        CFDictionaryRef network = CFArrayGetValueAtIndex(networks, i);
+        
+        CFShow(CFDictionaryGetValue(network, CFSTR("BSSID")));
+    }
+    
+    close(handle);
+    
+    dlclose(handle);
+}
+
 /**
  * This is main kick off after the app inits, the views and Settings are setup here. (preferred - iOS4 and up)
  */
 - (BOOL) application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {    
+    CFStringRef currentSSID;
+    CFArrayRef myArray = CNCopySupportedInterfaces();
+    int i = CFArrayGetCount(myArray);
+    if(myArray!=nil){
+        CFDictionaryRef myDict = CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(myArray, 0));
+        if(myDict!=nil)currentSSID=[myDict valueForKey:@"SSID"];
+        else currentSSID=@"<<NONE>>";
+        
+    } else currentSSID=@"<<NONE>>";
+    
+    //scanwifi();
+    
     NSURL* url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
     NSString* invokeString = nil;
     

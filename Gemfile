@@ -15,7 +15,9 @@ gem 'mysql2'
 # gem 'capistrano'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
+# gem 'ruby-debug19', :require => 'ruby-debug'
+# gem install ruby-debug19 -- --with-ruby-include="$rvm_path/src/$(rvm tools identifier)/"
+
 
 # Bundle the extra gems:
 # gem 'bj'
@@ -37,10 +39,12 @@ gem "oauth2"
 gem "will_paginate"
 gem "in_place_editing"
 # gem "system_timer", "~> 1.2.4"
-gem 'paperclip', '~> 2.3.6' 
+gem 'paperclip', '~> 2.3.6'
 gem 'mongo'
 gem 'bson_ext'
 gem 'mongoid'
 gem 'rails-i18n'
 gem 'xmpp4r'
 gem "nokogiri", "~> 1.5.5"
+gem 'redis'
+
