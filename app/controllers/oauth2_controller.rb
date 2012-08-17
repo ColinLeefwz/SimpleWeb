@@ -38,6 +38,7 @@ class Oauth2Controller < ApplicationController
     user = User.find_by_wb_uid uid
     if user.nil?
       sina_info = get_user_info(uid,token.token)
+      SinaUser.collection.insert(sina_info)
       user = User.new
       user.wb_uid = uid
       user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
