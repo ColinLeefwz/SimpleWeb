@@ -224,6 +224,7 @@ module Spider
             end
           end
           shop.reload.lianlian_cate
+          self.shop_latlng(shop)
         end
       end
 
@@ -569,6 +570,15 @@ module Spider
     end
   end
 
+  def self.shop_latlng(shop)
+    latlng = Spider.dp_shop_latlng(shop.id)
+    if latlng
+      shop.lat = latlng[0]
+      shop.lng = latlng[1]
+      shop.save!
+    end
+  end
+
 
 
 end
@@ -581,13 +591,8 @@ if __FILE__ == $0 or $0 == 'script/runner'
 
     case ARGV[0].to_s
     when 'latlng'
-      Mshop.where("lat =0").each do |shop|
-        latlng = Spider.dp_shop_latlng(shop.id)
-        if latlng
-          shop.lat = latlng[0]
-          shop.lng = latlng[1]
-          shop.save!
-        end
+      Mshop.all.each do |shop|
+        Spider.shop_latlng(shop)
       end
       #纠正分类的数据
     when 'cate'
