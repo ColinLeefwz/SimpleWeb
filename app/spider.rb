@@ -223,6 +223,7 @@ module Spider
               end
             end
           end
+          shop.reload.lianlian_cate
         end
       end
 
