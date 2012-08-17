@@ -1,0 +1,49 @@
+<h1>纠偏商家列表</h1>
+
+<%= form_tag admin_shops_path,:method =>:get do %>
+  <p>
+    名称:<%= text_field_tag :name, params[:name] %>
+    经度: <%= text_field_tag :lng, params[:lng] %>
+    纬度 <%= text_field_tag :lat, params[:lat] %>
+    分类: <%= select_tag :t,options_for_select([['所有分类',''],['酒吧• 活动',1],['咖啡• 茶馆 ',2],['餐饮• 酒店',3],['休闲• 娱乐',4],['购物• 广场',5],['楼宇• 社区',6]],params[:t].to_i)  %>
+    区号: <%= text_field_tag :city, params[:city] %>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+<table border="1">
+  <tr>
+    <th>名称</th>
+    <th>经纬度</th>
+    <th>电话</th>
+    <th>区号</th>
+    <th>地址</th>
+    <th>分类</th>
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td><%= shop.name %></td>
+      <td><%= shop.loc%></td>
+      <td><%= shop.tel %></td>
+      <td><%= shop.city %></td>
+      <td><%= shop.addr %></td>
+      <td><%= shop.t %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+<% if (@shops_len+@pcount-1)/@pcount > 1 %>
+  <div id="paginate" style="text-align: center">
+    <%= link_to "第1页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
+      :city => params[:city],:page => 1, :pcount => params[:pcount]}, :class => "previous_page"  %>
+    <%= link_to "上一页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
+      :city => params[:city],:page => @page.to_i-1, :pcount => params[:pcount]},:class => "previous_page"  if @page != 1 %>
+
+    <em class="current"><%= @page %></em>
+    <%= link_to "下一页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
+      :city => params[:city],:page => @page.to_i+1, :pcount => params[:pcount]}, :class => "next_page"  if @page != @last_page %>
+    <%= link_to "第#{@last_page}页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
+      :city => params[:city],:page => @last_page, :pcount => params[:pcount]}, :class => "next_page"   %>
+  </div>
+<%  end %>
