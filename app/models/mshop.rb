@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'offset'
 
 class Mshop < ActiveRecord::Base
@@ -65,6 +67,27 @@ class Mshop < ActiveRecord::Base
   def fill_lian_cate
 
   end
+
+  def lianlian_cate
+    cate = self.mcategory_join_name.force_encoding("UTF-8")
+    case cate.force_encoding("UTF-8")
+    when /酒吧/
+      self.liancate = 1
+    when /咖啡|茶馆/
+      self.liancate = 2
+    else
+      case mcategories.first.parent.id
+      when 10||60
+        self.liancate = 3
+      when 20||65
+        self.liancate = 5
+      else
+        self.liancate = 4
+      end
+    end
+    self.save
+  end
+  
 
 
   def second_mcategory
