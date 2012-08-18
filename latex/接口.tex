@@ -1044,11 +1044,85 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 \end{verbatim}
 
-聊天室里面发送
 
-\subsection{在聊天室发送图片}
+\subsection{聊天时发送图片}
+聊天发图主要流程是：客户端选择（拍摄）一张照片，通过http上传到服务器。上传完成后在xmpp里发送一个特定格式的消息。其它客户端收到消息后获取图片显示并发送回执消息。
+
+\subsubsection{上传图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/photos} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ photo[avatar]  & file & 必须 &  头像文件\\
+ \hline
+ photo[room]  & 字符串 & 可选 &  聊天室的id\\
+ \hline
+ photo[weibo]  & 0/1 & 可选 &  是否同步发送到微博\\
+ \hline
+ photo[to\_uid]  & 字符串 & 可选 &  接收人的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：
+
+\begin{enumerate}
+\item room和to\_uid两个字段必填一个，当在room中发图时，发送weibo选项。
+\item 该请求必须是POST请求，enctype="multipart/form-data"。
+\item 所上传文件的type必须是image/jpeg', 'image/gif' 或者'image/png'。
+\item 图片文件必须小于5M。
+\item 图片名为logo；缩略图分为两种大小，logo\_thumb为75*75的png，logo\_thumb2为150*150的png。
+\end{enumerate}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "photo[avatar]=@firefox.png;type=image/png" 
+http://www.dface.cn/photos
+
+{"_id":"502fd10abe4b19ed48000002","avatar_file_name":"7.png","avatar_content_type":"image/png","avatar_file_size":99422,"avatar_updated_at":"2012-08-18T17:29:46Z","room":"237","user_id":"502e61bfbe4b1921da000001","logo":"/system/avatars/502fd10abe4b19ed48000002/original/7.png?1345310986","logo_thumb":"/system/avatars/502fd10abe4b19ed48000002/thumb/7.jpg?1345310986","logo_thumb2":"/system/avatars/502fd10abe4b19ed48000002/thumb2/7.jpg?1345310986","id":"502fd10abe4b19ed48000002"}
+
+\end{verbatim}
+\end{figure}
+
+\subsubsection{发送消息}
+当图片发送完成后，客户端发送一个xmpp消息，其中的body内容格式为：
+
+\begin{verbatim}
+[img:$id]
+
+比如上面的图片发送成功后，发送消息"[img:502fd10abe4b19ed48000002]"。
+\end{verbatim}
+
+\subsubsection{收到消息后获取图片}
+接收端收到消息后，判断body的内容是否符合图片消息的格式。如果符合就调用下面的接口获取图片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/photo/\$id} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为75*75；2代表thumb2缩略图，大小为150*150。默认为1。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+Response Body中包含头像的二进制信息。
 
 
+\subsubsection{消息状态}
+如果是个人之间的传图，接收者发送状态更新消息给发送者。发送者将状态显示在图片旁边。
 
 
 \section{关于程序各页面之间的切换规则}
