@@ -74,23 +74,21 @@ class ApplicationController < ActionController::Base
   end
 
 
-  def user_authorize
-    if session_user.nil?
-      flash[:notice] = "请登录"
-      redirect_to( :controller => "user_login" , :action => "login")
+  def user_login_filter
+    if session[:user_id].nil?
+      render :json => {:error => "not login"}.to_json
+    end
+  end
+  
+  def user_is_session_user
+    if params[:user_id] != session[:user_id].to_s
+      render :json => {:error => "user #{params[:user_id]} != session user #{session[:user_id]}"}.to_json
+      return
     end
   end
 
-
-  def user_login_redirect(user)
-    session[:user_id] = user.id
-    uri = session[:o_uri]
-    session[:o_uri] = nil
-    redirect_to( uri || {:controller => "user_login", :action => "index"} )
-  end
-
   def session_user
-    u=User.find_by_id(session[:user_id])
+    u=User.find(session[:user_id])
     u
   end
 
