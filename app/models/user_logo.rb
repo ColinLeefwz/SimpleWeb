@@ -1,15 +1,32 @@
-class UserLogo < ActiveRecord::Base
-  belongs_to :user
+class UserLogo
+  include Mongoid::Document
+  include Mongoid::Paperclip
+  
+  field :user_id, type: Moped::BSON::ObjectId
+  field :ord, type: Float
+  
+
+  has_mongoid_attached_file :avatar,
+      :path => ":rails_root/public/system/:attachment/:id/:style/:filename",
+      :url => "/system/:attachment/:id/:style/:filename",
+      :styles => {
+        :thumb   => ['75x75',    :jpg],
+        :thumb2    => ['150x150',   :jpg]
+      }
+  
   validates_presence_of :user_id
   
-  has_attached_file :avatar, :styles => { :thumb => "75x75>", :thumb2 => "150x150>"  }
-
   validates_attachment_presence :avatar
   validates_attachment_size :avatar, :less_than => 5.megabytes
   validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/gif', 'image/png']
   
+  def user
+    User.find(self.user_id)
+  end
+  
+  
   def self.next_ord(user_id)
-    max = UserLogo.select("ord").where(:user_id => user_id).order("ord desc").first
+    max = UserLogo.where(:user_id => user_id).sort({ord:1}).last
     if max
       max.ord+10
     else
@@ -38,7 +55,7 @@ class UserLogo < ActiveRecord::Base
   end
   
   def output_hash
-    self.attributes.slice("id", "user_id", "avatar_file_size","updated_at","ord").merge!( logo_thumb_hash)
+    self.attributes.slice("user_id", "avatar_file_size","updated_at","ord").merge!( logo_thumb_hash).merge!({id: self._id})
   end
 
 end
