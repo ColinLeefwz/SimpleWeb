@@ -5,12 +5,12 @@ include Jabber
 
 #Jabber::debug = true
 
-client = Client.new(JID::new("38@dface.cn"))
+client = Client.new(JID::new("6180043@223.202.15.45"))
 client.connect
-client.auth("38")
+client.auth("y1423")
 client.send(Presence.new.set_type(:available))
 
-msg = Message::new("1@dface.cn", "Hello, 世界!")
+msg = Message::new("5821817@wemomo.com", 'hello')
 msg.type=:chat
 client.send(msg)
 

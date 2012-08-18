@@ -63,16 +63,12 @@ var gcj02_to_real = function(loc){
 
 
 var find_shops = function(loc,accuracy,ip){
-	var loc2 = real_to_gcj02(loc);
-    var cursor = db.shops.find({loc:{$within:{$center:[loc2,0.003]}}}).limit(100);
+    var cursor = db.shops.find({lo:{$within:{$center:[loc,0.003]}}}).limit(100);
 	var ret = [];
 	while ( cursor.hasNext() ) ret.push(cursor.next());
-	var special;
-	for(var i=5;i<ret.length;i++){if(ret[i]._id==9597685) special=ret[i]}
-	if(special) ret.unshift(special);
     if(ret.length>=7) return ret;
 	ret = [];
-	cursor = db.shops.find({loc:{$within:{$center:[loc2,0.3]}}}).limit(7);
+	cursor = db.shops.find({lo:{$within:{$center:[loc,0.3]}}}).limit(7);
 	while ( cursor.hasNext() ) ret.push(cursor.next());
 	return ret;
 };

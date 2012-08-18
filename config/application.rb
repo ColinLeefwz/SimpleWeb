@@ -44,6 +44,7 @@ module Lianlian
     config.generators do |g|  
       g.stylesheets false  
       g.assets false
+      #g.orm :active_record
     end
     
   end

@@ -2,54 +2,20 @@ class FollowInfoController < ApplicationController
   
   
   def followers
-    @followers = Follow.paginate(:conditions => genCondition(params[:id].to_i), :include => :user,:page => params[:page], :per_page => 20)
-    @all_length = Follow.count(:all,:conditions => genCondition(params[:id].to_i), :include => :user)
-    @users = @followers.map {|x| x.user}
-    puts_users(@users)
+    hash = {follows: Moped::BSON::ObjectId(params[:id])}
+    hash.merge!({name: /#{params[:name]}/})  unless params[:name].nil?
+    users = User.where(hash)
+    output_users(users)
   end
   
   def friends
-    @friends = Follow.paginate(:page => params[:page], :per_page => 20, :conditions => genCondition(params[:id].to_i), :include => :follow)
-    @all_length = Follow.find(:all, :conditions => genCondition(params[:id].to_i), :include => :follow).length
-    @users = @friends.map {|x| x.follow}
-    puts_users(@users)
+    users = User.find(params[:id]).follows.map {|x| User.where({_id:x}).first }
+    users.delete(nil)
+    users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
+    output_users(users)
   end
   
   private
-
-  def genCondition(id)
-
-    if params[:action] == "followers"
-      sql = "follows.follow_id = ?"
-      a = [id]
-    elsif params[:action] == "friends"
-      sql = "follows.user_id = ?"
-      a = [id]
-    end
-
-    unless  params[:name].blank?
-      sql += " and users.name like ? "
-      a << "%#{params[:name]}%"
-    end
-
-    a.unshift(sql)
-
-
-  end
-
-
-  def puts_users(fs)
-    users = []
-    fs.each {|f| users << f.safe_output_with_relation(params[:id].to_i) } if fs
-    if params[:hash]
-      ret = {:count => @all_length}
-      ret.merge!( {:data => users})
-    else
-      ret = [{:count => @all_length}]
-      ret << {:data => users}
-    end
-    render :json => ret.to_json
-  end
 
   def output_users(fs)
     users = []
@@ -59,7 +25,7 @@ class FollowInfoController < ApplicationController
     pcount = pcount.to_i
     
     fs2 = fs[(page-1)*pcount,pcount]
-    fs2.each {|f| users << f.safe_output_with_relation(params[:id].to_i) } if fs2
+    fs2.each {|f| users << f.safe_output_with_relation(params[:id]) } if fs2
     if params[:hash]
       ret = {:count => fs.size}
       ret.merge!( {:data => users})
