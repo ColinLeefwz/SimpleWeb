@@ -15,26 +15,5 @@ class FollowInfoController < ApplicationController
     output_users(users)
   end
   
-  private
-
-  def output_users(fs)
-    users = []
-    page = params[:page] || 1
-    pcount = params[:pcount] || 20
-    page = page.to_i
-    pcount = pcount.to_i
-    
-    fs2 = fs[(page-1)*pcount,pcount]
-    fs2.each {|f| users << f.safe_output_with_relation(params[:id]) } if fs2
-    if params[:hash]
-      ret = {:count => fs.size}
-      ret.merge!( {:data => users})
-    else
-      ret = [{:count => fs.size}]
-      ret << {:data => users}
-    end
-    render :json => ret.to_json
-  end
-  
   
 end

@@ -1,12 +1,8 @@
 Lianlian::Application.routes.draw do
   post "blacklists/delete" 
-  resources :blacklists
-
   resources :shop_notices
 
   post "follows/delete" 
-  resources :follows
-
 
   get "user_info/get"
   get "user_info/set"
@@ -93,6 +89,7 @@ Lianlian::Application.routes.draw do
   #match ':controller(/:action(/:id(.:format)))'
   match ':controller/:action' => ":controller#:action"
   match ':controller/:action(.:format)'  => ":controller#:action"
+  match ':controller' => ":controller#index"
 
   
 end

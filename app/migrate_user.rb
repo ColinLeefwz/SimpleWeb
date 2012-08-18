@@ -41,3 +41,10 @@ User.all.each do |u|
   u.update_attributes(follows:fs)
 end
   
+class Blacklist < ActiveRecord::Base; end
+
+Blacklist.all.each do |b|
+  u = User.where({oid:b.user_id}).first
+  bu = User.where({oid:b.block_id}).first
+  u.add_to_set(:blacks, {id:bu._id,report:b.report})
+end
