@@ -1,14 +1,36 @@
 # coding: utf-8
 
-class User < ActiveRecord::Base
-  has_many :user_logos, :order => 'ord asc'
-  validates_uniqueness_of :wb_uid
-
-  validates_length_of :name, :maximum => 64
-  validates_length_of :wb_uid, :maximum => 64
-  validates_length_of :birthday, :maximum => 32
-  validates_length_of :password, :maximum => 32
+class User 
+  include Mongoid::Document
+  #field :_id, type: Integer
+  field :wb_uid
+  field :name
+  field :gender, type: Integer
+  field :birthday
+  field :password
+  field :invisible, type: Integer
+  field :signature
+  field :job 
+  field :jobtype, type: Integer
+  field :hobby
   
+  field :blacks, type:Array #黑名单
+  field :follows, type:Array #关注
+
+  validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
+
+
+  def attr_with_id
+    hash = self.attributes.merge({id: self._id})
+    hash.delete("_id")
+    hash
+  end
+
+  def user_logos
+    return [] unless self._id
+    UserLogo.where("user_id='#{self._id}'").order("ord asc")
+  end
+
   
   def head_logo
     self.user_logos.first
@@ -24,7 +46,8 @@ class User < ActiveRecord::Base
   end
   
   def safe_output
-    self.attributes.slice("id", "name", "wb_uid", "gender", "birthday", "logo").merge!( head_logo_hash)
+    hash = self.attr_with_id.slice("name", "wb_uid", "gender", "birthday", "logo")
+    hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
   def safe_output_with_relation( user_id )
@@ -36,14 +59,17 @@ class User < ActiveRecord::Base
   end
   
   def output_with_relation( user_id )
-    hash = self.attributes
+    hash = self.attr_with_id
     hash.delete("password")
+    hash.delete("blacks")
+    hash.delete("follows")
     hash.merge!( head_logo_hash).merge!( relation_hash(user_id) )
     hash.merge!(last_location)
   end
 
   def last_location
-    loc = Checkin.where({user_id:self.id}).sort({_id:1}).last
+    loc = Checkin.where({user_id:self._id}).sort({_id:1}).last
+    return {:last => ""} if loc.nil?
     diff = Time.now.to_i - loc.cat.to_i
     tstr = case diff
     when 0..60 then "1分钟内"
@@ -62,11 +88,15 @@ class User < ActiveRecord::Base
   end
   
   def friend?(user_id)
-    Follow.find_by_user_id_and_follow_id(self.id, user_id) !=nil
+    self.follows !=nil && self.follows.index(user_id) !=nil
   end
   
   def follower?(user_id)
-    Follow.find_by_user_id_and_follow_id(user_id,self.id) !=nil
+    begin
+      return User.find(user_id).follows.index(self._id) !=nil
+    rescue
+      return false
+    end
   end
 
 
