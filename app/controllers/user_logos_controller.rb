@@ -1,5 +1,5 @@
 class UserLogosController < ApplicationController
-  before_filter :user_authorize
+  before_filter :user_login_filter
 
   def index
     render :json => session_user.user_logos.to_json
@@ -28,12 +28,10 @@ class UserLogosController < ApplicationController
   
   def change_all_position
     ids = params[:ids].split(",")
-    UserLogo.transaction do
     ids.each_with_index do |id,index|
       user_logo = UserLogo.find(id)
       raise "photo#{id}'s owner #{user_logo.user_id} != session user #{session[:user_id]}" if user_logo.user_id != session[:user_id]
       user_logo.update_attribute("ord",index*10)
-    end
     end
     render :json => session_user.user_logos.map{|x| x.output_hash}.to_json
   end
@@ -52,10 +50,4 @@ class UserLogosController < ApplicationController
     end
   end
 
-  private
-  def user_authorize
-    if session_user.nil?
-      render :json => {:error => "not login"}
-    end
-  end
 end
