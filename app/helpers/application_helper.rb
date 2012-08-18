@@ -3,25 +3,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  def show_dooo_captcha(options={})
-    %Q{
-                <input type="text" size="10" name="captcha" id="captcha"><img width="75" src="/util/captcha_img" id="captcha_img"/>
-                <script>
-                  function changeImage(){
-                    document.getElementById("captcha_img").src = "/util/captcha_img?id="+new Date().getTime(); // Math.random();
-                  }
-                changeImage();
-          </script>
-        }
-    end
-
-      def add_to_cart(discount)
-        s=form_remote_tag(:url => "/cart/add/#{discount.id}") do
-          submit_tag '加入购物车'
-        end
-        s
-      end
-
     def no_nav
       content_for :nav do
       end
@@ -51,45 +32,6 @@ module ApplicationHelper
       end
     end
 
-    def subshop_select
-      s=""
-      if(session_shop? && session_shop.subshops.count>0)
-        s+="<input id='discount_subshops_0' type='checkbox' name='discount[subshops][]' checked='checked' value=''/>&nbsp;总店和所有分店(缺省)&nbsp;&nbsp;"
-        s+="<input onclick='sel(this)' type='checkbox' name='discount[subshops][]' value='#{session_shop.phone}'/>&nbsp;总店&nbsp;&nbsp;"
-        session_shop.subshops.each do |x|
-          s+="<input onclick='sel(this)' type='checkbox' name='discount[subshops][]' value='#{x.phone}'/>&nbsp;#{x.name}&nbsp;&nbsp;"
-        end
-      end
-      s+="<script>function sel(c){document.getElementById('discount_subshops_0').checked=false;if(c.checked) document.getElementById('discount_desc').innerHTML+=c.nextSibling.data+',' }</script>"
-      s
-    end
-
-    def subshop_select2
-      s=""
-      if(session_shop? && session_shop.subshops.count>0)
-        s+=check_box_tag("discount[subshops][]", "" )
-        s+="总店和所有分店(缺省)<br />"
-        s+=check_box_tag("discount[subshops][]", "#{session_shop.phone}" )
-        s+="总店<br />"
-        session_shop.subshops.each do |x|
-          s+=check_box_tag("discount[subshops][]", x.phone )
-          s+="#{x.name}<br />"
-        end
-      end
-      s
-    end
-
-    def discount_multi_select
-      ret=[]
-      i=0
-      while i<61
-        a=Discount.multi_range[i]
-        b=Discount.multi_name[i]
-        ret << [ b,a ]
-        i+=1
-      end
-      ret
-    end
 
 
     # 分页
@@ -114,10 +56,6 @@ module ApplicationHelper
       return s
     end
 
-    def is_radio107?
-      true if session[:shop_id].to_s == "187"
-      #    true if session[:shop_id].to_s == "152"
-    end
 
     def admin_select_opt
       init=["请选择",""]
@@ -141,21 +79,6 @@ module ApplicationHelper
       [["是",true],["否",false]]
     end
 
-    def text_field_with_auto_complete_1dooo(object, method = :name,
-                                            tag_options = {:size => 30, :onclick => "#{object}_#{method}_auto_completer.activate();"},
-                                            completion_options = {:url => "/"+object.to_s+"s.js", :method => :get, :with => "'name='+element.value", :after_update_element => :getSelectionId, :indicator => "indicator"+object.to_s})
-
-      text_field(object, method, tag_options) +%Q{
-        <span id="indicator#{object}" style="display: none">
-          <img src="/images/spinner.gif" alt="Working..." />
-        </span>
-      }+
-    (completion_options[:skip_style] ? "" : auto_complete_stylesheet) +
-    content_tag("div", "", :id => "#{object}_#{method}_auto_complete", :class => "auto_complete") +
-    auto_complete_field("#{object}_#{method}", { :url => { :action => "auto_complete_for_#{object}_#{method}" } }.update(completion_options))
-
-    #text_field_with_auto_complete(object, method, tag_options, completion_options)
-  end
 
         def accounts_type_select
           ["支付宝", "网银在线", "财付通", "深圳发展银行", "招商银行", "中国工商银行", "中国农业银行", "中国建设银行", "中国光大银行", "中国民生银行", "交通银行", "广东发展银行", "中信银行", "浦发银行", "兴业银行"]
