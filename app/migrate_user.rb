@@ -25,7 +25,7 @@ end
 coll = db.collection("user_logos")
 UserLogo.all.each do |x|
   hash = x.attributes.slice("user_id","avatar_file_name","avatar_content_type","avatar_file_size","avatar_updated_at","ord").as_json
-  hash.merge!(_id:x.id)
+  hash.merge!(oid:x.id)
   coll.insert hash  
 end
 
@@ -47,4 +47,16 @@ Blacklist.all.each do |b|
   u = User.where({oid:b.user_id}).first
   bu = User.where({oid:b.block_id}).first
   u.add_to_set(:blacks, {id:bu._id,report:b.report})
+end
+
+UserLogo.all.each do |u|
+  user = User.where({oid:u.user_id}).first
+  puts user
+  next if user.nil?
+  u.update_attributes(user_id:user._id)
+end
+
+UserLogo.all.each do |u|
+  u.update_attributes(ord:u.ord.to_f)
+  u.update_attributes(avatar_updated_at:Time.now)
 end

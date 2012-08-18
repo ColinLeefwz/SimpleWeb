@@ -2,8 +2,7 @@ class UserLogosController < ApplicationController
   before_filter :user_authorize
 
   def index
-    @user_logo = UserLogo.find_by_user_id(session_user.id, :order => "id desc")
-    @user_logo = UserLogo.new unless @user_logo
+    render :json => session_user.user_logos.to_json
   end
 
   def create

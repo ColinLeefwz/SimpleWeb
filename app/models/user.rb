@@ -28,7 +28,7 @@ class User
 
   def user_logos
     return [] unless self._id
-    UserLogo.where("user_id='#{self._id}'").order("ord asc")
+    UserLogo.where({user_id: self._id}).sort({ord:1})
   end
 
   
@@ -46,7 +46,7 @@ class User
   end
   
   def safe_output
-    hash = self.attr_with_id.slice("name", "wb_uid", "gender", "birthday", "logo")
+    hash = self.attributes.slice("name", "wb_uid", "gender", "birthday", "logo")
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
