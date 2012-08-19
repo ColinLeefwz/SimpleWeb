@@ -3,14 +3,14 @@ class ShopNoticesController < ApplicationController
   # GET /shop_notices.json
   def index
     if params[:id]
-      @shop_notices = ShopNotice.find_all_by_shop_id params[:id]
+      @shop_notices = ShopNotice.where({shop_id: params[:id]})
     else
       @shop_notices = ShopNotice.all
     end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @shop_notices.map{|sn| sn.attributes.slice("id", "title")}.to_json }
+      format.json { render :json => @shop_notices.map{|sn| {id:sn._id, title:sn.title} }.to_json }
     end
   end
 
