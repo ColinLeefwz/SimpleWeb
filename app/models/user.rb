@@ -80,12 +80,7 @@ class User
     loc = Checkin.where({user_id:self._id}).sort({_id:1}).last
     return {:last => ""} if loc.nil?
     diff = Time.now.to_i - loc.cat.to_i
-    tstr = case diff
-    when 0..60 then "1分钟内"
-    when 61..3600 then "#{diff/60}分钟内"
-    when 3601..86400 then "#{diff/3600}小时内"
-    else "1天以前"
-    end
+    tstr = User.time_desc(diff)
     dstr = loc.shop_name
     dstr = Shop.find(loc.shop_id).name if dstr.nil?
      #TODO: 使用redis保存用户最后出现的地点和时间
@@ -105,6 +100,15 @@ class User
       return User.find(user_id).follows.index(self._id) !=nil
     rescue
       return false
+    end
+  end
+  
+  def self.time_desc(diff)
+    case diff
+    when 0..60 then "1分钟内"
+    when 61..3600 then "#{diff/60}分钟内"
+    when 3601..86400 then "#{diff/3600}小时内"
+    else "1天以前"
     end
   end
 
