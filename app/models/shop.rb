@@ -52,13 +52,12 @@ class Shop
   
   def users_count
     us = users.size
-    female = users.where("gender=2").size
-    [us,us-female,female]
+    [us,us/2,us/2]
   end
   
   def users
     # TODO: 获得现场的用户列表、最后出现时间、以及男女的数量
-    User.where("name is not null and id<60").order("id asc")
+    User.where({name: {"$exists" => 1}, id:{"$lt" => 60} }).sort({_id:-1})
   end
   
   
