@@ -12,4 +12,17 @@ class Checkin
     self._id.generation_time
   end
   
+  def time_desc
+    diff = Time.now.to_i - self.cat.to_i
+    User.time_desc(diff)
+  end
+  
+  def user
+    User.find(self.user_id)
+  end
+  
+  def shop
+    Shop.find(self.shop_id)
+  end
+  
 end
