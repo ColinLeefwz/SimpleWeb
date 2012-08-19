@@ -47,7 +47,7 @@ class AroundmeController < ApplicationController
 #    $login_users.each do |id|
 #      ret << User.find_by_id(id).safe_output_with_relation(session[:user_id])
 #    end
-    User.where("name is not null").order("id asc").limit(50).each {|u| ret << u.safe_output_with_relation(session[:user_id])}
+    User.where({name: {"$exists" => 1}}).sort({_id:-1}).limit(50).each {|u| ret << u.safe_output_with_relation(session[:user_id])}
     ret = ret[(page-1)*pcount,pcount]
     if ret
       render :json => ret.to_json
