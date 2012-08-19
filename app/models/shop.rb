@@ -52,12 +52,13 @@ class Shop
   
   def users_count
     us = users.size
-    [us,us/2,us/2]
+    male = users.inject(0) {| memo, obj | obj.gender==1? memo+1 : memo } 
+    [us,male,us-male]
   end
   
   def users
-    # TODO: 获得现场的用户列表、最后出现时间、以及男女的数量
-    User.where({name: {"$exists" => 1}, id:{"$lt" => 60} }).sort({_id:-1})
+    #TODO: 加上时间限制
+    Checkin.where({shop_id:self.id}).distinct("user_id").map {|x| User.find(x)}
   end
   
   
