@@ -60,3 +60,17 @@ UserLogo.all.each do |u|
   u.update_attributes(ord:u.ord.to_f)
   u.update_attributes(avatar_updated_at:Time.now)
 end
+
+def dir_path(id)
+  "./public/system/avatars/#{id}"
+end
+
+UserLogo.all.each do |u|
+begin
+  oldd = dir_path(u.oid)
+  newd = dir_path(u._id)
+  cmd = "mv #{oldd} #{newd}"
+  puts cmd
+rescue
+end
+end
