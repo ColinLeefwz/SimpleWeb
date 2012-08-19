@@ -74,3 +74,12 @@ begin
 rescue
 end
 end
+
+Checkin.all.each do |x|
+  u = User.where({oid:x.user_id}).first
+  next if u.nil?
+  puts u._id
+  x.update_attribute(:user_id, u._id)
+end
+
+

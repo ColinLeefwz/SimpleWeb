@@ -33,7 +33,6 @@ class CheckinsController < ApplicationController
     @checkin.shop_name = params[:shop_name]
     @checkin.od = params[:od]
     @checkin.ip = real_ip
-    @checkin.cat = Time.now
 
     respond_to do |format|
       if @checkin.save
