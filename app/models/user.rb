@@ -18,7 +18,16 @@ class User
   field :follows, type:Array #关注
 
   validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
-
+  
+  
+  def follows_s
+    (self.follows.nil?)? [] : self.follows
+  end
+  
+  def blacks_s
+    (self.blacks.nil?)? [] : self.blacks
+  end
+  
 
   def attr_with_id
     hash = self.attributes.merge({id: self._id})
