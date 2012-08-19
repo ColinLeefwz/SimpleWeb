@@ -17,9 +17,9 @@ class ShopController < ApplicationController
   end
   
   def users
-    shop = Shop.find(params[:id].to_i)
-    # TODO: 实际计算最后出现时间
-    render :json => shop.users.map {|u| u.safe_output_with_relation(session[:user_id]).merge!({time:"1 minute"})}.to_json
+    cs = Checkin.where({shop_id:params[:id].to_i}).sort({_id:-1}).limit(100)
+    hash = cs.map{|c| c.user.safe_output_with_relation(session[:user_id]).merge!({time:c.time_desc})}
+    render :json => hash.to_json
   end
 
 
