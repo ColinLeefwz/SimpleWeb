@@ -2,7 +2,7 @@ class BlacklistsController < ApplicationController
   before_filter :user_is_session_user, :except => [:index]
 
   def index
-    users = User.find(params[:id]).blacks.map {|x| User.where({_id:x["id"]}).first }
+    users = User.find(params[:id]).blacks_s.map {|x| User.where({_id:x["id"]}).first }
     users.delete(nil)
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
     output_users(users)
