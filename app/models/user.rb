@@ -20,8 +20,11 @@ class User
   validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
   
   def self.find2(id) #和find相比不抛出异常
-    id=Moped::BSON::ObjectId(id) if id.class==String
-    User.where({_id:id}).first
+    begin
+      User.find(id)
+    rescue
+      nil
+    end
   end
   
   def follows_s
