@@ -21,10 +21,9 @@ class ShopController < ApplicationController
     hash = Mongoid.default_session.command(eval:str)["retval"]
     ret = hash.map do |k,v|
       u = User.find2(k[10..-3]) # ObjectId("k") => k
-      u.nil?? nil : u.safe_output_with_relation(session[:user_id])
+      u.safe_output_with_relation(session[:user_id])
         .merge!({time:Checkin.time_desc(v)})
     end
-    ret.delete(nil)
     render :json => ret.to_json
   end
 
