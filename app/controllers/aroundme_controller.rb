@@ -43,11 +43,7 @@ class AroundmeController < ApplicationController
     pcount = params[:pcount] || 20
     page = page.to_i
     pcount = pcount.to_i
-    logger.info("login user count: #{$login_users.size} ")
-#    $login_users.each do |id|
-#      ret << User.find_by_id(id).safe_output_with_relation(session[:user_id])
-#    end
-    User.where({name: {"$exists" => 1}}).sort({_id:-1}).limit(50).each {|u| ret << u.safe_output_with_relation(session[:user_id])}
+    User.where({name: {"$exists" => 1}}).sort({_id:-1}).limit(200).each {|u| ret << u.safe_output_with_relation(session[:user_id]) unless u.head_logo.nil?}
     ret = ret[(page-1)*pcount,pcount]
     if ret
       render :json => ret.to_json
