@@ -96,10 +96,25 @@ var shop_user_count = function(sid){
         if(!users[x.user_id]){ //不重复统计同一个用户
             all+=1;
             if(x.gender==2) female+=1;
-            users[x.user_id] = x;
+            users[x.user_id] = x._id;
         }
     });
     return [all,all-female,female];
 }
 db.system.js.save({ "_id" : "shop_user_count", "value" : shop_user_count });
 
+
+var shop_users = function(sid){
+    var users={};
+    var count=0;
+    db.checkins.find({shop_id:sid}).sort({_id:-1}).limit(1000).forEach(function(x){
+        //TODO: 只统计最近一个月的访问用户
+        if(count>=100) return;
+        if(!users[x.user_id]){ //不重复统计同一个用户
+            users[x.user_id] = x._id.getTimestamp();
+            count+=1;
+        }
+    });
+    return users;
+}
+db.system.js.save({ "_id" : "shop_users", "value" : shop_users });
