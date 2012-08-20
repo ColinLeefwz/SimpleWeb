@@ -1,13 +1,9 @@
 Lianlian::Application.routes.draw do
-  post "blacklists/delete" 
-  resources :blacklists
   resources :shop_notices
   resources :photos
 
-  post "follows/delete" 
-
   get "user_info/get"
-  get "user_info/set"
+
 
   resources :checkins
 
@@ -29,11 +25,6 @@ Lianlian::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-
-  post "user_logos/delete" 
-  post "user_logos/position" 
-  post "user_logos/change_all_position" 
-  resources :user_logos
   
   resources :users do
     resources :user_logos
