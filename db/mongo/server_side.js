@@ -87,3 +87,19 @@ db.system.js.save({ "_id" : "gcj02_to_real", "value" : gcj02_to_real });
 db.system.js.save({ "_id" : "find_shops", "value" : find_shops });
 
 
+
+var shop_user_count = function(sid){
+    var users={};
+    var all=0,female=0;
+    db.checkins.find({shop_id:sid}).forEach(function(x){
+        //TODO: 只统计最近一个月的访问用户
+        if(!users[x.user_id]){ //不重复统计同一个用户
+            all+=1;
+            if(x.gender==2) female+=1;
+            users[x.user_id] = x;
+        }
+    });
+    return [all,all-female,female];
+}
+db.system.js.save({ "_id" : "shop_user_count", "value" : shop_user_count });
+
