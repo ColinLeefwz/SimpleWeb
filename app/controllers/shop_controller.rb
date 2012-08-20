@@ -24,6 +24,7 @@ class ShopController < ApplicationController
       u.safe_output_with_relation(session[:user_id])
         .merge!({time:Checkin.time_desc(v)})
     end
+    #TODO: 用redis缓存商家的用户访问记录
     render :json => ret.to_json
   end
 
