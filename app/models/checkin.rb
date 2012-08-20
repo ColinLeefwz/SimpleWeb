@@ -1,7 +1,7 @@
 class Checkin
   include Mongoid::Document
   field :shop_id, type: Integer
-  field :user_id
+  field :user_id, type: Moped::BSON::ObjectId
   field :gender, type:Integer
   field :loc, type:Array
   field :ip
