@@ -9,7 +9,7 @@ class BlacklistsController < ApplicationController
   end
 
   def create
-    hash = {id:Moped::BSON::ObjectId(params[:block_id]), report:params[:report].to_i }
+    hash = {id:Moped::BSON::ObjectId(params[:block_id]), report:params[:report].to_i, cat:Time.now }
     session_user.add_to_set(:blacks, hash)
     render:json => hash.to_json
   end
