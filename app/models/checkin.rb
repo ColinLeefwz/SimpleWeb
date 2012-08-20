@@ -18,6 +18,11 @@ class Checkin
     User.time_desc(diff)
   end
   
+  def self.time_desc(time)
+    diff = Time.now.to_i - time.to_i
+    User.time_desc(diff)
+  end
+  
   def user
     User.find(self.user_id)
   end
