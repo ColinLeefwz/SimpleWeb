@@ -51,15 +51,8 @@ class Shop
   end
   
   def users_count
-    us = users.size
-    male = users.inject(0) {| memo, obj | obj.gender==1? memo+1 : memo } 
-    [us,male,us-male]
+    str="shop_user_count(#{self.id})"
+    Mongoid.default_session.command(eval:str)["retval"].map {|x| x.to_i}
   end
-  
-  def users
-    #TODO: 加上时间限制
-    Checkin.where({shop_id:self.id}).distinct("user_id").map {|x| User.find(x)}
-  end
-  
   
 end
