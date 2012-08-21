@@ -35,6 +35,11 @@ class User
     (self.blacks.nil?)? [] : self.blacks
   end
   
+  def black?(user_id)
+    match = self.blacks_s.find {|x| x["id"].to_s==user_id.to_s}
+    ! match.nil?
+  end
+  
 
   def attr_with_id
     hash = self.attributes.merge({id: self._id})
