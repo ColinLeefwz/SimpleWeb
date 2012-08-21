@@ -35,24 +35,24 @@ class AdminLoginController < ApplicationController
     session[:admin_id] = nil
     if request.post?
       #	  保存用户登录信息 2010-05-07 13:38:00 修改
-      admin_login_log = AdminLoginLog.new
-      admin_login_log.login_time = Time.zone.now
-      admin_login_log.ip = request.remote_ip
-      admin_login_log.name = params[:name]
-      admin_login_log.password = params[:password]
+#      admin_login_log = AdminLoginLog.new
+#      admin_login_log.login_time = Time.zone.now
+#      admin_login_log.ip = request.remote_ip
+#      admin_login_log.name = params[:name]
+#      admin_login_log.password = params[:password]
       admin = Admin.auth(params[:name], params[:password])
       if admin
         # 用户的登录名/手机号是可以修改的，所以保存 admin_id
-        admin_login_log.admin_id = admin.id
-        admin_login_log.login_suc = true
-        admin_login_log.save
+#        admin_login_log.admin_id = admin.id
+#        admin_login_log.login_suc = true
+#        admin_login_log.save
         
         session[:admin_id] = admin.id
         uri = session[:o_uri]
         session[:o_uri] = nil
         redirect_to( uri || {:action => "index"} )
       else
-        admin_login_log.save
+#        admin_login_log.save
         flash.now[:notice] = "用户名或者密码错误！"
       end
     end

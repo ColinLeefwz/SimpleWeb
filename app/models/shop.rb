@@ -8,6 +8,7 @@ class Shop
   field :city
   field :addr
   field :t                #脸脸的商家类型
+  field :level            #商家的人工等级
   #field :cc, type:Integer  #点评的评论数
   #field :type              #从mapabc导入的商家类型
   
