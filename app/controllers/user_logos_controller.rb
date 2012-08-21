@@ -31,7 +31,7 @@ class UserLogosController < ApplicationController
     ids.each_with_index do |id,index|
       user_logo = UserLogo.find(id)
       raise "photo#{id}'s owner #{user_logo.user_id} != session user #{session[:user_id]}" if user_logo.user_id != session[:user_id]
-      user_logo.update_attribute("ord",index*10)
+      user_logo.update_attribute("ord",1+index*10)
     end
     render :json => session_user.user_logos.map{|x| x.output_hash}.to_json
   end
