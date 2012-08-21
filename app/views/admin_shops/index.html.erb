@@ -1,12 +1,15 @@
-<h1>纠偏商家列表</h1>
+<h1>商家管理</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
 
 <%= form_tag admin_shops_path,:method =>:get do %>
   <p>
     名称:<%= text_field_tag :name, params[:name] %>
-    经度: <%= text_field_tag :lng, params[:lng] %>
-    纬度 <%= text_field_tag :lat, params[:lat] %>
+    经度: <%= text_field_tag :lng, params[:lng], :size => 10  %>
+    纬度 <%= text_field_tag :lat, params[:lat], :size => 10  %>
+    区号: <%= text_field_tag :city, params[:city], :size => 10 %>
     分类: <%= select_tag :t,options_for_select([['所有分类',''],['酒吧• 活动',1],['咖啡• 茶馆 ',2],['餐饮• 酒店',3],['休闲• 娱乐',4],['购物• 广场',5],['楼宇• 社区',6]],params[:t].to_i)  %>
-    区号: <%= text_field_tag :city, params[:city] %>
+    等级： <%= select_tag :level,options_for_select([['所有等级',''],['A',"A"],['B',"B"],['C',"C"],['D',"D"],['空','空']],params[:level])  %>
+    排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"],['等级从高向低',"2"],['等级从低向高',"3"]],params[:order])  %>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
@@ -18,6 +21,7 @@
     <th>区号</th>
     <th>地址</th>
     <th>分类</th>
+    <th>等级</th>
   </tr>
 
   <% @shops.each do |shop| %>
@@ -28,6 +32,19 @@
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
       <td><%= shop.t %></td>
+      <td onclick="showe($(this))">
+        <span>
+          <%= shop.level %>
+        </span>
+        <span style="display:none">
+          <%= radio_button_tag :level,'空',shop.level=="" %>空
+          <%= radio_button_tag :level,'A', shop.level=="A" %>A
+          <%= radio_button_tag :level,'B',shop.level=="B" %>B
+          <%= radio_button_tag :level,'C',shop.level=="C" %>C
+          <%= radio_button_tag :level,'D',shop.level=="D" %>D
+          <%= submit_tag "提交", :onclick => "ajaxupdatelevel($(this), #{shop._id})" %>
+        </span>
+      </td>
     </tr>
   <% end %>
 </table>
@@ -47,3 +64,20 @@
       :city => params[:city],:page => @last_page, :pcount => params[:pcount]}, :class => "next_page"   %>
   </div>
 <%  end %>
+
+
+<script type="text/javascript">
+  function showe(obj){
+    obj.children("span:first").hide()
+    obj.children("span:last").show();
+  }
+
+  function ajaxupdatelevel(obj,shop_id){
+    level = obj.parent().children("input[@name='level']:checked").val()
+    $.post("/admin_shops/ajaxupdatelevel",{level:level, shop_id:shop_id}, function(data) {
+      obj.parent().replaceWith(data["level"])
+    });
+  }
+ 
+
+</script>
