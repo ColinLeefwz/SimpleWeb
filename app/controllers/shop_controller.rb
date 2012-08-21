@@ -17,9 +17,15 @@ class ShopController < ApplicationController
   end
   
   def users
-    cs = Checkin.where({shop_id:params[:id].to_i}).sort({_id:-1}).limit(100)
-    hash = cs.map{|c| c.user.safe_output_with_relation(session[:user_id]).merge!({time:c.time_desc})}
-    render :json => hash.to_json
+    str="shop_users(#{params[:id]})"
+    hash = Mongoid.default_session.command(eval:str)["retval"]
+    ret = hash.map do |k,v|
+      u = User.find2(k[10..-3]) # ObjectId("k") => k
+      u.safe_output_with_relation(session[:user_id])
+        .merge!({time:Checkin.time_desc(v)})
+    end
+    #TODO: 用redis缓存商家的用户访问记录
+    render :json => ret.to_json
   end
 
 

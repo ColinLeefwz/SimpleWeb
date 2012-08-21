@@ -19,6 +19,13 @@ class User
 
   validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
   
+  def self.find2(id) #和find相比不抛出异常
+    begin
+      User.find(id)
+    rescue
+      nil
+    end
+  end
   
   def follows_s
     (self.follows.nil?)? [] : self.follows
@@ -26,6 +33,11 @@ class User
   
   def blacks_s
     (self.blacks.nil?)? [] : self.blacks
+  end
+  
+  def black?(user_id)
+    match = self.blacks_s.find {|x| x["id"].to_s==user_id.to_s}
+    ! match.nil?
   end
   
 
@@ -37,11 +49,14 @@ class User
 
   def user_logos
     return [] unless self._id
-    UserLogo.where({user_id: self._id}).sort({ord:1})
+    # UserLogo.where({user_id: self._id}).sort({ord:1})
+    # 太变态了，sort单独调用可以排序，结合first却无效，只能用order_by
+    UserLogo.where({user_id: self._id}).order_by([:ord,:asc])
   end
 
   
   def head_logo
+    return nil if self.user_logos.size==0
     self.user_logos.first
   end
   
@@ -108,7 +123,8 @@ class User
     when 0..60 then "1分钟内"
     when 61..3600 then "#{diff/60}分钟内"
     when 3601..86400 then "#{diff/3600}小时内"
-    else "1天以前"
+    when 86400..864000 then "#{diff/86400}天内"
+    else "10天以前"
     end
   end
 
