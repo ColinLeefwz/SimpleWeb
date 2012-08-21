@@ -44,11 +44,14 @@ class User
 
   def user_logos
     return [] unless self._id
-    UserLogo.where({user_id: self._id}).sort({ord:1})
+    # UserLogo.where({user_id: self._id}).sort({ord:1})
+    # 太变态了，sort单独调用可以排序，结合first却无效，只能用order_by
+    UserLogo.where({user_id: self._id}).order_by([:ord,:asc])
   end
 
   
   def head_logo
+    return nil if self.user_logos.size==0
     self.user_logos.first
   end
   
