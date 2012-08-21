@@ -12,7 +12,7 @@ class FollowInfoController < ApplicationController
     users = User.find(params[:id]).follows_s.map {|x| User.find2(x) }
     users.delete(nil)
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
-    output_users(users)
+    output_users(users.reverse)
   end
   
   

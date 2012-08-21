@@ -120,11 +120,13 @@ class User
   
   def self.time_desc(diff)
     case diff
-    when 0..60 then "1分钟内"
-    when 61..3600 then "#{diff/60}分钟内"
-    when 3601..86400 then "#{diff/3600}小时内"
-    when 86400..864000 then "#{diff/86400}天内"
-    else "10天以前"
+    when 0..60 then "1 min"
+    when 61..3600 then "#{diff/60} mins"
+    when 3601..7200 then "1 hour"      
+    when 7201..86400 then "#{diff/3600} hours"
+    when 86401..172800 then "1 day"      
+    when 172800..864000 then "#{diff/86400} days"
+    else "10+ days"
     end
   end
 
