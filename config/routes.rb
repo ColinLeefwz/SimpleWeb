@@ -1,38 +1,9 @@
 Lianlian::Application.routes.draw do
-  post "blacklists/delete" 
   resources :shop_notices
   resources :photos
-
-  post "follows/delete" 
-
-  get "user_info/get"
-  get "user_info/set"
-
   resources :checkins
 
-  get "aroundme/shops"
-  get "aroundme/users"
-
   post "shops/manual"
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  post "user_logos/delete" 
-  post "user_logos/position" 
-  post "user_logos/change_all_position" 
-  resources :user_logos
   
   resources :users do
     resources :user_logos
