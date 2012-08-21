@@ -4,13 +4,21 @@ class Shop
   field :name
   field :loc, type:Array #地图上的经纬度
   field :lo, type:Array #实际的经纬度
-  field :tel
+  field :tel 
   field :city
+  field :del,type:Integer   #删除标记
   field :addr
   field :t                #脸脸的商家类型
   field :level            #商家的人工等级
   #field :cc, type:Integer  #点评的评论数
   #field :type              #从mapabc导入的商家类型
+
+
+  def self.default_hash
+    {del: {"$ne" => 1}}
+  end
+
+
   
   def self.import_form(mshop) #从Mshop导入点评商家
     begin
@@ -32,6 +40,11 @@ class Shop
     }
     #TODO: 点评的商家类型映射到脸脸的商家类型
     Shop.collection.insert hash
+  end
+
+  #删除商家.
+  def udel
+    self.update_attribute(:del,1)
   end
   
   def loc_first

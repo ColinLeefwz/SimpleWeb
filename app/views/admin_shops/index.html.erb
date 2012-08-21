@@ -21,7 +21,21 @@
     <th>区号</th>
     <th>地址</th>
     <th>分类</th>
-    <th>等级</th>
+    <th class="th_level" onclick="showes()">
+      <span>
+        等级
+      </span>
+      <span style="display:none">
+        <%= radio_button_tag :level,'空',false,:onclick => "checkall('n')" %>空
+        <%= radio_button_tag :level,'A',false,:onclick => "checkall('A')" %>A
+        <%= radio_button_tag :level,'B',false,:onclick => "checkall('B')" %>B
+        <%= radio_button_tag :level,'C',false,:onclick => "checkall('C')" %>C
+        <%= radio_button_tag :level,'D',false,:onclick => "checkall('D')" %>D
+        <%= submit_tag "提交", :onclick => "ajaxupdatelevelall()" %>
+      </span>
+
+    </th>
+    <th></th>
   </tr>
 
   <% @shops.each do |shop| %>
@@ -32,20 +46,24 @@
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
       <td><%= shop.t %></td>
-      <td onclick="showe($(this))">
+      <td class="td_level" onclick="showe($(this))" >
         <span>
           <%= shop.level %>
         </span>
-        <span style="display:none">
-          <%= radio_button_tag :level,'空',shop.level=="" %>空
-          <%= radio_button_tag :level,'A', shop.level=="A" %>A
-          <%= radio_button_tag :level,'B',shop.level=="B" %>B
-          <%= radio_button_tag :level,'C',shop.level=="C" %>C
-          <%= radio_button_tag :level,'D',shop.level=="D" %>D
-          <%= submit_tag "提交", :onclick => "ajaxupdatelevel($(this), #{shop._id})" %>
+        <span class="dhide" style="display:none">
+          <%= radio_button_tag "#{shop._id.to_i}",'空',shop.level=="",:class => 'level_n' %>空
+          <%= radio_button_tag "#{shop._id.to_i}",'A', shop.level=="A",:class => 'level_A' %>A
+          <%= radio_button_tag "#{shop._id.to_i}",'B',shop.level=="B",:class => 'level_B' %>B
+          <%= radio_button_tag "#{shop._id.to_i}",'C',shop.level=="C",:class => 'level_C' %>C
+          <%= radio_button_tag "#{shop._id.to_i}",'D',shop.level=="D",:class => 'level_D' %>D
+          <%= submit_tag "提交", :onclick => "ajaxupdatelevel($(this), #{shop._id})", :name => shop._id.to_i %>
         </span>
       </td>
+      <td>
+        <a onclick="ajaxdel($(this),<%= shop._id %>)">删除</a>
+      </td>
     </tr>
+
   <% end %>
 </table>
 
@@ -73,11 +91,35 @@
   }
 
   function ajaxupdatelevel(obj,shop_id){
-    level = obj.parent().children("input[@name='level']:checked").val()
+    var level = obj.parent().children("input[@type='radio']:checked").val()
     $.post("/admin_shops/ajaxupdatelevel",{level:level, shop_id:shop_id}, function(data) {
       obj.parent().replaceWith(data["level"])
     });
   }
- 
+
+  function ajaxdel(obj,shop_id){
+    $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
+      obj.parent().parent().hide()
+    });
+  }
+
+  function showes(){
+    $('.th_level').each(function(){showe($(this))})
+    $('.td_level').each(function(){showe($(this))})
+  }
+
+  function checkall(value){
+    $('.level_'+value).each(function(){$(this).attr('checked','checked')})
+  }
+
+  function ajaxupdatelevelall(){
+    $('.th_level:first').replaceWith("<th>等级</th>")
+    $(".dhide").each(
+    function(){
+      var subobj = $(this).children("input[@type='submit']:first")
+      ajaxupdatelevel(subobj, subobj.attr('name'))
+    }
+  )
+  }
 
 </script>
