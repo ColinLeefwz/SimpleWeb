@@ -60,7 +60,7 @@
         </span>
       </td>
       <td>
-        <a onclick="ajaxdel($(this),<%= shop._id %>)">删除</a>
+        <a onclick="ajaxdel($(this),<%= shop._id %>)" >删除</a>
       </td>
     </tr>
 
@@ -93,14 +93,15 @@
   function ajaxupdatelevel(obj,shop_id){
     var level = obj.parent().children("input[@type='radio']:checked").val()
     $.post("/admin_shops/ajaxupdatelevel",{level:level, shop_id:shop_id}, function(data) {
-      obj.parent().replaceWith(data["level"])
+      obj.parent().parent().replaceWith("<td>"+data["level"]+"</td>")
     });
   }
 
   function ajaxdel(obj,shop_id){
-    $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
-      obj.parent().parent().hide()
-    });
+    if(confirm("确定删除商家？"))
+      $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
+        obj.parent().parent().hide()
+      });
   }
 
   function showes(){
