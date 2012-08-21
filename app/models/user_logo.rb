@@ -26,7 +26,7 @@ class UserLogo
   
   
   def self.next_ord(user_id)
-    max = UserLogo.where(:user_id => user_id).sort({ord:1}).last
+    max = UserLogo.where(:user_id => user_id).order_by([:ord,:desc]).first
     if max
       max.ord+10
     else
@@ -40,12 +40,12 @@ class UserLogo
   
   def change_ord(position)
     if position==0
-      self.ord = self.user.user_logos.first.ord/2
+      self.ord = self.user.head_logo.ord/2
     elsif position>=self.user.user_logos.count-1
-      self.ord = self.user.user_logos.last.ord*2
+      self.ord = self.user_logos.last.ord*2
     else
-      logos = self.user.user_logos.offset(position-1).limit(2)
-      self.ord = (logos[0].ord + logos[1].ord)/2
+      logos = self.user.user_logos.skip(position-1).limit(2)
+      self.ord = (logos.first + logos.last)/2
     end
     self.update_attribute(:ord , self.ord)
   end
