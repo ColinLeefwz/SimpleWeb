@@ -1,7 +1,0 @@
-<h1>新建商家信息</h1>
-
-
-<%= form_for( @shop, :as => "shop", :url => shops_path(@shop)) do |f| %>
-  <%= render(:partial => "form.html", :locals => {:f => f}) %>
-<% end %>
-<%= link_to '返回列表', shops_path %>

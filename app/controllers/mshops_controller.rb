@@ -1,4 +1,4 @@
-class ShopsController < ApplicationController
+class MshopsController < ApplicationController
   before_filter :admin_authorize
   layout "admin"
 
