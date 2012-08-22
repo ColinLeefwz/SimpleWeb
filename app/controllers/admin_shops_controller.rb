@@ -9,9 +9,9 @@ class AdminShopsController < ApplicationController
     @page = 1 if @page==0
     @pcount = 200 if @pcount==0
     skip = (@page - 1)*@pcount
-    loc = [(params[:lat].to_f , params[:lng].to_f]
-    hash = Shop.default_hash
-    hash.merge!( lo: { "$within" => { "$center" => [loc, 0.1]} }) if loc
+    hash = {}
+    loc = [params[:lat].to_f , params[:lng].to_f] if !params[:lat].blank? && !params[:lng].blank?
+    hash.merge!({ loc: { "$within" => { "$center" => [loc, 0.1]} }}) if loc
     hash.merge!( {name: /#{params[:name]}/ }  )  if params[:name]
     hash.merge!( {t: params[:t].to_i }  )  if !params[:t].blank?
     hash.merge!( {level: params[:level]}) if !params[:level].blank?
@@ -22,6 +22,7 @@ class AdminShopsController < ApplicationController
 
 
     @shops = Shop.where(hash).skip(skip).limit(@pcount).sort(horder)
+    @shops = @shops.entries.keep_if{|s| s.del != 1}
   end
 
 
@@ -33,7 +34,7 @@ class AdminShopsController < ApplicationController
 
   def ajaxdel
     shop = Shop.where({_id: params[:shop_id]}).first
-    shop.udel
+    shop.shop_del
     render :js => true
   end
 
