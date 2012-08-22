@@ -6,7 +6,7 @@ class Shop
   field :lo, type:Array #实际的经纬度
   field :tel 
   field :city
-  field :del,type:Integer   #删除标记
+  field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. db.shops.ensureIndex({del:1},{sparse:true})
   field :addr
   field :t                #脸脸的商家类型
   field :level            #商家的人工等级
@@ -15,7 +15,7 @@ class Shop
 
 
   def self.default_hash
-    {del: {"$nin" => [1]}}
+    {del: {$exists:false}}
   end
 
 
@@ -43,7 +43,7 @@ class Shop
   end
 
   #删除商家.
-  def udel
+  def udel #shop_del
     self.update_attribute(:del,1)
   end
   
