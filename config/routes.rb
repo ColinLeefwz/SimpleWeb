@@ -12,7 +12,7 @@ Lianlian::Application.routes.draw do
   resources :admins
   resources :departs
   resources :roles
-  resources :shops
+  resources :mshops
   resources :mcities
   resources :mcategories
 
