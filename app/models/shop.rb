@@ -15,7 +15,7 @@ class Shop
 
 
   def self.default_hash
-    {del: {$exists:false}}
+    {del: {"$exists" => false}}
   end
 
 
@@ -43,7 +43,7 @@ class Shop
   end
 
   #删除商家.
-  def udel #shop_del
+  def shop_del
     self.update_attribute(:del,1)
   end
   
