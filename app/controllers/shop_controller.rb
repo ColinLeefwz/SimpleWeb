@@ -8,8 +8,8 @@ class ShopController < ApplicationController
     page = 1 if page==0
     pcount = 20 if pcount==0
     skip = (page-1)*pcount
-    loc = Offset.offset(params[:lat].to_f , params[:lng].to_f)
-    hash = { loc: { "$within" => { "$center" => [loc, 0.1]} }}
+    lo = [params[:lat].to_f , params[:lng].to_f]
+    hash = { lo: { "$within" => { "$center" => [lo, 0.1]} }}
     hash.merge!( {name: /#{params[:name]}/ }  )  if params[:name]
     hash.merge!( {t: params[:type].to_i }  )  if params[:type]
     shops = Shop.where(hash).skip(skip).limit(pcount)
