@@ -65,7 +65,6 @@ class Shop
   end
   
   def users_count
-    #TODO: 使用redis缓存商家用户数统计数据
     str="shop_user_count(#{self.id})"
     Mongoid.default_session.command(eval:str)["retval"].map {|x| x.to_i}
   end
