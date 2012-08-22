@@ -4,8 +4,6 @@ $sina_api_key = "2054816412"
 $sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  
 $sina_callback = "http://www.dface.cn/oauth2/sina_callback"
 
-$login_users = [] if $login_users.nil?
-
 class Oauth2Controller < ApplicationController
   
   def hello
@@ -50,10 +48,14 @@ class Oauth2Controller < ApplicationController
       user.save!
     end
     session[:user_id] = user.id
-    $login_users << user.id #TODO: 使用redis保存登陆用户
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
+  end
+  
+  def logout
+    reset_session
+    render :json => {"logout" => true}.to_json
   end
   
   def get_user_info(uid,token)

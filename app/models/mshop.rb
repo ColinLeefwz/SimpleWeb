@@ -1,6 +1,6 @@
 # coding: utf-8
 
-require 'offset'
+#require 'offset'
 
 class Mshop < ActiveRecord::Base
   validates_presence_of :name
@@ -33,7 +33,7 @@ class Mshop < ActiveRecord::Base
   def dp_url
     dp_id.blank? ? "" : "http://www.dianping.com/shop/%d" % dp_id
   end
-  
+
   def o_lat
     Offset.pixel2lat(Offset.lat2pixel(lat, 18) - (2 * 256 - 72 / 3), 18)
   end
@@ -41,26 +41,26 @@ class Mshop < ActiveRecord::Base
   def o_lng
     Offset.pixel2lng(Offset.lng2pixel(lng, 18) - (4 * 256 - 2 * 72), 18)
   end
-  
+
   def safe_output
     self.attributes.slice("id", "name", "address", "lat", "lng" , "phone")
   end
-  
+
   def safe_output_with_users
-    Rails.logger.warn "safe_output_with_users deprecate"  
+    Rails.logger.warn "safe_output_with_users deprecate"
     a,b,c = users_count
     safe_output.merge!( {"user"=>a, "male"=>b, "female"=>c} )
   end
-  
+
   def users_count
-    Rails.logger.warn "safe_output_with_users deprecate"  
+    Rails.logger.warn "safe_output_with_users deprecate"
     us = users.size
     female = users.where("gender=2").size
     [us,us-female,female]
   end
-  
+
   def users
-    Rails.logger.warn "safe_output_with_users deprecate"  
+    Rails.logger.warn "safe_output_with_users deprecate"
     User.where("name is not null and id<60").order("id asc")
   end
 
@@ -87,7 +87,7 @@ class Mshop < ActiveRecord::Base
     end
     self.save
   end
-  
+
 
 
   def second_mcategory
@@ -106,3 +106,4 @@ class Mshop < ActiveRecord::Base
   end
 
 end
+
