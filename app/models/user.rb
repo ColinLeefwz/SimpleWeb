@@ -2,7 +2,6 @@
 
 class User 
   include Mongoid::Document
-  #field :_id, type: Integer
   field :wb_uid
   field :name
   field :gender, type: Integer
@@ -35,9 +34,18 @@ class User
     (self.blacks.nil?)? [] : self.blacks
   end
   
+  # user_id是否在黑名单中
   def black?(user_id)
     match = self.blacks_s.find {|x| x["id"].to_s==user_id.to_s}
     ! match.nil?
+  end
+  
+  #是否屏蔽user_id（该用户的最后出现位置，以及在商家用户列表中找到）
+  def block?(user_id)
+    return true if black?(user_id)
+    return true if self.invisible==2
+    return true if self.invisible==1 && !( self.friend?(user_id) or self.follower?(user_id))
+    return false
   end
   
 
@@ -88,17 +96,16 @@ class User
     hash.delete("blacks")
     hash.delete("follows")
     hash.merge!( head_logo_hash).merge!( relation_hash(user_id) )
-    hash.merge!(last_location)
+    hash.merge!(last_location(user_id))
   end
 
-  def last_location
+  def last_location( user_id )
+    return "" if block?(user_id)
     loc = Checkin.where({user_id:self._id}).sort({_id:1}).last
     return {:last => ""} if loc.nil?
     diff = Time.now.to_i - loc.cat.to_i
     tstr = User.time_desc(diff)
-    dstr = loc.shop_name
     dstr = Shop.find(loc.shop_id).name if dstr.nil?
-     #TODO: 使用redis保存用户最后出现的地点和时间
     {:last => "#{tstr} #{dstr}"}
   end
   
