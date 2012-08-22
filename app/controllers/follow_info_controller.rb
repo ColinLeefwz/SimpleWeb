@@ -2,16 +2,20 @@ class FollowInfoController < ApplicationController
   
   
   def followers
+    who = User.find(params[:id])
     hash = {follows: Moped::BSON::ObjectId(params[:id])}
     hash.merge!({name: /#{params[:name]}/})  unless params[:name].nil?
     users = User.where(hash)
+    users.delete_if {|x| who.black?(x._id) }
     output_users(users)
   end
   
   def friends
-    users = User.find(params[:id]).follows_s.map {|x| User.find2(x) }
+    who = User.find(params[:id])
+    users = who.follows_s.map {|x| User.find2(x) }
     users.delete(nil)
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
+    users.delete_if {|x| who.black?(x._id) }
     output_users(users.reverse)
   end
   
