@@ -572,10 +572,14 @@ module Spider
 
   def self.shop_latlng(shop)
     latlng = Spider.dp_shop_latlng(shop.id)
+    begin
     if latlng
       shop.lat = latlng[0]
       shop.lng = latlng[1]
       shop.save!
+    end
+    rescue
+       $LOG.error "def self.shop_latlng(shop) returned an error. Ignored. #{$!}"
     end
   end
 
