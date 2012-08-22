@@ -16,7 +16,7 @@ Lianlian::Application.routes.draw do
   resources :mcities
   resources :mcategories
 
-  resources :admin_shops
+  resources :admin_shops #
   # Sample resource route with options:
   #   resources :products do
   #     member do
