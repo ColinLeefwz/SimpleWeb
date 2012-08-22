@@ -15,7 +15,7 @@ class Shop
 
 
   def self.default_hash
-    {del: {"$ne" => 1}}
+    {del: {"$nin" => [1]}}
   end
 
 
