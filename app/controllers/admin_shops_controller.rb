@@ -7,7 +7,7 @@ class AdminShopsController < ApplicationController
     @page = params[:page].to_i
     @pcount = params[:pcount].to_i
     @page = 1 if @page==0
-    @pcount = 15 if @pcount==0
+    @pcount = 200 if @pcount==0
     skip = (@page - 1)*@pcount
     loc = Offset.offset(params[:lat].to_f , params[:lng].to_f) if false
     hash = Shop.default_hash
