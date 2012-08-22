@@ -3,7 +3,7 @@ Lianlian::Application.routes.draw do
   resources :photos
   resources :checkins
 
-  post "shops/manual"
+  #post "shops/manual"
   
   resources :users do
     resources :user_logos
@@ -16,7 +16,7 @@ Lianlian::Application.routes.draw do
   resources :mcities
   resources :mcategories
 
-  resources :admin_shops #
+  #resources :admin_shops
   # Sample resource route with options:
   #   resources :products do
   #     member do
