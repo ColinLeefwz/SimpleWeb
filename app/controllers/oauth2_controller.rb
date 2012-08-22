@@ -53,6 +53,11 @@ class Oauth2Controller < ApplicationController
 	  render :json => data.to_json
   end
   
+  def logout
+    reset_session
+    render :json => {"logout" => true}.to_json
+  end
+  
   def get_user_info(uid,token)
     require 'open-uri'
     url = "https://api.weibo.com/2/users/show.json?uid=#{uid}&source=#{$sina_api_key}&access_token=#{token}"
