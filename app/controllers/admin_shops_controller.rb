@@ -9,7 +9,7 @@ class AdminShopsController < ApplicationController
     @page = 1 if @page==0
     @pcount = 200 if @pcount==0
     skip = (@page - 1)*@pcount
-    loc = Offset.offset(params[:lat].to_f , params[:lng].to_f) if false
+    loc = [(params[:lat].to_f , params[:lng].to_f]
     hash = Shop.default_hash
     hash.merge!( lo: { "$within" => { "$center" => [loc, 0.1]} }) if loc
     hash.merge!( {name: /#{params[:name]}/ }  )  if params[:name]
