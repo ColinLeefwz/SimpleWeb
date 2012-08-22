@@ -10,8 +10,8 @@ class AdminShopsController < ApplicationController
     @pcount = 200 if @pcount==0
     skip = (@page - 1)*@pcount
     hash = {}
-    loc = [params[:lat].to_f , params[:lng].to_f] if !params[:lat].blank? && !params[:lng].blank?
-    hash.merge!({ loc: { "$within" => { "$center" => [loc, 0.1]} }}) if loc
+    lo = [params[:lat].to_f , params[:lng].to_f] if !params[:lat].blank? && !params[:lng].blank?
+    hash.merge!({ lo: { "$within" => { "$center" => [lo, 0.1]} }}) if loc
     hash.merge!( {name: /#{params[:name]}/ }  )  if params[:name]
     hash.merge!( {t: params[:t].to_i }  )  if !params[:t].blank?
     hash.merge!( {level: params[:level]}) if !params[:level].blank?
