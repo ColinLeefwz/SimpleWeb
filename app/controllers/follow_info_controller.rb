@@ -5,7 +5,7 @@ class FollowInfoController < ApplicationController
     who = User.find(params[:id])
     hash = {follows: Moped::BSON::ObjectId(params[:id])}
     hash.merge!({name: /#{params[:name]}/})  unless params[:name].nil?
-    users = User.where(hash)
+    users = User.where(hash).to_ary
     users.delete_if {|x| who.black?(x._id) }
     output_users(users)
   end
