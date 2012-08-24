@@ -1,3 +1,5 @@
+#用户在聊天时上传的图片
+
 class Photo
   include Mongoid::Document
   include Mongoid::Paperclip
