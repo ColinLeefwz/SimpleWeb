@@ -1,6 +1,7 @@
 class Shop
   include Mongoid::Document
   field :_id, type: Integer
+  field :pass
   field :name
   field :loc, type:Array #地图上的经纬度
   field :lo, type:Array #实际的经纬度

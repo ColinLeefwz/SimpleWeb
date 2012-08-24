@@ -1,3 +1,5 @@
+#用户头像，最多只有8张
+
 class UserLogo
   include Mongoid::Document
   include Mongoid::Paperclip
