@@ -13,8 +13,12 @@
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
+<%= check_box_tag "", '', false, :onclick => "checked_all($(this).attr('checked'))" %> 全选
+<%= check_box_tag "", '', false, :onclick => "inverse_all()" %> 反选
+<%=  submit_tag '批量删除', :onclick => "batch_del()"%>
 <table border="1">
   <tr>
+    <th></th>
     <th>名称</th>
     <th>经纬度</th>
     <th>电话</th>
@@ -40,6 +44,7 @@
 
   <% @shops.each do |shop| %>
     <tr>
+      <td><%= check_box_tag "shops[]", shop._id, false, :class => 'checkbox_shops' %></td>
       <td><%= shop.name %></td>
       <td><%= shop.loc%></td>
       <td><%= shop.tel %></td>
@@ -60,13 +65,12 @@
         </span>
       </td>
       <td>
-        <a onclick="ajaxdel($(this),<%= shop._id %>)" >删除</a>
+        <a onclick="ajaxdel($(this),<%= shop._id %>, false)" >删除</a>
       </td>
     </tr>
 
   <% end %>
 </table>
-
 <br />
 <% if (@shops_len+@pcount-1)/@pcount > 1 %>
   <div id="paginate" style="text-align: center">
@@ -97,8 +101,8 @@
     });
   }
 
-  function ajaxdel(obj,shop_id){
-    if(confirm("确定删除商家？"))
+  function ajaxdel(obj,shop_id,no_confirm){
+    if(no_confirm || confirm("确定删除商家？"))
       $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
         obj.parent().parent().hide()
       });
@@ -119,6 +123,37 @@
     function(){
       var subobj = $(this).children("input[@type='submit']:first")
       ajaxupdatelevel(subobj, subobj.attr('name'))
+    }
+  )
+  }
+
+  function batch_del()
+  {
+    $("table .checkbox_shops:checked").each(
+    function(){
+      ajaxdel($(this),$(this).val(), true)
+    }
+  )
+  }
+
+  function checked_all(checked){
+    $("table .checkbox_shops").each(
+    function() {
+      if(checked == "checked")
+        $(this).attr("checked", 'checked')
+      else
+        $(this).attr("checked", false)
+    }
+  )
+  }
+
+  function inverse_all(){
+    $("table .checkbox_shops").each(
+    function() {
+     if($(this).attr("checked") == 'checked')
+       $(this).attr("checked", false)
+     else
+       $(this).attr("checked", 'checked')
     }
   )
   }
