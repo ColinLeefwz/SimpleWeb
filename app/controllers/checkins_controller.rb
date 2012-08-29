@@ -1,3 +1,6 @@
+require 'xmpp4r/client'
+include Jabber
+
 class CheckinsController < ApplicationController
   # GET /checkins
   # GET /checkins.json
@@ -34,6 +37,8 @@ class CheckinsController < ApplicationController
     @checkin.shop_name = params[:shop_name]
     @checkin.od = params[:od]
     @checkin.ip = real_ip
+    
+    sendmsg
 
     respond_to do |format|
       if @checkin.save
@@ -57,4 +62,18 @@ class CheckinsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+  def sendmsg(user_id)
+    coupon = Coupon.last
+    return if coupon.nil?
+    coupon.download(session[:user_id])
+    client = Client.new(JID::new("s#{coupon.shop_id}@dface.cn"))
+    client.connect
+    client.auth("pass")
+    msg = Message::new("#{user_id}@dface.cn", coupon.message)
+    msg.type=:chat
+    client.send(msg)
+  end
+
 end
