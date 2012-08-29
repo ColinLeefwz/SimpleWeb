@@ -46,6 +46,7 @@ GEM
     json (1.7.4)
     jwt (0.1.5)
       multi_json (>= 1.0)
+    kgio (2.7.4)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -103,6 +104,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
+    raindrops (0.10.0)
     rake (0.9.2.2)
     rdoc (3.12)
       json (~> 1.4)
@@ -117,6 +119,10 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
+    unicorn (4.3.1)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     will_paginate (3.0.3)
     xmpp4r (0.5)
 
@@ -136,5 +142,6 @@ DEPENDENCIES
   rails (~> 3.2.1)
   rails-i18n
   redis
+  unicorn
   will_paginate
   xmpp4r
