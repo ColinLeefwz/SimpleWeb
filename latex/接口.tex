@@ -1049,10 +1049,10 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{verbatim}
 
 
-\subsection{聊天时发送图片}
+\section{聊天时发送图片}
 聊天发图主要流程是：客户端选择（拍摄）一张照片，通过http上传到服务器。上传完成后在xmpp里发送一个特定格式的消息。其它客户端收到消息后获取图片显示并发送回执消息。
 
-\subsubsection{上传图片}
+\subsection{上传图片}
 
 \begin{table}[H]
    \begin{center}
@@ -1096,7 +1096,7 @@ http://www.dface.cn/photos
 \end{verbatim}
 \end{figure}
 
-\subsubsection{发送消息}
+\subsection{发送消息}
 当图片发送完成后，客户端发送一个xmpp消息，其中的body内容格式为：
 
 \begin{verbatim}
@@ -1105,7 +1105,7 @@ http://www.dface.cn/photos
 比如上面的图片发送成功后，发送消息"[img:502fd10abe4b19ed48000002]"。
 \end{verbatim}
 
-\subsubsection{收到消息后获取图片}
+\subsection{收到消息后获取图片}
 接收端收到消息后，判断body的内容是否符合图片消息的格式。如果符合就调用下面的接口获取图片。
 
 \begin{table}[H]
@@ -1125,8 +1125,57 @@ http://www.dface.cn/photos
 Response Body中包含头像的二进制信息。
 
 
-\subsubsection{消息状态}
+\subsection{消息状态}
 如果是个人之间的传图，接收者发送状态更新消息给发送者。发送者将状态显示在图片旁边。
+
+
+\section{优惠券}
+
+\subsection{商家推送优惠券}
+当用户使用脸脸时，比如签到／摇一摇等，可以收到商家推送过来的优惠券。优惠券也是一个xmpp消息，其中的body内容格式为：
+
+\begin{verbatim}
+[优惠券:$name:$shop:$id]
+
+ 其中，name是优惠券的名称、shop是商家的名称，id是该优惠券的id。
+ 
+ 所有优惠券都统一显示在会话中的“优惠券”文件夹中。优惠券的消息状态和其他消息同样处理。
+\end{verbatim}
+
+\subsection{优惠券展示}
+优惠券以图片的方式展示，由服务器端生成该图片。当用户进入优惠券文件夹查看优惠券时，调用下面的接口获得优惠券的图片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/coupons/img} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  id  & 字符串 & 必填 &  该优惠券的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+Response Body中包含头像的二进制信息。
+
+\subsection{优惠券使用}
+目前，所有优惠券都只支持单次使用，使用后即过期。当用户确认使用优惠券时，调用如下的接口：
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/coupons/use} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  id  & 字符串 & 必填 &  该优惠券的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
 
 
 \section{关于程序各页面之间的切换规则}
