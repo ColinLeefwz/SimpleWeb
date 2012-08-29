@@ -28,6 +28,11 @@ class ShopController < ApplicationController
     end
     render :json => ret.to_json
   end
+  
+  def info
+    shop = Shop.find(params[:id])
+    render :json => shop.safe_output_with_users.to_json
+  end
 
 
 end
