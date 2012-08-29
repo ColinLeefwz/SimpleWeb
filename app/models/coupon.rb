@@ -12,12 +12,8 @@ class Coupon
 
 
   has_mongoid_attached_file :avatar,
-      :path => ":rails_root/public/coupon/:id",
-      :url => "/coupon/:id",
-      :styles => {
-        :thumb   => ['75x75',    :jpg],
-        :thumb2    => ['150x150',   :jpg]
-      }
+      :path => ":rails_root/public/coupon/:id.jpg",
+      :url => "/coupon/:id.jpg"
   
   validates_presence_of :shop_id, :name, :desc
   
