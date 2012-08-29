@@ -32,6 +32,9 @@ gem 'mysql2'
 #   gem 'webrat'
 # end
 
+group :production do
+  gem 'unicorn'
+end
 
 #gem 'rack', '~> 1.4'
 gem "hpricot"
