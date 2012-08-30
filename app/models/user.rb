@@ -33,6 +33,16 @@ class User
   def blacks_s
     (self.blacks.nil?)? [] : self.blacks
   end
+
+  def reports_s
+    bs = blacks_s
+    bs.blank? ? [] : bs.select{|b| b['report']==1}
+  end
+
+  def reported_users
+    rs = reports_s
+    rs.blank? ? [] : rs.map{|r| User.find(r["id"])}
+  end
   
   # user_id是否在黑名单中
   def black?(user_id)
