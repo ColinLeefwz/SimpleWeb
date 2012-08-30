@@ -129,7 +129,8 @@
 
   function batch_del()
   {
-    $("table .checkbox_shops:checked").each(
+    if(confirm("确定需要批量删除商家？"))
+      $("table .checkbox_shops:checked").each(
     function(){
       ajaxdel($(this),$(this).val(), true)
     }
@@ -150,10 +151,10 @@
   function inverse_all(){
     $("table .checkbox_shops").each(
     function() {
-     if($(this).attr("checked") == 'checked')
-       $(this).attr("checked", false)
-     else
-       $(this).attr("checked", 'checked')
+      if($(this).attr("checked") == 'checked')
+        $(this).attr("checked", false)
+      else
+        $(this).attr("checked", 'checked')
     }
   )
   }
