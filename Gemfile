@@ -41,8 +41,6 @@ gem "hpricot"
 gem "oauth2"
 gem "will_paginate"
 gem "in_place_editing"
-# gem "system_timer", "~> 1.2.4"
-# gem 'paperclip', '~> 2.3.6'
 gem 'mongo'
 gem 'bson_ext'
 gem 'mongoid'
@@ -50,5 +48,10 @@ gem 'rails-i18n'
 gem 'xmpp4r'
 gem "nokogiri", "~> 1.5.5"
 gem 'redis'
-gem "mongoid-paperclip", :require => "mongoid_paperclip"
+
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'rest-client'
+gem 'carrierwave-aliyun'
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 
