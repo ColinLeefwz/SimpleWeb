@@ -1,8 +1,8 @@
 class CouponsController < ApplicationController
   def img
     cp = Coupon.find(params[:id])
-    response.headers['IMG_URL'] = cp.avatar.url
-    send_file cp.avatar.path
+    response.headers['IMG_URL'] = cp.img.url
+    redirect_to cp.img.url
   end
   
   def use
