@@ -1,4 +1,6 @@
 require 'oauth2'
+require 'rest_client'
+
 
 $sina_api_key = "2054816412"  
 $sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  
@@ -33,9 +35,31 @@ class Oauth2Controller < ApplicationController
     token = @@client.auth_code.get_token(params[:code], :redirect_uri => $sina_callback, :parse => :json )
     uid = token.params["uid"]
     data = {:token=> token.token, :expires_in => token.expires_in, :expires_at => token.expires_at, :wb_uid => uid }
+    do_login(uid,token.token,data)
+  end
+  
+  def login
+    response = RestClient.post 'https://api.weibo.com/oauth2/access_token', 
+      :client_id => $sina_api_key, :client_secret => $sina_api_key_secret, :grant_type => 'password', 
+      :username => params[:name], :password => params[:pass]
+    token = ActiveSupport::JSON.decode response.to_s
+    logger.debug response.to_s
+    uid = token["uid"]
+    data = {:token=> token["access_token"], :expires_in => token["expires_in"], :expires_at => token["expires_at"], :wb_uid => uid }
+    do_login(uid,token["access_token"],data)
+  end
+  
+  def logout
+    reset_session
+    render :json => {"logout" => true}.to_json
+  end
+  
+  private
+  
+  def do_login(uid,token,data)
     user = User.where({wb_uid: uid}).first
     if user.nil?
-      sina_info = get_user_info(uid,token.token)
+      sina_info = get_user_info(uid,token)
       SinaUser.collection.insert(sina_info)
       user = User.new
       user.wb_uid = uid
@@ -49,13 +73,8 @@ class Oauth2Controller < ApplicationController
     end
     session[:user_id] = user.id
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
-    data.merge!( user.head_logo_hash  )
+    #data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
-  end
-  
-  def logout
-    reset_session
-    render :json => {"logout" => true}.to_json
   end
   
   def get_user_info(uid,token)

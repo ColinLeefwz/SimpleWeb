@@ -1029,16 +1029,9 @@ http://www.dface.cn/user_logos/delete
 
 \begin{verbatim}
 摇一摇的消息格式为：
-<handshake name="用户名" xmlns="http://dface.cn"  />
+ [摇一摇:$name]
 
-如果是用户第一次进店的时候摇一摇，那么增加first属性，如：
-<handshake name="用户名" first="true" xmlns="http://dface.cn" />
-\end{verbatim}
-
-用户第一次进店摇一摇的时候可以参与抽奖，其后的摇一摇不行。
-用户在12小时后只能在一个商家参与抽奖一次，也就是在首页的进店摇一摇只有12小时内的第一次发送first属性。
-
-其它客户端收到摇一摇的XML格式消息后，再将其转换为文字描述。
+其它客户端收到摇一摇的消息后，再将其转换为文字描述。
 
 
 
