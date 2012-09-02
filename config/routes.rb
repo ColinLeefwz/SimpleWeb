@@ -1,6 +1,5 @@
 Lianlian::Application.routes.draw do
   resources :shop_notices
-  resources :photos
   resources :checkins
 
   #post "shops/manual"

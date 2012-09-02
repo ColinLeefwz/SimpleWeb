@@ -1,13 +1,12 @@
-#用户在聊天室上传的图片
+#个人聊天时发送图片
 
-class Photo
+class Photo2
   include Mongoid::Document
   
   field :user_id, type: Moped::BSON::ObjectId
-  field :room #发给聊天室
-  field :weibo, type:Boolean
+  field :to_uid #发给个人
   field :img
-  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface" ; end }
+  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface2" ; end }
   
   def user
     User.find(self.user_id)
