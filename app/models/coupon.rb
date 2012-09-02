@@ -9,7 +9,7 @@ class Coupon
   field :endt, type:DateTime
   field :users, type:Array
   field :img
-  mount_uploader :img, PhotoUploader
+  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "coupon" ; end }
 
   
   def shop

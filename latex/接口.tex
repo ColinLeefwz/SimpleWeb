@@ -395,8 +395,8 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
 "name":null,
 wb_uid:1884834632
 "gender":null,
-"logo":"/system/avatars/1/original/clojure.png?1339398140",
-"logo_thumb":"/system/avatars/1/thumb/clojure.png?1339398140"
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
 "birthday":null,
 "friend":true,
 "follower":false,
@@ -435,7 +435,7 @@ wb_uid:1884834632
 
 输出的Response Header中包含“Img\_url”头，这个头就是查看用户信息时显示的用户头像的路径。
 
-例如：“Img\_url:/system/avatars/1/thumb2/1.png?1339649979”
+例如：“Img\_url:/system/imgs/1/thumb2/1.png?1339649979”
 
 Response Body中包含头像的二进制信息。
 
@@ -465,10 +465,10 @@ Response Body中包含头像的二进制信息。
 返回值：
 
 [
-{"logo_thumb2":"/system/avatars/2/thumb2/2.png.png?1340616951","updated_at":"2012-06-25T09:35:51Z",
-"id":2,"logo":"/system/avatars/2/original/2.png.png?1340616951","avatar_file_size":81881,"user_id":1,"logo_thumb":"/system/avatars/2/thumb/2.png.png?1340616951"},
-{"logo_thumb2":"/system/avatars/4/thumb2/2.png.png?1340617039","updated_at":"2012-06-25T09:37:20Z",
-"id":4,"logo":"/system/avatars/4/original/2.png.png?1340617039","avatar_file_size":81881,"user_id":1,"logo_thumb":"/system/avatars/4/thumb/2.png.png?1340617039"}
+{"logo_thumb2":"/system/imgs/2/thumb2/2.png.png?1340616951","updated_at":"2012-06-25T09:35:51Z",
+"id":2,"logo":"/system/imgs/2/original/2.png.png?1340616951","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/2/thumb/2.png.png?1340616951"},
+{"logo_thumb2":"/system/imgs/4/thumb2/2.png.png?1340617039","updated_at":"2012-06-25T09:37:20Z",
+"id":4,"logo":"/system/imgs/4/original/2.png.png?1340617039","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/4/thumb/2.png.png?1340617039"}
 ]
 
 图片列表中的第一张图片就是用户的头像。
@@ -506,8 +506,8 @@ wb_uid:1884834632
 "gender":null,
 "birthday":null,
 "invisible":0,
-"logo":"/system/avatars/1/original/clojure.png?1339398140",
-"logo_thumb":"/system/avatars/1/thumb/clojure.png?1339398140"
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
 "password":"c84dad462d5b7282",
 "id":1
 }
@@ -568,8 +568,8 @@ wb_uid:1884834632
 "name":newname,
 "gender":null,
 "birthday":null,
-"logo":"/system/avatars/1/original/clojure.png?1339398140",
-"logo_thumb":"/system/avatars/1/thumb/clojure.png?1339398140"
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
 "id":1
 }
 
@@ -587,7 +587,7 @@ wb_uid:1884834632
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
- user\_logo[avatar]  & file & 必须 &  头像文件\\
+ user\_logo[img]  & file & 必须 &  头像文件\\
 \hline
 \end{tabular}
    \end{center}
@@ -606,17 +606,17 @@ wb_uid:1884834632
 
 \begin{figure}[H]
 \begin{verbatim}
-访问：curl -F "user_logo[avatar]=@firefox.png;type=image/png" 
+访问：curl -F "user_logo[img]=@firefox.png;type=image/png" 
 http://www.dface.cn/user_logos
 
 
-{"logo_thumb2":"/system/avatars/6/thumb2/csky2.png?1340779488",
+{"logo_thumb2":"/system/imgs/6/thumb2/csky2.png?1340779488",
 "updated_at":"2012-06-27T06:44:48Z"
 ,"id":6,
-"logo":"/system/avatars/6/original/csky2.png?1340779488",
-"avatar_file_size":156604,
+"logo":"/system/imgs/6/original/csky2.png?1340779488",
+"img_file_size":156604,
 "user_id":3,
-"logo_thumb":"/system/avatars/6/thumb/csky2.png?1340779488"}
+"logo_thumb":"/system/imgs/6/thumb/csky2.png?1340779488"}
 
 \end{verbatim}
 \end{figure}
@@ -1071,7 +1071,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
- photo[avatar]  & file & 必须 &  头像文件\\
+ photo[img]  & file & 必须 &  头像文件\\
  \hline
  photo[room]  & 字符串 & 可选 &  聊天室的id\\
  \hline
@@ -1097,10 +1097,10 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 \begin{figure}[H]
 \begin{verbatim}
-访问：curl -F "photo[avatar]=@firefox.png;type=image/png" 
+访问：curl -F "photo[img]=@firefox.png;type=image/png" 
 http://www.dface.cn/photos
 
-{"_id":"502fd10abe4b19ed48000002","avatar_file_name":"7.png","avatar_content_type":"image/png","avatar_file_size":99422,"avatar_updated_at":"2012-08-18T17:29:46Z","room":"237","user_id":"502e61bfbe4b1921da000001","logo":"/system/avatars/502fd10abe4b19ed48000002/original/7.png?1345310986","logo_thumb":"/system/avatars/502fd10abe4b19ed48000002/thumb/7.jpg?1345310986","logo_thumb2":"/system/avatars/502fd10abe4b19ed48000002/thumb2/7.jpg?1345310986","id":"502fd10abe4b19ed48000002"}
+{"_id":"502fd10abe4b19ed48000002","img_file_name":"7.png","img_content_type":"image/png","img_file_size":99422,"img_updated_at":"2012-08-18T17:29:46Z","room":"237","user_id":"502e61bfbe4b1921da000001","logo":"/system/imgs/502fd10abe4b19ed48000002/original/7.png?1345310986","logo_thumb":"/system/imgs/502fd10abe4b19ed48000002/thumb/7.jpg?1345310986","logo_thumb2":"/system/imgs/502fd10abe4b19ed48000002/thumb2/7.jpg?1345310986","id":"502fd10abe4b19ed48000002"}
 
 \end{verbatim}
 \end{figure}

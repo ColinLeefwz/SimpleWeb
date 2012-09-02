@@ -5,10 +5,6 @@ class PhotoUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   storage :aliyun
-
-  def aliyun_bucket
-    "dface"
-  end
   
   def store_dir
     "#{model.id}"
