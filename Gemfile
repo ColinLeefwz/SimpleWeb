@@ -18,6 +18,7 @@ gem 'mysql2'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 # gem install ruby-debug19 -- --with-ruby-include="$rvm_path/src/$(rvm tools identifier)/"
 
+gem 'debugger'
 
 # Bundle the extra gems:
 # gem 'bj'

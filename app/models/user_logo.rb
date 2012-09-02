@@ -6,7 +6,7 @@ class UserLogo
   field :user_id, type: Moped::BSON::ObjectId
   field :ord, type: Float
   field :img
-  mount_uploader :img, PhotoUploader
+  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "logo" ; end }
 
   def user
     User.find(self.user_id)
