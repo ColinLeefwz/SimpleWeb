@@ -8,7 +8,7 @@ class Photo
   field :weibo, type:Boolean
   field :to_uid #发给个人
   field :img
-  mount_uploader :img, PhotoUploader
+  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface" ; end }
   
   def user
     User.find(self.user_id)
