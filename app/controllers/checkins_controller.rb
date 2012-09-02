@@ -64,14 +64,14 @@ class CheckinsController < ApplicationController
   end
   
   private
-  def sendmsg(user_id)
+  def sendmsg
     coupon = Coupon.last
     return if coupon.nil?
     coupon.download(session[:user_id])
     client = Client.new(JID::new("s#{coupon.shop_id}@dface.cn"))
     client.connect
     client.auth("pass")
-    msg = Message::new("#{user_id}@dface.cn", coupon.message)
+    msg = Message::new("#{session[:user_id]}@dface.cn", coupon.message)
     msg.type=:chat
     client.send(msg)
   end
