@@ -73,7 +73,7 @@ class Oauth2Controller < ApplicationController
     end
     session[:user_id] = user.id
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
-    #data.merge!( user.head_logo_hash  )
+    data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
   end
   
