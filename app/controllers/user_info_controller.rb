@@ -10,13 +10,10 @@ class UserInfoController < ApplicationController
   def logo
     user = User.find(params[:id])
     if params[:size].to_i==0
-      response.headers['IMG_URL'] = user.head_logo.img.url
       redirect_to user.head_logo.img.url
     elsif params[:size].to_i==2
-      response.headers['IMG_URL'] = user.head_logo.img.url(:t2)
       redirect_to user.head_logo.img.url(:t2)
     else
-      response.headers['IMG_URL'] = user.head_logo.img.url(:t1)
       redirect_to user.head_logo.img.url(:t1)
     end
   end
