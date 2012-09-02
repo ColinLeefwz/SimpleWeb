@@ -44,11 +44,9 @@ class AdminCouponsController < ApplicationController
 
     respond_to do |format|
       if @coupon.save
-        format.html { redirect_to @coupon, notice: 'Coupon was successfully created.' }
-        format.json { render json: @coupon, status: :created, location: @coupon }
+        format.html { redirect_to '/admin_coupons', notice: 'Coupon was successfully created.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @coupon.errors, status: :unprocessable_entity }
       end
     end
   end
