@@ -32,6 +32,107 @@
 \newpage
 
 
+\section{登录和退出}
+\subsection{老的登录方式：oauth2}
+
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/oauth2/sina\_callback} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ code  & 字符串 & 必须 &  新浪返回的code\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：http://www.dface.cn/oauth2/sina_callback?code=...
+该访问由新浪微博通过302转向发起。
+返回值：
+
+{
+"id":1,
+"password":"15c663b8ff620502",
+"logo":"",
+"name" : "name"
+"gender" : 1
+"wb_uid":"1884834632",
+"expires_in":75693,
+"token":"2.00aaZYDCMcnDPCb4dc439e06i2m_GC",
+"expires_at":1338431259
+}
+
+其中，id和password是该用户在脸脸网的id和密码，在首次新浪授权时创建。该id加上"@dface.cn"就是openfire的jid。（目前还没有和jid关联上。）
+
+后面几个字段都是新浪提供的，其中wb_uid是该用户的新浪微博的uid，token是授权的access_token，其它几个是授权有效期信息。
+
+在首次登录获得用户的id和password以后，可以缓存到本地。以后用户每次登录，返回的id和password是不会改变的，除非服务器端重置密码（比如出现密码泄漏等安全情况）。
+
+logo可以得知用户是否成功上传头像。对于第一次登录的用户，其logo为空，此时需要引导用户上传头像。
+
+
+\end{verbatim}
+\end{figure}
+
+\subsection{新的登录方式：xauth}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/oauth2/login} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ name  & 字符串 & 必须 &  用户名\\
+ \hline
+ pass  & 字符串 & 必须 &  密码\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+本接口的输出和oauth2登录接口的输出相同。
+
+\begin{verbatim}
+hash的计算方式为：name+pass+"dface"进行SHA1算法后取前32位。
+比如用户名为name，密码为pass，
+那么待hash的字符串为"namepassdface"，
+其hash码为"11f4004a73a65117071bc4a7d3dfdf07"。
+\end{verbatim}
+
+新的登录方式不需要调用新浪的Xauth API，直接调用本API即可以登录。客户端应该不需要保存AppSecret。通过预先保存的AppKey和本调用输出中包含的token应该就可以访问新浪微博的API了。
+
+
+
+\subsection{退出}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://www.dface.cn/oauth2/logout} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+退出调用不需要参数。
+当用户主动退出时，调用本接口并断开XMPP的连接。
+
 \section{根据IP地址获得可能的现场商家}
 
 \begin{table}[H]
@@ -284,54 +385,6 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
 ]
 \end{verbatim}
 
-\section{新浪微博登录后的回调页}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-\multicolumn{4}{|c|}{http://www.dface.cn/oauth2/sina\_callback} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
- code  & 字符串 & 必须 &  新浪返回的code\\
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：http://www.dface.cn/oauth2/sina_callback?code=...
-该访问由新浪微博通过302转向发起。
-返回值：
-
-{
-"id":1,
-"password":"15c663b8ff620502",
-"logo":"",
-"name" : "name"
-"gender" : 1
-"wb_uid":"1884834632",
-"expires_in":75693,
-"token":"2.00aaZYDCMcnDPCb4dc439e06i2m_GC",
-"expires_at":1338431259
-}
-
-其中，id和password是该用户在脸脸网的id和密码，在首次新浪授权时创建。该id加上"@dface.cn"就是openfire的jid。（目前还没有和jid关联上。）
-
-后面几个字段都是新浪提供的，其中wb_uid是该用户的新浪微博的uid，token是授权的access_token，其它几个是授权有效期信息。
-
-在首次登录获得用户的id和password以后，可以缓存到本地。以后用户每次登录，返回的id和password是不会改变的，除非服务器端重置密码（比如出现密码泄漏等安全情况）。
-
-logo可以得知用户是否成功上传头像。对于第一次登录的用户，其logo为空，此时需要引导用户上传头像。
-
-
-\end{verbatim}
-\end{figure}
 
 
 \section{进入现场签到}
