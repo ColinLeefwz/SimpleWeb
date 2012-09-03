@@ -6,7 +6,7 @@ class Photo2
   field :user_id, type: Moped::BSON::ObjectId
   field :to_uid #发给个人
   field :img
-  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface2" ; end }
+  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface2"+bucket_suffix ; end }
   
   def user
     User.find(self.user_id)
