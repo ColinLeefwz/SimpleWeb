@@ -110,7 +110,7 @@ class User
   end
 
   def last_location( user_id )
-    return "" if block?(user_id)
+    return {:last => ""} if block?(user_id)
     loc = Checkin.where({user_id:self._id}).sort({_id:1}).last
     return {:last => ""} if loc.nil?
     diff = Time.now.to_i - loc.cat.to_i
