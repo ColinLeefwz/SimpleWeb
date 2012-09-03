@@ -39,6 +39,11 @@ class Oauth2Controller < ApplicationController
   end
   
   def login
+    hash = Digest::SHA1.hexdigest("#{params[:name]}#{params[:pass]}dface")[0,32]
+    if hash != params[:hash]
+      render :json => {error: "hash error: #{hash}."}
+      return
+    end
     response = RestClient.post 'https://api.weibo.com/oauth2/access_token', 
       :client_id => $sina_api_key, :client_secret => $sina_api_key_secret, :grant_type => 'password', 
       :username => params[:name], :password => params[:pass]
