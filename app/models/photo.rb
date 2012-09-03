@@ -7,10 +7,14 @@ class Photo
   field :room #发给聊天室
   field :weibo, type:Boolean
   field :img
-  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface" ; end }
+  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface"+bucket_suffix ; end }
   
   def user
     User.find(self.user_id)
+  end
+  
+  def shop
+    Shop.find(self.room)
   end
 
   

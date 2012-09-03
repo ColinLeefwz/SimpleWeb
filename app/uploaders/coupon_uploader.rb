@@ -11,7 +11,8 @@ class CouponUploader < CarrierWave::Uploader::Base
   end
   
   def aliyun_bucket
-    "coupon"
+    return "coupon" if ENV["RAILS_ENV"] == "production"
+    return "coupon_test" 
   end
   
   def filename
