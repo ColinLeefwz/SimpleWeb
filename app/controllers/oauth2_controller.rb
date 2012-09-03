@@ -43,7 +43,7 @@ class Oauth2Controller < ApplicationController
       :client_id => $sina_api_key, :client_secret => $sina_api_key_secret, :grant_type => 'password', 
       :username => params[:name], :password => params[:pass]
     token = ActiveSupport::JSON.decode response.to_s
-    logger.debug response.to_s
+    #logger.debug response.to_s
     uid = token["uid"]
     data = {:token=> token["access_token"], :expires_in => token["expires_in"], :expires_at => token["expires_at"], :wb_uid => uid }
     do_login(uid,token["access_token"],data)
@@ -72,6 +72,7 @@ class Oauth2Controller < ApplicationController
       user.save!
     end
     session[:user_id] = user.id
+    session[:user_token] = token
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json

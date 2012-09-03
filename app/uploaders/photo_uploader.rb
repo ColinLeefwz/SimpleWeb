@@ -6,6 +6,11 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   storage :aliyun
   
+  def bucket_suffix
+    return "" if ENV["RAILS_ENV"] == "production"
+    return "_test"
+  end
+  
   def store_dir
     "#{model.id}"
   end
