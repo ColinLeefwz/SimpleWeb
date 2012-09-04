@@ -6,7 +6,7 @@
 # See also http://unicorn.bogomips.org/examples/unicorn.conf.rb for
 # a more verbose configuration using more features.
 
-# listen 2007 # by default Unicorn listens on port 8080
+listen 8082 # by default Unicorn listens on port 8080
 worker_processes 10 # this should be >= nr_cpus
 pid "/home/dooo/lianlian/log/unicorn.pid"
 stderr_path "/home/dooo/lianlian/log/unicorn.log"
