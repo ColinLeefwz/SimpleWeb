@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   # See ActionController::Base for details
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password").
-#  filter_parameter_logging :password
+  #  filter_parameter_logging :password
 
 
   after_filter OutputCompressionFilter
@@ -53,6 +53,15 @@ class ApplicationController < ActionController::Base
       redirect_to( :controller => "admin_login" , :action => "login")
     else
       redirect_to "/noright.htm" unless right_check
+    end
+  end
+
+  def shop_authorize
+    if session[:shop_id]
+      @shop = Shop.where(:_id => session[:shop_id] ).first
+    else
+      session[:o_uri_path] = request.path unless request.path =~ /\/login/
+      redirect_to(:controller => 'shop_login', :action => 'login' )
     end
   end
 

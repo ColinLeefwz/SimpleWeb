@@ -1,0 +1,33 @@
+<p><h3>修改密码</h3></p>
+<p>
+  <%= notice %>
+</p>
+
+<%= form_for(@shop, :url => "/shop_pass", :html => {:method => 'post'} ) do |f| %>
+  <%if  @shop.errors.any? %>
+    <% @shop.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  <%end%>
+
+  <table>
+    <tr class="bgcolor">
+      <td class="td_60 td_top">原始密码：</td>
+      <td><%= password_field_tag 'oldpass', '', :size=>"30", :maxLength=>"16" ,:value => ''%>&nbsp;&nbsp;<img src="/img/008.gif" />
+        <div style="margin-top:10px; color:#999;">密码命名规则：由字母数字和下划线组成，长度为6~16。密码不要与账号名相同。</div>
+      </td>
+    </tr>
+    <tr  class="bgcolor">
+      <td>新的密码：</td>
+      <td><%= f.password_field :password, :size=>"30", :maxLength=>"16" ,:class=>"text-input"%>&nbsp;&nbsp;<img src="/img/008.gif" /></td>
+    </tr>
+    <tr  class="bgcolor">
+      <td>再次输入</td>
+      <td><%= f.password_field :password_confirmation, :size=>"30", :maxLength=>"16" ,:class=>"text-input"%>&nbsp;&nbsp;<img src="/img/008.gif"></td>
+    </tr>
+    <tr  class="bgcolor">
+      <td colspan="2"><%= f.submit "修改", :class => "button marginleft20" %>
+      </td>
+    </tr>
+  </table>
+<% end %>
