@@ -1,0 +1,46 @@
+
+<h1>商家登录</h1>
+
+<p><%= notice %></p>
+
+<%= form_tag "/shop_login/login" do %>
+  <body><table width="200" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="20px;" width="60%">
+        </td>
+        <td height="20px;" aligh="left">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>
+            <label for="user_name">商家id</label>
+            <%= text_field_tag :id, params[:id], :maxLength=>"50" %>
+          </p>
+        </td>
+        <td>
+          <p>&nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>
+            <label for="user_password">密码</label>
+            <%= password_field_tag :password, params[:password], :maxLength=>"16" %>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding-left:75px;">
+          <p class="act">
+            <%= submit_tag "登 录", :class => "button" %>
+          </p>
+        <%end%>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="bottom"></div>
+</div>
+
