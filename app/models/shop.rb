@@ -11,9 +11,14 @@ class Shop
   field :addr
   field :t                #脸脸的商家类型
   field :level            #商家的人工等级
+  field :password
+
   #field :cc, type:Integer  #点评的评论数
   #field :type              #从mapabc导入的商家类型
 
+  validates_confirmation_of :password
+  validates_presence_of :password
+  validates_length_of :password, :minimum => 6
 
   def self.default_hash
     {del: {"$exists" => false}}
