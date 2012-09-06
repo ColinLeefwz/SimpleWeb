@@ -3,8 +3,23 @@ class ShopNotice
   
   field :shop_id, type: Moped::BSON::ObjectId
   field :title
-  field :begin, type:DateTime
-  field :end, type:DateTime
+  #  field :begin, type:DateTime
+  #  field :end, type:DateTime
   field :ord, type:Float
+  field :effect, type:Boolean,default:true
+
+
+  #从新排序
+  def reord
+    sns = ShopNotice.where({shop_id: self.shop_id, effect: true, _id: {"$ne" => self._id}, ord: {"$gte" => self.ord}})
+    sns.each do |sn|
+      sn.update_attribute(:ord, sn.ord+1)
+    end
+  end
+
+  #显示公告的个数
+  def self.show_notices(shop_id,limit)
+    self.where({shop_id: shop_id, effect: true, ord: {"$ne" => nil}}).sort({ord: 1}).limit(limit)
+  end
   
 end
