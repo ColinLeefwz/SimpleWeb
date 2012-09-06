@@ -1,2 +1,0 @@
-module McitiesHelper
-end

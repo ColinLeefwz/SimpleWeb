@@ -19,7 +19,7 @@
       <td><%= shop_notice.effect ? '是' : '否' %></td>
       <td><%= link_to '详情', shop_notice %></td>
       <td><%= link_to '编辑', edit_shop_notice_path(shop_notice) if shop_notice.effect %></td>
-      <td><%= link_to '过期',{:action => 'destroy', :id => shop_notice.id }, :onclick => "return confirm('确定过期么？')" if shop_notice.effect %></td>
+      <td><%= link_to '过期',{:action => 'dest', :id => shop_notice.id }, :onclick => "return confirm('确定过期么？')" if shop_notice.effect %></td>
       <td><%= link_to '置顶',{:action => 'top', :id => shop_notice.id }, :onclick => "return confirm('确定置顶么？')" if shop_notice.effect %></td>
     </tr>
   <% end %>

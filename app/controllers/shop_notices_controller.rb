@@ -91,7 +91,7 @@ class ShopNoticesController < ApplicationController
 
   # DELETE /shop_notices/1
   # DELETE /shop_notices/1.json
-  def destroy
+  def dest
     @shop_notice = ShopNotice.find(params[:id])
     return  render :text => "你没有权限查看此公告"  if @shop_notice.shop_id != @shop.id
     @shop_notice.update_attribute(:effect, :false)
