@@ -1,13 +1,13 @@
+# coding: utf-8
+
 class ShopNoticesController < ApplicationController
+  before_filter :shop_authorize
+  layout 'shop'
+  #  before_filter :operate_auth, :only => [:show, :edit,:destroy]
   # GET /shop_notices
   # GET /shop_notices.json
   def index
-    if params[:id]
-      @shop_notices = ShopNotice.where({shop_id: params[:id]})
-    else
-      @shop_notices = ShopNotice.all
-    end
-
+    @shop_notices = ShopNotice.where({shop_id: @shop._id, effect: true}).sort({ord: 1})
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @shop_notices.map{|sn| {id:sn._id, title:sn.title} }.to_json }
@@ -18,6 +18,7 @@ class ShopNoticesController < ApplicationController
   # GET /shop_notices/1.json
   def show
     @shop_notice = ShopNotice.find(params[:id])
+    return  render :text => "你没有权限查看此公告"  if @shop_notice.shop_id != @shop.id
 
     respond_to do |format|
       format.html # show.html.erb
@@ -36,18 +37,33 @@ class ShopNoticesController < ApplicationController
     end
   end
 
-  # GET /shop_notices/1/edit
+  def top
+    @shop_notice = ShopNotice.find(params[:id])
+    return render :text => "你没有权限查看此公告"  if @shop_notice.shop_id != @shop.id
+    @shop_notice.update_attribute(:ord, 1)
+    @shop_notice.reload.reord
+    redirect_to shop_notices_url
+  end
+
   def edit
     @shop_notice = ShopNotice.find(params[:id])
+    return render :text => "你没有权限查看此公告"  if @shop_notice.shop_id != @shop.id
   end
+
+  # GET /shop_notices/1/edit
+  #  def edit
+  #    @shop_notice = ShopNotice.find(params[:id])
+  #    render :text => "你没有权限修改此公告"  if @shop_notice != @shop.id
+  #  end
 
   # POST /shop_notices
   # POST /shop_notices.json
   def create
     @shop_notice = ShopNotice.new(params[:shop_notice])
-
+    @shop_notice.shop_id = @shop._id
     respond_to do |format|
       if @shop_notice.save
+        @shop_notice.reord
         format.html { redirect_to @shop_notice, :notice => 'Shop notice was successfully created.' }
         format.json { render :json => @shop_notice, :status => :created, :location => @shop_notice }
       else
@@ -61,7 +77,7 @@ class ShopNoticesController < ApplicationController
   # PUT /shop_notices/1.json
   def update
     @shop_notice = ShopNotice.find(params[:id])
-
+    return  render :text => "你没有权限查看此公告"  if @shop_notice.shop_id != @shop.id
     respond_to do |format|
       if @shop_notice.update_attributes(params[:shop_notice])
         format.html { redirect_to @shop_notice, :notice => 'Shop notice was successfully updated.' }
@@ -77,11 +93,12 @@ class ShopNoticesController < ApplicationController
   # DELETE /shop_notices/1.json
   def destroy
     @shop_notice = ShopNotice.find(params[:id])
-    @shop_notice.destroy
-
+    return  render :text => "你没有权限查看此公告"  if @shop_notice.shop_id != @shop.id
+    @shop_notice.update_attribute(:effect, :false)
     respond_to do |format|
       format.html { redirect_to shop_notices_url }
       format.json { head :no_content }
     end
   end
+
 end

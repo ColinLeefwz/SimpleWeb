@@ -1,31 +1,32 @@
-<h1>Listing shop_notices</h1>
+<h1>公告列表</h1>
 
 <table>
   <tr>
-    <th>Shop</th>
-    <th>Title</th>
-    <th>Begin</th>
-    <th>End</th>
-    <th>Ord</th>
+    <th>商家</th>
+    <th>文本</th>
+    <th>排序</th>
+    <th>有效</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @shop_notices.each do |shop_notice| %>
-  <tr>
-    <td><%= shop_notice.shop_id %></td>
-    <td><%= shop_notice.title %></td>
-    <td><%= shop_notice.begin %></td>
-    <td><%= shop_notice.end %></td>
-    <td><%= shop_notice.ord %></td>
-    <td><%= link_to 'Show', shop_notice %></td>
-    <td><%= link_to 'Edit', edit_shop_notice_path(shop_notice) %></td>
-    <td><%= link_to 'Destroy', shop_notice, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <% @shop_notices.each do |shop_notice| %>
+    <tr>
+      <td><%= shop_notice.shop_id %></td>
+      <td><%= shop_notice.title %></td>
+      <td><%= shop_notice.ord %></td>
+      <td><%= shop_notice.effect ? '是' : '否' %></td>
+      <td><%= link_to '详情', shop_notice %></td>
+      <td><%= link_to '编辑', edit_shop_notice_path(shop_notice) if shop_notice.effect %></td>
+      <td><%= link_to '过期',{:action => 'destroy', :id => shop_notice.id }, :onclick => "return confirm('确定过期么？')" if shop_notice.effect %></td>
+      <td><%= link_to '置顶',{:action => 'top', :id => shop_notice.id }, :onclick => "return confirm('确定置顶么？')" if shop_notice.effect %></td>
+    </tr>
+  <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Shop notice', new_shop_notice_path %>
+<%= link_to '新建公告', new_shop_notice_path %>
+
+
