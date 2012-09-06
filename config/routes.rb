@@ -1,5 +1,10 @@
 Lianlian::Application.routes.draw do
-  resources :shop_notices
+  resources :shop_notices do
+    member do
+      get 'destroy'
+      get 'top'
+    end
+  end
   resources :checkins
 
   #post "shops/manual"
