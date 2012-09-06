@@ -4,7 +4,7 @@ class AdminsController < ApplicationController
   # GET /admins
   # GET /admins.xml
   def index
-    @admins = Admin.paginate(:conditions => genCondition, :joins => genJoins, :order => genOrder, :page => params[:page], :per_page =>20)
+    @admins = Admin.where({})
 
     respond_to do |format|
       format.html # index.html.erb
@@ -76,7 +76,7 @@ class AdminsController < ApplicationController
 
   # DELETE /admins/1
   # DELETE /admins/1.xml
-  def destroy
+  def dest
     @admin = Admin.find(params[:id])
     @admin.destroy
 

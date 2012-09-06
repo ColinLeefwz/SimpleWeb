@@ -1,6 +1,8 @@
 class Admin < ActiveRecord::Base
-  has_and_belongs_to_many :roles
-  belongs_to :depart
+
+  include Mongoid::Document
+  field :name
+  field :password
 
   validates_length_of :name, :maximum => 32
   validates_length_of :password, :within => 3..32
@@ -9,7 +11,7 @@ class Admin < ActiveRecord::Base
   validates_confirmation_of :password
 
   def self.auth(name,password)
-    admin = self.find_by_name(name)
+    admin = self.where({name: name}).first
     if admin
       if admin.password != password
         admin = nil

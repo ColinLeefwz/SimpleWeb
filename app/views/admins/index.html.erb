@@ -11,22 +11,22 @@
   <tr>
     <th>登录名</th>
     <th>密码</th>
-    <th>创建日期</th>
+    <th></th>
+    <th></th>
+    <th></th>
   </tr>
 
   <% for admin in @admins %>
     <tr>
       <td><%=h admin.name %></td>
       <td><%=h admin.pass2 %></td>
-      <td><%=h admin.created_at %></td>
-      <td><%= link_to '浏览', admin %></td>
+      <td><%= link_to '浏览', {:action => :show, :id => admin.id} %></td>
       <td><%= link_to '编辑', edit_admin_path(admin) %></td>
-      <td><%= link_to '删除', admin, :confirm => '确定要删除吗?', :method => :delete %></td>
+      <td><%= link_to '删除', {:action => 'destroy', :id => admin.id}, :onclick => "return confirm('确定删除么？')" %></td>
     </tr>
   <% end %>
 </table>
 
 <br />
 <div id="paginate" style="text-align: center">
-  <%= generate_paginate @admins %>
 </div>

@@ -1,6 +1,0 @@
-<h1>编辑商家信息</h1>
-
-<%= form_for( @shop, :as => "shop", :url => mshop_path(@shop),:html=>{:method => "put"}) do |f| %>
-  <%= render(:partial => "form", :locals => {:f => f}) %>
-<% end %>
-<%= link_to '返回列表', mshops_path %>
