@@ -47,12 +47,10 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_authorize
-    unless Admin.find_by_id(session[:admin_id])
+    unless Admin.find(session[:admin_id])
       flash[:notice] = "请登录"
       memo_original_url()
       redirect_to( :controller => "admin_login" , :action => "login")
-    else
-      redirect_to "/noright.htm" unless right_check
     end
   end
 
@@ -65,22 +63,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def right_check
-    model=self.controller_name
-    flag = Right.check(session_admin,model,self.action_name)
-    #save_operation_log(session_admin.id,model,self.action_name,flag)
-    flag
-  end
+#  def right_check
+#    model=self.controller_name
+#    flag = Right.check(session_admin,model,self.action_name)
+#    #save_operation_log(session_admin.id,model,self.action_name,flag)
+#    flag
+#  end
 
-  def save_operation_log(admin_id,model,action,flag)
-    log=OperationLog.new
-    log.admin_id=admin_id
-    log.model=model
-    log.action=action
-    log.object_id=params[:id]
-    log.allow=flag
-    log.save
-  end
+#  def save_operation_log(admin_id,model,action,flag)
+#    log=OperationLog.new
+#    log.admin_id=admin_id
+#    log.model=model
+#    log.action=action
+#    log.object_id=params[:id]
+#    log.allow=flag
+#    log.save
+#  end
 
 
   def user_login_filter
@@ -102,7 +100,7 @@ class ApplicationController < ActionController::Base
   end
 
   def session_admin
-    Admin.find_by_id(session[:admin_id])
+    Admin.find(session[:admin_id])
   end
 
 
