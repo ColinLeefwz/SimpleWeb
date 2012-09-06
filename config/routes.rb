@@ -1,7 +1,7 @@
 Lianlian::Application.routes.draw do
   resources :shop_notices do
     member do
-      get 'destroy'
+      get 'dest'
       get 'top'
     end
   end
@@ -12,10 +12,9 @@ Lianlian::Application.routes.draw do
   resources :users do
     resources :user_logos
   end
-  resources :rights
-  resources :admins
-  resources :departs
-  resources :roles
+  resources :admins do
+    member { get "dest"}
+  end
   resources :mshops
   resources :mcities
   resources :mcategories

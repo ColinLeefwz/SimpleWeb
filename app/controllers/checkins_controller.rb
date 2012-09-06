@@ -24,7 +24,10 @@ class CheckinsController < ApplicationController
       format.json { render :json => @checkin }
     end
   end
-  
+
+  def new
+    @checkin = Checkin.new
+  end
   # POST /checkins
   # POST /checkins.json
   def create
