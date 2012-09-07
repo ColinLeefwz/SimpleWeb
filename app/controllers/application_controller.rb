@@ -55,9 +55,7 @@ class ApplicationController < ActionController::Base
   end
 
   def shop_authorize
-    if session[:shop_id]
-      @shop = Shop.where(:_id => session[:shop_id] ).first
-    else
+    if session[:shop_id].nil?
       session[:o_uri_path] = request.path unless request.path =~ /\/login/
       redirect_to(:controller => 'shop_login', :action => 'login' )
     end
@@ -102,7 +100,6 @@ class ApplicationController < ActionController::Base
   def session_admin
     Admin.find(session[:admin_id])
   end
-
 
   class TransactionFilter
     def filter(controller)
