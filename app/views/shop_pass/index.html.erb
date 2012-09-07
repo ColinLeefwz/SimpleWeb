@@ -4,8 +4,8 @@
 </p>
 
 <%= form_for(@shop, :url => "/shop_pass", :html => {:method => 'post'} ) do |f| %>
-  <%if  @shop.errors.any? %>
-    <% @shop.errors.full_messages.each do |msg| %>
+  <%if  session_shop.errors.any? %>
+    <% session_shop.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
   <%end%>
