@@ -61,29 +61,46 @@ var gcj02_to_real = function(loc){
     return [loc[0]-tmp.d[0],loc[1]-tmp.d[1]];
 };
 
-var sort_with_score = function(arr,loc){
-	var diff = function(x){
-		return 1000*Math.abs(x.lo[0]-loc[0]) + 1500*Math.abs(x.lo[1]-loc[1])
+var shop_distance = function(shop,loc){
+	if((typeof shop.lo[0]) == "number" ) return get_distance(shop.lo,loc);
+	var ret=10000;
+	for(var i=0;i<shop.lo.length;i++){
+		var ret0 = get_distance(shop.lo[i],loc);
+		if(ret0<ret) ret=ret0;
 	}
-	var score = arr.map(function(x) { return [x,diff(x,loc)]; }); 
-	score.forEach(function(x,i,a) { 
-		if(x[0].t){
-			//printjson(x);
-			a[i][1]-=1; 
-		} 
-		if(x[0].del) a[i][1]+=5; 
+	return ret;
+}
+
+var sort_with_score = function(arr,loc,accuracy,ip,uid){
+	var score = arr.map(function(x) { return [x,shop_distance(x,loc),0]; }); 
+	score.forEach(function(xx,i,a) { 
+		var x = xx[0]; 
+		if(x.t) a[i][2]-=1; 
+		if(x.del) a[i][2]+=10; 
+		if(uid){
+			//print("****** "+x._id);
+			//print(db.checkins.count({shop_id:x._id, user_id:uid}));
+			a[i][2] -= db.checkins.count({shop_id:x._id, user_id:uid})*10;
+		}
+		if(ip.indexOf(",")==-1) a[i][2] -= db.checkins.count({shop_id:x._id, ip:ip});
+		a[i][2] -= db.checkins.count({shop_id:x._id, loc:{$within:{$center:[loc,0.0002]}}});
+		a[i][2] -= db.checkins.count({shop_id:x._id, loc:{$within:{$center:[loc,0.0005]}}});
+		//printjson(xx);
+		a[i][1] += (a[i][2]*accuracy/300)
 	}); 
-	score = score.sort(function(a,b) {return a[1]-b[1]}).slice(0,50);
+	score = score.sort(function(a,b) {return a[1]-b[1]}).slice(0,30);
 	return score.map(function(x) { return x[0] }); ;
 }
 
-var find_shops = function(loc,accuracy,ip){
-    var cursor = db.shops.find({lo:{$within:{$center:[loc,0.003]}}}).limit(100);
+var find_shops = function(loc,accuracy,ip,uid){
+	var radius = 0.003;
+	if(accuracy<300) radius = 0.0015+0.002*accuracy/300;
+    var cursor = db.shops.find({lo:{$within:{$center:[loc,radius]}}}).limit(60);
 	var ret = [];
 	while ( cursor.hasNext() ) ret.push(cursor.next());
-    if(ret.length>=7) return sort_with_score(ret,loc);
+    if(ret.length>=3) return sort_with_score(ret,loc,accuracy,ip,uid);
 	ret = [];
-	cursor = db.shops.find({lo:{$within:{$center:[loc,0.3]}}}).limit(7);
+	cursor = db.shops.find({lo:{$within:{$center:[loc,10*radius]}}}).limit(5);
 	while ( cursor.hasNext() ) ret.push(cursor.next());
 	return ret;
 };
@@ -98,6 +115,7 @@ db.system.js.save({ "_id" : "real_to_gcj02_distance", "value" : real_to_gcj02_di
 
 db.system.js.save({ "_id" : "gcj02_to_real", "value" : gcj02_to_real });
 
+db.system.js.save({ "_id" : "shop_distance", "value" : shop_distance });
 db.system.js.save({ "_id" : "sort_with_score", "value" : sort_with_score });
 db.system.js.save({ "_id" : "find_shops", "value" : find_shops });
 
