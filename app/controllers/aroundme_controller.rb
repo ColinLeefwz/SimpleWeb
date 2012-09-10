@@ -1,7 +1,8 @@
 class AroundmeController < ApplicationController
   
   def shops
-    str = "find_shops([#{params[:lat]},#{params[:lng]}],#{params[:accuracy]},'#{real_ip}',ObjectId('#{session[:user_id]}'))"
+    uid = ",ObjectId('#{session[:user_id]}')" if session[:user_id]
+    str = "find_shops([#{params[:lat]},#{params[:lng]}],#{params[:accuracy]},'#{real_ip}'#{uid})"
     arr = Mongoid.default_session.command(eval:str)["retval"]
     hash = arr.map do |x|
       s = Shop.new(x)
