@@ -78,14 +78,13 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
 		if(x.t) a[i][2]-=1; 
 		if(x.del) a[i][2]+=10; 
 		if(uid){
-			//print("****** "+x._id);
-			//print(db.checkins.count({shop_id:x._id, user_id:uid}));
 			a[i][2] -= db.checkins.count({shop_id:x._id, user_id:uid})*10;
+			//区分签到和实际发言过
 		}
 		if(ip.indexOf(",")==-1) a[i][2] -= db.checkins.count({shop_id:x._id, ip:ip});
-		a[i][2] -= db.checkins.count({shop_id:x._id, loc:{$within:{$center:[loc,0.0002]}}});
-		a[i][2] -= db.checkins.count({shop_id:x._id, loc:{$within:{$center:[loc,0.0005]}}});
-		//printjson(xx);
+		a[i][2] -= db.checkins.count({shop_id:x._id, loc:{$within:{$center:[loc,0.0001]}}});
+		a[i][2] -= db.checkins.count({shop_id:x._id, loc:{$within:{$center:[loc,0.0003]}}});
+		printjson(xx);
 		a[i][1] += (a[i][2]*accuracy/300)
 	}); 
 	score = score.sort(function(a,b) {return a[1]-b[1]}).slice(0,30);
