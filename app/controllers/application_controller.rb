@@ -29,6 +29,9 @@ class ApplicationController < ActionController::Base
     $0 = request.path[0,15] + "*"
   end
 
+
+  Time.now
+
   around_filter :exception_catch if ENV["RAILS_ENV"] == "production"
   def exception_catch
     begin
@@ -61,22 +64,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
-#  def right_check
-#    model=self.controller_name
-#    flag = Right.check(session_admin,model,self.action_name)
-#    #save_operation_log(session_admin.id,model,self.action_name,flag)
-#    flag
-#  end
+  #  def right_check
+  #    model=self.controller_name
+  #    flag = Right.check(session_admin,model,self.action_name)
+  #    #save_operation_log(session_admin.id,model,self.action_name,flag)
+  #    flag
+  #  end
 
-#  def save_operation_log(admin_id,model,action,flag)
-#    log=OperationLog.new
-#    log.admin_id=admin_id
-#    log.model=model
-#    log.action=action
-#    log.object_id=params[:id]
-#    log.allow=flag
-#    log.save
-#  end
+  #  def save_operation_log(admin_id,model,action,flag)
+  #    log=OperationLog.new
+  #    log.admin_id=admin_id
+  #    log.model=model
+  #    log.action=action
+  #    log.object_id=params[:id]
+  #    log.allow=flag
+  #    log.save
+  #  end
 
 
   def user_login_filter
@@ -99,6 +102,10 @@ class ApplicationController < ActionController::Base
 
   def session_admin
     Admin.find(session[:admin_id])
+  end
+
+  def session_shop
+    Shop.find(session[:shop_id])
   end
 
   class TransactionFilter
