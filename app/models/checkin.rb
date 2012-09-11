@@ -10,7 +10,8 @@ class Checkin
   field :od, type: Integer
   
   def cat
-    self._id.generation_time
+#    self._id.generation_time
+    Time.at self._id.to_s[0,8].to_i(16)
   end
   
   def time_desc
