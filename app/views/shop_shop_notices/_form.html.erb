@@ -1,0 +1,30 @@
+<%= javascript_include_tag "My97DatePicker/WdatePicker.js" %>
+
+
+<% if @shop_notice.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@shop_notice.errors.count, "error") %> prohibited this shop_notice from being saved:</h2>
+
+    <ul>
+      <% @shop_notice.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="field">
+  <%= f.label '文本' %><br />
+  <%= f.text_field :title %>
+</div>
+
+<div class="field">
+  <%= f.label '排序' %><br />
+  <%= f.text_field :ord, :value => @shop_notice.ord.blank? ? 1 : @shop_notice.ord %>
+</div>
+<br/>
+
+<div class="actions">
+  <%= f.submit '确定'%>
+</div>
+

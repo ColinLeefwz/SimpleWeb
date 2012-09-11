@@ -1,10 +1,12 @@
 Lianlian::Application.routes.draw do
-  resources :shop_notices do
+  resources :shop_shop_notices do
     member do
       get 'dest'
       get 'top'
     end
   end
+
+  resources :shop_notices
   resources :checkins
 
   #post "shops/manual"
