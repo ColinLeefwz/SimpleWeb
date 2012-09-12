@@ -17,8 +17,7 @@ class Shop
   #field :type              #从mapabc导入的商家类型
 
   validates_confirmation_of :password
-  validates_presence_of :password
-  validates_length_of :password, :minimum => 6
+  validates_length_of :password, :minimum => 6, :allow_nil => true
 
   def self.default_hash
     {del: {"$exists" => false}}
@@ -55,9 +54,9 @@ class Shop
   
   def loc_first
     if self["loc"][0].class==Array
-        self["loc"][0]
+      self["loc"][0]
     else
-        self["loc"]
+      self["loc"]
     end
   end
   
