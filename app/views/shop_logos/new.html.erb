@@ -1,0 +1,25 @@
+<h1>商家上传logo</h1><br>
+<div class="content-box">
+  <div class="content-box-header"><h3>上传logo</h3></div>
+  <div class="content-box-content">
+    <table>
+      <%= form_for(:shop_logo, :url => { :action => "create" } ,:html => { :multipart => true }) do |f| -%>
+
+        <tr class="bgcolor">
+          <td class="td_300">
+            <label for="uploaded_data">请选择一张图片</label><br />
+            *图片大小为640 x 640
+            <br />
+
+            <%= f.file_field :img %>
+          </td>
+        </tr>
+        <tr class="bgcolor">
+          <td class="td_padding_0">
+            <%= submit_tag ' 上 传 ' ,:class=>"button"%>
+          <% end -%>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
