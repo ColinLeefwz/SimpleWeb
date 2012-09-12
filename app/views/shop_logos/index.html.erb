@@ -1,0 +1,7 @@
+<h1>商家logo</h1>
+
+<%=image_tag(@shop_logo.img)  if @shop_logo%>
+<br/>
+<br/>
+<br/>
+ <%= link_to '上传logo', {:action => :new} %>
