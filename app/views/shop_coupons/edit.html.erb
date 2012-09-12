@@ -1,0 +1,10 @@
+<h1>编辑优惠券</h1>
+
+<%= form_for(@coupon, {:url => '/shop_coupons/update' , :html => {:method => 'PUT'}} ) do |f| %>
+  <%= render :partial => 'form', :locals => {f: f} %>
+  <div class="actions">
+    <%= f.submit '编辑' %>
+  </div>
+<% end %>
+
+<%= link_to '返回列表', '/shop_coupons' %>
