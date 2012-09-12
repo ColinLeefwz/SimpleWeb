@@ -24,12 +24,48 @@
 \textbf{注意事项}：
 \begin{enumerate}
 \item 所有的链接，如果要获得json格式的数据，最好带上".json"的后缀。因为同一个链接以后可能返回多种格式的数据，比如xml/html/json等。
-\item 获得附近的商家分解为三个API，对应三种情况。
-\item 新浪微博登录回调以后的API调用时都需要登录。目前登录信息通过cookie中的“\_session\_id”获得。
 \item 当调用出错时，会在返回的json中包含"error"信息。
+\item 只有开发调试时调用http的接口，发布时全部使用https接口。
 \end{enumerate}
 
 \newpage
+
+\section{初始化}
+手机应用启动后，初次访问时调用此API。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{https://60.191.119.190/init/init} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ os  & 字符串 & 必须 &  手机操作系统版本\\
+ \hline
+ mac  & 字符串 & 必须 &  无线网卡MAC地址\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：本API直接通过IP地址“60.191.119.190”访问，不通过DNS。而后续所有API调用的IP地址根据本调用的返回的IP地址确定。在目前只有单台服务器的情况下，返回的ip地址也是“60.191.119.190”，但是以后会根据离用户的距离返回就近的IP地址。
+
+
+hash的计算方式为：os+mac+"init"进行SHA1算法后取前32位，和登录时的hash算法［\ref{hash_algorithm}］类似。
+
+\begin{verbatim}
+返回值：
+{
+"ip": "60.191.119.190"
+}
+
+\end{verbatim}
+
+本API的作用一个是给客户端推荐IP地址，一个是统计应用的开机情况和操作系统分布。
+
+
 
 
 \section{登录和退出}
@@ -40,7 +76,7 @@
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/oauth2/sina\_callback} \\
+\multicolumn{4}{|c|}{/oauth2/sina\_callback} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -55,7 +91,7 @@
 
 \begin{figure}[H]
 \begin{verbatim}
-访问：http://www.dface.cn/oauth2/sina_callback?code=...
+访问：/oauth2/sina_callback?code=...
 该访问由新浪微博通过302转向发起。
 返回值：
 
@@ -84,18 +120,21 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
 \end{figure}
 
 \subsection{新的登录方式：xauth}
+\label{hash_algorithm}
 
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/oauth2/login} \\
+\multicolumn{4}{|c|}{/oauth2/login} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
  name  & 字符串 & 必须 &  用户名\\
  \hline
  pass  & 字符串 & 必须 &  密码\\
+  \hline
+ mac  & 字符串 & 必须 &  网卡Mac地址\\
  \hline
  hash  & 字符串 & 必须 &  hash验证码\\
 \hline
@@ -106,8 +145,8 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
 本接口的输出和oauth2登录接口的输出相同。
 
 \begin{verbatim}
-hash的计算方式为：name+pass+"dface"进行SHA1算法后取前32位。
-比如用户名为name，密码为pass，
+hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
+比如用户名为name，密码为pa，mac地址为ss
 那么待hash的字符串为"namepassdface"，
 其hash码为"11f4004a73a65117071bc4a7d3dfdf07"。
 \end{verbatim}
@@ -122,7 +161,7 @@ hash的计算方式为：name+pass+"dface"进行SHA1算法后取前32位。
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/oauth2/logout} \\
+\multicolumn{4}{|c|}{/oauth2/logout} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -139,7 +178,7 @@ hash的计算方式为：name+pass+"dface"进行SHA1算法后取前32位。
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops\_by\_ip} \\
+\multicolumn{4}{|c|}{/aroundme/shops\_by\_ip} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -163,7 +202,7 @@ hash的计算方式为：name+pass+"dface"进行SHA1算法后取前32位。
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/shops} \\
+\multicolumn{4}{|c|}{/aroundme/shops} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -223,7 +262,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/shop/nearby} \\
+\multicolumn{4}{|c|}{/shop/nearby} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -269,7 +308,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/aroundme/users} \\
+\multicolumn{4}{|c|}{/aroundme/users} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -321,7 +360,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/shop/info} \\
+\multicolumn{4}{|c|}{/shop/info} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -338,7 +377,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/shop/users} \\
+\multicolumn{4}{|c|}{/shop/users} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -367,7 +406,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/shop\_notices} \\
+\multicolumn{4}{|c|}{/shop\_notices} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -393,7 +432,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/checkins} \\
+\multicolumn{4}{|c|}{/checkins} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -425,7 +464,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/get} \\
+\multicolumn{4}{|c|}{/user\_info/get} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -473,7 +512,7 @@ wb_uid:1884834632
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/logo} \\
+\multicolumn{4}{|c|}{/user\_info/logo} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -490,7 +529,7 @@ wb_uid:1884834632
 
 例如：“Img\_url:/system/imgs/1/thumb2/1.png?1339649979”
 
-注意：采用阿里云存储后，会输出301重定向，而不是直接给二进制流。
+注意：采用阿里云存储后，会输出302重定向，而不是直接给二进制流。
 
 
 \section{获得用户的图片列表}
@@ -499,7 +538,7 @@ wb_uid:1884834632
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/photos} \\
+\multicolumn{4}{|c|}{/user\_info/photos} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -538,7 +577,7 @@ wb_uid:1884834632
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/get\_self} \\
+\multicolumn{4}{|c|}{/user\_info/get\_self} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -576,7 +615,7 @@ wb_uid:1884834632
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/user\_info/set} \\
+\multicolumn{4}{|c|}{/user\_info/set} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -613,7 +652,7 @@ wb_uid:1884834632
 \begin{figure}[H]
 \begin{verbatim}
 访问：curl -b "_session_id=ead9ac4f6291c55bb467ad4138eca2ed" 
-        -F "name=newname" http://www.dface.cn/user_info/set
+        -F "name=newname" /user_info/set
 
 返回值：
 
@@ -636,7 +675,7 @@ wb_uid:1884834632
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/user\_logos/create} \\
+\multicolumn{4}{|c|}{/user\_logos/create} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -660,7 +699,7 @@ wb_uid:1884834632
 \begin{figure}[H]
 \begin{verbatim}
 访问：curl -F "user_logo[img]=@firefox.png;type=image/png" 
-http://www.dface.cn/user_logos
+/user_logos
 
 
 {"logo_thumb2":"/system/imgs/6/thumb2/csky2.png?1340779488",
@@ -682,7 +721,7 @@ http://www.dface.cn/user_logos
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/user\_logos/position} \\
+\multicolumn{4}{|c|}{/user\_logos/position} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -699,7 +738,7 @@ http://www.dface.cn/user_logos
 \begin{figure}[H]
 \begin{verbatim}
 访问：curl -F "id=2;order=0" 
-http://www.dface.cn/user_logos/position
+/user_logos/position
 
 
 \end{verbatim}
@@ -712,7 +751,7 @@ http://www.dface.cn/user_logos/position
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/user\_logos/change\_all\_position} \\
+\multicolumn{4}{|c|}{/user\_logos/change\_all\_position} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -734,7 +773,7 @@ http://www.dface.cn/user_logos/position
 \begin{figure}[H]
 \begin{verbatim}
 访问：curl -F "ids=3,1,4" 
-http://www.dface.cn/user_logos/position
+/user_logos/position
 
 
 
@@ -750,7 +789,7 @@ http://www.dface.cn/user_logos/position
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/user\_logos/delete} \\
+\multicolumn{4}{|c|}{/user\_logos/delete} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -765,7 +804,7 @@ http://www.dface.cn/user_logos/position
 \begin{figure}[H]
 \begin{verbatim}
 访问：curl -F "id=2" 
-http://www.dface.cn/user_logos/delete
+/user_logos/delete
 
 输出：
 {"deleted":"2"}
@@ -781,7 +820,7 @@ http://www.dface.cn/user_logos/delete
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/follows/create} \\
+\multicolumn{4}{|c|}{/follows/create} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -800,7 +839,7 @@ http://www.dface.cn/user_logos/delete
 \begin{figure}[H]
 \begin{verbatim}
 访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
-       -d "user_id=2&follow_id=1" http://www.dface.cn/follows
+       -d "user_id=2&follow_id=1" /follows
 
 返回值：
 
@@ -821,7 +860,7 @@ http://www.dface.cn/user_logos/delete
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/follows/delete} \\
+\multicolumn{4}{|c|}{/follows/delete} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -840,7 +879,7 @@ http://www.dface.cn/user_logos/delete
 \begin{figure}[H]
 \begin{verbatim}
 访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
-       -d "user_id=2&follow_id=3" http://www.dface.cn/follows/delete
+       -d "user_id=2&follow_id=3" /follows/delete
 
 返回值：
 
@@ -861,7 +900,7 @@ http://www.dface.cn/user_logos/delete
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/follow\_info/followers} \\
+\multicolumn{4}{|c|}{/follow\_info/followers} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -921,7 +960,7 @@ http://www.dface.cn/user_logos/delete
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/follow\_info/friends} \\
+\multicolumn{4}{|c|}{/follow\_info/friends} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -951,7 +990,7 @@ http://www.dface.cn/user_logos/delete
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/blacklists} \\
+\multicolumn{4}{|c|}{/blacklists} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -978,7 +1017,7 @@ http://www.dface.cn/user_logos/delete
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/blacklists/create} \\
+\multicolumn{4}{|c|}{/blacklists/create} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -1017,7 +1056,7 @@ http://www.dface.cn/user_logos/delete
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/blacklists/delete} \\
+\multicolumn{4}{|c|}{/blacklists/delete} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -1036,7 +1075,7 @@ http://www.dface.cn/user_logos/delete
 \begin{figure}[H]
 \begin{verbatim}
 访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
-       -d "user_id=2&block_id=3" http://www.dface.cn/blacklists/delete
+       -d "user_id=2&block_id=3" /blacklists/delete
 
 返回值：
 
@@ -1123,7 +1162,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/photos/create} \\
+\multicolumn{4}{|c|}{/photos/create} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -1151,7 +1190,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \begin{figure}[H]
 \begin{verbatim}
 访问：curl -F "photo[img]=@firefox.png;type=image/png" 
-http://www.dface.cn/photos
+/photos
 
 {"_id":"502fd10abe4b19ed48000002","img_file_name":"7.png","img_content_type":"image/png","img_file_size":99422,"img_updated_at":"2012-08-18T17:29:46Z","room":"237","user_id":"502e61bfbe4b1921da000001","logo":"/system/imgs/502fd10abe4b19ed48000002/original/7.png?1345310986","logo_thumb":"/system/imgs/502fd10abe4b19ed48000002/thumb/7.jpg?1345310986","logo_thumb2":"/system/imgs/502fd10abe4b19ed48000002/thumb2/7.jpg?1345310986","id":"502fd10abe4b19ed48000002"}
 
@@ -1164,7 +1203,7 @@ http://www.dface.cn/photos
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/photo2s/create} \\
+\multicolumn{4}{|c|}{/photo2s/create} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -1195,7 +1234,7 @@ http://www.dface.cn/photos
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/photos/show} \\
+\multicolumn{4}{|c|}{/photos/show} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
   \hline
@@ -1214,7 +1253,7 @@ http://www.dface.cn/photos
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/photo2s/show} \\
+\multicolumn{4}{|c|}{/photo2s/show} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
   \hline
@@ -1251,7 +1290,7 @@ http://www.dface.cn/photos
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/coupons/img} \\
+\multicolumn{4}{|c|}{/coupons/img} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -1271,7 +1310,7 @@ http://www.dface.cn/photos
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{http://www.dface.cn/coupons/use} \\
+\multicolumn{4}{|c|}{/coupons/use} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
