@@ -1,0 +1,9 @@
+<h1>新建优惠券</h1>
+<%= form_for(@coupon, {:url => '/shop_coupons/create'} ) do |f| %>
+  <%= render :partial => 'form', :locals => {f: f} %>
+  <div class="actions">
+    <%= f.submit '新增'%>
+  </div>
+<% end %>
+
+<%= link_to '返回列表', '/shop_coupons' %>
