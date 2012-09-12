@@ -7,6 +7,9 @@ Lianlian::Application.routes.draw do
   end
 
   resources :shop_notices
+
+  resources :shop_coupons
+
   resources :checkins
 
   #post "shops/manual"
