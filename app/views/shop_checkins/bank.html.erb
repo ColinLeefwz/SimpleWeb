@@ -9,7 +9,7 @@
   <% @banks.each do |bank| %>
     <tr>
       <td><%= session_shop.name %></td>
-      <td><%= User.find(bank['user_id']).name %></td>
+      <td><%= User.find(bank['uid']).name %></td>
       <td><%= bank["count"] %></td>
     </tr>
   <% end %>
@@ -17,3 +17,4 @@
 
 <br/>
 <%= link_to '返回列表',"/shop_checkins" %>
+
