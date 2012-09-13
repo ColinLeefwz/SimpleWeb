@@ -7,6 +7,8 @@ class Checkin
   field :ip
   field :acc, type:Float
   field :od, type: Integer
+
+  
   
   def cat
 #    self._id.generation_time

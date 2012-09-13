@@ -102,17 +102,17 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
         if(x.del) a[i][2]+=10;
         if(uid){
             a[i][2] -= db.checkins.count({
-                shop_id:x._id,
-                user_id:uid
+                sid:x._id,
+                uid:uid
             })*10;
         //区分签到和实际发言过
         }
         if(ip.indexOf(",")==-1) a[i][2] -= db.checkins.count({
-            shop_id:x._id,
+            sid:x._id,
             ip:ip
         });
         a[i][2] -= db.checkins.count({
-            shop_id:x._id,
+            sid:x._id,
             loc:{
                 $within:{
                     $center:[loc,0.0001]
@@ -120,7 +120,7 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
                 }
             });
         a[i][2] -= db.checkins.count({
-            shop_id:x._id,
+            sid:x._id,
             loc:{
                 $within:{
                     $center:[loc,0.0003]
@@ -210,13 +210,13 @@ var shop_user_count = function(sid){
     var users={};
     var all=0,female=0;
     db.checkins.find({
-        shop_id:sid
+        sid:sid
     }).forEach(function(x){
         //TODO: 只统计最近一个月的访问用户
-        if(!users[x.user_id]){ //不重复统计同一个用户
+        if(!users[x.uid]){ //不重复统计同一个用户
             all+=1;
             if(x.gender==2) female+=1;
-            users[x.user_id] = x._id;
+            users[x.uid] = x._id;
         }
     });
     return [all,all-female,female];
@@ -231,14 +231,14 @@ var shop_users = function(sid){
     var users={};
     var count=0;
     db.checkins.find({
-        shop_id:sid
+        sid:sid
     }).sort({
         _id:-1
     }).limit(1000).forEach(function(x){
         //TODO: 只统计最近一个月的访问用户
         if(count>=100) return;
-        if(!users[x.user_id]){ //不重复统计同一个用户
-            users[x.user_id] = x._id.getTimestamp();
+        if(!users[x.uid]){ //不重复统计同一个用户
+            users[x.uid] = x._id.getTimestamp();
             count+=1;
         }
     });
@@ -251,11 +251,11 @@ db.system.js.save({
 
 
 
-var groupCheckin = function(shop_id, objectid){
+var groupCheckin = function(sid, objectid){
 
     var gr = db.checkins.group({
         "key" : {
-            user_id: true
+            uid: true
         },
         initial:{
             count: 0
@@ -267,7 +267,7 @@ var groupCheckin = function(shop_id, objectid){
             _id: {
                 "$gt": ObjectId(objectid)
             },
-            shop_id: shop_id
+            sid: sid
         }
     });
     return gr;
@@ -279,11 +279,6 @@ db.system.js.save({
     "value" : groupCheckin
 })
 
-var testaa = function(){
-    return '1'
-}
 
-db.system.js.save({
-    "_id" : "testaa",
-    "value" : testaa
-})
+db.checkins.update({},{$unset:{"shop_name": 1}, $rename:{"shop_id":"sid", "user_id": "uid", "accuracy" : "acc", "gender": "sex"} } );
+
