@@ -4,7 +4,7 @@ class ShopCheckinsController < ApplicationController
   before_filter :shop_authorize
 
   def index
-    @checkins = Checkin.where({shop_id: session[:shop_id]}).sort({_id: -1})
+    @checkins = Checkin.where({sid: session[:shop_id]}).sort({_id: -1})
   end
 
   def show
@@ -27,3 +27,4 @@ class ShopCheckinsController < ApplicationController
 
 
 end
+
