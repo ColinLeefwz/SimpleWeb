@@ -33,11 +33,10 @@ class CheckinsController < ApplicationController
   def create
     @checkin = Checkin.new
     @checkin.loc = [params[:lat].to_f, params[:lng].to_f]
-    @checkin.accuracy = params[:accuracy]
-    @checkin.user_id = Moped::BSON::ObjectId(params[:user_id]) 
-    @checkin.gender = User.find(params[:user_id]).gender
-    @checkin.shop_id = params[:shop_id]
-    @checkin.shop_name = params[:shop_name]
+    @checkin.acc = params[:accuracy]
+    @checkin.uid = Moped::BSON::ObjectId(params[:user_id]) 
+    @checkin.sex = User.find(params[:user_id]).gender
+    @checkin.sid = params[:shop_id]
     @checkin.od = params[:od]
     @checkin.ip = real_ip
     
