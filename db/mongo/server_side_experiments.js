@@ -2,11 +2,11 @@
 var shop_users = function(sid){
     var users={};
     var count=0;
-    db.checkins.find({shop_id:sid}).sort({_id:-1}).limit(1000).forEach(function(x){
+    db.checkins.find({sid:sid}).sort({_id:-1}).limit(1000).forEach(function(x){
         //TODO: 只统计最近一个月的访问用户
         if(count>=100) return;
-        if(!users[x.user_id]){ //不重复统计同一个用户
-            users[x.user_id] = x._id;
+        if(!users[x.uid]){ //不重复统计同一个用户
+            users[x.uid] = x._id;
             count+=1;
         }
     });
@@ -35,7 +35,7 @@ var _reduce = function (key, values) {
 
 var shop_users = function(sid){
     return db.checkins.mapReduce(_map,_reduce,{
-        query:{shop_id:sid},
+        query:{sid:sid},
         sort:{_id:-1},
         out: { inline : 1},
     })
@@ -67,11 +67,9 @@ var shop_users = function(sid){
     mr = distinct_map_reduce("user_id")
     print(mr[0])
     return db.checkins.mapReduce(mr[0],mr[1],{ //mapreduce执行时，拿不到闭包变量key?
-        query:{shop_id:sid},
+        query:{sid:sid},
         sort:{_id:-1},
         out: { inline : 1},
     })
 }
-
-
 

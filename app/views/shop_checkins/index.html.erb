@@ -15,7 +15,7 @@
     <tr>
       <td><%= session_shop.name %></td>
       <td><%= checkin.user.name %></td>
-      <td><%= checkin.gender %></td>
+      <td><%= checkin.sex %></td>
       <td><%= checkin.cat.strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%= checkin.loc %></td>
       <td><%= checkin.ip %></td>
@@ -26,3 +26,4 @@
 
 <%= link_to "周排行", "/shop_checkins/bank?flag=week" %>
 <%= link_to "月排行", "/shop_checkins/bank?flag=month" %>
+
