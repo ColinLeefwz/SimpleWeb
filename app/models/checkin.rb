@@ -1,12 +1,11 @@
 class Checkin
   include Mongoid::Document
-  field :shop_id, type: Integer
-  field :user_id, type: Moped::BSON::ObjectId
-  field :gender, type:Integer
+  field :sid, type: Integer
+  field :uid, type: Moped::BSON::ObjectId
+  field :sex, type:Integer
   field :loc, type:Array
   field :ip
-  field :shop_name
-  field :accuracy, type:Float
+  field :acc, type:Float
   field :od, type: Integer
   
   def cat
@@ -25,11 +24,11 @@ class Checkin
   end
   
   def user
-    User.find(self.user_id)
+    User.find(self.uid)
   end
   
   def shop
-    Shop.find(self.shop_id)
+    Shop.find(self.sid)
   end
   
 end
