@@ -82,88 +82,6 @@ var gcj02_to_real = function(loc){
     return [loc[0]-tmp.d[0],loc[1]-tmp.d[1]];
 };
 
-var shop_distance = function(shop,loc){
-    if((typeof shop.lo[0]) == "number" ) return get_distance(shop.lo,loc);
-    var ret=10000;
-    for(var i=0;i<shop.lo.length;i++){
-        var ret0 = get_distance(shop.lo[i],loc);
-        if(ret0<ret) ret=ret0;
-    }
-    return ret;
-}
-
-var sort_with_score = function(arr,loc,accuracy,ip,uid){
-    var score = arr.map(function(x) {
-        return [x,shop_distance(x,loc),0];
-    });
-    score.forEach(function(xx,i,a) {
-        var x = xx[0];
-        if(x.t) a[i][2]-=1;
-        if(x.del) a[i][2]+=10;
-        if(uid){
-            a[i][2] -= db.checkins.count({
-                sid:x._id,
-                uid:uid
-            })*10;
-        //区分签到和实际发言过
-        }
-        if(ip.indexOf(",")==-1) a[i][2] -= db.checkins.count({
-            sid:x._id,
-            ip:ip
-        });
-        a[i][2] -= db.checkins.count({
-            sid:x._id,
-            loc:{
-                $within:{
-                    $center:[loc,0.0001]
-                    }
-                }
-            });
-        a[i][2] -= db.checkins.count({
-            sid:x._id,
-            loc:{
-                $within:{
-                    $center:[loc,0.0003]
-                    }
-                }
-            });
-        printjson(xx);
-        a[i][1] += (a[i][2]*accuracy/300)
-    });
-    score = score.sort(function(a,b) {
-        return a[1]-b[1]
-        }).slice(0,30);
-    return score.map(function(x) {
-        return x[0]
-    }); ;
-}
-
-var find_shops = function(loc,accuracy,ip,uid){
-    var radius = 0.003;
-    if(accuracy<300) radius = 0.0015+0.002*accuracy/300;
-    var cursor = db.shops.find({
-        lo:{
-            $within:{
-                $center:[loc,radius]
-                }
-            }
-        }).limit(60);
-    var ret = [];
-    while ( cursor.hasNext() ) ret.push(cursor.next());
-    if(ret.length>=3) return sort_with_score(ret,loc,accuracy,ip,uid);
-    ret = [];
-    cursor = db.shops.find({
-        lo:{
-            $within:{
-                $center:[loc,10*radius]
-                }
-            }
-        }).limit(5);
-    while ( cursor.hasNext() ) ret.push(cursor.next());
-    return ret;
-};
-
-
 db.system.js.save({
     "_id" : "num_to_rad",
     "value" : num_to_rad
@@ -191,9 +109,119 @@ db.system.js.save({
     "value" : gcj02_to_real
 });
 
+
+var shop_distance = function(shop,loc){
+    if((typeof shop.lo[0]) == "number" ) return get_distance(shop.lo,loc);
+    var ret=10000;
+    for(var i=0;i<shop.lo.length;i++){
+        var ret0 = get_distance(shop.lo[i],loc);
+        if(ret0<ret) ret=ret0;
+    }
+    return ret;
+}
+
+var do_score = function(x,i,a){
+	var today = new Date();
+	var hour = today.getHours();
+	var hminute = hour*60+today.getMinutes();
+    if(x.t) a[i][2]-=3;
+    if(x.del) a[i][2]+=10;
+	if(x.t==3 && x.type.indexOf('餐饮服务')==0){
+		if(hour>=11 && hour<=13) a[i][2]-=6;
+		else if(hour>=17 && hour<=19) a[i][2]-=6;
+		else if(hminute>(14*60+30) && hminute<(16*60+30) ) a[i][2] +=10;
+	};
+	if(x.t==1){
+		if(hour>=20 || hour <=3) a[i][2]-=10;
+	};
+	if(x.t==6){
+		if(x.type.indexOf('商务住宅')==0){
+			if(x.type.indexOf('商务住宅;住宅区')==0){
+				if(hour>=20 || hour<=8) a[i][2] -=5;
+			}else{
+				var week = today.getDay();
+				if(week>=1 && week<=5){
+					if(hour>=14 && hour<=17) a[i][2] -=3;
+					if(hour>=8 && hour<=11) a[i][2] -=3;
+					if(hour>=19) a[i][2] +=10;
+				}else{
+					a[i][2] +=10;
+				}
+			}
+		}
+	};
+	if((typeof x.lo[0]) != "number" )  a[i][2]-=1;	
+}
+
+var sort_with_score = function(arr,loc,accuracy,ip,uid){
+    var score = arr.map(function(x) {
+        return [x,shop_distance(x,loc),0];
+    });
+    score.forEach(function(xx,i,a) {
+        var x = xx[0];
+		do_score(x,i,a);
+        if(uid){
+            a[i][2] -= db.checkins.count({
+                sid:x._id,
+                uid:uid
+            })*5;
+        };
+        if(ip.indexOf(",")==-1) a[i][2] -= db.checkins.count({
+            sid:x._id,
+            ip:ip
+        })*3;
+        a[i][2] -= db.checkins.count({
+            sid:x._id,
+            loc:{
+                $within:{
+                    $center:[loc,0.0001]
+                    }
+                }
+            })*2;
+        //printjson(xx);
+        a[i][1] += (a[i][2]*accuracy/300);
+    });
+    score = score.sort(function(a,b) {
+        return a[1]-b[1]
+        }).slice(0,30);
+    return score.map(function(x) {
+        return x[0];
+    });
+}
+
+var find_shops = function(loc,accuracy,ip,uid){
+    var radius = 0.003; //约300米
+    radius = 0.0015+0.002*accuracy/300;
+	if(radius>1000) radius=1000; 
+    var cursor = db.shops.find({
+        lo:{
+            $within:{
+                $center:[loc,radius]
+                }
+            }
+        }).limit(100);
+    var ret = [];
+    while ( cursor.hasNext() ) ret.push(cursor.next());
+    if(ret.length>=3) return sort_with_score(ret,loc,accuracy,ip,uid);
+    ret = [];
+    cursor = db.shops.find({
+        lo:{
+            $within:{
+                $center:[loc,10*radius]
+                }
+            }
+        }).limit(5);
+    while ( cursor.hasNext() ) ret.push(cursor.next());
+    return ret;
+};
+
 db.system.js.save({
     "_id" : "shop_distance",
     "value" : shop_distance
+});
+db.system.js.save({
+    "_id" : "do_score",
+    "value" : do_score
 });
 db.system.js.save({
     "_id" : "sort_with_score",
