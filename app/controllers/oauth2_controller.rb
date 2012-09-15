@@ -39,7 +39,7 @@ class Oauth2Controller < ApplicationController
   end
   
   def login
-    hash = Digest::SHA1.hexdigest("#{params[:name]}#{params[:pass]}dface")[0,32]
+    hash = Digest::SHA1.hexdigest("#{params[:name]}#{params[:pass]}#{params[:mac]}dface")[0,32]
     if hash != params[:hash]
       render :json => {error: "hash error: #{hash}."}.to_json
       return
