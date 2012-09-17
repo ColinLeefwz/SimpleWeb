@@ -1,5 +1,4 @@
-class Admin < ActiveRecord::Base
-
+class Admin
   include Mongoid::Document
   field :name
   field :password
