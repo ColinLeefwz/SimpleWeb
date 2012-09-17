@@ -124,9 +124,11 @@ var do_score = function(x,i,a){
 	var today = new Date();
 	var hour = today.getHours();
 	var hminute = hour*60+today.getMinutes();
+	var stype = x.type;
+	if(!stype) stype='';
     if(x.t) a[i][2]-=3;
     if(x.del) a[i][2]+=10;
-	if(x.t==3 && x.type.indexOf('餐饮服务')==0){
+	if(x.t==3 && stype.indexOf('餐饮服务')==0){
 		if(hour>=11 && hour<=13) a[i][2]-=6;
 		else if(hour>=17 && hour<=19) a[i][2]-=6;
 		else if(hminute>(14*60+30) && hminute<(16*60+30) ) a[i][2] +=10;
@@ -135,8 +137,8 @@ var do_score = function(x,i,a){
 		if(hour>=20 || hour <=3) a[i][2]-=10;
 	};
 	if(x.t==6){
-		if(x.type.indexOf('商务住宅')==0){
-			if(x.type.indexOf('商务住宅;住宅区')==0){
+		if(stype.indexOf('商务住宅')==0){
+			if(stype.indexOf('商务住宅;住宅区')==0){
 				if(hour>=20 || hour<=8) a[i][2] -=5;
 			}else{
 				var week = today.getDay();
