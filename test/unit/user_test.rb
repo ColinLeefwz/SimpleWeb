@@ -11,7 +11,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test ".find2 find 存在的id 能正确的查询" do
-    assert_equal User.find2(User.first.id).name, 'pddddsen'
+    assert_equal User.find2("502e6303421aa918ba00007c").name, '袁乐天'
   end
 
 end
