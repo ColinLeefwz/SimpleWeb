@@ -1,0 +1,25 @@
+git clone git://github.com/mongodb/mongodb-erlang.git
+cd mongodb-erlang/
+make
+mkdir /opt/local/lib/erlang/lib/mongodb-master
+sudo mkdir /opt/local/lib/erlang/lib/mongodb-master
+sudo cp -R deps ebin  /opt/local/lib/erlang/lib/mongodb-master
+sudo cp -R deps/bson /opt/local/lib/erlang/lib/bson
+sudo open /opt/local/lib/erlang/lib/mongodb-master
+
+
+erl
+1> application:start (mongodb).
+ok
+2> Host = {localhost, 27017}.
+{localhost,27017}
+3> {ok, Conn} = mongo:connect (Host).
+{ok,{connection,{"localhost",27017},
+                <0.39.0>,false,infinity}}
+4> mongo:do (safe, master, Conn, test, fun() ->
+4>     mongo:delete (foo, {}),
+4>     mongo:insert (foo, {x,1, y,2}),
+4>     mongo:find (foo, {x,1}) end).
+{ok,<0.43.0>}
+
+
