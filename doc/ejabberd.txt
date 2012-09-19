@@ -1,5 +1,20 @@
+#sudo dscl . -create /Users/staff
+./configure --prefix=/Users/ylt/ejabber
+make
+sudo make install
+
+ln -s ~/ejabber/etc ~/lianlian/ejabberd/etc
+sudo chown -RvL ylt:staff etc
+
+
 启动：sudo ejabberdctl start
 查看状态 sudo ejabberdctl status
+
+创建用户
+sudo sbin/ejabberdctl register admin1 localhost pass
+
+
+
 默认配置文件： /etc/ejabberd/ejabberd.cfg
 
 	{loglevel, 4}.
