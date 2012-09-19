@@ -24,6 +24,13 @@ class Shop
   end
 
 
+  def self.find_by_id(id)
+    begin
+      self.find(id)
+    rescue
+      nil
+    end
+  end
   
   def self.import_form(mshop) #从Mshop导入点评商家
     begin

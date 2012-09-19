@@ -31,13 +31,13 @@ var checkinDay = function(days){
     );
 
     for(var sh in ss){
-        da.push([sh, ss[sh]])
+        da.push([parseInt(sh), ss[sh]])
     }
-     
+
     da = da.sort(function(f,s){
         return s[1]-f[1]
     })
-    
+
     db.checkin_days.insert({
         num: num,
         od1: od1,
@@ -52,3 +52,4 @@ var i =1;
 for(i; i > 0; i--){
     checkinDay(i)
 }
+
