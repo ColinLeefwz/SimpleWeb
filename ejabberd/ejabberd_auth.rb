@@ -23,7 +23,7 @@ logger.info "Starting ejabberd authentication service"
 
 loop do
   begin
-    #$stdin.eof? # wait for input
+    $stdin.eof? # wait for input
     start = Time.now
 
     msg = $stdin.read(2)
