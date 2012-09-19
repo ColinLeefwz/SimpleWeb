@@ -1,0 +1,19 @@
+启动：sudo ejabberdctl start
+查看状态 sudo ejabberdctl status
+默认配置文件： /etc/ejabberd/ejabberd.cfg
+
+	{loglevel, 4}.
+	{hosts, ["localhost"]}.
+配置管理员
+	{acl, admin, {user, "admin1", "localhost"}}.
+	{access, configure, [{allow, admin}]}.
+
+最大离线消息数量
+{access, max_user_offline_messages, [{5000, admin}, {100, all}]}.
+
+
+配置第三方认证：
+	{auth_method, external}.
+	{extauth_program, "/Users/ylt/lianlian/ejabberd_auth.rb"}.
+
+
