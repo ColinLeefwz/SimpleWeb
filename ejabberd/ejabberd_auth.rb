@@ -27,6 +27,7 @@ loop do
     start = Time.now
 
     msg = $stdin.read(2)
+    next if msg.nil?
     length = msg.unpack('n').first
 
     msg = $stdin.read(length)
