@@ -39,10 +39,12 @@
 \multicolumn{4}{|c|}{https://60.191.119.190/init/init} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ model  & 字符串 & 必须 &  硬件型号\\
 \hline
  os  & 字符串 & 必须 &  手机操作系统版本\\
  \hline
- mac  & 字符串 & 必须 &  无线网卡MAC地址\\
+ mac  & 字符串 & 必须 &  无线网卡MAC地址的MD5\\
  \hline
  hash  & 字符串 & 必须 &  hash验证码\\
 \hline
@@ -58,8 +60,11 @@ hash的计算方式为：os+mac+"init"进行SHA1算法后取前32位，和登录
 \begin{verbatim}
 返回值：
 {
-"ip": "60.191.119.190"
+"ip": "60.191.119.190",
+"xmpp": "60.191.119.190"
 }
+
+后续的http访问使用返回的ip地址，xmpp协议的访问使用xmpp地址。
 
 \end{verbatim}
 
@@ -1354,6 +1359,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 
 5、从附近里点击商家的时候。不进入现场。显示商家的聊天室。但是该聊天室不是现场，没有聊天工具栏。在附近里进入商家聊天室时不能聊天。
+
 
 
 \newpage
