@@ -1,6 +1,6 @@
 class InitController < ApplicationController
   def init
-    hash = Digest::SHA1.hexdigest("#{model}#{params[:os]}#{params[:mac]}init")[0,32]
+    hash = Digest::SHA1.hexdigest("#{params[:model]}#{params[:os]}#{params[:mac]}init")[0,32]
     if hash != params[:hash]
       render :json => {error: "hash error: #{hash}."}.to_json
       return
