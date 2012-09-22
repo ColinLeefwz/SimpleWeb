@@ -55,7 +55,7 @@
 注意：本API直接通过IP地址“60.191.119.190”访问，不通过DNS。而后续所有API调用的IP地址根据本调用的返回的IP地址确定。在目前只有单台服务器的情况下，返回的ip地址也是“60.191.119.190”，但是以后会根据离用户的距离返回就近的IP地址。
 
 
-hash的计算方式为：os+mac+"init"进行SHA1算法后取前32位，和登录时的hash算法［\ref{hash_algorithm}］类似。
+hash的计算方式为：model+os+mac+"init"进行SHA1算法后取前32位，和登录时的hash算法［\ref{hash_algorithm}］类似。
 
 \begin{verbatim}
 返回值：

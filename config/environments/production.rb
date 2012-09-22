@@ -21,6 +21,12 @@ Lianlian::Application.configure do
   # See everything in the log (default is :info)
   config.log_level = :warn
 
+  config.middleware.use ExceptionNotifier,
+    :email_prefix => "[Exception] ",
+    :sender_address => %{"Exception Notifier" <jishu@1dooo.com>},
+    :exception_recipients => %w{yuan_xin_yu@hotmail.com}
+
+
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
 
