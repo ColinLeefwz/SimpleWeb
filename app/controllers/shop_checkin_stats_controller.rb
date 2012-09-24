@@ -7,7 +7,7 @@ class ShopCheckinStatsController < ApplicationController
     @page = params[:page].to_i
     @pcount = params[:pcount].to_i
     @page = 1 if @page==0
-    @pcount = 200 if @pcount==0
+    @pcount = 20 if @pcount==0
     skip = (@page - 1)*@pcount
     @length = CheckinShopStat.count()
     @last_page = (@length+@pcount-1)/@pcount
@@ -27,12 +27,12 @@ class ShopCheckinStatsController < ApplicationController
 
   def users_list
     @checkins = Checkin.where({sid: params[:sid], uid: params[:uid] })
-    render :template => 'shop_checkin_stats/checkin'
+    @checkin_shop_stat = CheckinShopStat.find(params[:sid])
   end
 
   def ips_list
     @checkins = Checkin.where({sid: params[:sid], ip: params[:ip] })
-    render :template => 'shop_checkin_stats/checkin'
+    @checkin_shop_stat = CheckinShopStat.find(params[:sid])
   end
 
 
