@@ -12,7 +12,7 @@
       <td><%= @checkin_shop_stat.shop.name%></td>
       <td><%= ip %></td>
       <td><%=link_to value.first, {:action => 'ips_list', :ip => ip.gsub('/', '.'), :sid => @checkin_shop_stat.id }%></td>
-      <td><%= value.last%></td>
+      <td><%=id_to_time(value.last).to_date%></td>
 
     </tr>
 

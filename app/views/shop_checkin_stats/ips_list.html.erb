@@ -13,7 +13,7 @@
 
   <% @checkins.each do |checkin| %>
     <tr>
-      <td><%= session_shop.name %></td>
+      <td><%= @checkin_shop_stat.shop.name %></td>
       <td><%= checkin.user.name %></td>
       <td><%= checkin.sex %></td>
       <td><%= checkin.cat.strftime("%Y-%m-%d %H:%M:%S") %></td>
@@ -22,4 +22,3 @@
     </tr>
   <% end %>
 </table>
-

@@ -11,8 +11,8 @@
     <tr>
       <td><%= @checkin_shop_stat.shop.name%></td>
       <td><%= @checkin_shop_stat.user(user).name%></td>
-      <td><%=link_to value.first, {:action => 'users_list', :uid => @checkin_shop_stat.user(user).id, :sid => @checkin_shop_stat.id  }%></td>
-      <td><%= value.last%></td>
+      <td><%=link_to value.first.to_i, {:action => 'users_list', :uid => @checkin_shop_stat.user(user).id, :sid => @checkin_shop_stat.id  }%></td>
+      <td><%= id_to_time(value.last).to_date%></td>
 
     </tr>
 
