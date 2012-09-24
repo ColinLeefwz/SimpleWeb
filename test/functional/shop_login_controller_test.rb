@@ -8,7 +8,7 @@ class ShopLoginControllerTest < ActionController::TestCase
   end
 
   test '没有的shop_id登陆' do
-    post :login, :id => 3, :password => '123456'
+    post :login, :id => 20, :password => '123456'
     assert_equal "id没有找到.", flash[:notice]
   end
 
