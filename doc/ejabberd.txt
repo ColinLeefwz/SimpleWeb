@@ -41,11 +41,12 @@ mod_announce和mod_adhoc如何使用？
 使用oneteam客户端，然后用管理员身份登陆，通过server commands就可以访问。
 
 mod_muc的使用，如何创建聊天室、如何查看聊天室的历史消息。
+
 用户加入聊天室的限制条件：nickname=id, 取消匿名提醒
 取消聊天室中的Presence广播消息
 个人聊天记录如何存储和获取。
 如何屏蔽用户？ command"end user session"可以中断一个用户的xmpp的连接。
 
-是否支持emoji问题
 如何动态升级？
-
+mongodb连接池？
+mod_rest, mod_archive
