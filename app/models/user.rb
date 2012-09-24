@@ -36,7 +36,7 @@ class User
 
   def reports_s
     bs = blacks_s
-    bs.blank? ? [] : bs.select{|b| b['report']==1}
+    bs.blank? ? [] : bs.select{|b| b['report']}
   end
 
   def reported_users
