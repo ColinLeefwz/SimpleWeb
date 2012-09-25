@@ -8,7 +8,7 @@
     用户: <%= text_field_tag :user, params[:user], :size => 10 %>
     经纬度: <%= text_field_tag :loc, params[:loc], :size => 30  %>
     ip： <%= text_field_tag :ip, params[:ip], :size => 20  %>
-    误差： <%= text_field_tag :ip, params[:ip], :size => 5  %>
+    误差： <%= text_field_tag :acc, params[:acc], :size => 5  %>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
@@ -26,9 +26,9 @@
 
   <% @checkins.each do |checkin| %>
     <tr>
-      <td><%= checkin.cat.to_date %></td>
-      <td><%= checkin.user.name %></td>
-      <td><%= checkin.shop.name %></td>
+      <td><%= checkin.cat%></td>
+      <td><%= checkin.uid %> , <%= checkin.user.name %></td>
+      <td><%= checkin.sid %> , <%= checkin.shop.name %></td>
       <td><%= checkin.loc %></td>
       <td><%= checkin.ip %></td>
       <td><%= checkin.od.to_i %></td>
