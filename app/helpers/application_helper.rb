@@ -109,5 +109,22 @@ module ApplicationHelper
     Time.at object_id.to_s[0,8].to_i(16)
   end
 
+
+  def generate_paginate 
+    if (@total_entries+@pcount-1)/@pcount > 1
+      a=  %q(<div id="paginate" style="text-align: center">)
+      a += link_to "第1页",request.params.merge!(:page => 1), :class => "previous_page"
+      a += link_to "上一页",request.params.merge!(:page => @page -1),:class => "previous_page"  if @page != 1
+
+      a += %q(<em class="current">)
+      a += "#{@page}"
+      a += "</em>"
+      a +=  link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page != @last_page
+      a +=  link_to "第#{@last_page}页",request.params.merge!(:page => @last_page), :class => "next_page"
+      a +=  "</div>"
+      a
+    end
+  end
+
 end
 

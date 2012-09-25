@@ -56,12 +56,12 @@
           <%= shop.level %>
         </span>
         <span class="dhide" style="display:none">
-          <%= radio_button_tag "#{shop._id.to_i}",'空',shop.level=="",:class => 'level_n' %>空
-          <%= radio_button_tag "#{shop._id.to_i}",'A', shop.level=="A",:class => 'level_A' %>A
-          <%= radio_button_tag "#{shop._id.to_i}",'B',shop.level=="B",:class => 'level_B' %>B
-          <%= radio_button_tag "#{shop._id.to_i}",'C',shop.level=="C",:class => 'level_C' %>C
-          <%= radio_button_tag "#{shop._id.to_i}",'D',shop.level=="D",:class => 'level_D' %>D
-          <%= submit_tag "提交", :onclick => "ajaxupdatelevel($(this), #{shop._id})", :name => shop._id.to_i %>
+          <%= radio_button_tag "#{shop._id.to_s}",'空',shop.level=="",:class => 'level_n' %>空
+          <%= radio_button_tag "#{shop._id.to_s}",'A', shop.level=="A",:class => 'level_A' %>A
+          <%= radio_button_tag "#{shop._id.to_s}",'B',shop.level=="B",:class => 'level_B' %>B
+          <%= radio_button_tag "#{shop._id.to_s}",'C',shop.level=="C",:class => 'level_C' %>C
+          <%= radio_button_tag "#{shop._id.to_s}",'D',shop.level=="D",:class => 'level_D' %>D
+          <%= submit_tag "提交", :onclick => "ajaxupdatelevel($(this), #{shop._id})", :name => shop._id.to_s %>
         </span>
       </td>
       <td>
@@ -72,20 +72,9 @@
   <% end %>
 </table>
 <br />
-<% if (@shops_len+@pcount-1)/@pcount > 1 %>
-  <div id="paginate" style="text-align: center">
-    <%= link_to "第1页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
-      :city => params[:city],:page => 1, :pcount => params[:pcount]}, :class => "previous_page"  %>
-    <%= link_to "上一页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
-      :city => params[:city],:page => @page.to_i-1, :pcount => params[:pcount]},:class => "previous_page"  if @page != 1 %>
 
-    <em class="current"><%= @page %></em>
-    <%= link_to "下一页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
-      :city => params[:city],:page => @page.to_i+1, :pcount => params[:pcount]}, :class => "next_page"  if @page != @last_page %>
-    <%= link_to "第#{@last_page}页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
-      :city => params[:city],:page => @last_page, :pcount => params[:pcount]}, :class => "next_page"   %>
-  </div>
-<%  end %>
+<%= generate_paginate.html_safe %>
+
 
 
 <script type="text/javascript">
