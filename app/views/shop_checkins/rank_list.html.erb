@@ -1,0 +1,22 @@
+<h1>总排行榜</h1>
+<table>
+  <tr>
+    <th>商家</th>
+    <th>用户</th>
+    <th>签到次数</th>
+    <th></th>
+  </tr>
+
+  <% @banks.each do |bank| %>
+    <tr>
+      <td><%= session_shop.name %></td>
+      <td><%= @checkin_shop_stat.user(bank[0]).name %></td>
+      <td><%= bank[1][0] %></td>
+      <td><%= link_to '历史签到', url_for(:action => 'index', :uid => @checkin_shop_stat.user(bank[0]) ) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br/>
+<%= link_to '返回列表',"/shop_checkins" %>
+
