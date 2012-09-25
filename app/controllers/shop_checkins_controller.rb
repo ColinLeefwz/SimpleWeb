@@ -1,17 +1,20 @@
 # encoding: utf-8
 
 class ShopCheckinsController < ApplicationController
+
   before_filter :shop_authorize
 
   def index
-    @checkins = Checkin.where({sid: session[:shop_id]}).sort({_id: -1})
+    hash = {sid: session[:shop_id]}
+    hash.merge!({uid: params[:uid]}) unless params[:uid].blank?
+    @checkins = Checkin.where(hash).sort({_id: -1})
   end
 
   def show
     @checkin = Checkin.find(params[:id])
   end
 
-  def bank
+  def rank
     case params[:flag]
     when 'week'
       objectid = 1.weeks.ago.beginning_of_day.to_i.to_s(16).ljust(24,'0')
@@ -24,7 +27,10 @@ class ShopCheckinsController < ApplicationController
     @banks = @banks.sort{|f,s| s['count'] <=> f['count']}
   end
 
-
+  def rank_list
+    @checkin_shop_stat  = CheckinShopStat.find(session[:shop_id])
+    @banks = @checkin_shop_stat.users.sort{|b, a| a[1][0] <=> b[1][0]}
+  end
 
 end
 
