@@ -28,6 +28,9 @@ class AdminCheckinsController < ApplicationController
       hash.merge!(sid: {'$in' => sids})
     end
 
+    hash.merge!(acc: params[:acc].to_i) unless params[:acc].blank?
+
+
     hash.merge!(ip: /#{params[:ip]}/) unless params[:ip].blank?
     hash.merge!({ loc: { "$within" => { "$center" => [params[:loc], 0.1]} }}) unless params[:loc].blank?
     
