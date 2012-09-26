@@ -30,7 +30,7 @@ class ShopCheckinStatsController < ApplicationController
   def users_list
     hash = {sid: params[:sid]}
     hash.merge!(uid: params[:uid]) unless params[:uid].blank?
-    @checkins = paginate("Checkin", hash, {}, params[:page])
+    @checkins = paginate("Checkin", params[:page], hash, {})
     @checkin_shop_stat = CheckinShopStat.find(params[:sid])
   end
 
@@ -38,10 +38,6 @@ class ShopCheckinStatsController < ApplicationController
     @checkins = Checkin.where({sid: params[:sid], ip: params[:ip] })
     @checkin_shop_stat = CheckinShopStat.find(params[:sid])
   end
-
-
-
-
 
 end
 
