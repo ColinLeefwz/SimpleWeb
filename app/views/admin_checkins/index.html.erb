@@ -19,6 +19,8 @@
     <th>商家</th>
     <th>经纬度</th>
     <th>ip</th>
+    <th>排名</th>
+    <th>误差</th>
   </tr>
 
   <% @checkins.each do |checkin| %>
@@ -28,6 +30,8 @@
       <td><%= checkin.shop.name %></td>
       <td><%= checkin.loc %></td>
       <td><%= checkin.ip %></td>
+      <td><%= checkin.od.to_i %></td>
+      <td><%= checkin.acc %></td>
     </tr>
   <% end %>
 </table>
