@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class ShopCheckinStatsController < ApplicationController
+  include Paginate
   before_filter :admin_authorize
 
   def index
@@ -26,7 +27,9 @@ class ShopCheckinStatsController < ApplicationController
   end
 
   def users_list
-    @checkins = Checkin.where({sid: params[:sid], uid: params[:uid] })
+    hash = {sid: params[:sid]}
+    hash.merge!(uid: params[:uid]) unless params[:uid].blank?
+    @checkins = paginate("Checkin", hash, {}, params[:page])
     @checkin_shop_stat = CheckinShopStat.find(params[:sid])
   end
 

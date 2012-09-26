@@ -61,4 +61,34 @@ var checkinShopStat = function(days){
     })
 }
 
+var total_users = function(){
+    db.checkin_shop_stats.find().forEach(function(css){
+        var total_users = 0;
+        var total_checkins = 0;
+        var users = css.users;
+        for(var user in users){
+            total_users += 1;
+            total_checkins += users[user][0]
+        }
+
+        db.checkin_shop_stats.update({
+            _id: css._id
+        }, {
+            $set: {
+                utotal: total_users,
+                ctotal: total_checkins
+            }
+        })
+
+    })
+}
+
 checkinShopStat(1)
+total_users()
+
+
+
+
+
+
+
