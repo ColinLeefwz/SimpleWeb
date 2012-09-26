@@ -129,12 +129,12 @@ var do_score = function(x,i,a){
     if(x.t) a[i][2]-=3;
     if(x.del) a[i][2]+=10;
 	if(x.t==3 && stype.indexOf('餐饮服务')==0){
-		if(hour>=11 && hour<=13) a[i][2]-=6;
-		else if(hour>=17 && hour<=19) a[i][2]-=6;
-		else if(hminute>(14*60+30) && hminute<(16*60+30) ) a[i][2] +=10;
+		if(hour>=11 && hour<=13) a[i][2]-=10;
+		else if(hour>=17 && hour<=19) a[i][2]-=10;
+		else if(hminute>(14*60+30) && hminute<(16*60+30) ) a[i][2] +=30;
 	};
 	if(x.t==1){
-		if(hour>=20 || hour <=3) a[i][2]-=10;
+		if(hour>=20 || hour <=3) a[i][2]-=20;
 	};
 	if(x.t==6){
 		if(stype.indexOf('商务住宅')==0){
@@ -143,8 +143,8 @@ var do_score = function(x,i,a){
 			}else{
 				var week = today.getDay();
 				if(week>=1 && week<=5){
-					if(hour>=14 && hour<=17) a[i][2] -=3;
-					if(hour>=8 && hour<=11) a[i][2] -=3;
+					if(hour>=14 && hour<=17) a[i][2] -=5;
+					if(hour>=8 && hour<=11) a[i][2] -=5;
 					if(hour>=19) a[i][2] +=10;
 				}else{
 					a[i][2] +=10;
@@ -166,20 +166,12 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
             a[i][2] -= db.checkins.count({
                 sid:x._id,
                 uid:uid
-            })*5;
+            })*30
         };
         if(ip.indexOf(",")==-1) a[i][2] -= db.checkins.count({
             sid:x._id,
             ip:ip
-        })*3;
-        a[i][2] -= db.checkins.count({
-            sid:x._id,
-            loc:{
-                $within:{
-                    $center:[loc,0.0001]
-                    }
-                }
-            })*2;
+        })*5;
         //printjson(xx);
         a[i][1] += (a[i][2]*accuracy/300);
     });

@@ -2,12 +2,13 @@
 <script src="/javascripts/My97DatePicker/WdatePicker.js"></script>
 <%= form_tag '/admin_checkins',:method =>:get do %>
   <p>
-    开始时间: <%= text_field_tag :start_at,params[:start_at] || Time.now.beginning_of_month.to_date, :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})", :size => 10 %>
-    截止时间: <%= text_field_tag :end_at, params[:end_at] || Time.now.to_date, :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})",:size => 10  %>
-    商家: <%= text_field_tag :shop, params[:shop], :size => 10  %>
+    开始时间: <%= text_field_tag :start_at,params[:start_at] || Time.now.beginning_of_month.to_date, :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})", :size => 15 %>
+    截止时间: <%= text_field_tag :end_at, params[:end_at] || Time.now.to_date, :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})",:size => 15  %>
+    商家: <%= text_field_tag :shop, params[:shop], :size => 20  %>
     用户: <%= text_field_tag :user, params[:user], :size => 10 %>
-    经纬度: <%= text_field_tag :loc, params[:loc], :size => 10  %>
-    ip： <%= text_field_tag :ip, params[:ip], :size => 10  %>
+    经纬度: <%= text_field_tag :loc, params[:loc], :size => 30  %>
+    ip： <%= text_field_tag :ip, params[:ip], :size => 20  %>
+    误差： <%= text_field_tag :acc, params[:acc], :size => 5  %>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
@@ -25,9 +26,9 @@
 
   <% @checkins.each do |checkin| %>
     <tr>
-      <td><%= checkin.cat.to_date %></td>
-      <td><%= checkin.user.name %></td>
-      <td><%= checkin.shop.name %></td>
+      <td><%= checkin.cat%></td>
+      <td><%= checkin.uid %> , <%= checkin.user.name %></td>
+      <td><%= checkin.sid %> , <%= checkin.shop.name %></td>
       <td><%= checkin.loc %></td>
       <td><%= checkin.ip %></td>
       <td><%= checkin.od.to_i %></td>
