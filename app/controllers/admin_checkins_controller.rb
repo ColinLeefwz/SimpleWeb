@@ -31,6 +31,6 @@ class AdminCheckinsController < ApplicationController
     hash.merge!(ip: /#{params[:ip]}/) unless params[:ip].blank?
     hash.merge!({ loc: { "$within" => { "$center" => [params[:loc], 0.1]} }}) unless params[:loc].blank?
     
-    @checkins = paginate("Checkin", hash, sort , params[:page],20  )
+    @checkins = paginate("Checkin", params[:page], hash, sort  )
   end
 end

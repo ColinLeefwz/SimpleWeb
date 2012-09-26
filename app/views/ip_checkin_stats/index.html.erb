@@ -1,0 +1,31 @@
+<h1>ip签到统计</h1>
+<table>
+  <tr>
+    <th>ip</th>
+    <th>截止日期</th>
+    <th>商家总数</th>
+    <th>签到次数</th>
+  </tr>
+
+  <% @checkin_ip_stats.each do |checkin_ip_stat| %>
+    <tr>
+      <td>
+        <%= checkin_ip_stat.id %>
+      </td>
+      <td>
+        <%= 1.days.ago.to_date %>
+      </td>
+      <td>
+        <%= link_to checkin_ip_stat.stotal.to_i, "/ip_checkin_stats/show_shops?id=#{checkin_ip_stat.id}" %>
+      </td>
+      <td>
+        <%= link_to checkin_ip_stat.ctotal.to_i, "/ip_checkin_stats/checkin_list?id=#{checkin_ip_stat.id}" %>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+
+
+
+<%= generate_paginate.html_safe %>
