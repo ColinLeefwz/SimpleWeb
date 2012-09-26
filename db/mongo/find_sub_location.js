@@ -32,3 +32,6 @@ db.mapabc2.find().sort({name:1}).forEach(function(x){
   }    
   if(num%1000==0) print(":"+num);
 })
+
+
+
