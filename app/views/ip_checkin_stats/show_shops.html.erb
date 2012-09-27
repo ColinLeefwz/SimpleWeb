@@ -16,10 +16,10 @@
         <%= 1.days.ago.to_date %>
       </td>
       <td>
-        <%= shop["sid"] %>
+        <%= Shop.find_by_id(shop["sid"]).name %>
       </td>
       <td>
-        <%= shop['time'] %>
+        <%= id_to_time(shop['time']).to_date %>
       </td>
     </tr>
 
