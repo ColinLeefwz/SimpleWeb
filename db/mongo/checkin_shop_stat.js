@@ -1,3 +1,4 @@
+
 var checkinShopStat = function(days){
     var z = '0000000000000000'
     var yesterday = new Date(parseInt(((new Date()).valueOf()/1000)-(24*60*60))*1000)
@@ -9,6 +10,9 @@ var checkinShopStat = function(days){
         _id: {
             $gt: ObjectId(idOfBeginYesterday),
             $lt: ObjectId(idOfEndYesterday)
+        },
+        del: {
+            $exists: false
         }
     }).forEach(function(checkin){
         var us ={};
@@ -59,7 +63,10 @@ var checkinShopStat = function(days){
        
 
     })
+
+    total_users()
 }
+
 
 var total_users = function(){
     db.checkin_shop_stats.find().forEach(function(css){
@@ -83,8 +90,9 @@ var total_users = function(){
     })
 }
 
+
 checkinShopStat(1)
-total_users()
+
 
 
 

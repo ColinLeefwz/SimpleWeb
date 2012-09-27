@@ -12,6 +12,9 @@ var checkinIpStat = function(days){
         },
         ip: {
             $not: /,/
+        },
+        del: {
+            $exists: false
         }
     }).forEach(function(checkin){
 
