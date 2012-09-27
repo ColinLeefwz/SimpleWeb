@@ -126,33 +126,34 @@ var do_score = function(x,i,a){
     var hminute = hour*60+today.getMinutes();
     var stype = x.type;
     if(!stype) stype='';
-    if(x.t) a[i][2]-=3;
-    if(x.del) a[i][2]+=10;
+    if(x.t) a[i][2]-=5;
+    if(x.del) a[i][2]+=30;
+    if(x.t==4 && stype.indexOf('风景名胜')==0) a[i][2]+=20;
     if(x.t==3 && stype.indexOf('餐饮服务')==0){
-        if(hour>=11 && hour<=13) a[i][2]-=10;
-        else if(hour>=17 && hour<=19) a[i][2]-=10;
+        if(hour>=11 && hour<=13) a[i][2]-=20;
+        else if(hour>=17 && hour<=19) a[i][2]-=20;
         else if(hminute>(14*60+30) && hminute<(16*60+30) ) a[i][2] +=30;
     };
     if(x.t==1){
-        if(hour>=20 || hour <=3) a[i][2]-=20;
+        if(hour>=20 || hour <=3) a[i][2]-=30;
     };
     if(x.t==6){
         if(stype.indexOf('商务住宅')==0){
             if(stype.indexOf('商务住宅;住宅区')==0){
-                if(hour>=20 || hour<=8) a[i][2] -=5;
+                if(hour>=20 || hour<=8) a[i][2] -=10;
             }else{
                 var week = today.getDay();
                 if(week>=1 && week<=5){
-                    if(hour>=14 && hour<=17) a[i][2] -=5;
-                    if(hour>=8 && hour<=11) a[i][2] -=5;
-                    if(hour>=19) a[i][2] +=10;
+                    if(hour>=14 && hour<=17) a[i][2] -=10;
+                    if(hour>=8 && hour<=11) a[i][2] -=10;
+                    if(hour>=19) a[i][2] +=20;
                 }else{
-                    a[i][2] +=10;
+                    a[i][2] +=20;
                 }
             }
         }
     };
-    if((typeof x.lo[0]) != "number" )  a[i][2]-=1;
+    if((typeof x.lo[0]) != "number" )  a[i][2]-=5; 
 }
 
 var sort_with_score = function(arr,loc,accuracy,ip,uid){
@@ -177,7 +178,7 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
     });
     score = score.sort(function(a,b) {
         return a[1]-b[1]
-    }).slice(0,30);
+        }).slice(0,30);
     return score.map(function(x) {
         return x[0];
     });
@@ -186,14 +187,14 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
 var find_shops = function(loc,accuracy,ip,uid){
     var radius = 0.003; //约300米
     radius = 0.0015+0.002*accuracy/300;
-    if(radius>1000) radius=1000;
+    if(radius>1000) radius=1000; 
     var cursor = db.shops.find({
         lo:{
             $within:{
                 $center:[loc,radius]
+                }
             }
-        }
-    }).limit(100);
+        }).limit(100);
     var ret = [];
     while ( cursor.hasNext() ) ret.push(cursor.next());
     if(ret.length>=3) return sort_with_score(ret,loc,accuracy,ip,uid);
@@ -202,9 +203,9 @@ var find_shops = function(loc,accuracy,ip,uid){
         lo:{
             $within:{
                 $center:[loc,10*radius]
+                }
             }
-        }
-    }).limit(5);
+        }).limit(5);
     while ( cursor.hasNext() ) ret.push(cursor.next());
     return ret;
 };
@@ -273,6 +274,7 @@ db.system.js.save({
 
 
 
+
 var groupCheckin = function(sid, objectid){
 
     var gr = db.checkins.group({
@@ -293,7 +295,6 @@ var groupCheckin = function(sid, objectid){
             del: {
                 $exists: false
             }
-
         }
     });
     return gr;
@@ -304,5 +305,7 @@ db.system.js.save({
     "_id" : "groupCheckin",
     "value" : groupCheckin
 })
+
+
 
 
