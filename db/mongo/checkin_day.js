@@ -14,6 +14,9 @@ var checkinDay = function(days){
         _id: {
             $gt: ObjectId(idOfBeginYesterday),
             $lt: ObjectId(idOfEndYesterday)
+        },
+        del: {
+            $exists: false
         }
     }).forEach(function(checkin){
         num+=1;
@@ -48,8 +51,63 @@ var checkinDay = function(days){
     })
 }
 
-var i =1;
-for(i; i > 0; i--){
-    checkinDay(i)
+var filterAccEqualFive = function(days){
+    var z = '0000000000000000'
+    var yesterday = new Date(parseInt(((new Date()).valueOf()/1000)-(24*60*60))*1000)
+    var daysago = new Date(parseInt(((new Date()).valueOf()/1000)-(days*24*60*60))*1000)
+    var idOfBeginYesterday = parseInt(daysago.setHours(0,0,0)/1000).toString(16) + z
+    var idOfEndYesterday = parseInt(yesterday.setHours(23,59,59)/1000).toString(16) + z
+    var users = []
+    var gr = db.checkins.group({
+        "key" : {
+            uid: true
+        },
+        initial:{
+            count: 0
+        },
+        "$reduce" : function(doc, prev) {
+            prev.count += 1
+        },
+        "cond" : {
+            acc: 5
+        }
+    });
+   
+    gr.forEach(function(h){
+        if(h['count'] > 3)
+            users.push(h['uid'])
+    })
+
+    db.checkins.find({
+        _id: {
+            $gt: ObjectId(idOfBeginYesterday),
+            $lt: ObjectId(idOfEndYesterday)
+        }, 
+        acc: 5,
+        uid: {
+            $in: users
+        }
+    }).forEach(function(checkin){
+        db.checkins.update({
+            _id: checkin._id
+        },{
+            $set:{
+                del: true
+            }
+        })
+    })
 }
+
+
+var filterAndCount = function(days){
+    filterAccEqualFive(days)
+    for(var i = days; i > 0; i--){
+        checkinDay(i)
+    }
+}
+
+
+
+filterAndCount(1)
+
 
