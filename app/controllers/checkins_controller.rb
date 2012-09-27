@@ -40,7 +40,7 @@ class CheckinsController < ApplicationController
     @checkin.od = params[:od]
     @checkin.ip = real_ip
     
-    sendmsg
+    #sendmsg TODO:采用ejabberd的mod_rest实现优惠券下发 
 
     respond_to do |format|
       if @checkin.save
