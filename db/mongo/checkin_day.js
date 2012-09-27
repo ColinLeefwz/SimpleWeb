@@ -51,12 +51,11 @@ var checkinDay = function(days){
     })
 }
 
-var filterAccEqualFive = function(days){
-    var z = '0000000000000000'
-    var yesterday = new Date(parseInt(((new Date()).valueOf()/1000)-(24*60*60))*1000)
-    var daysago = new Date(parseInt(((new Date()).valueOf()/1000)-(days*24*60*60))*1000)
-    var idOfBeginYesterday = parseInt(daysago.setHours(0,0,0)/1000).toString(16) + z
-    var idOfEndYesterday = parseInt(yesterday.setHours(23,59,59)/1000).toString(16) + z
+var staticFilterUsers = function(){
+    return [ObjectId("502e6303421aa918ba000005"),ObjectId("502e6303421aa918ba000006"),ObjectId("502e6303421aa918ba00007a")]
+}
+
+var dynamicFilterUsers = function(){
     var users = []
     var gr = db.checkins.group({
         "key" : {
@@ -72,29 +71,35 @@ var filterAccEqualFive = function(days){
             acc: 5
         }
     });
-   
+
     gr.forEach(function(h){
         if(h['count'] > 3)
             users.push(h['uid'])
     })
+    return users
+}
 
-    db.checkins.find({
+
+var filterAccEqualFive = function(days){
+    var z = '0000000000000000'
+    var yesterday = new Date(parseInt(((new Date()).valueOf()/1000)-(24*60*60))*1000)
+    var daysago = new Date(parseInt(((new Date()).valueOf()/1000)-(days*24*60*60))*1000)
+    var idOfBeginYesterday = parseInt(daysago.setHours(0,0,0)/1000).toString(16) + z
+    var idOfEndYesterday = parseInt(yesterday.setHours(23,59,59)/1000).toString(16) + z
+    var users = staticFilterUsers()
+    db.checkins.update({
         _id: {
             $gt: ObjectId(idOfBeginYesterday),
             $lt: ObjectId(idOfEndYesterday)
-        }, 
+        },
         acc: 5,
         uid: {
             $in: users
         }
-    }).forEach(function(checkin){
-        db.checkins.update({
-            _id: checkin._id
-        },{
-            $set:{
-                del: true
-            }
-        })
+    },{
+        $set:{
+            del: true
+        }
     })
 }
 
