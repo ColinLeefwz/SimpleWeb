@@ -6,15 +6,9 @@ class ShopCheckinStatsController < ApplicationController
   layout "admin"
 
   def index
-    @page = params[:page].to_i
-    @pcount = params[:pcount].to_i
-    @page = 1 if @page==0
-    @pcount = 20 if @pcount==0
-    skip = (@page - 1)*@pcount
-    @length = CheckinShopStat.count()
-    @last_page = (@length+@pcount-1)/@pcount
-    @checkin_shop_stats = CheckinShopStat.where({}).skip(skip).limit(@pcount)
-    
+    hash = {}
+    sort = {utotal: -1}
+    @checkin_shop_stats =  paginate("CheckinShopStat", params[:page], hash, sort)
   end
 
   def show_users
