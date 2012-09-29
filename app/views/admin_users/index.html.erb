@@ -1,0 +1,23 @@
+<table border="1">
+  <tr>
+    <th>用户</th>
+    <th>wb_uid</th>
+    <th>性别</th>
+    <th>关注数</th>
+    <th>黑名单数</th>
+    <th></th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.wb_uid %></td>
+      <td><%= user.gender %></td>
+      <td><%= user.blacks_s.count %></td>
+      <td><%= user.follows_s.count %></td>
+      <td>
+        <%= link_to '详情', "/admin_users/show?id=#{user.id}" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
