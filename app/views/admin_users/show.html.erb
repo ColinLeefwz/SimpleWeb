@@ -1,0 +1,49 @@
+<h1>用户详情</h1>
+
+<p>
+  <b>用户</b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>wb_uid:</b>
+  <%= @user.wb_uid %>
+</p>
+
+<p>
+  <b>性别:</b>
+  <%= @user.gender %>
+</p>
+
+<p>
+  <b>生日:</b>
+  <%= @user.birthday %>
+</p>
+
+
+<p>
+  <b>invisible:</b>
+  <%= @user.invisible %>
+</p>
+<p>
+  <b>signature:</b>
+  <%= @user.signature %>
+</p>
+<p>
+  <b>job:</b>
+  <%= @user.job %>
+</p>
+<p>
+  <b>jobtype:</b>
+  <%= @user.jobtype %>
+</p>
+
+<p>
+  <b>关注数:</b>
+  <%= @user.follows_s.count %>
+</p>
+
+<p>
+  <b>黑名单数:</b>
+  <%= @user.blacks_s.count %>
+</p>
