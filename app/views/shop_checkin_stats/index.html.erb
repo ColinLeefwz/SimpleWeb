@@ -30,17 +30,4 @@
 
 
 
-<% if (@length+@pcount-1)/@pcount > 1 %>
-  <div id="paginate" style="text-align: center">
-    <%= link_to "第1页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
-      :city => params[:city],:page => 1, :pcount => params[:pcount]}, :class => "previous_page"  %>
-    <%= link_to "上一页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
-      :city => params[:city],:page => @page.to_i-1, :pcount => params[:pcount]},:class => "previous_page"  if @page != 1 %>
-
-    <em class="current"><%= @page %></em>
-    <%= link_to "下一页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
-      :city => params[:city],:page => @page.to_i+1, :pcount => params[:pcount]}, :class => "next_page"  if @page != @last_page %>
-    <%= link_to "第#{@last_page}页",{:action => :index, :name => params[:name], :t => params[:t], :lat => params[:lat], :lng => params[:lng],
-      :city => params[:city],:page => @last_page, :pcount => params[:pcount]}, :class => "next_page"   %>
-  </div>
-<%  end %>
+<%= generate_paginate.html_safe %>
