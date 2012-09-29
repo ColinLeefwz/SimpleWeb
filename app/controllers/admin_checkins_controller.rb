@@ -4,7 +4,7 @@ class AdminCheckinsController < ApplicationController
   layout "admin"
 
   def index
-    hash = {}
+    hash = {del: {"$exists" => false}}
     sort = {_id: -1}
     
     unless params[:start_at].blank?
@@ -23,17 +23,45 @@ class AdminCheckinsController < ApplicationController
       hash.merge!(uid: {'$in' => uids})
     end
 
-    unless params[:shop].blank?
-      sids = Shop.where({name: /#{params[:shop]}/}).map { |m| m._id  }
+    unless params[:shop].blank? && params[:city]
+      sids = Shop.where({name: /#{params[:shop]}/, city: params[:city]}).map { |m| m._id  }
       hash.merge!(sid: {'$in' => sids})
     end
+    
+    unless params[:acc].blank?
+      accs =  params[:acc].split(' ')
+      if accs.count ==2
+        hash.merge!({acc: {"$gte" => accs[0].to_i, "$lte" => accs[1].to_i }})
+      else
+        hash.merge!(acc: accs[0].to_i)
+      end
+    end
 
-    hash.merge!(acc: params[:acc].to_i) unless params[:acc].blank?
+    unless params[:od].blank?
+      ods =  params[:od].split(' ')
+      if ods.count ==2
+        hash.merge!({od: {"$gte" => ods[0].to_i, "$lte" => ods[1].to_i }})
+      else
+        hash.merge!(od: ods[0].to_i)
+      end
+    end
 
 
     hash.merge!(ip: /#{params[:ip]}/) unless params[:ip].blank?
-    hash.merge!({ loc: { "$within" => { "$center" => [params[:loc], 0.1]} }}) unless params[:loc].blank?
+
+    unless params[:loc].blank?
+      lo = params[:loc].split(',')
+      hash.merge!({ loc: { "$within" => { "$center" => [lo, 0.1]} }}) if lo.length == 2
+    end
     
     @checkins = paginate("Checkin", params[:page], hash, sort  )
+  end
+
+
+
+  def ajaxdel
+    @checkin = Checkin.find(params[:id])
+    @checkin.update_attribute(:del, true)
+    render :js => true
   end
 end

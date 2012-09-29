@@ -1,8 +1,11 @@
 class CheckinDaysController < ApplicationController
+  include Paginate
   before_filter :admin_authorize
   layout "admin"
   
   def index
-    @checkin_days = CheckinDay.where({}).sort({_id: -1}).limit(15)
+    hash = {}
+    sort = {id: -1}
+    @checkin_days = paginate("CheckinDay", params[:page], hash, sort  )
   end
 end
