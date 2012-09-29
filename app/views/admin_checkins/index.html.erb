@@ -1,14 +1,23 @@
 <h1>签到列表</h1>
 <script src="/javascripts/My97DatePicker/WdatePicker.js"></script>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
 <%= form_tag '/admin_checkins',:method =>:get do %>
   <p>
-    开始时间: <%= text_field_tag :start_at,params[:start_at] || Time.now.beginning_of_month.to_date, :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})", :size => 15 %>
-    截止时间: <%= text_field_tag :end_at, params[:end_at] || Time.now.to_date, :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})",:size => 15  %>
+    开始时间: <%= text_field_tag :start_at,params[:start_at], :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})", :size => 15 %>
+    截止时间: <%= text_field_tag :end_at, params[:end_at], :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})",:size => 15  %>
+    <br/>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
     商家: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+
+    <br/>
     用户: <%= text_field_tag :user, params[:user], :size => 10 %>
     经纬度: <%= text_field_tag :loc, params[:loc], :size => 30  %>
     ip： <%= text_field_tag :ip, params[:ip], :size => 20  %>
-    误差： <%= text_field_tag :acc, params[:acc], :size => 5  %>
+    <br/>
+    排名： <%= text_field_tag :od, params[:od], :size => 10  %>
+    误差： <%= text_field_tag :acc, params[:acc], :size => 10  %>
+    <br/>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
@@ -22,19 +31,32 @@
     <th>ip</th>
     <th>排名</th>
     <th>误差</th>
+    <th></th>
   </tr>
 
   <% @checkins.each do |checkin| %>
     <tr>
       <td><%= checkin.cat%></td>
-      <td><%= checkin.uid %> , <%= checkin.user.name %></td>
+      <td><%=link_to checkin.uid, "/admin_users/show?id=#{checkin.uid}" %> , <%=link_to checkin.user.name, "/admin_users/show?id=#{checkin.uid}" %> </td>
       <td><%= checkin.sid %> , <%= checkin.shop.name %></td>
       <td><%= checkin.loc %></td>
       <td><%= checkin.ip %></td>
       <td><%= checkin.od.to_i %></td>
       <td><%= checkin.acc %></td>
+      <td>
+        <%= link_to '删除', '#', :onclick => "ajaxdel($(this), '#{checkin.id}');" %>
+      </td>
     </tr>
   <% end %>
 </table>
 
 <%= generate_paginate.html_safe %>
+
+<script type="text/javascript">
+  function ajaxdel(obj, cid){
+    if(confirm("确定删除商家？"))
+      $.post("/admin_checkins/ajaxdel",{id: cid}, function() {
+        obj.parent().parent().hide()
+      });
+  }
+</script>

@@ -6,7 +6,9 @@ class IpCheckinStatsController < ApplicationController
   layout "admin"
 
   def index
-    @checkin_ip_stats = paginate("CheckinIpStat", params[:page] )
+    sort = {stotal: -1}
+    hash = {}
+    @checkin_ip_stats = paginate("CheckinIpStat", params[:page], hash, sort )
   end
 
   def show_shops
