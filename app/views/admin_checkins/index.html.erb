@@ -37,7 +37,7 @@
   <% @checkins.each do |checkin| %>
     <tr>
       <td><%= checkin.cat%></td>
-      <td><%= checkin.uid %> , <%= checkin.user.name %></td>
+      <td><%=link_to checkin.uid, "/admin_users/show?id=#{checkin.uid}" %> , <%=link_to checkin.user.name, "/admin_users/show?id=#{checkin.uid}" %> </td>
       <td><%= checkin.sid %> , <%= checkin.shop.name %></td>
       <td><%= checkin.loc %></td>
       <td><%= checkin.ip %></td>
