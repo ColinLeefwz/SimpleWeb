@@ -82,6 +82,15 @@ var gcj02_to_real = function(loc){
     return [loc[0]-tmp.d[0],loc[1]-tmp.d[1]];
 };
 
+var baidu_to_real = function(loc){
+    var tmp = db.offsetbaidus.findOne({
+        loc: {
+            $near : loc
+        }
+    });
+    return [loc[0]-tmp.d[0],loc[1]-tmp.d[1]];
+};
+
 db.system.js.save({
     "_id" : "num_to_rad",
     "value" : num_to_rad
@@ -107,6 +116,11 @@ db.system.js.save({
 db.system.js.save({
     "_id" : "gcj02_to_real",
     "value" : gcj02_to_real
+});
+
+db.system.js.save({
+    "_id" : "baidu_to_real",
+    "value" : baidu_to_real
 });
 
 
