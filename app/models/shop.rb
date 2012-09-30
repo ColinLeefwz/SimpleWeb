@@ -1,9 +1,11 @@
 class Shop
   include Mongoid::Document
+  store_in collection: "baidu"
   field :_id, type: Integer
   field :pass
   field :name
-  field :loc, type:Array #地图上的经纬度
+  #field :lob, type:Array #百度地图上的经纬度  
+  #field :loc, type:Array #google地图上的经纬度
   field :lo, type:Array #实际的经纬度
   field :tel 
   field :city
