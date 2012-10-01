@@ -68,7 +68,7 @@ class Oauth2Controller < ApplicationController
         render :text => "1"
         return
       end
-    elsif User.find2(params["name"]).pass == params[:pass]
+    elsif User.find2(params["name"]).password == params[:pass]
       render :text => "1"
       return
     end
