@@ -25,7 +25,7 @@ class Oauth2Controller < ApplicationController
     redirect_to @@client.auth_code.authorize_url(:redirect_uri => $sina_callback)
   end
 
-
+  #使用sina oauth2认证时的回调页
   def sina_callback
     if params[:code].nil?
       render :json => params.to_json
@@ -38,6 +38,7 @@ class Oauth2Controller < ApplicationController
     do_login(uid,token.token,data)
   end
   
+  #提供给手机客户端的认证服务
   def login
     hash = Digest::SHA1.hexdigest("#{params[:name]}#{params[:pass]}#{params[:mac]}dface")[0,32]
     if hash != params[:hash]
@@ -57,6 +58,21 @@ class Oauth2Controller < ApplicationController
   def logout
     reset_session
     render :json => {"logout" => true}.to_json
+  end
+
+
+  #提供给erlang系统的认证服务
+  def auth
+    if params[:name][0]=='s'
+      if params[:pass] == 'pass'
+        render :text => "1"
+        return
+      end
+    elsif User.find2(params["name"]).pass == params[:pass]
+      render :text => "1"
+      return
+    end
+    render :text => "0"
   end
   
   private
