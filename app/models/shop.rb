@@ -1,6 +1,6 @@
 class Shop
   include Mongoid::Document
-  store_in collection: "baidu"
+  #store_in collection: "baidu"
   field :_id, type: Integer
   field :pass
   field :name
