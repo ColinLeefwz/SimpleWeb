@@ -57,4 +57,5 @@ gem 'carrierwave-aliyun'
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 
 gem 'memcache-client'
+gem 'resque', :require => "resque/server"
 
