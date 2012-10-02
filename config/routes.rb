@@ -1,4 +1,6 @@
 Lianlian::Application.routes.draw do
+  mount Resque::Server, :at => "/resque"
+  
   resources :shop_shop_notices do
     member do
       get 'dest'
