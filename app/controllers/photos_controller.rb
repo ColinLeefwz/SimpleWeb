@@ -9,9 +9,7 @@ class PhotosController < ApplicationController
     p.user_id = session[:user_id]
     p.save!
     if p.weibo
-      RestClient.post('https://api.weibo.com/2/statuses/upload_url_text.json', 
-        :access_token  => session[:user_token] , :status => "在#{p.shop.name}分享：", 
-        :url => p.img.url) # {|response, request, result| puts response }
+      Resque.enqueue(WeiboPhoto, session[:user_token], "在#{p.shop.name}分享：", p.img.url)
     end
     render :json => p.output_hash.to_json
   end
