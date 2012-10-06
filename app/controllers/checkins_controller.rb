@@ -38,6 +38,10 @@ class CheckinsController < ApplicationController
     @checkin.sex = User.find(params[:user_id]).gender
     @checkin.sid = params[:shop_id]
     @checkin.od = params[:od]
+    if params[:altitude]
+      @checkin.altitude = params[:altitude].to_f
+      @checkin.altacc = params[:altacc]
+    end
     @checkin.ip = real_ip
     
     #sendmsg TODO:采用ejabberd的mod_rest实现优惠券下发 
