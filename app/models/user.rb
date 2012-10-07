@@ -2,7 +2,8 @@
 
 class User 
   include Mongoid::Document
-  field :wb_uid
+  field :wb_uid #微博uid
+  field :wb_v, type:Boolean #是否是微博认证用户
   field :name
   field :gender, type: Integer
   field :birthday
@@ -12,6 +13,7 @@ class User
   field :job 
   field :jobtype, type: Integer
   field :hobby
+
   
   field :blacks, type:Array #黑名单
   field :follows, type:Array #关注
@@ -88,7 +90,7 @@ class User
   end
   
   def safe_output
-    hash = self.attributes.slice("name", "wb_uid", "gender", "birthday", "logo")
+    hash = self.attributes.slice("name", "wb_uid", "wb_v", "gender", "birthday", "logo")
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
