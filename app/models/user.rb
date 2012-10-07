@@ -13,7 +13,7 @@ class User
   field :job 
   field :jobtype, type: Integer
   field :hobby
-
+  field :multip, type:Boolean, default:false #该用户是否上传了多张图片
   
   field :blacks, type:Array #黑名单
   field :follows, type:Array #关注
@@ -90,7 +90,7 @@ class User
   end
   
   def safe_output
-    hash = self.attributes.slice("name", "wb_uid", "wb_v", "gender", "birthday", "logo")
+    hash = self.attributes.slice("name", "wb_uid", "wb_v", "gender", "birthday", "logo", "job", "jobtype", "multip")
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
@@ -147,6 +147,14 @@ class User
     when 172800..864000 then "#{diff/86400} days"
     else "10+ days"
     end
+  end
+
+  def set_if_multip
+    self.update_attributes!({multip:true}) if self.user_logos.count()>1
+  end
+
+  def self.init_multip
+    User.all.each {|u| u.set_if_multip}
   end
 
 
