@@ -39,7 +39,7 @@ class CheckinsController < ApplicationController
     @checkin.sid = params[:shop_id]
     @checkin.od = params[:od]
     if params[:altitude]
-      @checkin.altitude = params[:altitude].to_f
+      @checkin.alt = params[:altitude].to_f
       @checkin.altacc = params[:altacc]
     end
     @checkin.ip = real_ip

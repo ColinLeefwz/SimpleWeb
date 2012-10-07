@@ -1,14 +1,15 @@
 class Checkin
   include Mongoid::Document
-  field :sid, type: Integer
-  field :uid, type: Moped::BSON::ObjectId
-  field :sex, type:Integer
-  field :loc, type:Array
-  field :ip
-  field :acc, type:Float
-  field :od, type: Integer
-  field :del, type: Boolean
-
+  field :sid, type: Integer #商家id
+  field :uid, type: Moped::BSON::ObjectId #用户id
+  field :sex, type:Integer #用户性别
+  field :loc, type:Array  #经纬度
+  field :ip   #ip地址
+  field :acc, type:Float  #经纬度的精确度
+  field :od, type: Integer  #用户选择的商家在现场列表中的位置
+  field :del, type: Boolean #删除标记
+  field :alt, type:Float    #海拔高度
+  field :altacc, type: Integer  #海拔高度的精确度
   
   
   def cat
