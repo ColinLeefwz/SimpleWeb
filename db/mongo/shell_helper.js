@@ -1,22 +1,48 @@
 
 var last = function(col_name){
-	return eval("db."+col_name+".find().sort({_id:-1}).limit(1)");
+    return eval("db."+col_name+".find().sort({_id:-1}).limit(1)");
 }
 
 var first = function(col_name){
-	return eval("db."+col_name+".find().sort({_id:1}).limit(1)");
+    return eval("db."+col_name+".find().sort({_id:1}).limit(1)");
 }
 
 
-db.system.js.save({ "_id" : "last", "value" : last })
-db.system.js.save({ "_id" : "first", "value" : first })
+db.system.js.save({
+    "_id" : "last",
+    "value" : last
+})
+db.system.js.save({
+    "_id" : "first",
+    "value" : first
+})
 
 
-var gen_days_id =function(days){
-	var yesterday = new Date(parseInt(((new Date()).valueOf()/1000)-(days*24*60*60))*1000);
-  var id = yesterday.toLocaleFormat('%Y-%m-%d');
-  var z = '0000000000000000';
-  var idOfBeginYesterday = parseInt(yesterday.setHours(0,0,0)/1000).toString(16) + z;
-  var idOfEndYesterday = parseInt(yesterday.setHours(23,59,59)/1000).toString(16) + z;
-  return [idOfBeginYesterday,idOfEndYesterday];
+
+var gen_day_id =function(days){
+    var day =  new Date(parseInt(((new Date()).valueOf()/1000)-(days*24*60*60))*1000);
+    var id = day.toLocaleFormat('%Y-%m-%d');
+    var z = '0000000000000000';
+    var idOfBeginDAy = parseInt(day.setHours(0,0,0)/1000).toString(16) + z;
+    var idOfEndDay = parseInt(day.setHours(23,59,59)/1000).toString(16) + z;
+    return [idOfBeginDAy,idOfEndDay, id];
 }
+
+db.system.js.save({
+    "_id" : "gen_day_id",
+    "value" : gen_day_id
+})
+
+var gen_days_id = function(days){
+    var z = '0000000000000000'
+    var yesterday = new Date(parseInt(((new Date()).valueOf()/1000)-(24*60*60))*1000)
+    var daysago = new Date(parseInt(((new Date()).valueOf()/1000)-(days*24*60*60))*1000)
+    var idOfBeginDaysAgo = parseInt(daysago.setHours(0,0,0)/1000).toString(16) + z
+    var idOfEndYesterday = parseInt(yesterday.setHours(23,59,59)/1000).toString(16) + z
+    return [idOfBeginDaysAgo, idOfEndYesterday]
+}
+
+db.system.js.save({
+    "_id" : "gen_days_id",
+    "value" : gen_days_id
+})
