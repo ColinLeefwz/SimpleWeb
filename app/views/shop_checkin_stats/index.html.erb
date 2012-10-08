@@ -10,7 +10,7 @@
 
   <% @checkin_shop_stats.each do |checkin_shop_stat| %>
     <tr>
-      <td><%= checkin_shop_stat.shop.name%></td>
+      <td><%= checkin_shop_stat.shop.try(:name)%></td>
       <td><%= 1.days.ago.to_date %></td>
       <td>
         <%= link_to checkin_shop_stat.utotal.to_i, "/shop_checkin_stats/show_users?id=#{checkin_shop_stat.id}" %>
@@ -31,3 +31,4 @@
 
 
 <%= generate_paginate.html_safe %>
+
