@@ -32,7 +32,7 @@ class Checkin
   end
   
   def shop
-    Shop.find(self.sid)
+    Shop.find_by_id(self.sid)
   end
   
 end
