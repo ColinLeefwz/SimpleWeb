@@ -1,10 +1,7 @@
-var checkinDay = function(days){
-    var yesterday = new Date(parseInt(((new Date()).valueOf()/1000)-(days*24*60*60))*1000)
-    var id = yesterday.toLocaleFormat('%Y-%m-%d')
-    var z = '0000000000000000'
+db.loadServerScripts();
 
-    var idOfBeginYesterday = parseInt(yesterday.setHours(0,0,0)/1000).toString(16) + z
-    var idOfEndYesterday = parseInt(yesterday.setHours(23,59,59)/1000).toString(16) + z
+var checkinDay = function(days){
+    [idOfBeginYesterday,idOfEndYesterday] = gen_days_id(days);
     var ss={};
     var num=0, od1=0, od2=0,od3=0;
     var da = [];
