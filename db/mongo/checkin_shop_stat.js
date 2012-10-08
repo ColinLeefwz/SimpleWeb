@@ -1,14 +1,13 @@
+db.loadServerScripts();
 
 var checkinShopStat = function(days){
-    var z = '0000000000000000'
-    var yesterday = new Date(parseInt(((new Date()).valueOf()/1000)-(24*60*60))*1000)
-    var daysago = new Date(parseInt(((new Date()).valueOf()/1000)-(days*24*60*60))*1000)
-    var idOfBeginYesterday = parseInt(daysago.setHours(0,0,0)/1000).toString(16) + z
-    var idOfEndYesterday = parseInt(yesterday.setHours(23,59,59)/1000).toString(16) + z
+    var idOfBeginDaysAgo;
+    var idOfEndYesterday;
+    [idOfBeginDaysAgo, idOfEndYesterday] = gen_days_id(days);
 
     db.checkins.find({
         _id: {
-            $gt: ObjectId(idOfBeginYesterday),
+            $gt: ObjectId(idOfBeginDaysAgo),
             $lt: ObjectId(idOfEndYesterday)
         },
         del: {
