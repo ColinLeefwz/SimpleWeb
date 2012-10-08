@@ -4,6 +4,7 @@ class User
   include Mongoid::Document
   field :wb_uid #微博uid
   field :wb_v, type:Boolean #是否是微博认证用户
+  field :wb_vs # 微博认证说明
   field :name
   field :gender, type: Integer
   field :birthday
