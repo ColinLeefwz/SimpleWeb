@@ -1,3 +1,4 @@
+# coding: utf-8
 class Shop
   include Mongoid::Document
   #store_in collection: "baidu"
@@ -12,7 +13,7 @@ class Shop
   field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. db.shops.ensureIndex({del:1},{sparse:true})
   field :addr
   field :t                #脸脸的商家类型
-  field :level            #商家的人工等级
+#  field :level            #商家的人工等级
   field :password
 
   #field :cc, type:Integer  #点评的评论数
@@ -83,4 +84,8 @@ class Shop
     Mongoid.default_session.command(eval:str)["retval"].map {|x| x.to_i}
   end
   
+  def show_t
+    {1 => '酒吧• 活动', 2 => '咖啡• 茶馆', 3 => '餐饮• 酒店', 4 => '休闲• 娱乐', 5 => '购物• 广场', 6 => "'楼宇• 社区'"}[self.t.to_i]
+  end
+
 end
