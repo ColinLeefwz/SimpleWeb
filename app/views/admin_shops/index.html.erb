@@ -4,7 +4,6 @@
 <%= form_tag '/admin_shops',:method =>:get do %>
   <p>
     名称:<%= text_field_tag :name, params[:name] %>
-    经度: <%= text_field_tag :lng, params[:lng], :size => 10  %>
     区号: <%= text_field_tag :city, params[:city], :size => 10 %>
     分类: <%= select_tag :t,options_for_select([['所有分类',''],['酒吧• 活动',1],['咖啡• 茶馆 ',2],['餐饮• 酒店',3],['休闲• 娱乐',4],['购物• 广场',5],['楼宇• 社区',6]],params[:t].to_i)  %>
     排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"]],params[:order])  %>
