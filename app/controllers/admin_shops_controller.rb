@@ -11,7 +11,6 @@ class AdminShopsController < ApplicationController
     hash.merge!({ lo: { "$within" => { "$center" => [lo, 0.1]} }}) if lo
     hash.merge!( {name: /#{params[:name]}/ }  )  if params[:name]
     hash.merge!( {t: params[:t].to_i }  )  if !params[:t].blank?
-    hash.merge!( {level: params[:level]}) if !params[:level].blank?
     hash.merge!({city: params[:city]}) if !params[:city].blank?
 
     @shops = paginate("Shop", params[:page], hash, horder, 200  )
@@ -21,11 +20,7 @@ class AdminShopsController < ApplicationController
   end
 
 
-  def ajaxupdatelevel
-    shop = Shop.where({_id: params[:shop_id]}).first
-    shop.update_attribute(:level, params[:level])
-    render :json => {level: shop.reload.level}
-  end
+
 
   def ajaxdel
     shop = Shop.where({_id: params[:shop_id]}).first
@@ -41,10 +36,6 @@ class AdminShopsController < ApplicationController
       {_id: -1}
     when '1'
       {_id: 1}
-    when '2'
-      {level: -1}
-    when '3'
-      {level: 1}
     end
   end
   
