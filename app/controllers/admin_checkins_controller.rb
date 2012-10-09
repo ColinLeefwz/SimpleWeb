@@ -23,7 +23,7 @@ class AdminCheckinsController < ApplicationController
       hash.merge!(uid: {'$in' => uids})
     end
 
-    unless params[:shop].blank? && params[:city]
+    unless params[:shop].blank? && params[:city].blank?
       sids = Shop.where({name: /#{params[:shop]}/, city: params[:city]}).map { |m| m._id  }
       hash.merge!(sid: {'$in' => sids})
     end
