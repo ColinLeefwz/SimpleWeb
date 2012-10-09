@@ -4,8 +4,7 @@ class CheckinIpStat
   field :shops, type:Array
   field :stotal, type: Integer
   field :ctotal, type: Integer
-
-
+  field :data, type: Array
   
 end
 
