@@ -90,6 +90,7 @@ class Oauth2Controller < ApplicationController
         user.gender = 1 if sina_info["gender"]=="m"
         user.gender = 2 if sina_info["gender"]=="f"
         user.wb_v = sina_info["verified"]
+        user.wb_vs = sina_info["verified_reason"]
       end
       user.save!
     end
