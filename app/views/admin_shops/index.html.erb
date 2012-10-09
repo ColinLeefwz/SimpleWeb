@@ -5,11 +5,9 @@
   <p>
     名称:<%= text_field_tag :name, params[:name] %>
     经度: <%= text_field_tag :lng, params[:lng], :size => 10  %>
-    纬度 <%= text_field_tag :lat, params[:lat], :size => 10  %>
     区号: <%= text_field_tag :city, params[:city], :size => 10 %>
     分类: <%= select_tag :t,options_for_select([['所有分类',''],['酒吧• 活动',1],['咖啡• 茶馆 ',2],['餐饮• 酒店',3],['休闲• 娱乐',4],['购物• 广场',5],['楼宇• 社区',6]],params[:t].to_i)  %>
-    等级： <%= select_tag :level,options_for_select([['所有等级',''],['A',"A"],['B',"B"],['C',"C"],['D',"D"],['空','空']],params[:level])  %>
-    排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"],['等级从高向低',"2"],['等级从低向高',"3"]],params[:order])  %>
+    排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"]],params[:order])  %>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
@@ -20,25 +18,10 @@
   <tr>
     <th></th>
     <th>名称</th>
-    <th>经纬度</th>
     <th>电话</th>
     <th>区号</th>
     <th>地址</th>
     <th>分类</th>
-    <th class="th_level" onclick="showes()">
-      <span>
-        等级
-      </span>
-      <span style="display:none">
-        <%= radio_button_tag :level,'空',false,:onclick => "checkall('n')" %>空
-        <%= radio_button_tag :level,'A',false,:onclick => "checkall('A')" %>A
-        <%= radio_button_tag :level,'B',false,:onclick => "checkall('B')" %>B
-        <%= radio_button_tag :level,'C',false,:onclick => "checkall('C')" %>C
-        <%= radio_button_tag :level,'D',false,:onclick => "checkall('D')" %>D
-        <%= submit_tag "提交", :onclick => "ajaxupdatelevelall()" %>
-      </span>
-
-    </th>
     <th></th>
   </tr>
 
@@ -46,24 +29,11 @@
     <tr>
       <td><%= check_box_tag "shops[]", shop._id, false, :class => 'checkbox_shops' %></td>
       <td><%= shop.name %></td>
-      <td><%= shop.loc%></td>
+
       <td><%= shop.tel %></td>
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
-      <td><%= shop.t %></td>
-      <td class="td_level" onclick="showe($(this))" >
-        <span>
-          <%= shop.level %>
-        </span>
-        <span class="dhide" style="display:none">
-          <%= radio_button_tag "#{shop._id.to_s}",'空',shop.level=="",:class => 'level_n' %>空
-          <%= radio_button_tag "#{shop._id.to_s}",'A', shop.level=="A",:class => 'level_A' %>A
-          <%= radio_button_tag "#{shop._id.to_s}",'B',shop.level=="B",:class => 'level_B' %>B
-          <%= radio_button_tag "#{shop._id.to_s}",'C',shop.level=="C",:class => 'level_C' %>C
-          <%= radio_button_tag "#{shop._id.to_s}",'D',shop.level=="D",:class => 'level_D' %>D
-          <%= submit_tag "提交", :onclick => "ajaxupdatelevel($(this), #{shop._id})", :name => shop._id.to_s %>
-        </span>
-      </td>
+      <td><%= shop.show_t %></td>
       <td>
         <a onclick="ajaxdel($(this),<%= shop._id %>, false)" >删除</a>
       </td>
@@ -149,3 +119,4 @@
   }
 
 </script>
+
