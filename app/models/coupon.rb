@@ -7,7 +7,7 @@ class Coupon
   field :name 
   field :desc
   field :endt, type:DateTime
-  field :users, type:Array
+  field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间}
   field :img
   mount_uploader :img, CouponUploader
 
