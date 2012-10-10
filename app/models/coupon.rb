@@ -21,12 +21,12 @@ class Coupon
   end
 
   def send_coupon(user_id)
-    download(user.id)
+    download(user_id)
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
     logger.error(xmpp1)
-    RestClient.post('https:/42.121.98.157/rest', xmpp1) 
+    RestClient.post('http://42.121.98.157:5280/rest', xmpp1) 
     xmpp2 = "<message to='#{user_id}@dface.cn' from='#{shop_id}@c.dface.cn' type='groupchat'><body>#{message}</body></message>"
-    RestClient.post('https:/42.121.98.157/rest', xmpp2) 
+    RestClient.post('http://42.121.98.157:5280/rest', xmpp2) 
   end
   
   def download(user_id)
