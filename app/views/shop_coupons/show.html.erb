@@ -16,11 +16,6 @@
 </p>
 
 <p>
-  <b>截止日期:</b>
-  <%= @coupon.endt %>
-</p>
-
-<p>
   <b>优惠券图片:</b>
   <br/>
   <%=image_tag(@coupon.img) %>
@@ -29,3 +24,4 @@
 
 <%= link_to '编辑', edit_shop_coupon_path(@coupon) %> |
 <%= link_to '返回列表', shop_coupons_path %>
+
