@@ -1,0 +1,84 @@
+* {margin: 0;padding: 0;}
+img{border:none;}
+ul,ol{list-style:none;}
+a{text-decoration: none;}
+input{outline: none;}
+
+body {font-size: 12px;overflow:hidden;font-family:"宋体",Sans-Serif;}
+
+.both{clear:both;}
+.fn{float:none !important;}
+.pt15{padding-top:60px !important;}
+.ml10{margin-left:10px !important;}
+.ml15{margin-left:15px !important;}
+.mt15{margin-top:15px !important;}
+.mr5{margin-right:5px;}
+.logo{text-align: center;margin-bottom:50px;}
+.gray, a.gray{color:#ABABAB;}
+a.gray:hover{color:#0099ff;}
+.yellow, a.yellow{color:#C16F19;}
+a.yellow:hover{color:#0099ff;}
+.gray2{color:#505050;}
+
+#con{width:725px;margin:50px auto 0px auto;overflow:hidden;zoom:1;}
+.conleft{width:175px;float:left;}
+.conright{width:525px;float:right;}
+
+.nav{display:block;overflow:hidden;zoom:1;color:#3d3d3d;width:100%;line-height:30px;border-top:1px solid #F4F4F4;padding-top:10px;}
+.nav li{margin-bottom:10px;zoom:1;}
+.nav li a{padding-left:18px;display:block;overflow:hidden;color:#3d3d3d;}
+.nav li a:hover, .nav li a.hover{background-color:#F4F4F4;color:#C16F19;}
+
+.name{float:right;color:#666;margin:35px 0px;}
+.name a{color:#C16F19;}
+.name a:hover{color:#0099ff;}
+
+.subtitle{background-color:#F4F4F4;padding-left:20px;line-height:28px;color:#676767;clear:both;}
+
+.area{width:275px;height:448px;position:absolute;left:50%;top:50%;margin-left:-135px;margin-top:-224px;}
+.plane{color:#333333;background-color:#F4F4F4;display:block;padding:10px 8px;margin-bottom:15px;overflow:hidden;zoom:1;}
+.plane label{margin-right:10px;}
+.plane input.txt{width:210px;background-color:transparent;border:none;overflow:hidden;zoom:1;}
+.plane2{clear:both;overflow:hidden;zoom:1;}
+.plane2 input.btn{background-color:#C16F19;color:#ffffff;width:100px;padding:10px 0px;float:right;border:none;cursor:pointer;_padding:8px 0px;}
+.plane2 a{color:#C16F19;float:left;}
+.plane2 a:hover{color:#0099ff;}
+.plane2 .plane2inner{display:block;padding-top:160px;clear:both;overflow:hidden;text-align:center;}
+
+.formlist{display:block;overflow:hidden;zoom:1;margin-top:30px;margin-left:20px;color:#505050;}
+.formlist li{margin-bottom:20px;}
+.formlist li input.txt{border:1px solid #F4F4F4;background-color:transparent;width:155px;height:20px;line-height:20px;font-size:11px;}
+.formlist li label{width:60px;text-align:right;float:left;display:block;margin-top:6px;}
+.formlist li span{width:60px;text-align:left;float:left;display:block;margin-top:6px;}
+.formlist li input.btn{color:#fff;background-color:#505050;width:65px;padding:4px 0px;margin-left:60px;border:none;cursor:pointer;}
+
+.formlist2{display:block;overflow:hidden;zoom:1;margin-left:20px;color:#505050;}
+.formlist2 li{margin-bottom:20px;overflow:hidden;}
+.formlist2 li span{width:50px;text-align:right;float:left;display:block;margin-top:6px;margin-right:10px;}
+.formlist2 li span.right{width:420px;text-align:left;}
+.sbtn{color:#fff;background-color:#505050;width:40px;padding:1px 0px;margin-left:5px;border:none;cursor:pointer;}
+.stxt{border:1px solid #F4F4F4;background-color:transparent;width:100px;height:20px;line-height:20px;font-size:11px;}
+
+.tab{width:100%;margin-top:20px;line-height:20px;color:#666; vertical-align:middle;}
+.tab th{font-weight:normal;border-bottom:1px dashed #E8E8E8;padding:8px;}
+.tab th.first{text-align:left;padding-left:20px;}
+.tab td{border-bottom:1px dashed #E8E8E8;padding:8px 8px 8px 0px;}
+.tab img{width:60px;height:60px;}
+.tab a.btn{color:#fff;background-color:#505050;width:65px;padding:8px 4px;border:none;cursor:pointer;margin:0px auto;}
+.tab tr.bottom td{padding-top:20px;border-bottom:none;}
+
+/**页码样式**/
+.pages {clear: both;overflow: hidden;}
+.pages .pagination {float: right;overflow: hidden;}
+.pages .pagination .prev_page, .pagination a.prev_page {cursor: pointer;float: left;margin-right: 10px;}
+.pages .pagination .current, .pagination a {color: #C16F19;display: block;float: left;line-height: 20px;margin: 0 10px 0 0;padding: 0;text-align: center;}
+.pages .pagination a:hover {color: #0099ff;}
+.pages .pagination .next_page, .pagination a.next_page {cursor: pointer;float: left;}
+.pagination a:visited{color:#666;}
+/**页码样式 over**/
+
+#footer{width:725px;margin:50px auto 0px auto;overflow:hidden;zoom:1;color:#666;}
+#footer .footerinner{clear:both;float:right;width:490px;border-top:1px solid #f4f4f4;padding:15px 35px 0px 0px;text-align:right;}
+#footer a{color:#C16F19;}
+#footer a:hover{color:#0099ff;}
+

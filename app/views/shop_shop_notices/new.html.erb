@@ -1,4 +1,6 @@
-<h1>新建商家公告</h1>
+<div class="subtitle">发布新公告</div><br/>
+
+
 <%= form_for(@shop_notice, :url => { :action => :create}) do |f| %>
   <%= render :partial => 'form', :locals => { :f => f}%>
 <% end  %>

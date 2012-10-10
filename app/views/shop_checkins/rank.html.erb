@@ -1,16 +1,18 @@
-<h1>排行榜</h1>
-<table>
+<div class="subtitle">排行榜</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th>商家</th>
-    <th>用户</th>
-    <th>签到次数</th>
+    <th width="20%" class="first">用户</th>
+    <th width="16%">性别</th>
+    <th width="16%" align="center">生日</th>
+    <th width="10%" align="center">签到次数</th>
+    <th width="10%" align="center"></th>
   </tr>
-
   <% @banks.each do |bank| %>
     <tr>
-      <td><%= session_shop.name %></td>
-      <td><%= User.find(bank['uid']).name %></td>
-      <td><%= bank["count"] %></td>
+      <td class="gray"><%= User.find(bank['uid']).name %></td>
+      <td align="center" class="gray"><%= User.find(bank['uid']).show_gender%></td>
+      <td align="center" class="gray"><%= User.find(bank['uid']).birthday.try(:to_date)%></td>
+      <td align="center" class="gray"><%= bank["count"].to_i %></td>
       <td><%= link_to '历史签到', url_for(:action => 'index', :uid => bank['uid']) %></td>
     </tr>
   <% end %>

@@ -1,10 +1,51 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <%= stylesheet_link_tag 'admin' %>
-    
-    <title>商家后台</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+
+    <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="no-cache" http-equiv="Cache-Control"/>
+    <meta content="0" http-equiv="Expires"/>
+    <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+    <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+    <title>脸脸 | 后台</title>
+    <link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
+  </head>
   <body>
-    <%= yield  %>
+    <div id="con" style="background-color:Fd0">
+      <div class="conleft">
+        <img src="images/backstage.jpg" alt="脸脸DFACE.CN" />
+        <ul class="nav">
+          <li>
+            <%= link_to "首页", "/shop_login" %>
+          </li>
+          <li>
+            <%= link_to "修改密码", "/shop_pass/index" %>
+          </li>
+          <li>
+            <%= link_to "公告管理", "/shop_shop_notices" %>
+          </li>
+          <li>
+            <%= link_to "签到列表", "/shop_checkins" %>
+          </li>
+          <li>
+            <%= link_to "商家logo", "/shop_logos" %>
+          </li>
+          <li>
+            <%= link_to "优惠券管理", "/shop_coupons" %>
+          </li>
+        </ul>
+      </div>
+      <div class="conright">
+        <span class="name"><%= session_shop.name %>, <a href="/shop_login/logout">退出</a></span>
+        <%= yield  %>
+      </div>
+    </div>
+    <div id="footer">
+      <div class="footerinner">&copy; 2012 dface 浙ICP备11027288号<a href="http://www.dface.cn" class="fn ml15">WWW.DFACE.CN</a></div>
+    </div>
   </body>
 </html>
+
