@@ -45,7 +45,7 @@ class CheckinsController < ApplicationController
     respond_to do |format|
       if @checkin.save
         coupon = Coupon.where({shop_id:params[:shop_id]}).last
-        coupon.send(session[:user_id]) if coupon
+        coupon.send_coupon(session[:user_id]) if coupon
         format.html { redirect_to @checkin, :notice => 'Checkin was successfully created.' }
         format.json { render :json => @checkin, :status => :created, :location => @checkin }
       else
