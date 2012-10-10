@@ -1,31 +1,19 @@
-<h1>
-  公告详情
-</h1>
-
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>商家:</b>
-  <%= session_shop.name %>
-</p>
-
-<p>
-  <b>文本：</b>
-  <%= @shop_notice.title %>
-</p>
-
-
-<p>
-  <b>排序：</b>
-  <%= @shop_notice.ord %>
-</p>
-
-<p>
-  <b>有效：</b>
-  <%= @shop_notice.effect ? "是" : '否' %>
-</p>
-
-
+<div class="subtitle">公告详情</div><br/>
+  <center class="gray2"><%= notice %></center>
+<ul class="formlist2">
+  <li>
+    <span>文本</span>
+    <span class="right"><%= @shop_notice.title %></span>
+  </li>
+  <li>
+    <span>排序</span>
+    <span class="right"><%= @shop_notice.ord %></span>
+  </li>
+  <li>
+    <span>有效</span>
+    <span class="right"><%= @shop_notice.effect ? "是" : '否' %></span>
+  </li>
+</ul>
 
 <%= link_to '编辑', edit_shop_shop_notice_path(@shop_notice) if @shop_notice.effect %>
 <%= link_to '返回列表', shop_shop_notices_path %>

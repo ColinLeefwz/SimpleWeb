@@ -1,15 +1,17 @@
 # encoding: utf-8
 class ShopShopNoticesController < ApplicationController
   before_filter :shop_authorize
+  include Paginate
   layout 'shop'
   #  before_filter :operate_auth, :only => [:show, :edit,:destroy]
   # GET /shop_notices
   # GET /shop_notices.json
   def index
-    opt = {shop_id: session[:shop_id]}
-    opt.merge!({effect: {'1' => true, '0' => false}[params[:effect] || '1' ] }) if params[:effect] != ''
+    hash = {shop_id: session[:shop_id]}
+    hash.merge!({effect: {'1' => true, '0' => false}[params[:effect] || '1' ] }) if params[:effect] != ''
+    sort = {ord: 1}
+    @shop_notices = paginate("ShopNotice", params[:page], hash, sort)
 
-    @shop_notices = ShopNotice.where(opt).sort({ord: 1})
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @shop_notices.map{|sn| {id:sn._id, title:sn.title} }.to_json }
