@@ -1,46 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+<meta content="no-cache" http-equiv="Pragma"/>
+<meta content="no-cache" http-equiv="Cache-Control"/>
+<meta content="0" http-equiv="Expires"/>
+<meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+<meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+<title>脸脸 | 后台</title>
+<link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
+<script src="js/jquery-1.6.2.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#name").focus();
+});
+</script>
+</head>
+<body>
+<div class="area">
+<form action="" method="post">
+<div class="logo"> <img src="/images/backstage.jpg"></div>
 
-<h1>商家登录</h1>
+	<div class="plane"><label for="name">商家id</label><%= text_field_tag :id, params[:id],:id => "name", :class => "txt" %></div>
 
-<p><%= notice %></p>
-
-<%= form_tag "/shop_login/login" do %>
-  <body><table width="200" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td height="20px;" width="60%">
-        </td>
-        <td height="20px;" aligh="left">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p>
-            <label for="user_name">商家id</label>
-            <%= text_field_tag :id, params[:id], :maxLength=>"50" %>
-          </p>
-        </td>
-        <td>
-          <p>&nbsp;
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p>
-            <label for="user_password">密码</label>
-            <%= password_field_tag :password, params[:password], :maxLength=>"16" %>
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding-left:75px;">
-          <p class="act">
-            <%= submit_tag "登 录", :class => "button" %>
-          </p>
-        <%end%>
-      </td>
-    </tr>
-  </table>
+<div class="plane"><label for="pwd">密&nbsp;&nbsp;码</label>
+<%= password_field_tag :password, params[:password], :maxLength=>"16",:id =>'pwd', :class => 'txt'  %>
 </div>
-<div class="bottom"></div>
+<div class="plane2">
+<a href="#" class="mt15 ml10">忘记密码?</a><input type="submit" value="登 录" class="btn"/>
+<span class="plane2inner">&copy; 2012 dface 浙ICP备11027288号<a href="http://www.dface.cn" class="fn ml15">WWW.DFACE.CN</a></span>
 </div>
+</form>
+</div>
+
+</body>
+</html>
 
