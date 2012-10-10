@@ -158,5 +158,9 @@ class User
     User.all.each {|u| u.set_if_multip}
   end
 
+  def show_gender
+    {0=> '未设置', 1 => '男', 2 => '女'}[self.gender.to_i]
+  end
+
 
 end

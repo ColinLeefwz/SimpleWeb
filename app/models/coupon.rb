@@ -6,7 +6,7 @@ class Coupon
   field :shop_id, type: Integer
   field :name 
   field :desc
-  field :endt, type:DateTime
+#  field :endt, type:DateTime
   field :users, type:Array
   field :img
   mount_uploader :img, CouponUploader
