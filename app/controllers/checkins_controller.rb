@@ -1,5 +1,3 @@
-require 'xmpp4r/client'
-include Jabber
 
 class CheckinsController < ApplicationController
   # GET /checkins
@@ -43,11 +41,11 @@ class CheckinsController < ApplicationController
       @checkin.altacc = params[:altacc]
     end
     @checkin.ip = real_ip
-    
-    #sendmsg TODO:采用ejabberd的mod_rest实现优惠券下发 
 
     respond_to do |format|
       if @checkin.save
+        coupon = Coupon.where({shop_id:params[:shop_id]}).last
+        coupon.send_coupon(session[:user_id]) if coupon
         format.html { redirect_to @checkin, :notice => 'Checkin was successfully created.' }
         format.json { render :json => @checkin, :status => :created, :location => @checkin }
       else
@@ -67,19 +65,6 @@ class CheckinsController < ApplicationController
       format.html { redirect_to checkins_url }
       format.json { head :no_content }
     end
-  end
-  
-  private
-  def sendmsg
-    coupon = Coupon.last
-    return if coupon.nil?
-    coupon.download(session[:user_id])
-    client = Client.new(JID::new("s#{coupon.shop_id}@dface.cn"))
-    client.connect
-    client.auth("pass")
-    msg = Message::new("#{session[:user_id]}@dface.cn", coupon.message)
-    msg.type=:chat
-    client.send(msg)
   end
 
 end

@@ -5,7 +5,6 @@
     <th>商家id</th>
     <th>商家名称</th>
     <th>详情</th>
-    <th>结束时间</th>
     <th></th>
     <th></th>
     <th></th>
@@ -16,7 +15,6 @@
       <td><%= coupon.shop_id %></td>
       <td><%= session_shop.name %></td>
       <td><%= coupon.desc %></td>
-      <td><%= coupon.endt.try(:strftime,"%Y-%m-%d %H:%M:%S") %></td>
       <td><%= link_to '详情', shop_coupon_path(coupon) %></td>
       <td><%= link_to '编辑', edit_shop_coupon_path(coupon) %></td>
     </tr>
@@ -26,3 +24,4 @@
 <br />
 
 <%= link_to '新建优惠券', '/shop_coupons/new' %>
+
