@@ -20,7 +20,7 @@ class Coupon
     "[优惠券:#{name}:#{shop.name}:#{self._id}]"
   end
 
-  def send(user_id)
+  def send_coupon(user_id)
     download(user.id)
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
     logger.error(xmpp1)
