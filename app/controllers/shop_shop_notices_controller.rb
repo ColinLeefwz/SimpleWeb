@@ -10,7 +10,7 @@ class ShopShopNoticesController < ApplicationController
     hash = {shop_id: session[:shop_id]}
     hash.merge!({effect: {'1' => true, '0' => false}[params[:effect] || '1' ] }) if params[:effect] != ''
     sort = {ord: 1}
-    @shop_notices = paginate("ShopNotice", params[:page], hash, sort)
+    @shop_notices = paginate("ShopNotice", params[:page], hash, sort,5)
 
     respond_to do |format|
       format.html # index.html.erb
