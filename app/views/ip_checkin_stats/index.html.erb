@@ -2,6 +2,8 @@
 <table>
   <tr>
     <th>ip</th>
+    <th>城市</th>
+    <th>运营商</th>
     <th>截止日期</th>
     <th>商家总数</th>
     <th>签到次数</th>
@@ -11,6 +13,12 @@
     <tr>
       <td>
         <%= checkin_ip_stat.id %>
+      </td>
+       <td>
+        <%= checkin_ip_stat.data && checkin_ip_stat.data['city'] %>
+      </td>
+      <td>
+        <%= checkin_ip_stat.data && checkin_ip_stat.data['isp'] %>
       </td>
       <td>
         <%= 1.days.ago.to_date %>
@@ -29,3 +37,4 @@
 
 
 <%= generate_paginate.html_safe %>
+
