@@ -116,7 +116,7 @@ module ApplicationHelper
       html += %q(<div class="pagination">)
       html += link_to "第1页",request.params.merge!(:page => 1), :class => "prev_pagee"
       html += link_to "上一页",request.params.merge!(:page => @page -1),:class => "prev_pagee"  if @page != 1
-      html += "<span class='current'>1</span>"
+      html += "<span class='current'>#{@page}</span>"
       html +=  link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page != @last_page
       html +=  link_to "第#{@last_page}页",request.params.merge!(:page => @last_page), :class => "next_page"
       html += "</div>"
