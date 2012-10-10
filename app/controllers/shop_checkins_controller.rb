@@ -3,11 +3,14 @@
 class ShopCheckinsController < ApplicationController
 
   before_filter :shop_authorize
+  include Paginate
+  layout 'shop'
 
   def index
     hash = {sid: session[:shop_id]}
     hash.merge!({uid: params[:uid]}) unless params[:uid].blank?
-    @checkins = Checkin.where(hash).sort({_id: -1})
+    sort = {_id: -1}
+    @checkins = paginate("Checkin", params[:page], hash, sort,5)
   end
 
   def show

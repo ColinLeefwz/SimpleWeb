@@ -3,6 +3,10 @@
 class ShopLoginController < ApplicationController
   before_filter :shop_authorize, :except => [:login]
 
+  def index
+    render :layout => "shop"
+  end
+
 
   def login
     return redirect_to :action  => 'index' if session[:shop_id]

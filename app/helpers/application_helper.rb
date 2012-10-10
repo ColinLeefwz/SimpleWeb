@@ -112,16 +112,15 @@ module ApplicationHelper
 
   def generate_paginate
     if (@total_entries+@pcount-1)/@pcount > 1
-      html =  %q(<div id="paginate" style="text-align: center">)
-      html += link_to "第1页",request.params.merge!(:page => 1), :class => "previous_page"
-      html += link_to "上一页",request.params.merge!(:page => @page -1),:class => "previous_page"  if @page != 1
-
-      html += %q(<em class="current">)
-      html += "#{@page}"
-      html += "</em>"
+      html = %q(<div class="pages">)
+      html += %q(<div class="pagination">)
+      html += link_to "第1页",request.params.merge!(:page => 1), :class => "prev_pagee"
+      html += link_to "上一页",request.params.merge!(:page => @page -1),:class => "prev_pagee"  if @page != 1
+      html += "<span class='current'>1</span>"
       html +=  link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page != @last_page
       html +=  link_to "第#{@last_page}页",request.params.merge!(:page => @last_page), :class => "next_page"
-      html +=  "</div>"
+      html += "</div>"
+      html += "</div>"
     else
       ''
     end

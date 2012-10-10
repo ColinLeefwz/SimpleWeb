@@ -1,5 +1,6 @@
 # coding: utf-8
 class ShopPassController < ApplicationController
+  layout 'shop'
   before_filter :shop_authorize
   def index
     @shop = session_shop
