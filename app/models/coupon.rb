@@ -19,6 +19,15 @@ class Coupon
   def message
     "[优惠券:#{name}:#{shop.name}:#{self._id}]"
   end
+
+  def send(user_id)
+    download(user.id)
+    xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
+    logger.error(xmpp1)
+    RestClient.post('https:/42.121.98.157/rest', xmpp1) 
+    xmpp2 = "<message to='#{user_id}@dface.cn' from='#{shop_id}@c.dface.cn' type='groupchat'><body>#{message}</body></message>"
+    RestClient.post('https:/42.121.98.157/rest', xmpp2) 
+  end
   
   def download(user_id)
     self.add_to_set(:users, {id:user_id, dat:Time.now})
