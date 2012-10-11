@@ -10,7 +10,7 @@ class ShopCheckinsController < ApplicationController
     hash = {sid: session[:shop_id]}
     hash.merge!({uid: params[:uid]}) unless params[:uid].blank?
     sort = {_id: -1}
-    @checkins = paginate("Checkin", params[:page], hash, sort,5)
+    @checkins = paginate("Checkin", params[:page], hash, sort,10)
   end
 
   def show
@@ -28,13 +28,13 @@ class ShopCheckinsController < ApplicationController
     str = "groupCheckin(#{shop_id}, '#{objectid}')"
     @banks = Mongoid.default_session.command(eval:str)["retval"]
     @banks = @banks.sort{|f,s| s['count'] <=> f['count']}
-    @banks = paginate(@banks,params[:page],{},{},5)
+    @banks = paginate(@banks,params[:page],{},{})
   end
 
   def rank_list
     @checkin_shop_stat  = CheckinShopStat.find(session[:shop_id])
     @banks = @checkin_shop_stat.users.sort{|b, a| a[1][0] <=> b[1][0]}
-    @banks = paginate(@banks,params[:page],{},{},5)
+    @banks = paginate(@banks,params[:page],{},{})
   end
 
 end

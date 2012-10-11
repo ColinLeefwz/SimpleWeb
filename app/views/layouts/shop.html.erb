@@ -17,26 +17,33 @@
     <div id="con" style="background-color:Fd0">
       <div class="conleft">
         <img src="images/backstage.jpg" alt="脸脸DFACE.CN" />
-        <ul class="nav">
-          <li>
+
+        <dl class="nav">
+          <dt>
             <%= link_to "首页", "/shop_login" %>
-          </li>
-          <li>
+          </dt>
+          <dt>
             <%= link_to "修改密码", "/shop_pass/index" %>
-          </li>
-          <li>
+          </dt>
+          <dt>
             <%= link_to "公告管理", "/shop_shop_notices" %>
-          </li>
-          <li>
-            <%= link_to "签到列表", "/shop_checkins" %>
-          </li>
-          <li>
+          </dt>
+          <dt>
+            <a href="#" class="hover">签到管理</a>
+          <dd><%= link_to "最新签到", "/shop_checkins" %></dd>
+          <dd><a href="/shop_checkins/rank?flag=week">周排行</a></dd>
+          <dd><a href="/shop_checkins/rank?flag=month">月排行</a></dd>
+          <dd><a href="/shop_checkins/rank_list">总排行</a></dd>
+          </dt>
+          <dt>
             <%= link_to "商家logo", "/shop_logos" %>
-          </li>
-          <li>
+          </dt>
+          <dt>
             <%= link_to "优惠券管理", "/shop_coupons" %>
-          </li>
-        </ul>
+          </dt>
+        </dl>
+
+
       </div>
       <div class="conright">
         <span class="name"><%= session_shop.name %>, <a href="/shop_login/logout">退出</a></span>

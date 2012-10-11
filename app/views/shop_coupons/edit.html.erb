@@ -1,10 +1,26 @@
-<h1>编辑优惠券</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<div class="subtitle">编辑优惠券</div>
+<style>
+  .coupon{height: 300px;width: 98%; margin: 10px 0; background-color:#fdfddf}
+  .coupon .ldiv{border: 1px solid #EBEBEB;height: 95%; width: 59%;display: inline;float: left; margin: 1% 0 1% 1%;}
+  .coupon .rdiv{height: 100%; width: 38%; float: right;display: inline-block}
+  .coupon .rdiv .txt{width: 180px; margin-top: 10px;}
+</style>
 
-<%= form_for(@coupon, {:url => '/shop_coupons/update' , :html => {:method => 'PUT'}} ) do |f| %>
-  <%= render :partial => 'form', :locals => {f: f} %>
-  <div class="actions">
-    <%= f.submit '编辑' %>
+<%= form_for(@coupon, {:url => '/shop_coupons/create'} ) do |f| %>
+  <div class="coupon">
+    <div class ='ldiv'>
+      <input tabindex="3" name="img" size="20" type="file" style="position: absolute;bottom:50%;margin-left: 20px"  >
+    </div>
+    <div class="rdiv" >
+      <%= f.text_field :name,  :class => 'stxt txt' %>
+      <%= f.text_area :desc, :class => 'stxt ',:style => "width: 180px; height: 240px; margin-top: 10px;overflow: hidden;"%>
+    </div>
   </div>
+  <ul class="formlist" style="margin-top: 0px;">
+    <li><input type="submit" value="提 交" class="btn"/></li>
+  </ul>
 <% end %>
 
 <%= link_to '返回列表', '/shop_coupons' %>
+

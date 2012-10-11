@@ -1,9 +1,12 @@
 class ShopCouponsController < ApplicationController
   before_filter :shop_authorize
+  include Paginate
+  layout 'shop'
+
   def index
     hash = {:shop_id => session[:shop_id]}
-
-    @coupons = Coupon.where(hash)
+    sort = {}
+    @coupons = paginate("Coupon", params[:page], hash, sort,10)
 
     respond_to do |format|
       format.html # index.html.erb
