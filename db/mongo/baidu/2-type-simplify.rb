@@ -3,9 +3,9 @@ conn = Mongo::Connection.new("192.168.1.22")
 conn.database_names
 db = conn.db("dface")
 coll = db.collection("baidu")
-tmp2 = db.collection("tmp2")
+tmp2 = db.collection("tmp22")
 
-coll.find().each do |x|
+coll.find({type:/^\[\[/}).each do |x|
 begin
   #puts x
   next unless x["type"] && x["type"][0] == "["
