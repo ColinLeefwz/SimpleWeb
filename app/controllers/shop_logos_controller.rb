@@ -1,5 +1,6 @@
 class ShopLogosController < ApplicationController
   before_filter :shop_authorize
+  layout 'shop'
   
   def index
     @shop_logo = ShopLogo.shop_logo(session[:shop_id])

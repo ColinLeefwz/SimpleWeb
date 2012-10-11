@@ -1,7 +1,10 @@
-<h1>商家logo</h1>
+<div class="subtitle">商家logo</div>
+<center class="gray2"><%= notice %></center>
+<ul class="formlist2">
+  <li>
+    <span></span>
+    <span class="right"><%=image_tag(@shop_logo.img)  if @shop_logo%></span>
+  </li>
+</ul>
 
-<%=image_tag(@shop_logo.img)  if @shop_logo%>
-<br/>
-<br/>
-<br/>
- <%= link_to '上传logo', {:action => :new} %>
+<%= link_to '上传logo', {:action => :new} %>
