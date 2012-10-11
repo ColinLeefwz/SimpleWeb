@@ -1,27 +1,32 @@
-<h1>优惠券列表</h1>
-
-<table>
+<div class="subtitle">优惠券列表</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th>商家id</th>
-    <th>商家名称</th>
-    <th>详情</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th width="25%" class="first">名称</th>
+    <th width="10%">缩略图</th>
+    <th width="35%">详情</th>
+    <th width="5%" align="center">查看</th>
+    <th width="5%" align="center">下载</th>
+    <th width="5%" align="center">使用</th>
   </tr>
-
   <% @coupons.each do |coupon| %>
     <tr>
-      <td><%= coupon.shop_id %></td>
-      <td><%= session_shop.name %></td>
-      <td><%= coupon.desc %></td>
-      <td><%= link_to '详情', shop_coupon_path(coupon) %></td>
-      <td><%= link_to '编辑', edit_shop_coupon_path(coupon) %></td>
+      <td><%= coupon.name %></td>
+      <td align="center" class="gray"></td>
+      <td align="center" class="gray"><%=truncate( coupon.desc, :length => 20)  %></td>
+      <td align="center" class="gray"><%= link_to '查看', shop_coupon_path(coupon) %></td>
+      <td align="center" class="gray"><%= link_to (coupon.users && coupon.users.count)||0 %></td>
+      <td align="center" class="gray"><%= link_to (coupon.users && coupon.users.count{|s| s['uat']})||0 %></td>
     </tr>
   <% end %>
+  <tr class="bottom">
+    <td align="left"><%= link_to '新建优惠券', '/shop_coupons/new', :class=>'btn' %></td>
+    <td colspan="3" align="right">
+      <%= generate_paginate.html_safe %>
+    </td>
+  </tr>
 </table>
 
 <br />
 
-<%= link_to '新建优惠券', '/shop_coupons/new' %>
+
 

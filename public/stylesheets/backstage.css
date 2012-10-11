@@ -20,14 +20,18 @@ a.gray:hover{color:#0099ff;}
 a.yellow:hover{color:#0099ff;}
 .gray2{color:#505050;}
 
-#con{width:725px;margin:50px auto 0px auto;overflow:hidden;zoom:1;}
+#con{width:925px;margin:50px auto 0px auto;overflow:hidden;zoom:1;}
 .conleft{width:175px;float:left;}
-.conright{width:525px;float:right;}
+.conright{width:725px;float:right;}
 
 .nav{display:block;overflow:hidden;zoom:1;color:#3d3d3d;width:100%;line-height:30px;border-top:1px solid #F4F4F4;padding-top:10px;}
-.nav li{margin-bottom:10px;zoom:1;}
-.nav li a{padding-left:18px;display:block;overflow:hidden;color:#3d3d3d;}
-.nav li a:hover, .nav li a.hover{background-color:#F4F4F4;color:#C16F19;}
+.nav dt{margin:5px 0;zoom:1;}
+.nav dt a{padding-left:18px;display:block;overflow:hidden;color:#3d3d3d;}
+.nav dt a:hover, .nav dt a.hover{background-color:#F4F4F4;color:#C16F19;}
+
+.nav dd {line-height: 25px;}
+.nav dd a{padding-left:36px;display:block;overflow:hidden;color:#3d3d3d;}
+.nav dd a:hover, .nav dd a.hover{color:#C16F19;}
 
 .name{float:right;color:#666;margin:35px 0px;}
 .name a{color:#C16F19;}
@@ -38,13 +42,14 @@ a.yellow:hover{color:#0099ff;}
 .area{width:275px;height:448px;position:absolute;left:50%;top:50%;margin-left:-135px;margin-top:-224px;}
 .plane{color:#333333;background-color:#F4F4F4;display:block;padding:10px 8px;margin-bottom:15px;overflow:hidden;zoom:1;}
 .plane label{margin-right:10px;}
+.plane input.txt1{width:70px;background-color:transparent;border:none;overflow:hidden;zoom:1;}
 .plane input.txt{width:210px;background-color:transparent;border:none;overflow:hidden;zoom:1;}
 .plane2{clear:both;overflow:hidden;zoom:1;}
 .plane2 input.btn{background-color:#C16F19;color:#ffffff;width:100px;padding:10px 0px;float:right;border:none;cursor:pointer;_padding:8px 0px;}
 .plane2 a{color:#C16F19;float:left;}
 .plane2 a:hover{color:#0099ff;}
-.plane2 .plane2inner{display:block;padding-top:160px;clear:both;overflow:hidden;text-align:center;}
-
+.plane2 .plane2inner{color: #666;display:block;padding-top:160px;clear:both;overflow:hidden;text-align:center;}
+.plane span{color: #C16F19;position: absolute;right:10px}
 .formlist{display:block;overflow:hidden;zoom:1;margin-top:30px;margin-left:20px;color:#505050;}
 .formlist li{margin-bottom:20px;}
 .formlist li input.txt{border:1px solid #F4F4F4;background-color:transparent;width:155px;height:20px;line-height:20px;font-size:11px;}
@@ -58,6 +63,7 @@ a.yellow:hover{color:#0099ff;}
 .formlist2 li span.right{width:420px;text-align:left;}
 .sbtn{color:#fff;background-color:#505050;width:40px;padding:1px 0px;margin-left:5px;border:none;cursor:pointer;}
 .stxt{border:1px solid #F4F4F4;background-color:transparent;width:100px;height:20px;line-height:20px;font-size:11px;}
+
 
 .tab{width:100%;margin-top:20px;line-height:20px;color:#666; vertical-align:middle;}
 .tab th{font-weight:normal;border-bottom:1px dashed #E8E8E8;padding:8px;}
@@ -77,8 +83,8 @@ a.yellow:hover{color:#0099ff;}
 .pagination a:visited{color:#666;}
 /**页码样式 over**/
 
-#footer{width:725px;margin:50px auto 0px auto;overflow:hidden;zoom:1;color:#666;}
-#footer .footerinner{clear:both;float:right;width:490px;border-top:1px solid #f4f4f4;padding:15px 35px 0px 0px;text-align:right;}
+#footer{width:925px;margin:50px auto 0px auto;overflow:hidden;zoom:1;color:#666;}
+#footer .footerinner{clear:both;float:right;width:690px;border-top:1px solid #f4f4f4;padding:15px 35px 0px 0px;text-align:right;}
 #footer a{color:#C16F19;}
 #footer a:hover{color:#0099ff;}
 
