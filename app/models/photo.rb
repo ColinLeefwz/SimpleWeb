@@ -5,6 +5,7 @@ class Photo
   
   field :user_id, type: Moped::BSON::ObjectId
   field :room #发给聊天室
+  field :desc
   field :weibo, type:Boolean
   field :img
   mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface"+bucket_suffix ; end }
