@@ -1162,12 +1162,10 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{verbatim}
 
 
-\section{聊天时发送图片}
+\section{在聊天室发图}
 聊天发图主要流程是：客户端选择（拍摄）一张照片，通过http上传到服务器。上传完成后在xmpp里发送一个特定格式的消息。其它客户端收到消息后获取图片显示并发送回执消息。
 
 \subsection{上传图片}
-
-\subsubsection{在聊天室上传图片}
 
 \begin{table}[H]
    \begin{center}
@@ -1182,6 +1180,8 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
  photo[room]  & 字符串 & 必须  &  聊天室的id\\
  \hline
  photo[weibo]  & 0/1 & 必须  &  是否同步发送到微博\\
+   \hline
+ photo[desc]  & 字符串 & 可选  &  图像的说明文字\\
  \hline
 \end{tabular}
    \end{center}
@@ -1208,7 +1208,44 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{verbatim}
 \end{figure}
 
-\subsubsection{个人聊天时上传图片}
+
+\subsection{发送消息}
+当图片发送完成后，由服务器端发送一个xmpp消息（客户端不需要发送），其中的body内容格式为：
+
+\begin{verbatim}
+[img:$id]$desc
+
+比如上面的图片发送成功后，发送消息"[img:502fd10abe4b19ed48000002]"。其中$desc是可选的图片说明文字。
+\end{verbatim}
+
+\subsection{在聊天室收到消息后获取图片}
+
+接收端收到消息后，判断body的内容是否符合图片消息的格式。如果符合就调用下面的接口获取图片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/show} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为75*75；2代表thumb2缩略图，大小为150*150。默认为1。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+聊天室里发图不需要发送已读回执消息。
+
+
+
+
+\section{个人聊天时发图}
+
+\subsection{个人聊天时上传图片}
 
 \begin{table}[H]
    \begin{center}
@@ -1233,33 +1270,9 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \begin{verbatim}
 [img:$id]
 
-比如上面的图片发送成功后，发送消息"[img:502fd10abe4b19ed48000002]"。
 \end{verbatim}
 
-\subsection{收到消息后获取图片}
-\subsubsection{在聊天室收到消息后获取图片}
-
-接收端收到消息后，判断body的内容是否符合图片消息的格式。如果符合就调用下面的接口获取图片。
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-\multicolumn{4}{|c|}{/photos/show} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-  \hline
- id  & 字符串 & 必须 & 图片id\\
-\hline
- size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为75*75；2代表thumb2缩略图，大小为150*150。默认为1。\\ 
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-
-\subsubsection{在个人聊天时收到消息后获取图片}
+\subsection{在个人聊天时收到消息后获取图片}
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
@@ -1276,9 +1289,12 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
    \end{center}
 \end{table}
 
-
 \subsection{消息状态}
-如果是个人之间的传图，接收者发送状态更新消息给发送者。发送者将状态显示在图片旁边。
+和普通的文字消息一样，接收者收到图片后发送状态更新消息（收到／已读）给发送者。发送者将状态显示在图片旁边。
+
+
+
+
 
 
 \section{优惠券}
