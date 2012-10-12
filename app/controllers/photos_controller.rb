@@ -8,6 +8,7 @@ class PhotosController < ApplicationController
     p = Photo.new(params[:photo])
     p.user_id = session[:user_id]
     p.save!
+    Resque.enqueue(RoomPhoto, params[:room], p.id, params[:txt], session[:user_id])
     if p.weibo
       Resque.enqueue(WeiboPhoto, session[:user_token], "在#{p.shop.name}分享：", p.img.url)
     end
