@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class ShopLoginController < ApplicationController
-  before_filter :shop_authorize, :except => [:login]
+  before_filter :shop_authorize, :except => [:login, :find_user]
 
   def index
     render :layout => "shop"
@@ -25,6 +25,11 @@ class ShopLoginController < ApplicationController
   def logout
     session[:shop_id] = nil
     redirect_to :action => :login
+  end
+
+  def find_user
+    shop = Shop.find_by_id(params[:id])
+    render :json => {:text => shop ? shop.name : '错误id.'}
   end
 
 end
