@@ -83,4 +83,19 @@ class ShopCouponsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def users
+    @coupon = Coupon.find(params[:id])
+    case params[:flag]
+    when 'down'
+      @users = paginate(@coupon.users.to_a, params[:page],nil,nil,10 )
+    when 'use'
+      @users = paginate(@coupon.users.to_a.select{|s| s['uat']}, params[:page],nil,nil,10 )
+    end
+  end
+
+
+
+
+
 end

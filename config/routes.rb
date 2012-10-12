@@ -10,7 +10,11 @@ Lianlian::Application.routes.draw do
 
   resources :shop_notices
 
-  resources :shop_coupons
+  resources :shop_coupons do
+    collection do
+      get 'users'
+    end
+  end
 
   resources :checkins
 

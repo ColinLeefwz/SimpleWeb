@@ -11,11 +11,11 @@
   <% @coupons.each do |coupon| %>
     <tr>
       <td><%= coupon.name %></td>
-      <td align="center" class="gray"></td>
+      <td align="center" class="gray"><%=image_tag coupon.img.url(:t2) %></td>
       <td align="center" class="gray"><%=truncate( coupon.desc, :length => 20)  %></td>
       <td align="center" class="gray"><%= link_to '查看', shop_coupon_path(coupon) %></td>
-      <td align="center" class="gray"><%= link_to (coupon.users && coupon.users.count)||0 %></td>
-      <td align="center" class="gray"><%= link_to (coupon.users && coupon.users.count{|s| s['uat']})||0 %></td>
+      <td align="center" class="gray"><%= link_to coupon.users.to_a.count, {:action => 'users', :id => coupon.id, :flag => 'down'} %></td>
+      <td align="center" class="gray"><%= link_to coupon.users.to_a.count{|s| s['uat']},{:action => 'users', :id => coupon.id, :flag => 'use'} %></td>
     </tr>
   <% end %>
   <tr class="bottom">
@@ -25,8 +25,6 @@
     </td>
   </tr>
 </table>
-
-<br />
 
 
 
