@@ -88,3 +88,15 @@ a.yellow:hover{color:#0099ff;}
 #footer a{color:#C16F19;}
 #footer a:hover{color:#0099ff;}
 
+/** 优惠券发布样式 **/
+/** 优惠券发布样式 **/
+.coupon{height: 306px;width: 610px;margin-top: 10px;margin-left: 50px; margin-bottom: 20px; background-image: url('/images/coupon-list@2x.png');background-repeat: no-repeat;padding: 0px;}
+.coupon .adiv{border: 6px solid #D8D5CE; height: 190px; width: 560px; margin-left: 17px;display: inline-block;margin-top: 20px;}
+.coupon .ldiv{border: 6px solid #D8D5CE;height: 190px; width: 190px;display: inline-block;float: left; margin: 20px 0  20px 20px ;}
+.coupon .rdiv{height: 100%; width: 59%; float: right;display: inline-block; margin-top: 20px;}
+.coupon .inputImg{margin-top: 85px;}
+.coupon .rdiv .txt{width: 95%; margin-top: 5px; border: 2px solid #D8D5CE}
+.coupon .rdiv .atxt{width: 95%; margin-top: 5px; border: 2px solid #D8D5CE;height: 155px; margin-top: 10px;overflow: hidden}
+.coupon img{width: 100%; height: 100%}
+.coupon .desc{width: 95%; height: 240px; margin-top: 10px;overflow: hidden;}
+

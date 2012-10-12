@@ -11,7 +11,7 @@
   <% @coupons.each do |coupon| %>
     <tr>
       <td><%= coupon.name %></td>
-      <td align="center" class="gray"><%=image_tag coupon.img.url(:t2) %></td>
+      <td align="center" class="gray"><%=image_tag coupon.img.url(:t1) %></td>
       <td align="center" class="gray"><%=truncate( coupon.desc, :length => 20)  %></td>
       <td align="center" class="gray"><%= link_to '查看', shop_coupon_path(coupon) %></td>
       <td align="center" class="gray"><%= link_to coupon.users.to_a.count, {:action => 'users', :id => coupon.id, :flag => 'down'} %></td>
@@ -19,7 +19,7 @@
     </tr>
   <% end %>
   <tr class="bottom">
-    <td align="left"><%= link_to '新建优惠券', '/shop_coupons/new', :class=>'btn' %></td>
+    <td align="left"><%= link_to '发布优惠券', '/shop_coupons/new', :class=>'btn' %></td>
     <td colspan="3" align="right">
       <%= generate_paginate.html_safe %>
     </td>
