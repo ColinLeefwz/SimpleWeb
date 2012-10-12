@@ -25,10 +25,6 @@ class CouponUploader < CarrierWave::Uploader::Base
     process :resize_to_fit => [305, 153]
   end
 
-  version :t2 do
-    process :resize_to_fit => [58, 58]
-  end
-
   def extension_white_list
     %w(jpg jpeg gif png)
   end

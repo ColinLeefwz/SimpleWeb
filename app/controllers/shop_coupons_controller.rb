@@ -63,7 +63,7 @@ class ShopCouponsController < ApplicationController
 
     respond_to do |format|
       if @coupon.update_attributes(params[:coupon])
-        format.html { redirect_to @coupon, notice: 'Coupon was successfully updated.' }
+        format.html { redirect_to :action => :show, :id => @coupon.id, notice: 'Coupon was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
