@@ -29,6 +29,10 @@ class CheckinsController < ApplicationController
   # POST /checkins
   # POST /checkins.json
   def create
+    raise "" if params[:user_id].to_s != session[:user_id].to_s
+    RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
+        :roomid  => params[:shop_id].to_s , :message=> "我来了!" ,
+        :uid => params[:user_id].to_s)  {|response, request, result| puts response }
     @checkin = Checkin.new
     @checkin.loc = [params[:lat].to_f, params[:lng].to_f]
     @checkin.acc = params[:accuracy]
