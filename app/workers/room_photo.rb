@@ -1,5 +1,5 @@
 class RoomPhoto
-  @queue = :photo
+  @queue = :xmpp
 
   def self.perform(roomid,imgid,txt,uid)
   	txt="" if txt.nil?
