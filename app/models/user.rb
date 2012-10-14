@@ -99,6 +99,7 @@ class User
     if user_id.nil?
       safe_output
     else
+      user_id = User.find(user_id)._id if user_id.class == String
       safe_output.merge!( relation_hash(user_id) )
     end
   end
