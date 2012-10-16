@@ -1,0 +1,29 @@
+class AdminShopNoticesController < ApplicationController
+  include Paginate
+  before_filter :admin_authorize
+  layout "admin"
+  
+  def index
+    hash = {}
+    sort = {}
+
+    hash.merge!({shop_id: params[:sid].to_i}) unless params[:sid].blank?
+
+    unless params[:shop].blank? && params[:city].blank?
+      sids = Shop.where({name: /#{params[:shop]}/, city: params[:city]}).map { |m| m._id  }
+      hash.merge!(shop_id: {'$in' => sids})
+    end
+
+    unless params[:effect].blank?
+      hash.merge!(effect: params[:effect].to_i == 1 ? true : false)
+    end
+
+
+
+    hash.merge!({id: params[:id].to_i}) unless params[:id].blank?
+    hash.merge!({id: params[:id].to_i}) unless params[:id].blank?
+
+
+    @shop_notices = paginate("ShopNotice", params[:page], hash, sort)
+  end
+end
