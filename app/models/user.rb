@@ -163,5 +163,12 @@ class User
     {0=> '未设置', 1 => '男', 2 => '女'}[self.gender.to_i]
   end
 
+  def weibo_home
+    "http://www.weibo.com/#{wb_uid}" if wb_uid
+  end
 
+  def is_staff?
+    !Staff.where({user_id: id}).empty?
+  end
+  
 end
