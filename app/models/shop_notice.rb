@@ -21,5 +21,9 @@ class ShopNotice
   def self.show_notices(shop_id,limit)
     self.where({shop_id: shop_id, effect: true, ord: {"$ne" => nil}}).sort({ord: 1}).limit(limit)
   end
+
+  def shop
+    Shop.find_by_id(shop_id)
+  end
   
 end
