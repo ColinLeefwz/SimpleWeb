@@ -31,14 +31,20 @@ class CheckinsController < ApplicationController
   # POST /checkins.json
   def create
     raise "user != session user" if params[:user_id].to_s != session[:user_id].to_s
-    RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
-        :roomid  => params[:shop_id].to_s , :message=> "Hi,我来了!" ,
-        :uid => params[:user_id].to_s)  {|response, request, result| puts response }
     @checkin = Checkin.new
     @checkin.loc = [params[:lat].to_f, params[:lng].to_f]
     @checkin.acc = params[:accuracy]
     @checkin.uid = Moped::BSON::ObjectId(params[:user_id]) 
     @checkin.sex = User.find(params[:user_id]).gender
+    if @checkin.sex==2
+      message = "Hi，我来啦~😊"
+    else
+      message = "Hi，我来了~😝"
+    end
+    RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
+        :roomid  => params[:shop_id].to_s , :message=> message ,
+        :uid => params[:user_id].to_s)  {|response, request, result| puts response }
+
     @checkin.sid = params[:shop_id]
     @checkin.od = params[:od]
     if params[:altitude]
