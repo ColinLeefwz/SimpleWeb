@@ -37,9 +37,9 @@ class CheckinsController < ApplicationController
     @checkin.uid = Moped::BSON::ObjectId(params[:user_id]) 
     @checkin.sex = User.find(params[:user_id]).gender
     if @checkin.sex==2
-      message = "Hi，我来啦~😊"
+      message = "Hi，我来了~😊"
     else
-      message = "Hi，我来了~😝"
+      message = "Hi，我来啦~😝"
     end
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
         :roomid  => params[:shop_id].to_s , :message=> message ,
