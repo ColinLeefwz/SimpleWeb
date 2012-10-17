@@ -16,4 +16,8 @@ class ShopLogo
     {:logo => self.img.url, :logo_thumb => self.img.url(:t1), :logo_thumb2 => self.img.url(:t2)  }
   end
 
+  def shop
+    Shop.find_by_id(shop_id)
+  end
+
 end

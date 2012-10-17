@@ -88,4 +88,8 @@ class Shop
     {1 => '酒吧• 活动', 2 => '咖啡• 茶馆', 3 => '餐饮• 酒店', 4 => '休闲• 娱乐', 5 => '购物• 广场', 6 => "'楼宇• 社区'"}[self.t.to_i]
   end
 
+  def logo
+    ShopLogo.shop_logo(id)
+  end
+
 end
