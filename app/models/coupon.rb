@@ -13,7 +13,7 @@ class Coupon
 
   
   def shop
-    Shop.find(shop_id)
+    Shop.find_by_id(shop_id)
   end
   
   def message

@@ -1,10 +1,10 @@
 <div class="subtitle">编辑优惠券</div>
-<%= form_for(@coupon, :url => '/shop_coupons/create',:html => { :multipart => true } ) do |f| %>
+<%= form_for(@coupon, :url => { :action => "update", :id => @coupon.id },:html => { :multipart => true } ) do |f| %>
   <div class="coupon">
 
     <% if @coupon.desc  %>
       <div class ='ldiv'>
-        <input size="12" name="img" type="file" class="inputImg"  >
+        <input size="12" name="coupon[img]" type="file" class="inputImg"  >
       </div>
       <div class="rdiv" >
         <%= f.text_field :name, :class => 'stxt txt' %>
@@ -12,7 +12,7 @@
       </div>
     <%else%>
       <div class="adiv">
-        <input size="30" name="img" type="file" class="inputImg" style="margin-left:37px"  >
+        <input size="30" name="coupon[img]" type="file" class="inputImg" style="margin-left:37px"  >
       </div>
     <%end%>
   </div>

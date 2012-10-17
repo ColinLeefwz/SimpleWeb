@@ -1,0 +1,32 @@
+<h1>优惠券详情</h1>
+
+<p>
+  <b>商家id:</b>
+  <%= @coupon.shop.try(:id).try(:to_i) %>
+</p>
+
+<p>
+  <b>区号:</b>
+  <%= @coupon.shop.try(:city) %>
+</p>
+
+<p>
+  <b>商家名称:</b>
+  <%= @coupon.shop.try(:name) %>
+</p>
+
+<p>
+  <b>优惠券名称:</b>
+  <%= @coupon.name %>
+</p>
+
+<p>
+  <b>优惠券详情:</b>
+  <%= @coupon.desc %>
+</p>
+
+<p>
+  <b>优惠券</b>
+  <br/><br/>
+  <%=  image_tag @coupon.img %>
+</p>
