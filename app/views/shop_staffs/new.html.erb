@@ -6,20 +6,16 @@
     <th width="7%">性别</th>
     <th width="15%" align="center">生日</th>
     <th width="15%" align="center">微博id</th>
-    <th width="8%" align="center">签到次数</th>
-    <th width="20%" align="center">最后签到</th>
     <th width="8%" align="center"></th>
 
   </tr>
-  <% @collects.each do |collect| %>
+  <% @users.each do |user| %>
     <tr>
-      <td class="gray"><%= collect.first.try(:name) %></td>
-      <td align="center" class="gray"><%= collect.first.try(:show_gender) %></td>
-      <td align="center" class="gray"><%= collect.first.try(:birthday).try(:to_date) %></td>
-      <td align="center" class="gray"><%= collect.first.try(:wb_uid) %></td>
-      <td align="center" class="gray"><%= collect[1] %></td>
-      <td align="center" class="gray"><%= collect[2].try(:strftime,"%Y-%m-%d %H:%M:%S") %></td>
-      <td align="center" class="gray"><%= link_to "添加", '#', :onclick => "ajaxAddStaff($(this), '#{collect.first.id}')"  %></td>
+      <td class="gray"><%= user.name %></td>
+      <td align="center" class="gray"><%= user.show_gender %></td>
+      <td align="center" class="gray"><%= user.birthday.try(:to_date) %></td>
+      <td align="center" class="gray"><%= user.wb_uid %></td>
+      <td align="center" class="gray"><%= link_to "添加", '#', :onclick => "ajaxAddStaff($(this), '#{user.id}')"  %></td>
     </tr>
   <% end %>
 
