@@ -11,6 +11,13 @@ class ShopStaffsController < ApplicationController
     @staffs =  paginate('staff', params[:page], hash, sort, 10)
   end
 
+  def new
+    staff_ids = Staff.where({shop_id: session_shop.id}).map{|s| s.user_id}
+    checkin = Checkin.where({sid: session_shop.id, uid:{'$nin' => staff_ids }}).sort({_id: -1}).group_by{|g| g.uid}
+    @users = checkin.keys.map{|m| User.find2(m) }
+    @users = paginate(@users, params[:page], nil, nil, 10)
+  end
+
   def ajax_add_staff
     user = User.find2(params[:id])
     if user.is_staff?
