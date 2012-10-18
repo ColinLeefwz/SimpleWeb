@@ -1,0 +1,268 @@
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+I(<0.16502.9>:ejabberd_listener:281) : (#Port<0.442791>) Accepted connection {{122,235,142,200},15476} -> {{10,200,15,59},5222}
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26518.12>:ejabberd_receiver:320) : Received XML on stream = "<?xml version='1.0'?>"
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26518.12>:ejabberd_receiver:320) : Received XML on stream = "<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' to='dface.cn'>"
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26519.12>:ejabberd_c2s:1553) : Send XML on stream = [60,63,120,109,108,
+                                                          32,118,101,114,115,
+                                                          105,111,110,61,39,
+                                                          49,46,48,39,63,62,
+                                                          60,115,116,114,101,
+                                                          97,109,58,115,116,
+                                                          114,101,97,109,32,
+                                                          120,109,108,110,115,
+                                                          61,39,106,97,98,98,
+                                                          101,114,58,99,108,
+                                                          105,101,110,116,39,
+                                                          32,120,109,108,110,
+                                                          115,58,115,116,114,
+                                                          101,97,109,61,39,
+                                                          104,116,116,112,58,
+                                                          47,47,101,116,104,
+                                                          101,114,120,46,106,
+                                                          97,98,98,101,114,46,
+                                                          111,114,103,47,115,
+                                                          116,114,101,97,109,
+                                                          115,39,32,105,100,
+                                                          61,39,"378581508",
+                                                          39,32,102,114,111,
+                                                          109,61,39,
+                                                          "dface.cn",39,
+                                                          [" version='","1.0",
+                                                           "'"],
+                                                          [" xml:lang='","en",
+                                                           "'"],
+                                                          62]
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26519.12>:ejabberd_c2s:1553) : Send XML on stream = <<"<stream:features><starttls xmlns='urn:ietf:params:xml:ns:xmpp-tls'/><mechanisms xmlns='urn:ietf:params:xml:ns:xmpp-sasl'><mechanism>PLAIN</mechanism></mechanisms><c xmlns='http://jabber.org/protocol/caps' hash='sha-1' node='http://www.process-one.net/en/ejabberd/' ver='oW0fNp1BPWStCbQOTkmQAOYLmeY='/></stream:features>">>
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26518.12>:ejabberd_receiver:320) : Received XML on stream = "<auth xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\" mechanism=\"PLAIN\">ADUwMmU2MzAzNDIxYWE5MThiYTAwMDAwMQAx</auth>"
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26518.12>:shaper:61) : State: {maxrate,1000,0,1350541923105054}, Size=108
+M=54.0, I=317.446
+
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26519.12>:ejabberd_c2s:1553) : Send XML on stream = <<"<success xmlns='urn:ietf:params:xml:ns:xmpp-sasl'/>">>
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+I(<0.26519.12>:ejabberd_c2s:631) : ({socket_state,gen_tcp,#Port<0.442791>,<0.26518.12>}) Accepted authentication for 502e6303421aa918ba000001 by ejabberd_auth_dface
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26518.12>:ejabberd_receiver:320) : Received XML on stream = "<stream:stream xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams' version='1.0' to='dface.cn'>"
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26518.12>:shaper:61) : State: {maxrate,1000,170.10552842967397,
+                                       1350541923422504}, Size=113
+M=61.752194870029264, I=454.098
+
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26519.12>:ejabberd_c2s:1553) : Send XML on stream = [60,63,120,109,108,
+                                                          32,118,101,114,115,
+                                                          105,111,110,61,39,
+                                                          49,46,48,39,63,62,
+                                                          60,115,116,114,101,
+                                                          97,109,58,115,116,
+                                                          114,101,97,109,32,
+                                                          120,109,108,110,115,
+                                                          61,39,106,97,98,98,
+                                                          101,114,58,99,108,
+                                                          105,101,110,116,39,
+                                                          32,120,109,108,110,
+                                                          115,58,115,116,114,
+                                                          101,97,109,61,39,
+                                                          104,116,116,112,58,
+                                                          47,47,101,116,104,
+                                                          101,114,120,46,106,
+                                                          97,98,98,101,114,46,
+                                                          111,114,103,47,115,
+                                                          116,114,101,97,109,
+                                                          115,39,32,105,100,
+                                                          61,39,"4006536687",
+                                                          39,32,102,114,111,
+                                                          109,61,39,
+                                                          "dface.cn",39,
+                                                          [" version='","1.0",
+                                                           "'"],
+                                                          [" xml:lang='","en",
+                                                           "'"],
+                                                          62]
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26519.12>:ejabberd_c2s:1553) : Send XML on stream = <<"<stream:features><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'/><session xmlns='urn:ietf:params:xml:ns:xmpp-session'/><c xmlns='http://jabber.org/protocol/caps' hash='sha-1' node='http://www.process-one.net/en/ejabberd/' ver='oW0fNp1BPWStCbQOTkmQAOYLmeY='/></stream:features>">>
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26518.12>:ejabberd_receiver:320) : Received XML on stream = "<iq type=\"set\"><bind xmlns=\"urn:ietf:params:xml:ns:xmpp-bind\"/></iq>"
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26518.12>:shaper:61) : State: {maxrate,1000,0,1350541923877060}, Size=68
+M=34.0, I=28.652
+
+
+=INFO REPORT==== 2012-10-18 14:32:03 ===
+D(<0.26519.12>:ejabberd_c2s:1553) : Send XML on stream = <<"<iq type='result'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'><jid>502e6303421aa918ba000001@dface.cn/39291599261350541923906205</jid></bind></iq>">>
+
+=INFO REPORT==== 2012-10-18 14:32:04 ===
+D(<0.26518.12>:ejabberd_receiver:320) : Received XML on stream = "<iq type=\"set\"><session xmlns=\"urn:ietf:params:xml:ns:xmpp-session\"/></iq>"
+
+=INFO REPORT==== 2012-10-18 14:32:04 ===
+D(<0.26518.12>:shaper:61) : State: {maxrate,1000,981.0710987996307,
+                                       1350541923911716}, Size=74
+M=72.62528318985048, I=148.299
+
+
+=INFO REPORT==== 2012-10-18 14:32:04 ===
+I(<0.26519.12>:ejabberd_c2s:938) : ({socket_state,gen_tcp,#Port<0.442791>,<0.26518.12>}) Opened session for 502e6303421aa918ba000001@dface.cn/39291599261350541923906205
+
+=INFO REPORT==== 2012-10-18 14:32:04 ===
+D(<0.26519.12>:ejabberd_c2s:1553) : Send XML on stream = <<"<iq type='result'><session xmlns='urn:ietf:params:xml:ns:xmpp-session'/></iq>">>
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26518.12>:ejabberd_receiver:320) : Received XML on stream = "<presence/>"
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26518.12>:shaper:61) : State: {maxrate,1000,0,1350541924060852}, Size=11
+M=5.5, I=2895.575
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_c2s:1092) : presence_update({jid,
+                                                     "502e6303421aa918ba000001",
+                                                     "dface.cn",
+                                                     "39291599261350541923906205",
+                                                     "502e6303421aa918ba000001",
+                                                     "dface.cn",
+                                                     "39291599261350541923906205"},
+	{xmlelement,"presence",[],[]},
+	{state,{socket_state,gen_tcp,#Port<0.442791>,<0.26518.12>},
+               ejabberd_socket,#Ref<0.0.8.89023>,false,"4006536687",
+               {sasl_state,"jabber","dface.cn",[],
+                           #Fun<ejabberd_c2s.1.124955785>,
+                           #Fun<ejabberd_c2s.2.124955785>,
+                           #Fun<ejabberd_c2s.3.124955785>,undefined,undefined},
+               c2s,c2s_shaper,false,true,false,false,
+               [verify_none,{certfile,"/mnt/test.pem"}],
+               true,
+               {jid,"502e6303421aa918ba000001","dface.cn",
+                    "39291599261350541923906205","502e6303421aa918ba000001",
+                    "dface.cn","39291599261350541923906205"},
+               "502e6303421aa918ba000001","dface.cn",
+               "39291599261350541923906205",
+               {{1350,541924,60408},<0.26519.12>},
+               {1,{{"502e6303421aa918ba000001","dface.cn",[]},nil,nil}},
+               {1,{{"502e6303421aa918ba000001","dface.cn",[]},nil,nil}},
+               {0,nil},
+               {0,nil},
+               undefined,undefined,undefined,false,
+               {userlist,"Blocked contacts",[],false},
+               c2s,ejabberd_auth_dface,
+               {{122,235,142,200},15476},
+               [],[]})
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_c2s:1787) : from unavail = true
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_router:313) : route
+	from {jid,"502e6303421aa918ba000001","dface.cn",
+                  "39291599261350541923906205","502e6303421aa918ba000001",
+                  "dface.cn","39291599261350541923906205"}
+	to {jid,"502e6303421aa918ba000001","dface.cn",[],
+                "502e6303421aa918ba000001","dface.cn",[]}
+	packet {xmlelement,"presence",[{"type","probe"}],[]}
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_local:300) : local route
+	from {jid,"502e6303421aa918ba000001","dface.cn",
+                  "39291599261350541923906205","502e6303421aa918ba000001",
+                  "dface.cn","39291599261350541923906205"}
+	to {jid,"502e6303421aa918ba000001","dface.cn",[],
+                "502e6303421aa918ba000001","dface.cn",[]}
+	packet {xmlelement,"presence",[{"type","probe"}],[]}
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_sm:411) : session manager
+	from {jid,"502e6303421aa918ba000001","dface.cn",
+                  "39291599261350541923906205","502e6303421aa918ba000001",
+                  "dface.cn","39291599261350541923906205"}
+	to {jid,"502e6303421aa918ba000001","dface.cn",[],
+                "502e6303421aa918ba000001","dface.cn",[]}
+	packet {xmlelement,"presence",[{"type","probe"}],[]}
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_sm:411) : session manager
+	from {jid,"502e6303421aa918ba000001","dface.cn",
+                  "39291599261350541923906205","502e6303421aa918ba000001",
+                  "dface.cn","39291599261350541923906205"}
+	to {jid,"502e6303421aa918ba000001","dface.cn",
+                "39291599261350541923906205","502e6303421aa918ba000001",
+                "dface.cn","39291599261350541923906205"}
+	packet {xmlelement,"presence",[{"type","probe"}],[]}
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_sm:510) : sending to process <0.26519.12>
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_router:313) : route
+	from {jid,"502e6303421aa918ba000001","dface.cn",
+                  "39291599261350541923906205","502e6303421aa918ba000001",
+                  "dface.cn","39291599261350541923906205"}
+	to {jid,"502e6303421aa918ba000001","dface.cn",[],
+                "502e6303421aa918ba000001","dface.cn",[]}
+	packet {xmlelement,"presence",[],[]}
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_local:300) : local route
+	from {jid,"502e6303421aa918ba000001","dface.cn",
+                  "39291599261350541923906205","502e6303421aa918ba000001",
+                  "dface.cn","39291599261350541923906205"}
+	to {jid,"502e6303421aa918ba000001","dface.cn",[],
+                "502e6303421aa918ba000001","dface.cn",[]}
+	packet {xmlelement,"presence",[],[]}
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_sm:411) : session manager
+	from {jid,"502e6303421aa918ba000001","dface.cn",
+                  "39291599261350541923906205","502e6303421aa918ba000001",
+                  "dface.cn","39291599261350541923906205"}
+	to {jid,"502e6303421aa918ba000001","dface.cn",[],
+                "502e6303421aa918ba000001","dface.cn",[]}
+	packet {xmlelement,"presence",[],[]}
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_sm:411) : session manager
+	from {jid,"502e6303421aa918ba000001","dface.cn",
+                  "39291599261350541923906205","502e6303421aa918ba000001",
+                  "dface.cn","39291599261350541923906205"}
+	to {jid,"502e6303421aa918ba000001","dface.cn",
+                "39291599261350541923906205","502e6303421aa918ba000001",
+                "dface.cn","39291599261350541923906205"}
+	packet {xmlelement,"presence",[],[]}
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_sm:510) : sending to process <0.26519.12>
+
+
+=INFO REPORT==== 2012-10-18 14:32:06 ===
+D(<0.26519.12>:ejabberd_c2s:1553) : Send XML on stream = <<"<presence from='502e6303421aa918ba000001@dface.cn/39291599261350541923906205' to='502e6303421aa918ba000001@dface.cn/39291599261350541923906205'/>">>
+
