@@ -23,6 +23,6 @@ class AdminShopNoticesController < ApplicationController
 
   def show
     @shop = Shop.find(params[:shop_id])
-    @shop_notices = ShopNotice.show_notices(params[:shop_id].to_i, 3)
+    @shop_notices = ShopNotice.show_notices(params[:shop_id], 3)
   end
 end
