@@ -19,7 +19,7 @@ class ShopNotice
 
   #显示公告的个数
   def self.show_notices(shop_id,limit)
-    self.where({shop_id: shop_id, effect: true, ord: {"$ne" => nil}}).sort({ord: 1}).limit(limit)
+    self.where({shop_id: shop_id.to_s, effect: true, ord: {"$ne" => nil}}).sort({ord: 1}).limit(limit)
   end
 
   def shop
