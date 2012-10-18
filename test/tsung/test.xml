@@ -18,8 +18,12 @@
   <arrivalphase phase="1" duration="1" unit="minute">
     <users interarrival="1" unit="second"></users>
   </arrivalphase>
-
-
+  <arrivalphase phase="2" duration="1" unit="minute">
+    <users interarrival="0.1" unit="second"></users>
+  </arrivalphase>
+  <arrivalphase phase="3" duration="1" unit="minute">
+    <users interarrival="0.01" unit="second"></users>
+  </arrivalphase>
  </load>
   
  <!-- Jabber parameters -->  
@@ -39,12 +43,14 @@
     <request> <jabber type="connect" ack="local" /> </request>
 
    <transaction name="authenticate">  
-    <request><jabber type="auth_sasl" ack="local"/></request>  
-    <request><jabber type="auth_sasl_bind" ack="local"></jabber></request>  
+    <request><jabber type="auth_sasl" ack="local"/></request> 
+    <request><jabber type="auth_sasl_bind0" ack="local"></jabber></request> 
+    <request><jabber type="auth_sasl_bind" ack="local"></jabber></request> 
     <request><jabber type="auth_sasl_session" ack="local"></jabber></request>  
    </transaction>  
 
    <request><jabber type="presence:initial" ack="no_ack"/></request>  
+   <thinktime value="100"></thinktime>    
 
     <transaction name="close">
       <request> <jabber type="close" ack="local"> </jabber></request>
