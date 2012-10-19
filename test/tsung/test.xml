@@ -18,12 +18,6 @@
   <arrivalphase phase="1" duration="1" unit="minute">
     <users interarrival="1" unit="second"></users>
   </arrivalphase>
-  <arrivalphase phase="2" duration="1" unit="minute">
-    <users interarrival="0.1" unit="second"></users>
-  </arrivalphase>
-  <arrivalphase phase="3" duration="1" unit="minute">
-    <users interarrival="0.01" unit="second"></users>
-  </arrivalphase>
  </load>
   
  <!-- Jabber parameters -->  
@@ -33,6 +27,7 @@
   <option type="ts_jabber" name="domain" value="dface.cn"></option>  
   <option type="ts_jabber" name="username" value="s1"></option>  
   <option type="ts_jabber" name="passwd" value="pass"></option>  
+  <option type="ts_jabber" name="muc_service" value="c.dface.cn"/>
  </options>  
    
  <!-- Session TODO -->  
@@ -50,6 +45,27 @@
    </transaction>  
 
    <request><jabber type="presence:initial" ack="no_ack"/></request>  
+   <request> <jabber type="chat" ack="no_ack" size="16" destination="online"/></request>
+   <thinktime value="1"></thinktime>    
+
+<setdynvars sourcetype="random_number" start="1" end="100">
+ <var name="room"/>
+</setdynvars>
+<setdynvars sourcetype="random_string" length="10">
+ <var name="nick1"/>
+</setdynvars>
+<request subst="true">
+  <jabber type='muc:join' ack = "local" room = "room%%_room%%" nick = "%%_nick1%%"/>
+</request>
+
+<for from="1" to="6" var="i">
+ <thinktime value="3"/>
+ <request subst="true">
+   <jabber type="muc:chat" ack="no_ack" size="16" room =
+   "room%%_room%%"/>
+ </request>
+</for>
+
    <thinktime value="100"></thinktime>    
 
     <transaction name="close">
