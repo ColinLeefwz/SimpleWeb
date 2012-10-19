@@ -9,14 +9,20 @@
    
  <!-- Servers setup -->  
  <servers>  
-  <server host="42.121.0.192" port="5222" type="tcp"></server>  
+  <server host="10.200.15.59" port="5222" type="tcp"></server>  
  </servers>  
    
  <!-- Load User -->  
  
  <load>
   <arrivalphase phase="1" duration="1" unit="minute">
-    <users interarrival="1" unit="second"></users>
+    <users interarrival="0.01" unit="second"></users>
+  </arrivalphase>
+  <arrivalphase phase="2" duration="2" unit="minute">
+    <users interarrival="0.005" unit="second"></users>
+  </arrivalphase>
+  <arrivalphase phase="3" duration="5" unit="minute">
+    <users interarrival="0.01" unit="second"></users>
   </arrivalphase>
  </load>
   
@@ -47,26 +53,19 @@
    <request><jabber type="presence:initial" ack="no_ack"/></request>  
    <request> <jabber type="chat" ack="no_ack" size="16" destination="online"/></request>
    <thinktime value="1"></thinktime>    
+   <request> <jabber type="chat" ack="no_ack" size="16" destination="online"/></request>
 
 <setdynvars sourcetype="random_number" start="1" end="100">
  <var name="room"/>
 </setdynvars>
-<setdynvars sourcetype="random_string" length="10">
- <var name="nick1"/>
-</setdynvars>
 <request subst="true">
-  <jabber type='muc:join' ack = "local" room = "room%%_room%%" nick = "%%_nick1%%"/>
+  <jabber type='muc:join' ack = "local" room = "room%%_room%%" nick = "%%_username%%"/>
 </request>
-
-<for from="1" to="6" var="i">
- <thinktime value="3"/>
  <request subst="true">
-   <jabber type="muc:chat" ack="no_ack" size="16" room =
-   "room%%_room%%"/>
+   <jabber type="muc:chat" ack="no_ack" size="16" room = "room%%_room%%"/>
  </request>
-</for>
 
-   <thinktime value="100"></thinktime>    
+   <thinktime value="500"></thinktime>    
 
     <transaction name="close">
       <request> <jabber type="close" ack="local"> </jabber></request>
