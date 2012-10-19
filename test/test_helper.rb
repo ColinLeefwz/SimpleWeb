@@ -4,8 +4,15 @@ require 'rails/test_help'
 
 class ActiveSupport::TestCase
 
-  def self.stuff(fixt_prefix)
-    YAML.load(File.open())
+  def shop_login(shop_id)
+    @request.session[:shop_id] = Shop.find_by_id(shop_id).id
+  end
+
+  def db_connection
+    db_config = YAML.load(File.open(Rails.root.to_s+"/config/mongoid.yml"))['test']['sessions']['default']
+    host, port = db_config['hosts'].first.split(':')
+    connection = Mongo::Connection.new(host, port)
+    connection.db(db_config['database'])
   end
 
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
