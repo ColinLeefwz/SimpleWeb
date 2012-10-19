@@ -24,5 +24,3 @@ module InvokeParty
 end
 
 InvokeParty.invoke(Time.now)
-
-City.create({})
