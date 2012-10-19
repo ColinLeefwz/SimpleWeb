@@ -26,6 +26,13 @@ Lianlian::Application.routes.draw do
   resources :admins do
     member { get "dest"}
   end
+
+  resources :admin_parties do
+    collection do
+      get 'ajax_over'
+      get 'ajax_delay'
+    end
+  end
   resources :mshops
   resources :mcities
   resources :mcategories

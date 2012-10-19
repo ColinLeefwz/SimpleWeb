@@ -1,0 +1,37 @@
+<h1>活动详情</h1>
+
+<p>
+  <b>活动名称:</b>
+  <%= @party.name %>
+</p>
+
+<p>
+  <b>对应商家</b>
+  <%= @party.shop.try(:name) %>
+</p>
+<p>
+  <b>对应商家id</b>
+  <%= @party.shop.try(:id) %>
+</p>
+
+<p>
+  <b>活动地点:</b>
+  <%= @party.rshop.try(:name) %>
+</p>
+
+<p>
+  <b>活动详细地址:</b>
+  <%= @party.rshop.try(:addr) %>
+</p>
+
+<p>
+  <b>起始时间:</b>
+  <%= @party.ftime %>
+</p>
+
+<p>
+  <b>截止时间</b>
+  <%= @party.etime %>
+</p>
+
+<%=link_to '返回列表', admin_parties_path %>

@@ -1,0 +1,50 @@
+<h1>最新活动</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+
+<table border="1">
+  <tr>
+    <th>活动名称</th>
+    <th>发布时间</th>
+    <th>对应商家</th>
+    <th>活动地点</th>
+    <th>起始时间</th>
+    <th>截止时间</th>
+    <th>状态</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @parties.each do |party| %>
+    <tr>
+      <td><%= party.name %></td>
+      <td><%= party.cat %></td>
+      <td><%= party.shop.try(:name) %></td>
+      <td><%= party.rshop.try(:name) %></td>
+      <td><%= party.ftime %></td>
+      <td><%= party.etime  %></td>
+      <td><%= party.show_flag  %></td>
+      <td><%= link_to "详情", admin_party_path(party)  %></td>
+      <td><%= link_to "延长", '#', :onclick => "ajaxDelay($(this), '#{party.id}')"  %></td>
+      <td><%= link_to "过期", '#', :onclick => "ajaxOver($(this), '#{party.id}')"  %></td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+<%= link_to '发布活动', new_admin_party_path %>
+<%= generate_paginate.html_safe %>
+
+
+<script type="text/javascript">
+  function ajaxOver(obj, party_id){
+    $.get('/admin_parties/ajax_over', {id: party_id}, function(data){
+      obj.replaceWith(data['text'])
+    })
+  }
+  
+  function ajaxDelay(obj, party_id){
+    $.get('/admin_parties/ajax_delay', {id: party_id}, function(data){
+      obj.replaceWith(data['text'])
+    })
+  }
+</script>
