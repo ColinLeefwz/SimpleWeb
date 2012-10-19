@@ -212,7 +212,6 @@ var find_shops = function(loc,accuracy,ip,uid){
     var ret = [];
     while ( cursor.hasNext() ) ret.push(cursor.next());
     if(ret.length>=3) return sort_with_score(ret,loc,accuracy,ip,uid);
-    ret = [];
     cursor = db.shops.find({
         lo:{
             $within:{
@@ -220,7 +219,17 @@ var find_shops = function(loc,accuracy,ip,uid){
                 }
             }
         }).limit(5);
-    while ( cursor.hasNext() ) ret.push(cursor.next());
+    while ( ret.length<5 && cursor.hasNext() ){
+        var tmpshop = cursor.next();
+        var existflag = false;
+        for(var i=0;i<ret.length;i++){
+            if(ret[i]._id == tmpshop._id){
+                existflag = true;
+                break;
+            }
+        }
+        if(!existflag) ret.push(tmpshop);
+    }
     return ret;
 };
 
