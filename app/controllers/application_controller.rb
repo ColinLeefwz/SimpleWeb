@@ -29,16 +29,17 @@ class ApplicationController < ActionController::Base
     $0 = request.path[0,15] + "*"
   end
 
-
-  Time.now
+  def error_log(msg)
+    File.open("log/dface-error.log","a") {|f| f.puts msg.to_s}
+  end
 
   around_filter :exception_catch if ENV["RAILS_ENV"] == "production"
   def exception_catch
     begin
       yield
     rescue  Exception => err
-      logger.error "Internal Server Error: #{err.class.name}"
-      err.backtrace.each {|x| logger.error x}
+      error_log "Internal Server Error: #{err.class.name}"
+      err.backtrace.each {|x| error_log x}
       err_str = err.to_s
       render :json => {:error => err_str }.to_json   
     end
