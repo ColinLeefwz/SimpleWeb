@@ -39,5 +39,14 @@ class Coupon
     Coupon.collection.find(_id:self._id, "users.id" => user_id).update(:$set => {'users.$.uat' => Time.now} )
   end
   
+  def self.gen_demo(sid)
+    demo = Coupon.new
+    demo.shop_id = sid
+    demo.name = demo.shop.name+"20元代金券"
+    demo.desc = "测试券"
+    demo.save
+    `cd coupon && ./gen_demo.sh '#{demo.name}' ../public/#{demo._id}.jpg`
+    demo
+  end
 
 end
