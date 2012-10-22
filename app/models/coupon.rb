@@ -8,6 +8,7 @@ class Coupon
   field :desc
   #  field :endt, type:DateTime
   field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间}
+  #TODO: 一个用户可以多次下载一个优惠券：#{id:用户id,dat:下载时间,[{dat:下载时间,uat:使用时间}]}
   field :img
   mount_uploader :img, CouponUploader
 
