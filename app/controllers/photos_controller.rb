@@ -10,7 +10,7 @@ class PhotosController < ApplicationController
     p.save!
     #Resque.enqueue(RoomPhoto, p.room, p.id, p.desc.to_s, session[:user_id])
     if p.weibo
-      Resque.enqueue(WeiboPhoto, session[:user_token], "在#{p.shop.name}分享：", p.img.url)
+      Resque.enqueue(WeiboPhoto, session[:user_token], "在#{p.shop.name}分享：\n#{p.desc}", p.img.url)
     end
     render :json => p.output_hash.to_json
   end
