@@ -2,7 +2,7 @@
 
 class CouponsController < ApplicationController
   def img
-    cp = Coupon.find(params[:id])
+    cp = Coupon.find(params[:id][0,24])
     if cp.desc == "测试券" #测试优惠券在本地，不上传的阿里云
       if params[:size].to_i==0
         redirect_to "/#{cp._id}.jpg"
@@ -21,7 +21,7 @@ class CouponsController < ApplicationController
   end
   
   def use
-    Coupon.find(params[:id]).use(session[:user_id])
+    Coupon.find(params[:id][0,24]).use(session[:user_id])
     render :json => {used: params[:id]}.to_json
   end
   
