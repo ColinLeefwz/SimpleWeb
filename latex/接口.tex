@@ -1210,7 +1210,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 
 \subsection{发送消息}
-当图片发送完成后，由服务器端发送一个xmpp消息（客户端不需要发送），其中的body内容格式为：
+当图片发送完成后，客户端发送一个xmpp消息，其中的body内容格式为：
 
 \begin{verbatim}
 [img:$id]$desc
@@ -1303,9 +1303,11 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 当用户使用脸脸时，比如签到／摇一摇等，可以收到商家推送过来的优惠券。优惠券也是一个xmpp消息，其中的body内容格式为：
 
 \begin{verbatim}
-[优惠券:$name:$shop:$id]
+[优惠券:$name:$shop:$id:$time]
 
- 其中，name是优惠券的名称、shop是商家的名称，id是该优惠券的id。
+ 其中，name是优惠券的名称、shop是商家的名称，id是该优惠券的id，time是该张优惠券的下发时间。
+ 
+ 同一张id的优惠券，如果time不同的话，分开显示和使用。
  
  所有优惠券都统一显示在会话中的“优惠券”文件夹中。优惠券的消息状态和其他消息同样处理。
 \end{verbatim}
@@ -1323,7 +1325,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \hline
  \  id  & 字符串 & 必填 &  该优惠券的id  \\
 \hline
- size  & 整数 & 可选 &  目前0代表原图(610, 306)；1代表缩略图，大小为(305,153)。默认为1。\\ 
+ size  & 整数 & 可选 &  目前0代表原图(580, 224)；1代表缩略图，大小为(305,153)。默认为1。\\ 
 \hline
 \end{tabular}
    \end{center}

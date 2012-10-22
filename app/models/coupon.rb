@@ -17,10 +17,11 @@ class Coupon
   end
   
   def message
-    "[优惠券:#{name}:#{shop.name}:#{self._id}]"
+    "[优惠券:#{name}:#{shop.name}:#{self._id}#{Time.now.strftime('%Y-%m-%d %H:%M')}]"
   end
 
   def send_coupon(user_id)
+    #TODO: 如果有还未使用的优惠券，不再次下发优惠券
     download(user_id)
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
