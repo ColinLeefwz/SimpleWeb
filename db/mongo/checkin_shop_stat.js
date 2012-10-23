@@ -33,15 +33,13 @@ var checkinShopStat = function(days){
             _id: checkin.sid
         })
     
-        us = ciss.users
-        ips = ciss.ips
+        us = ciss.users;
+        ips = ciss.ips;
         if(!us[checkin.uid]){
-            us[checkin.uid] = [1, checkin._id];
+            us[checkin.uid] = [1, checkin._id, checkin.sex];
         }else{
-            us[checkin.uid] = [us[checkin.uid][0] + 1, checkin._id];
+            us[checkin.uid] = [us[checkin.uid][0] + 1, checkin._id, checkin.sex];
         }
-
-
         if(checkin.ip.indexOf(',') == -1){
             var ip = checkin.ip.replace('.', '/', 'g')
             if(!ips[ip]){
@@ -59,22 +57,21 @@ var checkinShopStat = function(days){
                 ips: ips
             }
         })
-       
-
     })
-
-    total_users()
+    total_users();
 }
 
 
 var total_users = function(){
     db.checkin_shop_stats.find().forEach(function(css){
         var total_users = 0;
+        var female_users = 0;
         var total_checkins = 0;
         var users = css.users;
         for(var user in users){
             total_users += 1;
-            total_checkins += users[user][0]
+            if(users[user][2]==2) female_users +=1;
+            total_checkins += users[user][0];
         }
 
         db.checkin_shop_stats.update({
@@ -82,12 +79,14 @@ var total_users = function(){
         }, {
             $set: {
                 utotal: total_users,
+                uftotal: female_users,
                 ctotal: total_checkins
             }
         })
 
     })
 }
+
 
 
 checkinShopStat(1)
