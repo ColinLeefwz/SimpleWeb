@@ -5,15 +5,15 @@ class User
   field :wb_uid #微博uid
   field :wb_v, type:Boolean #是否是微博认证用户
   field :wb_vs # 微博认证说明
-  field :name
-  field :gender, type: Integer
-  field :birthday
-  field :password
-  field :invisible, type: Integer
-  field :signature
-  field :job 
-  field :jobtype, type: Integer
-  field :hobby
+  field :name # 昵称，最多10个字符
+  field :gender, type: Integer #性别
+  field :birthday #生日
+  field :password #密码
+  field :invisible, type: Integer #隐身模式，1对陌生人隐身，2对所有人隐身
+  field :signature #签名
+  field :job #职业说明
+  field :jobtype, type: Integer #职业类别
+  field :hobby #爱好
   field :multip, type:Boolean, default:false #该用户是否上传了多张图片
   
   field :blacks, type:Array #黑名单
@@ -114,7 +114,7 @@ class User
   end
 
   def last_location( user_id )
-    return {:last => ""} if block?(user_id)
+    return {:last => "隐身"} if block?(user_id)
     loc = Checkin.where({user_id:self._id}).sort({_id:1}).last
     return {:last => ""} if loc.nil?
     diff = Time.now.to_i - loc.cat.to_i
