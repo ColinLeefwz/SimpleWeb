@@ -220,29 +220,7 @@ db.system.js.save({
     "value" : find_shops
 });
 
-
-
-var shop_user_count = function(sid){
-    var users={};
-    var all=0,female=0;
-    db.checkins.find({
-        sid:sid
-    }).forEach(function(x){
-        //TODO: 只统计最近一个月的访问用户
-        if(!users[x.uid]){ //不重复统计同一个用户
-            all+=1;
-            if(x.gender==2) female+=1;
-            users[x.uid] = x._id;
-        }
-    });
-    return [all,all-female,female];
-}
-db.system.js.save({
-    "_id" : "shop_user_count",
-    "value" : shop_user_count
-});
-
-
+//获得给定商家的用户列表
 var shop_users = function(sid){
     var users={};
     var count=0;
@@ -267,7 +245,7 @@ db.system.js.save({
 
 
 
-
+//用于商家签到的周排行和月排行统计。总排行直接查询checkin_shop_stats即可。
 var groupCheckin = function(sid, objectid){
 
     var gr = db.checkins.group({
