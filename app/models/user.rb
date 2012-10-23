@@ -119,7 +119,7 @@ class User
     return {:last => ""} if loc.nil?
     diff = Time.now.to_i - loc.cat.to_i
     tstr = User.time_desc(diff)
-    dstr = Shop.find(loc.shop_id).name if dstr.nil?
+    dstr = Shop.find(loc.sid).name if dstr.nil?
     {:last => "#{tstr} #{dstr}"}
   end
   
