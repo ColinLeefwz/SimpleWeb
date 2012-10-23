@@ -9,6 +9,7 @@ class Coupon
   #  field :endt, type:DateTime
   field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间}
   #TODO: 一个用户可以多次下载一个优惠券：#{id:用户id,dat:下载时间,[{dat:下载时间,uat:使用时间}]}
+  field :rule # 0代表一个用户只能下载一次，1代表一个用户只能有一张未使用的，2代表无限制
   field :img
   mount_uploader :img, CouponUploader
 
@@ -22,7 +23,7 @@ class Coupon
   end
 
   def send_coupon(user_id)
-    #TODO: 如果有还未使用的优惠券，不再次下发优惠券
+    #TODO: 根据rule判断是否下发
     download(user_id)
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
