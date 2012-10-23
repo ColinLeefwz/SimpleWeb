@@ -141,16 +141,22 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
     score.forEach(function(xx,i,a) {
         var x = xx[0];
         do_score(x,i,a);
-        if(uid){
-            a[i][2] -= db.checkins.count({
-                sid:x._id,
-                uid:uid
-            })*30
-        };
-        if(ip.indexOf(",")==-1) a[i][2] -= db.checkins.count({
-            sid:x._id,
-            ip:ip
-        })*5;
+        var sc = db.checkin_shop_stats.findOne({"_id":x._id});
+        if(sc){
+            if(uid && sc.users[uid]){
+                ucount = sc.users[uid][0];
+                a[i][2] -= ucount*30;
+            };
+            if(ip.indexOf(",")==-1){
+                var ip2 = ip.replace('.', '/', 'g');
+                var ip2s = sc.ips[ip2];
+                if(ip2s){
+                    ipcount = sc.ips[ip2][0];
+                    a[i][2] -= ipcount*5;
+                }
+            } 
+        }
+        if(a[i][2]<-200) a[i][2]=-200; //最多加权2/3后封顶
         //printjson(xx);
         a[i][1] += (a[i][2]*accuracy/300);
     });
