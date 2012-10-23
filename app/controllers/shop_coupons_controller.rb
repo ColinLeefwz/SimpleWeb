@@ -46,13 +46,10 @@ class ShopCouponsController < ApplicationController
   def create
     @coupon = Coupon.new(params[:coupon])
     @coupon.shop_id = session[:shop_id]
-
-    respond_to do |format|
-      if @coupon.save
-        format.html { redirect_to :action => :show, :id => @coupon.id , notice: 'Coupon was successfully created.' }
-      else
-        format.html { render action: "new" }
-      end
+    if @coupon.save
+      redirect_to :action => :show, :id => @coupon.id
+    else
+      render :layout => true
     end
   end
 
@@ -63,7 +60,8 @@ class ShopCouponsController < ApplicationController
 
     respond_to do |format|
       if @coupon.update_attributes(params[:coupon])
-        format.html { redirect_to :action => :show, :id => @coupon.id, notice: 'Coupon was successfully updated.' }
+        
+        format.html { redirect_to :action => :show, :id => @coupon.id }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -1,28 +1,36 @@
 <div class="subtitle">优惠券详情</div>
-<style>
-  .coupon img {width: 100%; height: 100%}
-</style>
-<div class="coupon">
-  <% if @coupon.desc %>
+<center class="gray2"><%= notice %></center>
+<ul class="formlist2">
+  <style>
+    .coupon img {width: 100%; height: 100%}
+  </style>
+  <div class="coupon">
+    <% if @coupon.t.to_i==1 %>
 
-    <div class ='ldiv'>
-      <%=  image_tag(@coupon.img) %>
-    </div>
-    <div class="rdiv" >
-      <div>
-        <h1 style="color:teal;"><%= @coupon.name %></h1>
+      <div class ='ldiv'>
+        <%=  image_tag(@coupon.img) %>
       </div>
-      <div class="desc" style = "width: 95%; height: 159px; margin-top: 10px;overflow: hidden;font-size:large;line-height: 20pt;">
-        <%= @coupon.desc %>
+      <div class="rdiv" >
+        <div>
+          <h1 style="color:teal;"><%= @coupon.name %></h1>
+        </div>
+        <div class="desc" style = "width: 95%; height: 159px; margin-top: 10px;overflow: hidden;font-size:large;line-height: 20pt;">
+          <%= @coupon.desc %>
+        </div>
       </div>
-    </div>
 
-  <%else%>
-    <div class ='adiv'>
-      <%=  image_tag(@coupon.img) %>
-    </div>
-  <%end%>
-</div>
+    <%else%>
+      <div class ='adiv'>
+        <%=  image_tag(@coupon.img) %>
+      </div>
+    <%end%>
+  </div>
+  <li>
+    <span style="width: 100px;">中奖比率:</span>
+    <span class="right"><%= "#{@coupon.rewards}%" %></span>
+  </li>
+</ul>
+
 
 
 <%= link_to '编辑', edit_shop_coupon_path(@coupon) %> |
