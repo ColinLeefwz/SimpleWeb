@@ -89,7 +89,7 @@ var total_users = function(){
 
 
 var sync_to_shops = function(){
-    db.checkin_shop_stats.find().limit(1).forEach(function(x){
+    db.checkin_shop_stats.find().forEach(function(x){
         db.shops.update({
             _id: x._id
         }, {
