@@ -251,9 +251,9 @@ var shop_users = function(sid){
     }).sort({
         _id:-1
     }).limit(1000).forEach(function(x){
-        //TODO: 只统计最近一个月的访问用户
+        //TODO: 根据签到商家统计以及当天新增签到记录统计
         if(count>=100) return;
-        if(!users[x.uid]){ //不重复统计同一个用户
+        if(!users[x.uid]){  //不重复统计同一个用户
             users[x.uid] = x._id.getTimestamp();
             count+=1;
         }
