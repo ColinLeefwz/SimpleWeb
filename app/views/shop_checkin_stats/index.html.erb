@@ -3,7 +3,7 @@
   <tr>
     <th>商家</th>
     <th>截止日期</th>
-    <th>用户总数</th>
+    <th>用户总数(女)</th>
     <th>用户签到总数</th>
     <th>ip总数</th>
   </tr>
@@ -15,7 +15,7 @@
          <%= checkin_shop_stat.shop.try(:name)%></td>
       <td><%= 1.days.ago.to_date %></td>
       <td>
-        <%= link_to checkin_shop_stat.utotal.to_i, "/shop_checkin_stats/show_users?id=#{checkin_shop_stat.id}" %>
+        <%= link_to checkin_shop_stat.utotal.to_i, "/shop_checkin_stats/show_users?id=#{checkin_shop_stat.id}" %> (<%= link_to checkin_shop_stat.uftotal.to_i%>)
       </td>
       <td>
         <%= link_to checkin_shop_stat.ctotal.to_i, "/shop_checkin_stats/users_list?sid=#{checkin_shop_stat.id}" %>
