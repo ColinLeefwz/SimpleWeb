@@ -18,7 +18,7 @@ class Coupon
   end
   
   def message
-    "[优惠券:#{name}:#{shop.name}:#{self._id}#{Time.now.strftime('%Y-%m-%d %H:%M')}]"
+    "[优惠券:#{name}:#{shop.name}:#{self._id}:#{Time.now.strftime('%Y-%m-%d %H:%M')}]"
   end
 
   def send_coupon(user_id)
