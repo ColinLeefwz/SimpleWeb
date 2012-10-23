@@ -15,6 +15,8 @@ class Shop
   field :t                #脸脸的商家类型
 #  field :level            #商家的人工等级
   field :password
+  field :utotal, type:Integer, default:0 #截至到昨天，该商家的用户总数
+  field :uftotal, type:Integer, default:0 #截至到昨天，该商家的女性用户总数
 
   #field :cc, type:Integer  #点评的评论数
   #field :type              #从mapabc导入的商家类型
@@ -75,14 +77,9 @@ class Shop
   end
   
   def safe_output_with_users
-    a,b,c = users_count
-    safe_output.merge!( {"user"=>a, "male"=>b, "female"=>c} )
+    safe_output.merge!( {"user"=>utotal, "male"=>utotal－uftotal, "female"=>uftotal} )
   end
-  
-  def users_count
-    str="shop_user_count(#{self.id})"
-    Mongoid.default_session.command(eval:str)["retval"].map {|x| x.to_i}
-  end
+
   
   def show_t
     {1 => '酒吧• 活动', 2 => '咖啡• 茶馆', 3 => '餐饮• 酒店', 4 => '休闲• 娱乐', 5 => '购物• 广场', 6 => "'楼宇• 社区'"}[self.t.to_i]

@@ -88,8 +88,21 @@ var total_users = function(){
 }
 
 
+var sync_to_shops = function(){
+    db.checkin_shop_stats.find().limit(1).forEach(function(x){
+        db.shops.update({
+            _id: x._id
+        }, {
+            $set: {
+                utotal: x.utotal,
+                uftotal: x.uftotal
+            }
+        })
+    })
+}
 
-checkinShopStat(1)
+checkinShopStat(1);
+sync_to_shops(); //将计算获得的商家用户统计数据写回商家表，以方便按用户数排序。
 
 
 
