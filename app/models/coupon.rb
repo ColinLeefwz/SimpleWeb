@@ -6,6 +6,8 @@ class Coupon
   field :shop_id, type: Integer
   field :name 
   field :desc
+  field :rewards, type:Integer
+  field :t, type: Integer #1.是图文混合模式发布的，2. 是全图模式发布的
   #  field :endt, type:DateTime
   field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间}
   #TODO: 一个用户可以多次下载一个优惠券：#{id:用户id,dat:下载时间,[{dat:下载时间,uat:使用时间}]}
@@ -13,6 +15,7 @@ class Coupon
   field :img
   mount_uploader :img, CouponUploader
 
+  validates_presence_of :img, :message => "必须上传优惠券图片."
   
   def shop
     Shop.find_by_id(shop_id)
@@ -41,6 +44,7 @@ class Coupon
     #db.coupons.update({'users.id':ObjectId("502e61bfbe4b1921da000001")},{$set: {'users.$.uat':111}})
     Coupon.collection.find(_id:self._id, "users.id" => user_id).update(:$set => {'users.$.uat' => Time.now} )
   end
+  
   
   def self.gen_demo(sid)
     demo = Coupon.new

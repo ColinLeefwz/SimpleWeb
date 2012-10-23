@@ -17,6 +17,7 @@
     <%end%>
   </div>
   <ul class="formlist" style="margin-top: 0px;">
+    <%= render :partial => 'rewards',  :locals => {:f => f}  %>
     <li><input type="submit" value="提 交" class="btn"/></li>
   </ul>
 <% end %>
