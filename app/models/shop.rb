@@ -77,7 +77,8 @@ class Shop
   end
   
   def safe_output_with_users
-    safe_output.merge!( {"user"=>utotal, "male"=>utotal－uftotal, "female"=>uftotal} )
+    male = self.utotal - self.uftotal
+    safe_output.merge!( {"user"=>utotal, "male"=>male, "female"=>uftotal} )
   end
 
   
