@@ -3,7 +3,7 @@ class ShopNoticesController < ApplicationController
   # GET /shop_notices.json
   def index
     if params[:id]
-      @shop_notices = ShopNotice.where({shop_id: params[:id]})
+      @shop_notices = ShopNotice.where({shop_id: params[:id].to_i})
     else
       @shop_notices = ShopNotice.all
     end
