@@ -28,6 +28,14 @@ class Coupon
   end
 
   def send_coupon(user_id)
+    if self.rule.to_i == 0
+      return false if self.users.to_a.detect{|u| user_id == u['id']}
+    end
+
+    if self.rule.to_i ==  1
+      return false if self.users.to_a.detect{|u| user_id == u['id'] && u['uat'].nil? }
+    end
+
     #TODO: 根据rule判断是否下发
     download(user_id)
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
@@ -39,7 +47,7 @@ class Coupon
   end
   
   def download(user_id)
-    self.add_to_set(:users, {id:user_id, dat:Time.now})
+    self.add_to_set(:users, {"id" => user_id, "dat" => Time.now})
   end
 
   def use(user_id)
@@ -62,7 +70,9 @@ class Coupon
     self.update_attribute(:flag, 1)
   end
 
-
+  def show_rule
+    ['只能下载一次', '只能有一张未使用','无限制'][self.rule.to_i]
+  end
 
 
 end
