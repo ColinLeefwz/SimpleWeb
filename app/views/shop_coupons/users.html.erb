@@ -12,7 +12,7 @@
       <td><%= user.name %></td>
       <td align="center" class="gray"><%= user.show_gender %></td>
       <td align="center" class="gray"><%= user.birthday.try(:to_date)   %></td>
-      <td align="center" class="gray"><%= u[{'down'=> "dat", "use"=> 'uat'}[params[:flag]]].to_datetime.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td align="center" class="gray"><%= (u[{'down'=> "dat", "use"=> 'uat'}[params[:flag]]].to_datetime+8.hours).strftime("%Y-%m-%d %H:%M:%S") %></td>
     </tr>
   <% end %>
   <tr class="bottom">
