@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ShopCouponsController < ApplicationController
   before_filter :shop_authorize
   include Paginate
@@ -92,8 +93,15 @@ class ShopCouponsController < ApplicationController
     end
   end
 
+  def ajax_deply
+    @coupon = Coupon.find(params[:id])
+    text = (@coupon.deply ? '成功停用.' : '停用失败.')
+    render :json => {text: text}
+  end
 
-
-
+  def ajax_del
+    @coupon = Coupon.find(params[:id])
+    render :json => {text: @coupon.del}
+  end
 
 end
