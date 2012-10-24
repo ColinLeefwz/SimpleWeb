@@ -13,6 +13,8 @@ Lianlian::Application.routes.draw do
   resources :shop_coupons do
     collection do
       get 'users'
+      get 'ajax_deply'
+      get 'ajax_del'
     end
   end
 
