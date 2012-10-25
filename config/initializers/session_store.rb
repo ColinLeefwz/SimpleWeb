@@ -6,4 +6,4 @@
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails generate session_migration")
 
-Lianlian::Application.config.session_store :mem_cache_store
+Lianlian::Application.config.session_store :redis_store

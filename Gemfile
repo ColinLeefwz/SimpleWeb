@@ -49,6 +49,8 @@ gem 'rails-i18n'
 gem 'xmpp4r'
 gem "nokogiri", "~> 1.5.5"
 gem 'redis'
+gem 'redis-store'
+gem 'redis-rails'
 
 gem 'carrierwave'
 gem 'mini_magick'
