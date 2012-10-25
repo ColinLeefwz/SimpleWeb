@@ -16,6 +16,15 @@ class CheckinShopStat
     user_object_id =~ /"(.*?)"/
     User.find($1)
   end
+
+  def self.find_by_id(id)
+    begin
+      self.find(id)
+    rescue
+      nil
+    end
+  end
+
 end
 
 =begin

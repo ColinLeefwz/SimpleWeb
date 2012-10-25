@@ -94,7 +94,9 @@ class Shop
   def user_last_checkins
     users1 = Checkin.get_users_redis(id.to_i)
     uids = users1.map {|arr| arr[0]}
-    users2 = CheckinShopStat.find(id.to_i).users.map {|k,v| [k[10..-3],v[1].generation_time.to_i]} # ObjectId("k") => k
+    css = CheckinShopStat.find_by_id(id.to_i)
+    return users1 if css.nil?
+    users2 = css.users.map {|k,v| [k[10..-3],v[1].generation_time.to_i]} # ObjectId("k") => k
     users2.sort!{|a,b| b[1] <=> a[1]}
     users2.each {|arr| users1 << arr unless uids.member?(arr[0])}
     users1
