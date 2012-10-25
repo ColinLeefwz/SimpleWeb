@@ -1,0 +1,27 @@
+脸脸网总体架构
+
+Nginx
+
+和脸脸网共用Nginx，启动在60.191.119.190:80。
+路径:/home/dooo/nginx-1.2.3/build/
+启动:sbin/nginx
+
+nginx version: nginx/1.2.3
+built by gcc 4.3.2 (Debian 4.3.2-1.1) 
+TLS SNI support enabled
+configure arguments: --with-http_ssl_module --prefix=/home/dooo/nginx-1.2.3/build
+
+
+
+rails环境
+ruby使用ruby1.9.3版本，路径为/opt/REE/
+rails版本3.2.x
+rails进程通过unicorn启动在8081端口，配置文件见unicorn.conf.rb
+项目代码位于/home/dooo/lianlian
+
+Memcached
+启动 /usr/bin/memcached -m 64 -p 11211 -u nobody -l 127.0.0.1
+rails中的配置
+./initializers/session_store.rb:Lianlian::Application.config.session_store :mem_cache_store
+./environments/production.rb:  config.cache_store = :mem_cache_store
+

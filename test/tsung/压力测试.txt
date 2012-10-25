@@ -1,0 +1,89 @@
+首先是emfile错误，增加open files的数量。
+
+然后是内存不足导致erlang进程直接被杀掉，要增加物理内存。基本上1G内存可以支持1万个登录的xmpp连接／或者5000个活跃的连接。
+通过tail /var/log/syslog看到：
+Oct 18 21:43:58 AY121008034208faf5074 kernel: [90145.276170] Out of memory: Kill process 13000 (beam.smp) score 806 or sacrifice child
+Oct 18 21:43:58 AY121008034208faf5074 kernel: [90145.277716] Killed process 13000 (beam.smp) total-vm:1 663 116kB, anon-rss:1 234 752kB, file-rss:128kB
+
+
+增加本地可用端口数量
+{error_logger,{{2012,10,18},{22,42,49}},"Protocol: ~p: register/listen error: ~p~n",["inet_tcp",eaddrinuse]}
+{error_logger,{{2012,10,18},{22,42,49}},crash_report,[[{initial_call,{net_kernel,init,['Argument__1']}},{pid,<0.20.0>},{registered_name,[]},{error_info,{exit,{error,badarg},[{gen_server,init_it,6,[{file,"gen_server.erl"},{line,320}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,227}]}]}},{ancestors,[net_sup,kernel_sup,<0.9.0>]},{messages,[]},{links,[<0.17.0>]},{dictionary,[{longnames,false}]},{trap_exit,true},{status,running},{heap_size,610},{stack_size,24},{reductions,384}],[]]}
+{error_logger,{{2012,10,18},{22,42,49}},supervisor_report,[{supervisor,{local,net_sup}},{errorContext,start_error},{reason,{'EXIT',nodistribution}},{offender,[{pid,undefined},{name,net_kernel},{mfargs,{net_kernel,start_link,[[tsung_status_22322,shortnames]]}},{restart_type,permanent},{shutdown,2000},{child_type,worker}]}]}
+{error_logger,{{2012,10,18},{22,42,49}},supervisor_report,[{supervisor,{local,kernel_sup}},{errorContext,start_error},{reason,shutdown},{offender,[{pid,undefined},{name,net_sup},{mfargs,{erl_distribution,start_link,[]}},{restart_type,permanent},{shutdown,infinity},{child_type,supervisor}]}]}
+{error_logger,{{2012,10,18},{22,42,49}},std_info,[{application,kernel},{exited,{shutdown,{kernel,start,[normal,[]]}}},{type,permanent}]}
+{"Kernel pid terminated",application_controller,"{application_start_failure,kernel,{shutdown,{kernel,start,[normal,[]]}}}"}
+Crash dump was written to: erl_crash.dump
+
+
+
+
+You can safely increase this limit when starting ejabberd. It impacts memory consumption but the difference will be quite small.
+erl -s ejabberd -env ERL_MAX_ETS_TABLES 20000 ...
+不知道是否产生了效果，何处看ERL_MAX_ETS_TABLES参数？
+=ERROR REPORT==== 2012-10-18 22:45:29 ===
+** Too many db tables **
+
+
+
+
+
+=ERROR REPORT==== 2012-10-19 13:11:56 ===
+** Generic server <0.282.0> terminating 
+** Last message in was {req_timeout,#Ref<0.0.3.199263>}
+** When Server state == {state,"10.200.15.59",8087,false,false,undefined,
+                         undefined,
+                         {[{request,#Ref<0.0.4.49684>,
+                            {rpbputreq,<<"chat">>,
+                             ["121019","s15410"],
+                             undefined,
+                             {rpbcontent,
+                              <<131,108,0,0,0,3,107,0,5,115,49,50,57,49,107,0,
+                                16,118,116,103,108,105,109,105,101,121,104,101,
+                                109,122,108,120,99,107,0,6,49,51,49,49,53,53,
+                                106>>,
+                              "application/x-erlang-binary",undefined,
+                              undefined,undefined,[],undefined,undefined,[],
+                              [],undefined},
+                             undefined,undefined,undefined,undefined,
+                             undefined,undefined,undefined},
+
+
+=ERROR REPORT==== 2012-10-19 13:12:56 ===
+E(<0.24078.3>:ejabberd_hooks:294) : {disconnected,
+                                     {gen_server,call,
+                                      [<0.282.0>,
+                                       {req,
+                                        {rpbputreq,<<"chat">>,
+
+E(<0.29814.3>:ejabberd_hooks:294) : {noproc,
+                                     {gen_server,call,
+                                      [undefined,
+                                       {req,
+                                        {rpbputreq,<<"gchat">>,
+                                         ["121019","room75"],
+                                         undefined,
+                                         {rpbcontent,
+                                          <<131,108,0,0,0,3,107,0,6,115,49,53,
+                                            52,53,52,107,0,16,118,116,103,108,
+                                            105,109,105,101,121,104,101,109,
+                                            122,108,120,99,107,0,6,49,51,49,50,
+                                            51,48,106>>,
+                                          "application/x-erlang-binary",
+                                          undefined,undefined,undefined,[],
+                                          undefined,undefined,[],[],undefined},
+                                         undefined,undefined,undefined,
+                                         undefined,undefined,undefined,
+                                         undefined},
+                                        60000},
+                                       infinity]}}
+running hook: {user_send_packet,
+                  [{jid,"s15454","dface.cn","tsung","s15454","dface.cn",
+                       "tsung"},
+                   {jid,"room75","c.dface.cn",[],"room75","c.dface.cn",[]},
+                   {xmlelement,"message",
+                       [{"type","groupchat"},{"to","room75@c.dface.cn"}],
+                       [{xmlelement,"body",[],
+                            [{xmlcdata,<<"vtglimieyhemzlxc">>}]}]}]}
+
+
