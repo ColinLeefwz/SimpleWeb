@@ -1,20 +1,22 @@
 一渡网总体架构
 
-Haproxy
+Nginx
 
-安装 下载/root/haproxy-1.4.15.tar.gz直接解压到/root/haproxy-1.4.15/
-配置文件 /root/haproxy.cfg
-启动：以root登录，执行./haproxy-1.4.15/haproxy -f haproxy.cfg
+和脸脸网共用Nginx，启动在60.191.119.190:80。
+路径:/home/dooo/nginx-1.2.3/build/
+启动:sbin/nginx
 
-Lighttpd
-安装 源代码下载到/home/dooo/lighttpd-1.4.30，然后configure和make进行安装
-配置文件 /etc/lighttpd/目录下
-启动 /etc/init.d/lighttpd start
+nginx version: nginx/1.2.3
+built by gcc 4.3.2 (Debian 4.3.2-1.1) 
+TLS SNI support enabled
+configure arguments: --with-http_ssl_module --prefix=/home/dooo/nginx-1.2.3/build
+
+
 
 rails环境
 ruby使用ruby-enterprise-1.8.7-2010.01版本，路径为/opt/REE/
 rails版本2.3.11
-rails进程通过lighttpd启动
+rails进程通过unicorn启动在8081端口，配置文件见unicorn.conf.rb
 项目代码位于/home/dooo/bodu_server
 
 Memcached
