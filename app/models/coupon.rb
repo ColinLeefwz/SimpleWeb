@@ -17,7 +17,7 @@ class Coupon
   field :img
   mount_uploader :img, CouponUploader
 
-  validates_presence_of :img, :message => "必须上传优惠券图片."
+  #validates_presence_of :img, :message => "必须上传优惠券图片." #目前存在测试券，图片自动生成的，不通过img上传获得。
   
   def shop
     Shop.find_by_id(shop_id)
