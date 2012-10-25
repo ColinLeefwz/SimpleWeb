@@ -220,30 +220,6 @@ db.system.js.save({
     "value" : find_shops
 });
 
-//获得给定商家的用户列表
-var shop_users = function(sid){
-    var users={};
-    var count=0;
-    db.checkins.find({
-        sid:sid
-    }).sort({
-        _id:-1
-    }).limit(1000).forEach(function(x){
-        //TODO: 根据签到商家统计以及当天新增签到记录统计
-        if(count>=100) return;
-        if(!users[x.uid]){  //不重复统计同一个用户
-            users[x.uid] = x._id.getTimestamp();
-            count+=1;
-        }
-    });
-    return users;
-}
-db.system.js.save({
-    "_id" : "shop_users",
-    "value" : shop_users
-});
-
-
 
 //用于商家签到的周排行和月排行统计。总排行直接查询checkin_shop_stats即可。
 var groupCheckin = function(sid, objectid){

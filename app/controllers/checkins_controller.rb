@@ -18,6 +18,7 @@ class CheckinsController < ApplicationController
     end
     checkin.ip = real_ip
     checkin.save!
+    checkin.add_to_redis
     send_coupon_if_exist
     render :json => checkin.to_json
   end
@@ -43,6 +44,8 @@ class CheckinsController < ApplicationController
     coupon = Coupon.gen_demo(params[:shop_id]) if coupon.nil?
     coupon.send_coupon(session[:user_id]) if coupon
   end
+
+
 
 
 
