@@ -90,4 +90,24 @@ class Shop
     ShopLogo.shop_logo(id)
   end
 
+  #从CheckinShopStat获得昨天以前的用户签到记录，从redis中获得今天的用户签到记录，然后合并
+  def user_last_checkins
+    users1 = Checkin.get_users_redis(id.to_i)
+    uids = users1.map {|arr| arr[0]}
+    users2 = CheckinShopStat.find(id.to_i).users.map {|k,v| [k[10..-3],v[1].generation_time.to_i]} # ObjectId("k") => k
+    users2.sort!{|a,b| b[1] <=> a[1]}
+    users2.each {|arr| users1 << arr if uids.member?(arr[0])}
+    users1
+  end
+
+  def users(session_uid)
+    ret = []
+    user_last_checkins.each do |uid,cat|
+      u = User.find2(uid)
+      next if u.block?(session_uid)
+      ret << u.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
+    end
+    ret
+  end
+
 end

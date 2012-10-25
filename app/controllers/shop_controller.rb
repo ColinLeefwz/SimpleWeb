@@ -17,16 +17,8 @@ class ShopController < ApplicationController
   end
   
   def users
-    str="shop_users(#{params[:id]})"
-    hash = Mongoid.default_session.command(eval:str)["retval"]
-    ret = []
-    hash.each do |k,v|
-      u = User.find2(k[10..-3]) # ObjectId("k") => k
-      next if u.block?(session[:user_id])
-      ret << u.safe_output_with_relation(session[:user_id])
-        .merge!({time:Checkin.time_desc(v)})
-    end
-    render :json => ret.to_json
+    shop = Shop.find(params[:id])
+    render :json => shop.users(session[:user_id]).to_json
   end
   
   def info
