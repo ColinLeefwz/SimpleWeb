@@ -4,7 +4,7 @@ class CheckinsController < ApplicationController
 
   def create
     raise "user != session user" if params[:user_id].to_s != session[:user_id].to_s
-    send_welcome_msg_if_not_invisible
+    send_welcome_msg_if_not_invisible(session_user.gender)
     checkin = Checkin.new
     checkin.loc = [params[:lat].to_f, params[:lng].to_f]
     checkin.acc = params[:accuracy]
@@ -24,19 +24,18 @@ class CheckinsController < ApplicationController
 
   private
 
-  def send_welcome_msg_if_not_invisible
-    if session_user.invisible!=2
-      if checkin.sex==2
-        message = "Hi，我来了~😊"
-      else
-        message = "Hi，我来啦~😝"
-      end
-      RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
-          :roomid  => params[:shop_id].to_s , :message=> message ,
-          :uid => params[:user_id].to_s)  {|response, request, result| puts response }
-      #TODO: 处理rest调用出错和重试
-      #TODO: 消息持久化。目前是直接投递的，导致没有保存。
+  def send_welcome_msg_if_not_invisible(user_gender)
+    return if session_user.invisible==2
+    if user_gender==2
+      message = "Hi，我来了~😊"
+    else
+      message = "Hi，我来啦~😝"
     end
+    RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
+        :roomid  => params[:shop_id].to_s , :message=> message ,
+        :uid => params[:user_id].to_s)  {|response, request, result| puts response }
+    #TODO: 处理rest调用出错和重试
+    #TODO: 消息持久化。目前是直接投递的，导致没有保存。
   end
 
   def send_coupon_if_exist
