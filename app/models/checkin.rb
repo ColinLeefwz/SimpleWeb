@@ -22,8 +22,8 @@ class Checkin
     User.time_desc(diff)
   end
   
-  def self.time_desc(time)
-    diff = Time.now.to_i - time.to_i
+  def self.time_desc(time_i)
+    diff = Time.now.to_i - time_i
     User.time_desc(diff)
   end
   
@@ -35,4 +35,15 @@ class Checkin
     Shop.find_by_id(self.sid)
   end
   
+  def add_to_redis
+    return if user.invisible==2
+    if( $redis.zadd("ckin#{self.sid}",Time.now.to_i, self.uid) )
+      # TODO: 增加计数器
+    end
+  end
+
+  def self.get_users_redis(sid)
+    $redis.zrevrange("ckin#{sid}",0,-1, withscores:true)
+  end
+
 end
