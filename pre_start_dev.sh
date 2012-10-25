@@ -1,6 +1,7 @@
 #!/bin/bash
 sudo mongod --fork --logpath=/var/log/mongo.log
-sudo haproxy -f /Users/ylt/lianlian/haproxy.development.cfg
+sudo haproxy -f ./haproxy.development.cfg
 nohup redis-server&
-memcached -d
+
+#设置www.dface.cn指向本机后，就可以使用发布系统的网址http://www.dface.cn来访问开发环境。
 
