@@ -47,7 +47,8 @@ class UserLogosController < ApplicationController
       render :json => {:error => "photo's owner #{user_logo.user_id} != session user #{session[:user_id]}"}.to_json
       return
     end
-    countp = user_logo.user.user_logos.count()
+    user = user_logo.user
+    countp = user.user_logos.count()
     if countp<=1
       render :json => {:error => "must have at least one photo"}.to_json
       return
