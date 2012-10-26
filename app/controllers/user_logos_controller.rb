@@ -40,7 +40,14 @@ class UserLogosController < ApplicationController
 
 
   def delete
-    user_logo = UserLogo.find(params[:id])
+    begin
+      user_logo = UserLogo.find(params[:id])
+    rescue
+      error_log "\nTry to delete non-exist photo:#{params[:id]}, #{Time.now}"
+      render :json => {:deleted => params[:id]}.to_json
+      return
+    end
+
     if user_logo.user_id != session[:user_id]
       render :json => {:error => "photo's owner #{user_logo.user_id} != session user #{session[:user_id]}"}.to_json
       return
