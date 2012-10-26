@@ -80,6 +80,8 @@ Resque是基于redis的ruby后台任务库。
 
  * 停止:kill -QUIT \`cat ./resque.pid`
 
+依赖的库：ghostscript,imagemagick，	
+
 
 ###Mongodb
 前面提到的几个组件都部署在连接外网的一台服务器上，ip地址192.168.1.21; 而mongodb则部署在内网的另外一台服务器上,ip地址192.168.1.22。
