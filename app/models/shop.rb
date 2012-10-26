@@ -104,6 +104,7 @@ class Shop
 
   def users(session_uid)
     #TODO: 当一个商家的用户数很多时，需要分页
+    #TODO: 性能优化，目前当用户大于10个时，执行耗时在半秒以上。
     ret = []
     user_last_checkins.each do |uid,cat|
       u = User.find2(uid)
