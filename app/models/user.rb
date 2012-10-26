@@ -15,6 +15,7 @@ class User
   field :jobtype, type: Integer #职业类别
   field :hobby #爱好
   field :multip, type:Boolean, default:false #该用户是否上传了多张图片
+  field :pcount, type: Integer #上传的头像的数量
   
   field :blacks, type:Array #黑名单
   field :follows, type:Array #关注
@@ -91,7 +92,7 @@ class User
   end
   
   def safe_output
-    hash = self.attributes.slice("name", "signature", "wb_uid", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype", "multip")
+    hash = self.attributes.slice("name", "signature", "wb_uid", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype", "multip","pcount")
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
@@ -151,13 +152,6 @@ class User
     end
   end
 
-  def set_if_multip
-    self.update_attributes!({multip:true}) if self.user_logos.count()>1
-  end
-
-  def self.init_multip
-    User.all.each {|u| u.set_if_multip}
-  end
 
   def show_gender
     {0=> '未设置', 1 => '男', 2 => '女'}[self.gender.to_i]
