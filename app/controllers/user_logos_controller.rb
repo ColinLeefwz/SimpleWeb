@@ -51,7 +51,7 @@ class UserLogosController < ApplicationController
       return
     end
     if user_logo.destroy
-      user.dec(:pcount, 1)
+      user.inc(:pcount, -1)
       render :json => {:deleted => params[:id]}.to_json
     else
       render :json => {:error => "user_logo #{params[:id]} delete failed"}.to_json
