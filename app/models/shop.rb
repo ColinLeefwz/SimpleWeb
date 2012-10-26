@@ -81,6 +81,10 @@ class Shop
     safe_output.merge!( {"user"=>utotal, "male"=>male, "female"=>uftotal} )
   end
 
+  def safe_output_with_staffs
+    safe_output.merge!( {"staffs"=> staffs} )
+  end  
+
   
   def show_t
     {1 => '酒吧• 活动', 2 => '咖啡• 茶馆', 3 => '餐饮• 酒店', 4 => '休闲• 娱乐', 5 => '购物• 广场', 6 => "'楼宇• 社区'"}[self.t.to_i]
@@ -88,6 +92,10 @@ class Shop
 
   def logo
     ShopLogo.shop_logo(id)
+  end
+
+  def staffs
+    Staff.where({shop_id: self.id}).map {|x| x.user_id}
   end
 
   #从CheckinShopStat获得昨天以前的用户签到记录，从redis中获得今天的用户签到记录，然后合并
