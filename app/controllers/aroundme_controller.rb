@@ -18,24 +18,14 @@ class AroundmeController < ApplicationController
     render :json =>  Mapabc.where({ loc: { "$within" => { "$center" => [loc, 0.003]} }}).limit(count).map {|s| s.safe_output_with_users}.to_json
   end
   
-  def shops_by_ip
+  def users
     ret = []
-    render :json => [].to_json    #取消该接口
-    return
-    ip = params[:ip] || real_ip
-    Checkin.where(ip: ip).each do |ckin|
-      if ckin.mshop
-        ret << ckin.mshop
-      else
-        shop = Mshop.new
-        shop.name = ckin.shop_name
-        shop.lat = ckin.loc[0]
-        shop.lng = ckin.loc[1]
-        ret << shop
-      end
+    User.where({name: {"$exists" => 1}}).sort({_id:-1}).limit(5).each {|u| ret << u.safe_output_with_relation(session[:user_id]) unless u.head_logo.nil?}
+    if ret
+      render :json => ret.to_json
+    else
+      render :json => [].to_json
     end
-    ret.uniq!
-    render :json => ret[0,10].map {|s| s.safe_output_with_users}.to_json
   end
   
 end
