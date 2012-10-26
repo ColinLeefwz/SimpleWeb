@@ -82,7 +82,7 @@ class Shop
   end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs} )
+    safe_output.merge!( {"staffs"=> staffs} ).merge!({"notice" => notice})
   end  
 
   
@@ -96,6 +96,10 @@ class Shop
 
   def staffs
     Staff.where({shop_id: self.id}).map {|x| x.user_id}
+  end
+
+  def notice
+    ShopNotice.where({shop_id: self.id, effect: true}).inject("") {|mem,x| mem << x.title }
   end
 
   #从CheckinShopStat获得昨天以前的用户签到记录，从redis中获得今天的用户签到记录，然后合并
