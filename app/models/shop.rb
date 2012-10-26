@@ -103,6 +103,7 @@ class Shop
   end
 
   def users(session_uid)
+    #TODO: 当一个商家的用户数很多时，需要分页
     ret = []
     user_last_checkins.each do |uid,cat|
       u = User.find2(uid)
