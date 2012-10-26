@@ -2,14 +2,13 @@
 
 class Coupon
   include Mongoid::Document
-  include Dels
   
   field :shop_id, type: Integer
   field :name 
   field :desc
-  field :rewards, type:Integer
+  field :ratio, type:Integer
   field :t, type: Integer #发布的方式,1.是图文混合模式发布的，2. 是全图模式发布的
-  field :flag, type:Integer #状态， 1.是停用
+  field :hidden, type:Integer #状态， 1.是停用
   #  field :endt, type:DateTime
   field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间}
   #TODO: 一个用户可以多次下载一个优惠券：#{id:用户id,dat:下载时间,[{dat:下载时间,uat:使用时间}]}
@@ -67,7 +66,7 @@ class Coupon
   end
 
   def deply
-    self.update_attribute(:flag, 1)
+    self.update_attribute(:hidden, 1)
   end
 
   def show_rule

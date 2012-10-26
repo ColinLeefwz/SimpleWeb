@@ -103,7 +103,7 @@ class ShopCouponsController < ApplicationController
 
   def ajax_del
     @coupon = Coupon.find(params[:id])
-    render :json => {text: @coupon.del}
+    render :json => {text: Del.insert(@coupon)}
   end
 
 end

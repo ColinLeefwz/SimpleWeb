@@ -17,7 +17,7 @@
     <%end%>
   </div>
   <ul class="formlist" style="margin-top: 0px;">
-    <%= render :partial => 'rewards',  :locals => {:f => f}  %>
+    <%= render :partial => 'ratio',  :locals => {:f => f}  %>
     <li>
       <label>使用规则:</label>
       <%= f.select :rule, [['只能下载一次', 0],['只能一张未使用',1],['无限制', 2]], :class => "txt" %>
