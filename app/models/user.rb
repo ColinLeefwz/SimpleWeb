@@ -141,6 +141,7 @@ class User
   end
   
   def self.time_desc(diff)
+    diff=diff.to_i
     case diff
     when 0..60 then "1 min"
     when 61..3600 then "#{diff/60} mins"
