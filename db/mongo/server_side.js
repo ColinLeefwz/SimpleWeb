@@ -231,10 +231,12 @@ var nearby_shops = function(loc,page,pcount,t,name){
     var cursor = db.shops.find(search_hash).sort({utotal:-1}).skip(skip).limit(pcount);
     var ret = [];
     while ( cursor.hasNext() ) ret.push(cursor.next());
+    printjson(ret);
     ret.sort(function(a,b){
-        if(a.utotal!=b.utotal) return b.utotal-a.utotal;
-        else return get_distance(loc,b.lo) - get_distance(loc,a.lo);
+        if(a.utotal!=b.utotal) return b.utotal-a.utotal; // 按utotal降序
+        else return shop_distance(a,loc) - shop_distance(b,loc); //按距离升序
     });
+    printjson(ret);
     var diff = pcount-ret.length;
     if(diff==0) return ret;
     var count = db.shops.count(search_hash);
