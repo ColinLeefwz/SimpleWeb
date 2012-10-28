@@ -9,9 +9,9 @@ class ShopController < ApplicationController
     pcount = 20 if pcount==0
     str = "nearby_shops([#{params[:lat]},#{params[:lng]}],#{page},#{pcount}"
     if params[:name]
-      str << ",#{params[:t].to_i},/#{params[:name]}/)"
-    elsif params[:t]
-      str << ",#{params[:t]})"
+      str << ",#{params[:type].to_i},/#{params[:name]}/)"
+    elsif params[:type]
+      str << ",#{params[:type]})"
     else
       str << ")"
     end
