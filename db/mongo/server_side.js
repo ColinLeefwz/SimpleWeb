@@ -228,14 +228,13 @@ var nearby_shops = function(loc,page,pcount,t,name){
     var search_hash = {utotal:{$gt:0},city:city};
     if(t>0) search_hash["t"]=t;
     if(name)  search_hash["name"]= name ;
-    var cursor = db.shops.find(search_hash).sort({ 
-        $by : function( a, b ){ 
-            if(a.utotal!=b.utotal) return b.utotal-a.utotal;
-            else return get_distance(loc,b.lo) - get_distance(loc,a.lo);
-        }
-    }).skip(skip).limit(pcount);
+    var cursor = db.shops.find(search_hash).sort({utotal:-1}).skip(skip).limit(pcount);
     var ret = [];
     while ( cursor.hasNext() ) ret.push(cursor.next());
+    ret.sort(function(a,b){
+        if(a.utotal!=b.utotal) return b.utotal-a.utotal;
+        else return get_distance(loc,b.lo) - get_distance(loc,a.lo);
+    });
     var diff = pcount-ret.length;
     if(diff==0) return ret;
     var count = db.shops.count(search_hash);
