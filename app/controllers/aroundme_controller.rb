@@ -18,34 +18,12 @@ class AroundmeController < ApplicationController
     render :json =>  Mapabc.where({ loc: { "$within" => { "$center" => [loc, 0.003]} }}).limit(count).map {|s| s.safe_output_with_users}.to_json
   end
   
-  def shops_by_ip
-    ret = []
-    render :json => [].to_json    #取消该接口
-    return
-    ip = params[:ip] || real_ip
-    Checkin.where(ip: ip).each do |ckin|
-      if ckin.mshop
-        ret << ckin.mshop
-      else
-        shop = Mshop.new
-        shop.name = ckin.shop_name
-        shop.lat = ckin.loc[0]
-        shop.lng = ckin.loc[1]
-        ret << shop
-      end
-    end
-    ret.uniq!
-    render :json => ret[0,10].map {|s| s.safe_output_with_users}.to_json
-  end
-
   def users
+    # TODO: 综合考虑位置（城市）、性别、头像质量等.可以考虑通过管理后台来设置。
     ret = []
-    page = params[:page] || 1
-    pcount = params[:pcount] || 20
-    page = page.to_i
-    pcount = pcount.to_i
-    User.where({name: {"$exists" => 1}}).sort({_id:-1}).limit(200).each {|u| ret << u.safe_output_with_relation(session[:user_id]) unless u.head_logo.nil?}
-    ret = ret[(page-1)*pcount,pcount]
+    users = User.where({pcount: {"$gt" => 0}}).limit(10)
+    users.sort! {|a,b| b.pcount <=> a.pcount}
+    users[0,4].each {|u| ret << u.safe_output_with_relation(session[:user_id]) }
     if ret
       render :json => ret.to_json
     else
