@@ -3,21 +3,11 @@
 class CouponsController < ApplicationController
   def img
     cp = Coupon.find(params[:id][0,24])
-    if cp.desc == "测试券" #测试优惠券在本地，不上传的阿里云
       if params[:size].to_i==0
-        redirect_to "/#{cp._id}.jpg"
+        redirect_to cp.img_url
       else
-        redirect_to "/#{cp._id}.jpg_2.jpg"
+        redirect_to cp.img_url(:t1)
       end
-    else
-      if params[:size].to_i==0
-        redirect_to cp.img.url
-      else
-        redirect_to cp.img.url(:t1)
-      end
-    end
-
-
   end
   
   def use
