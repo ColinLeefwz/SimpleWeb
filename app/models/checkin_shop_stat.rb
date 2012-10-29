@@ -35,7 +35,7 @@ class CheckinShopStat
     female = $redis.get("sufc#{shop_id.to_i}")
     all=0 if all.nil?
     female=0 if female.nil?
-    [all,femal]
+    [all,female]
   end
 
   def set_user_count_redis
