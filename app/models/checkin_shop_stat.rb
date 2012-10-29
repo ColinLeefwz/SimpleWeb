@@ -31,7 +31,11 @@ class CheckinShopStat
   end
 
   def self.get_user_count_redis(shop_id)
-    [$redis.get("suac#{shop_id}"),$redis.get("sufc#{shop_id}")]
+    all = $redis.get("suac#{shop_id}")
+    female = $redis.get("sufc#{shop_id}")
+    all=0 if all.nil?
+    female=0 if female.nil?
+    [all,femal]
   end
 
   def set_user_count_redis
