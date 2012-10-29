@@ -12,7 +12,7 @@
   </tr>
   <% @coupons.each do |coupon| %>
     <tr>
-      <td align="center" class="gray"><%=image_tag coupon.show_img(:t1) %></td>
+      <td align="center" class="gray"><%=image_tag coupon.img_url(:t1) %></td>
       <td align="center" class="gray"><%= coupon.ratio  %></td>
       <td align="center" class="gray"><%= coupon.show_rule  %></td>
       <td align="center" class="gray"><%= link_to coupon.users.to_a.count, {:action => 'users', :id => coupon.id, :flag => 'down'} %></td>
