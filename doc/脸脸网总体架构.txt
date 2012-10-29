@@ -1,27 +1,91 @@
-脸脸网总体架构
+脸脸网架构文档
+=============
 
-Nginx
+##脸脸网总体架构
 
-和脸脸网共用Nginx，启动在60.191.119.190:80。
-路径:/home/dooo/nginx-1.2.3/build/
-启动:sbin/nginx
+脸脸网总体上分为三大部分：
 
+* 基于Http协议的web服务器
+* 基于Xmpp协议的及时通讯服务器
+* 此外再加上移动客户端。
+
+移动客户端首先通过<http://60.191.119.190/init/init>接口获得web服务器和及时通讯服务器的ip地址。客户端随后根据返回的两个ip地址访问两个服务器集群。客户端和服务器端的接口见"**latex/接口.pdf**"文件。
+
+服务器端之间通过标准的HTTP接口开放API。Web服务器端API包括：
+
+* /oauth/auth?name=&pass=， 提供给Xmpp端实现用户认证。所有的用户信息都保存在Web端。
+
+Xmpp端提供的API包括：
+
+* /api/rest，模拟xmpp客户端发送xml消息，使用的是mod_rest模块。
+* /api/room?roomid=&message=&uid=，以给定uid的身份在roomid聊天室发送消息message
+* /api/block?uid=&bid=，用户uid屏蔽bid的消息
+* /api/unblock?uid=&bid=，用户uid取消屏蔽用户bid
+* /api/gchat?room=，获得聊天室room的消息历史
+* /api/chat?uid=，获得用户uid的聊天历史
+* /api/chat?uid1=&uid2=，获得用户uid1和uid2之间的聊天记录
+
+##脸脸网Web服务器集群
+
+脸脸网的Web服务器集群托管在萧山电信机房，目前有两台物理服务器。Web服务器集群主要包括：基于Nginx的Web接入层、基于Ror的应用层，以及基于Mongodb的数据库层。
+
+###Nginx
+
+脸脸网和一渡网共用Nginx，使用源代码编译安装，启动在60.191.119.190:80。
+
+ * 路径:/home/dooo/nginx-1.2.3/build/
+ * 配置文件: conf/nginx.conf
+ * 启动:sbin/nginx
+ * 重启:sbin/nginx -s reload
+
+```
 nginx version: nginx/1.2.3
 built by gcc 4.3.2 (Debian 4.3.2-1.1) 
 TLS SNI support enabled
 configure arguments: --with-http_ssl_module --prefix=/home/dooo/nginx-1.2.3/build
+```
+
+###Redis
+
+缓存系统采用Redis，使用源代码编译安装。
+
+ * 路径:/home/dooo/redis-2.4.16/
+ * 启动:src/redis-server
+ 
+ 
+###Ruby和Rails
+
+脸脸网和一渡网使用同一台物理主机，脸脸网使用的是Ruby1.9.3和rails3.2，而一渡网使用的是老的Ruby1.8.7和rails2.3。为了隔离两者的ruby环境，脸脸网使用了RVM。默认情况下，使用的是ruby1.8.7。要使用rvm和ruby1.9，需要执行“**source ~/.bash_profile**”来设置rvm的路径。
+
+ * 安装RVM: curl -L https://get.rvm.io | bash -s stable --ruby
+ 
+项目代码位于/home/dooo/lianlian。
+
+####Unicorn
+
+Unicorn是Rails的Http服务器，启动在8081端口，作为nginx的up-stream服务器。
+
+ * 安装：gem install unicorn
+ * 配置文件: unicorn.conf.rb
+ * 启动:unicorn -D -E production -c unicorn.conf.rb
+ * 重启:kill -HUP \`cat log/unicorn.pid`
 
 
+####Resque
 
-rails环境
-ruby使用ruby1.9.3版本，路径为/opt/REE/
-rails版本3.2.x
-rails进程通过unicorn启动在8081端口，配置文件见unicorn.conf.rb
-项目代码位于/home/dooo/lianlian
+Resque是基于redis的ruby后台任务库。
 
-Memcached
-启动 /usr/bin/memcached -m 64 -p 11211 -u nobody -l 127.0.0.1
-rails中的配置
-./initializers/session_store.rb:Lianlian::Application.config.session_store :mem_cache_store
-./environments/production.rb:  config.cache_store = :mem_cache_store
+ * 安装：gem install resque
+ * 启动:INTERVAL=1 PIDFILE=./resque.pid BACKGROUND=yes QUEUE='*' rake environment resque:work
+
+ * 停止:kill -QUIT \`cat ./resque.pid`
+
+依赖的库：ghostscript,imagemagick，	
+
+
+###Mongodb
+前面提到的几个组件都部署在连接外网的一台服务器上，ip地址192.168.1.21; 而mongodb则部署在内网的另外一台服务器上,ip地址192.168.1.22。
+
+##Xmpp集群
+Xmpp服务器采用ejabberd-2.1.11，erlang的版本是Erlang R15B01, 采用riak保存聊天记录
 
