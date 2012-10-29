@@ -42,6 +42,14 @@ class Checkin
     end
   end
 
+  def self.clear_yesterday_redis
+    now = Time.now
+    yesterday = now.to_i-now.hour*3600-now.min*60-now.sec
+    $redis.keys("ckin*").each do |key|
+      $redis.zremrangebyscore(key, 0, yesterday)
+    end
+  end
+
   def self.get_users_redis(sid)
     $redis.zrevrange("ckin#{sid}",0,-1, withscores:true)
   end
