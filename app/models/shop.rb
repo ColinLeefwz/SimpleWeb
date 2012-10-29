@@ -77,9 +77,14 @@ class Shop
   end
   
   def safe_output_with_users
-    male = self.utotal - self.uftotal
-    safe_output.merge!( {"user"=>utotal, "male"=>male, "female"=>uftotal} )
+    total,female = CheckinShopStat.get_user_count_redis(self._id)
+    male = total - female
+    safe_output.merge!( {"user"=>total, "male"=>male, "female"=>female} )
   end
+
+  def safe_output_with_staffs
+    safe_output.merge!( {"staffs"=> staffs} ).merge!({"notice" => notice})
+  end  
 
   
   def show_t
@@ -88,6 +93,14 @@ class Shop
 
   def logo
     ShopLogo.shop_logo(id)
+  end
+
+  def staffs
+    Staff.where({shop_id: self.id}).map {|x| x.user_id}
+  end
+
+  def notice
+    ShopNotice.where({shop_id: self.id, effect: true}).inject("") {|mem,x| mem << x.title }
   end
 
   #从CheckinShopStat获得昨天以前的用户签到记录，从redis中获得今天的用户签到记录，然后合并
@@ -103,6 +116,8 @@ class Shop
   end
 
   def users(session_uid)
+    #TODO: 当一个商家的用户数很多时，需要分页
+    #TODO: 性能优化，目前当用户大于10个时，执行耗时在半秒以上。
     ret = []
     user_last_checkins.each do |uid,cat|
       u = User.find2(uid)

@@ -10,9 +10,7 @@ class UserLogosController < ApplicationController
     user_logo.user_id = session[:user_id]
     user_logo.save!
     user = user_logo.user
-    unless user.multip
-      user.set_if_multip
-    end
+    user.inc(:pcount, 1)
     render :json => user_logo.output_hash.to_json
   end
   
@@ -42,19 +40,25 @@ class UserLogosController < ApplicationController
 
 
   def delete
-    user_logo = UserLogo.find(params[:id])
+    begin
+      user_logo = UserLogo.find(params[:id])
+    rescue
+      error_log "\nTry to delete non-exist photo:#{params[:id]}, #{Time.now}"
+      render :json => {:deleted => params[:id]}.to_json
+      return
+    end
+
     if user_logo.user_id != session[:user_id]
       render :json => {:error => "photo's owner #{user_logo.user_id} != session user #{session[:user_id]}"}.to_json
       return
     end
     user = user_logo.user
-    countp = user.user_logos.count()
-    if countp<=1
+    if user.pcount<=1
       render :json => {:error => "must have at least one photo"}.to_json
       return
     end
     if user_logo.destroy
-      user.update_attributes!({multip:false}) if countp<=2
+      user.inc(:pcount, -1)
       render :json => {:deleted => params[:id]}.to_json
     else
       render :json => {:error => "user_logo #{params[:id]} delete failed"}.to_json
