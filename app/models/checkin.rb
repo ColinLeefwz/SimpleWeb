@@ -38,7 +38,7 @@ class Checkin
   def add_to_redis
     return if user.invisible==2
     if( $redis.zadd("ckin#{self.sid}",Time.now.to_i, self.uid) )
-      # TODO: 增加计数器
+      CheckinShopStat.add_one_redis(sid, user.gender)
     end
   end
 
