@@ -75,14 +75,7 @@ class Coupon
     end
   end
 
-  #:t1显示的小图
-  def show_img(size = :default)
-    if self.t.to_i == 1
-      text_img(size)
-    elsif self.t.to_i == 2
-      full_img(size)
-    end
-  end
+
 
   def deply
     self.update_attribute(:hidden, 1)
@@ -92,27 +85,31 @@ class Coupon
     ['只能下载一次', '只能有一张未使用','无限制'][self.rule.to_i]
   end
 
-  def img_url(type)
-    
-  end
-
-  private
-  def full_img(size)
-    case size
-    when :default
-      self.img
-    when :t1
-      self.img.url(:t1)
+  #:t1是小图
+  def img_url(type=nil)
+    if self.t.to_i == 1
+      text_img(type)
+    elsif self.t.to_i == 2
+      full_img(type)
     end
   end
 
-  def text_img(size)
-    case size
-    when :default
-      "/coupon/#{self._id}.jpg"
+  private
+  def full_img(type)
+    case type
+    when :t1
+      self.img.url(:t1)
+    else
+      self.img
+    end
+  end
+
+  def text_img(type)
+    case type
     when :t1
       "/coupon/#{self._id}.jpg_2.jpg"
-      
+    else
+      "/coupon/#{self._id}.jpg"
     end
   end
 
