@@ -77,7 +77,7 @@ class Shop
   end
   
   def safe_output_with_users
-    [total,female] = CheckinShopStat.get_user_count_redis(self._id)
+    total,female = CheckinShopStat.get_user_count_redis(self._id)
     male = total - female
     safe_output.merge!( {"user"=>total, "male"=>male, "female"=>female} )
   end
