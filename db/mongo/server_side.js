@@ -221,6 +221,39 @@ db.system.js.save({
 });
 
 
+//查找附近的商家，先按商家用户数utotal排序，如果商家数量不足pcount个，那么按距离再查询出剩余商家。
+var nearby_shops = function(loc,page,pcount,t,name){
+    var skip = (page-1)*pcount;
+    var city = db.shops.findOne({lo:{$near:loc}}).city;
+    var search_hash = {utotal:{$gt:0},city:city};
+    if(t>0) search_hash["t"]=t;
+    if(name)  search_hash["name"]= name ;
+    var cursor = db.shops.find(search_hash).sort({utotal:-1}).skip(skip).limit(pcount);
+    var ret = [];
+    while ( cursor.hasNext() ) ret.push(cursor.next());
+    ret.sort(function(a,b){
+        if(a.utotal!=b.utotal) return b.utotal-a.utotal; // 按utotal降序
+        else return shop_distance(a,loc) - shop_distance(b,loc); //按距离升序
+    });
+    var diff = pcount-ret.length;
+    if(diff==0) return ret;
+    var count = db.shops.count(search_hash);
+    if(diff<pcount) skip2 = 0;
+    else skip2 = skip-count;
+    var hash2 = {lo:{$within:{$center:[loc,0.1]}}};
+    if(t>0) hash2["t"]=t;
+    if(name)  hash2["name"]=name;
+    var cursor2 = db.shops.find(hash2).skip(skip2).limit(diff);
+    while ( cursor2.hasNext() ) ret.push(cursor2.next());
+    return ret;
+}
+
+db.system.js.save({
+    "_id" : "nearby_shops",
+    "value" : nearby_shops
+});
+
+
 //用于商家签到的周排行和月排行统计。总排行直接查询checkin_shop_stats即可。
 var groupCheckin = function(sid, objectid){
 
