@@ -92,6 +92,10 @@ class Coupon
     ['只能下载一次', '只能有一张未使用','无限制'][self.rule.to_i]
   end
 
+  def img_url(type)
+    
+  end
+
   private
   def full_img(size)
     case size
