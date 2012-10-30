@@ -65,13 +65,17 @@ class Coupon
     demo
   end
 
+  def cat
+    (Time.at self._id.to_s[0,8].to_i(16)).strftime("%Y-%m-%d %H:%M")
+  end
+  
   #图文模式生成图片
   def gen_img
     if self.t.to_i == 1
       name = self.name
       desc = self.desc
       img = self.img
-      `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public/coupon/#{self._id}.jpg #{img}`
+      `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public/coupon/#{self._id}.jpg #{img} '#{self.cat}'`
     end
   end
 
@@ -112,6 +116,8 @@ class Coupon
       "/coupon/#{self._id}.jpg"
     end
   end
+
+
 
 
 end
