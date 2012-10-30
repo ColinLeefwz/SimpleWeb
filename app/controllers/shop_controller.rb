@@ -26,7 +26,11 @@ class ShopController < ApplicationController
   
   def users
     shop = Shop.find(params[:id])
-    render :json => shop.users(session[:user_id]).to_json
+    page = params[:page].to_i
+    pcount = params[:pcount].to_i
+    page = 1 if page==0
+    pcount = 20 if pcount==0
+    render :json => shop.users(session[:user_id],(page-1)*pcount,pcount).to_json
   end
   
   def info
