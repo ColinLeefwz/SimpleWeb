@@ -38,7 +38,15 @@ class Checkin
   def add_to_redis
     return if user.invisible==2
     if( $redis.zadd("ckin#{self.sid}",Time.now.to_i, self.uid) )
-      # TODO: 增加计数器
+      CheckinShopStat.add_one_redis(sid, user.gender)
+    end
+  end
+
+  def self.clear_yesterday_redis
+    now = Time.now
+    yesterday = now.to_i-now.hour*3600-now.min*60-now.sec
+    $redis.keys("ckin*").each do |key|
+      $redis.zremrangebyscore(key, 0, yesterday)
     end
   end
 
