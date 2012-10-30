@@ -95,8 +95,8 @@ a.yellow:hover{color:#0099ff;}
 .coupon .ldiv{border: 6px solid #D8D5CE;height: 190px; width: 190px;display: inline-block;float: left; margin: 20px 0  20px 20px ;}
 .coupon .rdiv{height: 100%; width: 59%; float: right;display: inline-block; margin-top: 20px;}
 .coupon .inputImg{margin-top: 85px;}
-.coupon .rdiv .txt{width: 95%; margin-top: 5px; border: 2px solid #D8D5CE}
-.coupon .rdiv .atxt{width: 95%; margin-top: 5px; border: 2px solid #D8D5CE;height: 155px; margin-top: 10px;overflow: hidden}
+.coupon .rdiv .txt{width: 340px; margin-top: 4px; border: 2px solid #D8D5CE;overflow: hidden;font-size:22px;font-weight:bold;color:#3097FF;height:28px;}
+.coupon .rdiv .atxt{width: 95%; margin-top: 4px; border: 2px solid #D8D5CE;height: 155px;overflow: hidden;font-size: 18px;letter-spacing: 1px;color:gray;line-height: 30px;font-weight:bold }
 .coupon img{width: 100%; height: 100%}
 .coupon .desc{width: 95%; height: 240px; margin-top: 10px;overflow: hidden;}
 
