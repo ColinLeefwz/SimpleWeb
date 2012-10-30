@@ -17,7 +17,8 @@
         </div>
         <div class="rdiv" >
           <%= f.text_field :name, :value => '点此输入名称', :class => 'stxt txt' %>
-          <%= f.text_area :desc, :value => '点此输入描述', :class => 'stxt atxt'%>
+          <%= f.text_area :desc, :value => '点此输入描述', :class => 'stxt atxt',:wrap => "off"%>
+
         </div>
       </div>
 
@@ -51,9 +52,6 @@
 
 
 <%= link_to '返回列表', '/shop_coupons' %>
-
-
-
 
 <script type="text/javascript">
   function imgText(){
