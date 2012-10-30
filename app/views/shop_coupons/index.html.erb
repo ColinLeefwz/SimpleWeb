@@ -1,24 +1,24 @@
 <div class="subtitle">优惠券列表</div>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th width="20%" class="first">名称</th>
     <th width="10%">缩略图</th>
-    <th width="30%">详情</th>
-    <th width="10%" align="center">状态</th>
-    <th width="5%" align="center">查看</th>
-    <th width="5%" align="center">下载</th>
-    <th width="5%" align="center">使用</th>
-    <th width="5%" align="center">删除</th>
+    <th width="10%">中奖率</th>
+    <th width="10%">规则</th>
+    <th width="8%" align="center">已下载</th>
+    <th width="8%" align="center">已使用</th>
+    <th width="8%" align="center">详情</th>
+    <th width="8%" align="center">停用</th>
+    <th width="8%" align="center">删除</th>
   </tr>
   <% @coupons.each do |coupon| %>
     <tr>
-      <td><%= coupon.name %></td>
-      <td align="center" class="gray"><%=image_tag coupon.img.url(:t1) %></td>
-      <td align="center" class="gray"><%=truncate( coupon.desc, :length => 20)  %></td>
-      <td align="center" class="gray"><%= coupon.hidden ==1 ? '已停用' : (link_to '停用', '#', :onclick => "ajaxDeply($(this), '#{coupon.id}')") %></td>
-      <td align="center" class="gray"><%= link_to '查看', shop_coupon_path(coupon) %></td>
+      <td align="center" class="gray"><%=image_tag coupon.img_url(:t1) %></td>
+      <td align="center" class="gray"><%= coupon.ratio  %></td>
+      <td align="center" class="gray"><%= coupon.show_rule  %></td>
       <td align="center" class="gray"><%= link_to coupon.users.to_a.count, {:action => 'users', :id => coupon.id, :flag => 'down'} %></td>
       <td align="center" class="gray"><%= link_to coupon.users.to_a.count{|s| s['uat']},{:action => 'users', :id => coupon.id, :flag => 'use'} %></td>
+      <td align="center" class="gray"><%= link_to '详情', shop_coupon_path(coupon) %></td>
+      <td align="center" class="gray"><%= coupon.hidden ==1 ? '已停用' : (link_to '停用', '#', :onclick => "ajaxDeply($(this), '#{coupon.id}')") %></td>
       <td align="center" class="gray"><%= (link_to '删除', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')") if coupon.users.blank? %></td>
     </tr>
   <% end %>

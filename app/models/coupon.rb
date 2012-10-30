@@ -61,9 +61,21 @@ class Coupon
     demo.name = demo.shop.name+"20元代金券"
     demo.desc = "测试券"
     demo.save
-    `cd coupon && ./gen_demo.sh '#{demo.name}' ../public/#{demo._id}.jpg`
+    `cd coupon && ./gen_demo.sh '#{demo.name}' '一二三四五六七八九十勾皮肯尖王一二三四五六七八九十勾皮肯尖王一二三四五六七八九十勾皮肯尖王一二三四五六七八九十勾皮肯尖王一二三四五六七八九十勾皮肯尖王' ../public/#{demo._id}.jpg 'http://www.baidu.com/img/baidu_sylogo1.gif'`
     demo
   end
+
+  #图文模式生成图片
+  def gen_img
+    if self.t.to_i == 1
+      name = self.name
+      desc = self.desc
+      img = self.img
+      `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public/coupon/#{self._id}.jpg #{img}`
+    end
+  end
+
+
 
   def deply
     self.update_attribute(:hidden, 1)
@@ -71,6 +83,34 @@ class Coupon
 
   def show_rule
     ['只能下载一次', '只能有一张未使用','无限制'][self.rule.to_i]
+  end
+
+  #:t1是小图
+  def img_url(type=nil)
+    if self.t.to_i == 1
+      text_img(type)
+    elsif self.t.to_i == 2
+      full_img(type)
+    end
+  end
+
+  private
+  def full_img(type)
+    case type
+    when :t1
+      self.img.url(:t1)
+    else
+      self.img
+    end
+  end
+
+  def text_img(type)
+    case type
+    when :t1
+      "/coupon/#{self._id}.jpg_2.jpg"
+    else
+      "/coupon/#{self._id}.jpg"
+    end
   end
 
 

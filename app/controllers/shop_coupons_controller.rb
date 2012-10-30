@@ -48,6 +48,7 @@ class ShopCouponsController < ApplicationController
     @coupon = Coupon.new(params[:coupon])
     @coupon.shop_id = session[:shop_id]
     if @coupon.save
+      @coupon.gen_img
       redirect_to :action => :show, :id => @coupon.id
     else
       render :layout => true
@@ -61,7 +62,7 @@ class ShopCouponsController < ApplicationController
 
     respond_to do |format|
       if @coupon.update_attributes(params[:coupon])
-        
+        @coupon.reload.gen_img
         format.html { redirect_to :action => :show, :id => @coupon.id }
         format.json { head :no_content }
       else
