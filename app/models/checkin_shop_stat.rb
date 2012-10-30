@@ -25,6 +25,30 @@ class CheckinShopStat
     end
   end
 
+  def self.add_one_redis(shop_id,gender)
+    $redis.incr("suac#{shop_id.to_i}")
+    $redis.incr("sufc#{shop_id.to_i}") if gender==2
+  end
+
+  def self.get_user_count_redis(shop_id)
+    all = $redis.get("suac#{shop_id.to_i}")
+    female = $redis.get("sufc#{shop_id.to_i}")
+    all=0 if all.nil?
+    female=0 if female.nil?
+    [all.to_i,female.to_i]
+  end
+
+  def set_user_count_redis
+    $redis.set("suac#{self._id.to_i}",utotal) #suac mean shop-users-all-count
+    $redis.set("sufc#{self._id.to_i}",uftotal)  #sufc mean shop-users-female-count 
+  end
+
+  def self.init_user_count
+    CheckinShopStat.all.each do |x|
+      x.set_user_count_redis
+    end
+  end
+
 end
 
 =begin
