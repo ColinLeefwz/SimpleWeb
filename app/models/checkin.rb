@@ -37,7 +37,7 @@ class Checkin
   
   def add_to_redis
     return if user.invisible==2
-    if( $redis.zadd("ckin#{self.sid}",Time.now.to_i, self.uid) )
+    if( $redis.zadd("ckin#{self.sid.to_i}",Time.now.to_i, self.uid) )
       CheckinShopStat.add_one_redis(sid, user.gender)
     end
   end
@@ -51,7 +51,16 @@ class Checkin
   end
 
   def self.get_users_redis(sid)
-    $redis.zrevrange("ckin#{sid}",0,-1, withscores:true)
+    $redis.zrevrange("ckin#{sid.to_i}",0,-1, withscores:true)
   end
+  
+  def self.get_users_count_redis(sid)
+    $redis.zcard("ckin#{sid.to_i}")
+  end
+  
+  def self.get_users_count_multi(sid_arr)
+    #TODO:
+  end
+  
 
 end
