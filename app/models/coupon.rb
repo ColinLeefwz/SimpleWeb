@@ -60,6 +60,7 @@ class Coupon
     demo.shop_id = sid
     demo.name = demo.shop.name+"20元代金券"
     demo.desc = "凭本券可抵扣现场消费人民币20元\r\n本券不兑现/不找零/不开发票,\r\n复印和涂改无效，请于点餐时\r\n有效期至:#{3.days.since.strftime("%Y-%m-%d日18：00")}\r\n状态:未使用"
+    demo.t=1
     demo.save
     `cd coupon && ./gen_demo.sh '#{demo.name}' '#{demo.desc}' ../public/coupon/#{demo._id}.jpg pic1.jpg '#{demo.cat}'`
     demo
