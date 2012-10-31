@@ -59,7 +59,19 @@ class Checkin
   end
   
   def self.get_users_count_multi(sid_arr)
-    #TODO:
+    code = <<LUA
+    local count = function(x) return redis.pcall('zcard','ckin'..x) end
+    local map = function(func, array)
+       local new_array = {}
+       for i,v in ipairs(array) do
+         new_array[i] = func(v)
+       end
+       return new_array
+    end
+    return map(count,ARGV)
+LUA
+    $redis.eval(code, [], sid_arr)
+    
   end
   
 
