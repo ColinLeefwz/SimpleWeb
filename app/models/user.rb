@@ -23,6 +23,10 @@ class User
 
   validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
   
+  index({"blacks.report" => 1},{ sparse: true })
+  index({wb_uid: 1})
+  index({follows: 1})
+  
   def self.find2(id) #和find相比不抛出异常
     begin
       User.find(id)
