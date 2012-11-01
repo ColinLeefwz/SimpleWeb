@@ -17,6 +17,7 @@ class Shop
   field :password
   field :utotal, type:Integer, default:0 #截至到昨天，该商家的用户总数
   field :uftotal, type:Integer, default:0 #截至到昨天，该商家的女性用户总数
+  field :shops, type:Array #子商家
 
   #field :cc, type:Integer  #点评的评论数
   #field :type              #从mapabc导入的商家类型
