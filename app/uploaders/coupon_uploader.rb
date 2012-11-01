@@ -19,10 +19,10 @@ class CouponUploader < CarrierWave::Uploader::Base
     "0.jpg" if original_filename
   end
 
-  process :resize_to_fit => [610, 306]
+  process :resize_to_fit => [580, 224]
   
   version :t1 do
-    process :resize_to_fit => [305, 153]
+    process :resize_to_fit => [290,112]
   end
 
   def extension_white_list
