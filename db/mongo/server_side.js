@@ -163,9 +163,7 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
     score = score.sort(function(a,b) {
         return a[1]-b[1]
         }).slice(0,30);
-    return score.map(function(x) {
-        return x[0];
-    });
+    return score;
 }
 
 var find_shops = function(loc,accuracy,ip,uid){
