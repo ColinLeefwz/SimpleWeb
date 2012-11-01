@@ -80,7 +80,9 @@ class User
   
   def head_logo
     return nil if head_logo_id.nil?
-    UserLogo.find(head_logo_id)
+    #UserLogo.find(head_logo_id)
+    #这里使用了一个很trick的优化：只需要知道logo的id就可以构造整个UserLogo对象。可以少一次数据库查询。
+    UserLogo.new({_id:head_logo_id,img_filename: "0.jpg"})
   end
   
   def head_logo_hash
