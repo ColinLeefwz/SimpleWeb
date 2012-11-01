@@ -1,3 +1,4 @@
+# encoding: utf-8
 class AdminShopsController < ApplicationController
   include Paginate
   
@@ -16,9 +17,59 @@ class AdminShopsController < ApplicationController
     @shops = paginate("Shop", params[:page], hash, horder, 200  )
     @shops = @shops.entries.keep_if{|s| s.del != 1}
 
-
   end
 
+  def subshops
+    @shop = Shop.find(params[:shop_id])
+    @shops = Shop.where({_id: {"$in" => @shop.shops.to_a}}).to_a
+    @shops = paginate(@shops, params[:page], hash, horder)
+  end
+
+  def ajax_find_shop
+    pshop = Shop.find_by_id(params[:pid])
+    shop = Shop.find_by_id(params[:id])
+    text = "<tr><td><input type='text' value=#{params[:id]} onchange='ajaxFindShop($(this))'/></td>"
+    if shop
+      if pshop.shops.to_a.include?(shop.id.to_i)
+        text += "<td colspan='5'>该商家已是#{pshop.name}的子商家。</td><td><a onclick='cancel($(this))'>取消</a></td></tr>"
+      else
+        text += "<td>#{shop.name}</td>"
+        text += "<td>#{shop.tel}</td>"
+        text += "<td>#{shop.city}</td>"
+        text += "<td>#{shop.addr}</td>"
+        text += "<td>#{shop.show_t}</td>"
+        text += "<td><input type='submit' value='确定' onclick='ajaxAddSub($(this), \"#{shop.id}\", \"#{params[:pid]}\")' />    <a onclick='cancel($(this))'>取消</a></td></tr>"
+      end
+    else
+      text += "<td colspan='5'>商家id(#{params[:id]})不存在</td><td><a onclick='cancel($(this))'>取消</a></td></tr>"
+    end
+    render :json => {text: text}
+  end
+
+  def ajax_add_sub
+    pshop = Shop.find_by_id(params[:pid])
+    shop = Shop.find_by_id(params[:id])
+    if shop
+      pshop.shops = pshop.shops.to_a << shop.id.to_i
+      pshop.save
+      text = "<tr><td>#{shop.id.to_i}</td>"
+      text += "<td>#{shop.name}</td>"
+      text += "<td>#{shop.tel}</td>"
+      text += "<td>#{shop.city}</td>"
+      text += "<td>#{shop.addr}</td>"
+      text += "<td>#{shop.show_t}</td>"
+      text += "<td><a onclick='ajaxDelSub($(this),\"#{shop.id}\", \"#{pshop.id}\")'>移除</a></td></tr>"
+    end
+    render :json => {text: text}
+  end
+
+  def ajax_del_sub
+    pshop = Shop.find_by_id(params[:pid])
+    shop = Shop.find_by_id(params[:id])
+    pshop.shops.to_a.delete(shop.id.to_i)
+    pshop.save
+    render :js => true
+  end
 
 
 
