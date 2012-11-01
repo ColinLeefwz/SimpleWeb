@@ -19,8 +19,7 @@ class UserInfoController < ApplicationController
   end
   
   def photos
-    user = User.find(params[:id])
-    render :json => user.user_logos.map{|x| x.output_hash}.to_json
+    render :json => UserLogo.logos(params[:id]).map{|x| x.output_hash}.to_json
   end
   
   def get_self
