@@ -22,7 +22,40 @@ class AdminShopsController < ApplicationController
   def subshops
     @shop = Shop.find(params[:shop_id])
     @shops = Shop.where({_id: {"$in" => @shop.shops.to_a}}).to_a
-    @shops = paginate(@shops, params[:page], hash, horder)
+    @shops = paginate(@shops, params[:page], nil, nil)
+  end
+
+  def find_shops
+    @shop = Shop.find(params[:pid])
+    hash,sort = {},{}
+
+    unless params[:loc].blank?
+      lo = params[:loc].split(',')
+      hash.merge!({ lo: { "$within" => { "$center" => [lo, 0.1]} }}) if lo.length == 2
+    end
+
+    unless params[:shop].blank? && params[:city].blank?
+      hash.merge!({name: /#{params[:shop]}/, city: params[:city]})
+    end
+
+    unless params[:addr].blank?
+      hash.merge!({addr: /#{params[:addr]}/})
+    end
+
+    if hash.empty?
+      @shops = paginate([], params[:page], hash, sort  )
+    else
+      hash.merge!({_id: {'$nin' => @shop.shops.to_a}})
+      @shops = paginate("Shop", params[:page], hash, sort, 200  )
+    end
+    
+  end
+
+  def bat_add_sub
+    @shop = Shop.find(params[:pid])
+    @shop.shops = @shop.shops.to_a + params['shop_ids'].to_a.map{|m| m.to_i}
+    @shop.save
+    redirect_to "/admin_shops/subshops?shop_id=#{@shop.id}"
   end
 
   def ajax_find_shop
