@@ -10,6 +10,8 @@ class Photo
   field :img
   mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface"+bucket_suffix ; end }
   
+  index({user_id:1, room:1})
+  
   def user
     User.find(self.user_id)
   end
