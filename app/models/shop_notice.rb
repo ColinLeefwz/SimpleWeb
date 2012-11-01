@@ -8,6 +8,8 @@ class ShopNotice
   field :ord, type:Float
   field :effect, type:Boolean,default:true
 
+  index({ shop_id: 1})
+
 
   #从新排序
   def reord
