@@ -96,6 +96,11 @@ Resque是基于redis的ruby后台任务库。
 ###Mongodb
 前面提到的几个组件都部署在连接外网的一台服务器上，ip地址192.168.1.21; 而mongodb则部署在内网的另外一台服务器上,ip地址192.168.1.22。
 
+建立索引：rake db:mongoid:create_indexes
+
+如何管理server端的js代码？
+
+
 ##Xmpp集群
 Xmpp服务器采用ejabberd-2.1.11，erlang的版本是Erlang R15B01, 采用riak保存聊天记录
 
