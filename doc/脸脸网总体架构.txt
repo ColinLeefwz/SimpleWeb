@@ -47,10 +47,20 @@ configure arguments: --with-http_ssl_module --prefix=/home/dooo/nginx-1.2.3/buil
 
 ###Redis
 
-缓存系统采用Redis，使用源代码编译安装。
+缓存系统采用Redis，需要2.6以上版本，因为使用了Redis Lua scripting特性。使用源代码编译安装。
+
+ this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+
 
  * 路径:/home/dooo/redis-2.4.16/
  * 启动:src/redis-server
+ 
+ 缓存到redis中的信息：
+ 
+1. 每个商家当天的签到数据。类型为zset，key为“ckin商家id"，值为用户id，排序值为时间。见checkin.add_to_redis方法。通过cronjob清空昨天的签到数据。
+
+2. 每个商家累计的用户总数／女性用户总数。用户总数的key为“suac商家id”。用户总数的计算方法为：昨天累计用户总数（来自mongodb）＋今天新增用户数（来自redis实时统计）。见CheckinShopStat.rb中的相关方法。
+ 
  
  
 ###Ruby和Rails

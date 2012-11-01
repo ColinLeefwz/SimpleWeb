@@ -16,6 +16,7 @@ class User
   field :hobby #爱好
   field :multip, type:Boolean, default:false #该用户是否上传了多张图片
   field :pcount, type: Integer #上传的头像的数量
+  field :head_logo_id, type: Moped::BSON::ObjectId
   
   field :blacks, type:Array #黑名单
   field :follows, type:Array #关注
@@ -56,8 +57,8 @@ class User
   
   #是否屏蔽user_id（该用户的最后出现位置，以及在商家用户列表中找到）
   def block?(user_id)
-    return true if black?(user_id)
     return true if self.invisible==2
+    return true if black?(user_id)
     return true if self.invisible==1 && !( self.friend?(user_id) or self.follower?(user_id))
     return false
   end
@@ -78,16 +79,29 @@ class User
 
   
   def head_logo
-    return nil if self.user_logos.size==0
-    self.user_logos.first
+    return nil if head_logo_id.nil?
+    #UserLogo.find(head_logo_id)
+    #这里使用了一个很trick的优化：只需要知道logo的id就可以构造整个UserLogo对象。可以少一次数据库查询。
+    UserLogo.new({_id:head_logo_id,img_filename: "0.jpg"})
   end
   
   def head_logo_hash
-    logo = head_logo
-    if logo
-      logo.logo_thumb_hash
+    if !head_logo_id.nil?
+      head_logo.logo_thumb_hash
     else
       {:logo => "", :logo_thumb => "", :logo_thumb2 => ""}
+    end
+  end
+  
+  def self.init_pcount
+    User.all.each {|x| x.set(:pcount, x.user_logos.size)}
+  end
+  
+  def self.init_head_logo_id
+    User.all.each do |x| 
+      ulogo = x.user_logos.first
+      next if ulogo.nil?
+      x.set(:head_logo_id, ulogo.id)
     end
   end
   
