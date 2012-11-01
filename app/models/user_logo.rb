@@ -15,13 +15,16 @@ class UserLogo
     User.find(self.user_id)
   end
   
+  def self.logos(uid)
+    UserLogo.where({user_id: uid}).order_by([:ord,:asc])
+  end
 
   def logo_thumb_hash
     {:logo => self.img.url, :logo_thumb => self.img.url(:t1), :logo_thumb2 => self.img.url(:t2)  }
   end
   
   def output_hash
-    self.attributes.slice("user_id", "file_size","updated_at","ord").merge!( logo_thumb_hash).merge!({id: self._id})
+    logo_thumb_hash.merge!({id: self._id, user_id:self.user_id})
   end
 
 end
