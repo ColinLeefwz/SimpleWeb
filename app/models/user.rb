@@ -30,6 +30,16 @@ class User
     end
   end
   
+  def save_redis
+    $redis.set(self.id,Zlib::Deflate.deflate(self.to_yaml))
+  end
+  
+  def self.load_redis(id)
+    str = $redis.get(id)
+    return nil if str.nil?
+    YAML::load(Zlib::Inflate.inflate(str))
+  end
+  
   def follows_s
     (self.follows.nil?)? [] : self.follows
   end
