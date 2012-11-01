@@ -72,22 +72,22 @@ class User
 
   def user_logos
     return [] unless self._id
-    # UserLogo.where({user_id: self._id}).sort({ord:1})
-    # 太变态了，sort单独调用可以排序，结合first却无效，只能用order_by
-    UserLogo.where({user_id: self._id}).order_by([:ord,:asc])
+    UserLogo.logos(self._id)
   end
 
   
   def head_logo
     return nil if head_logo_id.nil?
-    #UserLogo.find(head_logo_id)
-    #这里使用了一个很trick的优化：只需要知道logo的id就可以构造整个UserLogo对象。可以少一次数据库查询。
-    UserLogo.new({_id:head_logo_id,img_filename: "0.jpg"})
+    UserLogo.find(head_logo_id)
   end
   
   def head_logo_hash
     if !head_logo_id.nil?
-      head_logo.logo_thumb_hash
+      #这里使用了一个很trick的优化：直接构造整个UserLogo对象,可以少一次数据库查询。
+      logo = UserLogo.new
+      logo._id = head_logo_id
+      logo.img_filename = "0.jpg"
+      logo.logo_thumb_hash
     else
       {:logo => "", :logo_thumb => "", :logo_thumb2 => ""}
     end
