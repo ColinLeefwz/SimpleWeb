@@ -15,6 +15,9 @@ class Coupon
   field :rule # 0代表一个用户只能下载一次，1代表一个用户只能有一张未使用的，2代表无限制
   field :img
   mount_uploader :img, CouponUploader
+  
+  index({ shop_id: 1})
+  
 
   #validates_presence_of :img, :message => "必须上传优惠券图片." #目前存在测试券，图片自动生成的，不通过img上传获得。
   

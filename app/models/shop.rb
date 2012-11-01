@@ -10,10 +10,9 @@ class Shop
   field :lo, type:Array #实际的经纬度
   field :tel 
   field :city
-  field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. db.shops.ensureIndex({del:1},{sparse:true})
+  field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. 
   field :addr
   field :t                #脸脸的商家类型
-#  field :level            #商家的人工等级
   field :password
   field :utotal, type:Integer, default:0 #截至到昨天，该商家的用户总数
   field :uftotal, type:Integer, default:0 #截至到昨天，该商家的女性用户总数
@@ -25,6 +24,11 @@ class Shop
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 6, :allow_nil => true
 
+  index({lo: "2d"})
+  index({del: 1},{ sparse: true })
+  index({city: 1})
+  index({utotal:-1})
+  
   def self.default_hash
     {del: {"$exists" => false}}
   end

@@ -11,6 +11,8 @@ class Checkin
   field :alt, type:Float    #海拔高度
   field :altacc, type: Integer  #海拔高度的精确度
   
+  index({ uid: 1})
+  index({ sid: 1})
   
   def cat
     #    self._id.generation_time
