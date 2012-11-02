@@ -26,15 +26,10 @@ class Coupon
     "[优惠券:#{name}:#{shop.name}:#{self._id}:#{Time.now.strftime('%Y-%m-%d %H：%M')}]"
   end
 
-  def send_coupon(user_id)
-    if self.rule.to_i == 0
-      return false if self.users.to_a.detect{|u| user_id == u['id']}
-    end
-
-    if self.rule.to_i ==  1
-      return false if self.users.to_a.detect{|u| user_id == u['id'] && u['uat'].nil? }
-    end
-
+  def send_coupon(user_id, sub = true)
+    send_sub_coupon(user_id) if sub
+    return false unless send?(user_id)
+    
     #TODO: 根据rule判断是否下发
     download(user_id)
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
@@ -44,6 +39,8 @@ class Coupon
     logger.info(xmpp2)
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2) 
   end
+
+
   
   def download(user_id)
     self.add_to_set(:users, {"id" => user_id, "dat" => Time.now})
@@ -61,6 +58,7 @@ class Coupon
     demo.name = demo.shop.name+"20元代金券"
     demo.desc = "凭本券可抵扣现场消费人民币20元\r\n本券不兑现/不找零/不开发票,\r\n复印和涂改无效，请于点餐时\r\n有效期至:#{3.days.since.strftime("%Y-%m-%d日18：00")}\r\n本券最终解释权规商家所有"
     demo.t=1
+    demo.rule = 2
     demo.save
     re =  `cd coupon && ./gen_demo.sh '#{demo.name}' '#{demo.desc}' ../public/coupon/#{demo._id}.jpg pic1.jpg`
     re.blank? ? demo : re
@@ -119,7 +117,20 @@ class Coupon
     end
   end
 
+  def send_sub_coupon(user_id)
+    sids = self.shop.shops.to_a
+    sids.each do |sid|
+      cou = Coupon.where({shop_id: sid}).last
+      cou.send_coupon(user_id, false) if cou
+    end
+  end
 
+  def send?(user_id)
+    send = true
+    send = false if self.rule.to_i == 0 && self.users.to_a.detect{|u| user_id == u['id']}
+    send = false if self.rule.to_i == 1 && self.users.to_a.detect{|u| user_id == u['id'] && u['uat'].nil? }
+    send
+  end
 
 
 end
