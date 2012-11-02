@@ -39,8 +39,8 @@ class CheckinShopStat
   end
 
   def set_user_count_redis
-    $redis.set("suac#{self._id.to_i}",utotal) #suac mean shop-users-all-count
-    $redis.set("sufc#{self._id.to_i}",uftotal)  #sufc mean shop-users-female-count 
+    $redis.set("suac#{self._id.to_i}",utotal.to_i) #suac mean shop-users-all-count
+    $redis.set("sufc#{self._id.to_i}",uftotal.to_i)  #sufc mean shop-users-female-count 
   end
 
   def self.init_user_count
