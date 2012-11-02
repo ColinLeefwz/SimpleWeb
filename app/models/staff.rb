@@ -2,6 +2,9 @@ class Staff
   include Mongoid::Document
   field :user_id
   field :shop_id
+  
+  index({ shop_id: 1})
+  
 
   def self.find_by_id(id)
     begin
