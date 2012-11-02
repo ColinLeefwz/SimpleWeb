@@ -45,7 +45,7 @@ class AdminShopsController < ApplicationController
     if hash.empty?
       @shops = paginate([], params[:page], hash, sort  )
     else
-      hash.merge!({_id: {'$nin' => @shop.shops.to_a}})
+      hash.merge!({_id: {'$nin' => @shop.shops.to_a << @shop.id.to_i}})
       @shops = paginate("Shop", params[:page], hash, sort, 200  )
     end
     
@@ -82,7 +82,9 @@ class AdminShopsController < ApplicationController
   def ajax_add_sub
     pshop = Shop.find_by_id(params[:pid])
     shop = Shop.find_by_id(params[:id])
-    if shop
+    if shop.id == pshop.id
+      text = '不能添加。'
+    else
       pshop.shops = pshop.shops.to_a << shop.id.to_i
       pshop.save
       text = "<tr><td>#{shop.id.to_i}</td>"
