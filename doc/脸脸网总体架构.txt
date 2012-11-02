@@ -17,7 +17,7 @@
 
 Xmpp端提供的API包括：
 
-* /api/rest，模拟xmpp客户端发送xml消息，使用的是mod_rest模块。
+* /rest，模拟xmpp客户端发送xml消息，使用的是mod_rest模块。
 * /api/room?roomid=&message=&uid=，以给定uid的身份在roomid聊天室发送消息message
 * /api/block?uid=&bid=，用户uid屏蔽bid的消息
 * /api/unblock?uid=&bid=，用户uid取消屏蔽用户bid
@@ -80,6 +80,7 @@ Unicorn是Rails的Http服务器，启动在8081端口，作为nginx的up-stream�
  * 启动:unicorn -D -E production -c unicorn.conf.rb
  * 重启:kill -HUP \`cat log/unicorn.pid`
 
+unicorn只适合运行短任务。所有耗时的任务，以及调用第三方API的任务，都需要异步执行。异步执行有两种办法：1、使用resque，2、考虑使用node.js。
 
 ####Resque
 
@@ -89,6 +90,16 @@ Resque是基于redis的ruby后台任务库。
  * 启动:INTERVAL=1 PIDFILE=./resque.pid BACKGROUND=yes QUEUE='*' rake environment resque:work
 
  * 停止:kill -QUIT \`cat ./resque.pid`
+ 
+ 
+ 后台运行的任务：
+ 
+ * 发图时同时分享到微博
+ * 拉黑用户时，通知xmpp服务器阻塞黑名单
+ 
+ 如何监控resque进程？
+ 
+ 
 
 依赖的库：ghostscript,imagemagick，	
 
