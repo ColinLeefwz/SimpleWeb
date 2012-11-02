@@ -32,11 +32,7 @@ class CheckinsController < ApplicationController
     else
       message = "Hi，我来啦~😝"
     end
-    RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
-        :roomid  => params[:shop_id].to_s , :message=> message ,
-        :uid => params[:user_id].to_s)  {|response, request, result| puts response }
-    #TODO: 处理rest调用出错和重试
-    #TODO: 消息持久化。目前是直接投递的，导致没有保存。
+    Resque.enqueue(XmppWelcome, params[:shop_id], message, params[:user_id])
   end
 
   def send_coupon_if_exist
