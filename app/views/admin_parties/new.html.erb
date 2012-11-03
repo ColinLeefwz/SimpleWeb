@@ -1,10 +1,14 @@
 <h1>发布新活动</h1>
 <script src="/javascripts/My97DatePicker/WdatePicker.js"></script>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
 
 <%= form_for(@party, {:url => admin_parties_path} ) do |f| %>
   <div class="field">
     <%= f.label "活动地点商家id" %><br />
-    <%= f.text_field :rsid %>
+    <%= f.text_field :rsid , :size => 15, :onchange => 'ajaxFindShop($(this))'%>
+    <span>
+
+    </span>
   </div>
   <div class="field">
     <%= f.label "活动名称" %><br />
@@ -25,3 +29,11 @@
 <% end %>
 
 <%= link_to '返回列表', admin_parties_path %>
+
+<script type="text/javascript">
+  function ajaxFindShop(obj){
+    $.get("/shop_login/find_shop",{id: obj.val()}, function(data){
+      obj.parent().children('span:first').replaceWith("<span>  商家名称："+ data['text'] + "</span>")
+    })
+  }
+</script>
