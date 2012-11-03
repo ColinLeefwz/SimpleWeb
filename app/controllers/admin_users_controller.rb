@@ -6,7 +6,7 @@ class AdminUsersController < ApplicationController
   def index
 
     hash = {}
-    sort = {}
+    sort = {_id: -1}
 
     unless params[:name].blank?
       hash.merge!(name: /#{params[:name]}/)
