@@ -1,5 +1,5 @@
 class WeiboPhoto
-  @queue = :photo
+  @queue = :normal
 
   def self.perform(token, text, url)
     RestClient.post('https://api.weibo.com/2/statuses/upload_url_text.json', 
