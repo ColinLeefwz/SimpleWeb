@@ -4,9 +4,10 @@ rails_root  = ENV['RAILS_ROOT'] || "/home/dooo/bodu_server"
 God.watch do |w|
   w.dir      = "#{rails_root}"
   w.name     = "check_sms"
-  w.group    = 'check_sms'
+  w.group    = 'checksms'
+  w.log = "#{rails_root}/log/god.log"
   w.interval = 30.seconds
-  w.start    = "/opt/REE/bin/ruby script/runner app/check_sms.rb"
+  w.start    = "export PATH=/opt/REE/bin/:$PATH && ruby script/runner app/check_sms.rb"
 
   # restart if memory gets too high
   w.transition(:up, :restart) do |on|
