@@ -1,18 +1,19 @@
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/dooo/lianlian"
 
-[['xmpp',0.1,1],[normal,5,2]].each do |queue,inteval,num_workers|
+[['xmpp',0.1,1],['normal',5,2]].each do |queue,inteval,num_workers|
 num_workers.times do |num|
   God.watch do |w|
     w.dir      = "#{rails_root}"
+    w.log = "#{rails_root}/log/god.log"
     w.name     = "resque-#{queue}#{num}"
     w.group    = 'resque'
     w.interval = 30.seconds
     w.env      = {"QUEUE"=>queue, "RAILS_ENV"=>rails_env}
     w.start    = "INTERVAL=#{inteval} QUEUE='#{queue}' /home/dooo/.rvm/bin/rake -f #{rails_root}/Rakefile environment resque:work"
 
-    w.uid = 'dooo'
-    w.gid = 'dooo'
+#    w.uid = 'dooo'
+#    w.gid = 'dooo'
 
     # restart if memory gets too high
     w.transition(:up, :restart) do |on|
