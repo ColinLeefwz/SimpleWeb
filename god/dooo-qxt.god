@@ -2,9 +2,10 @@
 God.watch do |w|
   w.dir      = "/home/dooo/bodu_server/qxt/bin"
   w.name     = "qxt"
-  w.group    = 'qxt'
+  w.group    = 'dooo'
   w.interval = 30.seconds
-  w.start    = "/home/dooo/bodu_server/qxt/bin/start_qxt.sh"
+  w.start    = "/java/jdk/bin/java -cp ../lib/commons-lang-1.0.1.jar:../lib/commons-logging.jar:../lib/commons.jar:../lib/log4j-1.2.7.jar:../lib/log4j.properties:../lib/MobileOpenSDK.jar:../lib/mysql-connector-java-3.1.8-bin.jar:.  -Dfile.encoding=GBK dooo.QxtServer"
+  w.keepalive
 
   # determine the state on startup
   w.transition(:init, { true => :up, false => :start }) do |on|
