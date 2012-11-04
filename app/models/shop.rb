@@ -121,7 +121,6 @@ class Shop
   end
 
   def users(session_uid,start,size)
-    #TODO: 当一个商家的用户数很多时，需要分页
     #TODO: 性能优化，目前当用户大于10个时，执行耗时在半秒以上。
     #Benchmark.measure {Shop.find(4928288).users(User.last._id)} 
     ret = []
