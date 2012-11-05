@@ -1,12 +1,12 @@
 <h1>用户详情</h1>
 <p>
-  <b>头像</b>
+  <b>头像:</b>
   <br/>
-  <%= @user.head_logo %>
+  <%=image_tag @user.head_logo.try(:img) %>
 </p>
 
 <p>
-  <b>用户</b>
+  <b>用户:</b>
   <%= @user.name %>
 </p>
 
