@@ -180,8 +180,16 @@ class User
     "http://www.weibo.com/#{wb_uid}" if wb_uid
   end
 
+  def checkins
+    Checkin.where({uid: _id})
+  end
+
   def is_staff?
     !Staff.where({user_id: id}).empty?
   end
   
+  def cat
+    self._id.generation_time.getlocal
+  end
+
 end
