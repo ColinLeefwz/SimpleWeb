@@ -1,4 +1,9 @@
 <h1>用户详情</h1>
+<p>
+  <b>头像</b>
+  <br/>
+  <%= @user.head_logo %>
+</p>
 
 <p>
   <b>用户</b>
@@ -36,6 +41,11 @@
 <p>
   <b>jobtype:</b>
   <%= @user.jobtype %>
+</p>
+
+<p>
+  <b>签到数:</b>
+  <%=link_to @user.checkins.count, "/admin_checkins?uid=#{@user.id}" %>
 </p>
 
 <p>
