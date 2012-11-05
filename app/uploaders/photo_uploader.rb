@@ -26,7 +26,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
     process :quality => 100
   end 
   
-  version :t1
+  version :t1 do
     process :resize_to_fit => [75, 75]
     process :quality => 100
   end
