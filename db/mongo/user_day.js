@@ -33,7 +33,7 @@ var count = function(days){
     }
 }
 
-count(10)
+count(1)
 
 
 
