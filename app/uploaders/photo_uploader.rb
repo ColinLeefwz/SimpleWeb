@@ -23,10 +23,12 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   version :t2 do
     process :resize_to_fit => [150, 150]
+    process :quality => 100
   end 
   
   version :t1, :from_version => :t2 do
     process :resize_to_fit => [75, 75]
+    process :quality => 100
   end
 
   def extension_white_list
