@@ -7,6 +7,7 @@
 
 <table border="1">
   <tr>
+    <th>注册时间</th>
     <th>名称</th>
     <th>wb_uid</th>
     <th>性别</th>
@@ -17,8 +18,9 @@
 
   <% @users.each do |user| %>
     <tr>
+      <td><%= user.cat.strftime("%Y-%m-%d %H:%M") %></td>
       <td><%= user.name %></td>
-      <td><%= user.wb_uid %></td>
+      <td><%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %></td>
       <td><%= user.show_gender %></td>
       <td><%= user.blacks_s.count %></td>
       <td><%= user.follows_s.count %></td>
