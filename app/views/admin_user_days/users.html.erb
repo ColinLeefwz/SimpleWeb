@@ -1,4 +1,4 @@
-
+<h1><%= params[:id] %>注册用户</h1>
 
 <table border="1">
   <tr>
@@ -13,7 +13,7 @@
   <% @users.each do |user| %>
     <tr>
       <td><%= user.name %></td>
-      <td><%= user.wb_uid %></td>
+      <td><%=  link_to user.wb_uid.to_s, user.weibo_home %></td>
       <td><%= user.show_gender %></td>
       <td><%= user.blacks_s.count %></td>
       <td><%= user.follows_s.count %></td>
