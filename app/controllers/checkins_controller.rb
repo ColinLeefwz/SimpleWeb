@@ -27,12 +27,7 @@ class CheckinsController < ApplicationController
 
   def send_welcome_msg_if_not_invisible(user_gender)
     return if session_user.invisible==2
-    if user_gender==2
-      message = "Hi，我来了~😊"
-    else
-      message = "Hi，我来啦~😝"
-    end
-    Resque.enqueue(XmppWelcome, params[:shop_id], message, params[:user_id])
+    Resque.enqueue(XmppWelcome, params[:shop_id], user_gender, params[:user_id])
   end
 
   def send_coupon_if_exist
