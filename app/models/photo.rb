@@ -10,6 +10,11 @@ class Photo
   field :img
   mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface"+bucket_suffix ; end }
   
+  field :img_tmp
+  #field :img_processing, type:Boolean
+  store_in_background :img
+  
+  
   index({user_id:1, room:1})
   
   def user

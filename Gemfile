@@ -31,6 +31,7 @@ gem 'mini_magick'
 gem 'rest-client'
 gem 'carrierwave-aliyun'
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem 'carrierwave_backgrounder'
 
 gem 'resque', :require => "resque/server"
 
