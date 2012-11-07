@@ -6,7 +6,7 @@ class UserLogo
   field :user_id, type: Moped::BSON::ObjectId
   field :ord, type: Float
   field :img
-  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "logo"+bucket_suffix ; end }
+  mount_uploader(:img, LogoUploader)
   
   index({ user_id: 1, ord: 1 })
   
