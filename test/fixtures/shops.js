@@ -1,3 +1,4 @@
+db.shops.remove();
 db.shops.insert({ 
     "_id" : 1,
     "name" : "测试1",
