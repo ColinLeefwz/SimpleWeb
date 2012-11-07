@@ -1,8 +1,9 @@
 # encoding: utf-8
 
-class PhotoUploader < CommonPhotoUploader
+class LogoUploader < CommonPhotoUploader
 
-  def aliyun_bucket; "dface"+bucket_suffix ; end
+  def aliyun_bucket; "logo"+bucket_suffix ; end
+  
   process :resize_to_limit => [640, 640]
 
   version :t2 do

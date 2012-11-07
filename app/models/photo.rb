@@ -8,7 +8,7 @@ class Photo
   field :desc
   field :weibo, type:Boolean
   field :img
-  mount_uploader(:img, PhotoUploader) { def aliyun_bucket; "dface"+bucket_suffix ; end }
+  mount_uploader(:img, PhotoUploader)
   
   field :img_tmp
   #field :img_processing, type:Boolean
