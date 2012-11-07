@@ -1,7 +1,7 @@
 rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/dooo/lianlian"
 
-[['xmpp',0.1,1],['normal',5,2]].each do |queue,inteval,num_workers|
+[['xmpp',0.1,1],['*',5,2]].each do |queue,inteval,num_workers|
 num_workers.times do |num|
   God.watch do |w|
     w.dir      = "#{rails_root}"
