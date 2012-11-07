@@ -38,6 +38,12 @@ class Oauth2Controller < ApplicationController
     do_login(uid,token.token,data)
   end
   
+  def test_login
+    return if ENV["RAILS_ENV"] != "test"
+    session[:user_id] = User.find(params[:id]).id
+    render :json => {}
+  end
+
   #提供给手机客户端的认证服务
   def login
     hash = Digest::SHA1.hexdigest("#{params[:name]}#{params[:pass]}#{params[:mac]}dface")[0,32]
