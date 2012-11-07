@@ -27,7 +27,7 @@ class Photo
 
   
   def logo_thumb_hash
-    {:logo => self.img.url, :logo_thumb => self.img.url(:t1), :logo_thumb2 => self.img.url(:t2)  }
+    {:logo => self.img.url, :logo_thumb2 => self.img.url(:t2)  }
   end
   
   def output_hash

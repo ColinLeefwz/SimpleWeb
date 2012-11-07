@@ -8,6 +8,9 @@ class Photo2
   field :img
   mount_uploader(:img, Photo2Uploader)
   
+  field :img_tmp
+  store_in_background :img
+  
   index({ user_id: 1 })
   
   def user
@@ -16,7 +19,7 @@ class Photo2
 
   
   def logo_thumb_hash
-    {:logo => self.img.url, :logo_thumb => self.img.url(:t1), :logo_thumb2 => self.img.url(:t2)  }
+    {:logo => self.img.url, :logo_thumb2 => self.img.url(:t2)  }
   end
   
   def output_hash
