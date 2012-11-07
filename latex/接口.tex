@@ -1121,7 +1121,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \item 该请求必须是POST请求，enctype="multipart/form-data"。
 \item 所上传文件的type必须是image/jpeg', 'image/gif' 或者'image/png'。
 \item 图片文件必须小于5M。
-\item 图片名为logo；缩略图分为两种大小，logo\_thumb为75*75的png，logo\_thumb2为150*150的png。
+\item 图片名为logo；缩略图分logo\_thumb2为150*150的png。
 \end{enumerate}
 
 例子：
@@ -1131,7 +1131,14 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 访问：curl -F "photo[img]=@firefox.png;type=image/png" 
 /photos
 
-{"_id":"502fd10abe4b19ed48000002","img_file_name":"7.png","img_content_type":"image/png","img_file_size":99422,"img_updated_at":"2012-08-18T17:29:46Z","room":"237","user_id":"502e61bfbe4b1921da000001","logo":"/system/imgs/502fd10abe4b19ed48000002/original/7.png?1345310986","logo_thumb":"/system/imgs/502fd10abe4b19ed48000002/thumb/7.jpg?1345310986","logo_thumb2":"/system/imgs/502fd10abe4b19ed48000002/thumb2/7.jpg?1345310986","id":"502fd10abe4b19ed48000002"}
+{"_id":"509a1ffcbe4b1982a4000002",
+"weibo":false,"room":"1",
+"user_id":"502e61bfbe4b1921da000005",
+"img_tmp":"20121107-1646-42114-4251/111.jpg",
+"logo":"/uploads/tmp/20121107-1646-42114-4251/111.jpg",
+"logo_thumb2":null,"id":"509a1ffcbe4b1982a4000002"}
+
+当返回的响应中包含img_tmp字段，且logo_thumb2为null时，说明此时图片上传到了服务器，但是还未启动后台处理。后台异步处理图片，包括生成缩略图以及上传到阿里云。
 
 \end{verbatim}
 \end{figure}
@@ -1160,11 +1167,13 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
   \hline
  id  & 字符串 & 必须 & 图片id\\
 \hline
- size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为75*75；2代表thumb2缩略图，大小为150*150。默认为1。\\ 
+ size  & 整数 & 可选 &  目前0代表原图；2代表thumb2缩略图，大小为150*150。默认为2。\\ 
 \hline
 \end{tabular}
    \end{center}
 \end{table}
+
+注意：聊天时发图，取消的75*75大小的缩略图。［2012-11-7］
 
 聊天室里发图不需要发送已读回执消息。
 
@@ -1211,11 +1220,14 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
   \hline
  id  & 字符串 & 必须 & 图片id\\
 \hline
- size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为75*75；2代表thumb2缩略图，大小为150*150。默认为1。\\ 
+ size  & 整数 & 可选 &  目前0代表原图；2代表thumb2缩略图，大小为150*150。默认为2。\\ 
 \hline
 \end{tabular}
    \end{center}
 \end{table}
+
+注意：聊天时发图，取消的75*75大小的缩略图。［2012-11-7］
+
 
 \subsection{消息状态}
 和普通的文字消息一样，接收者收到图片后发送状态更新消息（收到／已读）给发送者。发送者将状态显示在图片旁边。

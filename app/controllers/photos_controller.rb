@@ -19,10 +19,8 @@ class PhotosController < ApplicationController
     photo = Photo.find(params[:id])
     if params[:size].to_i==0
       redirect_to photo.img.url
-    elsif params[:size].to_i==2
-      redirect_to photo.img.url(:t2)
     else
-      redirect_to photo.img.url(:t1)
+      redirect_to photo.img.url(:t2)
     end
   end
 
