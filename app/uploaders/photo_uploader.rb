@@ -4,7 +4,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
   include ::CarrierWave::Backgrounder::Delay
-
+  
   storage :aliyun
   
   def bucket_suffix

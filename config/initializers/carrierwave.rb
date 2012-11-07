@@ -18,8 +18,6 @@ module CarrierWave
   end
 end
 
-Mongoid::Document::ClassMethods.send(:include, ::CarrierWave::Backgrounder::ORM::Base)
-
 CarrierWave::Backgrounder.configure do |c|
   # :delayed_job, :girl_friday, :sidekiq, :qu, :resque, or :qc
   c.backend = :resque
