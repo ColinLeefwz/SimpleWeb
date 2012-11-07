@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/yuanxinyu/carrierwave-aliyun.git
+  revision: bcf3ae96f9819f076cdb7f15174979a93e7adb6e
+  specs:
+    carrierwave-aliyun (0.1.0)
+      carrierwave (>= 0.5.7)
+      rest-client (>= 1.6.7)
+
+GIT
   remote: git://github.com/yuanxinyu/carrierwave_backgrounder.git
   revision: 602e2ae48d009232499c519476e8b0c7a5061d77
   specs:
@@ -43,9 +51,6 @@ GEM
     carrierwave (0.7.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
-    carrierwave-aliyun (0.1.0)
-      carrierwave (>= 0.5.7)
-      rest-client (>= 1.6.7)
     carrierwave-mongoid (0.1.0)
       carrierwave
       mongoid
@@ -181,7 +186,7 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   carrierwave
-  carrierwave-aliyun
+  carrierwave-aliyun!
   carrierwave-mongoid
   carrierwave_backgrounder!
   debugger
