@@ -8,6 +8,9 @@ class UserLogo
   field :img
   mount_uploader(:img, LogoUploader)
   
+  field :img_tmp
+  store_in_background(:img) unless ENV["RAILS_ENV"] == "test"
+  
   index({ user_id: 1, ord: 1 })
   
 
