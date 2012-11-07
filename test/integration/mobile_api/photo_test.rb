@@ -20,15 +20,16 @@ class PhotoTest < ActionDispatch::IntegrationTest
 
   test "聊天室上传图片" do
     reload('users.js')
-    
+    #未登录时上传图片
     upload_photo
     assert_response :success
     data = JSON.parse(response.body)
     assert_equal data["error"], "not login"
-    
+    #登录
     get "/oauth2/test_login?id=502e6303421aa918ba000005"
     assert_equal User.find("502e6303421aa918ba000005").id, session[:user_id]
     
+    #上传图片
     upload_photo
     assert_response :success
     data = JSON.parse(response.body)
@@ -38,9 +39,24 @@ class PhotoTest < ActionDispatch::IntegrationTest
     assert_equal data["desc"],  '一张图片'
     assert_nil data["logo_thumb2"]
     assert !Photo.last.img_tmp.nil?
+
+    #未处理就获得图片
+    begin
+      get "/photos/show?id=#{Photo.last.id}"
+      raise "should throw error"
+    rescue
+    end
+       
+    #异步处理图片
     async_process_photo
     assert Photo.last.img_tmp.nil?
     assert Photo.last.img.url(:t2).index(Photo.last.id.to_s)>0
+    
+    #再次获得图片
+    get "/photos/show?id=#{Photo.last.id}"
+    assert_response :redirect
+    
+    
   end
 
 end
