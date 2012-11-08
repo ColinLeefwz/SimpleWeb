@@ -7,7 +7,7 @@ class PhotoTest < ActionDispatch::IntegrationTest
     file = 'public/images/test/测试图.jpg'
     post "/photos/create",{:photo => {
       :img => Rack::Test::UploadedFile.new(file, "image/jpeg"),
-      :room => 12,
+      :room => 4928288,
       :weibo => 0,
       :desc => '一张图片'
       }
@@ -34,7 +34,7 @@ class PhotoTest < ActionDispatch::IntegrationTest
     assert_response :success
     data = JSON.parse(response.body)
     assert_equal data["id"], Photo.last.id.to_s
-    assert_equal data["room"], "12"
+    assert_equal data["room"], "4928288"
     assert_equal data["weibo"], false
     assert_equal data["desc"],  '一张图片'
     assert_nil data["logo_thumb2"]
