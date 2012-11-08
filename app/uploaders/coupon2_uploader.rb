@@ -7,7 +7,7 @@ class Coupon2Uploader < CarrierWave::Uploader::Base
   storage :file
   
   def store_dir
-    "#{model.id}"
+    "coupon/#{model.id}"
   end
   
   def filename
