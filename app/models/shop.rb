@@ -131,5 +131,14 @@ class Shop
     end
     ret
   end
+  
+  def send_coupon(user_id)
+    find coupons
+    send
+    xmpp2 = "<message to='#{user_id}@dface.cn' from='#{shop_id}@c.dface.cn' type='groupchat'><body>收到一张优惠券：#{name}</body></message>"
+    logger.info(xmpp1)
+    logger.info(xmpp2)
+    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2) 
+  end
 
 end

@@ -15,6 +15,13 @@ class Coupon
   field :rule # 0代表一个用户只能下载一次，1代表一个用户只能有一张未使用的，2代表无限制
   field :img
   mount_uploader :img, CouponUploader
+  field :img_tmp
+
+  
+  field :img2
+  mount_uploader :img2, CouponUp2loader
+  
+  # 生成coupon image, 然后调用img_tmp='', CarrierWave::Workers::StoreAsset.perform("Coupon",id.to_s,"img")
   
   index({ shop_id: 1})
   
@@ -30,17 +37,13 @@ class Coupon
   end
 
   def send_coupon(user_id, sub = true)
+    
     send_sub_coupon(user_id) if sub
     return false unless send?(user_id)
     
-    #TODO: 根据rule判断是否下发
     download(user_id)
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
-    xmpp2 = "<message to='#{user_id}@dface.cn' from='#{shop_id}@c.dface.cn' type='groupchat'><body>收到一张优惠券：#{name}</body></message>"
-    logger.info(xmpp1)
-    logger.info(xmpp2)
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2) 
   end
 
 
@@ -94,6 +97,7 @@ class Coupon
 
   #:t1是小图
   def img_url(type=nil)
+    # 取消
     if self.t.to_i == 1
       text_img(type)
     elsif self.t.to_i == 2
