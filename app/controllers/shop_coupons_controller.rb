@@ -49,6 +49,7 @@ class ShopCouponsController < ApplicationController
     @coupon.shop_id = session[:shop_id]
     if @coupon.save
       @coupon.gen_img
+      CarrierWave::Workers::StoreAsset.perform("Coupon",@coupon.id.to_s,"img")
       redirect_to :action => :show, :id => @coupon.id
     else
       render :layout => true

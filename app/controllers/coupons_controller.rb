@@ -6,7 +6,7 @@ class CouponsController < ApplicationController
       if params[:size].to_i==0
         redirect_to cp.img.url
       else
-        redirect_to cp.img_ur(:t1)
+        redirect_to cp.img.url(:t1)
       end
   end
   

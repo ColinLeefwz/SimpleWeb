@@ -16,10 +16,10 @@ class Coupon
   field :img
   mount_uploader :img, CouponUploader
   field :img_tmp
-
+  store_in_background :img
   
   field :img2
-  mount_uploader :img2, CouponUp2loader
+  mount_uploader :img2, Coupon2Uploader
   
   # 生成coupon image, 然后调用img_tmp='', CarrierWave::Workers::StoreAsset.perform("Coupon",id.to_s,"img")
   
@@ -79,9 +79,10 @@ class Coupon
     if self.t.to_i == 1
       name = self.name
       desc = self.desc
-      img = self.img
-      re = `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public/coupon/#{self._id}.jpg #{img} '`
-      re.blank? ? self.attributes : re
+      img = self.img2
+      re = `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public/uploads/tmp/#{self.id}.jpg ../public/#{img}`
+      self.img_tmp = "#{self.id}.jpg"
+      self.save
     end
   end
 
@@ -96,33 +97,33 @@ class Coupon
   end
 
   #:t1是小图
-  def img_url(type=nil)
-    # 取消
-    if self.t.to_i == 1
-      text_img(type)
-    elsif self.t.to_i == 2
-      full_img(type)
-    end
-  end
+  #  def img_url(type=nil)
+  #    # 取消
+  #    if self.t.to_i == 1
+  #      text_img(type)
+  #    elsif self.t.to_i == 2
+  #      full_img(type)
+  #    end
+  #  end
 
   private
-  def full_img(type)
-    case type
-    when :t1
-      self.img.url(:t1)
-    else
-      self.img
-    end
-  end
-
-  def text_img(type)
-    case type
-    when :t1
-      "/coupon/#{self._id}.jpg_2.jpg"
-    else
-      "/coupon/#{self._id}.jpg"
-    end
-  end
+  #  def full_img(type)
+  #    case type
+  #    when :t1
+  #      self.img.url(:t1)
+  #    else
+  #      self.img
+  #    end
+  #  end
+  #
+  #  def text_img(type)
+  #    case type
+  #    when :t1
+  #      "/coupon/#{self._id}.jpg_2.jpg"
+  #    else
+  #      "/coupon/#{self._id}.jpg"
+  #    end
+  #  end
 
   def send_sub_coupon(user_id)
     sids = self.shop.shops.to_a
