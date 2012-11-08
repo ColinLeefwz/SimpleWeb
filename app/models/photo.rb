@@ -1,3 +1,4 @@
+# encoding: utf-8
 #用户在聊天室上传的图片
 
 class Photo
@@ -14,8 +15,14 @@ class Photo
   #field :img_processing, type:Boolean
   store_in_background :img
   
-  
   index({user_id:1, room:1})
+  
+  def after_async_store
+    # 发送聊天室消息
+    if weibo
+      Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), "在#{shop.name}分享：\n#{desc}", img.url)
+    end
+  end
   
   def user
     User.find(self.user_id)
