@@ -101,7 +101,7 @@ class Oauth2Controller < ApplicationController
       user.save!
     end
     session[:user_id] = user.id
-    session[:user_token] = token
+    $redis.set("wbtoken#{user.id}",token)
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json

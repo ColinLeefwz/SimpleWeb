@@ -7,11 +7,8 @@ class PhotosController < ApplicationController
   def create
     p = Photo.new(params[:photo])
     p.user_id = session[:user_id]
-    #debugger
+    debugger
     p.save!
-    if p.weibo
-      Resque.enqueue(WeiboPhoto, session[:user_token], "在#{p.shop.name}分享：\n#{p.desc}", p.img.url)
-    end
     render :json => p.output_hash.to_json
   end
   
