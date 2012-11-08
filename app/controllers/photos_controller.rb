@@ -7,7 +7,6 @@ class PhotosController < ApplicationController
   def create
     p = Photo.new(params[:photo])
     p.user_id = session[:user_id]
-    debugger
     p.save!
     render :json => p.output_hash.to_json
   end
