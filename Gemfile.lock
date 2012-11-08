@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/yuanxinyu/carrierwave_backgrounder.git
-  revision: 602e2ae48d009232499c519476e8b0c7a5061d77
+  revision: 39bc91986957f6427ed043096aa656a38131a972
   specs:
     carrierwave_backgrounder (0.0.8)
       carrierwave (~> 0.5)
