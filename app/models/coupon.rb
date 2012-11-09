@@ -37,15 +37,17 @@ class Coupon
   end
 
   def send_coupon(user_id, sub = true)
-    
-    send_sub_coupon(user_id) if sub
-    return false unless send?(user_id)
-    
     download(user_id)
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
   end
 
+  def allow_send?(user_id)
+    al = true
+    al = false if self.rule.to_i == 0 && self.users.to_a.detect{|u| user_id == u['id']}
+    al = false if self.rule.to_i == 1 && self.users.to_a.detect{|u| user_id == u['id'] && u['uat'].nil?  }
+    al
+  end
 
   
   def download(user_id)
@@ -54,7 +56,12 @@ class Coupon
 
   def use(user_id)
     #db.coupons.update({'users.id':ObjectId("502e61bfbe4b1921da000001")},{$set: {'users.$.uat':111}})
-    Coupon.collection.find(_id:self._id, "users.id" => user_id).update(:$set => {'users.$.uat' => Time.now} )
+    #    Coupon.collection.find(_id:self._id, "users.id" => user_id).update(:$set => {'users.$.uat' => Time.now} )
+    downed = self.users.detect { |u| u['id'] == user_id && u['uat'].nil? }
+    if downed
+      downed.update("uat" => Time.now)
+      self.save
+    end
   end
   
   
@@ -84,8 +91,8 @@ class Coupon
       `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public/uploads/tmp/coupon_#{self.id}.jpg ../public/#{img}`
       self.img_tmp = "coupon_#{self.id}.jpg"
       self.save
+      CarrierWave::Workers::StoreAsset.perform("Coupon",self.id.to_s,"img")
     end
-    CarrierWave::Workers::StoreAsset.perform("Coupon",self.id.to_s,"img")
   end
 
 
@@ -127,20 +134,13 @@ class Coupon
   #    end
   #  end
 
-  def send_sub_coupon(user_id)
-    sids = self.shop.shops.to_a
-    sids.each do |sid|
-      cou = Coupon.where({shop_id: sid}).last
-      cou.send_coupon(user_id, false) if cou
-    end
-  end
-
-  def send?(user_id)
-    send = true
-    send = false if self.rule.to_i == 0 && self.users.to_a.detect{|u| user_id == u['id']}
-    send = false if self.rule.to_i == 1 && self.users.to_a.detect{|u| user_id == u['id'] && u['uat'].nil? }
-    send
-  end
+  #  def send_sub_coupon(user_id)
+  #    sids = self.shop.shops.to_a
+  #    sids.each do |sid|
+  #      cou = Coupon.where({shop_id: sid}).last
+  #      cou.send_coupon(user_id, false) if cou
+  #    end
+  #  end
 
 
 end
