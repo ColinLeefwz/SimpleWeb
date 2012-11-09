@@ -120,3 +120,9 @@ god -c god/all.god
 ##Xmpp集群
 Xmpp服务器采用ejabberd-2.1.11，erlang的版本是Erlang R15B01, 采用riak保存聊天记录
 
+
+##系统更新
+1. 更新前保证在服务器上测试通过：rake test
+2. 如果gem file有变更，必须停止整个unicorn和resque再启动，不能简单reload。
+3. 如果rake test通过，更新后却报500错误，检查unicorn的日志。
+
