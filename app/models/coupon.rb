@@ -36,8 +36,10 @@ class Coupon
     "[优惠券:#{name}:#{shop.name}:#{self._id}:#{Time.now.strftime('%Y-%m-%d %H：%M')}]"
   end
 
-  def send_coupon(user_id, sub = true)
+  def send_coupon(user_id)
     download(user_id)
+
+    return message if ENV["RAILS_ENV"] != "production"
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
   end

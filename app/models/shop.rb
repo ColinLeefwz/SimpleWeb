@@ -131,14 +131,31 @@ class Shop
     end
     ret
   end
+
+
   
   def send_coupon(user_id)
-    find coupons
-    send
-    xmpp2 = "<message to='#{user_id}@dface.cn' from='#{shop_id}@c.dface.cn' type='groupchat'><body>收到一张优惠券：#{name}</body></message>"
-    logger.info(xmpp1)
+    coupons = []
+    Coupon.gen_demo(self.id) if self.latest_coupons.empty?
+    coupons += self.latest_coupons.select { |coupon| coupon.allow_send?(user_id) }
+    self.shops.each do |sid|
+      shop = Shop.find(sid)
+      coupons += shop.latest_coupons.select { |coupon| coupon.allow_send?(user_id) }
+    end
+
+    coupons.each{|coupon| coupon.send_coupon(user_id)}
+    #    find coupons
+    #    send
+    return "收到#{coupons.count}张优惠券" if ENV["RAILS_ENV"] != "production"
+    return if coupons.count == 0
+    xmpp2 = "<message to='#{user_id}@dface.cn' from='#{shop_id}@c.dface.cn' type='groupchat'><body>收到#{coupons.count}张优惠券</body></message>"
     logger.info(xmpp2)
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2) 
+  end
+
+  
+  def latest_coupons(n=1)
+    coupons = Coupon.where({shop_id: self.id}).sort({_id: -1}).limit(n).to_a
   end
 
 end
