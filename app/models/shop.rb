@@ -148,7 +148,7 @@ class Shop
     #    send
    
     return if coupons.count == 0
-    xmpp2 = "<message to='#{user_id}@dface.cn' from='#{self.id}@c.dface.cn' type='groupchat'><body>收到#{coupons.count}张优惠券</body></message>"
+    xmpp2 = "<message to='#{user_id}@dface.cn' from='#{self.id.to_i}@c.dface.cn' type='groupchat'><body>收到#{coupons.count}张优惠券</body></message>"
     return xmpp2 if ENV["RAILS_ENV"] != "production"
     logger.info(xmpp2)
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2) 
