@@ -170,7 +170,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
-    unicorn (4.4.0)
+    unicorn (4.3.1)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -202,7 +202,7 @@ DEPENDENCIES
   redis-store
   resque
   rest-client
-  unicorn (~> 4.4)
+  unicorn (~> 4.3)
   will_paginate
   wirble
   xmpp4r
