@@ -47,9 +47,9 @@ class ShopCouponsController < ApplicationController
   def create
     @coupon = Coupon.new(params[:coupon])
     @coupon.shop_id = session[:shop_id]
-    @coupon.process_img_upload = true
+    @coupon.process_img_upload = true if @coupon.t.to_i == 2
     if @coupon.save
-      @coupon.gen_img
+      @coupon.gen_img if @coupon.t.to_i == 1
       redirect_to :action => :show, :id => @coupon.id
     else
       render :layout => true
