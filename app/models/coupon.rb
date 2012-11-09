@@ -38,9 +38,9 @@ class Coupon
 
   def send_coupon(user_id)
     download(user_id)
-
-    return message if ENV["RAILS_ENV"] != "production"
     xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
+    logger.info(xmpp1)
+    return xmpp1 if ENV["RAILS_ENV"] != "production"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
   end
 
