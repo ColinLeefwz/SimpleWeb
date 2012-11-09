@@ -31,8 +31,9 @@ class CheckinsController < ApplicationController
   end
 
   def send_coupon_if_exist
-    shop = Shop.find(params[:shop_id])
-    shop.send_coupon(session[:user_id])
+    Resque.enqueue(SendCoupon, session[:user_id], params[:shop_id])
+    #    shop = Shop.find(params[:shop_id])
+    #    shop.send_coupon(session[:user_id])
     #    coupon = Coupon.where({shop_id:params[:shop_id]}).last
     #    coupon = Coupon.gen_demo(params[:shop_id]) if coupon.nil?
     #    coupon.send_coupon(session[:user_id]) if coupon
