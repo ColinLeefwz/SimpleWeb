@@ -56,5 +56,17 @@ class UserLogosController < ApplicationController
       render :json => {:error => "user_logo #{params[:id]} delete failed"}.to_json
     end
   end
+  
+  def show
+    photo = UserLogo.find(params[:id])
+    if params[:size].to_i==0
+      redirect_to photo.img.url
+    elsif params[:size].to_i==2
+      redirect_to photo.img.url(:t2)
+    else
+      redirect_to photo.img.url(:t1)
+    end
+  end
 
+  
 end
