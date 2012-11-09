@@ -31,10 +31,11 @@ class CheckinsController < ApplicationController
   end
 
   def send_coupon_if_exist
-    # shop.send_coupon
-    coupon = Coupon.where({shop_id:params[:shop_id]}).last
-    coupon = Coupon.gen_demo(params[:shop_id]) if coupon.nil?
-    coupon.send_coupon(session[:user_id]) if coupon
+    shop = Shop.find(params[:shop_id])
+    shop.send_coupon
+    #    coupon = Coupon.where({shop_id:params[:shop_id]}).last
+    #    coupon = Coupon.gen_demo(params[:shop_id]) if coupon.nil?
+    #    coupon.send_coupon(session[:user_id]) if coupon
   end
 
 
