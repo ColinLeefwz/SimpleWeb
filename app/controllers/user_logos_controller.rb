@@ -49,8 +49,10 @@ class UserLogosController < ApplicationController
       render :json => {:error => "must have at least one photo"}.to_json
       return
     end
+    change_head_logo = (user.head_logo_id==user_logo.id)
     if user_logo.destroy
       user.inc(:pcount, -1)
+      user.set(:head_logo_id, user.user_logos[0].id)  if change_head_logo
       render :json => {:deleted => params[:id]}.to_json
     else
       render :json => {:error => "user_logo #{params[:id]} delete failed"}.to_json
