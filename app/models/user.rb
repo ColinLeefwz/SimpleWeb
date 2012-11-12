@@ -14,8 +14,7 @@ class User
   field :job #职业说明
   field :jobtype, type: Integer #职业类别
   field :hobby #爱好
-  field :multip, type:Boolean, default:false #该用户是否上传了多张图片
-  field :pcount, type: Integer #上传的头像的数量
+  field :pcount, type: Integer, default:0 #上传的头像的数量
   field :head_logo_id, type: Moped::BSON::ObjectId
   
   field :blacks, type:Array #黑名单
@@ -110,7 +109,7 @@ class User
   end
   
   def safe_output
-    hash = self.attributes.slice("name", "signature", "wb_uid", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype", "multip","pcount")
+    hash = self.attributes.slice("name", "signature", "wb_uid", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   

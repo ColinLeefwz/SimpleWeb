@@ -38,7 +38,7 @@ class Coupon
 
   def send_coupon(user_id)
     download(user_id)
-    xmpp1 = "<message to='#{user_id}@dface.cn' from='s#{shop_id}@dface.cn' type='chat'><body>#{message}</body></message>"
+    xmpp1 = Xmpp.chat("s#{shop_id}",user_id,message)
     logger.info(xmpp1)
     return xmpp1 if ENV["RAILS_ENV"] != "production"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
@@ -106,43 +106,6 @@ class Coupon
   def show_rule
     ['只能下载一次', '只能有一张未使用','无限制'][self.rule.to_i]
   end
-
-  #:t1是小图
-  #  def img_url(type=nil)
-  #    # 取消
-  #    if self.t.to_i == 1
-  #      text_img(type)
-  #    elsif self.t.to_i == 2
-  #      full_img(type)
-  #    end
-  #  end
-
-  private
-  #  def full_img(type)
-  #    case type
-  #    when :t1
-  #      self.img.url(:t1)
-  #    else
-  #      self.img
-  #    end
-  #  end
-  #
-  #  def text_img(type)
-  #    case type
-  #    when :t1
-  #      "/coupon/#{self._id}.jpg_2.jpg"
-  #    else
-  #      "/coupon/#{self._id}.jpg"
-  #    end
-  #  end
-
-  #  def send_sub_coupon(user_id)
-  #    sids = self.shop.shops.to_a
-  #    sids.each do |sid|
-  #      cou = Coupon.where({shop_id: sid}).last
-  #      cou.send_coupon(user_id, false) if cou
-  #    end
-  #  end
 
 
 end
