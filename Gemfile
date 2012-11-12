@@ -8,7 +8,7 @@ gem 'rails', '~> 3.2'
 gem 'debugger'
 
 group :production do
-  gem 'unicorn'
+  gem 'unicorn', '~> 4.3'
 end
 
 gem "wirble", :group => :development
