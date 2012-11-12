@@ -10,7 +10,7 @@ class UserLogosController < ApplicationController
     user_logo.user_id = session[:user_id]
     user_logo.save!
     user = user_logo.user
-    user.set(:head_logo_id, user_logo.id) if user.pcount==0
+    user.set(:head_logo_id, user_logo.id) unless user.pcount>0
     user.inc(:pcount, 1)
     render :json => user_logo.output_hash.to_json
   end
