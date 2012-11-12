@@ -674,16 +674,35 @@ wb_uid:1884834632
 /user_logos
 
 
-{"logo_thumb2":"/system/imgs/6/thumb2/csky2.png?1340779488",
-"updated_at":"2012-06-27T06:44:48Z"
+{"logo_thumb2":null, "logo_thumb1":null
 ,"id":6,
-"logo":"/system/imgs/6/original/csky2.png?1340779488",
-"img_file_size":156604,
+"logo":"",
 "user_id":3,
-"logo_thumb":"/system/imgs/6/thumb/csky2.png?1340779488"}
+"img_tmp":"/system/imgs/6/thumb/csky2.png?1340779488"}
 
 \end{verbatim}
+
+用户上传图片更改为异步操作。图片上传完成后返回图片的id，但是此时图片还没有实际的阿里云链接。客户端上传完成后，可以用下面的“根据图片id获得用户相册里的图片”接口尝试获得实际的上传图片和缩略图。
+
 \end{figure}
+
+
+\section{根据图片id获得用户相册里的图片}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_logos/show} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；1代表thumb1缩略图，大小为75*75；2代表thumb2缩略图，大小为150*150。默认为1。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
 
 
 
