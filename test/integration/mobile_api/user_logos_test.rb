@@ -8,6 +8,7 @@ class UserLogosTest < ActionDispatch::IntegrationTest
     UserLogo.delete_all
     get "/oauth2/test_login?id=502e6303421aa918ba000005"
     assert_equal User.find("502e6303421aa918ba000005").id, session[:user_id]
+    assert_equal User.find("502e6303421aa918ba000005").pcount, 0
 
     #上传图片
     file = 'public/images/test/测试图.jpg'
