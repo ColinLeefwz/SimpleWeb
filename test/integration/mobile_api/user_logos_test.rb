@@ -8,6 +8,7 @@ class UserLogosTest < ActionDispatch::IntegrationTest
     UserLogo.delete_all
     get "/oauth2/test_login?id=502e6303421aa918ba000005"
     assert_equal User.find("502e6303421aa918ba000005").id, session[:user_id]
+    assert_equal User.find("502e6303421aa918ba000005").pcount, 0
 
     #上传图片
     file = 'public/images/test/测试图.jpg'
@@ -33,6 +34,7 @@ class UserLogosTest < ActionDispatch::IntegrationTest
     assert_response :success 
     data = JSON.parse(response.body)
     assert_equal  data.map{|d| d['id']}, [one.id.to_s, two.id.to_s, three.id.to_s]
+    assert_equal 3, session_user.pcount
 
     #改变图片位置
     get "/user_logos/change_all_position?ids=#{two.id.to_s},#{three.id.to_s},#{one.id.to_s}"
@@ -49,12 +51,16 @@ class UserLogosTest < ActionDispatch::IntegrationTest
     get "/user_logos/delete?id=#{one.id}"
     assert_response :success
     assert_equal session_user.user_logos.to_a,[two, three]
+    assert_equal session_user.head_logo_id, two.id
+    assert_equal 2, session_user.pcount
 
     #删除二个图片
     get "/user_logos/delete?id=#{two.id}"
     assert_response :success
     assert_equal session_user.user_logos.to_a,[three]
-
+    assert_equal session_user.head_logo_id, three.id
+    assert_equal 1, session_user.pcount
+    
     #删除最后一张图片
     get "/user_logos/delete?id=#{three.id}"
     assert_response :success

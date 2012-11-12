@@ -118,5 +118,48 @@ god -c god/all.god
 
 
 ##Xmpp集群
-Xmpp服务器采用ejabberd-2.1.11，erlang的版本是Erlang R15B01, 采用riak保存聊天记录
+Xmpp服务器采用ejabberd-2.1.11，erlang的版本是Erlang R15B01, 采用riak保存聊天记录。这几个系统全部使用源代码编译安装，可以使用“head config.log”命令查看configure时的参数。
+
+
+###Erlang
+源代码目录为：/mnt/otp_src_R15B01
+安装: ./configure && make && sudo make install
+
+
+###Ejabberd
+源代码目录为：/mnt/ejabberd-2.1.11/
+安装：./configure --prefix=/mnt/ejabber --enable-user=lian && make && make install
+然后要将src子目录替换为git版本控制。
+
+ejabberd安装时存在一个bug：如果指定用户，要求用户和组名字一样。在mac下创建和用户ylt一样的组并将ylt加入该组的命令如下：
+
+	sudo dscl . create /groups/ylt gid 1000
+	dscl
+	> list Local/Default/Groups
+	dseditgroup -o read ylt
+	dseditgroup -o edit -a ylt -u ylt -t user ylt
+	dscacheutil -q group
+
+riak-erlang-client
+
+###Riak
+
+###Tsung
+
+
+
+
+
+
+##系统更新
+###WEB系统更新
+1. 所有操作在~/lianlian目录下执行。更新前保证在服务器上测试通过：rake test
+2. 如果gem file有变更，必须停止整个unicorn和resque再启动，不能简单reload。
+3. 如果rake test通过，更新后却报500错误，检查unicorn的日志。
+
+
+###XMPP系统更新
+1. 所有操作在/mnt/ejabberd-2.1.11/src目录下执行。
+2. 代码更新：git pull && ./install.sh
+3. 重启：ejabberdctl restart
 

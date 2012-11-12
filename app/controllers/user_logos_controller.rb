@@ -10,7 +10,7 @@ class UserLogosController < ApplicationController
     user_logo.user_id = session[:user_id]
     user_logo.save!
     user = user_logo.user
-    user.set(:head_logo_id, user_logo.id) if user.pcount==0
+    user.set(:head_logo_id, user_logo.id) unless user.pcount>0
     user.inc(:pcount, 1)
     render :json => user_logo.output_hash.to_json
   end
@@ -49,12 +49,26 @@ class UserLogosController < ApplicationController
       render :json => {:error => "must have at least one photo"}.to_json
       return
     end
+    change_head_logo = (user.head_logo_id==user_logo.id)
     if user_logo.destroy
       user.inc(:pcount, -1)
+      user.set(:head_logo_id, user.user_logos[0].id)  if change_head_logo
       render :json => {:deleted => params[:id]}.to_json
     else
       render :json => {:error => "user_logo #{params[:id]} delete failed"}.to_json
     end
   end
+  
+  def show
+    photo = UserLogo.find(params[:id])
+    if params[:size].to_i==0
+      redirect_to photo.img.url
+    elsif params[:size].to_i==2
+      redirect_to photo.img.url(:t2)
+    else
+      redirect_to photo.img.url(:t1)
+    end
+  end
 
+  
 end
