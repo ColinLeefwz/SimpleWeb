@@ -1,41 +1,121 @@
 # coding: utf-8
 require 'test_helper'
+require 'integration/helpers/mobile_helper'
 
 class UserFollowsTest < ActionDispatch::IntegrationTest
 
   test "添加，删除，查看好友(粉丝)" do
     reload('users.js')
-    #登录
-    get "/oauth2/test_login?id=502e6303421aa918ba000005"
-    assert_equal User.find("502e6303421aa918ba000005").id, session[:user_id]
-    user = User.find('502e6303421aa918ba00007c')
-    assert_blank session_user.follows_s
-    assert !user.follower?(session_user.id)
 
-    #添加好友
-    post "/follows/create",{:user_id => session_user.id, :follow_id => user.id}
+    luser = User.find('502e6303421aa918ba000005')
+    user1 = User.find('502e6303421aa918ba00007c')
+    user2 = User.find('502e6303421aa918ba000002')
+
+    #登录添加好友
+    login(luser.id)
+    assert_blank luser.reload.follows_s
+    assert !user1.reload.follower?(luser.id)
+    post "/follows/create",{:user_id => luser.id, :follow_id => user1.id}
     assert_response :success
-    assert session_user.friend?(user.id)
-    assert user.follower?(session_user.id)
+    assert luser.reload.friend?(user1.id)
+    assert user1.follower?(luser.id)
+    assert_equal JSON.parse(response.body), {"saved"=>"502e6303421aa918ba00007c"}
 
-    #粉丝列表
-    get "/follow_info/followers?id=#{user.id}"
+    #未登录添加好友
+    logout
+    post "/follows/create",{:user_id => luser.id, :follow_id => user2.id}
+    assert_response :success
+    assert_equal response.body, {"error"=>"user 502e6303421aa918ba000005 != session user "}.to_json
+    assert_equal luser.reload.friend?(user2.id), false
+    assert_equal user2.follower?(luser.id), false
+
+    #登录添加另一用户的好友
+    logout
+    login(user1.id)
+    post "/follows/create",{:user_id => luser.id, :follow_id => user2.id}
+    assert_response :success
+    assert_equal response.body, {"error"=>"user 502e6303421aa918ba000005 != session user 502e6303421aa918ba00007c"}.to_json
+    assert_equal luser.reload.friend?(user2.id), false
+    assert_equal user2.follower?(luser.id), false
+
+    #未登录粉丝列表
+    logout
+    get "/follow_info/followers?id=#{user1.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert data.detect{|d| d['id'] == session_user.id.to_s}
+    assert_equal data, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>true},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>true}]
 
-    #好友列表
-    get "/follow_info/friends?id=#{session_user.id}"
+    #登录粉丝列表
+    login(luser.id)
+    get "/follow_info/followers?id=#{user1.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert data.detect{|d| d['id'] == user.id.to_s}
+    assert_equal data, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>true},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>true}]
 
-    #删除好友
-    post "follows/delete",{:user_id => session_user.id, :follow_id => '502e6303421aa918ba00007c' }
+    #未登录好友列表
+    logout
+    get "/follow_info/friends?id=#{luser.id}"
     assert_response :success
-    assert_blank session_user.follows_s
-    assert !user.follower?(session_user.id)
+    data = JSON.parse(response.body).last['data']
+    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>false}]
 
+    #登录好友列表
+    login(luser.id)
+    get "/follow_info/friends?id=#{luser.id}"
+    assert_response :success
+    data = JSON.parse(response.body).last['data']
+    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>false}]
+
+    #登录添加再添加一个好友
+    logout
+    login(luser.id)
+    assert_equal luser.reload.follows_s.count, 1
+    assert_equal luser.reload.friend?(user2.id), false
+    assert_equal user2.follower?(luser.id), false
+    post "/follows/create",{:user_id => luser.id, :follow_id => user2.id}
+    assert_response :success
+    assert_equal JSON.parse(response.body), {"saved"=>"502e6303421aa918ba000002"}
+    assert_equal luser.reload.follows_s.count, 2
+    assert_equal luser.reload.friend?(user2.id), true
+    assert_equal user2.follower?(luser.id), true
+
+    #未登录删除好友
+    logout
+    post "follows/delete",{:user_id => luser.id, :follow_id => user1.id }
+    assert_response :success
+    assert_equal response.body, {"error"=>"user 502e6303421aa918ba000005 != session user "}.to_json
+    assert_equal luser.reload.follows_s.count, 2
+    assert_equal luser.reload.friend?(user1.id), true
+    assert_equal user1.follower?(luser.id), true
+
+    #登录删除好友
+    login(luser.id)
+    post "follows/delete",{:user_id => luser.id, :follow_id => user1.id }
+    assert_response :success
+    assert_equal JSON.parse(response.body), {"deleted"=>"502e6303421aa918ba00007c"}
+    assert_equal luser.reload.follows_s.count, 1
+    assert_equal luser.reload.friend?(user1.id), false
+    assert_equal user1.follower?(luser.id), false
+
+    #登录删除另一个用户的好友
+    logout
+    login(user1.id)
+    post "follows/delete",{:user_id => luser.id, :follow_id => user2.id }
+    assert_response :success
+    assert_equal JSON.parse(response.body),{"error"=>"user 502e6303421aa918ba000005 != session user 502e6303421aa918ba00007c"}
+    assert_equal luser.reload.follows_s.count, 1
+    assert_equal luser.reload.friend?(user2.id), true
+    assert_equal user2.follower?(luser.id), true
+
+    #登录再删除好友
+    logout
+    login(luser.id)
+    post "follows/delete",{:user_id => luser.id, :follow_id => user2.id }
+    assert_response :success
+    assert_equal JSON.parse(response.body), {"deleted"=> user2.id.to_s}
+    assert_equal luser.reload.follows_s.count, 0
+    assert_equal luser.reload.friend?(user2.id), false
+    assert_equal user2.follower?(luser.id), false
   end
 
 
