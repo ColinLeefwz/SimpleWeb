@@ -22,7 +22,8 @@ h1{display: none}
 .slide h3{width: 300px;height: 60px;top: 400px;left: 518px;position: absolute;background:url(../images/btn2.png) center top no-repeat;}
 .con{margin:1px 0 0 0;width:100%;overflow:hidden;clear:both;height:239px;background:url(../images/conbg.jpg) left top repeat-x;}
 .Intro{margin-top: 25px;margin-bottom: 5px;}
-.Intro a {margin: 0 8px;}
+.Intro a {margin: 0 3px;}
+.pointer{cursor:pointer;}
 
 
 .footer{clear:both;height:122px;background:url(../images/footbg.jpg) left top repeat-x;color:#999;text-shadow: 1px 1px 0px rgba(0, 0, 0, 1); }
