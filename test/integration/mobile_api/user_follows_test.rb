@@ -25,7 +25,7 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     logout
     post "/follows/create",{:user_id => luser.id, :follow_id => user2.id}
     assert_response :success
-    assert_equal response.body, {"error"=>"user 502e6303421aa918ba000005 != session user "}.to_json
+    assert_equal response.body, {"error"=>"not login"}.to_json
     assert_equal luser.reload.friend?(user2.id), false
     assert_equal user2.follower?(luser.id), false
 
@@ -83,7 +83,7 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     logout
     post "follows/delete",{:user_id => luser.id, :follow_id => user1.id }
     assert_response :success
-    assert_equal response.body, {"error"=>"user 502e6303421aa918ba000005 != session user "}.to_json
+    assert_equal response.body, {"error"=>"not login"}.to_json
     assert_equal luser.reload.follows_s.count, 2
     assert_equal luser.reload.friend?(user1.id), true
     assert_equal user1.follower?(luser.id), true
