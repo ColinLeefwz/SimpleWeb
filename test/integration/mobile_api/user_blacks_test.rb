@@ -24,7 +24,7 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     logout
     post "/blacklists/create", {:user_id => luser.id, :block_id => user2.id}
     assert_response :success
-    assert_equal response.body, {"error"=>"user 502e6303421aa918ba000005 != session user "}.to_json
+    assert_equal response.body, {"error"=>"not login"}.to_json
     assert_equal luser.reload.blacks_s.count, 1
     assert luser.reload.blacks_s.detect{|data| data["id"] == user1.id}
 
@@ -64,7 +64,7 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     logout
     post '/blacklists/delete', {:user_id => luser.id, :block_id => user1.id}
     assert_response :success
-    assert_equal response.body, {"error"=>"user 502e6303421aa918ba000005 != session user "}.to_json
+    assert_equal response.body, {"error"=>"not login"}.to_json
     assert_equal luser.reload.blacks_s.count, 2
     assert luser.reload.blacks_s.detect{|data| data["id"] == user1.id}
 

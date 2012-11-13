@@ -1,5 +1,5 @@
 class FollowsController < ApplicationController
-  
+  before_filter :user_login_filter
   before_filter :user_is_session_user
 
   def create
