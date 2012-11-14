@@ -10,7 +10,6 @@ class UserLogosTest < ActionDispatch::IntegrationTest
 
     luser = User.find('502e6303421aa918ba000005')
     user1 = User.find('502e6303421aa918ba00007c')
-    user2 = User.find('502e6303421aa918ba000002')
     file = 'public/images/test/测试图.jpg'
     file1 = 'public/images/test/coupon.jpg'
 
