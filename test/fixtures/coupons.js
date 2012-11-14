@@ -26,4 +26,13 @@ db.coupons.insert({
     rule: 2
 })
 
+db.coupons.insert({
+    _id: ObjectId('507fc5bfc9ad42d756a412e4'),
+    shop_id: 1,
+    name: '测试优惠券',
+    desc: "规则无限制下载,测试优惠券只推送最后一张",
+    ratio: 2,
+    rule: 2
+})
+
 
