@@ -1,6 +1,8 @@
 # coding: utf-8
 
 class CouponsController < ApplicationController
+  before_filter :user_login_filter, :only => :use
+
   def img
     cp = Coupon.find(params[:id][0,24])
       if params[:size].to_i==0
