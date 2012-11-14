@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class CheckinsController < ApplicationController
+  before_filter :user_login_filter, :only => :create
 
   def create
     raise "user != session user" if params[:user_id].to_s != session[:user_id].to_s
@@ -31,7 +32,12 @@ class CheckinsController < ApplicationController
   end
 
   def send_coupon_if_exist
-    Resque.enqueue(SendCoupon, session[:user_id], params[:shop_id])
+    if ENV["RAILS_ENV"] == "production"
+      Resque.enqueue(SendCoupon, session[:user_id], params[:shop_id])
+    else
+      Shop.find(params[:shop_id]).send_coupon(session[:user_id])
+    end
+
     #    shop = Shop.find(params[:shop_id])
     #    shop.send_coupon(session[:user_id])
     #    coupon = Coupon.where({shop_id:params[:shop_id]}).last
