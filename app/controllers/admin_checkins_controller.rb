@@ -59,6 +59,9 @@ class AdminCheckinsController < ApplicationController
     @checkins = paginate("Checkin", params[:page], hash, sort  )
   end
 
+  def show
+    @checkin = Checkin.find(params[:id])
+  end
 
 
   def ajaxdel
