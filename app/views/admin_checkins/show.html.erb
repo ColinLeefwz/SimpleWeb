@@ -1,0 +1,50 @@
+
+<p>
+  <b>时间:</b>
+  <%= @checkin.cat.strftime("%Y-%m-%d %H:%M:%S") %>
+</p>
+
+<p>
+  <b>用户:</b>
+
+  <%= @checkin.user.name %>
+  (<%= @checkin.uid %>)
+</p>
+
+<p>
+  <b>商家:</b>
+  <%= @checkin.shop.name %>
+  (<%= @checkin.sid %>)
+</p>
+
+<p>
+  <b>经纬度:</b>
+  <%= @checkin.loc %>
+</p>
+<p>
+  <b>ip:</b>
+  <%= @checkin.ip%>
+</p>
+
+<p>
+  <b>排名:</b>
+  <%= @checkin.od.to_i %>
+</p>
+
+<p>
+  <b>误差:</b>
+  <%= @checkin.acc.to_i %>
+</p>
+
+<p>
+  <b>海拔高度:</b>
+  <%= @checkin.alt %>
+</p>
+<p>
+  <b>海拔高度的精确度:</b>
+  <%= @checkin.altacc.to_i %>
+</p>
+
+
+<%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %>
+

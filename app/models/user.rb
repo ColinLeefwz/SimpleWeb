@@ -181,7 +181,7 @@ class User
   end
 
   def checkins
-    Checkin.where({uid: _id})
+    Checkin.where({uid: _id, del: {"$exists" => false}})
   end
 
   def is_staff?
