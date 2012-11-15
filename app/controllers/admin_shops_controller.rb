@@ -22,7 +22,7 @@ class AdminShopsController < ApplicationController
   def subshops
     @shop = Shop.find(params[:shop_id])
     @shops = Shop.where({_id: {"$in" => @shop.shops.to_a}}).to_a
-    @shops = paginate(@shops, params[:page], nil, nil)
+    @shops = paginate_arr(@shops, params[:page])
   end
 
   def find_shops
@@ -43,7 +43,7 @@ class AdminShopsController < ApplicationController
     end
 
     if hash.empty?
-      @shops = paginate([], params[:page], hash, sort  )
+      @shops = paginate_arr([], params[:page] )
     else
       hash.merge!({_id: {'$nin' => @shop.shops.to_a << @shop.id.to_i}})
       @shops = paginate("Shop", params[:page], hash, sort, 200  )

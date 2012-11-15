@@ -91,10 +91,10 @@ class ShopCouponsController < ApplicationController
     case params[:flag]
     when 'down'
       @users = @coupon.users.to_a.sort{|x,y| y['dat'] <=> x['dat']}
-      @users = paginate(@users, params[:page],nil,nil,10 )
+      @users = paginate_arr(@users, params[:page],10 )
     when 'use'
       @users = @coupon.users.to_a.select{|s| s['uat']}.sort{|x,y| y['uat'] <=> x['uat']}
-      @users = paginate(@users, params[:page],nil,nil,10 )
+      @users = paginate_arr(@users, params[:page],10 )
     end
   end
 

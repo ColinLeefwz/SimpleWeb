@@ -13,7 +13,7 @@ class IpCheckinStatsController < ApplicationController
 
   def show_shops
     @checkin_ip_stat = CheckinIpStat.find(params[:id])
-    @shops =  paginate(@checkin_ip_stat.shops, params[:page])
+    @shops =  paginate_arr(@checkin_ip_stat.shops, params[:page])
   end
 
   def checkin_list
