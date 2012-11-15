@@ -131,6 +131,7 @@ class User
     hash.merge!(last_location(user_id))
   end
 
+  #当前用户的最后位置。 user_id 是查看当前用户的user
   def last_location( user_id )
     return {:last => "隐身"} if block?(user_id)
     loc = Checkin.where({uid:self._id}).sort({_id:1}).last
