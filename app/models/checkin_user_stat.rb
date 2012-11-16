@@ -1,7 +1,8 @@
 class CheckinUserStat
   include Mongoid::Document
-  field :l3
-  field :all
+  field :l3, type: Array
+  field :all, type: Integer
+  field :cities, type: Array
 
 
   def user
