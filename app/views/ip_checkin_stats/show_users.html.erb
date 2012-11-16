@@ -1,0 +1,31 @@
+
+<table>
+  <tr>
+    <th>ip</th>
+    <th>截止日期</th>
+    <th>用户</th>
+    <th>最后签到时间</th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td>
+        <%= @checkin_ip_stat.id %>
+      </td>
+      <td>
+        <%= 1.days.ago.to_date %>
+      </td>
+      <td>
+        <%=link_to User.find(user["uid"]).name,"/admin_users/show?id=#{user['uid']}" %>
+      </td>
+      <td>
+        <%= id_to_time(user['time']).to_date %>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+
+
+
+<%= generate_paginate.html_safe %>
