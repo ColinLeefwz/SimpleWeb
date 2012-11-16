@@ -68,7 +68,7 @@ var checkinIpStat = function(days){
             }
 
             for(var user in users){
-                if(users[user]['uid'] == checkin.uid){
+                if(db.users.findOne({_id: users[user]['uid']}).wb_uid == db.users.findOne({_id: checkin.uid}).wb_uid){
                     uindex = user
                     uexist = true
                     break
@@ -103,5 +103,5 @@ var checkinIpStat = function(days){
     })
 }
 
-checkinIpStat(100)
+checkinIpStat(1)
 
