@@ -4,6 +4,7 @@
     <th>用户</th>
     <th>截止日期</th>
     <th>总签到数</th>
+    <th>城市</th>
     <th>最后三次签到</th>
   </tr>
 
@@ -14,12 +15,11 @@
       <%= checkin_user_stat.user.try(:name)%></td>
       <td><%= 1.days.ago.to_date %></td>
       <td><%=link_to checkin_user_stat.all.to_i, "/admin_checkins?uid=#{checkin_user_stat.id}" %></td>
+      <td><%= checkin_user_stat.cities.join(', ') %></td>
       <td>
-        <%  checkin_user_stat.l3.map do |m| %>
-          城市:<%= m["city"] %>,
-          <%= link_to m["id"], "/admin_checkins/show?id=#{m['id']}"%>
-        <% end %>
+        <%=  checkin_user_stat.l3.map{|m| m.generation_time.localtime.strftime("%Y-%m-%d %H:%M")}.join(', ') %>
       </td>
+
     </tr>
 
   <% end %>
