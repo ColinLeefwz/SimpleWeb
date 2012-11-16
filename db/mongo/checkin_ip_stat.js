@@ -26,7 +26,9 @@ var checkinIpStat = function(days){
                 _id: checkin.ip,
                 ctotal: 0,
                 stotal: 0,
-                shops: []
+                utotal: 0,
+                shops: [],
+                users: []
             })
         }
 
@@ -34,43 +36,72 @@ var checkinIpStat = function(days){
             _id: checkin.ip
         })
 
-        var ctl = cips.ctotal + 1
-        var stl = cips.stotal
-        var shs = cips.shops
-        var index = 0
-        var exist = false
+        if(cips.stotal < 20){
+            var ctl = cips.ctotal + 1
+            var stl = cips.stotal
+            var utl = cips.utotal
+            var shs = cips.shops
+            var users = cips.users
+            var sindex = 0
+            var uindex = 0
+            var sexist = false
+            var uexist = false
 
-        for(var sh in shs){
-            if(shs[sh]['sid'] == checkin.sid){
-                index = sh
-                exist = true
-                break
+            for(var sh in shs){
+                if(shs[sh]['sid'] == checkin.sid){
+                    sindex = sh
+                    sexist = true
+                    break
+                }
             }
-        }
 
-        if(exist){
-            shs[index]['time'] = checkin._id
-        }
-        else
-        {
-            stl += 1;
-            shs.push({
-                sid: checkin.sid,
-                time: checkin._id
+            if(sexist){
+                shs[sindex]['time'] = checkin._id
+            }
+            else
+            {
+                stl += 1;
+                shs.push({
+                    sid: checkin.sid,
+                    time: checkin._id
+                })
+            }
+
+            for(var user in users){
+                if(users[user]['uid'] == checkin.uid){
+                    uindex = user
+                    uexist = true
+                    break
+                }
+            }
+
+            if(uexist){
+                users[uindex]['time'] = checkin._id
+            }
+            else
+            {
+                utl += 1;
+                users.push({
+                    uid: checkin.uid,
+                    time: checkin._id
+                })
+            }
+
+
+            db.checkin_ip_stats.update({
+                _id: checkin.ip
+            }, {
+                $set: {
+                    ctotal: ctl,
+                    stotal: stl,
+                    utotal: utl,
+                    shops: shs,
+                    users: users
+                }
             })
         }
-
-        db.checkin_ip_stats.update({
-            _id: checkin.ip
-        }, {
-            $set: {
-                ctotal: ctl,
-                stotal: stl,
-                shops: shs
-            }
-        })
     })
 }
 
-checkinIpStat(1)
+checkinIpStat(100)
 
