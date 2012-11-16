@@ -57,3 +57,5 @@
   <b>黑名单数:</b>
   <%= @user.blacks_s.count %>
 </p>
+
+<%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %>
