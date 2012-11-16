@@ -54,7 +54,7 @@ var checkinUserStat = function(days){
     })
 }
 
-checkinUserStat(1000);
+checkinUserStat(1);
 
 
 
