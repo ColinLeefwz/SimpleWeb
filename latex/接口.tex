@@ -1309,39 +1309,162 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{table}
 
 
+\section{XMPP服务器的Web接口}
+
+
+
+
+\subsection{获得聊天室的消息历史记录}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/api/gchat} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  room  & 字符串 & 必填 &  聊天室的房间id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsection{获得个人聊天的历史记录}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/api/chat} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid  & 字符串 & 必填 &  用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsection{获得两人之间的聊天历史记录}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/api/chat2} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid1  & 字符串 & 必填 &  用户1的id  \\
+\hline
+ \  uid2  & 字符串 & 必填 &  用户2的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsection{其它内部接口}
+仅用于服务器端的后台内部调用。
+
+\subsubsection{给指定的聊天室发送消息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/api/room} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  roomid  & 字符串 & 必填 &  聊天室的房间id  \\
+\hline
+ \  message  & 字符串 & 必填 &  需要发送的消息  \\
+\hline
+ \  uid  & 字符串 & 必填 &  该优惠券的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsubsection{用户屏蔽通讯}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/api/block} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid  & 字符串 & 必填 &  发起屏蔽请求的用户的id  \\
+\hline
+ \  bid  & 字符串 & 必填 &  被屏蔽的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsubsection{用户解除屏蔽}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/api/unblock} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid  & 字符串 & 必填 &  发起解除屏蔽请求的用户的id  \\
+\hline
+ \  bid  & 字符串 & 必填 &  被屏蔽的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsubsection{发送任意XMPP消息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/rest} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+通过POST提交任意类型的XMPP文本消息。
+
 \section{关于程序各页面之间的切换规则}
 
 程序的首页是选择现场页面。现场则是一个聊天室页面。
 
 1、程序干净启动时，要判断用户是否处于登录状态。
 
-1.1如果已经登录，进入选择现场页面，并从服务器端获取新的商家列表。
+1.1如果已经登录，进入定位页面，并从服务器端获取新的商家列表。
 
 1.2如果没有登录，进入登录页面。
 
 
 2、程序从睡眠状态被激活时，要判断距离上次的运行时间。
 
-2.1 如果不足12个小时，上次被任务切换时停留在那个页面就仍然停留在该页面。
+2.1 如果不足24个小时，上次被任务切换时停留在那个页面就仍然停留在该页面。
 
-2.2 如果超过12个小时，进入选择现场页面，并从服务器端获取新的商家列表。
+2.2 如果超过24个小时，进入定位页面，并从服务器端获取新的商家列表。
 
-
-3、从现场返回到选择现场时，判断当前的经纬度和上次进入现场时的经纬度。
-
-3.1如果超过1000米，提示用户是否刷新现场位置。
-
-3.2 如果不足1000米，不处理。用户要选择其它现场的话，从滚轮中选择。
 
 
 4、从其它tab点击现场时，判断用户是否摇进过现场
 
-4.1 如果摇进过某个现场，直接进入该现场聊天室。进入时要特殊处理下部的tab，提供动画。只有这种情况需要这么特殊处理。
+4.1 如果摇进过某个现场，直接进入该现场聊天室。。
 
-4.2 如果没有摇，那么就是选择现场页面。
+4.2 如果没有摇，那么就是定位页面。
 
-
-5、从附近里点击商家的时候。不进入现场。显示商家的聊天室。但是该聊天室不是现场，没有聊天工具栏。在附近里进入商家聊天室时不能聊天。
 
 
 
