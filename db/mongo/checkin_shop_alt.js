@@ -16,8 +16,8 @@ var checkinShopAlt = function(months){
         emit(this.sid, {
             _id: this._id,
             count: 1,
-            alt: this.alt,
-            altacc: this.altacc
+            alt: parseInt(this.alt),
+            altacc: parseInt(this.altacc)
         })
     }
     r = function(key, values) {
@@ -30,35 +30,29 @@ var checkinShopAlt = function(months){
         var pfaltacc =0;
         var fcalt =0;
         var fcaltacc = 0;
-        var maxalt = 0;
-        var max=[]
-        var minalt = 0;
-        var min=[]
+        var maxalt = (values[0] ? values[0].alt : 0);
+        var max = (values[0] ? [values[0].alt, values[0].altacc ] : [0, 0])
+        var minalt = (values[0] ? values[0].alt : 0);
+        var min = (values[0] ? [values[0].alt, values[0].altacc ] : [0, 0])
         values.forEach(function(v) {
             count += v.count;
-            talt += parseInt(v.alt);
-            taltacc += parseInt(v.altacc)
-            if(values.indexOf(v)==0){
+            talt += v.alt;
+            taltacc += v.altacc;
+            if(v.alt > maxalt){
                 maxalt = v.alt;
                 max = [v.alt, v.altacc]
+            }
+            if(v.alt< minalt)
+            {
                 minalt = v.alt;
                 min = [v.alt, v.altacc]
-            }else{
-                if(v.alt > maxalt){
-                    maxalt = v.alt;
-                    max = [v.alt, v.altacc]
-                }else if(v.alt< minalt)
-                {
-                    minalt = v.alt;
-                    min = [v.alt, v.altacc]
-                }
             }
         });
         avgalt = talt/count;
         avgaltacc = taltacc/count;
         values.forEach(function(v) {
             pfalt += (v.alt - avgalt)*(v.alt - avgalt);
-            pfaltacc += (v.altacc - avgaltacc)
+            pfaltacc += (v.altacc - avgaltacc)*(v.altacc - avgaltacc)
         });
         fcalt = Math.sqrt(pfalt);
         fcaltacc = Math.sqrt(pfaltacc);
@@ -106,10 +100,16 @@ var checkinShopAlt = function(months){
 
 }
 
-checkinShopAlt(2);
 
 
+function cycleCheckinShopAlt(months){
+    db.checkin_shop_alts.remove()
+    for(var i = months; i > 0; i--){
+        checkinShopAlt(i);
+    }
+}
 
+cycleCheckinShopAlt(2)
 
 
 
