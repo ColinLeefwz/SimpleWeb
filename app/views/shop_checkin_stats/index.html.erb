@@ -1,5 +1,9 @@
 <%= form_tag '/shop_checkin_stats',:method =>:get do %>
+  区号: <%= text_field_tag :city, params[:city], :size => 10  %>
   商家: <%= text_field_tag :name, params[:name], :size => 10  %>
+  (*区号和商家必须同时查询,否则无效,可以不填)
+  <br/>
+  <br/>
   <%= submit_tag "确 定" %>
 <% end %>
 <h1>商家签到统计</h1>
