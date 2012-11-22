@@ -1,5 +1,5 @@
 rails_env   = ENV['RAILS_ENV']  || "production"
-rails_root  = ENV['RAILS_ROOT'] || "/home/dooo/lianlian"
+rails_root  = ENV['RAILS_ROOT'] || "/mnt/lianlian"
 
 [['xmpp',0.1,1],['*',5,2]].each do |queue,inteval,num_workers|
 num_workers.times do |num|
@@ -10,7 +10,7 @@ num_workers.times do |num|
     w.group    = 'resque'
     w.interval = 30.seconds
     w.env      = {"QUEUE"=>queue, "RAILS_ENV"=>rails_env}
-    w.start    = "INTERVAL=#{inteval} QUEUE='#{queue}' /home/dooo/.rvm/bin/rake -f #{rails_root}/Rakefile environment resque:work"
+    w.start    = "INTERVAL=#{inteval} QUEUE='#{queue}' rake -f #{rails_root}/Rakefile environment resque:work"
 
 #    w.uid = 'dooo'
 #    w.gid = 'dooo'
