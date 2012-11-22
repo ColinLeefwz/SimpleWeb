@@ -1,0 +1,25 @@
+
+<div class="subtitle">子商家列表</div><br/>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="20%" class="first">名称</th>
+    <th width="25%" align="center">地址</th>
+    <th width="14%">电话</th>
+    <th width="8%" align="center">商家类型</th>
+  </tr>
+  <% @shops.each do |shop| %>
+    <tr>
+      <td align="left" class="gray"><%= shop.name %></td>
+      <td align="center" class="gray"><%= shop.tel %></td>
+      <td align="center" class="gray"><%= shop.addr %></td>
+      <td align="center" class="gray"><%= shop.show_t %></td>
+    </tr>
+  <% end %>
+
+  <tr class="bottom">
+    <td colspan="3" align="right">
+      <%= generate_paginate.html_safe %>
+    </td>
+  </tr>
+</table>
