@@ -7,10 +7,9 @@ class ShopCheckinStatsController < ApplicationController
 
   def index
     hash = {}
-    unless params[:name].blank?
-      sids = Shop.where({name: /#{params[:name]}/}).map{|m| m.id}
-      hash.merge!({_id: {"$in" => sids}})
-      debugger
+    unless params[:name].blank? && params[:city].blank?
+      sids = Shop.where({name: /#{params[:name]}/, city: params[:city]}).map { |m| m._id  }
+      hash.merge!(_id: {'$in' => sids})
     end
 
     sort = {utotal: -1}
