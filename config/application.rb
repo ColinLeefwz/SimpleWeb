@@ -9,6 +9,8 @@ require "sprockets/railtie"
 require "rails/test_unit/railtie"
 
 $xmpp_ip = "42.120.60.200"
+$web_ip = "42.121.79.210"
+
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
