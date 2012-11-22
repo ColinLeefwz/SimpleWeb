@@ -1,3 +1,7 @@
+<%= form_tag '/shop_checkin_stats',:method =>:get do %>
+  商家: <%= text_field_tag :name, params[:name], :size => 10  %>
+  <%= submit_tag "确 定" %>
+<% end %>
 <h1>商家签到统计</h1>
 <table>
   <tr>
@@ -21,7 +25,7 @@
         <%= link_to checkin_shop_stat.ctotal.to_i, "/shop_checkin_stats/users_list?sid=#{checkin_shop_stat.id}" %>
       </td>
       <td>
-        <%= link_to checkin_shop_stat.ips.length, "/shop_checkin_stats/show_ips?id=#{checkin_shop_stat.id}" %>
+        <%= link_to checkin_shop_stat.ips.to_a.length, "/shop_checkin_stats/show_ips?id=#{checkin_shop_stat.id}" %>
       </td>
     </tr>
 

@@ -7,6 +7,12 @@ class ShopCheckinStatsController < ApplicationController
 
   def index
     hash = {}
+    unless params[:name].blank?
+      sids = Shop.where({name: /#{params[:name]}/}).map{|m| m.id}
+      hash.merge!({_id: {"$in" => sids}})
+      debugger
+    end
+
     sort = {utotal: -1}
     @checkin_shop_stats =  paginate("CheckinShopStat", params[:page], hash, sort)
   end
