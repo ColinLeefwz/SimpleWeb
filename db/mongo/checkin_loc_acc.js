@@ -17,7 +17,7 @@ var findCheckins = function(idOfBeginDay,idOfEndDay){
 
 var checkinLocAcc = function(days){
     [idOfBeginDay,idOfEndDay, id] = gen_day_id(days);
-    
+
     var checkins = findCheckins(idOfBeginDay,idOfEndDay)
     var max = checkins[0] ? checkins[0].acc : 0
     var min = checkins[0] ? checkins[0].acc : 0
@@ -26,7 +26,7 @@ var checkinLocAcc = function(days){
     var count = 0;
     var avg = 0;
     var fc = 0;
-    
+
     findCheckins(idOfBeginDay,idOfEndDay).forEach(function(checkin){
         print(checkin.acc)
         tacc += checkin.acc;
@@ -49,10 +49,10 @@ var checkinLocAcc = function(days){
 }
 
 var cycleCheckinLocAcc = function(days){
-    db.checkin_loc_accs.remove();
     for(var i = days; i > 0; i--){
         checkinLocAcc(i)
     }
 }
 
-cycleCheckinLocAcc(56)
+cycleCheckinLocAcc(1)
+

@@ -86,7 +86,7 @@ var checkinShopAlt = function(months){
         out : "tmp_checkin_shop_alt"
     } );
 
-    var id = d.toLocaleFormat('%Y-%m-%d')
+    var id = d.toLocaleFormat('%Y-%m')
     var datas = []
 
     db.tmp_checkin_shop_alt.find().forEach(function(csa){
@@ -103,15 +103,10 @@ var checkinShopAlt = function(months){
 
 
 function cycleCheckinShopAlt(months){
-    db.checkin_shop_alts.remove()
     for(var i = months; i > 0; i--){
         checkinShopAlt(i);
     }
 }
 
-cycleCheckinShopAlt(2)
-
-
-
-
+cycleCheckinShopAlt(1)
 
