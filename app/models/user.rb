@@ -196,24 +196,27 @@ class User
     Photo.where({user_id: _id})
   end
   
-  #足迹功能需要将历史照片合并到签到中去。以后发的照片立刻写入签到中。
-  def init_trace
-    #checkins = self.checkins.map {|x| x.attributes.slice("_id","sid")}
-    checkins = self.checkins.only("sid").sort({_id:-1}).to_a
-    
-    def merge_to_checkin(photo)
-      checkins.each do |c|
-        if photo.room==c.sid.to_s && photo.id.to_s > c.id.to_s
-          puts "#{c.id.generation_time} : #{photo.id.generation_time}"
-          c.push(:photos, photo.id)
+    def merge_to_checkin(cins,photo)
+      cins.each do |c|
+        if photo.room==c.sid.to_s
+          puts c.id.generation_time
+          if photo.id.to_s > c.id.to_s
+            puts "#{c.sid}\t#{c.id.generation_time} : #{photo.id.generation_time}"
+            c.push(:photos, photo.id)
+            return
+          end
         end
       end
     end
-    
-    room_photos.each {|p| merge_to_checkin p}
+
+  #足迹功能需要将历史照片合并到签到中去。以后发的照片立刻写入签到中。
+  def init_trace
+    #checkins = self.checkins.map {|x| x.attributes.slice("_id","sid")}
+    cins = self.checkins.only("sid").sort({_id:-1}).to_a
+    room_photos.each {|p| merge_to_checkin(cins,p) }
   end
   
-  def init_trace_all
+  def self.init_trace_all
     User.all.each {|x| x.init_trace}
   end
 
