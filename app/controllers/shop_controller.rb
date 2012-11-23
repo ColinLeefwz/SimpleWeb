@@ -19,6 +19,7 @@ class ShopController < ApplicationController
     hash = arr.map do |x|
       s = Shop.new(x)
       s.id = x["_id"].to_i
+      #TODO: WARNING: Can't mass-assign protected attributes: _id
       s.safe_output_with_users
     end
     render :json =>  hash.to_json
