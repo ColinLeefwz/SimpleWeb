@@ -5,7 +5,7 @@ class ShopCheckinAltsController < ApplicationController
 
   def index
     hash = {}
-    sort = {}
+    sort = {_id: -1}
     @shop_checkin_alts = paginate("CheckinShopAlt", params[:page], hash, sort)
   end
 
