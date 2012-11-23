@@ -17,9 +17,21 @@ class PhotoTest < ActionDispatch::IntegrationTest
   def async_process_photo
     CarrierWave::Workers::StoreAsset.perform("Photo",Photo.last._id.to_s,"img")
   end
+  
+  def do_checkin
+    post "/checkins",{
+      :lat => 30.28,
+      :lng => 120.108,
+      :accuracy => 100,
+      :shop_id => 4928288,
+      :user_id => "502e6303421aa918ba000005",
+      :od => 1
+    }    
+  end
 
   test "聊天室上传图片" do
     reload('users.js')
+    reload('checkins.js')
     #未登录时上传图片
     upload_photo
     assert_response :success
@@ -28,6 +40,10 @@ class PhotoTest < ActionDispatch::IntegrationTest
     #登录
     get "/oauth2/test_login?id=502e6303421aa918ba000005"
     assert_equal User.find("502e6303421aa918ba000005").id, session[:user_id]
+    
+    assert_difference 'Checkin.count' do
+      do_checkin
+    end
     
     #上传图片
     upload_photo
@@ -39,6 +55,9 @@ class PhotoTest < ActionDispatch::IntegrationTest
     assert_equal data["desc"],  '一张图片'
     assert_nil data["logo_thumb2"]
     assert !Photo.last.img_tmp.nil?
+    
+    debugger
+    assert_equal Photo.last.id, Checkin.last.photos[0]
 
     #未处理就获得图片
     begin
