@@ -22,6 +22,9 @@ class UserInfoController < ApplicationController
     render :json => UserLogo.logos(params[:id]).map{|x| x.output_hash}.to_json
   end
   
+  def trace
+  end
+  
   def get_self
     user = session_user
     render :json => user.attr_with_id.merge(user.head_logo_hash).to_json
