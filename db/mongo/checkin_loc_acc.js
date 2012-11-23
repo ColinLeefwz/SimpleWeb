@@ -28,13 +28,12 @@ var checkinLocAcc = function(days){
     var fc = 0;
 
     findCheckins(idOfBeginDay,idOfEndDay).forEach(function(checkin){
-        print(checkin.acc)
         tacc += checkin.acc;
         count += 1;
         max = (checkin.acc > max ? checkin.acc : max)
         min = (checkin.acc < min ? checkin.acc : min)
     })
-    avg = tacc/count
+    avg = (count == 0 ? 0 :tacc/count)
     findCheckins(idOfBeginDay,idOfEndDay).forEach(function(checkin){
         pffc += (checkin.acc-avg)*(checkin.acc-avg)
     })
