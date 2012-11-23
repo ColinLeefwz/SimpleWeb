@@ -43,8 +43,13 @@ class Photo
     self.attributes.merge!( logo_thumb_hash).merge!({id: self._id})
   end
   
-  def find_checkin
-    Checkin.where({sid: self.room, uid:self.user_id}).sort({_id:-1}).limit(1)
+  def add_to_checkin
+    cin = Checkin.where({uid:self.user_id}).sort({_id:-1}).limit(1).first
+    if cin.sid.to_s==self.room
+      cin.push(:photos, self.id)
+    else
+      logger.error "Error:\tphoto.room:#{self.room} != checkin.sid:#{cin.sid}, photo.id:#{self.id}" 
+    end
   end
 
 end
