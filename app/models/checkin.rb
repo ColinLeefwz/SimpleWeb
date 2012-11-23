@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Checkin
   include Mongoid::Document
   field :sid, type: Integer #商家id
@@ -16,8 +18,8 @@ class Checkin
   index({ sid: 1})
   
   def cat
-    #    self._id.generation_time
-    Time.at self._id.to_s[0,8].to_i(16)
+    self._id.generation_time.getlocal
+    #Time.at self._id.to_s[0,8].to_i(16)
   end
   
   def time_desc
@@ -82,5 +84,24 @@ LUA
     
   end
   
+  def to_trace
+    if cat > Date.today.to_datetime
+      day = "今天" 
+    elsif cat > Date.yesterday.to_datetime
+      day = "昨天"
+    elsif cat.year == Date.today.year
+      day = cat.strftime("%m.%d")
+    else
+      day = cat.strftime("%2Y.%m.%d")
+    end
+    ps = []
+    unless photos.nil?
+      photos.each do |x| 
+        p=Photo.find(x)
+        ps << p.logo_thumb_hash.merge({id:p.id,desc:p.desc})
+      end
+    end
+    {time: [day,cat.strftime("%H:%M")], shop: shop.name, shop_id:sid.to_i, photos:ps}
+  end
 
 end

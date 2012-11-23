@@ -579,6 +579,46 @@ wb_uid:1884834632
 \end{figure}
 
 
+\section{获得当前登录用户的足迹}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/trace} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/trace
+返回值：
+
+[{"time":["09.22","14:24"],"shop":"(下沙服务区)书报百货","shop_id":1,
+"photos":[{"logo":"http://oss.aliyuncs.com/dface_test/5044301dbe4b192a30000002/0.jpg",
+"logo_thumb2":"http://oss.aliyuncs.com/dface_test/5044301dbe4b192a30000002/t2_0.jpg",
+"id":"5044301dbe4b192a30000002","desc":null}]},
+{"time":["07.21","00:02"],"shop":"海洋二所","shop_id":60775,"photos":[]}]
+
+字段说明：
+｛
+time: ［签订日期，签到时间］
+shop：商家
+shop_id:商家id
+photos ：｛desc：图片描述，id：图片id，logo：原图URL，logo_thumb2：缩略图｝
+｝
+
+\end{verbatim}
+\end{figure}
+
+
+
 
 \section{设置当前登录用户基本信息}
 
