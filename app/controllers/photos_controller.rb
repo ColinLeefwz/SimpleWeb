@@ -8,6 +8,7 @@ class PhotosController < ApplicationController
     p = Photo.new(params[:photo])
     p.user_id = session[:user_id]
     p.save!
+    p.add_to_checkin
     render :json => p.output_hash.to_json
   end
   
