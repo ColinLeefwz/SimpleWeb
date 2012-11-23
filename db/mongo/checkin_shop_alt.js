@@ -57,7 +57,6 @@ var checkinShopAlt = function(months){
         fcalt = Math.sqrt(pfalt);
         fcaltacc = Math.sqrt(pfaltacc);
         return {
-            _id: key,
             max: max,
             min: min,
             avgalt: avgalt,
@@ -90,6 +89,7 @@ var checkinShopAlt = function(months){
     var datas = []
 
     db.tmp_checkin_shop_alt.find().forEach(function(csa){
+        csa.value['_id'] = csa._id
         datas.push(csa.value)
     })
 
