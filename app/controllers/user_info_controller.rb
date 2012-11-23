@@ -23,6 +23,8 @@ class UserInfoController < ApplicationController
   end
   
   def trace
+    user = session_user
+    render :json => user.checkins.map {|x| x.to_trace}.to_json
   end
   
   def get_self
