@@ -1,4 +1,4 @@
-class CheckinShopStat
+class CheckinLocAcc
   include Mongoid::Document
   field :_id, type: String
   field :max, type: Integer #最大误差
