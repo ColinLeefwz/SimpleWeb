@@ -10,6 +10,7 @@ class Checkin
   field :del, type: Boolean #删除标记
   field :alt, type:Float    #海拔高度
   field :altacc, type: Integer  #海拔高度的精确度
+  field :photos, type:Array #本次签到期间发该商家的图片
   
   index({ uid: 1})
   index({ sid: 1})
@@ -37,6 +38,8 @@ class Checkin
     Shop.find_by_id(self.sid)
   end
   
+  #保存用户的签到到商家的当前签到redis集合中。
+  #如果是新用户，更新商家用户总数的统计；如果不是，仅更新最后出现时间（也就是zset的score，zadd的效果）。
   def add_to_redis
     return if user.invisible==2
     if( $redis.zadd("ckin#{self.sid.to_i}",Time.now.to_i, self.uid) )
@@ -44,6 +47,7 @@ class Checkin
     end
   end
 
+  #清除昨天的商家签到记录，由cronjob调用
   def self.clear_yesterday_redis
     now = Time.now
     yesterday = now.to_i-now.hour*3600-now.min*60-now.sec
@@ -52,6 +56,7 @@ class Checkin
     end
   end
 
+  #得到当天商家用户列表
   def self.get_users_redis(sid)
     $redis.zrevrange("ckin#{sid.to_i}",0,-1, withscores:true)
   end
@@ -60,6 +65,7 @@ class Checkin
     $redis.zcard("ckin#{sid.to_i}")
   end
   
+  #批量获得商家当天的用户总数
   def self.get_users_count_multi(sid_arr)
     code = <<LUA
     local count = function(x) return redis.pcall('zcard','ckin'..x) end

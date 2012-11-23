@@ -191,5 +191,30 @@ class User
   def cat
     self._id.generation_time.getlocal
   end
+  
+  def room_photos
+    Photo.where({user_id: _id})
+  end
+  
+  #足迹功能需要将历史照片合并到签到中去。以后发的照片立刻写入签到中。
+  def init_trace
+    #checkins = self.checkins.map {|x| x.attributes.slice("_id","sid")}
+    checkins = self.checkins.only("sid").sort({_id:-1}).to_a
+    
+    def merge_to_checkin(photo)
+      checkins.each do |c|
+        if photo.room==c.sid.to_s && photo.id.to_s > c.id.to_s
+          puts "#{c.id.generation_time} : #{photo.id.generation_time}"
+          c.push(:photos, photo.id)
+        end
+      end
+    end
+    
+    room_photos.each {|p| merge_to_checkin p}
+  end
+  
+  def init_trace_all
+    User.all.each {|x| x.init_trace}
+  end
 
 end

@@ -42,5 +42,9 @@ class Photo
   def output_hash
     self.attributes.merge!( logo_thumb_hash).merge!({id: self._id})
   end
+  
+  def find_checkin
+    Checkin.where({sid: self.room, uid:self.user_id}).sort({_id:-1}).limit(1)
+  end
 
 end
