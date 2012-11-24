@@ -56,7 +56,6 @@ class PhotoTest < ActionDispatch::IntegrationTest
     assert_nil data["logo_thumb2"]
     assert !Photo.last.img_tmp.nil?
     
-    debugger
     assert_equal Photo.last.id, Checkin.last.photos[0]
 
     #未处理就获得图片
