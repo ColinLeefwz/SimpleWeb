@@ -101,7 +101,8 @@ LUA
         ps << p.logo_thumb_hash.merge({id:p.id,desc:p.desc})
       end
     end
-    {time: [day,cat.strftime("%H:%M")], shop: shop.name, shop_id:sid.to_i, photos:ps}
+    shopname = shop.nil?? "" : shop.name
+    {time: [day,cat.strftime("%H ：%M")], shop: shopname, shop_id:sid.to_i, photos:ps}
   end
 
 end
