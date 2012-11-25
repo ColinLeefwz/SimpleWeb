@@ -24,7 +24,7 @@ class UserInfoController < ApplicationController
   
   def trace
     user = session_user
-    render :json => user.checkins.map {|x| x.to_trace}.to_json
+    render :json => user.checkins.sort({_id:-1}).map {|x| x.to_trace}.to_json
   end
   
   def get_self
