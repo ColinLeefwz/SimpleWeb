@@ -7,9 +7,11 @@ require "action_mailer/railtie"
 require "active_resource/railtie"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
+require 'uuid'
 
 $xmpp_ip = "42.120.60.200"
 $web_ip = "42.121.79.210"
+$uuid = UUID.new
 
 
 # If you have a Gemfile, require the gems listed there, including any gems
