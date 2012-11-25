@@ -23,8 +23,12 @@ class UserInfoController < ApplicationController
   end
   
   def trace
-    user = session_user
-    render :json => user.checkins.sort({_id:-1}).map {|x| x.to_trace}.to_json
+    page = params[:page].to_i
+    pcount = params[:pcount].to_i
+    page = 1 if page==0
+    pcount = 20 if pcount==0
+    checkins = session_user.checkins.sort({_id:-1}).skip((page-1)*pcount).limit(pcount)
+    render :json => checkins.map {|x| x.to_trace}.to_json
   end
   
   def get_self
