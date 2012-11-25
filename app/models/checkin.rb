@@ -85,10 +85,17 @@ LUA
   end
   
   def to_trace
+    $weeks = ['周一','周二','周三','周四','周五','周六','周日']
     if cat > Date.today.to_datetime
       day = "今天" 
     elsif cat > Date.yesterday.to_datetime
       day = "昨天"
+    elsif cat > Date.yesterday.prev_day.to_datetime
+      day = "前天"
+    elsif cat > Date.today.beginning_of_week
+      day = $weeks[cat.days_to_week_start]
+    elsif cat > Date.today.prev_week
+      day = "上"+$weeks[cat.days_to_week_start]      
     elsif cat.year == Date.today.year
       day = cat.strftime("%m.%d")
     else
@@ -105,4 +112,20 @@ LUA
     {time: [day,cat.strftime("%H ：%M")], shop: shopname, shop_id:sid.to_i, photos:ps}
   end
 
+  def self.merge_same_location_half_day(checkins)
+    ret = []
+    checkins.each_with_index do |ck,i|
+      if i>0
+        pre = ret[-1]
+        pre.photos = [] if pre.photos.nil?
+        if pre.sid == ck.sid && (pre.cat.to_i - ck.cat.to_i) < 3600*6
+          ck.photos.each {|x| pre.photos << x} unless ck.photos.nil?
+          next
+        end
+      end
+      ret << ck
+    end
+    return ret
+  end
+  
 end
