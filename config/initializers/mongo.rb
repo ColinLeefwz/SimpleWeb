@@ -11,7 +11,7 @@ module Moped
   class Cluster
 
     def nodes
-	puts "disable Node Discovery."
+	    #puts "disable Node Discovery."
       @nodes
     end
 
