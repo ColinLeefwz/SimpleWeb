@@ -18,12 +18,12 @@ class PhotoTest < ActionDispatch::IntegrationTest
     CarrierWave::Workers::StoreAsset.perform("Photo",Photo.last._id.to_s,"img")
   end
   
-  def do_checkin
+  def do_checkin(sid)
     post "/checkins",{
       :lat => 30.28,
       :lng => 120.108,
       :accuracy => 100,
-      :shop_id => 4928288,
+      :shop_id => sid,
       :user_id => "502e6303421aa918ba000005",
       :od => 1
     }    
@@ -42,9 +42,13 @@ class PhotoTest < ActionDispatch::IntegrationTest
     assert_equal User.find("502e6303421aa918ba000005").id, session[:user_id]
     
     assert_difference 'Checkin.count' do
-      do_checkin
+      do_checkin(4)
     end
-    
+
+    assert_difference 'Checkin.count' do
+      do_checkin(4928288)
+    end
+        
     #上传图片
     upload_photo
     assert_response :success
