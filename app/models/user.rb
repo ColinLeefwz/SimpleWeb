@@ -181,7 +181,7 @@ class User
   end
 
   def checkins
-    Checkin.where({uid: _id, del: {"$exists" => false}})
+    Checkin.where({uid: _id, del: {"$exists" => false}}).sort({_id:-1})
   end
 
   def is_staff?
