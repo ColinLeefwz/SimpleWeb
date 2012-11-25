@@ -131,6 +131,11 @@ class Shop
     end
     ret
   end
+  
+  def sub_shops
+    return [] if shops.nil?
+    return shops.map {|x| Shop.find(x)}
+  end
 
 
   
@@ -138,8 +143,7 @@ class Shop
     coupons = []
     Coupon.gen_demo(self.id) if self.latest_coupons.empty?
     coupons += self.latest_coupons.select { |coupon| coupon.allow_send?(user_id) }
-    self.shops.each do |sid|
-      shop = Shop.find(sid)
+    sub_shops.each do |shop|
       coupons += shop.latest_coupons.select { |coupon| coupon.allow_send?(user_id) }
     end
 
