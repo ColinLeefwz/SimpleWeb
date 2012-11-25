@@ -26,6 +26,7 @@ gem 'xmpp4r'
 gem 'redis'
 gem 'redis-store'
 gem 'redis-rails'
+gem 'uuid'
 
 gem 'carrierwave'
 gem 'mini_magick'
