@@ -1,4 +1,6 @@
 #!/bin/bash
+stime=`date +"%Y-%m-%d %H:%M:%S"`
+
 cd /mnt/lianlian
 /mnt/mongodb/bin/mongo 127.0.0.1/dface /mnt/lianlian/db/mongo/checkin_day.js
 /mnt/mongodb/bin/mongo 127.0.0.1/dface /mnt/lianlian/db/mongo/checkin_shop_stat.js
@@ -10,3 +12,8 @@ cd /mnt/lianlian
 /mnt/.rvm/bin/ruby script/rails r  'CheckinShopStat.init_user_count'
 /mnt/.rvm/bin/ruby script/rails r db/mongo/ip_info.rb
 
+etime=`date +"%Y-%m-%d %H:%M:%S"`
+stime_int=`date -d  "$stime" +%s`
+etime_int=`date -d  "$etime" +%s`
+inttt=`expr $etime_int - $stime_int`
+echo $stime"开始执行cron,总花费时间："$inttt'秒'>>log/cron-job.log
