@@ -16,4 +16,4 @@ try{
 }
 }
 
-ensure_exec(0);
+ensure_exec(db.mapabc_shop_around_count.find().sort({_id:-1}).limit(1)[0]._id);
