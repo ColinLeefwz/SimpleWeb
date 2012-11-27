@@ -1,4 +1,4 @@
-<div class="subtitle">公告</div>
+<div class="subtitle">置顶公告</div>
 <br/>
 <style>
   #showTitle{width: 400px; height: 100px; border: 1px solid #F4F4F4}
@@ -13,7 +13,7 @@
     <a class="sbtn sbtnSa" onclick="show_editer();">
       <%= @shop_notice ? '编 辑' : "发 布" %>
     </a>
-    <%= link_to('删 除', "/shop_shop_notices/del?id=#{@shop_notice.id}", :class => 'sbtn sbtnDela' ) if @shop_notice%>
+    <%= link_to('删 除', "/shop_top_notices/delete?id=#{@shop_notice.id}", :class => 'sbtn sbtnDela' ) if @shop_notice%>
   </div>
   <div id="showTitle" onclick="show_editer();">
     <%=  @shop_notice.try(:title) %>
@@ -36,7 +36,7 @@
 
   function ajaxCreateNotice(notice_id){
     var title = $("#noticeTitle").val()
-    $.get('/shop_shop_notices/ajax_release', {id: notice_id, title: title}, function(data){
+    $.get('/shop_top_notices/ajax_release', {id: notice_id, title: title}, function(data){
       var s = "<div id='showTitle' onclick='show_editer();'>"+data['title']+"</div>"
       var b = "<input class='sbtn' type='submit' id='savaBtn' value='保 存'  onclick=\"ajaxCreateNotice('"+data["id"]+"')\">"
       $('#showTitle').show();
@@ -45,5 +45,5 @@
       $('#savaBtn').replaceWith(b);
     })
   }
-
+  
 </script>
