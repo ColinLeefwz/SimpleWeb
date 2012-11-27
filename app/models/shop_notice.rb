@@ -27,5 +27,13 @@ class ShopNotice
   def shop
     Shop.find_by_id(shop_id)
   end
+
+  def self.find_or_new(id)
+    begin
+      self.find(id)
+    rescue
+      self.new
+    end
+  end
   
 end
