@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'test_helper'
 
-class PhotoTest < ActionDispatch::IntegrationTest
+class Photo2Test < ActionDispatch::IntegrationTest
   
   def upload_photo
     file = 'public/images/test/测试图.jpg'
