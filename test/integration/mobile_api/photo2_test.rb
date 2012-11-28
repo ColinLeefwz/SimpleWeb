@@ -36,9 +36,28 @@ class Photo2Test < ActionDispatch::IntegrationTest
     assert_equal Photo2.last.to_uid.to_s, "502e6303421aa918ba000005"
     assert_equal Photo2.last.user_id.to_s, "502e6303421aa918ba000001"
     
+    #测试发送私人xmpp的图片消息
     Photo2.last.after_async_store
     
-    
   end
+  
+  test "测试api/room接口" do
+    RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
+        :roomid  => "4928288" , :message=> "测试一下" ,
+        :uid => "502e6303421aa918ba000001") 
+  end  
 
+  test "实际部署的生产系统上测试阿里云文件上传" do
+    if `ifconfig eth1`.to_s.length > 0
+      raise "Not set ALIYUN_ACCESS_ID in env" unless ENV["ALIYUN_ACCESS_ID"]
+      conn=CarrierWave::Storage::Aliyun::Connection.new({
+        aliyun_access_id:ENV["ALIYUN_ACCESS_ID"],
+        aliyun_access_key:ENV["ALIYUN_ACCESS_KEY"],
+        aliyun_bucket:"dface"
+        })
+      tstr=Time.now.to_i.to_s
+      conn.put(tstr+`hostname`,"Test#{tstr}")
+    end
+  end  
+  
 end
