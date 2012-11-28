@@ -49,6 +49,7 @@ class Photo2Test < ActionDispatch::IntegrationTest
 
   test "实际部署的生产系统上测试阿里云文件上传" do
     if `ifconfig eth1`.to_s.length > 0
+      puts "本机器是生产系统"
       raise "Not set ALIYUN_ACCESS_ID in env" unless ENV["ALIYUN_ACCESS_ID"]
       conn=CarrierWave::Storage::Aliyun::Connection.new({
         aliyun_access_id:ENV["ALIYUN_ACCESS_ID"],
@@ -56,7 +57,7 @@ class Photo2Test < ActionDispatch::IntegrationTest
         aliyun_bucket:"dface"
         })
       tstr=Time.now.to_i.to_s
-      conn.put(tstr+`hostname`,"Test#{tstr}")
+      conn.put(tstr+`hostname`[0..-2] , "Test#{tstr}")
     end
   end  
   
