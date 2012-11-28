@@ -16,7 +16,7 @@ class PhotoTest < ActionDispatch::IntegrationTest
     CarrierWave::Workers::StoreAsset.perform("Photo",Photo.last._id.to_s,"img")
   end
 
-  test "聊天室上传图片" do
+  test "个人聊天上传图片" do
     reload('users.js')
     #未登录时上传图片
     upload_photo
