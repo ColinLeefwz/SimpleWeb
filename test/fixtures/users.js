@@ -66,3 +66,26 @@ db.users.insert({
     "signature" : "",
     "wb_uid" : "a1"
 })
+
+
+db.users.insert({
+	"_id" : ObjectId("502e6303421aa918ba000001"),
+	"birthday" : "1997-7-2",
+	"blacks" : [
+	],
+	"follows" : [
+	],
+	"gender" : 1,
+	"head_logo_id" : ObjectId("507b5ac0421aa9cf3200000b"),
+	"hobby" : "Weiqi, go",
+	"invisible" : 0,
+	"job" : "",
+	"jobtype" : 2,
+	"multip" : true,
+	"name" : "樱桃红了",
+	"oid" : 1,
+	"password" : "1",
+	"pcount" : 7,
+	"signature" : "热爱生活,做自己喜欢的事情！",
+	"wb_uid" : "1884834632"
+})
