@@ -5,6 +5,8 @@ CarrierWave.configure do |config|
     config.aliyun_access_key = '26T2lFww3gsd+0OY8DsSFXj1eQ8='
   else
     # 发布环境的阿里云id和key, 不保存在版本控制系统中
+    config.aliyun_access_id = ENV["ALIYUN_ACCESS_ID"]
+    config.aliyun_access_key = ENV["ALIYUN_ACCESS_KEY"]
   end
 end
 
