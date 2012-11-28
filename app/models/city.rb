@@ -5,6 +5,7 @@ class City
   field :name
   field :code
   field :ename
+  field :s
 
 end
 
