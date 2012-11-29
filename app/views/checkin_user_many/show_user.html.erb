@@ -1,0 +1,15 @@
+<h1></h1>
+<table>
+  <tr>
+    <th>日期</th>
+    <th>详情</th>
+  </tr>
+
+  <% @datas.each do |data| %>
+    <tr>
+      <td><%=User.find(data.first).name %></td>
+      <td><%=data.last.map{|m| m.map{|c| id_to_time(c).strftime("%Y-%m-%d %H:%M:%S")}.join(', ')}.join("<span style='color:orange;margin: 3px;'> | </span>").html_safe %></td>
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate.html_safe %>
