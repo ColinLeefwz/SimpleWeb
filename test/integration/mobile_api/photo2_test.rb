@@ -11,10 +11,6 @@ class Photo2Test < ActionDispatch::IntegrationTest
       }
     }
   end
-  
-  def async_process_photo
-    CarrierWave::Workers::StoreAsset.perform("Photo",Photo.last._id.to_s,"img")
-  end
 
   test "个人聊天上传图片" do
     reload('users.js')
@@ -36,9 +32,26 @@ class Photo2Test < ActionDispatch::IntegrationTest
     assert_equal Photo2.last.to_uid.to_s, "502e6303421aa918ba000005"
     assert_equal Photo2.last.user_id.to_s, "502e6303421aa918ba000001"
     
-    Photo2.last.after_async_store
-    
-    
+    #测试发送私人xmpp的图片消息, 看mod_rest的ip限制是否配置正确。
+    ips = [ "60.191.119", "122.235.240", "42.121.79" ]
+    ip = `curl -s ifconfig.me`
+    ipc = ip[0,ip.rindex(".")]
+    allow_ip = !ips.find_index(ipc).nil?
+    fail = false
+    begin
+      Photo2.last.after_async_store
+    rescue RestClient::NotAcceptable
+      fail = true
+    end
+    raise "allow_ip:#{ip},but fail." if allow_ip && fail
+    raise "not allow_ip:#{ip},but not fail." if !allow_ip && !fail      
   end
+  
+  test "测试api/room接口" do
+    RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
+        :roomid  => "4928288" , :message=> "测试一下" ,
+        :uid => "502e6303421aa918ba000001") 
+  end  
 
+  
 end
