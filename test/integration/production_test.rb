@@ -1,0 +1,31 @@
+# coding: utf-8
+require 'test_helper'
+
+class ProductionTest < ActionDispatch::IntegrationTest
+  
+
+  def aliyun_tst
+    raise "Not set ALIYUN_ACCESS_ID in env" unless ENV["ALIYUN_ACCESS_ID"]
+    conn=CarrierWave::Storage::Aliyun::Connection.new({
+      aliyun_access_id:ENV["ALIYUN_ACCESS_ID"],
+      aliyun_access_key:ENV["ALIYUN_ACCESS_KEY"],
+      aliyun_bucket:"dface"
+      })
+    tstr=Time.now.to_i.to_s
+    conn.put(tstr+`hostname`[0..-2] , "Test#{tstr}")
+  end
+  
+  def location_js_tst
+    out = `mongo --quiet dface test/mongo/location.js`
+    assert_equal out.length, 0 
+  end
+  
+  test "实际部署的生产系统上测试" do
+    if `ifconfig eth1`.to_s.length > 0
+      puts "本机器是生产系统"
+      aliyun_tst
+      location_js_tst
+    end
+  end  
+  
+end

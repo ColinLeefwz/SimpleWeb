@@ -49,7 +49,7 @@ class Oauth2Controller < ApplicationController
   #提供给手机客户端的认证服务
   def login
     hash = Digest::SHA1.hexdigest("#{params[:name]}#{params[:pass]}#{params[:mac]}dface")[0,32]
-    if hash != params[:hash]
+    if hash != params[:hash][0,32]
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
