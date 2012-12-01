@@ -2,10 +2,11 @@ library(maps)
 library(mapdata)
 map("china")
 
-wget http://cos.name/wp-content/uploads/2009/07/chinaprovinceborderdata_tar_gz.zip
+#参考http://cos.name/2009/07/drawing-china-map-using-r/
+#wget http://cos.name/wp-content/uploads/2009/07/chinaprovinceborderdata_tar_gz.zip
 
 library(maptools);
-x=read.shape('bou2_4p.shp');#下文中会继续用到x这个变量，
+x=readShapePoly('bou2_4p.shp');#下文中会继续用到x这个变量，
                             #如果你用的是其它的名称，
                             #请在下文的程序中也进行相应的改动。
 plot(x);
