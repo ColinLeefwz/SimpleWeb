@@ -109,7 +109,7 @@ LUA
       end
     end
     shopname = shop.nil?? "" : shop.name
-    {time: [day,cat.strftime("%H ：%M")], shop: shopname, shop_id:sid.to_i, photos:ps}
+    {id: self._id, time: [day,cat.strftime("%H ：%M")], shop: shopname, shop_id:sid.to_i, photos:ps}
   end
 
   def self.merge_same_location_half_day(checkins)
