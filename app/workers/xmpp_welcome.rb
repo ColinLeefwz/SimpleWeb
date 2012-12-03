@@ -8,7 +8,7 @@ class XmppWelcome
     #Resque.encode("Hi，我来了~😊")
     #=> "\"Hi\\uff0c\\u6211\\u6765\\u4e86~\\uf60a\"" 
     #最后一个字符超过了mbp,应该是\u1f60a
-    if user_gender==2
+    if user_gender.to_i==2
       message = "Hi，我来了~😊"
     else
       message = "Hi，我来啦~😝"
