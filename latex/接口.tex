@@ -592,7 +592,9 @@ wb_uid:1884834632
  page  & 整数 & 可选 & 分页，缺省值为1\\ 
  \hline
  pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
-\hline
+  \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\
+ \hline
 \end{tabular}
    \end{center}
 \end{table}
@@ -603,19 +605,25 @@ wb_uid:1884834632
 \begin{verbatim}
 访问：/user_info/trace
 返回值：
-
-[{"time":["09.22","14:24"],"shop":"(下沙服务区)书报百货","shop_id":1,
+{"pcount":20,"data":
+[{"id":"50b71b73c90d8b3c73000019","time":["09.22","14:24"],
+"shop":"(下沙服务区)书报百货","shop_id":1,
 "photos":[{"logo":"http://oss.aliyuncs.com/dface_test/5044301dbe4b192a30000002/0.jpg",
 "logo_thumb2":"http://oss.aliyuncs.com/dface_test/5044301dbe4b192a30000002/t2_0.jpg",
 "id":"5044301dbe4b192a30000002","desc":null}]},
 {"time":["07.21","00:02"],"shop":"海洋二所","shop_id":60775,"photos":[]}]
+}
 
-字段说明：
+其中pcount代表数据库中查询到的足迹的数量，如果该pcount等于客户端请求的数量，那么代表还会有更多的足迹。否则代表该用户没有足迹了。
+而data中保存的实际返回的足迹，其数量可能少于数据库中查询到的足迹。比如一个人在一天内在同一个地方的签到会被合并。
+
+data中的字段说明：
 ｛
-time: ［签订日期，签到时间］
+id：签到id
+time: ［签到日期，签到时间］
 shop：商家
 shop_id:商家id
-photos ：｛desc：图片描述，id：图片id，logo：原图URL，logo_thumb2：缩略图｝
+photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_thumb2：缩略图｝］
 ｝
 
 \end{verbatim}
