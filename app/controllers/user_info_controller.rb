@@ -26,9 +26,17 @@ class UserInfoController < ApplicationController
     page = params[:page].to_i
     pcount = params[:pcount].to_i
     page = 1 if page==0
-    pcount = 50 if pcount==0
+    pcount = 20 if pcount==0
     checkins = session_user.checkins.skip((page-1)*pcount).limit(pcount)
-    render :json => Checkin.merge_same_location_half_day(checkins).map {|x| x.to_trace}.to_json
+    cins = Checkin.merge_same_location_half_day(checkins).map {|x| x.to_trace}
+    if params[:hash]
+      ret = {:pcount => checkins.size}
+      ret.merge!( {:data => cins})
+    else
+      ret = [{:pcount => checkins.size}]
+      ret << {:data => cins}
+    end
+    render :json => ret.to_json
   end
   
   def get_self
