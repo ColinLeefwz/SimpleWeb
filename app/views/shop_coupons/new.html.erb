@@ -7,7 +7,7 @@
 </div>
 
 <div id="couponForm" style="display: <%= params[:action]=='new' ? 'none' : '' %>;">
-  <%= form_for(@coupon, :url => '/shop_coupons/create',:html => { :multipart => true } ) do |f| %>
+  <%= form_for(@coupon, :url => '/shop_coupons/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
     <div class="coupon">
 
       <div id="imgText">
@@ -22,11 +22,10 @@
         </div>
       </div>
 
-
       <div id="allImg">
         <input type="hidden" name="coupon[t]" value="2"/>
         <div class="adiv">
-          <input size="30" name="coupon[img]" type="file" class="inputImg" style="margin-left:37px"  >
+          <input size="30" name="coupon[img2]" type="file" class="inputImg" style="margin-left:37px" onchange="$('#cform').submit();"  >
         </div>
       </div>
 
@@ -65,3 +64,4 @@
     $('#couponForm').show()
   }
 </script>
+

@@ -8,6 +8,9 @@ Lianlian::Application.routes.draw do
       get 'users'
       get 'ajax_deply'
       get 'ajax_del'
+      get 'show_img2'
+      get 'cancel_crop'
+      post 'crop'
     end
   end
 
