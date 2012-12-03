@@ -141,7 +141,9 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
     score.forEach(function(xx,i,a) {
         var x = xx[0];
         do_score(x,i,a);
-        var sc = db.checkin_shop_stats.findOne({"_id":x._id});
+        var sc = db.checkin_shop_stats.findOne({
+            "_id":x._id
+        });
         if(sc){
             if(uid && sc.users[uid]){
                 ucount = sc.users[uid][0];
@@ -162,7 +164,7 @@ var sort_with_score = function(arr,loc,accuracy,ip,uid){
     });
     score = score.sort(function(a,b) {
         return a[1]-b[1]
-        }).slice(0,30);
+    }).slice(0,30);
     return score;
 }
 
@@ -174,9 +176,9 @@ var find_shops = function(loc,accuracy,ip,uid){
         lo:{
             $within:{
                 $center:[loc,radius]
-                }
             }
-        }).limit(100);
+        }
+    }).limit(100);
     var ret = [];
     while ( cursor.hasNext() ) ret.push(cursor.next());
     if(ret.length>=3) return sort_with_score(ret,loc,accuracy,ip,uid);
@@ -184,9 +186,9 @@ var find_shops = function(loc,accuracy,ip,uid){
         lo:{
             $within:{
                 $center:[loc,10*radius]
-                }
             }
-        }).limit(5);
+        }
+    }).limit(5);
     while ( ret.length<5 && cursor.hasNext() ){
         var tmpshop = cursor.next();
         var existflag = false;
@@ -222,11 +224,22 @@ db.system.js.save({
 //查找附近的商家，先按商家用户数utotal排序，如果商家数量不足pcount个，那么按距离再查询出剩余商家。
 var nearby_shops = function(loc,page,pcount,t,name){
     var skip = (page-1)*pcount;
-    var city = db.shops.findOne({lo:{$near:loc}}).city;
-    var search_hash = {utotal:{$gt:0},city:city};
+    var city = db.shops.findOne({
+        lo:{
+            $near:loc
+        }
+    }).city;
+    var search_hash = {
+        utotal:{
+            $gt:0
+        },
+        city:city
+    };
     if(t>0) search_hash["t"]=t;
     if(name)  search_hash["name"]= name ;
-    var cursor = db.shops.find(search_hash).sort({utotal:-1}).skip(skip).limit(pcount);
+    var cursor = db.shops.find(search_hash).sort({
+        utotal:-1
+    }).skip(skip).limit(pcount);
     var ret = [];
     while ( cursor.hasNext() ) ret.push(cursor.next());
     ret.sort(function(a,b){
@@ -238,7 +251,13 @@ var nearby_shops = function(loc,page,pcount,t,name){
     var count = db.shops.count(search_hash);
     if(diff<pcount) skip2 = 0;
     else skip2 = skip-count;
-    var hash2 = {lo:{$within:{$center:[loc,0.1]}}};
+    var hash2 = {
+        lo:{
+            $within:{
+                $center:[loc,0.1]
+            }
+        }
+    };
     if(t>0) hash2["t"]=t;
     if(name)  hash2["name"]=name;
     var cursor2 = db.shops.find(hash2).skip(skip2).limit(diff);
@@ -284,6 +303,52 @@ db.system.js.save({
     "value" : groupCheckin
 })
 
+//按城市,省份统计商家
+var groupShop = function(){
+    db.shops.group({
+        "key":{
+            city: true
+        },
+        initial:{
+            count: 0
+        },
+        "$reduce" : function(doc, prev) {
+            prev.count += 1
+        }
+    }).forEach(function(g){
+        db.code_count_shops.insert({
+            _id: g['city'],
+            count: g['count']
+        })
+    });
+    var groupS = {} ;
+    // 区号统计
+    db.cities.find().forEach(function(city){
+        if(!groupS[city.s]){
+            groupS[city.s] = [city.code]
+        }else{
+            groupS[city.s].push(city.code)
+        }
+    });
+    for(var s in groupS){
+        var scount =0;
+        db.code_count_shops.find({
+            _id: {
+                $in: groupS[s]
+            }
+        }).forEach(function(ccs){
+            scount += ccs.count
+        });
+        db.s_count_shops.insert({
+            _id: s,
+            count: scount
+        })
+    }
+}
 
+db.system.js.save({
+    "_id" : "groupShop",
+    "value" : groupShop
+})
 
 
