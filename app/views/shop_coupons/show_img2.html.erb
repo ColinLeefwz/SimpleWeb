@@ -1,0 +1,45 @@
+<div class="subtitle">裁剪图片</div>
+
+<% content_for :ahead do %>
+  <link rel="stylesheet" href="/jcrop_zh/css/jquery.Jcrop.css" type="text/css" />
+  <script type="text/javascript" src="/jcrop_zh/js/jquery.Jcrop.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var jcrop_api =  $.Jcrop("#img2",{
+        setSelect: [0,0, 560, 190 ],
+        allowSelect: false,
+        allowResize: false,
+        onChange:showCoords
+      });
+      
+      function showCoords(obj){
+        $("#x").val(obj.x);
+        $("#y").val(obj.y);
+        $("#w").val(obj.w);
+        $("#h").val(obj.h);
+      };
+
+      $("#crop_submit").click(function(){
+        $("#crop_form").submit();
+      });
+    });
+  </script>
+<% end %>
+
+<div style="margin:10px 0px;">
+  <img id="img2" src="<%= @coupon.img2 %>" />
+</div>
+
+<form action="/shop_coupons/crop" method="post" id="crop_form">
+
+
+
+
+  <input type="hidden" value="<%= @coupon.id %>" name="id" />
+  <input type="hidden" id="x" name="x" value="0"/>
+  <input type="hidden" id="y" name="y" value="0"/>
+  <input type="hidden" id="w" name="w" value="560" />
+  <input type="hidden" id="h" name="h" value="190" />
+  <input type="submit" value="确认剪裁" class="sbtn" style="width:60px;"/>
+  <%= link_to '取 消', "/shop_coupons/cancel_crop?id=#{@coupon.id}", :class => 'sbtn', :style => "padding:3px 5px;"  %>
+</form>

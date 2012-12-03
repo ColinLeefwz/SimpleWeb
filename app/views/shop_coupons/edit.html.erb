@@ -1,20 +1,9 @@
 <div class="subtitle">编辑优惠券</div>
 <%= form_for(@coupon, :url => { :action => "update", :id => @coupon.id },:html => { :multipart => true } ) do |f| %>
   <div class="coupon">
-
-    <% if @coupon.t == 1   %>
-      <div class ='ldiv'>
-        <%= image_tag @coupon.img2 %>
-      </div>
-      <div class="rdiv" >
-        <%= f.text_field :name, :class => 'stxt txt' %>
-        <%= f.text_area :desc, :class => 'stxt atxt', :wrap => "off"%>
-      </div>
-    <%else%>
-      <div class="adiv">
-        <input size="30" name="coupon[img]" type="file" class="inputImg" style="margin-left:37px"  >
-      </div>
-    <%end%>
+    <div class="adiv">
+      <%=  image_tag(@coupon.img) %>
+    </div>
   </div>
   <ul class="formlist" style="margin-top: 0px;">
     <%= render :partial => 'ratio',  :locals => {:f => f}  %>
