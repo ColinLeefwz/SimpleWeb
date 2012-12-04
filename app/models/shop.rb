@@ -105,8 +105,16 @@ class Shop
     Staff.where({shop_id: self.id}).map {|x| x.user_id}
   end
 
+  #  def notice
+  #    ShopNotice.where({shop_id: self.id, effect: true}).inject("") {|mem,x| mem << x.title }
+  #  end
+
   def notice
-    ShopNotice.where({shop_id: self.id, effect: true}).inject("") {|mem,x| mem << x.title }
+    ShopNotice.where(({shop_id: self.id})).last
+  end
+
+  def top_notice
+    ShopTopNotice.where(({shop_id: self.id})).last
   end
 
   #从CheckinShopStat获得昨天以前的用户签到记录，从redis中获得今天的用户签到记录，然后合并

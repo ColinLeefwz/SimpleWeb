@@ -25,6 +25,10 @@ class AdminShopsController < ApplicationController
     @shops = paginate_arr(@shops, params[:page])
   end
 
+  def show
+    @shop = Shop.find(params[:id])
+  end
+
   def find_shops
     @shop = Shop.find(params[:pid])
     hash,sort = {},{}
