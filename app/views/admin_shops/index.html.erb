@@ -24,6 +24,7 @@
     <th>分类</th>
     <th>子商家</th>
     <th></th>
+    <th></th>
   </tr>
 
   <% @shops.each do |shop| %>
@@ -38,6 +39,7 @@
       <td><%= shop.addr %></td>
       <td><%= shop.show_t %></td>
       <td><%= link_to(shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{shop.id}") %></td>
+      <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
       <td>
         <a onclick="ajaxdel($(this),<%= shop._id %>, false)" >删除</a>
       </td>
