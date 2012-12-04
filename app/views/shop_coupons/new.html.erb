@@ -8,9 +8,10 @@
 
 <div id="couponForm" style="display: <%= params[:action]=='new' ? 'none' : '' %>;">
   <%= form_for(@coupon, :url => '/shop_coupons/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
-    <div class="coupon">
 
-      <div id="imgText">
+
+    <div id="imgText">
+      <div class="coupon">
         <input type="hidden" name="coupon[t]" value="1"/>
         <div class ='ldiv'>
           <input size="12" name="coupon[img2]" type="file" class="inputImg"  >
@@ -18,37 +19,26 @@
         <div class="rdiv" >
           <%= f.text_field :name, :value => '点此输入名称', :class => 'stxt txt' %>
           <%= f.text_area :desc, :value => '点此输入描述', :class => 'stxt atxt',:wrap => "off"%>
-
         </div>
       </div>
-
-      <div id="allImg">
-        <input type="hidden" name="coupon[t]" value="2"/>
-        <div class="adiv">
-          <input size="30" name="coupon[img2]" type="file" class="inputImg" style="margin-left:37px" onchange="$('#cform').submit();"  >
-        </div>
-      </div>
-
+      <%= render :partial => 'form1', :locals => {:f => f}  %>
     </div>
 
-
-    <ul class="formlist" style="margin-top: 0px;">
-      <%= render :partial => 'ratio', :locals => {:f => f}  %>
-      <li>
-        <label>使用规则:</label>
-        <%= f.select :rule, [['只能下载一次', 0],['只能一张未使用',1],['无限制', 2]], :class => "txt" %>
-      </li>
-      <li>
-        <input type="submit" value="发 布" class="btn"/>
-      </li>
-    </ul>
+    <div id="allImg">
+      <div class="coupon">
+        <input type="hidden" name="coupon[t]" value="2"/>
+        <div class="adiv">
+          <input size="30" name="coupon[img2]" type="file" class="inputImg" style="margin-left:37px">
+        </div>
+      </div>
+      <ul class="formlist" style="margin-top: 0px;">
+        <li>
+          <input type="submit" value="下一步" class="btn"/>
+        </li>
+      </ul>
+    </div>
   <%  end %>
-
 </div>
-
-
-
-
 
 <%= link_to '返回列表', '/shop_coupons' %>
 

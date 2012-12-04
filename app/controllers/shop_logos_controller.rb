@@ -11,12 +11,14 @@ class ShopLogosController < ApplicationController
   end
 
   def create
-    @shop_logo=  ShopLogo.new(params[:shop_logo])
-    @shop_logo.shop_id = session[:shop_id]
-    if @shop_logo.save
-      redirect_to :action => :index
+    @shop_logo = ShopLogo.shop_logo(session[:shop_id])
+    if @shop_logo
+      @shop_logo.update_attributes(params[:shop_logo])
     else
-      render :action => :new
+      @shop_logo=  ShopLogo.new(params[:shop_logo])
+      @shop_logo.shop_id = session[:shop_id]
+      @shop_logo.save
     end
+    redirect_to :action => :index
   end
 end

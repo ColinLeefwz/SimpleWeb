@@ -1,4 +1,4 @@
-class AdminShopNoticesController < ApplicationController
+class AdminShopTopNoticesController < ApplicationController
   include Paginate
   before_filter :admin_authorize
   layout "admin"
@@ -14,11 +14,7 @@ class AdminShopNoticesController < ApplicationController
     hash.merge!({shop_id: params[:sid].to_i}) unless params[:sid].blank?
     
     hash.merge!({id: params[:id].to_i}) unless params[:id].blank?
-    @shop_notices = paginate("ShopNotice", params[:page], hash, sort)
+    @shop_notices = paginate("ShopTopNotice", params[:page], hash, sort)
   end
-
-  def show
-    @shop = Shop.find(params[:shop_id])
-    @shop_notices = ShopNotice.show_notices(params[:shop_id], 3)
-  end
+  
 end
