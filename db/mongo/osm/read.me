@@ -1,0 +1,15 @@
+Open Street Map处理
+
+brew install osmosis
+wget -O - http://m.m.i24.cc/osmconvert.c | sudo cc -x c - -lz -O3 -o osmconvert
+
+
+http://wiki.openstreetmap.org/wiki/Osmosis/DetailedUsage 
+
+osmosis --read-xml file="zhejiang.osm.bz2" --node-key keyList=place --write-xml file="data-sorted.osm"
+
+bzcat planet-latest.osm.bz2 | osmosis --read-xml file=-   --node-key-value keyValueList=place.town,place.suburb,place.island,place.county,place.city,place.state --write-xml file="place.osm"
+
+grep "<tag k=\"place" data-sorted.osm | sort | uniq -c | sort -n
+
+
