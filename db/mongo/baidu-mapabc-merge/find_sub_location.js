@@ -5,15 +5,15 @@
 
 var num=0;
 
-var e = new RegExp("\\([^\\)]*\\)$");
+var e = new RegExp("\\([^\\)]*\\)$|（[^（]*）$");
 
 var old_prefix="";
 var old_x=null;
 
 function diff(x,y){
 	if(y==null) return 100;
-	dx = (x.loc[0]-y.loc[0])*1;
-	dy = (x.loc[1]-y.loc[1])*1;
+	dx = (x.lo[0]-y.lo[0])*1;
+	dy = (x.lo[1]-y.lo[1])*1;
 	return Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
 }
 
@@ -25,7 +25,7 @@ function distance(x){
 	return 0.01;
 }
 
-db.shops.find({name:e}).sort({name:1}).forEach(function(x){
+db.shops.find({name:e,t:6}).sort({name:1}).forEach(function(x){
   num +=1;
   var prefix = x.name.substring(0,x.name.lastIndexOf("("));
   if(prefix.length==0){
