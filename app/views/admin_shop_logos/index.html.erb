@@ -18,20 +18,20 @@
     <th>商家id</th>
     <th>区号</th>
     <th>商家名称</th>
-    
+
     <th>商家地址</th>
     <th>缩略图</th>
     <th></th>
   </tr>
 
-  <% @shops.each do |shop| %>
+  <% @shop_logos.each do |shop_logo| %>
     <tr>
-      <td><%= shop.id.to_i %></td>
-      <td><%= shop.city %></td>
-      <td><%= shop.name %></td>
-      <td><%= shop.addr %></td>
-      <td><%=image_tag shop.logo && shop.logo.img.url(:t2) %></td>
-      <td><%= link_to '详情', "/admin_shop_logos/show?id=#{shop.id}" %></td>
+      <td><%= shop_logo.shop.id.to_i %></td>
+      <td><%= shop_logo.shop.city %></td>
+      <td><%= shop_logo.shop.name %></td>
+      <td><%= shop_logo.shop.addr %></td>
+      <td><%=image_tag shop_logo.img.url(:t2) %></td>
+      <td><%= link_to '详情', "/admin_shop_logos/show?id=#{shop_logo.shop.id}" %></td>
     </tr>
   <% end %>
 </table>

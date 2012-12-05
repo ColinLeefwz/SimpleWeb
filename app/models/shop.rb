@@ -1,4 +1,9 @@
 # coding: utf-8
+
+#<20275139,百度数据
+#20275139~20347004, mapabc数据
+#>20347004 osm数据
+
 class Shop
   include Mongoid::Document
   #store_in collection: "baidu"
@@ -17,6 +22,7 @@ class Shop
   field :utotal, type:Integer, default:0 #截至到昨天，该商家的用户总数
   field :uftotal, type:Integer, default:0 #截至到昨天，该商家的女性用户总数
   field :shops, type:Array #子商家
+  #field :osm_id #Open Street Map node id
 
   #field :cc, type:Integer  #点评的评论数
   #field :type              #从mapabc导入的商家类型
@@ -70,6 +76,7 @@ class Shop
   end
   
   def loc_first
+    return lo
     if self["loc"][0].class==Array
       self["loc"][0]
     else
@@ -104,8 +111,16 @@ class Shop
     Staff.where({shop_id: self.id}).map {|x| x.user_id}
   end
 
+  #  def notice
+  #    ShopNotice.where({shop_id: self.id, effect: true}).inject("") {|mem,x| mem << x.title }
+  #  end
+
   def notice
-    ShopNotice.where({shop_id: self.id, effect: true}).inject("") {|mem,x| mem << x.title }
+    ShopNotice.where(({shop_id: self.id})).last
+  end
+
+  def top_notice
+    ShopTopNotice.where(({shop_id: self.id})).last
   end
 
   #从CheckinShopStat获得昨天以前的用户签到记录，从redis中获得今天的用户签到记录，然后合并

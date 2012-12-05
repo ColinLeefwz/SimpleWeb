@@ -10,6 +10,7 @@ Lianlian::Application.routes.draw do
       get 'ajax_del'
       get 'show_img2'
       get 'cancel_crop'
+      get 'all_img'
       post 'crop'
     end
   end
