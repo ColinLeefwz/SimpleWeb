@@ -182,13 +182,7 @@ var find_shops = function(loc,accuracy,ip,uid){
     var ret = [];
     while ( cursor.hasNext() ) ret.push(cursor.next());
     if(ret.length>=3) return sort_with_score(ret,loc,accuracy,ip,uid);
-    cursor = db.shops.find({
-        lo:{
-            $within:{
-                $center:[loc,10*radius]
-            }
-        }
-    }).limit(5);
+    cursor = db.shops.find( { lo : { $near : loc } } ).limit(5);
     while ( ret.length<5 && cursor.hasNext() ){
         var tmpshop = cursor.next();
         var existflag = false;
