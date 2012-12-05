@@ -17,6 +17,20 @@ db.system.js.save({
     "value" : first
 })
 
+function ensure_exec(fun,dest_coll,start_offset){
+try{
+	if(start_offset==undefined) start_offset=0;
+	fun(start_offset);
+}catch(e){
+	offset = eval("db."+dest_coll+".find().sort({_id:-1}).limit(1)[0]._id");
+	ensure_exec(fun,offset,dest_coll);
+}
+}
+
+db.system.js.save({
+    "_id" : "ensure_exec",
+    "value" : ensure_exec
+})
 
 
 var gen_day_id =function(days){
