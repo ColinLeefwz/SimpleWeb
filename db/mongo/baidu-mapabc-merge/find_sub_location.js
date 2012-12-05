@@ -17,14 +17,6 @@ function diff(x,y){
 	return Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
 }
 
-function distance(x){
-	if(x.type.indexOf("交通设施服务")==0) return 0.03;
-	if(x.type.indexOf("购物服务;商场;购物中心")==0) return 0.03;
-	if(x.type.indexOf("风景名胜")==0) return 0.03;
-	if(x.type.indexOf("商务住宅")==0) return 0.03;
-	return 0.01;
-}
-
 db.shops.find({name:e,t:6}).sort({name:1}).forEach(function(x){
   num +=1;
   var prefix = x.name.substring(0,x.name.lastIndexOf("("));
