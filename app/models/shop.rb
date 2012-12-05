@@ -1,4 +1,9 @@
 # coding: utf-8
+
+#<20275139,百度数据
+#20275139~20347004, mapabc数据
+#>20347004 osm数据
+
 class Shop
   include Mongoid::Document
   #store_in collection: "baidu"
@@ -17,6 +22,7 @@ class Shop
   field :utotal, type:Integer, default:0 #截至到昨天，该商家的用户总数
   field :uftotal, type:Integer, default:0 #截至到昨天，该商家的女性用户总数
   field :shops, type:Array #子商家
+  #field :osm_id #Open Street Map node id
 
   #field :cc, type:Integer  #点评的评论数
   #field :type              #从mapabc导入的商家类型
