@@ -35,6 +35,14 @@ class Checkin
   def user
     User.find(self.uid)
   end
+
+  def self.find_by_id(id)
+    begin
+      self.find(id)
+    rescue
+      nil
+    end
+  end
   
   def shop
     Shop.find_by_id(self.sid)
