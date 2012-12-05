@@ -101,6 +101,7 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.2)
     origin (1.0.4)
+    osmlib-base (0.1.4)
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -202,6 +203,7 @@ DEPENDENCIES
   mongo
   mongoid
   oauth2
+  osmlib-base
   rails (~> 3.2)
   rails-i18n
   redis

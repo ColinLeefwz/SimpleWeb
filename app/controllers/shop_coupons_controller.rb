@@ -5,13 +5,13 @@ class ShopCouponsController < ApplicationController
   layout 'shop'
 
   def index
-    hash = {:shop_id => session[:shop_id], :img_filename => {"$exists" => true}}
+    hash = {:shop_id => session[:shop_id], :ratio => {"$exists" => true}}
     sort = {:_id => -1}
     @coupons = paginate("Coupon", params[:page], hash, sort,10)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @coupons }
+      format.json { render :json => @coupons }
     end
   end
 
@@ -22,7 +22,7 @@ class ShopCouponsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @coupon }
+      format.json { render :json => @coupon }
     end
   end
 
@@ -33,7 +33,7 @@ class ShopCouponsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @coupon }
+      format.json { render :json => @coupon }
     end
   end
 
@@ -55,7 +55,11 @@ class ShopCouponsController < ApplicationController
     @coupon.save
     CarrierWave::Workers::StoreAsset.perform("Coupon",@coupon.id.to_s,"img")
     FileUtils.rm_r("public/coupon/#{@coupon.id.to_s}")
-    redirect_to :action => :edit, :id => @coupon.id
+    redirect_to :action => :all_img, :id => @coupon.id
+  end
+
+  def all_img
+     @coupon = Coupon.find(params[:id])
   end
 
   def cancel_crop
