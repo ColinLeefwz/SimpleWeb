@@ -13,7 +13,7 @@ var old_prefix="";
 var prefix_shop=null;
 
 
-db.shops.find({name:e,t:6}).sort({name:1}).forEach(function(x){
+db.shops.find({t:6,name:e}).sort({name:1}).batchSize(10).forEach(function(x){
   num +=1;
   var prefix = x.name.substring(0,x.name.lastIndexOf("("));
   if(prefix.length==0){
@@ -21,13 +21,14 @@ db.shops.find({name:e,t:6}).sort({name:1}).forEach(function(x){
 	return;
   }
   if(prefix==old_prefix){
-	if(get_distance(x.lo,prefix_shop.lo)<3000){
+	dis = get_distance(x.lo,prefix_shop.lo);
+	if(dis<3000){
 		prefix_shop.subs.push(x);
 		return;
 	}
   }
   if(prefix_shop!=null){
-	  db.tmp4.insert(prefix_shop);
+	  if(prefix_shop.subs.length>0) db.tmp4.insert(prefix_shop);
 	  prefix_shop = null;
   }
   prefix_shop = db.shops.findOne({name:prefix,lo:{$within:{$center:[x.lo,0.02]}}});
@@ -40,6 +41,6 @@ db.shops.find({name:e,t:6}).sort({name:1}).forEach(function(x){
 	  prefix_shop.subs = [];
   }
   old_prefix = prefix;
-  if(num%1000==0) print(":"+num);
+  if(num%10==0) print(":"+num);
 })
 
