@@ -19,11 +19,11 @@ db.system.js.save({
 
 function ensure_exec(fun,dest_coll,start_offset){
 try{
-	if(start_offset==undefined) start_offset=0;
+	if(start_offset==undefined) throw "no start_offset";
 	fun(start_offset);
 }catch(e){
 	offset = eval("db."+dest_coll+".find().sort({_id:-1}).limit(1)[0]._id");
-	ensure_exec(fun,offset,dest_coll);
+	ensure_exec(fun,dest_coll,offset);
 }
 }
 
