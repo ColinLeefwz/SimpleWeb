@@ -22,6 +22,7 @@ try{
 	if(start_offset==undefined) throw "no start_offset";
 	fun(start_offset);
 }catch(e){
+	print(e);
 	offset = eval("db."+dest_coll+".find().sort({_id:-1}).limit(1)[0]._id");
 	ensure_exec(fun,dest_coll,offset);
 }
