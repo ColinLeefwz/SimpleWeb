@@ -17,7 +17,9 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert luser.reload.blacks_s.detect{|data| data["id"] == user1.id}
     assert_equal luser.reload.blacks_s.count, 1
-    assert_equal response.body, {"id"=>"502e6303421aa918ba00007c","report"=>0,"cat"=>Time.now}.to_json
+    data = JSON.parse(response.body)
+    data["cat"] = data['cat'].to_date
+    assert_equal data, {"id"=>"502e6303421aa918ba00007c","report"=>0,"cat"=>Time.now.to_date}.to_json
 
 
     #注销后添加黑名单
