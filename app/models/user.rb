@@ -220,32 +220,4 @@ class User
     User.all.each {|x| x.init_trace}
   end
 
-  def weibo_friend_ids(token,count,cursor=0)
-    response = RestClient.get "https://api.weibo.com/2/friendships/friends/ids.json?count=#{count}&cursor=#{cursor}&&access_token=#{token}&uid=#{self.wb_uid}"
-    response = JSON.parse response
-  end
-
-  def get_friend_ids(token,count = 5000)
-    data = weibo_friend_ids(token,count)
-    total_number = data["total_number"]
-    ids = data['ids'].map{|m| m.to_s}
-    1.upto((total_number-1)/count) do |page|
-      ids += weibo_friend_ids(token,count,page)["ids"].map{|m| m.to_s}
-    end
-    {ids: ids, total_number: total_number}
-  end
-
-  def friend_ids_insert(token)
-    if ENV["RAILS_ENV"] == "production"
-      conn = Mongo::Connection.new("192.168.1.22")
-    else
-      conn = Mongo::Connection.new("127.0.0.1")
-    end
-    db = conn.db("dface")
-    coll = db.collection("sina_friends")
-    coll.insert(_id: self.wb_uid, data: get_friend_ids(token))
-  end
-
-  "https://api.weibo.com/2/place/nearby/pois.json?lat=30.28&long=120.112&access_token=2.00kfdvGCGFlsXC1b5e64ba39QaSfpB"
-
 end
