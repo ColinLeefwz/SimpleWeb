@@ -1,17 +1,8 @@
 class AroundmeController < ApplicationController
   
   def shops
-    uid = ",ObjectId('#{session[:user_id]}')" if session[:user_id]
-    str = "find_shops([#{params[:lat]},#{params[:lng]}],#{params[:accuracy]},'#{real_ip}'#{uid})"
-    arr = Mongoid.default_session.command(eval:str)["retval"]
-    if arr[0].class == Array #[商家、距离+评分、评分]
-      #arr.each {|x| puts "#{x[1]},  #{x[2]},    #{x[0]["name"]}"}
-      shop_ids = arr.map{|x| x[0]["_id"].to_i}
-      realtime_score = Checkin.get_users_count_multi(shop_ids).map{|x| user_to_score(x)}
-      arr.each_with_index {|x,i| x[1] -= realtime_score[i]}
-      arr.sort! {|a,b| a[1] <=> b[1]}
-      arr = arr.map {|x| x[0]}
-    end    
+    arr = Shop.new.find_shops([params[:lat].to_f,params[:lng].to_f],
+          params[:accuracy].to_f,real_ip,session[:user_id])  
     hash = arr.map do |x|
       s = Shop.new(x)
       s.id = x["_id"].to_i
