@@ -47,28 +47,6 @@ class Shop
       nil
     end
   end
-  
-  def self.import_form(mshop) #从Mshop导入点评商家
-    begin
-      city = Mcity.find(mshop.mcity_id).code
-    rescue  Exception => error
-    end
-    city = "0571" if city.nil?
-    id = Shop.count+1
-    lo = Mongoid.default_session.command(eval:"gcj02_to_real([#{mshop.lat}, #{mshop.lng}])")["retval"]
-    hash = {
-      _id: id,
-      city: city,
-      name: mshop.name,
-      addr: mshop.address,
-      tel: mshop.phone,
-      loc: [mshop.lat.to_f,mshop.lng.to_f],
-      lo: lo,
-      cc: mshop.comment_count
-    }
-    #TODO: 点评的商家类型映射到脸脸的商家类型
-    Shop.collection.insert hash
-  end
 
   #删除商家.
   def shop_del

@@ -15,7 +15,7 @@ var prefix_shop=null;
 db.shops.find({t:6}).batchSize(10).forEach(function(x){
   num +=1;
   var e = new RegExp(x.name+".+$");
-  subs = db.shops.find({t:6,name:e}).toArray();
+  subs = db.shops.find({lo:{$within:{$center:[x.lo,0.03]}},t:6,name:e}).toArray();
   if(subs.length>0){
 	  x.subs = subs
 	  db.tmp6.insert(x);
