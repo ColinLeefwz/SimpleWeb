@@ -7,22 +7,13 @@ class ShopController < ApplicationController
     pcount = params[:pcount].to_i
     page = 1 if page==0
     pcount = 20 if pcount==0
-    str = "nearby_shops([#{params[:lat]},#{params[:lng]}],#{page},#{pcount}"
-    if params[:name]
-      str << ",#{params[:type].to_i},/#{params[:name]}/)"
-    elsif params[:type]
-      str << ",#{params[:type]})"
-    else
-      str << ")"
-    end
-    arr = Mongoid.default_session.command(eval:str)["retval"]
-    hash = arr.map do |x|
-      s = Shop.new(x)
-      s.id = x["_id"].to_i
-      #TODO: WARNING: Can't mass-assign protected attributes: _id
-      s.safe_output_with_users
-    end
-    render :json =>  hash.to_json
+    skip = (page-1)*pcount
+    lo = [params[:lat].to_f , params[:lng].to_f]
+    hash = {lo:{"$within"=>{"$center"=> [lo,0.05]}}}
+    hash.merge!( {name: /#{params[:name]}/ }  )  if params[:name]
+    hash.merge!( {t: params[:type].to_i }  )  if params[:type]
+    shops = Shop.where(hash).order_by([:utotal]).skip(skip).limit(pcount)
+    render :json =>  shops.map {|s| s.safe_output_with_users}.to_json
   end
   
   def users
