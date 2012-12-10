@@ -16,7 +16,7 @@ development:
         # safe: false
 
         # Change the default consistency model to :eventual or :strong.
-        # :eventual will send reads to secondaries, :strong sends everything
+        # :eventual will send reads to doooaries, :strong sends everything
         # to master. (default: :eventual)
         consistency: :strong
   # Configure Mongoid specific options. (optional)
@@ -64,8 +64,15 @@ production:
       database: dface
       hosts:
         - 10.135.44.107:27017
+        - 10.135.44.204:27017
       options:
-        consistency: :strong
+        consistency: :eventual
+    dooo:
+      database: dface
+      hosts:
+        - 127.0.0.1:27017
+      options:
+        consistency: :eventual
 
 test:
   sessions:
