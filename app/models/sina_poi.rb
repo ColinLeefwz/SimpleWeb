@@ -14,7 +14,7 @@ class SinaPoi
       pois(token,lo, page)["pois"].to_a.each do |d|
         id = d.delete("poiid")
         if coll.find({:_id => id}).to_a.blank?
-          if ba = check_baidu(d['title'], [d['lat'], d['lon']])
+          if ba = check_baidu(d['title'], [d['lat'].to_f, d['lon'].to_f])
             d.merge!({"baidu_id" => ba._id})
           end
           coll.insert({:_id => id }.merge(d))
