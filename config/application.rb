@@ -12,6 +12,7 @@ require 'uuid'
 $xmpp_ip = "42.120.60.200"
 $web_ip = "42.121.79.210"
 $uuid = UUID.new
+$LOG = Logger.new('log/sina_api.log', 0, 100 * 1024 * 1024)
 
 
 # If you have a Gemfile, require the gems listed there, including any gems
