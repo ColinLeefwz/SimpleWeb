@@ -56,7 +56,7 @@ class SinaPoi
 
   private
   def self.pois(token,lo, page=1, err_num = 0)
-    sleep(3)
+    sleep(1)
     url = "https://api.weibo.com/2/place/nearby/pois.json?count=#{count}&page=#{page}&lat=#{lo[0]}&long=#{lo[1]}&access_token=#{token}"
     begin
       response = RestClient.get(url)
@@ -64,7 +64,7 @@ class SinaPoi
     rescue
       err_num += 1
       return nil if err_num == 4
-      sleep 1 * 60
+      sleep 1 * 20
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误，. #{$!}"
       return pois(token,lo, page,err_num)
     end
@@ -72,7 +72,7 @@ class SinaPoi
   end
 
   def self.poi_user_page(token, poiid, page=1, err_num = 0)
-    sleep(5)
+    sleep(1)
     url =  "https://api.weibo.com/2/place/pois/users.json?poiid=#{poiid}&access_token=#{token}&count=#{count}&page=#{page}"
     begin
       response = RestClient.get(url)
@@ -80,7 +80,7 @@ class SinaPoi
     rescue
       err_num += 1
       return nil if err_num == 4
-      sleep 1 * 60
+      sleep 1 * 20
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误，. #{$!}"
       return poi_user_page(token, poiid, page, err_num)
     end
@@ -88,9 +88,12 @@ class SinaPoi
   end
 
   def self.user_get_attributes(uhash)
-    uhash.slice("screen_name","description","profile_image_url","gender","followers_count","friends_count","statuses_count",
+    source = uhash["status"]['source']
+    user = uhash.slice("screen_name","description","profile_image_url","gender","followers_count","friends_count","statuses_count",
       "favourites_count","created_at","allow_all_act_msg","geo_enabled","verified","verified_type","remark",
       "allow_all_comment","avatar_large","verified_reason")
+    user.merge!({:is_I => true}) if source.match(/iphone|ipad/i)
+    user
   end
 
 end
