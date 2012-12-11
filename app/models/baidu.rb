@@ -1,4 +1,4 @@
 class Baidu
   include Mongoid::Document
-  instance_variable_set(:@collection_name,:baidu)
+  store_in({:collection =>  "baidu", :session => "dooo"})
 end
