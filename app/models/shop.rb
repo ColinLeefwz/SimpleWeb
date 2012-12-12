@@ -16,6 +16,8 @@ class Shop
   field :lo, type:Array #实际的经纬度
   field :tel 
   field :city
+  field :phone
+  field :lob, type:Array
   field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. 
   field :addr
   field :t                #脸脸的商家类型
@@ -201,16 +203,16 @@ class Shop
     begin
       sc = CheckinShopStat.find(x["_id"].to_i)
       if uid && sc.users[uid]
-          ucount = sc.users[uid][0];
-          xx[2] -= ucount*30;
+        ucount = sc.users[uid][0];
+        xx[2] -= ucount*30;
       end
       if ip.index(",")==-1
-          ip2 = ip.replace('.', '/', 'g');
-          ip2s = sc.ips[ip2];
-          if(ip2s)
-              ipcount = sc.ips[ip2][0];
-              xx[2] -= ipcount*5;
-          end
+        ip2 = ip.replace('.', '/', 'g');
+        ip2s = sc.ips[ip2];
+        if(ip2s)
+          ipcount = sc.ips[ip2][0];
+          xx[2] -= ipcount*5;
+        end
       end
     rescue
     end
@@ -237,17 +239,17 @@ class Shop
     end
     if t==6
       if(stype.index('商务住宅')==0)
-          if(stype.index('商务住宅;住宅区')==0)
-              xx[2] -=10 if(hour>=20 || hour<=8)
+        if(stype.index('商务住宅;住宅区')==0)
+          xx[2] -=10 if(hour>=20 || hour<=8)
+        else
+          if(today.wday>=1 && today.wday<=5)
+            xx[2] -=10 if(hour>=14 && hour<=17)
+            xx[2] -=10 if(hour>=8 && hour<=11)
+            xx[2] +=20 if(hour>=19)
           else
-              if(today.wday>=1 && today.wday<=5)
-                  xx[2] -=10 if(hour>=14 && hour<=17)
-                  xx[2] -=10 if(hour>=8 && hour<=11)
-                  xx[2] +=20 if(hour>=19)
-              else
-                  xx[2] +=20;
-              end
+            xx[2] +=20;
           end
+        end
       end
     end
   end
@@ -260,7 +262,7 @@ class Shop
   
   
   def num_to_rad(d)
-      return d * 3.1416 / 180.0
+    return d * 3.1416 / 180.0
   end
   
   def pow(x,y)
@@ -273,22 +275,22 @@ class Shop
     a = radLat1 - radLat2
     b = num_to_rad(lng1) - num_to_rad(lng2)
     s = 2 * Math.asin(Math.sqrt(pow(Math.sin(a/2),2) +
-        Math.cos(radLat1)*Math.cos(radLat2)*pow(Math.sin(b/2),2)))
+          Math.cos(radLat1)*Math.cos(radLat2)*pow(Math.sin(b/2),2)))
     s = s *6378.137  #EARTH_RADIUS;
     s = (s * 10000).round / 10
     return s
   end
   
   def get_distance( loc1,loc2)
-      return get_distance4(loc1[0],loc1[1],loc2[0],loc2[1])
+    return get_distance4(loc1[0],loc1[1],loc2[0],loc2[1])
   end
   
   def min_distance(shop,loc)
-      if(shop["lo"][0].class==Array) 
-        shop["lo"].map {|x| get_distance(x,loc)}.min
-      else
-        return get_distance(shop["lo"],loc)
-      end
+    if(shop["lo"][0].class==Array)
+      shop["lo"].map {|x| get_distance(x,loc)}.min
+    else
+      return get_distance(shop["lo"],loc)
+    end
 
   end
 
