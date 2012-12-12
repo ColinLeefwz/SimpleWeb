@@ -19,6 +19,22 @@ class AdminShopsController < ApplicationController
 
   end
 
+  def new
+    @shop = Shop.new
+  end
+
+  def create
+    @shop = Shop.new(params[:shop])
+    @shop._id = Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
+    @shop.lob = @shop.lob.split(/[,，]/).map { |m| m.to_f  }
+    @shop.lo = @shop.lo.split(/[,，]/).map { |m| m.to_f  }
+    if @shop.save
+      redirect_to :action => "show", :id => @shop.id
+    else
+      render flash.now[:notice] = "添加商家失败."
+    end
+  end
+
   def subshops
     @shop = Shop.find(params[:shop_id])
     @shops = Shop.where({_id: {"$in" => @shop.shops.to_a}}).to_a
