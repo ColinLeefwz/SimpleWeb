@@ -23,6 +23,14 @@
   <%= @shop.tel %>
 </p>
 <p>
+  <b>百度经纬度:</b>
+  <%= @shop.lob %>
+</p>
+<p>
+  <b>实际经纬度:</b>
+  <%= @shop.lo %>
+</p>
+<p>
   <b>地址:</b>
   <%= @shop.addr %>
 </p>
@@ -45,4 +53,8 @@
 <p>
   <b>优惠券:</b>
   <%= link_to '查看', "/admin_shop_coupons?sid=#{@shop.id.to_i}" %>
+</p>
+<p>
+  <b>签到：</b>
+  <%= link_to '查看', "/admin_checkins?sid=#{@shop.id.to_i}"  %>
 </p>
