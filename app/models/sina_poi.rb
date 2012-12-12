@@ -11,7 +11,9 @@ class SinaPoi
     return if response.blank?
     total_number = pois(token, lo)["total_number"]
     1.upto((total_number-1)/count+1) do |page|
-      pois(token,lo, page)["pois"].to_a.each do |d|
+      tmp_pois = pois(token,lo, page)
+      next unless tmp_pois.is_a?(Hash)
+      tmp_pois["pois"].to_a.each do |d|
         id = d.delete("poiid")
         if coll.find({:_id => id}).to_a.blank?
           if ba = check_baidu(d['title'], [d['lat'].to_f, d['lon'].to_f])
@@ -32,7 +34,9 @@ class SinaPoi
     return if response.blank?
     total_number = response["total_number"]
     1.upto((total_number-1)/count+1) do |page|
-      poi_user_page(token, poiid, page)['users'].to_a.each do |r|
+      sinausers = poi_user_page(token, poiid, page)
+      next unless sinausers.is_a?(Hash)
+      sinausers['users'].to_a.each do |r|
         datas << [r["id"], r["status"]['text'], r["status"]['source'], r["checkin_at"]]
         id = r.delete("id")
         sucoll.insert({:_id =>  id }.merge(user_get_attributes(r))) unless SinaUser.find_by_id(id)
