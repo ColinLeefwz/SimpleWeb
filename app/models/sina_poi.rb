@@ -14,8 +14,13 @@ class SinaPoi
       tmp_pois["pois"].to_a.each do |d|
         id = d.delete("poiid")
         if coll.find({:_id => id}).to_a.blank?
-          if ba = check_baidu(d['title'], [d['lat'].to_f, d['lon'].to_f])
-            d.merge!({"baidu_id" => ba.first, 'mtype' => ba.last})
+          begin
+            if ba = check_baidu(d['title'], [d['lat'].to_f, d['lon'].to_f])
+              d.merge!({"baidu_id" => ba.first, 'mtype' => ba.last})
+            end
+          rescue Exception => e 
+            # end pattern with unmatched parenthesis: /^老庙黄金(东宝店）/ (RegexpError)
+            $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{e}"
           end
           coll.insert({:_id => id }.merge(d))
           pois_users_insert(token, id)
