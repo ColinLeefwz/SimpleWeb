@@ -17,7 +17,7 @@ h1{display: none}
 .ad{height: 509px;width:100%;clear:both;background:url(../images/index/ad1.jpg) center top no-repeat;}
 .slide {position: relative;width: 1000px;height: 367px;margin: 0 auto;}
 .slide .dl {width: 420px;height: 58px;top: 320px;left: 511px;position: absolute;background:url(../images/index/btn.png) 0px -59px no-repeat;}
-.slide .dl:hover {background:url(../images/btn.png) 0px 0px no-repeat;}
+.slide .dl:hover {background:url(../images/index/btn.png) 0px 0px no-repeat;}
 .slide h2 {top: -13px;width: 458px;height: 522px;position: absolute; background:url(../images/index/hand.png) left top no-repeat;}
 .slide h3{width: 300px;height: 60px;top: 400px;left: 518px;position: absolute;background:url(../images/index/btn2.png) center top no-repeat;}
 .con{margin:1px 0 0 0;width:100%;overflow:hidden;clear:both;height:239px;background:url(../images/index/conbg.jpg) left top repeat-x;}
