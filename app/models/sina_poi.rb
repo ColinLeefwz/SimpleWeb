@@ -1,16 +1,14 @@
 # encoding: utf-8
 class SinaPoi
   include Mongoid::Document
-  cattr_accessor :count
   store_in session: "dooo"
 
   def self.pois_insert(token,lo)
-    @@count ||= 50
     coll = self.collection
     response = pois(token, lo)
     return if response.blank?
     total_number = pois(token, lo)["total_number"]
-    1.upto((total_number-1)/count+1) do |page|
+    1.upto((total_number-1)/50+1) do |page|
       tmp_pois = pois(token,lo, page)
       next unless tmp_pois.is_a?(Hash)
       tmp_pois["pois"].to_a.each do |d|
@@ -28,12 +26,11 @@ class SinaPoi
 
 
   def self.pois_users_insert(token, poiid)
-    @@count ||= 50
     sucoll, datas =   SinaUser.collection, []
     response = poi_user_page(token, poiid)
     return if response.blank?
     total_number = response["total_number"]
-    1.upto((total_number-1)/count+1) do |page|
+    1.upto((total_number-1)/50+1) do |page|
       sinausers = poi_user_page(token, poiid, page)
       next unless sinausers.is_a?(Hash)
       sinausers['users'].to_a.each do |r|
@@ -46,6 +43,7 @@ class SinaPoi
   end
 
   def self.check_baidu(name, lo)
+#    return nil
     baidu = Baidu.where({:name => name, :lo => {"$within" => {"$center" => [lo, 0.01]}}}).to_a.first
     return baidu if baidu
     
@@ -61,7 +59,7 @@ class SinaPoi
   private
   def self.pois(token,lo, page=1, err_num = 0)
     sleep(1)
-    url = "https://api.weibo.com/2/place/nearby/pois.json?count=#{count}&page=#{page}&lat=#{lo[0]}&long=#{lo[1]}&access_token=#{token}"
+    url = "https://api.weibo.com/2/place/nearby/pois.json?count=50&page=#{page}&lat=#{lo[0]}&long=#{lo[1]}&access_token=#{token}"
     begin
       response = RestClient.get(url)
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}."
@@ -77,7 +75,7 @@ class SinaPoi
 
   def self.poi_user_page(token, poiid, page=1, err_num = 0)
     sleep(1)
-    url =  "https://api.weibo.com/2/place/pois/users.json?poiid=#{poiid}&access_token=#{token}&count=#{count}&page=#{page}"
+    url =  "https://api.weibo.com/2/place/pois/users.json?poiid=#{poiid}&access_token=#{token}&count=50&page=#{page}"
     begin
       response = RestClient.get(url)
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}"

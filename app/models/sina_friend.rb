@@ -1,11 +1,10 @@
 # encoding: utf-8
 class SinaFriend
   include Mongoid::Document
-  attr_accessor :count
   store_in session: "dooo"
 
   def insert_ids(wb_uid, token)
-    @count = 5000
+    
     coll = self.collection
     coll.insert(:_id => wb_uid.to_s, :data => all_page(wb_uid,token))
   end
@@ -16,7 +15,7 @@ class SinaFriend
   
   def single_page(wb_uid,token,cursor=0,err_num = 0)
     sleep(2)
-    url = "https://api.weibo.com/2/friendships/friends/ids.json?count=#{count}&cursor=#{cursor}&&access_token=#{token}&uid=#{wb_uid}"
+    url = "https://api.weibo.com/2/friendships/friends/ids.json?count=#{5000}&cursor=#{cursor}&&access_token=#{token}&uid=#{wb_uid}"
     begin
       response = RestClient.get(url)
     rescue
@@ -34,7 +33,7 @@ class SinaFriend
     return [] if data.nil?
     total_number = data["total_number"]
     ids = []
-    0.upto((total_number-1)/count) do |page|
+    0.upto((total_number-1)/5000) do |page|
       ids += single_page(wb_uid, token,page)["ids"].map{|m| m.to_s}
     end
     {:ids =>  ids, :total_number =>  total_number}
