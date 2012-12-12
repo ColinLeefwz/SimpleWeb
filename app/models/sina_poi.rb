@@ -31,27 +31,39 @@ class SinaPoi
     return if response.blank?
     total_number = response["total_number"]
     1.upto((total_number-1)/50+1) do |page|
-      sinausers = poi_user_page(token, poiid, page)
-      next unless sinausers.is_a?(Hash)
-      sinausers['users'].to_a.each do |r|
-        datas << [r["id"], r["status"]['text'], r["status"]['source'], r["checkin_at"]]
-        id = r.delete("id")
-        sucoll.insert({:_id =>  id }.merge(user_get_attributes(r))) unless SinaUser.find_by_id(id)
+      begin
+        sinausers = poi_user_page(token, poiid, page)
+        next unless sinausers.is_a?(Hash)
+        sinausers['users'].to_a.each do |r|
+          status = r["status"]
+          datas << [r["id"], status && status['text'], status && status['source'], r["checkin_at"]]
+          id = r.delete("id")
+          sucoll.insert({:_id =>  id }.merge(user_get_attributes(r))) unless SinaUser.find_by_id(id)
+        end
+      rescue
+        next
       end
     end
     SinaPoi.find(poiid).update_attribute(:datas, datas)
   end
 
+
   def self.check_baidu(name, lo)
-#    return nil
+
     baidu = Baidu.where({:name => name, :lo => {"$within" => {"$center" => [lo, 0.01]}}}).to_a.first
-    return baidu if baidu
-    
-    if name.last==')'
-      name2 = name.gsub(/[()]/, '')
-      baidu = Baidu.where({:name => name2,:lo => {"$within" => {"$center" => [lo,0.002]}}}).to_a.first
-      return baidu if baidu
+    return [baidu._id, 1] if baidu
+
+    if name.match(/[()（） \[\].]/)
+      name1 = name.split(/[()（） \[\].]/)
+      name2 = name1.first
+      baidu = Baidu.where({:name => name2,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+      return [baidu._id, 2] if baidu
+      name2 = name1.join('')
+      baidu = Baidu.where({:name => name2,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+      return [baidu._id, 3] if baidu
     end
+    baidu = Baidu.where({:name => /^#{name}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+    return [baidu._id, 4] if baidu
     
     nil
   end
