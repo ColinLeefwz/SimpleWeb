@@ -3,6 +3,7 @@
 #<20275139,百度数据
 #20275139~20347004, mapabc数据
 #>20347004 osm数据
+#>21000000 手动数据
 
 class Shop
   include Mongoid::Document
