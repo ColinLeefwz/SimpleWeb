@@ -15,7 +15,7 @@ class SinaPoi
         id = d.delete("poiid")
         if coll.find({:_id => id}).to_a.blank?
           if ba = check_baidu(d['title'], [d['lat'].to_f, d['lon'].to_f])
-            d.merge!({"baidu_id" => ba._id})
+            d.merge!({"baidu_id" => ba.first, 'mtype' => ba.last})
           end
           coll.insert({:_id => id }.merge(d))
           pois_users_insert(token, id)
