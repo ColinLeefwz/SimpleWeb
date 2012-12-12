@@ -50,6 +50,7 @@ class AdminCheckinsController < ApplicationController
 
 
     hash.merge!(ip: /#{params[:ip]}/) unless params[:ip].blank?
+    hash.merge!({sid: params[:sid]}) unless params[:sid].blank?
 
     unless params[:loc].blank?
       lo = params[:loc].split(',')
