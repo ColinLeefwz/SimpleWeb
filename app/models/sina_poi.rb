@@ -82,9 +82,10 @@ class SinaPoi
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}."
     rescue
       err_num += 1
+      Emailer.send_mail('pois错误',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误. #{$!}").deliver if err_num == 4
+      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误#{err_num}次，. #{$!}"
       return nil if err_num == 4
       sleep err_num * 20
-      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误，. #{$!}"
       return pois(token,lo, page,err_num)
     end
     JSON.parse response
@@ -98,9 +99,10 @@ class SinaPoi
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}"
     rescue
       err_num += 1
+      Emailer.send_mail('poi_user_page错误',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误. #{$!}").deliver if err_num == 4
+      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误#{err_num}次. #{$!}"
       return nil if err_num == 4
       sleep err_num * 20
-      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误，. #{$!}"
       return poi_user_page(token, poiid, page, err_num)
     end
     response = JSON.parse response
