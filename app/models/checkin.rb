@@ -112,8 +112,11 @@ LUA
     ps = []
     unless photos.nil?
       photos.each do |x| 
+        begin
         p=Photo.find(x)
         ps << p.logo_thumb_hash.merge({id:p.id,desc:p.desc})
+      rescue
+      end
       end
     end
     shopname = shop.nil?? "" : shop.name
