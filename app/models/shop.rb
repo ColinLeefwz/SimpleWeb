@@ -11,13 +11,12 @@ class Shop
   field :_id, type: Integer
   field :pass
   field :name
-  #field :lob, type:Array #百度地图上的经纬度  
+  field :lob, type:Array #百度地图上的经纬度  
   #field :loc, type:Array #google地图上的经纬度
   field :lo, type:Array #实际的经纬度
   field :tel 
   field :city
   field :phone
-  field :lob, type:Array
   field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. 
   field :addr
   field :t                #脸脸的商家类型
@@ -292,6 +291,20 @@ class Shop
       return get_distance(shop["lo"],loc)
     end
 
+  end
+
+  def get_city
+    rl = lo || lob_to_lo
+    return '' if rl.to_a.length != 2
+    Shop.where({lo:{'$near' => rl }}).first.city
+  end
+
+  def lob_to_lo
+    begin
+      Mongoid.session(:dooo).command(eval:"baidu_to_real(#{self.lob})")["retval"]
+    rescue
+      []
+    end
   end
 
   
