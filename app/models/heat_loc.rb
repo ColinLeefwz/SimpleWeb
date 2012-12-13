@@ -2,6 +2,10 @@ class HeatLoc
   include Mongoid::Document
   store_in(:session => "dooo")
 
+  def self.start
+    HeatLoc.cpoi('2.00kfdvGCMcnDPC2e8060392332c1uB')
+  end
+
   def self.cpoi(token)
     HeatLoc.where({:c => {'$gt' => 100}, :fetched => {"$exists" => false}}).sort({:c => -1}).to_a.each do |heat_loc|
       heat_loc.poi(token)
