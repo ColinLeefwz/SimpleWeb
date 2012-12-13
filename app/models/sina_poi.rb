@@ -75,32 +75,34 @@ class SinaPoi
 
   private
   def self.pois(token,lo, page=1, err_num = 0)
-    sleep(1)
+    sleep(2)
     url = "https://api.weibo.com/2/place/nearby/pois.json?count=50&page=#{page}&lat=#{lo[0]}&long=#{lo[1]}&access_token=#{token}"
     begin
       response = RestClient.get(url)
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}."
     rescue
       err_num += 1
+      Emailer.send_mail('pois错误',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误. #{$!}").deliver if err_num == 4
+      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误#{err_num}次，. #{$!}"
       return nil if err_num == 4
-      sleep 1 * 20
-      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误，. #{$!}"
+      sleep err_num * 20
       return pois(token,lo, page,err_num)
     end
     JSON.parse response
   end
 
   def self.poi_user_page(token, poiid, page=1, err_num = 0)
-    sleep(1)
+    sleep(2)
     url =  "https://api.weibo.com/2/place/pois/users.json?poiid=#{poiid}&access_token=#{token}&count=50&page=#{page}"
     begin
       response = RestClient.get(url)
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}"
     rescue
       err_num += 1
+      Emailer.send_mail('poi_user_page错误',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误. #{$!}").deliver if err_num == 4
+      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误#{err_num}次. #{$!}"
       return nil if err_num == 4
-      sleep 1 * 20
-      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误，. #{$!}"
+      sleep err_num * 20
       return poi_user_page(token, poiid, page, err_num)
     end
     response = JSON.parse response
