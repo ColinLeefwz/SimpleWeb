@@ -3,7 +3,7 @@ class HeatLoc
   store_in(:session => "dooo")
 
   def self.start
-    HeatLoc.cpoi('2.00kfdvGCGFlsXC1b5e64ba39QaSfpB')
+    HeatLoc.cpoi('2.00pCuxtBMcnDPC26fd20b579YtsnrB')
   end
 
   def self.cpoi(token)
