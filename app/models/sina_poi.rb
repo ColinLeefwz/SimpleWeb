@@ -75,7 +75,7 @@ class SinaPoi
 
   private
   def self.pois(token,lo, page=1, err_num = 0)
-    sleep(1)
+    sleep(2)
     url = "https://api.weibo.com/2/place/nearby/pois.json?count=50&page=#{page}&lat=#{lo[0]}&long=#{lo[1]}&access_token=#{token}"
     begin
       response = RestClient.get(url)
@@ -83,7 +83,7 @@ class SinaPoi
     rescue
       err_num += 1
       return nil if err_num == 4
-      sleep 1 * 20
+      sleep err_num * 20
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误，. #{$!}"
       return pois(token,lo, page,err_num)
     end
@@ -91,7 +91,7 @@ class SinaPoi
   end
 
   def self.poi_user_page(token, poiid, page=1, err_num = 0)
-    sleep(1)
+    sleep(2)
     url =  "https://api.weibo.com/2/place/pois/users.json?poiid=#{poiid}&access_token=#{token}&count=50&page=#{page}"
     begin
       response = RestClient.get(url)
@@ -99,7 +99,7 @@ class SinaPoi
     rescue
       err_num += 1
       return nil if err_num == 4
-      sleep 1 * 20
+      sleep err_num * 20
       $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误，. #{$!}"
       return poi_user_page(token, poiid, page, err_num)
     end
