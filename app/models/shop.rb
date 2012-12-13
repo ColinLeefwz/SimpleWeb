@@ -16,7 +16,7 @@ class Shop
   field :lo, type:Array #实际的经纬度
   field :tel 
   field :city
-  field :phone
+#  field :phone
   field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. 
   field :addr
   field :t                #脸脸的商家类型
