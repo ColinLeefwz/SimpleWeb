@@ -169,9 +169,9 @@ class Shop
     if arr.length>=3
       return sort_with_score(arr,loc,accuracy,ip,uid)
     else
-      arr = Shop.collection.find({lo:{"$near" =>loc}}).limit(5).to_a
+      arr = Shop.collection.find({lo:{"$near" =>loc}}).limit(10).to_a
       arr.uniq_by! {|x| x["_id"]}
-      return arr
+      return sort_with_score(arr,loc,accuracy,ip,uid)[0,5]
     end
   end
   
@@ -225,7 +225,7 @@ class Shop
     stype = x["type"]
     stype='' if(!stype)
     xx[2]-=5 if t
-    xx[2]+=30 if x["del"]
+    xx[2]+=100 if x["del"]
     xx[2]-=30 if t==1 && (hour>=20 || hour <=3)
     if (t==3 && stype.index('餐饮')==0)
       if(hour>=11 && hour<=13) 
