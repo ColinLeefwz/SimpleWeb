@@ -170,7 +170,7 @@ class Shop
     if arr.length>=3
       return sort_with_score(arr,loc,accuracy,ip,uid)
     else
-      arr = Shop.collection.find({lo:{"$near" =>loc}}).limit(3).to_a
+      arr = Shop.collection.find({lo:{"$near" =>loc}}).limit(5).to_a
       arr.uniq_by! {|x| x["_id"]}
       return arr
     end
