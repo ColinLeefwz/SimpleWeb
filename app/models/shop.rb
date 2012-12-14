@@ -104,7 +104,7 @@ class Shop
   end
 
   #从CheckinShopStat获得昨天以前的用户签到记录，从redis中获得今天的用户签到记录，然后合并
-  def user_last_checkins
+  def user_last_checkins(start,size)
     users1 = Checkin.get_users_redis(id.to_i)
     uids = users1.map {|arr| arr[0]}
     css = CheckinShopStat.find_by_id(id.to_i)
@@ -112,14 +112,14 @@ class Shop
     users2 = css.users.map {|k,v| [k[10..-3],v[1].generation_time.to_i]} # ObjectId("k") => k
     users2.sort!{|a,b| b[1] <=> a[1]}
     users2.each {|arr| users1 << arr unless uids.member?(arr[0])}
-    users1
+    users1[start,size]
   end
 
   def users(session_uid,start,size)
     #TODO: 性能优化，目前当用户大于10个时，执行耗时在半秒以上。
     #Benchmark.measure {Shop.find(4928288).users(User.last._id)} 
     ret = []
-    user_last_checkins[start,size].each do |uid,cat|
+    user_last_checkins(start,size).each do |uid,cat|
       u = User.find2(uid)
       next if u.block?(session_uid)
       ret << u.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
