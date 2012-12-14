@@ -12,7 +12,7 @@
 
 <p>
   <b>wb_uid:</b>
-  <%= @user.wb_uid %>
+  <%=link_to(@user.wb_uid.to_s, @user.weibo_home, :target => '_blank') %>
 </p>
 
 <p>

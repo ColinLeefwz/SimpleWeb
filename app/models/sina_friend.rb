@@ -4,12 +4,9 @@ class SinaFriend
   store_in session: "dooo"
 
   def insert_ids(wb_uid, token)
-    
     coll = self.collection
     coll.insert(:_id => wb_uid.to_s, :data => all_page(wb_uid,token))
   end
-
-
 
   private
   
