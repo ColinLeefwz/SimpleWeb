@@ -13,8 +13,8 @@ class SinaUser
 
   def convert_to_user
     return if User.where({wb_uid:self._id}).to_a.first
-    user = User.new({wb_uid:self.id, name:self.screen_name, gender:dface_gender, wb_v:self.verified, wb_vs:self.verified_reason, auto:true, pcount:1  })
-    user.save
+    User.collection.insert({wb_uid:self.id, name:self.screen_name, gender:dface_gender, wb_v:self.verified, wb_vs:self.verified_reason, auto:true, pcount:1  })
+    user = User.where({wb_uid:self._id}).to_a.first
     user_logo = UserLogo.new({user_id: user._id})
     user_logo.save
     if logo_store_local("public/uploads/tmp/#{user_logo.reload.id.to_s}.jpg")
