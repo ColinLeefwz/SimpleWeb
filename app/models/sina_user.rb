@@ -18,7 +18,7 @@ class SinaUser
     if logo_store_local("public/uploads/tmp/#{user_logo.id}.jpg")
       user_logo.img_tmp = "#{user_logo.id.to_s}.jpg"
       user.head_logo_id = user_logo.id
-      CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img") if user.save && user_logo.save
+      CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img") if User.collection.insert(user) && UserLogo.collection.insert(user_logo)
     end
   end
 
