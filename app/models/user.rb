@@ -16,6 +16,7 @@ class User
   field :hobby #爱好
   field :pcount, type: Integer, default:0 #上传的头像的数量
   field :head_logo_id, type: Moped::BSON::ObjectId
+  field :auto, type:Boolean #自动抓取
   
   field :blacks, type:Array #黑名单
   field :follows, type:Array #关注
