@@ -50,6 +50,48 @@ class Party
     party.sid = sp.id
     party.save!
   end
+  
+  
+  def self.activate(ftime)
+    Party.where({ftime: ftime}).each do |party|
+      s = party.shop
+      s.unset(:del)
+    end
+  end
+
+  def self.deactivate(etime)
+    Party.where({etime: etime}).each do |party|
+      s = party.shop
+      s.del = 1
+      s.save
+    end
+  end
+  
+  def self.activate_all(ftime)
+    Party.where({"ftime" => {"$lt" => ftime}}).each do |party|
+      s = party.shop
+      s.unset(:del) if s.del
+    end
+  end
+
+  def self.deactivate_all(etime)
+    Party.where({"etime" => {"$lt" => etime}}).each do |party|
+      s = party.shop
+      s.del = 1
+      s.save
+    end
+  end
+  
+  def self.scan(time)
+    ftime = time.strftime("%Y-%m-%d %H:%M")
+    etime = (time - 1.minutes).strftime("%Y-%m-%d %H:%M")
+    activate(ftime)
+    deactivate(etime)
+  end
+  
+  def self.scan_now
+    Party.scan(Time.now)
+  end
 
 end
 
