@@ -29,5 +29,18 @@ class UserLogo
   def output_hash
     logo_thumb_hash.merge!({id: self._id, user_id:self.user_id})
   end
+  
+  def self.next_ord(uid)
+    max = UserLogo.logos(uid).last
+    if max
+      max.ord+10
+    else
+      1
+    end
+  end
+  
+  before_create do |logo|
+    logo.ord = UserLogo.next_ord logo.user_id
+  end
 
 end
