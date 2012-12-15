@@ -112,7 +112,7 @@ class Shop
     users2 = css.users.map {|k,v| [k[10..-3],v[1].generation_time.to_i]} # ObjectId("k") => k
     users2.sort!{|a,b| b[1] <=> a[1]}
     users2.each {|arr| users1 << arr unless uids.member?(arr[0])}
-    users1[start,size]
+    users1[start,size] #TODO: 分页判断
   end
 
   def users(session_uid,start,size)
@@ -299,12 +299,16 @@ class Shop
     Shop.where({lo:{'$near' => rl }}).first.city
   end
 
-  def lob_to_lo
+  def self.lob_to_lo
     begin
       Mongoid.session(:dooo).command(eval:"baidu_to_real(#{self.lob})")["retval"]
     rescue
       []
     end
+  end
+  
+  def self.next_id
+    Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
   end
 
   
