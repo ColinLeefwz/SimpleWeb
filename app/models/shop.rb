@@ -49,6 +49,10 @@ class Shop
       nil
     end
   end
+  
+  def notice
+    ShopNotice.where({shop_id: self.id}).last
+  end
 
   #删除商家.
   def shop_del
