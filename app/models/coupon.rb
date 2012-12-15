@@ -45,6 +45,9 @@ class Coupon
   end
 
   def allow_send?(user_id)
+    if self.ratio
+      return false if ratio < Random.rand(100)
+    end
     al = true
     al = false if self.rule.to_i == 0 && self.users.to_a.detect{|u| user_id == u['id']}
     al = false if self.rule.to_i == 1 && self.users.to_a.detect{|u| user_id == u['id'] && u['uat'].nil?  }
