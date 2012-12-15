@@ -6,7 +6,7 @@ class Party
   field :ftime #起止时间，精确到分钟
   field :etime
   field :sid	#该活动对应的商家id
-  field :rsid	#该活动的地点位于那个商家
+  field :rsid	#该活动的地点位于那个商家  
   
   def cat
     (Time.at self._id.to_s[0,8].to_i(16)).strftime("%Y-%m-%d %H:%M:%S")
@@ -26,7 +26,8 @@ class Party
   	s.name = name
   	s.t = 0
   	s.del = 1
-    s.save ? s : nil
+    s.save!
+    s
   end
 
   def flag
@@ -41,18 +42,13 @@ class Party
   end
 
   def show_flag
-    {0 => "未开始", 1 => '活动中', 2 => '已过期'  }[flag]
+    ["未开始", '活动中', '已过期'][flag]
   end
 
   def Party.save(party)
-    return false if party.etime <= party.ftime
   	sp = party.gen_shop
-    if sp
-      party.sid = sp.id
-      party.save
-    else
-      false
-    end
+    party.sid = sp.id
+    party.save!
   end
 
 end
