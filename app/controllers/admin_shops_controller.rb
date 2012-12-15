@@ -25,9 +25,9 @@ class AdminShopsController < ApplicationController
 
   def create
     @shop = Shop.new(params[:shop])
-    @shop._id = Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
+    @shop._id = Shop.next_id
     @shop.lob = @shop.lob.split(/[,，]/).map { |m| m.to_f  }
-    @shop.lo = @shop.lob_to_lo
+    @shop.lo = Shop.lob_to_lo
     @shop.city = @shop.get_city
     if @shop.save
       redirect_to :action => "show", :id => @shop.id

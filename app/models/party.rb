@@ -22,7 +22,7 @@ class Party
 
   def gen_shop
   	s = rshop.clone
-  	s.id = Shop.count+2
+  	s.id = Shop.next_id
   	s.name = name
   	s.t = 0
   	s.del = 1
