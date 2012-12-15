@@ -7,7 +7,7 @@ class ShopShopNoticesController < ApplicationController
   # GET /shop_notices
   # GET /shop_notices.json
   def index
-    @shop_notice = ShopNotice.where({shop_id: session_shop.id}).last
+    @shop_notice = session_shop.notice
   end
 
   def ajax_release
