@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class CheckinsController < ApplicationController
-  before_filter :user_login_filter, :only => :create
+  before_filter :user_login_filter
 
   def create
     raise "user != session user" if params[:user_id].to_s != session[:user_id].to_s
@@ -25,6 +25,28 @@ class CheckinsController < ApplicationController
     render :json => checkin.to_json
   end
 
+  def delete
+    begin
+      cin = Checkin.find(params[:id])
+    rescue
+      error_log "\nTry to delete non-exist checkin:#{params[:id]}, #{Time.now}"
+      render :json => {:deleted => params[:id]}.to_json
+      return
+    end
+
+    if cin.uid != session[:user_id]
+      render :json => {:error => "checkin's owner #{cin.user_id} != session user #{session[:user_id]}"}.to_json
+      return
+    end
+    if cin.update_attribute(:del,true)
+      render :json => {:deleted => params[:id]}.to_json
+    else
+      render :json => {:error => "cin #{params[:id]} delete failed"}.to_json
+    end
+  end
+
+
+
   private
 
   def send_welcome_msg_if_not_invisible(user_gender)
@@ -47,9 +69,6 @@ class CheckinsController < ApplicationController
       Shop.find(params[:shop_id]).send_coupon(session[:user_id])
     end
   end
-
-
-
 
 
 end
