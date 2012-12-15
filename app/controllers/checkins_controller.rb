@@ -20,6 +20,7 @@ class CheckinsController < ApplicationController
     checkin.ip = real_ip
     checkin.save!
     checkin.add_to_redis
+    send_notice_if_exist
     send_coupon_if_exist
     render :json => checkin.to_json
   end
@@ -30,6 +31,14 @@ class CheckinsController < ApplicationController
     return if session_user.invisible==2
     Resque.enqueue(XmppWelcome, params[:shop_id], user_gender, params[:user_id])
   end
+  
+  def send_notice_if_exist
+    shop = Shop.find(params[:shop_id])
+    return if shop.nil?
+    notice = shop.notice
+    return if notice.nil? || notice.title.nil? || notice.title.length<1
+    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], notice.title)
+  end
 
   def send_coupon_if_exist
     if ENV["RAILS_ENV"] == "production"
@@ -37,12 +46,6 @@ class CheckinsController < ApplicationController
     else
       Shop.find(params[:shop_id]).send_coupon(session[:user_id])
     end
-
-    #    shop = Shop.find(params[:shop_id])
-    #    shop.send_coupon(session[:user_id])
-    #    coupon = Coupon.where({shop_id:params[:shop_id]}).last
-    #    coupon = Coupon.gen_demo(params[:shop_id]) if coupon.nil?
-    #    coupon.send_coupon(session[:user_id]) if coupon
   end
 
 
