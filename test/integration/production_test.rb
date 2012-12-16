@@ -21,7 +21,7 @@ class ProductionTest < ActionDispatch::IntegrationTest
   end
   
   test "实际部署的生产系统上测试" do
-    if `ifconfig eth1`.to_s.length > 0
+    if `ifconfig eth1`.to_s.index("inet addr:42")
       puts "本机器是生产系统"
       aliyun_tst
     end
