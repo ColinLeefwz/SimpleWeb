@@ -25,10 +25,19 @@ module Moped
   end
 
   class Node
+    
+    alias :refresh_old :refresh
+    
     def refresh
-	@primary = true
+      if ip_address.to_s == "127.0.0.1"
+        @primary = true
+      else
+        refresh_old
+      end
     end
+    
   end
+  
 end
 
 
