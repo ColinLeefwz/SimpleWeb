@@ -15,11 +15,11 @@ class AdminPartiesController < ApplicationController
 
   def create
     @party = Party.new(params[:party])
-    if Party.save(@party)
-      @party.reload
+    if @party.etime > @party.ftime
+      Party.save(@party)
       redirect_to admin_party_path(@party)
     else
-      flash.now[:notice] = "活动发布失败"
+      flash.now[:notice] = "结束时间不能早于开始时间"
       render :action => 'new'
     end
   end

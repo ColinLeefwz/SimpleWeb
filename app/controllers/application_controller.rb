@@ -40,8 +40,9 @@ class ApplicationController < ActionController::Base
     rescue  Exception => err
       error_log "\nInternal Server Error: #{err.class.name}, #{Time.now}"
       error_log "#{request.path}  #{request.params}"
-      err.backtrace.each {|x| error_log x}
       err_str = err.to_s
+      error_log err_str
+      err.backtrace.each {|x| error_log x}
       render :json => {:error => err_str }.to_json   
     end
   end
