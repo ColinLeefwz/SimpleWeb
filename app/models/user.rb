@@ -85,6 +85,15 @@ class User
     UserLogo.find(head_logo_id)
   end
   
+  def self.check_pcount
+    User.all.each do |u|
+      if u.pcount != u.user_logos.count
+        puts "#{u.name},#{u.pcount},#{u.user_logos.count}"
+        u.update_attributes!({"pcount" => u.user_logos.count})
+      end
+    end
+  end
+  
   def head_logo_hash
     if !head_logo_id.nil?
       #这里使用了一个很trick的优化：直接构造整个UserLogo对象,可以少一次数据库查询。

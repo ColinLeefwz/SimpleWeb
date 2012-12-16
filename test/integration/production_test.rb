@@ -15,16 +15,15 @@ class ProductionTest < ActionDispatch::IntegrationTest
     conn.put(tstr+`hostname`[0..-2] , "Test#{tstr}")
   end
   
-  def location_js_tst
+  def location_js_tst #不再使用js进行定位
     out = `mongo --quiet dface test/mongo/location.js`
     assert_equal out.length, 0 
   end
   
   test "实际部署的生产系统上测试" do
-    if `ifconfig eth1`.to_s.length > 0
+    if `ifconfig eth1`.to_s.index("inet addr:42")
       puts "本机器是生产系统"
       aliyun_tst
-      location_js_tst
     end
   end  
   
