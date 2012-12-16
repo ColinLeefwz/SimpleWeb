@@ -1,7 +1,7 @@
 test:
   sessions:
     default:
-      database: dface_test
+      database: dface_test2
       hosts:
         - 10.135.44.107:27017
         - 10.135.44.204:27017
@@ -9,7 +9,7 @@ test:
         safe: true
         consistency: :eventual
     dooo:
-      database: dface
+      database: dface_test2
       hosts:
         - 127.0.0.1:27017
       options:
