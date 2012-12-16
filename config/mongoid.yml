@@ -72,7 +72,7 @@ production:
         - 10.135.44.107:27017
         - 10.135.44.204:27017
       options:
-        safe: :true		  
+        safe: true
         consistency: :eventual
     dooo:
       database: dface
