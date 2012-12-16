@@ -13,17 +13,15 @@ class SinaUser
 
   def convert_to_user
     return if User.where({wb_uid:self._id}).to_a.first
-    User.collection.insert({wb_uid:self.id, name:self.screen_name, gender:dface_gender, wb_v:self.verified, wb_vs:self.verified_reason, auto:true, pcount:1  })
-    user = User.where({wb_uid:self._id}).to_a.first
-    user_logo = UserLogo.new({user_id: user.id})
-    user_logo.save
-    user_logo = UserLogo.where({user_id: user.id}).first
-    if logo_store_local("public/uploads/tmp/#{user_logo.reload.id.to_s}.jpg")
+    user = User.new({wb_uid:self.id, name:self.screen_name, gender:dface_gender, wb_v:self.verified, wb_vs:self.verified_reason, auto:true  })
+    user_logo = UserLogo.new({user_id: user._id})
+    if logo_store_local("public/uploads/tmp/#{user_logo.id}.jpg")
       user_logo.img_tmp = "#{user_logo.id.to_s}.jpg"
       user.head_logo_id = user_logo.id
-      user.save
-      user_logo.save
-      CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img")
+ user.save
+      UserLogo.collection.insert(user_logo.attributes)
+sleep(5)
+CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img")
     end
   end
 
