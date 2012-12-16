@@ -90,3 +90,10 @@ test:
       options:
         safe: true
         consistency: :strong
+    dooo:
+      database: dface_test
+      hosts:
+        - 127.0.0.1:27017
+      options:
+        safe: true
+        consistency: :eventual
