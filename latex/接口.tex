@@ -631,6 +631,25 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 
 
 
+\section{删除当前登录用户的一个签到足迹}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/checkins/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+   \hline
+ id  & 字符串 & 必须 & 签到的id\\ 
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+
 
 \section{设置当前登录用户基本信息}
 
