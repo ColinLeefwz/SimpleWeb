@@ -49,6 +49,10 @@ class Shop
       nil
     end
   end
+  
+  def notice
+    ShopNotice.where({shop_id: self.id}).last
+  end
 
   #删除商家.
   def shop_del
@@ -112,7 +116,7 @@ class Shop
     users2 = css.users.map {|k,v| [k[10..-3],v[1].generation_time.to_i]} # ObjectId("k") => k
     users2.sort!{|a,b| b[1] <=> a[1]}
     users2.each {|arr| users1 << arr unless uids.member?(arr[0])}
-    users1[start,size]
+    users1[start,size] #TODO: 分页判断
   end
 
   def users(session_uid,start,size)
@@ -137,7 +141,7 @@ class Shop
   def send_coupon(user_id)
     coupons = []
     Coupon.gen_demo(self.id) if self.latest_coupons.empty? && ENV["RAILS_ENV"] != "production"
-    coupons += self.latest_coupons.select { |coupon| coupon.allow_send?(user_id) }
+    coupons += self.latest_coupons.select { |c| c.allow_send?(user_id) }    
     sub_shops.each do |shop|
       coupons += shop.latest_coupons.select { |coupon| coupon.allow_send?(user_id) }
     end
@@ -299,12 +303,16 @@ class Shop
     Shop.where({lo:{'$near' => rl }}).first.city
   end
 
-  def lob_to_lo
+  def self.lob_to_lo
     begin
       Mongoid.session(:dooo).command(eval:"baidu_to_real(#{self.lob})")["retval"]
     rescue
       []
     end
+  end
+  
+  def self.next_id
+    Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
   end
 
   
