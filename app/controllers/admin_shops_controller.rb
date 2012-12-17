@@ -26,7 +26,7 @@ class AdminShopsController < ApplicationController
   def create
     @shop = Shop.new(params[:shop])
     @shop._id = Shop.next_id
-    @shop.lob = @shop.lob.split(/[,，]/).map { |m| m.to_f  }
+    @shop.lob = @shop.lob.split(/[,，]/).map { |m| m.to_f  }.reverse
     @shop.lo = @shop.lob_to_lo
     @shop.city = @shop.get_city
     if @shop.save
