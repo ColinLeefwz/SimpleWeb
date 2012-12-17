@@ -52,3 +52,5 @@ db.shops.remove({"name" : "感觉量越来越少了"})
 db.shops.remove({name:/生殖健康中心$/})
 db.shops.remove({type:"生活服务",name:/医院$/})
 db.shops.remove({type:"生活服务",name:/口腔$/})
+
+db.shops.remove({name:/复印/})
