@@ -303,12 +303,16 @@ class Shop
     Shop.where({lo:{'$near' => rl }}).first.city
   end
 
-  def self.lob_to_lo
+  def self.lob_to_lo(lob)
     begin
-      Mongoid.session(:dooo).command(eval:"baidu_to_real(#{self.lob})")["retval"]
+      Mongoid.session(:dooo).command(eval:"baidu_to_real(#{lob})")["retval"]
     rescue
       []
     end
+  end
+  
+  def lob_to_lo
+    Shop.lob_to_lo self.lob
   end
   
   def self.next_id
