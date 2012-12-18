@@ -60,11 +60,10 @@ class Shop
   end
   
   def loc_first
-    return lo
-    if self["loc"][0].class==Array
-      self["loc"][0]
+    if self["lo"][0].class==Array
+      self["lo"][0]
     else
-      self["loc"]
+      self["lo"]
     end
   end
   
