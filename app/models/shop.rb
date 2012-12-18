@@ -165,11 +165,12 @@ class Shop
   
   
   
-  def find_shops(loc,accuracy,ip,uid)
+  def find_shops(loc,accuracy,ip,uid,debug=false)
     radius = 0.0015+0.002*accuracy/300
     radius=0.01 if(radius>0.01)  #不大于1000米
     arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
     arr.uniq_by! {|x| x["_id"]}
+    return sort_with_score(arr,loc,accuracy,ip,uid,true) if debug
     if arr.length>=3
       return sort_with_score(arr,loc,accuracy,ip,uid)
     else
@@ -179,7 +180,7 @@ class Shop
     end
   end
   
-  def sort_with_score(arr,loc,accuracy,ip,uid)
+  def sort_with_score(arr,loc,accuracy,ip,uid,debug=false)
     score = arr.map {|x| [x,min_distance(x,loc),0]}
     score.each do |xx|
       x=xx[0]
@@ -192,7 +193,11 @@ class Shop
       xx[1] += (xx[2]*accuracy/300)
     end
     score.sort! {|a,b| a[1]<=>b[1]}
-    return score[0,30].map {|x| x[0]}
+    if debug
+      return score
+    else
+      return score[0,30].map {|x| x[0]}
+    end
   end
   
   def realtime_score(score)

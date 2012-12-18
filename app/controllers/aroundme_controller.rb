@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class AroundmeController < ApplicationController
   
   def shops
@@ -9,6 +11,16 @@ class AroundmeController < ApplicationController
       s.safe_output_with_users
     end
     render :json =>  hash.to_json
+  end
+  
+  def shop2
+    if params[:loc]
+      lob = params[:loc].split(/[,]/).map { |m| m.to_f  }.reverse
+      loc = Shop.lob_to_lo(lob)
+      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,"","",true)  
+    else
+      @shops = []
+    end
   end
   
   def mapabc
