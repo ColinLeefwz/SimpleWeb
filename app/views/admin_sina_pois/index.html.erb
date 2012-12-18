@@ -1,0 +1,74 @@
+<h1>sina商家</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<style>
+  p{margin: 7px auto}
+</style>
+
+<%= form_tag '/admin_sina_pois',:method =>:get do %>
+  <p>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :title, params[:title], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    poi:<%= text_field_tag :id, params[:id],:size => 20 %>
+  </p>
+
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>poi</th>
+    <th>名称</th>
+    <th>城市</th>
+    <th>电话</th>
+    <th>地址</th>
+    <th>坐标</th>
+    <th>签到用户</th>
+    <th>对应百度商家</th>
+    <th>添加对应</th>
+  </tr>
+
+  <% @sina_pois.each do |poi| %>
+    <tr>
+      <td><%= poi.id  %></td>
+      <td><%= poi.title %></td>
+      <td><%= poi.city %></td>
+      <td><%= poi.phone %></td>
+      <td><%= poi.address %></td>
+      <td><%= poi.lat %>, <%= poi.lon %></td>
+      <td><%= poi.datas.length if poi.respond_to?('datas') %></td>
+      <td id="bdn_<%= poi.id %>"><%=  link_to(Baidu.find_by_id(poi.baidu_id).try(:name),"/admin_baidu?id=#{poi.baidu_id}") if poi.respond_to?('baidu_id') %></td>
+      <td><a onclick="showAdd($(this),'<%= poi._id %>')" >更改</a></td>
+
+    </tr>
+
+  <% end %>
+
+
+</table>
+<br/>
+<%= generate_paginate.html_safe %>
+
+<br/>
+<br/>
+<br/>
+
+<script>
+  function showAdd(obj, poi_id){
+    str = "<input type='text' size='12' id='in_"+ poi_id +"' />"
+    str += "<br/>"
+    str += "<a onclick='ajaxAddBaiduId($(this),\""+ poi_id +"\")'>添加</a>"
+    obj.replaceWith(str)
+  }
+
+  function ajaxAddBaiduId(obj,poi_id){
+    $.post('/admin_sina_pois/ajax_add_baidu_id',{id: poi_id, baidu_id: $("#in_"+poi_id).val()}, function(data){
+      $("#bdn_"+poi_id).replaceWith("<td id='bdn_"+poi_id+"'>"+data['text']+"</td>")
+      obj.parent().replaceWith("<td><a onclick='showAdd($(this),\""+poi_id+"\")' >更改</a></td>")
+    } )
+  }
+</script>
