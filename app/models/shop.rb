@@ -228,8 +228,10 @@ class Shop
     t = x["t"]
     stype = x["type"]
     stype='' if(!stype)
-    xx[2]-=5 if t
-    xx[2]+=100 if x["del"]
+    xx[2]-=10 if t<4
+    xx[2]-=5 if t>=4
+    xx[2]+= x["d"] if x["d"]
+    xx[2]+=150 if x["del"]
     xx[2]-=30 if t==1 && (hour>=20 || hour <=3)
     if (t==3 && stype.index('餐饮')==0)
       if(hour>=11 && hour<=13) 
