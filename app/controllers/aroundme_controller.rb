@@ -14,10 +14,13 @@ class AroundmeController < ApplicationController
   end
   
   def shop2
-    if params[:loc]
+    if params[:loc] && params[:loc].length>3
       lob = params[:loc].split(/[,]/).map { |m| m.to_f  }.reverse
       loc = Shop.lob_to_lo(lob)
       @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,"","",true)  
+    elsif params[:lo]
+      loc = params[:lo].split(/[,]/).map { |m| m.to_f  }
+      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,"","",true)
     else
       @shops = []
     end
