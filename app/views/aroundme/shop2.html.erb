@@ -1,7 +1,8 @@
-<h1>商家定位查询</h1>
+<h1>商家定位查询   </h1><a href="http://api.map.baidu.com/lbsapi/getpoint/index.html">百度坐标</a>
 
 <%= form_tag '/aroundme/shop2',:method =>:get do %>
-  百度经纬度: <%= text_field_tag :loc, params[:loc], :size => 20  %>(例:120.108,30.28)<br/>
+  百度经纬度: <%= text_field_tag :loc, params[:loc], :size => 25  %>(例:120.108,30.28)
+  或者 实际经纬度: <%= text_field_tag :lo, params[:lo], :size => 25  %>(例:30.28，120.108)<br/>
   误差（米）: <%= text_field_tag :accuracy, params[:accuracy], :size => 5  %>
   <%= submit_tag "确 定" %>
 <% end %>
