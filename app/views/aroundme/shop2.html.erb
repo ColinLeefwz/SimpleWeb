@@ -10,6 +10,7 @@
 
 <table border="1">
   <tr>
+    <th>ID</th>
     <th>商家</th>
     <th>经纬度</th>
     <th>百度经纬度</th>
@@ -21,6 +22,7 @@
   <% @shops.each do |shop| %>
   <%diff= shop[2]*params[:accuracy].to_f/300%>
     <tr>
+      <td><%= shop[0]["_id"] %></td>
       <td><%= shop[0]["name"] %></td>
       <td><%= shop[0]["lo"] %></td>
       <td><%= shop[0]["lob"] %></td>
