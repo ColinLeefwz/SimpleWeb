@@ -1,0 +1,33 @@
+<h1>商家定位查询</h1>
+
+<%= form_tag '/aroundme/shop2',:method =>:get do %>
+  百度经纬度: <%= text_field_tag :loc, params[:loc], :size => 20  %>(例:120.108,30.28)<br/>
+  误差（米）: <%= text_field_tag :accuracy, params[:accuracy], :size => 5  %>
+  <%= submit_tag "确 定" %>
+<% end %>
+
+<hr/>
+
+<table border="1">
+  <tr>
+    <th>商家</th>
+    <th>经纬度</th>
+    <th>百度经纬度</th>
+    <th>实际距离</th>
+    <th>加权后距离</th>
+    <th>加权值</th>
+  </tr>
+
+  <% @shops.each do |shop| %>
+  <%diff= shop[2]*params[:accuracy].to_f/300%>
+    <tr>
+      <td><%= shop[0]["name"] %></td>
+      <td><%= shop[0]["lo"] %></td>
+      <td><%= shop[0]["lob"] %></td>
+      <td><%= '%.2f' %  (shop[1]-diff) %></td>
+      <td><%= '%.2f' %  shop[1] %></td>
+      <td><%= '%.2f' % diff %></td>
+	  	  
+    </tr>
+  <% end %>
+</table>
