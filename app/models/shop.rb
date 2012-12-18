@@ -234,6 +234,7 @@ class Shop
     stype = x["type"]
     stype='' if(!stype)
     if t
+      t = t.to_i
       xx[2]-=10 if t<4
       xx[2]-=5 if t>=4
     end
