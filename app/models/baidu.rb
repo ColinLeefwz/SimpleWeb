@@ -10,4 +10,12 @@ class Baidu
       end
     end
   end
+
+  def self.find_by_id(id)
+    begin
+      self.find(id)
+    rescue
+      nil
+    end
+  end
 end
