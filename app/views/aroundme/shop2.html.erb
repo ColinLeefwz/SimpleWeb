@@ -22,7 +22,7 @@
   <% @shops.each do |shop| %>
   <%diff= shop[2]*params[:accuracy].to_f/300%>
     <tr>
-      <td><%= shop[0]["_id"] %></td>
+      <td><%= link_to(shop[0]["_id"].to_i.to_s, "/admin_shops/show?id=#{shop[0]["_id"].to_i}") %></td>
       <td><%= shop[0]["name"] %></td>
       <td><%= shop[0]["lo"] %></td>
       <td><%= shop[0]["lob"] %></td>
