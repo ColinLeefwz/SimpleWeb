@@ -89,7 +89,12 @@ db.shops.remove({name:/干洗店/})
 db.shops.remove({name:/水洗店/})
 db.shops.remove({name:/信息咨询/})
 db.shops.remove({name:/支行/})
-
+db.shops.remove({name:/营业部/})
+db.shops.remove({name:/修鞋/})
+db.shops.remove({name:/旅行社/})
+db.shops.remove({name:/直销点/})
+db.shops.remove({name:"商住"})
+db.shops.remove({name:/盲人按摩/})
 
 db.shops.update({name:/加油站/},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({type:/^生活服务;便利店/},{$set:{d:50},$unset:{del:1}},false,true)
@@ -99,3 +104,4 @@ db.shops.update({name:/牛肉面/},{$set:{d:50}},false,true)
 db.shops.update({type:/^医疗/},{$set:{d:30}},false,true)
 db.shops.update({type:/^教育;科研机构/},{$set:{d:30}},false,true)
 db.shops.update({name:/汽车/},{$set:{d:50}},false,true)
+
