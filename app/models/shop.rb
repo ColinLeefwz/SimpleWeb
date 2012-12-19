@@ -206,7 +206,6 @@ class Shop
     acc = 30 if acc<30
     acc = 1000 if acc>1000
     ret*acc/300
-    ret
   end
   
   def realtime_score(score)
