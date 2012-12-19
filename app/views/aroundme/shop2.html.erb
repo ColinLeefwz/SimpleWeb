@@ -21,15 +21,14 @@
   </tr>
 
   <% @shops.each do |shop| %>
-  <%diff= shop[2]*params[:accuracy].to_f/300%>
     <tr>
       <td><%= link_to(shop[0]["_id"].to_i.to_s, "/admin_shops/show?id=#{shop[0]["_id"].to_i}") %></td>
       <td><%= shop[0]["name"] %></td>
       <td><%= shop[0]["lo"] %></td>
       <td><%= shop[0]["lob"] %></td>
-      <td><%= '%.2f' %  (shop[1]-diff) %></td>
+      <td><%= '%.2f' %  (shop[1]-shop[2]) %></td>
       <td><%= '%.2f' %  shop[1] %></td>
-      <td><%= '%.2f' % diff %></td>
+      <td><%= '%.2f' % shop[2] %></td>
 	  	  
     </tr>
   <% end %>
