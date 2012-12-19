@@ -13,6 +13,10 @@
   <p>
     poi:<%= text_field_tag :id, params[:id],:size => 20 %>
   </p>
+  <p>
+    对应百度数据
+    <%= select_tag :correspond,options_for_select([['所有',''],['是',1],['否',2]],params[:effect].to_i)  %>
+  </p>
 
   <p>
     <%= submit_tag "查 找" %>
@@ -24,12 +28,12 @@
     <th>poi</th>
     <th>名称</th>
     <th>城市</th>
-    <th>电话</th>
     <th>地址</th>
     <th>坐标</th>
     <th>签到用户</th>
     <th>对应百度商家</th>
     <th>添加对应</th>
+    <th></th>
   </tr>
 
   <% @sina_pois.each do |poi| %>
@@ -37,15 +41,13 @@
       <td><%= poi.id  %></td>
       <td><%= poi.title %></td>
       <td><%= poi.city %></td>
-      <td><%= poi.phone %></td>
       <td><%= poi.address %></td>
       <td><%= poi.lat %>, <%= poi.lon %></td>
       <td><%= poi.datas.length if poi.respond_to?('datas') %></td>
       <td id="bdn_<%= poi.id %>"><%=  link_to(Baidu.find_by_id(poi.baidu_id).try(:name),"/admin_baidu?id=#{poi.baidu_id}") if poi.respond_to?('baidu_id') %></td>
       <td><a onclick="showAdd($(this),'<%= poi._id %>')" >更改</a></td>
-
+      <td><%=  link_to "附近商家" , "/admin_sina_pois/near?id=#{poi._id}"%></td>
     </tr>
-
   <% end %>
 
 
