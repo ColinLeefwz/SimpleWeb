@@ -39,13 +39,20 @@ class AdminSinaPoisController < ApplicationController
     wbna = wbn.split(/[()]/)
     bn1 = bna.join('').scan(/[\u4e00-\u9fa5]|[^\u4e00-\u9fa5]+/)
     wbn1 = wbna.join('').scan(/[\u4e00-\u9fa5]|[^\u4e00-\u9fa5]+/)
-    if (bn1&wbn1).length >= (bn1.length < wbn1.length ? bn1.length : wbn1.length )/2.0
-      return true
+    len = bn1.length < wbn1.length ? bn1.length : wbn1.length
+    if len > 3
+      return true if (bn1&wbn1).length >=  len/2.0
+    else
+      return true if (bn1&wbn1).length == len
     end
+
     bn1 = bna.first.scan(/[\u4e00-\u9fa5]|[^\u4e00-\u9fa5]+/)
     wbn1 = wbna.first.scan(/[\u4e00-\u9fa5]|[^\u4e00-\u9fa5]+/)
-    if (bn1&wbn1).length >= (bn1.length < wbn1.length ? bn1.length : wbn1.length )/2.0
-      return true
+    len = bn1.length < wbn1.length ? bn1.length : wbn1.length
+    if len > 3
+      return true if (bn1&wbn1).length >=  len/2.0
+    else
+      return true if (bn1&wbn1).length == len
     end
 
     return false
