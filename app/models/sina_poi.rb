@@ -14,10 +14,8 @@ class SinaPoi
       tmp_pois["pois"].to_a.each do |d|
         id = d.delete("poiid")
         if coll.find({:_id => id}).to_a.blank?
-          lo = Mongoid.session(:dooo).command(eval:"gcj02_to_real(#{[d['lat'].to_f}, #{d['lon'].to_f]})")["retval"]
-          d.merge!({lo: lo})
           begin
-            if ba = check_baidu(d['title'], d["lo"])
+            if ba = check_baidu(d['title'], [d['lat'].to_f, d['lon'].to_f])
               d.merge!({"baidu_id" => ba.first, 'mtype' => ba.last})
             end
           rescue Exception => e 
@@ -73,11 +71,6 @@ class SinaPoi
     return [baidu._id, 4] if baidu
     
     nil
-  end
-
-
-  def real_lo
-    
   end
 
   private
