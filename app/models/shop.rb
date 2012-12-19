@@ -188,8 +188,8 @@ class Shop
     end
     realtime_score(score)
     score.each_with_index do |xx,i|
-      xx[2]=-200 if(xx[2] < -200)  #最多加权2/3后封顶
-      xx[1] += (xx[2]*accuracy/300)
+      xx[2] =  adjust(xx[2],accuracy)
+      xx[1] += xx[2]
     end
     score.sort! {|a,b| a[1]<=>b[1]}
     if debug
@@ -197,6 +197,16 @@ class Shop
     else
       return score[0,30].map {|x| x[0]}
     end
+  end
+  
+  def adjust(score,accuracy)
+    ret = score
+    ret = -200 if ret < -200 #最多加权2/3后封顶
+    acc = accuracy
+    acc = 30 if acc<30
+    acc = 1000 if acc>1000
+    ret*acc/300
+    ret
   end
   
   def realtime_score(score)
@@ -236,6 +246,10 @@ class Shop
       t = t.to_i
       xx[2]-=10 if t<4
       xx[2]-=5 if t>=4
+    end
+    if x["shops"]
+      xx[2]-=30
+      xx[2]-=x["shops"].length
     end
     xx[2]+= x["d"] if x["d"]
     xx[2]+=150 if x["del"]
