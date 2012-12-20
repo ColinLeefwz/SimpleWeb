@@ -206,9 +206,9 @@ class Shop
     acc = accuracy
     acc = 30 if acc<30
     acc = 1000 if acc>1000
-    ret = ret*(acc/300)
+    ret = ret*(acc/300.0)
     return ret if min_d<acc
-    factor = (min_d-acc)/30
+    factor = (min_d-acc)/30.0
     factor = 3 if factor>3
     return ret*(1+factor)
   end
