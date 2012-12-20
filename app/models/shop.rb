@@ -186,10 +186,10 @@ class Shop
       score = score.reject{|s| (s[1]>20 && s[0]["del"]) }
     end
     if score.length>5
-      score = score.reject{|s| (s[1]>30 && s[0]["d"]) }
+      score = score.reject{|s| (s[1]>35 && s[0]["d"]) }
     end
     if score.length>5
-      score = score.reject{|s| (s[1]>40 && s[0]["t"].nil?)}
+      score = score.reject{|s| (s[1]>50 && s[0]["t"].nil?)}
     end
     score.each do |xx|
       x=xx[0]
@@ -202,10 +202,18 @@ class Shop
       xx[1] += xx[2]
     end
     score.sort! {|a,b| a[1]<=>b[1]}
+    ret = []
+    score.each_with_index do |x,i|
+      if i<5
+        ret << x
+      else
+        ret << x if x[0]["t"]
+      end
+    end
     if debug
-      return score
+      return ret
     else
-      return score[0,30].map {|x| x[0]}
+      return ret[0,30].map {|x| x[0]}
     end
   end
   
@@ -265,7 +273,7 @@ class Shop
       xx[2]-=x["shops"].length
     end
     xx[2]+= x["d"] if x["d"]
-    xx[2]+=300 if x["del"]
+    xx[2]+=150 if x["del"]
     xx[2]-=30 if t==1 && (hour>=20 || hour <=3)
     if (t==3 && stype.index('餐饮')==0)
       if(hour>=11 && hour<=13) 
