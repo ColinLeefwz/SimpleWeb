@@ -277,7 +277,7 @@ class Shop
     xx[2]+= x["d"] if x["d"]
     xx[2]+=150 if x["del"]
     xx[2]-=30 if t==1 && (hour>=20 || hour <=3)
-    if (t==3 && stype.index('餐饮')==0)
+    if (t==4)
       if(hour>=11 && hour<=13) 
         xx[2]-=20 
       elsif (hour>=17 && hour<=19)
@@ -286,19 +286,16 @@ class Shop
         xx[2]+=30
       end
     end
-    if t==6
-      if(stype.index('商务住宅')==0)
-        if(stype.index('商务住宅;住宅区')==0)
-          xx[2] -=10 if(hour>=20 || hour<=8)
-        else
-          if(today.wday>=1 && today.wday<=5)
-            xx[2] -=10 if(hour>=14 && hour<=17)
-            xx[2] -=10 if(hour>=8 && hour<=11)
-            xx[2] +=20 if(hour>=19)
-          else
-            xx[2] +=20;
-          end
-        end
+    if t==11
+      xx[2] -=10 if(hour>=20 || hour<=8)
+    end
+    if t==10
+      if(today.wday>=1 && today.wday<=5)
+        xx[2] -=10 if(hour>=14 && hour<=17)
+        xx[2] -=10 if(hour>=8 && hour<=11)
+        xx[2] +=20 if(hour>=19)
+      else
+        xx[2] +=20;
       end
     end
   end
