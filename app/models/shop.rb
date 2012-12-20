@@ -165,7 +165,7 @@ class Shop
   
   
   def find_shops(loc,accuracy,ip,uid,debug=false)
-    radius = 0.0015+0.002*accuracy/300
+    radius = 0.002+0.002*accuracy/300
     radius=0.01 if(radius>0.01)  #不大于1000米
     arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
     arr.uniq_by! {|x| x["_id"]}
@@ -194,7 +194,7 @@ class Shop
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
-      shop_history_score(xx,x,ip,uid)
+      shop_history_score(xx,x,ip,"ObjectId(\"#{uid}\")")
     end
     realtime_score(score)
     score.each_with_index do |xx,i|
@@ -237,22 +237,23 @@ class Shop
     end
   end
   
-  def shop_history_score(xx,x,ip,uid)
+  def shop_history_score(xx,x,ip,uid_s)
     begin
       sc = CheckinShopStat.find(x["_id"].to_i)
-      if uid && sc.users[uid]
-        ucount = sc.users[uid][0];
-        xx[2] -= ucount*30;
+      if uid_s && sc.users[uid_s]
+        ucount = sc.users[uid_s][0]
+        xx[2] -= ucount*30
       end
-      if ip.index(",")==-1
-        ip2 = ip.replace('.', '/', 'g');
-        ip2s = sc.ips[ip2];
+      if ip && ip.index(",").nil?
+        ip2 = ip.split(".").join("/")
+        ip2s = sc.ips[ip2]
         if(ip2s)
-          ipcount = sc.ips[ip2][0];
-          xx[2] -= ipcount*5;
+          ipcount = sc.ips[ip2][0]
+          xx[2] -= ipcount*5
         end
       end
-    rescue
+    rescue Exception =>e
+      puts e
     end
   end
   
