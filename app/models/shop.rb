@@ -132,7 +132,7 @@ class Shop
   
   def sub_shops
     return [] if shops.nil?
-    return shops.map {|x| Shop.find(x)}
+    return shops.map {|x| Shop.find_by_id(x)}.reject {|x| x.nil?}
   end
 
 
@@ -181,6 +181,7 @@ class Shop
   
   def sort_with_score(arr,loc,accuracy,ip,uid,debug=false)
     score = arr.map {|x| [x,min_distance(x,loc),0]}
+    min_d = score[0][1]
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
@@ -188,7 +189,7 @@ class Shop
     end
     realtime_score(score)
     score.each_with_index do |xx,i|
-      xx[2] =  adjust(xx[2],accuracy)
+      xx[2] =  adjust(xx[2],accuracy,min_d)
       xx[1] += xx[2]
     end
     score.sort! {|a,b| a[1]<=>b[1]}
@@ -199,13 +200,17 @@ class Shop
     end
   end
   
-  def adjust(score,accuracy)
+  def adjust(score,accuracy,min_d)
     ret = score
     ret = -200 if ret < -200 #最多加权2/3后封顶
     acc = accuracy
     acc = 30 if acc<30
     acc = 1000 if acc>1000
-    ret*acc/300
+    ret = ret*(acc/300)
+    return ret if min_d<acc
+    factor = (min_d-acc)/30
+    factor = 3 if factor>3
+    return ret*(1+factor)
   end
   
   def realtime_score(score)
@@ -251,7 +256,7 @@ class Shop
       xx[2]-=x["shops"].length
     end
     xx[2]+= x["d"] if x["d"]
-    xx[2]+=150 if x["del"]
+    xx[2]+=300 if x["del"]
     xx[2]-=30 if t==1 && (hour>=20 || hour <=3)
     if (t==3 && stype.index('餐饮')==0)
       if(hour>=11 && hour<=13) 
@@ -326,11 +331,7 @@ class Shop
   end
 
   def self.lob_to_lo(lob)
-    begin
-      Mongoid.session(:dooo).command(eval:"baidu_to_real(#{lob})")["retval"]
-    rescue
-      []
-    end
+    Mongoid.session(:dooo).command(eval:"baidu_to_real(#{lob})")["retval"]
   end
   
   def lob_to_lo
@@ -339,6 +340,22 @@ class Shop
   
   def self.next_id
     Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
+  end
+  
+  def merge_shops_locations
+    if lo[0].class==Array
+      arr = lo
+    else
+      arr = [lo]
+    end
+    sub_shops.each do |s|
+      if s.lo[0].class==Array
+        arr << s.lo[0]
+      else
+        arr << s.lo
+      end
+    end
+    self.update_attributes!({lo:arr})
   end
 
   
