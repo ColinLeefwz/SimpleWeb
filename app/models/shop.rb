@@ -182,6 +182,15 @@ class Shop
   def sort_with_score(arr,loc,accuracy,ip,uid,debug=false)
     score = arr.map {|x| [x,min_distance(x,loc),0]}
     min_d = score[0][1]
+    if score.length>5
+      score = score.reject{|s| (s[1]>20 && s[0]["del"]) }
+    end
+    if score.length>5
+      score = score.reject{|s| (s[1]>30 && s[0]["d"]) }
+    end
+    if score.length>5
+      score = score.reject{|s| (s[1]>40 && s[0]["t"].nil?)}
+    end
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
@@ -207,7 +216,7 @@ class Shop
     acc = 30 if acc<30
     acc = 1000 if acc>1000
     ret = ret*(acc/300.0)
-    return ret if min_d<acc
+    return ret if min_d<acc #如果最近的点在误差范围之内
     factor = (min_d-acc)/30.0
     factor = 3 if factor>3
     return ret*(1+factor)
