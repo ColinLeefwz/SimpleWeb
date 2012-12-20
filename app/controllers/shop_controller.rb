@@ -10,7 +10,11 @@ class ShopController < ApplicationController
     skip = (page-1)*pcount
     lo = [params[:lat].to_f , params[:lng].to_f]
     hash = {lo:{"$within"=>{"$center"=> [lo,0.05]}}}
-    hash.merge!( {name: /#{params[:name]}/ }  )  if params[:name]
+    if params[:name]
+      hash.merge!( {name: /#{params[:name]}/ }  )  
+    else
+      hash.merge!( {t:{"$exists"=>true} }  )  
+    end
     hash.merge!( {t: params[:type].to_i }  )  if params[:type]
     shops = Shop.where(hash).order_by([:utotal]).skip(skip).limit(pcount)
     render :json =>  shops.map {|s| s.safe_output_with_users}.to_json
