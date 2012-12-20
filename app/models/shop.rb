@@ -189,7 +189,7 @@ class Shop
       score = score.reject{|s| (s[1]>35 && s[0]["d"]) }
     end
     if score.length>5
-      score = score.reject{|s| (s[1]>50 && s[0]["t"].nil?)}
+      score = score.reject{|s| (s[1]>100 && s[0]["t"].nil?)}
     end
     score.each do |xx|
       x=xx[0]
@@ -269,6 +269,8 @@ class Shop
       t = t.to_i
       xx[2]-=10 if t<4
       xx[2]-=5 if t>=4
+    else
+      xx[2] +=10
     end
     if x["shops"]
       xx[2]-=30
@@ -283,7 +285,7 @@ class Shop
       elsif (hour>=17 && hour<=19)
         xx[2]-=20
       elsif (hminute>(14*60+30) && hminute<(16*60+30) )
-        xx[2]+=30
+        xx[2]+=10
       end
     end
     if t==11
@@ -293,9 +295,9 @@ class Shop
       if(today.wday>=1 && today.wday<=5)
         xx[2] -=10 if(hour>=14 && hour<=17)
         xx[2] -=10 if(hour>=8 && hour<=11)
-        xx[2] +=20 if(hour>=19)
+        xx[2] +=10 if(hour>=19)
       else
-        xx[2] +=20;
+        xx[2] +=10;
       end
     end
   end
