@@ -243,6 +243,7 @@ class Shop
       if uid_s && sc.users[uid_s]
         ucount = sc.users[uid_s][0]
         xx[2] -= ucount*30
+        xx[2] -= user_to_score(sc.users.length)/2.0
       end
       if ip && ip.index(",").nil?
         ip2 = ip.split(".").join("/")
