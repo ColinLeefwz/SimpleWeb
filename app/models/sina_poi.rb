@@ -15,7 +15,9 @@ class SinaPoi
         id = d.delete("poiid")
         if coll.find({:_id => id}).to_a.blank?
           begin
-            if ba = check_baidu(d['title'], [d['lat'].to_f, d['lon'].to_f])
+            lo = Mongoid.session(:dooo).command(eval:"baidu_to_real([#{d['lat'].to_f},#{d['lon'].to_f}])")["retval"]
+            d.merge!({lo: lo})
+            if ba = check_baidu(d['title'], lo)
               d.merge!({"baidu_id" => ba.first, 'mtype' => ba.last})
             end
           rescue Exception => e 
