@@ -10,9 +10,9 @@ class AdminShopsController < ApplicationController
     hash,lo = {},nil
     lo = [params[:lat].to_f , params[:lng].to_f] if !params[:lat].blank? && !params[:lng].blank?
     hash.merge!({ lo: { "$within" => { "$center" => [lo, 0.1]} }}) if lo
-    hash.merge!( {name: /#{params[:name]}/ }  )  if params[:name]
-    hash.merge!( {t: params[:t].to_i }  )  if !params[:t].blank?
-    hash.merge!({city: params[:city]}) if !params[:city].blank?
+    hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
+    hash.merge!( {t: params[:t].to_i }  )  unless params[:t].blank?
+    hash.merge!({city: params[:city]}) unless params[:city].blank?
     hash.merge!({type: params[:type]}) unless params[:type].blank?
 
     @shops = paginate("Shop", params[:page], hash, horder, 200  )
