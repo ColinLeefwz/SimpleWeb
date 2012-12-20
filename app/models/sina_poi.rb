@@ -1,5 +1,7 @@
 # encoding: utf-8
 class SinaPoi
+  #mtype 字段 5是手工匹配的
+
   include Mongoid::Document
   store_in session: "dooo"
 
@@ -15,7 +17,7 @@ class SinaPoi
         id = d.delete("poiid")
         if coll.find({:_id => id}).to_a.blank?
           begin
-            lo = Mongoid.session(:dooo).command(eval:"baidu_to_real([#{d['lat'].to_f},#{d['lon'].to_f}])")["retval"]
+            lo = Mongoid.session(:dooo).command(eval:"gcj02_to_real([#{d['lat'].to_f},#{d['lon'].to_f}])")["retval"]
             d.merge!({lo: lo})
             if ba = check_baidu(d['title'], lo)
               d.merge!({"baidu_id" => ba.first, 'mtype' => ba.last})
@@ -69,7 +71,7 @@ class SinaPoi
       baidu = Baidu.where({:name => name2,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
       return [baidu._id, 3] if baidu
     end
-    baidu = Baidu.where({:name => /^#{name}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+    baidu = Baidu.where({:name => /^#{name1.first}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
     return [baidu._id, 4] if baidu
     
     nil
