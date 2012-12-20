@@ -132,7 +132,7 @@ class Shop
   
   def sub_shops
     return [] if shops.nil?
-    return shops.map {|x| Shop.find(x)}
+    return shops.map {|x| Shop.find_by_id(x)}.reject {|x| x.nil?}
   end
 
 
@@ -181,6 +181,16 @@ class Shop
   
   def sort_with_score(arr,loc,accuracy,ip,uid,debug=false)
     score = arr.map {|x| [x,min_distance(x,loc),0]}
+    min_d = score[0][1]
+    if score.length>5
+      score = score.reject{|s| (s[1]>20 && s[0]["del"]) }
+    end
+    if score.length>5
+      score = score.reject{|s| (s[1]>35 && s[0]["d"]) }
+    end
+    if score.length>5
+      score = score.reject{|s| (s[1]>50 && s[0]["t"].nil?)}
+    end
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
@@ -188,24 +198,36 @@ class Shop
     end
     realtime_score(score)
     score.each_with_index do |xx,i|
-      xx[2] =  adjust(xx[2],accuracy)
+      xx[2] =  adjust(xx[2],accuracy,min_d)
       xx[1] += xx[2]
     end
     score.sort! {|a,b| a[1]<=>b[1]}
+    ret = []
+    score.each_with_index do |x,i|
+      if i<5
+        ret << x
+      else
+        ret << x if x[0]["t"]
+      end
+    end
     if debug
-      return score
+      return ret
     else
-      return score[0,30].map {|x| x[0]}
+      return ret[0,30].map {|x| x[0]}
     end
   end
   
-  def adjust(score,accuracy)
+  def adjust(score,accuracy,min_d)
     ret = score
     ret = -200 if ret < -200 #最多加权2/3后封顶
     acc = accuracy
     acc = 30 if acc<30
     acc = 1000 if acc>1000
-    ret*acc/300
+    ret = ret*(acc/300.0)
+    return ret if min_d<acc #如果最近的点在误差范围之内
+    factor = (min_d-acc)/30.0
+    factor = 3 if factor>3
+    return ret*(1+factor)
   end
   
   def realtime_score(score)
@@ -326,11 +348,7 @@ class Shop
   end
 
   def self.lob_to_lo(lob)
-    begin
-      Mongoid.session(:dooo).command(eval:"baidu_to_real(#{lob})")["retval"]
-    rescue
-      []
-    end
+    Mongoid.session(:dooo).command(eval:"baidu_to_real(#{lob})")["retval"]
   end
   
   def lob_to_lo
@@ -339,6 +357,22 @@ class Shop
   
   def self.next_id
     Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
+  end
+  
+  def merge_shops_locations
+    if lo[0].class==Array
+      arr = lo
+    else
+      arr = [lo]
+    end
+    sub_shops.each do |s|
+      if s.lo[0].class==Array
+        arr << s.lo[0]
+      else
+        arr << s.lo
+      end
+    end
+    self.update_attributes!({lo:arr})
   end
 
   
