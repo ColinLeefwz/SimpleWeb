@@ -7,6 +7,8 @@
     区号: <%= text_field_tag :city, params[:city], :size => 10 %>
     分类: <%= select_tag :t,options_for_select([['所有分类',''],['酒吧• 活动',1],['咖啡• 茶馆 ',2],['餐饮• 酒店',3],['休闲• 娱乐',4],['购物• 广场',5],['楼宇• 社区',6]],params[:t].to_i)  %>
     排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"]],params[:order])  %>
+    <br/>
+    分类： <%= select_tag :type, options_for_select(import_type, params[:type].to_s) %>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
@@ -22,6 +24,7 @@
     <th>区号</th>
     <th>地址</th>
     <th>分类</th>
+    <th>百度分类</th>
     <th>子商家</th>
     <th></th>
     <th></th>
@@ -38,6 +41,7 @@
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
       <td><%= shop.show_t %></td>
+      <td><%= shop.type %></td>
       <td><%= link_to(shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{shop.id}") %></td>
       <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
       <td>
