@@ -50,12 +50,7 @@ class AdminShopsController < ApplicationController
 
   def near
     @shop = Shop.find(params[:id])
-    if @shop.lo.first.is_a?(Array)
-      lo = @shop.lo.first
-    else
-      lo = @shop.lo
-    end
-    @shops = Shop.where({:lo => {"$within" => {"$center" => [lo, 0.01]}}}).sort({name: 1})
+    @shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.loc_first, 0.01]}}}).sort({name: 1}).to_a
     #    @shops = Shop.all.to_a
     @shops -= [@shop]
   end

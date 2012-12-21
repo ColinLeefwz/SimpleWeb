@@ -12,10 +12,10 @@
 
     <% @shops.each do |shop| %>
       <tr>
-        <td><%= check_box_tag "shop_ids[]", shop._id, @shop.shops.include?(shop._id)%></td>
+        <td><%= check_box_tag "shop_ids[]", shop._id, @shop.shops.to_a.include?(shop._id)%></td>
         <td><%= shop.id.to_i %></td>
         <td><%= shop.name %></td>
-        <td><%= shop.get_distance(shop.lo, @shop.lo) %></td>
+        <td><%= shop.get_distance(shop.lo, @shop.loc_first) %></td>
         <td><%= shop.addr %></td>
       </tr>
 
