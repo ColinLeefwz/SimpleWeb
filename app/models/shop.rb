@@ -16,7 +16,7 @@ class Shop
   field :lo, type:Array #实际的经纬度
   field :tel 
   field :city
-#  field :phone
+  #  field :phone
   field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. 
   field :addr
   field :t                #脸脸的商家类型
@@ -83,7 +83,11 @@ class Shop
 
   
   def show_t
-    {1 => '酒吧• 活动', 2 => '咖啡• 茶馆', 3 => '餐饮• 酒店', 4 => '休闲• 娱乐', 5 => '购物• 广场', 6 => "'楼宇• 社区'"}[self.t.to_i]
+    if self.t
+      ["活动","酒吧","咖啡","茶馆","餐饮","酒店","休闲娱乐","运动","购物","广场","写字楼","住宅","学校","交通"][self.t.to_i]
+    else
+      ''
+    end
   end
 
   def logo
@@ -132,7 +136,7 @@ class Shop
   
   def sub_shops
     return [] if shops.nil?
-    return shops.map {|x| Shop.find(x)}
+    return shops.map {|x| Shop.find_by_id(x)}.reject {|x| x.nil?}
   end
 
 
@@ -165,7 +169,7 @@ class Shop
   
   
   def find_shops(loc,accuracy,ip,uid,debug=false)
-    radius = 0.0015+0.002*accuracy/300
+    radius = 0.002+0.002*accuracy/300
     radius=0.01 if(radius>0.01)  #不大于1000米
     arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
     arr.uniq_by! {|x| x["_id"]}
@@ -181,31 +185,53 @@ class Shop
   
   def sort_with_score(arr,loc,accuracy,ip,uid,debug=false)
     score = arr.map {|x| [x,min_distance(x,loc),0]}
+    min_d = score[0][1]
+    if score.length>5
+      score = score.reject{|s| (s[1]>20 && s[0]["del"]) }
+    end
+    if score.length>5
+      score = score.reject{|s| (s[1]>35 && s[0]["d"]) }
+    end
+    if score.length>5
+      score = score.reject{|s| (s[1]>100 && s[0]["t"].nil?)}
+    end
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
-      shop_history_score(xx,x,ip,uid)
+      shop_history_score(xx,x,ip,"ObjectId(\"#{uid}\")")
     end
     realtime_score(score)
     score.each_with_index do |xx,i|
-      xx[2] =  adjust(xx[2],accuracy)
+      xx[2] =  adjust(xx[2],accuracy,min_d)
       xx[1] += xx[2]
     end
     score.sort! {|a,b| a[1]<=>b[1]}
+    ret = []
+    score.each_with_index do |x,i|
+      if i<5
+        ret << x
+      else
+        ret << x if x[0]["t"]
+      end
+    end
     if debug
-      return score
+      return ret
     else
-      return score[0,30].map {|x| x[0]}
+      return ret[0,30].map {|x| x[0]}
     end
   end
   
-  def adjust(score,accuracy)
+  def adjust(score,accuracy,min_d)
     ret = score
     ret = -200 if ret < -200 #最多加权2/3后封顶
     acc = accuracy
     acc = 30 if acc<30
     acc = 1000 if acc>1000
-    ret*acc/300
+    ret = ret*(acc/300.0)
+    return ret if min_d<acc #如果最近的点在误差范围之内
+    factor = (min_d-acc)/30.0
+    factor = 3 if factor>3
+    return ret*(1+factor)
   end
   
   def realtime_score(score)
@@ -215,22 +241,24 @@ class Shop
     end
   end
   
-  def shop_history_score(xx,x,ip,uid)
+  def shop_history_score(xx,x,ip,uid_s)
     begin
       sc = CheckinShopStat.find(x["_id"].to_i)
-      if uid && sc.users[uid]
-        ucount = sc.users[uid][0];
-        xx[2] -= ucount*30;
+      if uid_s && sc.users[uid_s]
+        ucount = sc.users[uid_s][0]
+        xx[2] -= ucount*30
+        xx[2] -= user_to_score(sc.users.length)/2.0
       end
-      if ip.index(",")==-1
-        ip2 = ip.replace('.', '/', 'g');
-        ip2s = sc.ips[ip2];
+      if ip && ip.index(",").nil?
+        ip2 = ip.split(".").join("/")
+        ip2s = sc.ips[ip2]
         if(ip2s)
-          ipcount = sc.ips[ip2][0];
-          xx[2] -= ipcount*5;
+          ipcount = sc.ips[ip2][0]
+          xx[2] -= ipcount*5
         end
       end
-    rescue
+    rescue Exception =>e
+      puts e
     end
   end
   
@@ -245,6 +273,8 @@ class Shop
       t = t.to_i
       xx[2]-=10 if t<4
       xx[2]-=5 if t>=4
+    else
+      xx[2] +=10
     end
     if x["shops"]
       xx[2]-=30
@@ -253,28 +283,25 @@ class Shop
     xx[2]+= x["d"] if x["d"]
     xx[2]+=150 if x["del"]
     xx[2]-=30 if t==1 && (hour>=20 || hour <=3)
-    if (t==3 && stype.index('餐饮')==0)
+    if (t==4)
       if(hour>=11 && hour<=13) 
         xx[2]-=20 
       elsif (hour>=17 && hour<=19)
         xx[2]-=20
       elsif (hminute>(14*60+30) && hminute<(16*60+30) )
-        xx[2]+=30
+        xx[2]+=10
       end
     end
-    if t==6
-      if(stype.index('商务住宅')==0)
-        if(stype.index('商务住宅;住宅区')==0)
-          xx[2] -=10 if(hour>=20 || hour<=8)
-        else
-          if(today.wday>=1 && today.wday<=5)
-            xx[2] -=10 if(hour>=14 && hour<=17)
-            xx[2] -=10 if(hour>=8 && hour<=11)
-            xx[2] +=20 if(hour>=19)
-          else
-            xx[2] +=20;
-          end
-        end
+    if t==11
+      xx[2] -=10 if(hour>=20 || hour<=8)
+    end
+    if t==10
+      if(today.wday>=1 && today.wday<=5)
+        xx[2] -=10 if(hour>=14 && hour<=17)
+        xx[2] -=10 if(hour>=8 && hour<=11)
+        xx[2] +=10 if(hour>=19)
+      else
+        xx[2] +=10;
       end
     end
   end
@@ -326,11 +353,7 @@ class Shop
   end
 
   def self.lob_to_lo(lob)
-    begin
-      Mongoid.session(:dooo).command(eval:"baidu_to_real(#{lob})")["retval"]
-    rescue
-      []
-    end
+    Mongoid.session(:dooo).command(eval:"baidu_to_real(#{lob})")["retval"]
   end
   
   def lob_to_lo
@@ -339,6 +362,22 @@ class Shop
   
   def self.next_id
     Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
+  end
+  
+  def merge_shops_locations
+    if lo[0].class==Array
+      arr = lo
+    else
+      arr = [lo]
+    end
+    sub_shops.each do |s|
+      if s.lo[0].class==Array
+        arr << s.lo[0]
+      else
+        arr << s.lo
+      end
+    end
+    self.update_attributes!({lo:arr})
   end
 
   

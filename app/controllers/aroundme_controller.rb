@@ -14,13 +14,14 @@ class AroundmeController < ApplicationController
   end
   
   def shop2
+    (params[:user].nil? || params[:user]=="")? uid="": uid=User.find(params[:user].gsub(/\s+/, "")).id
     if params[:loc] && params[:loc].length>3
       lob = params[:loc].split(/[,]/).map { |m| m.to_f  }.reverse
       loc = Shop.lob_to_lo(lob)
-      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,"","",true)  
+      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,params[:ip],uid,true)  
     elsif params[:lo]
       loc = params[:lo].split(/[,]/).map { |m| m.to_f  }
-      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,"","",true)
+      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,params[:ip],uid,true)
     else
       @shops = []
     end

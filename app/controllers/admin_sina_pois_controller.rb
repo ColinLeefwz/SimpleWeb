@@ -28,9 +28,18 @@ class AdminSinaPoisController < ApplicationController
   end
 
 
+
+
   def near
     @sina_poi = SinaPoi.find(params[:id])
-    @shops = Baidu.where({:lo => {"$within" => {"$center" => [[@sina_poi.lat.to_f, @sina_poi.lon.to_f], 0.01]}}}).select{|m| name_similar(m.name, @sina_poi.title)}
+    @shops = Baidu.where({:lo => {"$within" => {"$center" => [@sina_poi.lo, 0.01]}}}).select{|m| name_similar(m.name, @sina_poi.title)}
+    #        @shops = Baidu.where({}).limit(1000).select{|m| name_similar(m.name, @sina_poi.title)}
+  end
+
+  def add_baidu_id
+    @sina_poi = SinaPoi.find(params[:id])
+    @sina_poi.update_attributes(:baidu_id => params[:baidu_id].to_i, :mtype => 5 )
+    redirect_to "/admin_sina_pois?id=#{@sina_poi._id}"
   end
 
   private

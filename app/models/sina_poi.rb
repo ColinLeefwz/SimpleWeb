@@ -1,5 +1,7 @@
 # encoding: utf-8
 class SinaPoi
+  #mtype 字段 5是手工匹配的
+
   include Mongoid::Document
   store_in session: "dooo"
 
@@ -69,7 +71,7 @@ class SinaPoi
       baidu = Baidu.where({:name => name2,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
       return [baidu._id, 3] if baidu
     end
-    baidu = Baidu.where({:name => /^#{name}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+    baidu = Baidu.where({:name => /^#{name1.first}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
     return [baidu._id, 4] if baidu
     
     nil
