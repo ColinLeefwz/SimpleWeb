@@ -52,7 +52,7 @@ class AdminShopsController < ApplicationController
     @shop = Shop.find(params[:id])
     @shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.loc_first, 0.01]}}})
     @shops -= [@shop]
-    @shops = @shops.map{|shop| [shop._id, shop.name, shop.addr, shop.get_distance(shop.loc_first, @shop.loc_first), shop.show_t]}
+    @shops = @shops.map{|shop| [shop._id.to_i, shop.name, shop.addr, shop.get_distance(shop.loc_first, @shop.loc_first), shop.show_t]}
     @shops = @shops.sort { |a, b| a[3] <=> b[3] }[0,300]
     #    @shops = Shop.all.to_a
     

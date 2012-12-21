@@ -13,7 +13,7 @@
 
     <% @shops.each do |shop| %>
       <tr>
-        <td><%= check_box_tag "shop_ids[]", shop._id, @shop.shops.to_a.include?(shop[0])%></td>
+        <td><%= check_box_tag "shop_ids[]", shop[0], @shop.shops.to_a.include?(shop[0])%></td>
         <td><%= shop[0] %></td>
         <td><%= shop[1] %></td>
         <td><%= shop[2] %></td>
