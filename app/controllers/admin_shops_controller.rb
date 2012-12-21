@@ -47,6 +47,11 @@ class AdminShopsController < ApplicationController
     @shop = Shop.find(params[:id])
   end
 
+  def near
+    @shop = Shop.find(params[:id])
+    @shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.lo, 0.01]}},_id: {'$nin' => @shop.shops.to_a << @shop.id.to_i}})
+  end
+
   def find_shops
     @shop = Shop.find(params[:pid])
     hash,sort = {},{}
