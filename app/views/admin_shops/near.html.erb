@@ -8,15 +8,17 @@
       <th>名称</th>
       <th>地址</th>
       <th>距离</th>
+      <th>分类</th>
     </tr>
 
     <% @shops.each do |shop| %>
       <tr>
-        <td><%= check_box_tag "shop_ids[]", shop._id, @shop.shops.to_a.include?(shop._id)%></td>
-        <td><%= shop.id.to_i %></td>
-        <td><%= shop.name %></td>
-        <td><%= shop.get_distance(shop.lo, @shop.loc_first) %></td>
-        <td><%= shop.addr %></td>
+        <td><%= check_box_tag "shop_ids[]", shop._id, @shop.shops.to_a.include?(shop[0])%></td>
+        <td><%= shop[0] %></td>
+        <td><%= shop[1] %></td>
+        <td><%= shop[2] %></td>
+        <td><%= shop[3] %></td>
+        <td><%= shop[4] %></td>
       </tr>
 
     <% end %>
