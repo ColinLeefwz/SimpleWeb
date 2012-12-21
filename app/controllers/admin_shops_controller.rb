@@ -13,7 +13,7 @@ class AdminShopsController < ApplicationController
     hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
     hash.merge!( {t: params[:t].to_i }  )  unless params[:t].blank?
     hash.merge!({city: params[:city]}) unless params[:city].blank?
-    hash.merge!({type: params[:type]}) unless params[:type].blank?
+#    hash.merge!({type: params[:type]}) unless params[:type].blank?
 
     @shops = paginate("Shop", params[:page], hash, horder, 200  )
     @shops = @shops.entries.keep_if{|s| s.del != 1}
