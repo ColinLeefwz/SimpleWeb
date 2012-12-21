@@ -41,7 +41,7 @@
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
       <td><%= shop.lo if shop.respond_to?(:lo) %></td>
-      <td><%= Mongoid.session(:dooo).command(eval:"get_distance(#{@sina_poi.lo},#{shop.lo})")["retval"] %></td>
+      <td><%= shop.get_distance(shop.loc_first, @sina_poi.lo)  %></td>
       <td><%= shop.type %></td>
       <td><%= link_to '对应',"/admin_sina_pois/add_baidu_id?id=#{@sina_poi._id}&baidu_id=#{shop._id}" %></td>
     </tr>
