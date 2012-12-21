@@ -5,7 +5,7 @@
 4 餐饮
 5 酒店
 6 休闲娱乐
-7 
+7 运动
 8 购物
 9 广场
 10 写字楼
@@ -39,4 +39,11 @@ db.shops.update({t:11,name:/酒店/},{$set:{t:5}},false,true)
 
 db.shops.update({t:3},{$set:{t:4}},false,true)
 db.shops.update({type:/^餐饮;休闲餐饮;茶座/},{$set:{t:3}},false,true)
+
+
+db.shops.remove({t:9})
+db.shops.update({type:/^休闲娱乐;休闲广场/},{$set:{t:9}},false,true)
+
+db.shops.update({type:/^休闲娱乐;体育场馆/},{$set:{t:7}},false,true)
+db.shops.update({type:/^休闲娱乐;健身中心/},{$set:{t:7}},false,true)
 
