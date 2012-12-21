@@ -15,7 +15,10 @@ class ShopController < ApplicationController
     else
       hash.merge!( {t:{"$exists"=>true} }  )  
     end
-    hash.merge!( {t: params[:type].to_i }  )  if params[:type]
+    if params[:type]
+      t = params[:type].to_i*2-1
+      hash.merge!( {t: { "$in" => [ t-1, t ] } }  ) 
+    end
     shops = Shop.where(hash).order_by([:utotal]).skip(skip).limit(pcount)
     render :json =>  shops.map {|s| s.safe_output_with_users}.to_json
   end
