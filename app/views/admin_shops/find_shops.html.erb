@@ -25,19 +25,19 @@
       <th>电话</th>
       <th>区号</th>
       <th>地址</th>
+      <th>距离</th>
       <th>分类</th>
     </tr>
 
     <% @shops.each do |shop| %>
       <tr>
-        <td><%= check_box_tag "shop_ids[]", shop._id, false%></td>
+        <td><%= check_box_tag "shop_ids[]", shop._id, @shop.shops.to_a.include?(shop._id)%></td>
         <td><%= shop.id.to_i %></td>
         <td><%= shop.name %></td>
-
-
         <td><%= shop.tel %></td>
         <td><%= shop.city %></td>
         <td><%= shop.addr %></td>
+        <td><%= shop.get_distance(shop.loc_first, @shop.loc_first) %>米</td>
         <td><%= shop.show_t %></td>
       </tr>
 
@@ -48,5 +48,4 @@
 <% end %>
 <br />
 
-<%= generate_paginate.html_safe %>
 

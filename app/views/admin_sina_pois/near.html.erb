@@ -1,3 +1,25 @@
+<h2>poi</h2>
+<table border="1">
+  <tr>
+    <th>poi</th>
+    <th>名称</th>
+    <th>城市</th>
+    <th>地址</th>
+    <th>坐标</th>
+  </tr>
+
+  <tr>
+    <td><%= @sina_poi.id  %></td>
+    <td><%= @sina_poi.title %></td>
+    <td><%= @sina_poi.city %></td>
+    <td><%= @sina_poi.address %></td>
+    <td><%= @sina_poi.lat %>, <%= @sina_poi.lon %></td>
+  </tr>
+</table>
+
+<br/>
+<br/>
+<h2>百度附近数据</h2>
 <table border="1">
   <tr>
     <th>id</th>
@@ -6,8 +28,9 @@
     <th>城市代码</th>
     <th>地址</th>
     <th>坐标</th>
+    <th>距离</th>
     <th>类型</th>
-
+    <th></th>
   </tr>
 
   <% @shops.each do |shop| %>
@@ -17,8 +40,10 @@
       <td><%= shop.phone %></td>
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
-      <td><%= shop.lob if shop.respond_to?(:lob) %></td>
+      <td><%= shop.lo if shop.respond_to?(:lo) %></td>
+      <td><%= shop.get_distance(shop.loc_first, @sina_poi.lo)  %></td>
       <td><%= shop.type %></td>
+      <td><%= link_to '对应',"/admin_sina_pois/add_baidu_id?id=#{@sina_poi._id}&baidu_id=#{shop._id}" %></td>
     </tr>
 
   <% end %>
@@ -27,4 +52,5 @@
 
 <br/>
 <br/>
+<%= link_to '返回',request.env["HTTP_REFERER"] if request && request.env %> | 
 <br/>
