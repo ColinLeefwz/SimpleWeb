@@ -16,7 +16,7 @@ class Shop
   field :lo, type:Array #实际的经纬度
   field :tel 
   field :city
-#  field :phone
+  #  field :phone
   field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. 
   field :addr
   field :t                #脸脸的商家类型
@@ -83,7 +83,11 @@ class Shop
 
   
   def show_t
-    {1 => '酒吧• 活动', 2 => '咖啡• 茶馆', 3 => '餐饮• 酒店', 4 => '休闲• 娱乐', 5 => '购物• 广场', 6 => "'楼宇• 社区'"}[self.t.to_i]
+    if self.t
+      ["活动","酒吧","咖啡","茶馆","餐饮","酒店","休闲娱乐","运动","购物","广场","写字楼","住宅","学校","交通"][self.t.to_i]
+    else
+      ''
+    end
   end
 
   def logo
