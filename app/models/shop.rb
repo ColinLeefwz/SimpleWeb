@@ -165,7 +165,7 @@ class Shop
   
   
   def find_shops(loc,accuracy,ip,uid,debug=false)
-    radius = 0.0015+0.002*accuracy/300
+    radius = 0.002+0.002*accuracy/300
     radius=0.01 if(radius>0.01)  #不大于1000米
     arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
     arr.uniq_by! {|x| x["_id"]}
@@ -189,12 +189,12 @@ class Shop
       score = score.reject{|s| (s[1]>35 && s[0]["d"]) }
     end
     if score.length>5
-      score = score.reject{|s| (s[1]>50 && s[0]["t"].nil?)}
+      score = score.reject{|s| (s[1]>100 && s[0]["t"].nil?)}
     end
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
-      shop_history_score(xx,x,ip,uid)
+      shop_history_score(xx,x,ip,"ObjectId(\"#{uid}\")")
     end
     realtime_score(score)
     score.each_with_index do |xx,i|
@@ -237,22 +237,24 @@ class Shop
     end
   end
   
-  def shop_history_score(xx,x,ip,uid)
+  def shop_history_score(xx,x,ip,uid_s)
     begin
       sc = CheckinShopStat.find(x["_id"].to_i)
-      if uid && sc.users[uid]
-        ucount = sc.users[uid][0];
-        xx[2] -= ucount*30;
+      if uid_s && sc.users[uid_s]
+        ucount = sc.users[uid_s][0]
+        xx[2] -= ucount*30
+        xx[2] -= user_to_score(sc.users.length)/2.0
       end
-      if ip.index(",")==-1
-        ip2 = ip.replace('.', '/', 'g');
-        ip2s = sc.ips[ip2];
+      if ip && ip.index(",").nil?
+        ip2 = ip.split(".").join("/")
+        ip2s = sc.ips[ip2]
         if(ip2s)
-          ipcount = sc.ips[ip2][0];
-          xx[2] -= ipcount*5;
+          ipcount = sc.ips[ip2][0]
+          xx[2] -= ipcount*5
         end
       end
-    rescue
+    rescue Exception =>e
+      puts e
     end
   end
   
@@ -267,6 +269,8 @@ class Shop
       t = t.to_i
       xx[2]-=10 if t<4
       xx[2]-=5 if t>=4
+    else
+      xx[2] +=10
     end
     if x["shops"]
       xx[2]-=30
@@ -275,28 +279,25 @@ class Shop
     xx[2]+= x["d"] if x["d"]
     xx[2]+=150 if x["del"]
     xx[2]-=30 if t==1 && (hour>=20 || hour <=3)
-    if (t==3 && stype.index('餐饮')==0)
+    if (t==4)
       if(hour>=11 && hour<=13) 
         xx[2]-=20 
       elsif (hour>=17 && hour<=19)
         xx[2]-=20
       elsif (hminute>(14*60+30) && hminute<(16*60+30) )
-        xx[2]+=30
+        xx[2]+=10
       end
     end
-    if t==6
-      if(stype.index('商务住宅')==0)
-        if(stype.index('商务住宅;住宅区')==0)
-          xx[2] -=10 if(hour>=20 || hour<=8)
-        else
-          if(today.wday>=1 && today.wday<=5)
-            xx[2] -=10 if(hour>=14 && hour<=17)
-            xx[2] -=10 if(hour>=8 && hour<=11)
-            xx[2] +=20 if(hour>=19)
-          else
-            xx[2] +=20;
-          end
-        end
+    if t==11
+      xx[2] -=10 if(hour>=20 || hour<=8)
+    end
+    if t==10
+      if(today.wday>=1 && today.wday<=5)
+        xx[2] -=10 if(hour>=14 && hour<=17)
+        xx[2] -=10 if(hour>=8 && hour<=11)
+        xx[2] +=10 if(hour>=19)
+      else
+        xx[2] +=10;
       end
     end
   end
