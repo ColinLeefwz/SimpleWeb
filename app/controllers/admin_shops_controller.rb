@@ -30,6 +30,7 @@ class AdminShopsController < ApplicationController
     @shop.lob = @shop.lob.split(/[,，]/).map { |m| m.to_f  }.reverse
     @shop.lo = @shop.lob_to_lo
     @shop.city = @shop.get_city
+    @shop.t = @shop.t.to_i
     if @shop.save
       redirect_to :action => "show", :id => @shop.id
     else
