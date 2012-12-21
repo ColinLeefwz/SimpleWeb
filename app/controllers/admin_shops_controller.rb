@@ -54,7 +54,9 @@ class AdminShopsController < ApplicationController
     else
       lo = @shop.lo
     end
-    @shops = Shop.where({:lo => {"$within" => {"$center" => [lo, 0.01]}},_id: {'$nin' => @shop.shops.to_a << @shop.id.to_i}})
+    @shops = Shop.where({:lo => {"$within" => {"$center" => [lo, 0.01]}}}).sort({name: 1})
+    #    @shops = Shop.all.to_a
+    @shops -= [@shop]
   end
 
   def find_shops
@@ -75,17 +77,17 @@ class AdminShopsController < ApplicationController
     end
 
     if hash.empty?
-      @shops = paginate_arr([], params[:page] )
+      @shops = []
     else
-      hash.merge!({_id: {'$nin' => @shop.shops.to_a << @shop.id.to_i}})
-      @shops = paginate("Shop", params[:page], hash, sort, 200  )
+      @shops = Shop.where(hash)
+      @shops -= [@shop]
     end
     
   end
 
   def bat_add_sub
     @shop = Shop.find(params[:pid])
-    @shop.shops = @shop.shops.to_a + params['shop_ids'].to_a.map{|m| m.to_i}
+    @shop.shops = params['shop_ids'].to_a.map{|m| m.to_i}
     @shop.save
     redirect_to "/admin_shops/subshops?shop_id=#{@shop.id}"
   end
