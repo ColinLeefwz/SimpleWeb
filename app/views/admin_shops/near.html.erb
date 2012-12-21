@@ -1,0 +1,29 @@
+
+<%= form_tag "/admin_shops/bat_add_sub" do %>
+  <%= hidden_field_tag :pid, @shop.id  %>
+  <table border="1">
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>名称</th>
+      <th>地址</th>
+      <th>距离</th>
+      <th>分类</th>
+    </tr>
+
+    <% @shops.each do |shop| %>
+      <tr>
+        <td><%= check_box_tag "shop_ids[]", shop[0], @shop.shops.to_a.include?(shop[0])%></td>
+        <td><%= shop[0] %></td>
+        <td><%= shop[1] %></td>
+        <td><%= shop[2] %></td>
+        <td><%= shop[3] %></td>
+        <td><%= shop[4] %></td>
+      </tr>
+
+    <% end %>
+  </table>
+  <br/>
+  <%= submit_tag "确定" unless @shops.blank? %>
+<% end %>
+<br />

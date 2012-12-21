@@ -32,8 +32,9 @@
     <th>坐标</th>
     <th>签到用户</th>
     <th>对应百度商家</th>
+    <th>查看附近</th>
     <th>添加对应</th>
-    <th></th>
+    
   </tr>
 
   <% @sina_pois.each do |poi| %>
@@ -45,8 +46,9 @@
       <td><%= poi.lat %>, <%= poi.lon %></td>
       <td><%= poi.datas.length if poi.respond_to?('datas') %></td>
       <td id="bdn_<%= poi.id %>"><%=  link_to(Baidu.find_by_id(poi.baidu_id).try(:name),"/admin_baidu?id=#{poi.baidu_id}") if poi.respond_to?('baidu_id') %></td>
-      <td><a onclick="showAdd($(this),'<%= poi._id %>')" >更改</a></td>
       <td><%=  link_to "附近商家" , "/admin_sina_pois/near?id=#{poi._id}"%></td>
+      <td><a onclick="showAdd($(this),'<%= poi._id %>')" >更改</a></td>
+      
     </tr>
   <% end %>
 
