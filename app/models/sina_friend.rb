@@ -11,7 +11,7 @@ class SinaFriend
   private
   
   def single_page(wb_uid,token,cursor=0,err_num = 0)
-    sleep(2)
+    sleep(1.5)
     url = "https://api.weibo.com/2/friendships/friends/ids.json?count=#{5000}&cursor=#{cursor}&&access_token=#{token}&uid=#{wb_uid}"
     begin
       response = RestClient.get(url)
