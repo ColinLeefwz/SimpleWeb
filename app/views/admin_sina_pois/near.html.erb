@@ -28,6 +28,7 @@
     <th>城市代码</th>
     <th>地址</th>
     <th>坐标</th>
+    <th>距离</th>
     <th>类型</th>
     <th></th>
   </tr>
@@ -39,7 +40,8 @@
       <td><%= shop.phone %></td>
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
-      <td><%= shop.lob if shop.respond_to?(:lob) %></td>
+      <td><%= shop.lo if shop.respond_to?(:lo) %></td>
+      <td><%= Mongoid.session(:dooo).command(eval:"get_distance(#{@sina_poi.lo},#{shop.lo})")["retval"] %></td>
       <td><%= shop.type %></td>
       <td><%= link_to '对应',"/admin_sina_pois/add_baidu_id?id=#{@sina_poi._id}&baidu_id=#{shop._id}" %></td>
     </tr>
