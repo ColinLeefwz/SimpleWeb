@@ -13,7 +13,7 @@ class AdminShopsController < ApplicationController
     hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
     hash.merge!( {t: params[:t].to_i }  )  unless params[:t].blank?
     hash.merge!({city: params[:city]}) unless params[:city].blank?
-    #    hash.merge!({type: params[:type]}) unless params[:type].blank?
+    hash.merge!({type: params[:type]}) unless params[:type].blank?
 
     @shops = paginate("Shop", params[:page], hash, horder, 200  )
     @shops = @shops.entries.keep_if{|s| s.del != 1}
@@ -52,7 +52,7 @@ class AdminShopsController < ApplicationController
     if @shop.lo.first.is_a?(Array)
       lo = @shop.lo.first
     else
-      lo = @shop
+      lo = @shop.lo
     end
     @shops = Shop.where({:lo => {"$within" => {"$center" => [lo, 0.01]}},_id: {'$nin' => @shop.shops.to_a << @shop.id.to_i}})
   end
