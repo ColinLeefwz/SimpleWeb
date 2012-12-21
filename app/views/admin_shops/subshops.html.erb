@@ -35,6 +35,7 @@
 <%= link_to '返回',request.env["HTTP_REFERER"] if request && request.env %> | 
 <%= link_to '添加子商家', "#", :onclick => "addTr('#{@shop.id}')" %>
 |<%= link_to '批量添加子商家',"/admin_shops/find_shops?pid=#{@shop.id}" %>
+|<%= link_to '附近商家',"/admin_shops/near?id=#{@shop.id}" %>
 
 <script type="text/javascript">
   function addTr(pid){
