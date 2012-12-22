@@ -25,7 +25,7 @@ class Party
   	s.id = Shop.next_id
   	s.name = name
   	s.t = 0
-  	s.del = 1
+  	ftime < Time.now.to_s? s.del=0 : s.del = 1
     s.save!
     s
   end
