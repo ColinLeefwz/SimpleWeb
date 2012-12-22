@@ -37,8 +37,7 @@ class AdminPartiesController < ApplicationController
 
   def ajax_over
     @party = Party.find(params[:id])
-    @party.etime = Time.now.strftime('%Y-%m-%d %H:%M')
-    @party.save
+    @party.expire
     render :json => {:text => '已过期'}
   end
 
