@@ -5,7 +5,6 @@ class CheckinsController < ApplicationController
 
   def create
     raise "user != session user" if params[:user_id].to_s != session[:user_id].to_s
-    send_welcome_msg_if_not_invisible(session_user.gender)
     checkin = Checkin.new
     checkin.loc = [params[:lat].to_f, params[:lng].to_f]
     checkin.acc = params[:accuracy]
@@ -19,7 +18,9 @@ class CheckinsController < ApplicationController
     end
     checkin.ip = real_ip
     checkin.save!
-    checkin.add_to_redis
+    if checkin.add_to_redis
+      send_welcome_msg_if_not_invisible(session_user.gender)
+    end
     send_notice_if_exist
     send_coupon_if_exist
     render :json => checkin.to_json
@@ -57,10 +58,17 @@ class CheckinsController < ApplicationController
   def send_notice_if_exist
     shop = Shop.find(params[:shop_id])
     return if shop.nil?
+    send_if_first shop.name
     notice = shop.notice
     return if notice.nil? || notice.title.nil? || notice.title.length<1
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], notice.title)
   end
+  
+  def send_if_first(sname)
+    return if Checkin.where({sid: params[:shop_id]}).first
+    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], 
+      "欢迎！您是第一个来到'#{sname}'的脸脸用户，很特别哦。等有其他人加入后，你们就可以聊天了。")
+  end 
 
   def send_coupon_if_exist
     if ENV["RAILS_ENV"] == "production"
