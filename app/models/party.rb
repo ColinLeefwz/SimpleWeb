@@ -25,7 +25,7 @@ class Party
   	s.id = Shop.next_id
   	s.name = name
   	s.t = 0
-  	ftime < Time.now.to_s? s.del=0 : s.del = 1
+  	ftime <= Time.now.strftime("%Y-%m-%d %H:%M")? s.del=0 : s.del = 1
     s.save!
     s
   end
@@ -44,12 +44,19 @@ class Party
   def show_flag
     ["未开始", '活动中', '已过期'][flag]
   end
+  
+  def expire
+    self.shop.unset(:del)
+    self.etime = Time.now.strftime('%Y-%m-%d %H:%M')
+    self.save
+  end
 
   def Party.save(party)
   	sp = party.gen_shop
     party.sid = sp.id
     party.save!
   end
+  
   
   
   def self.activate(ftime)
