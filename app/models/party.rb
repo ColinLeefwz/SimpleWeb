@@ -46,7 +46,7 @@ class Party
   end
   
   def expire
-    self.shop.unset(:del)
+    self.shop.set(:del,1)
     self.etime = Time.now.strftime('%Y-%m-%d %H:%M')
     self.save
   end
