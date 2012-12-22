@@ -137,4 +137,13 @@ db.shops.update({name:/精子/},{$set:{del:1},$unset:{t:1}},false,true)
 db.shops.update({name:/生殖/},{$set:{del:1},$unset:{t:1}},false,true)
 
 
+db.shops.update({name:/宿舍$/},{$set:{d:20}},false,true)
+
+db.shops.update({name:/活动中心$/},{$set:{d:50},$unset:{t:1}},false,true)
+db.shops.update({name:/棋牌/},{$set:{d:50},$unset:{t:1}},false,true)
+db.shops.update({name:/文化室$/},{$set:{d:30},$unset:{t:1}},false,true)
+
+
+
+
 
