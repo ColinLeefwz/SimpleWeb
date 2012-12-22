@@ -186,14 +186,15 @@ class Shop
   def sort_with_score(arr,loc,accuracy,ip,uid,debug=false)
     score = arr.map {|x| [x,min_distance(x,loc),0]}
     min_d = score[0][1]
+    score.reject!{|s| (s[0]["t"]==0 && s[0]["del"]) } #过期的活动
     if score.length>5
-      score = score.reject{|s| (s[1]>20 && s[0]["del"]) }
+      score.reject!{|s| (s[1]>20 && s[0]["del"]) }
     end
     if score.length>5
-      score = score.reject{|s| (s[1]>35 && s[0]["d"]) }
+      score.reject!{|s| (s[1]>35 && s[0]["d"]) }
     end
     if score.length>5
-      score = score.reject{|s| (s[1]>100 && s[0]["t"].nil?)}
+      score.reject!{|s| (s[1]>100 && s[0]["t"].nil?)}
     end
     score.each do |xx|
       x=xx[0]
