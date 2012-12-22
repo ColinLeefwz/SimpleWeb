@@ -108,6 +108,7 @@ db.shops.remove({name:/建筑装饰/})
 db.shops.remove({name:/出国/,type:/^金融/})
 db.shops.remove({name:/出国/,type:/^教育/})
 db.shops.remove({name:/销售部/})
+db.shops.remove({name:/有限责任公司/})
 
 db.shops.remove({name:"流通处"})
 db.shops.remove({name:"游客中心"})
