@@ -20,6 +20,7 @@ db.shops.update({type:/^交通设施;港口/},{$set:{t:13}},false,true)
 
 db.shops.update({type:/^教育/},{$set:{t:12}},false,true)
 db.shops.update({type:"教育"},{$unset:{t:1}},false,true)
+db.shops.update({type:/^教育;科研机构/},{$unset:{t:1}},false,true)
 
 db.shops.update({type:/^地产小区/},{$set:{t:11}},false,true)
 db.shops.update({t:11,name:/写字楼/},{$set:{t:10}},false,true)
@@ -38,7 +39,7 @@ db.shops.update({type:/^宾馆/},{$set:{t:5}},false,true)
 db.shops.update({t:11,name:/酒店/},{$set:{t:5}},false,true)
 
 db.shops.update({t:3},{$set:{t:4}},false,true)
-db.shops.update({type:/^餐饮;休闲餐饮;茶座/},{$set:{t:3}},false,true)
+db.shops.update({type:"餐饮;休闲餐饮;茶座"},{$set:{t:3}},false,true)
 
 
 db.shops.remove({t:9})
@@ -47,3 +48,11 @@ db.shops.update({type:/^休闲娱乐;休闲广场/},{$set:{t:9}},false,true)
 db.shops.update({type:/^休闲娱乐;体育场馆/},{$set:{t:7}},false,true)
 db.shops.update({type:/^休闲娱乐;健身中心/},{$set:{t:7}},false,true)
 
+
+db.shops.remove({type:"行政地标"})
+db.shops.remove({type:"行政地标;商圈;强商圈"})
+db.shops.update({"t" : 5, "type" : "购物"},{$unset:{t:1}},false,true)
+
+db.shops.find({"t" : 5, "type" : "购物"}
+
+db.shops.update({name:/博物馆$/},{$set:{t:6}},false,true)

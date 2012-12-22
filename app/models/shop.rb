@@ -305,6 +305,9 @@ class Shop
         xx[2] +=10;
       end
     end
+    len = x["name"].length
+    xx[2] += (10+(len-11)*3) if len>11
+    xx[2] += (10+(4-len)*3) if len<4
   end
   
   def user_to_score(uc)
