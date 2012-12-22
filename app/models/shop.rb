@@ -188,13 +188,16 @@ class Shop
     min_d = score[0][1]
     score.reject!{|s| (s[0]["t"]==0 && s[0]["del"]) } #过期的活动
     if score.length>5
-      score.reject!{|s| (s[1]>20 && s[0]["del"]) }
+      score.reject!{|s| (s[0]["del"] && s[1]>30 ) }
     end
     if score.length>5
-      score.reject!{|s| (s[1]>35 && s[0]["d"]) }
+      score.reject!{|s| (s[0]["d"] && s[1]>(100-s[0]["d"]) ) }
     end
+    score.reject!{|s| s[0]["del"] } if score.length>10
+    score.reject!{|s| s[0]["d"] } if score.length>15
+    score.reject!{|s| s[0]["t"].nil? } if score.length>20
     if score.length>5
-      score.reject!{|s| (s[1]>100 && s[0]["t"].nil?)}
+      score = score[0,5]+score[5..-1].reject{|s| (s[1]>120 && s[0]["t"].nil?)}
     end
     score.each do |xx|
       x=xx[0]
