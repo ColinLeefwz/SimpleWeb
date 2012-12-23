@@ -20,9 +20,9 @@ end
 
 def has_similar(x)
 	  Baidu.collection.find({lo:{"$near" => x["lo"], "$maxDistance" => 0.001 }, type:/^餐饮/}).each do |bd|
-	  	return true if similar(x.name,bd.name)
+	  	return bd if similar(x.name,bd.name)
 	  end
-	  return false
+	  return nil
 end
 
 Mapabc.collection.find({type:/^餐饮/, bid:{"$exists" => false}}).each do |x|
@@ -37,8 +37,13 @@ Mapabc.collection.find({type:/^餐饮/, bid:{"$exists" => false}}).each do |x|
 		next if type.index("餐饮服务;茶艺馆")
 	  next if name =~ /公司/
 	  next if name.length>16
-	  next if has_similar(x)
-	  Shop.collection.database.session[:tmp3].insert(x)
+	  bd = has_similar(x)
+    if bd.nil?
+	    Shop.collection.database.session[:tmp3].insert(x)
+    else
+      x.bid = bd["_id"]
+	    Mapabc.collection.database.session[:mapabc_baidu_name_similar].insert(x)      
+    end
 	rescue Exception =>e
 		puts x.to_yaml
 		puts e
