@@ -1,6 +1,6 @@
 class Mapabc
   include Mongoid::Document
-  store_in collection: "mapabc"
+  store_in({:collection =>  "mapabc", :session => "dooo"})
   field :name
   field :loc, type:Array
   field :phone
