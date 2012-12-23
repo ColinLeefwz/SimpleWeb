@@ -17,6 +17,7 @@ class CheckinsController < ApplicationController
       checkin.altacc = params[:altacc]
     end
     checkin.ip = real_ip
+    send_if_first
     checkin.save!
     if checkin.add_to_redis
       send_welcome_msg_if_not_invisible(session_user.gender)
@@ -58,13 +59,14 @@ class CheckinsController < ApplicationController
   def send_notice_if_exist
     shop = Shop.find(params[:shop_id])
     return if shop.nil?
-    send_if_first shop.name
     notice = shop.notice
     return if notice.nil? || notice.title.nil? || notice.title.length<1
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], notice.title)
   end
   
-  def send_if_first(sname)
+  def send_if_first
+    shop = Shop.find(params[:shop_id])
+    return if shop.nil?
     return if Checkin.where({sid: params[:shop_id]}).first
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], 
       "欢迎！您是第一个来到'#{sname}'的脸脸用户，很特别哦。等有其他人加入后，你们就可以聊天了。")
