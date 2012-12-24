@@ -50,9 +50,13 @@ class AdminShopsController < ApplicationController
 
   def near
     @shop = Shop.find(params[:id])
-    @shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.loc_first, 0.01]}}})
+    if ENV["RAILS_ENV"] == "production"
+      @shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.loc_first, 0.01]}}})
+    else
+      @shops = Shop.where({}).limit(5)
+    end
     @shops -= [@shop]
-    @shops = @shops.map{|shop| [shop._id.to_i, shop.name, shop.addr, shop.get_distance(shop.loc_first, @shop.loc_first), shop.show_t]}
+    @shops = @shops.map{|shop| [shop._id.to_i, shop.name, shop.addr, ENV["RAILS_ENV"] == "production" ? shop.get_distance(shop.loc_first, @shop.loc_first) : '', shop.show_t]}
     @shops = @shops.sort { |a, b| a[3] <=> b[3] }[0,300]
     #    @shops = Shop.all.to_a
     
@@ -86,7 +90,10 @@ class AdminShopsController < ApplicationController
 
   def bat_add_sub
     @shop = Shop.find(params[:pid])
-    @shop.shops = params['shop_ids'].to_a.map{|m| m.to_i}
+    css = params['shop_ids'].to_a.map{|m| m.to_i}
+    ids = params['ids'].to_a.map{|m| m.to_i}
+    ucs = ids - css
+    @shop.shops = (@shop.shops- ucs) | css
     @shop.save
     redirect_to "/admin_shops/subshops?shop_id=#{@shop.id}"
   end
