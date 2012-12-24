@@ -93,7 +93,7 @@ class AdminShopsController < ApplicationController
     css = params['shop_ids'].to_a.map{|m| m.to_i}
     ids = params['ids'].to_a.map{|m| m.to_i}
     ucs = ids - css
-    @shop.shops = (@shop.shops- ucs) | css
+    @shop.shops = (@shop.shops.to_a - ucs) | css
     @shop.save
     redirect_to "/admin_shops/subshops?shop_id=#{@shop.id}"
   end

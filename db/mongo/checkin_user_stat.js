@@ -37,7 +37,7 @@ var checkinUserStat = function(days){
         all = ciss.all + 1;
         l3 = ciss.l3
         cities = ciss.cities
-        if(city != null && cities.indexOf(city.city) == -1){
+        if(city != null && cities.indexOf(city.city) == -1 && city.city != null){
             cities.push(city.city)
         }
         l3.unshift(checkin._id)
