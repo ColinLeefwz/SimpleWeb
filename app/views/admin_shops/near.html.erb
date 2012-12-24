@@ -1,3 +1,7 @@
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<p>
+  <%= check_box_tag "", '', false, :onclick => "checked_all($(this).attr('checked'))" %> 全选
+</p>
 
 <%= form_tag "/admin_shops/bat_add_sub" do %>
   <%= hidden_field_tag :pid, @shop.id  %>
@@ -13,7 +17,8 @@
 
     <% @shops.each do |shop| %>
       <tr>
-        <td><%= check_box_tag "shop_ids[]", shop[0], @shop.shops.to_a.include?(shop[0])%></td>
+        <%= hidden_field_tag "ids[]", shop[0] %>
+        <td><%= check_box_tag "shop_ids[]", shop[0], @shop.shops.to_a.include?(shop[0]) ,:class => 'checkbox_shops' %></td>
         <td><%= shop[0] %></td>
         <td><%= shop[1] %></td>
         <td><%= shop[2] %></td>
@@ -27,3 +32,16 @@
   <%= submit_tag "确定" unless @shops.blank? %>
 <% end %>
 <br />
+
+<script>
+  function checked_all(checked){
+    $("table .checkbox_shops").each(
+    function() {
+      if(checked == "checked")
+        $(this).attr("checked", 'checked')
+      else
+        $(this).attr("checked", false)
+    }
+  )
+  }
+</script>

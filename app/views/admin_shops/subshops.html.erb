@@ -22,7 +22,7 @@
       <td><%= shop.tel %></td>
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
-      <td><%= shop.get_distance(shop.loc_first, @shop.loc_first) %></td>
+      <td><%= shop.get_distance(shop.loc_first, @shop.loc_first) if ENV["RAILS_ENV"] == "production" %></td>
       <td><%= shop.show_t %></td>
       <td>
         <%= link_to '移除', '#' , :onclick => "ajaxDelSub($(this),'#{shop.id.to_i}', '#{@shop.id.to_i}')"%>
