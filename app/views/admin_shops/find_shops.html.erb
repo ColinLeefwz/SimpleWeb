@@ -1,3 +1,5 @@
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+
 <%= form_tag "/admin_shops/find_shops",:method =>:get do %>
   <p>
     <%= hidden_field_tag :pid, @shop.id  %>
@@ -13,8 +15,11 @@
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
-
-
+<%  unless @shops.blank? %>
+  <p>
+    <%= check_box_tag "", '', false, :onclick => "checked_all($(this).attr('checked'))" %> 全选
+  </p>
+<% end %>
 <%= form_tag "/admin_shops/bat_add_sub" do %>
   <%= hidden_field_tag :pid, @shop.id  %>
   <table border="1">
@@ -31,13 +36,14 @@
 
     <% @shops.each do |shop| %>
       <tr>
-        <td><%= check_box_tag "shop_ids[]", shop._id, @shop.shops.to_a.include?(shop._id)%></td>
+        <%= hidden_field_tag "ids[]", shop._id %>
+        <td><%= check_box_tag "shop_ids[]", shop._id, @shop.shops.to_a.include?(shop._id),:class => 'checkbox_shops' %></td>
         <td><%= shop.id.to_i %></td>
         <td><%= shop.name %></td>
         <td><%= shop.tel %></td>
         <td><%= shop.city %></td>
         <td><%= shop.addr %></td>
-        <td><%= shop.get_distance(shop.loc_first, @shop.loc_first) %>米</td>
+        <td><%= shop.get_distance(shop.loc_first, @shop.loc_first) if ENV["RAILS_ENV"] == "production" %>米</td>
         <td><%= shop.show_t %></td>
       </tr>
 
@@ -49,3 +55,15 @@
 <br />
 
 
+<script>
+  function checked_all(checked){
+    $("table .checkbox_shops").each(
+    function() {
+      if(checked == "checked")
+        $(this).attr("checked", 'checked')
+      else
+        $(this).attr("checked", false)
+    }
+  )
+  }
+</script>
