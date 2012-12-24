@@ -112,7 +112,9 @@ db.shops.remove({name:/有限责任公司/})
 
 db.shops.remove({name:"流通处"})
 db.shops.remove({name:"游客中心"})
-
+db.shops.remove({t:11,name:/[0-9]+室$/})
+db.shops.remove({t:10,name:/[0-9一-九]+期$/})
+db.shops.remove({t:11,name:/[0-9一-九]+期$/})
 
 
 db.shops.update({type:/^生活服务;便利店/},{$set:{d:50},$unset:{del:1}},false,true)
@@ -144,6 +146,10 @@ db.shops.update({name:/棋牌/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/文化室$/},{$set:{d:30},$unset:{t:1}},false,true)
 
 
-
+db.shops.update({name:/熟食/},{$set:{d:50},$unset:{t:1}},false,true)
+db.shops.update({name:/快餐/},{$set:{d:50},$unset:{t:1}},false,true)
+db.shops.update({name:/大排档/},{$set:{d:50},$unset:{t:1}},false,true)
+db.shops.update({name:/米粉/},{$set:{d:40},$unset:{t:1}},false,true)
+db.shops.update({name:/卤味/},{$set:{d:40},$unset:{t:1}},false,true)
 
 
