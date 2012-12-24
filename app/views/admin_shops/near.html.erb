@@ -1,4 +1,11 @@
 <%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<script type="text/javascript" src="/javascripts/jquery.shiftcheckbox.js"></script>
+<script type="text/javascript">
+  $(document).ready (
+  function () {
+    $('.checkbox_shops').shiftcheckbox();
+  });
+</script>
 <p>
   <%= check_box_tag "", '', false, :onclick => "checked_all($(this).attr('checked'))" %> 全选
 </p>
