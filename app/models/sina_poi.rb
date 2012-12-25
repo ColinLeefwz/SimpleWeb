@@ -19,7 +19,10 @@ class SinaPoi
           begin
             lo = Mongoid.session(:dooo).command(eval:"gcj02_to_real([#{d['lat'].to_f},#{d['lon'].to_f}])")["retval"]
             d.merge!({lo: lo})
-            d.merge!(ba) if ba = check(d['title'], lo)
+	    ba = check(d['title'], lo)
+	    unless ba.blank?
+	     d.merge!(ba)
+            end
           rescue Exception => e 
             # end pattern with unmatched parenthesis: /^老庙黄金(东宝店）/ (RegexpError)
             $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{e}"
