@@ -115,7 +115,7 @@ db.shops.remove({name:"游客中心"})
 db.shops.remove({t:11,name:/[0-9]+室$/})
 db.shops.remove({t:10,name:/[0-9一-九]+期$/})
 db.shops.remove({t:11,name:/[0-9一-九]+期$/})
-
+db.shops.remove({name:"小吃部"})
 
 db.shops.update({type:/^生活服务;便利店/},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({type:/^金融/},{$set:{d:50},$unset:{del:1}},false,true)
