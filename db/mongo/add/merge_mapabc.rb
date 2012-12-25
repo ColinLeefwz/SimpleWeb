@@ -41,7 +41,7 @@ Mapabc.collection.find({type:/^餐饮/, bid:{"$exists" => false}}).sort({_id:1})
     if bd.nil?
 	    Shop.collection.database.session[:tmp3].insert(x)
     else
-      x.bid = bd["_id"]
+      x["bid"] = bd["_id"]
 	    Mapabc.collection.database.session[:mapabc_baidu_name_similar].insert(x)      
     end
 	rescue Exception =>e
