@@ -19,9 +19,7 @@ class SinaPoi
           begin
             lo = Mongoid.session(:dooo).command(eval:"gcj02_to_real([#{d['lat'].to_f},#{d['lon'].to_f}])")["retval"]
             d.merge!({lo: lo})
-            if ba = check_baidu(d['title'], lo)
-              d.merge!({"baidu_id" => ba.first, 'mtype' => ba.last})
-            end
+            d.merge!(ba) if ba = check(d['title'], lo)
           rescue Exception => e 
             # end pattern with unmatched parenthesis: /^老庙黄金(东宝店）/ (RegexpError)
             $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{e}"
@@ -35,7 +33,7 @@ class SinaPoi
 
 
   def self.pois_users_insert(token, poiid)
-    sucoll, datas =   SinaUser.collection, []
+    sucoll, datas, checkin_user_num, iso_num =   SinaUser.collection, [], 0, 0
     response = poi_user_page(token, poiid)
     return if response.blank?
     total_number = response["total_number"]
@@ -46,6 +44,8 @@ class SinaPoi
         sinausers['users'].to_a.each do |r|
           status = r["status"]
           datas << [r["id"], status && status['text'], status && status['source'], r["checkin_at"]]
+          checkin_user_num +=1
+          iso_num += 1 if iso?(status && status['source'])
           id = r.delete("id")
           sucoll.insert({:_id =>  id }.merge(user_get_attributes(r))) unless SinaUser.find_by_id(id)
         end
@@ -53,27 +53,51 @@ class SinaPoi
         next
       end
     end
-    SinaPoi.find(poiid).update_attribute(:datas, datas)
+    SinaPoi.find(poiid).update_attributes(:datas => datas, :checkin_user_num => checkin_user_num, :iso_num => iso_num  )
   end
 
+  def self.check(name, lo)
+    self.check_shop(name, lo) || self.check_baidu(name, lo)
+  end
 
   def self.check_baidu(name, lo)
-
     baidu = Baidu.where({:name => name, :lo => {"$within" => {"$center" => [lo, 0.01]}}}).to_a.first
-    return [baidu._id, 1] if baidu
-
+    return {baidu_id: baidu._id, mtype: 1} if baidu
     if name.match(/[()（） \[\].]/)
       name1 = name.split(/[()（） \[\].]/)
       name2 = name1.first
       baidu = Baidu.where({:name => name2,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
-      return [baidu._id, 2] if baidu
+      return {baidu_id: baidu._id, mtype: 2} if baidu
       name2 = name1.join('')
       baidu = Baidu.where({:name => name2,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
-      return [baidu._id, 3] if baidu
+      return {baidu_id: baidu._id, mtype: 3} if baidu
+      baidu = Baidu.where({:name => /^#{name1.first}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+      return {baidu_id: baidu._id, mtype: 4} if baidu
+    else
+      baidu = Baidu.where({:name => /^#{name}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+      return {baidu_id: baidu._id, mtype: 4} if baidu
     end
-    baidu = Baidu.where({:name => /^#{name1.first}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
-    return [baidu._id, 4] if baidu
-    
+    nil
+  end
+
+  def self.check_shop(name, lo)
+    shop = Shop.where({:name => name, :lo => {"$within" => {"$center" => [lo, 0.01]}}}).to_a.first
+    return {shop_id: shop._id.to_i, mtype: 1  } if shop
+
+    if name.match(/[()（） \[\].]/)
+      name1 = name.split(/[()（） \[\].]/)
+      name2 = name1.first
+      shop = Shop.where({:name => name2,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+      return {shop_id: shop._id.to_i, mtype: 2  } if shop
+      name2 = name1.join('')
+      shop = Shop.where({:name => name2,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+      return {shop_id: shop._id.to_i, mtype: 3  } if shop
+      shop = Shop.where({:name => /^#{name1.first}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+      return {shop_id: shop._id.to_i, mtype: 4    } if shop
+    else
+      shop = Shop.where({:name => /^#{name}/,:lo => {"$within" => {"$center" => [lo,0.003]}}}).to_a.first
+      return {shop_id: shop._id.to_i, mtype: 4    } if shop
+    end
     nil
   end
 
@@ -119,6 +143,10 @@ class SinaPoi
       "allow_all_comment","avatar_large","verified_reason")
     user.merge!({:is_I => true}) if source.match(/iphone|ipad/i)
     user
+  end
+
+  def self.iso?(source)
+    source.to_s.match(/iphone|ipad/i)
   end
 
 end
