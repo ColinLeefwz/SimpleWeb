@@ -25,7 +25,7 @@ def has_similar(x)
 	  return nil
 end
 
-Mapabc.collection.find({type:/^住宿服务;宾馆酒店/}).sort({_id:1}).each do |x|
+Mapabc.collection.find({type:/^住宿服务;宾馆酒店/,"_id" => { "$gt" => 14189203}}).sort({_id:1}).each do |x|
 	begin
 	  bd = has_similar(x)
     if bd.nil?
