@@ -7,7 +7,6 @@
 
 class Shop
   include Mongoid::Document
-  #store_in collection: "baidu"
   field :_id, type: Integer
   field :pass
   field :name
@@ -384,6 +383,7 @@ class Shop
         arr << s.lo
       end
     end
+    arr.uniq!
     self.update_attributes!({lo:arr})
   end
 
