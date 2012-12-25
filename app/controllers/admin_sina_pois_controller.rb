@@ -10,14 +10,31 @@ class AdminSinaPoisController < ApplicationController
       hash.merge!({:city=> params[:city], :title => /#{params[:title]}/})
     end
     hash.merge!({:_id => params[:id] }) unless params[:id].blank?
-    case params[:correspond].to_i
-    when 1
+    case params[:correspond]
+    when '0'
+      hash.merge!({:mtype => {"$exists" => true} })
+    when '1'
+      hash.merge!({:shop_id => {"$exists" => true} })
+    when '2'
       hash.merge!({:baidu_id => {"$exists" => true} })
-    when 2
+    when '3'
       hash.merge!({:baidu_id => {"$exists" => false} })
     end
 
-    @sina_pois = paginate("SinaPoi", params[:page], hash, sort, 20  )
+    case params[:sort].to_i
+    when 1
+      sort.merge!({:checkin_user_num => -1 })
+    when 2
+      sort.merge!({:checkin_user_num => 1 })
+    when 3
+      sort.merge!({:iso_num => -1 })
+    when 4
+      sort.merge!({:iso_num => 1 })
+    else
+      sort.merge!({:checkin_user_num => -1 })
+    end
+
+    @sina_pois = paginate("SinaPoi", params[:page], hash, sort, params[:num].blank? ? 15 : params[:num].to_i   )
   end
 
   def ajax_add_baidu_id
