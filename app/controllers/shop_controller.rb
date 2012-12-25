@@ -19,7 +19,7 @@ class ShopController < ApplicationController
       t = params[:type].to_i*2-1
       hash.merge!( {t: { "$in" => [ t-1, t ] } }  ) 
     end
-    shops = Shop.where(hash).order_by([:utotal]).skip(skip).limit(pcount)
+    shops = Shop.where(hash).sort({utotal:-1}).skip(skip).limit(pcount)
     render :json =>  shops.map {|s| s.safe_output_with_users}.to_json
   end
   
