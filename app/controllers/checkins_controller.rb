@@ -69,7 +69,7 @@ class CheckinsController < ApplicationController
     return if shop.nil?
     return if Checkin.where({sid: params[:shop_id]}).first
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], 
-      "欢迎！您是第一个来到'#{sname}'的脸脸用户，很特别哦。等有其他人加入后，你们就可以聊天了。")
+      "欢迎！您是第一个来到'#{shop.name}'的脸脸用户，很特别哦。等有其他人加入后，你们就可以聊天了。")
   end 
 
   def send_coupon_if_exist
