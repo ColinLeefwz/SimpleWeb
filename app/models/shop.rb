@@ -276,6 +276,7 @@ class Shop
       t = t.to_i
       xx[2]-=10 if t<4
       xx[2]-=5 if t>=4
+      xx[2]+=30 if t==14 # 14:大型医院
     else
       xx[2] +=10
     end
