@@ -95,6 +95,7 @@ class AdminShopsController < ApplicationController
     ucs = ids - css
     @shop.shops = (@shop.shops.to_a - ucs) | css
     @shop.save
+    @shop.merge_shops_locations
     redirect_to "/admin_shops/subshops?shop_id=#{@shop.id}"
   end
 
@@ -127,6 +128,7 @@ class AdminShopsController < ApplicationController
     else
       pshop.shops = pshop.shops.to_a << shop.id.to_i
       pshop.save
+      pshop.merge_shops_locations
       text = "<tr><td>#{shop.id.to_i}</td>"
       text += "<td>#{shop.name}</td>"
       text += "<td>#{shop.tel}</td>"
@@ -143,6 +145,7 @@ class AdminShopsController < ApplicationController
     shop = Shop.find_by_id(params[:id])
     pshop.shops.to_a.delete(shop.id.to_i)
     pshop.save
+    pshop.merge_shops_locations
     render :js => true
   end
 
