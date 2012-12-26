@@ -25,7 +25,7 @@ def has_similar(x)
 	  return nil
 end
 
-Mapabc.collection.find({type:/^购物服务;商场/}).sort({_id:1}).each do |x|
+Mapabc.collection.find({type:/^购物服务;商场/,bid:{"$exists" => false}}).sort({_id:1}).each do |x|
 	begin
 	  bd = has_similar(x)
     if bd.nil?
