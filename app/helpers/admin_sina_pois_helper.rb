@@ -9,4 +9,10 @@ module AdminSinaPoisHelper
       link_to "B:#{baidu.name}", "/admin_baidu?id=#{poi.baidu_id}"
     end
   end
+
+  def dt_selector
+    arr = []
+    SinaCategorys::SUPCATEGORY.each_with_index { |c,i|  arr << [c,i] }
+    arr
+  end
 end

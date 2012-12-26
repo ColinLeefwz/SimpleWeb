@@ -21,6 +21,10 @@ class AdminSinaPoisController < ApplicationController
       hash.merge!({:baidu_id => {"$exists" => false} })
     end
 
+    if params[:dt].to_i.between?(1, 20)
+      hash.merge!({dt: params[:dt].to_i})
+    end
+
     case params[:sort].to_i
     when 1
       sort.merge!({:checkin_user_num => -1 })
