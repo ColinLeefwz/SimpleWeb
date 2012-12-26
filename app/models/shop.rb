@@ -276,6 +276,7 @@ class Shop
       t = t.to_i
       xx[2]-=10 if t<4
       xx[2]-=5 if t>=4
+      xx[2]+=30 if t==14 # 14:大型医院
     else
       xx[2] +=10
     end
@@ -370,6 +371,7 @@ class Shop
     Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
   end
   
+  #将子商家的经纬度合并到主商家中
   def merge_shops_locations
     if lo[0].class==Array
       arr = lo
