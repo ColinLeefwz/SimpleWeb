@@ -1,10 +1,10 @@
 # encoding: utf-8
 #对应商家
 
-$Logger = Logger.new('log/correspond_shop.log', 0, 100 * 1024 * 1024)
+$Logger = Logger.new('log/weibo/correspond_shop.log', 0, 100 * 1024 * 1024)
 class CorrespondShop
 
-  def self.correspond
+  def self.preform
     SinaPoi.where({shop_id: {'$exists' => false}}).sort({_id: 1}).each do |poi|
       info = "poi_id: #{poi._id};"
       re = SinaPoi.check(poi.title, poi.lo)
@@ -20,8 +20,6 @@ class CorrespondShop
       $Logger.info(info)
     end
   end
-
-  def self.preform
-    correspond
-  end
 end
+
+CorrespondShop.preform
