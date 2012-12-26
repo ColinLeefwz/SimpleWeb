@@ -11,6 +11,8 @@
     (*区号和商家必须同时查询,否则无效,可以不填)
   </p>
   <p>
+    微博大类：
+    <%= select_tag :dt,options_for_select(dt_selector,params[:dt].to_i)  %>
     poi:<%= text_field_tag :id, params[:id],:size => 20 %>
   </p>
   <p>
@@ -34,7 +36,7 @@
     <th>名称</th>
     <th>城市</th>
     <th>地址</th>
-    <th>坐标</th>
+    <th>微博大类</th>
     <th>签到用户</th>
     <th>iso用户</th>
     <th>对应商家</th>
@@ -49,7 +51,7 @@
       <td><%= poi.title %></td>
       <td><%= poi.city %></td>
       <td><%= poi.address %></td>
-      <td><%= poi.lat %>, <%= poi.lon %></td>
+      <td><%= poi.show_dt %></td>
       <td><%= poi.checkin_user_num %></td>
       <td><%= poi.iso_num if poi.respond_to?(:iso_num) %></td>
       <td id="bdn_<%= poi.id %>"><%=  link_correspond_shop(poi) %></td>
