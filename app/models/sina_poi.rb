@@ -106,6 +106,11 @@ class SinaPoi
     nil
   end
 
+
+  def show_dt
+    SinaCategorys::SUPCATEGORY[self.dt] if self.respond_to?(:dt)
+  end
+
   private
   def self.pois(token,lo, page=1, err_num = 0)
     sleep(2)
@@ -151,7 +156,6 @@ class SinaPoi
   end
 
   def self.get_t(category_name)
-    puts "-------#{category_name}---"
     index = SinaCategorys::SINACATEGORY.find_index{ |c| c.include?(category_name)  }
     {dt: index+1} if index
   end
