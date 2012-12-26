@@ -153,3 +153,10 @@ db.shops.update({name:/米粉/},{$set:{d:40},$unset:{t:1}},false,true)
 db.shops.update({name:/卤味/},{$set:{d:40},$unset:{t:1}},false,true)
 
 
+db.shops.update({t:{$exists:false},name:/文体中心$/},{$set:{t:7}},false,true)
+db.shops.update({t:{$exists:false},name:/体育中心$/},{$set:{t:7}},false,true)
+
+db.shops.update({type:/^医疗/},{$set:{d:30},$unset:{t:1}},false,true)
+db.shops.update({type:/^医疗;综合医院/, name:/医院$/},{$set:{t:14},$unset:{d:1}},false,true)
+db.shops.update({type:/^医疗;专科医院/, name:/医院$/},{$set:{t:14},$unset:{d:1}},false,true)
+
