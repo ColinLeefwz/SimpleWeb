@@ -20,9 +20,11 @@ class SinaUser
       user.head_logo_id = user_logo.id
       user.save
       UserLogo.collection.insert(user_logo.attributes)
-#      sleep(5)
       CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img")
+    else
+      user.save
     end
+    user
   end
 
   def dface_gender
