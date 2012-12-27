@@ -13,17 +13,16 @@ class SinaUser
 
   def convert_to_user
     oldu = User.where({wb_uid:self._id}).first
-    return if oldu
+    return oldu if oldu
     user = User.new({wb_uid:self.id, name:self.screen_name, gender:dface_gender, wb_v:self.verified, wb_vs:self.verified_reason, auto:true  })
+    user.save!
     user_logo = UserLogo.new({user_id: user._id})
     if logo_store_local("public/uploads/tmp/#{user_logo.id}.jpg")
       user_logo.img_tmp = "#{user_logo.id.to_s}.jpg"
       user.head_logo_id = user_logo.id
       user.save
       UserLogo.collection.insert(user_logo.attributes)
-      CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img")
-    else
-      user.save
+      #CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img")
     end
     user
   end
@@ -36,14 +35,13 @@ class SinaUser
 
   def logo_store_local(path, err_num=0)
     begin
-      sleep(1)
       logo_data= RestClient.get(self.avatar_large)
       open(path, "wb") { |file| file.write(logo_data)}
       true
     rescue
       err_num += 1
+      puts "retry#{err_num}: #{path}"
       return nil if err_num == 4
-      sleep(err_num * 2)
       logo_store_local(path, err_num)
     end
   end

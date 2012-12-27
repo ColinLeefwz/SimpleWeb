@@ -1,10 +1,11 @@
 #db.sina_pois.findOne({city:"0021",shop_id:{$exists:true}}).title
 #db.sina_pois.count({city:"0021",shop_id:{$exists:true}})
 
-Mapabc.collection.database.session[:sina_pois].find({city:"0021",shop_id:{"$exists" => true}}).sort({"_id" => 1}).limit(10).each do |x|
+Mapabc.collection.database.session[:sina_pois].find({city:"0021",shop_id:{"$exists" => true}}).sort({"_id" => 1}).skip(100).each do |x|
   begin
     datas = x["datas"]
     next if datas.nil?
+    puts "#{x['title']} : #{datas.length}"
     hash = {_id: x["shop_id"]}
     users = []
     datas.each do |data|
@@ -21,9 +22,11 @@ Mapabc.collection.database.session[:sina_pois].find({city:"0021",shop_id:{"$exis
       Shop.collection.database.session[:shop_sina_users].insert(hash)
     end
   rescue Exception => e
-  	puts x.to_yaml
-  	puts e
+	puts e
+  	puts e.backtrace
+	puts "\n\n"
   end
 end
+
 
 
