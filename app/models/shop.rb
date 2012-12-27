@@ -114,10 +114,15 @@ class Shop
     users1 = Checkin.get_users_redis(id.to_i)
     uids = users1.map {|arr| arr[0]}
     css = CheckinShopStat.find_by_id(id.to_i)
-    return users1 if css.nil?
-    users2 = css.users.map {|k,v| [k[10..-3],v[1].generation_time.to_i]} # ObjectId("k") => k
-    users2.sort!{|a,b| b[1] <=> a[1]}
-    users2.each {|arr| users1 << arr unless uids.member?(arr[0])}
+    unless css.nil?
+      users2 = css.users.map {|k,v| [k[10..-3],v[1].generation_time.to_i]} # ObjectId("k") => k
+      users2.sort!{|a,b| b[1] <=> a[1]}
+      users2.each {|arr| users1 << arr unless uids.member?(arr[0])}
+    end
+    ssu = ShopSinaUser.find_by_id(id.to_i)
+    unless ssu.nil?
+      ssu.users.each {|x| users1 << [x,(Time.now-10.days).to_i]}
+    end
     users1[start,size] #TODO: 分页判断
   end
 
