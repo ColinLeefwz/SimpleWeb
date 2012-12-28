@@ -17,9 +17,12 @@
   </tr>
 </table>
 
-<br/>
-<br/>
-<h2>百度附近数据</h2>
+<h2><%= params[:coll] == 'shop' ? '商家' : '百度' %>附近数据</h2>
+<p style="padding: 0px 0px 5px 0px; margin: 0px;">
+  <%=  link_to "附近商家" , "/admin_sina_pois/near?id=#{@sina_poi._id}&coll=shop"%>
+  <%=  link_to "附近百度商家" , "/admin_sina_pois/near?id=#{@sina_poi._id}&coll=baidu"%>
+</p>
+
 <table border="1">
   <tr>
     <th>id</th>
@@ -37,13 +40,13 @@
     <tr>
       <td><%= shop.id.to_i %></td>
       <td><%= shop.name %></td>
-      <td><%= shop.phone %></td>
+      <td><%= params[:coll] == 'shop' ? shop.tel : shop.phone %></td>
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
       <td><%= shop.lo if shop.respond_to?(:lo) %></td>
-      <td><%= shop.get_distance(shop.loc_first, @sina_poi.lo)  %></td>
+      <td><%= shop.get_distance(shop.loc_first, @sina_poi.lo) if ENV["RAILS_ENV"] == "production"  %></td>
       <td><%= shop.type %></td>
-      <td><%= link_to '对应',"/admin_sina_pois/add_baidu_id?id=#{@sina_poi._id}&baidu_id=#{shop._id}" %></td>
+      <td><%= link_to '对应',"/admin_sina_pois/add_baidu_id?id=#{@sina_poi._id}&#{params[:coll]}_id=#{shop._id}" %></td>
     </tr>
 
   <% end %>
@@ -52,5 +55,6 @@
 
 <br/>
 <br/>
-<%= link_to '返回',request.env["HTTP_REFERER"] if request && request.env %> | 
+<%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %> |
+<a href="/admin_sina_pois">返回微博商家</a>
 <br/>

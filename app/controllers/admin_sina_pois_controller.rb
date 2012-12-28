@@ -53,13 +53,21 @@ class AdminSinaPoisController < ApplicationController
 
   def near
     @sina_poi = SinaPoi.find(params[:id])
-    @shops = Baidu.where({:lo => {"$within" => {"$center" => [@sina_poi.lo, 0.01]}}}).select{|m| name_similar(m.name, @sina_poi.title)}
-    #        @shops = Baidu.where({}).limit(1000).select{|m| name_similar(m.name, @sina_poi.title)}
+    if ENV["RAILS_ENV"] == "production"
+      if params[:coll] == 'shop'
+        @shops = Shop.where({:lo => {"$within" => {"$center" => [@sina_poi.lo, 0.01]}}}).select{|m| name_similar(m.name, @sina_poi.title)}
+      else
+        @shops = Baidu.where({:lo => {"$within" => {"$center" => [@sina_poi.lo, 0.01]}}}).select{|m| name_similar(m.name, @sina_poi.title)}
+      end
+    else
+      @shops = params[:coll].classify.constantize.where({}).limit(1000).select{|m| name_similar(m.name, @sina_poi.title)}
+    end
   end
 
   def add_baidu_id
     @sina_poi = SinaPoi.find(params[:id])
-    @sina_poi.update_attributes(:baidu_id => params[:baidu_id].to_i, :mtype => 5 )
+    hash =  params[:shop_id] ? {:shop_id => params[:shop_id].to_i} : {:baidu_id => params[:baidu_id].to_i}
+    @sina_poi.update_attributes( hash.merge({:mtype => 5}) )
     redirect_to "/admin_sina_pois?id=#{@sina_poi._id}"
   end
 

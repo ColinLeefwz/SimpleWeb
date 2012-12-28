@@ -55,7 +55,7 @@
       <td><%= poi.checkin_user_num %></td>
       <td><%= poi.iso_num if poi.respond_to?(:iso_num) %></td>
       <td id="bdn_<%= poi.id %>"><%=  link_correspond_shop(poi) %></td>
-      <td><%=  link_to "附近商家" , "/admin_sina_pois/near?id=#{poi._id}"%></td>
+      <td><%=  link_to "附近商家" , "/admin_sina_pois/near?id=#{poi._id}&coll=shop"%></td>
       <td><a onclick="showAdd($(this),'<%= poi._id %>')" >更改</a></td>
 
     </tr>
