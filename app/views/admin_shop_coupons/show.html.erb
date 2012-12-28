@@ -30,3 +30,14 @@
   <br/><br/>
   <%=  image_tag @coupon.img %>
 </p>
+<br/>
+<p>
+  <b>下载</b>
+  <%= link_to @coupon.down_users.length, "/admin_shop_coupons/detail?id=#{@coupon.id}&type=down"  %>
+</p>
+<p>
+  <b>使用</b>
+  <%= link_to @coupon.use_users.length, "/admin_shop_coupons/detail?id=#{@coupon.id}&type=use"  %>
+</p>
+
+
