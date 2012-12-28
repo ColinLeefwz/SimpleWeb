@@ -36,7 +36,7 @@ class Emailer < ActionMailer::Base
         end
       end
 
-      "用户数：#{sus};  其中ios系列用户：#{ius}; 杭州iso用户: #{hiu} \n 商家数：#{sps};  其中能和百度匹配的商家数：#{pps}; 杭州商家: #{hpi} \n 已抓取的热门地点数： #{hls}; 完成度：#{(hls/110.92).round(3)}%"
+      "用户数：#{sus};  其中ios系列用户：#{ius}; 杭州iso用户: #{hiu} \n 商家数：#{sps};  其中能匹配的商家数：#{pps}; 杭州商家: #{hpi} \n 已抓取的热门地点数： #{hls}; 完成度：#{(hls/110.92).round(3)}%"
     end
 
     def self.send_mail
