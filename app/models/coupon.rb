@@ -68,6 +68,14 @@ class Coupon
       self.save
     end
   end
+
+  def use_users
+    self.users.to_a.select{|s| s['uat']}.sort{|x,y| y['uat'] <=> x['uat']}
+  end
+
+  def down_users
+    self.users.to_a.sort{|x,y| y['dat'] <=> x['dat']}
+  end
   
   
   def self.gen_demo(sid)
