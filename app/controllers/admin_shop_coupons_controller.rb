@@ -20,5 +20,15 @@ class AdminShopCouponsController < ApplicationController
   def show
     @coupon = Coupon.find(params[:id])
   end
-  
+
+  def detail
+    @coupon = Coupon.find(params[:id])
+    case params[:type]
+    when 'use'
+      users = @coupon.use_users
+    when 'down'
+      users = @coupon.down_users
+    end
+    @users = paginate_arr(users, params[:page],20 )
+  end
 end
