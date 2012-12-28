@@ -5,7 +5,7 @@
     <th>名称</th>
     <th>城市</th>
     <th>地址</th>
-    <th>坐标</th>
+    <th>分类</th>
   </tr>
 
   <tr>
@@ -13,7 +13,7 @@
     <td><%= @sina_poi.title %></td>
     <td><%= @sina_poi.city %></td>
     <td><%= @sina_poi.address %></td>
-    <td><%= @sina_poi.lat %>, <%= @sina_poi.lon %></td>
+    <td><%= @sina_poi.category_name %></td>
   </tr>
 </table>
 
@@ -30,7 +30,6 @@
     <th>电话</th>
     <th>城市代码</th>
     <th>地址</th>
-    <th>坐标</th>
     <th>距离</th>
     <th>类型</th>
     <th></th>
@@ -43,7 +42,6 @@
       <td><%= params[:coll] == 'shop' ? shop.tel : shop.phone %></td>
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
-      <td><%= shop.lo if shop.respond_to?(:lo) %></td>
       <td><%= shop.get_distance(shop.loc_first, @sina_poi.lo) if ENV["RAILS_ENV"] == "production"  %></td>
       <td><%= shop.type %></td>
       <td><%= link_to '对应',"/admin_sina_pois/add_baidu_id?id=#{@sina_poi._id}&#{params[:coll]}_id=#{shop._id}" %></td>

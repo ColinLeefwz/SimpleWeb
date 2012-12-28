@@ -1,0 +1,23 @@
+<h2><%={'down' => "下载", "use"=> '使用'}[params[:type]]%>用户</h2>
+<table border="1">
+  <tr>
+    <th>优惠券所属商家</th>
+    <th>姓名</th>
+    <th>性别</th>
+    <th>生日</th>
+    <th><%= {'down'=> "下载", "use"=> '使用'}[params[:type]]%>时间</th>
+  </tr>
+
+  <% @users.each do |u| %>
+    <tr>
+      <% user = User.find(u["id"])   %>
+      <td><%= @coupon.shop.name %></td>
+      <td><%= user.name %></td>
+      <td><%= user.show_gender %></td>
+      <td><%= user.birthday.try(:to_date)   %></td>
+      <td><%= (u[{'down'=> "dat", "use"=> 'uat'}[params[:type]]].to_datetime+8.hours).strftime("%Y-%m-%d %H:%M:%S") %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate.html_safe %>
