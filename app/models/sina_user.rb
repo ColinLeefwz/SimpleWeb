@@ -11,6 +11,11 @@ class SinaUser
     end
   end
 
+  def self.has_user?(id)
+    return true if find_by_id(id.to_s)
+    return true if find_by_id(id.to_i)
+  end
+
   def convert_to_user
     oldu = User.where({wb_uid:self._id}).first
     return oldu if oldu
