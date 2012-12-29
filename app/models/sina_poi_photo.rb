@@ -21,6 +21,8 @@ class SinaPoiPhoto
   end
 
   def self.poi_photo_insert(token, poiid)
+    return if find_by_id(poiid)
+    datas = []
     coll = self.collection
     sucoll = SinaUser.collection
     photos = poi_photo_page(token, poiid)
@@ -28,16 +30,15 @@ class SinaPoiPhoto
     photos['statuses'].each do |photo|
       begin
         next if photo['deleted']
-        id = photo['id']
-        next if self.find_by_id(id)
-        hash = photo.slice('text', 'original_pic')
+        hash = photo.slice('text', 'original_pic', "created_at")
         uid = photo['user'].delete('id')
         sucoll.insert(photo['user'].merge(_id: uid )) unless SinaUser.has_user?(uid)
-        coll.insert(hash.merge(user_id: uid, _id: id))
+        datas << hash.merge(user_id: uid)
       rescue
         next
       end
     end
+    coll.insert(_id: poiid, datas: datas)
   end
   
   def self.poi_photo_page(token, poiid, err_num = 0)
