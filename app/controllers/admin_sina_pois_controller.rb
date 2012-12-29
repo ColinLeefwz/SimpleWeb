@@ -34,8 +34,6 @@ class AdminSinaPoisController < ApplicationController
       sort.merge!({:iso_num => -1 })
     when 4
       sort.merge!({:iso_num => 1 })
-    else
-      sort.merge!({:checkin_user_num => -1 })
     end
 
     @sina_pois = paginate("SinaPoi", params[:page], hash, sort, (params[:num].blank? ? 20 : params[:num].to_i) )
