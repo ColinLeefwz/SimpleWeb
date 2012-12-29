@@ -6,6 +6,7 @@
 #>21000000 手动数据
 
 class Shop
+  include Gps
   include Mongoid::Document
   field :_id, type: Integer
   field :pass
@@ -56,14 +57,6 @@ class Shop
   #删除商家.
   def shop_del
     self.update_attribute(:del,1)
-  end
-  
-  def loc_first
-    if self["lo"][0].class==Array
-      self["lo"][0]
-    else
-      self["lo"]
-    end
   end
   
   def safe_output
@@ -323,40 +316,6 @@ class Shop
     return 75 if(uc>100) 
     return 30+(uc-10)/2
   end
-  
-  
-  def num_to_rad(d)
-    return d * 3.1416 / 180.0
-  end
-  
-  def pow(x,y)
-    x ** y
-  end
-  
-  def get_distance4( lat1,  lng1,  lat2,  lng2)
-    radLat1 = num_to_rad(lat1)
-    radLat2 = num_to_rad(lat2)
-    a = radLat1 - radLat2
-    b = num_to_rad(lng1) - num_to_rad(lng2)
-    s = 2 * Math.asin(Math.sqrt(pow(Math.sin(a/2),2) +
-          Math.cos(radLat1)*Math.cos(radLat2)*pow(Math.sin(b/2),2)))
-    s = s *6378.137  #EARTH_RADIUS;
-    s = (s * 10000).round / 10
-    return s
-  end
-  
-  def get_distance( loc1,loc2)
-    return get_distance4(loc1[0],loc1[1],loc2[0],loc2[1])
-  end
-  
-  def min_distance(shop,loc)
-    if(shop["lo"][0].class==Array)
-      shop["lo"].map {|x| get_distance(x,loc)}.min
-    else
-      return get_distance(shop["lo"],loc)
-    end
-
-  end
 
   def get_city
     rl = lo || lob_to_lo
@@ -377,20 +336,8 @@ class Shop
   end
   
   #将子商家的经纬度合并到主商家中
-  def merge_shops_locations
-    if lo[0].class==Array
-      arr = lo
-    else
-      arr = [lo]
-    end
-    sub_shops.each do |s|
-      if s.lo[0].class==Array
-        arr << s.lo[0]
-      else
-        arr << s.lo
-      end
-    end
-    arr.uniq!
+  def merge_subshops_locations
+    arr = merge_locations(sub_shops)
     self.update_attributes!({lo:arr})
   end
 
