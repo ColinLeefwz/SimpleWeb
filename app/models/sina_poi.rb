@@ -4,6 +4,10 @@ class SinaPoi
 
   include Mongoid::Document
   store_in session: "dooo"
+  
+  index({checkin_user_num: 1}, { sparse: true })
+  index({iso_num: 1}, { sparse: true })
+  create_indexes
 
   def self.pois_insert(token,lo)
     coll = self.collection
