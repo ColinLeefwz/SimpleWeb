@@ -14,9 +14,12 @@ class SinaPoiPhoto
   end
 
   def self.start
-    SinaPoi.where({:photo_fetched => {'$exists' => false}}).sort({checkin_user_num:-1}).each do |poi|
-      self.poi_photo_insert('2.00t9e5PCMcnDPC86e7068cc9yxaMRC', poi._id)
-      poi.update_attribute(:photo_fetched, 1)
+    num = (SinaPoi.where({:photo_fetched => {'$exists' => false}}).count/3000)+1
+    num.times do |t|
+      SinaPoi.where({:iso_num => 0, :photo_fetched => {'$exists' => false} }).sort({iso_num:-1}).skip(t*3000).limit(3000).each do |poi|
+        self.poi_photo_insert('2.00t9e5PCMcnDPC86e7068cc9yxaMRC', poi._id)
+        poi.update_attribute(:photo_fetched, 1)
+      end
     end
   end
 
