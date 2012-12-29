@@ -6,3 +6,8 @@ UserLogo.all.each do |x|
   	puts e
   end
 end
+
+UserLogo.all.each do |x|
+  next if x.img_tmp.nil? || x.img_tmp.length==0
+  puts x.img_tmp
+end
