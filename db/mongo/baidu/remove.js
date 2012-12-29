@@ -117,6 +117,16 @@ db.shops.remove({t:10,name:/[0-9一-九]+期$/})
 db.shops.remove({t:11,name:/[0-9一-九]+期$/})
 db.shops.remove({name:"小吃部"})
 db.shops.remove({name:"小区"})
+db.shops.remove({name:/办事处$/})
+db.shops.remove({name:/管理咨询机构$/})
+db.shops.remove({name:/连锁机构$/})
+db.shops.remove({name:/策划机构$/})
+db.shops.remove({name:/酒店-/})
+db.shops.remove({name:/大厦-/})
+db.shops.remove({name:/网$/})
+
+db.shops.find({name:/[^\-]{5,}-/})
+
 
 db.shops.update({type:/^生活服务;便利店/},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({type:/^金融/},{$set:{d:50},$unset:{del:1}},false,true)
@@ -162,3 +172,4 @@ db.shops.update({type:/^医疗/},{$set:{d:30},$unset:{t:1}},false,true)
 db.shops.update({type:/^医疗;综合医院/, name:/医院$/},{$set:{t:14},$unset:{d:1}},false,true)
 db.shops.update({type:/^医疗;专科医院/, name:/医院$/},{$set:{t:14},$unset:{d:1}},false,true)
 
+db.shops.update({name:/招待所/},{$set:{d:30},$unset:{t:1}},false,true)
