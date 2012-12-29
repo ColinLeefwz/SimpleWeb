@@ -24,6 +24,14 @@ class AdminShopsController < ApplicationController
     @shop = Shop.new
   end
 
+  def set_password
+    @shop = Shop.find(params[:id])
+    if request.post?
+      @shop.update_attributes(params[:shop])
+      redirect_to :action => "show", :id => @shop.id
+    end
+  end
+
   def create
     @shop = Shop.new(params[:shop])
     @shop._id = Shop.next_id
