@@ -90,12 +90,15 @@ var total_users = function(){
 
 var sync_to_shops = function(){
     db.checkin_shop_stats.find().forEach(function(x){
+		ssu = db.shop_sina_users.findOne({_id: x._id});
+		if(ssu!=null) ssuc =ssu.users.length;
+		else ssuc=0;
         db.shops.update({
             _id: x._id
         }, {
             $set: {
-                utotal: x.utotal,
-                uftotal: x.uftotal
+                utotal: x.utotal+ssuc,
+                uftotal: x.uftotal+ssuc/2
             }
         })
     })
