@@ -182,6 +182,25 @@ hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
 当用户主动退出时，调用本接口并断开XMPP的连接。
 
 
+\section{首次使用脸脸时发送分享微博}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/share} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+   ver  & 浮点数 & 可选 &  当前安装的版本\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+首次使用脸脸／或者以后重大版本更新时，以登陆用户个人的名义发送使用脸脸的分享微博，微博由服务器端发送。
+
+
 \section{根据经纬度获得可能的现场商家}
 
 \begin{table}[H]

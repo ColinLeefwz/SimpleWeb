@@ -76,6 +76,12 @@ class Oauth2Controller < ApplicationController
     render :json => {"logout" => true}.to_json
   end
 
+  def share
+    Resque.enqueue(WeiboFirst, $redis.get("wbtoken#{user_id}") )
+    render :json => {"logout" => true}.to_json
+  end  
+  
+
 
   #提供给erlang系统的认证服务
   def auth
