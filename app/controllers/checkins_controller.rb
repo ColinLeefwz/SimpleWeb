@@ -20,7 +20,7 @@ class CheckinsController < ApplicationController
     send_if_first
     checkin.save!
     if checkin.add_to_redis
-      send_welcome_msg_if_not_invisible(session_user.gender)
+      send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     end
     send_notice_if_exist
     send_coupon_if_exist
@@ -51,9 +51,9 @@ class CheckinsController < ApplicationController
 
   private
 
-  def send_welcome_msg_if_not_invisible(user_gender)
+  def send_welcome_msg_if_not_invisible(user_gender, user_name)
     return if session_user.invisible==2
-    Resque.enqueue(XmppWelcome, params[:shop_id], user_gender, params[:user_id])
+    Resque.enqueue(XmppWelcome, params[:shop_id], user_gender, params[:user_id], user_name)
   end
   
   def send_notice_if_exist
