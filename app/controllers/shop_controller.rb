@@ -13,7 +13,7 @@ class ShopController < ApplicationController
     if params[:name]
       hash.merge!( {name: /#{params[:name]}/ }  )  
     else
-      hash.merge!( {t:{"$exists"=>true}, del:{"$exists"=>false} }  )  
+      hash.merge!( {utotal:{"$gt" => 0}, t:{"$exists"=>true}, del:{"$exists"=>false} }  )  
     end
     if params[:type]
       t = params[:type].to_i*2-1
