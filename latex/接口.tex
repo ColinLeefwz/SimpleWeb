@@ -173,14 +173,14 @@ hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
 \multicolumn{4}{|c|}{/oauth2/logout} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
+    pushtoken  & 浮点数 & 可选 &  当前设备的push消息token\\
 \hline
 \end{tabular}
    \end{center}
 \end{table}
 
-退出调用不需要参数。
 当用户主动退出时，调用本接口并断开XMPP的连接。
-
+[2012-12-30] 新增pushtoken参数。
 
 \section{首次使用脸脸时发送分享微博}
 
@@ -1532,6 +1532,35 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{table}
 
 通过POST提交任意类型的XMPP文本消息。
+
+
+\section{关于Push消息}
+
+\subsection{登录Xmpp服务器时，报告设备的Push消息token}
+登录Xmpp服务器，发送的密码格式变更为：
+
+\begin{verbatim}
+“用户密码”+《状态码》+token
+
+状态码为：1代表ios开发设备，2代表实际的发布设备。
+token是一个64位的字符串。
+
+比如某用户的密码是“c53b2f16a24c61d9”，
+token是“ea6e4f05b48f4a057816956e567c6feacf14ee28cbbbab67993e263c3dfa2c27”，
+目前是进行开发测试，那么登录Xmpp服务器时的密码为：
+“c53b2f16a24c61d91ea6e4f05b48f4a057816956e567c6feacf14ee28cbbbab67993e263c3dfa2c27”。
+\end{verbatim}
+
+服务器端解析出状态码和token并保存。
+
+
+\subsection{退出时，报告设备的Push消息token}
+
+用户退出的API接口新增pushtoken参数，以取消Push消息token绑定。
+
+\subsection{Push消息的发送}
+当有离线消息产生时，xmpp服务器获得用户的状态码以决定给那个Apple Push服务器发消息，以及获得和该用户绑定的token。一个用户只能绑定一个token。
+
 
 \section{关于程序各页面之间的切换规则}
 
