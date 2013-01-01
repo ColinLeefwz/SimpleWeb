@@ -163,7 +163,9 @@ db.shops.update({name:/盖浇饭/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/大排档/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/米粉/},{$set:{d:40},$unset:{t:1}},false,true)
 db.shops.update({name:/卤味/},{$set:{d:40},$unset:{t:1}},false,true)
+db.shops.update({name:/鸭脖子/},{$set:{d:50},$unset:{t:1}},false,true)
 
+db.shops.update({name:/会所$/},{$set:{d:30},$unset:{t:1}},false,true)
 
 db.shops.update({t:{$exists:false},name:/文体中心$/},{$set:{t:7}},false,true)
 db.shops.update({t:{$exists:false},name:/体育中心$/},{$set:{t:7}},false,true)
