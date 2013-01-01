@@ -282,6 +282,7 @@ class Shop
       xx[2]-=30
       xx[2]-=x["shops"].length
     end
+    xx[2]-=10 if x["lo"][0].class==Array
     xx[2]+= x["d"] if x["d"]
     xx[2]+=150 if x["del"]
     xx[2]-=30 if t==1 && (hour>=20 || hour <=3)
