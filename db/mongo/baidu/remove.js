@@ -156,7 +156,7 @@ db.shops.update({name:/活动中心$/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/棋牌/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/文化室$/},{$set:{d:30},$unset:{t:1}},false,true)
 
-
+db.shops.update({name:/包子/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/熟食/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/快餐/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/盖浇饭/},{$set:{d:50},$unset:{t:1}},false,true)
@@ -164,6 +164,8 @@ db.shops.update({name:/大排档/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/米粉/},{$set:{d:40},$unset:{t:1}},false,true)
 db.shops.update({name:/卤味/},{$set:{d:40},$unset:{t:1}},false,true)
 db.shops.update({name:/鸭脖子/},{$set:{d:50},$unset:{t:1}},false,true)
+db.shops.update({name:/饮食店$/},{$set:{d:30},$unset:{t:1}},false,true)
+db.shops.update({name:/米线$/},{$set:{d:20}},false,true)
 
 db.shops.update({name:/会所$/},{$set:{d:30},$unset:{t:1}},false,true)
 
