@@ -170,13 +170,12 @@ class Shop
     radius=0.01 if(radius>0.01)  #不大于1000米
     arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
     arr.uniq_by! {|x| x["_id"]}
-    return sort_with_score(arr,loc,accuracy,ip,uid,true) if debug
     if arr.length>=3
-      return sort_with_score(arr,loc,accuracy,ip,uid)
+      return sort_with_score(arr,loc,accuracy,ip,uid,debug)
     else
       arr = Shop.collection.find({lo:{"$near" =>loc}}).limit(10).to_a
       arr.uniq_by! {|x| x["_id"]}
-      return sort_with_score(arr,loc,accuracy,ip,uid)[0,5]
+      return sort_with_score(arr,loc,accuracy,ip,uid,debug)[0,5]
     end
   end
   
@@ -243,8 +242,8 @@ class Shop
   end
   
   def shop_history_score(xx,x,ip,uid_s)
-    begin
-      sc = CheckinShopStat.find(x["_id"].to_i)
+      sc = CheckinShopStat.find_by_id(x["_id"].to_i)
+      return if sc.nil?
       if uid_s && sc.users[uid_s]
         ucount = sc.users[uid_s][0]
         xx[2] -= ucount*30
@@ -258,9 +257,6 @@ class Shop
           xx[2] -= ipcount*5
         end
       end
-    rescue Exception =>e
-      puts e
-    end
   end
   
   def base_score(xx,x)
@@ -273,7 +269,7 @@ class Shop
     if t
       t = t.to_i
       xx[2]-=10 if t<4
-      xx[2]-=5 if t>=4
+      xx[2]-=5 if t>=4 && t<50
       xx[2]+=30 if t==14 # 14:大型医院
     else
       xx[2] +=10
