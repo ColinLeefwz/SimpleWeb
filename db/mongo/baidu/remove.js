@@ -177,3 +177,6 @@ db.shops.update({type:/^医疗;综合医院/, name:/医院$/},{$set:{t:14},$unse
 db.shops.update({type:/^医疗;专科医院/, name:/医院$/},{$set:{t:14},$unset:{d:1}},false,true)
 
 db.shops.update({name:/招待所/},{$set:{d:30},$unset:{t:1}},false,true)
+
+
+db.shops.update({t:13},{$unset:{d:1}},false,true)
