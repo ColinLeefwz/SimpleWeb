@@ -46,4 +46,3 @@ db.chongfu.find().forEach(function(x){
   })
 })
 
-
