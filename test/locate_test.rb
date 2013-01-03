@@ -45,5 +45,45 @@ class LocateTest < ActiveSupport::TestCase
     assert_equal 21000003, ss[0]["_id"]
     assert_equal "弄堂里(万塘店)", ss[0]["name"]
   end  
-      
+
+  def test_locate7
+    ss = Shop.new.find_shops([30.319336, 120.107246], 65, "211.140.18.114", "")
+    assert_equal 9241603, ss[0]["_id"]
+    assert_equal "杭州汽车北站", ss[0]["name"]
+  end  
+
+  def test_locate8
+    ss = Shop.new.find_shops([30.26222, 120.089729], 30, "", "")
+    assert_equal 1222273, ss[0]["_id"]
+    assert_equal "福云咖啡", ss[0]["name"]
+  end  
+  
+  def test_locate9
+    ss = Shop.new.find_shops([30.276918, 120.15477], 85, "", "")
+    shop = ss[0,6].find {|x| x["name"]=="星巴克咖啡华浙店"}
+    assert_equal "星巴克咖啡华浙店", shop["name"]
+  end        
+
+  def test_locate10
+    ss = Shop.new.find_shops([30.77376203, 114.208263] , 50, "", "")
+    assert ss[0]["name"].index("天河机场")>=0
+  end  
+
+  def test_locate11
+    ss = Shop.new.find_shops([30.290083, 120.117851], 65, "211.140.18.110", "")
+    assert_equal 21828370, ss[0]["_id"]
+    assert_equal "物美大卖场文一店", ss[0]["name"]
+  end  
+
+  def test_locate12
+    ss = Shop.new.find_shops([30.279968, 120.111618], 5, "", "")
+    assert ss[0]["name"].index("名苑幼儿园")>=0
+  end  
+  
+  def test_locate13
+    ss = Shop.new.find_shops([30.286594, 120.115089], 65, "", "")
+    assert_equal 7661568, ss[0]["_id"]
+    assert_equal "浙江省立同德医院", ss[0]["name"]
+  end   
+              
 end
