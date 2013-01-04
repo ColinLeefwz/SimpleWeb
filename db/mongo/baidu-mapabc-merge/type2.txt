@@ -13,6 +13,7 @@
 12 学校
 13 交通
 14 大型医院
+51 美容美发
 
 db.shops.update({type:/^交通设施;飞机场/},{$set:{t:13}},false,true)
 db.shops.update({type:/^交通设施;长途汽车站/},{$set:{t:13}},false,true)
@@ -57,3 +58,6 @@ db.shops.update({"t" : 5, "type" : "购物"},{$unset:{t:1}},false,true)
 db.shops.find({"t" : 5, "type" : "购物"}
 
 db.shops.update({name:/博物馆$/},{$set:{t:6}},false,true)
+
+db.shops.update({type:"生活服务;美容美发"},{$set:{t:51}},false,true)
+
