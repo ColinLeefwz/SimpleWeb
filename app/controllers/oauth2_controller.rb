@@ -96,12 +96,13 @@ class Oauth2Controller < ApplicationController
     else
       pass = params[:pass]
       if pass.length>(1+64) #硬编码了token的长度：64
+	ptoken = params[:pass][-65..-1]
         pass = pass[0..-66]
-        ptoken = pass[-65..-1]
       end
       user = User.find2(params["name"])
       if user.password == pass
-        user.update_attribute(:tk,ptoken) if ptoken
+	logger.warn "token:#{ptoken}"
+        User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) if user.tk.nil? && ptoken
         render :text => "1"
         return
       end
@@ -109,7 +110,8 @@ class Oauth2Controller < ApplicationController
     render :text => "0"
   end
   
-  def push_msg_info(from,to)
+  def push_msg_info
+    logger.warn "params['from'],params['to']"
     fu = User.find2(params["from"])
     tu = User.find2(params["to"])
     if fu && tu
