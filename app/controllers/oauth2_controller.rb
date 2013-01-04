@@ -72,9 +72,18 @@ class Oauth2Controller < ApplicationController
   end
   
   def logout
+    if params[:pushtoken] && session_user.token==params[:pushtoken]
+      session_user.unset(:tk)
+    end
     reset_session
     render :json => {"logout" => true}.to_json
   end
+
+  def share
+    Resque.enqueue(WeiboFirst, $redis.get("wbtoken#{user_id}") )
+    render :json => {"shared" => true}.to_json
+  end  
+  
 
 
   #提供给erlang系统的认证服务
@@ -84,11 +93,30 @@ class Oauth2Controller < ApplicationController
         render :text => "1"
         return
       end
-    elsif User.find2(params["name"]).password == params[:pass]
-      render :text => "1"
-      return
+    else
+      pass = params[:pass]
+      if pass.length==(16+1+64)
+        pass = pass[0,16]
+        ptoken = pass[16..-1]
+      end
+      user = User.find2(params["name"])
+      if user.password == pass
+        user.update_attribute(:tk,ptoken) if ptoken
+        render :text => "1"
+        return
+      end
     end
     render :text => "0"
+  end
+  
+  def push_msg_info(from,to)
+    fu = User.find2(params["from"])
+    tu = User.find2(params["to"])
+    if fu && tu
+      render :text => "#{tu.tk}#{fu.name}"
+    else
+      render :text => ""
+    end
   end
   
   private

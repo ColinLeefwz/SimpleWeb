@@ -87,6 +87,7 @@ class Coupon
     demo.rule = 2
     `cd coupon && ./gen_demo.sh '#{demo.name}' '#{demo.desc}' ../public/uploads/tmp/coupon_#{demo._id}.jpg pic1.jpg`
     demo.img_tmp = "coupon_#{demo.id}.jpg"
+    demo.ratio = 100
     demo.save
     CarrierWave::Workers::StoreAsset.perform("Coupon",demo.id.to_s,"img")
   end
