@@ -95,9 +95,9 @@ class Oauth2Controller < ApplicationController
       end
     else
       pass = params[:pass]
-      if pass.length==(16+1+64)
-        pass = pass[0,16]
-        ptoken = pass[16..-1]
+      if pass.length>(1+64) #硬编码了token的长度：64
+        pass = pass[0..-66]
+        ptoken = pass[-65..-1]
       end
       user = User.find2(params["name"])
       if user.password == pass
