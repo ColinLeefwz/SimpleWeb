@@ -8,6 +8,8 @@
 class Shop
   include Gps
   include Mongoid::Document
+  extend Similarity
+  
   field :_id, type: Integer
   field :pass
   field :name
