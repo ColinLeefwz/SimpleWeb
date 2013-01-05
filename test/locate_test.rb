@@ -13,6 +13,7 @@ class LocateTest < ActiveSupport::TestCase
     assert_equal "浙江科技产业大厦", ss[0]["name"]
     assert ss.length>20
     assert ss.find{|x| x["name"] =~ /号院$/}.nil?
+    assert ss.find{|x| x["name"] =~ /机构$/}.nil?
   end
 
 
