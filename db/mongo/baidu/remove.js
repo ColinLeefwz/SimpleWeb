@@ -180,3 +180,5 @@ db.shops.update({name:/招待所/},{$set:{d:30},$unset:{t:1}},false,true)
 
 
 db.shops.update({t:13},{$unset:{d:1}},false,true)
+
+db.shops.update({t:{$in:[0,1,2,3,5,9,10,11,12,13]}},{$unset:{d:1}},false,true)
