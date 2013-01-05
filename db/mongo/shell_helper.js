@@ -17,6 +17,16 @@ db.system.js.save({
     "value" : first
 })
 
+var shop_hz = function(name){
+	var reg = new RegExp(name);
+    return db.shops.find({city:"0571",name:reg});
+}
+
+db.system.js.save({
+    "_id" : "shop_hz",
+    "value" : shop_hz
+})
+
 function ensure_exec(fun,dest_coll,start_offset){
 try{
 	if(start_offset==undefined) throw "no start_offset";
@@ -61,3 +71,4 @@ db.system.js.save({
     "_id" : "gen_days_id",
     "value" : gen_days_id
 })
+
