@@ -17,7 +17,7 @@ class SinaPoiPhoto
     num = (SinaPoi.where({:photo_fetched => {'$exists' => false}}).count/3000)+1
     num.times do |t|
       SinaPoi.where({:iso_num => {'$gt' => 0}, :photo_fetched => {'$exists' => false} }).sort({iso_num:-1}).skip(t*20).limit(20).each do |poi|
-        self.poi_photo_insert('2.2.00kfdvGCGFlsXC1b5e64ba39QaSfpB', poi._id)
+        self.poi_photo_insert('2.00t9e5PCMcnDPC86e7068cc9yxaMRC', poi._id)
         poi.update_attribute(:photo_fetched, 1)
       end
     end
@@ -38,7 +38,6 @@ class SinaPoiPhoto
         sucoll.insert(photo['user'].merge(_id: uid )) unless SinaUser.has_user?(uid)
         datas << hash.merge(user_id: uid)
       rescue
-        $Logger.info "出错了"
         next
       end
     end
@@ -54,7 +53,7 @@ class SinaPoiPhoto
     rescue
       err_num += 1
       Emailer.send_mail('poi_photo_page错误',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoiPhoto.poi_photo_page get #{url}错误. #{$!}").deliver if err_num == 4
-      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoiPhoto.poi_photo_page get #{url}错误#{err_num}次. #{$!}"
+      $Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoiPhoto.poi_photo_page get #{url}错误#{err_num}次. #{$!}"
       return nil if err_num == 4
       sleep err_num * 20
       return poi_photo_page(token, poiid, err_num )
