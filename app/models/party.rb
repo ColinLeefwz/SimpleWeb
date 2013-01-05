@@ -92,18 +92,13 @@ class Party
   def self.scan(time)
     ftime = time.strftime("%Y-%m-%d %H:%M")
     etime = (time - 1.minutes).strftime("%Y-%m-%d %H:%M")
-    puts "---------------------ft:#{ftime},et:#{etime}"
     activate(ftime)
-    puts '--------------------------'
-   self.deactivate(etime)
-    puts '000000000000000000000000'
+    deactivate(etime)
 
   end
   
   def self.scan_now
-`echo "#{Time.now}" >> aadd.txt`
     Party.scan(Time.now)
-`echo "#{Time.now}" >> aad.txt`
   end
 
 end
