@@ -42,6 +42,7 @@ db.shops.update({t:11,name:/酒店/},{$set:{t:5}},false,true)
 
 db.shops.update({t:3},{$set:{t:4}},false,true)
 db.shops.update({type:"餐饮;休闲餐饮;茶座"},{$set:{t:3}},false,true)
+db.shops.update({type:"餐饮;休闲餐饮;咖啡厅"},{$set:{t:2}},false,true)
 
 
 db.shops.remove({t:9})
