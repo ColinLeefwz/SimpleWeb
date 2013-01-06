@@ -18,6 +18,7 @@ class User
   field :head_logo_id, type: Moped::BSON::ObjectId
   field :auto, type:Boolean #自动抓取
   field :tk  #Push消息的token
+  field :city
   
   field :blacks, type:Array #黑名单
   field :follows, type:Array #关注
@@ -229,6 +230,11 @@ class User
   
   def self.init_trace_all
     User.all.each {|x| x.init_trace}
+  end
+
+  def self.city_distribute
+    users = User.where({city:{"$exists" => true},auto:{"$exists" => false}})
+    users.group_by{|g| g.city}.map{|k, v| "#{k}:#{v.count}"}
   end
 
 end
