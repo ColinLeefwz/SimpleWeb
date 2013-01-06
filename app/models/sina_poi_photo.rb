@@ -29,7 +29,7 @@ class SinaPoiPhoto
     coll = self.collection
     sucoll = SinaUser.collection
     photos = poi_photo_page(token, poiid)
-    return if photos.blank?
+    return if photos.blank? || photos['statuses'].blank?
     photos['statuses'].each do |photo|
       begin
         next if photo['deleted']
