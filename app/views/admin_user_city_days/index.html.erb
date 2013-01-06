@@ -11,7 +11,7 @@
         <%= user_city_day._id   %>
       </td>
       <td>
-        <%= user_city_day.datas.map{|k,v| "#{k}:#{v.to_i}"}.join(';    ')  %>
+        <%= user_city_day.datas.sort{|s,f| f.last <=> s.last}.map{|k| "#{City.gname(k[0])}:#{k[1].to_i}"}.join(';    ')  %>
       </td>
       
     </tr>

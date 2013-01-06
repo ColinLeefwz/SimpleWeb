@@ -2,7 +2,7 @@
 class Emailer < ActionMailer::Base
   def send_mail(name,body)
     mail(:subject => name,
-      :to =>['yuan_xin_yu@hotmail.com','huang123qwe@126.com'],
+      :to =>['huang123qwe@126.com'],
       :from => 'huang123qwe@126.com',
       :date => Time.now,
       :body => body
@@ -45,5 +45,11 @@ class Emailer < ActionMailer::Base
       Emailer.send_weibo_mail('微博抓取情况', count_weibo.to_s).deliver
     end
 
+  end
+
+  class SendUserCity
+    def self.send_mail
+      Emailer.send_mail('城市分布统计(不含今天)', User.city_distribute.map{|m| "#{m[0]}:#{m[1]}"}.join(';  ') ).deliver
+    end
   end
 end
