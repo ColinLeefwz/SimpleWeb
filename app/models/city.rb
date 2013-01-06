@@ -7,5 +7,10 @@ class City
   field :ename
   field :s
 
+
+  def self.gname(code)
+    City.where({:code => code}).first.try(:name) || code
+  end
+
 end
 
