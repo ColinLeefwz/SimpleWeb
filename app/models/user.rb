@@ -234,7 +234,8 @@ class User
 
   def self.city_distribute
     users = User.where({city:{"$exists" => true},auto:{"$exists" => false}})
-    users.group_by{|g| g.city}.map{|k, v| "#{k}:#{v.count}"}
+    user_city = users.group_by{|g| g.city}.map{|k, v| [City.gname(k), v.count]}
+    user_city.sort { |a, b| b[1] <=> a[1]  }
   end
 
 end
