@@ -232,4 +232,9 @@ class User
     User.all.each {|x| x.init_trace}
   end
 
+  def self.city_distribute
+    users = User.where({city:{"$exists" => true},auto:{"$exists" => false}})
+    users.group_by{|g| g.city}.map{|k, v| "#{k}:#{v.count}"}
+  end
+
 end
