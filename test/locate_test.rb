@@ -86,6 +86,35 @@ class LocateTest < ActiveSupport::TestCase
     ss = Shop.new.find_shops([30.286594, 120.115089], 65, "", "")
     assert_equal 7661568, ss[0]["_id"]
     assert_equal "浙江省立同德医院", ss[0]["name"]
-  end   
-              
+  end  
+  
+  def test_shop_similar
+    #21612350	赛百味锦绣天地店 10442749	锦绣天地
+    assert Shop.similarity_by_id(21612350,10442749)<55
+    
+    #6551580	糖果KTV	6550857	糖果KTV·CLUB	
+    assert Shop.similarity_by_id(6551580,	6550857)>65
+    
+  	#10464431	斯坦福2平方		0571	西湖紫金港路与振华路交会处
+  	#10447006	斯坦福2(平方)		0571	西湖杭大路44号
+    assert Shop.similarity_by_id(10464431,	10447006)<52
+    
+    #6551618	Co·Co CLUB   6556964	COCO酒吧
+    assert Shop.similarity_by_id(6551618,	6556964)>70
+
+  	#2036714	豪尚豪宾馆  2032593	杭州豪尚豪旅馆  2032175	杭州豪尚豪客房
+    assert Shop.similarity_by_id(2036714,	2032593)>70
+    assert Shop.similarity_by_id(2036714,	2032175)>70
+    assert Shop.similarity_by_id(2032593,	2032175)>70    
+    
+    # 7039803	西湖区名苑幼儿园	
+    # 7032968	西湖区名苑幼儿园青苑园区 
+    # 7053052	名苑幼儿园	
+    # 7048974	名苑幼儿园青苑园区
+    assert Shop.similarity_by_id(7039803,	7032968)==0  
+    assert Shop.similarity_by_id(7039803,	7053052)>70
+    assert Shop.similarity_by_id(7032968,	7048974)>70
+    assert Shop.similarity_by_id(7053052,	7048974)==0  
+  end
+  
 end
