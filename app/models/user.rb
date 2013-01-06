@@ -18,6 +18,7 @@ class User
   field :head_logo_id, type: Moped::BSON::ObjectId
   field :auto, type:Boolean #自动抓取
   field :tk  #Push消息的token
+  field :city
   
   field :blacks, type:Array #黑名单
   field :follows, type:Array #关注
