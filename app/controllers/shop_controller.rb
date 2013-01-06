@@ -9,11 +9,11 @@ class ShopController < ApplicationController
     pcount = 20 if pcount==0
     skip = (page-1)*pcount
     lo = [params[:lat].to_f , params[:lng].to_f]
-    hash = {lo:{"$within"=>{"$center"=> [lo,0.05]}}}
+    hash = {city: Shop.get_city(lo)}
     if params[:name]
       hash.merge!( {name: /#{params[:name]}/ }  )  
     else
-      hash.merge!( {utotal:{"$gt" => 0}, t:{"$exists"=>true}, del:{"$exists"=>false} }  )  
+      hash.merge!( { del:{"$exists"=>false} }  )  
     end
     if params[:type]
       t = params[:type].to_i*2-1
