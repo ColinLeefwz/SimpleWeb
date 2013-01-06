@@ -168,7 +168,7 @@ class Shop
   
   
   def find_shops(loc,accuracy,ip,uid,debug=false)
-    radius = 0.002+0.002*accuracy/300
+    radius = 0.0018+0.002*accuracy/300
     radius=0.01 if(radius>0.01)  #不大于1000米
     arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
     arr.uniq_by! {|x| x["_id"]}
@@ -192,10 +192,10 @@ class Shop
       score.reject!{|s| (s[0]["d"] && s[1]>(100-s[0]["d"]) ) }
     end
     score.reject!{|s| s[0]["del"] } if score.length>10
-    score.reject!{|s| s[0]["d"] } if score.length>15
-    score.reject!{|s| s[0]["t"].nil? } if score.length>20
+    score.reject!{|s| s[0]["d"] && s[0]["d"]>=30 } if score.length>20
+    score.reject!{|s| s[0]["d"] } if score.length>25
     if score.length>5
-      score = score[0,5]+score[5..-1].reject{|s| (s[1]>120 && s[0]["t"].nil?)}
+      score = score[0,5]+score[5..-1].reject{|s| (s[0]["d"] || s[0]["t"].nil?)}
     end
     score.each do |xx|
       x=xx[0]
@@ -271,6 +271,7 @@ class Shop
     if t
       t = t.to_i
       xx[2]-=10 if t<4
+      xx[2]-=20 if t==0
       xx[2]-=5 if t>=4 && t<50
       xx[2]+=30 if t==14 # 14:大型医院
     else
@@ -283,7 +284,10 @@ class Shop
     xx[2]-=10 if x["lo"][0].class==Array
     xx[2]+= x["d"] if x["d"]
     xx[2]+=150 if x["del"]
-    xx[2]-=30 if t==1 && (hour>=20 || hour <=3)
+    if t==1
+      xx[2]-=30 if (hour>=20 || hour <=3)
+      xx[2]+=20 if (hour>=6 || hour <=12)
+    end
     if (t==4)
       if(hour>=11 && hour<=13) 
         xx[2]-=20 
