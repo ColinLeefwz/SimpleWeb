@@ -323,7 +323,11 @@ class Shop
   def get_city
     rl = lo || lob_to_lo
     return '' if rl.to_a.length != 2
-    Shop.where({lo:{'$near' => rl }}).first.city
+    Shop.get_city rl
+  end
+  
+  def self.get_city(loc)
+    Shop.where({lo:{'$near' => loc }}).first.city
   end
 
   def self.lob_to_lo(lob)
