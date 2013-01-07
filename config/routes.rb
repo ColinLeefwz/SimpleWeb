@@ -11,7 +11,10 @@ Lianlian::Application.routes.draw do
       get 'show_img2'
       get 'cancel_crop'
       get 'all_img'
+      get 'newly_down'
+      get 'newly_use'
       post 'crop'
+
     end
   end
 
