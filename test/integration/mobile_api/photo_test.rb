@@ -4,7 +4,7 @@ require 'test_helper'
 class PhotoTest < ActionDispatch::IntegrationTest
   
   def upload_photo
-    file = 'public/images/test/测试图.jpg'
+    file = 'public/images/test/test.jpg'
     post "/photos/create",{:photo => {
       :img => Rack::Test::UploadedFile.new(file, "image/jpeg"),
       :room => 4928288,
