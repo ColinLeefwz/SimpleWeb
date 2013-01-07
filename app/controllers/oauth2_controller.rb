@@ -112,8 +112,12 @@ class Oauth2Controller < ApplicationController
   
   def push_msg_info
     logger.warn "params['from'],params['to']"
-    fu = User.find2(params["from"])
-    tu = User.find2(params["to"])
+    if params["from"][0]=='s'
+      fu = Shop.find_by_id(params["from"][1..-1])
+    else
+      fu = User.find2(params["from"])
+    end
+    tu = User.find2(params["to"]) #TODO: 商家的Push消息提醒
     if fu && tu
       render :text => "#{tu.tk}#{fu.name}"
     else
