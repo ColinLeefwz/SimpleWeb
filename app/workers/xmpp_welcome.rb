@@ -9,9 +9,9 @@ class XmppWelcome
     #=> "\"Hi\\uff0c\\u6211\\u6765\\u4e86~\\uf60a\"" 
     #最后一个字符超过了mbp,应该是\u1f60a
     if user_gender.to_i==2
-      message = "'#{user_name}'来了~😊"
+      message = "#{user_name} 来了~😊"
     else
-      message = "'#{user_name}'来啦~😝"
+      message = "#{user_name} 来啦~😝"
     end
     
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
