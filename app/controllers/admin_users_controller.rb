@@ -12,6 +12,9 @@ class AdminUsersController < ApplicationController
       hash.merge!(name: /#{params[:name]}/)
     end
 
+    hash.merge!({id: params[:id]}) unless params[:id].blank?
+    hash.merge!({wb_uid: params[:wb_uid]}) unless params[:wb_uid].blank?
+
     @users =  paginate("User", params[:page], hash, sort)
 
 
