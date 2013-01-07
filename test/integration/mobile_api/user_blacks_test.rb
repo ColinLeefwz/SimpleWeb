@@ -19,7 +19,7 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     assert_equal luser.reload.blacks_s.count, 1
     data = JSON.parse(response.body)
     data["cat"] = data['cat'].to_date
-    assert_equal data, {"id"=>"502e6303421aa918ba00007c","report"=>0,"cat"=>Time.now.to_date}.to_json
+    assert_equal data, {"id"=>"502e6303421aa918ba00007c","report"=>0,"cat"=>Time.now.to_date}
 
 
     #注销后添加黑名单
