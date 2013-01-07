@@ -4,6 +4,8 @@ class FollowsController < ApplicationController
 
   def create
     session_user.add_to_set(:follows, Moped::BSON::ObjectId(params[:follow_id]))
+    loc = session_user.last_loc
+    Resque.enqueue(FollowNotice, session_user, params[:follow_id], loc.nil?? "" : Shop.find(loc.sid).name )
     render:json => {:saved => params[:follow_id] }.to_json
   end
 

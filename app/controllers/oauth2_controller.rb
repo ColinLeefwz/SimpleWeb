@@ -139,6 +139,7 @@ class Oauth2Controller < ApplicationController
         user.wb_vs = sina_info["verified_reason"]
       end
       user.save!
+      Resque.enqueue(NewUser, user.id)
     end
     session[:user_id] = user.id
     $redis.set("wbtoken#{user.id}",token)
