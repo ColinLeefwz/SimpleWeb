@@ -10,7 +10,7 @@ class UserLogosTest < ActionDispatch::IntegrationTest
 
     luser = User.find('502e6303421aa918ba000005')
     user1 = User.find('502e6303421aa918ba00007c')
-    file = 'public/images/test/测试图.jpg'
+    file = 'public/images/test/test.jpg'
     file1 = 'public/images/test/coupon.jpg'
 
     #登录上传图片
