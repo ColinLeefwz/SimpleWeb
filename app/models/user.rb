@@ -146,12 +146,16 @@ class User
   #当前用户的最后位置。 user_id 是查看当前用户的user
   def last_location( user_id )
     return {:last => "隐身"} if block?(user_id)
-    loc = Checkin.where({uid:self._id}).sort({_id:1}).last
+    loc = last_loc
     return {:last => ""} if loc.nil?
     diff = Time.now.to_i - loc.cat.to_i
     tstr = User.time_desc(diff)
     dstr = Shop.find(loc.sid).name if dstr.nil?
     {:last => "#{tstr} #{dstr}"}
+  end
+  
+  def last_loc
+    loc = Checkin.where({uid:self._id}).sort({_id:1}).last
   end
   
   def relation_hash( user_id )
