@@ -1,0 +1,26 @@
+<div class="subtitle">最新使用记录</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="10%">优惠券</th>
+    <th width="10%">用户</th>
+    <th width="10%">用户性别</th>
+    <th width="8%" align="center">用户生日</th>
+    <th width="8%" align="center">用户微博</th>
+    <th width="8%" align="center">使用时间</th>
+  </tr>
+  <% @uses.each do |use| %>
+    <tr>
+      <td align="center" class="gray"><%= link_to(image_tag(Coupon.find(use[2]).img.url(:t1)), "/shop_coupons/#{use[2]}") %></td>
+      <td align="center" class="gray"><%= User.find2(use[0]).try(:name)  %></td>
+      <td align="center" class="gray"><%= User.find2(use[0]).try(:show_gender)  %></td>
+      <td align="center" class="gray"><%= User.find2(use[0]).birthday.try(:to_date) %></td>
+      <td align="center" class="gray"><%= link_to '链接到微博',User.find2(use[0]).try(:weibo_home) %></td>
+      <td align="center" class="gray"><%= use[1].localtime.strftime("%Y-%m-%d %H:%M:%S") %></td>
+    </tr>
+  <% end %>
+  <tr class="bottom">
+    <td colspan="3" align="right">
+      <%= generate_paginate.html_safe %>
+    </td>
+  </tr>
+</table>

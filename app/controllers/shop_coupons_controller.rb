@@ -59,7 +59,7 @@ class ShopCouponsController < ApplicationController
   end
 
   def all_img
-     @coupon = Coupon.find(params[:id])
+    @coupon = Coupon.find(params[:id])
   end
 
   def cancel_crop
@@ -119,6 +119,22 @@ class ShopCouponsController < ApplicationController
       format.html { redirect_to '/admin_coupons' }
       format.json { head :no_content }
     end
+  end
+
+  def newly_down
+    down = []
+    Coupon.where({:shop_id => session[:shop_id], :ratio => {"$exists" => true}}).each do |coupon|
+      down += coupon.users.map{|m| [m['id'], m['dat'], coupon.id]}
+    end
+    @downs = paginate_arr(down.sort { |f,s| s[1] <=> f[1]  }, params[:page],10 )
+  end
+
+  def newly_use
+    use = []
+    Coupon.where({:shop_id => session[:shop_id], :ratio => {"$exists" => true}}).each do |coupon|
+      use += coupon.users.select { |s| s['uat'] }.map{|m| [m['id'], m['uat'], coupon.id]}
+    end
+    @uses = paginate_arr(use.sort { |f,s| s[1] <=> f[1]  }, params[:page],10 )
   end
 
   def users

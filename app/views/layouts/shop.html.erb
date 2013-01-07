@@ -10,7 +10,7 @@
     <meta content="0" http-equiv="Expires"/>
     <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
     <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
-    <title>脸脸 | 后台</title>
+    <title>脸脸 | 商家管理后台</title>
     <%= javascript_include_tag "jquery-1.6.2.min.js" %>
     <link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
     <%= yield :ahead %>
@@ -48,7 +48,10 @@
             <%= link_to "商家logo", "/shop_logos" %>
           </dt>
           <dt>
-            <%= link_to "优惠券管理", "/shop_coupons" %>
+            <a href="#" class="hover">优惠券管理</a>
+          <dd><a href="/shop_coupons/newly_use">最新使用记录</a></dd>
+          <dd><a href="/shop_coupons/newly_down">最新下载记录</a></dd>
+          <dd><a href="/shop_coupons">优惠券列表</a></dd>
           </dt>
           <dt>
             <%= link_to "员工管理", "/shop_staffs" %>
