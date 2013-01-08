@@ -22,7 +22,8 @@ class ShopController < ApplicationController
     end
     shops = Shop.where(hash).sort({utotal:-1}).skip(skip).limit(pcount)
     if city=="0571"
-      shops=shops[1..-1] if shops[0]["_id"]==20325453
+      shops = shops.to_a
+      shops=shops[1..-1] << shops[0]  if shops[0]["_id"]==20325453
     end
     render :json =>  shops.map {|s| s.safe_output_with_users}.to_json
   end
