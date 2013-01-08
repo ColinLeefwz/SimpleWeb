@@ -9,7 +9,8 @@ class ShopController < ApplicationController
     pcount = 20 if pcount==0
     skip = (page-1)*pcount
     lo = [params[:lat].to_f , params[:lng].to_f]
-    hash = {city: Shop.get_city(lo)}
+    city = Shop.get_city(lo)
+    hash = {city: city}
     if params[:name]
       hash.merge!( {name: /#{params[:name]}/ }  )  
     else
@@ -20,6 +21,9 @@ class ShopController < ApplicationController
       hash.merge!( {t: { "$in" => [ t-1, t ] } }  ) 
     end
     shops = Shop.where(hash).sort({utotal:-1}).skip(skip).limit(pcount)
+    if city=="0571"
+      shops=shops[1..-1] if shops[0]["_id"]==20325453
+    end
     render :json =>  shops.map {|s| s.safe_output_with_users}.to_json
   end
   
