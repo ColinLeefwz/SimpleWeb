@@ -1,7 +1,10 @@
+# encoding: utf-8
 class SinaUser
   include Mongoid::Document
   #  field :_id, type: String
   store_in session: "dooo"
+
+  Logger = Logger.new('log/weibo/sina_user.log', 0, 100 * 1024 * 1024)
 
   def self.find_by_id(id)
     begin
@@ -59,5 +62,23 @@ class SinaUser
     end
   end
 
+  def self.user_page(token, wb_uid, err_num=0)
+    url = "https://api.weibo.com/2/users/show.json?uid=#{wb_uid}&access_token=#{token}"
+    begin
+      response = RestClient.get(url)
+      Logger.info "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaUser.user_page get #{url}"
+    rescue RestClient::BadRequest
+      puts '---------------------------'
+      return nil
+    rescue
+      err_num += 1
+      Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaUser.user_page get #{url}错误#{err_num}次. #{$!}"
+      Emailer.send_mail('获取用户信息出错',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaUser.user_page get #{url}错误. #{$!}").deliver if err_num == 4
+      return nil if err_num == 4
+      sleep err_num * 20
+      return user_page(token, wb_uid, err_num )
+    end
+    JSON.parse response
+  end
 
 end
