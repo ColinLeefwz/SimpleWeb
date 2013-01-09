@@ -2,6 +2,8 @@
 class SinaPoi
   #mtype 字段 5是手工匹配的
 
+  Logger = Logger.new('log/weibo/sina_poi.log', 0, 100 * 1024 * 1024)
+
   include Mongoid::Document
   store_in session: "dooo"
   
@@ -9,6 +11,21 @@ class SinaPoi
   index({iso_num: 1}, { sparse: true })
   index({photo_fetched: 1}, { sparse: true })
   create_indexes
+
+  def self.find_by_id(id)
+    begin
+      self.find(id)
+    rescue
+      nil
+    end
+  end
+
+  def self.insert_poi(token, poiid)
+    poi = poi_page(token, poiid)
+    poiid = poi.delete('poiid')
+    self.collection.insert(poi.merge({:_id => poiid})) unless self.find_by_id(poiid)
+  end
+
 
   def self.pois_insert(token,lo)
     coll = self.collection
@@ -30,9 +47,9 @@ class SinaPoi
             end
             dt = get_t(d['category_name'])
             d.merge!(dt) if dt
-          rescue Exception => e 
+          rescue Exception => e
             # end pattern with unmatched parenthesis: /^老庙黄金(东宝店）/ (RegexpError)
-            $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{e}"
+            Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{e}"
           end
           coll.insert({:_id => id }.merge(d))
           pois_users_insert(token, id)
@@ -111,6 +128,24 @@ class SinaPoi
     nil
   end
 
+  def self.poi_page(token, poiid, err_num = 0)
+    url = "https://api.weibo.com/2/place/pois/show.json?poiid=#{poiid}&access_token=#{token}"
+    begin
+      response = RestClient.get(url)
+      Logger.info "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi.poi_page get #{url}"
+    rescue RestClient::BadRequest
+      return nil
+    rescue
+      err_num += 1
+      Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi.poi_page get #{url}错误#{err_num}次. #{$!}"
+      Emailer.send_mail('获取poi出错',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi.poi_page get #{url}错误. #{$!}").deliver if err_num == 4
+      return nil if err_num == 4
+      sleep err_num * 20
+      return poi_page(token, poiid, err_num)
+    end
+    JSON.parse response
+  end
+
 
   def show_dt
     SinaCategorys::SUPCATEGORY[self.dt] if self.respond_to?(:dt)
@@ -122,11 +157,11 @@ class SinaPoi
     url = "https://api.weibo.com/2/place/nearby/pois.json?count=50&page=#{page}&lat=#{lo[0]}&long=#{lo[1]}&access_token=#{token}"
     begin
       response = RestClient.get(url)
-      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}."
+      Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}."
     rescue
       err_num += 1
       Emailer.send_mail('pois错误',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误. #{$!}").deliver if err_num == 4
-      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误#{err_num}次，. #{$!}"
+      Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#pois get #{url}错误#{err_num}次，. #{$!}"
       return nil if err_num == 4
       sleep err_num * 20
       return pois(token,lo, page,err_num)
@@ -139,11 +174,11 @@ class SinaPoi
     url =  "https://api.weibo.com/2/place/pois/users.json?poiid=#{poiid}&access_token=#{token}&count=50&page=#{page}"
     begin
       response = RestClient.get(url)
-      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}"
+      Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}"
     rescue
       err_num += 1
       Emailer.send_mail('poi_user_page错误',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误. #{$!}").deliver if err_num == 4
-      $LOG.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误#{err_num}次. #{$!}"
+      Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi#poi_user_page get #{url}错误#{err_num}次. #{$!}"
       return nil if err_num == 4
       sleep err_num * 20
       return poi_user_page(token, poiid, page, err_num)
