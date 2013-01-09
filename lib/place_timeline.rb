@@ -16,6 +16,7 @@ module PlaceTimeline
       next if pois.blank?
       pois.each do |poi|
         poiid= poi['place']['poiid']
+        next if poiid == '(null)'
         sina_poi = SinaPoi.find_by_id(poiid)
         if sina_poi
           datas = sina_poi.respond_to?(:datas) ? sina_poi.datas : []
