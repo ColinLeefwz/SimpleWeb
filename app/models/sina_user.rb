@@ -68,7 +68,6 @@ class SinaUser
       response = RestClient.get(url)
       Logger.info "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaUser.user_page get #{url}"
     rescue RestClient::BadRequest
-      puts '---------------------------'
       return nil
     rescue
       err_num += 1
