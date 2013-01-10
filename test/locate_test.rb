@@ -86,6 +86,8 @@ class LocateTest < ActiveSupport::TestCase
     ss = Shop.new.find_shops([30.286594, 120.115089], 65, "", "")
     assert_equal 7661568, ss[0]["_id"]
     assert_equal "浙江省立同德医院", ss[0]["name"]
+    assert ss.find {|x| x["name"] =~ /咨询服务/ }.nil?
+    assert ss.find {|x| x["name"] =~ /物业顾问/ }.nil?
   end  
   
   def test_shop_similar
