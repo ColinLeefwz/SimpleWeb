@@ -122,6 +122,10 @@ db.shops.remove({name:/咨询机构/})
 db.shops.remove({name:/连锁机构/})
 db.shops.remove({name:/策划机构/})
 db.shops.remove({name:/企业机构/})
+db.shops.remove({name:/物业顾问/})
+db.shops.remove({name:/顾问机构/})
+db.shops.remove({name:/咨询服务/})
+
 
 db.shops.remove({name:/酒店-/})
 db.shops.remove({name:/大厦-/})
