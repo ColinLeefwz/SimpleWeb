@@ -139,6 +139,7 @@ db.shops.remove({name:/团队$/})
 db.shops.find({name:/[^\-]{5,}-/})
 
 db.shops.update({name:/华联超市/},{$set:{d:50},$unset:{del:1}},false,true)
+db.shops.update({name:/世纪华联/},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({name:"好又多"},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({name:/好又多超市/},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({t:8,name:/好又多[^生活购物量贩]/},{$set:{d:50},$unset:{del:1}},false,true)
@@ -223,3 +224,4 @@ db.shops.update({type:/^餐饮/,name:/(老娘舅|大娘水饺|顺旺基|肯德�
 db.shops.update({type:/^教育/,addr:/[0-9]+(楼|层|室)/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({type:/教育/,name:/美吉姆/},{$set:{d:30},$unset:{t:1}},false,true)
 
+db.shops.find({})
