@@ -89,6 +89,14 @@ class LocateTest < ActiveSupport::TestCase
     assert ss.find {|x| x["name"] =~ /咨询服务/ }.nil?
     assert ss.find {|x| x["name"] =~ /物业顾问/ }.nil?
   end  
+
+  def test_locate14
+    ss = Shop.new.find_shops([30.28053, 120.1096], 65, "", "")
+    assert_equal 21626790, ss[0]["_id"]
+    assert_equal "顺旺基中式快餐益乐路", ss[0]["name"]
+    assert ss.find {|x| x["name"] =~ /直通车教育中心/ }.nil?
+    assert ss[0,4].find {|x| x["name"] =~ /正大医院/ }.nil?
+  end 
   
   def test_shop_similar
     #21612350	赛百味锦绣天地店 10442749	锦绣天地
