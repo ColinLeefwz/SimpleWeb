@@ -93,8 +93,8 @@ module Similarity
   end
   
   def similarity(shop1,shop2)
-    return 0 if shop1.shops && shop1.shops.index(shop2.id)
-    return 0 if shop2.shops && shop2.shops.index(shop1.id)
+    return 0 if shop1["shops"] && shop1["shops"].index(shop2["_id"])
+    return 0 if shop2["shops"] && shop2["shops"].index(shop1["_id"])
     citys = []
     province = nil
     City.where({code:shop1["city"]}).each do |x| 
