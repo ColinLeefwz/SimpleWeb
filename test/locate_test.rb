@@ -125,6 +125,9 @@ class LocateTest < ActiveSupport::TestCase
     assert Shop.similarity_by_id(7039803,	7053052)>70
     assert Shop.similarity_by_id(7032968,	7048974)>70
     assert Shop.similarity_by_id(7053052,	7048974)==0  
+    
+    assert Shop.similarity(Shop.collection.find({"_id" => 7032968}).first,	Shop.collection.find({"_id" => 7048974}).first)>70
+    
   end
   
 end
