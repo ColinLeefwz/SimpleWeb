@@ -10,11 +10,12 @@
     <tr>
       <td><%=Time.at(gchat[2]).strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%=link_to gchat[0], "/admin_users/show?id=#{gchat[0]}" %></td>
-      <td><%=gchat[1] %></td>
+      <td><%=gchat_img(gchat[1]).html_safe %></td>
     </tr>
 
   <% end %>
 </table>
+
 
 <br />
 <br />
