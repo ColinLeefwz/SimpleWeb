@@ -122,6 +122,10 @@ db.shops.remove({name:/咨询机构/})
 db.shops.remove({name:/连锁机构/})
 db.shops.remove({name:/策划机构/})
 db.shops.remove({name:/企业机构/})
+db.shops.remove({name:/物业顾问/})
+db.shops.remove({name:/顾问机构/})
+db.shops.remove({name:/咨询服务/})
+
 
 db.shops.remove({name:/酒店-/})
 db.shops.remove({name:/大厦-/})
@@ -135,6 +139,7 @@ db.shops.remove({name:/团队$/})
 db.shops.find({name:/[^\-]{5,}-/})
 
 db.shops.update({name:/华联超市/},{$set:{d:50},$unset:{del:1}},false,true)
+db.shops.update({name:/世纪华联/},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({name:"好又多"},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({name:/好又多超市/},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({t:8,name:/好又多[^生活购物量贩]/},{$set:{d:50},$unset:{del:1}},false,true)
@@ -213,3 +218,10 @@ db.shops.update({"type" : "教育;学前教育"},{$set:{d:30},$unset:{t:1}},fals
 db.shops.update({"type" : "教育;学前教育", name:/幼儿园/ },{$set:{t:12},$unset:{d:1}},false,true)
 
 db.shops.update({t:6,name:/俱乐部$/},{$set:{d:30},$unset:{t:1}},false,true)
+
+db.shops.update({type:/^餐饮/,name:/(老娘舅|大娘水饺|顺旺基|肯德基|永和大王|真功夫|一口田|五芳斋|知味观|新丰小吃|麦当劳|味千拉面|八方客|客必多|有意思|港式茶餐厅|华莱士|咬不得高祖生煎|美食城|康师傅私房牛肉面|桂林米粉|德克士|一鸣真鲜奶吧|来必堡|上品快餐|一茶一坐|传世生煎|家和缘|旺角1号|华必和|巧燕坊|好客多|四海豆浆)/},{$set:{t:4},$unset:{d:1}},false,true)
+
+db.shops.update({type:/^教育/,addr:/[0-9]+(楼|层|室)/},{$set:{d:50},$unset:{t:1}},false,true)
+db.shops.update({type:/教育/,name:/美吉姆/},{$set:{d:30},$unset:{t:1}},false,true)
+
+db.shops.find({})

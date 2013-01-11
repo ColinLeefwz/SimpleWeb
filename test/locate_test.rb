@@ -86,7 +86,17 @@ class LocateTest < ActiveSupport::TestCase
     ss = Shop.new.find_shops([30.286594, 120.115089], 65, "", "")
     assert_equal 7661568, ss[0]["_id"]
     assert_equal "浙江省立同德医院", ss[0]["name"]
+    assert ss.find {|x| x["name"] =~ /咨询服务/ }.nil?
+    assert ss.find {|x| x["name"] =~ /物业顾问/ }.nil?
   end  
+
+  def test_locate14
+    ss = Shop.new.find_shops([30.28053, 120.1096], 65, "", "")
+    assert_equal 21626790, ss[0]["_id"]
+    assert_equal "顺旺基中式快餐益乐路", ss[0]["name"]
+    assert ss.find {|x| x["name"] =~ /直通车教育中心/ }.nil?
+    assert ss[0,3].find {|x| x["name"] =~ /正大医院/ }.nil?
+  end 
   
   def test_shop_similar
     #21612350	赛百味锦绣天地店 10442749	锦绣天地
@@ -115,6 +125,9 @@ class LocateTest < ActiveSupport::TestCase
     assert Shop.similarity_by_id(7039803,	7053052)>70
     assert Shop.similarity_by_id(7032968,	7048974)>70
     assert Shop.similarity_by_id(7053052,	7048974)==0  
+    
+    assert Shop.similarity(Shop.collection.find({"_id" => 7032968}).first,	Shop.collection.find({"_id" => 7048974}).first)>70
+    
   end
   
 end
