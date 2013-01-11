@@ -62,7 +62,7 @@ module Similarity
   	s2 = trim(trim_citys_province(str2.downcase,citys,province))
     s1 = trim_type(s1,shop1["t"])
     s2 = trim_type(s2,shop2["t"])
-    puts "#{s1} - #{s2}"
+    #puts "#{s1} - #{s2}"
   	a1 = s1.split(//).to_set
   	a2 = s2.split(//).to_set
     a3 = a1 & a2
@@ -93,8 +93,8 @@ module Similarity
   end
   
   def similarity(shop1,shop2)
-    return 0 if shop1.shops && shop1.shops.index(shop2.id)
-    return 0 if shop2.shops && shop2.shops.index(shop1.id)
+    return 0 if shop1["shops"] && shop1["shops"].index(shop2["_id"])
+    return 0 if shop2["shops"] && shop2["shops"].index(shop1["_id"])
     citys = []
     province = nil
     City.where({code:shop1["city"]}).each do |x| 
@@ -104,9 +104,9 @@ module Similarity
     name_score = 70*str_similar(shop1["name"],shop2["name"],citys,province,shop1,shop2)
     addr_score = 12*str_similar(shop1["addr"],shop2["addr"],citys,province,shop1,shop2)
     type_score = 8*(shop1["t"]==shop2["t"]? 1:0)
-    puts "distance: #{distance(shop1,shop2)}"
+    #puts "distance: #{distance(shop1,shop2)}"
     dist_score = dist_score(distance(shop1,shop2))
-    puts [name_score,addr_score,type_score,dist_score]
+    #puts [name_score,addr_score,type_score,dist_score]
     return name_score+addr_score+type_score+dist_score
   end
 
