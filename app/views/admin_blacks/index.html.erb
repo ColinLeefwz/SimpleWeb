@@ -3,15 +3,20 @@
 <table border="1">
   <tr>
     <th>名称</th>
-    <th>被举报的人数</th>
     <th>详情</th>
   </tr>
 
   <% @users.each do |user| %>
     <tr>
       <td><%= user.name %></td>
-      <td><%= user.reports_s.count %></td>
-      <td><%= user.reported_users.map{|ru| ru.try(:name)}.join(',') %></td>
+      <td>
+        <% user.reports_s.each do |u| %>
+          <%= u['cat'].localtime.strftime("%Y-%m-%d %H:%M:%S")%>,
+          <%= link_to u['id'], "/admin_users/human_chat?id=#{user.id.to_s}&uid=#{u["id"]}" %>,
+          <%= User.find2(u['id']) ? User.find2(u['id']).name : "null(删除)"   %>
+          <br/>
+        <%end%>
+      </td>
     </tr>
 
   <% end %>
