@@ -17,17 +17,17 @@ class AdminShopsController < ApplicationController
 
     case params[:v]
     when '1'
-      hash.merge!({v:{'$exists' => true}})
+      hash.merge!({v:{'$gt' => 0}})
     end
 
     case params[:d]
     when '1'
-      hash.merge!({d:{'$exists' => true}})
+      hash.merge!({d:{'$gt' => 0}})
     end
 
     case params[:del]
     when '1'
-      hash.merge!({del:{'$exists' => true}})
+      hash.merge!({del:{'$gt' => 0}})
     end
 
     @page =  params[:page].blank? ? 1 : params[:page].to_i
@@ -188,7 +188,7 @@ class AdminShopsController < ApplicationController
   def upgrade_v
     @shop = Shop.find(params[:id])
     if request.post?
-      @shop.update_attributes(params[:shop])
+      @shop.update_attribute(:v, params["shop[v]"].to_i)
       redirect_to :action => "show", :id => @shop.id
     end
   end
