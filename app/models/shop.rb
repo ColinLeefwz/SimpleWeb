@@ -33,6 +33,8 @@ class Shop
 
   #field :cc, type:Integer  #点评的评论数
   field :type              #从mapabc导入的商家类型
+  field :d #降低权重
+  field :v #加权距离0-100
 
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 6, :allow_nil => true
