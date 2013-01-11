@@ -8,9 +8,9 @@
     分类: <%= select_tag :t,options_for_select(import_t.unshift(['','']),params[:t].blank? ? '' : params[:t].to_i )  %>
     排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"]],params[:order])  %>
     <br/>
-    加权：<%= select_tag :v,options_for_select([['所有商家','0'],['加权商家','1'],['未加权商家',"2"]],params[:v])  %>
-    降权：<%= select_tag :d,options_for_select([['所有商家','0'],['降权商家','1'],['未降权商家',"2"]],params[:d])  %>
-    删除：<%= select_tag :del,options_for_select([['所有商家','0'],['删除商家','1'],['未删除商家',"2"]],params[:del])  %>
+    加权：<%= select_tag :v,options_for_select([['所有商家','0'],['加权商家','1']],params[:v])  %>
+    降权：<%= select_tag :d,options_for_select([['所有商家','0'],['降权商家','1']],params[:d])  %>
+    删除：<%= select_tag :del,options_for_select([['所有商家','0'],['删除商家','1']],params[:del])  %>
     <br/>
     分类： <%= select_tag :type, options_for_select(import_type, params[:type].to_s) %>
     <%= submit_tag "查 找" %>
