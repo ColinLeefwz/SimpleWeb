@@ -108,7 +108,7 @@ module SearchScore
       xx[2]-=10 if t<4
       xx[2]-=20 if t==0
       xx[2]-=5 if t>=4 && t<50
-      xx[2]+=30 if t==14 # 14:大型医院
+      xx[2]+=60 if t==14 # 14:大型医院
     else
       xx[2] +=10
     end
