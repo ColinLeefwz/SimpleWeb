@@ -4,7 +4,7 @@ class AdminBlacksController < ApplicationController
   layout "admin"
 
   def index
-    @users =  User.where({"blacks.report" => true})
+    @users =  User.where({"blacks.report" => 1})
   end
   
 
