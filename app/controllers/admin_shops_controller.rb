@@ -165,6 +165,11 @@ class AdminShopsController < ApplicationController
     render :js => true
   end
 
+  def gchat
+    @shop = Shop.find(params[:sid])
+    @gchats = paginate_arr(@shop.gchat, params[:page], 50)
+  end
+
   private
 
   def horder
