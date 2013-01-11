@@ -8,6 +8,10 @@
     分类: <%= select_tag :t,options_for_select(import_t.unshift(['','']),params[:t].blank? ? '' : params[:t].to_i )  %>
     排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"]],params[:order])  %>
     <br/>
+    加权：<%= select_tag :v,options_for_select([['所有商家','0'],['加权商家','1'],['未加权商家',"2"]],params[:v])  %>
+    降权：<%= select_tag :d,options_for_select([['所有商家','0'],['降权商家','1'],['未降权商家',"2"]],params[:d])  %>
+    删除：<%= select_tag :del,options_for_select([['所有商家','0'],['删除商家','1'],['未删除商家',"2"]],params[:del])  %>
+    <br/>
     分类： <%= select_tag :type, options_for_select(import_type, params[:type].to_s) %>
     <%= submit_tag "查 找" %>
   </p>
@@ -18,12 +22,13 @@
 <%=  submit_tag '批量删除', :onclick => "batch_del()"%>-->
 <table border="1">
   <tr>
-    <th></th>
     <th>id</th>
     <th>名称</th>
     <th>电话</th>
     <th>区号</th>
     <th>地址</th>
+    <th>加权值</th>
+    <th>降权值</th>
     <th>分类</th>
     <th>百度分类</th>
     <th>子商家</th>
@@ -35,7 +40,6 @@
 
   <% @shops.each do |shop| %>
     <tr>
-      <td><%= check_box_tag "shops[]", shop._id, false, :class => 'checkbox_shops' %></td>
       <td><%= shop.id.to_i %></td>
       <td><%= shop.name %></td>
 
@@ -43,6 +47,8 @@
       <td><%= shop.tel %></td>
       <td><%= shop.city %></td>
       <td><%= shop.addr %></td>
+      <td><%= shop.v || '无' %></td>
+      <td><%= shop.d || '无' %></td>
       <td><%= shop.show_t %></td>
       <td><%= shop.type %></td>
       <td><%= link_to(shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{shop.id}") %></td>

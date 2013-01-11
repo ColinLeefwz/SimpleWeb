@@ -15,9 +15,30 @@ class AdminShopsController < ApplicationController
     hash.merge!({city: params[:city]}) unless params[:city].blank?
     hash.merge!({type: params[:type]}) unless params[:type].blank?
 
+    case params[:v]
+    when '1'
+      hash.merge!({v:{'$exists' => true}})
+    when '2'
+      hash.merge!({v:{'$exists' => false}})
+    end
+
+    case params[:d]
+    when '1'
+      hash.merge!({d:{'$exists' => true}})
+    when '2'
+      hash.merge!({d:{'$exists' => false}})
+    end
+
+    case params[:del]
+    when '0'
+    when '1'
+      hash.merge!({del:{'$exists' => true}})
+    else
+      hash.merge!({del:{'$exists' => false}})
+    end
+
     @page =  params[:page].blank? ? 1 : params[:page].to_i
     @shops = Shop.where(hash).skip((@page-1)*200).limit(200).sort(horder)
-    @shops = @shops.entries.keep_if{|s| s.del != 1}
 
   end
 
