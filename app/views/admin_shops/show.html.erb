@@ -23,6 +23,14 @@
   <%= @shop.tel %>
 </p>
 <p>
+  <b>加权值:</b>
+  <%= @shop.v ? @shop.v.to_i : '无' %>
+</p>
+<p>
+  <b>降权值:</b>
+  <%= @shop.d ? @shop.d.to_i : '无' %>
+</p>
+<p>
   <b>百度经纬度:</b>
   <%= @shop.lob %>
 </p>
