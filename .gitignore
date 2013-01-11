@@ -31,6 +31,7 @@ nbproject/*
 tmp/*
 public/system/*
 public/coupon/*
+public/uploads/*
 ShopsNearby2/ShopsNearby2.xcodeproj/project.xcworkspace/
 ShopsNearby2/ShopsNearby2.xcodeproj/xcuserdata/
 latex/*.aux

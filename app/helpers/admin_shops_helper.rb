@@ -11,4 +11,11 @@ module AdminShopsHelper
   def import_t
     [["活动",0],["酒吧",1],["咖啡",2],["茶馆",3],["餐饮",4],["酒店",5],["休闲娱乐",6],["运动",7],["购物",8],["广场",9],["写字楼",10],["住宅",11],["学校",12],["交通",13]]
   end
+
+  def gchat_img(text)
+    if mat = text.match(/\[img:(.*)\]/)
+      text = text.sub(mat[1], link_to(mat[1], Photo.find(mat[1]).img))
+    end
+    text
+  end
 end
