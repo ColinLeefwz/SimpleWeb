@@ -19,6 +19,8 @@ class User
   field :pcount, type: Integer, default:0 #上传的头像的数量
   field :head_logo_id, type: Moped::BSON::ObjectId
   field :auto, type:Boolean #自动抓取
+  field :atime, type:DateTime #自动抓取的微博用户实际注册脸脸的时间
+
   field :tk  #Push消息的token
   field :city
   
