@@ -15,7 +15,8 @@ class AdminShopsController < ApplicationController
     hash.merge!({city: params[:city]}) unless params[:city].blank?
     hash.merge!({type: params[:type]}) unless params[:type].blank?
 
-    @shops = paginate("Shop", params[:page], hash, horder, 200  )
+    @page =  params[:page].blank? ? 1 : params[:page].to_i
+    @shops = Shop.where(hash).skip((@page-1)*200).limit(200).sort(horder)
     @shops = @shops.entries.keep_if{|s| s.del != 1}
 
   end
@@ -169,6 +170,19 @@ class AdminShopsController < ApplicationController
     @shop = Shop.find(params[:sid])
     @gchats = paginate_arr(@shop.gchat, params[:page], 50)
   end
+
+  def upgrade_v
+    @shop = Shop.find(params[:id])
+    if request.post?
+      @shop.update_attributes(params[:shop])
+      redirect_to :action => "show", :id => @shop.id
+    end
+  end
+
+  def set_v
+    
+  end
+  
 
   private
 

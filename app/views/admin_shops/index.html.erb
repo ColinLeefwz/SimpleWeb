@@ -12,9 +12,10 @@
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
+<!--
 <%= check_box_tag "", '', false, :onclick => "checked_all($(this).attr('checked'))" %> 全选
 <%= check_box_tag "", '', false, :onclick => "inverse_all()" %> 反选
-<%=  submit_tag '批量删除', :onclick => "batch_del()"%>
+<%=  submit_tag '批量删除', :onclick => "batch_del()"%>-->
 <table border="1">
   <tr>
     <th></th>
@@ -26,6 +27,7 @@
     <th>分类</th>
     <th>百度分类</th>
     <th>子商家</th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -45,6 +47,7 @@
       <td><%= shop.type %></td>
       <td><%= link_to(shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{shop.id}") %></td>
       <td><%= link_to('开通密码', "/admin_shops/set_password?id=#{shop.id}") %></td>
+      <td><%= link_to('加权', "/admin_shops/upgrade_v?id=#{shop.id}") %></td>
       <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
       <td>
         <a onclick="ajaxdel($(this),<%= shop._id %>, false)" >删除</a>
@@ -55,10 +58,12 @@
   <% end %>
 </table>
 <br />
-<%= link_to '添加商家', "/admin_shops/new"  %>
 <br />
+<%= link_to "第1页",request.params.merge!(:page => 1), :class => "prev_pagee" %>
+<%= link_to "上一页",request.params.merge!(:page => @page -1),:class => "prev_pagee"  if @page != 1 %>
+<span class='current'><%= @page %></span>
+<%= link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page" %>
 <br />
-<%= generate_paginate.html_safe %>
 
 
 
