@@ -184,6 +184,19 @@ class Shop
   def lob_to_lo
     Shop.lob_to_lo self.lob
   end
+
+  def gchat
+    chat = nil
+    $xmpp_ips.count.times do |t|
+      url = "http://#{$xmpp_ips[t]}:5280/api/gchat?room=#{self.id.to_i}"
+      puts url
+      begin
+        return JSON.parse(RestClient.get(url))
+      rescue
+        next
+      end
+    end
+  end
   
   def self.next_id
     Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
