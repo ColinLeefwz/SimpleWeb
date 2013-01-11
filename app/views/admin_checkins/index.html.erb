@@ -38,7 +38,10 @@
     <tr>
       <td><%= checkin.cat.strftime("%Y-%m-%d %H:%M:%S")%></td>
       <td><%=link_to checkin.uid, "/admin_users/show?id=#{checkin.uid}" %> , <%=link_to checkin.user.name, "/admin_users/show?id=#{checkin.uid}" %> </td>
-      <td><%= checkin.sid %> , <%= checkin.shop.try(:name) %></td>
+      <td><%=link_to checkin.sid, "/admin_shops/show?id=#{checkin.sid}" %> ,
+        <%=link_to checkin.shop.try(:name), "/admin_shops/show?id=#{checkin.sid}" %>,
+        <%= checkin.shop.try(:city) %>
+      </td>
       <td><%= checkin.loc %></td>
       <td><%= checkin.ip %></td>
       <td><%= checkin.od.to_i %></td>
