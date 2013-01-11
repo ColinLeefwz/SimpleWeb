@@ -10,8 +10,8 @@
   <% @users.each do |user| %>
     <tr>
       <td><%= user.name %></td>
-      <td><%= user.blacks.select{|u| u["report"] == true}.length %></td>
-      <td><%= user.reported_users.map{|ru| ru.name}.join(',') %></td>
+      <td><%= user.reports_s.count %></td>
+      <td><%= user.reported_users.map{|ru| ru.try(:name)}.join(',') %></td>
     </tr>
 
   <% end %>

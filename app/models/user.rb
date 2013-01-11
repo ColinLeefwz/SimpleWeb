@@ -47,12 +47,12 @@ class User
 
   def reports_s
     bs = blacks_s
-    bs.blank? ? [] : bs.select{|b| b['report']}
+    bs.blank? ? [] : bs.select{|b| b['report']==1}
   end
 
   def reported_users
     rs = reports_s
-    rs.blank? ? [] : rs.map{|r| User.find(r["id"])}
+    rs.blank? ? [] : rs.map{|r| User.find2(r["id"])}
   end
   
   # user_id是否在黑名单中
