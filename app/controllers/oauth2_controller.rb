@@ -129,27 +129,43 @@ class Oauth2Controller < ApplicationController
   
   def do_login(uid,token,data)
     user = User.where({wb_uid: uid}).first
-    if user.nil?
-      sina_info = get_user_info(uid,token)
-      SinaUser.collection.insert(sina_info)
-      user = User.new
-      user.wb_uid = uid
-      user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
-      if sina_info
-        user.name = sina_info["screen_name"]
-        user.gender = 1 if sina_info["gender"]=="m"
-        user.gender = 2 if sina_info["gender"]=="f"
-        user.wb_v = sina_info["verified"]
-        user.wb_vs = sina_info["verified_reason"]
-      end
-      user.save!
+    if user.nil? || user.auto
+      user = gen_new_user(uid,token) if user.nil?
+      change_auto_user(user) if user.auto
       Resque.enqueue(NewUser, user.id)
+      Resque.enqueue(WeiboFirst, token)
     end
     session[:user_id] = user.id
     $redis.set("wbtoken#{user.id}",token)
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
+  end
+  
+  def change_auto_user(user)
+    user.auto = false
+    user.head_logo_id = nil
+    user.pcount = 0
+    user.save!
+  end
+  
+  def gen_new_user(uid,token)
+    sina_info = get_user_info(uid,token)
+    #SinaUser.collection.insert(sina_info)
+    user = User.new
+    user.wb_uid = uid
+    user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
+    if sina_info
+      user.name = sina_info["screen_name"]
+      user.gender = 1 if sina_info["gender"]=="m"
+      user.gender = 2 if sina_info["gender"]=="f"
+      user.wb_v = sina_info["verified"]
+      user.wb_vs = sina_info["verified_reason"]
+      user.wb_name = user.name
+      user.wb_g = user.gender
+    end
+    user.save!
+    user
   end
   
   def get_user_info(uid,token)
