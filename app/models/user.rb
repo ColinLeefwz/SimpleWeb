@@ -211,6 +211,28 @@ class User
   def room_photos
     Photo.where({user_id: _id})
   end
+
+  def chat
+    $xmpp_ips.count.times do |t|
+      url = "http://#{$xmpp_ips[t]}:5280/api/chat?uid=#{self.id.to_s}"
+      begin
+        return JSON.parse(RestClient.get(url))
+      rescue
+        next
+      end
+    end
+  end
+
+  def human_chat(uid)
+    $xmpp_ips.count.times do |t|
+      url = "http://#{$xmpp_ips[t]}:5280/api/chat2?uid1=#{self.id.to_s}&uid2=#{uid}"
+      begin
+        return JSON.parse(RestClient.get(url))
+      rescue
+        next
+      end
+    end
+  end
   
   def merge_to_checkin(cins,photo)
     cins.each do |c|
