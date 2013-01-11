@@ -147,12 +147,17 @@ module SearchScore
     len = x["name"].length
     xx[2] += (10+(len-11)*3) if len>11
     xx[2] += (10+(4-len)*3) if len<4
+    xx[2] -= x["v"].to_i if x["v"]
   end
   
   def user_to_score(uc)
-    return uc*3 if(uc<=10) 
-    return 75 if(uc>100) 
-    return 30+(uc-10)/2
+    return 10 if uc==1
+    return 25 if uc==2
+    return 55 if uc==3
+    return 70 if uc==4
+    return 80 if uc==5   
+    return 80+4*(uc-5) if uc<=10
+    return 100+uc-10
   end
   
 end

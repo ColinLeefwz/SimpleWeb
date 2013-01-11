@@ -5,6 +5,8 @@ class User
   field :wb_uid #微博uid
   field :wb_v, type:Boolean #是否是微博认证用户
   field :wb_vs # 微博认证说明
+  field :wb_name
+  field :wb_g, type: Integer
   field :name # 昵称，最多10个字符
   field :gender, type: Integer #性别
   field :birthday #生日
