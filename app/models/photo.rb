@@ -46,6 +46,10 @@ class Photo
   def add_to_checkin
     cin = Checkin.where({uid:self.user_id}).order_by("id desc").limit(1).first
     #加first的时候必须用order_by, 不能用sort
+    if cin.nil?
+      logger.error "Error:\tnot checkined, but has photo upoladed, photo.id:#{self.id}" 
+      return
+    end
     if cin.sid.to_s==self.room
       cin.push(:photos, self.id)
     else
