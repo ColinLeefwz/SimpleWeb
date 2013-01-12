@@ -453,6 +453,62 @@ notice是该商家发布的公告。
 
 
 
+
+\section{输入商家的全称创建商家并签到}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/checkins/new\_shop} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+\hline
+ user\_id  & 整数 & 必须 &  签到用户id\\ 
+\hline
+ sname  & 字符串 & 必须 &  商家的全称\\  
+\hline
+ altitude  &  浮点数 & 可选 & 海拔高度\\ 
+\hline
+ altacc  & 整数 & 可选 & 海拔高度的精确度\\  
+\hline
+ bssid  & 字符串 & 可选 & wifi上网时的bssid，如果不是wifi上网则忽略\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+定位时，当用户当前的商家不存在时，可以通过输入商家的全称进入该商家的现场并签到。
+
+本API接口和签到接口类似，不同之处在于：
+
+1）定位时找到了商家，客户端签到（报告商家id／商家的排名od），客户端同时进入该商家的聊天室。
+2）定位时找不到商家，用户输入商家的全称（sname），客户端调用本接口并获得新建立的商家的id，然后进入该商家的聊天室。
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+返回值：
+
+{"name":"asdf","lo":[1,2],"lat":1,"lng":2,"address":null,"id":92264}
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+
 \section{获得用户基本信息}
 
 \begin{table}[H]
