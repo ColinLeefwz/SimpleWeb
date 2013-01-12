@@ -5,29 +5,24 @@ class CheckinsController < ApplicationController
 
   def create
     raise "user != session user" if params[:user_id].to_s != session[:user_id].to_s
-    checkin = Checkin.new
-    checkin.loc = [params[:lat].to_f, params[:lng].to_f]
-    checkin.acc = params[:accuracy]
-    checkin.uid = Moped::BSON::ObjectId(params[:user_id]) 
-    checkin.sex = session_user.gender
-    checkin.sid = params[:shop_id]
-    checkin.od = params[:od]
-    checkin.bssid = params[:bssid] if params[:bssid]
-    if params[:altitude]
-      checkin.alt = params[:altitude].to_f
-      checkin.altacc = params[:altacc]
-    end
-    checkin.ip = real_ip
-    send_if_first
-    checkin.save!
-    if checkin.add_to_redis #当天首次签到
-      send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
-      send_coupon_if_exist
-    end
-    send_notice_if_exist
-    render :json => checkin.to_json
+    ck = do_checkin
+    render :json => ck.to_json
   end
 
+  def new_shop
+    shop = Shop.new
+    shop._id = Shop.next_id
+    shop.name = params[:sname]
+    shop.lo = [params[:lat].to_f, params[:lng].to_f]
+    shop.city = shop.get_city
+    shop.type = "用户添加"
+    shop.save!
+    params[:shop_id] = shop._id
+    do_checkin
+    render :json => shop.safe_output.to_json
+  end
+  
+  
   def delete
     begin
       cin = Checkin.find(params[:id])
@@ -51,6 +46,30 @@ class CheckinsController < ApplicationController
 
 
   private
+  
+  def do_checkin
+    checkin = Checkin.new
+    checkin.loc = [params[:lat].to_f, params[:lng].to_f]
+    checkin.acc = params[:accuracy]
+    checkin.uid = session[:user_id]
+    checkin.sex = session_user.gender
+    checkin.sid = params[:shop_id]
+    checkin.od = params[:od]
+    checkin.bssid = params[:bssid] if params[:bssid]
+    if params[:altitude]
+      checkin.alt = params[:altitude].to_f
+      checkin.altacc = params[:altacc]
+    end
+    checkin.ip = real_ip
+    send_if_first
+    checkin.save!
+    if checkin.add_to_redis #当天首次签到
+      send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
+      send_coupon_if_exist
+    end
+    send_notice_if_exist
+    checkin
+  end
 
   def send_welcome_msg_if_not_invisible(user_gender, user_name)
     return if session_user.invisible==2

@@ -18,7 +18,11 @@ Lianlian::Application.routes.draw do
     end
   end
 
-  resources :checkins
+  resources :checkins do
+    collection do
+      post 'new_shop'
+    end
+  end
 
   #post "shops/manual"
   
