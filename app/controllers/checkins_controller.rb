@@ -12,6 +12,7 @@ class CheckinsController < ApplicationController
     checkin.sex = session_user.gender
     checkin.sid = params[:shop_id]
     checkin.od = params[:od]
+    checkin.bssid = params[:bssid] if params[:bssid]
     if params[:altitude]
       checkin.alt = params[:altitude].to_f
       checkin.altacc = params[:altacc]

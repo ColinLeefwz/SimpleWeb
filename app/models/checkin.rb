@@ -12,6 +12,8 @@ class Checkin
   field :del, type: Boolean #删除标记
   field :alt, type:Float    #海拔高度
   field :altacc, type: Integer  #海拔高度的精确度
+  field :bssid #wifi上网时的bssid
+  
   field :photos, type:Array #本次签到期间发该商家的图片
   
   index({ uid: 1})
