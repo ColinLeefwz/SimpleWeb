@@ -4,7 +4,7 @@ class LogoUploader < CommonPhotoUploader
 
   def aliyun_bucket; "logo"+bucket_suffix ; end
   
-  #process :resize_to_limit => [960, 960]
+  process :resize_to_limit => [640, 640]
 
   version :t2 do
     process :resize_to_fit => [200, 200]
