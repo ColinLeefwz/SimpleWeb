@@ -41,6 +41,11 @@ class ShopController < ApplicationController
     shop = Shop.find(params[:id])
     render :json => shop.safe_output_with_staffs.to_json
   end
+  
+  def photos
+    photos = Photo.where({room:params[:id]}).sort({updated_at: -1}).limit(4)
+    render :json => photos.map {|p| p.output_hash }.to_json
+  end
 
 
 end
