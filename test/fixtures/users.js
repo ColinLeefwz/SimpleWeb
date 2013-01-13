@@ -50,7 +50,7 @@ db.users.insert({
         "report" : false
     }, {
         "id" : ObjectId("502e6303421aa918ba000002"),
-        "report" : true
+        "report" : 1
     } ]
 })
 
