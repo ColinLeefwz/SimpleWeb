@@ -83,7 +83,7 @@ class Shop
   end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos})
+    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos.map {|p| p.output_hash} })
   end  
 
   
