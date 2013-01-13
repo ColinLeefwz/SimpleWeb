@@ -201,7 +201,9 @@ hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
 首次使用脸脸／或者以后重大版本更新时，以登陆用户个人的名义发送使用脸脸的分享微博，微博由服务器端发送。
 
 
-\section{根据经纬度获得可能的现场商家}
+\section{现场与附近}
+
+\subsection{根据经纬度获得可能的现场商家}
 
 \begin{table}[H]
    \begin{center}
@@ -261,7 +263,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
 
 
 
-\section{根据经纬度获得附近的商家}
+\subsection{根据经纬度获得附近的热点商家}
 
 \begin{table}[H]
    \begin{center}
@@ -304,7 +306,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
 
 
 
-\section{获得附近的用户}
+\subsection{获得附近的用户}
 
 \begin{table}[H]
    \begin{center}
@@ -323,7 +325,9 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
 输出格式和“根据商家ID获得商家用户”的接口一样。
 
 
-\section{根据商家ID获得商家的基本信息}
+
+\section{根据商家ID获得商家的信息}
+\subsection{根据商家ID获得商家的基本信息}
 
 \begin{table}[H]
    \begin{center}
@@ -354,17 +358,61 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
     "staffs": [
         "502e6303421aa918ba000001"
     ],
-    "notice":""
+    "notice":"",
+    "photos": []
 }
 
 staffs是该商家的员工数组。在商家聊天室，商家和商家的员工发言时都加V并加黄色背景。只有该商家在商家聊天室才加V，其它商家不做特殊处理。
 
-notice是该商家发布的公告。
+notice是该商家发布的公告（取消商家公告／置顶的部分改为照片墙）。
+
+新增photos字段，表示该商家最热的图片，最多4张。
 
 \end{verbatim}
 \end{figure}
 
-\section{根据商家ID获得当前在该商家的所有用户}
+
+
+\subsection{根据商家ID获得商家的图片}
+商家的图片来自个人在聊天室的发图。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/shop/photos} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+[{"id":"509a061fbe4b197297000002",
+"room":"1",
+"desc":"图片说明",  
+"updated_at":"2013-01-13T10:11:42Z",
+"user_id":"502e61bfbe4b1921da000005",
+"weibo":false,
+"logo":"http://oss.aliyuncs.com/dface_test/509a061fbe4b197297000002/0.jpg",
+"logo_thumb2":"http://oss.aliyuncs.com/dface_test/509a061fbe4b197297000002/t2_0.jpg",
+"id":"509a061fbe4b197297000002"}]
+
+\end{verbatim}
+\end{figure}
+
+
+\subsection{根据商家ID获得当前在该商家的所有用户}
 
 \begin{table}[H]
    \begin{center}
@@ -415,7 +463,10 @@ notice是该商家发布的公告。
 在商家的用户的统计数据根据签到来统计，而签到则是当用户进入商家聊天室时自动后台发送。
 
 
-\section{进入现场签到}
+
+\section{签到与足迹}
+
+\subsection{进入现场签到}
 
 \begin{table}[H]
    \begin{center}
@@ -453,8 +504,7 @@ notice是该商家发布的公告。
 
 
 
-
-\section{输入商家的全称创建商家并签到}
+\subsection{输入商家的全称创建商家并签到}
 
 \begin{table}[H]
    \begin{center}
@@ -508,158 +558,7 @@ notice是该商家发布的公告。
 
 
 
-
-\section{获得用户基本信息}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-\multicolumn{4}{|c|}{/user\_info/get} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
- id  & 整数 & 必须 &  用户id\\
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/user_info/get?id=1
-返回值：
-
-{
-"name":null,
-wb_uid:1884834632
-"gender":null,
-"logo":"/system/imgs/1/original/clojure.png?1339398140",
-"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
-"birthday":null,
-"friend":true,
-"follower":false,
-"signature":"","job":null,"jobtype":null,"hobby":"Weiqi, go",
-"last": "1天以前 顺旺基(益乐路店)" 
-"id":1
-}
-
-获得用户基本信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是当前登录用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
-
-[2012－8－8] 新增签名、职业、爱好等字段。
-[2012－8－8] 新增last字段，表示用户最后在脸脸上的时间和地点，一个以空格分割的字符串。
-
-\end{verbatim}
-\end{figure}
-
-
-\section{获得用户的头像}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-\multicolumn{4}{|c|}{/user\_info/logo} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
- id  & 整数 & 必须 &  用户id\\
-\hline
- size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为100*100；2代表thumb2缩略图，大小为200*200。默认为1。\\ 
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-输出的Response Header中包含“Img\_url”头，这个头就是查看用户信息时显示的用户头像的路径。
-
-例如：“Img\_url:/system/imgs/1/thumb2/1.png?1339649979”
-
-注意：采用阿里云存储后，会输出302重定向，而不是直接给二进制流。
-
-
-\section{获得用户的图片列表}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-\multicolumn{4}{|c|}{/user\_info/photos} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
- id  & 整数 & 必须 &  用户id\\
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/user_info/photos?id=1
-返回值：
-
-[
-{"logo_thumb2":"/system/imgs/2/thumb2/2.png.png?1340616951","updated_at":"2012-06-25T09:35:51Z",
-"id":2,"logo":"/system/imgs/2/original/2.png.png?1340616951","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/2/thumb/2.png.png?1340616951"},
-{"logo_thumb2":"/system/imgs/4/thumb2/2.png.png?1340617039","updated_at":"2012-06-25T09:37:20Z",
-"id":4,"logo":"/system/imgs/4/original/2.png.png?1340617039","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/4/thumb/2.png.png?1340617039"}
-]
-
-图片列表中的第一张图片就是用户的头像。
-
-
-\end{verbatim}
-\end{figure}
-
-
-
-\section{获得当前登录用户基本信息}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-\multicolumn{4}{|c|}{/user\_info/get\_self} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/user_info/get_self
-返回值：
-
-{
-"name":null,
-wb_uid:1884834632
-"gender":null,
-"birthday":null,
-"invisible":0,
-"logo":"/system/imgs/1/original/clojure.png?1339398140",
-"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
-"password":"c84dad462d5b7282",
-"id":1
-}
-
-\end{verbatim}
-\end{figure}
-
-
-\section{获得当前登录用户的足迹}
+\subsection{获得当前登录用户的足迹}
 
 \begin{table}[H]
    \begin{center}
@@ -711,7 +610,7 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 
 
 
-\section{删除当前登录用户的一个签到足迹}
+\subsection{删除当前登录用户的一个签到足迹}
 
 \begin{table}[H]
    \begin{center}
@@ -731,7 +630,98 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 
 
 
-\section{设置当前登录用户基本信息}
+
+
+\section{用户基本信息}
+
+\subsection{获得用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/get} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get?id=1
+返回值：
+
+{
+"name":null,
+wb_uid:1884834632
+"gender":null,
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
+"birthday":null,
+"friend":true,
+"follower":false,
+"signature":"","job":null,"jobtype":null,"hobby":"Weiqi, go",
+"last": "1天以前 顺旺基(益乐路店)" 
+"id":1
+}
+
+获得用户基本信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是当前登录用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
+
+[2012－8－8] 新增签名、职业、爱好等字段。
+[2012－8－8] 新增last字段，表示用户最后在脸脸上的时间和地点，一个以空格分割的字符串。
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{获得当前登录用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/get\_self} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get_self
+返回值：
+
+{
+"name":null,
+wb_uid:1884834632
+"gender":null,
+"birthday":null,
+"invisible":0,
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
+"password":"c84dad462d5b7282",
+"id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{设置当前登录用户基本信息}
 
 \begin{table}[H]
    \begin{center}
@@ -792,7 +782,10 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 \end{figure}
 
 
-\section{当前登录用户上传图片}
+\section{用户相册与头像}
+用户相册中的第一张图片就是头像。
+
+\subsection{当前登录用户上传图片}
 
 \begin{table}[H]
    \begin{center}
@@ -838,7 +831,7 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 \end{figure}
 
 
-\section{根据图片id获得用户相册里的图片}
+\subsection{根据图片id获得用户相册里的图片}
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
@@ -857,7 +850,72 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 
 
 
-\section{当前登录用户批量调整所有图片的位置}
+\subsection{获得用户的头像}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/logo} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为100*100；2代表thumb2缩略图，大小为200*200。默认为1。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+输出的Response Header中包含“Img\_url”头，这个头就是查看用户信息时显示的用户头像的路径。
+
+例如：“Img\_url:/system/imgs/1/thumb2/1.png?1339649979”
+
+注意：采用阿里云存储后，会输出302重定向，而不是直接给二进制流。
+
+
+\subsection{获得用户的图片列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/photos} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/photos?id=1
+返回值：
+
+[
+{"logo_thumb2":"/system/imgs/2/thumb2/2.png.png?1340616951","updated_at":"2012-06-25T09:35:51Z",
+"id":2,"logo":"/system/imgs/2/original/2.png.png?1340616951","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/2/thumb/2.png.png?1340616951"},
+{"logo_thumb2":"/system/imgs/4/thumb2/2.png.png?1340617039","updated_at":"2012-06-25T09:37:20Z",
+"id":4,"logo":"/system/imgs/4/original/2.png.png?1340617039","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/4/thumb/2.png.png?1340617039"}
+]
+
+图片列表中的第一张图片就是用户的头像。
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{当前登录用户批量调整所有图片的位置}
 
 \begin{table}[H]
    \begin{center}
@@ -885,14 +943,12 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 /user_logos/position
 
 
-
-
 \end{verbatim}
 \end{figure}
 
 
 
-\section{当前登录用户删除图片}
+\subsection{当前登录用户删除图片}
 
 \begin{table}[H]
    \begin{center}
@@ -922,8 +978,8 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 \end{figure}
 
 
-
-\section{添加我关注的人}
+\section{关注和粉丝}
+\subsection{添加我关注的人}
 
 \begin{table}[H]
    \begin{center}
@@ -963,7 +1019,7 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 
 
 
-\section{删除我的关注的人}
+\subsection{删除我的关注的人}
 
 \begin{table}[H]
    \begin{center}
@@ -1001,9 +1057,7 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 
 
 
-
-
-\section{粉丝列表}
+\subsection{粉丝列表}
 
 \begin{table}[H]
    \begin{center}
@@ -1060,10 +1114,7 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 \end{figure}
 
 
-
-
-
-\section{关注(好友)列表}
+\subsection{关注(好友)列表}
 
 \begin{table}[H]
    \begin{center}
@@ -1093,7 +1144,9 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 这里返回的所有用户，其"friend"值一定为true。
 
 
-\section{黑名单列表}
+
+\section{黑名单}
+\subsection{黑名单列表}
 
 \begin{table}[H]
    \begin{center}
@@ -1120,7 +1173,7 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 返回的内容格式和好友列表一样。
 
 
-\section{添加黑名单}
+\subsection{添加黑名单}
 
 \begin{table}[H]
    \begin{center}
@@ -1159,7 +1212,7 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 
 
 
-\section{删除黑名单}
+\subsection{删除黑名单}
 
 \begin{table}[H]
    \begin{center}
