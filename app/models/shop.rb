@@ -64,7 +64,7 @@ class Shop
   end
   
   def top4_photos
-    Photo.where({room: self.id.to_s}).sort({updated_at: -1}).limit(4)
+    Photo.where({room: self.id.to_i.to_s}).sort({updated_at: -1}).limit(4).to_a
   end
 
   #删除商家.
@@ -83,7 +83,7 @@ class Shop
   end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos.to_a})
+    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos})
   end  
 
   
