@@ -3,6 +3,8 @@
 
 class Photo
   include Mongoid::Document
+  include Mongoid::Timestamps::Updated
+  
   
   field :user_id, type: Moped::BSON::ObjectId
   field :room #发给聊天室
@@ -14,8 +16,10 @@ class Photo
   field :img_tmp
   #field :img_processing, type:Boolean
   store_in_background :img
-  
+    
   index({user_id:1, room:1})
+  index({room:1, updated_at:-1})
+  
   
   def after_async_store
     if weibo
@@ -54,6 +58,13 @@ class Photo
       cin.push(:photos, self.id)
     else
       logger.error "Error:\tphoto.room:#{self.room} != checkin.sid:#{cin.sid}, photo.id:#{self.id}" 
+    end
+  end
+  
+  def Photo.init_updated_at
+    Photo.all.each do |x|
+      x.updated_at=Time.now
+      x.save!
     end
   end
 
