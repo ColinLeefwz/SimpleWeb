@@ -98,6 +98,14 @@ class LocateTest < ActiveSupport::TestCase
     assert ss[0,3].find {|x| x["name"] =~ /正大医院/ }.nil?
   end 
   
+  def test_locate15
+    ss = Shop.new.find_shops([30.262188, 120.190781], 65, "", "50446058421aa92042000002")
+    assert ss[0,3].find {|x| x["name"] =~ /张生记/ }
+  end
+  
+  
+  
+  
   def test_shop_similar
     #21612350	赛百味锦绣天地店 10442749	锦绣天地
     assert Shop.similarity_by_id(21612350,10442749)<55
