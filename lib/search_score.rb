@@ -35,7 +35,7 @@ module SearchScore
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
-      shop_history_score(xx,x,ip,"ObjectId(\"#{uid}\")")
+      shop_history_score(xx,x,ip,"ObjectId(\"#{uid}\")")      
     end
     realtime_score(score)
     score.each_with_index do |xx,i|
@@ -110,7 +110,7 @@ module SearchScore
       xx[2]-=5 if t>=4 && t<50
       xx[2]+=60 if t==14 # 14:大型医院
     else
-      xx[2] +=10
+      xx[2] +=20
     end
     if x["shops"]
       xx[2]-=30
@@ -151,6 +151,7 @@ module SearchScore
   end
   
   def user_to_score(uc)
+    return 0 if uc==0
     return 10 if uc==1
     return 25 if uc==2
     return 55 if uc==3

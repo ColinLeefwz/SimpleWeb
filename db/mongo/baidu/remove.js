@@ -135,6 +135,7 @@ db.shops.remove({"type" : "生活服务", name:/广告/})
 db.shops.remove({t:{$in:[10,11,12]},name:/地块/})
 db.shops.remove({name:"商住楼"})
 db.shops.remove({name:/团队$/})
+db.shops.remove({name:/游戏专卖$/})
 
 db.shops.find({name:/[^\-]{5,}-/})
 
@@ -186,7 +187,7 @@ db.shops.update({name:/盖浇饭/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/排档/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/米粉/},{$set:{d:40},$unset:{t:1}},false,true)
 db.shops.update({name:/卤味/},{$set:{d:40},$unset:{t:1}},false,true)
-db.shops.update({name:/鸭脖子/},{$set:{d:50},$unset:{t:1}},false,true)
+db.shops.update({name:/鸭脖/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/鸭颈/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({name:/饮食店$/},{$set:{d:30},$unset:{t:1}},false,true)
 
