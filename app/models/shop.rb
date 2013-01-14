@@ -215,6 +215,11 @@ class Shop
     arr = merge_locations(sub_shops)
     self.update_attributes!({lo:arr})
   end
+  
+  def merge_shop_ids(ids)
+    arr = merge_locations(ids.map{|id| Shop.find(id)})
+    self.update_attributes!({lo:arr})
+  end
 
   
 end
