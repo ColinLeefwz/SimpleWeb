@@ -188,7 +188,7 @@ class AdminShopsController < ApplicationController
   def upgrade_v
     @shop = Shop.find(params[:id])
     if request.post?
-      @shop.update_attribute(:v, params["shop[v]"].to_i)
+      @shop.update_attribute(:v, params["shop"]["v"].to_i)
       redirect_to :action => "show", :id => @shop.id
     end
   end
