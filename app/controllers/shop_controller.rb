@@ -34,7 +34,9 @@ class ShopController < ApplicationController
     pcount = params[:pcount].to_i
     page = 1 if page==0
     pcount = 20 if pcount==0
-    render :json => shop.users(session[:user_id],(page-1)*pcount,pcount).to_json
+    users = shop.users(session[:user_id],(page-1)*pcount,pcount)
+    fm = users.group_by {|item| item["gender"]==2 ? "f" : "m" }
+    render :json => fm["f"].concat(fm["m"]).to_json
   end
   
   def info
