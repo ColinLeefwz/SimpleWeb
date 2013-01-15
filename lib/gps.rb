@@ -33,12 +33,15 @@ module Gps
     end
   end
   
-  
   def loc_first
-    if self["lo"][0].class==Array
-      self["lo"][0]
+    loc_first_of(self)
+  end
+  
+  def loc_first_of(shop)
+    if shop["lo"][0].class==Array
+      shop["lo"][0]
     else
-      self["lo"]
+      shop["lo"]
     end
   end
     
