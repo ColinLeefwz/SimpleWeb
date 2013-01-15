@@ -90,6 +90,7 @@ module Similarity
   	s2 = trim(trim_citys_province(str2.downcase,citys,province))
     x1 = s1.split(" ")
     x2 = s2.split(" ")
+    return 0.3 if (x1.length==0 || x2.length==0)
     s1=x1[x1.length-1]
     s2=x2[x2.length-1]
     #puts "#{s1} - #{s2}"

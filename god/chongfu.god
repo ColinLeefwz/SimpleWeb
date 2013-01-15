@@ -6,7 +6,7 @@ God.watch do |w|
     w.log = "#{rails_root}/log/chongfu.log"
     w.env      = {"RAILS_ENV"=>rails_env}
   w.name = "chongfu"
-  w.start = "rails r db/mongo/add/chongfu2.rb"
+  w.start = "rails r db/mongo/add/chongfu4.rb"
   w.keepalive
 end
 
