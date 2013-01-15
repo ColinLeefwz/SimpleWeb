@@ -115,7 +115,7 @@ class LocateTest < ActiveSupport::TestCase
     
   	#10464431	斯坦福2平方		0571	西湖紫金港路与振华路交会处
   	#10447006	斯坦福2(平方)		0571	西湖杭大路44号
-    assert Shop.similarity_by_id(10464431,	10447006)<52
+    assert Shop.similarity_by_id(10464431,	10447006)<55
     
     #6551618	Co·Co CLUB   6556964	COCO酒吧
     assert Shop.similarity_by_id(6551618,	6556964)>70
@@ -136,6 +136,13 @@ class LocateTest < ActiveSupport::TestCase
     
     assert Shop.similarity(Shop.collection.find({"_id" => 7032968}).first,	Shop.collection.find({"_id" => 7048974}).first)>70
     
+    #国美电器公主坟店 - 苏宁电器公主坟店
+    assert Shop.similarity_by_id(2408713,2447317)<56
+    #海拉尔贝尔大酒店(呼伦贝尔) - 海拉尔凯顿大酒店(呼伦贝尔)
+    assert Shop.similarity_by_id(8475,1642617)<63
+    
+    #布尔津旅游宾馆 - 阿勒泰旅游宾馆 ??
+    Shop.similarity_by_id(1636421,1636419)
   end
   
 end
