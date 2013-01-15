@@ -65,9 +65,9 @@ class CheckinsController < ApplicationController
     checkin.save!
     if checkin.add_to_redis #当天首次签到
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
-      send_coupon_if_exist
     end
     send_notice_if_exist
+    send_coupon_if_exist
     checkin
   end
 
