@@ -1,5 +1,5 @@
 ﻿*{margin:0px;padding:0px;}
-body { font-family:"微软雅黑"; font-size: 12px; background:#f4f6f9 url(../images/index/bg.jpg) left top repeat-x; }
+body { font-family:"微软雅黑"; font-size: 12px;background:#f4f6f9 url(../images/index/bg.jpg) left top repeat-x; }
 img{border:none;}
 ul,ol{list-style:none;}
 a{text-decoration:none;}
@@ -7,19 +7,30 @@ a{text-decoration:none;}
 .r{float:right;}
 h1{display: none}
 .mt20{margin-top:20px;}
-.header{width:860px;height:117px;margin:0px auto; background:url(../images/index/headerbg.jpg) left top no-repeat;}
-.logo{float:left;margin-top:20px;}
-.menu{display:block;font-size:14px;overflow:hidden;zoom:1;margin-top:46px;float:right;}
-.menu li{float:left;padding:0px 15px;width:76px;text-align:center;}
-.menu li.home{width:35px;}
-.menu a{color:#828282; padding-bottom:18px; display:block;}
-.menu a.hover, .menu a:hover{color:#985305;font-weight:bold;}
-.ad{height: 509px;width:100%;clear:both;background:url(../images/index/ad1.jpg) center top no-repeat;}
-.slide {position: relative;width: 1000px;height: 367px;margin: 0 auto;}
-.slide .dl {width: 420px;height: 58px;top: 320px;left: 511px;position: absolute;background:url(../images/index/btn.png) 0px -59px no-repeat;}
-.slide .dl:hover {background:url(../images/index/btn.png) 0px 0px no-repeat;}
-.slide h2 {top: -13px;width: 458px;height: 522px;position: absolute; background:url(../images/index/hand.png) left top no-repeat;}
-.slide h3{width: 300px;height: 60px;top: 400px;left: 518px;position: absolute;background:url(../images/index/btn2.png) center top no-repeat;}
+.header{width:1010px;height:117px;margin:0px auto;background:url(../images/index/headerbg.jpg) left top no-repeat;}
+.logo{float:left;margin-top:30px;margin-left:40px;}
+#Menu{display:block;font-size:14px;overflow:hidden;zoom:1;margin-top:70px;float:right;}
+#Menu li{float:left;padding:0px 15px;text-align:center;width:76px;}
+#Menu li.home{width:38px;}
+#Menu a{color:#828282; display:block;}
+#Menu a.hover, #Menu a:hover{color:#00CCFF;}
+.dh{width:100%;height:510px;clear:both;position:relative;}
+.dh .dhimg{width:100%;height:510px;position:relative;overflow:hidden;}
+.dh .dhimg a{width:100%;height:510px;position:absolute;left:0px;top:0px;display:block;zoom:1;overflow:hidden;}
+.dh .dhnum{position:absolute;width:100%;top:48%;height:49px;left:0px;z-index:2;}
+.dh .dhnum .def{display:none;}
+.dh .dhnum .selected{display:none;}
+.dh .dhnum .prevbtn, .dh .dhnum .nextbtn{width:49px;height:49px;background:url(../images/arrow.png) left top no-repeat;
+display:block;overflow:hidden;float:left;text-indent:-999em;margin-left:20px;}
+.dh .dhnum .nextbtn{background:url(../images/arrow2.png) left top no-repeat;float:right;margin-left:0px;margin-right:20px;}
+
+.slide {position: absolute;width:100%;height: 367px;left:0px;top:0px;z-index:99;}
+.slide .slideinner{width:1000px;margin:0 auto;}
+.slide  .slideinner .pic{width: 435px;height: 144px;top: 143px;left: 760px;position: absolute;background:url(../images/pic.png) 0px 0px no-repeat;}
+.slide  .slideinner .dl {width: 420px;height: 58px;top: 350px;left: 760px;position: absolute;background:url(../images/index/btn.png) 0px -59px no-repeat;}
+.slide  .slideinner .dl:hover {background:url(../images/index/btn.png) 0px 0px no-repeat;}
+.slide .slideinner h2 {top: -13px;width: 458px;height: 522px;position: absolute; background:url(../images/index/hand.png) left top no-repeat;}
+.slide  .slideinner h3{width: 300px;height: 60px;top: 430px;left: 780px;position: absolute;background:url(../images/index/btn2.png) center top no-repeat;}
 .con{margin:1px 0 0 0;width:100%;overflow:hidden;clear:both;height:239px;background:url(../images/index/conbg.jpg) left top repeat-x;}
 .Intro{margin-top: 25px;margin-bottom: 5px;}
 .Intro a {margin: 0 3px;}

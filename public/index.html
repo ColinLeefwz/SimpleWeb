@@ -4,27 +4,57 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>脸脸</title>
 <link rel="stylesheet" href="/stylesheets/style.css" />
+<script src="/javascripts/jquery-1.6.2.min.js"></script>
+<script src="/javascripts/dh.js"></script>
+
 <!--[if lt IE 7]>
-<script src="js/pngie6.js"></script>
+<script src="/javascripts/pngie6.js"></script>
 <![endif]-->
 </head>
 
 <body>
 	<div class="header">
-		<a href="#"><img src="/images/index/logo.png" alt="脸脸" title="Home" class="logo"/></a>
-		<!---<ul class="menu">
-			<li class="home"><a href="#" class="hover">首页</a></li>
+		<a href="#"><img src="/images/logo2.png" alt="脸脸" title="Home" class="logo"/></a>
+		<ul id="Menu">
+			<li class="home"><a href="index.html">首页</a></li>
 			<li><a href="#">关于脸脸</a></li>
 			<li><a href="#">用户帮助</a></li>
 			<li><a href="#">联系我们</a></li>
-			<li><a href="#">反馈建议</a></li>
-		</ul>--->
+		</ul>
 	</div>
-	<div class="ad">
+	<div class="dh" id="DH">
+		<div id="DHImg" class="dhimg">
+			<a href="#" style="background:url(images/ad1.jpg) center top no-repeat;"></a>
+			<a href="#" style="background:url(images/ad2.jpg) center top no-repeat;"></a>
+		</div>
+		<div id="DHNum" class="dhnum"> 
+			<a id="Prev" class="prevbtn" href="javascript:void(0)">左</a>
+			<a class="def selected" href="javascript:void(0)" title="1"></a>
+			<a class="def" href="javascript:void(0)" title="2"></a>
+			<a class="def" href="javascript:void(0)" title="3"></a>
+			<a class="def" href="javascript:void(0)" title="4"></a>
+			<a id="Next" class="nextbtn" href="javascript:void(0)">右</a>
+		</div>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	  <div class="slide">
-		<h2></h2>
-                <a alt="免费下载iphone版本" class="dl pointer"  title="免费下载iphone版本" href="https://itunes.apple.com/cn/app/lianlian/id577710538"></a>
-       <h3></h3>
+		<div class="slideinner">
+			<h2></h2>
+			<div class="pic"></div>
+			<a alt="免费下载iphone版本" class="dl pointer"  title="免费下载iphone版本" href="https://itunes.apple.com/cn/app/lianlian/id577710538"></a>
+			<h3></h3>
+		</div>
       </div>
 	</div>
 	<div class="con">
@@ -33,6 +63,7 @@
 		<a href="#"><img src="/images/index/pic1.png" title="发现现场的人们"/></a>
 		<a href="#"><img src="/images/index/pic2.png" title="找到人气聚集地"/></a>
 		<a href="#"><img src="/images/index/pic3.png" title="有趣的交友界面"/></a>
+		
 		<a href="#"><img src="/images/index/pic4.png" title="无缝连接新浪微博"/></a>
 		</div>
 		</div>
@@ -43,5 +74,8 @@
 		<div class="CopyRight"> 2011-2012 © All Rights Reserved. www.dface.com 浙ICP备11010943号-1</div>
 	</div>
 	</div>
+<script>
+	$("#Menu li a").eq(0).addClass("hover");
+</script>
 </body>
 </html>
