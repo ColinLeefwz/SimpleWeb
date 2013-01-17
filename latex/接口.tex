@@ -78,7 +78,7 @@ hash的计算方式为：model+os+mac+"init"进行SHA1算法后取前32位，和
 
 
 \section{登录和退出}
-\subsection{老的登录方式：oauth2}
+\subsection{网页登录接口：oauth2}
 
 
 \begin{table}[H]
@@ -128,7 +128,7 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
 \end{verbatim}
 \end{figure}
 
-\subsection{新的登录方式：xauth}
+\subsection{客户端登录接口：xauth}
 \label{hash_algorithm}
 
 \begin{table}[H]
@@ -163,6 +163,32 @@ hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
 新的登录方式不需要调用新浪的Xauth API，直接调用本API即可以登录。客户端应该不需要保存AppSecret。通过预先保存的AppKey和本调用输出中包含的token应该就可以访问新浪微博的API了。
 
 
+
+\subsection{客户端SSO接口}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/sso} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ remind\_in  & 字符串 & 必须 &  过期时间\\
+ \hline
+ expires\_in  & 字符串 & 必须 &  过期时间\\
+  \hline
+ uid  & 字符串 & 必须 &  微博的uid\\
+  \hline
+ access\_token  & 字符串 & 必须 &  微博的token\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+hash的计算方式为：uid+access\_token+"dface"进行SHA1算法后取前32位。
 
 \subsection{退出}
 
