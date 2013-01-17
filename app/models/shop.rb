@@ -153,7 +153,7 @@ class Shop
   
   def send_coupon(user_id)
     coupons = []
-    Coupon.gen_demo(self.id) if self.latest_coupons.empty? && (ENV["RAILS_ENV"] != "production" || user_id.to_s =="502e6303421aa918ba000001" || user_id.to_s =="502e6303421aa918ba000006")
+    Coupon.gen_demo(self.id) if self.latest_coupons.empty? && (ENV["RAILS_ENV"] != "production" )
     coupons += self.latest_coupons.select { |c| c.allow_send?(user_id) }    
     sub_shops.each do |shop|
       coupons += shop.latest_coupons.select { |coupon| coupon.allow_send?(user_id) }

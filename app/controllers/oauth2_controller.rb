@@ -71,6 +71,18 @@ class Oauth2Controller < ApplicationController
     do_login(uid,token["access_token"],data)
   end
   
+  def sso
+    uid = params[:uid]
+    token = params[:access_token]
+    hash = Digest::SHA1.hexdigest("#{uid}#{token}dface")[0,32]
+    if hash != params[:hash][0,32]
+      render :json => {error: "hash error: #{hash}."}.to_json
+      return
+    end
+    data = {}
+    do_login(uid,token,data)
+  end
+  
   def logout
     if params[:pushtoken] && session_user.token==params[:pushtoken]
       session_user.unset(:tk)
@@ -86,7 +98,7 @@ class Oauth2Controller < ApplicationController
   
 
 
-  #提供给erlang系统的认证服务
+  #提供给erlang系统的内部认证服务
   def auth
     if params[:name][0]=='s'
       if params[:pass][0,4] == 'pass'
