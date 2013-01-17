@@ -21,7 +21,7 @@
   <body>
     <div class="area">
       <form action="" method="post">
-        <div class="logo"> <img src="/images/backstage.jpg"></div>
+        <div class="logo"> <img src="/images/backstage2.jpg"></div>
 
         <div class="plane"><label>商家id</label>
           <%= text_field_tag :id, params[:id],:id => "name", :class => "txt", :onblur => "find_shop($(this).val())" %>
@@ -47,6 +47,4 @@
       $("#shopName").replaceWith("<span id='shopName'>" + data['text'] + "</span>")
     })
   }
-
-
 </script>
