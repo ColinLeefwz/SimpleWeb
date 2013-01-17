@@ -1,9 +1,7 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-
     <meta name="viewport" content="width=device-width, initial-scale=0.5">
-
     <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
     <meta content="no-cache" http-equiv="Pragma"/>
     <meta content="no-cache" http-equiv="Cache-Control"/>
@@ -16,51 +14,40 @@
     <%= yield :ahead %>
   </head>
   <body>
-    <div id="con" style="background-color:Fd0">
+  <div id="con">
       <div class="conleft">
-        <img src="/images/backstage.jpg" alt="脸脸DFACE.CN" />
-
-        <dl class="nav">
-          <dt>
-            <%= link_to "首页", "/shop_login" %>
-          </dt>
-          <dt>
-            <%= link_to "修改密码", "/shop_pass/index" %>
-          </dt>
-          <dt>
-            <%= link_to "公告管理", "/shop_shop_notices" %>
-          </dt>
-          <!--
-          <dt>
-          <%= link_to "公告管理", "#" %>
-          <dd><a href="/shop_top_notices">置顶公告</a></dd>
-          <dd><a href="/shop_shop_notices">公告</a></dd>
-          </dt>
-          -->
-          <dt>
-            <a href="#" class="hover">签到管理</a>
-          <dd><%= link_to "最新签到", "/shop_checkins" %></dd>
-          <dd><a href="/shop_checkins/rank?flag=week">周排行</a></dd>
-          <dd><a href="/shop_checkins/rank?flag=month">月排行</a></dd>
-          <dd><a href="/shop_checkins/rank_list">总排行</a></dd>
-          </dt>
-          <dt>
-            <%= link_to "商家logo", "/shop_logos" %>
-          </dt>
-          <dt>
-            <a href="#" class="hover">优惠券管理</a>
-          <dd><a href="/shop_coupons/newly_use">最新使用记录</a></dd>
-          <dd><a href="/shop_coupons/newly_down">最新下载记录</a></dd>
-          <dd><a href="/shop_coupons">优惠券列表</a></dd>
-          </dt>
-          <dt>
-            <%= link_to "员工管理", "/shop_staffs" %>
-          </dt>
-          <dt>
-            <%= link_to "查看子商家", "/shop_subshops" %>
-          </dt>
-        </dl>
-
+        <img src="/images/backstage2.jpg" alt="脸脸DFACE.CN" />
+		<div class=nav>
+		<a href="/shop_checkins" class="m">签到管理</a>
+		<ul>
+			<li><%= link_to "最新签到", "/shop_checkins" %></li>
+			<li><a href="/shop_checkins/rank?flag=week">周排行</a></li>
+			<li><a href="/shop_checkins/rank?flag=month">月排行</a></li>
+			<li><a href="/shop_checkins/rank_list">总排行</a></li>
+		</ul>
+		
+		<a href="/shop_coupons" class="m">优惠券管理</a>
+		<!--<ul>
+			<li><a href="/shop_coupons/newly_use">最新使用记录</a></li>
+            <li><a href="/shop_coupons/newly_down">最新下载记录</a></li>
+            <li><a href="#">优惠券列表</a></li>
+		</ul>-->
+		<a href="/shop_shop_notices" class="m">公告管理</a>
+        <!--
+			<ul>
+				<%= link_to "公告管理", "#" %>
+				<li><a href="/shop_top_notices">置顶公告</a></li>
+				<li><a href="/shop_shop_notices">公告</a></li>
+			</ul>
+        -->
+		<a href="/shop_pass/index" class="m">商家设置</a>
+		<ul>
+			<li><%= link_to "商家logo", "/shop_logos" %></li>
+			<li><%= link_to "修改密码", "/shop_pass/index" %></li>
+		</ul>
+		<a href="/shop_staffs" class="m">员工管理</a>
+		<a href="/shop_subshops" class="m">分店管理</a>
+		</div>
 
       </div>
       <div class="conright">

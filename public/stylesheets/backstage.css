@@ -25,17 +25,20 @@ a.yellow:hover{color:#0099ff;}
 .conright{width:725px;float:right;}
 
 .nav{display:block;overflow:hidden;zoom:1;color:#3d3d3d;width:100%;line-height:30px;border-top:1px solid #F4F4F4;padding-top:10px;}
-.nav dt{margin:5px 0;zoom:1;}
+.nav  .m{width:100%;background:url('/images/sign.jpg')  7px 6px no-repeat;background-color:#F4F4F4;color:#00B8FF;
+margin-bottom:1px;display:block;padding-left:30px;}
+.nav  .m:hover, .nav  .m.hover{background:#eee url('/images/sign2.jpg') 7px 6px no-repeat;}
+
 .nav dt a{padding-left:18px;display:block;overflow:hidden;color:#3d3d3d;}
-.nav dt a:hover, .nav dt a.hover{background-color:#F4F4F4;color:#C16F19;}
+.nav dt a:hover, .nav dt a.hover{}
 
 .nav dd {line-height: 25px;}
 .nav dd a{padding-left:36px;display:block;overflow:hidden;color:#3d3d3d;}
-.nav dd a:hover, .nav dd a.hover{color:#C16F19;}
+.nav dd a:hover, .nav dd a.hover{color:#00B8FF;}
 
 .name{float:right;color:#666;margin:35px 0px;}
-.name a{color:#C16F19;}
-.name a:hover{color:#0099ff;}
+.name a{color:#00B8FF;}
+.name a:hover{color:#ff7700;}
 
 .subtitle{background-color:#F4F4F4;padding-left:20px;line-height:28px;color:#676767;clear:both;}
 
@@ -43,13 +46,13 @@ a.yellow:hover{color:#0099ff;}
 .plane{color:#333333;background-color:#F4F4F4;display:block;padding:10px 8px;margin-bottom:15px;overflow:hidden;zoom:1;}
 .plane label{margin-right:10px;}
 .plane input.txt1{width:70px;background-color:transparent;border:none;overflow:hidden;zoom:1;}
-.plane input.txt{width:210px;background-color:transparent;border:none;overflow:hidden;zoom:1;}
+.plane input.txt{background-color:transparent;border:none;overflow:hidden;zoom:1;}
 .plane2{clear:both;overflow:hidden;zoom:1;}
-.plane2 input.btn{background-color:#C16F19;color:#ffffff;width:100px;padding:10px 0px;float:right;border:none;cursor:pointer;_padding:8px 0px;}
-.plane2 a{color:#C16F19;float:left;}
-.plane2 a:hover{color:#0099ff;}
+.plane2 input.btn{background-color:#00B8FF;color:#ffffff;width:100px;padding:10px 0px;float:right;border:none;cursor:pointer;_padding:8px 0px;}
+.plane2 a{color:#00B8FF;float:left;}
+.plane2 a:hover{color:#ff7700;}
 .plane2 .plane2inner{color: #666;display:block;padding-top:160px;clear:both;overflow:hidden;text-align:center;}
-.plane span{color: #C16F19;position: absolute;right:10px}
+.plane span{color: #00B8FF;position: absolute;right:10px}
 .formlist{display:block;overflow:hidden;zoom:1;margin-top:30px;margin-left:20px;color:#505050;}
 .formlist li{margin-bottom:20px;}
 .formlist li input.txt{border:1px solid #F4F4F4;background-color:transparent;width:155px;height:20px;line-height:20px;font-size:11px;}
@@ -73,7 +76,7 @@ a.yellow:hover{color:#0099ff;}
 .tab a.btn{color:#fff;background-color:#505050;width:65px;padding:8px 4px;border:none;cursor:pointer;margin:0px auto;}
 .tab tr.bottom td{padding-top:20px;border-bottom:none;}
 
-/**页码样式**/
+/**页码样式 begin**/
 .pages {clear: both;overflow: hidden;}
 .pages .pagination {float: right;overflow: hidden;}
 .pages .pagination .prev_page, .pagination a.prev_page {cursor: pointer;float: left;margin-right: 10px;}
@@ -85,8 +88,8 @@ a.yellow:hover{color:#0099ff;}
 
 #footer{width:925px;margin:50px auto 0px auto;overflow:hidden;zoom:1;color:#666;}
 #footer .footerinner{clear:both;float:right;width:690px;border-top:1px solid #f4f4f4;padding:15px 35px 0px 0px;text-align:right;}
-#footer a{color:#C16F19;}
-#footer a:hover{color:#0099ff;}
+#footer a{color:#00B8FF;}
+#footer a:hover{color:#ff7700;}
 
 /** 优惠券发布样式 **/
 /** 优惠券发布样式 **/
