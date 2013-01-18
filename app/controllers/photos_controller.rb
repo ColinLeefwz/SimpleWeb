@@ -21,4 +21,25 @@ class PhotosController < ApplicationController
     end
   end
 
+  def like
+    photo = Photo.find(params[:id])
+    if photo.like && photo.like.find{|x| x["id"]==session[:user_id]}
+      render :json => {"error" => "already liked photo #{photo.id}"}.to_json
+      return
+    end
+    ret = photo.push(:like, {id:session[:user_id], t:Time.now})
+    render :json => ret.to_json
+  end
+  
+  def dislike
+    photo = Photo.find(params[:id])
+    like = photo.like
+    uk = like.find{|x| x["id"]==session[:user_id]}
+    uk["del"] = true
+    photo.like=like
+    photo.save!
+    render :json => {ok:photo.id}.to_json
+  end  
+  
+
 end

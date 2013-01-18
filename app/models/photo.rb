@@ -10,6 +10,8 @@ class Photo
   field :room #发给聊天室
   field :desc
   field :weibo, type:Boolean
+  field :like, type:Array #赞
+  field :com, type:Array #评论
   field :img
   mount_uploader(:img, PhotoUploader)
   
