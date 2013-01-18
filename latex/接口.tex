@@ -1424,7 +1424,76 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 聊天室里发图不需要发送已读回执消息。
 
+\section{商家照片墙}
+\subsection{对聊天室图片点赞}
 
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/like} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsection{对聊天室图片取消赞}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/dislike} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{对聊天室图片点评}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/comment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+   \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsection{对聊天室图片取消点评}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/delcomment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+  \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
 
 
 \section{个人聊天时发图}
