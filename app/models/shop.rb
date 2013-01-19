@@ -59,6 +59,15 @@ class Shop
     end
   end
   
+  def city_name
+    City.where({code:self.city}).first.name
+  end
+  
+  def city_fullname
+    city = City.where({code:self.city}).first
+    city.s + city.name
+  end
+  
   def notice
     ShopNotice.where({shop_id: self.id}).last
   end
