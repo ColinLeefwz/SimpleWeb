@@ -27,19 +27,49 @@ class PhotosController < ApplicationController
       render :json => {"error" => "already liked photo #{photo.id}"}.to_json
       return
     end
-    ret = photo.push(:like, {id:session[:user_id], t:Time.now})
+    ret = photo.push(:like, {id:session[:user_id], name: session_user.name, t:Time.now})
     render :json => ret.to_json
   end
   
   def dislike
     photo = Photo.find(params[:id])
     like = photo.like
-    uk = like.find{|x| x["id"]==session[:user_id]}
-    uk["del"] = true
-    photo.like=like
+    photo.like = like.delete_if{|x| x["id"]==session[:user_id]}
     photo.save!
     render :json => {ok:photo.id}.to_json
   end  
+  
+  def comment
+    photo = Photo.find(params[:id])
+    ret = photo.push(:com, {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now})
+    render :json => ret.to_json
+  end
+  
+  def delcomment
+    photo = Photo.find(params[:id])
+    com = photo.com
+    photo.com = com.delete_if{|x| x["id"]==session[:user_id] && x["txt"]==params[:text]}
+    photo.save!
+    render :json => {ok:photo.id}.to_json
+  end
+  
+  def hidecomment
+    photo = Photo.find(params[:id])
+    if photo.user_id!=session[:user_id]
+      render :json => {"error" => "user #{session[:user_id]} isn't photo's owner."}.to_json
+      return
+    end
+    com = photo.com
+    comment = com.find{|x| x["id"].to_s==params[:uid] && x["txt"]==params[:text]}
+    if comment.nil?
+      render :json => {"error" => "comment #{params[:text]} not found."}.to_json
+      return
+    end
+    comment["hide"] = true
+    photo.com = com
+    photo.save!
+    render :json => {ok:photo.id}.to_json
+  end
   
 
 end

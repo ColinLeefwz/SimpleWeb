@@ -1456,7 +1456,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{tabular}
    \end{center}
 \end{table}
-
+个人只能取消自己给的赞。
 
 
 \subsection{对聊天室图片点评}
@@ -1494,6 +1494,31 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{tabular}
    \end{center}
 \end{table}
+个人只能取消自己发的点评。
+
+
+\subsection{对聊天室图片隐藏点评}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/delcomment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+  \hline
+ uid  & 字符串 & 必须 & 评论的发布者id\\
+   \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+只有图片的发布者才能隐藏他人给自己图片发的点评。调用本接口的必须是图片的发布人。
+点评隐藏后只有点评的发布者一人能够看到。
+
 
 
 \section{个人聊天时发图}
