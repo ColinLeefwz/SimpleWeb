@@ -2,21 +2,21 @@
 
 module SearchScore
 
-  def find_shops(loc,accuracy,ip,uid,debug=false)
+  def find_shops(loc,accuracy,ip,uid,bssid=nil,debug=false)
     radius = 0.0018+0.002*accuracy/300
     radius=0.01 if(radius>0.01)  #不大于1000米
     arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
     arr.uniq_by! {|x| x["_id"]}
     if arr.length>=3
-      return sort_with_score(arr,loc,accuracy,ip,uid,debug)
+      return sort_with_score(arr,loc,accuracy,ip,uid,bssid,debug)
     else
       arr = Shop.collection.find({lo:{"$near" =>loc}}).limit(10).to_a
       arr.uniq_by! {|x| x["_id"]}
-      return sort_with_score(arr,loc,accuracy,ip,uid,debug)[0,5]
+      return sort_with_score(arr,loc,accuracy,ip,uid,bssid,debug)[0,5]
     end
   end
   
-  def sort_with_score(arr,loc,accuracy,ip,uid,debug=false)
+  def sort_with_score(arr,loc,accuracy,ip,uid,bssid,debug=false)
     score = arr.map {|x| [x,min_distance(x,loc),0]}
     min_d = score[0][1]
     score.reject!{|s| (s[0]["t"]==0 && s[0]["del"]) } #过期的活动
@@ -37,6 +37,7 @@ module SearchScore
       base_score(xx,x)
       shop_history_score(xx,x,ip,"ObjectId(\"#{uid}\")")      
     end
+    bssid_score(score,bssid) if bssid
     realtime_score(score)
     score.each_with_index do |xx,i|
       xx[2] =  adjust(xx[2],accuracy,min_d)
@@ -77,6 +78,17 @@ module SearchScore
       score[i][2] -= s 
     end
   end
+
+  def bssid_score(score,bssid)
+    b = CheckinBssidStat.where({"_id" => bssid}).first
+    unless b.nil?
+      score.each_with_index do |xx,i|
+        bshop = b.shops.find{|shop| shop["id"]==xx[0]["_id"]}
+        next if bshop.nil?
+        xx[1] -= (30+(bshop["users"].size-1)*50)
+      end
+    end
+  end  
   
   def shop_history_score(xx,x,ip,uid_s)
       sc = CheckinShopStat.find_by_id(x["_id"].to_i)
@@ -86,14 +98,7 @@ module SearchScore
         xx[2] -= ucount*30
         xx[2] -= user_to_score(sc.users.length)/2.0
       end
-      if ip && ip.index(",").nil?
-        ip2 = ip.split(".").join("/")
-        ip2s = sc.ips[ip2]
-        if(ip2s)
-          ipcount = sc.ips[ip2][0]
-          xx[2] -= ipcount*5
-        end
-      end
+
   end
   
   def base_score(xx,x)
