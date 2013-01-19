@@ -15,7 +15,6 @@ var checkinShopStat = function(days){
         }
     }).forEach(function(checkin){
         var us ={};
-        var ips = {};
     
         var ciss =  db.checkin_shop_stats.findOne({
             _id: checkin.sid
@@ -25,7 +24,6 @@ var checkinShopStat = function(days){
             db.checkin_shop_stats.insert({
                 _id: checkin.sid,
                 users: us,
-                ips: ips
             })
         }
 
@@ -34,19 +32,10 @@ var checkinShopStat = function(days){
         })
     
         us = ciss.users;
-        ips = ciss.ips;
         if(!us[checkin.uid]){
             us[checkin.uid] = [1, checkin._id, checkin.sex];
         }else{
             us[checkin.uid] = [us[checkin.uid][0] + 1, checkin._id, checkin.sex];
-        }
-        if(checkin.ip.indexOf(',') == -1){
-            var ip = checkin.ip.replace('.', '/', 'g')
-            if(!ips[ip]){
-                ips[ip] = [1, checkin._id];
-            }else{
-                ips[ip] = [ips[ip][0] + 1, checkin._id];
-            }
         }
 
         db.checkin_shop_stats.update({
@@ -54,7 +43,6 @@ var checkinShopStat = function(days){
         }, {
             $set: {
                 users: us,
-                ips: ips
             }
         })
     })
