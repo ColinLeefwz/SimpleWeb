@@ -19,11 +19,11 @@ class CheckinBssidStat
       CheckinBssidStat.collection.insert({"_id" => bssid, "shops" => [{id:sid,users:[uid]}] })
     else
       shops = b.shops
-      shop = shops.find{|x| x.id==sid}
+      shop = shops.find{|x| x["id"]==sid}
       if shop.nil?
         b.push(:shops, {id:sid,users:[uid]} )
-      elsif shop.users.size<5
-        shop.users << uid
+      elsif shop["users"].size<5
+        shop["users"] = shop["users"].to_set.add(uid).to_a
         b.shops = shops
         b.save!
       end
