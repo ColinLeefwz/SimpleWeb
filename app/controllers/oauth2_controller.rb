@@ -84,7 +84,7 @@ class Oauth2Controller < ApplicationController
   end
   
   def logout
-    if params[:pushtoken] && session_user.token==params[:pushtoken]
+    if params[:pushtoken] && session_user.tk==params[:pushtoken]
       session_user.unset(:tk)
     end
     reset_session
