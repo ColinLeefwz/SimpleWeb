@@ -46,7 +46,9 @@ class Photo
   end
   
   def output_hash
-    self.attributes.merge!( logo_thumb_hash).merge!({id: self._id})
+    hash = {id: self._id, user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo}
+    hash.merge!( logo_thumb_hash)
+    hash.merge!( {like:self.like, comment:self.com} )
   end
   
   def add_to_checkin
