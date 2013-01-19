@@ -146,7 +146,7 @@ class Oauth2Controller < ApplicationController
     if user.nil? || user.auto
       user = gen_new_user(uid,token) if user.nil?
       change_auto_user(user) if user.auto
-      Resque.enqueue(NewUser, user.id)
+      session[:new_user_flag] = true
       Resque.enqueue(WeiboFirst, token)
     end
     session[:user_id] = user.id
