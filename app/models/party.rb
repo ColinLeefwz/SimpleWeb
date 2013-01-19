@@ -25,7 +25,7 @@ class Party
   	s.id = Shop.next_id
   	s.name = name
   	s.t = 0
-  	ftime <= Time.now.strftime("%Y-%m-%d %H:%M")? s.del=0 : s.del = 1
+  	ftime <= Time.now.strftime("%Y-%m-%d %H:%M")? s.del=nil : s.del = 1
     s.save!
     s
   end
