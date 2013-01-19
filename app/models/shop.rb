@@ -81,14 +81,9 @@ class Shop
     male = total - female
     safe_output.merge!( {"user"=>total, "male"=>male, "female"=>female} )
   end
-  
-  def top_notice
-    return "下城区人民政府欢迎您！" if self.id.to_i==21828377
-    return nil
-  end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs, "notice" => top_notice} ).merge!({"photos" => top4_photos.map {|p| p.output_hash} })
+    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos.map {|p| p.output_hash} })
   end  
 
   
