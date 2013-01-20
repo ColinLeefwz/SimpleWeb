@@ -5,14 +5,6 @@ class SinaFan
 
   Logger = Logger.new('log/weibo/sina_fan.log', 0, 100 * 1024 * 1024)
 
-  def self.find_by_id(id)
-    begin
-      self.find(id)
-    rescue
-      nil
-    end
-  end
-
   def self.start
     {'2045097601' => '陌陌科技', '1734536090' => '街旁', '1834134725' => '微领地', '2196734667' => '微博位置'}.each do |k,v|
       self.insert_fan('2.00t9e5PCMcnDPC86e7068cc9yxaMRC', k, :name => v)

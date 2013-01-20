@@ -13,7 +13,7 @@
         <% user.reports_s.each do |u| %>
           <%= u['cat'].localtime.strftime("%Y-%m-%d %H:%M:%S")%>,
           <%= link_to u['id'], "/admin_users/human_chat?id=#{user.id.to_s}&uid=#{u["id"]}" %>,
-          <%= User.find2(u['id']) ? User.find2(u['id']).name : "null(删除)"   %>
+          <%= User.find_by_id(u['id']) ? User.find_by_id(u['id']).name : "null(删除)"   %>
           <br/>
         <%end%>
       </td>

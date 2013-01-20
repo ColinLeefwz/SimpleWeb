@@ -11,10 +11,10 @@
   <% @uses.each do |use| %>
     <tr>
       <td align="center" class="gray"><%= link_to(image_tag(Coupon.find(use[2]).img.url(:t1)), "/shop_coupons/#{use[2]}") %></td>
-      <td align="center" class="gray"><%= User.find2(use[0]).try(:name)  %></td>
-      <td align="center" class="gray"><%= User.find2(use[0]).try(:show_gender)  %></td>
-      <td align="center" class="gray"><%= User.find2(use[0]).birthday.try(:to_date) %></td>
-      <td align="center" class="gray"><%= link_to '链接到微博',User.find2(use[0]).try(:weibo_home) %></td>
+      <td align="center" class="gray"><%= User.find_by_id(use[0]).try(:name)  %></td>
+      <td align="center" class="gray"><%= User.find_by_id(use[0]).try(:show_gender)  %></td>
+      <td align="center" class="gray"><%= User.find_by_id(use[0]).birthday.try(:to_date) %></td>
+      <td align="center" class="gray"><%= link_to '链接到微博',User.find_by_id(use[0]).try(:weibo_home) %></td>
       <td align="center" class="gray"><%= use[1].localtime.strftime("%Y-%m-%d %H:%M:%S") %></td>
     </tr>
   <% end %>

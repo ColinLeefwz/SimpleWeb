@@ -17,14 +17,6 @@ class CheckinShopStat
     User.find($1)
   end
 
-  def self.find_by_id(id)
-    begin
-      self.find(id)
-    rescue
-      nil
-    end
-  end
-
   def self.add_one_redis(shop_id,gender)
     $redis.incr("suac#{shop_id.to_i}")
     $redis.incr("sufc#{shop_id.to_i}") if gender==2
