@@ -12,14 +12,6 @@ class SinaPoi
   index({photo_fetched: 1}, { sparse: true })
   create_indexes
 
-  def self.find_by_id(id)
-    begin
-      self.find(id)
-    rescue
-      nil
-    end
-  end
-
   def self.insert_poi(token, poiid)
     poi = poi_page(token, poiid)
     poiid = poi.delete('poiid')

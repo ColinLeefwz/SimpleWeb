@@ -33,14 +33,6 @@ class User
   index({wb_uid: 1})
   index({follows: 1})
   
-  def self.find2(id) #和find相比不抛出异常
-    begin
-      User.find(id)
-    rescue
-      nil
-    end
-  end
-  
   def follows_s
     (self.follows.nil?)? [] : self.follows
   end
@@ -56,7 +48,7 @@ class User
 
   def reported_users
     rs = reports_s
-    rs.blank? ? [] : rs.map{|r| User.find2(r["id"])}
+    rs.blank? ? [] : rs.map{|r| User.find_by_id(r["id"])}
   end
   
   # user_id是否在黑名单中
