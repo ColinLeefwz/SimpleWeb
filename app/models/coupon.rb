@@ -91,10 +91,6 @@ class Coupon
     demo.save
     CarrierWave::Workers::StoreAsset.perform("Coupon",demo.id.to_s,"img")
   end
-
-  def cat
-    (Time.at self._id.to_s[0,8].to_i(16)).strftime("%Y-%m-%d %H:%M")
-  end
   
   #图文模式生成图片
   def gen_img
