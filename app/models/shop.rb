@@ -47,15 +47,6 @@ class Shop
   def self.default_hash
     {del: {"$exists" => false}}
   end
-
-
-  def self.find_by_id(id)
-    begin
-      self.find(id)
-    rescue
-      nil
-    end
-  end
   
   def city_name
     City.where({code:self.city}).first.name
@@ -144,7 +135,7 @@ class Shop
     #Benchmark.measure {Shop.find(4928288).users(User.last._id)} 
     ret = []
     user_last_checkins(start,size).each do |uid,cat|
-      u = User.find2(uid)
+      u = User.find_by_id(uid)
       next if u.block?(session_uid)
       ret << u.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
     end

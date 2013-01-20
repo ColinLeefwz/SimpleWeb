@@ -11,10 +11,10 @@
   <% @downs.each do |down| %>
     <tr>
       <td align="center" class="gray"><%= link_to(image_tag(Coupon.find(down[2]).img.url(:t1)), "/shop_coupons/#{down[2]}") %></td>
-      <td align="center" class="gray"><%= User.find2(down[0]).try(:name)  %></td>
-      <td align="center" class="gray"><%= User.find2(down[0]).try(:show_gender)  %></td>
-      <td align="center" class="gray"><%= User.find2(down[0]).birthday.try(:to_date) %></td>
-      <td align="center" class="gray"><%= link_to '链接到微博',User.find2(down[0]).try(:weibo_home) %></td>
+      <td align="center" class="gray"><%= User.find_by_id(down[0]).try(:name)  %></td>
+      <td align="center" class="gray"><%= User.find_by_id(down[0]).try(:show_gender)  %></td>
+      <td align="center" class="gray"><%= User.find_by_id(down[0]).birthday.try(:to_date) %></td>
+      <td align="center" class="gray"><%= link_to '链接到微博',User.find_by_id(down[0]).try(:weibo_home) %></td>
       <td align="center" class="gray"><%= down[1].localtime.strftime("%Y-%m-%d %H:%M:%S") %></td>
     </tr>
   <% end %>

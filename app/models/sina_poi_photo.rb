@@ -5,14 +5,6 @@ class SinaPoiPhoto
   include Mongoid::Document
   store_in session: "dooo"
 
-  def self.find_by_id(id)
-    begin
-      self.find(id)
-    rescue
-      nil
-    end
-  end
-
   def self.start
     num = (SinaPoi.where({:photo_fetched => {'$exists' => false}}).count/3000)+1
     num.times do |t|

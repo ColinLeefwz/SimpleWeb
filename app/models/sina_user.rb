@@ -6,14 +6,6 @@ class SinaUser
 
   Logger = Logger.new('log/weibo/sina_user.log', 0, 100 * 1024 * 1024)
 
-  def self.find_by_id(id)
-    begin
-      self.find(id)
-    rescue
-      nil
-    end
-  end
-
   def self.has_user?(id)
     return true if find_by_id(id.to_s)
     return true if find_by_id(id.to_i)

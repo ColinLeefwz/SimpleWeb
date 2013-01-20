@@ -111,7 +111,7 @@ class Oauth2Controller < ApplicationController
 	      ptoken = params[:pass][-65..-1]
         pass = pass[0..-66]
       end
-      user = User.find2(params["name"])
+      user = User.find_by_id(params["name"])
       if user.password == pass
 	      logger.warn "token:#{ptoken}"
         if ptoken && (user.tk.nil? || user.tk[0] != ptoken[0])
@@ -129,9 +129,9 @@ class Oauth2Controller < ApplicationController
     if params["from"][0]=='s'
       fu = Shop.find_by_id(params["from"][1..-1])
     else
-      fu = User.find2(params["from"])
+      fu = User.find_by_id(params["from"])
     end
-    tu = User.find2(params["to"]) #TODO: 商家的Push消息提醒
+    tu = User.find_by_id(params["to"]) #TODO: 商家的Push消息提醒
     if fu && tu
       render :text => "#{tu.tk}#{fu.name}"
     else
