@@ -171,14 +171,18 @@ class Oauth2Controller < ApplicationController
     user.wb_uid = uid
     user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
     if sina_info
-      user.name = sina_info["screen_name"]
+      if sina_info["screen_name"].length<10
+        user.name = sina_info["screen_name"]
+      else
+        user.name = ""
+      end
       user.gender = 1 if sina_info["gender"]=="m"
       user.gender = 2 if sina_info["gender"]=="f"
       if sina_info["verified"]
         user.wb_v = sina_info["verified"] 
         user.wb_vs = sina_info["verified_reason"]
       end
-      user.wb_name = user.name
+      user.wb_name = sina_info["screen_name"]
       user.wb_g = user.gender
     end
     user.save!
