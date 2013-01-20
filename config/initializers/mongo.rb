@@ -2,6 +2,29 @@
 #Mongoid.logger = Logger.new($stdout)
 Mongoid.logger = Rails.logger
 
+module Mongoid
+  module Finders
+    def find_by_id(id)
+      begin
+        find(id)
+      rescue
+        nil
+      end
+    end
+  end
+end
+
+module Mongoid
+  module Document
+    def cat
+      self._id.generation_time.getlocal
+    end
+    
+    def cati
+      self._id.to_s[0,8].to_i(16)
+    end
+  end
+end
 
 module Moped
 
