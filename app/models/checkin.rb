@@ -19,13 +19,8 @@ class Checkin
   index({ uid: 1})
   index({ sid: 1})
   
-  def cat
-    self._id.generation_time.getlocal
-    #Time.at self._id.to_s[0,8].to_i(16)
-  end
-  
   def time_desc
-    diff = Time.now.to_i - self.cat.to_i
+    diff = Time.now.to_i - self.cati
     User.time_desc(diff)
   end
   
@@ -135,7 +130,7 @@ LUA
       if i>0
         pre = ret[-1]
         pre.photos = [] if pre.photos.nil?
-        if pre.sid == ck.sid && (pre.cat.to_i - ck.cat.to_i) < 3600*6
+        if pre.sid == ck.sid && (pre.cati - ck.cati) < 3600*6
           ck.photos.each {|x| pre.photos << x} unless ck.photos.nil?
           next
         end
