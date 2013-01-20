@@ -23,6 +23,11 @@ module Mongoid
     def cati
       self._id.to_s[0,8].to_i(16)
     end
+    
+    def cats
+      (Time.at self._id.to_s[0,8].to_i(16)).strftime("%Y-%m-%d %H:%M:%S")
+    end
+    
   end
 end
 

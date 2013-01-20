@@ -7,10 +7,6 @@ class Party
   field :etime
   field :sid	#该活动对应的商家id
   field :rsid	#该活动的地点位于那个商家  
-  
-  def cat
-    (Time.at self._id.to_s[0,8].to_i(16)).strftime("%Y-%m-%d %H:%M:%S")
-  end
 
   def shop
   	Shop.find_by_id(sid)
