@@ -144,7 +144,7 @@ class User
     return {:last => "隐身"} if block?(user_id)
     loc = last_loc
     return {:last => ""} if loc.nil?
-    diff = Time.now.to_i - loc.cat.to_i
+    diff = Time.now.to_i - loc.cati
     tstr = User.time_desc(diff)
     dstr = Shop.find(loc.sid).name if dstr.nil?
     {:last => "#{tstr} #{dstr}"}
@@ -198,10 +198,6 @@ class User
 
   def is_staff?
     !Staff.where({user_id: id}).empty?
-  end
-  
-  def cat
-    self._id.generation_time.getlocal
   end
   
   def room_photos
