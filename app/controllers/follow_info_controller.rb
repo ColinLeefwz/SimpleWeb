@@ -12,7 +12,7 @@ class FollowInfoController < ApplicationController
   
   def friends
     who = User.find(params[:id])
-    users = who.follows_s.map {|x| User.find2(x) }
+    users = who.follows_s.map {|x| User.find_by_id(x) }
     users.delete(nil)
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
     users.delete_if {|x| who.black?(x._id) }

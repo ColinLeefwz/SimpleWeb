@@ -3,7 +3,9 @@ module AdminUsersHelper
 
   def chat_img(text)
     if mat = text.match(/\[img:(.*)\]/)
-      text = text.sub(mat[1],"<a href=#{Photo2.find(mat[1]).img} target='_blank'>#{mat[1]}</a><img src='#{Photo2.find(mat[1]).img.url(:t2)}' />" )
+      photo = Photo2.find_by_id(mat[1])
+      return text if photo.nil?
+      text = text.sub(mat[1],"<a href=#{photo} target='_blank'>#{mat[1]}</a><img src='#{photo.img.url(:t2)}' />" )
     end
     text
   end

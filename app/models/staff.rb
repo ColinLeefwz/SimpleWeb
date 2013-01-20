@@ -5,17 +5,8 @@ class Staff
   
   index({ shop_id: 1})
   
-
-  def self.find_by_id(id)
-    begin
-      Staff.find(id)
-    rescue
-      nil
-    end
-  end
-  
   def user
-    User.find2(user_id)
+    User.find_by_id(user_id)
   end
 
   def shop
