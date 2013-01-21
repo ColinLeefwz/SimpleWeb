@@ -54,6 +54,7 @@ class Shop
   
   def city_fullname
     city = City.where({code:self.city}).first
+    return "" if city.nil?
     city.s + city.name
   end
   
