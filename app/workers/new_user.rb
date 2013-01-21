@@ -12,6 +12,7 @@ class NewUser
   def self.notify(uid,sid, to)
     user = User.find(uid)
     shop = Shop.find(sid)
+    return unless shop.city=="0571"
     xmpp = Xmpp.chat(uid,to,"新用户来了:#{user.show_gender} #{shop.city_fullname} #{shop.name}")
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
   end
