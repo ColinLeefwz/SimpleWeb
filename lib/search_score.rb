@@ -44,14 +44,17 @@ module SearchScore
       xx[1] += xx[2]
     end
     score.sort! {|a,b| a[1]<=>b[1]}
-    ret = []
+    ret1 = []
+    ret2 = []
     score.each_with_index do |x,i|
-      if i<5
-        ret << x
-      else
-        ret << x if x[0]["t"]
+      if x[0]["t"]
+        ret1 << x
+      elsif i<5
+        ret2 << x
       end
     end
+    ret = ret1[0..4]+ret2
+    ret += ret1[5..-1] if ret1.length>5
     if debug
       return ret
     else
