@@ -22,7 +22,7 @@ class SinaUser
       user.head_logo_id = user_logo.id
       user.save
       UserLogo.collection.insert(user_logo.attributes)
-      CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img")
+      #CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img")
     end
     user
   end
