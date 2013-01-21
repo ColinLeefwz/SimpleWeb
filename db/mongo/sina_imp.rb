@@ -1,7 +1,7 @@
-#db.sina_pois.findOne({city:"0021",shop_id:{$exists:true}}).title
-#db.sina_pois.count({city:"0021",shop_id:{$exists:true}})
+#db.sina_pois.findOne({city:"0571",shop_id:{$exists:true}}).title
+#db.sina_pois.count({city:"0571",shop_id:{$exists:true}})
 
-Mapabc.collection.database.session[:sina_pois].find({city:"0021",shop_id:{"$exists" => true}}).sort({"_id" => 1}).skip(100).each do |x|
+Mapabc.collection.database.session[:sina_pois].find({city:"0571",shop_id:{"$exists" => true}}).sort({"_id" => 1}).each do |x|
   begin
     datas = x["datas"]
     next if datas.nil?
