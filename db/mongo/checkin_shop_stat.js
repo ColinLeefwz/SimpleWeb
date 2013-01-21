@@ -90,6 +90,18 @@ var sync_to_shops = function(){
             }
         })
     })
+	db.shop_sina_users.find().forEach(function(x){
+		ssuc =x.users.length;
+		if(ssuc==0) return;
+        db.shops.update({
+            _id: x._id, utotal:0
+        }, {
+            $set: {
+                utotal: ssuc,
+                uftotal: ssuc/2
+            }
+        })		
+	})
 }
 
 checkinShopStat(1);
