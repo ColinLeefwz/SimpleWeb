@@ -62,3 +62,6 @@ db.shops.update({name:/博物馆$/},{$set:{t:6}},false,true)
 
 db.shops.update({type:"生活服务;美容美发"},{$set:{t:51}},false,true)
 
+db.shops.update({type:/^餐饮/, t:{$exists:false}},{$set:{t:5}},false,true)
+
+

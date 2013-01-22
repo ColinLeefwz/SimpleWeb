@@ -27,6 +27,7 @@ class LocateTest < ActiveSupport::TestCase
     ss = Shop.new.find_shops([30.27169, 120.158607], 65, "211.140.18.108", "")
     assert_equal 21000012, ss[0]["_id"]
     assert_equal "杭州百货大楼", ss[0]["name"]
+    assert ss.find {|x| x["name"] =~ /珠宝/ }.nil?
     assert ss.length>20
   end
 
