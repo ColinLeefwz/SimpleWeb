@@ -7,7 +7,7 @@ class NewUser
     ["502e6303421aa918ba000001","50446058421aa92042000002","50bc20fcc90d8ba33600004b","502e6303421aa918ba000079"].each do |to|
       NewUser.notify(uid,sid, to)
     end
-    ["50fe2e9bc90d8b6c3a0001fd","50fe294cc90d8b143a000136"].each do |to|
+    ["50fe2e9bc90d8b6c3a0001fd","50fe294cc90d8b143a000136","50bec2c1c90d8bd12f000086"].each do |to|
       NewUser.notify(uid,sid, to, 1)
     end
   end
