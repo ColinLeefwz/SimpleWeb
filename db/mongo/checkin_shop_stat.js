@@ -77,6 +77,18 @@ var total_users = function(){
 
 
 var sync_to_shops = function(){
+	db.shop_sina_users.find().forEach(function(x){
+		ssuc =x.users.length;
+		if(ssuc==0) return;
+        db.shops.update({
+            _id: x._id, utotal:0
+        }, {
+            $set: {
+                utotal: ssuc,
+                uftotal: ssuc/2
+            }
+        })		
+	})
     db.checkin_shop_stats.find().forEach(function(x){
 		ssu = db.shop_sina_users.findOne({_id: x._id});
 		if(ssu!=null) ssuc =ssu.users.length;
@@ -90,18 +102,6 @@ var sync_to_shops = function(){
             }
         })
     })
-	db.shop_sina_users.find().forEach(function(x){
-		ssuc =x.users.length;
-		if(ssuc==0) return;
-        db.shops.update({
-            _id: x._id, utotal:0
-        }, {
-            $set: {
-                utotal: ssuc,
-                uftotal: ssuc/2
-            }
-        })		
-	})
 }
 
 checkinShopStat(1);
