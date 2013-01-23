@@ -139,6 +139,10 @@ db.shops.remove({name:/游戏专卖$/})
 
 db.shops.find({name:/[^\-]{5,}-/})
 
+db.shops.update({name:/回收/},{$set:{del:1},$unset:{d:1}},false,true)
+db.shops.update({name:/暂停/},{$set:{del:1},$unset:{d:1}},false,true)
+db.shops.update({name:/搬家/},{$set:{del:1},$unset:{d:1}},false,true)
+
 db.shops.update({name:/洗头房/},{$set:{del:1},$unset:{d:1}},false,true)
 db.shops.update({name:/汽配$/},{$set:{del:1},$unset:{d:1}},false,true)
 
