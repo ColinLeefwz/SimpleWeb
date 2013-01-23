@@ -63,7 +63,7 @@ module SearchScore
     acc = accuracy
     acc = 30 if acc<30
     acc = 1000 if acc>1000
-    ret = ret*(0.1+acc/300.0)
+    ret = ret*(0.05+acc/300.0)
     return ret if min_d<acc #如果最近的点在误差范围之内
     factor = (min_d-acc)/30.0
     factor = 3 if factor>3
@@ -83,7 +83,7 @@ module SearchScore
       score.each_with_index do |xx,i|
         bshop = b.shops.find{|shop| shop["id"]==xx[0]["_id"]}
         next if bshop.nil?
-        xx[1] -= (30/b.shops.size+(bshop["users"].size-1)*50)
+        xx[2] -= (30/b.shops.size+(bshop["users"].size-1)*50)
       end
     end
   end  

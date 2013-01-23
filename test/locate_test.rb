@@ -69,7 +69,8 @@ class LocateTest < ActiveSupport::TestCase
 
   def test_locate10
     ss = Shop.new.find_shops([30.77376203, 114.208263] , 50, "", "")
-    assert ss[0]["name"].index("天河机场")>=0
+    assert ss[0,3].find {|x| x["name"] =~ /天河机场/ }
+    #assert ss[0]["name"].index("天河机场")>=0
   end  
 
   def test_locate11
@@ -104,7 +105,11 @@ class LocateTest < ActiveSupport::TestCase
     assert ss[0,3].find {|x| x["name"] =~ /张生记/ }
   end
   
-  
+  def test_bssid
+    s0 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "", "" , nil ,true)[0]
+    s1 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "", "" , "0:23:89:71:6f:c4" ,true)[0]
+    assert s0[2] > s1[2]
+  end
   
   
   def test_shop_similar
