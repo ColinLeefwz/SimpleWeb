@@ -255,5 +255,25 @@ class User
     user_city = users.group_by{|g| g.city}.map{|k, v| [City.gname(k), v.count]}
     user_city.sort { |a, b| b[1] <=> a[1]  }
   end
+  
+  #目前导入的虚拟帐户被脸脸用户加关注的用户，需要人工联系
+  def self.auto_todo
+    ret = []
+    User.all.each do |u|
+      next if u.follows.nil?
+      u.follows.map {|x| User.find_by_id(x)}.each do |user|
+        next if user.nil?
+        ret << [user,u] if user.auto
+      end
+    end
+    ret.each do |arr| 
+      x = arr[0]
+      u=arr[1]
+      shop = ShopSinaUser.where({users:x.id}).first
+      shop = Shop.find(shop.id).name unless shop.nil?
+      puts "#{x.id}, #{x.name}, #{x.wb_uid},\t #{u.name}, #{u.wb_uid}, #{shop}"
+    end
+    ret
+  end
 
 end

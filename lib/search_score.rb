@@ -3,7 +3,7 @@
 module SearchScore
 
   def find_shops(loc,accuracy,ip,uid,bssid=nil,debug=false)
-    radius = 0.0018+0.002*accuracy/300
+    radius = 0.0016+0.002*accuracy/300
     radius=0.01 if(radius>0.01)  #不大于1000米
     arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
     arr.uniq_by! {|x| x["_id"]}
@@ -20,17 +20,11 @@ module SearchScore
     score = arr.map {|x| [x,min_distance(x,loc),0]}
     min_d = score[0][1]
     score.reject!{|s| (s[0]["t"]==0 && s[0]["del"]) } #过期的活动
-    if score.length>5
-      score.reject!{|s| (s[0]["del"] && s[1]>30 ) }
+    if score.length>10
+      score.reject!{|s| s[0]["del"] }
     end
     if score.length>5
-      score.reject!{|s| (s[0]["d"] && s[1]>(100-s[0]["d"]) ) }
-    end
-    score.reject!{|s| s[0]["del"] } if score.length>10
-    score.reject!{|s| s[0]["d"] && s[0]["d"]>=30 } if score.length>20
-    score.reject!{|s| s[0]["d"] } if score.length>25
-    if score.length>5
-      score = score[0,5]+score[5..-1].reject{|s| (s[0]["d"] || s[0]["t"].nil?)}
+      score = score[0,6]+score[6..-1].reject{|s| bad?(s) }
     end
     score.each do |xx|
       x=xx[0]
@@ -44,19 +38,23 @@ module SearchScore
       xx[1] += xx[2]
     end
     score.sort! {|a,b| a[1]<=>b[1]}
-    ret = []
-    score.each_with_index do |x,i|
-      if i<5
-        ret << x
-      else
-        ret << x if x[0]["t"]
-      end
+    if score.length>9
+      ret = score[0,9]+score[9..-1].reject{|s| bad?(s) }
+    else
+      ret = score
+    end
+    if bad?(ret[0]) && !bad?(ret[1])
+      ret = [ret[1],ret[0]]+ret[2..-1]
     end
     if debug
       return ret
     else
       return ret[0,30].map {|x| x[0]}
     end
+  end
+  
+  def bad?(shop)
+    shop[0]["d"] || shop[0]["t"].nil? || shop[0]["del"]
   end
   
   def adjust(score,accuracy,min_d)
@@ -115,15 +113,15 @@ module SearchScore
       xx[2]-=5 if t>=4 && t<50
       xx[2]+=60 if t==14 # 14:大型医院
     else
-      xx[2] +=20
+      xx[2] +=100
     end
     if x["shops"]
       xx[2]-=30
       xx[2]-=x["shops"].length
     end
     xx[2]-=10 if x["lo"][0].class==Array
-    xx[2]+= x["d"] if x["d"]
-    xx[2]+=150 if x["del"]
+    xx[2]+= (100+x["d"].to_i*5) if x["d"]
+    xx[2]+=1000 if x["del"]
     if t==1
       xx[2]-=30 if (hour>=20 || hour <=3)
       xx[2]+=20 if (hour>=6 || hour <=12)
