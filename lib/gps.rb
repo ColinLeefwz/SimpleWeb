@@ -64,6 +64,17 @@ module Gps
     arr.uniq!
     arr
   end
+  
+  def merge_latlng(lat,lng)
+    if self["lo"][0].class==Array
+      arr = self["lo"]
+    else
+      arr = [self["lo"]]
+    end
+    arr << [lat,lng]
+    arr.uniq!
+    self.update_attributes!({lo:arr})
+  end
 
   
 end
