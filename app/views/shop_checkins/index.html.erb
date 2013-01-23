@@ -12,14 +12,13 @@
 
 
   <% @checkins.each do |checkin| %>
-    <tr>
-      <td class="gray"><%=link_to checkin.user.name %></td>
-      <td align="center" class="gray"><%= checkin.user.show_gender%></td>
-      <td align="center" class="gray"><%= checkin.user.birthday.try(:to_date)%></td>
-      <td align="center" class="gray"><%= checkin.cat.strftime("%Y-%m-%d %H:%M:%S") %></td>
+    <tr class="gray">
+      <td><%=link_to checkin.user.name, :class=>"black"%></td>
+      <td align="center"><%= checkin.user.show_gender%></td>
+      <td align="center"><%= checkin.user.birthday.try(:to_date)%></td>
+      <td align="center"><%= checkin.cat.strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%= link_to '历史签到', url_for(:action => 'index', :uid => checkin.user.id) %></td>
       <td><%= link_to '链接到微博', checkin.user.weibo_home %></td>
-
     </tr>
   <% end %>
   <tr class="bottom">

@@ -11,7 +11,7 @@ $(document).ready(function(){
 				curr = i;
 				$("#DHImg a").filter("a").css("display","none").end().eq(j).css({"z-index":"1","display":"block"});
 
-				$("#DHImg a").eq(i).css({"z-index":"2","display":"none"}).fadeIn(1500);
+				$("#DHImg a").eq(i).css({"z-index":"2","display":"none"}).fadeIn(1800);
 				$(this).siblings(".def").removeClass("selected").end().addClass("selected");
 				/**siblings()获得匹配集合中每个元素的同胞元素，通过选择器进行筛选是可选的**/
 				j=i;
