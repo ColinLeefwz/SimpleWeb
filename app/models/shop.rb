@@ -141,6 +141,7 @@ class Shop
     ret = []
     user_last_checkins(start,size).each do |uid,cat|
       u = User.find_by_id(uid)
+      next if u.password==nil
       next if u.block?(session_uid)
       ret << u.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
     end
