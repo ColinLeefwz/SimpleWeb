@@ -1692,7 +1692,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \subsection{其它内部接口}
 仅用于服务器端的后台内部调用。
 
-\subsubsection{给指定的聊天室发送消息}
+\subsubsection{以给定用户身份给指定的聊天室发送消息}
 
 \begin{table}[H]
    \begin{center}
@@ -1706,11 +1706,13 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \hline
  \  message  & 字符串 & 必填 &  需要发送的消息  \\
 \hline
- \  uid  & 字符串 & 必填 &  该优惠券的id  \\
+ \  uid  & 字符串 & 必填 &  发送此消息的用户id  \\
 \hline
 \end{tabular}
    \end{center}
 \end{table}
+这条消息会发送给聊天室的所有人，比如用户进入聊天室时的打招呼。
+如果是给聊天室的某个人发消息，比如优惠券中奖／公告消息，则通过rest接口发送groupchat类型的消息。
 
 \subsubsection{用户屏蔽通讯}
 
@@ -1747,6 +1749,24 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{tabular}
    \end{center}
 \end{table}
+
+
+\subsubsection{杀掉用户会话}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/api/kill} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  user  & 字符串 & 必填 &  被封杀的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
 
 \subsubsection{发送任意XMPP消息}
 
