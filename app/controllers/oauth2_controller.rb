@@ -149,6 +149,10 @@ class Oauth2Controller < ApplicationController
       session[:new_user_flag] = true
       #Resque.enqueue(WeiboFirst, token)
     end
+    if user.password.nil?
+      render :json => {error:"forbidden."}.to_json
+      return
+    end
     session[:user_id] = user.id
     $redis.set("wbtoken#{user.id}",token)
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
