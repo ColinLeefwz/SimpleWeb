@@ -147,7 +147,7 @@ class Oauth2Controller < ApplicationController
       user = gen_new_user(uid,token) if user.nil?
       change_auto_user(user) if user.auto
       session[:new_user_flag] = true
-      Resque.enqueue(WeiboFirst, token)
+      #Resque.enqueue(WeiboFirst, token)
     end
     session[:user_id] = user.id
     $redis.set("wbtoken#{user.id}",token)
