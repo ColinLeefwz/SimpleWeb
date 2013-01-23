@@ -11,9 +11,17 @@
       <td><%= user.name %></td>
       <td>
         <% user.reports_s.each do |u| %>
+		 <% 
+			bu = User.find_by_id(u['id'])
+			next if bu.nil?
+		 %>
           <%= u['cat'].localtime.strftime("%Y-%m-%d %H:%M:%S")%>,
-          <%= link_to u['id'], "/admin_users/human_chat?id=#{user.id.to_s}&uid=#{u["id"]}" %>,
-          <%= User.find_by_id(u['id']) ? User.find_by_id(u['id']).name : "null(删除)"   %>
+		  <%= bu.id%>,
+          <%= link_to bu.name, "/admin_users/show?id=#{u["id"]}" %>,
+          <%= link_to " 聊天纪录 ", "/admin_users/human_chat?id=#{user.id.to_s}&uid=#{u["id"]}" %>,
+          <%= button_to(" 封杀'#{bu.name}'", "/admin_users/kill?id=#{u["id"]}") if bu.password!=nil %>
+          <%= button_to(" 解封'#{bu.name}'", "/admin_users/unkill?id=#{u["id"]}") if bu.password==nil %>
+		  
           <br/>
         <%end%>
       </td>
