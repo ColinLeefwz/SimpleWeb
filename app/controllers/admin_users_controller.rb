@@ -35,6 +35,21 @@ class AdminUsersController < ApplicationController
     chats = @user.human_chat(params[:uid]).sort{|a,b| b[3] <=> a[3]}
     @chats =paginate_arr(chats, params[:page], 50 )
   end
+  
+  def kill
+    @user = User.find(params[:id])
+    @user.password=nil
+    @user.save!
+    RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => params[:id]) 
+    render :text => "ok"
+  end
+  
+  def unkill
+    @user = User.find(params[:id])
+    @user.password=Digest::SHA1.hexdigest(":dface#{@user.wb_uid}")[0,16]
+    @user.save!
+    render :text => "ok"
+  end
 
 end
 
