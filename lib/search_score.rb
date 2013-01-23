@@ -63,7 +63,7 @@ module SearchScore
     acc = accuracy
     acc = 30 if acc<30
     acc = 1000 if acc>1000
-    ret = ret*(acc/300.0)
+    ret = ret*(0.1+acc/300.0)
     return ret if min_d<acc #如果最近的点在误差范围之内
     factor = (min_d-acc)/30.0
     factor = 3 if factor>3
@@ -83,7 +83,7 @@ module SearchScore
       score.each_with_index do |xx,i|
         bshop = b.shops.find{|shop| shop["id"]==xx[0]["_id"]}
         next if bshop.nil?
-        xx[1] -= (30+(bshop["users"].size-1)*50)
+        xx[1] -= (30/b.shops.size+(bshop["users"].size-1)*50)
       end
     end
   end  
@@ -100,9 +100,6 @@ module SearchScore
   end
   
   def base_score(xx,x)
-    today = Time.now
-    hour = today.hour
-    hminute = hour*60+today.min
     t = x["t"]
     stype = x["type"]
     stype='' if(!stype)
@@ -122,6 +119,18 @@ module SearchScore
     xx[2]-=10 if x["lo"][0].class==Array
     xx[2]+= (100+x["d"].to_i*5) if x["d"]
     xx[2]+=1000 if x["del"]
+    len = x["name"].length
+    xx[2] += (10+(len-11)*3) if len>11
+    xx[2] += (10+(4-len)*3) if len<4
+    xx[2] -= x["v"].to_i if x["v"]
+    time_score(xx,x)
+  end
+  
+  def time_score(xx,x)
+    today = Time.now
+    hour = today.hour
+    hminute = hour*60+today.min
+    t = x["t"]
     if t==1
       xx[2]-=30 if (hour>=20 || hour <=3)
       xx[2]+=20 if (hour>=6 || hour <=12)
@@ -131,6 +140,10 @@ module SearchScore
         xx[2]-=20 
       elsif (hour>=17 && hour<=19)
         xx[2]-=20
+      elsif (hour>20)
+        xx[2]+= 10*(hour-20)
+      elsif (hour<10)
+        xx[2]+= 10*(10-hour)
       elsif (hminute>(14*60+30) && hminute<(16*60+30) )
         xx[2]+=10
       end
@@ -147,10 +160,6 @@ module SearchScore
         xx[2] +=10;
       end
     end
-    len = x["name"].length
-    xx[2] += (10+(len-11)*3) if len>11
-    xx[2] += (10+(4-len)*3) if len<4
-    xx[2] -= x["v"].to_i if x["v"]
   end
   
   def user_to_score(uc)
