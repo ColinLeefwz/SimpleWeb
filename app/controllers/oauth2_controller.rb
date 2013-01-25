@@ -149,7 +149,7 @@ class Oauth2Controller < ApplicationController
       session[:new_user_flag] = true
       #Resque.enqueue(WeiboFirst, token)
     end
-    if user.password.nil?
+    if user.forbidden?
       render :json => {error:"forbidden."}.to_json
       return
     end
@@ -165,6 +165,7 @@ class Oauth2Controller < ApplicationController
     user.head_logo_id = nil
     user.pcount = 0
     user.atime = Time.now
+    user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
     user.save!
   end
   
