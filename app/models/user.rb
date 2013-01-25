@@ -65,6 +65,11 @@ class User
     return false
   end
   
+  #是否是被封杀的用户
+  def forbidden?
+    auto!=true && password==nil
+  end
+  
 
   def attr_with_id
     hash = self.attributes.merge({id: self._id})
