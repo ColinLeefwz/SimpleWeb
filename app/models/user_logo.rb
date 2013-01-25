@@ -5,6 +5,7 @@ class UserLogo
   
   field :user_id, type: Moped::BSON::ObjectId
   field :ord, type: Float
+  field :t, type:Integer #图片类型：1拍照；2选自相册
   field :img
   mount_uploader(:img, LogoUploader)
   
