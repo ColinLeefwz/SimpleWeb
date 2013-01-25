@@ -19,8 +19,8 @@
 		  <%= bu.id%>,
           <%= link_to bu.name, "/admin_users/show?id=#{u["id"]}" %>,
           <%= link_to " 聊天纪录 ", "/admin_users/human_chat?id=#{user.id.to_s}&uid=#{u["id"]}" %>,
-          <%= button_to(" 封杀'#{bu.name}'", "/admin_users/kill?id=#{u["id"]}") if bu.password!=nil %>
-          <%= button_to(" 解封'#{bu.name}'", "/admin_users/unkill?id=#{u["id"]}") if bu.password==nil %>
+          <%= button_to(" 封杀'#{bu.name}'", "/admin_users/kill?id=#{u["id"]}") unless bu.forbidden? %>
+          <%= button_to(" 解封'#{bu.name}'", "/admin_users/unkill?id=#{u["id"]}") if bu.forbidden? %>
 		  
           <br/>
         <%end%>
