@@ -46,6 +46,29 @@ class AroundmeController < ApplicationController
     end
   end
   
+  def hot_users
+    page = params[:page].to_i
+    pcount = params[:pcount].to_i
+    page = 1 if page==0
+    pcount = 20 if pcount==0
+    skip = (page-1)*pcount
+    lo = [params[:lat].to_f , params[:lng].to_f]
+    city = Shop.get_city(lo)
+    arr = Checkin.where({city: city}).skip(skip).limit(pcount).map{|c| [c.user,c.shop]}
+    if arr.nil?
+      render :json => [].to_json
+      return
+    end
+    users = []
+    arr.each {|user,shop| users << user.safe_output_with_relation(session[:user_id]).merge!({location:"@"+shop.name}) }
+    fm = users.group_by {|item| item["gender"]==2 ? "f" : "m" }
+    fmf = fm["f"]
+    fmf = [] if fmf.nil?
+    fmm = fm["m"]
+    fmm = [] if fmm.nil?
+    render :json => fmf.concat(fmm).to_json
+  end
+  
   private 
   
   def user_to_score(uc)
