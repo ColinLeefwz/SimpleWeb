@@ -60,7 +60,10 @@ class AroundmeController < ApplicationController
       return
     end
     users = []
-    arr.each {|user,shop| users << user.safe_output_with_relation(session[:user_id]).merge!({location:"@"+shop.name}) }
+    arr.each do |user,shop| 
+      hash = user.safe_output_with_relation(session[:user_id]).merge!({location: "@"+shop.name})
+      users << hash
+    end
     fm = users.group_by {|item| item["gender"]==2 ? "f" : "m" }
     fmf = fm["f"]
     fmf = [] if fmf.nil?

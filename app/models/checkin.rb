@@ -133,8 +133,9 @@ LUA
     return ret
   end
   
-  def self.init_city
+  def Checkin.init_city
     Checkin.all.each do |ck|
+      next if ck.city
       next if ck.shop.nil?
       ck.city = ck.shop.city
       ck.save
