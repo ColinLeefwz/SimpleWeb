@@ -4,7 +4,7 @@ class AdminBlacksController < ApplicationController
   layout "admin"
 
   def index
-    @users =  User.where({"blacks.report" => 1})
+    @users =  User.where({"blacks.report" => 1}).sort({_id:-1})
   end
   
 
