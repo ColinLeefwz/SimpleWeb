@@ -9,6 +9,7 @@ class Photo
   field :user_id, type: Moped::BSON::ObjectId
   field :room #发给聊天室
   field :desc
+  field :t, type:Integer #图片类型：1拍照；2选自相册
   field :weibo, type:Boolean
   field :like, type:Array #赞
   field :com, type:Array #评论

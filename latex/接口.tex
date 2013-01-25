@@ -850,6 +850,8 @@ wb_uid:1884834632
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
  user\_logo[img]  & file & 必须 &  头像文件\\
+ \hline
+ user\_logo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
 \hline
 \end{tabular}
    \end{center}
@@ -1388,6 +1390,8 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
    \hline
  photo[desc]  & 字符串 & 可选  &  图像的说明文字\\
  \hline
+  photo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
+ \hline
 \end{tabular}
    \end{center}
 \end{table}
@@ -1565,6 +1569,8 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
  \hline
  photo[to\_uid]  & 字符串 & 必须 &  接收人的id\\
 \hline
+  photo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
+ \hline
 \end{tabular}
    \end{center}
 \end{table}
