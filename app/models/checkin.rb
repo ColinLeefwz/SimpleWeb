@@ -13,6 +13,7 @@ class Checkin
   field :alt, type:Float    #海拔高度
   field :altacc, type: Integer  #海拔高度的精确度
   field :bssid #wifi上网时的bssid
+  field :city #city 城市
   
   field :photos, type:Array #本次签到期间发该商家的图片
   
@@ -130,6 +131,14 @@ LUA
       ret << ck
     end
     return ret
+  end
+  
+  def self.init_city
+    Checkin.all.each do |ck|
+      next if ck.shop.nil?
+      ck.city = ck.shop.city
+      ck.save
+    end
   end
   
 end
