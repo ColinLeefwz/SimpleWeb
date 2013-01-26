@@ -7,7 +7,7 @@ class SinaFan
 
   def self.start
     {'2045097601' => '陌陌科技', '1734536090' => '街旁', '1834134725' => '微领地', '2196734667' => '微博位置'}.each do |k,v|
-      self.insert_fan('2.00t9e5PCMcnDPC86e7068cc9yxaMRC', k, :name => v)
+      self.insert_fan('2.00t9e5PCHkEBGB6181606c3c0b8iY1', k, :name => v)
     end
   end
 
