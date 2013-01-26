@@ -54,7 +54,17 @@ class AroundmeController < ApplicationController
     skip = (page-1)*pcount
     lo = [params[:lat].to_f , params[:lng].to_f]
     city = Shop.get_city(lo)
-    ckins = Checkin.where({city: city, sid:{"$ne" => 20325453}}).sort({_id:-1}).skip(skip).limit(pcount).to_a
+    if page%2==1
+      sex = session_user.gender
+      if sex==1
+        sex=2
+      else
+        sex=1
+      end
+    else
+      sex = session_user.gender
+    end
+    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => 20325453}}).sort({_id:-1}).skip(skip).limit(pcount).to_a
     arr = ckins.uniq!{|x| x.uid}.map{|c| [c.user,c.shop]}
     if arr.nil?
       render :json => [].to_json
