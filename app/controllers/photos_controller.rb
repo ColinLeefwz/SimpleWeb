@@ -36,6 +36,7 @@ class PhotosController < ApplicationController
     like = photo.like
     photo.like = like.delete_if{|x| x["id"]==session[:user_id]}
     photo.save!
+    #TODO: 删除操作不更新最后updated_at
     render :json => {ok:photo.id}.to_json
   end  
   
