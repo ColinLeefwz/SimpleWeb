@@ -9,31 +9,19 @@ var set_user_city = function(){
             $exists: false
         }
     }).forEach(function(user){
-        var checkins = [];
         db.checkins.find({
             uid: user._id
         }).sort({
             _id: 1
-        }).forEach(function(ch){
-            checkins.push(ch)
-        });
-        if(!!checkins){
-            for(var checkin in checkins){
-                shop = db.shops.findOne({
-                    _id: checkins[checkin].sid
-                });
-                if(!!shop && !!shop.city && shop.city != ''){
-                    db.users.update({
-                        _id: user._id
-                    },{
-                        $set:{
-                            city: shop.city
-                        }
-                    });
-                    break;
+        }).limit(1).forEach(function(ch){
+            db.users.update({
+                _id: user._id
+            },{
+                $set:{
+                    city: ch.city
                 }
-            }
-        }
+            });
+        });
     })
 };
 
