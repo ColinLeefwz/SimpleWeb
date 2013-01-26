@@ -71,7 +71,7 @@ class CheckinsController < ApplicationController
     send_coupon_if_exist
     if session[:new_user_flag]
       session[:new_user_flag] = nil
-      Resque.enqueue(NewUser, checkin.uid,checkin.sid)
+      Resque.enqueue(NewUser, checkin.uid,checkin.sid,checkin.od)
     end
     checkin
   end
