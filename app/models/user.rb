@@ -276,6 +276,14 @@ class User
     sina_friends.delete_if {|x| follows_s.index(x.id)!=nil }
   end  
   
+  def sina_fans
+    SinaFriend.where({"data.ids" => wb_uid}).map {|x| User.where({wb_uid:x.id}).first}
+  end
+  
+  def sina_fans_not_lianlian_fans
+    sina_fans.delete_if {|x| x.follows_s.index(self.id)!=nil }
+  end
+  
   
   #目前导入的虚拟帐户被脸脸用户加关注的用户，需要人工联系
   def self.auto_todo
