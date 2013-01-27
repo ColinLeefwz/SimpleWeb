@@ -7,6 +7,13 @@ class WeiboFriend
     data = SinaFriend.new.insert_ids(wb_uid,token)
     user = User.find(uid)
     friend_notice_all(user)
+    fan_notice_all(user)
+  end
+  
+  def self.fan_notice_all(user)
+    user.sina_fans_not_lianlian_fans.each do |x|
+      WeiboFriend.friend_notice(x,user)
+    end
   end
   
   def self.friend_notice_all(user)
