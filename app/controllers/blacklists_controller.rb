@@ -10,9 +10,11 @@ class BlacklistsController < ApplicationController
   end
 
   def create
-    hash = {id:Moped::BSON::ObjectId(params[:block_id]), report:params[:report].to_i, cat:Time.now }
+    report = params[:report].to_i
+    hash = {id:Moped::BSON::ObjectId(params[:block_id]), report:report, cat:Time.now }
     session_user.add_to_set(:blacks, hash) unless session_user.black?(params[:block_id])
     Resque.enqueue(XmppBlack, session[:user_id], params[:block_id], 'block')
+    Resque.enqueue(XmppBlackNotice, session[:user_id], params[:block_id]) if report==1
     render:json => hash.to_json
   end
 
