@@ -18,7 +18,7 @@ class SinaFriend
       next if user.wb_uid.nil? || !user.wb_uid.match(/^[\d]+$/)
       next if SinaFriend.find_by_id(user.wb_uid)
       insert_ids(user.wb_uid,token)
-      sleep(1.5)
+      sleep(2)
     end
   end
 
@@ -46,7 +46,9 @@ class SinaFriend
     total_number = data["total_number"]
     ids = []
     0.upto((total_number-1)/5000) do |page|
-      ids += single_page(wb_uid, token,page)["ids"].map{|m| m.to_s}
+      xx = single_page(wb_uid, token,page)["ids"]
+      return nil if xx.nil?
+      ids += xx.map{|m| m.to_s}
     end
     {:ids =>  ids, :total_number =>  total_number}
   end

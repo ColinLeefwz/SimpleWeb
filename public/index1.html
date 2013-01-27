@@ -15,13 +15,21 @@
 <a href="/oauth2/sina_new">个人新浪微博登录</a><br><br>
 
 <a href="#" onclick="document.getElementById('xauth_login').style.display='block'">个人新浪微博登录Xauth</a><br><br>
-<form action="/oauth2/login" style="display:none" id="xauth_login">
+<div id="xauth_login" style="display:none">
+<form action="/oauth2/login">
 	name:<input type="text" name="name" value="yuanxinyu.hangzhou@gmail.com" size="40">
 	pass:<input type="text" name="pass">
 	<input type="hidden" name="hash" value="d4bb1bd9f0d5a6929ae1091954add84e">
 	<input type="submit" name="submit" value="login">
 </form>
-
+<br>
+<form action="/oauth2/login">
+	name:<input type="text" name="name" value="jishu@1dooo.com" size="40">
+	pass:<input type="text" name="pass">
+	<input type="hidden" name="hash" value="df28db876821ac9dfeb0363d1cfa90fb">
+	<input type="submit" name="submit" value="login">
+</form>
+</div>
 
 <a href="/follow_info/followers?id=502e6303421aa918ba000005">粉丝查询</a><br><br>
 <a href="/follow_info/friends?id=502e6303421aa918ba000005">关注查询</a><br><br>
