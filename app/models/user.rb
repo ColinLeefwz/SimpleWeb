@@ -261,6 +261,17 @@ class User
     user_city.sort { |a, b| b[1] <=> a[1]  }
   end
   
+  def sina_friends
+    ret = []
+    sf = SinaFriend.find_by_id(wb_uid)
+    return [] if sf.nil?
+    sf.data["ids"].each do |id|
+      user= User.where({wb_uid:id}).first
+      ret << user unless user.nil?
+    end
+    ret
+  end
+  
   #目前导入的虚拟帐户被脸脸用户加关注的用户，需要人工联系
   def self.auto_todo
     ret = []
