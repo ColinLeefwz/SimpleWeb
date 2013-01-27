@@ -9,7 +9,7 @@ class SinaPoiPhoto
     num = (SinaPoi.where({:photo_fetched => {'$exists' => false}}).count/3000)+1
     num.times do |t|
       SinaPoi.where({:iso_num => {'$gt' => 0}, :photo_fetched => {'$exists' => false} }).sort({iso_num:-1}).skip(t*20).limit(20).each do |poi|
-        self.poi_photo_insert('2.00t9e5PCHkEBGB6181606c3c0b8iY1', poi._id)
+        self.poi_photo_insert('2.00t9e5PCMcnDPC86e7068cc9yxaMRC', poi._id)
         poi.update_attribute(:photo_fetched, 1)
       end
     end
