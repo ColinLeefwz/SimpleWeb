@@ -1509,6 +1509,31 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
    \end{center}
 \end{table}
 
+
+\subsection{对聊天室图片点评进行回复}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/recomment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+ \hline
+ rid  & 字符串 & 必须 & 被回复者的id\\
+   \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+这里的rid是被回复者的id，而发布回复者的id是从session中自动获取的。
+
+这里的回复其实是针对人的，如果一个人在一张图片下发布了多个评论，那么这里的回复不针对特定的那条评论。
+
+
 \subsection{对聊天室图片取消点评}
 
 \begin{table}[H]
@@ -1527,6 +1552,9 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
    \end{center}
 \end{table}
 个人只能取消自己发的点评。
+
+评论的删除是区分两种情况：取消／隐藏，评论的发布人可以取消，图片的发布人可以隐藏。
+对第三方来说都是删除。
 
 
 \subsection{对聊天室图片隐藏点评}
