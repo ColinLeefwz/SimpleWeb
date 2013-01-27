@@ -271,6 +271,11 @@ class User
     end
     ret
   end
+
+  def sina_friends_not_lianlian_friends
+    sina_friends.delete_if {|x| follows_s.index(x.id)!=nil }
+  end  
+  
   
   #目前导入的虚拟帐户被脸脸用户加关注的用户，需要人工联系
   def self.auto_todo
