@@ -45,7 +45,13 @@ class PhotosController < ApplicationController
     ret = photo.push(:com, {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now})
     render :json => ret.to_json
   end
-  
+
+  def recomment
+    photo = Photo.find(params[:id])
+    ret = photo.push(:com, {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now, rid:params[:rid]})
+    render :json => ret.to_json
+  end
+    
   def delcomment
     photo = Photo.find(params[:id])
     com = photo.com
