@@ -64,7 +64,7 @@ class AroundmeController < ApplicationController
     else
       sex = session_user.gender
     end
-    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => 20325453}}).sort({_id:-1}).skip(skip).limit(pcount).to_a
+    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => 20325453}}).sort({_id:-1}).skip(skip).limit(pcount*10).to_a
     arr = ckins.uniq!{|x| x.uid}.map{|c| [c.user,c.shop]}
     if arr.nil?
       render :json => [].to_json
