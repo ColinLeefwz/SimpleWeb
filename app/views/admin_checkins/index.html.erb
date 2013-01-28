@@ -28,7 +28,7 @@
     <th>用户</th>
     <th>商家</th>
     <th>经纬度</th>
-    <th>ip</th>
+    <th>bssid</th>
     <th>排名</th>
     <th>误差</th>
     <th></th>
@@ -43,7 +43,7 @@
         <%= checkin.shop.try(:city) %>
       </td>
       <td><%= checkin.loc %></td>
-      <td><%= checkin.ip %></td>
+      <td><%= checkin.bssid %></td>
       <td><%= checkin.od.to_i %></td>
       <td><%= checkin.acc %></td>
       <td>
