@@ -135,15 +135,18 @@ module SearchScore
       xx[2]-=30 if (hour>=20 || hour <=3)
       xx[2]+=20 if (hour>=6 || hour <=12)
     end
+    if (t!=1 && t!=5 && t!=10 && t!=11 && t!=12 && t!=13 && t!=14)
+      if (hour>20)
+        xx[2]+= 10*(hour-20)
+      elsif (hour<10)
+        xx[2]+= 10*(10-hour)
+      end
+    end
     if (t==4)
       if(hour>=11 && hour<=13) 
         xx[2]-=20 
       elsif (hour>=17 && hour<=19)
         xx[2]-=20
-      elsif (hour>20)
-        xx[2]+= 10*(hour-20)
-      elsif (hour<10)
-        xx[2]+= 10*(10-hour)
       elsif (hminute>(14*60+30) && hminute<(16*60+30) )
         xx[2]+=10
       end
