@@ -81,6 +81,10 @@ class User
     return [] unless self._id
     UserLogo.logos(self._id)
   end
+  
+  def photos
+    Photo.where({user_id:_id})
+  end
 
   
   def head_logo
