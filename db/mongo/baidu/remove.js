@@ -136,6 +136,9 @@ db.shops.remove({t:{$in:[10,11,12]},name:/地块/})
 db.shops.remove({name:"商住楼"})
 db.shops.remove({name:/团队$/})
 db.shops.remove({name:/游戏专卖$/})
+db.shops.remove({name:"码头"})
+db.shops.remove({name:"婚庆"})
+
 
 db.shops.find({name:/[^\-]{5,}-/})
 
