@@ -49,7 +49,9 @@ class Shop
   end
   
   def city_name
-    City.where({code:self.city}).first.name
+    city = City.where({code:self.city}).first
+    return "海外" if city.nil?
+    city.name
   end
   
   def city_fullname
