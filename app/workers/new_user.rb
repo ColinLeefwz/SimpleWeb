@@ -7,15 +7,12 @@ class NewUser
     ["502e6303421aa918ba000001","50446058421aa92042000002"].each do |to|
       NewUser.notify(uid,sid, to, od)
     end
-    ["50bc20fcc90d8ba33600004b","502e6303421aa918ba000079"].each do |to|
-      NewUser.notify(uid,sid, to, od, 2)
-    end
-    ["50fe2e9bc90d8b6c3a0001fd","50fe294cc90d8b143a000136","50bec2c1c90d8bd12f000086"].each do |to|
-      NewUser.notify(uid,sid, to, od, 1)
-    end
     Resque.enqueue_in(2.seconds, NewUserWelcome, uid,sid,1)
     Resque.enqueue_in(6.seconds, NewUserWelcome, uid,sid,2)
     Resque.enqueue_in(9.seconds, NewUserWelcome, uid,sid,3)
+    Resque.enqueue_in(15.seconds, NewUserTalk, uid,sid,1)
+    Resque.enqueue_in(20.seconds, NewUserTalk, uid,sid,2)
+    
   end
   
   def self.notify(uid,sid, to, od, gender=0)
