@@ -92,11 +92,11 @@ class CheckinsController < ApplicationController
   
   def send_if_first(shop)
     return if shop.nil?
-    return if Checkin.where({sid: params[:shop_id]}).first
+    order = shop.realtime_user_count+1
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], 
-      "欢迎！您是第一个来到\##{shop.name}\#的脸脸，很特别哦。等有其他人加入后，你们就可以聊天了。")
+      "欢迎！您是第 #{order} 个来到\##{shop.name}\#的脸脸，很特别哦。") if order<=10
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], 
-      "置顶的照片栏还没被占领，赶快抢占并分享到微博吧。")
+      "置顶的照片栏还没被占领，赶快抢占并分享到微博吧。") if shop.photo_count<4
   end 
 
   def send_coupon_if_exist

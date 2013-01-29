@@ -65,6 +65,14 @@ class Shop
   def top4_photos
     Photo.where({room: self.id.to_i.to_s}).sort({updated_at: -1}).limit(4).to_a
   end
+  
+  def photos
+    Photo.where({room: self.id.to_i.to_s})
+  end
+  
+  def photo_count
+    Photo.where({room: self.id.to_i.to_s}).count
+  end
 
   #删除商家.
   def shop_del
@@ -83,6 +91,12 @@ class Shop
     end
     male = total - female
     safe_output.merge!( {"user"=>total, "male"=>male, "female"=>female} )
+  end
+  
+  def realtime_user_count
+    total,female = CheckinShopStat.get_user_count_redis(self._id)
+    total = self.utotal if total==0 && self.utotal>0
+    total
   end
 
   def safe_output_with_staffs
