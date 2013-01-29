@@ -36,4 +36,6 @@ gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'carrierwave_backgrounder', :git => "git://github.com/yuanxinyu/carrierwave_backgrounder.git"
 
 gem 'resque', :require => "resque/server"
+gem 'resque-scheduler', :require => 'resque_scheduler'
+
 gem 'osmlib-base'
