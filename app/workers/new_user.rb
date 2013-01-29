@@ -13,9 +13,9 @@ class NewUser
     ["50fe2e9bc90d8b6c3a0001fd","50fe294cc90d8b143a000136","50bec2c1c90d8bd12f000086"].each do |to|
       NewUser.notify(uid,sid, to, od, 1)
     end
-    Resque.enqueue(NewUserWelcome, uid,sid,1)
-    Resque.enqueue_in(4.seconds, NewUserWelcome, uid,sid,2)
-    Resque.enqueue_in(6.seconds, NewUserWelcome, uid,sid,3)
+    Resque.enqueue_in(2.seconds, NewUserWelcome, uid,sid,1)
+    Resque.enqueue_in(6.seconds, NewUserWelcome, uid,sid,2)
+    Resque.enqueue_in(9.seconds, NewUserWelcome, uid,sid,3)
   end
   
   def self.notify(uid,sid, to, od, gender=0)
