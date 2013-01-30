@@ -98,25 +98,41 @@ def want_msg(client,from,ck)
   client.send(msg)
 end
 
+def want(client,message)
+  user = User.find_by_id(message.from.to_s[0,24])
+  if user.nil?
+    error_msg(client,message.from)
+  else
+    ck = Checkin.where({sex:{"$ne" => user.gender}}).last
+    Rails.logger.debug("#{user},#{ck}")
+    want_msg(client,message.from,ck)
+    xmpp = Xmpp.chat(ck.user.id,user.id,": hi. (此为系统消息，不是#{ck.user.name}所发)")
+    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
+  end
+end
+
+def chat_process(client,m)
+  txt = m.body.gsub(/\W/, "")
+  if txt=="1"
+    msg1(client,m.from)
+    sleep(5)
+    msg2(client,m.from)
+  elsif  txt=="2" || txt=="我要" || txt=="找人"
+    want(client,m)
+  end
+end
+
+$message=nil
+
 client.add_message_callback do |m|
-  if m.type.to_s=="chat"
-    puts m
-    txt = m.body.gsub(/\W/, "")
-    if txt=="1"
-      msg1(client,m.from)
-      sleep(5)
-      msg2(client,m.from)
-    elsif  txt=="2" || txt=="我要" || txt=="找人"
-      user = User.find_by_id(m.from[0,24])
-      if user.nil?
-        error_msg(client,m.from)
-      else
-        ck = Checkin.where({sex:{"$ne" => user.gender}}).last
-        want_msg(client,m.from,ck)
-        xmpp = Xmpp.chat(ck.user.id,user.id,": hi. (此为系统消息，不是#{ck.user.name}所发)")
-        RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
-      end
+  $message=m
+  begin
+    if m.type.to_s=="chat"
+      Rails.logger.debug m
+      chat_process(client,m)
     end
+  rescue Exception => e
+    puts e
   end
 end
 
