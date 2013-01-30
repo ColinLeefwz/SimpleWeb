@@ -85,6 +85,23 @@ def msg2(client,from)
   client.send(msg)  
 end
 
+def help_msg(client,from)
+  str = <<-EOF   
+脸脸帮助：
+1、了解脸脸种子计划
+2、脸脸帮你推荐一位同城异性
+3、脸脸帮你推荐一位国内异性
+4、脸脸帮你推荐一位国外异性
+5、脸脸帮你推荐一位同城同性
+6、脸脸帮你推荐一位国内同性
+7、脸脸帮你推荐一位国外同性
+试试吧！
+  EOF
+  msg = Message::new(from, str)
+  msg.type=:chat
+  client.send(msg)  
+end
+
 def error_msg(client,from)
   msg = Message::new(from, "抱歉，出错了！")
   msg.type=:chat
@@ -98,12 +115,30 @@ def want_msg(client,from,ck)
   client.send(msg)
 end
 
-def want(client,message)
+def find_checkin(user,int)
+  case int
+  when 2
+    ck = Checkin.where({sex:{"$ne" => user.gender}, city:user.city}).last
+  when 3
+    ck = Checkin.where({sex:{"$ne" => user.gender}, city:{"$ne" => user.city}}).last
+  when 4
+    ck = Checkin.where({sex:{"$ne" => user.gender}, city:nil}).last
+  when 5
+    ck = Checkin.where({sex: user.gender, city:user.city}).last
+  when 6
+    ck = Checkin.where({sex: user.gender, city:{"$ne" => user.city}}).last
+  when 7
+    ck = Checkin.where({sex: user.gender, city:nil}).last
+  end
+  ck
+end
+
+def want(client,message,int)
   user = User.find_by_id(message.from.to_s[0,24])
   if user.nil?
     error_msg(client,message.from)
   else
-    ck = Checkin.where({sex:{"$ne" => user.gender}}).last
+    ck = find_checkin(user,int)
     Rails.logger.debug("#{user},#{ck}")
     want_msg(client,message.from,ck)
     xmpp = Xmpp.chat(ck.user.id,user.id,": hi. (此为系统消息，不是#{ck.user.name}所发)")
@@ -112,13 +147,15 @@ def want(client,message)
 end
 
 def chat_process(client,m)
-  txt = m.body.gsub(/\W/, "")
-  if txt=="1"
+  txt = m.body.gsub(/\W/, "").to_i
+  if txt==1
     msg1(client,m.from)
     sleep(5)
     msg2(client,m.from)
-  elsif  txt=="2" || txt=="我要" || txt=="找人"
-    want(client,m)
+  elsif  (txt>1 && txt<8)
+    want(client,m,txt)
+  else
+    help_msg(client,m.from)
   end
 end
 
