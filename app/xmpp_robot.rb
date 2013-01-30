@@ -85,6 +85,18 @@ def msg2(client,from)
   client.send(msg)  
 end
 
+def msg3(client,from)
+  str = <<-EOF   
+试试：
+回复2、遇见一位同城异性
+回复3、遇见一位国内异性
+回复4、遇见一位国外异性
+  EOF
+  msg = Message::new(from, str)
+  msg.type=:chat
+  client.send(msg)  
+end
+
 def help_msg(client,from)
   str = <<-EOF   
 脸脸帮助：回复
@@ -108,27 +120,30 @@ def error_msg(client,from)
   client.send(msg)  
 end
 
-def want_msg(client,from,ck)
-  gstr = ck.user.gender==2? "美女" : "帅哥"
-  msg = Message::new(from, "脸脸找到了一位#{gstr}: #{ck.user.name}, #{ck.shop.city_name}.")
+def want_msg(client,from,to)
+  gstr = to.gender==2? "美女" : "帅哥"
+  msg = Message::new(from, "脸脸找到了一位#{gstr}: #{to.name}, #{City.city_name(to.city)}.")
   msg.type=:chat
   client.send(msg)
 end
 
-def find_checkin(user,int)
+$count=1
+def find_user(user,int)
+  $count+=1
+  skip = $count % 10
   case int
   when 2
-    ck = Checkin.where({sex:{"$ne" => user.gender}, city:user.city}).last
+    ck = User.where({gender:{"$ne" => user.gender}, city:user.city, auto:nil}).sort({_id:-1}).skip(skip).first
   when 3
-    ck = Checkin.where({sex:{"$ne" => user.gender}, city:{"$ne" => user.city}}).last
+    ck = User.where({gender:{"$ne" => user.gender}, city:{"$ne" => user.city}, auto:nil}).sort({_id:-1}).skip(skip).first
   when 4
-    ck = Checkin.where({sex:{"$ne" => user.gender}, city:nil}).last
+    ck = User.where({gender:{"$ne" => user.gender}, city:nil, auto:nil}).sort({_id:-1}).skip(skip).first
   when 5
-    ck = Checkin.where({sex: user.gender, city:user.city}).last
+    ck = User.where({gender: user.gender, city:user.city, auto:nil}).sort({_id:-1}).skip(skip).first
   when 6
-    ck = Checkin.where({sex: user.gender, city:{"$ne" => user.city}}).last
+    ck = User.where({gender: user.gender, city:{"$ne" => user.city}, auto:nil}).sort({_id:-1}).skip(skip).first
   when 7
-    ck = Checkin.where({sex: user.gender, city:nil}).last
+    ck = User.where({gender: user.gender, city:nil, auto:nil}).sort({_id:-1}).skip(skip).first
   end
   ck
 end
@@ -138,10 +153,13 @@ def want(client,message,int)
   if user.nil?
     error_msg(client,message.from)
   else
-    ck = find_checkin(user,int)
-    Rails.logger.debug("#{user},#{ck}")
-    want_msg(client,message.from,ck)
-    xmpp = Xmpp.chat(ck.user.id,user.id,": hi. (此为系统消息，不是#{ck.user.name}所发)")
+    to = find_user(user,int)
+    if to.nil?
+      error_msg(client,message.from)
+      return
+    end
+    want_msg(client,message.from,to)
+    xmpp = Xmpp.chat(to.id,user.id,": hi. (此为系统消息，不是#{to.name}所发)")
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
   end
 end
@@ -152,6 +170,8 @@ def chat_process(client,m)
     msg1(client,m.from)
     sleep(5)
     msg2(client,m.from)
+    sleep(5)
+    msg3(client,m.from)
   elsif  (txt>1 && txt<8)
     want(client,m,txt)
   else
