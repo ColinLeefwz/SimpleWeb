@@ -73,6 +73,7 @@ class CheckinsController < ApplicationController
     send_coupon_if_exist
     if session[:new_user_flag]
       session[:new_user_flag] = nil
+      session_user.update_attribute(:city, checkin.city)
       Resque.enqueue(NewUser, checkin.uid,checkin.sid,checkin.od)
     end
     checkin
