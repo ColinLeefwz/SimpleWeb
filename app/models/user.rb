@@ -32,6 +32,7 @@ class User
   index({"blacks.report" => 1},{ sparse: true })
   index({wb_uid: 1})
   index({follows: 1})
+  index({city: 1, gender:1})
   
   def follows_s
     (self.follows.nil?)? [] : self.follows
