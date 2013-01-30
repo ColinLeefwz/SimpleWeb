@@ -64,8 +64,8 @@ client.send(Presence.new.set_type(:available))
 def msg1(client,from)
   str = <<-EOF   
 成为脸脸种子用户要求：
-1、连续5天摇进10个现场以上
-2、分享5张现场图片到新浪微博
+1、一个月内摇进10个现场以上
+2、分享10张现场图片到新浪微博
 3、邀请好友三个以上
   EOF
   msg = Message::new(from, str)
@@ -101,12 +101,12 @@ def help_msg(client,from)
   str = <<-EOF   
 脸脸帮助：回复
 1、了解脸脸种子计划
-2、脸脸帮你推荐一位同城异性
-3、脸脸帮你推荐一位国内异性
-4、脸脸帮你推荐一位国外异性
-5、脸脸帮你推荐一位同城同性
-6、脸脸帮你推荐一位国内同性
-7、脸脸帮你推荐一位国外同性
+2、遇见一位同城异性
+3、遇见一位国内异性
+4、遇见一位国外异性
+5、遇见一位同城同性
+6、遇见一位国内同性
+7、遇见一位国外同性
 试试吧！
   EOF
   msg = Message::new(from, str)
@@ -170,7 +170,7 @@ def chat_process(client,m)
     msg1(client,m.from)
     sleep(5)
     msg2(client,m.from)
-    sleep(5)
+  elsif  txt==0
     msg3(client,m.from)
   elsif  (txt>1 && txt<8)
     want(client,m,txt)
@@ -186,6 +186,7 @@ client.add_message_callback do |m|
   begin
     if m.type.to_s=="chat"
       Rails.logger.debug m
+      puts "#{m.from},#{m.body},Time.now.to_s"
       chat_process(client,m)
     end
   rescue Exception => e
