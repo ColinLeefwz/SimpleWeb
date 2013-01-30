@@ -85,13 +85,37 @@ def msg2(client,from)
   client.send(msg)  
 end
 
+def error_msg(client,from)
+  msg = Message::new(from, "抱歉，出错了！")
+  msg.type=:chat
+  client.send(msg)  
+end
+
+def want_msg(client,from,ck)
+  gstr = ck.user.gender==2? "美女" : "帅哥"
+  msg = Message::new(from, "脸脸找到了一位#{gstr}: #{ck.user.name}, #{ck.shop.city_name}.")
+  msg.type=:chat
+  client.send(msg)
+end
+
 client.add_message_callback do |m|
   if m.type.to_s=="chat"
     puts m
-    if m.body=="1"
+    txt = m.body.gsub(/\W/, "")
+    if txt=="1"
       msg1(client,m.from)
       sleep(5)
       msg2(client,m.from)
+    elsif  txt=="2" || txt=="我要" || txt=="找人"
+      user = User.find_by_id(m.from[0,24])
+      if user.nil?
+        error_msg(client,m.from)
+      else
+        ck = Checkin.where({sex:{"$ne" => user.gender}}).last
+        want_msg(client,m.from,ck)
+        xmpp = Xmpp.chat(ck.user.id,user.id,": hi. (此为系统消息，不是#{ck.user.name}所发)")
+        RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
+      end
     end
   end
 end
