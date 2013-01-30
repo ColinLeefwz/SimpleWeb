@@ -7,6 +7,9 @@ class NewUser
     ["502e6303421aa918ba000001","50446058421aa92042000002"].each do |to|
       NewUser.notify(uid,sid, to, od)
     end
+    ["502e6303421aa918ba000079"].each do |to|
+      NewUser.notify(uid,sid, to, od, 2)
+    end
     Resque.enqueue_in(2.seconds, NewUserWelcome, uid,sid,1)
     Resque.enqueue_in(6.seconds, NewUserWelcome, uid,sid,2)
     Resque.enqueue_in(9.seconds, NewUserWelcome, uid,sid,3)
