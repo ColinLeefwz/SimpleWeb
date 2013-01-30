@@ -122,7 +122,7 @@ end
 
 def want_msg(client,from,to)
   gstr = to.gender==2? "美女" : "帅哥"
-  msg = Message::new(from, "脸脸找到了一位#{gstr}: #{to.name}, #{City.city_name(to.city)}.")
+  msg = Message::new(from, "脸脸找到了一位#{gstr}: #{to.name}, #{City.city_name(to.city)}. 返回到'对话'中查看吧。")
   msg.type=:chat
   client.send(msg)
 end
