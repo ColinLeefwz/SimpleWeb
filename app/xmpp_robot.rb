@@ -100,7 +100,7 @@ end
 def help_msg(client,from)
   str = <<-EOF   
 脸脸帮助：回复
-1、了解脸脸种子计划
+1、如何成为脸脸种子用户?
 2、遇见一位同城异性
 3、遇见一位国内异性
 4、遇见一位国外异性
@@ -186,7 +186,7 @@ client.add_message_callback do |m|
   begin
     if m.type.to_s=="chat"
       Rails.logger.debug m
-      puts "#{m.from},#{m.body},Time.now.to_s"
+      puts "#{m.from.to_s[0,24]},#{m.body},#{Time.now.to_s}"
       chat_process(client,m)
     end
   rescue Exception => e
