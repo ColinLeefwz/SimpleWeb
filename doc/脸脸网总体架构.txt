@@ -29,6 +29,8 @@ Xmpp端提供的API包括：
 
 脸脸网的Web服务器集群目前有两台服务器web1和web2。Web服务器集群主要包括：基于Nginx的Web接入层、基于Ror的应用层，以及基于Mongodb的数据库层。
 
+目前redis跑在web1上,resque/resque-schedule也是。xmpp聊天机器人跑在web2上。
+
 ###Nginx
 
 Nginx使用默认安装，启动在80端口。
