@@ -16,7 +16,7 @@ class NewUserTalk
     end
     if seq==2
       shop = Shop.find(sid)
-      xmpp2 = Xmpp.chat(to,usid,"你在#{shop.name}？")
+      xmpp2 = Xmpp.chat(to,uid,"你在#{shop.name}？")
       RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2)
     end
   end
