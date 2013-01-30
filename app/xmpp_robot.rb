@@ -145,6 +145,7 @@ def find_user(user,int)
   when 7
     ck = User.where({city:nil, gender: user.gender, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
   end
+  return nil if (ck.id.to_s==$gfuid || ck.id.to_s=="5032ef4e421aa91a1e00001f") #点世界id
   ck
 end
 
