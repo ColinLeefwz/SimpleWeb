@@ -133,17 +133,17 @@ def find_user(user,int)
   skip = $count % 10
   case int
   when 2
-    ck = User.where({gender:{"$ne" => user.gender}, city:user.city, auto:nil}).sort({_id:-1}).skip(skip).first
+    ck = User.where({city:user.city, gender:{"$ne" => user.gender}, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
   when 3
-    ck = User.where({gender:{"$ne" => user.gender}, city:{"$ne" => user.city}, auto:nil}).sort({_id:-1}).skip(skip).first
+    ck = User.where({city:{"$ne" => user.city}, gender:{"$ne" => user.gender}, auto:nil,invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
   when 4
-    ck = User.where({gender:{"$ne" => user.gender}, city:nil, auto:nil}).sort({_id:-1}).skip(skip).first
+    ck = User.where({city:nil, gender:{"$ne" => user.gender}, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
   when 5
-    ck = User.where({gender: user.gender, city:user.city, auto:nil}).sort({_id:-1}).skip(skip).first
+    ck = User.where({city:user.city, gender: user.gender, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
   when 6
-    ck = User.where({gender: user.gender, city:{"$ne" => user.city}, auto:nil}).sort({_id:-1}).skip(skip).first
+    ck = User.where({city:{"$ne" => user.city}, gender: user.gender, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
   when 7
-    ck = User.where({gender: user.gender, city:nil, auto:nil}).sort({_id:-1}).skip(skip).first
+    ck = User.where({city:nil, gender: user.gender, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
   end
   ck
 end
@@ -165,14 +165,15 @@ def want(client,message,int)
 end
 
 def chat_process(client,m)
-  txt = m.body.gsub(/\W/, "").to_i
-  if txt==1
+  txt = m.body.gsub(/\W/, "")
+  int = txt.to_i
+  if int==1
     msg1(client,m.from)
     sleep(5)
     msg2(client,m.from)
-  elsif  txt==0
+  elsif  txt=="0" || txt=="o"
     msg3(client,m.from)
-  elsif  (txt>1 && txt<8)
+  elsif  (int>1 && int<8)
     want(client,m,txt)
   else
     help_msg(client,m.from)
