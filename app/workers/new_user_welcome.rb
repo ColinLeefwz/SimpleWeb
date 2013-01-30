@@ -16,7 +16,7 @@ class NewUserWelcome
       RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2)
     end
     if seq==3
-      xmpp3 = Xmpp.chat($gfuid,user.id,"有兴趣的话可以参与脸脸#{shop.city_name}种子计划，有特权的啦！了解详情请回复1。回复其它内容有惊喜哟！")
+      xmpp3 = Xmpp.chat($gfuid,user.id,"回复0了解脸脸使用秘笈，有惊喜哟！")
       RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp3)
     end
   end
