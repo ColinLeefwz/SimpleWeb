@@ -12,9 +12,9 @@ class NewUser
     end
     Resque.enqueue(NewUserWelcome, uid,sid,1)
     Resque.enqueue_in(3.seconds, NewUserWelcome, uid,sid,2)
-    Resque.enqueue_in(15.seconds, NewUserWelcome, uid,sid,3)
-    Resque.enqueue_in(30.seconds, NewUserTalk, uid,sid,1)
-    Resque.enqueue_in(35.seconds, NewUserTalk, uid,sid,2)
+    Resque.enqueue_in(20.seconds, NewUserWelcome, uid,sid,3)
+    Resque.enqueue_in(50.seconds, NewUserTalk, uid,sid,1)
+    Resque.enqueue_in(55.seconds, NewUserTalk, uid,sid,2)
   end
   
   def self.notify(uid,sid, to, od, gender=0)
