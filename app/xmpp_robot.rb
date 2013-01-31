@@ -160,7 +160,7 @@ def want(client,message,int)
       return
     end
     want_msg(client,message.from,to)
-    xmpp = Xmpp.chat(to.id,user.id,": hi. (此为系统消息，不是#{to.name}所发)")
+    xmpp = Xmpp.chat(to.id,user.id,": (此为系统消息，不是#{to.name}所发)")
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
   end
 end
