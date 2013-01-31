@@ -145,7 +145,7 @@ def find_user(user,int)
   when 7
     ck = User.where({city:nil, gender: user.gender, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
   end
-  return nil if (ck.id.to_s==$gfuid || ck.id.to_s=="5032ef4e421aa91a1e00001f") #点世界id
+  return nil if (ck.nil? || ck.id.to_s==$gfuid || ck.id.to_s=="5032ef4e421aa91a1e00001f") #点世界id
   ck
 end
 
@@ -175,7 +175,7 @@ def chat_process(client,m)
   elsif  txt=="0" || txt=="o"
     msg3(client,m.from)
   elsif  (int>1 && int<8)
-    want(client,m,txt)
+    want(client,m,int)
   else
     help_msg(client,m.from)
   end
@@ -193,6 +193,7 @@ client.add_message_callback do |m|
     end
   rescue Exception => e
     puts e
+    puts e.backtrace
   end
 end
 
