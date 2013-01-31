@@ -10,8 +10,8 @@ class NewUser
     ["502e6303421aa918ba000079"].each do |to|
       NewUser.notify(uid,sid, to, od, 2)
     end
-    Resque.enqueue_in(1.seconds, NewUserWelcome, uid,sid,1)
-    Resque.enqueue_in(4.seconds, NewUserWelcome, uid,sid,2)
+    Resque.enqueue(NewUserWelcome, uid,sid,1)
+    Resque.enqueue_in(3.seconds, NewUserWelcome, uid,sid,2)
     Resque.enqueue_in(15.seconds, NewUserWelcome, uid,sid,3)
     Resque.enqueue_in(30.seconds, NewUserTalk, uid,sid,1)
     Resque.enqueue_in(35.seconds, NewUserTalk, uid,sid,2)
