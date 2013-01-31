@@ -165,6 +165,8 @@ def want(client,message,int)
   end
 end
 
+#http://api.simsimi.com/request.p?key=68ebadb4-16f3-4fc2-98bf-673a43f161e0&ft=1.0&text=test&lc=ch
+
 def chat_process(client,m)
   txt = m.body.gsub(/\W/, "")
   int = txt.to_i

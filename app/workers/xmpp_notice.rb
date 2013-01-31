@@ -4,7 +4,7 @@ class XmppNotice
   @queue = :xmpp
 
   def self.perform(sid,uid,str)
-    xmpp2 = Xmpp.gchat(sid,uid,str)
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2) 
+    Xmpp.send_gchat(sid,uid,str)
   end
+  
 end
