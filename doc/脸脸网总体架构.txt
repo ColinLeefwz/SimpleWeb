@@ -14,6 +14,8 @@
 服务器端之间通过标准的HTTP接口开放API。Web服务器端API包括：
 
 * /oauth/auth?name=&pass=， 提供给Xmpp端实现用户认证。所有的用户信息都保存在Web端。
+* /oauth/push_msg_info?from=&to=， 提供给push消息使用。获得from用户的姓名和to用户的push token。
+* /shop/answer?sid=&uid=&msg=， 提供给商家的问答系统。用户uid发送消息msg到商家sid的现场聊天室，然后按照预先设置的规则给用户发送响应。
 
 Xmpp端提供的API包括：
 

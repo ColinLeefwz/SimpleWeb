@@ -289,6 +289,13 @@ class User
     sina_fans.delete_if {|x| x.follows_s.index(self.id)!=nil }
   end
   
+  def del_test_user
+    user_logos.each {|x| x.delete}
+    photos.each {|x| x.delete}
+    Checkin.where({uid: _id}).each {|x| x.delete}
+    self.delete
+  end
+  
   
   #目前导入的虚拟帐户被脸脸用户加关注的用户，需要人工联系
   def self.auto_todo
