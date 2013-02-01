@@ -8,7 +8,7 @@ module Mongoid
       begin
         find(id)
       rescue
-        Rails.logger.warn "#{self.class}: #{id} not exists."
+        Rails.logger.info "#{self.name}: #{id} not exists."
         nil
       end
     end
