@@ -68,9 +68,9 @@ class ShopController < ApplicationController
     sid = params["sid"]
     uid = params["uid"]
     msg = params["msg"]
-    Xmpp.gchat2(uid,sid,uid,msg)
+    Xmpp.send_gchat2(uid,sid,uid,msg)
     if sid="20325453"
-      Xmpp.gchat2(uid,sid,uid,"欢迎！")
+      Xmpp.send_gchat2($gfuid,sid,uid,"欢迎！")
     end
     render :text => "1"
   end
