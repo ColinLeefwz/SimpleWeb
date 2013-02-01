@@ -14,7 +14,7 @@ class NewUserWelcome
       Xmpp.send_gchat2($gfuid,shop.id,user.id,"你就这么很有缘的成为了脸脸早期体验者，俗话说：先入山门为大。以后来到#{shop.name}的小辈们都会向你膜拜哟！")
     end
     if seq==3
-      Xmpp.send_chat($gfuid,user.id,"回复0了解脸脸使用秘笈，有惊喜哟！")
+      Xmpp.send_chat($gfuid,user.id,"回复0试试，有惊喜哟！")
     end
   end
   
