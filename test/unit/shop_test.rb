@@ -7,6 +7,8 @@ class ShopTest < ActiveSupport::TestCase
   # end
 
   test ".find_by_id 不存在的id返回nil" do
+    {:a => "\360\237\230\204"}.to_json.to_s == "{\"a\":\"😄\"}"
+    {:a => "\360\237\230\204"}.to_json == "{\"a\":\"😄\"}"
     assert_equal Shop.find_by_id('12345'), nil
   end
   

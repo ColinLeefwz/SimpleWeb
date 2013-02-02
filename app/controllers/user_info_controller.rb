@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class UserInfoController < ApplicationController
   
   before_filter :user_login_filter
