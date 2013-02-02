@@ -63,17 +63,5 @@ class ShopController < ApplicationController
     photos = Photo.where({room:params[:id]}).sort({updated_at: -1}).skip(skip).limit(pcount)
     render :json => photos.map {|p| p.output_hash }.to_json
   end
-  
-  def answer
-    sid = params["sid"]
-    uid = params["uid"]
-    msg = params["msg"]
-    Xmpp.send_gchat2(uid,sid,uid,msg)
-    if sid=="20325453"
-      Xmpp.send_gchat2($gfuid,sid,uid,"欢迎！")
-    end
-    render :text => "1"
-  end
-
 
 end
