@@ -138,6 +138,8 @@ db.shops.remove({name:/团队$/})
 db.shops.remove({name:/游戏专卖$/})
 db.shops.remove({name:"码头"})
 db.shops.remove({name:"婚庆"})
+db.shops.remove({t:4,name:/小摊/})
+db.shops.find({name:/臭/})
 
 
 db.shops.find({name:/[^\-]{5,}-/})
@@ -158,6 +160,7 @@ db.shops.update({t:8,name:/好又多[^生活购物量贩]/},{$set:{d:50},$unset:
 db.shops.update({type:/^生活服务;便利店/},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({type:/^金融/},{$set:{d:50},$unset:{del:1}},false,true)
 db.shops.update({name:/拉面/},{$set:{d:50}},false,true)
+db.shops.update({name:/臭豆腐/},{$set:{d:50}},false,true)
 db.shops.update({name:/牛肉面/},{$set:{d:50}},false,true)
 db.shops.update({name:/鞋吧/},{$set:{d:50}},false,true)
 
