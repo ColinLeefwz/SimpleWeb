@@ -51,14 +51,14 @@ class AnswerController < ApplicationController
   2、优先享受脸脸最新优惠活动
   赶快行动吧！
     EOF
-    Resque.enqueue_in(5.seconds, XmppMsg, $gfuid,from,str)
+    Resque.enqueue_in(4.seconds, XmppMsg, $gfuid,from,str)
   end
 
   def msg3(from)
     str = <<-EOF   
   试试：
   回复2、遇见一位同城异性
-  回复3、遇见一位国内异性
+  回复3、遇见一位同龄异性
   回复4、遇见一位国外异性
     EOF
     Resque.enqueue(XmppMsg, $gfuid,from,str)
@@ -69,10 +69,10 @@ class AnswerController < ApplicationController
   脸脸帮助：回复
   1、如何成为脸脸种子用户?
   2、遇见一位同城异性
-  3、遇见一位国内异性
+  3、遇见一位同龄异性
   4、遇见一位国外异性
   5、遇见一位同城同性
-  6、遇见一位国内同性
+  6、遇见一位同龄同性
   7、遇见一位国外同性
   试试吧！
     EOF
@@ -97,13 +97,15 @@ class AnswerController < ApplicationController
     when 2
       ck = User.where({city:user.city, gender:{"$ne" => user.gender}, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
     when 3
-      ck = User.where({city:{"$ne" => user.city}, gender:{"$ne" => user.gender}, auto:nil,invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
+      reg = Regexp::new("^#{user.birthday[0,4]}")
+      ck = User.where({birthday:reg, gender:{"$ne" => user.gender}, auto:nil,invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
     when 4
       ck = User.where({city:nil, gender:{"$ne" => user.gender}, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
     when 5
       ck = User.where({city:user.city, gender: user.gender, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
     when 6
-      ck = User.where({city:{"$ne" => user.city}, gender: user.gender, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
+      reg = Regexp::new("^#{user.birthday[0,4]}")
+      ck = User.where({birthday:reg, gender: user.gender, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
     when 7
       ck = User.where({city:nil, gender: user.gender, auto:nil, invisible:{"$in" => [0,nil]} }).sort({_id:-1}).skip(skip).first
     end
