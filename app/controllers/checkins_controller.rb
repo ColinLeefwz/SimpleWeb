@@ -15,7 +15,7 @@ class CheckinsController < ApplicationController
     shop.name = params[:sname]
     shop.lo = [params[:lat].to_f, params[:lng].to_f]
     shop.city = shop.get_city
-    shop.type = "用户添加"
+    shop.type = session[:user_id].to_s
     shop.save!
     params[:shop_id] = shop._id
     do_checkin
