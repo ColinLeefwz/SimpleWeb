@@ -4,7 +4,10 @@ class WeiboFriend
   @queue = :normal
 
   def self.perform(token, wb_uid, uid)
-    data = SinaFriend.new.insert_ids(wb_uid,token)
+    begin
+      data = SinaFriend.new.insert_ids(wb_uid,token)
+    rescue
+    end
     user = User.find(uid)
     friend_notice_all(user)
     fan_notice_all(user)
