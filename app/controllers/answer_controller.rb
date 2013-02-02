@@ -21,7 +21,6 @@ class AnswerController < ApplicationController
     int = txt.to_i
     if int==1
       msg1(uid)
-      sleep(5)
       msg2(uid)
     elsif  txt=="0" || txt=="o"
       msg3(uid)
@@ -52,7 +51,7 @@ class AnswerController < ApplicationController
   2、优先享受脸脸最新优惠活动
   赶快行动吧！
     EOF
-    Resque.enqueue(XmppMsg, $gfuid,from,str)
+    Resque.enqueue_in(5.seconds, XmppMsg, $gfuid,from,str)
   end
 
   def msg3(from)
