@@ -9,7 +9,7 @@ class AdminUsersController < ApplicationController
     sort = {_id: -1}
 
     unless params[:name].blank?
-      hash.merge!(name: /#{params[:name]}/)
+      hash.merge!(name: /#{params[:name]}/i)
     end
 
     hash.merge!({id: params[:id]}) unless params[:id].blank?
