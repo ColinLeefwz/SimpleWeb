@@ -30,7 +30,7 @@ class Photo
     end
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
         :roomid  => room , :message => "[img:#{self._id}]#{self.desc}",
-        :uid => user_id)  {|response, request, result| puts response }
+        :uid => user_id)
   end
   
   def user
