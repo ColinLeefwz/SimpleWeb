@@ -2,6 +2,8 @@
   名称: <%= text_field_tag :name, params[:name], :size => 10  %>
   id: <%= text_field_tag :id, params[:id], :size => 30  %>
   微博id: <%= text_field_tag :wb_uid, params[:wb_uid], :size => 10  %>
+  城市代码: <%= text_field_tag :city, params[:city], :size => 5  %>
+  性别: <%= text_field_tag :gender, params[:gender], :size => 2  %>  
   <%= submit_tag "查 找" %>
 <% end %>
 
