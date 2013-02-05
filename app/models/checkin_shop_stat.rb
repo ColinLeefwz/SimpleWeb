@@ -34,6 +34,18 @@ class CheckinShopStat
     $redis.set("suac#{self._id.to_i}",utotal.to_i) #suac mean shop-users-all-count
     $redis.set("sufc#{self._id.to_i}",uftotal.to_i)  #sufc mean shop-users-female-count 
   end
+  
+  def self.del_user_count_redis(id)
+    $redis.del("suac#{id.to_i}") 
+    $redis.del("sufc#{id.to_i}")
+  end
+  
+  def self.del_with_redis(id)
+    CheckinShopStat.del_user_count_redis(id)
+    css = CheckinShopStat.find_by_id(id)
+    return if css.nil?
+    css.delete
+  end
 
   def self.init_user_count
     CheckinShopStat.all.each do |x|
