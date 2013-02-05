@@ -7,6 +7,6 @@ class InitController < ApplicationController
     end
     logger.info "INIT: #{params[:model]} , #{params[:os]} , #{params[:mac]}, #{params[:ver]}"
 		#ip = "192.168.244.4" if real_ip=="58.100.92.146"
-    render :json => {ip: $web_ip, xmpp: $xmpp_ip , ver:1.2}.to_json
+    render :json => {ip: $web_ip, xmpp: $xmpp_ip , ver:1.3}.to_json
   end
 end
