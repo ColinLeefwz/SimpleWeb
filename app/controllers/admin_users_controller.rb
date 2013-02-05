@@ -16,6 +16,7 @@ class AdminUsersController < ApplicationController
     hash.merge!({wb_uid: params[:wb_uid]}) unless params[:wb_uid].blank?
     hash.merge!({city: params[:city]}) unless params[:city].blank?
     hash.merge!({gender: params[:gender]}) unless params[:gender].blank?
+    hash.merge!({birthday: params[:birthday]}) unless params[:birthday].blank?
 
     @users =  paginate("User", params[:page], hash, sort)
 
