@@ -50,17 +50,6 @@ class Shop
     {del: {"$exists" => false}}
   end
   
-  def init_creator
-    if type && type.length==24
-      user = User.find_by_id(type)
-      unless user.nil?
-        self.creator=user.id
-        self.type=nil
-        self.save!
-      end
-    end
-  end
-  
   def city_name
     City.city_name(city)
   end
