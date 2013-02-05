@@ -4,6 +4,8 @@
   微博id: <%= text_field_tag :wb_uid, params[:wb_uid], :size => 10  %>
   城市代码: <%= text_field_tag :city, params[:city], :size => 5  %>
   性别: <%= text_field_tag :gender, params[:gender], :size => 2  %>  
+  : <%= text_field_tag :gender, params[:gender], :size => 2  %>  
+
   <%= submit_tag "查 找" %>
 <% end %>
 
@@ -14,6 +16,7 @@
     <th>id</th>
     <th>注册时间</th>
     <th>名称</th>
+    <th>出生日期</th>	
     <th>wb_uid</th>
     <th>性别</th>
     <th>关注数</th>
@@ -28,6 +31,7 @@
       <td><%= user._id %></td>
       <td><%= user.cat.strftime("%Y-%m-%d %H:%M") %></td>
       <td><%= user.name %></td>
+      <td><%= user.birthday %></td>
       <td><%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %></td>
       <td><%= user.show_gender %></td>
       <td><%= user.follows_s.count %></td>
