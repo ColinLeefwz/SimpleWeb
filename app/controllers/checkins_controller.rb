@@ -12,6 +12,7 @@ class CheckinsController < ApplicationController
   def new_shop
     if params[:sname].length<4
       render :json => {error: "地点名称不能少于四个字"}.to_json
+      return
     end
     shop = Shop.new
     shop._id = Shop.next_id
