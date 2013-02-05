@@ -1,7 +1,7 @@
 * {margin: 0;padding: 0;}
 img{border:none;}
 ul,ol{list-style:none;}
-a{text-decoration: none;}
+a{text-decoration: none;color:#666666;}
 input{outline: none;}
 
 body {font-size: 12px;font-family:"宋体",Sans-Serif;}
@@ -20,17 +20,16 @@ a.gray:hover{color:#0099ff;}
 a.yellow:hover{color:#0099ff;}
 .gray2{color:#505050;}
 
-#con{width:925px;margin:50px auto 0px auto;overflow:hidden;zoom:1;}
+#con{width:960px;margin:50px auto 0px auto;overflow:hidden;zoom:1;}
 .conleft{width:175px;float:left;}
-.conright{width:725px;float:right;}
+.conright{width:760px;float:right;}
 
 .nav{display:block;overflow:hidden;zoom:1;color:#3d3d3d;width:100%;line-height:30px;border-top:1px solid #F4F4F4;padding-top:10px;}
-.nav  .m{width:100%;background:url('/images/sign.jpg')  7px 6px no-repeat;background-color:#F4F4F4;color:#3d3d3d;
-margin-bottom:1px;display:block;padding-left:30px;border-radius: 5px;}
-.nav  .m:hover, .nav  .m.hover{color:#00B8FF;}
-.nav ul{border:1px solid #F4F4F4; display:block;}
-.nav ul li{padding-left:10px;}
-.nav ul li a{overflow:hidden;color:#3d3d3d;}
+.nav  .m{width:100%;color:#3d3d3d;display:block;padding-left:20px;}
+.nav  .m:hover, .nav  .m.hover{color:#00B8FF;background-color:#f0f0f0;}
+.nav ul{display:block;}
+.nav ul li{padding-left:30px;}
+.nav ul li a{overflow:hidden;color:#888;}
 .nav ul li a:hover{color:#00B8FF;}
 
 .nav dd {line-height: 25px;}
@@ -69,10 +68,10 @@ margin-bottom:1px;display:block;padding-left:30px;border-radius: 5px;}
 .stxt{border:1px solid #F4F4F4;background-color:transparent;width:100px;height:20px;line-height:20px;font-size:11px;}
 
 
-.tab{width:100%;margin-top:20px;line-height:20px;color:#666; vertical-align:middle;}
+.tab{width:95% !important;line-height:20px;color:#666; vertical-align:middle; margin:20px auto 0px auto;}
 .tab th{font-weight:normal;border-bottom:1px dashed #E8E8E8;padding:8px;}
-.tab th.first{text-align:left;padding-left:20px;}
-.tab td{border-bottom:1px dashed #E8E8E8;padding:8px 8px 8px 0px;}
+.tab th.first{text-align:left;padding-left:10px;}
+.tab td{border-bottom:1px dashed #E8E8E8;padding: 8px 6px;}
 .tab img{width:60px;height:60px;}
 .tab a.btn{color:#fff;background-color:#505050;width:65px;padding:8px 4px;border:none;cursor:pointer;margin:0px auto;}
 .tab tr.bottom td{padding-top:20px;border-bottom:none;}
