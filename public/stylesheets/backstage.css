@@ -25,10 +25,10 @@ a.yellow:hover{color:#0099ff;}
 .conright{width:725px;float:right;}
 
 .nav{display:block;overflow:hidden;zoom:1;color:#3d3d3d;width:100%;line-height:30px;border-top:1px solid #F4F4F4;padding-top:10px;}
-.nav  .m{width:100%;background:url('/images/sign.jpg')  7px 6px no-repeat;background-color:#F4F4F4;color:#00B8FF;
+.nav  .m{width:100%;background:url('/images/sign.jpg')  7px 6px no-repeat;background-color:#F4F4F4;color:#3d3d3d;
 margin-bottom:1px;display:block;padding-left:30px;border-radius: 5px;}
-.nav  .m:hover, .nav  .m.hover{background:#eee url('/images/sign2.jpg') 7px 6px no-repeat;}
-.nav ul{border:1px solid #F4F4F4;}
+.nav  .m:hover, .nav  .m.hover{color:#00B8FF;}
+.nav ul{border:1px solid #F4F4F4; display:block;}
 .nav ul li{padding-left:10px;}
 .nav ul li a{overflow:hidden;color:#3d3d3d;}
 .nav ul li a:hover{color:#00B8FF;}
