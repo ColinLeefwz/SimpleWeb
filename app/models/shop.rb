@@ -33,6 +33,8 @@ class Shop
 
   #field :cc, type:Integer  #点评的评论数
   field :type              #从mapabc导入的商家类型
+  field :creator, type: Moped::BSON::ObjectId #该地点的创建者
+
 
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 6, :allow_nil => true
@@ -46,6 +48,17 @@ class Shop
   
   def self.default_hash
     {del: {"$exists" => false}}
+  end
+  
+  def init_creator
+    if type && type.length==24
+      user = User.find_by_id(type)
+      unless user.nil?
+        self.creator=user.id
+        self.type=nil
+        self.save!
+      end
+    end
   end
   
   def city_name
