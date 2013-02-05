@@ -79,6 +79,17 @@ class Shop
     self.update_attribute(:del,1)
   end
   
+  #彻底删除商家
+  def del_test_shop
+    CheckinShopStat.del_with_redis(self.id)
+    checkins.each {|x| x.delete}
+    self.delete
+  end
+  
+  def checkins
+    Checkin.where({sid:self.id})
+  end
+  
   def safe_output
     self.attributes.slice("name", "phone", "lo", "t").merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>self.addr, "id"=>self.id.to_i} )
   end
