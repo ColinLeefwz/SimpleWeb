@@ -31,7 +31,7 @@ class AdminShopsController < ApplicationController
     end
 
     @page =  params[:page].blank? ? 1 : params[:page].to_i
-    @shops = Shop.where(hash).skip((@page-1)*200).limit(200).sort(horder)
+    @shops = Shop.where(hash).skip((@page-1)*20).limit(20).sort(horder)
 
   end
 
