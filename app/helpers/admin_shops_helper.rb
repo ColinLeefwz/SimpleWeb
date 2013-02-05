@@ -19,17 +19,16 @@ module AdminShopsHelper
     text
   end
   
-  def type_or_user(type)
-    return "" if type.nil?
-    if type.length==24
-      user = User.find_by_id(type)
+  def type_or_user(shop)
+    if shop.creator
+      user = User.find_by_id(shop.creator)
       if user.nil?
-        type
+        shop.type
       else
         link_to(user.name, "/admin_users/show?id=#{user.id}")
       end
     else
-      type
+      shop.type
     end
   end
   

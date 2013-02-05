@@ -48,7 +48,7 @@
       <td><%= shop.v || '无' %></td>
       <td><%= shop.d || '无' %></td>
       <td><%= shop.show_t %></td>
-      <td><%= type_or_user(shop.type) %></td>
+      <td><%= type_or_user(shop) %></td>
       <td><%= link_to(shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{shop.id}") %></td>
       <td><%= link_to('开通', "/admin_shops/set_password?id=#{shop.id}") %></td>
       <td><%= link_to('加权', "/admin_shops/upgrade_v?id=#{shop.id}") %></td>
