@@ -26,7 +26,7 @@ class NewUser
       return if user.gender!=gender
     end
     shop = Shop.find(sid)
-    xmpp = Xmpp.chat(uid,to,"新用户:#{user.show_gender} 排名#{od}:#{shop.name} #{shop.city_fullname}")
+    xmpp = Xmpp.chat(uid,to,"新:#{user.show_gender}:#{od} #{shop.name} #{shop.city_fullname}")
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
   end
   
