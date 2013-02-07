@@ -21,8 +21,7 @@ class CheckinsController < ApplicationController
     else
       shop.save!
     end
-    params[:shop_id] = shop._id
-    do_checkin
+    do_checkin(shop)
     render :json => shop.safe_output.to_json
   end
   
@@ -62,14 +61,14 @@ class CheckinsController < ApplicationController
     shop
   end
   
-  def do_checkin
+  def do_checkin(shop=nil)
+    shop = Shop.find(params[:shop_id]) if shop.nil?
     checkin = Checkin.new
     checkin.loc = [params[:lat].to_f, params[:lng].to_f]
     checkin.acc = params[:accuracy]
     checkin.uid = session[:user_id]
     checkin.sex = session_user.gender
-    checkin.sid = params[:shop_id]
-    shop = Shop.find(params[:shop_id])
+    checkin.sid = shop.id
     checkin.city = shop.city if shop
     checkin.od = params[:od]
     checkin.bssid = params[:bssid] if params[:bssid]
