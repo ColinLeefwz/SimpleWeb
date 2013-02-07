@@ -17,10 +17,10 @@ class CheckinsController < ApplicationController
     shop = gen_new_shop
     ss = Shop.similar_shops(shop,70)
     if ss.length>0
-      render :json => ss[0].safe_output.to_json
-      return
+      shop = ss[0]
+    else
+      shop.save!
     end
-    shop.save!
     params[:shop_id] = shop._id
     do_checkin
     render :json => shop.safe_output.to_json
