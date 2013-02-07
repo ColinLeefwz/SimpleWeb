@@ -21,6 +21,7 @@ class CheckinsController < ApplicationController
     else
       shop.save!
     end
+    params[:shop_id] = shop.id
     do_checkin(shop)
     render :json => shop.safe_output.to_json
   end
