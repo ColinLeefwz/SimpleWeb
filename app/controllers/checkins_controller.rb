@@ -14,13 +14,12 @@ class CheckinsController < ApplicationController
       render :json => {error: "地点名称不能少于四个字"}.to_json
       return
     end
-    shop = Shop.new
-    shop._id = Shop.next_id
-    shop.name = params[:sname]
-    shop.lo = [params[:lat].to_f, params[:lng].to_f]
-    shop.city = shop.get_city
-    shop.d = 10
-    shop.creator = session[:user_id]
+    shop = new_shop
+    ss = Shop.similar_shops(shop,70)
+    if ss.length>0
+      render :json => ss[0].safe_output.to_json
+      return
+    end
     shop.save!
     params[:shop_id] = shop._id
     do_checkin
@@ -51,6 +50,17 @@ class CheckinsController < ApplicationController
 
 
   private
+  
+  def new_shop
+    shop = Shop.new
+    shop._id = Shop.next_id
+    shop.name = params[:sname]
+    shop.lo = [params[:lat].to_f, params[:lng].to_f]
+    shop.city = shop.get_city
+    #shop.d = 10
+    shop.creator = session[:user_id]
+    shop
+  end
   
   def do_checkin
     checkin = Checkin.new
