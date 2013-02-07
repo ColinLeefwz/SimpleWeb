@@ -14,7 +14,7 @@ class CheckinsController < ApplicationController
       render :json => {error: "地点名称不能少于四个字"}.to_json
       return
     end
-    shop = new_shop
+    shop = gen_new_shop
     ss = Shop.similar_shops(shop,70)
     if ss.length>0
       render :json => ss[0].safe_output.to_json
@@ -51,7 +51,7 @@ class CheckinsController < ApplicationController
 
   private
   
-  def new_shop
+  def gen_new_shop
     shop = Shop.new
     shop._id = Shop.next_id
     shop.name = params[:sname]
