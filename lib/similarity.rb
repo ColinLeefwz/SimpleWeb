@@ -85,7 +85,7 @@ module Similarity
   end
   
   def addr_similar(str1,str2,citys,province,shop1,shop2)
-    return 0.3 if(str1=="" || str2=="") 
+    return 0.3 if(str1.nil? || str1=="" || str2.nil? || str2=="") 
   	s1 = trim(trim_citys_province(str1.downcase,citys,province))
   	s2 = trim(trim_citys_province(str2.downcase,citys,province))
     x1 = s1.split(" ")
@@ -141,6 +141,17 @@ module Similarity
 
   def similarity_by_id(id1,id2)
     return similarity(Shop.find(id1),Shop.find(id2))
+  end
+  
+  def similar_shops(x, min_score=60)
+    sames =[]
+    Shop.where({lo:{"$within" => {"$center" => [x.loc_first_of(x),0.003]}}} ).each do |y|
+      next if y.id==x.id
+      score = Shop.similarity(x,y)
+      sames << [y,score] if score>min_score
+    end
+    sames.each {|x| puts x}
+    sames.sort{|a,b| b[1]<=>b[2]}.map{|x| x[0]}
   end
   
 end
