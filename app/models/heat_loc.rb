@@ -17,4 +17,12 @@ class HeatLoc
     self.update_attribute(:fetched, true )
   end
   
+  def self.jiepang
+    HeatLoc.where({:c => {'$gt' => 100}, :jp => {"$exists" => false}}).sort({:c => -1}).to_a.each do |heat_loc|
+      Jiepang.insert(heat_loc.lo)
+      heat_loc.update_attribute(:jp, true )
+    end
+  end
+  
+  
 end
