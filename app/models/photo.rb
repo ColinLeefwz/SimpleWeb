@@ -26,7 +26,7 @@ class Photo
   
   def after_async_store
     if weibo
-      str = "我刚刚用\#脸脸\#在\##{shop.name}\#分享：\n#{desc2} \n(来自脸脸 http://www.dface.cn/a?v=3 )"
+      str = "我刚刚用\#脸脸\#在\##{shop.name}\#分享:\n#{desc2} \n(来自脸脸 http://www.dface.cn/a?v=3 )"
       Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
     end
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
