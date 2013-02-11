@@ -16,7 +16,7 @@ class Jiepang
   end
   
   def self.get_loc(lo,err_num=0)
-    url = "http://api.jiepang.com/v1/discover/featured_locations?lat=#{lo.lat}&lon=#{lo.lng}&count=100&source=100760"
+    url = "http://api.jiepang.com/v1/discover/featured_locations?lat=#{lo[0]}&lon=#{lo[1]}&count=100&source=100760"
     begin
       response = RestClient.get(url)
       Logger.info "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} get #{url}"
