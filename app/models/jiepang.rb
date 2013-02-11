@@ -7,11 +7,17 @@ class Jiepang
   
   def self.insert(lo)
     datas = Jiepang.get_loc(lo)
+    sleep(1.2)
     return if datas.nil?
     datas["items"].each do |x|
       x["_id"] = x["guid"]
       x.delete("guid")
-      Jiepang.collection.insert(x)
+      begin
+        Jiepang.collection.insert(x)
+      rescue Exception => e
+        Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} insert #{x}错误."
+        Logger.error e
+      end
     end
   end
   
