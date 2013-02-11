@@ -26,7 +26,10 @@ class AnswerController < ApplicationController
       msg3(uid)
     elsif  (int>1 && int<8)
       want(uid,int)
-    else
+      msg2(uid)
+    elsif  txt=="?" || txt=="？"
+      faq(uid)
+    elsif txt.size<3
       help_msg(uid)
     end
     render :text => "1"
@@ -60,10 +63,31 @@ class AnswerController < ApplicationController
   回复2、遇见一位同城异性
   回复3、遇见一位同龄异性
   回复4、遇见一位国外异性
+  回复?、常见问题解答
     EOF
     Resque.enqueue(XmppMsg, $gfuid,from,str)
   end
 
+  def faq(from)
+    str = <<-EOF   
+  问：我摇的每一个地点，都会被公开吗？
+  答：不会，只有最后一次的地点是公开的。
+
+  问：我摇过的地点可以删除吗？
+  答：可以，在“我的资料－>我的足迹”里可以删除摇过的地点。  
+
+  问：碰到有变态骚扰怎么办？
+  答：点击其头像后，然后把他拉黑。如果要脸脸协助处理，可以拉黑的同时举报。   
+
+  问：我在脸脸的发言和发图会被公开到新浪微博吗？
+  答：不会，除非是您明确点击分享到微博。  
+
+  问：现场是什么意思？
+  答：现场就是你当前所在的地点。
+    EOF
+    Resque.enqueue(XmppMsg, $gfuid,from,str)
+  end
+  
   def help_msg(from)
     str = <<-EOF   
   脸脸帮助：回复
@@ -74,6 +98,7 @@ class AnswerController < ApplicationController
   5、遇见一位同城同性
   6、遇见一位同龄同性
   7、遇见一位国外同性
+  ?、常见问题解答
   试试吧！
     EOF
     Resque.enqueue(XmppMsg, $gfuid,from,str)
