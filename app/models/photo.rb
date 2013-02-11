@@ -44,8 +44,8 @@ class Photo
   
   def desc2
     if desc.nil? || desc.length<1
-      count = Photo.where({user_id:self.user_id,room:self.room}).count
-      count>0? count : ""
+      count = Photo.where({user_id:self.user_id,room:self.room,desc:nil}).count
+      count>1? count : ""
     else
       desc
     end
