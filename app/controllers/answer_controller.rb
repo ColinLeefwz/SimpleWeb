@@ -26,7 +26,6 @@ class AnswerController < ApplicationController
       msg3(uid)
     elsif  (int>1 && int<8)
       want(uid,int)
-      msg2(uid)
     elsif  txt=="?" || txt=="？"
       faq(uid)
     elsif txt.size<3
