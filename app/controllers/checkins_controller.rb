@@ -97,7 +97,7 @@ class CheckinsController < ApplicationController
   def send_welcome_msg_if_not_invisible(user_gender, user_name)
     return if session_user.invisible==2
     Resque.enqueue(XmppWelcome, params[:shop_id], user_gender, params[:user_id], user_name)
-    Xmpp.send_gchat2($gfuid,params[:shop_id], params[:user_id],"新年快乐🎈🎈🎈")
+    Xmpp.send_gchat2($gfuid,params[:shop_id], params[:user_id],"🐍蛇年快乐🎈🎈🎈")
   end
   
   def send_notice_if_exist(shop)
