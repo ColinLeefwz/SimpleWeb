@@ -7,8 +7,8 @@ class Jiepang
   
   def self.insert(lo)
     datas = Jiepang.get_loc(lo)
-    sleep(1.2)
-    return if datas.nil?
+    sleep(5)
+    return nil if datas.nil?
     datas["items"].each do |x|
       x["_id"] = x["guid"]
       x.delete("guid")
@@ -19,6 +19,7 @@ class Jiepang
         Logger.error e
       end
     end
+    return datas
   end
   
   def self.get_loc(lo,err_num=0)
@@ -27,6 +28,7 @@ class Jiepang
       response = RestClient.get(url)
       Logger.info "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} get #{url}"
     rescue RestClient::BadRequest
+      Logger.info "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} BadRequest #{url}"
       return nil
     rescue
       err_num += 1
