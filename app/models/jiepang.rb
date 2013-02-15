@@ -4,10 +4,21 @@ class Jiepang
 
   include Mongoid::Document
   store_in session: "dooo"
-  
+
   def self.insert(lo)
+    10.times do |x|
+      next if x%2==0
+      10.times do |y|
+        next if y%2==0  
+        #puts "#{[lo[0]+x*0.001, lo[1]+y*0.001]}"
+        Jiepang.insert0([lo[0]+x*0.001, lo[1]+y*0.001])
+      end
+    end
+  end
+    
+  def self.insert0(lo)
     datas = Jiepang.get_loc(lo)
-    sleep(5)
+    sleep(2)
     return nil if datas.nil?
     datas["items"].each do |x|
       x["_id"] = x["guid"]

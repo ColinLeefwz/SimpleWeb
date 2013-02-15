@@ -5,7 +5,7 @@ class WeiboPhoto
 
   def self.perform(token, text, url)
     RestClient.post('https://api.weibo.com/2/statuses/upload_url_text.json', 
-        :access_token  => token , :status => text, 
+        :access_token  => token , :status => text[0..139], 
         :url => url)
   end
 end
