@@ -43,28 +43,28 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     get "/follow_info/followers?id=#{user1.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>true},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>true}]
+    assert_equal data, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>true,"last"=>"隐身"},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>true,"last"=>""}]
 
     #登录粉丝列表
     login(luser.id)
     get "/follow_info/followers?id=#{user1.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>true},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>true}]
+    assert_equal data, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>true,"last"=>"隐身"},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>true,"last"=>""}]
 
     #未登录好友列表
     logout
     get "/follow_info/friends?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>false}]
+    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>false,"last"=>"10+ days 测试1"}]
 
     #登录好友列表
     login(luser.id)
     get "/follow_info/friends?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>false}]
+    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>true,"follower"=>false,"last"=>"10+ days 测试1"}]
 
     #登录添加再添加一个好友
     logout
