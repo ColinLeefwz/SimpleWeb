@@ -140,6 +140,10 @@ class User
     end
   end
   
+  def safe_output_with_relation_location( user_id )
+    safe_output_with_relation( user_id ).merge!( last_location(user_id) )
+  end
+  
   def output_with_relation( user_id )
     hash = self.attr_with_id
     hash.delete("password")
