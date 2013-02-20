@@ -1155,7 +1155,8 @@ wb_uid:1884834632
 "gender":0,
 "friend":true,
 "follower":true,
-"birthday":null}
+"birthday":null,
+"last":"1 hour 浙江科技产业大厦"}
 }
 ]
 
@@ -1164,6 +1165,8 @@ wb_uid:1884834632
 获得用户基本信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是给定ID的用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
 
 这里返回的所有用户，其"follower"值一定为true。
+
+[2013-2-20] 新增last，表示用户最后一次出现的时间和地点。
 
 
 \end{verbatim}
