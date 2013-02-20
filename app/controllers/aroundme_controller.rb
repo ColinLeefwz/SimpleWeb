@@ -34,11 +34,9 @@ class AroundmeController < ApplicationController
   end
   
   def users
-    # TODO: 综合考虑位置（城市）、性别、头像质量等.可以考虑通过管理后台来设置。
     ret = []
-    users = User.where({pcount: {"$gt" => 0}}).limit(10)
-    users.sort! {|a,b| b.pcount <=> a.pcount}
-    users[0,4].each {|u| ret << u.safe_output_with_relation(session[:user_id]) }
+    users = User.where({pcount: {"$gt" => 2}}).limit(4)
+    users.each {|u| ret << u.safe_output_with_relation(session[:user_id]) }
     if ret
       render :json => ret.to_json
     else
