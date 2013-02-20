@@ -63,18 +63,21 @@ class AroundmeController < ApplicationController
       sex = session_user.gender
     end
     ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => 20325453}}).sort({_id:-1}).skip(skip).limit(pcount*10).to_a
-    arr = ckins.uniq!{|x| x.uid}.map{|c| [c.user,c.shop]}
+    #TODO: 缓存一个用户（在一个城市）的最后一次签到
+    arr = ckins.uniq!{|x| x.uid}.map{|c| [c.user,c.shop,c.cati]}
     if arr.nil?
       render :json => [].to_json
       return
     end
     users = []
-    arr.each do |user,shop| 
+    arr.each do |user,shop,cati| 
       next if shop.nil?
       next if user.forbidden?
       next if user.block?(session[:user_id])
       hash = user.safe_output_with_relation(session[:user_id])
-      hash.merge!({location: "@"+shop.name})
+      diff = Time.now.to_i - cati
+      tstr = User.time_desc(diff)
+      hash.merge!({location: "#{tstr} #{shop.name}"})
       users << hash
     end
     fm = users.group_by {|item| item["gender"]==2 ? "f" : "m" }
