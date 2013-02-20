@@ -5,7 +5,7 @@ class WeiboFriend
 
   def self.perform(token, wb_uid, uid)
     begin
-      data = SinaFriend.new.insert_ids(wb_uid,token)
+      SinaFriend.new.insert_ids(wb_uid,token)
     rescue
     end
     user = User.find(uid)
