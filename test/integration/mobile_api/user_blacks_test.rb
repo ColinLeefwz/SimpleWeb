@@ -44,7 +44,8 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     get "/blacklists?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>false}]
+    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>false,
+  "last"=>"10+ days 测试1"}]
 
 
     #登录黑名单列表
@@ -52,7 +53,7 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     get "/blacklists?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>false}]
+    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>false,"last"=>"10+ days 测试1"}]
 
    
     #再添加一个黑名单
