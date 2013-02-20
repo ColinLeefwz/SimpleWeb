@@ -153,7 +153,7 @@ class ApplicationController < ActionController::Base
     pcount = pcount.to_i
     
     fs2 = fs[(page-1)*pcount,pcount]
-    fs2.each {|f| users << f.safe_output_with_relation(params[:id]) } if fs2
+    fs2.each {|f| users << f.safe_output_with_relation_location(params[:id]) } if fs2
     if params[:hash]
       ret = {:count => fs.size}
       ret.merge!( {:data => users})
