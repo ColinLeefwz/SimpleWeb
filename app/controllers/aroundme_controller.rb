@@ -62,7 +62,7 @@ class AroundmeController < ApplicationController
     else
       sex = session_user.gender
     end
-    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => 20325453}}).sort({_id:-1}).skip(skip).limit(pcount*10).to_a
+    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => 20325453}}).sort({_id:-1}).skip(skip).limit(pcount*5).to_a
     #TODO: 缓存一个用户（在一个城市）的最后一次签到
     arr = ckins.uniq!{|x| x.uid}.map{|c| [c.user,c.shop,c.cati]}
     if arr.nil?
