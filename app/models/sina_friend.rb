@@ -24,9 +24,10 @@ class SinaFriend
   end
   
   def init_poi_user(token='2.00t9e5PCMcnDPC86e7068cc9yxaMRC')
-    SinaUser.all.each do |su|
+    SinaUser.where({fetched:{"$ne" => true}}).each do |su|
       insert_ids(su.id,token)
-      sleep(1)
+      su.update_attribute(:fetched, true)
+      sleep(0.8)
     end
   end
 
@@ -40,7 +41,7 @@ class SinaFriend
       puts e
       return nil
       err_num += 1
-      return nil if err_num == 3
+      return nil if err_num == 4
       sleep err_num*2
       Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaFriend#single_page get #{url}错误，. #{$!}"
       return single_page(wb_uid,token,cursor,err_num)
@@ -51,6 +52,8 @@ class SinaFriend
   def all_page(wb_uid, token)
     data = single_page(wb_uid,token)
     return nil if data.nil?
+    return {:ids =>  data["ids"], :total_number =>  data["total_number"]}
+    #后面重复抓取，其实不需要，超过5000直接忽略。
     total_number = data["total_number"]
     ids = []
     0.upto((total_number-1)/5000) do |page|
