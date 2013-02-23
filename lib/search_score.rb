@@ -2,21 +2,21 @@
 
 module SearchScore
 
-  def find_shops(loc,accuracy,ip,uid,bssid=nil,debug=false)
+  def find_shops(loc,accuracy,uid,bssid=nil,debug=false)
     radius = 0.0016+0.002*accuracy/300
     radius=0.01 if(radius>0.01)  #不大于1000米
     arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
     arr.uniq_by! {|x| x["_id"]}
     if arr.length>=3
-      return sort_with_score(arr,loc,accuracy,ip,uid,bssid,debug)
+      return sort_with_score(arr,loc,accuracy,uid,bssid,debug)
     else
       arr = Shop.collection.find({lo:{"$near" =>loc}}).limit(10).to_a
       arr.uniq_by! {|x| x["_id"]}
-      return sort_with_score(arr,loc,accuracy,ip,uid,bssid,debug)[0,5]
+      return sort_with_score(arr,loc,accuracy,uid,bssid,debug)[0,5]
     end
   end
   
-  def sort_with_score(arr,loc,accuracy,ip,uid,bssid,debug=false)
+  def sort_with_score(arr,loc,accuracy,uid,bssid,debug=false)
     score = arr.map {|x| [x,min_distance(x,loc),0]}
     min_d = score[0][1]
     score.reject!{|s| (s[0]["t"]==0 && s[0]["del"]) } #过期的活动
@@ -29,7 +29,7 @@ module SearchScore
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
-      shop_history_score(xx,x,ip,"ObjectId(\"#{uid}\")")      
+      shop_history_score(xx,x,"ObjectId(\"#{uid}\")")      
     end
     bssid_score(score,bssid) if bssid
     realtime_score(score)
@@ -85,15 +85,15 @@ module SearchScore
         bshop = b.shops.find{|shop| shop["id"]==xx[0]["_id"]}
         next if bshop.nil?
         if b.shop_id
-          xx[2] -= (30/b.shops.size+user_to_score(bshop["users"].size)/3)
+          xx[2] -= (50/b.shops.size+(bshop["users"].size-1)*5)
         else
-          xx[2] -= (30/b.shops.size+user_to_score(bshop["users"].size))
+          xx[2] -= (50/b.shops.size+(bshop["users"].size)*20)
         end
       end
     end
   end  
   
-  def shop_history_score(xx,x,ip,uid_s)
+  def shop_history_score(xx,x,uid_s)
       sc = CheckinShopStat.find_by_id(x["_id"].to_i)
       return if sc.nil?
       if uid_s && sc.users[uid_s]
@@ -101,7 +101,6 @@ module SearchScore
         xx[2] -= ucount*30
         xx[2] -= user_to_score(sc.users.length)/2.0
       end
-
   end
   
   def base_score(xx,x)
