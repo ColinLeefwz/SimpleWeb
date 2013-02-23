@@ -286,7 +286,8 @@ class User
   end  
   
   def sina_fans
-    SinaFriend.where({"data.ids" => wb_uid}).map {|x| User.where({wb_uid:x.id}).first}
+    fans = SinaFriend.where({"data.ids" => wb_uid}).map {|x| User.where({wb_uid:x.id}).first}
+    fans.delete_if {|x| x.nil? }
   end
   
   def sina_fans_not_lianlian_fans
