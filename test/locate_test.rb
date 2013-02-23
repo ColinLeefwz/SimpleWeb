@@ -105,6 +105,13 @@ class LocateTest < ActiveSupport::TestCase
     assert ss[0,3].find {|x| x["name"] =~ /张生记/ }
   end
   
+  def test_locate16
+    ss = Shop.new.find_shops([30.249882, 120.159645], 65, "", "" , "38:22:d6:87:5f:f0" )
+    assert_equal 21624918, ss[0]["_id"]
+    ss = Shop.new.find_shops([30.249849, 120.159599], 65, "", "" , "38:22:d6:87:5f:f0" )
+    assert_equal 21624918, ss[0]["_id"]
+  end
+  
   def test_bssid
     s0 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "", "" , nil ,true)[0]
     s1 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "", "" , "0:23:89:71:6f:c4" ,true)[0]
@@ -119,36 +126,22 @@ class LocateTest < ActiveSupport::TestCase
     #6551580	糖果KTV	6550857	糖果KTV·CLUB	
     assert Shop.similarity_by_id(6551580,	6550857)>65
     
-  	#10464431	斯坦福2平方		0571	西湖紫金港路与振华路交会处
-  	#10447006	斯坦福2(平方)		0571	西湖杭大路44号
-    assert Shop.similarity_by_id(10464431,	10447006)<55
-    
     #6551618	Co·Co CLUB   6556964	COCO酒吧
     assert Shop.similarity_by_id(6551618,	6556964)>70
 
   	#2036714	豪尚豪宾馆  2032593	杭州豪尚豪旅馆  2032175	杭州豪尚豪客房
-    assert Shop.similarity_by_id(2036714,	2032593)>70
-    assert Shop.similarity_by_id(2036714,	2032175)>70
-    assert Shop.similarity_by_id(2032593,	2032175)>70    
     
     # 7039803	西湖区名苑幼儿园	
     # 7032968	西湖区名苑幼儿园青苑园区 
     # 7053052	名苑幼儿园	
     # 7048974	名苑幼儿园青苑园区
-    assert Shop.similarity_by_id(7039803,	7032968)==0  
-    assert Shop.similarity_by_id(7039803,	7053052)>70
-    assert Shop.similarity_by_id(7032968,	7048974)>70
-    assert Shop.similarity_by_id(7053052,	7048974)==0  
-    
-    assert Shop.similarity(Shop.collection.find({"_id" => 7032968}).first,	Shop.collection.find({"_id" => 7048974}).first)>70
-    
+        
     #国美电器公主坟店 - 苏宁电器公主坟店
     assert Shop.similarity_by_id(2408713,2447317)<56
     #海拉尔贝尔大酒店(呼伦贝尔) - 海拉尔凯顿大酒店(呼伦贝尔)
     assert Shop.similarity_by_id(8475,1642617)<63
     
     #布尔津旅游宾馆 - 阿勒泰旅游宾馆 ??
-    Shop.similarity_by_id(1636421,1636419)
   end
   
 end
