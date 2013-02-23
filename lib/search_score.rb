@@ -59,7 +59,7 @@ module SearchScore
   
   def adjust(score,accuracy,min_d)
     ret = score
-    ret = -200 if ret < -200 #最多加权2/3后封顶
+    #ret = -200 if ret < -200 #最多加权2/3后封顶
     acc = accuracy
     acc = 30 if acc<30
     acc = 1000 if acc>1000
@@ -81,9 +81,14 @@ module SearchScore
     b = CheckinBssidStat.where({"_id" => bssid}).first
     unless b.nil?
       score.each_with_index do |xx,i|
+        xx[2] -= 300 if xx[0]["_id"]==b.shop_id
         bshop = b.shops.find{|shop| shop["id"]==xx[0]["_id"]}
         next if bshop.nil?
-        xx[2] -= (30/b.shops.size+(bshop["users"].size-1)*50)
+        if b.shop_id
+          xx[2] -= (30/b.shops.size+user_to_score(bshop["users"].size)/3)
+        else
+          xx[2] -= (30/b.shops.size+user_to_score(bshop["users"].size))
+        end
       end
     end
   end  
