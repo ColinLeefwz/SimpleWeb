@@ -8,7 +8,7 @@ class LocateTest < ActiveSupport::TestCase
 
   def test_locate1
     puts ENV["RAILS_ENV"] 
-    ss = Shop.new.find_shops([ 30.282204, 120.11528 ], 300, "122.235.138.18", "502e6303421aa918ba000001")
+    ss = Shop.new.find_shops([ 30.282204, 120.11528 ], 300, "502e6303421aa918ba000001")
     assert_equal 20325453, ss[0]["_id"]
     assert_equal "浙江科技产业大厦", ss[0]["name"]
     assert ss.length>20
@@ -18,13 +18,13 @@ class LocateTest < ActiveSupport::TestCase
 
 
   def test_locate2
-    ss = Shop.new.find_shops([30.284666, 120.118805], 65, "115.199.110.63", "50446058421aa92042000002")
+    ss = Shop.new.find_shops([30.284666, 120.118805], 65, "50446058421aa92042000002")
     assert_equal 5725522, ss[0]["_id"]
     assert_equal "苑苑·美容美发文二路店", ss[0]["name"]
   end
   
   def test_locate3
-    ss = Shop.new.find_shops([30.27169, 120.158607], 65, "211.140.18.108", "")
+    ss = Shop.new.find_shops([30.27169, 120.158607], 65, "")
     assert_equal 21000012, ss[0]["_id"]
     assert_equal "杭州百货大楼", ss[0]["name"]
     assert ss.find {|x| x["name"] =~ /珠宝/ }.nil?
@@ -44,37 +44,37 @@ class LocateTest < ActiveSupport::TestCase
   end  
 
   def test_locate6
-    ss = Shop.new.find_shops([30.2815, 120.120285], 65, "115.205.239.246", "50bc20fcc90d8ba33600004b")
+    ss = Shop.new.find_shops([30.2815, 120.120285], 65, "50bc20fcc90d8ba33600004b")
     assert_equal 21000003, ss[0]["_id"]
     assert_equal "弄堂里(万塘店)", ss[0]["name"]
   end  
 
   def test_locate7
-    ss = Shop.new.find_shops([30.319336, 120.107246], 65, "211.140.18.114", "")
+    ss = Shop.new.find_shops([30.319336, 120.107246], 65, "")
     assert_equal 9241603, ss[0]["_id"]
     assert_equal "杭州汽车北站", ss[0]["name"]
   end  
 
   def test_locate8
-    ss = Shop.new.find_shops([30.26222, 120.089729], 30, "", "")
+    ss = Shop.new.find_shops([30.26222, 120.089729], 30, "")
     assert_equal 1222273, ss[0]["_id"]
     assert_equal "福云咖啡", ss[0]["name"]
   end  
   
   def test_locate9
-    ss = Shop.new.find_shops([30.276918, 120.15477], 85, "", "")
+    ss = Shop.new.find_shops([30.276918, 120.15477], 85, "")
     shop = ss[0,6].find {|x| x["name"]=="星巴克咖啡华浙店"}
     assert_equal "星巴克咖啡华浙店", shop["name"]
   end        
 
   def test_locate10
-    ss = Shop.new.find_shops([30.77376203, 114.208263] , 50, "", "")
+    ss = Shop.new.find_shops([30.77376203, 114.208263] , 50, "")
     assert ss[0,3].find {|x| x["name"] =~ /天河机场/ }
     #assert ss[0]["name"].index("天河机场")>=0
   end  
 
   def test_locate11
-    ss = Shop.new.find_shops([30.290083, 120.117851], 65, "211.140.18.110", "")
+    ss = Shop.new.find_shops([30.290083, 120.117851], 65, "")
     assert_equal 21828370, ss[0]["_id"]
     assert_equal "物美大卖场文一店", ss[0]["name"]
   end  
@@ -101,20 +101,20 @@ class LocateTest < ActiveSupport::TestCase
   end 
   
   def test_locate15
-    ss = Shop.new.find_shops([30.262188, 120.190781], 65, "", "50446058421aa92042000002")
+    ss = Shop.new.find_shops([30.262188, 120.190781], 65, "50446058421aa92042000002")
     assert ss[0,3].find {|x| x["name"] =~ /张生记/ }
   end
   
   def test_locate16
-    ss = Shop.new.find_shops([30.249882, 120.159645], 65, "", "" , "38:22:d6:87:5f:f0" )
+    ss = Shop.new.find_shops([30.249882, 120.159645], 65, "" , "38:22:d6:87:5f:f0" )
     assert_equal 21624918, ss[0]["_id"]
-    ss = Shop.new.find_shops([30.249849, 120.159599], 65, "", "" , "38:22:d6:87:5f:f0" )
+    ss = Shop.new.find_shops([30.249849, 120.159599], 65, "" , "38:22:d6:87:5f:f0" )
     assert_equal 21624918, ss[0]["_id"]
   end
   
   def test_bssid
-    s0 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "", "" , nil ,true)[0]
-    s1 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "", "" , "0:23:89:71:6f:c4" ,true)[0]
+    s0 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "" , nil ,true)[0]
+    s1 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "" , "0:23:89:71:6f:c4" ,true)[0]
     assert s0[2] > s1[2]
   end
   
