@@ -4,7 +4,7 @@
   百度经纬度: <%= text_field_tag :loc, params[:loc], :size => 25  %>(例:120.108,30.28)
   或者 实际经纬度: <%= text_field_tag :lo, params[:lo], :size => 25  %>(例:30.28，120.108)<br/>
   误差（米）: <%= text_field_tag :accuracy, params[:accuracy], :size => 5  %>
-  IP地址: <%= text_field_tag :ip, params[:ip], :size => 20  %>
+  Bssid: <%= text_field_tag :bssid, params[:bssid], :size => 20  %>
   用户: <%= text_field_tag :user, params[:user], :size => 20  %>
   <%= submit_tag "确 定" %>
 <% end %>
