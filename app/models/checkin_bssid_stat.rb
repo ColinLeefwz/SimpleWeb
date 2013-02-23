@@ -75,6 +75,7 @@ class CheckinBssidStat
         shop["users"] = shop["users"].to_set.add(uid).to_a
         b.shops = shops
         b.save!
+        b.try_set_shop_id if shop["users"].size>1
       end
     end
   end
