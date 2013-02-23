@@ -4,7 +4,7 @@ class AroundmeController < ApplicationController
   
   def shops
     arr = Shop.new.find_shops([params[:lat].to_f,params[:lng].to_f],
-          params[:accuracy].to_f,real_ip,session[:user_id],params[:bssid])  
+          params[:accuracy].to_f,session[:user_id],params[:bssid])  
     hash = arr.map do |x|
       s = Shop.new(x)
       s.id = x["_id"].to_i
@@ -18,10 +18,10 @@ class AroundmeController < ApplicationController
     if params[:loc] && params[:loc].length>3
       lob = params[:loc].split(/[,]/).map { |m| m.to_f  }.reverse
       loc = Shop.lob_to_lo(lob)
-      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,params[:ip],uid,params[:bssid],true)  
+      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,uid,params[:bssid],true)  
     elsif params[:lo]
       loc = params[:lo].split(/[,]/).map { |m| m.to_f  }
-      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,params[:ip],uid,params[:bssid],true)
+      @shops = Shop.new.find_shops(loc,params[:accuracy].to_f,uid,params[:bssid],true)
     else
       @shops = []
     end
