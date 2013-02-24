@@ -26,6 +26,18 @@ class SinaUser
     end
     user
   end
+  
+  def self.gen_head_logo(user, token=$sina_token)
+    sina_info = SinaUser.get_user_info(uid,token)
+    user_logo = UserLogo.new({user_id: user._id})
+    if SinaUser.logo_store_local(sina_info["avatar_large"],"public/uploads/tmp/#{user_logo.id}.jpg")
+      user_logo.img_tmp = "#{user_logo.id.to_s}.jpg"
+      user.head_logo_id = user_logo.id
+      user.save
+      UserLogo.collection.insert(user_logo.attributes)
+      CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img")
+    end
+  end
 
   def dface_gender
     return "1" if self.gender == 'm'
@@ -33,9 +45,13 @@ class SinaUser
     '0'
   end
 
-  def logo_store_local(path, err_num=0)
+  def logo_store_local(path)
+    SinaUser.logo_store_local(self.avatar_large, path)
+  end
+  
+  def self.logo_store_local(url,path, err_num=0)
     begin
-      logo_data= RestClient.get(self.avatar_large)
+      logo_data= RestClient.get(url)
       open(path, "wb") { |file| file.write(logo_data)}
       true
     rescue
@@ -44,6 +60,16 @@ class SinaUser
       return nil if err_num == 4
       logo_store_local(path, err_num)
     end
+  end
+  
+  def self.get_user_info(uid,token)
+    require 'open-uri'
+    url = "https://api.weibo.com/2/users/show.json?uid=#{uid}&source=#{$sina_api_key}&access_token=#{token}"
+    
+    open(url) do |f|
+      return ActiveSupport::JSON.decode( f.gets )
+    end
+    return nil
   end
 
   def self.poi_suser_convert(poi)
