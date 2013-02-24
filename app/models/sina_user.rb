@@ -28,14 +28,14 @@ class SinaUser
   end
   
   def self.gen_head_logo(user, token=$sina_token)
-    sina_info = SinaUser.get_user_info(uid,token)
+    sina_info = SinaUser.get_user_info(user.wb_uid,token)
     user_logo = UserLogo.new({user_id: user._id})
     if SinaUser.logo_store_local(sina_info["avatar_large"],"public/uploads/tmp/#{user_logo.id}.jpg")
       user_logo.img_tmp = "#{user_logo.id.to_s}.jpg"
       user.head_logo_id = user_logo.id
       user.save
       UserLogo.collection.insert(user_logo.attributes)
-      CarrierWave::Workers::StoreAsset.perform("UserLogo",user_logo.id.to_s,"img")
+      Resque.enqueue_in(3.seconds, CarrierWave::Workers::StoreAsset, "UserLogo",user_logo.id.to_s,"img")
     end
   end
 
@@ -52,6 +52,7 @@ class SinaUser
   def self.logo_store_local(url,path, err_num=0)
     begin
       logo_data= RestClient.get(url)
+      return nil if logo_data.size<8000
       open(path, "wb") { |file| file.write(logo_data)}
       true
     rescue
