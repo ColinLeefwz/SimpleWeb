@@ -3,11 +3,6 @@
 require 'oauth2'
 require 'rest_client'
 
-
-$sina_api_key = "2054816412"  
-$sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  
-$sina_callback = "http://www.dface.cn/oauth2/sina_callback"
-
 class Oauth2Controller < ApplicationController
   
   def hello
@@ -171,7 +166,7 @@ class Oauth2Controller < ApplicationController
   end
   
   def gen_new_user(uid,token)
-    sina_info = get_user_info(uid,token)
+    sina_info = SinaUser.get_user_info(uid,token)
     #SinaUser.collection.insert(sina_info)
     user = User.new
     user.wb_uid = uid
@@ -195,14 +190,5 @@ class Oauth2Controller < ApplicationController
     user
   end
   
-  def get_user_info(uid,token)
-    require 'open-uri'
-    url = "https://api.weibo.com/2/users/show.json?uid=#{uid}&source=#{$sina_api_key}&access_token=#{token}"
-    
-    open(url) do |f|
-      return ActiveSupport::JSON.decode( f.gets )
-    end
-    return nil
-  end
   
 end
