@@ -26,6 +26,9 @@ class User
   
   field :blacks, type:Array #黑名单
   field :follows, type:Array #关注
+  
+  #no_wb_logo: 该用户没有设置新浪微博头像
+  #logo_backup: 被禁止的用户，其head_logo_id的备份
 
   validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
   
@@ -322,6 +325,10 @@ class User
     ret
   end
 
+  def self.fix_head_logo_err
+    fix_head_logo_err1
+    fix_head_logo_err2
+  end
   
   def self.fix_head_logo_err1
     User.where({auto:{"$ne"=>true},head_logo_id:{"$exists"=>true}}).each do |u|
@@ -349,8 +356,10 @@ class User
       if u.checkins.count==0
         #puts "该用户不活跃"
       else
+        next if u.wb_uid.to_i.to_s.size != u.wb_uid.size
+        next if u["no_wb_logo"]
         puts "#{u.name},  #{u.id},  #{u.wb_uid}"
-        SinaUser.gen_head_logo(self)
+        SinaUser.gen_head_logo(u)
       end
     end
   end
