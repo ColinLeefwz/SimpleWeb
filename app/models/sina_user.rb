@@ -36,6 +36,8 @@ class SinaUser
       user.save
       UserLogo.collection.insert(user_logo.attributes)
       Resque.enqueue_in(3.seconds, CarrierWave::Workers::StoreAsset, "UserLogo",user_logo.id.to_s,"img")
+    else
+      User.collection.find({_id:user._id}).update("$set" => {no_wb_logo:true}) 
     end
   end
 
@@ -59,7 +61,7 @@ class SinaUser
       err_num += 1
       puts "retry#{err_num}: #{path}"
       return nil if err_num == 4
-      logo_store_local(path, err_num)
+      logo_store_local(url, path, err_num)
     end
   end
   
