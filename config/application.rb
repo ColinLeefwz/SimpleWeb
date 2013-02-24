@@ -17,6 +17,12 @@ $gfuid = "507f6bf3421aa93f40000005"
 $uuid = UUID.new
 $LOG = Logger.new('log/sina_api.log', 0, 100 * 1024 * 1024)
 
+$sina_api_key = "2054816412"  
+$sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  
+$sina_callback = "http://www.dface.cn/oauth2/sina_callback"
+$sina_token = '2.00t9e5PCMcnDPC86e7068cc9yxaMRC'
+
+
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
