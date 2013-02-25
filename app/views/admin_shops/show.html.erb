@@ -9,6 +9,11 @@
   <%= @shop.name %>
 </p>
 <p>
+  <b>密码:</b>
+  <%= @shop.password || '未开通' %>
+</p>
+
+<p>
   <b>logo:</b>
   <br/><br/>
   <%=  image_tag @shop.logo && @shop.logo.img %>
