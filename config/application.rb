@@ -22,6 +22,8 @@ $sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"
 $sina_callback = "http://www.dface.cn/oauth2/sina_callback"
 $sina_token = '2.00t9e5PCMcnDPC86e7068cc9yxaMRC'
 
+$qq_api_key = "100379223"  
+$qq_api_key_secret = "3cc1b95d92352d1335eadc7aea01428f"  
 
 
 # If you have a Gemfile, require the gems listed there, including any gems
