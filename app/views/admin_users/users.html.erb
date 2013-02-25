@@ -1,24 +1,9 @@
-<%= form_tag '/admin_users',:method =>:get do %>
-  名称: <%= text_field_tag :name, params[:name], :size => 10  %>
-  id: <%= text_field_tag :id, params[:id], :size => 30  %>
-  微博id: <%= text_field_tag :wb_uid, params[:wb_uid], :size => 10  %>
-  城市代码: <%= text_field_tag :city, params[:city], :size => 5  %>
-  性别: <%= text_field_tag :gender, params[:gender], :size => 2  %>
-  : <%= text_field_tag :gender, params[:gender], :size => 2  %>
-  <br/>
-  加V： <%= select_tag :wb_v,options_for_select([['所有用户','0'],['加V用户','1']],params[:wb_v])  %>
-  <br/>
-  <%= submit_tag "查 找" %>
-<% end %>
-
-<br/>
-
 <table border="1">
   <tr>
     <th>id</th>
     <th>注册时间</th>
     <th>名称</th>
-    <th>出生日期</th>	
+    <th>出生日期</th>
     <th>wb_uid</th>
     <th>性别</th>
     <th>关注数</th>
@@ -48,4 +33,3 @@
 </table>
 
 <%= generate_paginate.html_safe %>
-
