@@ -18,6 +18,11 @@ class AdminUsersController < ApplicationController
     hash.merge!({gender: params[:gender]}) unless params[:gender].blank?
     hash.merge!({birthday: params[:birthday]}) unless params[:birthday].blank?
 
+    case params[:wb_v]
+    when '1'
+      hash.merge!({wb_v: true}) 
+    end
+
     @users =  paginate("User", params[:page], hash, sort)
 
 
@@ -25,6 +30,17 @@ class AdminUsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+  end
+
+  def logos
+    user = User.find(params[:id])
+    @logos = user.user_logos
+  end
+
+  def follows
+    user = User.find(params[:id])
+    @users = paginate_arr(user.follows_s, params[:page], 15 )
+    render :file => "/admin_users/users"
   end
 
   def chat
