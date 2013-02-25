@@ -6,13 +6,17 @@ class Coupon
   field :shop_id, type: Integer
   field :name 
   field :desc
-  field :ratio, type:Integer
-  field :t, type: Integer #发布的方式,1.是图文混合模式发布的，2. 是全图模式发布的
+  field :ratio, type:Integer #取消
+  field :t, type: Integer #发布的方式,1.是图文混合模式发布的，2. 是全图模式发布的,
+  field :t2, type: Integer #发布的方式,1.签到触发，2. 图片分享到微博触发类,  
+  field :text, #图片分享到微博触发类, 必须包含的文字。
   field :hidden, type:Integer #状态， 1.是停用
   #  field :endt, type:DateTime
-  field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间}
+  field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间,[img:图片id]}
   #TODO: 一个用户可以多次下载一个优惠券：#{id:用户id,dat:下载时间,[{dat:下载时间,uat:使用时间}]}
-  field :rule # 0代表一个用户只能下载一次，1代表一个用户只能有一张未使用的，2代表无限制
+  field :rule # 取消0代表一个用户只能下载一次，1代表一个用户只能有一张未使用的，2代表无限制
+  #0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。
+  field :rulev #1每日前几名签到优惠的数量;3常客累计满多少次签到优惠的数量。
   field :img
   mount_uploader :img, CouponUploader
   field :img_tmp
