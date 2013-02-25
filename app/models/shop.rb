@@ -42,6 +42,7 @@ class Shop
   index({lo: "2d"})
   index({del: 1},{ sparse: true })
   index({d: 1},{ sparse: true })
+  index({password: 1},{ sparse: true })
   index({v: 1},{ sparse: true })  
   index({city: 1})
   index({utotal:-1})
