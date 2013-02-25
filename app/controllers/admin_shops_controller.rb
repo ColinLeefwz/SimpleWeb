@@ -20,6 +20,11 @@ class AdminShopsController < ApplicationController
       hash.merge!({v:{'$gt' => 0}})
     end
 
+    case params[:password]
+    when '1'
+      hash.merge!({password: {"$exists" => true}})
+    end
+
     case params[:d]
     when '1'
       hash.merge!({d:{'$gt' => 0}})
