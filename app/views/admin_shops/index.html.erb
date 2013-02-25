@@ -11,9 +11,11 @@
     加权：<%= select_tag :v,options_for_select([['所有商家','0'],['加权商家','1']],params[:v])  %>
     降权：<%= select_tag :d,options_for_select([['所有商家','0'],['降权商家','1']],params[:d])  %>
     删除：<%= select_tag :del,options_for_select([['所有商家','0'],['删除商家','1']],params[:del])  %>
+    密码： <%= select_tag :password,options_for_select([['所有商家','0'],['开通商家','1']],params[:password])  %>
     <br/>
     分类： <%= select_tag :type, options_for_select(import_type, params[:type].to_s) %>
     <%= submit_tag "查 找" %>
+    
   </p>
 <% end %>
 <!--
@@ -50,11 +52,11 @@
       <td><%= shop.show_t %></td>
       <td><%= type_or_user(shop) %></td>
       <td><%= link_to(shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{shop.id}") %></td>
-      <td><%= link_to('开通', "/admin_shops/set_password?id=#{shop.id}") %></td>
+      <td><%= shop.password.blank? ?  link_to('开通', "/admin_shops/set_password?id=#{shop.id}") : '' %></td>
       <td><%= link_to('加权', "/admin_shops/upgrade_v?id=#{shop.id}") %></td>
       <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
       <td>
-        <a onclick="ajaxdel($(this),<%= shop._id %>, false)" >删除</a>
+        <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >删除</a>
       </td>
 
     </tr>
@@ -84,8 +86,9 @@
     });
   }
 
-  function ajaxdel(obj,shop_id,no_confirm){
-    if(no_confirm || confirm("确定删除商家？"))
+  function ajaxdel(obj,shop_id,no_confirm, shop_name){
+    text = "确定删除商家 "+shop_name+'？'
+    if(no_confirm || confirm(text))
       $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
         obj.parent().parent().hide()
       });
@@ -115,7 +118,7 @@
     if(confirm("确定需要批量删除商家？"))
       $("table .checkbox_shops:checked").each(
     function(){
-      ajaxdel($(this),$(this).val(), true)
+      ajaxdel($(this),$(this).val(), true, '')
     }
   )
   }
