@@ -39,7 +39,8 @@ class AdminUsersController < ApplicationController
 
   def follows
     user = User.find(params[:id])
-    @users = paginate_arr(user.follows_s, params[:page], 15 )
+    follows = user.follows_s.map{|m| User.find(m)}
+    @users = paginate_arr(follows, params[:page], 15 )
     render :file => "/admin_users/users"
   end
 
