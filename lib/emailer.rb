@@ -36,9 +36,10 @@ class Emailer < ActionMailer::Base
         end
       end
 
-      photo_num = SinaPoiPhoto.count
+#      photo_num = SinaPoiPhoto.count
+       sf_num = SinaFriend.count
 
-      "用户数：#{sus};  其中ios系列用户：#{ius}; 杭州iso用户: #{hiu} \n 商家数：#{sps};  其中能匹配的商家数：#{pps}; 杭州商家: #{hpi} \n 已抓取的热门地点数： #{hls}; 完成度：#{(hls/110.92).round(3)}% \n \n 图片抓取个数: #{photo_num} "
+      "用户数：#{sus};  其中ios系列用户：#{ius}; 杭州iso用户: #{hiu} \n 商家数：#{sps};  其中能匹配的商家数：#{pps}; 杭州商家: #{hpi} \n 已抓取的热门地点数： #{hls}; 完成度：#{(hls/110.92).round(3)}% \n \n 已抓微博好友个数: #{sf_num} "
     end
 
     def self.send_mail
