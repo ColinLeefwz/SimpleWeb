@@ -44,13 +44,17 @@
 </p>
 
 <p>
+  <b>头像数:</b>
+  <%=link_to @user.user_logos.size, "/admin_users/logos?id=#{@user.id}" %>
+</p>
+<p>
   <b>签到数:</b>
   <%=link_to @user.checkins.count, "/admin_checkins?uid=#{@user.id}" %>
 </p>
 
 <p>
   <b>关注数:</b>
-  <%= @user.follows_s.count %>
+  <%=link_to @user.follows_s.count, "/admin_users/follows?id=#{@user.id}" %>
 </p>
 
 <p>
