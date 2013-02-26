@@ -80,12 +80,13 @@ class CheckinsController < ApplicationController
     checkin.ip = real_ip
     send_if_first shop
     checkin.save!
+    send_coupon_if_exist
     CheckinBssidStat.insert_checkin(checkin) if params[:bssid]
     if checkin.add_to_redis #当天首次签到
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     end
     send_notice_if_exist shop
-    send_coupon_if_exist
+    
     if session[:new_user_flag]
       session[:new_user_flag] = nil
       session_user.update_attribute(:city, checkin.city)

@@ -186,9 +186,9 @@ class Shop
   def send_coupon(user_id)
     coupons = []
     Coupon.gen_demo(self.id) if self.latest_coupons.empty? && (ENV["RAILS_ENV"] != "production" )
-    coupons += self.latest_coupons.select { |c| c.allow_send?(user_id) }    
+    coupons += self.latest_coupons.select { |c| c.allow_send_checkin?(user_id) }
     sub_shops.each do |shop|
-      coupons += shop.latest_coupons.select { |coupon| coupon.allow_send?(user_id) }
+      coupons += shop.latest_coupons.select { |coupon| coupon.allow_send_checkin?(user_id) }
     end
 
     coupons.each{|coupon| coupon.send_coupon(user_id)}
