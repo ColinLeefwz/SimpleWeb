@@ -57,11 +57,11 @@ class Coupon
     when 0
       return true unless ckin.include?(user_id)
     when 1
-      return true if !ckin.include?(user_id) && ckin.size < self.rulev
+      return true if !ckin.include?(user_id) && ckin.size < self.rulev.to_i
     when 2
       return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == 1
     when 3
-      return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == self.rulev
+      return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == self.rulev.to_i
     end
   end
 
