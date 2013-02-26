@@ -47,15 +47,34 @@ class Coupon
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
   end
 
-  def allow_send?(user_id)
-    if self.ratio
-      return false if ratio < Random.rand(100)
-    end
-    al = true
-    al = false if self.rule.to_i == 0 && self.users.to_a.detect{|u| user_id == u['id']}
-    al = false if self.rule.to_i == 1 && self.users.to_a.detect{|u| user_id == u['id'] && u['uat'].nil?  }
-    al
+  def allow_send_share?(t)
+    return true if t.match(self.text)
   end
+  
+  def allow_send_checkin?(user_id)
+    ckin = $redis.zrange("ckin#{self.shop_id.to_i}", 0, -1)
+    case self.rule.to_i
+    when 0
+      return true unless ckin.include?(user_id)
+    when 1
+      return true if !ckin.include?(user_id) && ckin.size < self.rulev
+    when 2
+      return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == 1
+    when 3
+      return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == self.rulev
+    end
+  end
+
+
+#  def allow_send?(user_id)
+#    if self.ratio
+#      return false if ratio < Random.rand(100)
+#    end
+#    al = true
+#    al = false if self.rule.to_i == 0 && self.users.to_a.detect{|u| user_id == u['id']}
+#    al = false if self.rule.to_i == 1 && self.users.to_a.detect{|u| user_id == u['id'] && u['uat'].nil?  }
+#    al
+#  end
 
   
   def download(user_id)
