@@ -6,16 +6,15 @@ class Coupon
   field :shop_id, type: Integer
   field :name 
   field :desc
-  field :ratio, type:Integer #取消
+  #field :ratio, type:Integer #取消
   field :t, type: Integer #发布的方式,1.是图文混合模式发布的，2. 是全图模式发布的,
   field :t2, type: Integer #发布的方式,1.签到触发，2. 图片分享到微博触发类,  
-  field :text, #图片分享到微博触发类, 必须包含的文字。
+  field :text #图片分享到微博触发类, 必须包含的文字。
   field :hidden, type:Integer #状态， 1.是停用
   #  field :endt, type:DateTime
   field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间,[img:图片id]}
   #TODO: 一个用户可以多次下载一个优惠券：#{id:用户id,dat:下载时间,[{dat:下载时间,uat:使用时间}]}
-  field :rule # 取消0代表一个用户只能下载一次，1代表一个用户只能有一张未使用的，2代表无限制
-  #0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。
+  field :rule #0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。
   field :rulev #1每日前几名签到优惠的数量;3常客累计满多少次签到优惠的数量。
   field :img
   mount_uploader :img, CouponUploader
@@ -91,14 +90,13 @@ class Coupon
     demo.rule = 2
     `cd coupon && ./gen_demo.sh '#{demo.name}' '#{demo.desc}' ../public/uploads/tmp/coupon_#{demo._id}.jpg pic1.jpg`
     demo.img_tmp = "coupon_#{demo.id}.jpg"
-    demo.ratio = 100
     demo.save
     CarrierWave::Workers::StoreAsset.perform("Coupon",demo.id.to_s,"img")
   end
   
   #图文模式生成图片
   def gen_img
-    if self.t.to_i == 1
+    if self.t.to_i == 1 || self.t2==2
       name = self.name
       desc = self.desc
       img = self.img2
@@ -116,8 +114,11 @@ class Coupon
   end
 
   def show_rule
-    ['只能下载一次', '只能有一张未使用','无限制'][self.rule.to_i]
+    ['每日签到优惠', '每日前几名签到优惠','新用户首次签到优惠','累计签到优惠'][self.rule.to_i]
   end
 
+  def show_t2
+    ['签到类','分享类'][self.t2.to_i-1]
+  end
 
 end
