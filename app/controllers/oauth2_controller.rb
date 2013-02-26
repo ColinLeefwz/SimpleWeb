@@ -69,6 +69,7 @@ class Oauth2Controller < ApplicationController
   def sso
     uid = params[:uid]
     token = params[:access_token]
+    #TODO: 确认该:access_token是新浪真实授权的
     hash = Digest::SHA1.hexdigest("#{uid}#{token}dface")[0,32]
     if hash != params[:hash][0,32]
       render :json => {error: "hash error: #{hash}."}.to_json
@@ -77,7 +78,19 @@ class Oauth2Controller < ApplicationController
     data = {}
     do_login(uid,token,data)
   end
-  
+
+  def qq_client
+    openid = params[:openid]
+    token = params[:access_token]
+    hash = Digest::SHA1.hexdigest("#{openid}#{token}dface")[0,32]
+    if hash != params[:hash][0,32]
+      render :json => {error: "hash error: #{hash}."}.to_json
+      return
+    end
+    data = {}
+    do_login_qq(openid,token,data)
+  end
+    
   def logout
     if params[:pushtoken] && session_user.tk==params[:pushtoken]
       session_user.unset(:tk)
@@ -155,7 +168,25 @@ class Oauth2Controller < ApplicationController
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
   end
-  
+
+  def do_login_qq(openid,token,data)
+    user = User.where({qq: openid}).first
+    if user.nil?
+      user = gen_new_user_qq(openid,token)
+      return if user.nil?
+      session[:new_user_flag] = true
+    end
+    if user.forbidden?
+      render :json => {error:"forbidden."}.to_json
+      return
+    end
+    session[:user_id] = user.id
+    $redis.set("qqtoken#{user.id}",token)
+    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
+    data.merge!( user.head_logo_hash  )
+	  render :json => data.to_json
+  end
+    
   def change_auto_user(user)
     user.auto = false
     user.head_logo_id = nil
@@ -189,6 +220,27 @@ class Oauth2Controller < ApplicationController
     user.save!
     user
   end
-  
+
+  def gen_new_user_qq(openid,token)
+    info = nil
+    begin
+      info = RestClient.get "https://graph.qq.com/user/get_simple_userinfo?access_token=#{token}&oauth_consumer_key=#{$qq_api_key}&openid=#{openid}"
+    rescue Exception => e
+      puts e.backtrace
+      render :json => {error: e.to_s}.to_json
+      return nil
+    end
+    info = ActiveSupport::JSON.decode(info)
+    if info["ret"]!=0
+      render :json => {error: info["msg"] }.to_json
+      return nil
+    end
+    user = User.new
+    user.qq = openid
+    user.password = Digest::SHA1.hexdigest(":dface#{user.qq}")[0,16]
+    user.name = info["nickname"]
+    user.save!
+    user
+  end  
   
 end
