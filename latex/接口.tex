@@ -188,7 +188,35 @@ hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
 \end{tabular}
    \end{center}
 \end{table}
+手机客户端使用微博SSO登录后，调用本接口。
 hash的计算方式为：uid+access\_token+"dface"进行SHA1算法后取前32位。
+
+
+\subsection{客户端QQ接口}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/qq\_client} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ expires\_in  & 字符串 & 必须 &  过期时间\\
+  \hline
+ openid  & 字符串 & 必须 &  QQ的openid\\
+  \hline
+ access\_token  & 字符串 & 必须 &  QQ授权的token\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+手机客户端使用QQ提供的SDK登录后，调用本接口。
+hash的计算方式为：openid+access\_token+"dface"进行SHA1算法后取前32位。
+
 
 \subsection{退出}
 
