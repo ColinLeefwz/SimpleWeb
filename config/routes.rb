@@ -14,6 +14,8 @@ Lianlian::Application.routes.draw do
       get 'newly_down'
       get 'newly_use'
       post 'crop'
+      get 'new2'
+      post 'create2'
 
     end
   end

@@ -7,16 +7,19 @@
 </div>
 
 <ul class="formlist2">
-  <li>
-    <span style="width: 100px;">中奖比率:</span>
-    <span class="right"><%= "#{@coupon.ratio}%" %></span>
-  </li>
+
   <li>
     <span style="width: 100px;">使用规则:</span>
-    <span class="right"><%= "#{@coupon.show_rule}" %></span>
+    <span class="right"><%= @coupon.show_rule%></span>
   </li>
+  <% if [1,3].include?(@coupon.rule.to_i) %>
+    <li>
+      <span style="width: 100px;"><%= rulev_lable(@coupon.rule.to_i) %></span>
+      <span class="right"><%= @coupon.rulev%></span>
+    </li>
+  <%  end %>
+
 </ul>
 
-<%= link_to '编辑', edit_shop_coupon_path(@coupon) %> |
 <%= link_to '返回列表', shop_coupons_path %>
 
