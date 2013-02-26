@@ -16,48 +16,14 @@
     </div>
   <% end %>
 
-  <div class="coupon">
-    <% if @coupon.t.to_i == 1 %>
-      <div id="imgText">
-        <div class ='ldiv'>
-          <input size="12" name="coupon[img2]" type="file" class="inputImg"  >
-        </div>
-        <div class="rdiv" >
-          <%= f.text_field :name, :class => 'stxt txt' %>
-          <%= f.text_area :desc, :class => 'stxt atxt'%>
-        </div>
-      </div>
-    <% end %>
+  <% case @coupon.t.to_i  %>
+  <% when 1 %>
+    <%= render :partial => 'imgtext', :locals => {:f => f}  %>
+  <% when 2 %>
+    <%= render :partial => 'allimg', :locals => {:f => f}  %>
+  <% end  %>
 
-    <% if @coupon.t.to_i == 2 %>
-      <div id="allImg">
-        <div class="adiv">
-          <input size="30" name="coupon[img]" type="file" class="inputImg" style="margin-left:37px"  >
-        </div>
-      </div>
-    <% end %>
-
-  </div>
-
-
-  <ul class="formlist" style="margin-top: 0px;">
-    <%= render :partial => 'ratio',  :locals => {:f => f}  %>
-    <li>
-      <label>使用规则:</label>
-      <%= f.select :rule, [['只能下载一次', 0],['只能一张未使用',1],['无限制', 2]], :class => "txt" %>
-    </li>
-    <li>
-
-      <%= f.hidden_field :t, :value => @coupon.t %>
-      <input type="submit" value="发 布" class="btn"/>
-    </li>
-  </ul>
 <%  end %>
-
-
-
-
-
 
 <%= link_to '返回列表', '/shop_coupons' %>
 

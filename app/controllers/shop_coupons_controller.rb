@@ -5,7 +5,7 @@ class ShopCouponsController < ApplicationController
   layout 'shop'
 
   def index
-    hash = {:shop_id => session[:shop_id], :ratio => {"$exists" => true}}
+    hash = {:shop_id => session[:shop_id]}
     sort = {:_id => -1}
     @coupons = paginate("Coupon", params[:page], hash, sort,10)
 
@@ -19,11 +19,7 @@ class ShopCouponsController < ApplicationController
   # GET /coupons/1.json
   def show
     @coupon = Coupon.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @coupon }
-    end
+    render :file => "/shop_coupons/show2" if @coupon.t2 == 2
   end
 
   # GET /coupons/new
@@ -69,11 +65,28 @@ class ShopCouponsController < ApplicationController
     redirect_to :action => :new
   end
 
+  def new2
+    @coupon = Coupon.new
+  end
+
+  def create2
+    @coupon = Coupon.new(params[:coupon])
+    @coupon.shop_id = session[:shop_id]
+    @coupon.t2 = 2
+    if @coupon.save
+      @coupon.gen_img unless @coupon.img2.blank?
+      redirect_to :action => :show, :id => @coupon.id
+    else
+      render :action => :new
+    end
+  end
+
   # POST /coupons
   # POST /coupons.json
   def create
     @coupon = Coupon.new(params[:coupon])
     @coupon.shop_id = session[:shop_id]
+    @coupon.t2 = 1
     @coupon.process_img_upload = true if @coupon.t.to_i == 2
     if @coupon.img2.blank?
       flash[:notice]='请上传图片.'
@@ -123,7 +136,7 @@ class ShopCouponsController < ApplicationController
 
   def newly_down
     down = []
-    Coupon.where({:shop_id => session[:shop_id], :ratio => {"$exists" => true}}).each do |coupon|
+    Coupon.where({:shop_id => session[:shop_id]}).each do |coupon|
       down += coupon.users.map{|m| [m['id'], m['dat'], coupon.id]}
     end
     @downs = paginate_arr(down.sort { |f,s| s[1] <=> f[1]  }, params[:page],10 )
@@ -131,7 +144,7 @@ class ShopCouponsController < ApplicationController
 
   def newly_use
     use = []
-    Coupon.where({:shop_id => session[:shop_id], :ratio => {"$exists" => true}}).each do |coupon|
+    Coupon.where({:shop_id => session[:shop_id]}).each do |coupon|
       use += coupon.users.select { |s| s['uat'] }.map{|m| [m['id'], m['uat'], coupon.id]}
     end
     @uses = paginate_arr(use.sort { |f,s| s[1] <=> f[1]  }, params[:page],10 )

@@ -1,0 +1,36 @@
+<div class="subtitle">优惠券详情</div>
+<center class="gray2"><%= notice %></center>
+<% if @coupon.img.blank? %>
+  <ul class="formlist2">
+
+    <li>
+      <span style="width: 100px;">名称:</span>
+      <span class="right"><%= @coupon.name %></span>
+    </li>
+    <li>
+      <span style="width: 100px;">描叙:</span>
+      <span class="right"><%= @coupon.desc %></span>
+    </li>
+    <li>
+      <span style="width: 100px;">关键字:</span>
+      <span class="right"><%= @coupon.text %></span>
+    </li>
+  </ul>
+
+<%else%>
+
+  <div class="coupon">
+    <div class="adiv">
+      <%=  image_tag(@coupon.img) %>
+    </div>
+  </div>
+  <ul class="formlist2">
+    <li>
+      <span style="width: 100px;">关键字:</span>
+      <span class="right"><%= @coupon.text %></span>
+    </li>
+  </ul>
+<% end %>
+
+<%= link_to '返回列表', shop_coupons_path %>
+
