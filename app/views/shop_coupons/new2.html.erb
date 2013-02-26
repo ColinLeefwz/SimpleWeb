@@ -1,0 +1,23 @@
+<div class="subtitle">发布优惠券</div>
+<%= form_for(@coupon, :url => '/shop_coupons/create2',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+  <div id="imgText">
+    <div class="coupon">
+      <div class ='ldiv'>
+        <input size="12" name="coupon[img2]" type="file" class="inputImg"  >
+      </div>
+      <div class="rdiv" >
+        <%= f.text_field :name, :value => '点此输入名称', :class => 'stxt txt' %>
+        <%= f.text_area :desc, :value => '点此输入描述', :class => 'stxt atxt',:wrap => "off"%>
+      </div>
+    </div>
+    <ul class="formlist">
+      <li>
+        <label id="lt">关键字：</label>
+        <%= f.text_field :text, :class => "txt"%>
+      </li>
+      <li>
+        <input type="submit" value="发 布" class="btn"/>
+      </li>
+    </ul>
+  </div>
+<% end %>

@@ -14,40 +14,45 @@
     <%= yield :ahead %>
   </head>
   <body>
-  <div id="con">
+    <div id="con">
       <div class="conleft">
         <img src="/images/backstage2.jpg" alt="脸脸DFACE.CN" />
-		<div id="Nav" class="nav">
-		<a href="/shop_checkins" class="m">签到管理</a>
-		<ul>
-			<li><%= link_to "最新签到", "/shop_checkins" %></li>
-			<li><a href="/shop_checkins/rank?flag=week">周排行</a></li>
-			<li><a href="/shop_checkins/rank?flag=month">月排行</a></li>
-			<li><a href="/shop_checkins/rank_list">总排行</a></li>
-		</ul>
-		
-		<a href="/shop_coupons" class="m">优惠券管理</a>
-		<!--<ul>
+        <div id="Nav" class="nav">
+          <a href="/shop_checkins" class="m">签到管理</a>
+          <ul>
+            <li><%= link_to "最新签到", "/shop_checkins" %></li>
+            <li><a href="/shop_checkins/rank?flag=week">周排行</a></li>
+            <li><a href="/shop_checkins/rank?flag=month">月排行</a></li>
+            <li><a href="/shop_checkins/rank_list">总排行</a></li>
+          </ul>
+
+          <a href="javascript:void(0);" class="m">优惠券管理</a>
+          <ul>
+            <li><a href="/shop_coupons">列表</a></li>
+            <li><a href="/shop_coupons/new">签到类发布</a></li>
+            <li><a href="/shop_coupons/new2">分享类发布</a></li>
+          </ul>
+          <!--<ul>
 			<li><a href="/shop_coupons/newly_use">最新使用记录</a></li>
-            <li><a href="/shop_coupons/newly_down">最新下载记录</a></li>
-            <li><a href="#">优惠券列表</a></li>
+      <li><a href="/shop_coupons/newly_down">最新下载记录</a></li>
+      <li><a href="#">优惠券列表</a></li>
 		</ul>-->
-		<a href="/shop_shop_notices" class="m">公告管理</a>
-        <!--
+          <a href="/shop_shop_notices" class="m">公告管理</a>
+          <!--
 			<ul>
-				<%= link_to "公告管理", "#" %>
+          <%= link_to "公告管理", "#" %>
 				<li><a href="/shop_top_notices">置顶公告</a></li>
 				<li><a href="/shop_shop_notices">公告</a></li>
 			</ul>
-        -->
-		<a href="/shop_pass/index" class="m">商家设置</a>
-		<ul>
-			<li><%= link_to "商家logo", "/shop_logos" %></li>
-			<li><%= link_to "修改密码", "/shop_pass/index" %></li>
-		</ul>
-		<a href="/shop_staffs" class="m">员工管理</a>
-		<a href="/shop_subshops" class="m">分店管理</a>
-		</div>
+          -->
+          <a href="/shop_pass/index" class="m">商家设置</a>
+          <ul>
+            <li><%= link_to "商家logo", "/shop_logos" %></li>
+            <li><%= link_to "修改密码", "/shop_pass/index" %></li>
+          </ul>
+          <a href="/shop_staffs" class="m">员工管理</a>
+          <a href="/shop_subshops" class="m">分店管理</a>
+        </div>
 
       </div>
       <div class="conright">

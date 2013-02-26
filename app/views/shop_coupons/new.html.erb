@@ -8,35 +8,8 @@
 
 <div id="couponForm" style="display: <%= params[:action]=='new' ? 'none' : '' %>;">
   <%= form_for(@coupon, :url => '/shop_coupons/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
-
-
-    <div id="imgText">
-      <div class="coupon">
-        <input type="hidden" name="coupon[t]" value="1"/>
-        <div class ='ldiv'>
-          <input size="12" name="coupon[img2]" type="file" class="inputImg"  >
-        </div>
-        <div class="rdiv" >
-          <%= f.text_field :name, :value => '点此输入名称', :class => 'stxt txt' %>
-          <%= f.text_area :desc, :value => '点此输入描述', :class => 'stxt atxt',:wrap => "off"%>
-        </div>
-      </div>
-      <%= render :partial => 'form1', :locals => {:f => f}  %>
-    </div>
-
-    <div id="allImg">
-      <div class="coupon">
-        <input type="hidden" name="coupon[t]" value="2"/>
-        <div class="adiv">
-          <input size="30" name="coupon[img2]" type="file" class="inputImg" style="margin-left:37px">
-        </div>
-      </div>
-      <ul class="formlist" style="margin-top: 0px;">
-        <li>
-          <input type="submit" value="下一步" class="btn"/>
-        </li>
-      </ul>
-    </div>
+    <%= render :partial => 'imgtext', :locals => {:f => f}  %>
+    <%= render :partial => 'allimg', :locals => {:f => f}  %>
   <%  end %>
 </div>
 
