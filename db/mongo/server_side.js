@@ -55,6 +55,16 @@ var baidu_to_real = function(loc){
     return [loc[0]-tmp.d[0],loc[1]-tmp.d[1]];
 };
 
+var real_to_baidu = function(loc){
+    var tmp = db.offsetbaidus.findOne({
+        loc: {
+            $near : loc
+        }
+    });
+    return [loc[0]+tmp.d[0],loc[1]+tmp.d[1]];
+};
+
+
 db.system.js.save({
     "_id" : "num_to_rad",
     "value" : num_to_rad
