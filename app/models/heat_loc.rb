@@ -7,7 +7,7 @@ class HeatLoc
   end
 
   def self.cpoi(token)
-    HeatLoc.where({:c => {'$gt' => 90}, :fetched => {"$exists" => false}}).sort({:c => -1}).to_a.each do |heat_loc|
+    HeatLoc.where({:c => {'$gt' => 85}, :fetched => {"$exists" => false}}).sort({:c => -1}).to_a.each do |heat_loc|
       heat_loc.poi(token)
     end
   end
