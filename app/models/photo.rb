@@ -86,5 +86,15 @@ class Photo
       x.save!
     end
   end
+  
+  def self.fix_error
+    Photo.where({img_tmp:{"$ne" => nil}}).each do |p|
+      begin
+        CarrierWave::Workers::StoreAsset.perform("Photo",p.id.to_s,"img")
+      rescue Exception => e
+        puts e
+      end
+    end
+  end
 
 end

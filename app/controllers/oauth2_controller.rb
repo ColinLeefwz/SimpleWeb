@@ -145,6 +145,10 @@ class Oauth2Controller < ApplicationController
   
       
   def logout
+    if session[:user_id].nil?
+      render :json => {error: "未登录"}.to_json
+      return
+    end
     if params[:pushtoken] && session_user.tk==params[:pushtoken]
       session_user.unset(:tk)
     end
