@@ -2,6 +2,7 @@
 class CheckinBssidStat
   include Mongoid::Document
   field :_id, type: String
+  field :ssid, type: String
   field :shops, type:Array #{id:商家id,users:[用户id,...]}, 使用该bssid签到的商家及其用户
   field :shop_id, type:Integer #实际所属商家
   
@@ -59,13 +60,13 @@ class CheckinBssidStat
   end
   
   def self.insert_checkin(ck)
-    CheckinBssidStat.insert(ck["bssid"],ck["sid"],ck["uid"])
+    CheckinBssidStat.insert(ck["bssid"],ck["sid"],ck["uid"],ck["ssid"])
   end
   
-  def self.insert(bssid,sid,uid)
+  def self.insert(bssid,sid,uid,ssid)
     b = CheckinBssidStat.where({"_id" => bssid}).first
     if b.nil?
-      CheckinBssidStat.collection.insert({"_id" => bssid, "shops" => [{id:sid,users:[uid]}] })
+      CheckinBssidStat.collection.insert({"_id" => bssid, "ssid" => ssid, "shops" => [{id:sid,users:[uid]}] })
     else
       shops = b.shops
       shop = shops.find{|x| x["id"]==sid}
