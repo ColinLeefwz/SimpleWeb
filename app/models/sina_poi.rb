@@ -128,6 +128,8 @@ class SinaPoi
     rescue RestClient::BadRequest
       return nil
     rescue
+      sleep 3
+      return nil
       err_num += 1
       Logger.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi.poi_page get #{url}错误#{err_num}次. #{$!}"
       Emailer.send_mail('获取poi出错',"#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} SinaPoi.poi_page get #{url}错误. #{$!}").deliver if err_num == 4
