@@ -12,6 +12,18 @@ module Mongoid
         nil
       end
     end
+    
+    def find_primary(id) #只通过replset的主数据库查询
+      self.collection.database.session.cluster.with_primary do |node|
+        db = self.collection.database.name
+        coll = self.to_s.pluralize.underscore
+        id2 = self.fields["_id"].mongoize(id)
+        obj = node.query(db,coll,{_id:id2}).documents[0]
+        obj = self.new(obj) unless obj.nil?
+        return obj
+      end
+    end    
+    
   end
 end
 
