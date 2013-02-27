@@ -131,7 +131,7 @@ class User
   end
   
   def safe_output
-    hash = self.attributes.slice("name", "signature", "wb_uid", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
+    hash = self.attributes.slice("name", "signature", "qq", "wb_uid", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
