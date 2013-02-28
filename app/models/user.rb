@@ -31,7 +31,7 @@ class User
   #no_wb_logo: 该用户没有设置新浪微博头像
   #logo_backup: 被禁止的用户，其head_logo_id的备份
 
-  validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
+  #validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
   
   index({"blacks.report" => 1},{ sparse: true })
   index({wb_uid: 1})
