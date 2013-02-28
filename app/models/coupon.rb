@@ -88,6 +88,10 @@ class Coupon
     self.users.to_a.sort{|x,y| y['dat'] <=> x['dat']}
   end
   
+  def downed(user_id)
+    self.users.detect { |u| u['id'].to_s == user_id.to_s }
+  end
+  
   
   def self.gen_demo(sid)
     demo = Coupon.new
@@ -116,9 +120,9 @@ class Coupon
   end
 
   def gen_share_coupon_img_by_user(user)
-    downed = self.users.detect { |u| u['id'].to_s == user.id.to_s }
-    return if downed.nil?
-    gen_share_coupon_img(Photo.find(downed["photo"]))
+    down = downed(user.id)
+    return if down.nil?
+    gen_share_coupon_img(Photo.find(down["photo"]))
   end
     
   def gen_share_coupon_img(photo)
@@ -131,6 +135,8 @@ class Coupon
   def share_coupon_img_path(photo_id)
     "/uploads/tmp/cp_#{self.id}_#{photo_id}.jpg"
   end
+  
+
 
 
 
