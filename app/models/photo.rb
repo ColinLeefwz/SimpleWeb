@@ -41,7 +41,7 @@ class Photo
   
   def send_coupon
     coupon = shop.share_coupon
-    if coupon && (true || coupon.text.nil? || (desc && desc.index(coupon.text) ))
+    if coupon && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
       coupon.send_coupon(user_id,self.id)
     end
   end
