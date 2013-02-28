@@ -182,7 +182,7 @@ class Shop
   end
 
   def checkin_coupons
-    Coupon.where({shop_id: self.id, hidden: {'$exists' => false}}, t2).sort({_id: -1})
+    Coupon.where({shop_id: self.id, hidden: {'$exists' => false}}, t2: 1).sort({_id: -1})
   end
 
   
