@@ -3,11 +3,11 @@ class HeatLoc
   store_in(:session => "dooo")
 
   def self.start
-    HeatLoc.cpoi('2.00t9e5PCMcnDPC86e7068cc9yxaMRC')
+    HeatLoc.cpoi($sina_token)
   end
 
   def self.cpoi(token)
-    HeatLoc.where({:c => {'$gt' => 90}, :fetched => {"$exists" => false}}).sort({:c => -1}).to_a.each do |heat_loc|
+    HeatLoc.where({:c => {'$gt' => 85}, :fetched => {"$exists" => false}}).sort({:c => -1}).to_a.each do |heat_loc|
       heat_loc.poi(token)
     end
   end

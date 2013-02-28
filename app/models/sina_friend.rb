@@ -23,7 +23,7 @@ class SinaFriend
     end
   end
   
-  def init_poi_user(token='2.00t9e5PCMcnDPC86e7068cc9yxaMRC')
+  def init_poi_user(token=$sina_token)
     SinaUser.where({fetched:{"$ne" => true}}).each do |su|
       insert_ids(su.id,token)
       su.update_attribute(:fetched, true)
