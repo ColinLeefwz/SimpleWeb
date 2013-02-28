@@ -322,7 +322,7 @@ class Oauth2Controller < ApplicationController
     end
     info = ActiveSupport::JSON.decode(info)
     if info["ret"]!=0
-      render :json => {error: info["msg"] }.to_json
+      render :json => {error: info["ret"].to_s+","+info["msg"] }.to_json
       return nil
     end
     user = User.new
