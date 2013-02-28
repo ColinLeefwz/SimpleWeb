@@ -335,20 +335,33 @@ class User
     User.where({auto:{"$ne"=>true},head_logo_id:{"$exists"=>true}}).each do |u|
       next if u.forbidden?
       logo = UserLogo.find_by_id(u.head_logo_id)
-      if logo.nil?
-        if u.user_logos.count>0
-          puts "#{u.name}, 头像不存在，但是有照片。"
-          u.update_attribute(:head_logo_id, u.user_logos.first.id) if u.user_logos.first.img.url
-        else
-          puts "#{u.name}, 图片不存在。"
-        end
-      elsif logo.img.url.nil?
-        puts "#{u.name}, 图片未上传到阿里云。"
-        CarrierWave::Workers::StoreAsset.perform("UserLogo",u.head_logo_id.to_s,"img")
-      else
-        #正常头像
+      begin
+        fix_head_logo_err1_do(u,logo)
+      rescue Exception => e
+        puts e
       end
     end    
+  end
+  
+  def self.fix_head_logo_err1_do(u,logo)
+    if logo.nil?
+      if u.user_logos.count>0
+        puts "#{u.name}, 头像不存在，但是有照片。"
+        u.update_attribute(:head_logo_id, u.user_logos.first.id) if u.user_logos.first.img.url
+      else
+        puts "#{u.name}, 图片不存在。"
+      end
+    elsif logo.img.url.nil?
+      puts "#{u.name}, 图片未上传到阿里云。"
+      begin
+       CarrierWave::Workers::StoreAsset.perform("UserLogo",u.head_logo_id.to_s,"img")
+      rescue Errno::ENOENT => e
+        logo.delete
+        u.update_attribute(:head_logo_id, nil)
+      end      
+    else
+      #正常头像
+    end
   end
   
   def self.fix_head_logo_err2
