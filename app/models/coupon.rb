@@ -55,9 +55,9 @@ class Coupon
     ckin = $redis.zrange("ckin#{self.shop_id.to_i}", 0, -1)
     case self.rule.to_i
     when 0
-      return true unless ckin.include?(user_id)
+      return true unless ckin.include?(user_id.to_s)
     when 1
-      return true if !ckin.include?(user_id) && ckin.size < self.rulev.to_i
+      return true if !ckin.include?(user_id.to_s) && ckin.size < self.rulev.to_i
     when 2
       return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == 1
     when 3
