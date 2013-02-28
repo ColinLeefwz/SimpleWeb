@@ -5,11 +5,17 @@ class CouponsController < ApplicationController
 
   def img
     cp = Coupon.find(params[:id][0,24])
-      if params[:size].to_i==0
-        redirect_to cp.img.url
-      else
-        redirect_to cp.img.url(:t1)
-      end
+    if cp.t2==2 && cp.img.url.nil?
+      path = cp.gen_share_coupon_img_by_user(session_user)
+      redirect_to path
+      return
+    end
+    #判断用户确实拥有该优惠券
+    if params[:size].to_i==0
+      redirect_to cp.img.url
+    else
+      redirect_to cp.img.url(:t1)
+    end
   end
   
   def use
