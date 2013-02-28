@@ -100,7 +100,10 @@ Resque是基于redis的ruby后台任务库。
  * 发图时同时分享到微博
  * 拉黑用户时，通知xmpp服务器阻塞黑名单
  
- 如何监控resque进程？
+ 异步延时任务则采用resque-scheduler，启动：
+ * rake resque:scheduler
+ 
+ resque的监控采用god，如何监控resque-scheduler进程？
  
  
 
