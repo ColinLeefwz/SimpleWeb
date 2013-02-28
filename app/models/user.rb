@@ -332,40 +332,47 @@ class User
   end
   
   def self.fix_head_logo_err1
-    User.where({auto:{"$ne"=>true},head_logo_id:{"$exists"=>true}}).each do |u|
+    User.where({auto:{"$ne"=>true},head_logo_id:{"$exists"=>true}}).sort({_id:-1}).limit(1000).each do |u|
+      #TODO: 这里要保证一天新注册用户少于1000
       next if u.forbidden?
       logo = UserLogo.find_by_id(u.head_logo_id)
+      next if (logo && logo.img.url)
       begin
-        fix_head_logo_err1_do(u,logo)
+        u.fix_head_logo_err1_do(logo)
       rescue Exception => e
         puts e
       end
     end    
   end
   
-  def self.fix_head_logo_err1_do(u,logo)
+  def fix_head_logo_err1_do(logo)
     if logo.nil?
-      if u.user_logos.count>0
-        puts "#{u.name}, 头像不存在，但是有照片。"
-        u.update_attribute(:head_logo_id, u.user_logos.first.id) if u.user_logos.first.img.url
-      else
-        puts "#{u.name}, 图片不存在。"
-      end
-    elsif logo.img.url.nil?
-      puts "#{u.name}, 图片未上传到阿里云。"
+      fix_head_logo_err_nil
+    else
+      puts "#{name}, 图片未上传到阿里云。"
       begin
-       CarrierWave::Workers::StoreAsset.perform("UserLogo",u.head_logo_id.to_s,"img")
+       CarrierWave::Workers::StoreAsset.perform("UserLogo",head_logo_id.to_s,"img")
       rescue Errno::ENOENT => e
         logo.delete
-        u.update_attribute(:head_logo_id, nil)
-      end      
+        self.update_attribute(:head_logo_id, nil)
+        self.update_attribute(:head_logo_id, user_logos.first.id) if user_logos.first.img.url
+      end 
+    end
+  end
+  
+  def fix_head_logo_err_nil
+    if user_logos.count>0
+      puts "#{name}, 头像不存在，但是有照片。"
+      self.update_attribute(:head_logo_id, user_logos.first.id) if user_logos.first.img.url
+      return true
     else
-      #正常头像
+      puts "#{name}, 图片不存在。"
+      return false
     end
   end
   
   def self.fix_head_logo_err2
-    User.where({auto:{"$ne"=>true},head_logo_id:nil}).each do |u|
+    User.where({auto:{"$ne"=>true},head_logo_id:nil}).sort({_id:-1}).limit(1000).each do |u|
       next if u.forbidden?
       if u.checkins.count==0
         #puts "该用户不活跃"
@@ -373,6 +380,7 @@ class User
         next if u.wb_uid.to_i.to_s.size != u.wb_uid.size
         next if u["no_wb_logo"]
         puts "#{u.name},  #{u.id},  #{u.wb_uid}"
+        next if u.fix_head_logo_err_nil
         SinaUser.gen_head_logo(u)
       end
     end
