@@ -181,14 +181,17 @@ class Shop
     return shops.map {|x| Shop.find_by_id(x)}.reject {|x| x.nil?}
   end
 
+  def checkin_coupons
+    Coupon.where({shop_id: self.id, hidden: {'$exists' => false}}, t2).sort({_id: -1})
+  end
 
   
   def send_coupon(user_id)
     coupons = []
     Coupon.gen_demo(self.id) if self.latest_coupons.empty? && (ENV["RAILS_ENV"] != "production" )
-    coupons += self.latest_coupons.select { |c| c.allow_send_checkin?(user_id) }
+    coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
     sub_shops.each do |shop|
-      coupons += shop.latest_coupons.select { |coupon| coupon.allow_send_checkin?(user_id) }
+      coupons += shop.checkin_coupons.select { |coupon| coupon.allow_send_checkin?(user_id) }
     end
 
     coupons.each{|coupon| coupon.send_coupon(user_id)}
@@ -200,7 +203,7 @@ class Shop
     xmpp2 = Xmpp.gchat(self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}")
     return xmpp2 if ENV["RAILS_ENV"] != "production"
     logger.info(xmpp2)
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2) 
+    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2)
   end
 
   
