@@ -8,7 +8,8 @@ class WeiboFriend
       SinaFriend.new.insert_ids(wb_uid,token)
     rescue
     end
-    user = User.find(uid)
+    user = User.find_by_id(uid)
+    user = User.find_primary(uid) if user.nil?
     friend_notice_all(user)
     fan_notice_all(user)
   end
