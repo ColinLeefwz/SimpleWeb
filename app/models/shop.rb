@@ -185,6 +185,9 @@ class Shop
     Coupon.where({shop_id: self.id, hidden: {'$exists' => false}, t2: 1}).sort({_id: -1})
   end
 
+  def share_coupon
+    Coupon.where({shop_id: self.id, hidden: {'$exists' => false}, t2: 2}).last
+  end
   
   def send_coupon(user_id)
     coupons = []
@@ -193,11 +196,7 @@ class Shop
     sub_shops.each do |shop|
       coupons += shop.checkin_coupons.select { |coupon| coupon.allow_send_checkin?(user_id) }
     end
-
     coupons.each{|coupon| coupon.send_coupon(user_id)}
-    #    find coupons
-    #    send
-   
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
     xmpp2 = Xmpp.gchat(self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}")
