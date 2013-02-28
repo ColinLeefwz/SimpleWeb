@@ -12,8 +12,9 @@ class Coupon
   field :text #图片分享到微博触发类, 必须包含的文字。
   field :hidden, type:Integer #状态， 1.是停用
   #  field :endt, type:DateTime
-  field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间,[img:图片id]}
+  field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间,[photo:图片id]}
   #TODO: 一个用户可以多次下载一个优惠券：#{id:用户id,dat:下载时间,[{dat:下载时间,uat:使用时间}]}
+  #但是这样解决不了分享类优惠券的多次下载，因为每次图片不一样，但是请求的coupon id都一样
   field :rule #0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。
   field :rulev #1每日前几名签到优惠的数量;3常客累计满多少次签到优惠的数量。
   field :img
@@ -39,16 +40,12 @@ class Coupon
     "[优惠券:#{name}:#{shop.name}:#{self._id}:#{Time.now.strftime('%Y-%m-%d %H：%M')}]"
   end
 
-  def send_coupon(user_id)
-    download(user_id)
+  def send_coupon(user_id,photo_id=nil)
+    download(user_id,photo_id)
     xmpp1 = Xmpp.chat("s#{shop_id}",user_id,message)
     logger.info(xmpp1)
     return xmpp1 if ENV["RAILS_ENV"] != "production"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
-  end
-
-  def allow_send_share?(t)
-    return true if t.match(self.text)
   end
   
   def allow_send_checkin?(user_id)
@@ -64,21 +61,13 @@ class Coupon
       return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == self.rulev.to_i
     end
   end
-
-
-#  def allow_send?(user_id)
-#    if self.ratio
-#      return false if ratio < Random.rand(100)
-#    end
-#    al = true
-#    al = false if self.rule.to_i == 0 && self.users.to_a.detect{|u| user_id == u['id']}
-#    al = false if self.rule.to_i == 1 && self.users.to_a.detect{|u| user_id == u['id'] && u['uat'].nil?  }
-#    al
-#  end
-
   
-  def download(user_id)
-    self.add_to_set(:users, {"id" => user_id, "dat" => Time.now})
+  def download(user_id, photo_id=nil)
+    if photo_id==nil
+      self.add_to_set(:users, {"id" => user_id, "dat" => Time.now})
+    else
+      self.add_to_set(:users, {"id" => user_id, "dat" => Time.now, photo: photo_id})
+    end
   end
 
   def use(user_id)
@@ -124,6 +113,23 @@ class Coupon
       self.save
       CarrierWave::Workers::StoreAsset.perform("Coupon",self.id.to_s,"img")
     end
+  end
+
+  def gen_share_coupon_img_by_user(user)
+    downed = self.users.detect { |u| u['id'].to_s == user.id.to_s }
+    return if downed.nil?
+    gen_share_coupon_img(Photo.find(downed["photo"]))
+  end
+    
+  def gen_share_coupon_img(photo)
+    path = share_coupon_img_path(photo.id)
+    return path if File.exist?("public"+path)
+    `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public#{path} #{photo.img.url(:t2)}`
+    return path
+  end
+  
+  def share_coupon_img_path(photo_id)
+    "/uploads/tmp/cp_#{self.id}_#{photo_id}.jpg"
   end
 
 

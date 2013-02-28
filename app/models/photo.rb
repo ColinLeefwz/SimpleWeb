@@ -32,10 +32,18 @@ class Photo
         str = "我刚刚用\#脸脸\#分享了一张图片:\n#{desc2} 我在\##{shop.name}\#\n(来自脸脸 http://www.dface.cn/a?v=3 )"
       end
       Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
+      send_coupon
     end
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
         :roomid  => room , :message => "[img:#{self._id}]#{self.desc}",
         :uid => user_id)
+  end
+  
+  def send_coupon
+    coupon = shop.share_coupon
+    if coupon && (true || coupon.text.nil? || (desc && desc.index(coupon.text) ))
+      coupon.send_coupon(user_id,self.id)
+    end
   end
   
   def user
