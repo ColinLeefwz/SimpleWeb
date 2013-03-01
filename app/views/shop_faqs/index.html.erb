@@ -12,7 +12,7 @@
       <td align="center" class="gray"><%= faq.od    %></td>
       <td align="center" class="gray"><%= faq.title  %></td>
       <td align="center" class="gray"><%= faq.text  %></td>
-      <td align="center" class="gray"><%=image_tag faq.img.url(:t1)  %></td>
+      <td align="center" class="gray"><%=image_tag faq.img.url(:t2)  %></td>
       <td align="center" class="gray"><%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{faq.id}')" %></td>
     </tr>
   <% end %>
