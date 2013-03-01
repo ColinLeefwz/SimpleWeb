@@ -14,7 +14,7 @@ class PhotosController < ApplicationController
   
   def show
     if params[:id] =~ /^faq/
-      photo = ShopFaq.find(params[:id])
+      photo = ShopFaq.find(params[:id].sub('faq',''))
     else
       photo = Photo.find(params[:id])
     end
