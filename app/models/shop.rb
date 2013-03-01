@@ -209,6 +209,31 @@ class Shop
   def latest_coupons(n=1)
     coupons = Coupon.where({shop_id: self.id}).sort({_id: -1}).limit(n).to_a
   end
+
+
+  def faqs
+    ShopFaq.where({sid: self.id}).sort({od: 1})
+  end
+
+  def faq(od)
+    ShopFaq.where({sid: self.id, od: od}).first
+  end
+
+  def has_faq?
+    self.faqs.count > 0
+  end
+
+  def answer_text(msg)
+    return  unless msg=='0' || msg =~ /^0[1-9]$/
+    return "本地点未启用数字问答系统" unless self.has_faq?
+    faq = self.faq(msg.last)
+    return '试试回复：\n' + self.faqs.map{|m| "0#{m.od}=>#{m.title}."}.join('\n') if faq.nil?
+    if faq.img.blank?
+      "文本: #{faq.text}"
+    else
+      "[img:#{faq.img}]#{faq.text}"
+    end
+  end
   
 
   def get_city

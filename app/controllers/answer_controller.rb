@@ -9,11 +9,9 @@ class AnswerController < ApplicationController
     uid = params["uid"]
     msg = params["msg"]
     Xmpp.send_gchat2(uid,sid,uid,msg)
-    if sid=="20325453"
-      Xmpp.send_gchat2($gfuid,sid,uid,"欢迎！")
-    else
-      Xmpp.send_gchat2($gfuid,sid,uid,"本地点未启用数字问答系统.")
-    end
+    shop = Shop.find(sid)
+    text = shop.answer_text(msg)
+    Xmpp.send_gchat2($gfuid,sid,uid, text) if text
     render :text => "1"
   end
   

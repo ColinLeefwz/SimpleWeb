@@ -1,0 +1,46 @@
+
+<div class="subtitle">新建问答系统</div>
+<center class="gray2">
+  <% if @shop_faq.errors.any? %>
+    <div id="error_explanation">
+      <h2>新建问答系统出错</h2>
+      <ul>
+        <% @shop_faq.errors.messages.values.each do |msg| %>
+          <li><%= msg.join(' ') %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</center>
+
+<%= form_for(@shop_faq, :url => '/shop_faqs/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+
+  <br/>
+  <ul class="formlist" style="margin-top: 0px;">
+    <li>
+      <label>序号：</label>
+      <%= f.select :od, [1,2,3,4,5,6,7,8,9] - session_shop.faqs.map{|m| m.od.to_i},{}, {:class => "txt"} %>
+    </li>
+    <li>
+      <label>标题：</label>
+      <%= f.text_field :title, :class => "txt"%>(例:获取wifi密码.)
+    </li>
+    <li>
+      <label>文本：</label>
+      <%= f.text_field :text, :class => "txt"%>(例: wifi密码123456.)
+    </li>
+    <li>
+      <label>图片：</label>
+      <%= f.file_field :img, :class => "txt" %>
+    </li>
+    <li>
+      <input type="submit" value="发 布" class="btn"/>
+    </li>
+  </ul>
+
+<%  end %>
+
+<%= link_to '返回列表', '/shop_faqs' %>
+
+
+
