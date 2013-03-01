@@ -227,7 +227,7 @@ class Shop
     return  unless msg=='0' || msg =~ /^0[1-9]$/
     return "本地点未启用数字问答系统" unless self.has_faq?
     faq = self.faq(msg.last)
-    return '试试回复：\n' + self.faqs.map{|m| "0#{m.od}=>#{m.title}."}.join('\n') if faq.nil?
+    return "试试回复：\n" + self.faqs.map{|m| "0#{m.od}=>#{m.title}."}.join("\n") if faq.nil?
     if faq.img.blank?
       "文本: #{faq.text}"
     else
