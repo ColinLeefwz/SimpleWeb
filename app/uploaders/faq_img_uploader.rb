@@ -22,6 +22,10 @@ class FaqImgUploader < CarrierWave::Uploader::Base
   process :resize_to_fit => [580, 224]
   
   version :t1 do
+    process :resize_to_fit => [290,112]
+  end
+  
+  version :t2 do
     process :resize_to_fit => [145,56]
   end
 

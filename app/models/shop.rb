@@ -231,7 +231,7 @@ class Shop
     if faq.img.blank?
       "文本: #{faq.text}"
     else
-      "[img:#{faq.img}]#{faq.text}"
+      "[img:faq#{faq._id}]#{faq.text}"
     end
   end
   

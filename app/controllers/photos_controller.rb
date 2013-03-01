@@ -13,7 +13,12 @@ class PhotosController < ApplicationController
   end
   
   def show
-    photo = Photo.find(params[:id])
+    if params =~ /^faq/
+      photo = ShopFaq.find(params[:id])
+    else
+      photo = Photo.find(params[:id])
+    end
+    
     if params[:size].to_i==0
       redirect_to photo.img.url
     else
