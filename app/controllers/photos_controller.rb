@@ -13,7 +13,7 @@ class PhotosController < ApplicationController
   end
   
   def show
-    if params =~ /^faq/
+    if params[:id] =~ /^faq/
       photo = ShopFaq.find(params[:id])
     else
       photo = Photo.find(params[:id])
