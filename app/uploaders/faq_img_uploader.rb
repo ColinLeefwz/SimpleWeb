@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class FaqImgUploader < CarrierWave::Uploader::Base
+class FaqImgUploader < CommonPhotoUploader
 
   def aliyun_bucket; "dface"+bucket_suffix ; end
 
