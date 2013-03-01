@@ -2,34 +2,12 @@
 
 class FaqImgUploader < CarrierWave::Uploader::Base
 
-  include CarrierWave::MiniMagick
+  def aliyun_bucket; "dface"+bucket_suffix ; end
 
-  storage :aliyun
-  
-  def store_dir
-    "#{model.id}"
-  end
-  
-  def aliyun_bucket
-    return "coupon" if ENV["RAILS_ENV"] == "production"
-    return "coupon_test" 
-  end
-  
-  def filename
-    "0.jpg" if original_filename
-  end
+  process :resize_to_limit => [640, 640]
 
-  process :resize_to_fit => [580, 224]
-  
-  version :t1 do
-    process :resize_to_fit => [290,112]
-  end
-  
   version :t2 do
-    process :resize_to_fit => [145,56]
-  end
-
-  def extension_white_list
-    %w(jpg jpeg gif png)
-  end
+    process :resize_to_fit => [200, 200]
+    process :quality => 100
+  end 
 end
