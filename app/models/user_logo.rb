@@ -43,5 +43,20 @@ class UserLogo
   before_create do |logo|
     logo.ord = UserLogo.next_ord logo.user_id
   end
+  
+  def self.fix_error(delete_error=false)
+    UserLogo.where({img_tmp:{"$ne" => nil}}).each do |logo|
+      begin
+       CarrierWave::Workers::StoreAsset.perform("UserLogo",logo.id.to_s,"img")
+      rescue Errno::ENOENT => e
+        puts "#{logo.id}, 图片有数据库记录，但是文件不存在。"
+        if delete_error
+          user = logo.user
+          logo.delete 
+          user.fix_pcount_error
+        end
+      end 
+    end
+  end
 
 end
