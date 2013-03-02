@@ -6,7 +6,6 @@ class Coupon
   field :shop_id, type: Integer
   field :name 
   field :desc
-  #field :ratio, type:Integer #取消
   field :t, type: Integer #发布的方式,1.是图文混合模式发布的，2. 是全图模式发布的,
   field :t2, type: Integer #发布的方式,1.签到触发，2. 图片分享到微博触发类,  
   field :text #图片分享到微博触发类, 必须包含的文字。
@@ -29,9 +28,6 @@ class Coupon
   
   index({ shop_id: 1})
   
-
-  #validates_presence_of :img, :message => "必须上传优惠券图片." #目前存在测试券，图片自动生成的，不通过img上传获得。
-  
   def shop
     Shop.find_by_id(shop_id)
   end
@@ -41,6 +37,7 @@ class Coupon
   end
 
   def send_coupon(user_id,photo_id=nil)
+    return if downed(user_id) #所有的优惠券都只能下载一次
     download(user_id,photo_id)
     xmpp1 = Xmpp.chat("s#{shop_id}",user_id,message)
     logger.info(xmpp1)
