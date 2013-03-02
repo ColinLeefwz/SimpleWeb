@@ -15,6 +15,10 @@ class Photo2
   index({ user_id: 1 })
   
   def after_async_store
+    if img.url.nil?
+      Rails.logger.error("async_store3:#{self.class},#{self.id}")
+      return
+    end
     xmpp = "<message id='img#{self.id}' to='#{to_uid}@dface.cn' from='#{user_id}@dface.cn' type='chat'><body>[img:#{self.id}]</body></message>"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
   end

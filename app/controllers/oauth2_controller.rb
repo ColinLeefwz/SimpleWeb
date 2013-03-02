@@ -152,8 +152,8 @@ class Oauth2Controller < ApplicationController
     if params[:pushtoken] && session_user.tk==params[:pushtoken]
       session_user.unset(:tk)
     end
-    $redis.del("wbtoken#{session_user.id}")
-    $redis.del("qqtoken#{session_user.id}")
+    $redis.del("wbtoken#{session[:user_id]}")
+    $redis.del("qqtoken#{session[:user_id]}")
     reset_session
     render :json => {"logout" => true}.to_json
   end
