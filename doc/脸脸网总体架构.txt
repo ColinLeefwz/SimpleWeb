@@ -103,7 +103,7 @@ Resque是基于redis的ruby后台任务库。
  异步延时任务则采用resque-scheduler，启动：
  * rake resque:scheduler
  
- resque的监控采用god，如何监控resque-scheduler进程？
+resque和resque-scheduler都采用god进行监控和启动。
  
  
 
