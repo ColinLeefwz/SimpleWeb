@@ -25,6 +25,10 @@ class Photo
   
   
   def after_async_store
+    if img.url.nil?
+      Rails.logger.error("async_store3:#{self.class},#{self.id}")
+      return
+    end
     if weibo
       if desc && desc.length>0
         str = "我刚刚用\#脸脸\#分享:\n#{desc2} ,我在\##{shop.name}\#\n(来自脸脸 http://www.dface.cn/a?v=3 )"

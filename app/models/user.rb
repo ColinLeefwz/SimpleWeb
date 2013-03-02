@@ -353,6 +353,7 @@ class User
       begin
        CarrierWave::Workers::StoreAsset.perform("UserLogo",head_logo_id.to_s,"img")
       rescue Errno::ENOENT => e
+        puts "#{name}, 图片有数据库记录，但是文件不存在。"
         logo.delete
         self.update_attribute(:head_logo_id, nil)
         self.update_attribute(:head_logo_id, user_logos.first.id) if user_logos.first.img.url
