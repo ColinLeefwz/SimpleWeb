@@ -99,10 +99,16 @@ class Photo
     end
   end
   
-  def self.fix_error
+  def self.fix_error(delete_error=false)
     Photo.where({img_tmp:{"$ne" => nil}}).each do |p|
       begin
         CarrierWave::Workers::StoreAsset.perform("Photo",p.id.to_s,"img")
+      rescue Errno::ENOENT => noe
+        puts "#{p.id}, 图片有数据库记录，但是文件不存在。"
+        if delete_error
+          Checkin.where({photos:p.id}).first.pull(:photos, p.id)
+          p.delete 
+        end
       rescue Exception => e
         puts e
       end
