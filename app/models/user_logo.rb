@@ -1,3 +1,4 @@
+# coding: utf-8
 #用户头像，最多只有8张
 
 class UserLogo
