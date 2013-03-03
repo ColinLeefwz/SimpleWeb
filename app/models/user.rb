@@ -335,7 +335,7 @@ class User
     User.where({auto:{"$ne"=>true},head_logo_id:{"$exists"=>true}}).sort({_id:-1}).limit(pcount).each do |u|
       next if u.forbidden?
       logo = UserLogo.find_by_id(u.head_logo_id)
-      next if (Time.now.to_i-logo.id.generation_time.to_i < 60)
+      next if (logo && (Time.now.to_i-logo.id.generation_time.to_i < 60))
       next if (logo && logo.img.url)
       begin
         u.fix_head_logo_err1_do(logo)

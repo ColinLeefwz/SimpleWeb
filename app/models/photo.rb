@@ -99,8 +99,9 @@ class Photo
     end
   end
   
-  def self.fix_error(delete_error=false)
-    Photo.where({img_tmp:{"$ne" => nil}}).each do |p|
+  def self.fix_error(delete_error=false,pcount=1000)
+    Photo.where({img_tmp:{"$ne" => nil}}).sort({_id:-1}).limit(pcount).each do |p|
+      next if (Time.now.to_i-p.id.generation_time.to_i < 60)
       begin
         CarrierWave::Workers::StoreAsset.perform("Photo",p.id.to_s,"img")
       rescue Errno::ENOENT => noe
@@ -113,6 +114,14 @@ class Photo
         puts e
       end
     end
+  end
+  
+  def Photo.fix_error_of_all_type_image
+    #TODO：目前图片先保存在本地文件系统，然后通过store_asset异步上传到阿里云。
+    #      所以只能在单机上运行错误监测。如果让多机器可以并行处理？
+    Photo.fix_error(false)
+    User.fix_head_logo_err1
+    UserLogo.fix_error(false)
   end
 
 end
