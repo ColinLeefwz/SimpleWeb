@@ -45,8 +45,9 @@ class UserLogo
     logo.ord = UserLogo.next_ord logo.user_id
   end
   
-  def self.fix_error(delete_error=false)
-    UserLogo.where({img_tmp:{"$ne" => nil}}).each do |logo|
+  def self.fix_error(delete_error=false,pcount=1000)
+    UserLogo.where({img_tmp:{"$ne" => nil}}).sort({_id:-1}).limit(pcount).each do |logo|
+      next if (Time.now.to_i-logo.id.generation_time.to_i < 60)
       begin
        CarrierWave::Workers::StoreAsset.perform("UserLogo",logo.id.to_s,"img")
       rescue Errno::ENOENT => e
