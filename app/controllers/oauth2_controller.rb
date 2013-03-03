@@ -152,9 +152,7 @@ class Oauth2Controller < ApplicationController
     if params[:pushtoken] && session_user.tk==params[:pushtoken]
       session_user.unset(:tk)
     end
-    $redis.del("wbtoken#{session[:user_id]}")
-    $redis.del("qqtoken#{session[:user_id]}")
-    reset_session
+    clear_session_info
     render :json => {"logout" => true}.to_json
   end
 
@@ -208,6 +206,12 @@ class Oauth2Controller < ApplicationController
   
   private
   
+  def clear_session_info
+    $redis.del("wbtoken#{session[:user_id]}")
+    $redis.del("qqtoken#{session[:user_id]}")
+    reset_session
+  end
+  
   def bind_qq(openid,token)
     if session[:user_id].nil?
       render :json => {error: "未登录"}.to_json
@@ -240,6 +244,7 @@ class Oauth2Controller < ApplicationController
   end  
   
   def do_login(uid,token,data)
+    clear_session_info
     user = User.where({wb_uid: uid}).first
     if user.nil? || user.auto
       user = gen_new_user(uid,token) if user.nil?
@@ -260,6 +265,7 @@ class Oauth2Controller < ApplicationController
   end
 
   def do_login_qq(openid,token,data)
+    clear_session_info
     user = User.where({qq: openid}).first
     if user.nil?
       user = gen_new_user_qq(openid,token)
