@@ -331,11 +331,11 @@ class User
     fix_head_logo_err2
   end
   
-  def self.fix_head_logo_err1
-    User.where({auto:{"$ne"=>true},head_logo_id:{"$exists"=>true}}).sort({_id:-1}).limit(1000).each do |u|
-      #TODO: 这里要保证一天新注册用户少于1000
+  def self.fix_head_logo_err1(pcount=1000)
+    User.where({auto:{"$ne"=>true},head_logo_id:{"$exists"=>true}}).sort({_id:-1}).limit(pcount).each do |u|
       next if u.forbidden?
       logo = UserLogo.find_by_id(u.head_logo_id)
+      next if (logo && (Time.now.to_i-logo.id.generation_time.to_i < 60))
       next if (logo && logo.img.url)
       begin
         u.fix_head_logo_err1_do(logo)
@@ -353,6 +353,7 @@ class User
       begin
        CarrierWave::Workers::StoreAsset.perform("UserLogo",head_logo_id.to_s,"img")
       rescue Errno::ENOENT => e
+        puts "#{name}, 图片有数据库记录，但是文件不存在。"
         logo.delete
         self.update_attribute(:head_logo_id, nil)
         self.update_attribute(:head_logo_id, user_logos.first.id) if user_logos.first.img.url
@@ -384,6 +385,11 @@ class User
         SinaUser.gen_head_logo(u)
       end
     end
+  end
+  
+  def fix_pcount_error
+    c = user_logos.count
+    self.update_attribute(:pcount,c) if self.pcount!=c
   end
 
 end
