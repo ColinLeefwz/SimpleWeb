@@ -1,3 +1,4 @@
+# coding: utf-8
 #用户头像，最多只有8张
 
 class UserLogo
@@ -42,6 +43,22 @@ class UserLogo
   
   before_create do |logo|
     logo.ord = UserLogo.next_ord logo.user_id
+  end
+  
+  def self.fix_error(delete_error=false,pcount=1000)
+    UserLogo.where({img_tmp:{"$ne" => nil}}).sort({_id:-1}).limit(pcount).each do |logo|
+      next if (Time.now.to_i-logo.id.generation_time.to_i < 60)
+      begin
+       CarrierWave::Workers::StoreAsset.perform("UserLogo",logo.id.to_s,"img")
+      rescue Errno::ENOENT => e
+        puts "#{logo.id}, 图片有数据库记录，但是文件不存在。"
+        if delete_error
+          user = logo.user
+          logo.delete 
+          user.fix_pcount_error
+        end
+      end 
+    end
   end
 
 end
