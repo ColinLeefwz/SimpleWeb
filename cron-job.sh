@@ -14,6 +14,8 @@ mongo 10.135.44.107/dface /mnt/lianlian/db/mongo/user_city_day.js
 /mnt/.rvm/bin/ruby script/rails r  'Checkin.clear_yesterday_redis'
 /mnt/.rvm/bin/ruby script/rails r  'CheckinShopStat.init_user_count'
 /mnt/.rvm/bin/ruby script/rails r  'User.fix_head_logo_err'
+/mnt/.rvm/bin/ruby script/rails r  'Photo.fix_error(true)'
+/mnt/.rvm/bin/ruby script/rails r  'UserLogo.fix_error(true)'
 #/mnt/.rvm/bin/ruby script/rails r db/mongo/ip_info.rb
 
 etime=`date +"%Y-%m-%d %H:%M:%S"`
