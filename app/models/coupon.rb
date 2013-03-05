@@ -87,6 +87,7 @@ class Coupon
   end
   
   def downed(user_id)
+    return nil if self.users.nil?
     self.users.detect { |u| u['id'].to_s == user_id.to_s }
   end
   
