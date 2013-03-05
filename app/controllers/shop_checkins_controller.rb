@@ -24,11 +24,15 @@ class ShopCheckinsController < ApplicationController
     when 'month'
       objectid = 1.months.ago.beginning_of_day.to_i.to_s(16).ljust(24,'0')
     end
-    shop_id = session[:shop_id]
-    str = "groupCheckin(#{shop_id}, '#{objectid}')"
-    @banks = Mongoid.default_session.command(eval:str)["retval"]
-    @banks = @banks.sort{|f,s| s['count'] <=> f['count']}
+    gc = Checkin.where({sid: session[:shop_id], _id: {'$gte' => objectid }}).group_by{|c| c.uid}
+    @banks = gc.map { |k,v| [k, v.count] }.sort{|f,s| s[1] <=> f[1]}
     @banks = paginate_arr(@banks,params[:page])
+
+    #    shop_id = session[:shop_id]
+    #    str = "groupCheckin(#{shop_id}, '#{objectid}')"
+    #    @banks = Mongoid.default_session.command(eval:str)["retval"]
+    #    @banks = @banks.sort{|f,s| s['count'] <=> f['count']}
+    #
   end
 
   def rank_list

@@ -9,11 +9,12 @@
   </tr>
   <% @banks.each do |bank| %>
     <tr>
-      <td class="gray"><%= User.find(bank['uid']).name %></td>
-      <td align="center" class="gray"><%= User.find(bank['uid']).show_gender%></td>
-      <td align="center" class="gray"><%= User.find(bank['uid']).birthday.try(:to_date)%></td>
-      <td align="center" class="gray"><%= bank["count"].to_i %></td>
-      <td><%= link_to '历史签到', url_for(:action => 'index', :uid => bank['uid']) %></td>
+      <% user = User.find(bank[0])  %>
+      <td class="gray"><%= user.name %></td>
+      <td align="center" class="gray"><%= user.show_gender%></td>
+      <td align="center" class="gray"><%= user.birthday.try(:to_date)%></td>
+      <td align="center" class="gray"><%= bank[1].to_i %></td>
+      <td><%= link_to '历史签到', url_for(:action => 'index', :uid => bank[0]) %></td>
     </tr>
   <% end %>
   <tr class="bottom">

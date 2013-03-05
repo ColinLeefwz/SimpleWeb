@@ -25,7 +25,7 @@ class AdminPartiesController < ApplicationController
   end
 
   def show
-    @party = Party.find(params[:id])
+    @party = Party.find_primary(params[:id])
   end
 
   def ajax_delay
