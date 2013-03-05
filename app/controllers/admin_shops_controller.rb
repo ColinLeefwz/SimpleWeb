@@ -76,7 +76,7 @@ class AdminShopsController < ApplicationController
   end
 
   def show
-    @shop = Shop.find(params[:id])
+    @shop = Shop.find_primary(params[:id])
   end
 
   def near
