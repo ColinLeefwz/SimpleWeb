@@ -5,35 +5,18 @@
   <p>
     名称:<%= text_field_tag :name, params[:name] %>
     区号: <%= text_field_tag :city, params[:city], :size => 10 %>
-    分类: <%= select_tag :t,options_for_select(import_t.unshift(['','']),params[:t].blank? ? '' : params[:t].to_i )  %>
-    排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"]],params[:order])  %>
-    <br/>
-    加权：<%= select_tag :v,options_for_select([['所有商家','0'],['加权商家','1']],params[:v])  %>
-    降权：<%= select_tag :d,options_for_select([['所有商家','0'],['降权商家','1']],params[:d])  %>
-    删除：<%= select_tag :del,options_for_select([['所有商家','0'],['删除商家','1']],params[:del])  %>
-    密码： <%= select_tag :password,options_for_select([['所有商家','0'],['开通商家','1']],params[:password])  %>
-    <br/>
-    分类： <%= select_tag :type, options_for_select(import_type, params[:type].to_s) %>
+
     <%= submit_tag "查 找" %>
-    
   </p>
 <% end %>
-<!--
-<%= check_box_tag "", '', false, :onclick => "checked_all($(this).attr('checked'))" %> 全选
-<%= check_box_tag "", '', false, :onclick => "inverse_all()" %> 反选
-<%=  submit_tag '批量删除', :onclick => "batch_del()"%>-->
+
 <table border="1">
   <tr>
     <th>id</th>
     <th>名称</th>
-    <th>电话</th>
     <th>区号</th>
-    <th>加权值</th>
-    <th>降权值</th>
-    <th>分类</th>
-    <th>百度分类</th>
-    <th>子商家</th>
-    <th>开通密码</th>
+    <th>创建者</th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -43,21 +26,12 @@
     <tr>
       <td><%= shop.id.to_i %></td>
       <td><%= shop.name %></td>
-
-
-      <td><%= shop.tel %></td>
       <td><%= shop.city_fullname %></td>
-      <td><%= shop.v || '无' %></td>
-      <td><%= shop.d || '无' %></td>
-      <td><%= shop.show_t %></td>
       <td><%= type_or_user(shop) %></td>
-      <td><%= link_to(shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{shop.id}") %></td>
-      <td><%= shop.password.blank? ?  link_to('开通', "/admin_shops/set_password?id=#{shop.id}") : '' %></td>
-      <td><%= link_to('加权', "/admin_shops/upgrade_v?id=#{shop.id}") %></td>
-      <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
-      <td>
-        <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >标记删除</a>
-      </td>
+      <td><%= link_to '编辑', "/admin_user_add_shops/edit?id=#{shop.id}" %></td>
+      <td><%= link_to '详情', "/admin_user_add_shops/show?id=#{shop.id}" %></td>
+      <td><%= link_to '清除', "/admin_user_add_shops/del?id=#{shop.id}" %></td>
+      <td><%= link_to '百度位置', "/admin_user_add_shops/baidu_map?id=#{shop.id}" %></td>
 
     </tr>
 

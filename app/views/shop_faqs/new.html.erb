@@ -26,12 +26,12 @@
       <%= f.text_field :title, :class => "txt"%>(例:获取wifi密码.)
     </li>
     <li>
-      <label>文本：</label>
-      <%= f.text_field :text, :class => "txt"%>(例: wifi密码123456.)
-    </li>
-    <li>
       <label>图片：</label>
       <%= f.file_field :img, :class => "txt" %>
+    </li>
+    <li>
+      <label>文本：</label>
+      <%= f.text_area :text, :class => "stxt atxt", :style => "width: 400px; height: 100px;border: 3px inset #F4F4F4;"%>(例: wifi密码123456.)
     </li>
     <li>
       <input type="submit" value="发 布" class="btn"/>
