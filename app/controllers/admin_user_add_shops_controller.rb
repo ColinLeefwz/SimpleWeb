@@ -15,7 +15,8 @@ class AdminUserAddShopsController < ApplicationController
   end
 
   def show
-    @shop = Shop.find_primary(params[:id])
+    #    @shop = Shop.find_primary(params[:id])
+    @shop = Shop.find(params[:id])
   end
 
   def baidu_map
