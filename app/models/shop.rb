@@ -58,7 +58,7 @@ class Shop
   def city_fullname
     city = City.where({code:self.city}).first
     return "" if city.nil?
-    city.s + city.name
+    city.s.to_s + city.name.to_s
   end
   
   def notice
@@ -247,11 +247,21 @@ class Shop
   end
 
   def self.lob_to_lo(lob)
-    Mongoid.session(:dooo).command(eval:"baidu_to_real(#{lob})")["retval"]
+    tmp = Mongoid.session(:dooo)[:offsetbaidus].where({loc: {'$near' => lob}}).first
+    [lob[0]-tmp['d'][0],lob[1]-tmp['d'][1]];
+  end
+
+  def self.lo_to_lob(lo)
+    tmp = Mongoid.session(:dooo)[:offsetbaidus].where({loc:{'$near' => lo}}).first
+    [lo[0]+tmp['d'][0], lo[1]+tmp['d'][1] ];
   end
   
   def lob_to_lo
     Shop.lob_to_lo self.lob
+  end
+
+  def lo_to_lob
+    Shop.lo_to_lob self.lo
   end
 
   def gchat

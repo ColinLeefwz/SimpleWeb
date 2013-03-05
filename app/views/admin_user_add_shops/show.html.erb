@@ -1,0 +1,44 @@
+<h1>商家详情</h1>
+
+<p>
+  <b>商家id:</b>
+  <%= @shop.id.to_i %>
+</p>
+<p>
+  <b>商家名称:</b>
+  <%= @shop.name %>
+</p>
+<p>
+  <b>密码:</b>
+  <%= @shop.password || '未开通' %>
+  <%= link_to '开通', "/admin_shops/set_password?id=#{@shop.id}" unless @shop.t.blank? %>
+</p>
+
+<p>
+  <b>logo:</b>
+  <br/><br/>
+  <%=  image_tag @shop.logo && @shop.logo.img %>
+</p>
+
+<p>
+  <b>区号:</b>
+  <%= @shop.city %>
+</p>
+<p>
+  <b>电话:</b>
+  <%= @shop.tel %>
+</p>
+
+<p>
+  <b>实际经纬度:</b>
+  <%= @shop.lo %>
+</p>
+<p>
+  <b>地址:</b>
+  <%= @shop.addr %>
+</p>
+<p>
+  <b>分类:</b>
+  <%= @shop.show_t %>
+</p>
+
