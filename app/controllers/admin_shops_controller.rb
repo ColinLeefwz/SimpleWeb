@@ -47,8 +47,11 @@ class AdminShopsController < ApplicationController
   def set_password
     @shop = Shop.find(params[:id])
     if request.post?
-      @shop.update_attributes(params[:shop])
-      redirect_to :action => "show", :id => @shop.id
+      if @shop.update_attributes(params[:shop])
+        redirect_to :action => "show", :id => @shop.id
+      else
+        flash[:notice] = '密码修改失败.'
+      end
     end
   end
 
@@ -175,6 +178,12 @@ class AdminShopsController < ApplicationController
     pshop.save
     pshop.merge_subshops_locations
     render :js => true
+  end
+
+  def del
+    shop = Shop.find(params[:id])
+    shop.shop_del
+    redirect_to :action => :index
   end
 
 
