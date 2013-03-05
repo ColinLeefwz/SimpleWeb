@@ -55,7 +55,7 @@ class Coupon
     when 2
       return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == 1
     when 3
-      return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == self.rulev.to_i
+      return true if Checkin.where({sid: self.shop_id, uid: user_id}).group_by{|s| s.id.generation_time.to_date}.count == self.rulev.to_i
     end
   end
   
