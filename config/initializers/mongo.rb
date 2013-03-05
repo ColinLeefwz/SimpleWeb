@@ -19,7 +19,8 @@ module Mongoid
         coll = self.to_s.pluralize.underscore
         id2 = self.fields["_id"].mongoize(id)
         obj = node.query(db,coll,{_id:id2}).documents[0]
-        obj = self.new(obj) unless obj.nil?
+        obj = self.instantiate(obj) unless obj.nil?
+        #从hash结果new一个对象会导致id变化
         return obj
       end
     end    
