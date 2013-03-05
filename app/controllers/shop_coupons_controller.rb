@@ -18,7 +18,7 @@ class ShopCouponsController < ApplicationController
   # GET /coupons/1
   # GET /coupons/1.json
   def show
-    @coupon = Coupon.find_primary(params[:id])
+    @coupon = Coupon.find(params[:id])
     render :file => "/shop_coupons/show2" if @coupon.t2 == 2
   end
 
@@ -39,7 +39,7 @@ class ShopCouponsController < ApplicationController
   end
 
   def show_img2
-    @coupon = Coupon.find_primary(params[:id])
+    @coupon = Coupon.find(params[:id])
   end
 
   def crop
