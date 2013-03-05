@@ -17,7 +17,7 @@ class ShopLogo
   end
 
   def shop
-    Shop.find_by_id(shop_id)
+    Shop.find_by_id(shop_id.to_i)
   end
 
 end
