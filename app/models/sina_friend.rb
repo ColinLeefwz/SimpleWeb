@@ -9,7 +9,7 @@ class SinaFriend
 
 
   def insert_ids(wb_uid, token)
-    return if SinaFriend.find_by_id(wb_uid)
+    return if SinaFriend.where({ _id: wb_uid.to_s }).count>0 #性能优化，判断记录是否存在是不加载整条记录
     hash =  all_page(wb_uid,token)
     return nil if hash.nil? || hash[:total_number]==0
     SinaFriend.collection.insert(:_id => wb_uid.to_s, :data =>hash)
