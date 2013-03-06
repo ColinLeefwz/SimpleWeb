@@ -1,25 +1,31 @@
+<div class="title2"><h2>子商家列表</h2></div>
 
-<div class="subtitle">子商家列表</div><br/>
-
-<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab2">
   <tr>
-    <th width="20%" class="first">名称</th>
-    <th width="25%" align="center">地址</th>
-    <th width="14%">电话</th>
-    <th width="8%" align="center">商家类型</th>
+    <th width="38%" align="left">商店名称</th>
+    <th width="38%" align="left">地址</th>
+    <th width="10%">电话</th>
+    <th width="14%">商家类型</th>
   </tr>
   <% @shops.each do |shop| %>
     <tr>
-      <td align="left" class="gray"><%= shop.name %></td>
-      <td align="center" class="gray"><%= shop.tel %></td>
-      <td align="center" class="gray"><%= shop.addr %></td>
-      <td align="center" class="gray"><%= shop.show_t %></td>
+      <td align="left"><%= shop.name %></td>
+      <td align="left"><%= shop.tel %></td>
+      <td align="center"><%= shop.addr %></td>
+      <td align="center"><%= shop.show_t %></td>
     </tr>
   <% end %>
-
-  <tr class="bottom">
-    <td colspan="3" align="right">
-      <%= generate_paginate.html_safe %>
-    </td>
-  </tr>
 </table>
+<div class="pages mt15">
+	<div class="pagination r">
+		<a class="first_page" href="#">第一页</a>
+		<a class="prev_page" href="#">上一页</a>
+		<span class="current">第<input type="text" value="1" />页</span>
+		<a class="sum_page" href="#">共2页</a>
+		<a class="next_page" href="#">下一页</a>
+		<a class="last_page" href="#">最后页</a>
+	</div>
+</div>
+<script type="text/javascript">
+	LeftMenu(14);
+</script>

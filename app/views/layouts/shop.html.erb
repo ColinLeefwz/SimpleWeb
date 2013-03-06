@@ -9,59 +9,73 @@
     <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
     <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
     <title>脸脸 | 商家管理后台</title>
+	<link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
     <%= javascript_include_tag "jquery-1.6.2.min.js" %>
-    <link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
+	<script>
+		$(document).ready(function(){
+			if($("#Notice").html()==""){
+				$("#Notice").addClass("none");
+			}
+		});
+		function LeftMenu(obj){
+			$("#Nav a[name=n"+obj+"]").addClass("hover");
+		}
+	</script>
+<!--[if IE 6]>
+	<%= javascript_include_tag "DD_belatedPNG.js" %>
+	
+	<script type="text/javascript">
+		DD_belatedPNG.fix('.logo2, .logo');
+		
+	</script>
+<![endif]-->
+
     <%= yield :ahead %>
+	
   </head>
+
   <body>
-    <div id="con">
-      <div class="conleft">
-        <img src="/images/backstage2.jpg" alt="脸脸DFACE.CN" />
-        <div id="Nav" class="nav">
-          <a href="/shop_checkins" class="m">签到管理</a>
-          <ul>
-            <li><%= link_to "最新签到", "/shop_checkins" %></li>
-            <li><a href="/shop_checkins/rank?flag=week">周排行</a></li>
-            <li><a href="/shop_checkins/rank?flag=month">月排行</a></li>
-            <li><a href="/shop_checkins/rank_list">总排行</a></li>
-          </ul>
+    <div class="header">
+		<div class="headerinner">
+			<h1 class="logo2">脸脸网</h1>
+			<span class="name"><%= session_shop.name %>, <a href="/shop_login/logout">退出</a></span>
+		</div>
+	</div>
 
-          <a href="javascript:void(0);" class="m">优惠券管理</a>
-          <ul>
-            <li><a href="/shop_coupons">列表</a></li>
-            <li><a href="/shop_coupons/new">签到类发布</a></li>
-            <li><a href="/shop_coupons/new2">分享类发布</a></li>
-            <li><a href="/shop_coupons/newly_use">最新使用记录</a></li>
-            <li><a href="/shop_coupons/newly_down">最新下载记录</a></li>
-          </ul>
+	<div class="con">
+		<div class="conleft">
+			<div id="Nav" class="nav">
+				<a href="/shop_login/index" class="index" name="n0">脸脸首页
+					<span class="sign"></span>
+				</a>
+				<span class="tit">优惠券管理</span>
+					<a href="/shop_coupons" class="s arrow" name="n6">列表</a>
+					<a href="/shop_coupons/newly_use" class="s arrow" name="n16">最新使用记录</a>
+					<a href="/shop_coupons/newly_down" class="s arrow" name="n17">最新下载记录</a>
+				<span class="borderstyle"></span>
+				<a href="/shop_faqs" name="n15"  class="arrow">问答系统</a>
+				<span class="borderstyle"></span>
+				<a href="/shop_checkins" name="n1" class="arrow">签到管理</a>
+				<span class="borderstyle"></span>
+				<!--a href="/shop_shop_notices" name="n9">公告管理</a-->
+				<span class="tit">商家设置</span>
+					<%= link_to "商家logo", "/shop_logos", :class =>'s arrow' ,:name=>'n11' %>
+					<%= link_to "修改密码", "/shop_pass/index" , :class => 's arrow' , :name=>'n12'%>
+				<span class="borderstyle"></span>
+				<a href="/shop_staffs" name="n13" class="arrow">员工管理</a>
+				<span class="borderstyle"></span>
+				<a href="/shop_subshops" name="n14"  class="arrow">分店管理</a>
+			</div>
 
-          <a href="/shop_shop_notices" class="m">公告管理</a>
-          <!--
-			<ul>
-          <%= link_to "公告管理", "#" %>
-				<li><a href="/shop_top_notices">置顶公告</a></li>
-				<li><a href="/shop_shop_notices">公告</a></li>
-			</ul>
-          -->
-          <a href="/shop_pass/index" class="m">商家设置</a>
-          <ul>
-            <li><%= link_to "商家logo", "/shop_logos" %></li>
-            <li><%= link_to "修改密码", "/shop_pass/index" %></li>
-          </ul>
-          <a href="/shop_staffs" class="m">员工管理</a>
-          <a href="/shop_subshops" class="m">分店管理</a>
-          <a href="/shop_faqs" class="m">问答系统</a>
-        </div>
-
-      </div>
+		</div>
       <div class="conright">
-        <span class="name"><%= session_shop.name %>, <a href="/shop_login/logout">退出</a></span>
+        
         <%= yield  %>
       </div>
-    </div>
+	</div>
     <div id="footer">
       <div class="footerinner">&copy; 2012 dface 浙ICP备11027288号<a href="http://www.dface.cn" class="fn ml15">WWW.DFACE.CN</a></div>
-    </div>
+    </div> 
   </body>
 </html>
 

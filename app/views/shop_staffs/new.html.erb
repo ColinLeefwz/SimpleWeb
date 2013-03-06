@@ -1,38 +1,41 @@
-<div class="subtitle">添加新员工</div>
+<div class="title2"><h2>添加新员工</h2></div>
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-  <tr>
-    <th width="10%" class="first">姓名</th>
-    <th width="7%">性别</th>
-    <th width="15%" align="center">生日</th>
-    <th width="15%" align="center">微博id</th>
-    <th width="8%" align="center"></th>
-
-  </tr>
+	<tr>
+		<th width="35%" align="left">用户名</th>
+		<th width="9%">性别</th>
+		<th width="17%" align="center">生日</th>
+		<th width="20%" align="center">微博ID</th>
+		<th align="center"></th>
+	</tr>
   <% @users.each do |user| %>
     <tr>
-      <td class="gray"><%= user.name %></td>
-      <td align="center" class="gray"><%= user.show_gender %></td>
-      <td align="center" class="gray"><%= user.birthday.try(:to_date) %></td>
-      <td align="center" class="gray"><%= user.wb_uid %></td>
-      <td align="center" class="gray"><%= link_to "添加", '#', :onclick => "ajaxAddStaff($(this), '#{user.id}')"  %></td>
+      <td><img class="imgs" src="../images/pic5.jpg">
+		<a href="#"><%= user.name %></a></td>
+      <td align="center"><img src="../images/sign6.jpg"/></td>
+      <td align="center"><%= user.birthday.try(:to_date) %></td>
+      <td align="center"><%= user.wb_uid %></td>
+      <td align="center"><%= link_to "添加", '#', :onclick => "ajaxAddStaff($(this), '#{user.id}')"  %></td>
     </tr>
   <% end %>
-
-  <tr class="bottom">
-    <td align="left"><%= link_to '返回', '/shop_staffs' %></td>
-    <td colspan="3" align="right">
-      <%= generate_paginate.html_safe %>
-    </td>
-  </tr>
 </table>
-
+<div class="pages mt15">
+	<%= link_to '返回列表>>', '/shop_staffs', :class=>"btn3 l" %>
+	<div class="pagination r">
+		<a class="first_page" href="#">第一页</a>
+		<a class="prev_page" href="#">上一页</a>
+		<span class="current">第<input type="text" value="1" />页</span>
+		<a class="sum_page" href="#">共2页</a>
+		<a class="next_page" href="#">下一页</a>
+		<a class="last_page" href="#">最后页</a>
+	</div>
+</div>
 <script type="text/javascript">
+  LeftMenu(13);
   function ajaxAddStaff(obj, uid){
     if(confirm("确定要加为员工？"))
       $.post("/shop_staffs/ajax_add_staff",{id: uid}, function(data) {
         obj.replaceWith(data['text'])
       });
   }
-
 </script>
