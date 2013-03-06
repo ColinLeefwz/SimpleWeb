@@ -59,8 +59,8 @@ class CheckinBssidStat
     end
   end
   
-  def self.insert_checkin(ck)
-    CheckinBssidStat.insert(ck["bssid"],ck["sid"],ck["uid"],ck["ssid"])
+  def self.insert_checkin(ck,ssid)
+    CheckinBssidStat.insert(ck["bssid"],ck["sid"],ck["uid"],ssid)
   end
   
   def self.insert(bssid,sid,uid,ssid)
@@ -68,6 +68,8 @@ class CheckinBssidStat
     if b.nil?
       CheckinBssidStat.collection.insert({"_id" => bssid, "ssid" => ssid, "shops" => [{id:sid,users:[uid]}] })
     else
+      b.update_attribute(:ssid, ssid) if b.ssid.nil? && ssid
+      return if b.shop_id
       shops = b.shops
       shop = shops.find{|x| x["id"]==sid}
       if shop.nil?
