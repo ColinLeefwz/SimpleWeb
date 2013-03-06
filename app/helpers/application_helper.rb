@@ -112,18 +112,27 @@ module ApplicationHelper
 
   def generate_paginate
     if (@total_entries+@pcount-1)/@pcount > 1
-      html = %q(<div class="pages">)
-      html += %q(<div class="pagination">)
-      html += link_to "第1页",request.params.merge!(:page => 1), :class => "prev_pagee"
-      html += link_to "上一页",request.params.merge!(:page => @page -1),:class => "prev_pagee"  if @page != 1
-      html += "<span class='current'>#{@page}</span>"
-      html +=  link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page != @last_page
-#      html +=  link_to "第#{@last_page}页",request.params.merge!(:page => @last_page), :class => "next_page"
+      html = "<form methods='get' action='#{url_for(request.params)}'>"
+      html += %q(<div class="pagination r">)
+      html += link_to "上一页",request.params.merge!(:page => @page -1),:class => "prev_page"  if @page != 1
+      html += "<span class='current'>第<input type='text' name='page' value='#{@page}'>页</span>"
+      html += %q(<a href="#" class="sum_page">共2页</a>)
+      html +=  link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page
       html += "</div>"
-      html += "</div>"
+      html += "</form>"
     else
       ''
     end
+  end
+  
+  def generate_paginate2
+    html = "<form methods='get' action='#{url_for(request.params)}'>"
+    html += %q(<div class="pagination r">)
+    html += link_to "上一页",request.params.merge!(:page => @page -1),:class => "prev_page"  if @page != 1
+    html += "<span class='current'>第<input type='text' name='page' value='#{@page}'>页</span>"
+    html +=  link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page
+    html += "</div>"
+    html += "</form>"
   end
 
 end

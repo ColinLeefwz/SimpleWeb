@@ -10,7 +10,7 @@ class ShopCheckinsController < ApplicationController
     hash = {sid: session[:shop_id]}
     hash.merge!({uid: params[:uid]}) unless params[:uid].blank?
     sort = {_id: -1}
-    @checkins = paginate("Checkin", params[:page], hash, sort,10)
+    @checkins = paginate2("Checkin", params[:page], hash, sort,10)
   end
 
   def show

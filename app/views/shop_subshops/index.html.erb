@@ -16,16 +16,10 @@
     </tr>
   <% end %>
 </table>
+<%# debugger %>
 <div class="pages mt15">
-	<div class="pagination r">
-		<a class="first_page" href="#">第一页</a>
-		<a class="prev_page" href="#">上一页</a>
-		<span class="current">第<input type="text" value="1" />页</span>
-		<a class="sum_page" href="#">共2页</a>
-		<a class="next_page" href="#">下一页</a>
-		<a class="last_page" href="#">最后页</a>
-	</div>
+  <%= generate_paginate.html_safe %>
 </div>
 <script type="text/javascript">
-	LeftMenu(14);
+  LeftMenu(14);
 </script>

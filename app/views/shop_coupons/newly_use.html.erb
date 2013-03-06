@@ -8,16 +8,16 @@
     <th width="10%" align="center">用户微博</th>
     <th align="center">使用时间</th>
   </tr>
-  
+
   <tr>
-	<td>好上号优惠券</td>
-	<td>QQ腾讯有限公司</td>
-	<td align="center"><img src="../images/sign6.jpg"></td>
-	<td align="center">2012-25-36</td>
-	<td align="center"><a href="#">微博</a></td>
-	<td align="center">2012-12-02 02:23</td>
+    <td>好上号优惠券</td>
+    <td>QQ腾讯有限公司</td>
+    <td align="center"><img src="../images/sign6.jpg"></td>
+    <td align="center">2012-25-36</td>
+    <td align="center"><a href="#">微博</a></td>
+    <td align="center">2012-12-02 02:23</td>
   </tr>
-  
+
   <% @uses.each do |use| %>
     <tr>
       <td><%= link_to(image_tag(Coupon.find(use[2]).img.url(:t1)), "/shop_coupons/#{use[2]}") %></td>
@@ -31,16 +31,9 @@
 </table>
 
 <div class="pages mt15">
-	<div class="pagination r">
-		<a class="first_page" href="#">第一页</a>
-		<a class="prev_page" href="#">上一页</a>
-		<span class="current">第<input type="text" value="1">页</span>
-		<a class="sum_page" href="#">共2页</a>
-		<a class="next_page" href="#">下一页</a>
-		<a class="last_page" href="#">最后页</a>
-	</div>
+  <%= generate_paginate.html_safe %>
 </div>
 
 <script>
-LeftMenu(16);
+  LeftMenu(16);
 </script>
