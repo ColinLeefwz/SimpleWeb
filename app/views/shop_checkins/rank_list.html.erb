@@ -1,27 +1,36 @@
-<div class="subtitle">总排行榜</div>
-<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-  <tr>
-    <th width="20%" class="first">用户</th>
-    <th width="16%">性别</th>
-    <th width="16%" align="center">生日</th>
-    <th width="10%" align="center">签到次数</th>
-    <th width="10%" align="center"></th>
-  </tr>
-  <% @banks.each do |bank| %>
+<div class="title2"><h2>周排行</h2>统计来访用户，看看谁最爱你们</div>
+<div class="items" id="Items">
+  <a href="/shop_checkins">最新签到</a>
+  <a href="/shop_checkins/rank?flag=week" >周排行</a>
+  <a href="/shop_checkins/rank?flag=month" >月排行</a>
+  <a class ="hover" href="/shop_checkins/rank_list">总排行</a>
+</div>
+
+
+<div class="lists">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
     <tr>
-      <td class="gray"><%= @checkin_shop_stat.user(bank[0]).name %></td>
-      <td align="center" class="gray"><%= @checkin_shop_stat.user(bank[0]).show_gender %></td>
-      <td align="center" class="gray"><%= @checkin_shop_stat.user(bank[0]).birthday.try(:to_date) %></td>
-      <td align="center" class="gray"><%= bank[1][0].to_i %></td>
-      <td><%= link_to '历史签到', url_for(:action => 'index', :uid => @checkin_shop_stat.user(bank[0]) ) %></td>
+      <th width="12%" class="bold" align="left">No</th>
+      <th width="33%" align="left">用户</th>
+      <th width="20%" align="center">性别/年龄</th>
+      <th width="15%" align="center">签到次数</th>
+      <th align="center"></th>
     </tr>
-  <% end %>
-  <tr class="bottom">
-    <td align="left"></td>
-    <td colspan="3" align="right">
-      <%= generate_paginate.html_safe %>
-    </td>
-  </tr>
-</table>
+    <% @banks.each_with_index do |bank, index| %>
+      <tr>
+        <% user = User.find(bank[0])  %>
+        <td class="bold"><% (index+1).to_s.rjust(3, '0') %></td>
+        <td><img src="<%= user.head_logo.try(:img).try(:url,:t1) %>" class="imgs"/><a href="#"><%= user.name %></a></td>
+        <td align="center"><%= img_gender(user.gender)%> <%= age(user.birthday.try(:to_date)) %></td>
+        <td align="center"><%= bank[1] %></td>
+        <td align="center"><a href="<%= user.weibo_home %>">微博</a></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="pages mt15">
+    <%= generate_paginate.html_safe %>
+  </div>
+</div>
 
 
