@@ -142,10 +142,6 @@ class Shop
     ShopNotice.where(({shop_id: self.id})).last
   end
 
-  def top_notice
-    ShopTopNotice.where(({shop_id: self.id})).last
-  end
-
   #从CheckinShopStat获得昨天以前的用户签到记录，从redis中获得今天的用户签到记录，然后合并
   def user_last_checkins(start,size)
     users1 = Checkin.get_users_redis(id.to_i)
