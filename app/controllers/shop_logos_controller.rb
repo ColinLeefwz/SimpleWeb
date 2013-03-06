@@ -3,7 +3,11 @@ class ShopLogosController < ApplicationController
   layout 'shop'
   
   def index
-    @shop_logo = ShopLogo.shop_logo(session[:shop_id])
+    if params[:id]
+      @shop_logo = ShopLogo.find_primary(params[:id])
+    else
+      @shop_logo = ShopLogo.shop_logo(session[:shop_id])
+    end
   end
 
   def new
@@ -19,6 +23,6 @@ class ShopLogosController < ApplicationController
       @shop_logo.shop_id = session[:shop_id]
       @shop_logo.save
     end
-    redirect_to :action => :index
+    redirect_to :action => :index, :id => @shop_logo.id
   end
 end

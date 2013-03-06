@@ -1,165 +1,44 @@
 <div class="title2"><h2>签到管理</h2>统计来访用户，看看谁最爱你们</div>
 <div class="items" id="Items">
-	<a class ="hover" rel="0">最新签到</a>
-	<a rel="1">周排行</a>
-	<a rel="2">月排行</a>
-	<a rel="3">总排行</a>
+  <a class ="hover" rel="0">最新签到</a>
+  <a href="/shop_checkins/rank?flag=week" >周排行</a>
+  <a href="/shop_checkins/rank?flag=month" >月排行</a>
+  <a href="/shop_checkins/rank_list">总排行</a>
 </div>
 <div class="lists" style="display:block;">
-	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-		<tr>
-			<th width="30%" align="left">用户</th>
-			<th width="9%">性别</th>
-			<th width="17%" align="center">生日</th>
-			<th width="20%" align="center">签到时间</th>
-			<th width="13%" align="center"></th>
-			<th></th>
-		</tr>
-	  <% @checkins.each do |checkin| %>
-		<tr>
-		  <td><img class="imgs" src="../images/pic5.jpg"><%=link_to checkin.user.name%></td>
-		  <td align="center"><img src="../images/sign6.jpg"/></td>
-		  <td align="center"><%= checkin.user.birthday.try(:to_date)%></td>
-		  <td align="center"><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %></td>
-		  <td align="center"><%= link_to '历史签到', url_for(:action => 'index', :uid => checkin.user.id) %></td>
-		  <td align="center"><%= link_to '微博', checkin.user.weibo_home %></td>
-		</tr>
-	  <% end %>
-	</table>
-	<div class="pages mt15">
-		<div class="pagination r">
-			<a class="first_page" href="#">第一页</a>
-			<a class="prev_page" href="#">上一页</a>
-			<span class="current">第<input type="text" value="1" />页</span>
-			<a class="sum_page" href="#">共2页</a>
-			<a class="next_page" href="#">下一页</a>
-			<a class="last_page" href="#">最后页</a>
-		</div>
-	</div>
-</div>
-
-<div class="lists">
-	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-	  <tr>
-		<th width="12%" class="bold" align="left">No</th>
-		<th width="33%" align="left">用户</th>
-		<th width="20%" align="center">性别/年龄</th>
-		<th width="15%" align="center">签到次数</th>
-		<th align="center"></th>
-	  </tr>
-	  <tr>
-		<td class="bold">001.</td>
-		<td><img src="../images/pic5.jpg" class="imgs"/><a href="#">菲儿</a></td>
-		<td align="center"><img src="../images/sign7.jpg"/> 23岁</td>
-		<td align="center">150</td>
-		<td align="center"><a href="/shop_checkins">微博</a></td>
-	  </tr>
-	  <tr>
-		<td class="bold">002.</td>
-		<td><img src="../images/pic5.jpg" class="imgs"/><a href="#">双色琉璃</a></td>
-		<td align="center"><img src="../images/sign6.jpg"/> 28岁</td>
-		<td align="center">150</td>
-		<td align="center"><a href="/shop_checkins">微博</a></td>
-	  </tr>
-	</table>
-
-	<div class="pages mt15">
-
-		<div class="pagination r">
-			<a class="first_page" href="#">第一页</a>
-			<a class="prev_page" href="#">上一页</a>
-			<span class="current">第<input type="text" value="1" />页</span>
-			<a class="sum_page" href="#">共2页</a>
-			<a class="next_page" href="#">下一页</a>
-			<a class="last_page" href="#">最后页</a>
-		</div>
-	</div>
-</div>
-
-<div class="lists">
-	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-	  <tr>
-		<th width="12%" class="bold" align="left">No</th>
-		<th width="33%" align="left">用户</th>
-		<th width="20%" align="center">性别/年龄</th>
-		<th width="15%" align="center">签到次数</th>
-		<th align="center"></th>
-	  </tr>
-	  <tr>
-		<td class="bold">001.</td>
-		<td><img src="../images/pic5.jpg" class="imgs"/><a href="#">菲儿</a></td>
-		<td align="center"><img src="../images/sign7.jpg"/> 23岁</td>
-		<td align="center">150</td>
-		<td align="center"><a href="/shop_checkins">微博</a></td>
-	  </tr>
-	  <tr>
-		<td class="bold">002.</td>
-		<td><img src="../images/pic5.jpg" class="imgs"/><a href="#">双色琉璃</a></td>
-		<td align="center"><img src="../images/sign6.jpg"/> 28岁</td>
-		<td align="center">150</td>
-		<td align="center"><a href="/shop_checkins">微博</a></td>
-	  </tr>
-	</table>
-
-	<div class="pages mt15">
-
-		<div class="pagination r">
-			<a class="first_page" href="#">第一页</a>
-			<a class="prev_page" href="#">上一页</a>
-			<span class="current">第<input type="text" value="1" />页</span>
-			<a class="sum_page" href="#">共2页</a>
-			<a class="next_page" href="#">下一页</a>
-			<a class="last_page" href="#">最后页</a>
-		</div>
-	</div>
-</div>
-
-<div class="lists">
-	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-	  <tr>
-		<th width="12%" class="bold" align="left">No</th>
-		<th width="33%" align="left">用户</th>
-		<th width="20%" align="center">性别/年龄</th>
-		<th width="15%" align="center">签到次数</th>
-		<th align="center"></th>
-	  </tr>
-	  <tr>
-		<td class="bold">001.</td>
-		<td><img src="../images/pic5.jpg" class="imgs"/><a href="#">菲儿</a></td>
-		<td align="center"><img src="../images/sign7.jpg"/> 23岁</td>
-		<td align="center">150</td>
-		<td align="center"><a href="/shop_checkins">微博</a></td>
-	  </tr>
-	  <tr>
-		<td class="bold">002.</td>
-		<td><img src="../images/pic5.jpg" class="imgs"/><a href="#">双色琉璃</a></td>
-		<td align="center"><img src="../images/sign6.jpg"/> 28岁</td>
-		<td align="center">150</td>
-		<td align="center"><a href="/shop_checkins">微博</a></td>
-	  </tr>
-	</table>
-
-	<div class="pages mt15">
-
-		<div class="pagination r">
-			<a class="first_page" href="#">第一页</a>
-			<a class="prev_page" href="#">上一页</a>
-			<span class="current">第<input type="text" value="1" />页</span>
-			<a class="sum_page" href="#">共2页</a>
-			<a class="next_page" href="#">下一页</a>
-			<a class="last_page" href="#">最后页</a>
-		</div>
-	</div>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+    <tr>
+      <th width="30%" align="left">用户</th>
+      <th width="9%">性别</th>
+      <th width="17%" align="center">生日</th>
+      <th width="20%" align="center">签到时间</th>
+      <th width="13%" align="center"></th>
+      <th></th>
+    </tr>
+    <% @checkins.each do |checkin| %>
+      <tr>
+        <td><img class="imgs" src="<%= checkin.user.head_logo.try(:img).try(:url,:t1) %>"><%=link_to checkin.user.name%></td>
+        <td align="center"><%= img_gender(checkin.user.gender)%></td>
+        <td align="center"><%= checkin.user.birthday.try(:to_date)%></td>
+        <td align="center"><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %></td>
+        <td align="center"><%= link_to '历史签到', url_for(:action => 'index', :uid => checkin.user.id) %></td>
+        <td align="center"><%= link_to '微博', checkin.user.weibo_home %></td>
+      </tr>
+    <% end %>
+  </table>
+  <div class="pages mt15">
+    <%= generate_paginate2.html_safe %>
+  </div>
 </div>
 
 <script>
-	 LeftMenu(1);
+  LeftMenu(1);
 	 
-	 $(document).ready(function(){
-		$("#Items a").click(function(){
-			var n=$(this).attr("rel");
-			$(this).addClass("hover").siblings("a").removeClass("hover");
-			$("div.lists").eq(n).css("display","block").siblings("div.lists").css("display","none");
-		});
-	 });
+  $(document).ready(function(){
+    $("#Items a").click(function(){
+      var n=$(this).attr("rel");
+      $(this).addClass("hover").siblings("a").removeClass("hover");
+      $("div.lists").eq(n).css("display","block").siblings("div.lists").css("display","none");
+    });
+  });
 </script>
