@@ -1,5 +1,21 @@
-<div class="subtitle">商家logo</div>
-<center class="gray2"><%= notice %></center>
+<div class="title2"><h2>商家LOGO</h2>在脸脸内显示的官方头像</div>
+<div class="notice" id="Notice"><%= notice %></div>
+
+<form action="" method="post">
+<table width="50%" border="0" cellspacing="0" cellpadding="0" class="shopLogo">
+  <tr>
+  <td align="left" valign="top" width="23%"><img src="/images/pic3.jpg" width="150" height="150" class="ml5"/><p class="pl55">150*150px</p></td>
+    <td align="left" valign="top" width="13%"><img src="/images/pic4.jpg" width="75" height="75" class="ml5"/><p class="pl25">75*75px</p></td>
+    <td align="left" valign="top">
+		<input type="button" value="修改头像" class="btn1 ml15" id="Btn1"/>
+		<input type="file" class="none" id="UpLoad"/>
+	</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><input type="submit" value=" " class="btn2 mt15"/></td>
+  </tr>
+</table>
+</form>
 <ul class="formlist2">
   <li>
     <span></span>
@@ -8,3 +24,11 @@
 </ul>
 <%= "还没有logo,现在就来" if !@shop_logo  %>
 <%= link_to '上传', {:action => :new} %>
+
+<script>
+	LeftMenu("11");
+
+	$("#Btn1").click(function(){
+		$("#UpLoad").click();
+	});
+</script>
