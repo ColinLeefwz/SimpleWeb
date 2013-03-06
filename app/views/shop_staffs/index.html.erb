@@ -1,39 +1,45 @@
+<div class="title2"><h2>员工列表</h2></div>
 
-<div class="subtitle">员工列表</div>
-
-<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-  <tr>
-    <th width="20%" class="first">姓名</th>
-    <th width="20%">性别</th>
-    <th width="20%" align="center">生日</th>
-    <th width="20%" align="center">签到次数</th>
-    <th width="20%" align="center"></th>
-
-  </tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab mt0">
+	<tr>
+		<th width="35%" align="left">用户名</th>
+		<th width="9%">性别</th>
+		<th width="17%" align="center">生日</th>
+		<th width="20%" align="center">签到次数</th>
+		<th align="center"></th>
+	</tr>
   <% @staffs.each do |staff| %>
     <tr>
-      <td class="gray"><%= staff.user.try(:name) %></td>
-      <td align="center" class="gray"><%= staff.user.try(:show_gender) %></td>
-      <td align="center" class="gray"><%= staff.user.try(:birthday).try(:to_date) %></td>
-      <td align="center" class="gray"><%=link_to staff.checkin_count(staff.user_id),"/shop_checkins?uid=#{staff.user_id}" %></td>
-      <td align="center" class="gray"><%=link_to '删除', '#' , :onclick => "ajaxDeleteStaff($(this), '#{staff.id}');" %></td>
+      <td>
+		<img class="imgs" src="../images/pic5.jpg">
+		<a href="#"><%= staff.user.try(:name) %></a>
+	  </td>
+      <td align="center"><img src="../images/sign6.jpg"/></td>
+      <td align="center"><%= staff.user.try(:birthday).try(:to_date) %></td>
+      <td align="center"><%=link_to staff.checkin_count(staff.user_id),"/shop_checkins?uid=#{staff.user_id}" %></td>
+      <td align="center"><%=link_to '删除',  :onclick => "ajaxDeleteStaff($(this), '#{staff.id}');" %></td>
   </tr>
-<% end %>
-
-  <tr class="bottom">
-    <td align="left"><%= link_to '从签到人中添加', "/shop_staffs/new" %></td>
-    <td colspan="3" align="right">
-    <%= generate_paginate.html_safe %>
-    </td>
-  </tr>
+  <% end %>
 </table>
+<div class="pages mt15">
+	<%= link_to '从签到人中添加', "/shop_staffs/new", :class=>"btn3 l" %>
+	<div class="pagination r">
+		<a class="first_page" href="#">第一页</a>
+		<a class="prev_page" href="#">上一页</a>
+		<span class="current">第<input type="text" value="1" />页</span>
+		<a class="sum_page" href="#">共2页</a>
+		<a class="next_page" href="#">下一页</a>
+		<a class="last_page" href="#">最后页</a>
+	</div>
+</div>
 
 <script type="text/javascript">
+	LeftMenu(13);
+	
   function ajaxDeleteStaff(obj, id){
     if(confirm("确定删除该员工？"))
       $.post("/shop_staffs/ajax_delete_staff",{id: id}, function() {
         obj.parent().parent().remove();
       });
   }
-
 </script>

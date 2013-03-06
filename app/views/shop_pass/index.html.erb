@@ -1,7 +1,6 @@
-<div class="subtitle">修改密码</div>
-<p>
-  <%= notice %>
-</p>
+<div class="title2"><h2>修改密码</h2></div>
+<div class="notice" id="Notice"><%= notice %></div>
+
 <%= form_for(@shop, :url => "/shop_pass", :html => {:method => 'post'} ) do |f| %>
   <%if  session_shop.errors.any? %>
     <% session_shop.errors.full_messages.each do |msg| %>
@@ -12,7 +11,10 @@
     <li><label for="pwd1">原始密码：</label><%= password_field_tag 'oldpass', '',:value => '', :class => "txt"%></li>
     <li><label for="pwd1">新的密码：</label><%= f.password_field :password, :class => "txt"%></li>
     <li><label for="pwd1">再次输入：</label><%= f.password_field :password_confirmation, :class => "txt"%></li>
-    <li><input type="submit" value="提 交" class="btn"/></li>
+    <li><input type="submit" value="提 交" class="btn1 ml62"/></li>
   </ul>
-
 <% end %>
+
+<script>
+	LeftMenu("12");
+</script>

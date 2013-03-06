@@ -1,14 +1,33 @@
-<div class="subtitle">优惠券列表</div>
+<div class="title2"><h2>优惠券管理</h2></div>
+<a href="/shop_coupons/new" class="btn4 l mt10">签到类发布</a>
+<a href="/shop_coupons/new2" class="btn5 l ml15 mt10">分享类发布</a>
+
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th width="10%">缩略图</th>
+    <th width="40%" align="left" colspan="2">标题</th>
     <th width="10%">类型</th>
-    <th width="8%" align="center">已下载</th>
-    <th width="8%" align="center">已使用</th>
-    <th width="8%" align="center">详情</th>
-    <th width="8%" align="center">停用</th>
-    <th width="8%" align="center">删除</th>
+    <th width="9%" align="center">已下载</th>
+    <th width="9%" align="center">已使用</th>
+    <th align="center">操作</th>
   </tr>
+  
+  <tr>
+      <td width="10%"><img src="../images/pic3.jpg" class="imgs3"></td>
+	  <td valign="center" width="30%">标题名称</td>
+      <td class="gray f12" align="center">签到类</td>
+      <td align="center"><a href="/shop_coupons/users?flag=down&amp;id=512c86a0c90d8bd84b000006">9</a></td>
+      <td align="center"><a href="/shop_coupons/users?flag=use&amp;id=512c86a0c90d8bd84b000006">0</a></td>
+      <td align="center">
+		<a href="#">详情</a>
+		<a href="#">停用</a>
+		<a href="#">删除</a>
+	  </td>
+    </tr>
+  
+  
+  
+  
+  
   <% @coupons.each do |coupon| %>
     <tr>
       <td align="center" class="gray"><%=image_tag coupon.img.url(:t1) %></td>
@@ -20,14 +39,21 @@
       <td align="center" class="gray"><%= (link_to '删除', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')") if coupon.users.blank? %></td>
     </tr>
   <% end %>
-  <tr class="bottom">
-    <td colspan="3" align="right">
-      <%= generate_paginate.html_safe %>
-    </td>
-  </tr>
 </table>
+<div class="pages mt15">
+	<div class="pagination r">
+		<a href="#" class="first_page">第一页</a>
+		<a href="#" class="prev_page">上一页</a>
+		<span class="current">第<input type="text" value="1">页</span>
+		<a href="#" class="sum_page">共2页</a>
+		<a href="#" class="next_page">下一页</a>
+		<a href="#" class="last_page">最后页</a>
+	</div>
+</div>
+
 
 <script type ="text/javascript">
+  LeftMenu(6);
   function ajaxDeply(obj, coupon_id){
     if(confirm("确定停用此优惠券么？"))
     {
@@ -48,8 +74,6 @@
         }
       });
     }
-
-
   }
 </script>
 
