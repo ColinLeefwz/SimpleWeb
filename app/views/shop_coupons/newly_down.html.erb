@@ -1,26 +1,45 @@
-<div class="subtitle">最新下载记录</div>
+<div class="title2"><h2>最新下载记录</h2></div>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th width="10%">优惠券</th>
-    <th width="10%">用户</th>
-    <th width="10%">用户性别</th>
-    <th width="8%" align="center">用户生日</th>
-    <th width="8%" align="center">用户微博</th>
-    <th width="8%" align="center">下载时间</th>
+    <th width="25%" align="left">优惠券</th>
+    <th width="20%" align="left">用户</th>
+    <th width="10%" align="center">用户性别</th>
+    <th width="13%" align="center">用户生日</th>
+    <th width="10%" align="center">用户微博</th>
+    <th align="center">下载时间</th>
   </tr>
+  
+  <tr>
+	<td>好上号优惠券</td>
+	<td>QQ腾讯有限公司</td>
+	<td align="center"><img src="../images/sign6.jpg"></td>
+	<td align="center">2012-25-36</td>
+	<td align="center"><a href="#">微博</a></td>
+	<td align="center">2012-12-02 02:23</td>
+  </tr>
+
   <% @downs.each do |down| %>
     <tr>
-      <td align="center" class="gray"><%= link_to(image_tag(Coupon.find(down[2]).img.url(:t1)), "/shop_coupons/#{down[2]}") %></td>
-      <td align="center" class="gray"><%= User.find_by_id(down[0]).try(:name)  %></td>
-      <td align="center" class="gray"><%= User.find_by_id(down[0]).try(:show_gender)  %></td>
-      <td align="center" class="gray"><%= User.find_by_id(down[0]).birthday.try(:to_date) %></td>
-      <td align="center" class="gray"><%= link_to '链接到微博',User.find_by_id(down[0]).try(:weibo_home) %></td>
-      <td align="center" class="gray"><%= down[1].localtime.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td><%= link_to(image_tag(Coupon.find(down[2]).img.url(:t1)), "/shop_coupons/#{down[2]}") %></td>
+      <td><%= User.find_by_id(down[0]).try(:name)  %></td>
+      <td align="center"><%= User.find_by_id(down[0]).try(:show_gender)  %></td>
+      <td align="center"><%= User.find_by_id(down[0]).birthday.try(:to_date) %></td>
+      <td align="center"><%= link_to '微博',User.find_by_id(down[0]).try(:weibo_home) %></td>
+      <td align="center"><%= down[1].localtime.strftime("%Y-%m-%d %H:%M") %></td>
     </tr>
   <% end %>
-  <tr class="bottom">
-    <td colspan="3" align="right">
-      <%= generate_paginate.html_safe %>
-    </td>
-  </tr>
 </table>
+<div class="pages mt15">
+	<div class="pagination r">
+		<a class="first_page" href="#">第一页</a>
+		<a class="prev_page" href="#">上一页</a>
+		<span class="current">第<input type="text" value="1">页</span>
+		<a class="sum_page" href="#">共2页</a>
+		<a class="next_page" href="#">下一页</a>
+		<a class="last_page" href="#">最后页</a>
+	</div>
+</div>
+
+<script>
+LeftMenu(17);
+</script>
