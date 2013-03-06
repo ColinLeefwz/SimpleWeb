@@ -73,7 +73,6 @@ class CheckinsController < ApplicationController
     checkin.city = shop.city if shop
     checkin.od = params[:od]
     checkin.bssid = params[:bssid] if params[:bssid]
-    checkin.ssid = params[:ssid] if params[:ssid]
     if params[:altitude]
       checkin.alt = params[:altitude].to_f
       checkin.altacc = params[:altacc]
@@ -82,7 +81,7 @@ class CheckinsController < ApplicationController
     send_if_first shop
     checkin.save!
     send_coupon_if_exist
-    CheckinBssidStat.insert_checkin(checkin) if params[:bssid]
+    CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid]
     if checkin.add_to_redis #当天首次签到
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     end
