@@ -21,6 +21,7 @@
       <td align="center"><%= link_to coupon.users.to_a.count{|s| s['uat']},{:action => 'users', :id => coupon.id, :flag => 'use'} %></td>
       <td align="center">
         <a href="#"><%= link_to '详情', shop_coupon_path(coupon) %></a>
+        <a href="#"><%=link_to '编辑', edit_shop_coupon_path(coupon) if coupon.users.blank? %></a>
         <a href="#"><%= coupon.hidden ==1 ? '已停用' : (link_to '停用', '#', :onclick => "ajaxDeply($(this), '#{coupon.id}')") %></a>
         <a href="#"><%= (link_to '删除', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')") if coupon.users.blank? %></a>
       </td>

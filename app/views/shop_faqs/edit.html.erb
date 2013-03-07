@@ -14,12 +14,12 @@
   <% end %>
 </div>
 
-<%= form_for(@shop_faq, :url => '/shop_faqs/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+<%= form_for(@shop_faq, :url => "/shop_faqs/update?id=#{@shop_faq.id}",:html => { :multipart => true, :id => 'cform' } ) do |f| %>
 
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab3">
     <tr>
       <td width="8%">序号</td>
-      <td><%= f.select :od, [1,2,3,4,5,6,7,8,9] - session_shop.faqs.map{|m| m.od.to_i},{}, {:class => "txt"} %></td>
+      <td><%= f.select :od, [1,2,3,4,5,6,7,8,9] - session_shop.faqs.map{|m| m.od.to_i}+[@shop_faq.od],{}, {:class => "txt"} %></td>
       <td rowspan="5"><img src="../images/pic6.jpg" /></td>
     </tr>
     <tr>
@@ -29,7 +29,6 @@
         <span class="words">(3-12个字,例如:获取wifi密码)</span>
       </td>
     </tr>
-
     <tr>
       <td valign="top">图片</td>
       <td><input type="button" value="添加图片" class="btn1" id="Btn1"/>
@@ -43,6 +42,7 @@
         <span class="words">(3-140个字,例如：本店wifi密码：321123)</span>
       </td>
     </tr>
+
     <tr>
       <td colspan="2">
         <br/>

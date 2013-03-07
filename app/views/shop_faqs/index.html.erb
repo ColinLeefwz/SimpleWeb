@@ -15,7 +15,8 @@
       <td><%= faq.text  %></td>
       <td align="center"><%=image_tag faq.img.url(:t2), :class=>"imgs2"  %></td>
       <td align="center">
-      <%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{faq.id}')" %></td>
+        <%= link_to '编辑', "/shop_faqs/edit?id=#{faq.id}" %>
+        <%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{faq.id}')" %></td>
     </tr>
   <% end %>
 </table>
@@ -30,7 +31,7 @@
 <script type ="text/javascript">
   LeftMenu(15);
   function ajaxDel(obj, faq_id){
-    if(confirm("确定删除此优惠券么？"))
+    if(confirm("确定删除此问答么？"))
     {
       $.get("/shop_faqs/ajax_del",{id: faq_id}, function(data) {
         if(data['text']){
