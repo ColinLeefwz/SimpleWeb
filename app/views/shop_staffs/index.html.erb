@@ -12,7 +12,7 @@
     <tr>
       <td>
         <img class="imgs" src="<%= staff.user.head_logo.try(:img).try(:url,:t1) %>">
-        <a href="#"><%= staff.user.try(:name) %></a>
+        <%= staff.user.try(:name) %>
       </td>
       <td align="center"><%= img_gender(staff.user.gender) %></td>
       <td align="center"><%= staff.user.try(:birthday).try(:to_date) %></td>
