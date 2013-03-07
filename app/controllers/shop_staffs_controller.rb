@@ -13,8 +13,8 @@ class ShopStaffsController < ApplicationController
 
   def new
     staff_ids = Staff.where({shop_id: session_shop.id}).map{|s| s.user_id}
-    checkin = Checkin.where({sid: session_shop.id, uid:{'$nin' => staff_ids }}).sort({_id: -1}).group_by{|g| g.uid}
-    @users = checkin.keys.map{|m| User.find_by_id(m) }
+    checkin = Checkin.where({sid: session_shop.id}).sort_by{|s| s.id}.group_by{|g| g.uid}
+    @users = (checkin.keys - staff_ids ).reverse.map{|m| User.find_by_id(m) }
     @users = paginate_arr(@users, params[:page], 10)
   end
 
