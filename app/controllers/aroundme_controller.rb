@@ -3,8 +3,9 @@
 class AroundmeController < ApplicationController
   
   def shops
-    arr = Shop.new.find_shops([params[:lat].to_f,params[:lng].to_f],
-          params[:accuracy].to_f,session[:user_id],params[:bssid])  
+    lo = [params[:lat].to_f,params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    arr = Shop.new.find_shops(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
     hash = arr.map do |x|
       s = Shop.new(x)
       s.id = x["_id"].to_i
