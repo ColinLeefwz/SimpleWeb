@@ -1,17 +1,17 @@
 <div class="title2"><h2>添加新员工</h2></div>
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-	<tr>
-		<th width="35%" align="left">用户名</th>
-		<th width="9%">性别</th>
-		<th width="17%" align="center">生日</th>
-		<th width="20%" align="center">微博ID</th>
-		<th align="center"></th>
-	</tr>
+  <tr>
+    <th width="35%" align="left">用户名</th>
+    <th width="9%">性别</th>
+    <th width="17%" align="center">生日</th>
+    <th width="20%" align="center">微博ID</th>
+    <th align="center"></th>
+  </tr>
   <% @users.each do |user| %>
     <tr>
       <td><img class="imgs" src="<%= user.head_logo.try(:img).try(:url,:t1) %>">
-		<a href="#"><%= user.name %></a></td>
+        <a href="#"><%= user.name %></a></td>
       <td align="center"><%= img_gender(user.gender) %></td>
       <td align="center"><%= user.birthday.try(:to_date) %></td>
       <td align="center"><%=link_to user.wb_uid.to_s, user.weibo_home %></td>
@@ -20,15 +20,8 @@
   <% end %>
 </table>
 <div class="pages mt15">
-	<%= link_to '返回列表>>', '/shop_staffs', :class=>"btn3 l" %>
-	<div class="pagination r">
-		<a class="first_page" href="#">第一页</a>
-		<a class="prev_page" href="#">上一页</a>
-		<span class="current">第<input type="text" value="1" />页</span>
-		<a class="sum_page" href="#">共2页</a>
-		<a class="next_page" href="#">下一页</a>
-		<a class="last_page" href="#">最后页</a>
-	</div>
+  <%= link_to '返回列表>>', '/shop_staffs', :class=>"btn3 l" %>
+  <%= generate_paginate.html_safe %>
 </div>
 <script type="text/javascript">
   LeftMenu(13);
