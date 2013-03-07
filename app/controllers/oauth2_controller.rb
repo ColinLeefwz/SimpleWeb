@@ -250,6 +250,7 @@ class Oauth2Controller < ApplicationController
       user = gen_new_user(uid,token) if user.nil?
       change_auto_user(user) if user.auto
       session[:new_user_flag] = true
+      data.merge!({newuser:1})
       Resque.enqueue(WeiboFriend, token,uid,user.id)
       #Resque.enqueue(WeiboFirst, token)
     end
@@ -271,6 +272,7 @@ class Oauth2Controller < ApplicationController
       user = gen_new_user_qq(openid,token)
       return if user.nil?
       session[:new_user_flag] = true
+      data.merge!({newuser:1})
     end
     if user.forbidden?
       render :json => {error:"forbidden."}.to_json
