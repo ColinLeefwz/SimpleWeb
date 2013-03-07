@@ -12,6 +12,23 @@ class ShopFaqsController < ApplicationController
     @shop_faq = ShopFaq.new
   end
 
+  def edit
+    @shop_faq = ShopFaq.find(params[:id])
+  end
+
+  def update
+    @shop_faq = ShopFaq.find(params[:id])
+    if @shop_faq.update_attributes(params[:shop_faq])
+      redirect_to :action => "show", :id => @shop_faq.id
+    else
+      render :action => :edit
+    end
+  end
+
+  def show
+    @shop_faq = ShopFaq.find_primary(params[:id])
+  end
+
   def create
     @shop_faq = ShopFaq.new(params[:shop_faq])
     @shop_faq.sid = session[:shop_id]

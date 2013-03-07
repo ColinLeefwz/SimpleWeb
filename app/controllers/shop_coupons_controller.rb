@@ -36,6 +36,7 @@ class ShopCouponsController < ApplicationController
   # GET /coupons/1/edit
   def edit
     @coupon = Coupon.find(params[:id])
+    render :file => "/shop_coupons/edit2" if @coupon.t2.to_i == 2
   end
 
   def show_img2
@@ -109,16 +110,13 @@ class ShopCouponsController < ApplicationController
   # PUT /coupons/1.json
   def update
     @coupon = Coupon.find(params[:id])
-    respond_to do |format|
-      if @coupon.update_attributes(params[:coupon])
-        @coupon.reload.gen_img
-        
-        format.html { redirect_to :action => :show, :id => @coupon.id }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @coupon.errors, status: :unprocessable_entity }
-      end
+    @coupon.process_img_upload = true if @coupon.t.to_i == 2
+    if @coupon.update_attributes(params[:coupon])
+      return redirect_to :action => :show_img2, :id => @coupon.id unless params[:flag].blank?
+      @coupon.gen_img if @coupon.t.to_i == 1
+      redirect_to :action => :show, :id => @coupon.id
+    else
+      render :action => :edit
     end
   end
 
@@ -137,17 +135,17 @@ class ShopCouponsController < ApplicationController
   def newly_down
     down = []
     Coupon.where({:shop_id => session[:shop_id]}).each do |coupon|
-      down += coupon.users.map{|m| [m['id'], m['dat'], coupon.id]}
+      down += coupon.users.map{|m| [m['id'], m['dat'], coupon.id]} unless coupon.users.blank?
     end
-    @downs = paginate_arr(down.sort { |f,s| s[1] <=> f[1]  }, params[:page],10 )
+    @downs = paginate_arr(down.sort_by { |d| d[1]  }.reverse, params[:page],10 )
   end
 
   def newly_use
     use = []
     Coupon.where({:shop_id => session[:shop_id]}).each do |coupon|
-      use += coupon.users.select { |s| s['uat'] }.map{|m| [m['id'], m['uat'], coupon.id]}
+      use += coupon.users.select { |s| s['uat'] }.map{|m| [m['id'], m['uat'], coupon.id]} unless coupon.users.blank?
     end
-    @uses = paginate_arr(use.sort { |f,s| s[1] <=> f[1]  }, params[:page],10 )
+    @uses = paginate_arr(use.sort_by { |s| s[1] }.reverse, params[:page],10 )
   end
 
   def users

@@ -5,8 +5,8 @@
       <input size="12" name="coupon[img2]" type="file" class="inputImg"  >
     </div>
     <div class="rdiv" >
-      <%= f.text_field :name, :value => '点此输入名称', :class => 'stxt txt' %>
-      <%= f.text_area :desc, :value => '点此输入描述', :class => 'stxt atxt',:wrap => "off"%>
+      <%= f.text_field :name, :value => @coupon.name || '点此输入名称', :class => 'stxt txt' %>
+      <%= f.text_area :desc, :value => @coupon.desc || '点此输入描述', :class => 'stxt atxt',:wrap => "off"%>
     </div>
   </div>
   <%= render :partial => 'form1', :locals => {:f => f}  %>
