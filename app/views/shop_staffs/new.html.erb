@@ -10,11 +10,11 @@
 	</tr>
   <% @users.each do |user| %>
     <tr>
-      <td><img class="imgs" src="../images/pic5.jpg">
+      <td><img class="imgs" src="<%= user.head_logo.try(:img).try(:url,:t1) %>">
 		<a href="#"><%= user.name %></a></td>
-      <td align="center"><img src="../images/sign6.jpg"/></td>
+      <td align="center"><%= img_gender(user.gender) %></td>
       <td align="center"><%= user.birthday.try(:to_date) %></td>
-      <td align="center"><%= user.wb_uid %></td>
+      <td align="center"><%=link_to user.wb_uid.to_s, user.weibo_home %></td>
       <td align="center"><%= link_to "添加", '#', :onclick => "ajaxAddStaff($(this), '#{user.id}')"  %></td>
     </tr>
   <% end %>

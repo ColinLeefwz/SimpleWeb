@@ -17,8 +17,8 @@
     <% @banks.each_with_index do |bank, index| %>
       <tr>
         <% user = User.find(bank[0])  %>
-        <td class="bold"><% (index+1).to_s.rjust(3, '0') %></td>
-        <td><img src="<%= user.head_logo.try(:img).try(:url,:t1) %>" class="imgs"/><a href="#"><%= user.name %></a></td>
+        <td class="bold"><%= (index+1).to_s.rjust(3, '0') %></td>
+        <td><img src="<%= user.head_logo.try(:img).try(:url,:t1) %>" class="imgs"/><%= user.name %></td>
         <td align="center"><%= img_gender(user.gender)%> <%= age(user.birthday.try(:to_date)) %></td>
         <td align="center"><%= bank[1] %></td>
         <td align="center"><a href="<%= user.weibo_home %>">微博</a></td>
