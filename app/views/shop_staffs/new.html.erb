@@ -11,7 +11,7 @@
   <% @users.each do |user| %>
     <tr>
       <td><img class="imgs" src="<%= user.head_logo.try(:img).try(:url,:t1) %>">
-        <a href="#"><%= user.name %></a></td>
+        <%= user.name %></td>
       <td align="center"><%= img_gender(user.gender) %></td>
       <td align="center"><%= user.birthday.try(:to_date) %></td>
       <td align="center"><%=link_to user.wb_uid.to_s, user.weibo_home %></td>
