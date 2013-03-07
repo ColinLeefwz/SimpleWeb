@@ -307,6 +307,13 @@ hash的计算方式为：openid+access\_token+"dface"进行SHA1算法后取前32
 \end{enumerate}
 
 
+\subsection{关于首次登录的判断}
+以前，脸脸判断用户是否首次登录是看TA是否有头像。如果没有头像，则走注册流程。
+
+现在更改为：每种登录接口（sina xauth/sso, qq）都会在用户首次登录时返回字段：{newuser:1}。当有newuser时，走注册流程。
+
+
+
 \section{首次使用脸脸时发送分享微博}
 
 \begin{table}[H]

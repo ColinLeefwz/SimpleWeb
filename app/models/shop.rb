@@ -44,8 +44,8 @@ class Shop
   index({d: 1},{ sparse: true })
   index({password: 1},{ sparse: true })
   index({v: 1},{ sparse: true })  
-  index({city: 1})
-  index({utotal:-1})
+  index({city: 1, utotal:-1})
+
   
   def self.default_hash
     {del: {"$exists" => false}}
