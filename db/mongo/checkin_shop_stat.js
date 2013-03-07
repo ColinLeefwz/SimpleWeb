@@ -32,10 +32,10 @@ var checkinShopStat = function(days){
         })
     
         us = ciss.users;
-        if(!us[checkin.uid]){
-            us[checkin.uid] = [1, checkin._id, checkin.sex];
+        if(!us[checkin.uid.str]){
+            us[checkin.uid.str] = [1, checkin._id, checkin.sex];
         }else{
-            us[checkin.uid] = [us[checkin.uid][0] + 1, checkin._id, checkin.sex];
+            us[checkin.uid.str] = [us[checkin.uid.str][0] + 1, checkin._id, checkin.sex];
         }
 
         db.checkin_shop_stats.update({
@@ -93,7 +93,7 @@ var sync_to_shops = function(){
     db.checkin_shop_stats.find().forEach(function(x){
         ssu = db.shop_sina_users.findOne({
             _id: x._id
-            });
+        });
         if(ssu!=null) ssuc =ssu.users.length;
         else ssuc=0;
         db.shops.update({
@@ -107,8 +107,8 @@ var sync_to_shops = function(){
     })
 }
 
-checkinShopStat(1);
-sync_to_shops(); //将计算获得的商家用户统计数据写回商家表，以方便按用户数排序。
+checkinShopStat(1000);
+//sync_to_shops(); //将计算获得的商家用户统计数据写回商家表，以方便按用户数排序。
 
 
 
