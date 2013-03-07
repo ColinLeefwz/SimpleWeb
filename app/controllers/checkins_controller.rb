@@ -80,7 +80,7 @@ class CheckinsController < ApplicationController
     checkin.ip = real_ip
     send_if_first shop
     checkin.save!
-    send_coupon_if_exist
+    shop.send_coupon(session[:user_id])
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid]
     if checkin.add_to_redis #当天首次签到
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
@@ -115,14 +115,6 @@ class CheckinsController < ApplicationController
     str += "置顶的照片栏还没被占领，赶快抢占并分享到微博吧。" if shop.photo_count<4
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
   end 
-
-  def send_coupon_if_exist
-    if ENV["RAILS_ENV"] == "production"
-      Resque.enqueue(SendCoupon, session[:user_id], params[:shop_id])
-    else
-      Shop.find(params[:shop_id]).send_coupon(session[:user_id])
-    end
-  end
 
 
 end
