@@ -165,6 +165,7 @@ class Shop
     ret = []
     user_last_checkins(start,size).each do |uid,cat|
       u = User.find_by_id(uid)
+      next if u.nil?
       next if u.forbidden?
       next if u.block?(session_uid)
       ret << u.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
@@ -225,7 +226,7 @@ class Shop
     faq = self.faq(msg.last)
     return "试试回复：\n" + self.faqs.map{|m| "0#{m.od}=>#{m.title}."}.join("\n") if faq.nil?
     if faq.img.blank?
-      "文本: #{faq.text}"
+      faq.text
     else
       "[img:faq#{faq._id}]#{faq.text}"
     end
