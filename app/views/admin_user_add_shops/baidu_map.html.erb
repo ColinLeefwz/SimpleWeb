@@ -1,176 +1,37 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title></title>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
-    <style type="text/css">
-      .f15{font-size:15px;}
-      .mt90{margin-top:90px;}
-      #Maps{width:700px;height:500px;margin:10px auto;border:1px solid #CACACA;}
-    </style>
-  </head>
+<p>
+  <span style="padding: 0 5px;"> <%= link_to '去百度地图查看',"http://api.map.baidu.com/lbsapi/getpoint/index.html", :target => "blank" %> </span>
+  <span style="padding: 0 5px;"><%= link_to '编辑',"/admin_user_add_shops/edit?id=#{@shop.id}" %></span>
+  <span style="padding: 0 5px;"><%= link_to '标记删除',"/admin_user_add_shops/del?id=#{@shop.id}"%></span>
+</p>
 
-  <body>
-    <div style="float: left">
+<p>
+  <b>商家id:</b>
+  <%= @shop.id.to_i %>
+</p>
+<p>
+  <b>商家名称:</b>
+  <%= @shop.name %>
+</p>
+<p>
+  <b>区号:</b>
+  <%= @shop.city %>
+</p>
+<p>
+  <b>电话:</b>
+  <%= @shop.tel %>
+</p>
 
-      <p>
-        <b>商家id:</b>
-        <%= @shop.id.to_i %>
-      </p>
-      <p>
-        <b>商家名称:</b>
-        <%= @shop.name %>
-      </p>
-      <p>
-        <b>区号:</b>
-        <%= @shop.city %>
-      </p>
-      <p>
-        <b>电话:</b>
-        <%= @shop.tel %>
-      </p>
+<p>
+  <b>实际经纬度:</b>
+  <%= @shop.lo %>
+</p>
+<p>
+  <b>百度经纬度:</b>
+  <%= @shop.lob.reverse.join(',') %>
+</p>
+<p>
+  <b>地址:</b>
+  <%= @shop.addr %>
+</p>
 
-      <p>
-        <b>实际经纬度:</b>
-        <%= @shop.lo %>
-      </p>
-      <p>
-        <b>百度经纬度:</b>
-        <%= @shop.lob.reverse.join(',') %>
-      </p>
-      <p>
-        <b>地址:</b>
-        <%= @shop.addr %>
-      </p>
 
-      <p>
-        <%= link_to '去百度地图查看',"http://api.map.baidu.com/lbsapi/getpoint/index.html", :target => "blank" %>
-      </p>
-
-    </div>
-    <div id="Maps" style="float: left;margin-left:20px;"><center class="mt90 f15">地图加载中...</center></div>
-
-    <script type="text/javascript">
-      /*创建和初始化地图函数：*/
-      function initMap(){
-        createMap();//创建地图
-        setMapEvent();//设置地图事件
-        addMapControl();//向地图添加控件
-        addMarker();//向地图中添加marker(即标志)
-      }
-
-      /*创建地图函数：*/
-      function createMap(){
-        var map = new BMap.Map("Maps");//在容器中创建一个百度地图
-        var point = new BMap.Point(<%= @shop.lob.last %>, <%= @shop.lob.first %>);//定义一个中心点坐标（即页面刚加载完成时，地图需要显示的中心位置）
-        map.centerAndZoom(point,17);//设定地图的中心点坐标。其中的数字15表示地图的比例，可以改为其他数字试试效果。
-        window.map = map;//将map变量存储在全局
-      }
-
-      /*地图事件设置函数：*/
-      function setMapEvent(){
-        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
-        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
-        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
-        map.enableKeyboard();//启用键盘上下左右键移动地图
-      }
-
-      /*地图控件添加函数：*/
-      function addMapControl(){
-        /*向地图中添加缩放控件*/
-        var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE });
-        map.addControl(ctrl_nav);
-        /*
-                    anchor:有BMAP_ANCHOR_TOP_LEFT（上左）、BMAP_ANCHOR_TOP_RIGHT（上右）、BMAP_ANCHOR_BOTTOM_LEFT（下左）、BMAP_ANCHOR_BOTTOM_RIGHT（下右）四种位置。
-                    type:有BMAP_NAVIGATION_CONTROL_LARGE（大显示）、BMAP_NAVIGATION_CONTROL_SMALL（小显示）、BMAP_NAVIGATION_CONTROL_PAN（只显示箭头）、BMAP_NAVIGATION_CONTROL_ZOOM（只显示加减）四种显示方式。
-         */
-
-        /*向地图中添加缩略图控件*/
-        var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:0});
-        map.addControl(ctrl_ove);
-        /*
-                    anchor:有BMAP_ANCHOR_TOP_LEFT（上左）、BMAP_ANCHOR_TOP_RIGHT（上右）、BMAP_ANCHOR_BOTTOM_LEFT（下左）、BMAP_ANCHOR_BOTTOM_RIGHT（下右）四种位置。
-                    isOpen:有两个值0表示最小化缩略控件、1表示正常化缩略控件。
-         */
-
-        /*向地图中添加比例尺控件*/
-        var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
-        map.addControl(ctrl_sca);
-        /*
-                    anchor:有BMAP_ANCHOR_TOP_LEFT（上左）、BMAP_ANCHOR_TOP_RIGHT（上右）、BMAP_ANCHOR_BOTTOM_LEFT（下左）、BMAP_ANCHOR_BOTTOM_RIGHT（下右）四种位置。
-         */
-      }
-
-      /*标注点数组*/
-      var markerArr = [{title:"<%= @shop.name %>",content:"<%= @shop.addr %>",point:"<%= @shop.lob.last %>|<%= @shop.lob.first %>",isOpen:0,icon:{w:19,h:27,l:0,t:0,x:6,lb:10}} ];
-      /*
-    title:在地图上标示名称。
-    content:鼠标单击名称时显示名称的详情。
-    point:名称的经纬度。
-    isOpen:是否在地图加载完成时就显示关于名称的详情。
-    icon:createIcon()程序中标示的图标在地图上的位置。
-       */
-
-      /*创建marker*/
-      function addMarker(){
-        for(var i=0;i<markerArr.length;i++){
-          var json = markerArr[i];
-          var p0 = json.point.split("|")[0];
-          var p1 = json.point.split("|")[1];
-          var point = new BMap.Point(p0,p1);
-          var iconImg = createIcon(json.icon);
-          var marker = new BMap.Marker(point,{icon:iconImg});
-          var iw = createInfoWindow(i);
-
-          var label = new BMap.Label(json.title,{"offset":new BMap.Size(json.icon.lb-json.icon.x+10,-20)});
-          /*json.icon.lb-json.icon.x+10,-20 可以设定title所表示的名称的位置*/
-          marker.setLabel(label);
-
-          map.addOverlay(marker);
-
-          label.setStyle({
-            borderColor:"#808080", color:"#333", cursor:"pointer"
-          });/*设置title所表示的名称的样式*/
-
-          (function(){
-            var index = i;
-            var _iw = createInfoWindow(i);
-            var _marker = marker;
-
-            _marker.addEventListener("click",function(){ this.openInfoWindow(_iw); });
-
-            _iw.addEventListener("open",function(){ _marker.getLabel().hide(); });
-
-            _iw.addEventListener("close",function(){ _marker.getLabel().show(); });
-
-            label.addEventListener("click",function(){ _marker.openInfoWindow(_iw); });
-
-            if(!!json.isOpen){ label.hide(); _marker.openInfoWindow(_iw); } }
-        )();/*这个匿名闭合包用于控制名称详情的显示与关闭*/
-        }
-      }
-
-      /*创建InfoWindow*/
-      function createInfoWindow(i){
-        var json = markerArr[i];
-        var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>"+json.content+"</div>");//名称详情显示时的样式可在此设置。
-        return iw;
-      }
-
-      /*创建一个Icon*/
-      function createIcon(json){//控制程序中标示的图标位置
-        var icon = new BMap.Icon(
-        "/images/baidu_sign/sign.png",//标示图标的路径
-        new BMap.Size(json.w,json.h),{//标示图标的位置
-          imageOffset: new BMap.Size(-json.l,-json.t),
-          infoWindowOffset:new BMap.Size(json.lb+5,1),
-          offset:new BMap.Size(json.x,json.h)
-        });
-        return icon;
-      }
-
-      initMap();//创建和初始化地图
-    </script>
-  </body>
-</html>
