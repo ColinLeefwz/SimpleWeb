@@ -30,7 +30,7 @@ class Photo2Test < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal data["id"], Photo2.last.id.to_s
     assert_equal Photo2.last.to_uid.to_s, "502e6303421aa918ba000005"
-    assert_equal Photo2.last.user_id.to_s, "502e6303421aa918ba000001"
+    assert_equal Photo2.last.user_id.to_s, "502e6303421aa918ba000001"    
     
     #测试发送私人xmpp的图片消息, 看mod_rest的ip限制是否配置正确。
     ips = [ "60.191.119", "122.235.240", "42.121.79" ]
@@ -39,7 +39,7 @@ class Photo2Test < ActionDispatch::IntegrationTest
     allow_ip = !ips.find_index(ipc).nil?
     fail = false
     begin
-      Photo2.last.after_async_store
+      CarrierWave::Workers::StoreAsset.perform("Photo2",Photo2.last._id.to_s,"img")
     rescue RestClient::NotAcceptable
       fail = true
     end
