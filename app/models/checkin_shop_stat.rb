@@ -6,6 +6,22 @@ class CheckinShopStat
   field :utotal, type: Integer #用户总数
   field :uftotal, type: Integer #女性用户总数
   field :ctotal, type: Integer #签到总次数
+  
+  def self.find_by_id(id)
+    key = my_cache_key(id)
+    cache = Rails.cache.read(key)
+    return nil if cache==-1
+    return cache unless cache.nil?
+    begin
+      ret = find(id)
+      Rails.cache.write(key,ret)
+      ret
+    rescue
+      Rails.logger.info "#{self.name}: #{id} not exists."
+      Rails.cache.write(key,-1)
+      nil
+    end
+  end
 
 
   def shop
