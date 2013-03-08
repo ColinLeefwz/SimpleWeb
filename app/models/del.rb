@@ -6,7 +6,7 @@ class Del
   def self.insert(obj)
     begin
       Del.create!(:name => obj.collection_name.to_s, :data => obj.attributes)
-      obj.delete
+      obj.destroy
     rescue
       nil
     end

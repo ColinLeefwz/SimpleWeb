@@ -60,7 +60,7 @@ class CheckinShopStat
     CheckinShopStat.del_user_count_redis(id)
     css = CheckinShopStat.find_by_id(id)
     return if css.nil?
-    css.delete
+    css.destroy
   end
 
   def self.init_user_count
