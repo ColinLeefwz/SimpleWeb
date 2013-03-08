@@ -1,11 +1,14 @@
-<h1>商家管理</h1>
+<h1>地点管理</h1>
 <%= javascript_include_tag "jquery-1.6.2.min.js" %>
 
-<%= form_tag '/admin_shops',:method =>:get do %>
+<%= form_tag '/admin_user_add_shops',:method =>:get do %>
   <p>
     名称:<%= text_field_tag :name, params[:name] %>
     区号: <%= text_field_tag :city, params[:city], :size => 10 %>
-
+    <br>
+    编辑：<%= select_tag :t,options_for_select([['所有地点','0'],['已编辑地点','1']],params[:t])  %>
+    删除：<%= select_tag :del,options_for_select([['所有商家','0'],['删除商家','1']],params[:del])  %>
+    <br>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
@@ -16,7 +19,6 @@
     <th>名称</th>
     <th>区号</th>
     <th>创建者</th>
-    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -31,7 +33,6 @@
       <td><%= link_to '编辑', "/admin_user_add_shops/edit?id=#{shop.id}" %></td>
       <td><%= link_to '详情', "/admin_user_add_shops/show?id=#{shop.id}" %></td>
       <td><%= link_to '清除', "/admin_user_add_shops/del?id=#{shop.id}" %></td>
-      <td><%= link_to '百度位置', "/admin_user_add_shops/baidu_map?id=#{shop.id}" %></td>
 
     </tr>
 

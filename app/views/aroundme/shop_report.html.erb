@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=yes, target-densitydpi=device-dpi">
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="no-cache" http-equiv="Cache-Control"/>
+    <meta content="0" http-equiv="Expires"/>
+    <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+    <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+    <title>附近  |脸脸</title>
+    <link href="/phone2/css/style.css" rel="stylesheet" type="text/css">
+    <script src="/javascripts/jquery-1.6.2.min.js"></script>
+    <script src="js/public.js"></script>
+    <style>
+      .ne_list div {
+        font-size: 30px;
+        height: 128px;
+        margin-right: 20px;
+        vertical-align: middle;
+      }
+      .ff {float: right}
+    </style>
+    <script type="text/javascript">
+      function showReport(hid,sid){
+        $('#'+hid).hide();
+        $('#'+sid).show();
+      }
+      function ajaxReport(reobj, obj, sid){
+        des = $('#'+obj).value
+        $.get('/aroundme/report', {sid: sid, des: des}, function(){
+          $('#'+reobj).replaceWith("<span class='ne_name ff'>错误报告已经发出.</span>")
+        })
+      }
+    </script>
+  </head>
+  <body>
+    <div id="main">
+      <div id="header">
+        <h1>附近</h1>
+
+      </div>
+      <div id="con">
+        <% @shops.each do |shop| %>
+
+          <div class="ne_list">
+            <div>
+              <span class="ne_name"> <%= shop[0]  %>  </span>
+              <span class="ne_name ff" onclick ="showReport('se<%= shop[1] %>','be<%= shop[1] %>')" id="se<%= shop[1] %>" > 报错  </span>
+              <span class="ne_name ff" id="be<%= shop[1] %>" style="display: none;" >
+                <input class="text4" type="text" name="des" id="des<%= shop[1] %>">
+                <input type="hidden" name="sid" value="<%= shop[1] %>">
+                <input class="btn4 ml15 mt4" type="submit" value=" " onclick="ajaxReport('be<%= shop[1] %>','des<%= shop[1] %>', '<%= shop[1] %>')">
+              </span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </body>
+</html>
