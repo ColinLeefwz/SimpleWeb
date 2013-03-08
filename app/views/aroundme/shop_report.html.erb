@@ -24,9 +24,9 @@
         $('#'+hid).hide();
         $('#'+sid).show();
       }
-      function ajaxReport(reobj, obj, sid){
+      function ajaxReport(reobj, obj, sid, uid){
         des = $('#'+obj).value
-        $.get('/aroundme/report', {sid: sid, des: des}, function(){
+        $.get('/aroundme/report', {sid: sid, des: des, uid: uid}, function(){
           $('#'+reobj).replaceWith("<span class='ne_name ff'>错误报告已经发出.</span>")
         })
       }
@@ -48,7 +48,7 @@
               <span class="ne_name ff" id="be<%= shop[1] %>" style="display: none;" >
                 <input class="text4" type="text" name="des" id="des<%= shop[1] %>">
                 <input type="hidden" name="sid" value="<%= shop[1] %>">
-                <input class="btn4 ml15 mt4" type="submit" value=" " onclick="ajaxReport('be<%= shop[1] %>','des<%= shop[1] %>', '<%= shop[1] %>')">
+                <input class="btn4 ml15 mt4" type="submit" value=" " onclick="ajaxReport('be<%= shop[1] %>','des<%= shop[1] %>', '<%= shop[1] %>', '<%= params[:uid] %>')">
               </span>
             </div>
           </div>
