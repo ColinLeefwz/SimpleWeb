@@ -3,12 +3,28 @@
 Mongoid.logger = Rails.logger
 Mongoid.identity_map_enabled = true
 
+module ActiveSupport
+  module Callbacks
+    
+  end
+end
+
 
 module Mongoid
   module Finders
+    
+    def my_cache_key(id)
+      "#{self.name}#{id}"
+    end
+    
     def find_by_id(id)
+      key = my_cache_key(id)
+      cache = Rails.cache.read(key)
+      return cache unless cache.nil?
       begin
-        find(id)
+        ret = find(id)
+        Rails.cache.write(key,ret)
+        ret
       rescue
         Rails.logger.info "#{self.name}: #{id} not exists."
         nil
@@ -32,6 +48,27 @@ end
 
 module Mongoid
   module Document
+    
+    def my_cache_key
+      "#{self.class.name}#{_id}"
+    end
+    
+    def cache_after_update
+      Rails.logger.debug "update cache:#{my_cache_key}"
+      Rails.cache.write(my_cache_key,self)
+    end
+
+    def cache_after_destroy
+      key = my_cache_key
+      Rails.logger.debug "delete cache: #{key}"
+      Rails.cache.delete(key)
+    end
+    
+    def self.included(base)
+      base.set_callback(:update, :after,  :cache_after_update)
+      base.set_callback(:destroy, :after,  :cache_after_destroy)
+    end
+    
     def cat
       self._id.generation_time.getlocal
     end
