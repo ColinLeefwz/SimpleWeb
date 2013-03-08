@@ -6,7 +6,7 @@ class CheckinUserStat
 
 
   def user
-    User.find(id)
+    User.find_by_id(id)
   end
 
 end

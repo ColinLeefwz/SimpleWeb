@@ -64,7 +64,7 @@ class Coupon
       self.add_to_set(:users, {"id" => user_id, "dat" => Time.now})
     else
       self.add_to_set(:users, {"id" => user_id, "dat" => Time.now, photo: photo_id})
-      gen_share_coupon_img(Photo.find(photo_id))
+      gen_share_coupon_img(Photo.find_by_id(photo_id))
     end
   end
 
@@ -121,7 +121,7 @@ class Coupon
   def gen_share_coupon_img_by_user(user)
     down = downed(user.id)
     return if down.nil?
-    gen_share_coupon_img(Photo.find(down["photo"]))
+    gen_share_coupon_img(Photo.find_by_id(down["photo"]))
     #下载时和查看时都尝试生成优惠券的图片。这里是查看时，download方法是下载时
   end
     
