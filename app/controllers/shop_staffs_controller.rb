@@ -31,7 +31,7 @@ class ShopStaffsController < ApplicationController
 
   def ajax_delete_staff
     staff = Staff.find_by_id(params[:id])
-    staff.delete if staff
+    staff.destroy if staff
     render :json => {:text => '删除成功'}
   end
   
