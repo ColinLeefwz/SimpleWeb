@@ -7,8 +7,7 @@ class AroundmeController < ApplicationController
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     arr = Shop.new.find_shops(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
     hash = arr.map do |x|
-      s = Shop.new(x)
-      s.id = x["_id"].to_i
+      s = Shop.instantiate(x)
       s.safe_output_with_users
     end
     render :json =>  hash.to_json
