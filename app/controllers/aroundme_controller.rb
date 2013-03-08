@@ -12,6 +12,20 @@ class AroundmeController < ApplicationController
     end
     render :json =>  hash.to_json
   end
+
+  def shop_report
+    arr = Shop.new.find_shops([params[:lat].to_f,params[:lng].to_f],
+      params[:accuracy].to_f,session[:user_id],params[:bssid])
+    @shops = arr.map do |x|
+      [x['name'],x['id']]
+    end
+    render :layout => false
+  end
+
+  def report
+    ShopReport.create(:uid => session[:user_id], :sid => params[:sid], :des => params[:des] )
+    render :js => true
+  end
   
   def shop2
     (params[:user].nil? || params[:user]=="")? uid="": uid=User.find(params[:user].gsub(/\s+/, "")).id
