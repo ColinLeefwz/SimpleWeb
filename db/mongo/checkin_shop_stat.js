@@ -33,6 +33,7 @@ var checkinShopStat = function(days){
     
         us = ciss.users;
         if(!us[checkin.uid.str]){
+			//这里的更改导致数据不兼容：checkin.uid!=checkin.uid.str, ObjectId("x") => x
             us[checkin.uid.str] = [1, checkin._id, checkin.sex];
         }else{
             us[checkin.uid.str] = [us[checkin.uid.str][0] + 1, checkin._id, checkin.sex];
