@@ -157,8 +157,16 @@ class Oauth2Controller < ApplicationController
   end
 
   def share
-    Resque.enqueue(WeiboFirst, $redis.get("wbtoken#{session_user.id}") )
-    render :json => {"shared" => true}.to_json
+    t = params[:t].to_i
+    if t==0
+      Resque.enqueue(WeiboFirst, $redis.get("wbtoken#{session_user.id}") )
+      render :json => {"shared" => true}.to_json
+    elsif t==1
+      #TODO: 分享到QQ空间
+      render :json => {"shared" => true}.to_json
+    else
+      render :json => {"error" => "unknow t:#{t}."}.to_json
+    end
   end  
   
 
