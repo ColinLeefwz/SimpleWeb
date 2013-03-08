@@ -156,12 +156,14 @@ class Shop
     unless ssu.nil?
       ssu.users.each {|x| users1 << [x,(Time.now-10.days).to_i]}
     end
+    Rails.logger.info users1.size
+    debugger
     users1[start,size] #TODO: 分页判断
   end
 
   def users(session_uid,start,size)
     #TODO: 性能优化，目前当用户大于10个时，执行耗时在半秒以上。
-    #Benchmark.measure {Shop.find(4928288).users(User.last._id)} 
+    #Benchmark.measure {Shop.find_by_id(4928288).users(User.last._id)} 
     ret = []
     user_last_checkins(start,size).each do |uid,cat|
       u = User.find_by_id(uid)
@@ -283,7 +285,7 @@ class Shop
   end
   
   def merge_shop_ids(ids)
-    arr = merge_locations(ids.map{|id| Shop.find(id)})
+    arr = merge_locations(ids.map{|id| Shop.find_by_id(id)})
     self.update_attributes!({lo:arr})
   end
 

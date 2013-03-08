@@ -31,7 +31,7 @@ class Checkin
   end
   
   def user
-    User.find(self.uid)
+    User.find_by_id(self.uid)
   end
   
   def shop

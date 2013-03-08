@@ -72,7 +72,7 @@ class SinaPoi
         next
       end
     end
-    SinaPoi.find(poiid).update_attributes(:datas => datas, :checkin_user_num => checkin_user_num, :iso_num => iso_num  )
+    SinaPoi.find_by_id(poiid).update_attributes(:datas => datas, :checkin_user_num => checkin_user_num, :iso_num => iso_num  )
   end
 
   def self.check(name, lo)
