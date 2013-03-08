@@ -42,7 +42,7 @@ class ShopFaqsController < ApplicationController
 
   def ajax_del
     @shop_faq = ShopFaq.find(params[:id])
-    text = (@shop_faq.delete ? '删除成功.' : nil)
+    text = (@shop_faq.destroy ? '删除成功.' : nil)
     render :json => {text: text}
   end
 

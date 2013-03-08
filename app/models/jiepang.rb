@@ -22,7 +22,7 @@ class Jiepang
     return nil if datas.nil?
     datas["items"].each do |x|
       x["_id"] = x["guid"]
-      x.delete("guid")
+      x.destroy("guid")
       begin
         Jiepang.collection.insert(x)
       rescue Exception => e
