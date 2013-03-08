@@ -98,9 +98,15 @@ module SearchScore
       return if sc.nil?
       if uid_s && sc.users[uid_s]
         ucount = sc.users[uid_s][0]
-        xx[2] -= ucount*30
+        xx[2] -= ucount_score(ucount)
         xx[2] -= user_to_score(sc.users.length)/2.0
       end
+  end
+  
+  def ucount_score(c)
+    return 30*c if c<=3
+    return 90+10*(c-3) if c<=10
+    return 150+c
   end
   
   def base_score(xx,x)
