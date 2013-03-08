@@ -13,7 +13,7 @@ class CheckinShopStat
     return nil if cache==-1
     return cache unless cache.nil?
     begin
-      ret = find_by_id(id)
+      ret = find(id)
       Rails.cache.write(key,ret)
       ret
     rescue
