@@ -85,8 +85,8 @@ class Shop
   #彻底删除商家
   def del_test_shop
     CheckinShopStat.del_with_redis(self.id)
-    checkins.each {|x| x.delete}
-    self.delete
+    checkins.each {|x| x.destroy}
+    self.destroy
   end
   
   def checkins
