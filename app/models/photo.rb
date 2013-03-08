@@ -108,7 +108,7 @@ class Photo
         puts "#{p.id}, 图片有数据库记录，但是文件不存在。"
         if delete_error
           Checkin.where({photos:p.id}).first.pull(:photos, p.id)
-          p.delete 
+          p.destroy 
         end
       rescue Exception => e
         puts e

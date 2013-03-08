@@ -54,7 +54,7 @@ class UserLogo
         puts "#{logo.id}, 图片有数据库记录，但是文件不存在。"
         if delete_error
           user = logo.user
-          logo.delete 
+          logo.destroy 
           user.fix_pcount_error
         end
       end 

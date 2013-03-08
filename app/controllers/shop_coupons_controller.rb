@@ -61,7 +61,7 @@ class ShopCouponsController < ApplicationController
 
   def cancel_crop
     @coupon = Coupon.find(params[:id])
-    @coupon.delete
+    @coupon.destroy
     FileUtils.rm_r("public/coupon/#{@coupon.id.to_s}")
     redirect_to :action => :new
   end

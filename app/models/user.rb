@@ -299,10 +299,10 @@ class User
   end
   
   def del_test_user
-    user_logos.each {|x| x.delete}
-    photos.each {|x| x.delete}
-    Checkin.where({uid: _id}).each {|x| x.delete}
-    self.delete
+    user_logos.each {|x| x.destroy}
+    photos.each {|x| x.destroy}
+    Checkin.where({uid: _id}).each {|x| x.destroy}
+    self.destroy
   end
   
   
@@ -354,7 +354,7 @@ class User
        CarrierWave::Workers::StoreAsset.perform("UserLogo",head_logo_id.to_s,"img")
       rescue Errno::ENOENT => e
         puts "#{name}, 图片有数据库记录，但是文件不存在。"
-        logo.delete
+        logo.destroy
         self.update_attribute(:head_logo_id, nil)
         self.update_attribute(:head_logo_id, user_logos.first.id) if user_logos.first.img.url
       end 
