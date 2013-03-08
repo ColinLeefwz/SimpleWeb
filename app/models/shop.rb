@@ -148,7 +148,7 @@ class Shop
     uids = users1.map {|arr| arr[0]}
     css = CheckinShopStat.find_by_id(id.to_i)
     unless css.nil?
-      users2 = css.users.map {|k,v| [k[10..-3],v[1].generation_time.to_i]} # ObjectId("k") => k
+      users2 = css.users.map {|k,v| [k,v[1].generation_time.to_i]} # ObjectId("k") => k
       users2.sort!{|a,b| b[1] <=> a[1]}
       users2.each {|arr| users1 << arr unless uids.member?(arr[0])}
     end
@@ -156,8 +156,6 @@ class Shop
     unless ssu.nil?
       ssu.users.each {|x| users1 << [x,(Time.now-10.days).to_i]}
     end
-    Rails.logger.info users1.size
-    debugger
     users1[start,size] #TODO: 分页判断
   end
 
