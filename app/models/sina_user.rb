@@ -76,7 +76,7 @@ class SinaUser
   end
 
   def self.poi_suser_convert(poi)
-    sina_users = SinaPoi.find(poi).datas.select{|su| su[2].match(/iphone|ipad/i)}
+    sina_users = SinaPoi.find_by_id(poi).datas.select{|su| su[2].match(/iphone|ipad/i)}
     sina_users.each do |s|
       su = SinaUser.find_by_id(s[0])
       su.convert_to_user if su

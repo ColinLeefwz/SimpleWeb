@@ -13,7 +13,7 @@ class CheckinShopStat
     return nil if cache==-1
     return cache unless cache.nil?
     begin
-      ret = find(id)
+      ret = find_by_id(id)
       Rails.cache.write(key,ret)
       ret
     rescue
@@ -30,7 +30,7 @@ class CheckinShopStat
 
   def user(user_object_id)
     user_object_id =~ /"(.*?)"/
-    User.find($1)
+    User.find_by_id($1)
   end
 
   def self.add_one_redis(shop_id,gender)
