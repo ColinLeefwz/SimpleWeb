@@ -14,10 +14,9 @@ class AroundmeController < ApplicationController
   end
 
   def shop_report
-    arr = Shop.new.find_shops([params[:lat].to_f,params[:lng].to_f],
-      params[:accuracy].to_f,params[:uid],params[:bssid])
+    arr = Shop.new.find_shops([params[:lat].to_f,params[:lng].to_f],params[:accuracy].to_f,params[:uid],params[:bssid])
     @shops = arr.map do |x|
-      [x['name'],x['id']]
+      [x['name'],x['_id'].to_i]
     end
     render :layout => false
   end
