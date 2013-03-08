@@ -1,6 +1,12 @@
 <h1>商家详情</h1>
 
 <p>
+  <span style="padding: 0 5px;"> <%= link_to '去百度地图查看',"http://api.map.baidu.com/lbsapi/getpoint/index.html", :target => "blank" %> </span>
+  <span style="padding: 0 5px;"><%= link_to '编辑',"/admin_user_add_shops/edit?id=#{@shop.id}" %></span>
+  <span style="padding: 0 5px;"><%= link_to '标记删除',"/admin_user_add_shops/del?id=#{@shop.id}"%></span>
+</p>
+
+<p>
   <b>商家id:</b>
   <%= @shop.id.to_i %>
 </p>
@@ -9,20 +15,8 @@
   <%= @shop.name %>
 </p>
 <p>
-  <b>密码:</b>
-  <%= @shop.password || '未开通' %>
-  <%= link_to '开通', "/admin_shops/set_password?id=#{@shop.id}" unless @shop.t.blank? %>
-</p>
-
-<p>
-  <b>logo:</b>
-  <br/><br/>
-  <%=  image_tag @shop.logo && @shop.logo.img %>
-</p>
-
-<p>
   <b>区号:</b>
-  <%= @shop.city_fullname %>
+  <%= @shop.city %>
 </p>
 <p>
   <b>电话:</b>
@@ -34,11 +28,12 @@
   <%= @shop.lo %>
 </p>
 <p>
+  <b>百度经纬度:</b>
+  <%= @shop.lob.reverse.join(',') %>
+</p>
+<p>
   <b>地址:</b>
   <%= @shop.addr %>
 </p>
-<p>
-  <b>分类:</b>
-  <%= @shop.show_t %>
-</p>
+
 
