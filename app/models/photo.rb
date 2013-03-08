@@ -51,11 +51,11 @@ class Photo
   end
   
   def user
-    User.find(self.user_id)
+    User.find_by_id(self.user_id)
   end
   
   def shop
-    Shop.find(self.room)
+    Shop.find_by_id(self.room)
   end
   
   def desc2

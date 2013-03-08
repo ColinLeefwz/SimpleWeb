@@ -94,7 +94,7 @@ class User
   
   def head_logo
     return nil if head_logo_id.nil?
-    UserLogo.find(head_logo_id)
+    UserLogo.find_by_id(head_logo_id)
   end
   
   def self.check_pcount
@@ -139,7 +139,7 @@ class User
     if user_id.nil?
       safe_output
     else
-      user_id = User.find(user_id)._id if user_id.class == String
+      user_id = User.find_by_id(user_id)._id if user_id.class == String
       safe_output.merge!( relation_hash(user_id) )
     end
   end
@@ -164,7 +164,7 @@ class User
     return {:last => ""} if loc.nil?
     diff = Time.now.to_i - loc.cati
     tstr = User.time_desc(diff)
-    dstr = Shop.find(loc.sid).name if dstr.nil?
+    dstr = Shop.find_by_id(loc.sid).name if dstr.nil?
     {:last => "#{tstr} #{dstr}"}
   end
   
@@ -182,7 +182,7 @@ class User
   
   def follower?(user_id)
     begin
-      return User.find(user_id).follows.index(self._id) !=nil
+      return User.find_by_id(user_id).follows.index(self._id) !=nil
     rescue
       return false
     end
@@ -320,7 +320,7 @@ class User
       x = arr[0]
       u=arr[1]
       shop = ShopSinaUser.where({users:x.id}).first
-      shop = Shop.find(shop.id).name unless shop.nil?
+      shop = Shop.find_by_id(shop.id).name unless shop.nil?
       puts "#{x.id}, #{x.name}, #{x.wb_uid},\t #{u.name}, #{u.wb_uid}, #{shop}"
     end
     ret

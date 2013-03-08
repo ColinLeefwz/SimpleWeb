@@ -37,18 +37,18 @@ class CheckinBssidStat
       return false
     end
     if arr2.size==1
-      puts "唯一商家: #{Shop.find(arr2[0][0]).name}"
+      puts "唯一商家: #{Shop.find_by_id(arr2[0][0]).name}"
       self.update_attribute(:shop_id, arr2[0][0])
       return true
     end
     arr2.sort! {|a,b| b[4]<=>a[4]}
     if arr2[0][4]>arr2[1][4]+2
       puts arr2
-      puts "积分最大商家: #{Shop.find(arr2[0][0]).name}"
+      puts "积分最大商家: #{Shop.find_by_id(arr2[0][0]).name}"
       self.update_attribute(:shop_id, arr2[0][0])
       return true
     else
-      puts "积分基本相等商家: #{Shop.find(arr2[0][0]).name}，#{Shop.find(arr2[1][0]).name}"
+      puts "积分基本相等商家: #{Shop.find_by_id(arr2[0][0]).name}，#{Shop.find_by_id(arr2[1][0]).name}"
       return false
     end
   end
