@@ -29,7 +29,7 @@ module SearchScore
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
-      shop_history_score(xx,x,"ObjectId(\"#{uid}\")")      
+      shop_history_score(xx,x,uid.to_s)      
     end
     bssid_score(score,bssid) if bssid
     realtime_score(score)
