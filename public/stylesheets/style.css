@@ -7,14 +7,17 @@ a{text-decoration:none;}
 .r{float:right;}
 h1{display: none}
 .pointer{cursor:pointer;}
+.f12{font-size:12px !important;}
 .ff{font-family:"微软雅黑";text-shadow:0px 0px 2px #ccc;color:#333;}
 .btn{display:block;width:210px;height:65px;background:transparent url(../images/btn.jpg) left top no-repeat;overflow:hidden;text-indent:-999em;}
 .ml100{margin-left:100px;}
+.mt5{margin-top:5px;}
 .mt20{margin-top:20px;}
 .mt25{margin-top:25px;}
 .mt110{margin-top:110px;}
 .mt130{margin-top:110px;}
 .mb90{margin-bottom:90px;}
+.m_auto{margin-left:auto !important;margin-right:auto !important;}
 .header{width:960px;height:117px;margin:0px auto;background:url(../images/index/headerbg.jpg) left top no-repeat;}
 .logo{float:left;margin-top:30px;margin-left:40px;}
 #Menu{display:block;font-size:14px;overflow:hidden;zoom:1;margin-top:70px;float:right;}
@@ -51,6 +54,7 @@ display:block;overflow:hidden;float:left;text-indent:-999em;margin-left:20px;cur
 
 .article{width:100%;overflow:hidden;}
 .article h2.tit{font-size:22px;color:#333;margin:40px 0px 40px 100px;display:block;font-family:"微软雅黑";text-shadow:1px 0px 3px #c9c9c9;letter-spacing:2px;}
+.article h2.tit2{font-size:22px;color:#333;margin:40px 0px 40px 0px;text-align:center;display:block;font-family:"微软雅黑";text-shadow:1px 0px 3px #c9c9c9;letter-spacing:2px;}
 .articleinner{width:100%;position:relative;}
 .articleinner p{margin:15px 0px;padding:0px;}
 
