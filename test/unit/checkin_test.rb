@@ -41,6 +41,15 @@ class CheckinTest < ActiveSupport::TestCase
     assert_equal Checkin.find_by_id(id), Checkin.first
     assert_equal Checkin.find_by_id(id), Rails.cache.read(Checkin.first.my_cache_key)    
   end
+  
+  test "cache update2" do  
+    id = Checkin.first.id
+    ck = Checkin.find_by_id(id)
+    ck.update_attribute(:sid, 998)
+    assert_equal 998, Checkin.first.sid
+    assert_equal Checkin.find_by_id(id), Checkin.first
+    assert_equal Checkin.find_by_id(id), Rails.cache.read(Checkin.first.my_cache_key)    
+  end
 
   test "cache destroy" do  
     id = Checkin.first.id
