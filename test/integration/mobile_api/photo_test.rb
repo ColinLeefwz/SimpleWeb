@@ -68,6 +68,10 @@ class PhotoTest < ActionDispatch::IntegrationTest
       raise "should throw error"
     rescue
     end
+    
+    id = Photo.last.id
+    #assert_equal Photo.find_by_id(id).to_json, Photo.find(id).to_json
+    #奇怪，为什么上面的断言不成立，{img:{img:url}属性不一样！
        
     #异步处理图片
     async_process_photo
