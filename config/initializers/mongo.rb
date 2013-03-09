@@ -20,6 +20,7 @@ module Mongoid
     def find_by_id(id)
       key = my_cache_key(id)
       cache = Rails.cache.read(key)
+      Rails.logger.debug "read cache:#{key} =>> #{cache}"
       return cache unless cache.nil?
       begin
         ret = find(id)
@@ -53,20 +54,98 @@ module Mongoid
       "#{self.class.name}#{_id}"
     end
     
-    def cache_after_update
+    def update_my_cache
       Rails.logger.debug "update cache:#{my_cache_key}"
       Rails.cache.write(my_cache_key,self)
     end
 
-    def cache_after_destroy
+    def clear_my_cache
       key = my_cache_key
       Rails.logger.debug "delete cache: #{key}"
       Rails.cache.delete(key)
     end
     
+#http://mongoid.org/en/mongoid/docs/persistence.html#atomic    
+#使Atomic Persistence支持cache更新
+#When executing atomic operations via these methods, no callbacks will ever get run, nor will any validations.
+    def add_to_set_cache(field, value, options = {})
+      add_to_set_without_cache(field, value, options)
+      update_my_cache
+    end
+    
+    def inc_cache(field, value, options = {})
+      inc_without_cache(field, value, options)
+      update_my_cache
+    end
+    
+    def pop_cache(field, value, options = {})
+      pop_without_cache(field, value, options)
+      update_my_cache
+    end
+    
+    def pull_cache(field, value, options = {})
+      pull_without_cache(field, value, options)
+      update_my_cache
+    end
+    
+    def pull_all_cache(field, value, options = {})
+      pull_all_without_cache(field, value, options)
+      update_my_cache
+    end
+
+    def push_cache(field, value, options = {})
+      push_without_cache(field, value, options)
+      update_my_cache
+    end
+    
+    def push_all_cache(field, value, options = {})
+      push_all_without_cache(field, value, options)
+      update_my_cache
+    end
+    
+    def rename_cache(field, value, options = {})
+      rename_without_cache(field, value, options)
+      update_my_cache
+    end
+    
+    def set_cache(field, value, options = {})
+      set_without_cache(field, value, options)
+      update_my_cache
+    end
+    
+    def unset_cache(field, value, options = {})
+      unset_without_cache(field, value, options)
+      update_my_cache
+    end
+    
+    
     def self.included(base)
-      base.set_callback(:update, :after,  :cache_after_update)
-      base.set_callback(:destroy, :after,  :cache_after_destroy)
+      base.set_callback(:update, :after,  :update_my_cache)
+      base.set_callback(:upsert, :after,  :update_my_cache)
+      base.set_callback(:save, :after,  :update_my_cache)
+      base.set_callback(:destroy, :after,  :clear_my_cache)
+      base.class_eval do
+        alias_method :add_to_set_without_cache, :add_to_set
+        alias_method :add_to_set, :add_to_set_cache
+        alias_method :inc_without_cache, :inc
+        alias_method :inc, :inc_cache
+        alias_method :pop_without_cache, :pop
+        alias_method :pop, :pop_cache
+        alias_method :pull_without_cache, :pull
+        alias_method :pull, :pull_cache
+        alias_method :pull_all_without_cache, :pull_all
+        alias_method :pull_all, :pull_all_cache
+        alias_method :push_without_cache, :push
+        alias_method :push, :push_cache
+        alias_method :push_all_without_cache, :push_all
+        alias_method :push_all, :push_all_cache
+        alias_method :rename_without_cache, :rename
+        alias_method :rename, :rename_cache
+        alias_method :set_without_cache, :set
+        alias_method :set, :set_cache
+        alias_method :unset_without_cache, :unset
+        alias_method :unset, :unset_cache
+      end
     end
     
     def cat
