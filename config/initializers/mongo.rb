@@ -20,7 +20,7 @@ module Mongoid
     def find_by_id(id)
       key = my_cache_key(id)
       cache = Rails.cache.read(key)
-      Rails.logger.debug "read cache:#{key} =>> #{cache}"
+      Rails.logger.warn "read cache:#{key} =>> #{cache}"
       return cache unless cache.nil?
       begin
         ret = find(id)
@@ -55,13 +55,15 @@ module Mongoid
     end
     
     def update_my_cache
-      Rails.logger.debug "update cache:#{my_cache_key}"
-      Rails.cache.write(my_cache_key,self)
+      key = my_cache_key
+      Rails.logger.warn "update/delete cache:#{key}"
+      #Rails.cache.write(key,self)
+      Rails.cache.delete(key)
     end
 
     def clear_my_cache
       key = my_cache_key
-      Rails.logger.debug "delete cache: #{key}"
+      Rails.logger.warn "delete cache: #{key}"
       Rails.cache.delete(key)
     end
     
