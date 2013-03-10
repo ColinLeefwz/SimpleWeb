@@ -6,6 +6,7 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
 
   test "添加，删除，查看黑名单" do
     reload('users.js')
+    clear_cache_all(User)
     luser = User.find('502e6303421aa918ba000005')
     user1 = User.find('502e6303421aa918ba00007c')
     user2 = User.find('502e6303421aa918ba000002')
