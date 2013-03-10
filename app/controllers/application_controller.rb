@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_authorize
-    unless Admin.find(session[:admin_id])
+    unless Admin.find_by_id(session[:admin_id])
       flash[:notice] = "请登录"
       memo_original_url()
       redirect_to( :controller => "admin_login" , :action => "login")
@@ -99,16 +99,16 @@ class ApplicationController < ActionController::Base
   end
 
   def session_user
-    u=User.find(session[:user_id])
+    u=User.find_by_id(session[:user_id])
     u
   end
 
   def session_admin
-    Admin.find(session[:admin_id])
+    Admin.find_by_id(session[:admin_id])
   end
 
   def session_shop
-    Shop.find(session[:shop_id])
+    Shop.find_by_id(session[:shop_id])
   end
 
   class TransactionFilter
