@@ -26,6 +26,11 @@ class ActiveSupport::TestCase
   def session_user
     User.find(session[:user_id])
   end
+  
+  def clear_cache_all(clazz)
+    clazz.only(:id).all.each {|x| x.clear_my_cache}
+  end
+  
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests

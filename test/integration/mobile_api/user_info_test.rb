@@ -6,8 +6,12 @@ class UserInfoTest < ActionDispatch::IntegrationTest
   test "设置，查看个人信息" do
     reload('users.js')
     reload("checkins.js")
+    clear_cache_all(User)
+    
     luser = User.find('502e6303421aa918ba000005')
     user1 = User.find('502e6303421aa918ba00007c')
+    #luser.clear_my_cache
+    #user1.clear_my_cache
 
     #未登录获取当前用户信息
     get "/user_info/get_self"
