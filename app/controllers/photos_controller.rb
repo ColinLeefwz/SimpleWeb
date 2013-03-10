@@ -53,7 +53,7 @@ class PhotosController < ApplicationController
 
   def recomment
     photo = Photo.find(params[:id])
-    ru = User.find(params[:rid])
+    ru = User.find_by_id(params[:rid])
     ret = photo.push(:com, {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now, rid:ru.id, rname:ru.name})
     render :json => ret.to_json
   end

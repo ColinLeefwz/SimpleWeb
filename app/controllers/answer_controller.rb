@@ -9,7 +9,7 @@ class AnswerController < ApplicationController
     uid = params["uid"]
     msg = params["msg"]
     Xmpp.send_gchat2(uid,sid,uid,msg)
-    shop = Shop.find(sid)
+    shop = Shop.find_by_id(sid)
     text = shop.answer_text(msg)
     Xmpp.send_gchat2($gfuid,sid,uid, text) if text
     render :text => "1"
