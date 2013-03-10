@@ -63,7 +63,7 @@ class CheckinsController < ApplicationController
   end
   
   def do_checkin(shop=nil)
-    shop = Shop.find(params[:shop_id]) if shop.nil?
+    shop = Shop.find_by_id(params[:shop_id]) if shop.nil?
     checkin = Checkin.new
     checkin.loc = [params[:lat].to_f, params[:lng].to_f]
     checkin.acc = params[:accuracy]

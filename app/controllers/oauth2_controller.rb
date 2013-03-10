@@ -41,7 +41,7 @@ class Oauth2Controller < ApplicationController
   
   def test_login
     return if ENV["RAILS_ENV"] != "test"
-    session[:user_id] = User.find(params[:id]).id
+    session[:user_id] = User.find_by_id(params[:id]).id
     render :json => {}
   end
 
