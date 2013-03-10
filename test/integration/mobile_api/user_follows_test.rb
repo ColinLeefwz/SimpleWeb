@@ -6,13 +6,10 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
 
   test "添加，删除，查看好友(粉丝)" do
     reload('users.js')
-
+    clear_cache_all(User)
     luser = User.find('502e6303421aa918ba000005')
     user1 = User.find('502e6303421aa918ba00007c')
     user2 = User.find('502e6303421aa918ba000002')
-    luser.clear_my_cache
-    user1.clear_my_cache
-    user2.clear_my_cache
 
     #登录添加好友
     login(luser.id)
@@ -21,8 +18,11 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     post "/follows/create",{:user_id => luser.id, :follow_id => user1.id}
     assert_response :success
     assert_equal JSON.parse(response.body), {"saved"=>"502e6303421aa918ba00007c"}
+    assert_equal nil, Rails.cache.read(luser.my_cache_key)
     assert luser.reload.friend?(user1.id)
-    User.find_by_id("502e6303421aa918ba000005").to_json==luser.to_json
+    #assert User.find_by_id("502e6303421aa918ba000005").to_json==luser.to_json
+    assert_equal User.find_by_id("502e6303421aa918ba000005").follows,
+       User.find("502e6303421aa918ba000005").follows
     assert user1.follower?(luser.id)
 
     #未登录添加好友
