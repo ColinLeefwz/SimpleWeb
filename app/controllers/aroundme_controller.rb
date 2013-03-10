@@ -27,7 +27,7 @@ class AroundmeController < ApplicationController
   end
   
   def shop2
-    (params[:user].nil? || params[:user]=="")? uid="": uid=User.find(params[:user].gsub(/\s+/, "")).id
+    (params[:user].nil? || params[:user]=="")? uid="": uid=User.find_by_id(params[:user].gsub(/\s+/, "")).id
     if params[:loc] && params[:loc].length>3
       lob = params[:loc].split(/[,]/).map { |m| m.to_f  }.reverse
       loc = Shop.lob_to_lo(lob)
