@@ -30,9 +30,8 @@
       <td><%= shop.name %></td>
       <td><%= shop.city_fullname %></td>
       <td><%= type_or_user(shop) %></td>
-      <td><%= link_to '编辑', "/admin_user_add_shops/edit?id=#{shop.id}" %></td>
       <td><%= link_to '详情', "/admin_user_add_shops/show?id=#{shop.id}" %></td>
-      <td><%= link_to '清除', "/admin_user_add_shops/del?id=#{shop.id}" %></td>
+      <td><%= link_to '标记删除', "/admin_user_add_shops/del?id=#{shop.id}" %></td>
 
     </tr>
 

@@ -29,11 +29,11 @@ class AdminUserAddShopsController < ApplicationController
 
   def show
     @shop = Shop.find_primary(params[:id])
+    @shop.lob = @shop.lo_to_lob
   end
 
   def baidu_map
     @shop = Shop.find(params[:id])
-    #    @shop.lob = @shop.lo_to_lob
   end
 
   def edit
