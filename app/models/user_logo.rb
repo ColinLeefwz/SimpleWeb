@@ -59,6 +59,11 @@ class UserLogo
         end
       end 
     end
+    delete_nil_img
+  end
+  
+  def self.delete_nil_img
+    UserLogo.only(:id).where({img_tmp:nil,img_filename:nil}).each {|x| x.destroy}
   end
 
 end
