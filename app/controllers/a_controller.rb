@@ -8,7 +8,7 @@ class AController < ApplicationController
     c.agent = request.env["HTTP_USER_AGENT"]
     c.save
     if c.agent.match(/iphone|ipad/i)
-      redirect_to "https://itunes.apple.com/cn/app/lian-lian-xian-chang-she-jiao/id577710538?mt=8"
+      redirect_to "http://itunes.apple.com/app/id577710538?ls=1&mt=8"
     else
       redirect_to "/"
     end
