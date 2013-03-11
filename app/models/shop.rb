@@ -152,10 +152,10 @@ class Shop
       users2.sort!{|a,b| b[1] <=> a[1]}
       users2.each {|arr| users1 << arr unless uids.member?(arr[0])}
     end
-    ssu = ShopSinaUser.find_by_id(id.to_i)
-    unless ssu.nil?
-      ssu.users.each {|x| users1 << [x,(Time.now-10.days).to_i]}
-    end
+    #ssu = ShopSinaUser.find_by_id(id.to_i)
+    #unless ssu.nil?
+    #  ssu.users.each {|x| users1 << [x,(Time.now-10.days).to_i]}
+    #end
     users1[start,size] #TODO: 分页判断
   end
 
