@@ -8,11 +8,7 @@ class NewUserTalk
     if user.gender==2
       to = "50bc20fcc90d8ba33600004b" #浦靠谱
     else
-      if Time.now.to_i % 2 ==0
-        to = "50bec2c1c90d8bd12f000086" #amanda林
-      else
-        to = "50ffd0e5c90d8bf7480000b7" #沈翌
-      end
+      to = "50bec2c1c90d8bd12f000086" #amanda林
     end
     if seq==1
       xmpp1 = Xmpp.chat(to,uid,"hi")
