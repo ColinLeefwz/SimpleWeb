@@ -31,10 +31,10 @@ class Oauth2Controller < ApplicationController
     @@client ||= sina_client
     token = @@client.auth_code.get_token(params[:code], :redirect_uri => $sina_callback, :parse => :json )
     uid = token.params["uid"]
+    data = {:token=> token.token, :expires_in => token.expires_in, :expires_at => token.expires_at, :wb_uid => uid }
     if params[:bind].to_i==1
-      bind_sina(uid,token.token)
+      bind_sina(uid,token.token,data)
     else
-      data = {:token=> token.token, :expires_in => token.expires_in, :expires_at => token.expires_at, :wb_uid => uid }
       do_login(uid,token.token,data)
     end
   end
@@ -66,10 +66,10 @@ class Oauth2Controller < ApplicationController
     token = ActiveSupport::JSON.decode response.to_s
     #logger.debug response.to_s
     uid = token["uid"]
+    data = {:token=> token["access_token"], :expires_in => token["expires_in"], :expires_at => token["expires_at"], :wb_uid => uid }
     if params[:bind].to_i==1
-      bind_sina(uid,token["access_token"])
+      bind_sina(uid,token["access_token"],data)
     else
-      data = {:token=> token["access_token"], :expires_in => token["expires_in"], :expires_at => token["expires_at"], :wb_uid => uid }
       do_login(uid,token["access_token"],data)
     end
   end
@@ -83,10 +83,10 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
+    data = {}
     if params[:bind].to_i==1
-      bind_sina(uid,token)
+      bind_sina(uid,token,data)
     else
-      data = {}
       do_login(uid,token,data)
     end
   end
@@ -236,7 +236,7 @@ class Oauth2Controller < ApplicationController
     render :json => {binded: true}.to_json
   end
 
-  def bind_sina(wb_uid,token)
+  def bind_sina(wb_uid,token,data)
     if session[:user_id].nil?
       render :json => {error: "未登录"}.to_json
       return
@@ -248,7 +248,7 @@ class Oauth2Controller < ApplicationController
     #TODO: wb_uid重复监测
     session_user.update_attribute(:wb_uid, wb_uid)
     $redis.set("wbtoken#{session[:user_id]}",token)
-    render :json => {binded: true}.to_json
+    render :json => data.merge!({binded: true}).to_json
   end  
   
   def do_login(uid,token,data)
