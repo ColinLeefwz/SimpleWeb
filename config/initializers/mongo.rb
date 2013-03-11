@@ -110,13 +110,13 @@ module Mongoid
       update_my_cache
     end
     
-    def set_cache(field, value, options = {})
-      set_without_cache(field, value, options)
+    def set_cache(field, options = {})
+      set_without_cache(field, options)
       update_my_cache
     end
     
-    def unset_cache(field, value, options = {})
-      unset_without_cache(field, value, options)
+    def unset_cache(field, options = {})
+      unset_without_cache(field, options)
       update_my_cache
     end
     
