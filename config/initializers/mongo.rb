@@ -19,9 +19,12 @@ module Mongoid
     
     def find_by_id(id)
       key = my_cache_key(id)
-      cache = Rails.cache.read(key)
-      Rails.logger.debug "read cache:#{key} =>> #{cache}"
-      return cache unless cache.nil?
+      begin
+        cache = Rails.cache.read(key)
+        Rails.logger.debug "read cache:#{key} =>> #{cache}"
+        return cache unless cache.nil?
+      rescue
+      end
       begin
         ret = find(id)
         Rails.cache.write(key,ret)
