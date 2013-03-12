@@ -254,10 +254,12 @@ class Shop
   end
   
   def lob_to_lo
+    return self.lob if ENV["RAILS_ENV"] != "production"
     Shop.lob_to_lo self.lob
   end
 
   def lo_to_lob
+    return self.lo if ENV["RAILS_ENV"] != "production"
     Shop.lo_to_lob self.lo
   end
 
