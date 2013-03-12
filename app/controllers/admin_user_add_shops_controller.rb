@@ -29,7 +29,8 @@ class AdminUserAddShopsController < ApplicationController
 
   def show
     @shop = Shop.find_primary(params[:id])
-    @shop.lob = @shop.lo_to_lob
+    @shop.lob = @shop.lo_to_lob.reverse.join(',')
+    render :layout => true
   end
 
   def baidu_map
@@ -42,12 +43,16 @@ class AdminUserAddShopsController < ApplicationController
 
   def update
     @shop = Shop.find(params[:id])
-    @shop.lob = @shop.lob.split(/[,，]/).map { |m| m.to_f  }.reverse
+    shop = Shop.new(params[:shop])
+    @shop.lob = shop.lob.split(/[,，]/).map { |m| m.to_f  }.reverse
     if @shop.lob.count == 2
-      params[:shop][:lo] = @shop.lob_to_lo
+      @shop.lo = @shop.lob_to_lo
     end
-    if @shop.update_attributes(params[:shop])
-      redirect_to :action => :show, :id => @shop.id
+    @shop.addr = shop.addr
+    @shop.name = shop.name
+    @shop.t = shop.t
+    if @shop.save
+      render :json => @shop.attributes.slice('name', 'lo', 'addr').merge('lob' => @shop.lob.to_a.reverse.join(','), 'st' => @shop.show_t)
     else
       render :action => :edit
     end
@@ -56,8 +61,14 @@ class AdminUserAddShopsController < ApplicationController
 
   def del
     @shop = Shop.find(params[:id])
-    shop.shop_del
-    redirect_to :action => :index
+    @shop.shop_del
+    render :js => "rmshop('#{@shop.id.to_i}');"
+  end
+
+  def ajax_del
+    @shop = Shop.find(params[:id])
+    @shop.shop_del
+    render :js => "window.opener.rmshop('#{@shop.id.to_i}');"
   end
 
   
