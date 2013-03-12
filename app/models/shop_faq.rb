@@ -6,7 +6,7 @@ class ShopFaq
   field :title
   field :text
   field :img
-  field :od
+  field :od, type: Integer
 
   validates_presence_of :od, :message => '序号不能是空.'
   validates_presence_of :title, :message => '标题不能是空.'
