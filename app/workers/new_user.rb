@@ -4,7 +4,7 @@ class NewUser
   @queue = :normal
 
   def self.perform(uid,sid,od)
-    ["502e6303421aa918ba000001","50446058421aa92042000002"].each do |to|
+    ["502e6303421aa918ba000001","50446058421aa92042000002","50ffd0e5c90d8bf7480000b7"].each do |to|
       NewUser.notify(uid,sid, to, od)
     end
     ["502e6303421aa918ba000079"].each do |to|
