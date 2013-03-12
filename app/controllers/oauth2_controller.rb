@@ -35,7 +35,7 @@ class Oauth2Controller < ApplicationController
     if params[:bind].to_i==1
       bind_sina(uid,token.token,data)
     else
-      do_login(uid,token.token,data)
+      do_login(uid,token.token,token.expires_in, data)
     end
   end
   
@@ -70,7 +70,7 @@ class Oauth2Controller < ApplicationController
     if params[:bind].to_i==1
       bind_sina(uid,token["access_token"],data)
     else
-      do_login(uid,token["access_token"],data)
+      do_login(uid,token["access_token"], token["expires_in"], data)
     end
   end
   
@@ -87,7 +87,7 @@ class Oauth2Controller < ApplicationController
     if params[:bind].to_i==1
       bind_sina(uid,token,data)
     else
-      do_login(uid,token,data)
+      do_login(uid,token, params[:expires_in], data)
     end
   end
 
@@ -103,7 +103,7 @@ class Oauth2Controller < ApplicationController
       bind_qq(openid,token)
     else
       data = {}
-      do_login_qq(openid,token,data)
+      do_login_qq(openid,token,params[:expires_in], data)
     end
   end
   
@@ -217,6 +217,8 @@ class Oauth2Controller < ApplicationController
   def clear_session_info
     $redis.del("wbtoken#{session[:user_id]}")
     $redis.del("qqtoken#{session[:user_id]}")
+    $redis.del("wbexpire#{session[:user_id]}")
+    $redis.del("qqexpire#{session[:user_id]}")
     reset_session
   end
   
@@ -251,7 +253,7 @@ class Oauth2Controller < ApplicationController
     render :json => data.merge!({binded: true}).to_json
   end  
   
-  def do_login(uid,token,data)
+  def do_login(uid,token,expires_in,data)
     clear_session_info
     user = User.where({wb_uid: uid}).first
     if user.nil? || user.auto
@@ -268,12 +270,13 @@ class Oauth2Controller < ApplicationController
     end
     session[:user_id] = user.id
     $redis.set("wbtoken#{user.id}",token)
+    $redis.set("wbexpire#{user.id}",expires_in)
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
   end
 
-  def do_login_qq(openid,token,data)
+  def do_login_qq(openid,token,expires_in,data)
     clear_session_info
     user = User.where({qq: openid}).first
     if user.nil?
@@ -288,6 +291,7 @@ class Oauth2Controller < ApplicationController
     end
     session[:user_id] = user.id
     $redis.set("qqtoken#{user.id}",token)
+    $redis.set("qqexpire#{user.id}",expires_in)
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
