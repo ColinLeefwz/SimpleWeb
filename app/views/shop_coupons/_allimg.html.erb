@@ -3,13 +3,17 @@
     <input type="hidden" name="coupon[t]" value="2"/>
     <input type="hidden" value="t" name="flag" />
     <div class="adiv">
-      <input size="30" name="coupon[img2]" type="file" class="inputImg" style="margin-left:37px">
+	  <input type="button" value="" class="btns3" id="Btn1"/>
+      <input name="coupon[img2]" type="file" class="none" id="File1" />
     </div>
   </div>
-  <ul class="formlist" style="margin-top: 0px;">
-
-    <li>
-      <input type="submit" value="下一步" class="btn"/>
-    </li>
-  </ul>
+  <input type="submit" class="btn1 m_auto" value="下一步"/>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$("#Btn1").click(function(){
+			$("#File1").click();
+		});
+	});
+</script>

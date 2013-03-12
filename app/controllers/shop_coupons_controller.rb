@@ -162,7 +162,7 @@ class ShopCouponsController < ApplicationController
 
   def ajax_deply
     @coupon = Coupon.find(params[:id])
-    text = (@coupon.deply ? '成功停用.' : '停用失败.')
+    text = (@coupon.deply ? '<span class="gray">已停用</span>' : '<span class="red">失败了</span>')
     render :json => {text: text}
   end
 
