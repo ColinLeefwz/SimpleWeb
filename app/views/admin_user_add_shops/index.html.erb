@@ -1,4 +1,5 @@
 <h1>地点管理</h1>
+
 <%= javascript_include_tag "jquery-1.6.2.min.js" %>
 
 <%= form_tag '/admin_user_add_shops',:method =>:get do %>
@@ -21,18 +22,16 @@
     <th>创建者</th>
     <th></th>
     <th></th>
-    <th></th>
   </tr>
 
   <% @shops.each do |shop| %>
-    <tr>
+    <tr id="shop<%=shop.id.to_i %>">
       <td><%= shop.id.to_i %></td>
       <td><%= shop.name %></td>
       <td><%= shop.city_fullname %></td>
       <td><%= type_or_user(shop) %></td>
-      <td><%= link_to '详情', "/admin_user_add_shops/show?id=#{shop.id}" %></td>
-      <td><%= link_to '标记删除', "/admin_user_add_shops/del?id=#{shop.id}" %></td>
-
+      <td><%= link_to '处理', "/admin_user_add_shops/show?id=#{shop.id.to_i}", :target => "blank" %></td>
+      <td><%= link_to '标记删除', "#{}", :onclick => "ajaxDel('#{shop.id.to_i}')" %></td>
     </tr>
 
   <% end %>
@@ -48,75 +47,12 @@
 
 
 <script type="text/javascript">
-  function showe(obj){
-    obj.children("span:first").hide()
-    obj.children("span:last").show();
+  function rmshop(sid){
+    $('#shop'+sid).remove()
   }
 
-  function ajaxupdatelevel(obj,shop_id){
-    var level = obj.parent().children("input[@type='radio']:checked").val()
-    $.post("/admin_shops/ajaxupdatelevel",{level:level, shop_id:shop_id}, function(data) {
-      obj.parent().parent().replaceWith("<td>"+data["level"]+"</td>")
-    });
-  }
-
-  function ajaxdel(obj,shop_id,no_confirm, shop_name){
-    text = "确定删除商家 "+shop_name+'？'
-    if(no_confirm || confirm(text))
-      $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
-        obj.parent().parent().hide()
-      });
-  }
-
-  function showes(){
-    $('.th_level').each(function(){showe($(this))})
-    $('.td_level').each(function(){showe($(this))})
-  }
-
-  function checkall(value){
-    $('.level_'+value).each(function(){$(this).attr('checked','checked')})
-  }
-
-  function ajaxupdatelevelall(){
-    $('.th_level:first').replaceWith("<th>等级</th>")
-    $(".dhide").each(
-    function(){
-      var subobj = $(this).children("input[@type='submit']:first")
-      ajaxupdatelevel(subobj, subobj.attr('name'))
-    }
-  )
-  }
-
-  function batch_del()
-  {
-    if(confirm("确定需要批量删除商家？"))
-      $("table .checkbox_shops:checked").each(
-    function(){
-      ajaxdel($(this),$(this).val(), true, '')
-    }
-  )
-  }
-
-  function checked_all(checked){
-    $("table .checkbox_shops").each(
-    function() {
-      if(checked == "checked")
-        $(this).attr("checked", 'checked')
-      else
-        $(this).attr("checked", false)
-    }
-  )
-  }
-
-  function inverse_all(){
-    $("table .checkbox_shops").each(
-    function() {
-      if($(this).attr("checked") == 'checked')
-        $(this).attr("checked", false)
-      else
-        $(this).attr("checked", 'checked')
-    }
-  )
+  function ajaxDel(sid){
+    $.get("/admin_user_add_shops/ajax_del",{id: sid})
   }
 
 </script>
