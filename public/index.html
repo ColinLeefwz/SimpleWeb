@@ -12,6 +12,27 @@
 <!--[if lt IE 7]>
 	<script src="/javascripts/pngie6.js"></script>
 <![endif]-->
+<script type="text/javascript">
+(function(){
+    var mobile_host = "http://m.ximalaya.com";
+    var userAgent = navigator.userAgent,
+        redirect = false;
+
+    //判断设备      
+    if(/(mobile|wap|ipod|android)/i.test(userAgent)){
+       window.location.replace(mobile_host);
+    }else{
+        return;
+    }
+
+    if(/pad/i.test(userAgent) || /ting/i.test(userAgent)){  
+        return;
+    }
+
+})();
+
+
+</script>
 </head>
 
 <body>
