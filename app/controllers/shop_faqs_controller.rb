@@ -32,6 +32,7 @@ class ShopFaqsController < ApplicationController
   def create
     @shop_faq = ShopFaq.new(params[:shop_faq])
     @shop_faq.sid = session[:shop_id]
+    @shop_faq.od = @shop_faq.od.to_i
 
     if @shop_faq.save
       redirect_to :action => "index"
