@@ -62,9 +62,11 @@
   <%= @user.blacks_s.count %>
 </p>
 
+<!--
 <p>
   <b>聊天记录:</b>
   <%=link_to "查看", "/admin_users/chat?id=#{@user.id}" %>
 </p>
+-->
 
 <%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %>

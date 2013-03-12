@@ -1,6 +1,13 @@
 <%= javascript_include_tag "jquery-1.6.2.min.js" %>
 <%= javascript_include_tag "jquery.form.js" %>
 <script type="text/javascript">
+  function ajaxDis(lob1){
+    var lob2 = $('#lob2').val();
+    $.get('/admin_user_add_shops/ajax_dis', {lob1: lob1, lob2: lob2}, function(data){
+      $('#dis').replaceWith("<span id='dis'>两经纬度之间相距"+data["distance"]+'（米）</span>')
+    })
+  }
+
   $(document).ready(function()
   {
     $('#shopFrom').hide();
@@ -41,7 +48,7 @@
 <h1>商家处理</h1>
 
 <p>
-  <span style="padding: 0 5px;"> <%= link_to '去百度地图查看',"http://api.map.baidu.com/lbsapi/getpoint/index.html", :target => "blank" %> </span>
+  <span style="padding: 0 5px;"> <%= link_to '去百度地图查看',"http://api.map.baidu.com/lbsapi/getpoint/index.html", :target => "blan" %> </span>
   <span style="padding: 0 5px;"><%= link_to '编辑',"#" ,:id => 'cedit'%></span>
   <span style="padding: 0 5px;"><%= link_to '标记删除',"#", :id => 'sdel'%></span>
   <a id="wclose" style="display:none" href="#" onclick="window.opener.rmshop('<%=@shop.id.to_i%>');window.close();">关闭当前窗口</a>
@@ -66,6 +73,12 @@
     <b>电话:</b>
     <%= @shop.tel %>
   </p>
+  <p>
+    <b>创建者:</b>
+    <%= @shop.user.try(:name) %>
+    <b>签到次数:</b>
+    <%=link_to @shop.user.checkins.count,"/admin_checkins?uid=#{@shop.user.id}", :target => 'check' %>
+  </p>
 
   <p>
     <b>实际经纬度:</b>
@@ -77,6 +90,10 @@
     <b>百度经纬度:</b>
     <span id="slob">
       <%= @shop.lob %>
+      <input type="text" id="lob2"/>
+      <a onclick="ajaxDis('<%= @shop.lob %>')">计算距离</a>
+      <span id="dis">
+      </span>
     </span>
   </p>
   <p>
