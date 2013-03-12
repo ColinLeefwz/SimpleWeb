@@ -1,39 +1,121 @@
-<h1>商家详情</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<%= javascript_include_tag "jquery.form.js" %>
+<script type="text/javascript">
+  $(document).ready(function()
+  {
+    $('#shopFrom').hide();
+
+    $('#cedit').click(function(){
+      $("#shopFrom").show();
+      $('#showShop').hide();
+    });
+
+    $('#sdel').click(function(){
+      $.get("/admin_user_add_shops/ajax_del?id=<%= @shop.id.to_i %>", function(){
+        window.close();
+      })
+    });
+    
+    $('#shopFrom').submit(function()
+    {
+      var options = {
+        url:'/admin_user_add_shops/update',
+        type:'POST',
+        success: function(data){
+          $('#sname').replaceWith("<span id='sname'>" + data['name'] +'</span>');
+          $('#saddr').replaceWith("<span id='saddr'>" + data['addr'] +'</span>');
+          $('#st').replaceWith("<span id= 'st' >" + data['st'] +'</span>');
+          $('#slob').replaceWith("<span id= 'slob'>" + data['lob'] +'</span>');
+          $('#slo').replaceWith("<span id='slo'>" + data['lo'] +'</span>');
+          $("#shopFrom").hide();
+          $('#showShop').show();
+          $('#wclose').show();
+        }
+      }
+      $('#shopFrom').ajaxSubmit(options);
+      return false;
+    })
+  }
+)
+</script>
+<h1>商家处理</h1>
 
 <p>
   <span style="padding: 0 5px;"> <%= link_to '去百度地图查看',"http://api.map.baidu.com/lbsapi/getpoint/index.html", :target => "blank" %> </span>
-  <span style="padding: 0 5px;"><%= link_to '编辑',"/admin_user_add_shops/edit?id=#{@shop.id}" %></span>
-  <span style="padding: 0 5px;"><%= link_to '标记删除',"/admin_user_add_shops/del?id=#{@shop.id}"%></span>
+  <span style="padding: 0 5px;"><%= link_to '编辑',"#" ,:id => 'cedit'%></span>
+  <span style="padding: 0 5px;"><%= link_to '标记删除',"#", :id => 'sdel'%></span>
+  <a id="wclose" style="display:none" href="#" onclick="window.opener.rmshop('<%=@shop.id.to_i%>');window.close();">关闭当前窗口</a>
 </p>
+<div id="showShop">
+  <p>
+    <b>商家id:</b>
+    <%= @shop.id.to_i %>
+  </p>
+  <p>
+    <b>商家名称:</b>
+    <span id="sname">
+      <%= @shop.name %>
+    </span>
 
-<p>
-  <b>商家id:</b>
-  <%= @shop.id.to_i %>
-</p>
-<p>
-  <b>商家名称:</b>
-  <%= @shop.name %>
-</p>
-<p>
-  <b>区号:</b>
-  <%= @shop.city %>
-</p>
-<p>
-  <b>电话:</b>
-  <%= @shop.tel %>
-</p>
+  </p>
+  <p>
+    <b>区号:</b>
+    <%= @shop.city %>
+  </p>
+  <p>
+    <b>电话:</b>
+    <%= @shop.tel %>
+  </p>
 
-<p>
-  <b>实际经纬度:</b>
-  <%= @shop.lo %>
-</p>
-<p>
-  <b>百度经纬度:</b>
-  <%= @shop.lob.reverse.join(',') %>
-</p>
-<p>
-  <b>地址:</b>
-  <%= @shop.addr %>
-</p>
+  <p>
+    <b>实际经纬度:</b>
+    <span id="slo">
+      <%= @shop.lo %>
+    </span>
+  </p>
+  <p>
+    <b>百度经纬度:</b>
+    <span id="slob">
+      <%= @shop.lob %>
+    </span>
+  </p>
+  <p>
+    <b>地址:</b>
+    <span id="saddr">
+      <%= @shop.addr %>
+    </span>
+  </p>
+  <p>
+    <b>类型:</b>
+    <span id="st">
+      <%= @shop.show_t %>
+    </span>
+  </p>
+</div>
+
+
+
+<%= form_for(@shop, :url => '',:html => {:id => 'shopFrom'}) do |f| %>
+  <%= hidden_field_tag :id, @shop.id.to_i %>
+  <p>
+    名称:<br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    地址:<br />
+    <%= f.text_field :addr %>
+  </p>
+  <p>
+    百度纬度度:<br />
+    <%= f.text_field :lob %>(例:120.108,30.28 )
+  </p>
+  <p>
+    类型:<br />
+    <%= f.select :t,options_for_select(import_t)  %>
+  </p>
+  <p>
+    <%= f.submit "保存" %>
+  </p>
+<% end %>
 
 
