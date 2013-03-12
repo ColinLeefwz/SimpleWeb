@@ -19,7 +19,7 @@
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab3">
     <tr>
       <td width="8%">序号</td>
-      <td><%= f.select :od, [1,2,3,4,5,6,7,8,9] - session_shop.faqs.map{|m| m.od.to_i}+[@shop_faq.od],{}, {:class => "txt"} %></td>
+      <td><%= f.select :od, ["01","02","03","04","05","06","07","08","09"] - session_shop.faqs.map{|m| m.od.to_i}+["0"+@shop_faq.od],{}, {:class => "p2"} %></td>
       <td rowspan="5"><img src="../images/pic6.jpg" /></td>
     </tr>
     <tr>
@@ -31,14 +31,13 @@
     </tr>
     <tr>
       <td valign="top">图片</td>
-      <td><input type="button" value="修改图片" class="btn1" id="Btn1"/>
+      <td>
+	    <div class="imgbox">
+          <%= image_tag(@shop_faq.img.try(:url, :t2)) %>
+        </div>
+		<input type="button" value="修改图片" class="btn1" id="Btn1"/>
         <span class="words">(可以添加店内菜单、最新活动、宣传海报等图片)</span>
       <%= f.file_field :img, :class => "none" %></td>
-      <td>
-        <span>
-          <%= image_tag(@shop_faq.img.try(:url, :t2)) %>
-        </span>
-      </td>
     </tr>
     <tr>
       <td valign="top">回答</td>
