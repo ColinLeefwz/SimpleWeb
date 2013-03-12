@@ -78,15 +78,13 @@ class CheckinsController < ApplicationController
       checkin.altacc = params[:altacc]
     end
     checkin.ip = real_ip
-    send_if_first shop
+    send_all_notice_msg shop
     checkin.save!
     shop.send_coupon(session[:user_id])
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid]
     if checkin.add_to_redis #当天首次签到
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
-    end
-    send_notice_if_exist shop
-    
+    end    
     if session[:new_user_flag]
       session[:new_user_flag] = nil
       session_user.update_attribute(:city, checkin.city)
@@ -101,14 +99,32 @@ class CheckinsController < ApplicationController
   end
   
   def send_notice_if_exist(shop)
-    return if shop.nil?
     notice = shop.notice
     return if notice.nil? || notice.title.nil? || notice.title.length<1
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], notice.title)
   end
   
-  def send_if_first(shop)
+  def send_share_coupon_notice_if_exist(shop)
+    coupon = shop.share_coupon
+    return if coupon.nil?
+    key = coupon.text.nil?? "" : "文字中带'#{coupon.text}'#{coupon.text.length}个字"
+    str = "发送分享图片到新浪微博，#{key}，即可获得'#{coupon.name}'。"
+    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str)
+    return true
+  end
+
+  def send_faq_notice_if_exist(shop)
+    return if shop.faqs.count<1
+    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], "本地点开启了数字问答系统，请发送数字0获知详情。")
+    return true
+  end
+    
+  def send_all_notice_msg(shop)
     return if shop.nil?
+    send_notice_if_exist shop
+    flag1 = send_share_coupon_notice_if_exist(shop)
+    flag2 = send_faq_notice_if_exist(shop)
+    return if flag1 || flag2
     order = shop.realtime_user_count+1
     str = ""
     str += "欢迎！您是第 #{order} 个来到\##{shop.name}\#的脸脸。" if order<=10
