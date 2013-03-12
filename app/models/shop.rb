@@ -77,6 +77,11 @@ class Shop
     Photo.where({room: self.id.to_i.to_s}).count
   end
 
+  def user
+    return if self.creator.blank?
+    user = User.find_by_id(self.creator)
+  end
+
   #删除商家.
   def shop_del
     self.update_attribute(:del,1)

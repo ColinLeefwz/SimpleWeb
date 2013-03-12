@@ -71,5 +71,12 @@ class AdminUserAddShopsController < ApplicationController
     render :js => "window.opener.rmshop('#{@shop.id.to_i}');"
   end
 
+  def ajax_dis
+    lob1 = params[:lob1].split(/[,，]/).map { |m| m.to_f  }.reverse
+    lob2 = params[:lob2].split(/[,，]/).map {|m| m.to_f }.reverse
+    distance = Shop.new.get_distance(lob1, lob2)
+    render :json => {:distance => distance}
+  end
+
   
 end
