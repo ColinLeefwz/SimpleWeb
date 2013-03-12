@@ -110,6 +110,15 @@ Resque是基于redis的ruby后台任务库。
 resque和resque-scheduler都采用god进行监控和启动。
  
  
+####缓存系统设计
+所有的model对象都增加了一个按id缓存单个查询结果的缓存层。
+按主键查询对象有两个方法：
+
+ * find, mongoid库默认提供的方法，找不到报错，不使用缓存。建议在更新操作时调用。比如find后要立即修改的场合，此时不要用find_by_id。
+ * find_by_id, 利用缓存，找不到返回nil，建议只读操作时调用。
+
+
+ 
 
 依赖的库：ghostscript,imagemagick，	
 ###God
