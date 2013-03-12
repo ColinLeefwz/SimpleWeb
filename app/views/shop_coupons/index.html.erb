@@ -4,26 +4,33 @@
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th width="40%" align="left" colspan="2">标题</th>
+    <th width="25%" align="left">图片</th>
+	<th width="25%" align="left">标题</th>
     <th width="10%">类型</th>
     <th width="9%" align="center">已下载</th>
     <th width="9%" align="center">已使用</th>
-    <th align="center">操作</th>
+    <th align="center" colspan="4">操作</th>
   </tr>
 
   <% @coupons.each do |coupon| %>
 
     <tr>
-      <td width="10%"><%=image_tag coupon.img.url(:t1) %></td>
-      <td valign="center" width="30%"><%= coupon.name %></td>
-      <td class="gray f12" align="center"><%= coupon.show_t2  %></td>
+      <td><%=image_tag coupon.img.url(:t1), :class=>"imgs4" %></td>
+      <td valign="center"><%= coupon.name %></td>
+      <td class="gray" align="center"><%= coupon.show_t2  %></td>
       <td align="center"><%= link_to coupon.users.to_a.count, {:action => 'users', :id => coupon.id, :flag => 'down'} %></td>
       <td align="center"><%= link_to coupon.users.to_a.count{|s| s['uat']},{:action => 'users', :id => coupon.id, :flag => 'use'} %></td>
-      <td align="center">
-        <a href="#"><%= link_to '详情', shop_coupon_path(coupon) %></a>
-        <a href="#"><%=link_to '编辑', edit_shop_coupon_path(coupon) if coupon.users.blank? %></a>
-        <a href="#"><%= coupon.hidden ==1 ? '已停用' : (link_to '停用', '#', :onclick => "ajaxDeply($(this), '#{coupon.id}')") %></a>
-        <a href="#"><%= (link_to '删除', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')") if coupon.users.blank? %></a>
+      <td align="center" class="plr0">
+        <%= link_to '详情', shop_coupon_path(coupon) %>
+     </td>
+	 <td align="center" class="plr0">
+        <%=link_to '编辑', edit_shop_coupon_path(coupon) if coupon.users.blank? %>
+     </td>
+	 <td align="center" class="plr0">
+		<%= coupon.hidden ==1 ? '<span class="gray">已停用</span>'.html_safe : (link_to '停用', '#', :onclick => "ajaxDeply($(this), '#{coupon.id}')") %>
+     </td>
+	 <td align="center" class="plr0">
+		<%= (link_to '删除', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')") if coupon.users.blank? %>
       </td>
     </tr>
 
