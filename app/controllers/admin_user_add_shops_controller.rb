@@ -30,29 +30,31 @@ class AdminUserAddShopsController < ApplicationController
   def show
     @shop = Shop.find_primary(params[:id])
     @shop.lob = @shop.lo_to_lob.reverse.join(',')
+    @shops = Shop.where({:name => /#{@shop.name}/,:t => {"$exists" => true} , :lo => {"$within" => {"$center" => [@shop.lo, 0.03]}}})
     render :layout => true
   end
 
-  def baidu_map
-    @shop = Shop.find(params[:id])
-  end
-
-  def edit
-    @shop = Shop.find(params[:id])
-  end
+#  def baidu_map
+#    @shop = Shop.find(params[:id])
+#  end
+#
+#  def edit
+#    @shop = Shop.find(params[:id])
+#  end
 
   def update
     @shop = Shop.find(params[:id])
     shop = Shop.new(params[:shop])
-    @shop.lob = shop.lob.split(/[,，]/).map { |m| m.to_f  }.reverse
-    if @shop.lob.count == 2
-      @shop.lo = @shop.lob_to_lo
+    unless shop.lob.blank?
+      lobs = shop.lob.split(/[;；]/)
+      @shop.lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
+      @shop.lo = @shop.lob.map{|m| Shop.lob_to_lo(m)}
     end
     @shop.addr = shop.addr
     @shop.name = shop.name
     @shop.t = shop.t
     if @shop.save
-      render :json => @shop.attributes.slice('name', 'lo', 'addr').merge('lob' => @shop.lob.to_a.reverse.join(','), 'st' => @shop.show_t)
+      render :json => @shop.attributes.slice('name', 'lo', 'addr').merge('lob' => @shop.show_lob, 'st' => @shop.show_t)
     else
       render :action => :edit
     end
@@ -77,6 +79,5 @@ class AdminUserAddShopsController < ApplicationController
     distance = Shop.new.get_distance(lob1, lob2)
     render :json => {:distance => distance}
   end
-
   
 end
