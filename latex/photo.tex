@@ -1,0 +1,300 @@
+
+\section{在聊天室发图}
+聊天发图主要流程是：客户端选择（拍摄）一张照片，通过http上传到服务器。上传完成后在xmpp里发送一个特定格式的消息。其它客户端收到消息后获取图片显示并发送回执消息。
+
+\subsection{上传图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ photo[img]  & file & 必须 &  头像文件\\
+ \hline
+ photo[room]  & 字符串 & 必须  &  聊天室的id\\
+ \hline
+ photo[weibo]  & 0/1 & 必须  &  是否同步发送到微博\\
+   \hline
+ photo[desc]  & 字符串 & 可选  &  图像的说明文字\\
+ \hline
+  photo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：
+
+\begin{enumerate}
+\item 该请求必须是POST请求，enctype="multipart/form-data"。
+\item 所上传文件的type必须是image/jpeg', 'image/gif' 或者'image/png'。
+\item 图片文件要在客户端先压缩到640*640。
+\item 图片名为logo；缩略图分logo\_thumb2为200*200的png。
+\end{enumerate}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "photo[img]=@firefox.png;type=image/png" 
+/photos
+
+{"_id":"509a1ffcbe4b1982a4000002",
+"weibo":false,"room":"1",
+"user_id":"502e61bfbe4b1921da000005",
+"img_tmp":"20121107-1646-42114-4251/111.jpg",
+"logo":"/uploads/tmp/20121107-1646-42114-4251/111.jpg",
+"logo_thumb2":null,"id":"509a1ffcbe4b1982a4000002"}
+
+当返回的响应中包含img_tmp字段，且logo_thumb2为null时，说明此时图片上传到了服务器，但是还未启动后台处理。后台异步处理图片，包括生成缩略图以及上传到阿里云。
+
+\end{verbatim}
+\end{figure}
+
+
+\subsection{发送消息}
+当图片发送完成后，服务器端发送一个xmpp消息，其中的body内容格式为：
+
+\begin{verbatim}
+[img:$id]$desc
+
+比如上面的图片发送成功后，发送消息"[img:502fd10abe4b19ed48000002]"。其中$desc是可选的图片说明文字。
+\end{verbatim}
+
+\subsection{在聊天室收到消息后获取图片}
+
+接收端收到消息后，判断body的内容是否符合图片消息的格式。如果符合就调用下面的接口获取图片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/show} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；2代表thumb2缩略图，大小为200*200。默认为2。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+聊天室里发图不需要发送已读回执消息。
+在现场收到图片时，如果图片id以“faq”开头，不添加到照片墙上。18:02:24
+
+\section{商家照片墙}
+
+\subsection{删除聊天室图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+个人只能删除自己发布的照片。
+
+
+
+\subsection{对聊天室图片点赞}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/like} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsection{对聊天室图片取消赞}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/dislike} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+个人只能取消自己给的赞。
+
+
+\subsection{对聊天室图片点评}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/comment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+   \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的数据结构是评论的数组。
+ id: 评论人的id
+ name: 评论人的名字
+ txt:评论的内容
+ t:时间
+ rid:被回复者的id
+ rname: 被回复者的名字
+
+
+\subsection{对聊天室图片点评进行回复}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/recomment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+ \hline
+ rid  & 字符串 & 必须 & 被回复者的id\\
+   \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+这里的rid是被回复者的id，而发布回复者的id是从session中自动获取的。
+
+这里的回复其实是针对人的，如果一个人在一张图片下发布了多个评论，那么这里的回复不针对特定的那条评论。
+
+
+\subsection{对聊天室图片删除点评}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/delcomment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+  \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+个人只能删除自己发的点评。
+
+评论的删除是区分两种情况：删除／隐藏，评论的发布人可以删除，图片的发布人可以隐藏。
+对第三方来说都是删除。
+
+如果一个评论是我发的，同时图也是我发的，那么此时对评论操作就是删除，不需要隐藏。
+
+
+\subsection{对聊天室图片隐藏点评}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/hidecomment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+  \hline
+ uid  & 字符串 & 必须 & 评论的发布者id\\
+   \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+只有图片的发布者才能隐藏他人给自己图片发的点评。调用本接口的必须是图片的发布人。
+点评隐藏后只有点评的发布者一人能够看到。
+
+
+
+\section{个人聊天时发图}
+
+\subsection{个人聊天时上传图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photo2s/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ photo[img]  & file & 必须 &  头像文件\\
+ \hline
+ photo[to\_uid]  & 字符串 & 必须 &  接收人的id\\
+\hline
+  photo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsection{发送消息}
+当图片发送完成后，服务器端发送一个xmpp消息，其中的body内容格式为：
+
+\begin{verbatim}
+[img:$id]
+
+\end{verbatim}
+
+\subsection{在个人聊天时收到消息后获取图片}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photo2s/show} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；2代表thumb2缩略图，大小为200*200。默认为2。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：聊天时发图，取消的100*100大小的缩略图。［2012-11-7］
+
+
+\subsection{消息状态}
+和普通的文字消息一样，接收者收到图片后发送状态更新消息（收到／已读）给发送者。发送者将状态显示在图片旁边。
+
+
+

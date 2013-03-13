@@ -1,0 +1,147 @@
+\section{XMPP协议接口}
+
+
+\subsection{与Openfire聊天服务器接口}
+脸脸网的XMPP服务器采用的是Openfire。
+
+\begin{enumerate}
+\item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。
+\item 商家的id加上"@c.dface.cn"就是现场聊天室的jid。
+\item 脸脸的用户名就是openfire的用户名，且也就是聊天时的用户名。Xmpp协议允许用户在加入聊天室时取一个名字，脸脸的聊天室应该忽略该名字。
+\item 脸脸中的关注和粉丝关系是单向的，和xmpp中的好友roster关系无关。
+\item 只要用户登录，其xmpp协议中的presence就是在线，没有其它状态。
+\item 脸脸中的隐身也和xmpp中的隐身状态无关。
+\item xmpp中的任意两个用户可以发送消息，不管对方是否隐身，只要对方未设置黑名单即可。如果对方未登录，那么就是离线消息。
+\end{enumerate}
+
+
+\subsection{脸脸中的聊天用户的三种类型}
+
+\begin{enumerate}
+\item管理员，其jid固定为"502e6303421aa918ba000001@dface.cn";
+\item商家，其jid为's+商家id@dface.cn';
+\item个人，其jid为'个人id@dface.cn'。
+\end{enumerate}
+如果一个jid以字母s开头，那么它一定是商家。
+
+
+\subsection{摇一摇及其消息格式}
+目前，用户在聊天室摇一摇时，客户端发送“用户名 摇了摇手机和大家say hello~”给服务器。这导致要分析摇一摇数据很困难，所以要为摇一摇定义特殊的消息格式。
+
+\begin{verbatim}
+摇一摇的消息格式为：
+ [摇一摇:$name]
+
+其它客户端收到摇一摇的消息后，再将其转换为文字描述。
+\end{verbatim}
+
+
+
+\subsection{个人之间聊天的消息发送状态确认}
+XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extensions/xep-0022.html}{XEP-0022: Message Events}”。其定义了四种消息事件：Offline、Delivered、Displayed、Composing。Dface只需要其中的两种。
+
+\begin{verbatim}
+当接收端收到消息时，发送delivered确认消息，例如：
+<message id="Kk98S-16" to="s6@dface.cn/ylt">
+<x xmlns="jabber:x:event"><delivered/><id>purplea5e6669c</id></x>
+</message>
+
+当接收端展示消息时，发送displayed确认消息，例如：
+<message id="Kk98S-17" to="s6@dface.cn/ylt">
+<x xmlns="jabber:x:event"><displayed/><id>purplea5e6669c</id></x>
+</message>
+
+发送端根据从接收端获得的状态通知更改单条消息的发送状态。
+
+只有类型是message,且body不为空的消息需要确认状态。
+
+当本地无法发送消息时（比如无网络、或者连接不上xmpp服务器），消息的状态为“发送失败”。发送失败的消息可以再次发送。
+
+\end{verbatim}
+
+
+\input{./photo.tex}
+
+
+\section{优惠券}
+
+\subsection{商家推送优惠券}
+当用户使用脸脸时，比如签到／摇一摇等，可以收到商家推送过来的优惠券。优惠券也是一个xmpp消息，其中的body内容格式为：
+
+\begin{verbatim}
+[优惠券:$name:$shop:$id:$time]
+
+ 其中，name是优惠券的名称、shop是商家的名称，id是该优惠券的id，time是该张优惠券的下发时间。
+ 
+ 同一张id的优惠券，如果time不同的话，分开显示和使用。
+ 
+ 所有优惠券都统一显示在会话中的“优惠券”文件夹中。优惠券的消息状态和其他消息同样处理。
+\end{verbatim}
+
+\subsection{优惠券展示}
+优惠券以图片的方式展示，由服务器端生成该图片。当用户进入优惠券文件夹查看优惠券时，调用下面的接口获得优惠券的图片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/coupons/img} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  id  & 字符串 & 必填 &  该优惠券的id  \\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图(580, 224)；1代表缩略图，大小为(290,112)。默认为1。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{优惠券使用}
+目前，所有优惠券都只支持单次使用，使用后即过期。当用户确认使用优惠券时，调用如下的接口：
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/coupons/use} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  id  & 字符串 & 必填 &  该优惠券的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\input{./xmpp_web.tex}
+
+
+\section{关于Push消息}
+
+\subsection{登录Xmpp服务器时，报告设备的Push消息token}
+登录Xmpp服务器，发送的密码格式变更为：
+
+\begin{verbatim}
+“用户密码”+《状态码》+token
+
+状态码为：1代表ios开发设备，2代表实际的发布设备。
+token是一个64位的字符串。
+
+比如某用户的密码是“c53b2f16a24c61d9”，
+token是“ea6e4f05b48f4a057816956e567c6feacf14ee28cbbbab67993e263c3dfa2c27”，
+目前是进行开发测试，那么登录Xmpp服务器时的密码为：
+“c53b2f16a24c61d91ea6e4f05b48f4a057816956e567c6feacf14ee28cbbbab67993e263c3dfa2c27”。
+\end{verbatim}
+
+服务器端解析出状态码和token并保存。
+
+
+\subsection{退出时，报告设备的Push消息token}
+
+用户退出的API接口新增pushtoken参数，以取消Push消息token绑定。
+
+\subsection{Push消息的发送}
+当有离线消息产生时，xmpp服务器获得用户的状态码以决定给那个Apple Push服务器发消息，以及获得和该用户绑定的token。一个用户只能绑定一个token。

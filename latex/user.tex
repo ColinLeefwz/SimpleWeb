@@ -1,0 +1,629 @@
+
+
+\section{用户基本信息}
+
+\subsection{获得用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/get} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get?id=1
+返回值：
+
+{
+"name":null,
+wb_uid:1884834632
+"gender":null,
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
+"birthday":null,
+"friend":true,
+"follower":false,
+"signature":"","job":null,"jobtype":null,"hobby":"Weiqi, go",
+"last": "1天以前 顺旺基(益乐路店)" 
+"id":1
+}
+
+获得用户基本信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是当前登录用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
+
+[2012－8－8] 新增签名、职业、爱好等字段。
+[2012－8－8] 新增last字段，表示用户最后在脸脸上的时间和地点，一个以空格分割的字符串。
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{获得当前登录用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/get\_self} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get_self
+返回值：
+
+{
+"name":null,
+wb_uid:1884834632
+"gender":null,
+"birthday":null,
+"invisible":0,
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
+"password":"c84dad462d5b7282",
+"id":1
+}
+
+[2013-03-12]  新增
+微博登陆的话：增加wb_token，wb_expire
+qq登陆的话：增加qq_token，qq_expire
+
+\end{verbatim}
+\end{figure}
+
+
+
+
+\subsection{设置当前登录用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/set} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ name  & 字符串 & 选填 &  用户的名字. 长度小于64\\
+\hline
+ gender  & 数字 & 选填 &  用户的性别，未设置0男1女2\\
+\hline
+ birthday  & 字符串 & 选填 &  用户的生日,格式如2012-06-01\\
+ \hline
+ signature  & 字符串 & 选填 &  签名档. 长度小于255\\
+ \hline
+ job  & 字符串 & 选填 &  职业\\
+ \hline
+ jobtype  & 整数 & 选填 &  职业类别\\
+ \hline
+ hobby  & 字符串 & 选填 &  爱好. 长度小于255\\
+ \hline
+ invisible  & 数字 & 选填 &  0：不隐身,1：对黑名单隐身,2：陌生人隐身, 3：全部隐身\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+用户初次登录时获取新浪微博的名称／性别／出生日期等信息并提交到服务端。以后更新时可以只更新其中的某个字段。
+
+隐身的效果是：
+1、在商家的用户列表中不在出现该用户
+2、不更新自己的位置信息
+3、用户进入商家时，不发打招呼的信息。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=ead9ac4f6291c55bb467ad4138eca2ed" 
+        -F "name=newname" /user_info/set
+
+返回值：
+
+{
+"name":newname,
+"gender":null,
+"birthday":null,
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
+"id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+\section{用户相册与头像}
+用户相册中的第一张图片就是头像。
+
+\subsection{当前登录用户上传图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_logos/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_logo[img]  & file & 必须 &  头像文件\\
+ \hline
+ user\_logo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：
+
+\begin{enumerate}
+\item 该请求必须是POST请求，enctype="multipart/form-data"。
+\item 所上传文件的type必须是image/jpeg', 'image/gif' 或者'image/png'。
+\item 图片文件要在客户端先压缩到640*640。
+\item 图片名为logo；缩略图分为两种大小，logo\_thumb为100*100的png，logo\_thumb2为200*200的png。
+\end{enumerate}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "user_logo[img]=@firefox.png;type=image/png" 
+/user_logos
+
+
+{"logo_thumb2":null, "logo_thumb1":null
+,"id":6,
+"logo":"",
+"user_id":3,
+"img_tmp":"/system/imgs/6/thumb/csky2.png?1340779488"}
+
+\end{verbatim}
+
+用户上传图片更改为异步操作。图片上传完成后返回图片的id，但是此时图片还没有实际的阿里云链接。客户端上传完成后，可以用下面的“根据图片id获得用户相册里的图片”接口尝试获得实际的上传图片和缩略图。
+
+\end{figure}
+
+
+\subsection{根据图片id获得用户相册里的图片}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_logos/show} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；1代表thumb1缩略图，大小为100*100；2代表thumb2缩略图，大小为200*200。默认为1。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{获得用户的头像}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/logo} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为100*100；2代表thumb2缩略图，大小为200*200。默认为1。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+输出的Response Header中包含“Img\_url”头，这个头就是查看用户信息时显示的用户头像的路径。
+
+例如：“Img\_url:/system/imgs/1/thumb2/1.png?1339649979”
+
+注意：采用阿里云存储后，会输出302重定向，而不是直接给二进制流。
+
+
+\subsection{获得用户的图片列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_info/photos} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/photos?id=1
+返回值：
+
+[
+{"logo_thumb2":"/system/imgs/2/thumb2/2.png.png?1340616951","updated_at":"2012-06-25T09:35:51Z",
+"id":2,"logo":"/system/imgs/2/original/2.png.png?1340616951","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/2/thumb/2.png.png?1340616951"},
+{"logo_thumb2":"/system/imgs/4/thumb2/2.png.png?1340617039","updated_at":"2012-06-25T09:37:20Z",
+"id":4,"logo":"/system/imgs/4/original/2.png.png?1340617039","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/4/thumb/2.png.png?1340617039"}
+]
+
+图片列表中的第一张图片就是用户的头像。
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{当前登录用户批量调整所有图片的位置}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_logos/change\_all\_position} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ ids  & 逗号分割的整数 & 必须 &  所有图片的id按新的循序排列\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+说明：
+
+比如原有图片的循序是2468，新的循序是8642，此时需要调用本接口，传递ids=8,6,4,2。此时服务器会更新所有图片的排序，而客户端只需要发送一个请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "ids=3,1,4" 
+/user_logos/position
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{当前登录用户删除图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/user\_logos/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  图片的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "id=2" 
+/user_logos/delete
+
+输出：
+{"deleted":"2"}
+
+\end{verbatim}
+\end{figure}
+
+
+\section{关注和粉丝}
+\subsection{添加我关注的人}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/follows/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ follow\_id  & 整数 & 必须 &  关注用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&follow_id=1" /follows
+
+返回值：
+
+{
+"id":1,
+"user_id":2,
+"follow_id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{删除我的关注的人}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/follows/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ follow\_id  & 整数 & 必须 &  关注用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&follow_id=3" /follows/delete
+
+返回值：
+
+{
+"deleted":3
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{粉丝列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/follow\_info/followers} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+    \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+    \hline    
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/follow_info/followers?id=2
+
+返回值：
+
+[
+{"count":1}
+{"data":
+{"id":1,
+"name":"name23",
+"wb_uid":1884834632,
+"gender":0,
+"friend":true,
+"follower":true,
+"birthday":null,
+"last":"1 hour 浙江科技产业大厦"}
+}
+]
+
+其中count是符合条件的粉丝的总数。
+
+获得用户基本信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是给定ID的用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
+
+这里返回的所有用户，其"follower"值一定为true。
+
+[2013-2-20] 新增last，表示用户最后一次出现的时间和地点。
+
+
+\end{verbatim}
+\end{figure}
+
+
+\subsection{关注(好友)列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/follow\_info/friends} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+     \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+     \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的内容格式同粉丝列表一样
+
+这里返回的所有用户，其"friend"值一定为true。
+
+
+
+\section{黑名单}
+\subsection{黑名单列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/blacklists} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+     \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+     \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的内容格式和好友列表一样。
+
+
+\subsection{添加黑名单}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/blacklists/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ block\_id  & 整数 & 必须 &  加黑阻止的用户的id\\
+ \hline
+ report  & 整数 & 可选 &  是否同时举报被加黑的用户，0不举报1举报\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+\begin{figure}[H]
+\begin{verbatim}
+
+返回值：
+
+{
+"id":1,
+"user_id":2,
+"report":false,
+"block_id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{删除黑名单}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/blacklists/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ block\_id  & 整数 & 必须 &  加黑用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&block_id=3" /blacklists/delete
+
+返回值：
+
+{
+"deleted":3
+}
+
+\end{verbatim}
+\end{figure}
+
+
