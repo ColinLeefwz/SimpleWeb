@@ -296,7 +296,7 @@ class Shop
   end
 
   def show_lob
-    return unless self.lob.is_a?(Array)
+    return '' unless self.lob.is_a?(Array)
     if self.lob.first.is_a?(Array)
       self.lob.map{|m| m.reverse.join(',')}.join(' ; ')
     else

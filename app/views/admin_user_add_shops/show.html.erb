@@ -148,6 +148,12 @@
     类型:<br />
     <%= f.select :t,options_for_select(import_t)  %>
   </p>
+
+  <p>
+    父商家id:<br />
+    * 如果当前地点不是商家的子地点,不用填入.否则可以填入父商家的id.<br />
+    <%= text_field_tag :pid  %>
+  </p>
   <p>
     <%= f.submit "保存" %>
   </p>
