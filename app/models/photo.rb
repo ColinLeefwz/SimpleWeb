@@ -51,7 +51,7 @@ class Photo
   
   def send_qq
     title = "我在\##{shop.name}"
-    text = "我刚刚用脸脸分享了一张图片。(来自脸脸 http://www.dface.cn/a?v=18 )"
+    text = "刚刚用脸脸分享了一张图片。(来自脸脸 http://www.dface.cn/a?v=18 )"
     Resque.enqueue(QqPhoto, user_id, title, text, img.url, desc)
   end
   
