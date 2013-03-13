@@ -8,12 +8,21 @@
     })
   }
 
-  function ajaxNear(lo, name){
-    $.get('/admin_user_add_shops/near',{lo: lo, name: name})
-  }
 
   $(document).ready(function()
   {
+    $.get('/admin_user_add_shops/near?id=<%= @shop.id.to_i %>', function(data){
+      if(data=='')
+      {str = '<h3>附近没有重复的商家.</h3>'}
+      else{
+        str = "<table><tr><th>id</th><th>名称</th><th>地址</th><th>分类</th><th>距离</th></tr>"
+        data.forEach(function(s){
+          str += "<tr><td>" +s.join("</td><td>") + "</td></tr>"
+        })
+        str += "</table>"}
+      $('#nearShops').replaceWith(str)
+    })
+
     $('#shopFrom').hide();
 
     $('#cedit').click(function(){
@@ -90,29 +99,9 @@
 
     </span>
   </p>
-  <% if @shops.any? %>
-  <div>
-    <h2>附近重名商家</h2>
-    <table border="1">
-      <tr>
-        <th>id</th>
-        <th>名称</th>
-        <th>地址</th>
-        <th>分类</th>
-        <th>距离</th>
-      </tr>
-      <% @shops.each do |shop| %>
-      <tr>
-        <td><%= shop.id %></td>
-        <td><%= shop.name %></td>
-        <td><%= shop.addr %></td>
-        <td><%= shop.show_t %></td>
-        <td><%= shop.min_distance(shop, @shop.lo) %></td>
-      </tr>
-      <% end %>
-    </table>
+  <div id="nearShops">
+    正在获取附近重复商家...
   </div>
-  <% end %>
   <p>
     <b>百度经纬度:</b>
     <span id="slob">
