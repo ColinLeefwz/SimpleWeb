@@ -30,7 +30,7 @@ class AdminUserAddShopsController < ApplicationController
   def show
     @shop = Shop.find_primary(params[:id])
     @shop.lob = @shop.lo_to_lob.reverse.join(',')
-    @shops = Shop.where({:name => /#{@shop.name}/,:t => {"$exists" => true} , :lo => {"$within" => {"$center" => [@shop.lo, 0.03]}}})
+    @shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.lo, 0.03]}},:name => /#{@shop.name}/,:_id => {"$ne" => @shop.id }})
     render :layout => true
   end
 
