@@ -1,0 +1,235 @@
+
+\section{登录和退出}
+\subsection{网页登录接口：oauth2}
+
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/sina\_callback} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ code  & 字符串 & 必须 &  新浪返回的code\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/oauth2/sina_callback?code=...
+该访问由新浪微博通过302转向发起。
+返回值：
+
+{
+"id":1,
+"password":"15c663b8ff620502",
+"logo":"",
+"name" : "name"
+"gender" : 1
+"wb_uid":"1884834632",
+"expires_in":75693,
+"token":"2.00aaZYDCMcnDPCb4dc439e06i2m_GC",
+"expires_at":1338431259
+}
+
+其中，id和password是该用户在脸脸网的id和密码，在首次新浪授权时创建。该id加上"@dface.cn"就是openfire的jid。（目前还没有和jid关联上。）
+
+后面几个字段都是新浪提供的，其中wb_uid是该用户的新浪微博的uid，token是授权的access_token，其它几个是授权有效期信息。
+
+在首次登录获得用户的id和password以后，可以缓存到本地。以后用户每次登录，返回的id和password是不会改变的，除非服务器端重置密码（比如出现密码泄漏等安全情况）。
+
+logo可以得知用户是否成功上传头像。对于第一次登录的用户，其logo为空，此时需要引导用户上传头像。
+
+本接口不再需要，登录逻辑为：如果客户端安装了支持SSO的微博客户端，那么使用SSO的接口登录；否则使用xauth的接口登录。
+
+
+\end{verbatim}
+\end{figure}
+
+\subsection{客户端登录接口：xauth}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/login} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ name  & 字符串 & 必须 &  用户名\\
+ \hline
+ pass  & 字符串 & 必须 &  密码\\
+  \hline
+ mac  & 字符串 & 必须 &  网卡Mac地址\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+\hline
+ bind  & 整数 & 可选 &  bind为0表示登录，1表示绑定微博帐户，默认为0\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+本接口的输出和oauth2登录接口的输出相同。
+
+\begin{verbatim}
+hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
+比如用户名为name，密码为pa，mac地址为ss
+那么待hash的字符串为"namepassdface"，
+其hash码为"11f4004a73a65117071bc4a7d3dfdf07"。
+\end{verbatim}
+
+新的登录方式不需要调用新浪的Xauth API，直接调用本API即可以登录。客户端应该不需要保存AppSecret。通过预先保存的AppKey和本调用输出中包含的token应该就可以访问新浪微博的API了。
+
+如果加上可选的bind=1，则代表是绑定操作。绑定成功返回{binded: true}
+
+
+
+\subsection{客户端SSO接口}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/sso} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ remind\_in  & 字符串 & 必须 &  过期时间\\
+ \hline
+ expires\_in  & 字符串 & 必须 &  过期时间\\
+  \hline
+ uid  & 字符串 & 必须 &  微博的uid\\
+  \hline
+ access\_token  & 字符串 & 必须 &  微博的token\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+\hline
+ bind  & 整数 & 可选 &  bind为0表示登录，1表示绑定微博帐户，默认为0\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+手机客户端使用微博SSO登录后，调用本接口。
+hash的计算方式为：uid+access\_token+"dface"进行SHA1算法后取前32位。
+
+
+\subsection{客户端QQ接口}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/qq\_client} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ expires\_in  & 字符串 & 必须 &  过期时间\\
+  \hline
+ openid  & 字符串 & 必须 &  QQ的openid\\
+  \hline
+ access\_token  & 字符串 & 必须 &  QQ授权的token\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+ \hline
+ bind  & 整数 & 可选 &  bind为0表示登录，1表示绑定qq帐户，默认为0\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+手机客户端使用QQ提供的SDK登录后，调用本接口。
+hash的计算方式为：openid+access\_token+"dface"进行SHA1算法后取前32位。
+
+
+\subsection{退出}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/logout} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    pushtoken  & 浮点数 & 可选 &  当前设备的push消息token\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+当用户主动退出时，调用本接口并断开XMPP的连接。
+[2012-12-30] 新增pushtoken参数。
+
+
+\subsection{解除QQ绑定}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/unbind\_qq} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    uid  & 字符串 & 必须 &  当前用户的id\\
+\hline
+    qq  & 字符串 & 必须 &  QQ分配的openid\\    
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+解除成功返回{unbind: true}，否则返回error信息。
+新浪微博和QQ只有都处在有效登录状态时，才能解除其中的一个的绑定。
+
+
+\subsection{解除新浪微博绑定}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/oauth2/unbind\_sina} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    uid  & 字符串 & 必须 &  当前用户的id\\
+\hline
+    wb\_uid  & 字符串 & 必须 &  新浪微博的uid\\    
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+解除成功返回{unbind: true}，否则返回error信息。
+
+
+\subsection{登录与绑定的状态判断}
+目前，脸脸帐号登录相关方有四个：脸脸web服务器、脸脸xmpp服务器，新浪微博，QQ。
+
+\begin{enumerate}
+
+\item 当访问web接口时，如果返回的error信息是"not login"，此时代表要登录脸脸web服务器。但是脸脸不提供独立的帐户体系，要登陆脸脸Web服务器，必须登陆新浪微博或者QQ中的一个。当脸脸登录时，如果客户端缓存有未过期的新浪微博或者QQ认证信息，要丢弃。Web服务器认证信息保存在\_session\_id中。\_session\_id默认没有过期时间，也就是除非用户主动退出或者服务器端返回"not login"，否则一直有效。
+\item 如果脸脸\_session\_id没有过期：
+\begin{enumerate}
+
+\item 如果新浪微博或者QQ中的一个处于有效登录状态，需要使用另外一个服务时，此时要调用绑定接口。
+\item 如果新浪微博和QQ都没有登录，此时要返回到登录界面。\_session\_id作废。
+\item 绑定操作可以取消，而登录操作不能取消。
+\end{enumerate}
+
+\item xmpp服务器是单独登录的。每次应用打开的时候登录，退出或切换到后台时退出。
+\end{enumerate}
+
+
+\subsection{关于首次登录的判断}
+以前，脸脸判断用户是否首次登录是看TA是否有头像。如果没有头像，则走注册流程。
+
+现在更改为：每种登录接口（sina xauth/sso, qq）都会在用户首次登录时返回字段：{newuser:1}。当有newuser时，走注册流程。
