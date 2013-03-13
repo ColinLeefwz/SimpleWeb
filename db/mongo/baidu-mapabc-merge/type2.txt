@@ -15,6 +15,7 @@
 14 大型医院
 51 美容美发
 52 公司
+53 其他
 
 db.shops.update({type:/^交通设施;飞机场/},{$set:{t:13}},false,true)
 db.shops.update({type:/^交通设施;长途汽车站/},{$set:{t:13}},false,true)
