@@ -241,6 +241,28 @@
 点评隐藏后只有点评的发布者一人能够看到。
 
 
+\subsection{获得当前登录用户的照片墙}
+用户的照片墙由其本人在各个现场照片墙发布的照片组成。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/photos/users} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出格式参见：\ref{photowall}
+
+
 
 \section{个人聊天时发图}
 
