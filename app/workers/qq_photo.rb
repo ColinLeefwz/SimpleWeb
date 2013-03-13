@@ -6,7 +6,7 @@ class QqPhoto
   def self.perform(user_id,title, text, url, comment)
     token = $redis.get("qqtoken#{user_id}")
     openid = User.find_by_id(user_id).qq
-    do_share(token,openid, text, url,comment)
+    do_share(token,openid, title, text, url,comment)
   end
   
   def self.do_share(token,openid,title, text, url, comment)
