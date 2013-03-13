@@ -33,13 +33,13 @@ class AdminUserAddShopsController < ApplicationController
     render :layout => true
   end
 
-#  def baidu_map
-#    @shop = Shop.find(params[:id])
-#  end
-#
-#  def edit
-#    @shop = Shop.find(params[:id])
-#  end
+  #  def baidu_map
+  #    @shop = Shop.find(params[:id])
+  #  end
+  #
+  #  def edit
+  #    @shop = Shop.find(params[:id])
+  #  end
 
   def update
     @shop = Shop.find(params[:id])
@@ -48,12 +48,20 @@ class AdminUserAddShopsController < ApplicationController
       lobs = shop.lob.split(/[;；]/)
       @shop.lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
       @shop.lo = @shop.lob.map{|m| Shop.lob_to_lo(m)}
+    else
+      shop.lob = @shop.lo_to_lob.reverse.join(',')
     end
     @shop.addr = shop.addr
     @shop.name = shop.name
     @shop.t = shop.t
     if @shop.save
-      render :json => @shop.attributes.slice('name', 'lo', 'addr').merge('lob' => @shop.show_lob, 'st' => @shop.show_t)
+      pshop = Shop.find_by_id(params[:pid])
+      if pshop
+        pshop.shops = pshop.shops.to_a << @shop.id.to_i unless pshop.shops.include?(@shop.id.to_i)
+        pshop.save
+        pshop.merge_subshops_locations
+      end
+      render :json => @shop.attributes.slice('name', 'lo', 'addr').merge('lob' => shop.lob, 'st' => @shop.show_t)
     else
       render :action => :edit
     end
