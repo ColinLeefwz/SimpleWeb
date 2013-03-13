@@ -120,7 +120,7 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "您没有绑定过qq帐号"}.to_json
       return
     end    
-    session_user.update_attribute(:qq, nil)
+    session_user.unset(:qq)
     $redis.del("qqtoken#{session_user.id}")
     render :json => {unbind: true}.to_json
   end
@@ -138,7 +138,7 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "不能解除唯一登录帐号的绑定"}.to_json
       return
     end    
-    session_user.update_attribute(:wb_uid, nil)
+    session_user.unset(:wb_uid)
     $redis.del("qqtoken#{session_user.id}")
     render :json => {unbind: true}.to_json
   end
@@ -231,8 +231,11 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "已经绑定了qq帐号"}.to_json
       return
     end
+    if User.where({qq:openid}).count>0
+      render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
+      return
+    end
     #TODO: 调用https://graph.qq.com/oauth2.0/me?access_token= 来判断openid的真实性。
-    #TODO: openid重复监测
     session_user.update_attribute(:qq, openid)
     $redis.set("qqtoken#{session[:user_id]}",token)
     render :json => {binded: true}.to_json
@@ -247,7 +250,10 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "已经绑定了新浪微博帐号"}.to_json
       return
     end
-    #TODO: wb_uid重复监测
+    if User.where({wb_uid:wb_uid}).count>0
+      render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
+      return
+    end
     session_user.update_attribute(:wb_uid, wb_uid)
     $redis.set("wbtoken#{session[:user_id]}",token)
     render :json => data.merge!({binded: true}).to_json

@@ -116,6 +116,8 @@ resque和resque-scheduler都采用god进行监控和启动。
 
  * find, mongoid库默认提供的方法，找不到报错，不使用缓存。建议在更新操作时调用。比如find后要立即修改的场合，此时不要用find_by_id。
  * find_by_id, 利用缓存，找不到返回nil，建议只读操作时调用。
+ * 删除对象要调用destory， 这样才能清除对象的缓存。调用delete时不会清除缓存。
+ 
 
 
  
