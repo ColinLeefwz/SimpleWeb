@@ -8,6 +8,10 @@
     })
   }
 
+  function ajaxNear(lo, name){
+    $.get('/admin_user_add_shops/near',{lo: lo, name: name})
+  }
+
   $(document).ready(function()
   {
     $('#shopFrom').hide();
@@ -63,7 +67,6 @@
     <span id="sname">
       <%= @shop.name %>
     </span>
-
   </p>
   <p>
     <b>区号:</b>
@@ -84,8 +87,32 @@
     <b>实际经纬度:</b>
     <span id="slo">
       <%= @shop.lo %>
+
     </span>
   </p>
+  <% if @shops.any? %>
+  <div>
+    <h2>附近重名商家</h2>
+    <table border="1">
+      <tr>
+        <th>id</th>
+        <th>名称</th>
+        <th>地址</th>
+        <th>分类</th>
+        <th>距离</th>
+      </tr>
+      <% @shops.each do |shop| %>
+      <tr>
+        <td><%= shop.id %></td>
+        <td><%= shop.name %></td>
+        <td><%= shop.addr %></td>
+        <td><%= shop.show_t %></td>
+        <td><%= shop.get_distance(shop.lo, @shop.lo) %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+  <% end %>
   <p>
     <b>百度经纬度:</b>
     <span id="slob">
@@ -124,7 +151,9 @@
   </p>
   <p>
     百度纬度度:<br />
-    <%= f.text_field :lob %>(例:120.108,30.28 )
+    * 如果不需要修改经纬度,不用填入.<br />
+    * 支持多百度坐标,分号隔开.例:120.108,30.28 或 120.108,30.28;121.108,31.28<br />
+    <%= f.text_field :lob, :value => '' %>
   </p>
   <p>
     类型:<br />

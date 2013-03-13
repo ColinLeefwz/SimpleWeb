@@ -250,22 +250,22 @@ class Shop
   end
 
   def self.lob_to_lo(lob)
+    return lob if ENV["RAILS_ENV"] != "production"
     tmp = Mongoid.session(:dooo)[:offsetbaidus].where({loc: {'$near' => lob}}).first
     [lob[0]-tmp['d'][0],lob[1]-tmp['d'][1]];
   end
 
   def self.lo_to_lob(lo)
+    return lo if ENV["RAILS_ENV"] != "production"
     tmp = Mongoid.session(:dooo)[:offsetbaidus].where({loc:{'$near' => lo}}).first
     [lo[0]+tmp['d'][0], lo[1]+tmp['d'][1] ];
   end
   
   def lob_to_lo
-    return self.lob if ENV["RAILS_ENV"] != "production"
     Shop.lob_to_lo self.lob
   end
 
   def lo_to_lob
-    return self.lo if ENV["RAILS_ENV"] != "production"
     Shop.lo_to_lob self.lo
   end
 
@@ -295,5 +295,13 @@ class Shop
     self.update_attributes!({lo:arr})
   end
 
+  def show_lob
+    return unless self.lob.is_a?(Array)
+    if self.lob.first.is_a?(Array)
+      self.lob.map{|m| m.reverse.join(',')}.join(' ; ')
+    else
+      self.lob.reverse.join(',')
+    end
+  end
   
 end
