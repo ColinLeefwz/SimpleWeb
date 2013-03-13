@@ -28,9 +28,8 @@ class AdminUserAddShopsController < ApplicationController
   end
 
   def show
-    @shop = Shop.find_primary(params[:id])
+    @shop = Shop.find_by_id(params[:id])
     @shop.lob = @shop.lo_to_lob.reverse.join(',')
-    @shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.lo, 0.03]}},:name => /#{@shop.name}/,:_id => {"$ne" => @shop.id }})
     render :layout => true
   end
 
@@ -79,5 +78,11 @@ class AdminUserAddShopsController < ApplicationController
     distance = Shop.new.get_distance(lob1, lob2)
     render :json => {:distance => distance}
   end
-  
+
+  def near
+    @shop = Shop.find_by_id(params[:id])
+    shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.lo, 0.03]}},:name => /#{@shop.name}/,:_id => {"$ne" => @shop.id }})
+    data = shops.map{|shop| [ shop.id.to_i, shop.name,  shop.addr,  shop.show_t,  shop.min_distance(shop, @shop.lo)]}
+    render :json => data
+  end
 end
