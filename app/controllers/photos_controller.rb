@@ -25,6 +25,19 @@ class PhotosController < ApplicationController
       redirect_to photo.img.url(:t2)
     end
   end
+  
+  def delete
+    photo = Photo.find(params[:id])
+    if photo.user_id != session[:user_id]
+      render :json => {:error => "photo's owner #{photo.user_id} != session user #{session[:user_id]}"}.to_json
+      return
+    end
+    if photo.destory
+      render :json => {ok:photo.id}.to_json
+    else
+      render :json => {"error" => "delete #{photo.id} failed."}.to_json
+    end
+  end
 
   def like
     photo = Photo.find(params[:id])
