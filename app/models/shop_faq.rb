@@ -16,4 +16,8 @@ class ShopFaq
 
   mount_uploader(:img, FaqImgUploader)
 
+  def shop
+    Shop.find_by_id(sid)
+  end
+
 end
