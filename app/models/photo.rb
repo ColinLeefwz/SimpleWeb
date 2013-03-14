@@ -11,6 +11,7 @@ class Photo
   field :desc
   field :t, type:Integer #图片类型：1拍照；2选自相册
   field :weibo, type:Boolean
+  field :qq, type:Boolean
   field :like, type:Array #赞
   field :com, type:Array #评论
   field :img
@@ -30,17 +31,28 @@ class Photo
       return
     end
     if weibo
-      if desc && desc.length>0
-        str = "我刚刚用\#脸脸\#分享:\n#{desc2} ,我在\##{shop.name}\#\n(来自脸脸 http://www.dface.cn/a?v=3 )"
-      else
-        str = "我刚刚用\#脸脸\#分享了一张图片:\n#{desc2} 我在\##{shop.name}\#\n(来自脸脸 http://www.dface.cn/a?v=3 )"
-      end
-      Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
+      send_wb
       send_coupon
     end
+    send_qq if qq
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
         :roomid  => room , :message => "[img:#{self._id}]#{self.desc}",
         :uid => user_id)
+  end
+  
+  def send_wb
+    if desc && desc.length>0
+      str = "我刚刚用\#脸脸\#分享:\n#{desc2} ,我在\##{shop.name}\#\n(来自脸脸 http://www.dface.cn/a?v=3 )"
+    else
+      str = "我刚刚用\#脸脸\#分享了一张图片:\n#{desc2} 我在\##{shop.name}\#\n(来自脸脸 http://www.dface.cn/a?v=3 )"
+    end
+    Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
+  end
+  
+  def send_qq
+    title = "我在\##{shop.name}"
+    text = "刚刚用脸脸分享了一张图片。(来自脸脸 http://www.dface.cn/a?v=18 )"
+    Resque.enqueue(QqPhoto, user_id, title, text, img.url, desc)
   end
   
   def send_coupon
@@ -60,8 +72,10 @@ class Photo
   
   def desc2
     if desc.nil? || desc.length<1
+      ret = ""
       count = Photo.where({user_id:self.user_id,room:self.room,desc:nil}).count
-      count>1? count : ""
+      count.times {|x| ret << " "}
+      ret
     else
       desc
     end
@@ -73,7 +87,7 @@ class Photo
   end
   
   def output_hash
-    hash = {id: self._id, user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo}
+    hash = {id: self._id, user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo, qq:self.qq}
     hash.merge!( logo_thumb_hash)
     hash.merge!( {like:self.like, comment:self.com, user_name: user.name, time:cati} )
   end
