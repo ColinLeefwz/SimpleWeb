@@ -5,6 +5,12 @@
       <%=  image_tag(@coupon.img) %>
     </div>
   </div>
+  <ul class="formlist" class="mt0">
+    <li>
+      <label>标题&nbsp;&nbsp;</label>
+      <%= f.text_field :name, :class => 'txt'  %>
+    </li>
+  </ul>
   <%= render :partial => 'form1', :locals => {:f => f}  %>
 <% end %>
 

@@ -4,7 +4,8 @@ db.shops.insert({
     "name" : "测试1",
     "city" : "0571",
     'loc': [39.896445, 116.317378],
-    'level' :"A"
+    'level':"A",
+    'shops': [2]
 })
 
 db.shops.insert({

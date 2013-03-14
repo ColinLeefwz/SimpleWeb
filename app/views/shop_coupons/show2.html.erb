@@ -7,7 +7,7 @@
   </div>
   <div class="clear1"></div>
   <div class="plane3 pl100 pt20">
-	<a class="l " href="#">重新编辑</a>
+    <%= link_to '重新编辑', edit_shop_coupon_path(@coupon.id),:class => "l" %>
 	<span class="l plr20">|</span>
 	<%= link_to '返回列表', shop_coupons_path, :class=>"btn6 pl0 mt0" %>
 </div>

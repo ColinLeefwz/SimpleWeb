@@ -35,7 +35,7 @@ class ShopFaqsController < ApplicationController
     @shop_faq.od = @shop_faq.od.to_i
 
     if @shop_faq.save
-      redirect_to :action => "index"
+      redirect_to :action => "show", :id => @shop_faq.id
     else
       render :action => :new
     end
