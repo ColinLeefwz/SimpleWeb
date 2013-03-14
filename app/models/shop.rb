@@ -188,17 +188,20 @@ class Shop
     Coupon.where({shop_id: self.id, hidden: {'$exists' => false}, t2: 1}).sort({_id: -1})
   end
 
+  def checkin_eday_coupons
+    Coupon.where({shop_id: self.id, hidden: {'$exists' => false}, t2: 1, rule: '0'}).sort({_id: -1})
+  end
+
   def share_coupon
     Coupon.where({shop_id: self.id, hidden: {'$exists' => false}, t2: 2}).last
   end
   
   def send_coupon(user_id)
+    return if $redis.zrange("ckin#{self.id.to_i}", 0, -1).include?(user_id.to_s)
     coupons = []
     Coupon.gen_demo(self.id) if self.latest_coupons.empty? && (ENV["RAILS_ENV"] != "production" )
     coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
-    sub_shops.each do |shop|
-      coupons += shop.checkin_coupons.select { |coupon| coupon.allow_send_checkin?(user_id) }
-    end
+    sub_shops.each{|shop| coupons += shop.checkin_eday_coupons.to_a }
     coupons.each{|coupon| coupon.send_coupon(user_id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
