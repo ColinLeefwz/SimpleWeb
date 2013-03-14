@@ -4,6 +4,13 @@ require 'oauth2'
 require 'rest_client'
 
 class Oauth2Controller < ApplicationController
+  before_filter :user_login_filter, :only => [:logout, :unbind_sina, :unbind_qq, :share] 
+  before_filter :bind_login_filter, :only => [:login, :sso, :qq_client] 
+  
+  def bind_login_filter
+    user_login_filter if params[:bind].to_i==1 
+  end
+  
   
   def hello
     render :text => (session[:user_id].to_s + ".")
@@ -108,10 +115,6 @@ class Oauth2Controller < ApplicationController
   end
   
   def unbind_qq
-    if session[:user_id].nil?
-      render :json => {error: "未登录"}.to_json
-      return
-    end
     if session_user.wb_uid.nil?
       render :json => {error: "不能解除唯一登录帐号的绑定"}.to_json
       return
@@ -126,10 +129,6 @@ class Oauth2Controller < ApplicationController
   end
 
   def unbind_sina
-    if session[:user_id].nil?
-      render :json => {error: "未登录"}.to_json
-      return
-    end
     if session_user.wb_uid.nil?
       render :json => {error: "您没有绑定过新浪微博帐号"}.to_json
       return
@@ -145,10 +144,6 @@ class Oauth2Controller < ApplicationController
   
       
   def logout
-    if session[:user_id].nil?
-      render :json => {error: "未登录"}.to_json
-      return
-    end
     if params[:pushtoken] && session_user.tk==params[:pushtoken]
       session_user.unset(:tk)
     end
@@ -223,10 +218,6 @@ class Oauth2Controller < ApplicationController
   end
   
   def bind_qq(openid,token)
-    if session[:user_id].nil?
-      render :json => {error: "未登录"}.to_json
-      return
-    end
     if session_user.qq
       render :json => {error: "已经绑定了qq帐号"}.to_json
       return
@@ -242,16 +233,12 @@ class Oauth2Controller < ApplicationController
   end
 
   def bind_sina(wb_uid,token,data)
-    if session[:user_id].nil?
-      render :json => {error: "未登录"}.to_json
-      return
-    end
     if session_user.wb_uid
       render :json => {error: "已经绑定了新浪微博帐号"}.to_json
       return
     end
     if User.where({wb_uid:wb_uid}).count>0
-      render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
+      render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
       return
     end
     session_user.update_attribute(:wb_uid, wb_uid)
