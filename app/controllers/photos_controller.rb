@@ -46,6 +46,11 @@ class PhotosController < ApplicationController
       return
     end
     ret = photo.push(:like, {id:session[:user_id], name: session_user.name, t:Time.now})
+    #TODO: ver判断，大于1.4.1的才发送xmpp提醒
+    if session[:ver].to_f > 1.4
+      Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
+      "#{session_user.name}赞了你在#{photo.shop.name}分享的照片。")
+    end
     render :json => ret.to_json
   end
   
@@ -61,6 +66,10 @@ class PhotosController < ApplicationController
   def comment
     photo = Photo.find(params[:id])
     ret = photo.push(:com, {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now})
+    if session[:ver].to_f > 1.4
+      Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
+      "#{session_user.name}评论了你在#{photo.shop.name}分享的照片。")
+    end
     render :json => ret.to_json
   end
 
