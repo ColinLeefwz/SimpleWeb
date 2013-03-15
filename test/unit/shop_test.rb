@@ -80,11 +80,6 @@ class ShopTest < ActiveSupport::TestCase
     shop = Shop.find(2)
     assert_equal shop.answer_text('0'), "本地点未启用数字问答系统"
   end
-
-  test "#faq(od)" do
-    shop = Shop.find(1)
-    assert_equal shop.faq('1'), 1
-  end
   
 end
 
