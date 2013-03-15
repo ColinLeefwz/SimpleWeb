@@ -17,11 +17,9 @@ class Shop
   field :lob, type:Array #百度地图上的经纬度  
   #field :loc, type:Array #google地图上的经纬度
   field :lo, type:Array #实际的经纬度
-  field :tel 
   field :city
   #  field :phone
   field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. 
-  field :addr
   field :t                #脸脸的商家类型
   field :password
   field :utotal, type:Integer, default:0 #截至到昨天，该商家的用户总数
@@ -30,9 +28,6 @@ class Shop
   #field :osm_id #Open Street Map node id
   field :d, type:Integer #降权
   field :v, type:Integer #加权
-
-  #field :cc, type:Integer  #点评的评论数
-  field :type              #从mapabc导入的商家类型
   field :creator, type: Moped::BSON::ObjectId #该地点的创建者
 
 
@@ -99,7 +94,7 @@ class Shop
   end
   
   def safe_output
-    self.attributes.slice("name", "phone", "lo", "t").merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>self.addr, "id"=>self.id.to_i} )
+    self.attributes.slice("name", "lo", "t").merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
   end
   
   def safe_output_with_users
@@ -307,4 +302,26 @@ class Shop
     end
   end
   
+  
+  #将一些定位无关的商家信息保存到独立的ShopInfo中，为保持兼容性，添加一些代理addr等的方法。
+  def info
+    ShopInfo.find_by_id(self.id)
+  end
+  
+  def addr
+    info.addr
+  end
+
+  def phone
+    info.phone
+  end
+  
+  def tel
+    info.tel
+  end
+  
+  def type
+    info.type
+  end
+        
 end
