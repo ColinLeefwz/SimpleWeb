@@ -10,6 +10,7 @@ class AroundmeController < ApplicationController
       s = Shop.instantiate(x)
       s.safe_output_with_users
     end
+    record_gps(lo)
     render :json =>  hash.to_json
   end
 
@@ -38,12 +39,6 @@ class AroundmeController < ApplicationController
     else
       @shops = []
     end
-  end
-  
-  def mapabc
-    count = params[:count] || 100
-    loc = Offset.offset(params[:lat].to_f , params[:lng].to_f)
-    render :json =>  Mapabc.where({ loc: { "$within" => { "$center" => [loc, 0.003]} }}).limit(count).map {|s| s.safe_output_with_users}.to_json
   end
   
   def users
@@ -108,6 +103,13 @@ class AroundmeController < ApplicationController
     return uc*3 if(uc<=10) 
     return 75 if(uc>100) 
     return 30+(uc-10)/2
+  end
+  
+  def record_gps(lo)
+    hash = {uid:session[:user_id], lo:lo, acc:params[:accuracy]}
+    hash.merge!(bssid:params[:bssid]) if params[:bssid]
+    hash.merge!(bd:params[:baidu]) if params[:baidu]
+    GpsLog.collection.insert(hash)
   end
   
 end
