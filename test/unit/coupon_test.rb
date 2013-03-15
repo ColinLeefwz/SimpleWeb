@@ -11,14 +11,22 @@ class CouponTest < ActiveSupport::TestCase
     $redis.keys("ckin*").each{|key| $redis.zremrangebyrank(key, 0, -1)}
   end
 
+  test ".download(user_id) 优惠券下载" do
+    coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
+    user = User.find('502e6303421aa918ba000005')
+    coupon.download(user.id)
+    assert_equal coupon.users.length ,1
+    coupon.download(user.id)
+    assert_equal coupon.users.length ,2
+  end
 
 
   test ".use(user_id) 优惠券第一次使用。" do
-    coupon = Coupon.find('507fc5bfc9ad42d756a412e2')
+    coupon = Coupon.find('507fc5bfc9ad42d756a412e3')
     user = User.find('502e6303421aa918ba000005')
     coupon.download(user.id)
     coupon.use(user.id)
-    assert_equal coupon.users.first.keys, ['id', 'dat', 'uat']
+    assert_equal coupon.users.select{|s| s['id'] == user.id}.map { |m| m.keys }, [['id', 'dat', 'uat']]
   end
 
   test ".use(user_id) 优惠券同一用户第二次使用。" do
