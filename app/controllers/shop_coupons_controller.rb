@@ -56,7 +56,7 @@ class ShopCouponsController < ApplicationController
   end
 
   def all_img
-    @coupon = Coupon.find(params[:id])
+    @coupon = Coupon.find_primary(params[:id])
   end
 
   def cancel_crop
@@ -72,6 +72,10 @@ class ShopCouponsController < ApplicationController
 
   def create2
     @coupon = Coupon.new(params[:coupon])
+    if session_shop.share_coupon
+      flash.now[:notice] = '该商家已有一张未停用分享类优惠券.'
+      return render :action => :new2
+    end
     @coupon.shop_id = session[:shop_id]
     @coupon.t2 = 2
     if @coupon.save
@@ -90,7 +94,12 @@ class ShopCouponsController < ApplicationController
     @coupon.t2 = 1
     @coupon.process_img_upload = true if @coupon.t.to_i == 2
     if @coupon.img2.blank?
-      flash[:notice]='请上传图片.'
+      flash.now[:notice]='请上传图片.'
+      return render :layout => true
+    end
+
+    if @coupon.rule && Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :rule => @coupon.rule  }).count > 0
+      flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
       return render :layout => true
     end
 
@@ -110,10 +119,32 @@ class ShopCouponsController < ApplicationController
   # PUT /coupons/1.json
   def update
     @coupon = Coupon.find(params[:id])
-    @coupon.process_img_upload = true if @coupon.t.to_i == 2
+    coupon = Coupon.new(params[:coupon])
+    #修改全图模式,
+    if @coupon.t.to_i == 2
+      if coupon.img2.blank?
+        return render :action => 'all_img', :id => @coupon.id if coupon.rule.blank?
+        if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :_id => {"$ne" => @coupon.id},  :rule => coupon.rule  }).count > 0
+          flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
+          return render :action => 'all_img', :id => @coupon.id
+        end
+      else
+        @coupon.process_img_upload = true
+        @coupon.update_attributes(params[:coupon])
+        return redirect_to :action => :show_img2, :id => @coupon.id
+      end
+    end
+
+    #修改图文模式
+    if @coupon.t.to_i == 1
+      if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :_id => {"$ne" => @coupon.id}, :rule => coupon.rule  }).count > 0
+        flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
+        return  render :action => :edit
+      end
+    end
+   
     if @coupon.update_attributes(params[:coupon])
-      return redirect_to :action => :show_img2, :id => @coupon.id unless params[:flag].blank?
-      @coupon.gen_img if @coupon.t.to_i == 1
+      @coupon.gen_img if @coupon.t.to_i == 1 || (@coupon.t2==2 && !@coupon.img2.blank?)
       redirect_to :action => :show, :id => @coupon.id
     else
       render :action => :edit
