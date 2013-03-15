@@ -36,8 +36,8 @@ class Photo
     end
     send_qq if qq
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
-        :roomid  => room , :message => "[img:#{self._id}]#{self.desc}",
-        :uid => user_id)
+      :roomid  => room , :message => "[img:#{self._id}]#{self.desc}",
+      :uid => user_id)
   end
   
   def send_wb
@@ -57,7 +57,9 @@ class Photo
   
   def send_coupon
     coupon = shop.share_coupon
-    if coupon && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
+    return if coupon.nil?
+    return if coupon.users.to_a.detect{|u| u['id'].to_s == user_id.to_s && u['dat'].to_date == Time.now.to_date}
+    if coupon.text.nil? || (desc && desc.index(coupon.text) )
       coupon.send_coupon(user_id,self.id)
     end
   end

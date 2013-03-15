@@ -9,6 +9,7 @@ class ShopTest < ActiveSupport::TestCase
     reload('checkins.js')
     reload('shops.js')
     reload('coupons.js')
+    reload('shop_faqs.js')
   end
 
 
@@ -55,6 +56,35 @@ class ShopTest < ActiveSupport::TestCase
     assert_equal shop.send_coupon(user.id), nil
   end
 
+  test "#answer_text(msg) 回复0" do
+    shop = Shop.find(1)
+    assert_equal shop.answer_text('0'), "试试回复：\n01=>问题1.\n02=>问题2.\n03=>问题3.\n04=>问题4.\n05=>问题5."
+  end
+  
+  test "#answer_text(msg) 回复01" do
+    shop = Shop.find(1)
+    assert_equal shop.answer_text('01'), "答案1"
+  end
+
+  test "#answer_text(msg) 回复06" do
+    shop = Shop.find(1)
+    assert_equal shop.answer_text('06'), "试试回复：\n01=>问题1.\n02=>问题2.\n03=>问题3.\n04=>问题4.\n05=>问题5."
+  end
+
+  test "#answer_text(msg) 回复s" do
+    shop = Shop.find(1)
+    assert_equal shop.answer_text('s'), nil
+  end
+
+  test "#answer_text(msg) 没开通问答系统回复0" do
+    shop = Shop.find(2)
+    assert_equal shop.answer_text('0'), "本地点未启用数字问答系统"
+  end
+
+  test "#faq(od)" do
+    shop = Shop.find(1)
+    assert_equal shop.faq('1'), 1
+  end
   
 end
 
