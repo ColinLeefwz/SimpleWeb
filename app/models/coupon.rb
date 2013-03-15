@@ -37,7 +37,6 @@ class Coupon
   end
 
   def send_coupon(user_id,photo_id=nil)
-    return if downed(user_id) #所有的优惠券都只能下载一次
     download(user_id,photo_id)
     xmpp1 = Xmpp.chat("s#{shop_id}",user_id,message)
     logger.info(xmpp1)
