@@ -310,6 +310,7 @@ class User
   end
   
   def del_test_user
+    self.clear_my_cache
     user_logos.each {|x| x.destroy}
     photos.each {|x| x.destroy}
     Checkin.where({uid: _id}).each {|x| x.destroy}

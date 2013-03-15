@@ -220,9 +220,15 @@ hash的计算方式为：openid+access\_token+"dface"进行SHA1算法后取前32
 \item 如果脸脸\_session\_id没有过期：
 \begin{enumerate}
 
-\item 如果新浪微博或者QQ中的一个处于有效登录状态，需要使用另外一个服务时，此时要调用绑定接口。
+\item 如果新浪微博或者QQ中的一个处于有效登录状态(wb\_token/qq\_token处在有效期内)，需要使用另外一个服务时：
+\begin{enumerate}
+\item 如果以前绑定过另外一个的帐号，此时就登录那个帐号。
+\item 如果没有，此时要调用绑定接口。
+\end{enumerate}
+
 \item 如果新浪微博和QQ都没有登录，此时要返回到登录界面。\_session\_id作废。
-\item 绑定操作可以取消，而登录操作不能取消。
+\item 绑定操作只需要执行一次，以后只需要登录。当用户的个人信息中有wb\_uid，代表绑定过微博；有qq\_openid，代表绑定过QQ。
+\item 绑定操作可以取消。而对于登录操作，如果新浪微博或者QQ都没有登录，则不能取消。
 \end{enumerate}
 
 \item xmpp服务器是单独登录的。每次应用打开的时候登录，退出或切换到后台时退出。
