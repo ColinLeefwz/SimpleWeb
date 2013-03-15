@@ -70,6 +70,16 @@ class User
     return false
   end
   
+  #封杀用户
+  def kill
+    User.collection.find({_id:self._id}).update("$set" => {logo_backup:logo}) 
+    self.password=nil
+    logo = self.head_logo_id
+    self.head_logo_id=nil
+    self.save!
+    RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
+  end
+  
   #是否是被封杀的用户
   def forbidden?
     auto!=true && password==nil
