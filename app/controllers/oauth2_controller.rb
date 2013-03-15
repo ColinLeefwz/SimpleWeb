@@ -42,7 +42,7 @@ class Oauth2Controller < ApplicationController
     if params[:bind].to_i==1
       bind_sina(uid,token.token,data)
     else
-      do_login(uid,token.token,token.expires_in, data)
+      do_login_wb(uid,token.token,token.expires_in, data)
     end
   end
   
@@ -77,7 +77,7 @@ class Oauth2Controller < ApplicationController
     if params[:bind].to_i==1
       bind_sina(uid,token["access_token"],data)
     else
-      do_login(uid,token["access_token"], token["expires_in"], data)
+      do_login_wb(uid,token["access_token"], token["expires_in"], data)
     end
   end
   
@@ -94,7 +94,7 @@ class Oauth2Controller < ApplicationController
     if params[:bind].to_i==1
       bind_sina(uid,token,data)
     else
-      do_login(uid,token, params[:expires_in], data)
+      do_login_wb(uid,token, params[:expires_in], data)
     end
   end
 
@@ -246,8 +246,23 @@ class Oauth2Controller < ApplicationController
     render :json => data.merge!({binded: true}).to_json
   end  
   
-  def do_login(uid,token,expires_in,data)
-    clear_session_info
+  def do_login_wb_done(user,token,expires_in,data)
+    $redis.set("wbtoken#{user.id}",token)
+    $redis.set("wbexpire#{user.id}",expires_in)
+    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
+    data.merge!( user.head_logo_hash  )
+	  render :json => data.to_json
+  end
+  
+  def do_login_wb(uid,token,expires_in,data)
+    if session[:user_id]
+      if session_user.wb_uid != uid
+        render :json => {error:"此次登录的新浪微博帐号和绑定的新浪微博帐号不一致."}.to_json
+        return
+      end
+      do_login_wb_done(user,token,expires_in,data)
+      return
+    end
     user = User.where({wb_uid: uid}).first
     if user.nil? || user.auto
       user = gen_new_user(uid,token) if user.nil?
@@ -262,15 +277,26 @@ class Oauth2Controller < ApplicationController
       return
     end
     session[:user_id] = user.id
-    $redis.set("wbtoken#{user.id}",token)
-    $redis.set("wbexpire#{user.id}",expires_in)
+    do_login_wb_done(user,token,expires_in,data)
+  end
+  
+  def do_login_qq_done(user,token,expires_in,data)
+    $redis.set("qqtoken#{user.id}",token)
+    $redis.set("qqexpire#{user.id}",expires_in)
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
   end
 
   def do_login_qq(openid,token,expires_in,data)
-    clear_session_info
+    if session[:user_id]
+      if session_user.qq != openid
+        render :json => {error:"此次登录的QQ帐号和绑定的QQ帐号不一致."}.to_json
+        return
+      end
+      do_login_qq_done(user,token,expires_in,data)
+      return
+    end
     user = User.where({qq: openid}).first
     if user.nil?
       user = gen_new_user_qq(openid,token)
@@ -283,11 +309,7 @@ class Oauth2Controller < ApplicationController
       return
     end
     session[:user_id] = user.id
-    $redis.set("qqtoken#{user.id}",token)
-    $redis.set("qqexpire#{user.id}",expires_in)
-    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
-    data.merge!( user.head_logo_hash  )
-	  render :json => data.to_json
+    do_login_qq_done(user,token,expires_in,data)
   end
     
   def change_auto_user(user)
