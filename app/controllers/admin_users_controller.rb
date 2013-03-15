@@ -57,13 +57,8 @@ class AdminUsersController < ApplicationController
   end
   
   def kill
-    @user = User.find(params[:id])
-    @user.password=nil
-    logo = @user.head_logo_id
-    @user.head_logo_id=nil
-    @user.save!
-    User.collection.find({_id:@user._id}).update("$set" => {logo_backup:logo}) 
-    RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => params[:id]) 
+    user = User.find(params[:id])
+    user.kill
     render :text => "ok"
   end
   
