@@ -193,7 +193,7 @@ class Shop
   end
 
   def share_coupon
-    Coupon.where({shop_id: self.id, hidden: {'$exists' => false}, t2: 2}).last
+    Coupon.where({shop_id: self.id.to_i, hidden: {'$exists' => false}, t2: '2'}).last
   end
   
   def send_coupon(user_id)
@@ -232,7 +232,7 @@ class Shop
   def answer_text(msg)
     return  unless msg=='0' || msg =~ /^0[1-9]$/
     return "本地点未启用数字问答系统" unless self.has_faq?
-    faq = self.faq(msg.last)
+    faq = self.faq(msg[1].to_s)
     return "试试回复：\n" + self.faqs.map{|m| "0#{m.od}=>#{m.title}."}.join("\n") if faq.nil?
     if faq.img.blank?
       faq.text
