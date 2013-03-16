@@ -78,5 +78,21 @@ class UserTest < ActiveSupport::TestCase
     user = User.find_by_id('502e6303421aa918ba000007')
     assert !user.follower?(foll.id)
   end
+  
+  test "set/unset的缓存" do
+    user = User.find('502e6303421aa918ba00007c')
+    user.update_attribute(:job, "it")
+    assert_equal User.find('502e6303421aa918ba00007c').job, "it"
+    assert_equal User.find_by_id('502e6303421aa918ba00007c').job, "it"
+    user.unset(:job)
+    assert_equal User.find('502e6303421aa918ba00007c').job, nil
+    assert_equal User.find_by_id('502e6303421aa918ba00007c').job, nil
+    user.job="it2"
+    user.save!
+    assert_equal User.find('502e6303421aa918ba00007c').job, "it2"
+    assert_equal User.find_by_id('502e6303421aa918ba00007c').job, "it2"    
+  end
+  
+  
 end
 
