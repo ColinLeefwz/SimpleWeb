@@ -309,19 +309,19 @@ class Shop
   end
   
   def addr
-    info.addr
+    info.nil?? nil:info.addr
   end
 
   def phone
-    info.phone
+    info.nil?? nil:info.phone
   end
   
   def tel
-    info.tel
+    info.nil?? nil:info.tel
   end
   
   def type
-    info.type
+    info.nil?? nil:info.type
   end
         
 end
