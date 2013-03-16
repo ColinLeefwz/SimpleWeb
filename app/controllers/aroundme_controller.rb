@@ -70,13 +70,12 @@ class AroundmeController < ApplicationController
     else
       sex = session_user.gender
     end
-    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip).limit(pcount*5).to_a
-    #TODO: 缓存一个用户（在一个城市）的最后一次签到
-    arr = ckins.uniq!{|x| x.uid}.map{|c| [c.user,c.shop,c.cati]}
-    if arr.nil?
-      render :json => [].to_json
-      return
+    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*5).to_a
+    if ckins.size==0
+      ckins = Checkin.where({city: nil, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*5).to_a
     end
+    #TODO: 缓存一个用户（在一个城市）的最后一次签到
+    arr = ckins.uniq!{|x| x.uid}[0,pcount].map{|c| [c.user,c.shop,c.cati]}
     users = []
     arr.each do |user,shop,cati| 
       next if shop.nil?
