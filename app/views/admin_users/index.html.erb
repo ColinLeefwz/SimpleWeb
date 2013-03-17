@@ -32,7 +32,7 @@
     <tr>
       <td><%= user._id %></td>
       <td><%= user.cat.strftime("%Y-%m-%d %H:%M") %></td>
-      <td><%= user.name %></td>
+      <td><%=image_tag(user.head_logo.img.url(:t1), :size => "50x50") if user.head_logo%><%= user.name %></td>
       <td><%= user.birthday %></td>
       <td><%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %></td>
       <td><%= user.show_gender %></td>
