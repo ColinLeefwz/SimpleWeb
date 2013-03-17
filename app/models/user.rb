@@ -21,6 +21,7 @@ class User
   field :auto, type:Boolean #自动抓取
   field :atime, type:DateTime #自动抓取的微博用户实际注册脸脸的时间
   field :qq
+  field :qq_name
 
   field :tk  #Push消息的token
   field :city
@@ -72,9 +73,8 @@ class User
   
   #封杀用户
   def kill
-    User.collection.find({_id:self._id}).update("$set" => {logo_backup:logo}) 
+    User.collection.find({_id:self._id}).update("$set" => {logo_backup:head_logo_id}) 
     self.password=nil
-    logo = self.head_logo_id
     self.head_logo_id=nil
     self.save!
     RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
