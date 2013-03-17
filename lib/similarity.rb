@@ -151,7 +151,7 @@ module Similarity
       sames << [y,score] if score>min_score
     end
     sames.each {|x| puts x}
-    sames.sort{|a,b| b[1]<=>b[2]}.map{|x| x[0]}
+    sames.sort{|a,b| b[1]<=>a[1]}.map{|x| x[0]}
   end
   
 end
