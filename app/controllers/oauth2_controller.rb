@@ -364,6 +364,7 @@ class Oauth2Controller < ApplicationController
     user.qq = openid
     user.password = Digest::SHA1.hexdigest(":dface#{user.qq}")[0,16]
     user.name = info["nickname"]
+    user.qq_name = info["nickname"]    
     user.save!
     user
   end  
