@@ -43,12 +43,7 @@ class UserInfoController < ApplicationController
   
   def get_self
     user = User.find_primary(session[:user_id])
-    data = {}
-    wbtoken = $redis.get("wbtoken#{session_user.id}")
-    data.merge!({wb_token: wbtoken , wb_expire: $redis.get("wbexpire#{session_user.id}") }) if wbtoken
-    qqtoken =  $redis.get("qqtoken#{session_user.id}")
-    data.merge!({qq_token:  qqtoken, qq_expire: $redis.get("qqexpire#{session_user.id}") }) if qqtoken    
-    render :json => user.attr_with_id.merge!(user.head_logo_hash).merge!(data).to_json
+    render :json => user.attr_with_id.merge!(user.head_logo_hash).to_json
   end
 
   def set

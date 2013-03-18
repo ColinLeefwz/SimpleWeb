@@ -91,6 +91,8 @@ class User
   def attr_with_id
     hash = self.attributes.merge({id: self._id})
     hash.delete("_id")
+    hash.delete("qq")
+    hash.merge!({qq_openid: self.qq}) if self.qq
     hash
   end
 
