@@ -88,7 +88,6 @@ hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
 
 新的登录方式不需要调用新浪的Xauth API，直接调用本API即可以登录。客户端应该不需要保存AppSecret。通过预先保存的AppKey和本调用输出中包含的token应该就可以访问新浪微博的API了。
 
-如果加上可选的bind=1，则代表是绑定操作。绑定成功返回{binded: true}
 
 
 
