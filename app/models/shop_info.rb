@@ -3,6 +3,8 @@
 class ShopInfo
   include Mongoid::Document
 
+  field :_id, type: Integer
+  
   field :addr
   field :tel 
   field :phone
