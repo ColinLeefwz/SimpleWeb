@@ -131,8 +131,9 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "您没有绑定过qq帐号"}.to_json
       return
     end    
-    session_user.unset(:qq)
-    $redis.del("qqtoken#{session_user.id}")
+    User.find(session[:user_id]).unset(:qq)
+    $redis.del("qqtoken#{session[:user_id]}")
+    $redis.del("qqexpire#{session[:user_id]}")
     render :json => {unbind: true}.to_json
   end
 
@@ -145,8 +146,9 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "不能解除唯一登录帐号的绑定"}.to_json
       return
     end    
-    session_user.unset(:wb_uid)
-    $redis.del("qqtoken#{session_user.id}")
+    User.find(session[:user_id]).unset(:wb_uid)
+    $redis.del("wbtoken#{session[:user_id]}")
+    $redis.del("wbexpire#{session[:user_id]}")
     render :json => {unbind: true}.to_json
   end
   
