@@ -232,7 +232,7 @@ class Oauth2Controller < ApplicationController
   def do_login_wb_done(user,token,expires_in,data)
     $redis.set("wbtoken#{user.id}",token)
     $redis.set("wbexpire#{user.id}",expires_in)
-    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
+    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender, :wb_uid => user.wb_uid} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
   end
@@ -280,7 +280,7 @@ class Oauth2Controller < ApplicationController
   def do_login_qq_done(user,token,expires_in,data)
     $redis.set("qqtoken#{user.id}",token)
     $redis.set("qqexpire#{user.id}",expires_in)
-    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
+    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender, :qq_openid => user.qq} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
   end
