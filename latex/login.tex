@@ -71,7 +71,7 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
  \hline
  hash  & 字符串 & 必须 &  hash验证码\\
 \hline
- bind  & 整数 & 可选 &  bind为0表示登录，1表示绑定微博帐户，默认为0\\
+ bind  & 整数 & 可选 &  bind为0表示正常登录，1表示绑定微博帐户，2表示已经绑定过微博且已经用qq登录时，同时登录微博。默认为0\\
 \hline
 \end{tabular}
    \end{center}
@@ -113,7 +113,7 @@ hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
  \hline
  hash  & 字符串 & 必须 &  hash验证码\\
 \hline
- bind  & 整数 & 可选 &  bind为0表示登录，1表示绑定微博帐户，默认为0\\
+ bind  & 整数 & 可选 &  bind为0表示正常登录，1表示绑定微博帐户，2表示已经绑定过微博且已经用qq登录时，同时登录微博。默认为0\\
 \hline
 \end{tabular}
    \end{center}
@@ -141,7 +141,8 @@ hash的计算方式为：uid+access\_token+"dface"进行SHA1算法后取前32位
  \hline
  hash  & 字符串 & 必须 &  hash验证码\\
  \hline
- bind  & 整数 & 可选 &  bind为0表示登录，1表示绑定qq帐户，默认为0\\
+ bind  & 整数 & 可选 &  bind为0表示正常登录，1表示绑定qq帐户，2表示已经绑定过qq且已经用微博登录时，同时登录qq。默认为0\\
+
 \hline
 \end{tabular}
    \end{center}
@@ -216,22 +217,38 @@ hash的计算方式为：openid+access\_token+"dface"进行SHA1算法后取前32
 
 \begin{enumerate}
 
-\item 当访问web接口时，如果返回的error信息是"not login"，此时代表要登录脸脸web服务器。但是脸脸不提供独立的帐户体系，要登陆脸脸Web服务器，必须登陆新浪微博或者QQ中的一个。当脸脸登录时，如果客户端缓存有未过期的新浪微博或者QQ认证信息，要丢弃。Web服务器认证信息保存在\_session\_id中。\_session\_id默认没有过期时间，也就是除非用户主动退出或者服务器端返回"not login"，否则一直有效。
-\item 如果脸脸\_session\_id没有过期：
+\item 当访问web接口时，如果返回的error信息是"not login"，此时代表要登录脸脸web服务器。但是脸脸不提供独立的帐户体系，要登陆脸脸Web服务器，必须登陆新浪微博或者QQ中的一个。当脸脸登录时，如果客户端缓存有未过期的新浪微博或者QQ认证信息，要丢弃。Web服务器认证信息保存在\_session\_id中。\_session\_id默认没有过期时间。
+\item 如果脸脸\_session\_id包含登录信息（没返回not login）：
 \begin{enumerate}
 
 \item 如果新浪微博或者QQ中的一个处于有效登录状态(wb\_token/qq\_token处在有效期内)，需要使用另外一个服务时：
 \begin{enumerate}
-\item 如果以前绑定过另外一个的帐号，此时就登录那个帐号。
-\item 如果没有，此时要调用绑定接口。
+\item 如果以前绑定过另外一个的帐号，使用bind=2参数登录。
+\item 如果没有，此时要绑定帐号。要使用bind=1参数登录。此时会绑定帐号并登录。
 \end{enumerate}
 
-\item 如果新浪微博和QQ都没有登录，此时要返回到登录界面。\_session\_id作废。
-\item 绑定操作只需要执行一次，以后只需要登录。当用户的个人信息中有wb\_uid，代表绑定过微博；有qq\_openid，代表绑定过QQ。
+\item 如果新浪微博和QQ都没有登录，此时要返回到登录界面。
+\item 绑定操作（bind=1）只需要执行一次，
+\item 当用户的个人信息中有wb\_uid，代表绑定过微博；有qq\_openid，代表绑定过QQ。
+\item 当用户的个人信息中有wb\_token，代表登录了微博；有qq\_token，代表登录了QQ。
 \item 绑定操作可以取消。而对于登录操作，如果新浪微博或者QQ都没有登录，则不能取消。
 \end{enumerate}
 
+\item 关于\_session\_id：
+\begin{enumerate}
+\item 首次安装应用调用init接口时，生成\_session\_id。以后所有的调用包括后来的init调用也要带上\_session\_id。
+\item 即使没有登录也分配\_session\_id。
+\item 调用logout时会变更\_session\_id。
+\item 任何调用，如果没带\_session\_id，会生成新的\_session\_id。这样用户原来的所有状态信息会丢失，这是不建议的。
+
+\end{enumerate}
+
+\item 总的来说就是：没有\_session\_id通过init调用获得\_session\_id；每次调用总是带上\_session\_id，logout时更新\_session\_id。
+
+
 \item xmpp服务器是单独登录的。每次应用打开的时候登录，退出或切换到后台时退出。
+
+
 \end{enumerate}
 
 
