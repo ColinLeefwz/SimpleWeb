@@ -42,7 +42,7 @@ class UserInfoController < ApplicationController
   end
   
   def get_self
-    user = session_user
+    user = User.find_primary(session[:user_id])
     data = {}
     wbtoken = $redis.get("wbtoken#{session_user.id}")
     data.merge!({wb_token: wbtoken , wb_expire: $redis.get("wbexpire#{session_user.id}") }) if wbtoken
