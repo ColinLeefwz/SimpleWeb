@@ -4,6 +4,9 @@ class SinaFriend
   Logger = Logger.new('log/weibo/sina_friend.log', 0, 100 * 1024 * 1024)
   
   include Mongoid::Document
+  store_in({:database => "sina"})
+  
+  
   field :_id, type: String
   field :data, type: Hash #{ids, total_number}
 
