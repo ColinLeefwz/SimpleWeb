@@ -2,7 +2,7 @@
 class  ActiveSupport::TestCase
   def logout
     get '/oauth2/logout'
-    raise("注销失败") if  session !={}
+    raise("注销失败") if  session[:user_id] != nil
   end
 
   def login(user_id)
