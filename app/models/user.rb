@@ -73,7 +73,9 @@ class User
   
   #封杀用户
   def kill
+    logo = User.head_logo
     User.collection.find({_id:self._id}).update("$set" => {logo_backup:head_logo_id}) 
+    logo.destroy
     self.password=nil
     self.head_logo_id=nil
     self.save!
