@@ -68,7 +68,7 @@ class AdminUserAddShopsController < ApplicationController
       
       pshop = Shop.find_by_id(params[:pid])
       if pshop
-        pshop.shops = pshop.shops.to_a << @shop.id.to_i unless pshop.shops.include?(@shop.id.to_i)
+        pshop.shops = pshop.shops.to_a << @shop.id.to_i unless pshop.shops.to_a.include?(@shop.id.to_i)
         pshop.save
         pshop.merge_subshops_locations
       end
