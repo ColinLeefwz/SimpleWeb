@@ -19,7 +19,7 @@
         redirect = false;
 
     //判断设备      
-    if(/(mobile|wap|ipod|android)/i.test(userAgent)){
+    if(/(mobile|wap|android)/i.test(userAgent)){// if(/(mobile|wap|ipod|android)/i.test(userAgent)){
        window.location.replace(mobile_host);
     }else{
         return;
@@ -27,7 +27,6 @@
     if(/pad/i.test(userAgent) || /ting/i.test(userAgent)){  
         return;
     }
-
 })();
 
 
