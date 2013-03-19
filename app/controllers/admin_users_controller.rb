@@ -23,7 +23,7 @@ class AdminUsersController < ApplicationController
       hash.merge!({wb_v: true}) 
     end
 
-    @users =  paginate("User", params[:page], hash, sort)
+    @users =  paginate3("User", params[:page], hash, sort)
 
 
   end
