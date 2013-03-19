@@ -94,7 +94,7 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
-    data = {}
+    data = {:wb_uid => uid}
     if params[:bind].to_i==1
       bind_sina(uid,token, params[:expires_in], data)
     elsif params[:bind].to_i==2
@@ -112,7 +112,7 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
-    data = {}
+    data = {qq_openid:openid}
     if params[:bind].to_i==1
       bind_qq(openid,token,params[:expires_in], data)
     elsif params[:bind].to_i==2
@@ -123,11 +123,11 @@ class Oauth2Controller < ApplicationController
   end
   
   def unbind_qq
-    if session_user.wb_uid.nil?
+    if session_user_no_cache.wb_uid.nil?
       render :json => {error: "不能解除唯一登录帐号的绑定"}.to_json
       return
     end
-    if session_user.qq.nil?
+    if session_user_no_cache.qq.nil?
       render :json => {error: "您没有绑定过qq帐号"}.to_json
       return
     end    
@@ -138,11 +138,11 @@ class Oauth2Controller < ApplicationController
   end
 
   def unbind_sina
-    if session_user.wb_uid.nil?
+    if session_user_no_cache.wb_uid.nil?
       render :json => {error: "您没有绑定过新浪微博帐号"}.to_json
       return
     end
-    if session_user.qq.nil?
+    if session_user_no_cache.qq.nil?
       render :json => {error: "不能解除唯一登录帐号的绑定"}.to_json
       return
     end    
@@ -154,8 +154,8 @@ class Oauth2Controller < ApplicationController
   
       
   def logout
-    if params[:pushtoken] && session_user.tk==params[:pushtoken]
-      session_user.unset(:tk)
+    if params[:pushtoken] && session_user_no_cache.tk==params[:pushtoken]
+      session_user_no_cache.unset(:tk)
     end
     clear_session_info
     render :json => {"logout" => true}.to_json
@@ -164,7 +164,7 @@ class Oauth2Controller < ApplicationController
   def share
     t = params[:t].to_i
     if t==0
-      Resque.enqueue(WeiboFirst, $redis.get("wbtoken#{session_user.id}") )
+      Resque.enqueue(WeiboFirst, $redis.get("wbtoken#{session[:user_id]}") )
       render :json => {"shared" => true}.to_json
     elsif t==1
       Resque.enqueue(QqFirst, session[:user_id])
@@ -232,13 +232,13 @@ class Oauth2Controller < ApplicationController
   def do_login_wb_done(user,token,expires_in,data)
     $redis.set("wbtoken#{user.id}",token)
     $redis.set("wbexpire#{user.id}",expires_in)
-    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender, :wb_uid => user.wb_uid} )
+    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
   end
 
   def bind_sina(wb_uid,token,expires_in,data)
-    if session_user.wb_uid
+    if session_user_no_cache.wb_uid
       render :json => {error: "已经绑定了新浪微博帐号"}.to_json
       return
     end
@@ -246,16 +246,16 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
       return
     end
-    session_user.update_attribute(:wb_uid, wb_uid)
-    do_login_wb_done(session_user,token,expires_in,data)
+    session_user_no_cache.update_attribute(:wb_uid, wb_uid)
+    do_login_wb_done(session_user_no_cache,token,expires_in,data)
   end  
     
   def bind_sina2(uid,token,expires_in,data)
-    if session_user.wb_uid != uid
+    if session_user_no_cache.wb_uid != uid
       render :json => {error:"此次登录的新浪微博帐号和绑定的新浪微博帐号不一致."}.to_json
       return
     end
-    do_login_wb_done(session_user,token,expires_in,data)
+    do_login_wb_done(session_user_no_cache,token,expires_in,data)
   end 
   
   
@@ -280,13 +280,13 @@ class Oauth2Controller < ApplicationController
   def do_login_qq_done(user,token,expires_in,data)
     $redis.set("qqtoken#{user.id}",token)
     $redis.set("qqexpire#{user.id}",expires_in)
-    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender, :qq_openid => user.qq} )
+    data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
   end
   
   def bind_qq(openid,token,expires_in,data)
-    if session_user.qq
+    if session_user_no_cache.qq
       render :json => {error: "已经绑定了qq帐号"}.to_json
       return
     end
@@ -295,16 +295,16 @@ class Oauth2Controller < ApplicationController
       return
     end
     #TODO: 调用https://graph.qq.com/oauth2.0/me?access_token= 来判断openid的真实性。
-    session_user.update_attribute(:qq, openid)
-    do_login_qq_done(session_user,token,expires_in,data)
+    session_user_no_cache.update_attribute(:qq, openid)
+    do_login_qq_done(session_user_no_cache,token,expires_in,data)
   end
   
   def bind_qq2(openid,token,expires_in,data)
-    if session_user.qq != openid
+    if session_user_no_cache.qq != openid
       render :json => {error:"此次登录的QQ帐号和绑定的QQ帐号不一致."}.to_json
       return
     end
-    do_login_qq_done(session_user,token,expires_in,data)
+    do_login_qq_done(session_user_no_cache,token,expires_in,data)
   end
 
   def do_login_qq(openid,token,expires_in,data)

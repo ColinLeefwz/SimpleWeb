@@ -102,6 +102,10 @@ class ApplicationController < ActionController::Base
     u=User.find_by_id(session[:user_id])
     u
   end
+  
+  def session_user_no_cache
+    User.find_primary(session[:user_id])
+  end
 
   def session_admin
     Admin.find_by_id(session[:admin_id])
