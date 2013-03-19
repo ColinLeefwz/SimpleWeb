@@ -82,6 +82,7 @@ class UserTest < ActiveSupport::TestCase
   test "set/unset的缓存" do
     user = User.find('502e6303421aa918ba00007c')
     user.update_attribute(:job, "it")
+    assert_equal user.job, "it"    
     assert_equal User.find('502e6303421aa918ba00007c').job, "it"
     assert_equal User.find_by_id('502e6303421aa918ba00007c').job, "it"
     user.unset(:job)
@@ -91,6 +92,11 @@ class UserTest < ActiveSupport::TestCase
     user.save!
     assert_equal User.find('502e6303421aa918ba00007c').job, "it2"
     assert_equal User.find_by_id('502e6303421aa918ba00007c').job, "it2"    
+    
+    User.find_by_id('502e6303421aa918ba00007c')
+    user = User.find_by_id('502e6303421aa918ba00007c')
+    user.update_attribute(:job, "it3")
+    assert_equal user.job, "it3"    
   end
   
   
