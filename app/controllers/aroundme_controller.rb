@@ -23,7 +23,12 @@ class AroundmeController < ApplicationController
   end
 
   def report
-    ShopReport.create(:uid => params[:uid], :sid => params[:sid], :des => params[:des] )
+    user = User.find_by_id(params[:uid])
+    if user.nil?
+      render :json => ""
+      return
+    end
+    ShopReport.create(:uid => user.id, :sid => params[:sid], :des => params[:des] )
     render :js => true
   end
   
