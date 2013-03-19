@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-	<meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=yes, target-densitydpi=device-dpi">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes, target-densitydpi=device-dpi">
     <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
     <meta content="no-cache" http-equiv="Pragma"/>
     <meta content="no-cache" http-equiv="Cache-Control"/>
@@ -26,24 +26,24 @@
 	
 	<script type="text/javascript">
 		DD_belatedPNG.fix('.logo2, .logo');
-		
 	</script>
 <![endif]-->
 
     <%= yield :ahead %>
 	
   </head>
-
   <body>
     <div class="header">
 		<div class="headerinner">
-			<a href="/shop_login/index"><h1 class="logo2">脸脸网</h1></a>
-			<span class="name"><%= session_shop.name %>, <a href="/shop_login/logout">退出</a></span>
+			<img src="../images/logo4.png" align="absbottom"/><span><%= session_shop.name %></span>
 		</div>
 	</div>
 
 	<div class="con">
 		<div class="conleft">
+		<a href="/shop_logos"><img src="../images/img-75.jpg" class="headerImg"></a>
+		<span class="l pt5"><%= session_shop.name %></span>
+			<div class="clear1"></div>
 			<div id="Nav" class="nav">
 				<a href="/shop_login/index" class="index" name="n0">脸脸首页
 					<span class="sign"></span>
@@ -57,19 +57,21 @@
 				<span class="borderstyle"></span>
 				<a href="/shop_checkins" name="n1" class="arrow">签到管理</a>
 				<span class="borderstyle"></span>
-				<!--a href="/shop_shop_notices" name="n9">公告管理</a-->
+				<a href="/shop_shop_notices" name="n9" class="arrow">公告管理</a>
+				<span class="borderstyle"></span>
 				<span class="tit">商家设置</span>
 					<%= link_to "商家logo", "/shop_logos", :class =>'s arrow' ,:name=>'n11' %>
 					<%= link_to "修改密码", "/shop_pass/index" , :class => 's arrow' , :name=>'n12'%>
 				<span class="borderstyle"></span>
 				<a href="/shop_staffs" name="n13" class="arrow">员工管理</a>
 				<span class="borderstyle"></span>
-				<a href="/shop_subshops" name="n14"  class="arrow">分店管理</a>
+				<a href="/shop_subshops" name="n14" class="arrow">分店管理</a>
+				<span class="borderstyle"></span>
+				<a href="/shop_login/logout" class="arrow">退出</a>
 			</div>
 
 		</div>
       <div class="conright">
-        
         <%= yield  %>
       </div>
 	</div>
