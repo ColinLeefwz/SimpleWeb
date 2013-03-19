@@ -127,13 +127,25 @@ module ApplicationHelper
   end
   
   def generate_paginate2
-
     html = "<form methods='get' action='#{url_for(request.params)}'>"
     html += %q(<div class="pagination r">)
     html += link_to "上一页",request.params.merge!(:page => @page -1),:class => "prev_page"  if @page != 1
     html += "<span class='current'>第<input type='text' name='page' value='#{@page}'>页</span>"
     request.params.delete_if{|k, v| ['controller', 'action', 'page'].include?(k)}.each{|k,v| html += "<input type='hidden' name='#{k}' value='#{v}' />" }
     html +=  link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page
+    html += "</div>"
+    html += "</form>"
+  end
+
+  def generate_paginate3
+    html = "<form methods='get' action='#{url_for(request.params)}'>"
+    html += %q(<div class="pagination r">)
+    html += link_to "首页",request.params.merge!(:page => 1),:class => "prev_page"  if @page != 1
+    html += link_to "上一页",request.params.merge!(:page => @page -1),:class => "prev_page"  if @page != 1
+    html += "<span class='current'>第<input type='text' name='page' value='#{@page}'>页</span>"
+    request.params.delete_if{|k, v| ['controller', 'action', 'page'].include?(k)}.each{|k,v| html += "<input type='hidden' name='#{k}' value='#{v}' />" }
+    html +=  link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page != -1
+    html +=  link_to "未页",request.params.merge!(:page => -1), :class => "next_page"  if @page
     html += "</div>"
     html += "</form>"
   end

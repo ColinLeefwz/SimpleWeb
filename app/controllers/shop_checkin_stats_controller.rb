@@ -13,7 +13,7 @@ class ShopCheckinStatsController < ApplicationController
     end
 
     sort = {utotal: -1}
-    @checkin_shop_stats =  paginate("CheckinShopStat", params[:page], hash, sort)
+    @checkin_shop_stats =  paginate3("CheckinShopStat", params[:page], hash, sort)
   end
 
   def show_users

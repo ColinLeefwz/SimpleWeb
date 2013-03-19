@@ -33,7 +33,7 @@ class IpCheckinStatsController < ApplicationController
     end
 
 
-    @checkin_ip_stats = paginate("CheckinIpStat", params[:page], hash, sort )
+    @checkin_ip_stats = paginate3("CheckinIpStat", params[:page], hash, sort )
   end
 
   def show_shops

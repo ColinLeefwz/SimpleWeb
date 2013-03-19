@@ -6,6 +6,7 @@ class AdminUserAddShopsController < ApplicationController
 
   def index
     hash = {creator: {"$exists" => true}}
+
      
     case params[:t].to_s
     when ''
@@ -23,8 +24,7 @@ class AdminUserAddShopsController < ApplicationController
     hash.merge!({})
     hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
     hash.merge!({city: params[:city]}) unless params[:city].blank?
-    @page =  params[:page].blank? ? 1 : params[:page].to_i
-    @shops = Shop.where(hash).skip((@page-1)*10).limit(10).sort({_id: -1})
+    @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
   end
 
   def show
@@ -48,20 +48,32 @@ class AdminUserAddShopsController < ApplicationController
       lobs = shop.lob.split(/[;；]/)
       @shop.lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
       @shop.lo = @shop.lob.map{|m| Shop.lob_to_lo(m)}
+      @shop.unset(:lob)
     else
       shop.lob = @shop.lo_to_lob.reverse.join(',')
     end
-    @shop.addr = shop.addr
+
+    
+    unless params[:shop][:addr].blank?
+      info = @shop.info || ShopInfo.new()
+      info._id = @shop.id
+      info.addr = params[:shop][:addr]
+      info.save
+    end
+
+    #    @shop.addr = shop.addr
     @shop.name = shop.name
     @shop.t = shop.t
     if @shop.save
+      
       pshop = Shop.find_by_id(params[:pid])
       if pshop
         pshop.shops = pshop.shops.to_a << @shop.id.to_i unless pshop.shops.include?(@shop.id.to_i)
         pshop.save
         pshop.merge_subshops_locations
       end
-      render :json => @shop.attributes.slice('name', 'lo', 'addr').merge('lob' => shop.lob, 'st' => @shop.show_t)
+      @shop = Shop.find_primary(@shop._id)
+      render :json => {'name' => @shop.name, 'lo' => @shop.lo, 'addr' => @shop.addr, 'lob' => shop.lob, 'st' => @shop.show_t}
     else
       render :action => :edit
     end
