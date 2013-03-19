@@ -6,7 +6,7 @@ class CheckinUserManyController < ApplicationController
   def index
     sort = {:_id => -1}
     hash = {}
-    @checkin_user_manies = paginate("CheckinUserMany", params[:page], hash, sort)
+    @checkin_user_manies = paginate3("CheckinUserMany", params[:page], hash, sort)
   end
 
   def show_user

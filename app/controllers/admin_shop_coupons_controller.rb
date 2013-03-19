@@ -12,7 +12,7 @@ class AdminShopCouponsController < ApplicationController
     end
     #id 必须在name后面, 因为给定id 前面的name就会覆盖。
     hash.merge!({shop_id: params[:sid].to_i}) unless params[:sid].blank?
-    @coupons = paginate("Coupon", params[:page], hash, sort)
+    @coupons = paginate3("Coupon", params[:page], hash, sort)
   end
 
   # GET /coupons/1

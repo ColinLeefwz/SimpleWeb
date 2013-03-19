@@ -7,7 +7,7 @@ class CheckinLocAccsController < ApplicationController
   def index
     sort = {_id: -1}
     hash = {}
-    @checkin_loc_accs = paginate("CheckinLocAcc", params[:page], hash, sort)
+    @checkin_loc_accs = paginate3("CheckinLocAcc", params[:page], hash, sort)
   end
 end
 

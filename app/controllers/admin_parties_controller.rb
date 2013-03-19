@@ -6,7 +6,7 @@ class AdminPartiesController < ApplicationController
   def index
     hash = {}
     sort = {_id: -1}
-    @parties = paginate('Party', params[:page], hash , sort)
+    @parties = paginate3('Party', params[:page], hash , sort)
   end
 
   def new

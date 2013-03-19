@@ -10,7 +10,7 @@ class AdminBaiduController < ApplicationController
       hash.merge!({:city => params[:city], :name => /#{params[:name]}/})
     end
     hash.merge!({:id => params[:id].to_i}) unless params[:id].blank?
-    @shops = paginate('Baidu', params[:page], hash , sort)
+    @shops = paginate3('Baidu', params[:page], hash , sort)
   end
 end
 
