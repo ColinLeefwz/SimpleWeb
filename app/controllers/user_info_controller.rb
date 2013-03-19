@@ -42,7 +42,7 @@ class UserInfoController < ApplicationController
   end
   
   def get_self
-    user = User.find_primary(session[:user_id])
+    user = session_user_no_cache
     render :json => user.attr_with_id.merge!(user.head_logo_hash).to_json
   end
 
