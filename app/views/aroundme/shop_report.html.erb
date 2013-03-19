@@ -6,7 +6,7 @@
     <meta content="0" http-equiv="Expires"/>
     <title>地点纠错|脸脸</title>
     <link href="/phone2/css/style.css" rel="stylesheet" type="text/css">
-    <script src="/javascripts/jquery-1.6.2.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
     <style>
       .ne_list div {
         font-size: 30px;
@@ -59,18 +59,17 @@
         $('#sid').val(hid)
         $('#res').css('background-color', '#0000FF')
       }
-      function ajaxReport(){
+      function ajaxReport(uid){
         des = $('#des').val();
         if(des.length >= 3){
           sid = $('#sid').val();
-          uid = <%= params[:uid] %>
           $.get('/aroundme/report', {sid: sid, des: des, uid: uid}, function(){
             $('#dig').hide();
             $('#shop'+sid).remove();
           })
         }
         else
-        $('#res').css('background-color', '#ff0000')
+          $('#res').css('background-color', '#ff0000')
       }
       function hidReport(){
         $('#dig').hide();
@@ -79,8 +78,8 @@
   </head>
   <body>
     <div id="main">
-      <div style="position:absolute;width: 100%; height:100%;font-size: 30px;background-color: #000;opacity: 0.9;display: none" id="dig">
-         <div style="position:absolute;background-color:#fff;left:10%;top:33%;width:80%;height:200px;">
+      <div style="position:relative;width: 100%; height:100%;font-size: 30px;background-color: #000;opacity: 0.9;display: none" id="dig">
+        <div style="position:relative;background-color:#fff;left:10%;top:33%;width:80%;height:200px;">
           <div style="background-color:#00FFCC; width: 100%; height:46px;padding-top:10px;" id="res">
             请输入三字以上的错误原因
           </div>
@@ -88,7 +87,7 @@
             <input class="text4" type="text" name="des" style="margin-top:15px;margin-left:20px;width:90%" id="des" >
             <input type="hidden" name="sid" id="sid">
             <br/>
-            <input class="rbtn1 ml15 mt4" type="submit" value="完 成" onclick="ajaxReport()">
+            <input class="rbtn1 ml15 mt4" type="submit" value="完 成" onclick="ajaxReport('<%= params[:uid] %>')">
             <input class="rbtn2 ml15 mt4" type="submit" value="取 消" onclick="hidReport()">
           </div>
         </div>
