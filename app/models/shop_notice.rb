@@ -30,7 +30,7 @@ class ShopNotice
 
   def self.find_or_new(id)
     begin
-      self.find_by_id(id)
+      self.find(id)
     rescue
       self.new
     end
