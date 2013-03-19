@@ -6,6 +6,6 @@ class CheckinDaysController < ApplicationController
   def index
     hash = {}
     sort = {_id: -1}
-    @checkin_days = paginate("CheckinDay", params[:page], hash, sort  )
+    @checkin_days = paginate3("CheckinDay", params[:page], hash, sort  )
   end
 end
