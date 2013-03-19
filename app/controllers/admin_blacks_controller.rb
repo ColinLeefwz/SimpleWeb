@@ -4,7 +4,7 @@ class AdminBlacksController < ApplicationController
   layout "admin"
 
   def index
-    @users =  User.where({"blacks.report" => 1}).sort({_id:-1})
+    @users = paginate3("User", params[:page], {"blacks.report" => 1}, {_id:-1})
   end
   
 
