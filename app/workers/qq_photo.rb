@@ -10,7 +10,7 @@ class QqPhoto
   end
   
   def self.do_share(token,openid,title, text, url, comment)
-    RestClient.post("https://graph.qq.com/share/add_share",
+    response = RestClient.post("https://graph.qq.com/share/add_share",
     :access_token => token,
     :oauth_consumer_key => $qq_api_key,
     :openid => openid,
@@ -22,6 +22,8 @@ class QqPhoto
     :site => "http://www.dface.cn",
     :fromurl => "http://www.dface.cn/a?v=16",
     :nswb => 0)
+    json = JSON.parse(response)
+    raise json["msg"] if json["ret"]!=0
   end
   
 end
