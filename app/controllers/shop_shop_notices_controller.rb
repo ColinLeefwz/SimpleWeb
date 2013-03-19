@@ -19,7 +19,7 @@ class ShopShopNoticesController < ApplicationController
   end
 
   def del
-    @shop_notice = ShopNotice.find(params[:id])
+    @shop_notice = ShopNotice.find_or_new(params[:id])
     @shop_notice.destroy
     redirect_to :action => "index"
   end
