@@ -1,4 +1,17 @@
 module Paginate
+
+  def paginate3(model,page=1, hash={},sort={},pcount= 15)
+    @page =  page ? page.to_i : 1
+    if @page < 0
+      sort = {:_id => -1} if sort.blank?
+      sort.keys.each{|k| sort[k] = sort[k]*-1}
+    end
+    @pcount =  pcount ? pcount.to_i : 15
+    cons = model.classify.constantize
+    skip = (@page.abs - 1)*@pcount
+    cons.where(hash).skip(skip).limit(@pcount).sort(sort)
+  end
+
   def paginate2(model,page=1, hash={},sort={},pcount={})
     @page =  page ? page.to_i : 1
     @pcount =  pcount ? pcount.to_i : 15

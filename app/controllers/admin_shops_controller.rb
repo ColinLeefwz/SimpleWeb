@@ -10,7 +10,13 @@ class AdminShopsController < ApplicationController
     hash,lo = {},nil
     lo = [params[:lat].to_f , params[:lng].to_f] if !params[:lat].blank? && !params[:lng].blank?
     hash.merge!({ lo: { "$within" => { "$center" => [lo, 0.1]} }}) if lo
-    hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
+
+    if params[:fun] == 'true'
+      hash.merge!({name: params[:name]})  unless params[:name].blank?
+    else
+      hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
+    end
+
     hash.merge!( {t: params[:t].to_i }  )  unless params[:t].blank?
     hash.merge!({city: params[:city]}) unless params[:city].blank?
     hash.merge!({type: params[:type]}) unless params[:type].blank?
@@ -22,7 +28,7 @@ class AdminShopsController < ApplicationController
 
     case params[:password]
     when '1'
-      hash.merge!({password: {"$exists" => true}})
+      hash.merge!({password: {"$gt" => ''}})
     end
 
     case params[:d]
@@ -34,10 +40,8 @@ class AdminShopsController < ApplicationController
     when '1'
       hash.merge!({del:{'$gt' => 0}})
     end
-
-    @page =  params[:page].blank? ? 1 : params[:page].to_i
-    @shops = Shop.where(hash).skip((@page-1)*20).limit(20).sort(horder)
-
+    hash.merge!({_id: params[:id]}) unless params[:id].blank?
+    @shops = paginate3('shop',params[:page], hash, horder,20 )
   end
 
   def new
