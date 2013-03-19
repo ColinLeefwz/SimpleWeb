@@ -36,7 +36,7 @@ class AdminSinaPoisController < ApplicationController
       sort.merge!({:iso_num => 1 })
     end
 
-    @sina_pois = paginate("SinaPoi", params[:page], hash, sort, (params[:num].blank? ? 20 : params[:num].to_i) )
+    @sina_pois = paginate3("SinaPoi", params[:page], hash, sort, (params[:num].blank? ? 20 : params[:num].to_i) )
   end
 
   def ajax_add_baidu_id

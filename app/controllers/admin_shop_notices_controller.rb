@@ -14,7 +14,7 @@ class AdminShopNoticesController < ApplicationController
     hash.merge!({shop_id: params[:sid].to_i}) unless params[:sid].blank?
     
     hash.merge!({id: params[:id].to_i}) unless params[:id].blank?
-    @shop_notices = paginate("ShopNotice", params[:page], hash, sort)
+    @shop_notices = paginate3("ShopNotice", params[:page], hash, sort)
   end
 
   def show

@@ -12,7 +12,7 @@ class AdminShopLogosController < ApplicationController
       hash.merge!({name: /#{params[:shop]}/, city: params[:city]})
     end
     
-    @shop_logos = paginate("ShopLogo", params[:page], hash, sort)
+    @shop_logos = paginate3("ShopLogo", params[:page], hash, sort)
   end
 
   def show

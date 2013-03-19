@@ -8,7 +8,7 @@ class UserCheckinStatsController < ApplicationController
   def index
     hash = {}
     sort = {all: -1}
-    @checkin_user_stats =  paginate("CheckinUserStat", params[:page], hash, sort)
+    @checkin_user_stats =  paginate3("CheckinUserStat", params[:page], hash, sort)
   end
 
 end
