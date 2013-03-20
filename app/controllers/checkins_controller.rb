@@ -117,7 +117,7 @@ class CheckinsController < ApplicationController
     #return if shop.faqs.count<1
     #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], "本地点开启了数字问答系统，请发送数字0获知详情。")
     text = shop.answer_text_default
-    return if text="本地点未启用数字问答系统"
+    return if text=="本地点未启用数字问答系统"
     Xmpp.send_gchat2($gfuid,params[:shop_id], params[:user_id], text)
     return true
   end
