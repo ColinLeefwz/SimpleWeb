@@ -59,6 +59,15 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 \end{verbatim}
 
+\subsection{消息提醒}
+\begin{enumerate}
+\item 当不在现场的界面收到现场聊天室的消息时，在现场按钮旁边加红点提醒;
+\item 当收到发送人是"sphoto@dface.cn"发过来的单聊消息时，表明是有照片提醒消息。这时在我的照片等地方加红点提醒。
+\item 状态确认类消息不需要提醒。
+\item 其它个人之间聊天的消息以数字计数的方式提醒。
+\end{enumerate}
+
+
 
 \input{./photo.tex}
 
@@ -114,6 +123,9 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{tabular}
    \end{center}
 \end{table}
+
+优惠券的使用要保证只能点击一次，使用后就灰掉，不需要等待服务器端的返回结果。如果网络不通或者服务器端失败，要以一定的策略重试。
+
 
 
 \input{./xmpp_web.tex}
