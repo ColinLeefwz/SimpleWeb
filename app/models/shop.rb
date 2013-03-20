@@ -234,7 +234,7 @@ class Shop
   
   def answer_text_default
     faqs = self.faqs.to_a
-    return nil if faqs.size==0
+    return "本地点未启用数字问答系统" if faqs.size==0
     "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n") 
   end
   
