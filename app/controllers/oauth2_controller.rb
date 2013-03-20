@@ -4,7 +4,7 @@ require 'oauth2'
 require 'rest_client'
 
 class Oauth2Controller < ApplicationController
-  before_filter :user_login_filter, :only => [:logout, :unbind_sina, :unbind_qq, :share] 
+  before_filter :user_login_filter, :only => [:unbind_sina, :unbind_qq, :share] 
   before_filter :bind_login_filter, :only => [:login, :sso, :qq_client] 
   
   def bind_login_filter
@@ -239,7 +239,7 @@ class Oauth2Controller < ApplicationController
 
   def bind_sina(wb_uid,token,expires_in,data)
     if session_user_no_cache.wb_uid
-      render :json => {error: "已经绑定了新浪微博帐号"}.to_json
+      render :json => {error: "你已经绑定了另外一个新浪微博帐号"}.to_json
       return
     end
     if User.where({wb_uid:wb_uid}).count>0
