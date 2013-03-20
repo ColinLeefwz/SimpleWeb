@@ -114,8 +114,11 @@ class CheckinsController < ApplicationController
   end
 
   def send_faq_notice_if_exist(shop)
-    return if shop.faqs.count<1
-    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], "本地点开启了数字问答系统，请发送数字0获知详情。")
+    #return if shop.faqs.count<1
+    #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], "本地点开启了数字问答系统，请发送数字0获知详情。")
+    text = shop.answer_text_default
+    return if text.nil?
+    Xmpp.send_gchat2($gfuid,params[:shop_id], params[:user_id], text)
     return true
   end
     
