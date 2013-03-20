@@ -21,20 +21,37 @@
     <th>实际距离</th>
     <th>加权后距离</th>
     <th>加权值</th>
+    <th>是否删除</th>
+    <th></th>
   </tr>
 
   <% index =1 %>
   <% @shops.each do |shop| %>
     <tr>
+      <% s = Shop.find_by_id(shop[0]["_id"].to_i) %>
       <td><%= index %></td>  <%index+=1%>
       <td><%= link_to(shop[0]["_id"].to_i.to_s, "/admin_shops/show?id=#{shop[0]["_id"].to_i}") %></td>
-	  <td><%= shop[0]["name"] %></td>
+      <td><%= shop[0]["name"] %></td>
       <td><%= shop[0]["lo"] %></td>
       <td><%= shop[0]["lob"] %></td>
       <td><%= '%.2f' %  (shop[1]-shop[2]) %></td>
       <td><%= '%.2f' %  shop[1] %></td>
       <td><%= '%.2f' % shop[2] %></td>
-	  	  
+      <td>
+        <%= s.del ? '是' : '否' %>
+      </td>
+      <td>
+        <%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{shop[0]["_id"].to_i}')" %>
+      </td>
+
     </tr>
   <% end %>
 </table>
+
+<script type="text/javascript">
+  function ajaxDel(obj,sid){
+    $.get("/admin_shops/ajaxdel",{shop_id: sid}, function(){
+      obj.parent().parent().remove();
+    })
+  }
+</script>
