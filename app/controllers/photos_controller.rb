@@ -32,7 +32,7 @@ class PhotosController < ApplicationController
       render :json => {:error => "photo's owner #{photo.user_id} != session user #{session[:user_id]}"}.to_json
       return
     end
-    if photo.destory
+    if photo.destroy
       render :json => {ok:photo.id}.to_json
     else
       render :json => {"error" => "delete #{photo.id} failed."}.to_json
