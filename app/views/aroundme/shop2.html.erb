@@ -28,7 +28,7 @@
   <% index =1 %>
   <% @shops.each do |shop| %>
     <tr>
-      <% s = Shop.find_by_id(shop[0]["_id"].to_i) %>
+      <% s = Shop.find(shop[0]["_id"].to_i) %>
       <td><%= index %></td>  <%index+=1%>
       <td><%= link_to(shop[0]["_id"].to_i.to_s, "/admin_shops/show?id=#{shop[0]["_id"].to_i}") %></td>
       <td><%= shop[0]["name"] %></td>
