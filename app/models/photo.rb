@@ -49,11 +49,16 @@ class Photo
     Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
   end
   
-  def send_qq
+  def send_qq(direct=false)
     title = "我在\##{shop.name}"
     text = "刚刚用脸脸分享了一张图片。(来自脸脸 http://www.dface.cn/a?v=18 )"
-    Resque.enqueue(QqPhoto, user_id, title, text, img.url, desc)
+    if test
+      QqPhoto.perform(user_id, title, text, img.url, desc)
+    else
+      Resque.enqueue(QqPhoto, user_id, title, text, img.url, desc)
+    end
   end
+
   
   def send_coupon
     coupon = shop.share_coupon
