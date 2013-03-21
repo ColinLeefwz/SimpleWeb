@@ -89,7 +89,7 @@
 聊天室里发图不需要发送已读回执消息。
 在现场收到图片时，如果图片id以“faq”开头，不添加到照片墙上。18:02:24
 
-\section{商家照片墙}
+\section{照片墙}
 
 \subsection{删除聊天室图片}
 
@@ -250,9 +250,33 @@
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
+\multicolumn{4}{|c|}{/photos/me} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出格式参见：\ref{photowall}
+
+
+\subsection{查看其它用户的照片墙}
+其它用户的照片墙由其该在各个现场照片墙发布并分享到微博／qq的照片组成。没有分享过的图片看成只在该现场才能看到的图片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
 \multicolumn{4}{|c|}{/photos/users} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ uid  & 整数 & 必须 & 被查看用户的id\\ 
 \hline
  page  & 整数 & 可选 & 分页，缺省值为1\\ 
  \hline
