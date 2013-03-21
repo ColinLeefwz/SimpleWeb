@@ -27,7 +27,13 @@ class PhotosController < ApplicationController
   end
   
   def delete
-    photo = Photo.find(params[:id])
+    begin
+      photo = Photo.find(params[:id])
+    rescue
+      error_log "\nTry to delete non-exist photo:#{params[:id]}, #{Time.now}"
+      render :json => {:deleted => params[:id]}.to_json
+      return
+    end
     if photo.user_id != session[:user_id]
       render :json => {:error => "photo's owner #{photo.user_id} != session user #{session[:user_id]}"}.to_json
       return

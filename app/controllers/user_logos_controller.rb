@@ -35,7 +35,7 @@ class UserLogosController < ApplicationController
     begin
       user_logo = UserLogo.find(params[:id])
     rescue
-      error_log "\nTry to delete non-exist photo:#{params[:id]}, #{Time.now}"
+      error_log "\nTry to delete non-exist logo:#{params[:id]}, #{Time.now}"
       render :json => {:deleted => params[:id]}.to_json
       return
     end
