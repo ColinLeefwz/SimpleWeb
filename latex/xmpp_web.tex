@@ -135,6 +135,45 @@
 \end{table}
 
 
+\subsubsection{禁止用户在聊天室发言}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/api/room\_ban} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  roomid  & 字符串 & 必填 & 聊天室id \\
+ \hline
+ \  uid  & 字符串 & 必填 &  被封杀的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsubsection{解除禁止用户在聊天室发言}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{http://xmpp\_ip:5280/api/room\_unban} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  roomid  & 字符串 & 必填 & 聊天室id \\
+ \hline
+ \  uid  & 字符串 & 必填 &  被封杀的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
 \subsubsection{发送任意XMPP消息}
 
 \begin{table}[H]
