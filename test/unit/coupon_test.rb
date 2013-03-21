@@ -12,14 +12,13 @@ class CouponTest < ActiveSupport::TestCase
   end
 
   test ".download(user_id) 优惠券下载" do
-    coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
+    coupon = Coupon.find('507fc5bfc9ad42d756a4122e')
     user = User.find('502e6303421aa918ba000005')
     coupon.download(user.id)
     assert_equal coupon.users.length ,1
     coupon.download(user.id)
     assert_equal coupon.users.length ,2
   end
-
 
   test ".use(user_id) 优惠券第一次使用。" do
     coupon = Coupon.find('507fc5bfc9ad42d756a412e3')
@@ -39,12 +38,11 @@ class CouponTest < ActiveSupport::TestCase
     assert_equal coupon.users.select{|s| s['id'] == user.id}.map { |m| m.keys }, [['id', 'dat', 'uat'],['id', 'dat', 'uat']]
   end
   
-  test "#allow_send_checkin? 规则是新用户首次签到优惠，新用户签到第一次可以发优惠券， 第二次不可以发。 " do
+  test "#allow_send_checkin? 规则是每日签到签到优惠，用户下载一次后不能在下载 " do
     user = User.find('502e6303421aa918ba000005')
     coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
-    checkin1 = Checkin.create!(uid: user._id, sid: coupon.shop_id)
     assert_equal coupon.allow_send_checkin?(user._id.to_s), true
-    checkin1.add_to_redis
+    coupon.download(user.id)
     assert_equal coupon.allow_send_checkin?('502e6303421aa918ba000005'), nil
   end
 
@@ -86,5 +84,7 @@ class CouponTest < ActiveSupport::TestCase
     coupon.download(user.id)
     assert_equal coupon.allow_send_checkin?(user._id), nil
   end
+
+
   
 end
