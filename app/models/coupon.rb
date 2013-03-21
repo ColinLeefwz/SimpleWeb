@@ -46,16 +46,16 @@ class Coupon
   
   def allow_send_checkin?(user_id)
     ckin = $redis.zrange("ckin#{self.shop_id.to_i}", 0, -1)
-    
+    user_id = user_id.to_s
     case self.rule.to_i
     when 0
-      return true unless ckin.include?(user_id.to_s)
+      return true unless self.users.to_a.detect { |u| u['id'].to_s == user_id && u['dat'].to_date == Time.now.to_date  }
     when 1
       return true if !ckin.include?(user_id.to_s) && ckin.size < self.rulev.to_i
     when 2
       return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == 1
     when 3
-      unless self.users.to_a.detect{|u| u['id'] == user_id}
+      unless self.users.to_a.detect{|u| u['id'].to_s == user_id}
         return true if Checkin.where({sid: self.shop_id, uid: user_id}).group_by{|s| s.id.generation_time.to_date}.count >= self.rulev.to_i
       end
     end

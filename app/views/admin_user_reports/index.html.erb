@@ -1,0 +1,53 @@
+<h1>地点纠错</h1>
+<%= javascript_include_tag "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js" %>
+<table border="1">
+  <tr>
+    <th>商家id</th>
+    <th>商家名称</th>
+    <th>报错人</th>
+    <th>错误原因</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @shop_reports.each do |report| %>
+
+    <tr class="shop<%= report.shop.id.to_i %>">
+      <td><%= report.shop.id.to_i %></td>
+      <td><%= report.shop.name %></td>
+      <td><%= report.user.try(:name) %></td>
+      <td><%= report.des %></td>
+      <td><%= link_to '删除地点', "#", :onclick => "ajaxDel('#{report.shop.id.to_i}')" %></td>
+      <td><%= link_to '误报', "#", :onclick => "ajaxDistort('#{report.shop.id.to_i}')" %></td>
+      <td><%= link_to '处理', "/admin_user_reports/show?id=#{report.id}",:target => "blank" %></td>
+
+    </tr>
+
+  <% end %>
+</table>
+<br />
+<br />
+<%= generate_paginate3.html_safe %>
+<br />
+
+
+<script type="text/javascript">
+  function ajaxDel(sid){
+    $.get('/admin_user_reports/ajax_del', {sid: sid}, function(){
+      $(".shop"+sid).remove()
+    })
+  }
+  function ajaxDistort(sid){
+    $.get('/admin_user_reports/ajax_distort', {sid: sid}, function(){
+      $(".shop"+sid).remove()
+    })
+  }
+
+  function rmtr(sid){
+    $(".shop"+sid).remove()
+  }
+
+</script>
+
+
