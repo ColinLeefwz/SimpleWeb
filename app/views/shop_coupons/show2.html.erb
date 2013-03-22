@@ -3,20 +3,23 @@
 <% if @coupon.img.blank? %>
   <div class="clear1"></div>
   <div class="plane4">
-	<img src="../images/pic14.jpg" class="imgs"/>
+    <img src="../images/pic14.jpg" class="imgs"/>
   </div>
   <div class="clear1"></div>
   <div class="plane3 pl100 pt20">
     <%= link_to '重新编辑', edit_shop_coupon_path(@coupon.id),:class => "l" %>
-	<span class="l plr20">|</span>
-	<%= link_to '返回列表', shop_coupons_path, :class=>"btn6 pl0 mt0" %>
-</div>
+    <span class="l plr20">|</span>
+    <%= link_to '返回列表', shop_coupons_path, :class=>"btn6 pl0 mt0" %>
+  </div>
 
 <%else%>
   <div class="coupon">
     <div class="adiv" style="background:url('<%= @coupon.img%>') center center no-repeat;"></div>
   </div>
   <ul class="formlist">
+    <li>
+      <label>规则：</label><span class="right" style="width: 120px"><%= @coupon.show_rule2 %></span>
+    </li>
     <li>
       <label>关键字：</label><span class="right"><%= @coupon.text %></span>
     </li>

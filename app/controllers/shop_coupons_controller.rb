@@ -72,17 +72,32 @@ class ShopCouponsController < ApplicationController
 
   def create2
     @coupon = Coupon.new(params[:coupon])
-    if session_shop.share_coupon
-      flash.now[:notice] = '该商家已有一张未停用分享类优惠券.'
-      return render :action => :new2
-    end
     @coupon.shop_id = session[:shop_id]
     @coupon.t2 = 2
+
+    unless Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => nil, :t2 => 2}).limit(1).blank?
+      return flash.now[:notice] = '该商家已有一张未停用分享类优惠券.'
+    end
+
+    if @coupon.t.to_i == 2
+      return flash.now[:notice] = '请上传图片.' if @coupon.img2.blank?
+    end
+
     if @coupon.save
-      @coupon.gen_img unless @coupon.img2.blank?
+      case @coupon.t.to_i
+      when 1
+        @coupon.gen_img unless @coupon.img2.blank?
+      when 2
+        @coupon.process_img_upload = true
+        FileUtils.cp("public/#{@coupon.img2}", "public/uploads/tmp/coupon_#{@coupon.id}.jpg")
+        FileUtils.rm_r("public/coupon/#{@coupon.id.to_s}")
+        @coupon.img_tmp = "coupon_#{@coupon.id}.jpg"
+        @coupon.save
+        CarrierWave::Workers::StoreAsset.perform("Coupon",@coupon.id.to_s,"img")
+      end
       redirect_to :action => :show, :id => @coupon.id
     else
-      render :action => :new
+      flash.now[:notice] = '发布失败.'
     end
   end
 
@@ -98,7 +113,8 @@ class ShopCouponsController < ApplicationController
       return render :layout => true
     end
 
-    if @coupon.rule && Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :rule => @coupon.rule  }).count > 0
+    #    debugger
+    if @coupon.rule && Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :t2 => 1, :rule => @coupon.rule  }).limit(1).any?
       flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
       return render :layout => true
     end
@@ -120,11 +136,24 @@ class ShopCouponsController < ApplicationController
   def update
     @coupon = Coupon.find(params[:id])
     coupon = Coupon.new(params[:coupon])
-    #修改全图模式,
-    if @coupon.t.to_i == 2
+
+    #修改分享类全图模式
+    if @coupon.t2.to_i == 2 && @coupon.t.to_i ==2 && !coupon.img2.blank?
+      @coupon.update_attributes(params[:coupon])
+      @coupon.process_img_upload = true
+      FileUtils.cp("public/#{@coupon.img2}", "public/uploads/tmp/coupon_#{@coupon.id}.jpg")
+      FileUtils.rm_r("public/coupon/#{@coupon.id.to_s}")
+      @coupon.img_tmp = "coupon_#{@coupon.id}.jpg"
+      @coupon.save
+      CarrierWave::Workers::StoreAsset.perform("Coupon",@coupon.id.to_s,"img")
+      return redirect_to :action => :show, :id => @coupon.id
+    end
+
+    #修改签到全图模式,
+    if @coupon.t2.to_i == 1 && @coupon.t.to_i == 2
       if coupon.img2.blank?
         return render :action => 'all_img', :id => @coupon.id if coupon.rule.blank?
-        if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :_id => {"$ne" => @coupon.id},  :rule => coupon.rule  }).count > 0
+        if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => nil, :_id => {"$ne" => @coupon.id},  :rule => coupon.rule  }).limit(1).any?
           flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
           return render :action => 'all_img', :id => @coupon.id
         end
@@ -135,9 +164,9 @@ class ShopCouponsController < ApplicationController
       end
     end
 
-    #修改图文模式
-    if @coupon.t.to_i == 1
-      if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :_id => {"$ne" => @coupon.id}, :rule => coupon.rule  }).count > 0
+    #修改签到图文模式
+    if @coupon.t2.to_i == 1 && @coupon.t.to_i == 1
+      if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => nil, :_id => {"$ne" => @coupon.id}, :rule => coupon.rule  }).limit(1).any?
         flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
         return  render :action => :edit
       end

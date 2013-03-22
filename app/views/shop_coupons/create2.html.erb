@@ -1,14 +1,5 @@
 <div class="title2"><h2>发布分享优惠券</h2></div>
 <div id="Notice" class="notice"><%= notice %></div>
-
-<div id="Sele" style="height: 250px;width: 670px;margin-top: 40px;margin-left: 10px;">
-  <div class="l"><center><a onclick = "imgText()" class="pointer">
-        <img src="../images/pic7.jpg" /><br/>图文模式</a></center></div>
-  <div class="r"><center><a onclick = "allText()" class="pointer">
-        <img src="../images/pic8.jpg" /><br/>全图模式</a></center></div>
-</div>
-
-
 <script type="text/javascript">
   LeftMenu("6");
   function imgText(){
@@ -41,22 +32,10 @@
   });
 </script>
 
-
-
-
-
-
-<div id="couponForm" style="display: <%= params[:action]=='new2' ? 'none' : '' %>;">
-  <%= form_for(@coupon, :url => '/shop_coupons/create2',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
-    <%= render :partial => 'imgtext2', :locals => {:f => f}  %>
-    <%= render :partial => 'allimg2', :locals => {:f => f}  %>
-  <%  end %>
-</div>
-
-
-
-
-
-
-
-
+<%= form_for(@coupon, :url => '/shop_coupons/create2',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+  <% if @coupon.t.to_i ==1  %>
+    <%=  render :partial => 'imgtext2', :locals => {:f => f} %>
+  <% elsif @coupon.t.to_i ==2 %>
+    <%=  render :partial => 'allimg2', :locals => {:f => f}  %>
+  <%end%>
+<%  end %>
