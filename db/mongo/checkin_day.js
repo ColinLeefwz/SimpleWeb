@@ -1,4 +1,5 @@
 db.loadServerScripts();
+db.checkins.remove({acc:5,alt:0})
 
 var checkinDay = function(days){
     [idOfBeginDay,idOfEndDay, id] = gen_day_id(days);
