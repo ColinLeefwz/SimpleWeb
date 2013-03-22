@@ -1,0 +1,21 @@
+<div id="imgText">
+  <div class="coupon">
+    <input type="hidden" name="coupon[t]" value="1"/>
+    <input size="12" name="coupon[img2]" type="file" class="none"  id="Files"/>
+    <input type="button" class="btns" id="Btns" />
+    <div class="rdiv" >
+      <%= f.text_field :name, :value => '点此输入名称', :class => 'txt' %>
+      <%= f.text_area :desc, :value => '点此输入描述', :class => 'atxt' %>
+    </div>
+  </div>
+  <ul class="formlist">
+    <li>
+      <label id="lt">规则;</label>
+       <%= f.select :rule, [['每日分享优惠', 0],['首次分享优惠',1]] %>
+    </li>
+    <li>
+      <label id="lt">关键字&nbsp;&nbsp;</label>
+      <%= f.text_field :text, :class => "txt l"%><input type="submit" value="发 布" class="btn1 l ml20 mt5"/>
+    </li>
+  </ul>
+</div>
