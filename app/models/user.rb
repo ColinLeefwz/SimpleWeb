@@ -80,6 +80,7 @@ class User
     self.head_logo_id=nil
     self.pcount=0
     self.save!
+    self.clear_my_cache
     RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
   end
   
