@@ -112,7 +112,7 @@ class PhotosController < ApplicationController
     render :json => {ok:photo.id}.to_json
   end
   
-  def users
+  def me
     page = params[:page].to_i
     pcount = params[:pcount].to_i
     page = 1 if page==0
@@ -122,5 +122,15 @@ class PhotosController < ApplicationController
     render :json => photos.map {|p| p.output_hash }.to_json
   end
   
+  def users
+    page = params[:page].to_i
+    pcount = params[:pcount].to_i
+    page = 1 if page==0
+    pcount = 20 if pcount==0
+    skip = (page-1)*pcount
+    photos = Photo.where({user_id: params[:uid], 
+      "$or" => [ { weibo: true } , { qq: true } ]}).sort({updated_at: -1}).skip(skip).limit(pcount)
+    render :json => photos.map {|p| p.output_hash }.to_json
+  end
 
 end
