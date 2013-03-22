@@ -70,8 +70,14 @@
           <%= link_to "修改密码", "/shop_pass/index" , :class => 's arrow' , :name=>'n12'%>
           <span class="borderstyle"></span>
           <a href="/shop_staffs" name="n13" class="arrow">员工管理</a>
+          <!--
           <span class="borderstyle"></span>
-          <a href="/shop_subshops" name="n14" class="arrow">分店管理</a>
+          <a href="/shop_bindwbs" name="n13" class="arrow">绑定微博</a>
+          -->
+          <% unless session_shop.shops.blank? %>
+            <span class="borderstyle"></span>
+            <a href="/shop_subshops" name="n14" class="arrow">分店管理</a>
+          <% end %>
           <span class="borderstyle"></span>
           <a href="/shop_login/logout" class="arrow">退出</a>
         </div>
