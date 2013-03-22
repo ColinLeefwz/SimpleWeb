@@ -179,7 +179,7 @@ riak-erlang-client
 1. 所有操作在~/lianlian目录下执行。更新前保证在服务器上测试通过：rake test
 2. 如果gem file有变更，必须停止整个unicorn和resque再启动，不能简单reload。
 3. 如果rake test通过，更新后却报500错误，检查unicorn的日志。
-4. web app重启运行./restart.sh; 后台任务队列重启god restart resque
+4. web app重启运行./restart.sh; 后台任务队列重启./restart_resque.sh
 
 
 ###XMPP系统更新
