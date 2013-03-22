@@ -72,12 +72,13 @@ class User
   end
   
   #封杀用户
-  def kill
-    logo = User.head_logo
+  def kill(del_all_logos=false)
+    logo = self.head_logo
     User.collection.find({_id:self._id}).update("$set" => {logo_backup:head_logo_id}) 
-    logo.destroy
+    user_logos.each {|x| x.destroy} if del_all_logos
     self.password=nil
     self.head_logo_id=nil
+    self.pcount=0
     self.save!
     RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
   end
