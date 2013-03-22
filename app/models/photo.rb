@@ -63,8 +63,7 @@ class Photo
   def send_coupon
     coupon = shop.share_coupon
     return if coupon.nil?
-    return if coupon.users.to_a.detect{|u| u['id'].to_s == user_id.to_s && u['dat'].to_date == Time.now.to_date}
-    if coupon.text.nil? || (desc && desc.index(coupon.text) )
+    if coupon.allow_send_share?(user_id.to_s) && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
       coupon.send_coupon(user_id,self.id)
     end
   end

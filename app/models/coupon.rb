@@ -43,7 +43,16 @@ class Coupon
     return xmpp1 if ENV["RAILS_ENV"] != "production"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
   end
-  
+
+  def allow_send_share?(user_id)
+    case self.rule.to_i
+    when 0
+      return true unless self.users.to_a.reverse.detect{|u| u['id'].to_s == user_id.to_s && u['dat'].to_date == Time.now.to_date}
+    when 1
+      return true unless self.users.to_a.reverse.detect{|u| u['id'].to_s == user_id.to_s}
+    end
+  end
+
   def allow_send_checkin?(user_id)
     ckin = $redis.zrange("ckin#{self.shop_id.to_i}", 0, -1)
     user_id = user_id.to_s
@@ -148,6 +157,10 @@ class Coupon
 
   def show_rule
     ['每日签到优惠', '每日前几名签到优惠','新用户首次签到优惠','累计签到优惠'][self.rule.to_i]
+  end
+
+  def show_rule2
+    ['每日分享优惠','首次分享优惠'][self.rule.to_i]
   end
 
   def show_t2

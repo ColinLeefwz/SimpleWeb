@@ -188,7 +188,7 @@ class Shop
   end
 
   def share_coupon
-    Coupon.where({shop_id: self.id.to_i, hidden: {'$exists' => false}, t2: '2'}).last
+    Coupon.where({shop_id: self.id.to_i, hidden: nil, t2: '2'}).sort({_id: -1}).limit(1).first
   end
   
   def send_coupon(user_id)
