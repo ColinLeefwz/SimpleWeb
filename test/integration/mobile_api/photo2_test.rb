@@ -48,9 +48,11 @@ class Photo2Test < ActionDispatch::IntegrationTest
   end
   
   test "测试api/room接口" do
-    RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
+    $xmpp_ips.each do |ip|
+      RestClient.post("http://#{ip}:5280/api/room", 
         :roomid  => "4928288" , :message=> "测试一下" ,
         :uid => "502e6303421aa918ba000001") 
+      end
   end  
 
   
