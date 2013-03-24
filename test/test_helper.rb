@@ -12,10 +12,8 @@ require 'ripple/test_server'
 class ActiveSupport::TestCase
 
 
-  setup { Ripple::TestServer.setup }
-
-
-  teardown { Ripple::TestServer.clear }
+#  setup { Ripple::TestServer.setup }
+#  teardown { Ripple::TestServer.clear }
 
 
   def shop_login(shop_id)
