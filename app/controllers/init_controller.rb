@@ -12,6 +12,6 @@ class InitController < ApplicationController
     else
       ip = $web_ip
     end
-    render :json => {ip: ip, xmpp: $xmpp_ip , ver:1.3}.to_json
+    render :json => {ip: ip, xmpp: $xmpp_ip , ver:1.4}.to_json
   end
 end
