@@ -1,0 +1,51 @@
+/* ======================= base ========================= */
+*{margin:0;padding:0;font-size:12px;font-family:"宋体"}
+ul,ol,li{list-style:none;}
+body{background:#dbdddc url(../images/rept-x1.png) repeat-x;}
+.clr{clear:both;font-size:0;height:0;overflow:hidden;}
+img{border:0;}
+
+
+/* ===================== layout ========================= */
+#wrap{width:320px;height:800px;margin:0 auto;background:url(../images/bg.png) no-repeat;}
+#head{height:90px;}
+a.shop{display:block;height:70px;width:203px;background:url(../images/btn.png) no-repeat 60px 10px;padding:10px 0 0 58px;}
+.phoneZone{width:193px;height:406px;overflow:hidden;margin:0 auto;position:relative;}
+a.shopName{color:#0176a2;display:block;height:24px;line-height:24px;text-align:center;margin-top:70px;font-weight:normal;position:relative;}/*店名*/
+a.shopName span{position:absolute;top:-1px;left:54px;color:#fff;}
+
+
+/*== 消息列表 ==*/
+ul.msgCon{width:159px;height:223px;overflow:hidden;padding-bottom:6px;margin:0 2px 0 19px;}
+ul.msgCon li{position:relative;padding:5px 0;}
+li.nearL{float:left;}
+li.nearR{float:right;}
+
+.headImg{position:absolute;bottom:0;}/*头像*/
+li.nearL .headImg{left:0px}
+li.nearR .headImg{right:0px;}
+.headImg img{width:33px;height:33px;}
+
+.msg{position:relative;}/*消息*/
+li.nearL .msg{padding:0 14px 0 40px;float:left;}
+li.nearR .msg{padding:0 40px 0 14px;float:right;}
+ul.msgCon span{display:inline-block;padding:2px;border-radius:3px;}
+li.nearL span{background:#fff;border:2px solid #e5e0dd;}
+li.nearR span{background:#fffbd6;border:2px solid #fae7c9;float:right;}
+
+/*由于以下简写对ie6有影响，无奈写重了*/
+li.nearL .arrow{position:absolute;bottom:0px;display:block;width:6px;height:8px;overflow:hidden;background:url(../images/ico.png) no-repeat;left:37px;}
+li.nearR .arrow{position:absolute;bottom:0px;display:block;width:6px;height:8px;overflow:hidden;background:url(../images/ico.png) no-repeat;right:37px;background-position:0 -12px;}
+
+
+/*== 链接 ==*/
+.links{width:240px;margin:0 auto;}
+.links a{display:block;width:240px;background:url(../images/btn.png) no-repeat;}
+a.downNow{height:27px;width:110px;background-position:-30px -246px;margin:20px auto 0;}
+a.downLogin{height:53px;background-position:0 -99px;margin-top:15px;}
+a.downLocal{height:53px;background-position:0 -160px;margin-top:13px;}
+a.meetFriend{height:24px;background-position:0 -295px;margin-top:20px;}
+a.shareFun{height:24px;background-position:0 -326px;margin-top:8px;}
+a.getSale{height:24px;background-position:0 -358px;margin-top:8px;}
+
+
