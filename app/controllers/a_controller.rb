@@ -9,7 +9,7 @@ class AController < ApplicationController
     c.save
     if c.agent.match(/iphone|ipad/i)
       #redirect_to "http://itunes.apple.com/app/id577710538?ls=1&mt=8"
-      render "/mini.html"
+      render :file => "~/lianlian/public/mini.html", :use_full_path => true      
     else
       redirect_to "/"
     end
