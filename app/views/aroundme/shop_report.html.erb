@@ -14,8 +14,8 @@
         margin-right: 20px;
         vertical-align: middle;
       }
-      .ff {float: right}
-
+      .ff {float: right;font-size:30px;color:#67a8ff}
+      .clear{clear:both;}
 
       .s{
         border-bottom: 1px solid #ABABAB;
@@ -26,6 +26,17 @@
         overflow: hidden;
         padding: 0 60px 0 20px;
       }
+      .tex{
+      border-color: #E0E0E0 #BBBBBB;
+      border-radius: 5px 5px 5px 5px;
+      border-style: solid;
+      border-width: 2px;
+      float: left;
+      font-size: 30px;
+      height: 70px;
+      line-height: 70px;
+      padding: 0 7px;
+      }
 
       .s span{
         height: 60px;
@@ -33,23 +44,26 @@
       }
 
       .rbtn1{
-        background:url('/images/btn/pic1.png') no-repeat scroll left top transparent;
+        background:url('/images/btn/pic1.jpg') no-repeat scroll left top transparent;
         border: medium none;
         cursor: pointer;
         float: left;
-        height: 58px;
-        width: 122px;
+        height: 84px;
+        width: 240px;
         font-size: 30px;
+				text-indent：-9999px;
       }
       .rbtn2{
-        background:url('/images/btn/pic2.png') no-repeat scroll left top transparent;
+        background:url('/images/btn/pic2.jpg') no-repeat scroll left top transparent;
         border: medium none;
         cursor: pointer;
         float: left;
-        height: 58px;
-        width: 122px;
+        height: 84px;
+        width: 240px;
         font-size: 30px;
+				text-indent：-9999px;
       }
+			.line{width:100%;border-top: 2px solid #a7a7a7;border-bottom: 1px solid #e4e4e4;margin:20px 0}
 
     </style>
     <script type="text/javascript">
@@ -57,7 +71,7 @@
         $('#dig').css({"height":$("#main").height()+"px","display":"block"});
         $('#des').val('');
         $('#sid').val(hid)
-        $('#res').css('background-color', '#0000FF');
+        $('#res').css('background-color', '');
         $("#boxss").css("top",($(document).scrollTop()+200)+"px");
       }
       function ajaxReport(uid){
@@ -80,16 +94,20 @@
   <body>
     <div id="main">
       <div style="position:absolute;width: 100%; height:100%;font-size: 30px;background: url(/images/btn/dig.png);display: none" id="dig">
-        <div style="position:absolute;background-color:#fff;left:10%;width:80%;height:200px;" id="boxss">
-          <div style="background-color:#00FFCC; width: 100%; height:46px;padding-top:10px;" id="res">
-            请输入三字以上的错误原因
-          </div>
+        <div style="position:absolute;background-color:#c9c9c9;border: 2px solid #181818;left:10%;width:80%;height:370px;padding:0px 35px" id="boxss">
+          
           <div>
-            <input class="text4" type="text" name="des" style="margin-top:15px;margin-left:20px;width:90%" id="des" >
+            <input class="tex" type="text" name="des" style="margin: 50px 0 20px;width:90%" id="des" >
             <input type="hidden" name="sid" id="sid">
-            <br/>
-            <input class="rbtn1 ml15 mt4" type="submit" value="完 成" onclick="ajaxReport('<%= params[:uid] %>')">
-            <input class="rbtn2 ml15 mt4" type="submit" value="取 消" onclick="hidReport()">
+           
+          <div class="clear"></div>
+						<p style="width: 100%; height:46px;padding:10px 0 0;color:#000" id="res">
+            请输入三字以上的错误原因
+            </p>
+					  <div class="line"></div>
+             <div class="clear"></div>
+            <input class="rbtn1 ml15 mt4" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
+            <input class="rbtn2 ml15 mt4" type="submit" value=" " onclick="hidReport()">
           </div>
         </div>
       </div>
