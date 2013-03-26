@@ -17,6 +17,7 @@ class BindWb
     begin
       response = JSON.parse(RestClient.get(url))
       self.errors.add(:wu_uid, '微博uid和微博昵称不匹配.')  if response["screen_name"] != self.name
+      val = true
     rescue RestClient::BadRequest
       self.errors.add(:wu_uid, '微博uid可能不存在.')
     rescue
