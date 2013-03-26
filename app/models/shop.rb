@@ -25,6 +25,7 @@ class Shop
   field :utotal, type:Integer, default:0 #截至到昨天，该商家的用户总数
   field :uftotal, type:Integer, default:0 #截至到昨天，该商家的女性用户总数
   field :shops, type:Array #子商家
+  field :psid, type:Integer #总店id
   #field :osm_id #Open Street Map node id
   field :d, type:Integer #降权
   field :v, type:Integer #加权
