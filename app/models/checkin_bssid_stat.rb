@@ -6,8 +6,6 @@ class CheckinBssidStat
   field :shops, type:Array #{id:商家id,users:[用户id,...]}, 使用该bssid签到的商家及其用户
   field :shop_id, type:Integer #实际所属商家
   
-  $kxs = ["502e6303421aa918ba000001","5032e88d421aa91a1e000016","50446058421aa92042000002","50bc20fcc90d8ba33600004b","502e6303421aa918ba000079"].to_set
-  
   def self.kx_users(arr)
     arr.map{|x| x.to_s}.to_set & $kxs
   end
