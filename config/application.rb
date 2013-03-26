@@ -21,6 +21,8 @@ $LOG = Logger.new('log/sina_api.log', 0, 100 * 1024 * 1024)
 $llcf = 21828775 #脸脸茶坊
 $zjkjcyds = 20325453 #浙江科技产业大厦
 
+  $kxs = ["502e6303421aa918ba000001","5032e88d421aa91a1e000016","50446058421aa92042000002","50bc20fcc90d8ba33600004b","502e6303421aa918ba000079"].to_set
+
 $sina_api_key = "2054816412"  
 $sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  
 $sina_callback = "http://www.dface.cn/oauth2/sina_callback"
