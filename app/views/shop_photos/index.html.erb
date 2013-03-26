@@ -12,7 +12,7 @@
   <% @photos.each do |photo| %>
     <tr>
       <td align="center"><%=image_tag photo.img.try(:url, :t2), :class=>"imgs4"  %></td>
-      <td><%= photo.user.try(:name)   %></td>
+      <td align="center><%= photo.user.try(:name)   %></td>
       <td title="<%= photo.desc %>"><%=truncate photo.desc, :length => 10 %></td>
       <td><%= photo.weibo ? '是' : '否' %></td>
       <td><%= photo.qq ? '是' : '否' %></td>
