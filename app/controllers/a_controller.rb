@@ -7,11 +7,7 @@ class AController < ApplicationController
     c.time = Time.now
     c.agent = request.env["HTTP_USER_AGENT"]
     c.save
-    if c.agent.match(/iphone|ipad/i)
-      redirect_to "http://itunes.apple.com/app/id577710538?ls=1&mt=8"
-    else
-      redirect_to "/"
-    end
+    render :file => "~/lianlian/public/mini.html", :use_full_path => true 
   end
   
 end
