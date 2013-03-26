@@ -9,7 +9,13 @@ class AdminShopFaqsController < ApplicationController
       sids = Shop.where({name: /#{params[:shop]}/, city: params[:city]}).map { |m| m._id  }
       hash.merge!(sid: {'$in' => sids})
     end
-     hash.merge!({sid: params[:sid].to_i}) unless params[:sid].blank?
+    hash.merge!({sid: params[:sid].to_i}) unless params[:sid].blank?
     @shop_faqs = paginate3('ShopFaqs', params[:page], hash, sort)
+  end
+
+  def ajax_del
+    faq = ShopFaq.find(params[:id])
+    faq.delete
+    render :json => ''
   end
 end

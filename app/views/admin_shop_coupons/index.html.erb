@@ -1,3 +1,4 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
 <h1>商家优惠券</h1>
 <%= form_tag '/admin_shop_coupons',:method =>:get do %>
   <p>
@@ -7,7 +8,9 @@
   </p>
   <p>
     商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
+    过期：<%= select_tag :hidden,options_for_select([['所有优惠券','0'],['过期优惠券','1']],params[:hidden])  %>
   </p>
+
   <p>
     <%= submit_tag "查 找" %>
   </p>
@@ -22,6 +25,7 @@
     <th>详情</th>
     <th>缩略图</th>
     <th></th>
+    <th></th>
   </tr>
 
   <% @coupons.each do |coupon| %>
@@ -33,8 +37,20 @@
       <td><%=truncate(coupon.desc, :length => 25) %></td>
       <td><%=image_tag coupon.img && coupon.img.url(:t1) %></td>
       <td><%= link_to "详情", "/admin_shop_coupons/show?id=#{coupon.id}" %></td>
+      <td><%= link_to "过期", "#", :onclick => "ajaxLapse($(this), '#{coupon.id}')" %></td>
     </tr>
   <% end %>
 </table>
 
 <%= generate_paginate3.html_safe %>
+
+<script type="text/javascript">
+  function ajaxLapse(obj, coupon_id){
+    if(confirm("确定过期？"))
+    {
+      $.get("/admin_shop_coupons/ajax_lapse", {id: coupon_id}, function(){
+        obj.parent().parent().remove();
+      })
+    }
+  }
+</script>
