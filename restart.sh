@@ -18,5 +18,6 @@ do
   	break
   fi
   echo "."
+  sleep 1
 done
 
