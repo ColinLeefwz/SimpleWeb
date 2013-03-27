@@ -9,7 +9,7 @@ module Paginate
     @pcount =  pcount ? pcount.to_i : 15
     cons = model.classify.constantize
     skip = (@page.abs - 1)*@pcount
-    cons.where(hash).skip(skip).limit(@pcount).sort(sort)
+    @colls = cons.where(hash).skip(skip).limit(@pcount).sort(sort)
   end
 
   def paginate2(model,page=1, hash={},sort={},pcount={})
