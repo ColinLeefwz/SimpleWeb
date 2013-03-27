@@ -1,5 +1,5 @@
 class AdminBlacksController < ApplicationController
-
+  include Paginate
   before_filter :admin_authorize
   layout "admin"
 
