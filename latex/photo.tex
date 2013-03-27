@@ -24,6 +24,10 @@
  \hline
   photo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
  \hline
+ wbtoken  & 字符串 & 可选  &  如果分享到微博，该用户的微博token\\
+  \hline
+ qqtoken  & 字符串 & 可选  &  如果分享到QQ空间，该用户的QQtoken\\
+ \hline
 \end{tabular}
    \end{center}
 \end{table}
@@ -262,7 +266,10 @@
    \end{center}
 \end{table}
 
-输出格式参见：\ref{photowall}
+输出格式参见：\ref{photowall} 。唯一不同点在于：
+商家照片墙中包含user\_name，指明该照片是谁发的。
+用户照片墙中包含shop\_name，指明该照片是在哪儿拍摄的。
+
 
 
 \subsection{查看其它用户的照片墙}
@@ -286,8 +293,7 @@
    \end{center}
 \end{table}
 
-输出格式参见：\ref{photowall}
-
+输出格式同上。
 
 
 \section{个人聊天时发图}
