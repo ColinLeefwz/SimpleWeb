@@ -1,7 +1,7 @@
 
 #Mongoid.logger = Logger.new($stdout)
 Mongoid.logger = Rails.logger
-Mongoid.identity_map_enabled = true
+Mongoid.identity_map_enabled = false
 
 module ActiveSupport
   module Callbacks
