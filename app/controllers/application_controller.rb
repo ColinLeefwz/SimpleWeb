@@ -97,6 +97,10 @@ class ApplicationController < ActionController::Base
       return
     end
   end
+  
+  def is_session_user_kx
+    $kxs.find_index(session[:user_id].to_s) != nil
+  end
 
   def session_user
     u=User.find_by_id(session[:user_id])
