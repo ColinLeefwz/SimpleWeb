@@ -14,6 +14,14 @@ class CheckinsController < ApplicationController
       render :json => {error: "地点名称不能少于四个字"}.to_json
       return
     end
+    if params[:sname][0,3]=="@@@" && is_session_user_kx #测试人员输入商家id模拟签到
+      shop = Shop.find(params[:sname][3..-1])
+      params[:shop_id] = shop.id
+      params[:bssid] = nil
+      do_checkin(shop)
+      render :json => shop.safe_output.to_json
+      return
+    end
     shop = gen_new_shop
     ss = Shop.similar_shops(shop,70)
     if ss.length>0
