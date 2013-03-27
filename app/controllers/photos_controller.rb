@@ -9,6 +9,12 @@ class PhotosController < ApplicationController
     p.user_id = session[:user_id]
     p.save!
     p.add_to_checkin
+    if p.weibo && params[:wbtoken] && $redis.get("wbtoken#{session[:user_id]}").nil?
+      $redis.set("wbtoken#{session[:user_id]}", params[:wbtoken])
+    end
+    if p.qq && params[:qqtoken] && $redis.get("qqtoken#{session[:user_id]}").nil?
+      $redis.set("qqtoken#{session[:user_id]}", params[:qqtoken])
+    end    
     render :json => p.output_hash_with_username.to_json
   end
   
