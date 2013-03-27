@@ -9,7 +9,7 @@ class PhotosController < ApplicationController
     p.user_id = session[:user_id]
     p.save!
     p.add_to_checkin
-    render :json => p.output_hash.to_json
+    render :json => p.output_hash_with_username.to_json
   end
   
   def show
@@ -119,7 +119,7 @@ class PhotosController < ApplicationController
     pcount = 20 if pcount==0
     skip = (page-1)*pcount
     photos = Photo.where({user_id: session[:user_id]}).sort({updated_at: -1}).skip(skip).limit(pcount)
-    render :json => photos.map {|p| p.output_hash }.to_json
+    render :json => photos.map {|p| p.output_hash_with_shopname }.to_json
   end
   
   def users
@@ -130,7 +130,7 @@ class PhotosController < ApplicationController
     skip = (page-1)*pcount
     photos = Photo.where({user_id: params[:uid], 
       "$or" => [ { weibo: true } , { qq: true } ]}).sort({updated_at: -1}).skip(skip).limit(pcount)
-    render :json => photos.map {|p| p.output_hash }.to_json
+    render :json => photos.map {|p| p.output_hash_with_shopname }.to_json
   end
 
 end

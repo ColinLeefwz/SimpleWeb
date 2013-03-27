@@ -95,8 +95,16 @@ class Photo
   def output_hash
     hash = {id: self._id, user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo, qq:self.qq}
     hash.merge!( logo_thumb_hash)
-    hash.merge!( {like:self.like, comment:self.com, user_name: user.name, time:cati} )
+    hash.merge!( {like:self.like, comment:self.com, time:cati} )
   end
+  
+  def output_hash_with_username
+    output_hash.merge!( {user_name: user.name} )
+  end
+
+  def output_hash_with_shopname
+    output_hash.merge!( {shop_name: shop.name} )
+  end  
   
   def add_to_checkin
     cin = Checkin.where({uid:self.user_id}).order_by("id desc").limit(1).first
