@@ -17,6 +17,7 @@ class CheckinsController < ApplicationController
     if params[:sname][0,3]=="@@@" && is_session_user_kx #测试人员输入商家id模拟签到
       shop = Shop.find(params[:sname][3..-1])
       params[:shop_id] = shop.id
+      params[:bssid] = nil
       do_checkin(shop)
       render :json => shop.safe_output.to_json
       return
