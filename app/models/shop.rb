@@ -238,7 +238,10 @@ class Shop
     return "本地点未启用数字问答系统" if faqs.size==0
     "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n") 
   end
-  
+
+  def child_sids
+    Shop.where({psid: self._id})
+  end
 
   
 
@@ -292,6 +295,8 @@ class Shop
     arr = merge_locations(sub_shops)
     self.update_attributes!({lo:arr})
   end
+
+
   
   def merge_shop_ids(ids)
     arr = merge_locations(ids.map{|id| Shop.find_by_id(id)})

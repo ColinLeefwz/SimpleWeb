@@ -36,7 +36,8 @@
     <th>分类</th>
     <th>百度分类</th>
     <th>子商家</th>
-    <th>开通密码</th>
+    <th>分店</th>
+    <th>密码</th>
     <th></th>
     <th></th>
     <th></th>
@@ -55,6 +56,7 @@
       <td><%= shop.show_t %></td>
       <td><%= type_or_user(shop) %></td>
       <td><%= link_to(shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{shop.id}") %></td>
+      <td><%= link_to '查看', "/admin_branchs?psid=#{shop.id}" %></td>
       <td><%= shop.password.blank? ?  link_to('开通', "/admin_shops/set_password?id=#{shop.id}") : '' %></td>
       <td><%= link_to('加权', "/admin_shops/upgrade_v?id=#{shop.id}") %></td>
       <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
@@ -115,7 +117,7 @@
   function batch_del()
   {
     if(confirm("确定需要批量删除商家？"))
-      $("table .checkbox_shops:checked").each(
+    $("table .checkbox_shops:checked").each(
     function(){
       ajaxdel($(this),$(this).val(), true, '')
     }
