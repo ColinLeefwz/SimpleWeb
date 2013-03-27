@@ -66,7 +66,10 @@ class AdminShopsController < ApplicationController
     @shop.lo = @shop.lob_to_lo
     @shop.city = @shop.get_city
     @shop.t = @shop.t.to_i
-    if @shop.save
+    if Shop.similar_shops(@shop, 70).blank? && @shop.save
+      shop_info = ShopInfo.new(params[:shop_info])
+      shop_info._id = @shop.id.to_i
+      shop_info.save
       redirect_to :action => "show", :id => @shop.id
     else
       render flash.now[:notice] = "添加商家失败."
