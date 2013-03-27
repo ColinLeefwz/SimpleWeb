@@ -18,7 +18,6 @@ class Shop
   #field :loc, type:Array #google地图上的经纬度
   field :lo, type:Array #实际的经纬度
   field :city
-  #  field :phone
   field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. 
   field :t                #脸脸的商家类型
   field :password
