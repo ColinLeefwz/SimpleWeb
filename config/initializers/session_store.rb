@@ -19,3 +19,4 @@ Lianlian::Application.config.middleware.delete 'ActionDispatch::Head'      # 如
 Lianlian::Application.config.middleware.delete 'Rack::ConditionalGet'      # HTTP客户端缓存才会使用
 Lianlian::Application.config.middleware.delete 'Rack::ETag'    # HTTP客户端缓存才会使用
 Lianlian::Application.config.middleware.delete 'ActionDispatch::BestStandardsSupport' # 设置X-UA-Compatible, 在nginx上设置
+Lianlian::Application.config.middleware.delete 'Rack::Mongoid::Middleware::IdentityMap'
