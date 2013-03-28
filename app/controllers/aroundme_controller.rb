@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class AroundmeController < ApplicationController
+  caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
   
   def shops
     lo = [params[:lat].to_f,params[:lng].to_f]
@@ -76,12 +77,7 @@ class AroundmeController < ApplicationController
     else
       sex = session_user.gender
     end
-    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*5).to_a
-    if ckins.size==0
-      ckins = Checkin.where({city: nil, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*5).to_a
-    end
-    #TODO: 缓存一个用户（在一个城市）的最后一次签到
-    arr = ckins.uniq!{|x| x.uid}[0,pcount].map{|c| [c.user,c.shop,c.cati]}
+    arr = hot_users_cache(city,sex,skip,pcount)
     users = []
     arr.each do |user,shop,cati| 
       next if shop.nil?
@@ -93,13 +89,9 @@ class AroundmeController < ApplicationController
       tstr = User.time_desc(diff)
       hash.merge!({location: "#{tstr} #{shop.name}"})
       users << hash
+      break if users.size>=pcount
     end
-    fm = users.group_by {|item| item["gender"]==2 ? "f" : "m" }
-    fmf = fm["f"]
-    fmf = [] if fmf.nil?
-    fmm = fm["m"]
-    fmm = [] if fmm.nil?
-    render :json => fmf.concat(fmm).to_json
+    render :json => users.to_json
   end
   
   private 
@@ -115,6 +107,32 @@ class AroundmeController < ApplicationController
     hash.merge!(bssid:params[:bssid]) if params[:bssid]
     hash.merge!(bd:params[:baidu]) if params[:baidu]
     GpsLog.collection.insert(hash)
+  end
+  
+  def hot_user_cache_key(city,sex,skip,pcount)
+    "HOTU#{city}#{sex}#{skip}#{pcount}#{Date.today.to_s}"
+  end
+  
+  def hot_users_no_cache(city,sex,skip,pcount)
+    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2).to_a
+    if ckins.size==0
+      ckins = Checkin.where({city: {"$ne" => city}, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2).to_a
+    end
+    ckins = ckins.uniq!{|x| x.uid}
+    ckin2 = Checkin.where({city: city, sex:{"$ne" => sex}, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2+5).to_a
+    if ckin2.size==0
+      ckin2 = Checkin.where({city: {"$ne" => city}, sex:{"$ne" => sex}, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2+5).to_a
+    end
+    ckin2 = ckin2.uniq!{|x| x.uid}
+    ckins = ckins + ckin2
+    arr = ckins.map{|c| [c.user,c.shop,c.cati]}
+    arr
+  end
+  
+  def hot_users_cache(city,sex,skip,pcount)
+    Rails.cache.fetch(hot_user_cache_key(city,sex,skip,pcount)) do 
+      hot_users_no_cache(city,sex,skip,pcount)
+    end
   end
   
 end
