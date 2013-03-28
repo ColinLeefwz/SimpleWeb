@@ -5,7 +5,7 @@ var userDay = function(days){
     var mtotal = 0;
     var ftotal = 0;
     var total = 0;
-    var wb = 1;
+    var wb = 0;
 	var qq =0;
 	
     db.users.find({
