@@ -67,15 +67,11 @@ class AroundmeController < ApplicationController
     skip = (page-1)*pcount
     lo = [params[:lat].to_f , params[:lng].to_f]
     city = Shop.get_city(lo)
-    if page%2==1
-      sex = session_user.gender
-      if sex==1
-        sex=2
-      else
-        sex=1
-      end
+    sex = session_user.gender
+    if sex==1
+      sex=2
     else
-      sex = session_user.gender
+      sex=1
     end
     arr = hot_users_cache(city,sex,skip,pcount)
     users = []
