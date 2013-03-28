@@ -75,7 +75,7 @@ class UserLogosController < ApplicationController
   
   private 
   def expire_cache
-    expire_action :controller => :user_info, :action => :photos, :id => session[:user_id]
+    expire_fragment "UIP#{session[:user_id]}"
   end
 
   
