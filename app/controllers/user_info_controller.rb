@@ -3,8 +3,7 @@
 class UserInfoController < ApplicationController
   
   before_filter :user_login_filter
-  caches_action :photos, :cache_path => Proc.new { |c| c.params[:id] }
-  
+  caches_action :photos, cache_path: ->(c) {"UIP#{c.params[:id]}"}  
   
   def get
     user = User.find_by_id(params[:id])

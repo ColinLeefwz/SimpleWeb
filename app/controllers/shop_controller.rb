@@ -3,6 +3,9 @@
 class ShopController < ApplicationController
 
   layout nil
+  caches_action :info, cache_path: ->(c) {"SI#{c.params[:id]}"}
+  caches_action :photos, cache_path: ->(c) {"SP#{c.params[:id]}-#{c.params[:pcount]}#{c.params[:page]}"}
+  
   
   def nearby
     page = params[:page].to_i
@@ -31,7 +34,7 @@ class ShopController < ApplicationController
   end
   
   def users
-    shop = Shop.find(params[:id])
+    shop = Shop.find_by_id(params[:id])
     page = params[:page].to_i
     pcount = params[:pcount].to_i
     page = 1 if page==0
@@ -50,7 +53,7 @@ class ShopController < ApplicationController
   end
   
   def info
-    shop = Shop.find(params[:id])
+    shop = Shop.find_by_id(params[:id])
     render :json => shop.safe_output_with_staffs.to_json
   end
   

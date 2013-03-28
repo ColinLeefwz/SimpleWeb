@@ -26,12 +26,14 @@ class ShopStaffsController < ApplicationController
       staff = Staff.new({user_id: user.id, shop_id: session_shop.id})
       text =  staff.save ? "添加成功" : "添加失败"
     end
+    expire_fragment "SI#{session_shop.id}"
     render :json => {:text => text }.to_json
   end
 
   def ajax_delete_staff
     staff = Staff.find_by_id(params[:id])
     staff.destroy if staff
+    expire_fragment "SI#{session_shop.id}"
     render :json => {:text => '删除成功'}
   end
   
