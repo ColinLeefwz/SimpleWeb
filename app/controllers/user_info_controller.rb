@@ -3,6 +3,8 @@
 class UserInfoController < ApplicationController
   
   before_filter :user_login_filter
+  caches_action :photos, :cache_path => Proc.new { |c| c.params[:id] }
+  
   
   def get
     user = User.find_by_id(params[:id])
@@ -10,7 +12,7 @@ class UserInfoController < ApplicationController
   end
   
   def logo
-    user = User.find(params[:id])
+    user = User.find_by_id(params[:id])
     if params[:size].to_i==0
       redirect_to user.head_logo.img.url
     elsif params[:size].to_i==2
