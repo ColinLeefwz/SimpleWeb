@@ -118,7 +118,7 @@ class Coupon
   
   #图文模式生成图片
   def gen_img
-    if self.t.to_i == 1 || self.t2==2
+    if self.t.to_i == 1
       name = self.name
       desc = self.desc
       img = self.img2
@@ -127,6 +127,15 @@ class Coupon
       self.save
       CarrierWave::Workers::StoreAsset.perform("Coupon",self.id.to_s,"img")
     end
+  end
+
+  def gen_img2
+    name = self.name
+    desc = self.desc
+    `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public/uploads/tmp/coupon_#{self.id}.jpg pic1.jpg`
+    self.img_tmp = "coupon_#{self.id}.jpg"
+    self.save
+    CarrierWave::Workers::StoreAsset.perform("Coupon",self.id.to_s,"img")
   end
 
   def gen_share_coupon_img_by_user(user)
