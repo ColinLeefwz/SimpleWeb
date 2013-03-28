@@ -197,6 +197,7 @@ class Shop
     Coupon.gen_demo(self.id) if self.latest_coupons.empty? && (ENV["RAILS_ENV"] != "production" )
     coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
     sub_shops.each{|shop| coupons += shop.checkin_eday_coupons.to_a }
+
     coupons.each{|coupon| coupon.send_coupon(user_id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
@@ -238,7 +239,7 @@ class Shop
     "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n") 
   end
 
-  def child_sids
+  def branchs
     Shop.where({psid: self._id})
   end
 
