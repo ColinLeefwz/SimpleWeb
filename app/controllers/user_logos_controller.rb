@@ -12,6 +12,7 @@ class UserLogosController < ApplicationController
     user = user_logo.user
     user.set(:head_logo_id, user_logo.id) unless user.pcount>0
     user.inc(:pcount, 1)
+    expire_cache
     render :json => user_logo.output_hash.to_json
   end
   
@@ -27,6 +28,7 @@ class UserLogosController < ApplicationController
       raise "photo#{id}'s owner #{user_logo.user_id} != session user #{session[:user_id]}" if user_logo.user_id != session[:user_id]
       user_logo.update_attribute("ord",1+index*10)
     end
+    expire_cache
     render :json => session_user.user_logos.map{|x| x.output_hash}.to_json
   end
 
@@ -53,6 +55,7 @@ class UserLogosController < ApplicationController
     if user_logo.destroy
       user.inc(:pcount, -1)
       user.set(:head_logo_id, user.user_logos[0].id)  if change_head_logo
+      expire_cache
       render :json => {:deleted => params[:id]}.to_json
     else
       render :json => {:error => "user_logo #{params[:id]} delete failed"}.to_json
@@ -68,6 +71,11 @@ class UserLogosController < ApplicationController
     else
       redirect_to photo.img.url(:t1)
     end
+  end
+  
+  private 
+  def expire_cache
+    expire_action :controller => :user_info, :action => :photos, :id => session[:user_id]
   end
 
   
