@@ -1,7 +1,7 @@
 
 #Mongoid.logger = Logger.new($stdout)
 Mongoid.logger = Rails.logger
-Mongoid.identity_map_enabled = true
+Mongoid.identity_map_enabled = false
 
 module ActiveSupport
   module Callbacks
@@ -127,7 +127,7 @@ module Mongoid
     def self.included(base)
       base.set_callback(:update, :after,  :update_my_cache)
       base.set_callback(:upsert, :after,  :update_my_cache)
-      base.set_callback(:save, :after,  :update_my_cache)
+      #base.set_callback(:save, :after,  :update_my_cache)
       base.set_callback(:destroy, :after,  :clear_my_cache)
       base.class_eval do
         alias_method :add_to_set_without_cache, :add_to_set
