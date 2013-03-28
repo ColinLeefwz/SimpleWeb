@@ -5,7 +5,9 @@ var userDay = function(days){
     var mtotal = 0;
     var ftotal = 0;
     var total = 0;
-
+    var wb = 0;
+	var qq =0;
+	
     db.users.find({
         _id: {
             $gt: ObjectId(idOfBeginDay),
@@ -19,10 +21,24 @@ var userDay = function(days){
             ftotal += 1;
     })
 
+	db.users.find({
+	    _id: {
+		     $gt: ObjectId(idOfBeginDay),
+			 $lt: ObjectId(idOfEndDay)
+		}
+	}).forEach(function(user){
+        if(user.wb_uid!=null)
+             wb += 1;
+        if (user.qq!=null)
+             qq += 1;
+    })			 
+	
     db.user_days.insert({
         _id: id,
         mtotal: mtotal,
         ftotal: ftotal,
+		wb: wb,
+		qq: qq,
         total: total
     })
 }
