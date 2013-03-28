@@ -5,7 +5,7 @@ class UserInfoController < ApplicationController
   before_filter :user_login_filter
   
   def get
-    user = User.find(params[:id])
+    user = User.find_by_id(params[:id])
     render :json => user.output_with_relation(session[:user_id]).to_json
   end
   
