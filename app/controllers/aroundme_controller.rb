@@ -112,12 +112,12 @@ class AroundmeController < ApplicationController
   def hot_users_no_cache(city,sex,skip,pcount)
     ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2).to_a
     if ckins.size==0
-      ckins = Checkin.where({city: {"$ne" => city}, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2).to_a
+      ckins = Checkin.where({city: {"$ne" => city}, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*3).limit(pcount*2).to_a
     end
     ckins = ckins.uniq!{|x| x.uid}
-    ckin2 = Checkin.where({city: city, sex:{"$ne" => sex}, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2+5).to_a
+    ckin2 = Checkin.where({city: city, sex:{"$ne" => sex}, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2).to_a
     if ckin2.size==0
-      ckin2 = Checkin.where({city: {"$ne" => city}, sex:{"$ne" => sex}, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2+5).to_a
+      ckin2 = Checkin.where({city: {"$ne" => city}, sex:{"$ne" => sex}, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*3).limit(pcount*2).to_a
     end
     ckin2 = ckin2.uniq!{|x| x.uid}
     ckins = ckins + ckin2
