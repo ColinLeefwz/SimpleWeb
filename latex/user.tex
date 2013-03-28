@@ -521,7 +521,39 @@ qq登陆的话：增加qq_token，qq_expire
 
 返回的内容格式同粉丝列表一样
 
-这里返回的所有用户，其"friend"值一定为true。
+在1.5版本以前，本接口返回所有我关注的用户。
+在1.5版本以后，本接口返回所有我关注的且对方没有关注我的用户。双向关注的则由新增的good\_friends接口提供。
+
+
+\subsection{双向好友列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+\multicolumn{4}{|c|}{/follow\_info/good\_friends} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+     \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+     \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的内容格式同粉丝列表一样
+
+这里返回的所有用户，都和当前登录用户互相关注。
+
 
 
 
