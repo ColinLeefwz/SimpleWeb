@@ -154,7 +154,7 @@ class ShopCouponsController < ApplicationController
       if coupon.img2.blank?
         return render :action => 'all_img', :id => @coupon.id if coupon.rule.blank?
         if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => nil, :_id => {"$ne" => @coupon.id},  :rule => coupon.rule  }).limit(1).any?
-          flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
+          flash.now[:notice] = "该商家已有一张有效的#{coupon.show_rule}类型的优惠券."
           return render :action => 'all_img', :id => @coupon.id
         end
       else
