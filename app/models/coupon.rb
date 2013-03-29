@@ -58,11 +58,13 @@ class Coupon
     user_id = user_id.to_s
     case self.rule.to_i
     when 0
-      return true unless self.users.to_a.detect { |u| u['id'].to_s == user_id && u['dat'].to_date == Time.now.to_date  }
+      #      return true unless self.users.to_a.detect { |u| u['id'].to_s == user_id && u['dat'].to_date == Time.now.to_date  }
+      return true if !ckin.include?(user_id.to_s)
     when 1
       return true if !ckin.include?(user_id.to_s) && ckin.size < self.rulev.to_i
     when 2
-      return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == 1
+      #      return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == 1
+      return true if self.users.to_a.detect{|u| u['id'].to_s == user_id.to_s}.nil?
     when 3
       unless self.users.to_a.detect{|u| u['id'].to_s == user_id}
         return true if Checkin.where({sid: self.shop_id, uid: user_id}).group_by{|s| s.id.generation_time.to_date}.count >= self.rulev.to_i
@@ -136,7 +138,7 @@ class Coupon
   def gen_img2
     name = self.name
     desc = self.desc
-    `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public/uploads/tmp/coupon_#{self.id}.jpg pic1.jpg`
+    `cd coupon && ./gen_demo.sh '#{name}' '#{desc}' ../public/uploads/tmp/coupon_#{self.id}.jpg pic1.png`
     self.img_tmp = "coupon_#{self.id}.jpg"
     self.save
     CarrierWave::Workers::StoreAsset.perform("Coupon",self.id.to_s,"img")
@@ -169,6 +171,7 @@ class Coupon
   end
 
   def show_rule
+    return if self.rule.blank?
     ['每日签到优惠', '每日前几名签到优惠','新用户首次签到优惠','累计签到优惠'][self.rule.to_i]
   end
 

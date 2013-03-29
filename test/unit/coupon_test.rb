@@ -42,7 +42,8 @@ class CouponTest < ActiveSupport::TestCase
     user = User.find('502e6303421aa918ba000005')
     coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
     assert_equal coupon.allow_send_checkin?(user._id.to_s), true
-    coupon.download(user.id)
+    checkin1 = Checkin.create!(uid: user._id, sid: coupon.shop_id)
+    checkin1.add_to_redis
     assert_equal coupon.allow_send_checkin?('502e6303421aa918ba000005'), nil
   end
 
@@ -64,7 +65,7 @@ class CouponTest < ActiveSupport::TestCase
     user = User.find('502e6303421aa918ba00007c')
     coupon = Coupon.find('507fc5bfc9ad42d756a412e3')
     assert_equal coupon.allow_send_checkin?(user._id), true
-    Checkin.create(uid: user._id, sid: coupon.shop_id)
+    coupon.download(user.id)
     assert_equal coupon.allow_send_checkin?(user._id), nil
   end
 
