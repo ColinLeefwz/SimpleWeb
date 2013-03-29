@@ -13,7 +13,7 @@ class ShopLoginControllerTest < ActionController::TestCase
   end
 
   test '没有开通密码的商家登陆' do
-    post :login, :id => 1, :password => '123456'
+    post :login, :id => 112, :password => '123456'
     assert_equal "密码还没有开通.", flash[:notice]
   end
 

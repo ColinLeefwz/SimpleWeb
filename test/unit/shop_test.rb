@@ -39,7 +39,7 @@ class ShopTest < ActiveSupport::TestCase
     user = User.find('502e6303421aa918ba00007c')
     shop = Shop.find(1)
     checkin1 = Checkin.create!(uid: user._id, sid: shop.id)
-    assert_match(/收到3张优惠券: 测试前2名优惠券,测试每日优惠券.,测试每日优惠券2./, shop.send_coupon(user.id))
+    assert_equal("收到4张优惠券: 测试首次优惠券,测试前2名优惠券,测试每日优惠券.,测试每日优惠券2.", shop.send_coupon(user.id))
     checkin1.add_to_redis
     checkin2 = Checkin.create!(uid: user._id, sid: shop.id)
     assert_equal shop.send_coupon(user.id), nil
@@ -50,7 +50,7 @@ class ShopTest < ActiveSupport::TestCase
     user = User.find('502e6303421aa918ba000002')
     shop = Shop.find(1)
     checkin1 = Checkin.create!(uid: user._id, sid: shop.id)
-    assert_match(/收到4张优惠券: 测试累计优惠券,测试前2名优惠券,测试每日优惠券.,测试每日优惠券2./, shop.send_coupon(user.id))
+    assert_equal('收到5张优惠券: 测试累计优惠券,测试首次优惠券,测试前2名优惠券,测试每日优惠券.,测试每日优惠券2.', shop.send_coupon(user.id))
     checkin1.add_to_redis
     checkin2 = Checkin.create!(uid: user._id, sid: shop.id)
     assert_equal shop.send_coupon(user.id), nil
