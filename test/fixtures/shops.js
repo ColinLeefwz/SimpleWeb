@@ -4,12 +4,14 @@ db.shops.insert({
     "name" : "测试1",
     "city" : "0571",
     'loc': [39.896445, 116.317378],
-    'shops': [2]
+    'shops': [2],
+    'password': '123456'
 })
 
 db.shops.insert({
     "_id" : 111,
     "name" : "测试1分店",
+    "password": '123456',
     "city" : "0571",
     'loc': [39.896445, 116.317378],
     'psid': 1
