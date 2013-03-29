@@ -15,6 +15,7 @@ class PhotosController < ApplicationController
     if p.qq && params[:qqtoken] && $redis.get("qqtoken#{session[:user_id]}").nil?
       $redis.set("qqtoken#{session[:user_id]}", params[:qqtoken])
     end    
+    expire_cache_shop(p.room)
     render :json => p.output_hash_with_username.to_json
   end
   
@@ -44,7 +45,9 @@ class PhotosController < ApplicationController
       render :json => {:error => "photo's owner #{photo.user_id} != session user #{session[:user_id]}"}.to_json
       return
     end
+    sid = photo.room
     if photo.destroy
+      expire_cache_shop(sid)
       render :json => {ok:photo.id}.to_json
     else
       render :json => {"error" => "delete #{photo.id} failed."}.to_json
@@ -138,5 +141,11 @@ class PhotosController < ApplicationController
       "$or" => [ { weibo: true } , { qq: true } ]}).sort({updated_at: -1}).skip(skip).limit(pcount)
     render :json => photos.map {|p| p.output_hash_with_shopname }.to_json
   end
+  
+  private 
+  def expire_cache_shop(sid)
+    expire_fragment "SI#{sid}"
+  end
+  
 
 end
