@@ -145,11 +145,6 @@ class PhotosController < ApplicationController
   private 
   def expire_cache_shop(sid)
     expire_fragment "SI#{sid}"
-    #Regexp expiration is only supported on caches that can iterate over all keys (unlike memcached).
-    expire_fragment "SP#{sid}-" 
-    expire_fragment "SP#{sid}-201" 
-    expire_fragment "SP#{sid}-202" 
-    #TODO: 如何正确清除所有的cache
   end
   
 
