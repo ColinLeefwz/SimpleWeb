@@ -11,13 +11,17 @@ class UserInfoController < ApplicationController
   end
   
   def logo
-    user = User.find_by_id(params[:id])
-    if params[:size].to_i==0
-      redirect_to user.head_logo.img.url
-    elsif params[:size].to_i==2
-      redirect_to user.head_logo.img.url(:t2)
-    else
-      redirect_to user.head_logo.img.url(:t1)
+    begin
+      user = User.find_by_id(params[:id])
+      if params[:size].to_i==0
+        redirect_to user.head_logo.img.url
+      elsif params[:size].to_i==2
+        redirect_to user.head_logo.img.url(:t2)
+      else
+        redirect_to user.head_logo.img.url(:t1)
+      end
+    rescue Exception => e
+      render :json => {error:"User #{params[:id]}'s Head Logo not exists."}.to_json
     end
   end
   
