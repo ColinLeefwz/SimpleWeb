@@ -33,6 +33,7 @@ class Photo
     if weibo
       send_wb
       send_coupon
+      send_pshop_coupon
     end
     send_qq if qq
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
@@ -52,10 +53,11 @@ class Photo
   def send_qq(direct=false)
     title = "我在\##{shop.name}"
     text = "刚刚用脸脸分享了一张图片。(来自脸脸 http://www.dface.cn/a?v=18 )"
+    url = "http://www.dface.cn/photos/show?id=#{self.id}&size=0"
     if direct
-      QqPhoto.perform(user_id, title, text, img.url, desc)
+      QqPhoto.perform(user_id, title, text, url, desc)
     else
-      Resque.enqueue(QqPhoto, user_id, title, text, img.url, desc)
+      Resque.enqueue(QqPhoto, user_id, title, text, url, desc)
     end
   end
 
@@ -65,6 +67,16 @@ class Photo
     return if coupon.nil?
     if coupon.allow_send_share?(user_id.to_s) && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
       coupon.send_coupon(user_id,self.id)
+    end
+  end
+
+  def send_pshop_coupon
+    return if shop.psid.blank?
+    return if (pshop = Shop.find_by_id(shop.psid)).nil?
+    coupon = pshop.share_coupon
+    return if coupon.nil?
+    if coupon.allow_send_share?(user_id.to_s, shop.id.to_i) && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
+      coupon.send_coupon(user_id,self.id, room)
     end
   end
   
