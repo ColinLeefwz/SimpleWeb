@@ -88,7 +88,7 @@ class CheckinsController < ApplicationController
     checkin.ip = real_ip
     send_all_notice_msg shop
     checkin.save!
-    shop.send_coupon(session[:user_id])
+    @send_coupon_msg = shop.send_coupon(session[:user_id])
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid]
     if checkin.add_to_redis #当天首次签到
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
@@ -96,6 +96,7 @@ class CheckinsController < ApplicationController
     if session[:new_user_flag]
       session[:new_user_flag] = nil
       session_user.update_attribute(:city, checkin.city)
+      return  if ENV["RAILS_ENV"] != "production"
       Resque.enqueue(NewUser, checkin.uid,checkin.sid,checkin.od)
     end
     checkin
@@ -103,12 +104,14 @@ class CheckinsController < ApplicationController
 
   def send_welcome_msg_if_not_invisible(user_gender, user_name)
     return if session_user.invisible==2
+    return user_name if ENV["RAILS_ENV"] != "production"
     Resque.enqueue(XmppWelcome, params[:shop_id], user_gender, params[:user_id], user_name)
   end
   
   def send_notice_if_exist(shop)
     notice = shop.notice
     return if notice.nil? || notice.title.nil? || notice.title.length<1
+    return notice.title if ENV["RAILS_ENV"] != "production"
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], notice.title)
   end
   
@@ -117,6 +120,7 @@ class CheckinsController < ApplicationController
     return if coupon.nil?
     key = coupon.text.nil?? "" : "文字中带'#{coupon.text}'#{coupon.text.length}个字"
     str = "发送分享图片到新浪微博，#{key}，即可获得'#{coupon.name}'。"
+    return str if ENV["RAILS_ENV"] != "production"
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str)
     return true
   end
@@ -126,6 +130,7 @@ class CheckinsController < ApplicationController
     #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], "本地点开启了数字问答系统，请发送数字0获知详情。")
     text = shop.answer_text_default
     return if text=="本地点未启用数字问答系统"
+    return text if ENV["RAILS_ENV"] != "production"
     Xmpp.send_gchat2($gfuid,params[:shop_id], params[:user_id], text)
     return true
   end
@@ -140,6 +145,7 @@ class CheckinsController < ApplicationController
     str = ""
     str += "欢迎！您是第 #{order} 个来到\##{shop.name}\#的脸脸。" if order<=10
     str += "置顶的照片栏还没被占领，赶快抢占并分享到微博吧。" if shop.photo_count<4
+    return str if ENV["RAILS_ENV"] != "production"
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
   end 
 
