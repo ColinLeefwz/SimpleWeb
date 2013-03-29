@@ -1,15 +1,11 @@
 Lianlian::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # The production environment is meant for finished, "live" apps.
-  # Code is not reloaded between requests
   config.cache_classes = true
 
-  # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
   # For nginx:
@@ -25,7 +21,7 @@ Lianlian::Application.configure do
   # config.logger = SyslogLogger.new
 
   # Use a different cache store in production
-  config.cache_store = :redis_store
+  config.cache_store = :dalli_store, "10.200.141.171:11211", "10.200.141.172:11211"
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
