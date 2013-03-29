@@ -57,5 +57,18 @@ class UserInfoTest < ActionDispatch::IntegrationTest
     assert_equal JSON.parse(response.body), {"birthday"=>"1988-08-08","gender"=>1.0,"hobby"=>"计算机","invisible"=>0.0,"job"=>"程序员","jobtype"=>1,"name"=>"测试name","oid"=>154.0,"password"=>"c84dad462d5b7282","pcount"=>0,"signature"=>"测试签名档","wb_uid"=>"a1","id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}
 
   end
+  
+  test "测试caches_action" do
+    Rails.cache.clear
+    ActionController::Base.perform_caching = true
+    luser = User.find('502e6303421aa918ba000005')
+    login(luser.id)
+    get "/user_info/photos?id=#{luser.id}"
+    assert_response :success
+    #TODO: 如何测试caches_action
+    #assert Rails.cache.read("views/UIP#{luser.id}.json") != nil
+    ActionController::Base.perform_caching = false
+  end
+  
 end
 
