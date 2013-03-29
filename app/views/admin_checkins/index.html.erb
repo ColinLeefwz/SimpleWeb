@@ -1,10 +1,9 @@
 <h1>签到列表</h1>
-<script src="/javascripts/My97DatePicker/WdatePicker.js"></script>
 <%= javascript_include_tag "jquery-1.6.2.min.js" %>
 <%= form_tag '/admin_checkins',:method =>:get do %>
   <p>
-    开始时间: <%= text_field_tag :start_at,params[:start_at], :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})", :size => 15 %>
-    截止时间: <%= text_field_tag :end_at, params[:end_at], :onclick=>"WdatePicker({dateFmt:'yyyy-MM-dd'})",:size => 15  %>
+    开始时间: <%= text_field_tag :start_at,params[:start_at], :size => 15 %>
+    截止时间: <%= text_field_tag :end_at, params[:end_at]||Time.now.to_date,:size => 15  %>
     <br/>
     区号: <%= text_field_tag :city, params[:city], :size => 5  %>
     商家: <%= text_field_tag :shop, params[:shop], :size => 20  %>

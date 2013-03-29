@@ -33,6 +33,7 @@ class Photo
     if weibo
       send_wb
       send_coupon
+      send_pshop_coupon
     end
     send_qq if qq
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
@@ -65,6 +66,16 @@ class Photo
     return if coupon.nil?
     if coupon.allow_send_share?(user_id.to_s) && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
       coupon.send_coupon(user_id,self.id)
+    end
+  end
+
+  def send_pshop_coupon
+    return if shop.psid.blank?
+    return if (pshop = Shop.find_by_id(shop.psid)).nil?
+    coupon = pshop.share_coupon
+    return if coupon.nil?
+    if coupon.allow_send_share?(user_id.to_s, shop.id.to_i) && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
+      coupon.send_coupon(user_id,self.id, room)
     end
   end
   
