@@ -1,4 +1,4 @@
-<script type="text/javascript" src="/javascripts/My97DatePicker/WdatePicker.js" ></script>
+
 
 <h1>用户列表</h1>
 <%= link_to '添加用户', new_user_path %>
@@ -11,7 +11,7 @@
     Email:<%= text_field_tag :email, params[:email] %>
     性别:<%= text_field_tag :sex, params[:sex] %>
     职业:<%= text_field_tag :occupation, params[:occupation] %>
-    创建日期: <%= text_field_tag :created_at, params[:created_at],:onclick=>"WdatePicker()" , :readonly=>"readonly"%>
+
     <%= submit_tag "查 找", :name => nil %>
   </p>
 <% end %>
