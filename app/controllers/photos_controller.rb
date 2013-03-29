@@ -144,7 +144,7 @@ class PhotosController < ApplicationController
   
   private 
   def expire_cache_shop(sid)
-    expire_fragment "SI#{sid}"
+    Rails.cache.delete("views/SI#{sid}.json")
   end
   
 
