@@ -4,8 +4,6 @@ class ShopController < ApplicationController
 
   layout nil
   caches_action :info, cache_path: ->(c) {"SI#{c.params[:id]}"}
-  caches_action :photos, cache_path: ->(c) {"SP#{c.params[:id]}-#{c.params[:pcount]}#{c.params[:page]}"}
-  
   
   def nearby
     page = params[:page].to_i
