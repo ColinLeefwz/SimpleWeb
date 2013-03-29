@@ -11,7 +11,7 @@ class Coupon
   field :text #图片分享到微博触发类, 必须包含的文字。
   field :hidden, type:Integer #状态， 1.是停用
   #  field :endt, type:DateTime
-  field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间,[photo:图片id]}
+  field :users, type:Array #{id:用户id,dat:下载时间,uat:使用时间,[photo:图片id],[sid: 分店]}
   #TODO: 一个用户可以多次下载一个优惠券：#{id:用户id,dat:下载时间,[{dat:下载时间,uat:使用时间}]}
   #但是这样解决不了分享类优惠券的多次下载，因为每次图片不一样，但是请求的coupon id都一样
   field :rule #0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。
@@ -36,20 +36,20 @@ class Coupon
     "[优惠券:#{name}:#{shop.name}:#{self._id}:#{Time.now.strftime('%Y-%m-%d %H：%M')}]"
   end
 
-  def send_coupon(user_id,photo_id=nil)
-    download(user_id,photo_id)
+  def send_coupon(user_id,photo_id=nil, sid=nil)
+    download(user_id,photo_id, sid)
     xmpp1 = Xmpp.chat("s#{shop_id}",user_id,message)
     logger.info(xmpp1)
     return xmpp1 if ENV["RAILS_ENV"] != "production"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
   end
 
-  def allow_send_share?(user_id)
+  def allow_send_share?(user_id, sid = nil)
     case self.rule.to_i
     when 0
-      return true unless self.users.to_a.reverse.detect{|u| u['id'].to_s == user_id.to_s && u['dat'].to_date == Time.now.to_date}
+      return true unless self.users.to_a.reverse.detect{|u| u['id'].to_s == user_id.to_s && u['dat'].to_date == Time.now.to_date && u['sid'] == sid }
     when 1
-      return true unless self.users.to_a.reverse.detect{|u| u['id'].to_s == user_id.to_s}
+      return true unless self.users.to_a.reverse.detect{|u| u['id'].to_s == user_id.to_s && u['sid'] == sid }
     end
   end
 
@@ -70,11 +70,15 @@ class Coupon
     end
   end
   
-  def download(user_id, photo_id=nil)
+  def download(user_id, photo_id=nil, sid = nil)
     if photo_id==nil
       self.add_to_set(:users, {"id" => user_id, "dat" => Time.now})
     else
-      self.add_to_set(:users, {"id" => user_id, "dat" => Time.now, photo: photo_id})
+      if sid.nil?
+        self.add_to_set(:users, {"id" => user_id, "dat" => Time.now, photo: photo_id})
+      else
+        self.add_to_set(:users, {"id" => user_id, "dat" => Time.now, 'sid' => sid.to_i, photo: photo_id})
+      end
       gen_share_coupon_img(Photo.find_by_id(photo_id))
     end
   end

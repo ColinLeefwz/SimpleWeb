@@ -1,5 +1,5 @@
 <h1>发布新活动</h1>
-<script src="/javascripts/My97DatePicker/WdatePicker.js"></script>
+
 <%= javascript_include_tag "jquery-1.6.2.min.js" %>
 
 <%= form_for(@party, {:url => admin_parties_path} ) do |f| %>
@@ -16,11 +16,13 @@
   </div>
   <div class="field">
     <%= f.label "起始时间" %><br />
-    <input type="text" size="30" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" name="party[ftime]">
+    <input type="text" size="30" name="party[ftime]">
+    (如: 2013-03-05 14:53)
   </div>
   <div class="field">
     <%= f.label "截止时间" %><br />
-    <input type="text" size="30" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" name="party[etime]">
+    <input type="text" size="30" name="party[etime]">
+    (如: 2013-03-05 14:53)
   </div>
 
   <p>
