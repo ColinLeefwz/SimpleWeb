@@ -66,10 +66,21 @@ db.coupons.insert({
     _id: ObjectId('507fc5bfc9ad42d756a412e5'),
     shop_id: 1,
     t2: 2,
+    rule: 0,
     users: [],
     name: '测试分享优惠券',
     desc: "分享类测试优惠",
     text: '我们一起分享吧'
 })
 
+db.coupons.insert({
+    _id: ObjectId('507fc5bfc9ad42d756a412e6'),
+    shop_id: 1,
+    t2: 2,
+    rule: 1,
+    users: [],
+    name: '测试分享优惠券',
+    desc: "分享类测试优惠",
+    text: '我们一起分享吧'
+})
 
