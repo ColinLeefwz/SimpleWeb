@@ -75,7 +75,7 @@ class UserLogosController < ApplicationController
   
   private 
   def expire_cache
-    expire_fragment "UIP#{session[:user_id]}"
+    expire_fragment "views/UIP#{session[:user_id]}.json"
   end
 
   
