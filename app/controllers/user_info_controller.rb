@@ -3,14 +3,15 @@
 class UserInfoController < ApplicationController
   
   before_filter :user_login_filter
+  caches_action :photos, cache_path: ->(c) {"UIP#{c.params[:id]}"}  
   
   def get
-    user = User.find(params[:id])
+    user = User.find_by_id(params[:id])
     render :json => user.output_with_relation(session[:user_id]).to_json
   end
   
   def logo
-    user = User.find(params[:id])
+    user = User.find_by_id(params[:id])
     if params[:size].to_i==0
       redirect_to user.head_logo.img.url
     elsif params[:size].to_i==2
