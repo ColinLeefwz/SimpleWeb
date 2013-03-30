@@ -10,4 +10,9 @@ class AController < ApplicationController
     render :file => "~/lianlian/public/mini.html", :use_full_path => true 
   end
   
+  def xmpp_test
+    Xmpp.test
+    render :text => "ok"
+  end
+  
 end

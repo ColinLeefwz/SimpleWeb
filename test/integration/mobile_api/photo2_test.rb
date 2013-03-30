@@ -48,18 +48,7 @@ class Photo2Test < ActionDispatch::IntegrationTest
   end
   
   test "测试api/room接口" do
-    cur_ip = nil
-    begin
-      $xmpp_ips.each do |ip|
-        cur_ip = ip
-        RestClient.post("http://#{ip}:5280/api/room", 
-          :roomid  => "4928288" , :message=> "测试一下" ,
-          :uid => "502e6303421aa918ba000001") 
-      end
-    rescue Exception => e
-      puts cur_ip
-      raise e
-    end
+    Xmpp.test
   end  
 
   
