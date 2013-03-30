@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Xmpp
 
   def self.chat(from,to,msg)
@@ -28,6 +30,21 @@ class Xmpp
   #在聊天室以特定用户身份发消息
   def self.send_gchat2(from,room,to,msg)
     RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat2(from,room,to,msg))   
+  end
+  
+  def self.test
+    cur_ip = nil
+    begin
+      $xmpp_ips.each do |ip|
+        cur_ip = ip
+        RestClient.post("http://#{ip}:5280/api/room", 
+          :roomid  => "4928288" , :message=> "测试一下" ,
+          :uid => "502e6303421aa918ba000001") 
+      end
+    rescue Exception => e
+      puts cur_ip
+      raise e
+    end
   end
 
 end
