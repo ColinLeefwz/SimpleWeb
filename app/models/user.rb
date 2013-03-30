@@ -80,7 +80,7 @@ class User
     self.head_logo_id=nil
     self.pcount=0
     self.save!
-    self.clear_my_cache
+    self.del_my_cache
     RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
   end
   
@@ -316,7 +316,7 @@ class User
   end
   
   def del_test_user
-    self.clear_my_cache
+    self.del_my_cache
     user_logos.each {|x| x.destroy}
     photos.each {|x| x.destroy}
     Checkin.where({uid: _id}).each {|x| x.destroy}
