@@ -40,7 +40,7 @@ class ActiveSupport::TestCase
   end
   
   def clear_cache_all(clazz)
-    clazz.only(:id).all.each {|x| x.clear_my_cache}
+    clazz.only(:id).all.each {|x| x.del_my_cache}
   end
   
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
