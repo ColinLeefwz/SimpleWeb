@@ -19,7 +19,7 @@ class ShopPassControllerTest < ActionController::TestCase
   end
 
   test '密码修改成功' do
-    Shop.find(3).clear_my_cache
+    Shop.find(3).del_my_cache
     shop_login(3)
     post :index,{:oldpass => '123456',"shop" => {:password => '1234567', :password_confirmation => '1234567'}}
     assert_equal '密码修改成功.', flash[:notice]
