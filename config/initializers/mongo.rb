@@ -64,7 +64,7 @@ module Mongoid
       Rails.cache.delete(key)
     end
 
-    def clear_my_cache
+    def del_my_cache
       key = my_cache_key
       Rails.logger.debug "delete cache: #{key}"
       Rails.cache.delete(key)
@@ -128,7 +128,7 @@ module Mongoid
       base.set_callback(:update, :after,  :update_my_cache)
       base.set_callback(:upsert, :after,  :update_my_cache)
       #base.set_callback(:save, :after,  :update_my_cache)
-      base.set_callback(:destroy, :after,  :clear_my_cache)
+      base.set_callback(:destroy, :after,  :del_my_cache)
       base.class_eval do
         alias_method :add_to_set_without_cache, :add_to_set
         alias_method :add_to_set, :add_to_set_cache
