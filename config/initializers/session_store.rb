@@ -6,8 +6,11 @@
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails generate session_migration")
 
-Lianlian::Application.config.session_store :redis_store
-
+if Rails.env=="production"
+  Lianlian::Application.config.session_store :redis_store, {host: "10.200.141.172"}
+else
+  Lianlian::Application.config.session_store :redis_store
+end
     
 Lianlian::Application.config.middleware.delete 'Rack::Cache'   # 整页缓存，用不上
 Lianlian::Application.config.middleware.delete 'Rack::Lock'    # 多线程加锁，多进程模式下无意义
