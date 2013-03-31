@@ -37,7 +37,7 @@ class Photo
     end
     send_qq if qq
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
-      :roomid  => room , :message => "[img:#{self._id}]#{self.desc}",
+      :roomid  => room.to_i.to_s , :message => "[img:#{self._id}]#{self.desc}",
       :uid => user_id)
   end
   

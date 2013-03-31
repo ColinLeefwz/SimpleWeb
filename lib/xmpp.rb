@@ -14,7 +14,7 @@ class Xmpp
   
   def self.gchat(from,to,msg)
     msg2 = CGI.escapeHTML(msg)
-    "<message id='#{$uuid.generate}' to='#{to}@dface.cn' from='#{from}@c.dface.cn' type='groupchat'><body>#{msg2}</body></message>"
+    "<message id='#{$uuid.generate}' to='#{to}@dface.cn' from='#{from.to_i}@c.dface.cn' type='groupchat'><body>#{msg2}</body></message>"
   end 
   
   #在聊天室发送系统消息
@@ -24,7 +24,7 @@ class Xmpp
 
   def self.gchat2(from,room,to,msg)
     msg2 = CGI.escapeHTML(msg)
-    "<message id='#{$uuid.generate}' to='#{to}@dface.cn' from='#{room}@c.dface.cn/#{from}' type='groupchat'><body>#{msg2}</body></message>"
+    "<message id='#{$uuid.generate}' to='#{to}@dface.cn' from='#{room.to_i}@c.dface.cn/#{from}' type='groupchat'><body>#{msg2}</body></message>"
   end 
   
   #在聊天室以特定用户身份发消息

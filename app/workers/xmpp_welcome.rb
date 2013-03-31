@@ -15,7 +15,7 @@ class XmppWelcome
     end
     
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
-        :roomid  => sid , :message=> message ,
+        :roomid  => sid.to_i.to_s , :message=> message ,
         :uid => uid)
   end
 end
