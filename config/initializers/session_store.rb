@@ -7,7 +7,7 @@
 # (create the session table with "rails generate session_migration")
 
 if Rails.env=="production"
-  Lianlian::Application.config.session_store :redis_store, {host: "10.200.141.172"}
+  Lianlian::Application.config.session_store :redis_store, :servers => {host: '10.200.141.172'}
 else
   Lianlian::Application.config.session_store :redis_store
 end
