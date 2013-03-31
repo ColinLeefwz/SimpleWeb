@@ -12,17 +12,20 @@ group :production do
   gem 'god'
 end
 
-gem "wirble", :group => :development
+group :development do
+  gem 'osmlib-base'
+  gem "wirble"
+  gem 'xmpp4r'
+end
 
 #gem 'rack', '~> 1.4'
 gem "oauth2"
-gem "will_paginate"
+#gem "will_paginate"
 gem "in_place_editing"
 gem 'mongo'
 gem 'bson_ext'
 gem 'mongoid'
 gem 'rails-i18n'
-gem 'xmpp4r'
 gem 'redis'
 gem 'redis-store'
 gem 'redis-rails'
@@ -37,8 +40,6 @@ gem 'carrierwave_backgrounder', :git => "git://github.com/yuanxinyu/carrierwave_
 
 gem 'resque', :require => "resque/server"
 gem 'resque-scheduler', :require => 'resque_scheduler'
-
-gem 'osmlib-base'
 
 gem 'ripple', '~> 1.0.0.beta2'
 gem 'rake', '~> 10.0.1'
