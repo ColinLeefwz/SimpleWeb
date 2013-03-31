@@ -76,7 +76,7 @@ GEM
     json (1.7.4)
     jwt (0.1.5)
       multi_json (>= 1.0)
-    kgio (2.7.4)
+    kgio (2.8.0)
     macaddr (1.6.1)
       systemu (~> 2.5.0)
     mail (2.4.4)
@@ -105,7 +105,7 @@ GEM
     origin (1.0.4)
     osmlib-base (0.1.4)
     polyglot (0.3.3)
-    rack (1.4.1)
+    rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-protection (1.2.0)
@@ -193,7 +193,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
-    unicorn (4.3.1)
+    unicorn (4.6.2)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
