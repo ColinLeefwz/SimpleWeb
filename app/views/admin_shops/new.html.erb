@@ -1,3 +1,37 @@
+<% unless @similars.blank? %>
+  <h3>附近相似商家</h3>
+  <table>
+    <tr>
+      <th>id</th>
+      <th>名称</th>
+      <th>地址</th>
+      <th>分类</th>
+      <th>距离</th>
+    </tr>
+    <% @similars.each do |s| %>
+      <tr>
+        <td>
+          <%= s.id.to_i %>
+        </td>
+        <td>
+          <%= s.name %>
+        </td>
+        <td>
+          <%= s.addr %>
+        </td>
+        <td>
+          <%= s.show_t %>
+        </td>
+        <td>
+          <%= @shop.get_distance(s.loc_first, @shop.loc_first) %>
+        </td>
+      </tr>
+    <%  end %>
+  </table>
+<%  end %>
+
+
+
 <%= form_for(@shop, :url => "/admin_shops/create") do |f| %>
   <p>
     名称:<br />
