@@ -2,7 +2,7 @@
 require 'rest_client'
 
 class PhotosController < ApplicationController
-  before_filter :user_login_filter
+  before_filter :user_login_filter, :except => [:show ]
 
   def create
     p = Photo.new(params[:photo])
