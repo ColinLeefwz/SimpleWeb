@@ -396,6 +396,7 @@ class User
       if u.checkins.count==0
         #puts "该用户不活跃"
       else
+        next if u.wb_uid.nil?
         next if u.wb_uid.to_i.to_s.size != u.wb_uid.size
         next if u["no_wb_logo"]
         puts "#{u.name},  #{u.id},  #{u.wb_uid}"
