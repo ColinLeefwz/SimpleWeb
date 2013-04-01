@@ -6,7 +6,7 @@ class ShopPhotosController < ApplicationController
   layout 'shop'
 
   def index
-    hash = {:room => session[:shop_id].to_s}
+    hash = {:room => session[:shop_id].to_i.to_s}
     sort = {:updated_at =>  -1}
     @photos = paginate("Photo", params[:page], hash, sort,10)
   end
