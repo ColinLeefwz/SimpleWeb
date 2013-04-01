@@ -88,6 +88,11 @@ class Shop
     checkins.each {|x| x.destroy}
     self.destroy
   end
+
+  def first_checkin
+    f = Checkin.where({sid: self.id.to_i}).limit(1).only(:_id).first
+    f && f._id.generation_time.strftime("%Y-%m-%d %H:%M")
+  end
   
   def checkins
     Checkin.where({sid:self.id})
