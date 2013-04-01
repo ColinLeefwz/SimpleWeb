@@ -20,6 +20,7 @@
     <th>名称</th>
     <th>区号</th>
     <th>创建者</th>
+    <th>创建时间</th>
     <th></th>
     <th></th>
   </tr>
@@ -30,6 +31,7 @@
       <td><%= shop.name %></td>
       <td><%= shop.city_fullname %></td>
       <td><%= type_or_user(shop) %></td>
+      <td><%= shop.first_checkin %></td>
       <td><%= link_to '处理', "/admin_user_add_shops/show?id=#{shop.id.to_i}", :target => "blank" %></td>
       <td><%= link_to '标记删除', "#{}", :onclick => "ajaxDel('#{shop.id.to_i}')" %></td>
     </tr>
