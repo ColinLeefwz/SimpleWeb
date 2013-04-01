@@ -101,7 +101,7 @@ class AdminUserAddShopsController < ApplicationController
 
   def near
     @shop = Shop.find_by_id(params[:id])
-    shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.lo, 0.03]}},:name => /#{@shop.name}/,:_id => {"$ne" => @shop.id }})
+    shops = Shop.similar_shops(@shop, 60)
     data = shops.map{|shop| [ shop.id.to_i, shop.name,  shop.addr,  shop.show_t,  shop.min_distance(shop, @shop.lo)]}
     render :json => data
   end
