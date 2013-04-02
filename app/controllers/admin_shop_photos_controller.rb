@@ -9,7 +9,7 @@ class AdminShopPhotosController < ApplicationController
     sort ={:_id => -1}
 
     if !params[:city].blank? && !params[:shop].blank?
-      sids = Shop.where({:name => /#{params[:shop]}/, :city => params[:city]}).only(:name).map { |m| m._id  }
+      sids = Shop.where({:name => /#{params[:shop]}/, :city => params[:city]}).only(:_id).map { |m| m._id.to_i.to_s }
       hash.merge!(:room => {'$in' => sids})
     end
 
