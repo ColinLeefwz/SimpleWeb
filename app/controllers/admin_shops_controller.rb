@@ -76,11 +76,15 @@ class AdminShopsController < ApplicationController
     info = @shop.info
     new_info = ShopInfo.new2(params[:shop_info])
     if info || new_info
-      shop_info = info || ShopInfo.new
-      shop_info._id = @shop.id.to_i
-      shop_info.addr = new_info.addr
-      shop_info.tel = new_info.tel
-      shop_info.save
+      if new_info.nil?
+        info.delete
+      else
+        shop_info = info || ShopInfo.new
+        shop_info._id = @shop.id.to_i
+        shop_info.addr = new_info.try(:addr)
+        shop_info.tel = new_info.try(:tel)
+        shop_info.save
+      end
     end
     redirect_to :action => "show", :id => @shop.id
   end
