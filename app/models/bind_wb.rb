@@ -11,18 +11,25 @@ class BindWb
   validates_presence_of :login_name, :message => "微博登录名必填."
   validates_presence_of :name, :message => "微博昵称必填."
 
-  validate :rr
-  def rr
+
+
+  validate :check_wb
+  def check_wb
     url = "https://api.weibo.com/2/users/show.json?access_token=#{$sina_token}&uid=#{self.wb_uid}"
     begin
       response = JSON.parse(RestClient.get(url))
       self.errors.add(:wu_uid, '微博uid和微博昵称不匹配.')  if response["screen_name"] != self.name
-      val = true
+      self.val = true
     rescue RestClient::BadRequest
       self.errors.add(:wu_uid, '微博uid可能不存在.')
     rescue
     end
   end
+  
+  def shop
+    Shop.find(self._id)
+  end
+
 
 
   def self.find2(id)
