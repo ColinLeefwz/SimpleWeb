@@ -13,5 +13,12 @@ class ShopInfo
   field :mid, type:Integer
   field :osm_id, type:Integer
 
+
+  def self.new2(info={})
+    shop_info  = self.new(info)
+    return shop_info unless shop_info.addr.blank?
+    return shop_info unless shop_info.tel.blank?
+    return nil
+  end
 end
 
