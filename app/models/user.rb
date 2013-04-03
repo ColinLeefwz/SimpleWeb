@@ -416,10 +416,10 @@ class User
   
   def self.fake_user(view_by_who)
     if view_by_who.gender==1
-      index = view_by_who.cati % $fakeusers2.size
+      index = (view_by_who.cati+Time.now.mday) % $fakeusers2.size
       uid = $fakeusers2[index]
     else
-      index = view_by_who.cati % $fakeusers1.size
+      index = (view_by_who.cati+Time.now.mday) % $fakeusers1.size
       uid = $fakeusers1[index]      
     end
     User.find_by_id(uid)
