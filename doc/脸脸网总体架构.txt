@@ -60,6 +60,12 @@ Nginx使用默认安装，启动在80端口。
  * 源代码路径:/mnt/redis-2.6.4/
  * 启动:redis-server
  
+ sudo utils/install_server.sh
+ sudo rm /etc/redis/6379.conf 
+ sudo ln -s /mnt/lianlian/redis.conf /etc/redis/6379.conf 
+ sudo /etc/init.d/redis_6379 start
+ redis-cli -h 10.200.141.172 shutdown 
+ 
  缓存到redis中的信息：
  
 1. 每个商家当天的签到数据。类型为zset，key为“ckin商家id"，值为用户id，排序值为时间。见checkin.add_to_redis方法。通过cronjob清空昨天的签到数据。
@@ -187,3 +193,4 @@ riak-erlang-client
 2. 代码更新：git pull origin master && ./install.sh
 3. 重启：ejabberdctl restart
 
+如果重启xmpp服务器，一定要先启动riak然后启动ejabberd。
