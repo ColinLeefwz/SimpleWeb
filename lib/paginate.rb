@@ -13,11 +13,19 @@ module Paginate
   end
 
   def paginate2(model,page=1, hash={},sort={},pcount={})
-    @page =  page ? page.to_i : 1
+    #    @page =  page ? page.to_i : 1
+    @page = page.to_i <= 1 ? 1 :  page.to_i
     @pcount =  pcount ? pcount.to_i : 15
     cons = model.classify.constantize
     skip = (@page - 1)*@pcount
     cons.where(hash).skip(skip).limit(@pcount).sort(sort)
+  end
+
+  def paginate_arr2(array, page =1, pcount = 15)
+    @page =  page ? page.to_i : 1
+    @pcount =  pcount ? pcount.to_i : 15
+    skip = (@page - 1)*@pcount
+    array[skip, @pcount]
   end
 
   def paginate(model, page =1, hash = {}, sort={}, pcount = 15)
@@ -31,7 +39,7 @@ module Paginate
   end
 
   def paginate_arr(model_or_array, page =1, pcount = 15)
-    @page =  page ? page.to_i : 1
+    @page = page.to_i <= 1 ? 1 :  page.to_i
     @pcount =  pcount ? pcount.to_i : 15
     @total_entries = model_or_array.length
     @last_page = (@total_entries+@pcount-1)/@pcount
