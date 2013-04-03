@@ -18,7 +18,7 @@
 	  </td>
       <td><%= user.try(:name)  %></td>
       <td align="center"><%= img_gender(user.gender)  %></td>
-      <td align="center"><%= user.birthday.try(:to_date) %></td>
+      <td align="center"><%= age(user.birthday.try(:to_date)) %></td>
       <td align="center"><%= link_to '微博',user.try(:weibo_home) %></td>
       <td align="center"><%= down[1].localtime.strftime("%Y-%m-%d %H:%M") %></td>
     </tr>

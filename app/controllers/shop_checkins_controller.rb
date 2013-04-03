@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class ShopCheckinsController < ApplicationController
+  
 
   before_filter :shop_authorize
   include Paginate
@@ -8,7 +9,12 @@ class ShopCheckinsController < ApplicationController
 
   def index
     hash = {sid: session[:shop_id]}
+    unless params[:name].blank?
+      uids = User.where(:name => /#{params[:name]}/).only(:_id).map { |m| m._id }
+      hash.merge!({uid: {'$in' => uids}})
+    end
     hash.merge!({uid: params[:uid]}) unless params[:uid].blank?
+    
     sort = {_id: -1}
     @checkins = paginate2("Checkin", params[:page], hash, sort,10)
   end
@@ -39,6 +45,22 @@ class ShopCheckinsController < ApplicationController
     @checkin_shop_stat  = CheckinShopStat.find(session[:shop_id])
     @banks = @checkin_shop_stat.users.sort{|b, a| a[1][0] <=> b[1][0]}
     @banks = paginate_arr(@banks,params[:page])
+  end
+
+  def do_ban
+    ban = session_shop.ban || ShopBan.new
+    ban._id = session[:shop_id].to_i
+    users = ban.users.to_a
+    (ban.users = users << params[:uid] ) if users.index(params[:uid]).nil?
+    ban.save
+    redirect_to :action => "index", :name => params[:name], :page => params[:page]
+  end
+
+  def unban
+    ban = session_shop.ban
+    ban.users.delete(params[:uid])
+    ban.save
+    redirect_to :action => "index", :name => params[:name], :page => params[:page]
   end
 
 end
