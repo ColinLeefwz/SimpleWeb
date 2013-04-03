@@ -248,6 +248,18 @@ class Shop
     Shop.where({psid: self._id})
   end
 
+  def has_branch?
+    Shop.where({psid: self._id}).limit(1).only(:_id).any?
+  end
+
+  def ban
+    ShopBan.find2(self._id.to_i)
+  end
+
+  def ban_user(uid)
+    ban && ban.users.to_a.index(uid)
+  end
+
   
 
   def get_city
