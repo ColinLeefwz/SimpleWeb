@@ -48,6 +48,11 @@ class AdminShopsController < ApplicationController
     @shop = Shop.new
   end
 
+  def edit
+    @shop = Shop.find_by_id(params[:id])
+    @shop_info = @shop.info || ShopInfo.new
+  end
+
   def set_password
     @shop = Shop.find(params[:id])
     if request.post?
@@ -57,6 +62,31 @@ class AdminShopsController < ApplicationController
         flash[:notice] = '密码修改失败.'
       end
     end
+  end
+
+  def update
+    @shop = Shop.find(params[:id])
+    os = Shop.new(params[:shop])
+    @shop.lo = (os.lo.count == 1 ?os.lo.first.split(/[,，]/).map{|l| l.to_f} : os.lo.map { |m| m.split(/[,，]/).map{|l| l.to_f} })
+    @shop.name = os.name
+    @shop.t = os.t.to_i
+    @shop.city = os.get_city
+    @shop.save
+
+    info = @shop.info
+    new_info = ShopInfo.new2(params[:shop_info])
+    if info || new_info
+      if new_info.nil?
+        info.delete
+      else
+        shop_info = info || ShopInfo.new
+        shop_info._id = @shop.id.to_i
+        shop_info.addr = new_info.try(:addr)
+        shop_info.tel = new_info.try(:tel)
+        shop_info.save
+      end
+    end
+    redirect_to :action => "show", :id => @shop.id
   end
 
   def create
