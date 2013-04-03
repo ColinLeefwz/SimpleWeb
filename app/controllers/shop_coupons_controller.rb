@@ -86,7 +86,7 @@ class ShopCouponsController < ApplicationController
     if @coupon.save
       case @coupon.t.to_i
       when 1
-        @coupon.img2.blank? ? @coupon.gen_img2 : @coupon.gen_img
+        @coupon.gen_img unless @coupon.img2.blank?
       when 2
         @coupon.process_img_upload = true
         FileUtils.cp("public/#{@coupon.img2}", "public/uploads/tmp/coupon_#{@coupon.id}.jpg")
