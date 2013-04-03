@@ -1,17 +1,23 @@
 <div class="title2"><h2>优惠券详情</h2></div>
 <div id="Notice" class="notice none"></div>
 <% if @coupon.img.blank? %>
-  <div class="clear1"></div>
-  <div class="plane4">
-    <img src="../images/pic14.jpg" class="imgs"/>
+  <div id="imgText">
+    <div class="coupon">
+      <div class="btns" style="background: url('/images/btn/coupon.png') repeat scroll left top transparent;"></div>
+      <div class="rdiv" >
+        <div class = 'txt' style="border: none">点此输入名称</div>
+        <div class = 'atxt' style="border: none">点此输入名称</div>
+      </div>
+    </div>
+    <ul class="formlist">
+      <li>
+        <label>规则：</label><span class="right" style="width: 120px"><%= @coupon.show_rule2 %></span>
+      </li>
+      <li>
+        <label>关键字：</label><span class="right"><%= @coupon.text %></span>
+      </li>
+    </ul>
   </div>
-  <div class="clear1"></div>
-  <div class="plane3 pl100 pt20">
-    <%= link_to '重新编辑', edit_shop_coupon_path(@coupon.id),:class => "l" %>
-    <span class="l plr20">|</span>
-    <%= link_to '返回列表', shop_coupons_path, :class=>"btn6 pl0 mt0" %>
-  </div>
-
 <%else%>
   <div class="coupon">
     <div class="adiv" style="background:url('<%= @coupon.img%>') center center no-repeat;"></div>
