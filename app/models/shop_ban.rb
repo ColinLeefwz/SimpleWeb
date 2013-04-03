@@ -10,7 +10,11 @@ class ShopBan
   end
 
   def self.find2(sid)
-    self.where({:_id => sid}).limit(1).first
+    begin
+      self.find(sid)
+    rescue
+      nil
+    end
   end
 
 end

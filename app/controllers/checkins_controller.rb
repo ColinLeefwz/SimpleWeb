@@ -88,7 +88,8 @@ class CheckinsController < ApplicationController
     checkin.ip = real_ip
     send_all_notice_msg shop
     checkin.save!
-    @send_coupon_msg = shop.send_coupon(session[:user_id])
+    send_coupon_msg = shop.send_coupon(session[:user_id])
+    @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid]
     if checkin.add_to_redis #当天首次签到
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
