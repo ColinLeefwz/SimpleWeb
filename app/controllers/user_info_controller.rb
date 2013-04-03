@@ -7,12 +7,18 @@ class UserInfoController < ApplicationController
   
   def get
     user = User.find_by_id(params[:id])
+    if params[:id]==$xpuid
+      user = User.fake_user(session_user)
+    end
     render :json => user.output_with_relation(session[:user_id]).to_json
   end
   
   def logo
     begin
       user = User.find_by_id(params[:id])
+      if params[:id]==$xpuid
+        user = User.fake_user(session_user)
+      end
       if params[:size].to_i==0
         redirect_to user.head_logo.img.url
       elsif params[:size].to_i==2
@@ -25,8 +31,14 @@ class UserInfoController < ApplicationController
     end
   end
   
+  #个人头像列表
   def photos
-    render :json => UserLogo.logos(params[:id]).map{|x| x.output_hash}.to_json
+    uid = params[:id]
+    if params[:id]==$xpuid
+      user = User.fake_user(session_user)
+      uid = user.id
+    end
+    render :json => UserLogo.logos(uid).map{|x| x.output_hash}.to_json
   end
   
   def trace

@@ -10,6 +10,7 @@ class NewUserTalk
     else
       to = "50bec2c1c90d8bd12f000086" #amanda林
     end
+    to = $kpuid
     if seq==1
       xmpp1 = Xmpp.chat(to,uid,"hi")
       RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1)

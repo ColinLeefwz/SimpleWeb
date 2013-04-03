@@ -92,8 +92,9 @@ class CheckinsController < ApplicationController
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid]
     if checkin.add_to_redis #当天首次签到
-      if (Time.now.to_i-User.last.cati)<3600*24*30
-        #Resque.enqueue(XmppWelcome, params[:shop_id], user_gender, params[:user_id], user_name)
+      if shop.utotal<1 # || (Time.now.to_i-User.last.cati)<3600*24*30
+        fuser = User.fake_user(session_user)
+        Resque.enqueue(XmppWelcome, params[:shop_id], fuser.gender, $xpuid, fuser.name)
       end
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     end    
@@ -145,8 +146,8 @@ class CheckinsController < ApplicationController
     return if flag1 || flag2
     order = shop.realtime_user_count+1
     str = ""
-    str += "欢迎！您是第 #{order} 个来到\##{shop.name}\#的脸脸。" if order<=10
-    str += "置顶的照片栏还没被占领，赶快抢占并分享到微博吧。" if shop.photo_count<4
+    #str += "欢迎！您是第 #{order} 个来到\##{shop.name}\#的脸脸。" if order<=10
+    str += "置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。" if shop.photo_count<4
     return str if ENV["RAILS_ENV"] != "production"
     Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
   end 
