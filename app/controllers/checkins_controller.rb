@@ -92,6 +92,9 @@ class CheckinsController < ApplicationController
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid]
     if checkin.add_to_redis #当天首次签到
+      if (Time.now.to_i-User.last.cati)<3600*24*30
+        #Resque.enqueue(XmppWelcome, params[:shop_id], user_gender, params[:user_id], user_name)
+      end
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     end    
     if session[:new_user_flag]
@@ -119,10 +122,8 @@ class CheckinsController < ApplicationController
   def send_share_coupon_notice_if_exist(shop)
     coupon = shop.share_coupon
     return if coupon.nil?
-    key = coupon.text.nil?? "" : "文字中带'#{coupon.text}'#{coupon.text.length}个字"
-    str = "发送分享图片到新浪微博，#{key}，即可获得'#{coupon.name}'。"
-    return str if ENV["RAILS_ENV"] != "production"
-    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str)
+    return coupon.share_text_hint if ENV["RAILS_ENV"] != "production"
+    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], coupon.share_text_hint)
     return true
   end
 
