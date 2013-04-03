@@ -3,7 +3,7 @@
 class UserInfoController < ApplicationController
   
   before_filter :user_login_filter, :except => [:photos, :logo ]
-  caches_action :photos, cache_path: ->(c) {"UIP#{c.params[:id]}"}  
+  #caches_action :photos, cache_path: ->(c) {"UIP#{c.params[:id]}"}  
   
   def get
     user = User.find_by_id(params[:id])
