@@ -1,8 +1,13 @@
 <h1>商家详情</h1>
+<style>
+  p a{padding-left: 15px; }
+</style>
 <p>
+
   <b></b>
   <%= link_to '开通密码', "/admin_shops/set_password?id=#{@shop.id}"  if @shop.password.blank? %>
   <%= link_to('加权', "/admin_shops/upgrade_v?id=#{@shop.id}") %>
+  <%= link_to('编辑', "/admin_shops/edit?id=#{@shop.id}") %>
   <%= link_to('标记删除', "/admin_shops/del?id=#{@shop.id}") %>
 </p>
 <p>
@@ -16,7 +21,7 @@
 <p>
   <b>密码:</b>
   <%= @shop.password || '未开通' %>
-  
+
 </p>
 
 <p>
@@ -76,6 +81,6 @@
 <!--
 <p>
   <b>聊天记录：</b>
-  <%= link_to '查看', "/admin_shops/gchat?sid=#{@shop.id.to_i}"  %>
+<%= link_to '查看', "/admin_shops/gchat?sid=#{@shop.id.to_i}"  %>
 </p>
 -->

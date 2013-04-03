@@ -8,7 +8,7 @@
 
 listen "127.0.0.1:8082" # by default Unicorn listens on port 8080
 listen "#{`echo -n $ipaddr0`}:8082"
-worker_processes `nproc`.to_i  # this should be >= nr_cpus
+worker_processes `nproc`.to_i+1  # this should be >= nr_cpus
 pid "/mnt/lianlian/log/unicorn.pid"
 stderr_path "/mnt/lianlian/log/unicorn.log"
 stdout_path "/mnt/lianlian/log/unicorn.log"
