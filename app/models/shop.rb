@@ -177,8 +177,8 @@ class Shop
     user_last_checkins(start,size).each do |uid,cat|
       if uid==$xpuid
         fuser = User.fake_user(User.find_by_id(session_uid))
-        hash = u.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
-        hash.merge!({_id: fuser.id, id: fuser.id})
+        hash = fuser.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
+        hash.merge!({_id: $xpuid, id: $xpuid})
         ret << hash
         next
       end
