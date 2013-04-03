@@ -43,16 +43,16 @@ class Photo
   
   def send_wb
     if desc && desc.length>0
-      str = "#{desc2} ,我在\##{shop.name}\#\n(来自\#脸脸\# http://www.dface.cn/a?v=3 )"
+      str = "#{desc2} ,我在\##{shop.name}\#\n(来自脸脸: http://www.dface.cn/a?v=3 )"
     else
-      str = "我刚刚用\#脸脸\#分享了一张图片:\n#{desc2} 我在\##{shop.name}\#\n(来自脸脸 http://www.dface.cn/a?v=3 )"
+      str = "我刚刚用\#脸脸\#分享了一张图片:\n#{desc2} 我在\##{shop.name}\#\n(脸脸下载地址: http://www.dface.cn/a?v=3 )"
     end
     Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
   end
   
   def send_qq(direct=false)
     title = "我在\##{shop.name}"
-    text = "刚刚用脸脸分享了一张图片。(来自脸脸 http://www.dface.cn/a?v=18 )"
+    text = "刚刚用脸脸分享了一张图片。(脸脸下载地址: http://www.dface.cn/a?v=18 )"
     url = "http://www.dface.cn/photos/show?id=#{self.id}&size=0"
     if direct
       QqPhoto.perform(user_id, title, text, url, desc)
