@@ -162,7 +162,12 @@ class Shop
     #unless ssu.nil?
     #  ssu.users.each {|x| users1 << [x,(Time.now-10.days).to_i]}
     #end
-    users1[start,size] #TODO: 分页判断
+    if users1.size<2
+      users1 << [$xpuid,Time.now.to_i-30*60-rand(10000)]
+      users1
+    else
+      users1[start,size] #TODO: 分页判断
+    end
   end
 
   def users(session_uid,start,size)
