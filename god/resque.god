@@ -5,12 +5,12 @@ rails_root  = ENV['RAILS_ROOT'] || "/mnt/lianlian"
 num_workers.times do |num|
   God.watch do |w|
     w.dir      = "#{rails_root}"
-    w.log = "#{rails_root}/log/god.log"
+    w.log = "#{rails_root}/log/resque.log"
     w.name     = "resque-#{queue}#{num}"
     w.group    = 'resque'
     w.interval = 30.seconds
     w.env      = {"QUEUE"=>queue, "RAILS_ENV"=>rails_env}
-    w.start    = "INTERVAL=#{inteval} QUEUE='#{queue}' rake -f #{rails_root}/Rakefile environment resque:work"
+    w.start    = "INTERVAL=#{inteval} QUEUE='#{queue}' rake resque:work"
 
 #    w.uid = 'dooo'
 #    w.gid = 'dooo'

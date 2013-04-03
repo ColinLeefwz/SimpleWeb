@@ -1,0 +1,53 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<h1>微博绑定商家</h1>
+<%= form_tag '/admin_shop_bindwbs',:method =>:get do %>
+  <p>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
+  </p>
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>商家</th>
+    <th>登录名</th>
+    <th>昵称</th>
+    <th>微博id</th>
+    <th>通过验证</th>
+  </tr>
+
+  <% @bind_wbs.each do |bind| %>
+    <tr>
+      <td><%= link_to bind.shop.try(:name), "/admin_shops/show?id=#{bind._id}" %></td>
+      <td><%= bind.login_name %></td>
+      <td><%= bind.name %></td>
+      <td><%= bind.wb_uid %></td>
+      <td><%= bind.val ? "是" : '否' %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
+
+<script type="text/javascript">
+  function ajaxDel(obj, photo_id){
+    if(confirm("确定删除此照片"))
+    {
+      $.get("/admin_shop_photos/ajax_del",{id: photo_id}, function(data) {
+        if(data['text']){
+          obj.parent().parent().remove();
+        }
+        else{
+          obj.replaceWith('删除失败.')
+        }
+      });
+    }
+  }
+</script>
