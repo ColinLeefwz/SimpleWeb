@@ -5,7 +5,7 @@
 脸脸网的XMPP服务器采用的是Openfire。
 
 \begin{enumerate}
-\item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。
+\item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。登录xmpp时的resource使用机器特定的字符串，以区分一个帐号在多台设备上登录。
 \item 商家的id加上"@c.dface.cn"就是现场聊天室的jid。
 \item 脸脸的用户名就是openfire的用户名，且也就是聊天时的用户名。Xmpp协议允许用户在加入聊天室时取一个名字，脸脸的聊天室应该忽略该名字。脸脸用户加入聊天室的时候，其jid格式为"roomid@c.dface.cn/uid"。
 \item 脸脸中的关注和粉丝关系是单向的，和xmpp中的好友roster关系无关。
