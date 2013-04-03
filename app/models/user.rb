@@ -410,5 +410,9 @@ class User
     c = user_logos.count
     self.update_attribute(:pcount,c) if self.pcount!=c
   end
+  
+  def self.fake_user(view_by_who)
+    
+  end
 
 end
