@@ -76,11 +76,14 @@ class UserLogosTest < ActionDispatch::IntegrationTest
       {"logo"=>three.img.url,"logo_thumb"=>three.img.url(:t1),"logo_thumb2"=>three.img.url(:t2),"id"=>three.id.to_s,"user_id"=>"502e6303421aa918ba000005"},
       {"logo"=>one.img.url,"logo_thumb"=>one.img.url(:t1),"logo_thumb2"=>one.img.url(:t2),"id"=>one.id.to_s,"user_id"=>"502e6303421aa918ba000005"}]
 
-    #未登录获取用户头像
+    #未登录获取用户头像, 现在未登录也允许查看头像
     logout
     get "/user_info/logo?id=#{luser.id}"
-    assert_response :success
-    assert_equal response.body, {"error"=>"not login"}.to_json
+    assert_response :redirect
+    url = "http://oss.aliyuncs.com/logo_test/#{luser.reload.head_logo.id}/0.jpg"
+    assert response.body.index(url)>0
+    assert_redirected_to UserLogo.find(luser.reload.head_logo_id).img.url
+    
 
     #登录获取用户头像
     login(luser.id)
