@@ -94,7 +94,7 @@ class CheckinsController < ApplicationController
     if checkin.add_to_redis #当天首次签到
       if shop.utotal<1 # || (Time.now.to_i-User.last.cati)<3600*24*30
         fuser = User.fake_user(session_user)
-        Resque.enqueue(XmppWelcome, params[:shop_id], fuser.gender, $xpuid, fuser.name)
+        Resque.enqueue(XmppWelcome, params[:shop_id], fuser.gender, $xpuid, fuser.name) if fuser
       end
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     end    
