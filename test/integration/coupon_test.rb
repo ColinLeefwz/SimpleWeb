@@ -174,6 +174,8 @@ class CouponTest < ActionDispatch::IntegrationTest
     post "/checkins", {:lat => '30.28', :lng => "120.80", "accuract" => 65, :shop_id => 2, :user_id => user.id, :od => 1 }
     assert_equal assigns[:send_coupon_msg], nil
 
+    #######
+
     
   end
   

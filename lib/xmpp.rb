@@ -29,6 +29,7 @@ class Xmpp
   
   #在聊天室以特定用户身份发消息
   def self.send_gchat2(from,room,to,msg)
+    return "消息：#{msg}" if ENV["RAILS_ENV"] != "production"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat2(from,room,to,msg))   
   end
   
