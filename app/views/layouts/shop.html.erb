@@ -61,7 +61,9 @@
           <span class="borderstyle"></span>
           <a href="/shop_faqs" name="n15"  class="arrow">问答系统</a>
           <span class="borderstyle"></span>
-          <a href="/shop_checkins" name="n1" class="arrow">签到管理</a>
+          <span class="tit">签到管理</span>
+          <a href="/shop_checkins" class="s arrow" name="n1">最新签到</a>
+          <a href="/shop_checkins/rank?flag=week" class="s arrow" name="n22">排行榜</a>
           <span class="borderstyle"></span>
           <a href="/shop_shop_notices" name="n9" class="arrow">公告管理</a>
           <span class="borderstyle"></span>
@@ -71,13 +73,21 @@
           <span class="borderstyle"></span>
           <a href="/shop_staffs" name="n13" class="arrow">员工管理</a>
           <span class="borderstyle"></span>
-          <a href="/shop_bindwbs" name="n13" class="arrow">绑定微博</a>
-          <% unless session_shop.shops.blank? %>
+          <% if session_shop.ban  %>
+            <a href="/shop_bans" name="n21" class="arrow">屏蔽用户</a>
             <span class="borderstyle"></span>
-            <a href="/shop_subshops" name="n14" class="arrow">内部商家管理</a>
           <% end %>
+          <a href="/shop_bindwbs" name="n18" class="arrow">绑定微博</a>
           <span class="borderstyle"></span>
-          <a href="/shop_photos" name="n14" class="arrow">照片墙</a>
+          <% unless session_shop.shops.blank? %>
+            <a href="/shop_subshops" name="n14" class="arrow">内部商家管理</a>
+            <span class="borderstyle"></span>
+          <% end %>
+          <% if session_shop.has_branch? %>
+            <a href="#" name="n20" class="arrow">分店管理管理</a>
+            <span class="borderstyle"></span>
+          <% end %>
+          <a href="/shop_photos" name="n19" class="arrow">照片墙</a>
           <span class="borderstyle"></span>
           <a href="/shop_login/logout" class="arrow">退出</a>
         </div>
