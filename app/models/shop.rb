@@ -175,6 +175,13 @@ class Shop
     #Benchmark.measure {Shop.find_by_id(4928288).users(User.last._id)} 
     ret = []
     user_last_checkins(start,size).each do |uid,cat|
+      if uid==$xpuid
+        fuser = User.fake_user(User.find_by_id(session_uid))
+        hash = fuser.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
+        hash.merge!({_id: $xpuid, id: $xpuid})
+        ret << hash
+        next
+      end
       u = User.find_by_id(uid)
       next if u.nil?
       next if u.forbidden?
