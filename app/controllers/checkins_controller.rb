@@ -22,7 +22,7 @@ class CheckinsController < ApplicationController
       shop = Shop.find(params[:sname][3..-1])
       params[:shop_id] = shop.id
       params[:bssid] = nil
-      do_checkin(shop)
+      do_checkin(shop,true)
       render :json => shop.safe_output.to_json
       return
     end
@@ -74,7 +74,7 @@ class CheckinsController < ApplicationController
     shop
   end
   
-  def do_checkin(shop=nil)
+  def do_checkin(shop=nil,fake=false)
     shop = Shop.find_by_id(params[:shop_id]) if shop.nil?
     checkin = Checkin.new
     checkin.loc = [params[:lat].to_f, params[:lng].to_f]
@@ -94,7 +94,7 @@ class CheckinsController < ApplicationController
     checkin.save!
     send_coupon_msg = shop.send_coupon(session[:user_id])
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
-    CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid]
+    CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !fake
     if checkin.add_to_redis #当天首次签到
       if shop.utotal<1 || ( shop.utotal<2 && (Time.now.to_i-User.last.cati)<3600*24*7 )
         fuser = User.fake_user(session_user)
