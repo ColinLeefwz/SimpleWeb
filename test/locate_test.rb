@@ -5,6 +5,13 @@ require 'rails/test_help'
 
 class LocateTest < ActiveSupport::TestCase
   
+  def test_json
+    ss = Shop.new.find_shops([ 32.192425, 120.803238 ], 5, nil)
+    ss.map{|x| x.safe_output_with_users}.to_json
+    ss = Shop.new.find_shops([ 30.282204, 120.11528 ], 300, "502e6303421aa918ba000001")
+    ss.map{|x| x.safe_output_with_users}.to_json
+  end
+  
 
   def test_locate1
     puts ENV["RAILS_ENV"] 
