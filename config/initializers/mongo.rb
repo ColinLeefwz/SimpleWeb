@@ -3,13 +3,6 @@
 Mongoid.logger = Rails.logger
 Mongoid.identity_map_enabled = false
 
-module ActiveSupport
-  module Callbacks
-    
-  end
-end
-
-
 module Mongoid
   module Finders
     
@@ -174,7 +167,7 @@ module Moped
   # node, a replica set, or a mongos server.
   class Cluster
 
-    def nodes
+    def nodes(opts = {})
 	    #puts "disable Node Discovery."
       @nodes
     end
