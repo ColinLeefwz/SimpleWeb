@@ -8,8 +8,7 @@ class AroundmeController < ApplicationController
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     arr = Shop.new.find_shops(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
     hash = arr.map do |x|
-      s = Shop.instantiate(x)
-      s.safe_output_with_users
+      x.safe_output_with_users
     end
     record_gps(lo)
     render :json =>  hash.to_json
