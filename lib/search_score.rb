@@ -24,7 +24,7 @@ module SearchScore
     if arr.length>=3
       return sort_with_score(arr,loc,accuracy,uid,bssid,debug)
     else
-      arr = Shop.collection.find({lo:{"$near" =>loc}}).limit(10).to_a
+      arr = Shop.where({lo:{"$near" =>loc}}).limit(10).to_a
       arr.uniq_by! {|x| x["_id"]}
       return sort_with_score(arr,loc,accuracy,uid,bssid,debug)[0,5]
     end
