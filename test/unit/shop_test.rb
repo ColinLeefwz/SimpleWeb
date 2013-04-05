@@ -21,6 +21,9 @@ class ShopTest < ActiveSupport::TestCase
   
   test ".find_by_id 存在的id 能正确的查询" do
     assert_equal Shop.find_by_id('1').name, '测试1'
+    assert_equal Shop.find_by_id('1').id.class, Fixnum
+    assert_equal Shop.find_by_id('1')._id.class, Fixnum
+    
   end
 
   test "#send_coupon(user_id) 新用户当天第一次签到，发送每日签到优惠，每日前几名签到优惠，新用户首次签到优惠，子商家只收到每日签到优惠.第二次签到没有" do
