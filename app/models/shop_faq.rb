@@ -14,9 +14,6 @@ class ShopFaq
 
   mount_uploader(:img, FaqImgUploader)
   
-  after_find do |obj|
-    obj._id = obj._id.to_i
-  end
 
   def shop
     Shop.find_by_id(sid)
