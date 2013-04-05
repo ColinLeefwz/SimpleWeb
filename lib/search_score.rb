@@ -50,7 +50,8 @@ module SearchScore
       x=xx[0]
       base_score(xx,x)
     end
-    if uid && (Time.now.to_i-User.find_by_id(uid).cati)>3600*24*7 && bssid.nil?
+    user = User.find_by_id(uid)
+    if user && (Time.now.to_i-user.cati)>3600*24*7 && bssid.nil?
       score.each do |xx|
         x=xx[0]
         shop_history_score(xx,x,uid.to_s) unless bssid #没有wifi时，要更依赖历史推荐
