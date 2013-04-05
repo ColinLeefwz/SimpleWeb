@@ -88,13 +88,13 @@ GEM
       subexec (~> 0.2.1)
     mongo (1.6.4)
       bson (~> 1.6.4)
-    mongoid (3.0.3)
-      activemodel (~> 3.1)
-      moped (~> 1.1)
+    mongoid (3.1.2)
+      activemodel (~> 3.2)
+      moped (~> 1.4.2)
       origin (~> 1.0)
       tzinfo (~> 0.3.22)
-    moped (1.2.0)
-    multi_json (1.6.1)
+    moped (1.4.5)
+    multi_json (1.7.2)
     multipart-post (1.1.5)
     oauth2 (0.8.0)
       faraday (~> 0.8)
@@ -102,7 +102,7 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
-    origin (1.0.4)
+    origin (1.0.11)
     osmlib-base (0.1.4)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -192,7 +192,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.33)
+    tzinfo (0.3.37)
     unicorn (4.6.2)
       kgio (~> 2.6)
       rack
@@ -219,7 +219,7 @@ DEPENDENCIES
   in_place_editing
   mini_magick
   mongo
-  mongoid
+  mongoid (~> 3.1.0)
   oauth2
   osmlib-base
   rails (~> 3.2)
