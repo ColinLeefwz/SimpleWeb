@@ -7,16 +7,14 @@ class AroundmeController < ApplicationController
     lo = [params[:lat].to_f,params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     arr = Shop.new.find_shops(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
-    hash = arr.map do |x|
-      x.safe_output_with_users
-    end
     record_gps(lo)
-    render :json =>  hash.to_json
+    render :json =>  arr.map{|x| x.safe_output_with_users}.to_json
   end
 
   def shop_report
-    arr = Shop.new.find_shops([params[:lat].to_f,params[:lng].to_f],params[:accuracy].to_f,params[:uid],params[:bssid])
-    #    arr = Shop.all
+    lo = [params[:lat].to_f,params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    arr = Shop.new.find_shops(lo,params[:accuracy].to_f,params[:uid],params[:bssid])
     @shops = arr.map do |x|
       [x['name'],x['_id'].to_i]
     end
