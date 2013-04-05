@@ -58,6 +58,7 @@ class CheckinBssidStat
   end
   
   def self.insert_checkin(ck,ssid)
+    add_bssid_redis(ck)
     CheckinBssidStat.insert(ck["bssid"],ck["sid"],ck["uid"],ssid)
   end
   
@@ -80,6 +81,16 @@ class CheckinBssidStat
       end
     end
   end
+  
+  def self.init_bssid_redis
+    Checkin.where({bssid:{"$exists" => true}}).each do |ck|
+      add_bssid_redis(ck)
+    end
+  end
+  
+  def self.add_bssid_redis(checkin)
+    $redis.sadd("BSSID#{checkin["bssid"]}",checkin["sid"].to_i)
+  end  
   
 end
 
