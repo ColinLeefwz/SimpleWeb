@@ -13,6 +13,9 @@ class ShopInfo
   field :mid, type:Integer
   field :osm_id, type:Integer
 
+  after_find do |obj|
+    obj._id = obj._id.to_i
+  end
 
   def self.new2(info={})
     shop_info  = self.new(info)

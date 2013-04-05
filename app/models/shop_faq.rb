@@ -12,9 +12,11 @@ class ShopFaq
   validates_presence_of :title, :message => '标题不能是空.'
   validates_presence_of :img, :message => "文本和图片至少有一个存在.", :if => "text.blank?"
 
-
-
   mount_uploader(:img, FaqImgUploader)
+  
+  after_find do |obj|
+    obj._id = obj._id.to_i
+  end
 
   def shop
     Shop.find_by_id(sid)
