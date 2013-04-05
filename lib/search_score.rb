@@ -3,10 +3,24 @@
 module SearchScore
 
   def find_shops(loc,accuracy,uid,bssid=nil,debug=false)
-    radius = 0.0016+0.002*accuracy/300
-    radius=0.01 if(radius>0.01)  #不大于1000米
-    arr = Shop.collection.find({lo:{"$near" =>loc,"$maxDistance"=>radius}}).limit(100).to_a
+    radius = get_radius(accuracy)
+    limit = 100
+    hash = {lo:{"$near" =>loc,"$maxDistance"=>radius}}
+    if bssid
+      b = CheckinBssidStat.find_by_id(bssid)
+      shopids = $redis.smembers("BSSID#{bssid}")
+      shopids << b.shop_id.to_i if b && b.shop_id
+      hash["_id"] = {"$nin" => shopids} if shopids.size>0
+      if b && b.shop_id
+        limit = 20
+      else
+        limit = 100 - shopids.size*5
+        limit = 20 if limit<20
+      end
+    end
+    arr = Shop.where(hash).limit(limit).to_a
     arr.uniq_by! {|x| x["_id"]}
+    shopids.each {|x| arr << Shop.find_by_id(x)} if shopids
     if arr.length>=3
       return sort_with_score(arr,loc,accuracy,uid,bssid,debug)
     else
@@ -14,6 +28,12 @@ module SearchScore
       arr.uniq_by! {|x| x["_id"]}
       return sort_with_score(arr,loc,accuracy,uid,bssid,debug)[0,5]
     end
+  end
+  
+  def get_radius(accuracy)
+    radius = 0.0016+0.002*accuracy/300
+    radius=0.01 if(radius>0.01)  #不大于1000米
+    radius
   end
   
   def sort_with_score(arr,loc,accuracy,uid,bssid,debug=false)
@@ -29,7 +49,12 @@ module SearchScore
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
-      shop_history_score(xx,x,uid.to_s)      
+    end
+    if uid && (Time.now.to_i-User.find_by_id(uid).cati)>3600*24*7 && bssid.nil?
+      score.each do |xx|
+        x=xx[0]
+        shop_history_score(xx,x,uid.to_s) unless bssid #没有wifi时，要更依赖历史推荐
+      end
     end
     bssid_score(score,bssid) if bssid
     realtime_score(score)
@@ -78,7 +103,7 @@ module SearchScore
   end
 
   def bssid_score(score,bssid)
-    b = CheckinBssidStat.where({"_id" => bssid}).first
+    b = CheckinBssidStat.find_by_id(bssid)
     unless b.nil?
       score.each_with_index do |xx,i|
         xx[2] -= 300 if xx[0]["_id"]==b.shop_id
@@ -99,7 +124,6 @@ module SearchScore
       if uid_s && sc.users[uid_s]
         ucount = sc.users[uid_s][0]
         xx[2] -= ucount_score(ucount)
-        xx[2] -= user_to_score(sc.users.length)/2.0
       end
   end
   
@@ -133,6 +157,7 @@ module SearchScore
     xx[2] += (10+(len-11)*3) if len>11
     xx[2] += (10+(4-len)*3) if len<4
     xx[2] -= x["v"].to_i if x["v"]
+    xx[2] -= user_to_score(x["utotal"].to_i)/2.0
     time_score(xx,x)
   end
   
