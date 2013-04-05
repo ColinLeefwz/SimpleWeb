@@ -24,7 +24,7 @@ gem "oauth2"
 gem "in_place_editing"
 gem 'mongo'
 gem 'bson_ext'
-gem 'mongoid'
+gem 'mongoid', '~> 3.1.0'
 gem 'rails-i18n'
 gem 'redis'
 gem 'redis-store'
