@@ -40,7 +40,10 @@ class Shop
   index({password: 1},{ sparse: true })
   index({v: 1},{ sparse: true })  
   index({city: 1, utotal:-1})
-
+  
+  after_find do |obj|
+    obj._id = obj._id.to_i
+  end
   
   def self.default_hash
     {del: {"$exists" => false}}
@@ -79,6 +82,12 @@ class Shop
 
   #删除商家.
   def shop_del
+    if utotal > 3
+      throw "超过3人签到的商家不能直接删除"
+    end
+    if CheckinBssidStat.where({shop_id: self.id}).first
+      throw "和WIFI绑定的商家不能直接删除"
+    end    
     self.update_attribute(:del,1)
   end
   
@@ -205,7 +214,7 @@ class Shop
   end
 
   def share_coupon
-    Coupon.where({shop_id: self.id.to_i, hidden: nil, t2: '2'}).sort({_id: -1}).limit(1).first
+    Coupon.where({shop_id: self.id.to_i, hidden: nil, t2: '2'}).sort({_id: -1}).limit(1).to_a[0]
   end
   
   def send_coupon(user_id)

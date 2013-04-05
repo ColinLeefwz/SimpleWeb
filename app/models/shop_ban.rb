@@ -4,6 +4,10 @@ class ShopBan
 
   field :_id, type: Integer
   field :users, type:Array #用户id字符串
+  
+  after_find do |obj|
+    obj._id = obj._id.to_i
+  end
 
   def shop
     Shop.find_by_id(self._id)
