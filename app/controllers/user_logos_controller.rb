@@ -74,7 +74,7 @@ class UserLogosController < ApplicationController
   
   private 
   def expire_cache
-    Rails.cache.delete("views/UIP#{session[:user_id]}.json")    
+    Rails.cache.delete("ULOGOS#{session[:user_id]}")    
   end
 
   
