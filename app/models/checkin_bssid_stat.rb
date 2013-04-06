@@ -86,21 +86,35 @@ class CheckinBssidStat
   end
   
   def is_mobile_wifi
-    return true if self._id[0,10]=="78:52:62:7" #贝尔tr958上网伴侣移动3G无线路由器
-    ss = shops.map {|x| Shop.find_by_id(x["id"])}
-    ss = ss.find_all{|x| x!=nil}
-    ss.each_with_index do |x,i| 
-      return true if x.shop_distance(ss[i-1])>3000 #同一wifi签到的点，距离超过3000米
-    end
-    false
+    return true if is_mobile_wifi_0(self._id,self.ssid)
+    return shop_distance_large_than(3000) #同一wifi签到的点，距离超过3000米
+  end
+  
+  def is_mobile_wifi_0(bssid,ssid)
+    return true if bssid[0,10]=="78:52:62:7" #贝尔tr958上网伴侣移动3G无线路由器
+    return true if ssid=="AndroidAp" || ssid=="CMCC" || ssid=="ChinaUnicom"
+    return true if bssid[0,8]=="ChinaNet"
+    return false
   end
   
   def print_shop_distance
     ss = shops.map {|x| Shop.find_by_id(x["id"])}
     ss = ss.find_all{|x| x!=nil}
+    puts "#{ssid}, #{_id}, #{shop_id}"
     ss.each_with_index do |x,i| 
-      puts x.shop_distance(ss[i-1])
+      dis = x.shop_distance(ss[i-1])
+      puts "#{dis}\t #{x.name},#{x.city},#{x.city_fullname}"
+      puts shops[i]#["users"].each {|x| puts User.find_by_id(x).name}
     end
+  end
+  
+  def shop_distance_large_than(distance)
+    ss = shops.map {|x| Shop.find_by_id(x["id"])}
+    ss = ss.find_all{|x| x!=nil}
+    ss.each_with_index do |x,i| 
+      return true if x.shop_distance(ss[i-1])>distance
+    end
+    false
   end
   
   def self.init_bssid_redis
