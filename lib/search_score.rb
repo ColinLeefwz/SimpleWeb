@@ -9,7 +9,7 @@ module SearchScore
     if bssid
       b = CheckinBssidStat.find_by_id(bssid)
       shopids = $redis.smembers("BSSID#{bssid}")
-      shopids << b.shop_id.to_i if b && b.shop_id
+      shopids << b.shop_id if b && b.shop_id && !shopids.find{|x| x.to_i==b.shop_id.to_i}
       hash["_id"] = {"$nin" => shopids} if shopids.size>0
       if b && b.shop_id
         limit = 20
