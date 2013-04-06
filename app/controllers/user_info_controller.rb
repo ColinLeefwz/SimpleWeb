@@ -3,7 +3,6 @@
 class UserInfoController < ApplicationController
   
   before_filter :user_login_filter, :except => [:photos, :logo ]
-  #caches_action :photos, cache_path: ->(c) {"UIP#{c.params[:id]}"}  
   
   def get
     user = User.find_by_id(params[:id])
@@ -38,7 +37,14 @@ class UserInfoController < ApplicationController
       user = User.fake_user(session_user)
       uid = user.id
     end
-    render :json => UserLogo.logos(uid).map{|x| x.output_hash}.to_json
+    ids = UserLogo.ids_cache(uid)
+    arr = ids.map do |id|
+      {:logo => UserLogo.img_url(id), 
+        :logo_thumb => UserLogo.img_url(id,:t1), 
+        :logo_thumb2 => UserLogo.img_url(id,:t2),
+        id: id, user_id:uid}
+    end
+    render :json => arr.to_json
   end
   
   def trace

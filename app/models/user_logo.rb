@@ -41,6 +41,16 @@ class UserLogo
     logo_thumb_hash.merge!({id: self._id, user_id:self.user_id})
   end
   
+  def self.ids_no_cache(uid)
+    UserLogo.only(:id).where({user_id: uid}).order_by([:ord,:asc]).map{|x| x.id}
+  end
+  
+  def self.ids_cache(uid)
+    Rails.cache.fetch("ULOGOS#{uid}") do 
+      ids_no_cache(uid)
+    end
+  end
+  
   def self.next_ord(uid)
     max = UserLogo.logos(uid).last
     if max
