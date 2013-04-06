@@ -33,6 +33,10 @@ module Gps
     end
   end
   
+  def shop_distance(shop)
+    min_distance(shop,loc_first)
+  end
+  
   def loc_first
     loc_first_of(self)
   end
