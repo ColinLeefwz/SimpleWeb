@@ -14,6 +14,15 @@ class Photo2
   
   index({ user_id: 1 })
   
+  
+  def self.img_url(id,type=nil)
+    if type
+      "http://oss.aliyuncs.com/dface2/#{id}/#{type}_0.jpg"
+    else
+      "http://oss.aliyuncs.com/dface2/#{id}/0.jpg"
+    end
+  end
+  
   def after_async_store
     if img.url.nil?
       Rails.logger.error("async_store3:#{self.class},#{self.id}")

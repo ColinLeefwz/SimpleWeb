@@ -123,14 +123,12 @@ class User
   end
   
   def head_logo_hash
-    if !head_logo_id.nil?
-      #这里使用了一个很trick的优化：直接构造整个UserLogo对象,可以少一次数据库查询。
-      logo = UserLogo.new
-      logo._id = head_logo_id
-      logo.img_filename = "0.jpg"
-      logo.logo_thumb_hash
-    else
+    if head_logo_id.nil?
       {:logo => "", :logo_thumb => "", :logo_thumb2 => ""}
+    else
+      {:logo => UserLogo.img_url(head_logo_id), 
+        :logo_thumb => UserLogo.img_url(head_logo_id, :t1), 
+        :logo_thumb2 => UserLogo.img_url(head_logo_id, :t2)}
     end
   end
   

@@ -20,11 +20,11 @@ class UserInfoController < ApplicationController
         user = User.fake_user(session_user)
       end
       if params[:size].to_i==0
-        redirect_to user.head_logo.img.url
+        redirect_to UserLogo.img_url(user.head_logo_id)
       elsif params[:size].to_i==2
-        redirect_to user.head_logo.img.url(:t2)
+        redirect_to UserLogo.img_url(user.head_logo_id,:t2)
       else
-        redirect_to user.head_logo.img.url(:t1)
+        redirect_to UserLogo.img_url(user.head_logo_id,:t1)
       end
     rescue Exception => e
       render :json => {error:"User #{params[:id]}'s Head Logo not exists."}.to_json

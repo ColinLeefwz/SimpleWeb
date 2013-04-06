@@ -14,6 +14,15 @@ class ShopFaq
 
   mount_uploader(:img, FaqImgUploader)
   
+  
+  def self.img_url(id,type=nil)
+    if type
+      "http://oss.aliyuncs.com/dface/#{id}/#{type}_0.jpg"
+    else
+      "http://oss.aliyuncs.com/dface/#{id}/0.jpg"
+    end
+  end
+  
 
   def shop
     Shop.find_by_id(sid)

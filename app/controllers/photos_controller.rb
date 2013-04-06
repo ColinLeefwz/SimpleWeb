@@ -21,15 +21,18 @@ class PhotosController < ApplicationController
   
   def show
     if params[:id] =~ /^faq/
-      photo = ShopFaq.find(params[:id].sub('faq',''))
+      id = params[:id].sub('faq','')
+      if params[:size].to_i==0
+        redirect_to ShopFaq.img_url(params[:id])
+      else
+        redirect_to ShopFaq.img_url(params[:id],:t2)
+      end      
     else
-      photo = Photo.find(params[:id])
-    end
-    
-    if params[:size].to_i==0
-      redirect_to photo.img.url
-    else
-      redirect_to photo.img.url(:t2)
+      if params[:size].to_i==0
+        redirect_to Photo.img_url(params[:id])
+      else
+        redirect_to Photo.img_url(params[:id],:t2)
+      end
     end
   end
   
