@@ -84,17 +84,19 @@ class CheckinsController < ApplicationController
     checkin.sid = shop.id
     checkin.city = shop.city if shop
     checkin.od = params[:od]
-    checkin.bssid = params[:bssid] if params[:bssid]
+    checkin.bssid = params[:bssid] if params[:bssid] & !fake
     if params[:altitude]
       checkin.alt = params[:altitude].to_f
       checkin.altacc = params[:altacc]
     end
+    checkin.del = true if fake
+    checkin.del = true if checkin.acc==5 && checkin.alt==0
     checkin.ip = real_ip
     send_all_notice_msg shop
     checkin.save!
     send_coupon_msg = shop.send_coupon(session[:user_id])
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
-    CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !fake
+    CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
     if checkin.add_to_redis #当天首次签到
       if shop.utotal<1 || ( shop.utotal<2 && (Time.now.to_i-User.last.cati)<3600*24*7 )
         fuser = User.fake_user(session_user)
