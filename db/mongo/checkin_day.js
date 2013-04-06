@@ -1,5 +1,4 @@
 db.loadServerScripts();
-db.checkins.remove({acc:5,alt:0})
 
 var checkinDay = function(days){
     [idOfBeginDay,idOfEndDay, id] = gen_day_id(days);
@@ -48,57 +47,10 @@ var checkinDay = function(days){
     })
 }
 
-var staticFilterUsers = function(){
-    return [ObjectId("502e6303421aa918ba000005"),ObjectId("502e6303421aa918ba000006"),ObjectId("502e6303421aa918ba00007a")]
-}
-
-var dynamicFilterUsers = function(){
-    var users = []
-    var gr = db.checkins.group({
-        "key" : {
-            uid: true
-        },
-        initial:{
-            count: 0
-        },
-        "$reduce" : function(doc, prev) {
-            prev.count += 1
-        },
-        "cond" : {
-            acc: 5
-        }
-    });
-
-    gr.forEach(function(h){
-        if(h['count'] > 3)
-            users.push(h['uid'])
-    })
-    return users
-}
-
-
-var filterAccEqualFive = function(days){
-    [idOfBeginDaysAgo, idOfEndYesterday] = gen_days_id(days)
-    var users = staticFilterUsers()
-    db.checkins.update({
-        _id: {
-            $gt: ObjectId(idOfBeginDaysAgo),
-            $lt: ObjectId(idOfEndYesterday)
-        },
-        acc: 5,
-        uid: {
-            $in: users
-        }
-    },{
-        $set:{
-            del: true
-        }
-    })
-}
-
 
 var filterAndCount = function(days){
-    filterAccEqualFive(days)
+	db.checkins.remove({acc:5,alt:0});
+	db.checkins.remove({del:true});
     for(var i = days; i > 0; i--){
         checkinDay(i)
     }

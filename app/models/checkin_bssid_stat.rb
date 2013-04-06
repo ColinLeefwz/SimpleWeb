@@ -5,6 +5,7 @@ class CheckinBssidStat
   field :ssid, type: String
   field :shops, type:Array #{id:商家id,users:[用户id,...]}, 使用该bssid签到的商家及其用户
   field :shop_id, type:Integer #实际所属商家
+  field :mobile, type:Boolean #是否是可移动的WIFI
   
   def self.kx_users(arr)
     arr.map{|x| x.to_s}.to_set & $kxs
@@ -58,12 +59,13 @@ class CheckinBssidStat
   end
   
   def self.insert_checkin(ck,ssid)
-    add_bssid_redis(ck)
     CheckinBssidStat.insert(ck["bssid"],ck["sid"],ck["uid"],ssid)
   end
   
   def self.insert(bssid,sid,uid,ssid)
     b = CheckinBssidStat.where({"_id" => bssid}).first
+    return if b && b.mobile
+    add_bssid_redis(ck)
     if b.nil?
       CheckinBssidStat.collection.insert({"_id" => bssid, "ssid" => ssid, "shops" => [{id:sid,users:[uid]}] })
     else
@@ -73,12 +75,31 @@ class CheckinBssidStat
       shop = shops.find{|x| x["id"]==sid}
       if shop.nil?
         b.push(:shops, {id:sid,users:[uid]} )
+        b.update_attribute(:mobile,true) if b.is_mobile_wifi
       elsif shop["users"].size<5
         shop["users"] = shop["users"].to_set.add(uid).to_a
         b.shops = shops
         b.save!
         b.try_set_shop_id if shop["users"].size>1
       end
+    end
+  end
+  
+  def is_mobile_wifi
+    return true if self._id[0,10]=="78:52:62:7" #贝尔tr958上网伴侣移动3G无线路由器
+    ss = shops.map {|x| Shop.find_by_id(x["id"])}
+    ss = ss.find_all{|x| x!=nil}
+    ss.each_with_index do |x,i| 
+      return true if x.shop_distance(ss[i-1])>3000 #同一wifi签到的点，距离超过3000米
+    end
+    false
+  end
+  
+  def print_shop_distance
+    ss = shops.map {|x| Shop.find_by_id(x["id"])}
+    ss = ss.find_all{|x| x!=nil}
+    ss.each_with_index do |x,i| 
+      puts x.shop_distance(ss[i-1])
     end
   end
   
