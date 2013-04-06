@@ -15,6 +15,15 @@ class UserLogo
   
   index({ user_id: 1, ord: 1 })
   
+  
+  def self.img_url(id,type=nil)
+    if type
+      "http://oss.aliyuncs.com/logo/#{id}/#{type}_0.jpg"
+    else
+      "http://oss.aliyuncs.com/logo/#{id}/0.jpg"
+    end
+  end
+  
 
   def user
     User.find_by_id(self.user_id)

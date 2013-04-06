@@ -63,13 +63,12 @@ class UserLogosController < ApplicationController
   end
   
   def show
-    photo = UserLogo.find(params[:id])
     if params[:size].to_i==0
-      redirect_to photo.img.url
+      redirect_to UserLogo.img_url(params[:id])
     elsif params[:size].to_i==2
-      redirect_to photo.img.url(:t2)
+      redirect_to UserLogo.img_url(params[:id],:t2)
     else
-      redirect_to photo.img.url(:t1)
+      redirect_to UserLogo.img_url(params[:id],:t1)
     end
   end
   
