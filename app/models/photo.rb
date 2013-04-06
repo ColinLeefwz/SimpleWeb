@@ -24,6 +24,14 @@ class Photo
   index({user_id:1, room:1})
   index({room:1, updated_at:-1})
   
+  def self.img_url(id,type=nil)
+    if type
+      "http://oss.aliyuncs.com/dface/#{id}/#{type}_0.jpg"
+    else
+      "http://oss.aliyuncs.com/dface/#{id}/0.jpg"
+    end
+  end
+  
   
   def after_async_store
     if img.url.nil?
