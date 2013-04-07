@@ -34,7 +34,7 @@ class CheckinsController < ApplicationController
       shop.save!
     end
     params[:shop_id] = shop.id
-    do_checkin(shop)
+    do_checkin(shop,false,true)
     render :json => shop.safe_output.to_json
   end
   
@@ -74,7 +74,7 @@ class CheckinsController < ApplicationController
     shop
   end
   
-  def do_checkin(shop=nil,fake=false)
+  def do_checkin(shop=nil,fake=false, new_shop=false)
     shop = Shop.find_by_id(params[:shop_id]) if shop.nil?
     checkin = Checkin.new
     checkin.loc = [params[:lat].to_f, params[:lng].to_f]
@@ -94,6 +94,15 @@ class CheckinsController < ApplicationController
     checkin.ip = real_ip
     send_all_notice_msg shop
     checkin.save!
+    if new_shop
+      str = "欢迎！您是第1个来到#{shop.name}的脸脸。置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。"
+      Resque.enqueue(XmppNotice, shop.id, params[:user_id], str)
+      Resque.enqueue(XmppRoomMsg, $gfuid, shop.id, params[:user_id], "等#{shop.name}审核通过后，你就是这里的地主啦！👍")
+      send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
+      new_user_nofity(checkin)
+      CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
+      return checkin
+    end
     send_coupon_msg = shop.send_coupon(session[:user_id])
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
@@ -104,13 +113,17 @@ class CheckinsController < ApplicationController
       end
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     end    
+    new_user_nofity(checkin)
+    checkin
+  end
+  
+  def new_user_nofity(checkin)
     if session[:new_user_flag]
       session[:new_user_flag] = nil
       session_user.update_attribute(:city, checkin.city)
       return  if ENV["RAILS_ENV"] != "production"
       Resque.enqueue(NewUser, checkin.uid,checkin.sid,checkin.od)
     end
-    checkin
   end
 
   def send_welcome_msg_if_not_invisible(user_gender, user_name)
