@@ -43,8 +43,7 @@ class Xmpp
           :uid => "502e6303421aa918ba000001") 
       end
     rescue Exception => e
-      puts cur_ip
-      raise e
+      raise cur_ip
     end
   end
 
