@@ -84,7 +84,7 @@ class CheckinsController < ApplicationController
     checkin.sid = shop.id
     checkin.city = shop.city if shop
     checkin.od = params[:od]
-    checkin.bssid = params[:bssid] if params[:bssid] & !fake
+    checkin.bssid = params[:bssid] if params[:bssid] && !fake
     if params[:altitude]
       checkin.alt = params[:altitude].to_f
       checkin.altacc = params[:altacc]
