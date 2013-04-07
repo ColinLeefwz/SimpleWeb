@@ -73,7 +73,7 @@ class UserInfoController < ApplicationController
     if !request.post?
       render :json => {:error => "only support post request"}.to_json
     else
-      user = session_user
+      user = session_user_no_cache
       hash = {}
       hash[:name] = params[:name] unless params[:name].nil?
       hash[:gender] = params[:gender] unless params[:gender].nil?
