@@ -11,8 +11,12 @@ class AController < ApplicationController
   end
   
   def xmpp_test
-    Xmpp.test
-    render :text => "ok"
+    begin
+      Xmpp.test
+      render :text => "ok"
+    rescue Exception => e
+      render :text => e.to_s, :status => 500
+    end
   end
   
 end
