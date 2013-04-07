@@ -65,7 +65,7 @@ class CheckinBssidStat
   def self.insert(bssid,sid,uid,ssid)
     b = CheckinBssidStat.where({"_id" => bssid}).first
     return if b && b.mobile
-    add_bssid_redis(ck)
+    add_bssid_redis(bssid,sid)
     if b.nil?
       CheckinBssidStat.collection.insert({"_id" => bssid, "ssid" => ssid, "shops" => [{id:sid,users:[uid]}] })
     else
@@ -119,12 +119,12 @@ class CheckinBssidStat
   
   def self.init_bssid_redis
     Checkin.where({bssid:{"$exists" => true}}).each do |ck|
-      add_bssid_redis(ck)
+      add_bssid_redis(ck["bssid"],ck["sid"])
     end
   end
   
-  def self.add_bssid_redis(checkin)
-    $redis.sadd("BSSID#{checkin["bssid"]}",checkin["sid"].to_i)
+  def self.add_bssid_redis(bssid,sid)
+    $redis.sadd("BSSID#{bssid}",sid.to_i)
   end  
   
 end
