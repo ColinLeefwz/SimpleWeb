@@ -67,12 +67,16 @@ class SinaUser
   
   def self.get_user_info(uid,token)
     require 'open-uri'
-    url = "https://api.weibo.com/2/users/show.json?uid=#{uid}&source=#{$sina_api_key}&access_token=#{token}"
-    
-    open(url) do |f|
-      return ActiveSupport::JSON.decode( f.gets )
+    begin
+      url = "https://api.weibo.com/2/users/show.json?uid=#{uid}&source=#{$sina_api_key}&access_token=#{token}"
+      
+      open(url) do |f|
+        return ActiveSupport::JSON.decode( f.gets )
+      end
+    rescue Exception => e
+      puts e
+      return nil
     end
-    return nil
   end
 
   def self.poi_suser_convert(poi)
