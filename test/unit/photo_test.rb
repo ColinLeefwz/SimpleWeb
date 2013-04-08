@@ -55,13 +55,13 @@ class PhotoTest < ActiveSupport::TestCase
     photo = Photo.create!({:user_id => User.first.id, :room => 111, :desc => '我们一起分享吧'})
     coupon = Coupon.find('507fc5bfc9ad42d756a412e5')
     coupon.unset(:users)
-    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e5', photo.send_pshop_coupon
+    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e5', photo.send_pshop_coupon[1]
     assert Coupon.find('507fc5bfc9ad42d756a412e5').users.detect{|u| u['dat'].to_date == Time.now.to_date && u['sid'].to_i == 111}
     assert_equal photo.send_coupon, nil
     coupon = Coupon.find('507fc5bfc9ad42d756a412e5')
     coupon.users.first['dat'] = 1.days.ago
     coupon.save
-    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e5', photo.send_pshop_coupon
+    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e5', photo.send_pshop_coupon[1]
     assert_equal Coupon.find('507fc5bfc9ad42d756a412e5').users.select{|u| u['sid'].to_i==111}.count, 2
     assert_equal photo.send_coupon, nil
     photo1 = Photo.create!({:user_id => User.first.id, :room => 111, :desc => '我们一起分享吧'})
@@ -74,7 +74,7 @@ class PhotoTest < ActiveSupport::TestCase
     photo = Photo.create!({:user_id => User.first.id, :room => 111, :desc => '我们一起分享吧'})
     coupon = Coupon.find('507fc5bfc9ad42d756a412e6')
     coupon.unset(:users)
-    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e6', photo.send_pshop_coupon
+    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e6', photo.send_pshop_coupon[1]
     assert Coupon.find('507fc5bfc9ad42d756a412e6').users.detect{|u| u['dat'].to_date == Time.now.to_date && u['sid'].to_i == 111}
     assert_equal photo.send_coupon, nil
     coupon = Coupon.find('507fc5bfc9ad42d756a412e6')
