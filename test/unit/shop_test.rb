@@ -86,7 +86,7 @@ class ShopTest < ActiveSupport::TestCase
   end
   
   test "商家id自增" do
-    $redis.del(SHOP_NID)
+    $redis.del("SHOP_NID")
     assert_equal 4928289, Shop.next_id
     assert_equal 4928290, Shop.next_id
   end
