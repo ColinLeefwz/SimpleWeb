@@ -6,6 +6,10 @@ class UserLogosController < ApplicationController
   end
 
   def create
+    if session_user.pcount>10
+      render :json => {:error => "一个用户最多只能有8张头像"}.to_json
+      return
+    end
     user_logo = UserLogo.new(params[:user_logo])
     user_logo.user_id = session[:user_id]
     user_logo.save!
@@ -48,8 +52,13 @@ class UserLogosController < ApplicationController
     end
     user = user_logo.user
     if user.pcount<=1
-      render :json => {:error => "must have at least one photo"}.to_json
-      return
+      pcount = user.user_logos.size
+      if pcount<=1
+        render :json => {:error => "一个用户必须至少有一张头像"}.to_json
+        return
+      else
+        user.set(:pcount, pcount)
+      end
     end
     change_head_logo = (user.head_logo_id==user_logo.id)
     if user_logo.destroy
