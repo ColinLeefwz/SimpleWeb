@@ -63,6 +63,7 @@ class Coupon
     logger.info(xmpp1)
     return xmpp1 if ENV["RAILS_ENV"] != "production"
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
+    return true
   end
 
   def allow_send_share?(user_id, sid = nil)
