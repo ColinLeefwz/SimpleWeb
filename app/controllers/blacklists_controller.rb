@@ -3,7 +3,9 @@ class BlacklistsController < ApplicationController
   before_filter :user_is_session_user, :except => [:index]
 
   def index
-    users = UserBlack.where({uid:params[:id]}).map {|x| User.find_by_id(x["bid"]) }
+    id = Moped::BSON::ObjectId(params[:id])
+    users = UserBlack.where({uid:id}).map {|x| User.find_by_id(x["bid"]) }
+    users.delete_if {|x| x.nil? } 
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
     output_users(users)
   end
