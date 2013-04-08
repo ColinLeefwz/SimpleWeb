@@ -46,7 +46,7 @@ class Photo
       end
       psid = send_pshop_coupon
       if psid
-        bindwb = BindWb.find_by_id(psid)
+        bindwb = BindWb.find_by_id(psid[0])
         at_shop_wb = " @#{bindwb.name}" if bindwb
       end
       send_wb(at_shop_wb)
@@ -81,12 +81,11 @@ class Photo
   
   def send_coupon
     coupon = shop.share_coupon
-    return false if coupon.nil?
+    return if coupon.nil?
     if coupon.allow_send_share?(user_id.to_s) && (!coupon.has_text? || (desc && desc.index(coupon.text) ))
-      coupon.send_coupon(user_id,self.id)
-      return true
+      return coupon.send_coupon(user_id,self.id)
     end
-    return false
+    return nil
   end
 
   def send_pshop_coupon
@@ -95,8 +94,8 @@ class Photo
     coupon = pshop.share_coupon
     return nil if coupon.nil?
     if coupon.allow_send_share?(user_id.to_s, shop.id.to_i) && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
-      coupon.send_coupon(user_id,self.id, room)
-      return shop.psid
+      ret = coupon.send_coupon(user_id,self.id, room)
+      return [shop.psid,ret]
     end
     return nil
   end
