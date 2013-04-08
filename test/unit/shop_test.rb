@@ -85,5 +85,11 @@ class ShopTest < ActiveSupport::TestCase
     assert_equal shop.answer_text('0'), "本地点未启用数字问答系统"
   end
   
+  test "商家id自增" do
+    $redis.del(SHOP_NID)
+    assert_equal 4928289, Shop.next_id
+    assert_equal 4928290, Shop.next_id
+  end
+  
 end
 
