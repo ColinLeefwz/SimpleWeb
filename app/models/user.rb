@@ -407,12 +407,12 @@ class User
   $fakeusers2=["513ec89cc90d8b5b010000d1", "513ed1e7c90d8b590100016f", "514179b1c90d8bc67b0002fb", "51413535c90d8b681d0004ed", "51413be6c90d8b681d00057d", "51413fd4c90d8b5215000561", "514143dbc90d8b52150005e3", "5141469ec90d8b681d000681", "51415eb0c90d8bc37b0001a0", "51416042c90d8bc97b00014a", "5141667fc90d8bc67b000186", "51417b05c90d8bc37b000473", "51417ee3c90d8bc37b000497", "51417f8cc90d8bc37b00049f", "51418667c90d8bc67b000421", "51418bf7c90d8bc37b0005d2", "514190f8c90d8bc67b00054a", "5141921ec90d8bc97b00069d", "51419a00c90d8bc67b0005b5", "51419b91c90d8bc37b000819", "51419c4cc90d8bc37b000826", "51419db8c90d8bc97b0007bd", "51419ec0c90d8bc97b0007c1", "51419fdbc90d8bc97b0007e7"] 
   
   def self.fake_user(view_by_who)
-    if view_by_who.gender==1
+    if view_by_who.gender==2
+      index = (view_by_who.cati+Time.now.mday) % $fakeusers1.size
+      uid = $fakeusers1[index]  
+    else
       index = (view_by_who.cati+Time.now.mday) % $fakeusers2.size
       uid = $fakeusers2[index]
-    else
-      index = (view_by_who.cati+Time.now.mday) % $fakeusers1.size
-      uid = $fakeusers1[index]      
     end
     User.find_by_id(uid)
   end
