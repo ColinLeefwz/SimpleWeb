@@ -3,6 +3,8 @@
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
+`rm -rf tmp/cache/` #清除缓存
+
 class LocateTest < ActiveSupport::TestCase
   
   def test_json
@@ -12,7 +14,12 @@ class LocateTest < ActiveSupport::TestCase
     ss.map{|x| x.safe_output_with_users}.to_json
   end
   
-
+  def test_wifi
+    ss = Shop.new.find_shops([30.279564, 120.108803], 50, "502e6303421aa918ba000001", "0:23:89:71:6f:c4")
+    assert ss[-1].name != "宝珍大馇粥"
+  end
+  
+  
   def test_locate1
     puts ENV["RAILS_ENV"] 
     ss = Shop.new.find_shops([ 30.282204, 120.11528 ], 300, "502e6303421aa918ba000001")
@@ -26,8 +33,7 @@ class LocateTest < ActiveSupport::TestCase
 
   def test_locate2
     ss = Shop.new.find_shops([30.284666, 120.118805], 65, "50446058421aa92042000002")
-    assert_equal 5725522, ss[0]["_id"]
-    assert_equal "苑苑·美容美发文二路店", ss[0]["name"]
+    assert ss[0]["_id"] == 5725522 || ss[1]["_id"] == 5725522
   end
   
   def test_locate3
