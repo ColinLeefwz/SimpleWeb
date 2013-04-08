@@ -319,7 +319,12 @@ class Shop
   end
   
   def self.next_id
-    Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
+    nid = $redis.incr("SHOP_NID")
+    if nid==1
+      nid = Shop.last.id.to_i+1
+      $redis.set("SHOP_NID",nid)
+    end
+    nid
   end
   
   #将子商家的经纬度合并到主商家中
