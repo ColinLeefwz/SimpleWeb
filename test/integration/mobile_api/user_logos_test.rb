@@ -129,7 +129,7 @@ class UserLogosTest < ActionDispatch::IntegrationTest
     #删除最后一张图片
     get "/user_logos/delete?id=#{three.id}"
     assert_response :success
-    assert_equal JSON.parse(response.body) , {"error" => "must have at least one photo"}
+    assert_equal JSON.parse(response.body) , {"error" => "一个用户必须至少有一张头像"}
     assert_equal luser.reload.user_logos.to_a,[three]
 
   end
