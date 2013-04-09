@@ -1,0 +1,45 @@
+<div class="title2"><h2>评论列表</h2></div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="15%" align="center">用户</th>
+    <th width="8%" align="center">性别</th>
+    <th width="8%" align="center">生日</th>
+    <th width="8%" align="center">微博</th>
+    <th width="20%" align="center">评论</th>
+    <th width="18%" align="center">评论时间</th>
+    <th width="12%" align="center">操作</th>
+  </tr>
+  <% @coms.each do |com| %>
+    <% user = User.find_by_id(com["id"]) %>
+    <% user = User.first %>
+    <tr>
+      <td align="center"><%= user.name   %></td>
+      <td align="center"> <%= img_gender(user.gender)   %></td>
+      <td align="center"><%= age(user.birthday.try(:to_date))   %></td>
+      <td align="center"><%= link_weibo(user)   %></td>
+      <td align="center" title="<%= com['txt'] %>"><%= truncate com['txt'], :length=> 13   %></td>
+      <td align="center"><%= com['t'].localtime.strftime("%Y-%m-%d %H:%M")  %></td>
+      <td align="center"><%= link_to '删除', "#", :onclick => "ajaxHide($(this), '#{@photo.id}', '#{com['id']}','#{com['t']}')"  %></td>
+    </tr>
+  <% end %>
+</table>
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+</div>
+
+<script type ="text/javascript">
+  LeftMenu(19);
+  function ajaxHide(obj, id, uid, t){
+    if(confirm("确定删除此照片"))
+    {
+      $.get("/shop_photos/hide_com",{id: id,uid: uid, t: t}, function(data) {
+        if(data['text']==0)
+          obj.parent().parent().remove();
+        else
+          obj.replaceWith('删除失败.')
+      });
+    }
+  }
+</script>
+<%= link_to '返回照片详情', "/shop_photos/show?id=#{@photo.id}", :class=>"btn6 r" %>

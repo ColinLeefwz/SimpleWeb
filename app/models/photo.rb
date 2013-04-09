@@ -15,6 +15,7 @@ class Photo
   field :like, type:Array #赞
   field :com, type:Array #评论
   field :img
+  field :hide #隐藏照片
   mount_uploader(:img, PhotoUploader)
   
   field :img_tmp
@@ -173,4 +174,14 @@ class Photo
     UserLogo.fix_error(false)
   end
 
+
+  def hidecom(uid, t)
+    comment = com.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
+    return if comment.nil?
+    comment["hide"] = true
+    com = comment
+    self.save!
+  rescue
+    nil
+  end
 end
