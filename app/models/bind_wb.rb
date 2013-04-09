@@ -39,5 +39,13 @@ class BindWb
       nil
     end
   end
+  
+  # 根据商家id获得其企业微博的名字，或者是主店的企业微博的名字
+  def self.wb_name(sid)
+    bindwb = BindWb.find_by_id(sid)
+    return bindwb.name if bindwb
+    psid = Shop.find_by_id(sid).try(:psid)
+    return BindWb.find_by_id(psid).try(:name)
+  end
 
 end
