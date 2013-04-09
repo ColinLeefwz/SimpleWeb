@@ -1,0 +1,30 @@
+<div class="title2"><h2>赞列表</h2></div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="15%" align="center">用户</th>
+    <th width="10%" align="center">性别</th>
+    <th width="13%" align="center">生日</th>
+    <th width="10%" align="center">微博</th>
+    <th width="18%" align="center">赞时间</th>
+    
+  </tr>
+  <% @likes.each do |like| %>
+    <% user = User.find_by_id(like["id"]) %>
+    <tr>
+      <td align="center"><%= user.name   %></td>
+      <td align="center"> <%= img_gender(user.gender)   %></td>
+      <td align="center"><%= age(user.birthday.try(:to_date))   %></td>
+      <td align="center"><%= link_weibo(user)   %></td>
+      <td align="center"><%= like['t'].localtime.strftime("%Y-%m-%d %H:%M")  %></td>
+    </tr>
+  <% end %>
+</table>
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+</div>
+
+<script type ="text/javascript">
+  LeftMenu(19);
+</script>
+<%= link_to '返回照片详情', "/shop_photos/show?id=#{@photo.id}", :class=>"btn6 r" %>
