@@ -126,9 +126,17 @@ class Shop
     total = self.utotal if total==0 && self.utotal>0
     total
   end
+  
+  def hint_text_when_photo
+    ret = ""
+    coupon = share_coupon
+    ret += coupon.text if coupon
+    shop_wb = BindWb.wb_name(self.id)
+    ret += " @#{shop_wb}" if shop_wb
+  end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos.map {|p| p.output_hash} })
+    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos.map {|p| p.output_hash} }).merge!({text: hint_text_when_photo})
   end  
 
   
@@ -146,12 +154,8 @@ class Shop
   end
 
   def staffs
-    Staff.where({shop_id: self.id}).map {|x| x.user_id}
+    Staff.only(:user_id).where({shop_id: self.id}).map {|x| x.user_id}
   end
-
-  #  def notice
-  #    ShopNotice.where({shop_id: self.id, effect: true}).inject("") {|mem,x| mem << x.title }
-  #  end
 
   def notice
     ShopNotice.where(({shop_id: self.id})).last
