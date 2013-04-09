@@ -1,3 +1,6 @@
+# encoding: utf-8
+#签约商家合同
+
 class ShopSign
   include Mongoid::Document
   field :htid #合同编号
