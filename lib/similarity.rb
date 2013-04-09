@@ -147,7 +147,11 @@ module Similarity
     sames =[]
     Shop.where({lo:{"$within" => {"$center" => [x.loc_first_of(x),0.003]}}} ).each do |y|
       next if y.id==x.id
-      score = Shop.similarity(x,y)
+      begin
+        score = Shop.similarity(x,y)
+      rescue
+        next
+      end
       sames << [y,score] if score>min_score
     end
     sames.each {|x| puts x}
