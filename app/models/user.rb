@@ -26,7 +26,6 @@ class User
   field :tk  #Push消息的token
   field :city
   
-  field :blacks, type:Array #黑名单
   field :follows, type:Array #关注
   
   #no_wb_logo: 该用户没有设置新浪微博头像
@@ -34,7 +33,6 @@ class User
 
   #validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
   
-  index({"blacks.report" => 1},{ sparse: true })
   index({wb_uid: 1})
   index({follows: 1})
   index({city: 1, gender:1})
@@ -44,23 +42,20 @@ class User
   end
   
   def blacks_s
-    (self.blacks.nil?)? [] : self.blacks
+    UserBlack.where({uid: self.id})
   end
 
   def reports_s
-    bs = blacks_s
-    bs.blank? ? [] : bs.select{|b| b['report']==1}
+    UserBlack.where({uid: self.id, report:1})
   end
 
   def reported_users
-    rs = reports_s
-    rs.blank? ? [] : rs.map{|r| User.find_by_id(r["id"])}
+    reports_s.map {|x| User.find_by_id(x["bid"])}
   end
   
   # user_id是否在黑名单中
   def black?(user_id)
-    match = self.blacks_s.find {|x| x["id"].to_s==user_id.to_s}
-    ! match.nil?
+    UserBlack.where({uid: self.id, bid: user_id}).first
   end
   
   #是否屏蔽user_id（该用户的最后出现位置，以及在商家用户列表中找到）
@@ -166,7 +161,6 @@ class User
   def output_with_relation( user_id )
     hash = self.attr_with_id
     hash.delete("password")
-    hash.delete("blacks")
     hash.delete("follows")
     hash.merge!( head_logo_hash).merge!( relation_hash(user_id) )
     hash.merge!(last_location(user_id))
@@ -413,12 +407,12 @@ class User
   $fakeusers2=["513ec89cc90d8b5b010000d1", "513ed1e7c90d8b590100016f", "514179b1c90d8bc67b0002fb", "51413535c90d8b681d0004ed", "51413be6c90d8b681d00057d", "51413fd4c90d8b5215000561", "514143dbc90d8b52150005e3", "5141469ec90d8b681d000681", "51415eb0c90d8bc37b0001a0", "51416042c90d8bc97b00014a", "5141667fc90d8bc67b000186", "51417b05c90d8bc37b000473", "51417ee3c90d8bc37b000497", "51417f8cc90d8bc37b00049f", "51418667c90d8bc67b000421", "51418bf7c90d8bc37b0005d2", "514190f8c90d8bc67b00054a", "5141921ec90d8bc97b00069d", "51419a00c90d8bc67b0005b5", "51419b91c90d8bc37b000819", "51419c4cc90d8bc37b000826", "51419db8c90d8bc97b0007bd", "51419ec0c90d8bc97b0007c1", "51419fdbc90d8bc97b0007e7"] 
   
   def self.fake_user(view_by_who)
-    if view_by_who.gender==1
+    if view_by_who.gender==2
+      index = (view_by_who.cati+Time.now.mday) % $fakeusers1.size
+      uid = $fakeusers1[index]  
+    else
       index = (view_by_who.cati+Time.now.mday) % $fakeusers2.size
       uid = $fakeusers2[index]
-    else
-      index = (view_by_who.cati+Time.now.mday) % $fakeusers1.size
-      uid = $fakeusers1[index]      
     end
     User.find_by_id(uid)
   end
