@@ -1,34 +1,79 @@
 <h1>举报用户</h1>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<%= form_tag '/admin_blacks',:method =>:get do %>
+  <p>
+    处理：<%= select_tag :flag,options_for_select([['所有','0'],['已处理','1']],params[:flag])  %>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
 
 <table border="1">
   <tr>
-    <th>名称</th>
-    <th>详情</th>
+    <th>用户</th>
+    <th>黑名单</th>
+    <th>是否举报</th>
+    <th>聊天记录</th>
+    <th></th>
+    <th></th>
   </tr>
 
-  <% @users.each do |user| %>
+  <% @user_blacks.each do |user_black| %>
     <tr>
-      <td><%= link_to user.name, "/admin_users/show?id=#{user.id}" %></td>
+      <td><%= link_to user_black.user.try(:name), "/admin_users/show?id=#{user_black.uid}" %></td>
       <td>
-        <% user.reports_s.each do |u| %>
-		 <% 
-			bu = User.find_by_id(u['id'])
-			next if bu.nil?
-		 %>
-          <%= u['cat'].localtime.strftime("%Y-%m-%d %H:%M:%S")%>,
-		  <%= bu.id%>,
-          <%= link_to bu.name, "/admin_users/show?id=#{u["id"]}" %>,
-          <%= link_to " 聊天纪录 ", "/admin_users/human_chat?id=#{user.id.to_s}&uid=#{u["id"]}" %>,
-          <%= button_to(" 封杀'#{bu.name}'", "/admin_users/kill?id=#{u["id"]}") unless bu.forbidden? %>
-          <%= button_to(" 解封'#{bu.name}'", "/admin_users/unkill?id=#{u["id"]}") if bu.forbidden? %>
-		  
-          <br/>
-        <%end%>
+        <%= link_to user_black.buser.try(:name), "/admin_users/show?id=#{user_black.bid}" %>
+      </td>
+      <td>
+        <%= link_to user_black.report.to_i ==1 ? "是" : "否" %>
+      </td>
+      <td>
+        <%= link_to " 聊天纪录 ", "/admin_users/human_chat?id=#{user_black.uid.to_s}&uid=#{user_black.bid.to_s}" %>
+      </td>
+      <td>
+        <%= button_to(" 封杀'#{user_black.buser.try(:name)}'",{}, {:onclick => "return kill($(this), {id: '#{user_black.bid}', ubid: '#{user_black.id}', name: '#{user_black.buser.try(:name)}'})"}) unless user_black.buser.try("forbidden?") %>
+        <%= button_to(" 解封'#{user_black.buser.try(:name)}'",{}, {:onclick => "return unkill($(this), {id: '#{user_black.bid}', ubid: '#{user_black.id}', name: '#{user_black.buser.try(:name)}'})"}) if user_black.buser.try("forbidden?") %>
+      </td>
+      <td>
+        <%= button_to("忽略",{}, :onclick => "return ignore($(this), '#{user_black.id}')") unless user_black.flag  %>
       </td>
     </tr>
+
 
   <% end %>
 </table>
 <br />
 <%= generate_paginate3.html_safe %>
+
+
+<script>
+  function kill(obj, param){
+    if(confirm("确定封杀么？")){
+      $.get("/admin_users/kill",param, function() {
+        str = "<input type='submit' value=' 解封\""+ param.name +"\"' onclick='return unkill($(this),"+ JSON.stringify(param) + ")'>"
+        obj.parent().replaceWith(str)
+      });
+    }
+    return false;
+  }
+
+  function unkill(obj, param){
+    if(confirm("确定解封么？")){
+      $.get("/admin_users/unkill",{id: param.id}, function() {
+        str = "<input type='submit' value=\" 封杀'" + param.name + "'\" onclick='return kill($(this), " + JSON.stringify(param) +  ")'>"
+        obj.parent().replaceWith(str)
+      });
+      return false
+    }
+  }
+
+  function ignore(obj,id){
+    if(confirm("确定忽略么？")){
+      $.get("/admin_blacks/ignore",{id: id}, function() {
+        obj.parent().parent().parent().parent().remove()
+      });
+      return false
+    }
+  }
+  
+</script>
 
