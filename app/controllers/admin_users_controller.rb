@@ -58,6 +58,8 @@ class AdminUsersController < ApplicationController
   
   def kill
     user = User.find(params[:id])
+    user_black = UserBlack.find(params[:ubid])
+    user_black.update_attribute(:flag, true)
     user.kill
     render :text => "ok"
   end

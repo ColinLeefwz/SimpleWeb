@@ -17,6 +17,10 @@ class UserBlack
     User.find_by_id(self.uid)
   end
 
+  def buser
+    User.find_by_id(self.bid)
+  end
+
   
 
 end

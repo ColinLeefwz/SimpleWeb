@@ -45,13 +45,7 @@ db.users.insert({
     "password" : "da9ed318086e601f",
     "signature" : null,
     "wb_uid" : "1934660880",
-    "blacks" : [{
-        "id" : ObjectId("502e6303421aa918ba00007c"),
-        "report" : false
-    }, {
-        "id" : ObjectId("502e6303421aa918ba000002"),
-        "report" : 1
-    } ]
+
 })
 
 db.users.insert({
@@ -71,8 +65,6 @@ db.users.insert({
 db.users.insert({
 	"_id" : ObjectId("502e6303421aa918ba000001"),
 	"birthday" : "1997-7-2",
-	"blacks" : [
-	],
 	"follows" : [
 	],
 	"gender" : 1,
