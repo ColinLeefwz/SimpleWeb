@@ -4,8 +4,20 @@ class AdminBlacksController < ApplicationController
   layout "admin"
 
   def index
-    @users = paginate3("User", params[:page], {"blacks.report" => 1}, {_id:-1})
+    hash = {:report => 1}
+    case params[:flag].to_s
+    when ''
+      hash.merge!(:flag => false)
+    when '1'
+      hash.merge!(:flag => true)
+    end
+    sort = {:_id => -1}
+    @user_blacks = paginate3('UserBlack', params[:page], hash, sort)
   end
-  
 
+  def ignore
+    @user_black = UserBlack.find(params[:id])
+    @user_black.update_attribute(:flag, true)
+    render :json => {}
+  end
 end
