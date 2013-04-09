@@ -12,7 +12,6 @@
   </tr>
   <% @coms.each do |com| %>
     <% user = User.find_by_id(com["id"]) %>
-    <% user = User.first %>
     <tr>
       <td align="center"><%= user.name   %></td>
       <td align="center"> <%= img_gender(user.gender)   %></td>
