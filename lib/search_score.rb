@@ -38,7 +38,7 @@ module SearchScore
   
   def sort_with_score(arr,loc,accuracy,uid,bssid,debug=false)
     score = arr.map {|x| [x,min_distance(x,loc),0]}
-    score.delete_if{|x| x[1]>3000} #排除超过3000米的WIFI签到过的地点
+    score.delete_if{|x| x[1]>1500} #排除超过1500米的WIFI签到过的地点
     min_d = score[0][1]
     score.reject!{|s| (s[0]["t"]==0 && s[0]["del"]) } #过期的活动
     if score.length>10
