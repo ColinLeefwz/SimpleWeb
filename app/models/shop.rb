@@ -131,7 +131,7 @@ class Shop
     ret = ""
     coupon = share_coupon
     ret += coupon.text if coupon
-    shop_wb = BindWb.wb_name(room)
+    shop_wb = BindWb.wb_name(self.id)
     ret += " @#{shop_wb}" if shop_wb
   end
 
