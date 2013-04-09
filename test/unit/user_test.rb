@@ -5,6 +5,13 @@ class UserTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
+  
+  def setup
+    reload('user_blacks.js')
+    reload('users.js')
+  end
+
+
 
   test ".find2 find 不存在的id返回nil" do
     assert_equal User.find_by_id('12345'), nil
@@ -31,8 +38,7 @@ class UserTest < ActiveSupport::TestCase
 
   test ".reports_s 有举报的人" do
     user = User.find_by_id('502e6303421aa918ba000007')
-    repo = [User.find_by_id('502e6303421aa918ba000002').id]
-    assert_equal user.reports_s.map{|m| m['id']} , repo
+    assert_equal user.reports_s.map{|m| m.bid.to_s} , ['502e6303421aa918ba000002']
   end
 
   test ".black? 用户在黑名单中" do
@@ -44,7 +50,7 @@ class UserTest < ActiveSupport::TestCase
   test ".black? 用户不在黑名单中" do
     user = User.find_by_id('502e6303421aa918ba000002')
     blackuser  = User.find_by_id('502e6303421aa918ba000007')
-    assert !user.black?(blackuser.id)
+    assert_equal user.black?(blackuser.id), nil
 
   end
 
