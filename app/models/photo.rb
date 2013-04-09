@@ -40,17 +40,9 @@ class Photo
       return
     end
     if weibo
-      at_shop_wb = ""
-      if send_coupon
-        bindwb = BindWb.find_by_id(room)
-        at_shop_wb = " @#{bindwb.name}" if bindwb
-      end
-      psid = send_pshop_coupon
-      if psid
-        bindwb = BindWb.find_by_id(psid[0])
-        at_shop_wb = " @#{bindwb.name}" if bindwb
-      end
-      send_wb(at_shop_wb)
+      send_wb
+      send_coupon
+      send_pshop_coupon
     end
     send_qq if qq
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
@@ -58,13 +50,14 @@ class Photo
       :uid => user_id)
   end
   
-  def send_wb(at_shop_wb)
+  def send_wb
     if desc && desc.length>0
       str = "#{desc2} ,我在\##{shop.name}\#\n(来自脸脸: http://www.dface.cn/a?v=3 )"
     else
       str = "我刚刚用\#脸脸\#分享了一张图片:\n#{desc2} 我在\##{shop.name}\#\n(脸脸下载地址: http://www.dface.cn/a?v=3 )"
     end
-    str += at_shop_wb
+    shop_wb = BindWb.wb_name(room)
+    str += "@#{shop_wb}" if shop_wb
     Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
   end
   

@@ -1,6 +1,8 @@
 Thumbs.db
 /tmp
 .DS_Store
+*.apk
+*.ipa
 *.xcuserstate
 *.rails2
 *.pyc
