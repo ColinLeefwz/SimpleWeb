@@ -1,4 +1,4 @@
-* {margin: 0;padding: 0;}
+﻿* {margin: 0;padding: 0;}
 img{border:none;}
 ul,ol{list-style:none;}
 a{text-decoration: none;color:#666666;}
@@ -116,13 +116,16 @@ padding-left:40px;font-size:14px;padding-right:25px;}
  text-shadow: 0 2px 2px #DDDDDD;font-weight:normal;}
 
 .header{width:100%;height:82px;overflow:hidden;background:transparent url("../images/bg2.jpg") left top repeat-x;padding-top:12px;
-line-height:50px;letter-spacing:1px;}
+line-height:50px;letter-spacing:1px;position:relative;}
+.header a.uExit{position:absolute;right:0;top:30px;display:block;width:80px;height:50px;color:#fff;text-align:center;}
+.header a.uExit:hover{font-weight:600;}
 .headerinner{width:960px;overflow:hidden;zoom:1;margin:0px auto;text-align:center;}
 .headerinner span{font-size:25px;color:#fff;text-shadow:1px 1px 1px #666;font-family:"微软雅黑";font-weight:normal;text-indent:1px;}
 .headerinner img{margin-right:8px;}
 .headerinner .name{float:right;color:#B6EFFB;margin:50px 10px 0px 0px;}
 .headerinner .name a{color:#fff;}
 .headerinner .name a:hover{color:#e6e6e6;}
+
 
 .con{width:960px;overflow:hidden;zoom:1;margin:30px auto 0px auto;}
 .conleft{width:195px;float:left;color:#555;}
@@ -213,6 +216,7 @@ border-radius: 3px;border:1px solid #e0e0e0;}
 .pages .pagination input{color: #797979;width:28px;height:23px;*height:18px;border-radius:3px;margin:0px 5px;border:1px solid #e0e0e0;text-align:center;}
 .pages .pagination .next_page, .pagination a.next_page {width:12px;height:15px;display:block;cursor: pointer;float: left;background:transparent url("../images/sign11.gif") center center no-repeat;
 text-indent:-999em;margin-top:5px;border-radius: 3px;border:1px solid #e0e0e0;}
+.pages .pagination .prev_page,.pages .pagination .next_page{width:20px;height:22px;margin-top:0;}
 .pages .pagination .last_page{width:16px;height:15px;display:block;cursor: pointer;float: left;background:transparent url("../images/sign10.gif") center center no-repeat;
 text-indent:-999em;margin-top:5px;border-radius: 3px;border:1px solid #e0e0e0;}
 .pages .pagination .sum_page{margin-top:4px;}
