@@ -172,7 +172,8 @@ class Shop
     #  ssu.users.each {|x| users1 << [x,(Time.now-10.days).to_i]}
     #end
     if users1.size<2
-      users1 << [$xpuid,Time.now.to_i-30*60-rand(10000)]
+      fuser = User.fake_user(User.find_by_id(session_uid))
+      users1 << [fuser.id,Time.now.to_i-30*60-rand(10000)]
       users1
     else
       users1[start,size] #TODO: 分页判断
@@ -184,13 +185,6 @@ class Shop
     #Benchmark.measure {Shop.find_by_id(4928288).users(User.last._id)} 
     ret = []
     user_last_checkins(start,size).each do |uid,cat|
-      if uid==$xpuid
-        fuser = User.fake_user(User.find_by_id(session_uid))
-        hash = fuser.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
-        hash.merge!({_id: $xpuid, id: $xpuid})
-        ret << hash
-        next
-      end
       u = User.find_by_id(uid)
       next if u.nil?
       next if u.forbidden?
@@ -325,7 +319,12 @@ class Shop
   end
   
   def self.next_id
-    Shop.all.sort({_id: -1}).limit(1).to_a[0].id.to_i+1
+    nid = $redis.incr("SHOP_NID")
+    if nid==1
+      nid = Shop.last.id.to_i+1
+      $redis.set("SHOP_NID",nid)
+    end
+    nid
   end
   
   #将子商家的经纬度合并到主商家中

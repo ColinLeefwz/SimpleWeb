@@ -40,9 +40,17 @@ class Photo
       return
     end
     if weibo
-      send_wb
-      send_coupon
-      send_pshop_coupon
+      at_shop_wb = ""
+      if send_coupon
+        bindwb = BindWb.find_by_id(room)
+        at_shop_wb = " @#{bindwb.name}" if bindwb
+      end
+      psid = send_pshop_coupon
+      if psid
+        bindwb = BindWb.find_by_id(psid[0])
+        at_shop_wb = " @#{bindwb.name}" if bindwb
+      end
+      send_wb(at_shop_wb)
     end
     send_qq if qq
     RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
@@ -50,12 +58,13 @@ class Photo
       :uid => user_id)
   end
   
-  def send_wb
+  def send_wb(at_shop_wb)
     if desc && desc.length>0
       str = "#{desc2} ,我在\##{shop.name}\#\n(来自脸脸: http://www.dface.cn/a?v=3 )"
     else
       str = "我刚刚用\#脸脸\#分享了一张图片:\n#{desc2} 我在\##{shop.name}\#\n(脸脸下载地址: http://www.dface.cn/a?v=3 )"
     end
+    str += at_shop_wb
     Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
   end
   
@@ -75,18 +84,21 @@ class Photo
     coupon = shop.share_coupon
     return if coupon.nil?
     if coupon.allow_send_share?(user_id.to_s) && (!coupon.has_text? || (desc && desc.index(coupon.text) ))
-      coupon.send_coupon(user_id,self.id)
+      return coupon.send_coupon(user_id,self.id)
     end
+    return nil
   end
 
   def send_pshop_coupon
-    return if shop.psid.blank?
-    return if (pshop = Shop.find_by_id(shop.psid)).nil?
+    return nil if shop.psid.blank?
+    return nil if (pshop = Shop.find_by_id(shop.psid)).nil?
     coupon = pshop.share_coupon
-    return if coupon.nil?
+    return nil if coupon.nil?
     if coupon.allow_send_share?(user_id.to_s, shop.id.to_i) && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
-      coupon.send_coupon(user_id,self.id, room)
+      ret = coupon.send_coupon(user_id,self.id, room)
+      return [shop.psid,ret]
     end
+    return nil
   end
   
   def user
