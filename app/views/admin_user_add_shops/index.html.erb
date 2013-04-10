@@ -25,13 +25,13 @@
     <th></th>
   </tr>
 
-  <% @shops.each do |shop, index| %>
+  <% @shops.each do |shop, i| %>
     <tr id="shop<%=shop.id.to_i %>">
       <td><%= shop.id.to_i %></td>
       <td><%= shop.name %></td>
       <td><%= shop.city_fullname %></td>
       <td><%= type_or_user(shop) %></td>
-      <td><%= shop.first_checkin if index==0 || index == @shops.length-1%></td>
+      <td><%= shop.first_checkin_time if i==0 || i == @shops.length-1%></td>
       <td><%= link_to '处理', "/admin_user_add_shops/show?id=#{shop.id.to_i}", :target => "blank" %></td>
       <td><%= link_to '标记删除', "#{}", :onclick => "ajaxDel('#{shop.id.to_i}')" %></td>
     </tr>
