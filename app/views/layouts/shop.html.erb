@@ -37,19 +37,11 @@
       <div class="headerinner">
         <img src="../images/logo4.png" align="absbottom"/><span><%= session_shop.name %></span>
       </div>
-    </div>
+ <a href="/shop_login/logout" class="uExit">退出</a>   </div>
 
     <div class="con">
       <div class="conleft">
-        <a href="/shop_logos">
-          <% if session_shop.logo  %>
-            <%= image_tag session_shop.logo.img, :class => "headerImg" %>
-          <%else%>
-            <img src="../images/img-75.jpg" class="headerImg">
-          <%  end %>
-        </a>
-        <span class="l pt5"><%= session_shop.name %></span>
-        <div class="clear1"></div>
+             <div class="clear1"></div>
         <div id="Nav" class="nav">
           <a href="/shop_login/index" class="index" name="n0">脸脸首页
             <span class="sign"></span>
@@ -88,8 +80,6 @@
             <span class="borderstyle"></span>
           <% end %>
           <a href="/shop_photos" name="n19" class="arrow">照片墙</a>
-          <span class="borderstyle"></span>
-          <a href="/shop_login/logout" class="arrow">退出</a>
         </div>
 
       </div>
