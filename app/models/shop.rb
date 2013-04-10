@@ -223,10 +223,8 @@ class Shop
     coupons.each{|coupon| coupon.send_coupon(user_id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
-    xmpp2 = Xmpp.gchat(self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}")
     return "收到#{coupons.count}张优惠券: #{name}" if ENV["RAILS_ENV"] != "production"
-    logger.info(xmpp2)
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2)
+    Resque.enqueue(XmppNotice, self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}")
   end
 
   
