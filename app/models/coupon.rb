@@ -59,10 +59,10 @@ class Coupon
 
   def send_coupon(user_id,photo_id=nil, sid=nil)
     download(user_id,photo_id, sid)
-    xmpp1 = Xmpp.chat("s#{shop_id}",user_id,message)
-    logger.info(xmpp1)
-    return xmpp1 if ENV["RAILS_ENV"] != "production"
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1) 
+    if ENV["RAILS_ENV"] != "production"
+      return Xmpp.chat("s#{shop_id}",user_id,message)
+    end
+    Resque.enqueue(XmppMsg, "s#{shop_id}",user_id,message)
     return true
   end
 
