@@ -20,6 +20,8 @@
   \hline
  photo[qq]  & 0/1 & 可选  &  是否同步发送到QQ空间\\
    \hline
+ photo[wx]  & 0/1/2/3 & 可选  &  分享到微信: 1个人,2朋友圈, 3都分享了\\
+   \hline
  photo[desc]  & 字符串 & 可选  &  图像的说明文字\\
  \hline
   photo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
@@ -39,6 +41,7 @@
 \item 所上传文件的type必须是image/jpeg', 'image/gif' 或者'image/png'。
 \item 图片文件要在客户端先压缩到640*640。
 \item 图片名为logo；缩略图分logo\_thumb2为200*200的png。
+\item 分享到新浪微博和QQ空间由服务器执行，客户端只需要传递标志位即可；而分享到微信则由客户端实现，然后报告服务器分享的结果。
 \end{enumerate}
 
 例子：
