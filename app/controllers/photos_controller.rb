@@ -23,9 +23,9 @@ class PhotosController < ApplicationController
     if params[:id] =~ /^faq/
       id = params[:id].sub('faq','')
       if params[:size].to_i==0
-        redirect_to ShopFaq.img_url(params[:id])
+        redirect_to ShopFaq.img_url(id)
       else
-        redirect_to ShopFaq.img_url(params[:id],:t2)
+        redirect_to ShopFaq.img_url(id,:t2)
       end      
     else
       if params[:size].to_i==0
