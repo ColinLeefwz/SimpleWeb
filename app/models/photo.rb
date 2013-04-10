@@ -10,8 +10,9 @@ class Photo
   field :room #发给聊天室
   field :desc
   field :t, type:Integer #图片类型：1拍照；2选自相册
-  field :weibo, type:Boolean
-  field :qq, type:Boolean
+  field :weibo, type:Boolean #是否分享到新浪微博
+  field :qq, type:Boolean  #是否分享到QQ空间
+  field :wx, type:Integer   #分享到微信: 1个人,2朋友圈, 3都分享了
   field :like, type:Array #赞
   field :com, type:Array #评论
   field :img
@@ -45,9 +46,7 @@ class Photo
       send_pshop_coupon
     end
     send_qq if qq
-    RestClient.post("http://#{$xmpp_ip}:5280/api/room", 
-      :roomid  => room.to_i.to_s , :message => "[img:#{self._id}]#{self.desc}",
-      :uid => user_id)
+    Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}")
   end
   
   def send_wb

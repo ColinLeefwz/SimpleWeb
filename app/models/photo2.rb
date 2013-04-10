@@ -28,8 +28,11 @@ class Photo2
       Rails.logger.error("async_store3:#{self.class},#{self.id}")
       return
     end
-    xmpp = "<message id='img#{self.id}' to='#{to_uid}@dface.cn' from='#{user_id}@dface.cn' type='chat'><body>[img:#{self.id}]</body></message>"
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
+    if Rails.env == "production"
+      Resque.enqueue(XmppMsg, user_id, to_uid, "[img:#{self.id}]")
+    else
+      Xmpp.send_chat(user_id, to_uid, "[img:#{self.id}]")
+    end
   end
   
   def user
