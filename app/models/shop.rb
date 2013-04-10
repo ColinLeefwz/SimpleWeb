@@ -186,7 +186,8 @@ class Shop
       users1 << [fuser.id,Time.now.to_i-30*60-rand(10000)]
     end
     users = [session_uid, 1] + users1.delete_if{|x| x[0]==session_uid}
-    users1.each do |uid,cat|
+    users = [[session_uid, Time.now.to_i]] + users1.delete_if{|x| x[0]==session_uid}
+    users.each do |uid,cat|
       u = User.find_by_id(uid)
       next if u.nil?
       next if u.forbidden?
