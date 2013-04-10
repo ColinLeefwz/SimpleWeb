@@ -129,7 +129,12 @@ class CheckinsController < ApplicationController
   def send_welcome_msg_if_not_invisible(user_gender, user_name)
     return if session_user.invisible==2
     return user_name if ENV["RAILS_ENV"] != "production"
-    Resque.enqueue(XmppWelcome, params[:shop_id], user_gender, params[:user_id], user_name)
+    if user_gender.to_i==2
+      message = "#{user_name} 来了~😊"
+    else
+      message = "#{user_name} 来啦~😝"
+    end
+    Resque.enqueue(XmppRoomMsg2, params[:shop_id], params[:user_id], message)
   end
   
   def send_notice_if_exist(shop)
