@@ -4,6 +4,8 @@ class ShopBan
 
   field :_id, type: Integer
   field :users, type:Array #用户id字符串
+
+  delegate :name, :_id , :to => :shop, :allow_nil => true, :prefix => true
   
   after_find do |obj|
     obj._id = obj._id.to_i
@@ -20,5 +22,6 @@ class ShopBan
       nil
     end
   end
+
 
 end
