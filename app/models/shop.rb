@@ -175,20 +175,18 @@ class Shop
     #unless ssu.nil?
     #  ssu.users.each {|x| users1 << [x,(Time.now-10.days).to_i]}
     #end
-    if users1.size<2
-      fuser = User.fake_user(User.find_by_id(session_uid))
-      users1 << [fuser.id,Time.now.to_i-30*60-rand(10000)]
-      users1
-    else
-      users1[start,size] #TODO: 分页判断
-    end
+    users1[start,size] #TODO: 分页判断
   end
 
   def users(session_uid,start,size)
-    #TODO: 性能优化，目前当用户大于10个时，执行耗时在半秒以上。
-    #Benchmark.measure {Shop.find_by_id(4928288).users(User.last._id)} 
     ret = []
-    user_last_checkins(start,size).each do |uid,cat|
+    users1 = user_last_checkins(start,size)
+    if users1.size<2
+      fuser = User.fake_user(User.find_by_id(session_uid))
+      users1 << [fuser.id,Time.now.to_i-30*60-rand(10000)]
+    end
+    users = [session_uid, 1] + users1.delete_if{|x| x[0]==session_uid}
+    users1.each do |uid,cat|
       u = User.find_by_id(uid)
       next if u.nil?
       next if u.forbidden?
