@@ -46,6 +46,7 @@ class Photo
       send_pshop_coupon
     end
     send_qq if qq
+    return if ENV["RAILS_ENV"] == "test"
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}")
   end
   
@@ -86,7 +87,7 @@ class Photo
     return nil if (pshop = Shop.find_by_id(shop.psid)).nil?
     coupon = pshop.share_coupon
     return nil if coupon.nil?
-    if coupon.allow_send_share?(user_id.to_s, shop.id.to_i) && (coupon.text.nil? || (desc && desc.index(coupon.text) ))
+    if coupon.allow_send_share?(user_id.to_s, shop.id.to_i) && (!coupon.has_text? || (desc && desc.index(coupon.text) ))
       ret = coupon.send_coupon(user_id,self.id, room)
       return [shop.psid,ret]
     end

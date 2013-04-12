@@ -175,7 +175,132 @@ class CouponTest < ActionDispatch::IntegrationTest
     assert_equal assigns[:send_coupon_msg], nil
 
     #######
+    #总店分享优惠券
+    parent_coupon = Coupon.where({:t2 => 2, :shop_id => 1}).to_a.first
+    #分店分享优惠券
+    branch_coupon = Coupon.where({:t2 => 2, :shop_id => 111}).to_a.first
+    #登录
+    login("502e6303421aa918ba000005")
+    #总店上传图片并分享到微博可以接收分享类优惠券
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '1', 'weibo' => 1 }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert parent_coupon.reload.users.find{|u| u['id'].to_s == '502e6303421aa918ba000005' && u['dat'].to_date == Time.now.to_date  }
 
+    #今天总店上传图片并分享到微博后不能再收到优惠券
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '1', 'weibo' => 1 }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert_equal parent_coupon.reload.users.count, 1
+
+    #优惠券下载时间改为昨天
+    parent_coupon.reload.users.first['dat'] = 1.days.ago
+    parent_coupon.save
+
+    #规则改成首次分享优惠后就不能收到优惠券
+    parent_coupon.update_attribute(:rule, 1)
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '1', 'weibo' => 1 }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert_equal parent_coupon.reload.users.count, 1
+
+
+    #规则改成每日分享优惠后能收到优惠券
+    parent_coupon.update_attribute(:rule, 0)
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '1', 'weibo' => 1 }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert parent_coupon.reload.users.find{|u| u['id'].to_s == '502e6303421aa918ba000005' && u['dat'].to_date == Time.now.to_date  }
+    assert_equal parent_coupon.reload.users.count, 2
+
+
+    #清空优惠券下载记录
+    parent_coupon.unset(:users)
+    
+    #内部商家分享图片不能接受优惠券
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '2', 'weibo' => 1 }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert_equal parent_coupon.reload.users, nil
+    
+    #分店取消关键字
+    branch_coupon.unset(:text)
+    
+    #分店分享图片能接收到总店和分店的优惠券
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '111', 'weibo' => 1 }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert parent_coupon.reload.users.find{|u| u['id'].to_s == '502e6303421aa918ba000005' && u['dat'].to_date == Time.now.to_date && u['sid'].to_i == 111  }
+    assert branch_coupon.reload.users.find{|u| u['id'].to_s == '502e6303421aa918ba000005' && u['dat'].to_date == Time.now.to_date }
+    
+    #清空优惠券下载记录
+    parent_coupon.unset(:users)
+    #总店分享类优惠券添加关键字
+    parent_coupon.update_attribute(:text, '总店分享')
+
+    #总店分享图片到微博描叙不匹配关键字
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '1', 'weibo' => 1, 'desc' => "我在总店" }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert_equal parent_coupon.reload.users, nil
+
+    #总店分享图片到微博并匹配关键字
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '1', 'weibo' => 1, 'desc' => "我在总店分享图片" }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert parent_coupon.reload.users.find{|u| u['id'].to_s == '502e6303421aa918ba000005' && u['dat'].to_date == Time.now.to_date  }
+
+    #分店优惠券清空下载记录
+    branch_coupon.unset(:users)
+    #分店分享优惠券添加关键字
+    branch_coupon.update_attribute(:text, "分店分享")
+
+    #分店分享图片可以带的关键字同时满足总分点的关键字
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '111', 'weibo' => 1, 'desc' => "分店分享一次，还可以总店分享一次" }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert parent_coupon.reload.users.find{|u| u['id'].to_s == '502e6303421aa918ba000005' && u['dat'].to_date == Time.now.to_date && u['sid'].to_i == 111  }
+    assert branch_coupon.reload.users.find{|u| u['id'].to_s == '502e6303421aa918ba000005' && u['dat'].to_date == Time.now.to_date }
+
+    #分店再次分享图片总店和分店的优惠券都不能接收到
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '111', 'weibo' => 1, 'desc' => "分店分享一次，还可以总店分享一次" }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert_equal parent_coupon.reload.users.length, 2
+    assert_equal branch_coupon.reload.users.length, 1
+
+    ####################
+    #总店优惠券规则改成首次签到优惠， 并清空下载记录
+    parent_coupon.update_attribute(:rule, 1)
+    parent_coupon.unset(:users)
+
+    #分店优惠券清空下载记录
+    branch_coupon.unset(:users)
+
+    #在分店1分享图片能收到优惠券
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '111', 'weibo' => 1, 'desc' => "分店分享一次，还可以总店分享一次" }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert parent_coupon.reload.users.find{|u| u['id'].to_s == '502e6303421aa918ba000005' && u['dat'].to_date == Time.now.to_date && u['sid'].to_i == 111  }
+
+    #在没有优惠券的分店2分享图片也能还能收到优惠券
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '112', 'weibo' => 1, 'desc' => "分店分享一次，还可以总店分享一次" }}
+    assert_response :success
+    photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
+    CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
+    assert parent_coupon.reload.users.find{|u| u['id'].to_s == '502e6303421aa918ba000005' && u['dat'].to_date == Time.now.to_date && u['sid'].to_i == 112  }
+    assert_equal parent_coupon.reload.users.count, 2
     
   end
   
