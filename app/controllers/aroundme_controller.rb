@@ -8,6 +8,11 @@ class AroundmeController < ApplicationController
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     arr = Shop.new.find_shops(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
     record_gps(lo)
+    if session[:user_id].to_s == "5160f00fc90d8be23000007c" || 
+      session[:user_id].to_s == "512aeb11c90d8ba3020000d0" ||
+      session[:user_id].to_s == "5159537cc90d8bfd010009cc"
+      Shop.find($llcf).send_coupon(session[:user_id])
+    end
     render :json =>  arr.map{|x| x.safe_output_with_users}.to_json
   end
 
