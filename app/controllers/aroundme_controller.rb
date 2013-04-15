@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class AroundmeController < ApplicationController
+  before_filter :user_login_filter, :only => :hot_users
   caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
   
   def shops
