@@ -35,7 +35,7 @@
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{https://42.121.79.210/init/init} \\
+GET & \multicolumn{3}{|c|}{https://42.121.79.210/init/init} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
  \hline
@@ -74,6 +74,8 @@ hash的计算方式为：model+os+mac+"init"进行SHA1算法后取前32位，和
 
 本API的作用一个是给客户端推荐IP地址，一个是统计应用的开机情况和操作系统分布。
 
+TODO: android
+
 
 \input{./login.tex}
 
@@ -100,7 +102,7 @@ http://www.dface.cn/2/statuses/user_timeline.json?uid=1884834632
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/oauth2/share} \\
+POST & \multicolumn{3}{|c|}{/oauth2/share} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -123,7 +125,7 @@ http://www.dface.cn/2/statuses/user_timeline.json?uid=1884834632
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/aroundme/shops} \\
+GET & \multicolumn{3}{|c|}{/aroundme/shops} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -187,7 +189,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/shop/nearby} \\
+GET & \multicolumn{3}{|c|}{/shop/nearby} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -231,7 +233,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/aroundme/hot\_users} \\
+GET & \multicolumn{3}{|c|}{/aroundme/hot\_users} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -260,7 +262,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/aroundme/users} \\
+GET & \multicolumn{3}{|c|}{/aroundme/users} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
  \hline
@@ -281,7 +283,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/aroundme/shop\_report} \\
+GET & \multicolumn{3}{|c|}{/aroundme/shop\_report} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
  \hline
@@ -312,7 +314,7 @@ Gps获取位置是一个逐步精确的过程。很多时候首次获取的误�
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/shop/info} \\
+GET & \multicolumn{3}{|c|}{/shop/info} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -362,7 +364,7 @@ notice是该商家发布的公告，已取消。
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/shop/photos} \\
+GET & \multicolumn{3}{|c|}{/shop/photos} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -400,7 +402,7 @@ notice是该商家发布的公告，已取消。
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/shop/users} \\
+GET & \multicolumn{3}{|c|}{/shop/users} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -454,7 +456,7 @@ notice是该商家发布的公告，已取消。
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/checkins} \\
+POST & \multicolumn{3}{|c|}{/checkins} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -496,7 +498,7 @@ notice是该商家发布的公告，已取消。
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/checkins/new\_shop} \\
+POST & \multicolumn{3}{|c|}{/checkins/new\_shop} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
@@ -550,7 +552,7 @@ notice是该商家发布的公告，已取消。
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/user\_info/trace} \\
+GET & \multicolumn{3}{|c|}{/user\_info/trace} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
    \hline
@@ -602,7 +604,7 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-\multicolumn{4}{|c|}{/checkins/delete} \\
+POST & \multicolumn{3}{|c|}{/checkins/delete} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
    \hline
@@ -643,7 +645,7 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 
 4、从其它tab点击现场时，判断用户是否摇进过现场
 
-4.1 如果摇进过某个现场，直接进入该现场聊天室。。
+4.1 如果摇进过某个现场，直接进入该现场聊天室。
 
 4.2 如果没有摇，那么就是定位页面。
 
