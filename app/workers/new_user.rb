@@ -25,7 +25,7 @@ class NewUser
     if gender!=0
       return if user.gender!=gender
     end
-    shop = Shop.find(sid)
+    shop = Shop.find_primary(sid)
     if user.qq
       from="qq"
     else
