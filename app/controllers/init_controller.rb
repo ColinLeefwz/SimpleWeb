@@ -12,6 +12,11 @@ class InitController < ApplicationController
     else
       ip = $web_ip
     end
+    if params[:os][0,7].downcase=="android"
+      ver = 1.41
+    else
+      ver = 1.4
+    end
     render :json => {ip: ip, xmpp: $xmpp_ip , ver:1.4}.to_json
   end
 end
