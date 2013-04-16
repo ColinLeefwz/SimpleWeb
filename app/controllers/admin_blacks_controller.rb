@@ -5,10 +5,10 @@ class AdminBlacksController < ApplicationController
 
   def index
     hash = {:report => 1}
-    case params[:flag].to_s
-    when ''
+    case params[:flag].to_i
+    when 0
       hash.merge!(:flag => false)
-    when '1'
+    when 1
       hash.merge!(:flag => true)
     end
     sort = {:_id => -1}
