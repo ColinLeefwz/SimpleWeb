@@ -50,6 +50,29 @@
 
 <script type ="text/javascript">
   LeftMenu(6);
+  function ajaxDeply(obj, coupon_id){
+    if(confirm("确定停用此优惠券么？"))
+    {
+      $.get("/shop_coupons/ajax_deply",{id: coupon_id}, function(data) {
+        obj.replaceWith(data['text'])
+      });
+    }
+  }
+
+  function ajaxDel(obj, coupon_id){
+    if(confirm("确定删除此优惠券么？"))
+    {
+      $.get("/shop_coupons/ajax_del",{id: coupon_id}, function(data) {
+        if(data['text']){
+          obj.parent().parent().remove();
+        }
+        else{
+          obj.replaceWith('删除失败.')
+        }
+      });
+    }
+  }
+
 
   function ajaxActivate(obj, coupon_id, allow){
     if(allow){
