@@ -182,7 +182,8 @@ class User
   end
   
   def relation_hash( user_id )
-    {:friend => follower?(user_id), :follower => friend?(user_id)}
+    {:friend => false, :follower => false}
+    #{:friend => follower?(user_id), :follower => friend?(user_id)}
   end
   
   def friend?(user_id)

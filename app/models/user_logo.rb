@@ -46,9 +46,11 @@ class UserLogo
   end
   
   def self.ids_cache(uid)
-    Rails.cache.fetch("ULOGOS#{uid}") do 
+    ret = Rails.cache.fetch("ULOGOS#{uid}") do 
       ids_no_cache(uid)
     end
+    Rails.cache.delete("ULOGOS#{uid}") if ret.size==0
+    return ret
   end
   
   def self.next_ord(uid)
