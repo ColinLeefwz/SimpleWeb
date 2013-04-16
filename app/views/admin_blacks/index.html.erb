@@ -19,7 +19,11 @@
 
   <% @user_blacks.each do |user_black| %>
     <tr>
-      <td><%= link_to user_black.user.try(:name), "/admin_users/show?id=#{user_black.uid}" %></td>
+      <td>
+        <%=image_tag(user_black.buser.head_logo.img.url(:t1), :size => "50x50") if user_black.user && user_black.user.head_logo%>
+        <%= link_to user_black.user.try(:name), "/admin_users/show?id=#{user_black.uid}" %>
+        <%= user_black.user.try(:show_gender) %>
+      </td>
       <td>
         <%=image_tag(user_black.buser.head_logo.img.url(:t1), :size => "50x50") if user_black.buser && user_black.buser.head_logo%>
         <%= link_to user_black.buser.try(:name), "/admin_users/show?id=#{user_black.bid}" %>
