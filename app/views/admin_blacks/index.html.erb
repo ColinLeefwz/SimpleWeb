@@ -2,7 +2,7 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
 <%= form_tag '/admin_blacks',:method =>:get do %>
   <p>
-    处理：<%= select_tag :flag,options_for_select([['所有','0'],['已处理','1']],params[:flag])  %>
+    处理：<%= select_tag :flag,options_for_select([['未处理', 0],['已处理',1],['所有',2]], params[:flag].to_i)  %>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
@@ -21,7 +21,9 @@
     <tr>
       <td><%= link_to user_black.user.try(:name), "/admin_users/show?id=#{user_black.uid}" %></td>
       <td>
+        <%=image_tag(user_black.buser.head_logo.img.url(:t1), :size => "50x50") if user_black.buser.head_logo%>
         <%= link_to user_black.buser.try(:name), "/admin_users/show?id=#{user_black.bid}" %>
+        <%= user_black.buser.show_gender %>
       </td>
       <td>
         <%= link_to user_black.report.to_i ==1 ? "是" : "否" %>
