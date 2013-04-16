@@ -17,7 +17,8 @@ class AdminBlacksController < ApplicationController
 
   def ignore
     @user_black = UserBlack.find(params[:id])
-    @user_black.update_attribute(:flag, true)
+    @user_black.flag = true
+    @user_black.save!
     render :json => {}
   end
 end
