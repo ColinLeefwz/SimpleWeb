@@ -5,14 +5,12 @@ class AdminUserAddShopsController < ApplicationController
   layout "admin"
 
   def index
-    hash = {creator: {"$exists" => true}}
-
-     
+    hash = {creator: {"$ne" => nil}}
     case params[:t].to_s
     when ''
       hash.merge!({t: nil})
     when '1'
-      hash.merge!({t: {"$exists" => true}})
+      hash.merge!({t: {"$gte" => 0}})
     end
 
     case params[:del].to_s
@@ -21,7 +19,6 @@ class AdminUserAddShopsController < ApplicationController
     when '1'
       hash.merge!({del: 1})
     end
-    hash.merge!({})
     hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
     hash.merge!({city: params[:city]}) unless params[:city].blank?
     @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
