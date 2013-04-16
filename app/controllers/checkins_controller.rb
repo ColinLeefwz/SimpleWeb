@@ -89,6 +89,10 @@ class CheckinsController < ApplicationController
       checkin.alt = params[:altitude].to_f
       checkin.altacc = params[:altacc]
     end
+    if params[:speed]
+      speed = params[:speed].to_f 
+      checkin.speed = speed if speed>0.5
+    end
     checkin.del = true if fake
     checkin.del = true if checkin.acc==5 && checkin.alt==0
     checkin.ip = real_ip
