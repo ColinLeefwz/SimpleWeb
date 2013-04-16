@@ -20,7 +20,7 @@
   <% @user_blacks.each do |user_black| %>
     <tr>
       <td>
-        <%=image_tag(user_black.buser.head_logo.img.url(:t1), :size => "50x50") if user_black.user && user_black.user.head_logo%>
+        <%=image_tag(user_black.user.head_logo.img.url(:t1), :size => "50x50") if user_black.user && user_black.user.head_logo%>
         <%= link_to user_black.user.try(:name), "/admin_users/show?id=#{user_black.uid}" %>
         <%= user_black.user.try(:show_gender) %>
       </td>
