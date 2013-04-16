@@ -25,12 +25,60 @@
     <span class="right" style="width: 300px;"><%=@photo.qq ? "是" : "否"  %></span>
   </li>
   <li>
-    <span style="width: 100px;">赞次数:</span>
-    <span class="right" style="width: 300px;"><%=link_to(@photo.like.to_a.count, "/shop_photos/show_like?id=#{@photo.id}") %></span>
+    <span style="width: 100px;">赞:</span>
+    <span class="right" style="width: 300px;"><%=@photo.like_user_names || "空" %></span>
   </li>
-  <li>
-    <span style="width: 100px;">评论次数:</span>
-    <span class="right" style="width: 300px;"><%=  link_to(@photo.com.to_a.reject{|p| p['hide']}.count, "/shop_photos/show_com?id=#{@photo.id}") %></span>
-  </li>
+  <% if @photo.com.to_a.blank? %>
+    <li>
+      <span style="width: 100px;">评论:</span>
+      <span class="right" style="width: 300px;">空</span>
+    </li>
+  <% else %>
+    <% @photo.com.each_with_index do |c, index| %>
+      <% user = User.find_by_id(c["id"]) %>
+      <li style="margin: 0px">
+        <span style="width: 100px;"><%= "评论:" if index==0 %></span>
+        <span class="right" style="width: 100px;"><%= user.name %></span>
+        <span class="right" style="width: 100px;"><%= truncate c['txt'], :length=> 13   %></span>
+        <span class="right" style="width: 150px;"> <%= c['t'].localtime.strftime("%Y-%m-%d %H:%M")  %></span>
+        <span class="right" style="width: 80px;"><%= c["hide"] ? "隐藏" : "显示"   %></span>
+        <span class="right" style="width: 100px;">
+          <% if c['hide'] %>
+            <%= link_to '显示', "#", :onclick => "ajaxUnhide($(this), '#{@photo.id}', '#{c['id']}','#{c['t']}')"  %>
+          <% else %>
+            <%= link_to '隐藏', "#", :onclick => "ajaxHide($(this), '#{@photo.id}', '#{c['id']}','#{c['t']}')"  %>
+          <% end %>
+        </span>
+      </li>
+    <% end %>
+
+  <% end %>
 </ul>
+
+
+<script type ="text/javascript">
+  LeftMenu(19);
+  function ajaxHide(obj, id, uid, t){
+    if(confirm("确定隐藏此评论"))
+    {
+      $.get("/shop_photos/hide_com",{id: id,uid: uid, t: t}, function(data) {
+        if(data['text']==0)
+          obj.replaceWith('已隐藏')
+        else
+          obj.replaceWith('隐藏失败')
+      });
+    }
+  }
+  function ajaxUnhide(obj, id, uid, t){
+    if(confirm("确定显示此评论"))
+    {
+      $.get("/shop_photos/unhide_com",{id: id,uid: uid, t: t}, function(data) {
+        if(data['text']==0)
+          obj.replaceWith('已显示')
+        else
+          obj.replaceWith('显示失败')
+      });
+    }
+  }
+</script>
 <%= link_to '返回列表', "/shop_photos", :class=>"btn6 r" %>
