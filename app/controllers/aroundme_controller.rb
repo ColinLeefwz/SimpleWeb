@@ -14,6 +14,9 @@ class AroundmeController < ApplicationController
       session[:user_id].to_s == "5159537cc90d8bfd010009cc"
       Shop.find($llcf).send_coupon(session[:user_id])
     end
+    if is_session_user_kx
+      arr << $llcf
+    end
     render :json =>  arr.map{|x| x.safe_output_with_users}.to_json
   end
 
