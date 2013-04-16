@@ -2,13 +2,13 @@
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th width="15%" align="center">缩略图</th>
+    <th width="13%" align="center">缩略图</th>
     <th width="9%" align="center">用户</th>
-    <th width="18%" align="left">描述</th>
-    <th width="19%" align="left">发布时间</th>
+    <th width="15%" align="left">描述</th>
+    <th width="15%" align="left">发布时间</th>
     <th width="12%" align="left">分享到微博</th>
     <th width="12%" align="left">分享到qq</th>
-    <th width="15%" align="center" colspan="2">操作</th>
+    <th width="20%" align="center" colspan="3">操作</th>
   </tr>
   <% @photos.each do |photo| %>
     <tr>
@@ -19,7 +19,8 @@
       <td><%= photo.weibo ? '是' : '否' %></td>
       <td><%= photo.qq ? '是' : '否' %></td>
       <td><%= link_to '详情', "/shop_photos/show?id=#{photo.id}" %></td>
-      <td><%= link_to '删除', "#",:onclick => "ajaxDel($(this), '#{photo.id}')"  %></td>
+      <td><%= link_to '隐藏', "#",:onclick => "ajaxDel($(this), '#{photo.id}')"  unless photo.hide  %></td>
+      <td><%= link_to '显示', "#",:onclick => "ajaxUndel($(this), '#{photo.id}')" if photo.hide %></td>
     </tr>
   <% end %>
 </table>
@@ -30,14 +31,27 @@
 <script type ="text/javascript">
   LeftMenu(19);
   function ajaxDel(obj, id){
-    if(confirm("确定删除此照片"))
+    if(confirm("确定隐藏此照片？"))
     {
       $.get("/shop_photos/ajax_del",{id: id}, function(data) {
         if(data['text']){
-          obj.parent().parent().remove();
+          obj.replaceWith(data['text'])
         }
         else{
-          obj.replaceWith('删除失败.')
+          obj.replaceWith('隐藏失败.')
+        }
+      });
+    }
+  }
+
+  function ajaxUndel(obj, id){
+    if(confirm("确定取消隐藏？")){
+      $.get("/shop_photos/ajax_undel",{id: id}, function(data) {
+        if(data['text']){
+          obj.replaceWith(data['text'])
+        }
+        else{
+          obj.replaceWith('隐藏失败.')
         }
       });
     }

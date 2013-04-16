@@ -13,10 +13,10 @@ class Photo
   field :weibo, type:Boolean #是否分享到新浪微博
   field :qq, type:Boolean  #是否分享到QQ空间
   field :wx, type:Integer   #分享到微信: 1个人,2朋友圈, 3都分享了
-  field :like, type:Array #赞
-  field :com, type:Array #评论
+  field :like, type:Array #赞 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间' }]
+  field :com, type:Array #评论 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间', 'txt' => "评论", 'hide' => '隐藏'  }]
   field :img
-  field :hide #隐藏照片
+  field :hide, type:Boolean  #隐藏照片
   mount_uploader(:img, PhotoUploader)
   
   field :img_tmp
@@ -179,14 +179,30 @@ class Photo
     UserLogo.fix_error(false)
   end
 
+  def like_user_names
+    return if self.like.blank?
+    self.like.to_a.map{|m| User.find_by_id(m['id']).try(:name)}.compact.join(', ')
+  end
 
+
+  #隐藏评论
   def hidecom(uid, t)
     comment = com.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
     return if comment.nil?
     comment["hide"] = true
-    com = comment
     self.save!
   rescue
     nil
   end
+
+  #取消评论的隐藏
+  def unhidecom(uid, t)
+    comment = com.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
+    return if comment.nil?
+    comment.delete("hide")
+    self.save!
+  rescue
+    nil
+  end
+
 end
