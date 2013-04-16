@@ -22,7 +22,6 @@ class Shop
   field :t                #脸脸的商家类型
   field :password
   field :utotal, type:Integer, default:0 #截至到昨天，该商家的用户总数
-  field :uftotal, type:Integer, default:0 #截至到昨天，该商家的女性用户总数
   field :shops, type:Array #子商家
   field :psid, type:Integer #总店id
   #field :osm_id #Open Street Map node id
@@ -115,7 +114,7 @@ class Shop
     total,female = CheckinShopStat.get_user_count_redis(self._id)
     if total==0
       total = self.utotal
-      female = self.uftotal
+      female = total/2
     end
     male = total - female
     safe_output.merge!( {"user"=>total, "male"=>male, "female"=>female} )
@@ -284,7 +283,8 @@ class Shop
   end
   
   def self.get_city(loc)
-    Shop.where({lo:{'$near' => loc }}).first.city
+    shop = Shop.only(:city).where({lo:{'$near' => loc,'$maxDistance' => 0.1}, city:{'$exists' => true}}).first
+    shop.nil?? nil : shop.city
   end
 
   def self.lob_to_lo(lob)
