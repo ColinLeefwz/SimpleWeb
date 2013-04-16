@@ -12,6 +12,7 @@ class Checkin
   field :del, type: Boolean #删除标记
   field :alt, type:Float    #海拔高度
   field :altacc, type: Integer  #海拔高度的精确度
+  field :speed, type:Float    #速度m/s
   field :bssid #wifi上网时的bssid
   field :city #city 城市
   
