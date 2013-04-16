@@ -1,11 +1,9 @@
 <div class="title2"><h2>签到类优惠券管理</h2></div>
 <div class="items" id="Items">
-  <a class ="hover" href="/shop_coupons" style="margin-top: 10px;">签到类</a>
-  <a href="/shop_share_coupons" style="margin-top: 10px;">分享类</a>
-  <a href="/shop_coupons/new" class="btn4" style="float: right; padding-right: 0px; border-width: 0px; width: 95px;">签到类发布</a>
+  <a href="/shop_coupons" style="margin-top: 10px;">签到类</a>
+  <a class ="hover" href="/shop_share_coupons" style="margin-top: 10px;">分享类</a>
+  <a href="/shop_share_coupons/new" class="btn5" style="float: right; padding-right: 0px; border-width: 0px; width: 95px;">分享类发布</a>
 </div>
-
-
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
@@ -26,10 +24,10 @@
       <td align="center"><%= link_to coupon.users.to_a.count, {:action => 'users', :id => coupon.id, :flag => 'down'} %></td>
       <td align="center"><%= link_to coupon.users.to_a.count{|s| s['uat']},{:action => 'users', :id => coupon.id, :flag => 'use'} %></td>
       <td align="center" class="plr0">
-        <%= link_to '详情', shop_coupon_path(coupon) %>
+        <%= link_to '详情', "/shop_share_coupons/show?id=#{coupon.id}" %>
       </td>
       <td align="center" class="plr0">
-        <%=link_to '编辑', edit_shop_coupon_path(coupon) if coupon.users.blank? && coupon.hidden !=1 %>
+        <%=link_to '编辑', "/shop_share_coupons/edit?id=#{coupon.id}" if coupon.users.blank? && coupon.hidden !=1 %>
       </td>
       <td align="center" class="plr0">
         <% if coupon.hidden == 1 %>
@@ -52,14 +50,6 @@
 
 <script type ="text/javascript">
   LeftMenu(6);
-  function ajaxDeply(obj, coupon_id){
-    if(confirm("确定停用此优惠券么？"))
-    {
-      $.get("/shop_coupons/ajax_deply",{id: coupon_id}, function(data) {
-        obj.replaceWith(data['text'])
-      });
-    }
-  }
 
   function ajaxActivate(obj, coupon_id, allow){
     if(allow){
@@ -72,21 +62,7 @@
     }
     else
     {
-      alert('不能激活,已有一张有效的同规则优惠券。')
-    }
-  }
-
-  function ajaxDel(obj, coupon_id){
-    if(confirm("确定删除此优惠券么？"))
-    {
-      $.get("/shop_coupons/ajax_del",{id: coupon_id}, function(data) {
-        if(data['text']){
-          obj.parent().parent().remove();
-        }
-        else{
-          obj.replaceWith('删除失败.')
-        }
-      });
+      alert('不能激活,已有一张有效的分享类优惠券。')
     }
   }
 </script>
