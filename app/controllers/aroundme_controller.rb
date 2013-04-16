@@ -15,7 +15,7 @@ class AroundmeController < ApplicationController
       Shop.find($llcf).send_coupon(session[:user_id])
     end
     if is_session_user_kx
-      arr << $llcf
+      arr << Shop.find_by_id($llcf)
     end
     render :json =>  arr.map{|x| x.safe_output_with_users}.to_json
   end
