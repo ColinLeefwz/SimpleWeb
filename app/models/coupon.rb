@@ -214,4 +214,12 @@ class Coupon
     "发送分享图片到新浪微博#{key}，即可获得'#{name}'。"
   end
 
+  def allow_activate?
+    if self.t2.to_i == 2
+      Coupon.where({t2: 2, hidden: {"$ne" => 1}, shop_id: self.shop_id.to_i}).limit(1).blank?
+    else
+      Coupon.where({t2: 1, hidden: {"$ne" => 1}, shop_id: self.shop_id.to_i, rule: self.rule }).limit(1).blank?
+    end
+  end
+
 end

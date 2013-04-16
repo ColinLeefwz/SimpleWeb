@@ -32,11 +32,12 @@
   });
 </script>
 
-<%= form_for(@coupon, :url => shop_coupon_path(@coupon.id),:html => { :multipart => true, :id => 'cform' }) do |f| %>
+<%= form_for(@coupon, :url => "/shop_share_coupons/update",:html => { :multipart => true, :id => 'cform' }) do |f| %>
+  <%= hidden_field_tag :id, @coupon.id %>
   <% if @coupon.t.to_i ==1  %>
-    <%=  render :partial => 'imgtext2', :locals => {:f => f} %>
+    <%=  render :partial => 'imgtext', :locals => {:f => f} %>
   <% elsif @coupon.t.to_i ==2 %>
-    <%=  render :partial => 'allimg2', :locals => {:f => f}  %>
+    <%=  render :partial => 'allimg', :locals => {:f => f}  %>
   <%end%>
 <% end %>
 
