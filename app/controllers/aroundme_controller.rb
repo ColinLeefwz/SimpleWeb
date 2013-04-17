@@ -57,7 +57,7 @@ class AroundmeController < ApplicationController
   def users
     ret = []
     users = User.where({pcount: {"$gt" => 2}}).limit(4)
-    users.each {|u| ret << u.safe_output_with_relation(session[:user_id]) }
+    users.each {|u| ret << u.safe_output(session[:user_id]) }
     if ret
       render :json => ret.to_json
     else
@@ -87,7 +87,7 @@ class AroundmeController < ApplicationController
       next if user.invisible.to_i>=2
       # next if user.block?(session[:user_id])
       next if user.id.to_s=="51145007c90d8b056a000796" #马甲Keri Choo	
-      hash = user.safe_output_with_relation(session[:user_id])
+      hash = user.safe_output(session[:user_id])
       diff = Time.now.to_i - cati
       tstr = User.time_desc(diff)
       hash.merge!({location: "#{tstr} #{shop.name}"})
