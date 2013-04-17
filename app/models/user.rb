@@ -25,20 +25,21 @@ class User
 
   field :tk  #Push消息的token
   field :city
-  
-  field :follows, type:Array #关注
-  
+    
   #no_wb_logo: 该用户没有设置新浪微博头像
   #logo_backup: 被禁止的用户，其head_logo_id的备份
 
   #validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
   
   index({wb_uid: 1})
-  index({follows: 1})
   index({city: 1, gender:1})
   
   def follows_s
-    (self.follows.nil?)? [] : self.follows
+    UserFollow.find(self.id).follows
+  end
+  
+  def follows
+    UserFollow.find(self.id).follows
   end
   
   def blacks_s
@@ -69,7 +70,7 @@ class User
   #封杀用户
   def kill(del_all_logos=false)
     logo = self.head_logo
-    User.collection.find({_id:self._id}).update("$set" => {logo_backup:head_logo_id}) 
+    self.update_attribute(:logo_backup, head_logo_id)
     user_logos.each {|x| x.destroy} if del_all_logos
     self.password=nil
     self.head_logo_id=nil
@@ -182,12 +183,11 @@ class User
   end
   
   def relation_hash( user_id )
-    {:friend => false, :follower => false}
-    #{:friend => follower?(user_id), :follower => friend?(user_id)}
+    {:friend => false, :follower => false} #仅用于兼容老版本客户端
   end
   
   def friend?(user_id)
-    self.follows !=nil && self.follows.index(user_id) !=nil
+    self.follows.index(user_id) !=nil
   end
   
   def follower?(user_id)
