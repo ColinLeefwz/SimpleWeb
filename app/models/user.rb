@@ -149,7 +149,7 @@ class User
   end
   
   def safe_output_with_location( user_id )
-    safe_output( user_id ).merge!( last_location(user_id) )
+    safe_output.merge!( last_location(user_id) )
   end
   
   def output_with_relation( user_id )
