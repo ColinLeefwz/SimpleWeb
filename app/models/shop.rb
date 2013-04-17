@@ -281,8 +281,14 @@ class Shop
     return '' if rl.to_a.length != 2
     Shop.get_city rl
   end
-  
-  def self.get_city(loc)
+
+  def self.get_city(lo)
+    hash = "%.2f%.1f" %  lo
+    field = ("%.2f" %  lo[1])[-1..-1]
+    $redis.hget(hash,field)
+  end
+    
+  def self.get_city_mongo(loc)
     shop = Shop.only(:city).where({lo:{'$near' => loc,'$maxDistance' => 0.1}, city:{'$exists' => true}}).first
     shop.nil?? nil : shop.city
   end
