@@ -35,11 +35,13 @@ class User
   index({city: 1, gender:1})
   
   def follows_s
-    UserFollow.find(self.id).follows
+    follows
   end
   
   def follows
-    UserFollow.find(self.id).follows
+    ret = UserFollow.find_by_id(self.id)
+    return [] if ret.nil?
+    ret.follows
   end
   
   def blacks_s
@@ -146,17 +148,8 @@ class User
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
-  def safe_output_with_relation( user_id )
-    if user_id.nil?
-      safe_output
-    else
-      user_id = User.find_by_id(user_id)._id if user_id.class == String
-      safe_output.merge!( relation_hash(user_id) )
-    end
-  end
-  
-  def safe_output_with_relation_location( user_id )
-    safe_output_with_relation( user_id ).merge!( last_location(user_id) )
+  def safe_output_with_location( user_id )
+    safe_output( user_id ).merge!( last_location(user_id) )
   end
   
   def output_with_relation( user_id )
@@ -183,7 +176,7 @@ class User
   end
   
   def relation_hash( user_id )
-    {:friend => false, :follower => false} #仅用于兼容老版本客户端
+    {:friend => follower?(user_id), :follower => friend?(user_id)}
   end
   
   def friend?(user_id)
