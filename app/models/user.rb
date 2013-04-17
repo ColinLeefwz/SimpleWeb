@@ -142,7 +142,7 @@ class User
     end
   end
   
-  def safe_output
+  def safe_output(uid=nil)
     hash = self.attributes.slice("name", "signature", "wb_uid", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
     hash.merge!({qq_openid: self.qq}) if self.qq
     hash.merge!({id: self._id}).merge!( head_logo_hash)
