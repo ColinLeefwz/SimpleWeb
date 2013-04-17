@@ -2,7 +2,6 @@ db.users.remove();
 db.users.insert({
     "_id" : ObjectId("502e6303421aa918ba00007c"),
     "birthday" : "",
-    "follows" : [ ObjectId("502e6303421aa918ba000002") ],
     "gender" : 1,
     "hobby" : "",
     "invisible" : 0,
@@ -17,7 +16,6 @@ db.users.insert({
 db.users.insert({
     "_id" : ObjectId("502e6303421aa918ba000002"),
     "birthday" : "",
-    "follows" : [ 	ObjectId("502e6303421aa918ba00007c"), 	ObjectId("502e6303421aa918ba000007") ],
     "gender" : 0,
     "hobby" : "",
     "invisible" : 0,
@@ -65,8 +63,6 @@ db.users.insert({
 db.users.insert({
 	"_id" : ObjectId("502e6303421aa918ba000001"),
 	"birthday" : "1997-7-2",
-	"follows" : [
-	],
 	"gender" : 1,
 	"head_logo_id" : ObjectId("507b5ac0421aa9cf3200000b"),
 	"hobby" : "Weiqi, go",
