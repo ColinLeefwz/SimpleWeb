@@ -1,0 +1,23 @@
+<%= form_for(@shop_sign, :url => '/admin_shop_signs/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+
+  <p>
+    <label>商家id：</label>
+    <%= f.text_field :sid, :class => "inputs l" %>
+  </p>
+  <p>
+    <label>合同编号：</label>
+    <%= f.text_field :htid, :class => "inputs l" %>
+  </p>
+  <p>
+    <label>商家名称：</label>
+    <%= f.text_field :name, :class => "inputs l" %>
+  </p>
+  <p>
+    <label>合同附件：</label>
+    <%= f.file_field :attch, :class => "inputs l" %>
+  </p>
+  <p>
+    <input type="submit" value="发 布" class="btn1 ml20 l"/>
+  </p>
+
+<% end %>
