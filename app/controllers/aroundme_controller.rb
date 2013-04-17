@@ -84,7 +84,8 @@ class AroundmeController < ApplicationController
     arr.each do |user,shop,cati| 
       next if shop.nil?
       next if user.forbidden?
-      next if user.block?(session[:user_id])
+      next if user.invisible>=2
+      # next if user.block?(session[:user_id])
       next if user.id.to_s=="51145007c90d8b056a000796" #马甲Keri Choo	
       hash = user.safe_output_with_relation(session[:user_id])
       diff = Time.now.to_i - cati
