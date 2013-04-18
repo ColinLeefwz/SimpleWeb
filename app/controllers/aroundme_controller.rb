@@ -17,6 +17,9 @@ class AroundmeController < ApplicationController
     if is_session_user_kx
       arr << Shop.find_by_id($llcf)
     end
+    if in_zi_wei_yuan_dian?(lo)
+      arr << Shop.find_by_id(21830231)
+    end
     render :json =>  arr.map{|x| x.safe_output_with_users}.to_json
   end
 
@@ -136,6 +139,12 @@ class AroundmeController < ApplicationController
     Rails.cache.fetch(hot_user_cache_key(city,sex,skip,pcount)) do 
       hot_users_no_cache(city,sex,skip,pcount)
     end
+  end
+  
+  def in_zi_wei_yuan_dian?(lo)
+    lo[0] < 30.26082 && lo[0] > 30.2431 && lo[1] > 120.15379 && lo[1] < 120.164
+    #[30.26081567, 120.1537979]  [30.26064367, 120.16330190000001] 
+    #[30.24317747, 120.1573636]  [30.24311447, 120.1620166] 
   end
   
 end
