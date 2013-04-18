@@ -190,7 +190,7 @@ class Shop
       next if u.nil?
       next if u.forbidden?
       next if u.block?(session_uid)
-      ret << u.safe_output_with_relation(session_uid).merge!({time:Checkin.time_desc(cat)})
+      ret << u.safe_output(session_uid).merge!({time:Checkin.time_desc(cat)})
     end
     ret
   end

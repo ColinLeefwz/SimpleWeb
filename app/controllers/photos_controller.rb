@@ -128,7 +128,7 @@ class PhotosController < ApplicationController
     page = params[:page].to_i
     pcount = params[:pcount].to_i
     page = 1 if page==0
-    pcount = 20 if pcount==0
+    pcount = 5 if pcount==0
     skip = (page-1)*pcount
     photos = Photo.where({user_id: session[:user_id]}).sort({updated_at: -1}).skip(skip).limit(pcount)
     render :json => photos.map {|p| p.output_hash_with_shopname }.to_json
@@ -138,7 +138,7 @@ class PhotosController < ApplicationController
     page = params[:page].to_i
     pcount = params[:pcount].to_i
     page = 1 if page==0
-    pcount = 20 if pcount==0
+    pcount = 5 if pcount==0
     skip = (page-1)*pcount
     photos = Photo.where({user_id: params[:uid], 
       "$or" => [ { weibo: true } , { qq: true } ]}).sort({updated_at: -1}).skip(skip).limit(pcount)
