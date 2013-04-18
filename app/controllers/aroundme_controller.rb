@@ -17,6 +17,9 @@ class AroundmeController < ApplicationController
     if is_session_user_kx
       arr << Shop.find_by_id($llcf)
     end
+    if in_zi_wei_yuan_dian?(lo)
+      arr << Shop.find_by_id(21830231)
+    end
     render :json =>  arr.map{|x| x.safe_output_with_users}.to_json
   end
 
@@ -57,7 +60,7 @@ class AroundmeController < ApplicationController
   def users
     ret = []
     users = User.where({pcount: {"$gt" => 2}}).limit(4)
-    users.each {|u| ret << u.safe_output_with_relation(session[:user_id]) }
+    users.each {|u| ret << u.safe_output(session[:user_id]) }
     if ret
       render :json => ret.to_json
     else
@@ -87,7 +90,7 @@ class AroundmeController < ApplicationController
       next if user.invisible.to_i>=2
       # next if user.block?(session[:user_id])
       next if user.id.to_s=="51145007c90d8b056a000796" #马甲Keri Choo	
-      hash = user.safe_output_with_relation(session[:user_id])
+      hash = user.safe_output(session[:user_id])
       diff = Time.now.to_i - cati
       tstr = User.time_desc(diff)
       hash.merge!({location: "#{tstr} #{shop.name}"})
@@ -136,6 +139,12 @@ class AroundmeController < ApplicationController
     Rails.cache.fetch(hot_user_cache_key(city,sex,skip,pcount)) do 
       hot_users_no_cache(city,sex,skip,pcount)
     end
+  end
+  
+  def in_zi_wei_yuan_dian?(lo)
+    lo[0] < 30.26082 && lo[0] > 30.2431 && lo[1] > 120.15379 && lo[1] < 120.164
+    #[30.26081567, 120.1537979]  [30.26064367, 120.16330190000001] 
+    #[30.24317747, 120.1573636]  [30.24311447, 120.1620166] 
   end
   
 end
