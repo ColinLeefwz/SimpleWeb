@@ -63,13 +63,14 @@ class PhotosController < ApplicationController
       render :json => {"error" => "already liked photo #{photo.id}"}.to_json
       return
     end
-    ret = photo.push(:like, {id:session[:user_id], name: session_user.name, t:Time.now})
+    like = {id:session[:user_id], name: session_user.name, t:Time.now}
+    photo.push(:like, like)
     #TODO: ver判断，大于1.4.1的才发送xmpp提醒
     if session[:ver].to_f > 1.4
       Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
-      "#{session_user.name}赞了你在#{photo.shop.name}分享的照片。")
+      "#{session_user.name} '赞'了你在 #{photo.shop.name} 分享的照片。")
     end
-    render :json => ret.to_json
+    render :json => like.to_json
   end
   
   def dislike
@@ -83,19 +84,23 @@ class PhotosController < ApplicationController
   
   def comment
     photo = Photo.find(params[:id])
-    ret = photo.push(:com, {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now})
+    com = {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now}
+    ret = photo.push(:com, com)
     if session[:ver].to_f > 1.4
       Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
       "#{session_user.name}评论了你在#{photo.shop.name}分享的照片。")
     end
-    render :json => ret.to_json
+    logger.info com.class
+    logger.info com
+    render :json => com.to_json
   end
 
   def recomment
     photo = Photo.find(params[:id])
     ru = User.find_by_id(params[:rid])
-    ret = photo.push(:com, {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now, rid:ru.id, rname:ru.name})
-    render :json => ret.to_json
+    com = {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now, rid:ru.id, rname:ru.name}
+    ret = photo.push(:com, com)
+    render :json => com.to_json
   end
     
   def delcomment
