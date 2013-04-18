@@ -9,7 +9,7 @@ class UserBlack
   field :report, type:Integer #1代表举报，需要脸脸的工作人员处理
   field :flag,type: Boolean ,default:false #代表是否已处理
 
-  index({ uid: 1 })
+  index({ uid: 1, bid: 1 })
   index({ report: 1, flag: 1 })
   
 

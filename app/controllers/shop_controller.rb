@@ -50,7 +50,7 @@ class ShopController < ApplicationController
     page = params[:page].to_i
     pcount = params[:pcount].to_i
     page = 1 if page==0
-    pcount = 20 if pcount==0
+    pcount = 5 if pcount==0
     skip = (page-1)*pcount
     photos = Photo.where({room:params[:id]}).sort({updated_at: -1}).skip(skip).limit(pcount)
     render :json => photos.map {|p| p.output_hash_with_username }.to_json
