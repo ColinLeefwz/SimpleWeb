@@ -25,20 +25,23 @@ class User
 
   field :tk  #Push消息的token
   field :city
-  
-  field :follows, type:Array #关注
-  
+    
   #no_wb_logo: 该用户没有设置新浪微博头像
   #logo_backup: 被禁止的用户，其head_logo_id的备份
 
   #validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
   
   index({wb_uid: 1})
-  index({follows: 1})
   index({city: 1, gender:1})
   
   def follows_s
-    (self.follows.nil?)? [] : self.follows
+    follows
+  end
+  
+  def follows
+    ret = UserFollow.find_by_id(self.id)
+    return [] if ret.nil?
+    ret.follows
   end
   
   def blacks_s
@@ -69,7 +72,7 @@ class User
   #封杀用户
   def kill(del_all_logos=false)
     logo = self.head_logo
-    User.collection.find({_id:self._id}).update("$set" => {logo_backup:head_logo_id}) 
+    self.update_attribute(:logo_backup, head_logo_id)
     user_logos.each {|x| x.destroy} if del_all_logos
     self.password=nil
     self.head_logo_id=nil
@@ -139,23 +142,14 @@ class User
     end
   end
   
-  def safe_output
+  def safe_output(uid=nil)
     hash = self.attributes.slice("name", "signature", "wb_uid", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
     hash.merge!({qq_openid: self.qq}) if self.qq
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
-  def safe_output_with_relation( user_id )
-    if user_id.nil?
-      safe_output
-    else
-      user_id = User.find_by_id(user_id)._id if user_id.class == String
-      safe_output.merge!( relation_hash(user_id) )
-    end
-  end
-  
-  def safe_output_with_relation_location( user_id )
-    safe_output_with_relation( user_id ).merge!( last_location(user_id) )
+  def safe_output_with_location( user_id )
+    safe_output.merge!( last_location(user_id) )
   end
   
   def output_with_relation( user_id )
@@ -182,12 +176,11 @@ class User
   end
   
   def relation_hash( user_id )
-    {:friend => false, :follower => false}
-    #{:friend => follower?(user_id), :follower => friend?(user_id)}
+    {:friend => follower?(user_id), :follower => friend?(user_id)}
   end
   
   def friend?(user_id)
-    self.follows !=nil && self.follows.index(user_id) !=nil
+    self.follows.index(user_id) !=nil
   end
   
   def follower?(user_id)
