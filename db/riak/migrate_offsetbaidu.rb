@@ -9,5 +9,5 @@ Mongoid.session(:dooo)[:offsetbaidus].where({v:{"$exists" => false}}).each do |x
     obj.store
   end
   Mongoid.session(:dooo)[:offsetbaidus].find({_id:x["_id"]}).update({"$set" => {v:true}})
-  sleep 0.01
+  #sleep 0.01
 end
