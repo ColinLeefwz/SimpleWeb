@@ -9,8 +9,8 @@ class Xmpp
   end
   
   #发送个人聊天消息
-  def self.send_chat(from,to,msg)
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.chat(from,to,msg)) 
+  def self.send_chat(from,to,msg,id=nil)
+    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.chat(from,to,msg,id)) 
   end
   
   def self.gchat(from,to,msg, id=nil)
@@ -20,8 +20,8 @@ class Xmpp
   end 
   
   #在聊天室发送系统消息
-  def self.send_gchat(from,to,msg)
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat(from,to,msg)) 
+  def self.send_gchat(from,to,msg, id=nil)
+    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat(from,to,msg,id)) 
   end
 
   def self.gchat2(from,room,to,msg, id=nil)
@@ -31,9 +31,9 @@ class Xmpp
   end 
   
   #在聊天室以特定用户身份发消息
-  def self.send_gchat2(from,room,to,msg)
+  def self.send_gchat2(from,room,to,msg, id=nil)
     return "消息：#{msg}" if ENV["RAILS_ENV"] != "production"
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat2(from,room,to,msg))   
+    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat2(from,room,to,msg,id))   
   end
   
   def self.test
