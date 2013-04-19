@@ -64,9 +64,9 @@ class Coupon
   def allow_send_share?(user_id, sid = nil)
     case self.rule.to_i
     when 0
-      return true unless self.users.to_a.reverse.detect{|u| u['id'].to_s == user_id.to_s && u['dat'].to_date == Time.now.to_date && u['sid'] == sid }
+      return true unless self.down_users.detect{|du| du.uid.to_s == user_id.to_s && du.dat.to_date == Time.now.to_date && du.sub_sid   == sid }
     when 1
-      return true unless self.users.to_a.reverse.detect{|u| u['id'].to_s == user_id.to_s && u['sid'] == sid }
+      return true unless self.down_users.detect{|du| du.uid.to_s == user_id.to_s && du.sub_sid == sid }
     end
   end
 
@@ -81,9 +81,9 @@ class Coupon
       return true if !ckin.include?(user_id.to_s) && ckin.size < self.rulev.to_i
     when 2
       #      return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == 1
-      return true if self.users.to_a.detect{|u| u['id'].to_s == user_id.to_s}.nil?
+      return true if self.down_users.detect{|du| du.uid.to_s == user_id.to_s}.nil?
     when 3
-      unless self.users.to_a.detect{|u| u['id'].to_s == user_id}
+      unless self.down_users.detect{|du| du.uid.to_s == user_id.to_s}
         return true if Checkin.where({sid: self.shop_id, uid: user_id}).group_by{|s| s.id.generation_time.to_date}.count >= self.rulev.to_i
       end
     end

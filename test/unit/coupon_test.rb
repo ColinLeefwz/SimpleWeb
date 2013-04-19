@@ -8,36 +8,10 @@ class CouponTest < ActiveSupport::TestCase
   def setup
     reload('coupons.js')
     reload('checkins.js')
+    CouponDown.delete_all
     $redis.keys("ckin*").each{|key| $redis.zremrangebyrank(key, 0, -1)}
   end
 
-  test ".download(user_id) 优惠券下载" do
-    coupon = Coupon.find('507fc5bfc9ad42d756a4122e')
-    user = User.find('502e6303421aa918ba000005')
-    coupon.download(user.id)
-    assert_equal coupon.users.length ,1
-    coupon.download(user.id)
-    assert_equal coupon.users.length ,2
-  end
-
-  test ".use(user_id) 优惠券第一次使用。" do
-    coupon = Coupon.find('507fc5bfc9ad42d756a412e3')
-    user = User.find('502e6303421aa918ba000005')
-    coupon.download(user.id)
-    coupon.use(user.id)
-    assert_equal coupon.users.select{|s| s['id'] == user.id}.map { |m| m.keys }, [['id', 'dat', 'uat']]
-  end
-
-  test ".use(user_id) 优惠券同一用户第二次使用。" do
-    coupon = Coupon.find('507fc5bfc9ad42d756a412e2')
-    user = User.find('502e6303421aa918ba000005')
-    coupon.download(user.id)
-    coupon.use(user.id)
-    coupon.download(user.id)
-    coupon.use(user.id)
-    assert_equal coupon.users.select{|s| s['id'] == user.id}.map { |m| m.keys }, [['id', 'dat', 'uat'],['id', 'dat', 'uat']]
-  end
-  
   test "#allow_send_checkin? 规则是每日签到签到优惠，用户下载一次后不能在下载 " do
     user = User.find('502e6303421aa918ba000005')
     coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
@@ -65,7 +39,7 @@ class CouponTest < ActiveSupport::TestCase
     user = User.find('502e6303421aa918ba00007c')
     coupon = Coupon.find('507fc5bfc9ad42d756a412e3')
     assert_equal coupon.allow_send_checkin?(user._id), true
-    coupon.download(user.id)
+    CouponDown.download(coupon, user.id)
     assert_equal coupon.allow_send_checkin?(user._id), nil
   end
 
@@ -82,7 +56,7 @@ class CouponTest < ActiveSupport::TestCase
     Checkin.create(uid: user._id, sid: coupon.shop_id)
     assert_equal coupon.allow_send_checkin?(user._id), true
     #优惠券只能下载一个
-    coupon.download(user.id)
+    CouponDown.download(coupon, user.id)
     assert_equal coupon.allow_send_checkin?(user._id), nil
   end
 

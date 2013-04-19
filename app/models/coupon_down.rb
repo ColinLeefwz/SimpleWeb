@@ -27,7 +27,7 @@ class CouponDown
   end
    
   def message
-    s = "[优惠券:#{coupon.name}:#{shop.name}:#{id}:#{dat.strftime('%Y-%m-%d %H：%M')}"
+    s = "[优惠券:#{coupon.name}:#{shop.name}:#{coupon.id}:#{dat.strftime('%Y-%m-%d %H：%M')}"
     s += ":#{coupon.hint}" if coupon.hint
     s += "]"
     s
@@ -43,6 +43,7 @@ class CouponDown
     cpdown.sub_sid = sid if sid
     cpdown.save!
     cpdown.gen_share_coupon_img if photo_id
+    cpdown
   end
   
   def use(user_id, data)
