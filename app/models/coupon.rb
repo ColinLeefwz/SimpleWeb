@@ -64,28 +64,24 @@ class Coupon
   def allow_send_share?(user_id, sid = nil)
     case self.rule.to_i
     when 0
-      return true unless self.down_users.detect{|du| du.uid.to_s == user_id.to_s && du.dat.to_date == Time.now.to_date && du.sub_sid   == sid }
+      return !downed_today(user_id)
     when 1
-      return true unless self.down_users.detect{|du| du.uid.to_s == user_id.to_s && du.sub_sid == sid }
+      return !downed(user_id)
     end
   end
 
   def allow_send_checkin?(user_id)
     ckin = $redis.zrange("ckin#{self.shop_id.to_i}", 0, -1)
-    user_id = user_id.to_s
     case self.rule.to_i
     when 0
-      #      return true unless self.users.to_a.detect { |u| u['id'].to_s == user_id && u['dat'].to_date == Time.now.to_date  }
-      return true if !ckin.include?(user_id.to_s)
+      return !downed_today(user_id)
     when 1
-      return true if !ckin.include?(user_id.to_s) && ckin.size < self.rulev.to_i
+      return true if !downed_today(user_id) && ckin.size < self.rulev.to_i
     when 2
-      #      return true if Checkin.where({sid: self.shop_id, uid: user_id}).count == 1
-      return true if self.down_users.detect{|du| du.uid.to_s == user_id.to_s}.nil?
+      return !downed(user_id)
     when 3
-      unless self.down_users.detect{|du| du.uid.to_s == user_id.to_s}
-        return true if Checkin.where({sid: self.shop_id, uid: user_id}).group_by{|s| s.id.generation_time.to_date}.count >= self.rulev.to_i
-      end
+      return false if downed(user_id)
+      return Checkin.where({sid: self.shop_id, uid: user_id}).group_by{|s| s.id.generation_time.to_date}.count >= self.rulev.to_i
     end
   end
 
@@ -100,7 +96,12 @@ class Coupon
   def downed(user_id)
     CouponDown.where({cid:self.id, uid: user_id}).first != nil
   end
-  
+
+  def downed_today(user_id)
+    cpd = CouponDown.where({cid:self.id, uid: user_id}).sort({_id:-1}).limit(1).to_a
+    return false if cpd.nil? || cpd.size==0
+    return cpd[0].dat.to_date == Time.now.to_date
+  end  
   
   def self.gen_demo(sid)
     demo = Coupon.new
