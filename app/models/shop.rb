@@ -214,12 +214,11 @@ class Shop
   end
   
   def send_coupon(user_id)
-    return if $redis.zrange("ckin#{self.id.to_i}", 0, -1).include?(user_id.to_s)
     coupons = []
-    Coupon.gen_demo(self.id) if self.latest_coupons.empty? && (ENV["RAILS_ENV"] != "production" )
     coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
-    Shop.find(self.id).sub_shops.each{|shop| coupons += shop.checkin_eday_coupons.to_a }
-
+    unless $redis.zrange("ckin#{self.id.to_i}", 0, -1).include?(user_id.to_s)
+      sub_shops.each{|shop| coupons += shop.checkin_eday_coupons.to_a }
+    end
     coupons.each{|coupon| coupon.send_coupon(user_id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)

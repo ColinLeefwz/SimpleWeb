@@ -14,6 +14,8 @@ class ShopFaq
 
   mount_uploader(:img, FaqImgUploader)
   
+  index({sid: 1, od:1})
+  
   
   def self.img_url(id,type=nil)
     if type
