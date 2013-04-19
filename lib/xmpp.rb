@@ -2,9 +2,10 @@
 
 class Xmpp
 
-  def self.chat(from,to,msg)
+  def self.chat(from,to,msg, id=nil)
     msg2 = CGI.escapeHTML(msg)
-    "<message id='#{$uuid.generate}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat'><body>#{msg2}</body></message>"
+    mid = id.nil?? $uuid.generate : id
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat'><body>#{msg2}</body></message>"
   end
   
   #发送个人聊天消息
@@ -12,9 +13,10 @@ class Xmpp
     RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.chat(from,to,msg)) 
   end
   
-  def self.gchat(from,to,msg)
+  def self.gchat(from,to,msg, id=nil)
     msg2 = CGI.escapeHTML(msg)
-    "<message id='#{$uuid.generate}' to='#{to}@dface.cn' from='#{from.to_i}@c.dface.cn' type='groupchat'><body>#{msg2}</body></message>"
+    mid = id.nil?? $uuid.generate : id
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from.to_i}@c.dface.cn' type='groupchat'><body>#{msg2}</body></message>"
   end 
   
   #在聊天室发送系统消息
@@ -22,9 +24,10 @@ class Xmpp
     RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat(from,to,msg)) 
   end
 
-  def self.gchat2(from,room,to,msg)
+  def self.gchat2(from,room,to,msg, id=nil)
     msg2 = CGI.escapeHTML(msg)
-    "<message id='#{$uuid.generate}' to='#{to}@dface.cn' from='#{room.to_i}@c.dface.cn/#{from}' type='groupchat'><body>#{msg2}</body></message>"
+    mid = id.nil?? $uuid.generate : id
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{room.to_i}@c.dface.cn/#{from}' type='groupchat'><body>#{msg2}</body></message>"
   end 
   
   #在聊天室以特定用户身份发消息
