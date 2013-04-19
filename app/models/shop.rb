@@ -10,6 +10,7 @@ class Shop
   include SearchScore
   include Mongoid::Document
   extend Similarity
+  extend GpsOffset
   
   field :_id, type: Integer
   field :pass
@@ -274,7 +275,13 @@ class Shop
     ban && ban.users.to_a.index(uid)
   end
 
-  
+  def lob_to_lo
+    Shop.lob_to_lo self.lob
+  end
+
+  def lo_to_lob
+    Shop.lo_to_lob self.lo
+  end
 
   def get_city
     rl = lo || lob_to_lo
@@ -291,26 +298,6 @@ class Shop
   def self.get_city_mongo(loc)
     shop = Shop.only(:city).where({lo:{'$near' => loc,'$maxDistance' => 0.1}, city:{'$exists' => true}}).first
     shop.nil?? nil : shop.city
-  end
-
-  def self.lob_to_lo(lob)
-    return lob if ENV["RAILS_ENV"] != "production"
-    tmp = Mongoid.session(:dooo)[:offsetbaidus].where({loc: {'$near' => lob}}).first
-    [lob[0]-tmp['d'][0],lob[1]-tmp['d'][1]];
-  end
-
-  def self.lo_to_lob(lo)
-    return lo if ENV["RAILS_ENV"] != "production"
-    tmp = Mongoid.session(:dooo)[:offsetbaidus].where({loc:{'$near' => lo}}).first
-    [lo[0]+tmp['d'][0], lo[1]+tmp['d'][1] ];
-  end
-  
-  def lob_to_lo
-    Shop.lob_to_lo self.lob
-  end
-
-  def lo_to_lob
-    Shop.lo_to_lob self.lo
   end
 
   def gchat

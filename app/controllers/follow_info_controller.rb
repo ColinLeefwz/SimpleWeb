@@ -13,6 +13,10 @@ class FollowInfoController < ApplicationController
   
   def friends
     who = UserFollow.find_by_id(params[:id])
+    if who.nil?
+      render :json => [].to_json
+      return
+    end
     users = who.follows.map {|x| User.find_by_id(x) }
     users.delete(nil)
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
@@ -21,6 +25,10 @@ class FollowInfoController < ApplicationController
   
   def good_friends
     who = UserFollow.find_by_id(params[:id])
+    if who.nil?
+      render :json => [].to_json
+      return
+    end
     users = who.follows.map {|x| User.find_by_id(x) }
     users.delete(nil)
     users.delete_if {|x| !x.friend?(who.id)}
