@@ -27,7 +27,7 @@ class CouponDown
   end
    
   def message
-    s = "[优惠券:#{coupon.name}:#{shop.name}:#{coupon.id}:#{dat.strftime('%Y-%m-%d %H：%M')}"
+    s = "[优惠券:#{coupon.name}:#{shop.name}:#{id}:#{dat.strftime('%Y-%m-%d %H：%M')}"
     s += ":#{coupon.hint}" if coupon.hint
     s += "]"
     s
