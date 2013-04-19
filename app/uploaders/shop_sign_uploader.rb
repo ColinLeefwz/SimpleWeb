@@ -1,12 +1,16 @@
 # encoding: utf-8
 
 class ShopSignUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MimeTypes
+
   storage :aliyun
  
   def aliyun_bucket
     return "lianlian" if ENV["RAILS_ENV"] == "production"
-    return "lianlian_test"
+    return "coupon_test"
   end
+
+  process :set_content_type
 
   def store_dir
     "#{model.id}"
