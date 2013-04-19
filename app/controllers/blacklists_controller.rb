@@ -1,5 +1,5 @@
 class BlacklistsController < ApplicationController
-  before_filter :user_login_filter, :except => [:index]
+  before_filter :user_login_filter #, :except => [:index]
   before_filter :user_is_session_user, :except => [:index]
 
   def index
