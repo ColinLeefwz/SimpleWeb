@@ -15,7 +15,7 @@ class InitController < ApplicationController
       ip = $web_ip
     end
     if params[:os][0,7].downcase=="android"
-      ver = 1.44
+      ver = 0.4
     else
       ver = 1.4
     end
