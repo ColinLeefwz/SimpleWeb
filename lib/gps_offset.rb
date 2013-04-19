@@ -30,7 +30,7 @@ module GpsOffset
   
   def lo_to_lob(lo)
     data = get_lo_offset(lo)
-    [lob[0]+data[0],lob[1]+data[1]]
+    [lo[0]+data[0],lo[1]+data[1]]
   end
 
   
