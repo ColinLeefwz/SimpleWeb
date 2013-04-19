@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class InitController < ApplicationController
   def init
     hash = Digest::SHA1.hexdigest("#{params[:model]}#{params[:os]}#{params[:mac]}init")[0,32]
@@ -13,10 +15,25 @@ class InitController < ApplicationController
       ip = $web_ip
     end
     if params[:os][0,7].downcase=="android"
-      ver = 1.41
+      ver = 1.44
     else
       ver = 1.4
     end
     render :json => {ip: ip, xmpp: $xmpp_ip , ver:ver }.to_json
   end
+  
+  $ios = [
+          ["2.0.0","界面全新改版",false],
+          ["2.0.1","聊天室发图增加了分享到微信朋友圈和微信好友功能\n界面美化，更美观更清新",true]
+         ]
+  $android = []
+  
+  def upgrade
+    if params[:os][0,7].downcase=="android"
+      render :json => []
+    else
+      render :json => $ios[-1].to_json
+    end
+  end
+  
 end

@@ -29,7 +29,9 @@
 
 \newpage
 
-\section{初始化}
+\section{初始化与升级}
+\subsection{初始化}
+
 手机应用启动后，初次访问时调用此API。
 \begin{table}[H]
    \begin{center}
@@ -75,6 +77,37 @@ hash的计算方式为：model+os+mac+"init"进行SHA1算法后取前32位，和
 本API的作用一个是给客户端推荐IP地址，一个是统计应用的开机情况和操作系统分布。
 
 TODO: android
+
+\subsection{获得最新的升级信息}
+
+如果客户端判断出版本不是最新的，调用本接口获得最新的升级信息。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{https://42.121.79.210/init/upgrade} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ os  & 字符串 & 必须 &  手机操作系统版本\\
+ \hline
+ ver  & 字符串 & 必须 &  客户端软件版本\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+返回值：
+["2.0.1","聊天室发图增加了分享到微信朋友圈和微信好友功能\n界面美化，更美观更清新",true]
+
+分别代表：最新的软件版本、功能介绍、是否强制升级。
+
+如果不强制升级，那么弹出升级对话框时有两个选择：立即升级／暂不升级。
+
+如果强制升级，那么弹出升级对话框时只有一个选择：立即升级。强制升级用于发生不兼容改动时。
+\end{verbatim}
+
 
 
 \input{./login.tex}
