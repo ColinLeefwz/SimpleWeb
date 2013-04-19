@@ -15,7 +15,7 @@ class CouponTest < ActionDispatch::IntegrationTest
     post "/shop_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "rulev"=>""}}
     assert_redirected_to(:controller => 'shop_login', :action => 'login' )
     #未登录发布分享优惠券
-    post "/shop_coupons/create2",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "rulev"=>""}}
+    post "/shop_share_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "rulev"=>""}}
     assert_redirected_to(:controller => 'shop_login', :action => 'login' )
 
     #登录
@@ -95,16 +95,16 @@ class CouponTest < ActionDispatch::IntegrationTest
     ############################################################################################
     #分享类优惠券发布
     #图文模式发布可以不上传图片
-    post "/shop_coupons/create2",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "text"=>"好"}}
+    post "/shop_share_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "text"=>"好"}}
     coupon = assigns[:coupon]
     assert_redirected_to :action => :show, :id => assigns[:coupon].id
     assert_equal Coupon.count, 5
     #分享类只能发布一张有效的
     #***** 发布图文
-    post "/shop_coupons/create2",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "text"=>"好"}}
+    post "/shop_share_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "text"=>"好"}}
     assert_equal flash[:notice], "该商家已有一张未停用分享类优惠券."
     #***** 发布全图
-    post "/shop_coupons/create2", {"coupon"=>{"t"=>"2", "name"=>"", "rule"=>"0", "text"=>""}}
+    post "/shop_share_coupons/create", {"coupon"=>{"t"=>"2", "name"=>"", "rule"=>"0", "text"=>""}}
     assert_equal flash[:notice], "该商家已有一张未停用分享类优惠券."
     assert_equal Coupon.count, 5
 
@@ -112,11 +112,11 @@ class CouponTest < ActionDispatch::IntegrationTest
     coupon.delete
     assert_equal Coupon.count, 4
     #全图模式必须上传图片
-    post "/shop_coupons/create2", {"coupon"=>{"t"=>"2", "name"=>"", "rule"=>"0", "text"=>""}}
+    post "/shop_share_coupons/create", {"coupon"=>{"t"=>"2", "name"=>"", "rule"=>"0", "text"=>""}}
     assert_equal flash[:notice], "请上传图片."
-    assert_template "create2"
+    assert_template "create"
     assert_equal Coupon.count, 4
-    post "/shop_coupons/create2", {"coupon"=>{"t"=>"2", "name"=>"", "rule"=>"0", "text"=>"", "img2" => Rack::Test::UploadedFile.new(IMG, "image/jpeg")}}
+    post "/shop_share_coupons/create", {"coupon"=>{"t"=>"2", "name"=>"", "rule"=>"0", "text"=>"", "img2" => Rack::Test::UploadedFile.new(IMG, "image/jpeg")}}
     assert_redirected_to :action => :show, :id => assigns[:coupon].id
     assert_equal Coupon.count, 5
 
@@ -131,7 +131,7 @@ class CouponTest < ActionDispatch::IntegrationTest
     post "/shop_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"2首次签到", "desc"=>"点此输入描述", "rule"=>"2", "rulev"=>"","img2" => Rack::Test::UploadedFile.new(IMG, "image/jpeg")}}
     assert_equal Coupon.count, 7
     #分享类
-    post "/shop_coupons/create2",{"coupon"=>{"t"=>"1", "name"=>"2分享优惠", "desc"=>"点此输入描述", "rule"=>"0", "text"=>"好","img2" => Rack::Test::UploadedFile.new(IMG, "image/jpeg")}}
+    post "/shop_share_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"2分享优惠", "desc"=>"点此输入描述", "rule"=>"0", "text"=>"好","img2" => Rack::Test::UploadedFile.new(IMG, "image/jpeg")}}
     assert_equal Coupon.count, 8
 
     ############################################################################
@@ -143,7 +143,7 @@ class CouponTest < ActionDispatch::IntegrationTest
     post "/shop_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"2", "rulev"=>"","img2" => Rack::Test::UploadedFile.new(IMG, "image/jpeg")}}
     assert_equal Coupon.count, 10
     #分享类
-    post "/shop_coupons/create2",{"coupon"=>{"t"=>"1", "name"=>"111分享优惠", "desc"=>"点此输入描述", "rule"=>"0", "text"=>"好","img2" => Rack::Test::UploadedFile.new(IMG, "image/jpeg")}}
+    post "/shop_share_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"111分享优惠", "desc"=>"点此输入描述", "rule"=>"0", "text"=>"好","img2" => Rack::Test::UploadedFile.new(IMG, "image/jpeg")}}
     assert_equal Coupon.count, 11
 
 
