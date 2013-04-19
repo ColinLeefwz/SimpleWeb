@@ -4,13 +4,14 @@ class CouponsController < ApplicationController
   before_filter :user_login_filter, :only => :use
 
   def img
-    cp = Coupon.find(params[:id][0,24])
-    if cp.downed(session[:user_id]).nil?
+    cpd = CouponDown.find(params[:id][0,24])
+    cp = cpd.coupon
+    if cpd.uid != session[:user_id]
       render :json => {error: "你没有获取到过这张优惠券"}.to_json
       return
     end
     if cp.t2==2 && cp.img.url.nil?
-      path = cp.gen_share_coupon_img_by_user(session_user)
+      path = cpd.gen_share_coupon_img
       redirect_to path
       return
     end
@@ -22,7 +23,7 @@ class CouponsController < ApplicationController
   end
   
   def use
-    Coupon.find(params[:id][0,24]).use(session[:user_id])
+    CouponDown.find(params[:id][0,24]).use(session[:user_id])
     render :json => {used: params[:id]}.to_json
   end
   
