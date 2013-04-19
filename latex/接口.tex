@@ -552,6 +552,46 @@ POST & \multicolumn{3}{|c|}{/checkins/new\_shop} \\
 
 
 
+\subsection{签到时输入地点名称查找地点}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/add\_search} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+\hline
+ sname  & 字符串 & 必须 &  商家的全称\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+定位时，如果在滚轮中找不到商家，在输入商家名称时查询本接口给用户提供实时匹配的可选择地点。
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+
+curl /shop/add_search?lat=30.28&lng=120.108&accuracy=100&sname=新村
+
+返回值：
+
+[{"id":10443603,"name":"高教新村"},{"id":10428968,"name":"古荡新村"}]
+
+\end{verbatim}
+\end{figure}
+
+
 \subsection{获得当前登录用户的足迹}
 
 \begin{table}[H]
