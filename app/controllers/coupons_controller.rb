@@ -23,7 +23,7 @@ class CouponsController < ApplicationController
   end
   
   def use
-    CouponDown.find(params[:id][0,24]).use(session[:user_id])
+    CouponDown.find(params[:id][0,24]).use(session[:user_id],params[:data])
     render :json => {used: params[:id]}.to_json
   end
   
