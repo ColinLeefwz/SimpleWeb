@@ -31,6 +31,19 @@ class ShopController < ApplicationController
     render :json =>  shops.map {|s| s.safe_output_with_users}.to_json
   end
   
+  #签到时输入地点名称查找地点
+  def add_search
+    if params[:sname].nil? || params[:sname].length>4
+      render :json => [].to_json
+      return
+    end
+    lo = [params[:lat].to_f, params[:lng].to_f]
+    radis = 0.001 + params[:sname].length*0.0005
+    shops = Shop.where({lo:{"$within" => {"$center" => [lo,radis]}}, name:/#{params[:sname]}/}).limit(10)
+    render :json =>  shops.map {|s| {id:s.id,name:s.name} }.to_json
+  end
+
+  
   def users
     shop = Shop.find_by_id(params[:id])
     page = params[:page].to_i
