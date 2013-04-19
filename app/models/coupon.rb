@@ -34,6 +34,8 @@ class Coupon
   #  field :endt, type:DateTime
   field :rule #0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。
   field :rulev #1每日前几名签到优惠的数量;3常客累计满多少次签到优惠的数量。
+  field :hint  #优惠券使用时的要求输入信息的消费提示
+  
   field :img
   mount_uploader :img, CouponUploader
   field :img_tmp

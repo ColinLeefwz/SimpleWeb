@@ -27,7 +27,10 @@ class CouponDown
   end
    
   def message
-    "[优惠券:#{coupon.name}:#{shop.name}:#{id}:#{dat.strftime('%Y-%m-%d %H：%M')}]"
+    s = "[优惠券:#{coupon.name}:#{shop.name}:#{id}:#{dat.strftime('%Y-%m-%d %H：%M')}"
+    s += ":#{coupon.hint}" if coupon.hint
+    s += "]"
+    s
   end
   
   def self.download(coupon, user_id, photo_id=nil, sid = nil)
@@ -42,9 +45,11 @@ class CouponDown
     cpdown.gen_share_coupon_img if photo_id
   end
   
-  def use(user_id)
+  def use(user_id, data)
     raise "你没有获取这张优惠券" if self.uid!=user_id
-    self.update_attribute(:uat, Time.now)
+    self.uat = Time.now
+    self.data = data if data
+    self.save!
   end
   
   def gen_share_coupon_img

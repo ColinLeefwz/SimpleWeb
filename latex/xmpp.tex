@@ -79,11 +79,13 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 当用户使用脸脸时，比如签到／摇一摇等，可以收到商家推送过来的优惠券。优惠券也是一个xmpp消息，其中的body内容格式为：
 
 \begin{verbatim}
-[优惠券:$name:$shop:$id:$time]
+[优惠券:$name:$shop:$id:$time:$hint]
 
  其中，name是优惠券的名称、shop是商家的名称，id是该优惠券的id，time是该张优惠券的下发时间。
  
- 同一张id的优惠券，如果time不同的话，分开显示和使用。
+ hint是可选的，表示使用优惠券时的提示语言，比如“请输入此次的消费金额”。有hint的优惠券使用时要求用户输入内容才能使用优惠券。内容默认是数字。
+ 
+优惠券id不重复。如果有重复的优惠券id时代表消息重发了，此时要忽略这条消息。
  
  所有优惠券都统一显示在会话中的“优惠券”文件夹中。优惠券的消息状态和其他消息同样处理。
 \end{verbatim}
@@ -120,6 +122,8 @@ POST & \multicolumn{3}{|c|}{/coupons/use} \\
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
  \  id  & 字符串 & 必填 &  该优惠券的id  \\
+ \hline
+ \  data  & 字符串 & 可选 &  优惠券使用时填写的信息  \\
 \hline
 \end{tabular}
    \end{center}
@@ -127,7 +131,7 @@ POST & \multicolumn{3}{|c|}{/coupons/use} \\
 
 优惠券的使用要保证只能点击一次，使用后就灰掉，不需要等待服务器端的返回结果。如果网络不通或者服务器端失败，要以一定的策略重试。
 
-
+当优惠券有hint字段时，使用时带上消费者输入的data。
 
 \input{./xmpp_web.tex}
 
