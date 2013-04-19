@@ -250,7 +250,7 @@ POST & \multicolumn{3}{|c|}{/photos/hidecomment} \\
 点评隐藏后只有点评的发布者一人能够看到。
 
 
-\subsection{获得当前登录用户的照片墙}
+\subsection{我的照片墙}
 用户的照片墙由其本人在各个现场照片墙发布的照片组成。
 
 \begin{table}[H]
@@ -273,6 +273,27 @@ GET & \multicolumn{3}{|c|}{/photos/me} \\
 商家照片墙中包含user\_name，指明该照片是谁发的。
 用户照片墙中包含shop\_name，指明该照片是在哪儿拍摄的。
 
+
+\subsection{我的评论}
+获得当前登录用户的评论的照片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photos/my\_comments} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出格式同上。
 
 
 \subsection{查看其它用户的照片墙}
