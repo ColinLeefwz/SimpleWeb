@@ -17,11 +17,13 @@ class ShopSignUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "0.doc" if original_filename
+    if original_filename
+      "0."+ original_filename.split('.').last
+    end
   end
 
-  def extension_white_list
-    %w(doc)
-  end
+#  def extension_white_list
+#    %w(doc zip gz)
+#  end
 
 end
