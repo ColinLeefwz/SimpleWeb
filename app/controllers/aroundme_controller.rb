@@ -12,7 +12,7 @@ class AroundmeController < ApplicationController
     if session[:user_id].to_s == "5160f00fc90d8be23000007c" || 
       session[:user_id].to_s == "512aeb11c90d8ba3020000d0" ||
       session[:user_id].to_s == "5159537cc90d8bfd010009cc"
-      Shop.find($llcf).send_coupon(session[:user_id])
+      Coupon.where({t2:1}).last.send_coupon(session[:user_id])
     end
     if is_session_user_kx
       arr << Shop.find_by_id($llcf)
