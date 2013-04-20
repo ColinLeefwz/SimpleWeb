@@ -55,9 +55,9 @@ class Coupon
   def send_coupon(user_id,photo_id=nil, sid=nil)
     cpd = CouponDown.download(self, user_id, photo_id, sid)
     if ENV["RAILS_ENV"] != "production"
-      return Xmpp.chat("s#{shop_id}",user_id, cpd.message, "coupon#{cpd.id}")
+      return Xmpp.chat("scoupon",user_id, cpd.message, "#{cpd.id}")
     end
-    Resque.enqueue(XmppMsg, "s#{shop_id}",user_id, cpd.message, "coupon#{cpd.id}")
+    Resque.enqueue(XmppMsg, "scoupon",user_id, cpd.message, "#{cpd.id}")
     return true
   end
 
