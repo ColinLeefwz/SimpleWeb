@@ -5,8 +5,7 @@ class UserInfoController < ApplicationController
   before_filter :user_login_filter, :except => [:photos, :logo ]
   
   def get
-    user = User.find_by_id(params[:id])
-    render :json => user.output_with_relation(session[:user_id]).to_json
+    render :json => user_info_cache(params[:id],session[:user_id])
   end
   
   def logo
@@ -78,6 +77,13 @@ class UserInfoController < ApplicationController
       else
         render :json => {:error => "update user info failed"}.to_json
       end
+    end
+  end
+  
+  private
+  def user_info_cache(uid,vid)
+    Rails.cache.fetch("#{uid}#{vid}", :expires_in => 12.hours) do
+      User.find_by_id(uid).output_with_relation(vid).to_json
     end
   end
   

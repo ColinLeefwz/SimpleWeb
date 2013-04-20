@@ -63,9 +63,8 @@ class User
   
   #是否屏蔽user_id（该用户的最后出现位置，以及在商家用户列表中找到）
   def block?(user_id)
-    #return true if self.invisible==2
+    return true if self.invisible==2 && !self.friend?(user_id)
     return true if black?(user_id)
-    #return true if self.invisible==1 && !( self.friend?(user_id) or self.follower?(user_id))
     return false
   end
   
@@ -168,7 +167,7 @@ class User
     return {:last => ""} if loc.nil?
     diff = Time.now.to_i - loc.cati
     tstr = User.time_desc(diff)
-    dstr = Shop.find_by_id(loc.sid).name if dstr.nil?
+    dstr = Shop.find_by_id(loc.sid).name
     {:last => "#{tstr} #{dstr}"}
   end
   

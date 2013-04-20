@@ -72,7 +72,10 @@ Nginx使用默认安装，启动在80端口。
 2. 每个商家累计的用户总数／女性用户总数。用户总数的key为“suac商家id”。用户总数的计算方法为：昨天累计用户总数（来自mongodb）＋今天新增用户数（来自redis实时统计）。见CheckinShopStat.rb中的相关方法。
 3. Resque的异步任务。
 4. 登录用户的新浪微博token。
-5. Rails框架的session和cache数据。
+5. 经纬度到城市的映射数据, 见gen_gps_city.rb。
+
+
+Rails框架的session和cache数据保存在Memcache中，不保存在redis中。
  
  
  
