@@ -82,7 +82,7 @@ class UserInfoController < ApplicationController
   
   private
   def user_info_cache(uid,vid)
-    Rails.cache.fetch("#{uid}#{vid}", :expires_in => 12.hours) do
+    Rails.cache.fetch("UI#{uid}#{vid}", :expires_in => 12.hours) do
       User.find_by_id(uid).output_with_relation(vid).to_json
     end
   end
