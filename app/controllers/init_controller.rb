@@ -14,12 +14,17 @@ class InitController < ApplicationController
     else
       ip = $web_ip
     end
+    if "502e6303421aa918ba000001" == session[:user_id].to_s
+      xmpp = $xmpp_ips[3]
+    else
+      xmpp = $xmpp_ip
+    end
     if params[:os][0,7].downcase=="android"
       ver = 0.4
     else
       ver = 1.4
     end
-    render :json => {ip: ip, xmpp: $xmpp_ip , ver:ver }.to_json
+    render :json => {ip: ip, xmpp: xmpp , ver:ver }.to_json
   end
   
   $ios = [
