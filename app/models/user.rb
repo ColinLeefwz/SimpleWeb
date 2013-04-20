@@ -164,15 +164,29 @@ class User
   def last_location( user_id )
     return {:last => "隐身"} if block?(user_id)
     loc = last_loc
-    return {:last => ""} if loc.nil?
-    diff = Time.now.to_i - loc.cati
+    return {:last => ""} if loc.size==0
+    diff = Time.now.to_i - loc[0]
     tstr = User.time_desc(diff)
-    dstr = Shop.find_by_id(loc.sid).name
+    dstr = loc[1]
     {:last => "#{tstr} #{dstr}"}
   end
   
+  def write_lat_loc(checkin)
+    ret = [checkin.cati, checkin.shop.name]
+    Rails.cache.write("LASTL:#{self.id}", ret)
+    ret
+  end
+
   def last_loc
-    loc = Checkin.where({uid:self._id}).sort({_id:1}).last
+    Rails.cache.fetch("LASTL:#{self.id}") do
+      last_loc_no_cache
+    end
+  end
+    
+  def last_loc_no_cache
+    ck = Checkin.where({uid:self._id}).sort({_id:1}).last
+    ck = [] if ck.nil?
+    write_lat_loc(ck)
   end
   
   def relation_hash( user_id )
