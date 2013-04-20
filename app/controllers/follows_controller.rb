@@ -8,8 +8,7 @@ class FollowsController < ApplicationController
     uf.add_to_set(:follows, Moped::BSON::ObjectId(params[:follow_id]))
     uf.del_my_cache
     Rails.cache.delete("UI#{params[:follow_id]}#{session[:user_id]}")
-    loc = user.last_loc
-    Resque.enqueue(FollowNotice, user, params[:follow_id], loc.nil?? "" : Shop.find_by_id(loc.sid).name )
+    Resque.enqueue(FollowNotice, user, params[:follow_id], user.last_loc[1] )
     render:json => {:saved => params[:follow_id] }.to_json
   end
 
