@@ -21,7 +21,19 @@ class CouponsController < ApplicationController
       redirect_to cp.img.url(:t1)
     end
   end
-  
+
+  def delivered
+    cp = CouponDown.find(params[:id][0,24])
+    cp.update_attribute(:sat, Time.now) unless cp.sat
+    render :json => {recv: params[:id]}.to_json
+  end
+
+  def displayed
+    cp = CouponDown.find(params[:id][0,24])
+    cp.update_attribute(:vat, Time.now) unless cp.vat
+    render :json => {display: params[:id]}.to_json
+  end
+      
   def use
     CouponDown.find(params[:id][0,24]).use(session[:user_id],params[:data])
     render :json => {used: params[:id]}.to_json

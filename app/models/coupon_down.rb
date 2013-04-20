@@ -7,8 +7,8 @@ class CouponDown
   field :sid, type: Integer #商家
   field :uid, type: Moped::BSON::ObjectId #用户
   field :dat, type: DateTime  #下载时间
-  #field :sat, type: DateTime #收到时间
-  #field :vat, type: DateTime #查看时间
+  field :sat, type: DateTime #收到时间
+  field :vat, type: DateTime #查看时间
   field :uat, type: DateTime  #使用时间
   field :photo_id, type: Moped::BSON::ObjectId # 分享类优惠券的分享图片id
   field :sub_sid, type: Integer #获得主店分享类优惠券时，实际分享发生的分店id
