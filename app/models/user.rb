@@ -172,7 +172,11 @@ class User
   end
   
   def write_lat_loc(checkin)
-    ret = [checkin.cati, checkin.shop.name]
+    if checkin.nil?
+      ret = []
+    else
+      ret = [checkin.cati, checkin.shop.name]
+    end
     Rails.cache.write("LASTL:#{self.id}", ret)
     ret
   end
@@ -185,7 +189,6 @@ class User
     
   def last_loc_no_cache
     ck = Checkin.where({uid:self._id}).sort({_id:1}).last
-    ck = [] if ck.nil?
     write_lat_loc(ck)
   end
   
