@@ -15,4 +15,18 @@ class UserFollow
     uf
   end
   
+  def self.add(uid,fid)
+    uf = UserFollow.find_or_new(uid)
+    uf.add_to_set(:follows, fid)
+    uf.del_my_cache
+    Rails.cache.delete("UI#{fid}#{uid}")
+  end
+  
+  def self.del(uid,fid)
+    uf = UserFollow.find(uid)
+    uf.pull(:follows,fid)
+    uf.del_my_cache
+    Rails.cache.delete("UI#{fid}#{uid}")
+  end
+  
 end
