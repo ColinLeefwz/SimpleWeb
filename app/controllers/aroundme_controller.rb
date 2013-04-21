@@ -11,6 +11,7 @@ class AroundmeController < ApplicationController
     record_gps(lo)
     if session[:user_id].to_s == "5160f00fc90d8be23000007c" || 
       session[:user_id].to_s == "512aeb11c90d8ba3020000d0" ||
+      session[:user_id].to_s == "502e6303421aa918ba000001" ||      
       session[:user_id].to_s == "5159537cc90d8bfd010009cc"
       Coupon.where({t2:1}).last.send_coupon(session[:user_id])
     end
@@ -78,37 +79,12 @@ class AroundmeController < ApplicationController
     lo = [params[:lat].to_f , params[:lng].to_f]
     city = Shop.get_city(lo)
     sex = session_user.gender
-    if sex==1
-      sex=2
-    else
-      sex=1
-    end
-    arr = hot_users_cache(city,sex,skip,pcount)
-    users = []
-    arr.each do |user,shop,cati| 
-      next if shop.nil?
-      next if user.forbidden?
-      next if user.invisible.to_i>=2
-      # next if user.block?(session[:user_id])
-      next if user.id.to_s=="51145007c90d8b056a000796" #马甲Keri Choo	
-      hash = user.safe_output(session[:user_id])
-      diff = Time.now.to_i - cati
-      tstr = User.time_desc(diff)
-      hash.merge!({location: "#{tstr} #{shop.name}"})
-      users << hash
-      break if users.size>=pcount
-    end
-    render :json => users.to_json
+    users = hot_users_cache(city,sex,skip,pcount)
+    render :json => users.map{|u| u.safe_output_with_location(session[:user_id])}.to_json
   end
   
   private 
-  
-  def user_to_score(uc)
-    return uc*3 if(uc<=10) 
-    return 75 if(uc>100) 
-    return 30+(uc-10)/2
-  end
-  
+
   def record_gps(lo)
     hash = {uid:session[:user_id], lo:lo, acc:params[:accuracy]}
     hash.merge!(bssid:params[:bssid]) if params[:bssid]
@@ -117,27 +93,31 @@ class AroundmeController < ApplicationController
   end
   
   def hot_user_cache_key(city,sex,skip,pcount)
-    "HOTU#{city}#{sex}#{skip}#{pcount}#{Date.today.to_s}"
+    "HOTU#{city}#{sex}#{skip}#{pcount}"
   end
   
   def hot_users_no_cache(city,sex,skip,pcount)
-    ckins = Checkin.where({city: city, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2).to_a
-    if ckins.size==0
-      ckins = Checkin.where({city: {"$ne" => city}, sex:sex, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*3).limit(pcount*2).to_a
+    sex==1? sexa=2 : sexa=1
+    sex==1? sexb=1 : sexb=2 
+    uids = $redis.zrevrange("HOT#{sexa}U#{city}",skip,skip+pcount-1)
+    diff = uids.size-pcount
+    if diff>0
+     uids += $redis.zrevrange("HOT#{sexb}U#{city}",skip,skip+diff-1)
     end
-    ckins = ckins.uniq!{|x| x.uid}
-    ckin2 = Checkin.where({city: city, sex:{"$ne" => sex}, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*2).limit(pcount*2).to_a
-    if ckin2.size==0
-      ckin2 = Checkin.where({city: {"$ne" => city}, sex:{"$ne" => sex}, sid:{"$ne" => $llcf}}).sort({_id:-1}).skip(skip*3).limit(pcount*2).to_a
+    diff = uids.size-pcount
+    if diff>0
+      if city.length>1
+        uids += $redis.zrevrange("HOT#{sexa}U",skip,skip+diff-1)
+      else
+        uids += $redis.zrevrange("HOT#{sexa}U010",skip,skip+diff-1) 
+      end
     end
-    ckin2 = ckin2.uniq!{|x| x.uid}
-    ckins = ckins + ckin2
-    arr = ckins.map{|c| [c.user,c.shop,c.cati]}
-    arr
+    users = uids.map{|id| User.find_by_id(id)}.find_all{|x| x != nil}
+    users
   end
   
   def hot_users_cache(city,sex,skip,pcount)
-    Rails.cache.fetch(hot_user_cache_key(city,sex,skip,pcount)) do 
+    Rails.cache.fetch(hot_user_cache_key(city,sex,skip,pcount), :expires_in => 60.minutes) do 
       hot_users_no_cache(city,sex,skip,pcount)
     end
   end
