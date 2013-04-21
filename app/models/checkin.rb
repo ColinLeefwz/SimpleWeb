@@ -139,4 +139,16 @@ LUA
     end
   end
   
+  def Checkin.init_city_redis
+    Checkin.where({}).sort({_id:1}).each do |ck|
+      ck.add_city_redis
+    end
+  end
+  
+  def add_city_redis
+    x = self.sex
+    x = 1 if x!=2
+    $redis.zadd("HOT#{x}U#{self.city}",self.cati, self.uid)
+  end
+  
 end

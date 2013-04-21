@@ -118,6 +118,7 @@ class CheckinsController < ApplicationController
       end
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     end    
+    checkin.add_city_redis
     new_user_nofity(checkin)
     checkin
   end
