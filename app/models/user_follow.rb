@@ -5,7 +5,7 @@ class UserFollow
   field :follows, type:Array #关注
   
   def self.find_or_new(uid)
-    uf = UserFollow.find(uid)
+    uf = UserFollow.find_by_id(uid)
     if uf.nil?
       uf = UserFollow.new
       uf.id = uid
