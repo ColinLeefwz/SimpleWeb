@@ -190,6 +190,7 @@ class Oauth2Controller < ApplicationController
         pass = pass[0..-66]
       end
       user = User.find_by_id(params["name"])
+      user = User.find_primary(params["name"]) if user.nil?
       if user.password == pass
 	      logger.warn "token:#{ptoken}"
         if ptoken && (user.tk.nil? || user.tk[0] != ptoken[0])
