@@ -131,6 +131,10 @@ class LocateTest < ActiveSupport::TestCase
     assert s0[2] > s1[2]
   end
   
+  def test_wifi_aboard
+    Shop.new.find_shops([ 33.665527, -112.581947 ], 100, "" , nil ,true)
+  end
+    
   
   def test_shop_similar
     #21612350	赛百味锦绣天地店 10442749	锦绣天地
