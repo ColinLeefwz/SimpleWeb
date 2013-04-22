@@ -5,7 +5,7 @@ class AdminUserAddShopsController < ApplicationController
   layout "admin"
 
   def index
-    hash = {creator: {"$ne" => nil}}
+    hash = {_id:{"$gt" => 21000000}, creator: {"$ne" => nil}}
     case params[:t].to_s
     when ''
       hash.merge!({t: nil})
