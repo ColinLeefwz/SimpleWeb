@@ -1,4 +1,4 @@
-<div class="title2"><h2>最新下载记录</h2></div>
+<div class="title2"><h2><%= params[:cid].blank? ? "最新" : "'#{Coupon.find_by_id(params[:cid]).try(:name)}'" %>下载记录</h2></div>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
     <th width="35%" align="left" colspan="2">优惠券</th>
@@ -8,19 +8,18 @@
     <th width="10%" align="center">微博</th>
     <th align="center">下载时间</th>
   </tr>
-  
+
   <% @downs.each do |down| %>
     <tr>
-      <% user = User.find_by_id(down[0]); coupon = Coupon.find(down[2])  %>
-      <td width="10%"><%=image_tag coupon.img.try(:url,:t1), :class=>"imgs4" %></td>
-      <td valign="center"><%= coupon.name %>
-	  <span class="gray f12">（<%= coupon.show_t2 %>）</span>
-	  </td>
-      <td><%= user.try(:name)  %></td>
-      <td align="center"><%= img_gender(user.gender)  %></td>
-      <td align="center"><%= age(user.birthday.try(:to_date)) %></td>
-      <td align="center"><%= link_to '微博',user.try(:weibo_home) %></td>
-      <td align="center"><%= down[1].localtime.strftime("%Y-%m-%d %H:%M") %></td>
+      <td width="10%"><%=image_tag down.coupon_img.try(:url,:t1), :class=>"imgs4" %></td>
+      <td valign="center"><%= down.coupon_name %>
+        <span class="gray f12">（<%= down.coupon_show_t2 %>）</span>
+      </td>
+      <td><%= down.user_name  %></td>
+      <td align="center"><%= img_gender(down.user_gender)  %></td>
+      <td align="center"><%= age(down.user_birthday.try(:to_date)) %></td>
+      <td align="center"><%= link_to '微博',down.user_weibo_home %></td>
+      <td align="center"><%= down.dat.since(8.hours).strftime("%Y-%m-%d %H:%M") %></td>
     </tr>
   <% end %>
 </table>
