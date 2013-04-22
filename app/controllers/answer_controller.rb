@@ -29,8 +29,10 @@ class AnswerController < ApplicationController
       want(uid,int)
     elsif  txt=="?" || txt=="？"
       faq(uid)
-    elsif txt.size<3
+    elsif txt.bytesize<=3
       help_msg(uid)
+    else
+      Resque.enqueue(XmppMsg, uid,User.first.id,":反馈："+txt)
     end
     render :text => "1"
   end
