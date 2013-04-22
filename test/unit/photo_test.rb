@@ -18,13 +18,15 @@ class PhotoTest < ActiveSupport::TestCase
 
   test "#send_coupon 分享优惠券, 匹配关键字发送。" do
     photo = Photo.create!({:user_id => User.first.id, :room => 1, :desc => '我们一起分享吧'})
-    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e6', photo.send_coupon
+    message = photo.send_coupon
+    assert_match "优惠券:测试分享优惠券:测试1:#{CouponDown.last.id.to_s}", message
   end
 
   test "#send_coupon 分享优惠券, 优惠券关键字是空，发送。" do
     photo = Photo.create!({:user_id => User.first.id, :room => 1, :desc => '我们一起分享吧'})
     photo.shop.share_coupon.unset(:text)
-    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e6', photo.send_coupon
+    message = photo.send_coupon
+    assert_match "优惠券:测试分享优惠券:测试1:#{CouponDown.last.id.to_s}", message
   end
 
   test "#send_coupon 每天只能发送一次" do
@@ -34,7 +36,8 @@ class PhotoTest < ActiveSupport::TestCase
     coupon = Coupon.find('507fc5bfc9ad42d756a412e5')
     CouponDown.delete_all
     CouponDown.create!(:cid => coupon.id, :uid => User.first.id, :dat => 1.days.ago)
-    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e5', photo.send_coupon
+    message = photo.send_coupon
+    assert_match "优惠券:测试分享优惠券:测试1:#{CouponDown.last.id.to_s}", message
     assert_equal photo.send_coupon, nil
     photo1 = Photo.create!({:user_id => User.first.id, :room => 1, :desc => '我们一起分享吧'})
     assert_equal photo1.send_coupon, nil
@@ -56,11 +59,13 @@ class PhotoTest < ActiveSupport::TestCase
     photo = Photo.create!({:user_id => User.first.id, :room => 111, :desc => '我们一起分享吧'})
     coupon = Coupon.find('507fc5bfc9ad42d756a412e5')
     CouponDown.delete_all
-    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e5', photo.send_pshop_coupon[1]
+    message = photo.send_pshop_coupon[1]
+    assert_match "优惠券:测试分享优惠券:测试1:#{CouponDown.last.id.to_s}", message
     assert CouponDown.last.dat.to_date == Time.now.to_date && CouponDown.last.sub_sid.to_i == 111
     assert_equal photo.send_coupon, nil
     CouponDown.last.update_attribute(:dat, 1.days.ago )
-    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e5', photo.send_pshop_coupon[1]
+    message = photo.send_pshop_coupon[1]
+    assert_match "优惠券:测试分享优惠券:测试1:#{CouponDown.last.id.to_s}",message
     assert_equal CouponDown.where({cid: '507fc5bfc9ad42d756a412e5', sub_sid: 111}).to_a.length, 2
     assert_equal photo.send_coupon, nil
     photo1 = Photo.create!({:user_id => User.first.id, :room => 111, :desc => '我们一起分享吧'})
@@ -73,7 +78,8 @@ class PhotoTest < ActiveSupport::TestCase
     photo = Photo.create!({:user_id => User.first.id, :room => 111, :desc => '我们一起分享吧'})
     coupon = Coupon.find('507fc5bfc9ad42d756a412e6')
     CouponDown.delete_all
-    assert_match '优惠券:测试分享优惠券:测试1:507fc5bfc9ad42d756a412e6', photo.send_pshop_coupon[1]
+    message = photo.send_pshop_coupon[1]
+    assert_match "优惠券:测试分享优惠券:测试1:#{CouponDown.last.id.to_s}", message
     assert CouponDown.last.dat.to_date == Time.now.to_date && CouponDown.last.sub_sid.to_i == 111
     assert_equal photo.send_coupon, nil
     CouponDown.create!(cid: '507fc5bfc9ad42d756a412e6', uid: User.first.id, dat: 1.days.ago, sub_sid: 111 )
