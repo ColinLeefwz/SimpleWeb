@@ -142,19 +142,15 @@ class ShopCouponsController < ApplicationController
   end
 
   def newly_down
-    down = []
-    Coupon.where({:shop_id => session[:shop_id]}).each do |coupon|
-      down += coupon.users.map{|m| [m['id'], m['dat'], coupon.id]} unless coupon.users.blank?
-    end
-    @downs = paginate_arr(down.sort_by { |d| d[1]  }.reverse, params[:page],10 )
+    hash, sort = {:sid => session[:shop_id]}, {_id: -1}
+    hash.merge!(:cid => params[:cid]) unless params[:cid].blank?
+    @downs = paginate("CouponDown", params[:page], hash, sort)
   end
 
   def newly_use
-    use = []
-    Coupon.where({:shop_id => session[:shop_id]}).each do |coupon|
-      use += coupon.users.select { |s| s['uat'] }.map{|m| [m['id'], m['uat'], coupon.id]} unless coupon.users.blank?
-    end
-    @uses = paginate_arr(use.sort_by { |s| s[1] }.reverse, params[:page],10 )
+    hash, sort = {:sid => session[:shop_id], :uat =>{'$ne' => nil}  }, {uat: -1}
+    hash.merge!(:cid => params[:cid]) unless params[:cid].blank?
+    @uses = paginate("CouponDown", params[:page], hash, sort)
   end
 
   def users

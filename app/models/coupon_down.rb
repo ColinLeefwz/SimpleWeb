@@ -13,11 +13,21 @@ class CouponDown
   field :photo_id, type: Moped::BSON::ObjectId # 分享类优惠券的分享图片id
   field :sub_sid, type: Integer #获得主店分享类优惠券时，实际分享发生的分店id
   field :data #消费时输入的数据，可以是消费金额／手机号码／服务员编号等
-  
+
+  with_options :prefix => true, :allow_nil => true do |option|
+    option.delegate :name, :gender, :birthday, :weibo_home, :to => :user
+    option.delegate :name, :to => :shop
+    option.delegate :img, :name, :show_t2,  :to => :coupon
+  end
+
   index({cid: 1, uid:1})
   
   def shop
     Shop.find_by_id(sid)
+  end
+
+  def user
+    User.find_by_id(uid)
   end
   
   def coupon
