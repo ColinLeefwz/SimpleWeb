@@ -98,7 +98,7 @@ class CheckinsController < ApplicationController
     checkin.ip = real_ip
     send_all_notice_msg shop
     checkin.save!
-    session_user.write_lat_loc(checkin)
+    session_user.write_lat_loc(checkin, shop.name)
     if new_shop
       str = "欢迎！您是第1个来到#{shop.name}的脸脸。置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。"
       Resque.enqueue(XmppNotice, shop.id, params[:user_id], str)
