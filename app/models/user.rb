@@ -171,11 +171,12 @@ class User
     {:last => "#{tstr} #{dstr}"}
   end
   
-  def write_lat_loc(checkin)
+  def write_lat_loc(checkin, shop_name=nil)
+    shop_name = checkin.shop.name if shop_name.nil?
     if checkin.nil?
       ret = []
     else
-      ret = [checkin.cati, checkin.shop.name]
+      ret = [checkin.cati, shop_name]
     end
     Rails.cache.write("LASTL:#{self.id}", ret)
     ret
