@@ -16,9 +16,8 @@ class CouponTest < ActiveSupport::TestCase
     user = User.find('502e6303421aa918ba000005')
     coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
     assert_equal coupon.allow_send_checkin?(user._id.to_s), true
-    checkin1 = Checkin.create!(uid: user._id, sid: coupon.shop_id)
-    checkin1.add_to_redis
-    assert_equal coupon.allow_send_checkin?('502e6303421aa918ba000005'), nil
+    CouponDown.download(coupon, user.id)
+    assert_equal coupon.allow_send_checkin?('502e6303421aa918ba000005'), false
   end
 
   test "#allow_send_checkin? 规则是每日前2名签到优惠，第三个用户签到不能发优惠券 " do
@@ -40,7 +39,7 @@ class CouponTest < ActiveSupport::TestCase
     coupon = Coupon.find('507fc5bfc9ad42d756a412e3')
     assert_equal coupon.allow_send_checkin?(user._id), true
     CouponDown.download(coupon, user.id)
-    assert_equal coupon.allow_send_checkin?(user._id), nil
+    assert_equal coupon.allow_send_checkin?(user._id), false
   end
 
   test "#allow_send_checkin? 规则是累计签到三天， 第三天签到才可以发优惠券。超过部分不发" do
@@ -48,16 +47,16 @@ class CouponTest < ActiveSupport::TestCase
     coupon = Coupon.find('507fc5bfc9ad42d756a412e4')
     #添加一个当前之前的签到
     Checkin.mongo_session['checkins'].insert(_id: "502e6303421aa918ba00007c".__mongoize_object_id__,uid: user._id, sid: coupon.shop_id)
-    assert_equal coupon.allow_send_checkin?(user._id), nil
+    assert_equal coupon.allow_send_checkin?(user._id), false
     Checkin.mongo_session['checkins'].insert(_id: "502d6303421aa918ba00007c".__mongoize_object_id__,uid: user._id, sid: coupon.shop_id)
-    assert_equal coupon.allow_send_checkin?(user._id), nil
+    assert_equal coupon.allow_send_checkin?(user._id), false
     Checkin.mongo_session['checkins'].insert(_id: "502d6303421aa918ba000071".__mongoize_object_id__,uid: user._id, sid: coupon.shop_id)
-    assert_equal coupon.allow_send_checkin?(user._id), nil
+    assert_equal coupon.allow_send_checkin?(user._id), false
     Checkin.create(uid: user._id, sid: coupon.shop_id)
     assert_equal coupon.allow_send_checkin?(user._id), true
     #优惠券只能下载一个
     CouponDown.download(coupon, user.id)
-    assert_equal coupon.allow_send_checkin?(user._id), nil
+    assert_equal coupon.allow_send_checkin?(user._id), false
   end
 
 
