@@ -23,13 +23,13 @@
       <td><%=image_tag coupon.img.url(:t1), :class=>"imgs4" %></td>
       <td valign="center"><%= coupon.name %></td>
       <td class="gray" align="center"><%= coupon.show_t2  %></td>
-      <td align="center"><%= link_to coupon.users.to_a.count, {:action => 'users', :id => coupon.id, :flag => 'down'} %></td>
-      <td align="center"><%= link_to coupon.users.to_a.count{|s| s['uat']},{:action => 'users', :id => coupon.id, :flag => 'use'} %></td>
+      <td align="center"><%= link_to coupon.down_users.to_a.count, {:action => 'newly_down', :cid => coupon.id} %></td>
+      <td align="center"><%= link_to coupon.use_users.to_a.count,{:action => 'newly_use', :cid => coupon.id} %></td>
       <td align="center" class="plr0">
         <%= link_to '详情', shop_coupon_path(coupon) %>
       </td>
       <td align="center" class="plr0">
-        <%=link_to '编辑', edit_shop_coupon_path(coupon) if coupon.users.blank? && coupon.hidden !=1 %>
+        <%=link_to '编辑', edit_shop_coupon_path(coupon) if coupon.down_users.blank? && coupon.hidden !=1 %>
       </td>
       <td align="center" class="plr0">
         <% if coupon.hidden == 1 %>
@@ -39,7 +39,7 @@
         <% end %>
       </td>
       <td align="center" class="plr0">
-        <%= (link_to '删除', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')") if coupon.users.blank? %>
+        <%= (link_to '删除', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')") if coupon.down_users.blank? %>
       </td>
     </tr>
 
