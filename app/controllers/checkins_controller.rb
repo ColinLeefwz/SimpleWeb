@@ -15,11 +15,15 @@ class CheckinsController < ApplicationController
       return
     end
     if params[:sname][0,3]=="@@@" #测试人员输入商家id模拟签到
-      unless is_session_user_kx
+      shop = Shop.find_by_id(params[:sname][3..-1])
+      if shop.nil? 
+        render :json => {error: "地点不存在：params[:sname][3..-1]"}.to_json
+        return
+      end      
+      if shop.nil? is_session_user_kx
         render :json => {error: "没权限创建：params[:sname]"}.to_json
         return
       end
-      shop = Shop.find(params[:sname][3..-1])
       params[:shop_id] = shop.id
       params[:bssid] = nil
       do_checkin(shop,true)
