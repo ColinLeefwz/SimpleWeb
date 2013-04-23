@@ -133,6 +133,7 @@ class LocateTest < ActiveSupport::TestCase
   
   def test_wifi_aboard
     Shop.new.find_shops([ 33.665527, -112.581947 ], 100, "" , nil ,true)
+    Shop.new.find_shops([ 43.841984, -79.398109 ], 100, "" , nil ,true)
   end
     
   
