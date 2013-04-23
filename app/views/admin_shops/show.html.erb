@@ -1,6 +1,7 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
 <h1>商家详情</h1>
 <style>
-  p a{padding-left: 15px; }
+  p a{padding-left: 15px;  }
 </style>
 <p>
 
@@ -9,6 +10,24 @@
   <%= link_to('加权', "/admin_shops/upgrade_v?id=#{@shop.id}") %>
   <%= link_to('编辑', "/admin_shops/edit?id=#{@shop.id}") %>
   <%= link_to('标记删除', "/admin_shops/del?id=#{@shop.id}") %>
+  <br/>
+  <br/>
+
+  <%  if @shop.seller  %>
+    <%= "已绑定销售人员: #{@shop.seller_name} #{@shop.seller_show_gender}" %>
+    <%= link_to('重新绑定销售人员', '#', :onclick => 'show_sell();', :class => "aSeller") %>
+  <% end %>
+
+<div id="sellContainer" style="display: <%= @shop.seller ? "none" : '' %>">
+  <%= link_to('绑定销售人员', "#", :onclick => 'show_sell();', :class => "aSeller") %>
+  <span id="seller" style="display: none ">
+    用户id: <%= text_field_tag :uid, '', :id => "uid", :onblur => 'user_info($(this).val())'  %>
+    <span id="show_info"></span>
+    <input type="button" value="提交" onclick ="submitSell('<%=@shop.id %>')" />
+  </span>
+</div>
+
+
 </p>
 <p>
   <b>商家id:</b>
@@ -84,3 +103,23 @@
 <%= link_to '查看', "/admin_shops/gchat?sid=#{@shop.id.to_i}"  %>
 </p>
 -->
+
+<script type="text/javascript">
+  function show_sell(){
+    $('.aSeller').css("display","none")
+    $('#seller').css("display","inline")
+    $('#sellContainer').css("display","block")
+  }
+
+  function user_info(uid){
+    $.get("/admin_users/get_info", {id : uid}, function(data){
+      str = "<span id='show_info'>" + data['info'] +"</span>"
+      $('#show_info').replaceWith(str)
+    })
+  }
+  function submitSell(sid){
+    $.get('/admin_shops/bindsell', {sid: sid, uid: $('#uid').val()}, function(data){
+      $('#sellContainer').replaceWith(data['text'])
+    })
+  }
+</script>
