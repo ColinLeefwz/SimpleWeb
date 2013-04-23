@@ -157,6 +157,7 @@ class User
     hash = self.attr_with_id
     hash.delete("password")
     hash.delete("follows")
+    hash.delete("wb_uid") if self.wb_hidden
     #TODO: 性能优化
     hash.merge!( head_logo_hash).merge!( relation_hash(user_id) )
     hash.merge!(last_location(user_id))
