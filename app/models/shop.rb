@@ -41,6 +41,10 @@ class Shop
   index({password: 1},{ sparse: true })
   index({v: 1},{ sparse: true })  
   index({city: 1, utotal:-1})
+
+  with_options :allow_nil => true, :prefix => true do |option|
+    option.delegate :name, :show_gender, :to => :seller
+  end
   
   after_find do |obj|
     obj._id = obj._id.to_i
@@ -74,6 +78,10 @@ class Shop
   
   def photo_count
     Photo.where({room: self.id.to_i.to_s}).count
+  end
+
+  def seller
+    User.find_by_id(seller_id)
   end
 
   def user
