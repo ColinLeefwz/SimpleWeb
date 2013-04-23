@@ -7,6 +7,8 @@ db.checkins.insert({
     'od' :1
 })
 
+
+
 db.checkins.insert({ 
     "_id" : ObjectId("50598b371d41c8c11a000002"),
     "uid" : ObjectId("502e6303421aa918ba00007c"),
@@ -37,4 +39,12 @@ db.checkins.insert({
     "ip" : "192.168.1.4",
     "sid" : 1,
     'od' :2
+})
+
+db.checkins.insert({
+    "_id" : ObjectId("50598b371d41c8c11a000011"),
+    "uid" : ObjectId("502e6303421aa918ba000005"),
+    "ip" : "192.168.1.1",
+    "sid" : 2,
+    'od' :1
 })
