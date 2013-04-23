@@ -20,7 +20,7 @@ class CheckinsController < ApplicationController
         render :json => {error: "地点不存在：params[:sname][3..-1]"}.to_json
         return
       end      
-      if shop.nil? is_session_user_kx
+      if session[:user_id].to_s != shop.seller_id.to_s && !is_session_user_kx
         render :json => {error: "没权限创建：params[:sname]"}.to_json
         return
       end
