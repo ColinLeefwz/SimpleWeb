@@ -29,6 +29,7 @@ class Shop
   field :d, type:Integer #降权
   field :v, type:Integer #加权
   field :creator, type: Moped::BSON::ObjectId #该地点的创建者
+  field :seller_id, type: Moped::BSON::ObjectId #负责该地点销售的人员
 
 
   validates_confirmation_of :password
@@ -79,6 +80,11 @@ class Shop
     return if self.creator.blank?
     user = User.find_by_id(self.creator)
   end
+
+  def seller
+    User.find_by_id(self.seller_id)
+  end
+
 
   #删除商家.
   def shop_del
