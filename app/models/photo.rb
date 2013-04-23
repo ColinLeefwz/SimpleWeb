@@ -57,8 +57,8 @@ class Photo
     else
       str = "我刚刚用\#脸脸\#分享了一张图片:\n#{desc2} 我在\##{shop.name}\#\n(脸脸下载地址: http://www.dface.cn/a?v=3 )"
     end
-    shop_wb = BindWb.wb_name(room)
-    str += "@#{shop_wb}" if shop_wb
+    #shop_wb = BindWb.wb_name(room)
+    #str += "@#{shop_wb}" if shop_wb
     Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
   end
   
