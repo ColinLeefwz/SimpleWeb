@@ -1,3 +1,4 @@
+# encoding: utf-8
 class AdminUsersController < ApplicationController
   include Paginate
   before_filter :admin_authorize
@@ -35,6 +36,11 @@ class AdminUsersController < ApplicationController
   def logos
     user = User.find(params[:id])
     @logos = user.user_logos
+  end
+
+  def get_info
+    user = User.find_by_id(params[:id])
+    render :json => {'info' => user ? "#{user.name} #{user.show_gender}" : "找不到该用户."}
   end
 
   def follows
