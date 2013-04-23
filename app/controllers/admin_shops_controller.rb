@@ -226,6 +226,14 @@ class AdminShopsController < ApplicationController
     redirect_to :action => :index
   end
 
+  def bindsell
+    shop = Shop.find(params[:sid])
+    user = User.find(params[:uid])
+    shop.update_attribute(:seller_id, user.id)
+    render :json => {'text' => "已绑定销售人员: #{user.name} #{user.show_gender}"}
+  rescue
+    render :json => {'text' => '绑定销售人员失败'}
+  end
 
 
   def ajaxdel
