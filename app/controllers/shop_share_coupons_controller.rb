@@ -13,7 +13,6 @@ class ShopShareCouponsController < ApplicationController
   # GET /coupons/1
   # GET /coupons/1.json
   def show
-    puts "----------"*20
     @coupon = Coupon.find_primary(params[:id])
   end
 
