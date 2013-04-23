@@ -7,6 +7,7 @@ class User
   field :wb_vs # 微博认证说明
   field :wb_name
   field :wb_g, type: Integer
+  field :wb_hidden, type:Boolean
   field :name # 昵称，最多10个字符
   field :gender, type: Integer #性别
   field :birthday #生日
@@ -142,7 +143,8 @@ class User
   end
   
   def safe_output(uid=nil)
-    hash = self.attributes.slice("name", "signature", "wb_uid", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
+    hash = self.attributes.slice("name", "signature", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
+    hash.merge!({"wb_uid" => self.wb_uid}) unless self.wb_hidden
     hash.merge!({qq_openid: self.qq}) if self.qq
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
