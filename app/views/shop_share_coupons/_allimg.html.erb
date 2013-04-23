@@ -17,6 +17,10 @@
       <%= f.select :rule, [['每日分享优惠', 0],['首次分享优惠',1]] %>
     </li>
     <li>
+      <label id="lt">消费提示&nbsp;&nbsp;</label>
+      <%= f.text_field :hint, :class => "txt l"%>
+    </li>
+    <li>
       <label id="lt">关键字&nbsp;&nbsp;</label>
       <%= f.text_field :text, :class => "txt l"%><input type="submit" value="发 布" class="btn1 l ml20 mt5"/>
     </li>
