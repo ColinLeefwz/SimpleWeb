@@ -70,7 +70,7 @@ module ApplicationHelper
   end
 
   def generate_paginate3
-    return '' if @page==1 && @colls.length < @pcount
+    return '' if @page==1 && @colls.to_a.length < @pcount
     html = "<form methods='get' action='#{url_for(request.params)}'>"
     html += %q(<div class="pagination r">)
     html += link_to "首页",request.params.merge!(:page => 1),:class => "prev_page"  if @page != 1
