@@ -6,6 +6,7 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
 
   test "添加，删除，查看好友(粉丝)" do
     reload('users.js')
+    UserFollow.delete_all
     reload('user_follows.js')    
     clear_cache_all(User)
     luser = User.find('502e6303421aa918ba000005')
@@ -21,7 +22,7 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     assert_equal JSON.parse(response.body), {"saved"=>"502e6303421aa918ba00007c"}
     assert luser.reload.friend?(user1.id)
     assert_equal User.find_by_id("502e6303421aa918ba000005").follows,
-       User.find("502e6303421aa918ba000005").follows
+      User.find("502e6303421aa918ba000005").follows
     assert user1.follower?(luser.id)
 
     #未登录添加好友
@@ -60,14 +61,16 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     get "/follow_info/friends?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","last"=>"10+ days 测试1"}]
+    data.map{|m| m.delete('last'); m}
+    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
 
     #登录好友列表
     login(luser.id)
     get "/follow_info/friends?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","last"=>"10+ days 测试1"}]
+    data.map{|m| m.delete('last'); m}
+    assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
 
     #登录添加再添加一个好友
     logout
