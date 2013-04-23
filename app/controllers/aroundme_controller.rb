@@ -80,7 +80,19 @@ class AroundmeController < ApplicationController
     city = Shop.get_city(lo)
     sex = session_user.gender
     users = hot_users_cache(city,sex,skip,pcount)
-    render :json => users.map{|u| u.safe_output_with_location(session[:user_id])}.to_json
+    ret = users.map do |u| 
+      hash = u.safe_output_with_location(session[:user_id])
+      last = hash[:last].split()
+      if last.size>=3
+        time = last[0]+" "+last[1]
+      else
+        time = "1 day"
+      end
+      Rails.logger.info time
+      hash.merge!({time: time})
+      hash
+    end
+    render :json => ret.to_json
   end
   
   private 
