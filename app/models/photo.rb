@@ -130,7 +130,8 @@ class Photo
   end
 
   def output_hash_with_shopname
-    output_hash.merge!( {shop_name: shop.name} )
+    shopname = shop.nil?? "" : shop.name
+    output_hash.merge!( {shop_name: shopname} )
   end  
   
   def add_to_checkin
