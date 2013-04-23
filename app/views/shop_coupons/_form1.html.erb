@@ -1,13 +1,20 @@
 <ul class="formlist" class="mt0">
+
   <li>
     <label>使用规则&nbsp;&nbsp;</label>
     <%= f.select :rule, [['每日签到优惠', 0],['每日前几名签到优惠',1],['新用户首次签到优惠', 2],["累计签到优惠", 3]],{}, {:class => "p2 l", :onchange => "show_rulev($(this).val())"} %>
-    
-    <input type="submit" value="发 布" class="btn1 ml20 l" id="btnn3" style="display:<%= [1,3].include?(@coupon.rule.to_i) ? 'none' : '' %>" />
+
   </li>
+  
   <li id="rulev" style="display:<%= [1,3].include?(@coupon.rule.to_i) ? '' : 'none' %>">
     <label id="lt"><%= rulev_lable(@coupon.rule.to_i) %></label>
-    <%= f.text_field :rulev, :class => "inputs l"%><input type="submit" value="发 布" class="btn1 ml20 l"/>
+    <%= f.text_field :rulev, :class => "txt l"%>
+  </li>
+  
+  <li>
+    <label id="lt">消费提示&nbsp;&nbsp;</label>
+    <%= f.text_field :hint, :class => "txt l"%>
+    <input type="submit" value="发 布" class="btn1 ml20 l"/>
   </li>
 </ul>
 
@@ -16,7 +23,7 @@
     if(rv == '1' || rv == '3')
     { 
       $('#rulev').css("display","block");
-      lt = rv == '1' ? '前几名：' : "累计次数：";
+      lt = rv == '1' ? '前几名&nbsp;&nbsp;' : "累计次数&nbsp;&nbsp;";
       $('#lt').replaceWith('<label id="lt">' + lt + '</label>');
       $("#btnn3").css("display","none");
     }
