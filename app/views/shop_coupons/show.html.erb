@@ -13,7 +13,7 @@
       <span class="right" style="width: 300px;"><%= @coupon.name%></span>
     </li>
   <% end  %>
-    
+
   <li>
     <span style="width: 100px;">使用规则:</span>
     <span class="right" style="width: 300px;"><%= @coupon.show_rule%></span>
@@ -25,6 +25,10 @@
       <span class="right"><%= @coupon.rulev%></span>
     </li>
   <%  end %>
+  <li>
+    <span style="width: 100px;">消费提示:</span>
+    <span class="right" style="width: 300px;"><%= @coupon.hint%></span>
+  </li>
 
 </ul>
 

@@ -16,6 +16,9 @@
       <li>
         <label>关键字：</label><span class="right"><%= @coupon.text %></span>
       </li>
+      <li>
+        <label>消费提示：</label><span class="right" style="width: 220px"><%= @coupon.hint %></span>
+      </li>
     </ul>
   </div>
 <%else%>
@@ -25,16 +28,21 @@
   <ul class="formlist">
     <% if @coupon.t == 2 %>
       <li>
-        <span>标题:</span>
+        <label>标题:</label>
         <span class="right" style="width: 300px;"><%= @coupon.name%></span>
       </li>
     <% end  %>
 
     <li>
-      <span>规则：</span><span class="right" style="width: 120px"><%= @coupon.show_rule2 %></span>
+      <label>规则:</label>
+      <span class="right" style="width: 120px"><%= @coupon.show_rule2 %></span>
     </li>
     <li>
-      <span>关键字：</span><span class="right"><%= @coupon.text %></span>
+      <label>关键字:</label>
+      <span class="right"><%= @coupon.text %></span>
+    </li>
+    <li>
+      <label>消费提示:</label><span class="right" style="width: 220px"><%= @coupon.hint %></span>
     </li>
   </ul>
   <div class="clear1"></div>
