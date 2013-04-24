@@ -30,6 +30,10 @@ class BindWb
     Shop.find(self._id)
   end
 
+  def weibo_home
+    "http://www.weibo.com/#{wb_uid}" if wb_uid
+  end
+
 
 
   def self.find2(id)
