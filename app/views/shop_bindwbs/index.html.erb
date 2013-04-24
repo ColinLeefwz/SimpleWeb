@@ -25,43 +25,44 @@
           <%= f.text_field :login_name, :class => "inputs" %>
           <span class="words">(如:lianlian@126.com)</span>
         </td>
-    </tr>
-    <tr>
-      <td  width="11%">(微博)uid</td>
-      <td>
-        <%= f.text_field :wb_uid, :class => "inputs" %>
-        <span class="words">(如:123456. 来自:http://weibo.com/u/123456)</span>
-      </td>
-    </tr>
+      </tr>
+      <tr>
+        <td  width="11%">(微博)uid</td>
+        <td>
+          <%= f.text_field :wb_uid, :class => "inputs" %>
+          <span class="words">(如:123456. 来自:http://weibo.com/u/123456)</span>
+        </td>
+      </tr>
 
-    <tr>
-      <td  width="11%">(微博)昵称</td>
-      <td>
-        <%= f.text_field :name, :class => "inputs" %>
-        <span class="words">(如: 脸脸)</span>
-      </td>
-    </tr>
+      <tr>
+        <td  width="11%">(微博)昵称</td>
+        <td>
+          <%= f.text_field :name, :class => "inputs" %>
+          <span class="words">(如: 脸脸)</span>
+        </td>
+      </tr>
 
-    <tr>
-      <td colspan="2">
-        <br/>
-        <input type="submit" value="提 交" class="btn3 ml50 l"/></td>
-    </tr>
+      <tr>
+        <td colspan="2">
+          <br/>
+          <input type="submit" value="提 交" class="btn3 ml50 l"/></td>
+      </tr>
     </table>
   <%  end %>
 
 <%  else %>
   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab" >
     <tr style="border-bottom: 0px">
-      <th width="30%" align="left">微博id</th>
-      <th width="30%" align="left">登录名</th>
-      <th width="30%" align="left">微博昵称</th>
-      <th width="30%" align="left">操作</th>
+      <th width="20%" align="left">微博id</th>
+      <th width="20%" align="left">登录名</th>
+      <th width="20%" align="left" >微博昵称</th>
+      <th width="10%" align="center" colspan="2">操作 </th>
     </tr>
     <tr>
       <td><%= @bind_wb.wb_uid %></td>
       <td><%= @bind_wb.login_name %></td>
       <td><%= @bind_wb.name %></td>
+      <td><%= link_to '微博', @bind_wb.weibo_home,  :target => 'blank'  %></td>
       <td><%= link_to '解除', '/shop_bindwbs/del', :onclick => "return confirm_del()"  %></td>
     </tr>
   </table>
