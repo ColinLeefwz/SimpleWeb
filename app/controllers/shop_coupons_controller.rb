@@ -60,6 +60,7 @@ class ShopCouponsController < ApplicationController
   # POST /coupons
   # POST /coupons.json
   def create
+    params[:coupon].delete("hint") if params[:hintv] == '0' #使用流程选0， hint = nil
     @coupon = Coupon.new(params[:coupon])
     @coupon.shop_id = session[:shop_id]
     @coupon.t2 = 1
@@ -122,6 +123,7 @@ class ShopCouponsController < ApplicationController
     end
    
     if @coupon.update_attributes(params[:coupon])
+      @coupon.unset(:hint) if params[:hintv] == '0' #使用流程选0， hint = nil
       @coupon.gen_img if @coupon.t.to_i == 1
       redirect_to :action => :show, :id => @coupon.id
     else
