@@ -31,11 +31,13 @@ class InitController < ApplicationController
           ["2.0.0","界面全新改版",false],
           ["2.0.1","聊天室发图增加了分享到微信朋友圈和微信好友功能\n界面美化，更美观更清新",true]
          ]
-  $android = []
+  $android = [
+    ["0.5","重大功能调整",true]    
+  ]
   
   def upgrade
     if params[:os][0,7].downcase=="android"
-      render :json => []
+      render :json => $android[-1].to_json
     else
       render :json => $ios[-1].to_json
     end
