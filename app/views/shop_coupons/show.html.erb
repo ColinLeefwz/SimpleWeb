@@ -9,26 +9,32 @@
 <ul class="formlist">
   <% if @coupon.t == 2 %>
     <li>
-      <span style="width: 100px;">标题:</span>
+      <span style="width: 160px;">标题:</span>
       <span class="right" style="width: 300px;"><%= @coupon.name%></span>
     </li>
   <% end  %>
 
   <li>
-    <span style="width: 100px;">使用规则:</span>
+    <span style="width: 160px;">发放规则:</span>
     <span class="right" style="width: 300px;"><%= @coupon.show_rule%></span>
   </li>
 
   <% if [1,3].include?(@coupon.rule.to_i) %>
     <li>
-      <span style="width: 100px;"><%= rulev_lable(@coupon.rule.to_i) %></span>
+      <span style="width: 160px;"><%= rulev_lable(@coupon.rule.to_i) %></span>
       <span class="right"><%= @coupon.rulev%></span>
     </li>
   <%  end %>
   <li>
-    <span style="width: 100px;">消费提示:</span>
-    <span class="right" style="width: 300px;"><%= @coupon.hint%></span>
+    <span style="width: 160px;">使用流程:</span>
+    <span class="right" style="width: 400px;"><%= ['展示优惠券，点击后既代表使用了','展示优惠券，点击后按要求输入内容，然后确定使用'][@coupon.hint.blank? ? 0 : 1] %></span>
   </li>
+  <% unless @coupon.hint.blank? %>
+    <li>
+      <span style="width: 160px;">使用时输入内容的提示:</span>
+      <span class="right" style="width: 300px;"><%= @coupon.hint%></span>
+    </li>
+  <% end %>
 
 </ul>
 
