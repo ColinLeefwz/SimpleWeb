@@ -6,13 +6,7 @@
       <%=  image_tag(@coupon.img) %>
     </div>
   </div>
-  <ul class="formlist" class="mt0">
-    <li>
-      <label>标题&nbsp;&nbsp;</label>
-      <%= f.text_field :name, :class => 'txt'  %>
-    </li>
-  </ul>
-  <%= render :partial => 'form1', :locals => {:f => f}  %>
+  <%= render :partial => 'form1', :locals => {:f => f, :s => true}  %>
 <% end %>
 
 <%= link_to '返回列表', '/shop_coupons', :class=>"btn6 r" %>

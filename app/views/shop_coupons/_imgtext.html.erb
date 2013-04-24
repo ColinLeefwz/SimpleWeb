@@ -8,7 +8,7 @@
       <%= f.text_area :desc, :value => @coupon.desc || '点此输入描述', :class => 'atxt'%>
     </div>
   </div>
-  <%= render :partial => 'form1', :locals => {:f => f}  %>
+  <%= render :partial => 'form1', :locals => {:f => f, :s => false}  %>
 </div>
 <script>
 $(document).ready(function(){
