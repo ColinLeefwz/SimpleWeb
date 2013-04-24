@@ -65,8 +65,26 @@ class ShopController < ApplicationController
     page = 1 if page==0
     pcount = 5 if pcount==0
     skip = (page-1)*pcount
-    photos = Photo.where({room:params[:id]}).sort({updated_at: -1}).skip(skip).limit(pcount)
+    photos = shop_photo_cache(params[:id], skip, pcount)
     render :json => photos.map {|p| p.output_hash_with_username }.to_json
   end
+  
+  def shop_photo_cache_key(sid,skip,pcount)
+    "SP#{sid}-#{pcount}"
+  end
+  
+  def shop_photo_cache(sid,skip,pcount)
+    if skip>0
+      return shop_photo_no_cache(sid,skip,pcount)
+    end
+    Rails.cache.fetch(shop_photo_cache_key(sid,skip,pcount)) do
+      shop_photo_no_cache(sid,skip,pcount)
+    end
+  end
+  
+  def shop_photo_no_cache(sid,skip,pcount)
+    Photo.where({room:params[:id]}).sort({updated_at: -1}).skip(skip).limit(pcount).to_a
+  end
+
 
 end
