@@ -73,10 +73,26 @@ Nginx使用默认安装，启动在80端口。
 3. Resque的异步任务。
 4. 登录用户的新浪微博token。
 5. 经纬度到城市的映射数据, 见gen_gps_city.rb。
+6. Rails框架的session数据
+7. 每个城市分性别最新用户签到有序集合："HOT#{x}U#{self.city}".
 
 
-Rails框架的session和cache数据保存在Memcache中，不保存在redis中。
- 
+###Memcache
+
+	使用默认安装： apt-get install memcache
+	配置文件：/etc/memcached.conf 
+	需要修改的设置： -m 512 -l 10.200.141.172
+	
+Memcache中保存的数据：
+
+1. 所有对象的单个find_by_id缓存: "#{self.class.name}#{_id}"
+2. 商家信息缓存："views/SI#{c.params[:id]}"
+3. 注册流程中查看附近的用户缓存：:cache_path => Proc.new { |c| c.params }
+4. 查看热点用户缓存："HOTU#{city}#{sex}#{skip}#{pcount}", :expires_in => 60.minutes
+5. 查看个人信息时的缓存："UI#{uid}#{vid}", :expires_in => 12.hours
+6. 用户头像列表缓存："ULOGOS#{uid}"
+7. 用户最后出现的地点缓存："LASTL:#{self.id}"
+
  
  
 ###Ruby和Rails
