@@ -1,3 +1,4 @@
+# encoding: utf-8
 class QqInfo
   include Mongoid::Document
   store_in session: "dooo"
@@ -7,7 +8,7 @@ class QqInfo
   def self.insert_info(user)
     token = $redis.get("qqtoken#{user.id}")
     openid = user.qq
-    return if (info = get_info(token, openid)).nil? || info['ret'] < 0
+    return if (info = get_info(token, openid)).nil? || info['ret'] != 0
     self.collection.insert({_id: openid, data: info['data']})
   end
 
