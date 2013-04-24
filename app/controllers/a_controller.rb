@@ -10,6 +10,10 @@ class AController < ApplicationController
     render :file => "~/lianlian/public/mini.html", :use_full_path => true 
   end
   
+  def down
+    redirect_to "http://oss.aliyuncs.com/dface/dface.apk"
+  end
+  
   def xmpp_test
     begin
       Xmpp.test
