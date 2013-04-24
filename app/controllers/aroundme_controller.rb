@@ -88,7 +88,6 @@ class AroundmeController < ApplicationController
       else
         time = "1 day"
       end
-      Rails.logger.info time
       hash.merge!({time: time})
       hash
     end
