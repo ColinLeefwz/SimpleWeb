@@ -37,6 +37,7 @@ class ShopShareCouponsController < ApplicationController
   end
 
   def create
+    params[:coupon].delete("hint") if params[:hintv] == '0' #使用流程选0， hint = nil
     @coupon = Coupon.new(params[:coupon])
     @coupon.shop_id = session[:shop_id]
     @coupon.t2 = 2
@@ -87,6 +88,7 @@ class ShopShareCouponsController < ApplicationController
     end
    
     if @coupon.update_attributes(params[:coupon])
+      @coupon.unset(:hint) if params[:hintv] == '0' #使用流程选0， hint = nil
       if @coupon.t.to_i == 1
         @coupon.gen_img if !@coupon.img.blank? || !@coupon.img2.blank?
       end
