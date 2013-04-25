@@ -79,6 +79,8 @@ class User
     self.pcount=0
     self.save!
     self.del_my_cache
+    Rails.cache.delete "ULOGOS#{self.id}"
+    Rails.cache.delete "LASTL:#{self.id}"
     RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
   end
   
