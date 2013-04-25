@@ -5,7 +5,7 @@ class AdminShopCouponsController < ApplicationController
   
   def index
     hash = {}
-    sort = {}
+    sort = {_id: -1}
     if !params[:shop].blank? && !params[:city].blank?
       sids = Shop.where({name: /#{params[:shop]}/, city: params[:city]}).map { |m| m._id  }
       hash.merge!(shop_id: {'$in' => sids})
