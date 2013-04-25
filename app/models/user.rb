@@ -195,6 +195,7 @@ class User
     
   def last_loc_no_cache
     ck = Checkin.where({uid:self._id}).sort({_id:1}).last
+    return nil if ck.nil?
     write_lat_loc(ck)
   end
   
