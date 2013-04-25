@@ -93,6 +93,7 @@ Memcache中保存的数据：
 6. 用户最后出现的地点缓存："LASTL:#{self.id}"
 7. 照片墙第一页的缓存："SP#{sid}-#{pcount}"
 8. 商家信息缓存："views/SI#{c.params[:id]}"
+9. 用户是否在24小时内创建过地点："ADDSHOP#{user_id}"
 
 
  

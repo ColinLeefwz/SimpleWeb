@@ -30,12 +30,19 @@ class CheckinsController < ApplicationController
       render :json => shop.safe_output.to_json
       return
     end
+    if !is_session_user_kx
+      if Rails.cache.read("ADDSHOP#{session[:user_id]}")
+        render :json => {error: "一个用户一天只能创建一个地点"}.to_json
+        return
+      end
+    end
     shop = gen_new_shop
     ss = Shop.similar_shops(shop,70)
     if ss.length>0
       shop = ss[0]
     else
       shop.save!
+      Rails.cache.write("ADDSHOP#{session[:user_id]}", 1, :expires_in => 24.hours)
     end
     params[:shop_id] = shop.id
     do_checkin(shop,false,true)
