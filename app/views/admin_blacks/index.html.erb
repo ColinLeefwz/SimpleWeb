@@ -40,7 +40,9 @@
         <%= button_to(" 解封'#{user_black.buser.try(:name)}'",{}, {:onclick => "return unkill($(this), {id: '#{user_black.bid}', ubid: '#{user_black.id}', name: '#{user_black.buser.try(:name)}'})"}) if user_black.buser.try("forbidden?") %>
       </td>
       <td>
-        <%= button_to("忽略",{},:id=>'btnIgnore', :onclick => "return ignore('#{user_black.id}')") unless user_black.flag  %>
+        <span onclick="ignore('<%= user_black.id%>')">
+          <%= button_to("忽略",{},:id=>'btnIgnore', :onclick => "return false") unless user_black.flag  %>
+        </span>
       </td>
     </tr>
 
