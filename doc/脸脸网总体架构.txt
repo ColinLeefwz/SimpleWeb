@@ -86,12 +86,14 @@ Nginx使用默认安装，启动在80端口。
 Memcache中保存的数据：
 
 1. 所有对象的单个find_by_id缓存: "#{self.class.name}#{_id}"
-2. 商家信息缓存："views/SI#{c.params[:id]}"
-3. 注册流程中查看附近的用户缓存：:cache_path => Proc.new { |c| c.params }
-4. 查看热点用户缓存："HOTU#{city}#{sex}#{skip}#{pcount}", :expires_in => 60.minutes
-5. 查看个人信息时的缓存："UI#{uid}#{vid}", :expires_in => 12.hours
-6. 用户头像列表缓存："ULOGOS#{uid}"
-7. 用户最后出现的地点缓存："LASTL:#{self.id}"
+2. 注册流程中查看附近的用户缓存：:cache_path => Proc.new { |c| c.params }
+3. 查看热点用户缓存："HOTU#{city}#{sex}#{skip}#{pcount}", :expires_in => 60.minutes
+4. 查看个人信息时的缓存："UI#{uid}#{vid}", :expires_in => 12.hours
+5. 用户头像列表缓存："ULOGOS#{uid}"
+6. 用户最后出现的地点缓存："LASTL:#{self.id}"
+7. 照片墙第一页的缓存："SP#{sid}-#{pcount}"
+8. 商家信息缓存："views/SI#{c.params[:id]}"
+
 
  
  
