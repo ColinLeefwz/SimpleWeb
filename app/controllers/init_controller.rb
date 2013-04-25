@@ -20,7 +20,7 @@ class InitController < ApplicationController
       xmpp = $xmpp_ip
     end
     if params[:os][0,7].downcase=="android"
-      ver = 0.4
+      ver = 0.51
     else
       ver = 1.4
     end
