@@ -70,7 +70,8 @@ class AdminShopsController < ApplicationController
     @shop.lo = (os.lo.count == 1 ?os.lo.first.split(/[,，]/).map{|l| l.to_f} : os.lo.map { |m| m.split(/[,，]/).map{|l| l.to_f} })
     @shop.name = os.name
     @shop.t = os.t.to_i
-    @shop.city = os.get_city
+    #商家编辑不能编辑城市
+    #    @shop.city = os.get_city
     @shop.save
 
     info = @shop.info
