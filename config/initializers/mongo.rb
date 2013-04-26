@@ -63,6 +63,10 @@ module Mongoid
       Rails.cache.delete(key)
     end
     
+    def set_my_cache
+      Rails.cache.write(my_cache_key,self)
+    end
+    
 #http://mongoid.org/en/mongoid/docs/persistence.html#atomic    
 #使Atomic Persistence支持cache更新
 #When executing atomic operations via these methods, no callbacks will ever get run, nor will any validations.
