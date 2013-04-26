@@ -12,6 +12,11 @@ class SinaAdvt
   field :wbid
   field :wb_uid #发给聊天室
 
+  def self.com
+    c = create_comment
+    com if c.nil?
+  end
+
   def self.create_comment
     places = place_timelines
     return unless places.is_a?(Array)
@@ -20,8 +25,8 @@ class SinaAdvt
       poi = get_poi(place)
       token = get_token(place['user']['gender'])
       params = {"id" => place['id'], "access_token"=> token, "comment" => comment(poi) }
-      # params = {"id" => '3560414669383960', "access_token"=> token, "comment" => comment(poi) }
-      create_com(:url => url, :method => :post, :params => params )
+#      params = {"id" => '3560414669383960', "access_token"=> token, "comment" => comment(poi) }
+      next if  create_com(:url => url, :method => :post, :params => params ).nil?
       self.create(:wbid => place['id'], :wb_uid => place['user']['id']  )
     end
   end
@@ -41,7 +46,13 @@ class SinaAdvt
 
   def self.get_poi(place)
     poi = place['annotations']
-    return poi.first['place']['title'] unless poi.nil? #测试用， 正式用时取消这行
+    
+    #测试用， 正式用时取消这行
+    unless poi.nil?
+      pl =  poi.first['place']
+      return pl['title'] if pl.is_a?(Hash)
+    end
+    
     return #测试用， 正式用时取消这行
     if poi.nil?
       lo = place['geo']['coordinates']
