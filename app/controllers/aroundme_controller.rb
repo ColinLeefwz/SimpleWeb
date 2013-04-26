@@ -79,7 +79,7 @@ class AroundmeController < ApplicationController
     lo = [params[:lat].to_f , params[:lng].to_f]
     city = Shop.get_city(lo)
     sex = session_user.gender
-    users = hot_users_cache(city,sex,skip,pcount)
+    users = hot_users_no_cache(city,sex,skip,pcount)
     ret = users.map do |u| 
       hash = u.safe_output_with_location(session[:user_id])
       last = hash[:last].split()
