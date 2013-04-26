@@ -108,7 +108,7 @@ class LocateTest < ActiveSupport::TestCase
   def test_locate14
     ss = Shop.new.find_shops([30.28053, 120.1096], 65, "", "")
     assert_equal 21626790, ss[0]["_id"]
-    assert_equal "顺旺基中式快餐益乐路", ss[0]["name"]
+    assert_equal "可佳基中式快餐益乐路", ss[0]["name"]
     assert ss.find {|x| x["name"] =~ /直通车教育中心/ }.nil?
     assert ss[0,3].find {|x| x["name"] =~ /正大医院/ }.nil?
   end 
@@ -145,7 +145,7 @@ class LocateTest < ActiveSupport::TestCase
     assert Shop.similarity_by_id(6551580,	6550857)>65
     
     #6551618	Co·Co CLUB   6556964	COCO酒吧
-    assert Shop.similarity_by_id(6551618,	6556964)>70
+    assert Shop.similarity_by_id(6551618,	6556964)>68
 
   	#2036714	豪尚豪宾馆  2032593	杭州豪尚豪旅馆  2032175	杭州豪尚豪客房
     
