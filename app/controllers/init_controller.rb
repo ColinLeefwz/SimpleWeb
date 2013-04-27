@@ -22,14 +22,14 @@ class InitController < ApplicationController
     if params[:os][0,7].downcase=="android"
       ver = 0.51
     else
-      ver = 1.4
+      ver = 2.1
     end
     render :json => {ip: ip, xmpp: xmpp , ver:ver }.to_json
   end
   
   $ios = [
           ["2.0.0","界面全新改版",false],
-          ["2.0.1","聊天室发图增加了分享到微信朋友圈和微信好友功能\n界面美化，更美观更清新",true]
+          ["2.1.0","我的照片墙增加新评论提醒功能\n聊天室发图分享到微信朋友圈功能",true]
          ]
   $android = [
     ["0.5","重大功能调整",true]    
