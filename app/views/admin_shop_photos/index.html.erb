@@ -23,7 +23,8 @@
     <th>描述</th>
     <th>分享到微博</th>
     <th>分享到qq</th>
-
+    <th>是否隐藏</th>
+    <th></th>
     <th></th>
   </tr>
 
@@ -36,7 +37,17 @@
       <td title="<%= photo.desc %>"><%=truncate photo.desc, :length => 10 %></td>
       <td><%= photo.weibo ? '是' : '否' %></td>
       <td><%= photo.qq ? '是' : '否' %></td>
-      <td><%= link_to '删除', "#",:onclick => "ajaxDel($(this), '#{photo.id}')"  %></td>
+      <td><%= photo.hide ? '是' : '否' %></td>
+      <td>
+        <%= link_to '详情', "/admin_shop_photos/show?id=#{photo.id}" %>
+      </td>
+      <td>
+        <% if photo.hide.nil? %>
+          <%= link_to '隐藏', "#",:onclick => "ajaxDel($(this), '#{photo.id}')"  %>
+        <%  else %>
+          <%= link_to '显示', "#",:onclick => "ajaxUnDel($(this), '#{photo.id}')"  %>
+        <%  end %>
+      </td>
     </tr>
   <% end %>
 </table>
@@ -45,11 +56,25 @@
 
 <script type="text/javascript">
   function ajaxDel(obj, photo_id){
-    if(confirm("确定删除此照片"))
+    if(confirm("确定隐藏此照片"))
     {
       $.get("/admin_shop_photos/ajax_del",{id: photo_id}, function(data) {
         if(data['text']){
-          obj.parent().parent().remove();
+          obj.replaceWith('已隐藏');
+        }
+        else{
+          obj.replaceWith('删除失败.')
+        }
+      });
+    }
+  }
+  
+  function ajaxUnDel(obj, photo_id){
+    if(confirm("确定显示此照片"))
+    {
+      $.get("/admin_shop_photos/ajax_undel",{id: photo_id}, function(data) {
+        if(data['text']){
+          obj.replaceWith('已显示');
         }
         else{
           obj.replaceWith('删除失败.')
