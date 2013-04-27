@@ -18,10 +18,40 @@ class AdminShopPhotosController < ApplicationController
     @photos = paginate3("Photo", params[:page], hash, sort)
   end
 
+  def show
+    @photo = Photo.find(params[:id])
+  end
+
   def ajax_del
     photo = Photo.find(params[:id])
     photo.update_attribute(:hide, true)
-    Rails.cache.delete("SP#{photo.room}-5")
-    render :json => {:text => '删除成功'}
+    expire_cache_shop(photo.room)
+    render :json => {:text => '隐藏成功'}
+  end
+
+  def ajax_undel
+    photo = Photo.find(params[:id])
+    photo.unset(:hide)
+    expire_cache_shop(photo.room)
+    render :json => {:text => '显示成功'}
+  end
+
+  def hide_com
+    photo = Photo.find(params[:id])
+    result = photo.hidecom(params[:uid], params[:t])
+    expire_cache_shop(photo.room)
+    render :json => {:text => result ? 0 : 1 }
+  end
+
+  def unhide_com
+    photo = Photo.find(params[:id])
+    result = photo.unhidecom(params[:uid], params[:t])
+    expire_cache_shop(photo.room)
+    render :json => {:text => result ? 0 : 1 }
+  end
+
+  private
+  def expire_cache_shop(sid)
+    Rails.cache.delete("SP#{sid}-5")
   end
 end
