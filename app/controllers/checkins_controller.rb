@@ -123,16 +123,22 @@ class CheckinsController < ApplicationController
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
     if checkin.add_to_redis #当天首次签到
-      if shop.utotal<1 || ( shop.utotal<2 && (Time.now.to_i-User.last.cati)<3600*24*7 )
-        fuser = User.fake_user(session_user)
-        Xmpp.send_gchat2(fuser.id, params[:shop_id], session[:user_id], "#{fuser.name} 来了~😊") if fuser
-      end
+      fake_user(shop)
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     end    
     checkin.add_city_redis
     new_user_nofity(checkin)
     Coupon.find("5170b35820f318bbab00000c").send_coupon(params[:user_id]) if params[:shop_id]==$llcf.to_s
     checkin
+  end
+  
+  def fake_user(shop)
+    last_loc = session_user.last_loc
+    if shop.utotal<2 && (last_loc.nil? ||  (Time.now.to_i - last_loc[0]) > 3600*24 )
+      fuser = User.fake_user(session_user)
+      return unless fuser
+      Xmpp.send_gchat2(fuser.id, params[:shop_id], session[:user_id], "#{fuser.name} 来了~😊")
+    end
   end
   
   def new_user_nofity(checkin)

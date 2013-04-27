@@ -34,7 +34,7 @@ Xmpp端提供的API包括：
 
 脸脸网的Web服务器集群目前有两台服务器web1和web2。Web服务器集群主要包括：基于Nginx的Web接入层、基于Ror的应用层，以及基于Mongodb的数据库层。
 
-目前redis跑在web1上,resque/resque-schedule也是。
+目前resque/resque-schedule跑在web1上, redis则跑在web2上。
 每分钟监测图片处理错误的程序Photo.fix_error_of_all_type_image跑在web1上。
 
 目前两台服务器只有web1在跑真实的应用，web2主要用于测试。
@@ -52,7 +52,7 @@ Nginx使用默认安装，启动在80端口。
 
 ###Redis
 
-缓存系统采用Redis，需要2.6以上版本，因为使用了Redis Lua scripting特性。使用源代码编译安装。Redis目前只在web1服务器上启动，以后要配置为一个集群。
+缓存系统采用Redis，需要2.6以上版本，因为使用了Redis Lua scripting特性。使用源代码编译安装。运行版本的Redis目前只在web2服务器的eth0接口上启动，以后要配置为一个集群。此外，web1/web2都有一个测试用的redis跑在localhost上。
 
  this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
 
@@ -66,7 +66,7 @@ Nginx使用默认安装，启动在80端口。
  sudo /etc/init.d/redis_6379 start
  redis-cli -h 10.200.141.172 shutdown 
  
- 缓存到redis中的信息：
+redis主要用于保存一些需要长期在内存中的信息，当作内存数据库而不是缓存。保存在redis中的数据有：
  
 1. 每个商家当天的签到数据。类型为zset，key为“ckin商家id"，值为用户id，排序值为时间。见checkin.add_to_redis方法。通过cronjob清空昨天的签到数据。
 2. 每个商家累计的用户总数／女性用户总数。用户总数的key为“suac商家id”。用户总数的计算方法为：昨天累计用户总数（来自mongodb）＋今天新增用户数（来自redis实时统计）。见CheckinShopStat.rb中的相关方法。
@@ -83,7 +83,7 @@ Nginx使用默认安装，启动在80端口。
 	配置文件：/etc/memcached.conf 
 	需要修改的设置： -m 512 -l 10.200.141.172
 	
-Memcache中保存的数据：
+Memcache在web1和web2中都启动，通过客户端实现负载均衡。Memcache中保存的数据：
 
 1. 所有对象的单个find_by_id缓存: "#{self.class.name}#{_id}"
 2. 注册流程中查看附近的用户缓存：:cache_path => Proc.new { |c| c.params }
