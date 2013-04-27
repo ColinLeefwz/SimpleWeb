@@ -125,7 +125,7 @@ module SearchScore
   end  
   
   def shop_history_score(xx,x,uid_s)
-      sc = Rails.cache.read("CheckinShopStat#{x['_id']}")
+      sc = Rails.cache.read("CheckinShopStat#{x['_id'].to_i}")
       return if sc.nil? || sc==-1
       if uid_s && sc.users[uid_s]
         ucount = sc.users[uid_s][0]
