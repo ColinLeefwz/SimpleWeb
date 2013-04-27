@@ -169,7 +169,7 @@ class User
   def last_location( user_id )
     return {:last => "隐身"} if block?(user_id)
     loc = last_loc
-    return {:last => ""} if loc.size==0
+    return {:last => ""} if loc.nil? || loc.size==0
     diff = Time.now.to_i - loc[0]
     tstr = User.time_desc(diff)
     dstr = loc[1]
