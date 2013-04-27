@@ -16,6 +16,8 @@ class AroundmeController < ApplicationController
       Coupon.where({t2:1}).last.send_coupon(session[:user_id])
     end
     if is_session_user_kx
+      arr << Shop.find_by_id(21830784)
+      arr << Shop.find_by_id(21830785)
       arr << Shop.find_by_id($llcf)
       arr << Shop.find_by_id($llsc)
     end
