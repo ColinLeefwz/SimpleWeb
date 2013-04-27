@@ -20,7 +20,8 @@ class AdminShopPhotosController < ApplicationController
 
   def ajax_del
     photo = Photo.find(params[:id])
-    photo.delete
+    photo.update_attribute(:hide, true)
+    Rails.cache.delete("SP#{photo.room}-5")
     render :json => {:text => '删除成功'}
   end
 end
