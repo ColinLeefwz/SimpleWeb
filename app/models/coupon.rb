@@ -171,5 +171,9 @@ class Coupon
       Coupon.where({t2: 1, hidden: {"$ne" => 1}, shop_id: self.shop_id.to_i, rule: self.rule }).limit(1).blank?
     end
   end
+  
+  def self.init_city_coupon_redis
+    Coupon.where({hidden:{"$ne" => 1}}).each {|x| $redis.sadd("ACS#{x.shop.city}", x.shop_id)}
+  end
 
 end

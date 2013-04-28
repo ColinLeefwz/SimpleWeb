@@ -29,5 +29,9 @@ class ShopFaq
   def shop
     Shop.find_by_id(sid)
   end
+  
+  def self.init_city_faq_redis
+    ShopFaq.all.each {|x| $redis.sadd("FaqS#{x.shop.city}", x.sid)}
+  end
 
 end
