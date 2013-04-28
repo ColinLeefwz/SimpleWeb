@@ -12,6 +12,15 @@ class AdminShopCouponsController < ApplicationController
     end
     #id 必须在name后面, 因为给定id 前面的name就会覆盖。
     hash.merge!({shop_id: params[:sid].to_i}) unless params[:sid].blank?
+
+    hash.merge!({name: /#{params[:name]}/}) unless params[:name].blank?
+
+    case params[:t2]
+    when '1'
+      hash.merge!({ t2: 1})
+    when '2'
+      hash.merge!({ t2: 2})
+    end
     
 
     case params[:hidden]
@@ -32,13 +41,17 @@ class AdminShopCouponsController < ApplicationController
 
   def detail
     @coupon = Coupon.find(params[:id])
+    hash = {cid: @coupon.id}
+    sort = {}
     case params[:type]
     when 'use'
-      users = @coupon.use_users
+      hash.merge!({uat: {'$exists' => true}})
+      sort.merge!({uat: -1, dat: -1})
     when 'down'
-      users = @coupon.down_users
+      sort.merge!({dat: -1})
     end
-    @users = paginate_arr(users, params[:page],20 )
+    @coupon_downs = paginate3("CouponDown", params[:page],hash, sort )
+
   end
 
   def ajax_lapse
