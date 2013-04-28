@@ -11,9 +11,9 @@ class NewUser
       NewUser.notify(uid,sid, to, od, 2 )
     end
     Resque.enqueue(NewUserWelcome, uid,sid,1)
-    Resque.enqueue_in(3.seconds, NewUserWelcome, uid,sid,2)
-    Resque.enqueue_in(6.seconds, NewUserWelcome, uid,sid,3)
-    Resque.enqueue_in(20.seconds, NewUserWelcome, uid,sid,4)
+    #Resque.enqueue_in(3.seconds, NewUserWelcome, uid,sid,2)
+    #Resque.enqueue_in(6.seconds, NewUserWelcome, uid,sid,3)
+    Resque.enqueue_in(10.seconds, NewUserWelcome, uid,sid,4) unless Shop.find_by_id(sid).city=="0571"
     if User.find(uid).gender
       Resque.enqueue_in(50.seconds, NewUserTalk, uid,sid,1)
       Resque.enqueue_in(55.seconds, NewUserTalk, uid,sid,2)
