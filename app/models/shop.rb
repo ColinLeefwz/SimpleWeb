@@ -297,9 +297,11 @@ class Shop
   end
 
   def get_city
-    rl = lo || lob_to_lo
-    return '' if rl.to_a.length != 2
-    Shop.get_city rl
+    if lo.nil?
+      return Shop.get_city(self.lob)
+    else
+      return Shop.get_city(self.loc_first)
+    end
   end
 
   def self.get_city(lo)

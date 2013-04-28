@@ -74,7 +74,11 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 4. 登录用户的新浪微博token。
 5. 经纬度到城市的映射数据, 见gen_gps_city.rb。
 6. Rails框架的session数据
-7. 每个城市分性别最新用户签到有序集合："HOT#{x}U#{self.city}".
+7. 每个城市分性别最新用户签到有序集合："HOT#{x}U#{self.city}"。用于热点用户列表展示。
+8. 每个Wifi签到过的商家id的集合，"BSSID#{bssid}", 用于定位时提供可选商家。
+9. 有活跃优惠券的商家，“ACS#{city}”
+10. 有问答系统的商家，“FaqS#{city}”
+11. 一个人被那些人看过,TODO.
 
 
 ###Memcache
