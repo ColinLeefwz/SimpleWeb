@@ -78,10 +78,15 @@ class User
     self.head_logo_id=nil
     self.pcount=0
     self.save!
+    self.clear_all_cache
+    RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
+  end
+  
+  def clear_all_cache
     self.del_my_cache
+    Rails.cache.delete "UI#{self.id}#{User.first.id}"    
     Rails.cache.delete "ULOGOS#{self.id}"
     Rails.cache.delete "LASTL:#{self.id}"
-    RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
   end
   
   #是否是被封杀的用户
