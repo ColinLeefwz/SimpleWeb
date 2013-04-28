@@ -13,7 +13,11 @@
       <td class="bold"><%= faq.od%></td>
       <td><%= faq.title  %></td>
       <td><%= faq.text  %></td>
-      <td align="center"><%=image_tag faq.img.url(:t2), :class=>"imgs2"  %></td>
+      <td align="center">
+        <% unless faq.img.blank? %>
+          <%=image_tag faq.img.url(:t2), :class=>"imgs2"  %>
+        <% end %>
+      </td>
       <td align="center">
         <%= link_to '编辑', "/shop_faqs/edit?id=#{faq.id}" %>
         <%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{faq.id}')" %></td>
