@@ -7,7 +7,7 @@ class AroundmeController < ApplicationController
   def shops
     lo = [params[:lat].to_f,params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
-    arr = Shop.new.find_shops(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
+    arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
     record_gps(lo)
     if session[:user_id].to_s == "5160f00fc90d8be23000007c" || 
       session[:user_id].to_s == "512aeb11c90d8ba3020000d0" ||
@@ -30,7 +30,7 @@ class AroundmeController < ApplicationController
   def shop_report
     lo = [params[:lat].to_f,params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
-    arr = Shop.new.find_shops(lo,params[:accuracy].to_f,params[:uid],params[:bssid])
+    arr = find_shop_cache(lo,params[:accuracy].to_f,params[:uid],params[:bssid])
     @shops = arr.map do |x|
       [x['name'],x['_id'].to_i]
     end
@@ -104,6 +104,21 @@ class AroundmeController < ApplicationController
     hash.merge!(bd:params[:baidu]) if params[:baidu]
     GpsLog.collection.insert(hash)
   end
+  
+  def find_shop_key(lo,uid)
+    "#{uid}%.4f%.4f" %  lo
+  end
+  
+  def find_shop_cache(lo,accu,uid,bssid)
+    Rails.cache.fetch(find_shop_key(lo,uid), :expires_in => 60.minutes) do 
+      find_shop_no_cache(lo,accu,uid,bssid)
+    end    
+  end
+  
+  def find_shop_no_cache(lo,accuracy,uid,bssid)
+    Shop.new.find_shops(lo,accuracy,uid,bssid)  
+  end
+  
   
   def hot_user_cache_key(city,sex,skip,pcount)
     "HOTU#{city}#{sex}#{skip}#{pcount}"
