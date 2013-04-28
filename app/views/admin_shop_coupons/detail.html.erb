@@ -1,23 +1,26 @@
 <h2><%={'down' => "下载", "use"=> '使用'}[params[:type]]%>用户</h2>
 <table border="1">
   <tr>
-    <th>优惠券所属商家</th>
-    <th>姓名</th>
-    <th>性别</th>
-    <th>生日</th>
-    <th><%= {'down'=> "下载", "use"=> '使用'}[params[:type]]%>时间</th>
+    <th>商家</th>
+    <th>用户</th>
+    <th>下载时间</th>
+    <th>收到时间</th>
+    <th>查看时间</th>
+    <th>使用时间</th>
+    <th>使用数据</th>
   </tr>
 
-  <% @users.each do |u| %>
+  <% @coupon_downs.each do |coupon_down| %>
     <tr>
-      <% user = User.find(u["id"])   %>
-      <td><%= @coupon.shop.name %></td>
-      <td><%= user.name %></td>
-      <td><%= user.show_gender %></td>
-      <td><%= user.birthday.try(:to_date)   %></td>
-      <td><%= (u[{'down'=> "dat", "use"=> 'uat'}[params[:type]]].to_datetime+8.hours).strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td><%= link_to coupon_down.shop_name, "/admin_shops/show?id=#{coupon_down.sid}" %></td>
+      <td><%= link_to coupon_down.user_name, "/admin_users/show?id=#{coupon_down.uid}" %></td>
+      <td><%= to_local coupon_down.dat  %></td>
+      <td><%= to_local coupon_down.sat  %></td>
+      <td><%= to_local coupon_down.vat  %></td>
+      <td><%= to_local coupon_down.uat  %></td>
+      <td><%=  coupon_down.data  %></td>
     </tr>
   <% end %>
 </table>
 
-<%= generate_paginate.html_safe %>
+<%= generate_paginate3.html_safe %>
