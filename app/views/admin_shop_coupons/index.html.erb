@@ -7,6 +7,10 @@
     (*区号和商家必须同时查询,否则无效,可以不填)
   </p>
   <p>
+    优惠券名称:<%= text_field_tag :name, params[:name],:size => 10 %>
+    优惠券类型：<%= select_tag :t2,options_for_select([['所有类型', '0'],['签到类','1'],['分享类','2']],params[:t2])  %>
+  </p>
+  <p>
     商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
     过期：<%= select_tag :hidden,options_for_select([['所有优惠券','0'],['过期优惠券','1']],params[:hidden])  %>
   </p>
