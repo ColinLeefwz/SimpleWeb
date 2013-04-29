@@ -59,4 +59,11 @@ class AdminShopCouponsController < ApplicationController
     coupon.deply
     render :json => ''
   end
+
+  def ajax_destroy
+    coupon = Coupon.find(params[:id])
+    coupon.down_users.each{|d| Del.insert(d)}
+    Del.insert(coupon)
+    render :json => ''
+  end
 end
