@@ -114,10 +114,10 @@ module SearchScore
   def content_score(score)
     city = score[0][0].city
     faqs = $redis.smembers("FaqS#{city}")
-    coupons = $redis.smembers("ACS#{city}")
+    coupons = $redis.smembers("ACS#{city}") 
     score.each_with_index do |xx,i|
-      xx[2] -= 30 if faqs.index(xx[0].id.to_i)
-      xx[2] -= 80 if coupons.index(xx[0].id.to_i)
+      xx[2] -= 30 if faqs.index(xx[0].id.to_i.to_s)
+      xx[2] -= 80 if coupons.index(xx[0].id.to_i.to_s)
     end
   end
 
