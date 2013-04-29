@@ -199,12 +199,13 @@ class Shop
       #fuser = User.fake_user(User.find_by_id(session_uid))
       #users1 << [fuser.id,Time.now.to_i-30*60-rand(10000)]
     end
-    users = [[session_uid, Time.now.to_i]] + users1.delete_if{|x| x[0].to_s==session_uid.to_s}
+    users = [[session_uid,Time.now.to_i]] + users1.delete_if{|x| x[0].to_s==session_uid.to_s} if start==0
     users.each do |uid,cat|
       u = User.find_by_id(uid)
       next if u.nil?
       next if u.forbidden?
-      next if u.block?(session_uid)
+      #next if u.block?(session_uid)
+      next if u.invisible.to_i>=2
       ret << u.safe_output(session_uid).merge!({time:Checkin.time_desc(cat)})
     end
     ret
