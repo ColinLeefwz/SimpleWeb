@@ -9,12 +9,6 @@ class AroundmeController < ApplicationController
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
     record_gps(lo)
-    if session[:user_id].to_s == "5160f00fc90d8be23000007c" || 
-      session[:user_id].to_s == "512aeb11c90d8ba3020000d0" ||
-      session[:user_id].to_s == "502e6303421aa918ba000001" ||      
-      session[:user_id].to_s == "5159537cc90d8bfd010009cc"
-      Coupon.where({t2:1, hidden:{"$ne" => 1}}).first.send_coupon(session[:user_id])
-    end
     if is_session_user_kx
       arr << Shop.find_by_id(21830784)
       arr << Shop.find_by_id(21830785)
