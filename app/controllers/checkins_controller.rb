@@ -102,7 +102,7 @@ class CheckinsController < ApplicationController
     end
     if params[:speed]
       speed = params[:speed].to_f 
-      checkin.speed = speed if speed>0.5
+      checkin.speed = speed if speed>0.1
     end
     checkin.del = true if fake
     checkin.del = true if checkin.acc==5 && checkin.alt==0
