@@ -65,7 +65,6 @@ class PhotosController < ApplicationController
     end
     like = {id:session[:user_id], name: session_user.name, t:Time.now}
     photo.push(:like, like)
-    #TODO: ver判断，大于1.4.1的才发送xmpp提醒
     if session[:ver].to_f > 1.4
       Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
       "#{session_user.name} '赞'了你在 #{photo.shop.name} 分享的照片。")
