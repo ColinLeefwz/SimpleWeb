@@ -245,7 +245,7 @@ class CouponTest < ActionDispatch::IntegrationTest
     parent_coupon.update_attribute(:text, '总店分享')
 
     #总店分享图片到微博描叙不匹配关键字
-    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '1', 'weibo' => 1, 'desc' => "我在总店" }}
+    post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '1', 'weibo' => 1, 'desc' => "不在" }}
     assert_response :success
     photo = Photo.where({}).sort({:_id => -1}).limit(1).to_a.first
     CarrierWave::Workers::StoreAsset.perform("Photo",photo.id.to_s,"img")
