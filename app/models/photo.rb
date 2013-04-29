@@ -77,7 +77,7 @@ class Photo
   def send_coupon
     coupon = shop.share_coupon
     return if coupon.nil?
-    if coupon.allow_send_share?(user_id.to_s) && (!coupon.has_text? || (desc && desc.index(coupon.text) ))
+    if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s)
       return coupon.send_coupon(user_id,self.id)
     end
     return nil
