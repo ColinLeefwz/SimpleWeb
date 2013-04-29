@@ -29,6 +29,7 @@ class SinaUser
   
   def self.gen_head_logo(user, token=$sina_token)
     sina_info = SinaUser.get_user_info(user.wb_uid,token)
+    return if sina_info.nil?
     user_logo = UserLogo.new({user_id: user._id})
     if SinaUser.logo_store_local(sina_info["avatar_large"],"public/uploads/tmp/#{user_logo.id}.jpg")
       user_logo.img_tmp = "#{user_logo.id.to_s}.jpg"
