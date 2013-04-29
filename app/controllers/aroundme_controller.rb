@@ -102,15 +102,21 @@ class AroundmeController < ApplicationController
     hash = {uid:session[:user_id], lo:lo, acc:params[:accuracy]}
     hash.merge!(bssid:params[:bssid]) if params[:bssid]
     hash.merge!(bd:params[:baidu]) if params[:baidu]
+    if params[:speed]
+      speed = params[:speed].to_f 
+      hash.merge!(speed:speed) if speed>0.1
+    end    
     GpsLog.collection.insert(hash)
   end
   
-  def find_shop_key(lo,uid)
-    "#{uid}%.4f%.4f" %  lo
-  end
+  def find_shop_key(lo,accu,uid)
+    acc = accu>100? 1:0
+    str = "#{uid}%.3f%.3f#{acc}" %  lo
+    str
+  end 
   
   def find_shop_cache(lo,accu,uid,bssid)
-    Rails.cache.fetch(find_shop_key(lo,uid), :expires_in => 60.minutes) do 
+    Rails.cache.fetch(find_shop_key(lo,accu,uid), :expires_in => 60.minutes) do 
       find_shop_no_cache(lo,accu,uid,bssid)
     end    
   end

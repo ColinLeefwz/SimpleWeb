@@ -12,10 +12,16 @@ class PhotoTest < ActiveSupport::TestCase
   end
 
   test "#send_coupon 分享优惠券, 没匹配关键字不发送。" do
-    photo = Photo.create!({:user_id => User.first.id, :room => 1, :desc => '我们一起分享'})
+    photo = Photo.create!({:user_id => User.first.id, :room => 1, :desc => '不一样'})
     assert_equal photo.send_coupon, nil
   end
 
+  test "#send_coupon 分享优惠券, 部分匹配关键字发送。" do
+    photo = Photo.create!({:user_id => User.first.id, :room => 1, :desc => '分享'})
+    message = photo.send_coupon
+    assert_match "优惠券:测试分享优惠券:测试1:#{CouponDown.last.id.to_s}", message
+  end
+  
   test "#send_coupon 分享优惠券, 匹配关键字发送。" do
     photo = Photo.create!({:user_id => User.first.id, :room => 1, :desc => '我们一起分享吧'})
     message = photo.send_coupon

@@ -159,6 +159,12 @@ class Coupon
     text!=nil && text.length>0
   end
   
+  def share_text_match(str)
+    return true unless has_text?
+    return false if str.nil?
+    return Shop.str_similar(text.downcase, str.downcase)>0.4
+  end
+  
   def share_text_hint
     key = has_text?? ",文字中带'#{text}'#{text.length}个字" : ""
     "发送分享图片到新浪微博#{key}，即可获得'#{name}'。"
