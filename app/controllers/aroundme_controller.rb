@@ -105,12 +105,15 @@ class AroundmeController < ApplicationController
     GpsLog.collection.insert(hash)
   end
   
-  def find_shop_key(lo,uid)
-    "#{uid}%.4f%.4f" %  lo
+  def find_shop_key(lo,accu,uid)
+    acc = accu>100? 1:0
+    str = "#{uid}%.3f%.3f#{acc}" %  lo
+    logger.info str
+    str
   end
   
   def find_shop_cache(lo,accu,uid,bssid)
-    Rails.cache.fetch(find_shop_key(lo,uid), :expires_in => 60.minutes) do 
+    Rails.cache.fetch(find_shop_key(lo,accu,uid), :expires_in => 60.minutes) do 
       find_shop_no_cache(lo,accu,uid,bssid)
     end    
   end
