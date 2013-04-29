@@ -64,6 +64,7 @@ module SearchScore
     end
     bssid_score(score,bssid) if bssid
     realtime_score(score)
+    content_score(score)
     score.each_with_index do |xx,i|
       xx[2] =  adjust(xx[2],accuracy,min_d)
       xx[1] += xx[2]
@@ -101,13 +102,26 @@ module SearchScore
     return ret*(1+factor)
   end
   
+  #对当天有用户的商家加权
   def realtime_score(score)
     shop_ids = score.map{|x| x[0]["_id"].to_i}
     Checkin.get_users_count_multi(shop_ids).map{|x| user_to_score(x)}.each_with_index do |s,i|
       score[i][2] -= s 
     end
   end
+  
+  #对有问答和激活优惠券的商家加权
+  def content_score(score)
+    city = score[0][0].city
+    faqs = $redis.smembers("FaqS#{city}")
+    coupons = $redis.smembers("ACS#{city}")
+    score.each_with_index do |xx,i|
+      xx[2] -= 30 if faqs.index(xx[0].id.to_i)
+      xx[2] -= 80 if coupons.index(xx[0].id.to_i)
+    end
+  end
 
+  #对用WIFI定位的加权
   def bssid_score(score,bssid)
     b = CheckinBssidStat.find_by_id(bssid)
     unless b.nil?
@@ -124,6 +138,7 @@ module SearchScore
     end
   end  
   
+  #对用户在商家的历史访问加权
   def shop_history_score(xx,x,uid_s)
       sc = Rails.cache.read("CheckinShopStat#{x['_id'].to_i}")
       return if sc.nil? || sc==-1
