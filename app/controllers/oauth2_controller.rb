@@ -194,7 +194,10 @@ class Oauth2Controller < ApplicationController
       if user.password == pass
 	      logger.warn "token:#{ptoken}"
         if ptoken && (user.tk.nil? || user.tk[0] != ptoken[0])
-          User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) 
+          #User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) 
+          user.del_my_cache
+          user = User.find(params["name"])
+          user.update_attribute(:tk, ptoken)
         end
         render :text => "1"
         return
