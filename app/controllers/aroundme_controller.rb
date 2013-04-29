@@ -82,21 +82,34 @@ class AroundmeController < ApplicationController
     city = Shop.get_city(lo)
     sex = session_user.gender
     users = hot_users_no_cache(city,sex,skip,pcount)
-    ret = users.map do |u| 
-      hash = u.safe_output_with_location(session[:user_id])
-      last = hash[:last].split()
-      if last.size>=3
-        time = last[0]+" "+last[1]
-      else
-        time = "1 day"
-      end
-      hash.merge!({time: time})
-      hash
+    ret = []
+    users.each do |u|
+      next if u.forbidden?
+      next if u.invisible.to_i>=2
+      output_hot_user(u,ret)
+    end
+    diff = pcount-ret.size
+    if diff>0
+      sex2 = sex==2? 1:2
+      users2 = hot_users_no_cache(city,sex2,skip,diff)
+      users2.each {|x| output_hot_user(x,ret)}
     end
     render :json => ret.to_json
   end
   
   private 
+  
+  def output_hot_user(u,ret)
+    hash = u.safe_output_with_location(session[:user_id])
+    last = hash[:last].split()
+    if last.size>=3
+      time = last[0]+" "+last[1]
+    else
+      time = "1 day"
+    end
+    hash.merge!({time: time})
+    ret << hash
+  end
 
   def record_gps(lo)
     hash = {uid:session[:user_id], lo:lo, acc:params[:accuracy]}
