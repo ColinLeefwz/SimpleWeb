@@ -75,6 +75,7 @@ class Photo
 
   
   def send_coupon
+    return if room == "21830231"
     coupon = shop.share_coupon
     return if coupon.nil?
     if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s)
