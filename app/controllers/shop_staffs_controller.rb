@@ -27,6 +27,7 @@ class ShopStaffsController < ApplicationController
       text =  staff.save ? "添加成功" : "添加失败"
     end
     expire_fragment "SI#{session_shop.id}"
+    Rails.cache.delete("views/SI#{session_shop.id}.json")
     render :json => {:text => text }.to_json
   end
 
@@ -34,6 +35,7 @@ class ShopStaffsController < ApplicationController
     staff = Staff.find_by_id(params[:id])
     staff.destroy if staff
     expire_fragment "SI#{session_shop.id}"
+    Rails.cache.delete("views/SI#{session_shop.id}.json")
     render :json => {:text => '删除成功'}
   end
   
