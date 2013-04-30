@@ -23,12 +23,16 @@ class AnswerController < ApplicationController
     if int==1
       msg1(uid)
       msg2(uid)
-    elsif  txt=="0" || txt=="o"
+    elsif  txt=="0" || txt=="o" || txt=="O" || txt=="〇"
       msg3(uid)
     elsif  (int>1 && int<8)
       want(uid,int)
     elsif  txt=="?" || txt=="？"
       faq(uid)
+    elsif txt=="您好" || txt=="你好"
+      Resque.enqueue_in(2.seconds,XmppMsg, $gfuid,uid,"您好😄")
+    elsif txt.bytesize==4
+      Resque.enqueue_in(2.seconds,XmppMsg, $gfuid,uid,"😊")
     elsif txt.bytesize<=3
       help_msg(uid)
     else

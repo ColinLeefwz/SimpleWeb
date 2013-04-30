@@ -14,6 +14,7 @@ class AroundmeController < ApplicationController
       arr << Shop.find_by_id(21830785)
       arr << Shop.find_by_id($llcf)
       arr << Shop.find_by_id($llsc)
+      arr << Shop.find_by_id(21830231)
     end
     if in_zi_wei_yuan_dian?(lo)
       arr = [Shop.find_by_id(21830231)] + arr #延安路•紫微大街 
