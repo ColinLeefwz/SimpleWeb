@@ -141,7 +141,7 @@ class Shop
     total
   end
   
-  def hint_text_when_photo
+  def default_text_when_photo
     ret = ""
     coupon = share_coupon
     ret += coupon.text if coupon
@@ -150,7 +150,7 @@ class Shop
   end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos.map {|p| p.output_hash} }).merge!({text: hint_text_when_photo})
+    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos.map {|p| p.output_hash} }).merge!({text: default_text_when_photo})
   end  
 
   
