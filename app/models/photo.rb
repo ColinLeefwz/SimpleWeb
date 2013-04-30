@@ -84,11 +84,15 @@ class Photo
   end
 
   def send_pshop_coupon
+    if room == "21830231" #延安路•紫微大街 , 分享后发子地点签到优惠券
+      Shop.find(21830231).send_coupon(user_id)
+      return
+    end
     return nil if shop.psid.blank?
     return nil if (pshop = Shop.find_by_id(shop.psid)).nil?
     coupon = pshop.share_coupon
     return nil if coupon.nil?
-    if coupon.allow_send_share?(user_id.to_s, shop.id.to_i) && (!coupon.has_text? || (desc && desc.index(coupon.text) ))
+    if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s, shop.id.to_i)
       ret = coupon.send_coupon(user_id,self.id, room)
       return [shop.psid,ret]
     end
