@@ -231,8 +231,8 @@ class Shop
   def send_coupon(user_id)
     coupons = []
     coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
-    unless $redis.zrange("ckin#{self.id.to_i}", 0, -1).include?(user_id.to_s)
-      sub_shops.each{|shop| coupons += shop.checkin_eday_coupons.to_a }
+    sub_shops.each do |shop|
+      coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(user_id) }
     end
     coupons.each{|coupon| coupon.send_coupon(user_id)}
     return if coupons.count == 0
@@ -240,7 +240,6 @@ class Shop
     return "收到#{coupons.count}张优惠券: #{name}" if ENV["RAILS_ENV"] != "production"
     Resque.enqueue(XmppNotice, self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}")
   end
-
   
   def latest_coupons(n=1)
     coupons = Coupon.where({shop_id: self.id}).sort({_id: -1}).limit(n).to_a
