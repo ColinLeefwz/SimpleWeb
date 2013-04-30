@@ -104,7 +104,6 @@ class ShopShareCouponsController < ApplicationController
   def ajax_activate
     @coupon = Coupon.find(params[:id])
     @coupon.unset(:hidden)
-    Rails.cache.delete("views/SI#{@coupon.shop_id}.json")
     render :json => {:text => "已激活."}
   end
 
