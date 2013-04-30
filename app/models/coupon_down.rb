@@ -17,6 +17,7 @@ class CouponDown
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :gender, :birthday, :weibo_home, :to => :user
     option.delegate :name, :to => :shop
+    option.delegate :name, :to => :sub_shop
     option.delegate :img, :name, :show_t2,  :to => :coupon
   end
 
@@ -24,6 +25,10 @@ class CouponDown
   
   def shop
     Shop.find_by_id(sid)
+  end
+
+  def sub_shop
+    Shop.find_by_id(sub_sid)
   end
 
   def user
