@@ -111,15 +111,10 @@ class CheckinsController < ApplicationController
     checkin.save!
     session_user.write_lat_loc(checkin, shop.name)
     if new_shop
-      str = "欢迎！您是第1个来到#{shop.name}的脸脸。置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。"
-      Resque.enqueue(XmppNotice, shop.id, params[:user_id], str)
-      Resque.enqueue(XmppRoomMsg, $gfuid, shop.id, params[:user_id], "等#{shop.name}审核通过后，你就是这里的地主啦！👍")
-      send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
-      new_user_nofity(checkin)
-      CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
+      new_shop_welcome(shop,checkin)
       return checkin
     end
-    send_coupon_msg = shop.send_coupon(session[:user_id])
+    send_coupon_msg = shop.send_coupon(session[:user_id]) if params[:shop_id]!=21830231 #延安路•紫微大街
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
     if checkin.add_to_redis #当天首次签到
@@ -139,6 +134,15 @@ class CheckinsController < ApplicationController
       return unless fuser
       Xmpp.send_gchat2(fuser.id, params[:shop_id], session[:user_id], "#{fuser.name} 来了~😊")
     end
+  end
+  
+  def new_shop_welcome(shop,checkin)
+    str = "欢迎！您是第1个来到#{shop.name}的脸脸。置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。"
+    Resque.enqueue(XmppNotice, shop.id, params[:user_id], str)
+    Resque.enqueue(XmppRoomMsg, $gfuid, shop.id, params[:user_id], "等#{shop.name}审核通过后，你就是这里的地主啦！👍")
+    send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
+    new_user_nofity(checkin)
+    CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
   end
   
   def new_user_nofity(checkin)
