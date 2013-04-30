@@ -41,8 +41,8 @@ class Photo
       Rails.logger.error("async_store3:#{self.class},#{self.id}")
       return
     end
-    if weibo
-      send_wb
+    send_wb if weibo
+    if weibo || wx>0
       send_coupon
       send_pshop_coupon
     end
