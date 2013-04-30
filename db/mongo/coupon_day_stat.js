@@ -1,11 +1,10 @@
 db.loadServerScripts();
 var couponDayStat = function(days){
     [idOfBeginDay,idOfEndDay, day] = gen_day_id(days);
-    print('---------------')
     db.coupon_downs.find({
         _id: {
-            $gt: ObjectId(idOfBeginDaysAgo),
-            $lt: ObjectId(idOfEndYesterday)
+            $gt: ObjectId(idOfBeginDay),
+            $lt: ObjectId(idOfEndDay)
         }
     }).forEach(function(coupon_down){
         var cdss =  db.coupon_day_stats.findOne({
@@ -48,5 +47,11 @@ var couponDayStat = function(days){
         });
     })
 }
-couponDayStat(1)
+
+var cds = function(days){
+    for(var i = days; i > 0; i--){
+        couponDayStat(i)
+    }
+}
+cds(1)
 
