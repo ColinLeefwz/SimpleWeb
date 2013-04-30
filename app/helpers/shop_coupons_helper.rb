@@ -18,8 +18,8 @@ module ShopCouponsHelper
   end
 
   def to_local(datetime, format = "%Y-%m-%d %H:%M")
-    return '' unless datetime.is_a?(Date)
-    datetime = datetime.utc? ? datetime.since(8.hours) : datetime
+    return datetime unless datetime.is_a?(Date)
+    datetime = datetime.to_time.localtime
     datetime.strftime(format)
   end
 
