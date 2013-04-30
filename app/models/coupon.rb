@@ -71,12 +71,11 @@ class Coupon
   end
 
   def allow_send_checkin?(user_id)
-    ckin = $redis.zrange("ckin#{self.shop_id.to_i}", 0, -1)
     case self.rule.to_i
     when 0
       return !downed_today(user_id)
     when 1
-      return true if !downed_today(user_id) && ckin.size < self.rulev.to_i
+      return true if !downed_today(user_id) && $redis.zcard("ckin#{self.shop_id.to_i}") < self.rulev.to_i
     when 2
       return !downed(user_id)
     when 3
