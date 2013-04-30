@@ -79,6 +79,7 @@ class ShopCouponsController < ApplicationController
     if @coupon.save
       if @coupon.t.to_i == 1
         @coupon.gen_img if @coupon.t.to_i == 1
+        Rails.cache.delete("views/SI#{@coupon.sid}.json")
         redirect_to :action => :show, :id => @coupon.id
       else
         redirect_to :action => :show_img2, :id => @coupon.id
@@ -125,6 +126,7 @@ class ShopCouponsController < ApplicationController
     if @coupon.update_attributes(params[:coupon])
       @coupon.unset(:hint) if params[:hintv] == '0' #使用流程选0， hint = nil
       @coupon.gen_img if @coupon.t.to_i == 1
+      Rails.cache.delete("views/SI#{@coupon.sid}.json")
       redirect_to :action => :show, :id => @coupon.id
     else
       render :action => :edit
@@ -136,6 +138,7 @@ class ShopCouponsController < ApplicationController
   def destroy
     @coupon = Coupon.find(params[:id])
     @coupon.destroy
+    Rails.cache.delete("views/SI#{@coupon.sid}.json")
 
     respond_to do |format|
       format.html { redirect_to '/admin_coupons' }
@@ -172,11 +175,13 @@ class ShopCouponsController < ApplicationController
   def ajax_deply
     @coupon = Coupon.find(params[:id])
     text = (@coupon.deply ? '<span class="gray">已停用</span>' : '<span class="red">失败了</span>')
+    Rails.cache.delete("views/SI#{@coupon.sid}.json")
     render :json => {text: text}
   end
 
   def ajax_del
     @coupon = Coupon.find(params[:id])
+    Rails.cache.delete("views/SI#{@coupon.sid}.json")
     render :json => {text: Del.insert(@coupon)}
   end
 
