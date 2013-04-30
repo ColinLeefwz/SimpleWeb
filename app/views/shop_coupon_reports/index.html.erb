@@ -32,7 +32,12 @@
       <%=link_to @report.sum{|r| r[2]}, "/shop_coupons/newly_use?date=#{params[:date]|| Time.now.to_date}"%>
     </td>
   </tr>
-
-
-
 </table>
+
+<br/>
+
+<%= link_to '快速导出今日统计数据', "/shop_coupon_reports/csv_export" %>
+
+<script>
+  LeftMenu(23);
+</script>
