@@ -15,3 +15,5 @@ rescue Exception => e
   puts e
 end
 
+#批量删除
+#redis-cli -h $ipaddr0 KEYS "OF*" | xargs redis-cli -h $ipaddr0 DEL
