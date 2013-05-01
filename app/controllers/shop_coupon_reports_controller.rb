@@ -8,10 +8,12 @@ class ShopCouponReportsController < ApplicationController
 
 
   def index
-    cdss = CouponDayStat.where({sid: session[:shop_id]}).only(:_id).unshift('')
+    cdss = CouponDayStat.where({sid: session[:shop_id]}).only(:_id).sort({_id: -1}).entries.unshift('')
     if params[:page].to_i > 1
-      coupon_day_stat = paginate_arr(cdss, params[:page], 1)
-      @report = CouponDayStat.find_by_id(coupon_day_stat[0]).data.map{|x,y| [Coupon.find_by_id(x), y[0], y[1]]}
+      coupon_day_stats = paginate_arr(cdss, params[:page], 1)
+      coupon_day_stat = CouponDayStat.find_by_id(coupon_day_stats[0])
+      @day = coupon_day_stat.day
+      @report = coupon_day_stat.data.map{|x,y| [Coupon.find_by_id(x), y[0].to_i, y[1].to_i]}
     else
       coupon_downs = CouponDown.where({sid: session[:shop_id], dat: {"$gte" => Time.now.to_date}}).only(:cid, :uat)
       @report = coupon_downs.group_by{|g| g.coupon}.map{|x,y| [x,y.count, y.count{|c| c.uat}]}
@@ -28,9 +30,14 @@ class ShopCouponReportsController < ApplicationController
     end  
 
     if params[:stime] && params[:etime]
-      coupon_downs = CouponDown.where({dat: {"$gt" => params[:stime], "$lt" => params[:etime].succ}})
+      hash = {dat: {"$gt" => params[:stime], "$lt" => params[:etime].succ}, sid: session[:shop_id]}
+      unless params[:cname].blank?
+        cids = Coupon.where({name: params[:cname]}).only(:_id).map{|m| m._id}
+        hash.merge!({cid: {'$in' => cids}})
+      end
+      coupon_downs = CouponDown.where(hash)
     else
-      coupon_downs = CouponDown.where({dat: {"$gt" => Time.now.to_date}})
+      coupon_downs = CouponDown.where({dat: {"$gt" => Time.now.to_date}, sid: session[:shop_id]})
     end
 
     csv_string =  CSV.generate do |csv|
