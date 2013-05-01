@@ -195,6 +195,7 @@ class Shop
   def users(session_uid,start,size)
     ret = []
     users1 = user_last_checkins(start,size)
+    users1 = [] if users1.nil?
     if users1.size<2
       #fuser = User.fake_user(User.find_by_id(session_uid))
       #users1 << [fuser.id,Time.now.to_i-30*60-rand(10000)]

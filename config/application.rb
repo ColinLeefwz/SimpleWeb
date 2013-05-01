@@ -7,7 +7,6 @@ require "action_mailer/railtie"
 require "active_resource/railtie"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
-require "ripple/railtie"
 require 'uuid'
 
 $xmpp_ips = ["42.120.60.200","42.121.98.157","42.121.0.193","42.121.0.192"]

@@ -41,7 +41,7 @@ gem 'carrierwave_backgrounder', :git => "git://github.com/yuanxinyu/carrierwave_
 gem 'resque', :require => "resque/server"
 gem 'resque-scheduler', :require => 'resque_scheduler'
 
-gem 'ripple', '~> 1.0.0.beta2'
+#gem 'ripple', '~> 1.0.0.beta2'
 gem 'rake', '~> 10.0.1'
 gem 'dalli'
 
