@@ -8,7 +8,7 @@ class ShopCouponReportsController < ApplicationController
 
 
   def index
-    cdss = CouponDayStat.where({sid: session[:shop_id]}).only(:_id).unshift('')
+    cdss = CouponDayStat.where({sid: session[:shop_id]}).only(:_id).sort({_id: -1}).entries.unshift('')
     if params[:page].to_i > 1
       coupon_day_stats = paginate_arr(cdss, params[:page], 1)
       coupon_day_stat = CouponDayStat.find_by_id(coupon_day_stats[0])
