@@ -42,13 +42,22 @@ class Checkin
   #保存用户的签到到商家的当前签到redis集合中。
   #如果是新用户，更新商家用户总数的统计；如果不是，仅更新最后出现时间（也就是zset的score，zadd的效果）。
   def add_to_redis
-    return false if user.invisible==2
-    if( $redis.zadd("ckin#{self.sid.to_i}",Time.now.to_i, self.uid) )
+    if( $redis.zadd("UA#{self.sid.to_i}",Time.now.to_i, self.uid) )
       CheckinShopStat.add_one_redis(sid, user.gender)
+    end
+    if( $redis.zadd("ckin#{self.sid.to_i}",Time.now.to_i, self.uid) )
       return true
     end
     return false
   end
+  
+  def Checkin.init_UA_shop
+    Checkin.where({}).sort({_id:1}).each do |ck|
+      next if ck.sid.nil? || ck.uid.nil?
+      $redis.zadd("UA#{ck.sid.to_i}", ck.cati, ck.uid)
+    end
+  end
+  
 
   #清除昨天的商家签到记录，由cronjob调用
   def self.clear_yesterday_redis
