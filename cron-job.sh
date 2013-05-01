@@ -11,6 +11,7 @@ mongo 10.135.44.107/dface /mnt/lianlian/db/mongo/checkin_loc_acc.js
 mongo 10.135.44.107/dface /mnt/lianlian/db/mongo/checkin_user_many.js
 mongo 10.135.44.107/dface /mnt/lianlian/db/mongo/user_city_day.js
 mongo 10.135.44.107/dface /mnt/lianlian/db/mongo/coupon_day_stat.js
+mongo 10.135.44.107/dface /mnt/lianlian/db/mongo/user_device_stat.js
 
 
 /mnt/.rvm/bin/ruby script/rails r  'Checkin.clear_yesterday_redis'
