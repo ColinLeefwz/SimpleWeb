@@ -81,8 +81,16 @@ class Checkin
     $redis.zcard("UA#{sid.to_i}")
   end
   
+  def self.fix_user_count_error
+    $redis.keys("UA*").each do |key|
+      count = $redis.zcard(key)
+      sid = key[2..-1]
+      $redis.set("suac#{sid}", count)
+    end
+  end
+  
   #批量获得商家当天的用户总数
-  def self.get_users_count_multi(sid_arr)
+  def self.get_users_count_today_multi(sid_arr)
     code = <<LUA
     local count = function(x) return redis.pcall('zcard','ckin'..x) end
     local map = function(func, array)

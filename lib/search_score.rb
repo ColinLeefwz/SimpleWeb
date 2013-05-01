@@ -105,7 +105,7 @@ module SearchScore
   #对当天有用户的商家加权
   def realtime_score(score)
     shop_ids = score.map{|x| x[0]["_id"].to_i}
-    Checkin.get_users_count_multi(shop_ids).map{|x| user_to_score(x)}.each_with_index do |s,i|
+    Checkin.get_users_count_today_multi(shop_ids).map{|x| user_to_score(x)}.each_with_index do |s,i|
       score[i][2] -= s 
     end
   end
