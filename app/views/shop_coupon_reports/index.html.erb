@@ -33,7 +33,9 @@
     </td>
   </tr>
 </table>
-
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+</div>
 <br/>
 
 <%= link_to '快速导出今日统计数据', "/shop_coupon_reports/csv_export" %>
