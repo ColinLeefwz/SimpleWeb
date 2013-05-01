@@ -69,12 +69,16 @@ class Checkin
   end
 
   #得到当天商家用户列表
-  def self.get_users_redis(sid)
+  def self.get_users_redis_today(sid)
     $redis.zrevrange("ckin#{sid.to_i}",0,-1, withscores:true)
   end
   
+  def self.get_users_redis(sid, start, size)
+    $redis.zrevrange("UA#{sid.to_i}", start, start+size-1, withscores:true)
+  end
+  
   def self.get_users_count_redis(sid)
-    $redis.zcard("ckin#{sid.to_i}")
+    $redis.zcard("UA#{sid.to_i}")
   end
   
   #批量获得商家当天的用户总数
