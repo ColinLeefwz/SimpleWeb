@@ -177,8 +177,8 @@ class Shop
 
   def users(session_uid,start,size)
     ret = []
-    users1 = Checkin.get_users_redis(id.to_i,start,size)
-    users = [[session_uid,Time.now.to_i]] + users1.delete_if{|x| x[0].to_s==session_uid.to_s} if start==0
+    users = Checkin.get_users_redis(id.to_i,start,size)
+    users = [[session_uid,Time.now.to_i]] + users.delete_if{|x| x[0].to_s==session_uid.to_s} if start==0
     users.each do |uid,cat|
       u = User.find_by_id(uid)
       next if u.nil?
