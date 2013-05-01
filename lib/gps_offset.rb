@@ -1,8 +1,15 @@
 
 module GpsOffset
 
-  
   def get_lo_offset(lo)
+    hash = "OF%.2f%.1f" %  lo
+    field = ("%.2f" %  lo[1])[-1..-1]
+    str = $redis.hget(hash,field)
+    return [0,0] if str.nil?
+    str.split(",").map{|x| x.to_f}
+  end
+  
+  def get_lo_offset_riak(lo)
     #return [0,0] if ENV["RAILS_ENV"] != "production"
     begin
       client = Ripple.client
