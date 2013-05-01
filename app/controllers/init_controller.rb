@@ -7,8 +7,9 @@ class InitController < ApplicationController
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
-    logger.info "INIT: #{params[:model]} , #{params[:os]} , #{params[:mac]}, #{params[:ver]}"
     session[:ver]=params[:ver]
+    session[:user_dev] = UserDevice.init(params[:mac],params[:os],params[:model],params[:ver],
+                                          params[:screen_w],params[:screen_h])
     if "502e6303421aa918ba000001" == session[:user_id].to_s
       ip = $web_ips[2]
     else
