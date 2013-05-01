@@ -42,7 +42,7 @@ class Photo
       return
     end
     send_wb if weibo
-    if weibo || (wx && wx>0)
+    if weibo || qq || (wx && wx>0)
       send_coupon
       send_pshop_coupon
     end
