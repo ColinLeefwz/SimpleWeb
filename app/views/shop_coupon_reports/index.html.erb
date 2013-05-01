@@ -1,4 +1,4 @@
-<div class="title2"><h2><%= params[:date]||'今日' %>优惠券使用/下载统计</h2></div>
+<div class="title2"><h2><%= @day||'今日' %>优惠券使用/下载统计</h2></div>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
     <th width="30%" align="left">优惠券</th>
@@ -15,23 +15,25 @@
         <%= report[0].name %>
       </td>
       <td align="center">
-        <%= link_to report[1], "/shop_coupons/newly_down?cid=#{report[0].id}&date=#{params[:date]|| Time.now.to_date}"%>
+        <%= link_to report[1], "/shop_coupons/newly_down?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}"%>
       </td>
       <td align="center">
-        <%=link_to report[2], "/shop_coupons/newly_use?cid=#{report[0].id}&date=#{params[:date]|| Time.now.to_date}" %>
+        <%=link_to report[2], "/shop_coupons/newly_use?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}" %>
       </td>
     </tr>
   <% end %>
 
-  <tr>
-    <td colspan="2">累计</td>
-    <td align="center">
-      <%=link_to @report.sum{|r| r[1]}, "/shop_coupons/newly_down?date=#{params[:date]|| Time.now.to_date}"%>
-    </td>
-    <td align="center">
-      <%=link_to @report.sum{|r| r[2]}, "/shop_coupons/newly_use?date=#{params[:date]|| Time.now.to_date}"%>
-    </td>
-  </tr>
+  <% if (dcount = @report.sum{|r| r[1]}) > 0  %>
+    <tr>
+      <td colspan="2">累计</td>
+      <td align="center">
+        <%=link_to dcount, "/shop_coupons/newly_down?date=#{@day|| Time.now.to_date}"%>
+      </td>
+      <td align="center">
+        <%=link_to @report.sum{|r| r[2]}, "/shop_coupons/newly_use?date=#{@day|| Time.now.to_date}"%>
+      </td>
+    </tr>
+  <% end  %>
 </table>
 <div class="pages mt15">
   <%= generate_paginate.html_safe %>
@@ -39,7 +41,20 @@
 <br/>
 
 <%= link_to '快速导出今日统计数据', "/shop_coupon_reports/csv_export" %>
+<br/>
+定制导出
+<%= form_tag "/shop_coupon_reports/csv_export" do  %>
+  开始日期:<%= text_field_tag :stime,Time.now.to_date, :size => 10  %>
+  结束日期:<%= text_field_tag :etime,Time.now.to_date, :size => 10  %>
+  优惠券全称:<%= text_field_tag :cname  %>
+  <%= submit_tag "导出", :onclick => "return submit_export();" %>
+<% end %>
 
 <script>
+  function submit_export(){
+    var patrn=/^20\d\d-(0\d|1[0-2])-(0\d|[12]\d|[3][01])$/;
+    if(!patrn.exec($('#stime').val())){alert('开始时间不是有效的日期'); return false;}
+    if(!patrn.exec($('#etime').val())){alert('结束时间不是有效的日期'); return false;}
+  }
   LeftMenu(23);
 </script>
