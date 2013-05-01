@@ -8,6 +8,7 @@ class InitController < ApplicationController
       return
     end
     session[:ver]=params[:ver]
+    session[:os] = os_type
     session[:user_dev] = UserDevice.init(params[:mac],params[:os],params[:model],params[:ver],
                                           params[:screen_w],params[:screen_h])
     if "502e6303421aa918ba000001" == session[:user_id].to_s
@@ -20,8 +21,8 @@ class InitController < ApplicationController
     else
       xmpp = $xmpp_ip
     end
-    if params[:os][0,7].downcase=="android"
-      ver = 0.81
+    if session[:os] == 1
+      ver = 0.82
     else
       ver = 2.1
     end
@@ -33,14 +34,27 @@ class InitController < ApplicationController
           ["2.1.0","我的照片墙增加新评论提醒功能\n聊天室发图分享到微信朋友圈功能",true]
          ]
   $android = [
-    ["0.81","重大功能调整",false]    
+    ["0.82","重大功能调整",false]    
   ]
   
   def upgrade
-    if params[:os][0,7].downcase=="android"
+    if session[:os] == 1
       render :json => $android[-1].to_json
     else
       render :json => $ios[-1].to_json
+    end
+  end
+  
+  private 
+  def os_type
+    return 0 if params[:os].nil?
+    case params[:os][0,3].downcase
+    when "and"
+      1
+    when "ios"
+      2
+    else
+      0
     end
   end
   
