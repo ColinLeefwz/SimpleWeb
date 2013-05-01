@@ -28,9 +28,9 @@ var couponDayStat = function(days){
         var dcount = cdss.dcount +1;
         var ucount = cdss.ucount + uc;
         var data = cdss.data;
-        var ca = data[coupon_down.cid];
+        var ca = data[coupon_down.cid.str];
         if(!ca){
-            data[coupon_down.cid] = [1, 0+uc]
+            data[coupon_down.cid.str] = [1, 0+uc]
         }
         else{
             ca[0] += 1;
