@@ -8,9 +8,16 @@ class ShopCouponReportsController < ApplicationController
 
 
   def index
-    date = params[:date] || Time.now.to_date
-    coupon_downs = CouponDown.where({sid: session[:shop_id], dat: {"$gte" => date}}).only(:cid, :uat)
-    @report = coupon_downs.group_by{|g| g.coupon}.map{|x,y| [x,y.count, y.count{|c| c.uat}]}
+    cdss = CouponDayStat.where({sid: session[:shop_id]}).only(:_id).unshift('')
+    if params[:page].to_i > 1
+      coupon_day_stat = paginate_arr(cdss, params[:page], 1)
+      @report = CouponDayStat.find_by_id(coupon_day_stat[0]).data.map{|x,y| [Coupon.find_by_id(x), y[0], y[1]]}
+    else
+      coupon_downs = CouponDown.where({sid: session[:shop_id], dat: {"$gte" => Time.now.to_date}}).only(:cid, :uat)
+      @report = coupon_downs.group_by{|g| g.coupon}.map{|x,y| [x,y.count, y.count{|c| c.uat}]}
+      paginate_arr(cdss, 1, 1)
+    end
+    
   end
 
   def csv_export
