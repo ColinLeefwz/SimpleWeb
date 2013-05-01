@@ -30,14 +30,14 @@ class ShopCouponReportsController < ApplicationController
     end  
 
     if params[:stime] && params[:etime]
-      hash = {dat: {"$gt" => params[:stime], "$lt" => params[:etime].succ}}
+      hash = {dat: {"$gt" => params[:stime], "$lt" => params[:etime].succ}, sid: session[:shop_id]}
       unless params[:cname].blank?
         cids = Coupon.where({name: params[:cname]}).only(:_id).map{|m| m._id}
         hash.merge!({cid: {'$in' => cids}})
       end
       coupon_downs = CouponDown.where(hash)
     else
-      coupon_downs = CouponDown.where({dat: {"$gt" => Time.now.to_date}})
+      coupon_downs = CouponDown.where({dat: {"$gt" => Time.now.to_date}, sid: session[:shop_id]})
     end
 
     csv_string =  CSV.generate do |csv|
