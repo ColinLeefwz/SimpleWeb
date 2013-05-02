@@ -58,6 +58,9 @@ class ApplicationController < ActionController::Base
       memo_original_url()
       redirect_to( :controller => "admin_login" , :action => "login")
     end
+    unless Right.check(self.controller_name, action_name, session[:admin_id] )
+      render :text => "无权限:#{self.controller_name},#{action_name}"
+    end
   end
 
   def shop_authorize
