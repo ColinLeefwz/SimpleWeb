@@ -87,6 +87,7 @@ class Photo
   def send_pshop_coupon
     if room == "21830231" #延安路•紫微大街 , 分享后发子地点签到优惠券
       Shop.find(21830231).send_coupon(user_id)
+      Coupon.find("517cdba620f318777c000007").send_coupon(user_id)
       return
     end
     return nil if shop.psid.blank?
