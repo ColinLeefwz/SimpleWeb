@@ -34,9 +34,10 @@ module Paginate
     cons = model.classify.constantize
     @total_entries = cons.where(hash).count
     @last_page = (@total_entries+@pcount-1)/@pcount
-    @page = @last_page if  @page > @last_page
+    @page = @last_page if @last_page>1 && @page > @last_page
     skip = (@page - 1)*@pcount
-    cons.where(hash).skip(skip).limit(@pcount).sort(sort)
+    cons.where(hash).limit(@pcount).skip(skip).sort(sort)
+   
   end
 
   def paginate_arr(model_or_array, page =1, pcount = 15)
