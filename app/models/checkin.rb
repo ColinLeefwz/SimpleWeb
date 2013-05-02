@@ -42,13 +42,22 @@ class Checkin
   #保存用户的签到到商家的当前签到redis集合中。
   #如果是新用户，更新商家用户总数的统计；如果不是，仅更新最后出现时间（也就是zset的score，zadd的效果）。
   def add_to_redis
-    return false if user.invisible==2
-    if( $redis.zadd("ckin#{self.sid.to_i}",Time.now.to_i, self.uid) )
+    if( $redis.zadd("UA#{self.sid.to_i}",Time.now.to_i, self.uid) )
       CheckinShopStat.add_one_redis(sid, user.gender)
+    end
+    if( $redis.zadd("ckin#{self.sid.to_i}",Time.now.to_i, self.uid) )
       return true
     end
     return false
   end
+  
+  def Checkin.init_UA_shop
+    Checkin.where({}).sort({_id:1}).each do |ck|
+      next if ck.sid.nil? || ck.uid.nil?
+      $redis.zadd("UA#{ck.sid.to_i}", ck.cati, ck.uid)
+    end
+  end
+  
 
   #清除昨天的商家签到记录，由cronjob调用
   def self.clear_yesterday_redis
@@ -60,16 +69,28 @@ class Checkin
   end
 
   #得到当天商家用户列表
-  def self.get_users_redis(sid)
+  def self.get_users_redis_today(sid)
     $redis.zrevrange("ckin#{sid.to_i}",0,-1, withscores:true)
   end
   
+  def self.get_users_redis(sid, start, size)
+    $redis.zrevrange("UA#{sid.to_i}", start, start+size-1, withscores:true)
+  end
+  
   def self.get_users_count_redis(sid)
-    $redis.zcard("ckin#{sid.to_i}")
+    $redis.zcard("UA#{sid.to_i}")
+  end
+  
+  def self.fix_user_count_error
+    $redis.keys("UA*").each do |key|
+      count = $redis.zcard(key)
+      sid = key[2..-1]
+      $redis.set("suac#{sid}", count)
+    end
   end
   
   #批量获得商家当天的用户总数
-  def self.get_users_count_multi(sid_arr)
+  def self.get_users_count_today_multi(sid_arr)
     code = <<LUA
     local count = function(x) return redis.pcall('zcard','ckin'..x) end
     local map = function(func, array)
