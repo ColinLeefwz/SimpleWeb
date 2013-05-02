@@ -30,8 +30,8 @@
   <% @shop_notices.each do |shop_notice| %>
     <tr>
 
-      <td><%= shop_notice.shop.try(:id).try(:to_i) %></td>
-      <td><%= shop_notice.shop.try(:name) %></td>
+      <td><%= shop_notice.shop_id.to_i %></td>
+      <td><%=link_to shop_notice.shop.try(:name)||'',  "/admin_shops/show?id=#{shop_notice.shop_id}" %></td>
       <td><%= shop_notice.title %></td>
       <td><%= shop_notice.id.generation_time.getlocal.strftime("%Y-%m-%d %H:%M:%S") %></td>
     </tr>
