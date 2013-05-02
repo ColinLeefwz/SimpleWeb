@@ -14,6 +14,7 @@ module AdminShopsHelper
 
   def gchat_img(text)
     if mat = text.match(/\[img:(.*)\]/)
+      return text if Photo.find_by_id(mat[1]).nil?
       text = text.sub(mat[1],"<a href=#{Photo.find(mat[1]).img} target='_blank'>#{mat[1]}</a><img src='#{Photo.find(mat[1]).img.url(:t2)}' />" )
     end
     text
