@@ -8,7 +8,7 @@ class InitController < ApplicationController
       return
     end
     session[:ver]=params[:ver]
-    session[:os] = os_type
+    session[:os] = UserDevice.os_type(params[:os])
     session[:user_dev] = UserDevice.init(params[:mac],params[:os],params[:model],params[:ver],
                                           params[:screen_w],params[:screen_h])
     if "502e6303421aa918ba000001" == session[:user_id].to_s
@@ -42,19 +42,6 @@ class InitController < ApplicationController
       render :json => $android[-1].to_json
     else
       render :json => $ios[-1].to_json
-    end
-  end
-  
-  private 
-  def os_type
-    return 0 if params[:os].nil?
-    case params[:os][0,3].downcase
-    when "and"
-      1
-    when "ios"
-      2
-    else
-      0
     end
   end
   
