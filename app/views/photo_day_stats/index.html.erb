@@ -20,7 +20,7 @@
       <td><%= photo_day_stat.album.to_i %></td>
       <td>
         <%  photo_day_stat.shops.each do |s| %>
-          <%= link_to  "#{Shop.find_by_id(s[0]).name}(#{s[0]})", "/admin_shops/show?id=#{s[0]}"  %>
+          <%= link_to  "#{Shop.find_by_id(s[0]).try(:name)}(#{s[0]})", "/admin_shops/show?id=#{s[0]}"  %>
           <%= s[1].to_i %>
           <br/>
         <% end %>
