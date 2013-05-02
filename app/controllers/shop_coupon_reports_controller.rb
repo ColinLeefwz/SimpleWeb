@@ -8,18 +8,18 @@ class ShopCouponReportsController < ApplicationController
 
 
   def index
-    cdss = CouponDayStat.where({sid: session[:shop_id]}).only(:_id).sort({_id: -1}).entries.unshift('')
-    if params[:page].to_i > 1
-      coupon_day_stats = paginate_arr(cdss, params[:page], 1)
-      coupon_day_stat = CouponDayStat.find_by_id(coupon_day_stats[0])
-      @day = coupon_day_stat.day
-      @report = coupon_day_stat.data.map{|x,y| [Coupon.find_by_id(x), y[0].to_i, y[1].to_i]}
+    unless params[:day].blank?
+      coupon_day_stat = CouponDayStat.where({sid: session[:shop_id], day: params[:day]}).limit(1).to_a.first
+      @day = params[:day]
+      if coupon_day_stat
+        @report = coupon_day_stat.data.map{|x,y| [Coupon.find_by_id(x), y[0].to_i, y[1].to_i]}
+      else
+        @report =[]
+      end
     else
       coupon_downs = CouponDown.where({sid: session[:shop_id], dat: {"$gte" => Time.now.to_date}}).only(:cid, :uat)
       @report = coupon_downs.group_by{|g| g.coupon}.map{|x,y| [x,y.count, y.count{|c| c.uat}]}
-      paginate_arr(cdss, 1, 1)
     end
-    
   end
 
   def csv_export
