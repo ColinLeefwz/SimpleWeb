@@ -9,7 +9,7 @@
     <th align="center">下载时间</th>
   </tr>
 
-  <% !@downs.blank? && @downs.each do |down| %>
+  <%  @downs.each do |down| %>
     <tr>
       <td width="10%"><%=image_tag down.coupon_img.try(:url,:t1), :class=>"imgs4" %></td>
       <td valign="center"><%= down.coupon_name %>
