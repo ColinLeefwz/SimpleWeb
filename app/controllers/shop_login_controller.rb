@@ -2,6 +2,7 @@
 
 class ShopLoginController < ApplicationController
   before_filter :shop_authorize, :except => [:login, :find_shop]
+  include Paginate
 
   def index
     render :layout => "shop"
@@ -30,6 +31,11 @@ class ShopLoginController < ApplicationController
   def find_shop
     shop = Shop.find_by_id(params[:id])
     render :json => {:text => shop ? shop.name : '错误id.'}
+  end
+
+  def gchat
+    @chats = paginate_arr(session_shop.gchat, params[:page], 15)
+    render :layout => "shop"
   end
 
 end
