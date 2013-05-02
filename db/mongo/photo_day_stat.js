@@ -3,12 +3,12 @@ db.loadServerScripts();
 var userDay = function(days){
     [idOfBeginDay,idOfEndDay, id] = gen_day_id(days);
     var ss={};
-	var total = 0;
+    var total = 0;
     var wb = 0;
-	var qq =0;
-	var album=0;
-	var pic=0;
-	var da = [];
+    var qq =0;
+    var album=0;
+    var pic=0;
+    var da = [];
 	
     db.photos.find({
         _id: {
@@ -21,11 +21,11 @@ var userDay = function(days){
             wb += 1;
         if(photos.qq==true)
             qq += 1;
-		if(photos.t==1)
+        if(photos.t==1)
             pic += 1;
-		if(photos.t==2)
+        if(photos.t==2)
             album += 1;	
-		if(photos.room != undefined) {
+        if(photos.room != undefined) {
             if(!ss[photos.room]){
                 ss[photos.room] = 1;
             }else{
@@ -34,7 +34,7 @@ var userDay = function(days){
         }
     })
 	
-	for(var sh in ss){
+    for(var sh in ss){
         da.push([parseInt(sh), ss[sh]])
     }
 
@@ -42,14 +42,14 @@ var userDay = function(days){
         return s[1]-f[1]
     })
 	
-	db.photo_days.insert({
+    db.photo_day_stats.insert({
         _id: id,
-		wb: wb,
-		qq: qq,
+        wb: wb,
+        qq: qq,
         total: total,
-		pic: pic,
-		album: album,
-		shops: da.slice(0, 10),
+        pic: pic,
+        album: album,
+        shops: da.slice(0, 10)
     })
 }
 

@@ -3,7 +3,7 @@
   <ul class="formlist" class="mt0">
     <li>
       <label>日期&nbsp;</label>
-      <%= text_field_tag :day, params[:day], :class => "txt l"%>
+      <%= text_field_tag :day, params[:day]|| Time.now.to_date, :class => "txt l"%>
       <input type="submit" value="查 询" class="btn1 l ml20 mt5"/>
     </li>
   </ul>
