@@ -50,7 +50,7 @@ class ShopController < ApplicationController
     pcount = params[:pcount].to_i
     page = 1 if page==0
     pcount = 20 if pcount==0
-    users = shop.users(session[:user_id],(page-1)*pcount,pcount)
+    users = shop.view_users(session[:user_id],(page-1)*pcount,pcount)
     render :json => users.to_json
   end
   
