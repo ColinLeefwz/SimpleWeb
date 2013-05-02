@@ -175,32 +175,10 @@ class Shop
     ShopNotice.where(({shop_id: self.id})).last
   end
 
-  #从CheckinShopStat获得昨天以前的用户签到记录，从redis中获得今天的用户签到记录，然后合并
-  def user_last_checkins(start,size)
-    users1 = Checkin.get_users_redis(id.to_i)
-    uids = users1.map {|arr| arr[0]}
-    css = CheckinShopStat.find_by_id(id.to_i)
-    unless (css.nil? || css==-1)
-      users2 = css.users.map {|k,v| [k,v[1].generation_time.to_i]} # ObjectId("k") => k
-      users2.sort!{|a,b| b[1] <=> a[1]}
-      users2.each {|arr| users1 << arr unless uids.member?(arr[0])}
-    end
-    #ssu = ShopSinaUser.find_by_id(id.to_i)
-    #unless ssu.nil?
-    #  ssu.users.each {|x| users1 << [x,(Time.now-10.days).to_i]}
-    #end
-    users1[start,size] #TODO: 分页判断
-  end
-
   def users(session_uid,start,size)
     ret = []
-    users1 = user_last_checkins(start,size)
-    users1 = [] if users1.nil?
-    if users1.size<2
-      #fuser = User.fake_user(User.find_by_id(session_uid))
-      #users1 << [fuser.id,Time.now.to_i-30*60-rand(10000)]
-    end
-    users = [[session_uid,Time.now.to_i]] + users1.delete_if{|x| x[0].to_s==session_uid.to_s} if start==0
+    users = Checkin.get_users_redis(id.to_i,start,size)
+    users = [[session_uid,Time.now.to_i]] + users.delete_if{|x| x[0].to_s==session_uid.to_s} if start==0
     users.each do |uid,cat|
       u = User.find_by_id(uid)
       next if u.nil?
