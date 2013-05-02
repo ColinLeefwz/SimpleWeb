@@ -26,7 +26,7 @@
 
   <% @shop_signs.each do |shop_sign| %>
     <tr>
-      <td><%= shop_sign.shop__id %>(<%= shop_sign.shop_name %>)</td>
+      <td><%=link_to "#{shop_sign.shop_name}(#{shop_sign.sid})", "/admin_shops/show?id=#{shop_sign.sid}" %></td>
       <td><%= shop_sign.name %></td>
       <td><%= shop_sign.htid %></td>
       <td><%= link_to '详情', "/admin_shop_signs/show?id=#{shop_sign.id}" %></td>

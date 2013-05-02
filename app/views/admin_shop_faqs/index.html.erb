@@ -27,7 +27,7 @@
   <% @shop_faqs.each do |faq| %>
     <tr>
       <td><%= faq.shop.id.to_i %></td>
-      <td><%= faq.shop.name %></td>
+      <td><%=link_to faq.shop.name, "/admin_shops/show?id=#{faq.sid}" %></td>
       <td><%= faq.od %></td>
       <td><%= faq.title %></td>
       <td><%= faq.img && image_tag(faq.img.url(:t2)) %><%= faq.text %></td>

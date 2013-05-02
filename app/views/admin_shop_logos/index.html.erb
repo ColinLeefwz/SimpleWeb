@@ -26,9 +26,9 @@
 
   <% @shop_logos.each do |shop_logo| %>
     <tr>
-      <td><%= shop_logo.shop.id.to_i %></td>
+      <td><%= shop_logo.shop_id.to_i %></td>
       <td><%= shop_logo.shop.city %></td>
-      <td><%= shop_logo.shop.name %></td>
+      <td><%=link_to shop_logo.shop.name, "/admin_shops/show?id=#{shop_logo.shop_id}" %></td>
       <td><%= shop_logo.shop.addr %></td>
       <td><%=image_tag shop_logo.img.url(:t2) %></td>
       <td><%= link_to '详情', "/admin_shop_logos/show?id=#{shop_logo.shop.id}" %></td>
