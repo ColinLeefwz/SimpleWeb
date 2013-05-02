@@ -1,0 +1,23 @@
+<h1>每日注册用户机型统计</h1>
+<table>
+  <tr>
+    <th>日期</th>
+    <th>iso</th>
+    <th>安卓</th>
+  </tr>
+
+  <% @user_device_stats.each do |user_device_stat| %>
+    <tr>
+      <td><%= user_device_stat._id %></td>
+      <td><%= user_device_stat.cios %></td>
+      <td><%= user_device_stat.card %></td>
+    </tr>
+  <% end %>
+</table>
+
+
+
+
+
+<%= generate_paginate3.html_safe %>
+
