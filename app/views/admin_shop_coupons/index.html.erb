@@ -35,9 +35,9 @@
 
   <% @coupons.each do |coupon| %>
     <tr>
-      <td><%= coupon.shop.try(:id).try(:to_i) %></td>
+      <td><%= coupon.shop_id.to_i %></td>
       <td><%= coupon.shop.try(:city) %></td>
-      <td><%= coupon.shop.try(:name) %></td>
+      <td><%=link_to coupon.shop.try(:name), "/admin_shops/show?id=#{coupon.shop_id}" %></td>
       <td><%= coupon.name %></td>
       <td><%=truncate(coupon.desc, :length => 25) %></td>
       <td><%=image_tag coupon.img && coupon.img.url(:t1) %></td>
