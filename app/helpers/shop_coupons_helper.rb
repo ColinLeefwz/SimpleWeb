@@ -12,7 +12,7 @@ module ShopCouponsHelper
   def age(birthday)
     return if birthday.blank?
     l = Time.now.to_date
-    b = birthday
+    b = birthday.to_date
     a = l.year-b.year
     a-1 if "#{l.month}#{l.day}" < "#{b.month}#{b.day}"
   end
