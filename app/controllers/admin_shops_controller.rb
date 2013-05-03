@@ -113,8 +113,7 @@ class AdminShopsController < ApplicationController
 
   def subshops
     @shop = Shop.find(params[:shop_id])
-    @shops = Shop.where({_id: {"$in" => @shop.shops.to_a}}).to_a
-    @shops = paginate_arr(@shops, params[:page])
+    @shops = paginate("shop", params[:page], {_id: {"$in" => @shop.shops.to_a}}, {})
   end
 
   def show
@@ -167,8 +166,9 @@ class AdminShopsController < ApplicationController
     ids = params['ids'].to_a.map{|m| m.to_i}
     ucs = ids - css
     @shop.shops = (@shop.shops.to_a - ucs) | css
+    @shop.shops = @shop.shops.uniq
     @shop.save
-    @shop.merge_subshops_locations
+    @shop.merge_subshops_locations 
     expire_cache_shop(@shop.id)
     redirect_to "/admin_shops/subshops?shop_id=#{@shop.id}"
   end
@@ -179,7 +179,7 @@ class AdminShopsController < ApplicationController
     text = "<tr><td><input type='text' value=#{params[:id]} onchange='ajaxFindShop($(this))'/></td>"
     if shop
       if pshop.shops.to_a.include?(shop.id.to_i)
-        text += "<td colspan='5'>该商家已是#{pshop.name}的子商家。</td><td><a onclick='cancel($(this))'>取消</a></td></tr>"
+        text += "<td colspan='6'>该商家已是#{pshop.name}的子商家。</td><td><a onclick='cancel($(this))'>取消</a></td></tr>"
       else
         text += "<td>#{shop.name}</td>"
         text += "<td>#{shop.tel}</td>"
