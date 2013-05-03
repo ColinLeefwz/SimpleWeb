@@ -309,6 +309,17 @@ class Shop
     end
   end
   
+  def history(skip,count)
+    $xmpp_ips.count.times do |t|
+      url = "http://#{$xmpp_ips[t]}:5280/api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}"
+      begin
+        return JSON.parse(RestClient.get(url))
+      rescue
+        next
+      end
+    end
+  end
+  
   def self.next_id
     nid = $redis.incr("SHOP_NID")
     if nid==1
