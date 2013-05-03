@@ -25,7 +25,7 @@ class ShopCheckinsController < ApplicationController
 
   def user
     @user = User.find_by_id(params[:uid])
-    @coupon_downs = CouponDown.where({sid: session[:shop_id], uid: @user.id}).sort({uat: -1})
+    @coupon_downs = CouponDown.where({sid: session[:shop_id], uid: @user.id}).sort({_id: -1})
   end
 
   def rank
