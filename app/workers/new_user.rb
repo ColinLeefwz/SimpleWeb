@@ -11,6 +11,14 @@ class NewUser
     ["502e6303421aa918ba000079"].each do |to|
       NewUser.notify(uid,sid, to, od, ud, 2 )
     end
+    ["51163b3ac90d8b90650001d5","512aeb11c90d8ba3020000d0"].each do |to|
+      NewUser.notify(uid,sid, to, od, ud, 2 )
+    end
+    if ud && ud.os_type==1
+      ["51163b3ac90d8b90650001d5","5160f00fc90d8be23000007c"].each do |to|
+        NewUser.notify(uid,sid, to, od, ud)
+      end
+    end
     Resque.enqueue(NewUserWelcome, uid,sid,1)
     #Resque.enqueue_in(3.seconds, NewUserWelcome, uid,sid,2)
     #Resque.enqueue_in(6.seconds, NewUserWelcome, uid,sid,3)
