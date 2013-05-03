@@ -477,9 +477,41 @@ GET & \multicolumn{3}{|c|}{/shop/users} \\
 \end{verbatim}
 \end{figure}
 
-
-
 在商家的用户的统计数据根据签到来统计，而签到则是当用户进入商家聊天室时自动后台发送。
+
+
+\subsection{根据商家ID获得商家的聊天室历史}
+商家的图片来自个人在聊天室的发图。\label{photowall}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/history} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+   \hline
+ skip  & 整数 & 必须 & 跳过多少条消息\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为10\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+skip的大小应该是聊天室当前最新显示的消息的总数。这样传递的skip获得的历史消息才不会和聊天室当前的消息重复。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+[["5160f00fc90d8be23000007c", "茉莉", 1367575501, "q9d8G-8"], ["5160f00fc90d8be23000007c", "哦你家", 1367575499, "q9d8G-7"]]
+返回的是历史消息的数据，其中每个字段的含义是：
+发送者、消息内容、发送时间、消息ID。
+\end{verbatim}
+\end{figure}
 
 
 

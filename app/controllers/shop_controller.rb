@@ -59,6 +59,14 @@ class ShopController < ApplicationController
     render :json => shop.safe_output_with_staffs.to_json
   end
   
+  def history
+    shop = Shop.find_by_id(params[:id])
+    skip = params[:skip].to_i
+    pcount = params[:pcount].to_i
+    pcount = 10 if pcount==0
+    render :json => shop.history(skip,pcount).to_json
+  end
+  
   def photos
     page = params[:page].to_i
     pcount = params[:pcount].to_i
