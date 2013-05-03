@@ -28,5 +28,21 @@ class UserDevice
       ud.push(:ds,self.ds[0])
     end
   end
+  
+  def os_type
+    UserDevice.os_type(self.ds[0][1])
+  end
+  
+  def self.os_type(os)
+    return 0 if os.nil?
+    case os[0,3].downcase
+    when "and"
+      1
+    when "ios"
+      2
+    else
+      0
+    end
+  end
 
 end
