@@ -23,6 +23,11 @@ class ShopCheckinsController < ApplicationController
     @checkin = Checkin.find(params[:id])
   end
 
+  def user
+    @user = User.find_by_id(params[:uid])
+    @coupon_downs = CouponDown.where({sid: session[:shop_id], uid: @user.id}).sort({uat: -1})
+  end
+
   def rank
     case params[:flag]
     when 'week'
