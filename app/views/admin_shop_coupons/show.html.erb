@@ -1,6 +1,10 @@
 <h1>优惠券详情</h1>
 
 <p>
+  <b>优惠券id:</b>
+  <%= @coupon._id %>
+</p>
+<p>
   <b>商家id:</b>
   <%= @coupon.shop.try(:id).try(:to_i) %>
 </p>
