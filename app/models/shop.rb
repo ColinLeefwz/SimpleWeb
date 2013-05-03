@@ -175,7 +175,7 @@ class Shop
     ShopNotice.where(({shop_id: self.id})).last
   end
 
-  def users(session_uid,start,size)
+  def view_users(session_uid,start,size)
     ret = []
     users = Checkin.get_users_redis(id.to_i,start,size)
     users = [[session_uid,Time.now.to_i]] + users.delete_if{|x| x[0].to_s==session_uid.to_s} if start==0
@@ -188,6 +188,10 @@ class Shop
       ret << u.safe_output(session_uid).merge!({time:Checkin.time_desc(cat)})
     end
     ret
+  end
+  
+  def users
+    Checkin.get_users_redis(id.to_i,0,-1).map {|x| User.find_by_id(x[0])}
   end
   
   def sub_shops
