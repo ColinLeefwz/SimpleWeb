@@ -15,7 +15,7 @@
     <% user =   User.find_by_id(chat[0]) %>
     <tr>
       <td class="bold"><%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M:%S")%></td>
-      <td class="bold"><%= user.try(:name) %></td>
+      <td class="bold"><%= link_to user.try(:name)|| '', "/shop_checkins/user?uid=#{chat[0]}" %></td>
       <td class="bold"><%= img_gender(user.try(:gender)) %></td>
       <td class="bold"><%= age(user.try(:birthday)) %></td>
       <td align="bold"><%= link_to('微博', user.weibo_home) if user.try(:weibo_home) %></td>
