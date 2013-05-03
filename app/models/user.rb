@@ -179,6 +179,11 @@ class User
     dstr = loc[1]
     {:last => "#{tstr} #{dstr}"}
   end
+
+  #店面最后的一次签到
+  def last_checkin(sid, lim=1)
+    Checkin.where({sid: sid, uid: _id}).sort({_id: -1}).limit(lim)
+  end
   
   def write_lat_loc(checkin, shop_name=nil)
     shop_name = checkin.shop.name if shop_name.nil?
@@ -383,7 +388,7 @@ class User
     else
       puts "#{name}, 图片未上传到阿里云。"
       begin
-       CarrierWave::Workers::StoreAsset.perform("UserLogo",head_logo_id.to_s,"img")
+        CarrierWave::Workers::StoreAsset.perform("UserLogo",head_logo_id.to_s,"img")
       rescue Errno::ENOENT => e
         puts "#{name}, 图片有数据库记录，但是文件不存在。"
         logo.destroy
