@@ -9,6 +9,9 @@ class CheckinsController < ApplicationController
     render :json => ck.to_json
   end
 
+  $majia = ["513ed1e7c90d8b590100016f","513e8f16c90d8b9f7d0002be","514190f8c90d8bc67b00054a","513e9311c90d8b0b0a000348","51427b92c90d8b670c00027b"]
+  # 球球爱嘟嘴,_凯文,甜可儿,Darcy先森,简小二 
+  
   def new_shop
     if params[:sname].length<4
       render :json => {error: "地点名称不能少于四个字"}.to_json
@@ -20,7 +23,7 @@ class CheckinsController < ApplicationController
         render :json => {error: "地点不存在：params[:sname][3..-1]"}.to_json
         return
       end      
-      if session[:user_id].to_s != shop.seller_id.to_s && !is_session_user_kx
+      if session[:user_id].to_s != shop.seller_id.to_s && !is_session_user_kx && ($majia.find{|x| session[:user_id].to_s==x}.nil? )
         render :json => {error: "没权限创建：params[:sname]"}.to_json
         return
       end
