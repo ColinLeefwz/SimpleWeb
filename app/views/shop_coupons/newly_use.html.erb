@@ -18,9 +18,8 @@
       <td valign="center"><%= use.coupon_name %>
         <span class="gray f12">（<%= use.coupon_show_t2  %>）</span>
       </td>
-      <td><%= use.user_name  %></td>
+      <td><%=link_to use.user_name, "/shop_checkins/user?uid=#{use.uid}"  %></td>
       <td align="center"><%= img_gender(use.user_gender)  %></td>
-      <td align="center"><%= age(use.user_birthday.try(:to_date)) %></td>
       <td align="center"><%= link_to '微博',use.user_weibo_home %></td>
       <td align="center"><%= use.sat.since(8.hours).strftime("%Y-%m-%d %H:%M") if use.sat %></td>
       <td align="center"><%= use.vat.since(8.hours).strftime("%Y-%m-%d %H:%M") if use.vat %></td>
