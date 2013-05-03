@@ -4,11 +4,12 @@ class NewUser
   @queue = :normal
 
   def self.perform(uid,sid,od)
+    ud=UserDevice.find_by_id(uid)
     ["502e6303421aa918ba000001","50446058421aa92042000002","50ffd0e5c90d8bf7480000b7"].each do |to|
-      NewUser.notify(uid,sid, to, od)
+      NewUser.notify(uid,sid, to, od, ud)
     end
     ["502e6303421aa918ba000079"].each do |to|
-      NewUser.notify(uid,sid, to, od, 2 )
+      NewUser.notify(uid,sid, to, od, ud, 2 )
     end
     Resque.enqueue(NewUserWelcome, uid,sid,1)
     #Resque.enqueue_in(3.seconds, NewUserWelcome, uid,sid,2)
@@ -20,7 +21,7 @@ class NewUser
     end
   end
   
-  def self.notify(uid,sid, to, od, gender=0)
+  def self.notify(uid,sid, to, od, ud, gender=0)
     user = User.find(uid)
     if gender!=0
       return if user.gender!=gender
@@ -31,7 +32,12 @@ class NewUser
     else
       from="微博"
     end
-    xmpp = Xmpp.chat(uid,to,"#{user.show_gender}:#{od}:#{from} #{shop.name} #{shop.city_fullname}")
+    if ud && ud.os_type==1
+      os = "⛄"
+    else
+      os = "🍎"
+    end
+    xmpp = Xmpp.chat(uid,to,"#{user.show_gender}:#{od}:#{from}#{os} #{shop.name} #{shop.city_fullname}")
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
   end
   

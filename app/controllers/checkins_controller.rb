@@ -123,7 +123,10 @@ class CheckinsController < ApplicationController
     end    
     checkin.add_city_redis
     new_user_nofity(checkin)
-    Coupon.find("5170b35820f318bbab00000c").send_coupon(params[:user_id]) if params[:shop_id]==$llcf.to_s
+    if params[:shop_id]==$llcf.to_s
+      c = Coupon.find_by_id("5170b35820f318bbab00000c")
+      c.send_coupon(params[:user_id]) if c
+    end
     checkin
   end
   
