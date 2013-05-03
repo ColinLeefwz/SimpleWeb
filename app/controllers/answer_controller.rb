@@ -34,7 +34,10 @@ class AnswerController < ApplicationController
     elsif txt.bytesize==4
       Resque.enqueue_in(2.seconds,XmppMsg, $gfuid,uid,"😊")
     elsif txt.bytesize<=3
-      help_msg(uid)
+      Rails.cache.fetch("HELP#{uid}", :expires_in => 12.hours) do
+        help_msg(uid)
+        "1"
+      end
     else
       Resque.enqueue(XmppMsg, uid,User.first.id,":反馈："+txt)
     end
