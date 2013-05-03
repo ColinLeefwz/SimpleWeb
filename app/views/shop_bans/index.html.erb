@@ -10,7 +10,7 @@
 
   <% @users.each do |user| %>
     <tr>
-      <td><%= user.name  %></td>
+      <td><%=link_to  user.name||'', "/shop_checkins/user?uid=#{user.id}"  %></td>
       <td align="center"><%= img_gender(user.gender)  %></td>
       <td align="center"><%= age(user.birthday.try(:to_date)) %></td>
       <td align="center"><%= link_to '微博',user.try(:weibo_home) %></td>
