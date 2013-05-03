@@ -3,8 +3,8 @@
 class XmppNotice
   @queue = :xmpp
 
-  def self.perform(sid,uid,str)
-    Xmpp.send_gchat(sid,uid,str)
+  def self.perform(sid,uid,str,id=nil)
+    Xmpp.send_gchat(sid,uid,str,id)
   end
   
 end
