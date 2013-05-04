@@ -179,11 +179,6 @@ class User
     dstr = loc[1]
     {:last => "#{tstr} #{dstr}"}
   end
-
-  #店面最后的一次签到
-  def last_checkin(sid, lim=1)
-    Checkin.where({sid: sid, uid: _id}).sort({_id: -1}).limit(lim)
-  end
   
   def write_lat_loc(checkin, shop_name=nil)
     shop_name = checkin.shop.name if shop_name.nil?
@@ -206,6 +201,18 @@ class User
     ck = Checkin.where({uid:self._id}).sort({_id:1}).last
     return nil if ck.nil?
     write_lat_loc(ck)
+  end
+  
+  def latest_checkin_time_shop(sid)
+    $redis.zscore("UA#{sid.to_i}", self.id)
+  end
+  
+  def total_checkin_shop(sid)
+    css = CheckinShopStat.find_by_id(sid.to_i)
+    return 1 if css.nil? || css==-1
+    arr = css.users[self.id.to_s]
+    return 1 if arr.nil? || arr.size<1
+    arr[0].to_i
   end
   
   def relation_hash( user_id )

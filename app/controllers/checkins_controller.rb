@@ -111,21 +111,23 @@ class CheckinsController < ApplicationController
     checkin.del = true if checkin.acc==5 && checkin.alt==0
     checkin.ip = real_ip
     send_all_notice_msg shop
-    checkin.save!
-    session_user.write_lat_loc(checkin, shop.name)
     if new_shop
+      checkin.save!
+      session_user.write_lat_loc(checkin, shop.name)
       new_shop_welcome(shop,checkin)
       return checkin
     end
     send_coupon_msg = shop.send_coupon(session[:user_id]) if params[:shop_id]!=21830231 #延安路•紫微大街
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
-    CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
     if checkin.add_to_redis #当天首次签到
+      checkin.save!
+      session_user.write_lat_loc(checkin, shop.name)
       fake_user(shop)
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
+      CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
+      checkin.add_city_redis
+      new_user_nofity(checkin)      
     end    
-    checkin.add_city_redis
-    new_user_nofity(checkin)
     if params[:shop_id]==$llcf.to_s
       c = Coupon.find_by_id("5170b35820f318bbab00000c")
       c.send_coupon(params[:user_id]) if c
