@@ -167,7 +167,10 @@ class CouponTest < ActionDispatch::IntegrationTest
     login(user.id)
     Checkin.mongo_session['checkins'].insert(:_id => "502d6303421aa918ba00007c".__mongoize_object_id__, :uid => user.id, :sid => 1)
     post "/checkins", {:lat => '30.28', :lng => "120.80", "accuract" => 65, :shop_id => 1, :user_id => user.id, :od => 1 }
-    assert_equal assigns[:send_coupon_msg], '收到4张优惠券: 签到满二次优惠,发布后首次签到优惠,每日签到优惠,2每日签到优惠'
+    assert_equal assigns[:send_coupon_msg], '收到3张优惠券: 发布后首次签到优惠,每日签到优惠,2每日签到优惠'
+    #先判断优惠券条件，后保存签到。所以累计签到优惠要下一次才能触发
+    post "/checkins", {:lat => '30.28', :lng => "120.80", "accuract" => 65, :shop_id => 1, :user_id => user.id, :od => 1 }
+    assert_equal assigns[:send_coupon_msg], '收到1张优惠券: 签到满二次优惠'
 
     ####内部店签到，只能收到内部店的优惠, 且大地点拿过优惠券， 内部店不能拿到
     post "/checkins", {:lat => '30.28', :lng => "120.80", "accuract" => 65, :shop_id => 2, :user_id => user.id, :od => 1 }
