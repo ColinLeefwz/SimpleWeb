@@ -204,7 +204,9 @@ class User
   end
   
   def latest_checkin_time_shop(sid)
-    $redis.zscore("UA#{sid.to_i}", self.id)
+    cati = $redis.zscore("UA#{sid.to_i}", self.id)
+    return "" unless cati
+    (Time.at cati).strftime("%Y-%m-%d %H:%M:%S")
   end
   
   def total_checkin_shop(sid)

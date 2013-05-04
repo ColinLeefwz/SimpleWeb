@@ -80,7 +80,7 @@ class Coupon
       return !downed(user_id)
     when 3
       return false if downed(user_id)
-      return Checkin.where({sid: self.shop_id, uid: user_id}).group_by{|s| s.id.generation_time.to_date}.count >= self.rulev.to_i
+      return Checkin.where({sid: self.shop_id, uid: user_id}).count >= self.rulev.to_i
     end
   end
 
