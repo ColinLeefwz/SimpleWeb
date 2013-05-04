@@ -41,6 +41,10 @@ class PhotoTest < ActionDispatch::IntegrationTest
     get "/oauth2/test_login?id=502e6303421aa918ba000005"
     assert_equal User.find("502e6303421aa918ba000005").id, session[:user_id]
     
+    $redis.zrem("ckin4", session[:user_id])
+    $redis.zrem("ckin4928288", session[:user_id])
+    
+    
     assert_difference 'Checkin.count' do
       do_checkin(4)
     end
@@ -48,7 +52,11 @@ class PhotoTest < ActionDispatch::IntegrationTest
     assert_difference 'Checkin.count' do
       do_checkin(4928288)
     end
-        
+
+    assert_no_difference 'Checkin.count' do
+      do_checkin(4928288)
+    end
+            
     #上传图片
     upload_photo
     assert_response :success
