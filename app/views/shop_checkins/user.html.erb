@@ -42,14 +42,14 @@
     最后签到时间:
   </span>
   <span style="width: 480px;">
-    <%= id_to_time(@user.last_checkin(session[:shop_id]).to_a.first.id) %>
+    <%= @user.latest_checkin_time_shop(session[:shop_id]) %>
   </span>
   <br/>
   <span>
     累计签到次数:
   </span>
   <span style="width: 480px;">
-    <%= link_to "1", "/shop_checkins?uid=#{@user.id}"  %>
+    <%= link_to "#{@user.total_checkin_shop(session[:shop_id])}", "/shop_checkins?uid=#{@user.id}"  %>
   </span>
 </div>
 
