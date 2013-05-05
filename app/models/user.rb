@@ -237,9 +237,13 @@ class User
     end
   end
   
+  def fan_ids
+    UserFollow.only(:_id).where({follows: self.id})
+  end
+  
+  
   def followers
-    hash = {follows: self.id}
-    users = UserFollow.only(:_id).where(hash).map {|x| User.find_by_id(x.id) }
+    users = fan_ids.map {|x| User.find_by_id(x.id) }
     users.delete(nil)
     users
   end

@@ -10,6 +10,8 @@ class UserTest < ActiveSupport::TestCase
     reload('user_blacks.js')
     reload('users.js')
     reload('user_follows.js')    
+    $redis.keys("Fan*").each {|key| $redis.zremrangebyrank(key,0,-1)}
+    $redis.keys("Frd*").each {|key| $redis.zremrangebyrank(key,0,-1)}
   end
 
 
@@ -112,26 +114,36 @@ class UserTest < ActiveSupport::TestCase
     u2 = User.find("502e6303421aa918ba000005")
     assert_equal u1.friend?(u2.id), false
     assert_equal u1.follower?(u2.id), false
+    assert_equal $redis.zcard("Fan#{u1.id}"), 0
+    assert_equal $redis.zcard("Fan#{u2.id}"), 0    
     UserFollow.add(u1.id,u2.id)
     assert_equal u1.friend?(u2.id), true
     assert_equal u1.follower?(u2.id), false
     assert_equal $redis.zscore("Frd#{u1.id}",u2.id), nil
     assert_equal $redis.zscore("Frd#{u2.id}",u1.id), nil
+    assert_equal $redis.zcard("Fan#{u1.id}"), 0
+    assert_equal $redis.zcard("Fan#{u2.id}"), 1       
     UserFollow.add(u2.id,u1.id)
     assert_equal u1.friend?(u2.id), true
     assert_equal u1.follower?(u2.id), true    
     assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 0
     assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 0    
+    assert_equal $redis.zcard("Fan#{u1.id}"), 1
+    assert_equal $redis.zcard("Fan#{u2.id}"), 1     
     UserFollow.del(u2.id,u1.id)
     assert_equal u1.friend?(u2.id), true
     assert_equal u1.follower?(u2.id), false
     assert_equal $redis.zscore("Frd#{u1.id}",u2.id), nil
     assert_equal $redis.zscore("Frd#{u2.id}",u1.id), nil    
+    assert_equal $redis.zcard("Fan#{u1.id}"), 0
+    assert_equal $redis.zcard("Fan#{u2.id}"), 1       
     UserFollow.add(u2.id,u1.id)
     assert_equal u1.friend?(u2.id), true
     assert_equal u1.follower?(u2.id), true    
     assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 0
     assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 0    
+    assert_equal $redis.zcard("Fan#{u1.id}"), 1
+    assert_equal $redis.zcard("Fan#{u2.id}"), 1   
   end
   
   
