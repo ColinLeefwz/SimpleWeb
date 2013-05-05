@@ -42,11 +42,12 @@ class Photo
       return
     end
     send_wb if weibo
+    send_qq if qq
     if weibo || qq || (wx && wx>0)
       send_coupon
       send_pshop_coupon
+      Resque.enqueue(PhotoNotice, self.id)
     end
-    send_qq if qq
     return if ENV["RAILS_ENV"] == "test"
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}")
   end
@@ -212,5 +213,6 @@ class Photo
   rescue
     nil
   end
+  
 
 end
