@@ -59,6 +59,6 @@ class UserFollow
     $redis.zrem("Frd#{uid1}",uid2)
     $redis.zrem("Frd#{uid2}",uid1)    
   end
-  
+
     
 end
