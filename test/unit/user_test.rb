@@ -9,6 +9,7 @@ class UserTest < ActiveSupport::TestCase
   def setup
     reload('user_blacks.js')
     reload('users.js')
+    reload('user_follows.js')    
   end
 
 
@@ -103,6 +104,34 @@ class UserTest < ActiveSupport::TestCase
     user = User.find_by_id('502e6303421aa918ba00007c')
     user.update_attribute(:job, "it3")
     assert_equal user.job, "it3"    
+  end
+
+  test "添加删除好友的缓存" do  
+    UserFollow.del_good_friend_redis("502e6303421aa918ba00007c","502e6303421aa918ba000005")
+    u1 = User.find("502e6303421aa918ba00007c")
+    u2 = User.find("502e6303421aa918ba000005")
+    assert_equal u1.friend?(u2.id), false
+    assert_equal u1.follower?(u2.id), false
+    UserFollow.add(u1.id,u2.id)
+    assert_equal u1.friend?(u2.id), true
+    assert_equal u1.follower?(u2.id), false
+    assert_equal $redis.zscore("Frd#{u1.id}",u2.id), nil
+    assert_equal $redis.zscore("Frd#{u2.id}",u1.id), nil
+    UserFollow.add(u2.id,u1.id)
+    assert_equal u1.friend?(u2.id), true
+    assert_equal u1.follower?(u2.id), true    
+    assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 0
+    assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 0    
+    UserFollow.del(u2.id,u1.id)
+    assert_equal u1.friend?(u2.id), true
+    assert_equal u1.follower?(u2.id), false
+    assert_equal $redis.zscore("Frd#{u1.id}",u2.id), nil
+    assert_equal $redis.zscore("Frd#{u2.id}",u1.id), nil    
+    UserFollow.add(u2.id,u1.id)
+    assert_equal u1.friend?(u2.id), true
+    assert_equal u1.follower?(u2.id), true    
+    assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 0
+    assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 0    
   end
   
   
