@@ -233,6 +233,14 @@ class User
     end
   end
   
+  def good_friend_ids
+    $redis.zrange("Frd#{id}",0,-1)
+  end
+  
+  def good_friends
+    good_friend_ids.map {|x| User.find_by_id(x)}
+  end
+  
   def self.time_desc(diff)
     diff=diff.to_i
     case diff

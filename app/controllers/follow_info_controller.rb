@@ -29,9 +29,8 @@ class FollowInfoController < ApplicationController
       render :json => [].to_json
       return
     end
-    users = who.follows.map {|x| User.find_by_id(x) }
+    users = who.good_friends
     users.delete(nil)
-    users.delete_if {|x| !x.friend?(who.id)}
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
     output_users(users.reverse)
   end

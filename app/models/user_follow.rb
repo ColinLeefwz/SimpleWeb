@@ -41,10 +41,10 @@ class UserFollow
   
   def self.init_good_friend_redis
     UserFollow.all.each do |uf|
-      users = follows.map {|x| User.find_by_id(x) }
+      users = uf.follows.map {|x| User.find_by_id(x) }
       users.delete(nil)
       users.delete_if {|x| !x.friend?(uf.id)}
-      users.each_with_index{|u,idx| $redis.zadd("Frd#{uf.id}",u.id,idx)}
+      users.each_with_index{|u,idx| $redis.zadd("Frd#{uf.id}",idx,u.id)}
     end
   end
   
@@ -59,5 +59,6 @@ class UserFollow
     $redis.zrem("Frd#{uid1}",uid2)
     $redis.zrem("Frd#{uid2}",uid1)    
   end
+  
     
 end
