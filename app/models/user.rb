@@ -185,16 +185,20 @@ class User
     if checkin.nil?
       ret = []
     else
-      ret = [checkin.cati, shop_name]
+      ret = [checkin.cati, shop_name, checkin.loc]
     end
     Rails.cache.write("LASTL:#{self.id}", ret)
     ret
   end
 
   def last_loc
-    Rails.cache.fetch("LASTL:#{self.id}") do
+    Rails.cache.fetch("LASTL:#{id}") do
       last_loc_no_cache
     end
+  end
+  
+  def self.last_loc_cache(id)
+    Rails.cache.fetch("LASTL:#{id}")
   end
     
   def last_loc_no_cache
@@ -239,6 +243,29 @@ class User
   
   def good_friends
     good_friend_ids.map {|x| User.find_by_id(x)}
+  end
+  
+  def notify_good_friend(shop)
+    good_friend_ids.each do |uid|
+      arr = User.last_loc_cache(uid)
+      next if arr.nil? || arr.size<3
+      time = Time.now.to_i - arr[0]
+      next if time>7000
+      dis = shop.get_distance(shop.loc_first,arr[3])
+      next if dis>2000
+      user = User.find_by_id(uid)
+      if time>3600
+        timedesc = "一小时前"
+      elsif time<600
+        time = time/60
+        timedesc = "#{time}分钟前"
+      else
+        time = time/600
+        timedesc = "#{time}0分钟前"
+      end
+      Xmpp.send_chat(self.id, uid, ":您的好友#{name}刚刚在'#{shop.name}'签到，和你的距离只有#{dis}米。")
+      Xmpp.send_chat(uid, self.id, ":您的好友#{user.name}#{timedesc}在'#{arr[1]}'签到，和你的距离只有#{dis}米。")
+    end
   end
   
   def self.time_desc(diff)

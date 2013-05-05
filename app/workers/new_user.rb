@@ -43,7 +43,7 @@ class NewUser
     if ud && ud.os_type==1
       os = "⛄"
     else
-      os = "🍎"
+      os = ""
     end
     xmpp = Xmpp.chat(uid,to,"#{user.show_gender}:#{od}:#{from}#{os} #{shop.name} #{shop.city_fullname}")
     RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
