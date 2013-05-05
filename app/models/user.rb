@@ -237,12 +237,21 @@ class User
     end
   end
   
+  def followers
+    hash = {follows: self.id}
+    users = UserFollow.only(:_id).where(hash).map {|x| User.find_by_id(x.id) }
+    users.delete(nil)
+    users
+  end
+  
   def good_friend_ids
     $redis.zrange("Frd#{id}",0,-1)
   end
   
   def good_friends
-    good_friend_ids.map {|x| User.find_by_id(x)}
+    users = good_friend_ids.map {|x| User.find_by_id(x)}
+    users.delete(nil)
+    users
   end
 
   def notify_good_friend(shop)    
