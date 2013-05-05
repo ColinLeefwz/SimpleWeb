@@ -132,6 +132,7 @@ class CheckinsController < ApplicationController
       c = Coupon.find_by_id("5170b35820f318bbab00000c")
       c.send_coupon(params[:user_id]) if c
     end
+    Resque.enqueue(LocationNotice, session[:user_id], params[:shop_id] )
     checkin
   end
   

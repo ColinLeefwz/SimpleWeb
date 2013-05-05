@@ -244,14 +244,20 @@ class User
   def good_friends
     good_friend_ids.map {|x| User.find_by_id(x)}
   end
-  
-  def notify_good_friend(shop)
+
+  def notify_good_friend(shop)    
+    Rails.cache.fetch("Notify#{id}", :expires_in => 60.minutes) do
+      do_notify_good_friend(shop)
+    end
+  end
+    
+  def do_notify_good_friend(shop)
     good_friend_ids.each do |uid|
       arr = User.last_loc_cache(uid)
       next if arr.nil? || arr.size<3
       time = Time.now.to_i - arr[0]
       next if time>7000
-      dis = shop.get_distance(shop.loc_first,arr[3])
+      dis = shop.get_distance(shop.loc_first,arr[2])
       next if dis>2000
       user = User.find_by_id(uid)
       if time>3600
@@ -263,10 +269,18 @@ class User
         time = time/600
         timedesc = "#{time}0分钟前"
       end
-      Xmpp.send_chat(self.id, uid, ":您的好友#{name}刚刚在'#{shop.name}'签到，和你的距离只有#{dis}米。")
-      Xmpp.send_chat(uid, self.id, ":您的好友#{user.name}#{timedesc}在'#{arr[1]}'签到，和你的距离只有#{dis}米。")
+      if dis>1000
+        dis = dis / 1000.0
+        dis = "距离%.1f公里" % dis
+      else
+        dis = "距离#{dis.to_i}米"
+      end
+      Resque.enqueue(XmppMsg, self.id, uid, ": 你的好友#{name}刚刚在#{shop.name}签到，#{dis}，快和TA打个招呼吧")
+      Resque.enqueue(XmppMsg, uid, self.id, ": 你的好友#{user.name}#{timedesc}在#{arr[1]}，#{dis}，快和TA打个招呼吧")
     end
   end
+  
+  
   
   def self.time_desc(diff)
     diff=diff.to_i
