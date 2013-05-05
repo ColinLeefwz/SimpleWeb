@@ -101,6 +101,8 @@ Memcache在web1和web2中都启动，通过客户端实现负载均衡。Memcach
 7. 照片墙第一页的缓存："SP#{sid}-#{pcount}"
 8. 商家信息缓存："views/SI#{c.params[:id]}"
 9. 用户是否在24小时内创建过地点："ADDSHOP#{user_id}"
+10. 用户在1小时内发送过好友距离提醒：“Notify#{id}”
+11. 用户在12小时内获得过脸脸全部帮助菜单：“HELP#{uid}”
 
 
  
