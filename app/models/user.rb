@@ -286,7 +286,8 @@ class User
         dis = dis / 1000.0
         dis = "距离%.1f公里" % dis
       else
-        dis = "距离#{dis.to_i}米"
+        dis = dis / 10
+        dis = "距离#{dis.to_i}0米内"
       end
       Resque.enqueue(XmppMsg, self.id, uid, ": 你的好友#{name}刚刚在#{shop.name}签到，#{dis}，快和TA打个招呼吧")
       Resque.enqueue(XmppMsg, uid, self.id, ": 你的好友#{user.name}#{timedesc}在#{arr[1]}，#{dis}，快和TA打个招呼吧")
