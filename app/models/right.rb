@@ -13,10 +13,12 @@ class Right
     right = Right.find_by_id(admin.id)
     return false if right.nil?
     xin = right.data.find {|x| x["c"]=='*'}
-    if xin["r"]
-      return true if read_op(action_name)
-    else
-      return true
+    if xin
+      if xin["r"]
+        return true if read_op(action_name)
+      else
+        return true
+      end
     end
     hash = right.data.find {|x| x["c"]==controller_name}
     return false if hash.nil?
