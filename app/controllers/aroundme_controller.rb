@@ -19,7 +19,15 @@ class AroundmeController < ApplicationController
     if in_zi_wei_yuan_dian?(lo)
       arr = [Shop.find_by_id(21830231)] + arr.delete_if{|x| x["_id"].to_s=="21830231"} #延安路•紫微大街 
     end
-    render :json =>  arr.map{|x| x.safe_output_with_users}.to_json
+    ret = arr.map{|x| x.safe_output_with_users}
+    city = arr[0]["city"]
+    coupons = $redis.smembers("ACS#{city}") 
+    if coupons
+      ret.each_with_index do |xx,i|
+        ret[i]["coupon"] = 1 if coupons.index(xx["id"].to_i.to_s)
+      end
+    end
+    render :json =>  ret.to_json
   end
 
   def shop_report
