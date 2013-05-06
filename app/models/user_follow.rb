@@ -63,7 +63,8 @@ class UserFollow
   end
   
   def self.init_fans_redis
-    User.all.each do |user|
+    User.where({auto:{"$ne" => true}}).each do |user|
+      next if $redis.zcard("Fan#{user.id}") > 0
       arr = user.fan_ids.to_a
       next if arr.size==0
       arr.each_with_index{|uid,idx| $redis.zadd("Fan#{user.id}",idx,uid)}
