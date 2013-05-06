@@ -26,7 +26,7 @@ class Right
     return read_op(action_name)
   end
   
-  def read_op(action_name)
+  def self.read_op(action_name)
     action_name=="show" || action_name=="index" || action_name=="search" || action_name=="list"
   end
 
