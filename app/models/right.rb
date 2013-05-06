@@ -12,15 +12,21 @@ class Right
     return true if admin.name=='root'
     right = Right.find_by_id(admin.id)
     return false if right.nil?
+    xin = right.data.find {|x| x["c"]=='*'}
+    if xin["r"]
+      return true if read_op(action_name)
+    else
+      return true
+    end
     hash = right.data.find {|x| x["c"]==controller_name}
     return false if hash.nil?
     return true unless hash["r"]
-    if action_name=="show" || action_name=="index" || action_name=="search" || action_name=="list"
-      return true
-    end
-    return false
+    return read_op(action_name)
   end
-
+  
+  def read_op(action_name)
+    action_name=="show" || action_name=="index" || action_name=="search" || action_name=="list"
+  end
 
 
 end
