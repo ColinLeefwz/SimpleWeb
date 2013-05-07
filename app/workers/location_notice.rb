@@ -28,15 +28,15 @@ class LocationNotice
         push(id,user,shop)
       end
     end
-    uids = $redis.zrangebyscore("UA#{sid.to_i}", 0, now-3600*3）
+    uids = $redis.zrangebyscore("UA#{sid.to_i}", 0, now-3600*3)
     uids.each do |id|
-      #
+      puts id
     end
   end
   
   def self.push(id,user,shop)
     token = User.find_by_id(id).tk
-    next unless token
+    return unless token
     Resque.enqueue(PushMsg, token,
      "#{user.name}刚刚摇了摇手机进入#{shop.name}了！")
   end
