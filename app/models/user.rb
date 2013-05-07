@@ -268,6 +268,7 @@ class User
     good_friend_ids.each do |uid|
       arr = User.last_loc_cache(uid)
       next if arr.nil? || arr.size<3
+      next if shop.name==arr[1] #同一个地点，不使用距离提醒
       time = Time.now.to_i - arr[0]
       next if time>7000
       dis = shop.get_distance(shop.loc_first,arr[2])
