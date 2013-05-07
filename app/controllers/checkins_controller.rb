@@ -131,6 +131,8 @@ class CheckinsController < ApplicationController
     if params[:shop_id]==$llcf.to_s
       c = Coupon.find_by_id("5170b35820f318bbab00000c")
       c.send_coupon(params[:user_id]) if c
+      Resque.enqueue(XmppNotice, params[:shop_id],params[:user_id],
+        "收到1张优惠券: #{c.name}","coupon#{Time.now.to_i}")
     end
     Resque.enqueue(LocationNotice, session[:user_id], params[:shop_id] )
     checkin
