@@ -364,6 +364,10 @@ class Shop
   def phone
     info.nil?? nil:info.phone
   end
+
+  def contact
+    info && info.contact
+  end
   
   def tel
     info.nil?? nil:info.tel
