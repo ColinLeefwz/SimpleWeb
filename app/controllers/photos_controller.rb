@@ -2,7 +2,7 @@
 require 'rest_client'
 
 class PhotosController < ApplicationController
-  before_filter :user_login_filter, :except => [:show ]
+  before_filter :user_login_filter, :except => [:show, :detail ]
 
   def create
     p = Photo.new(params[:photo])
@@ -34,6 +34,10 @@ class PhotosController < ApplicationController
         redirect_to Photo.img_url(params[:id],:t2)
       end
     end
+  end
+  
+  def detail
+    render :json => Photo.find_by_id(params[:id]).output_hash_with_username.to_json
   end
   
   def delete
