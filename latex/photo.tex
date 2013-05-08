@@ -96,6 +96,25 @@ GET & \multicolumn{3}{|c|}{/photos/show} \\
 聊天室里发图不需要发送已读回执消息。
 在现场收到图片时，如果图片id以“faq”开头，不添加到照片墙上。18:02:24
 
+
+\subsection{在聊天室收点击图片获取图片详细信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photos/detail} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
 \section{照片墙}
 
 \subsection{删除聊天室图片}
