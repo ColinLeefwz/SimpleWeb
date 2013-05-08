@@ -30,7 +30,9 @@ class AnswerController < ApplicationController
     elsif  txt=="?" || txt=="？"
       faq(uid)
     elsif txt=="您好" || txt=="你好"
-      Resque.enqueue_in(2.seconds,XmppMsg, $gfuid,uid,"您好😄")
+      Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"您好😄")
+    elsif txt=="你是" || txt[0,3]=="你是谁"
+      Resque.enqueue_in(5.seconds,XmppMsg, $gfuid,uid,"我是脸脸客服😊")
     elsif txt.bytesize==4
       Resque.enqueue_in(2.seconds,XmppMsg, $gfuid,uid,"😊")
     elsif txt.bytesize<=3
