@@ -4,7 +4,7 @@ class LocationNotice
   @queue = :normal
 
   def self.perform(uid,sid)
-    user = User.find_by_id(uid)
+    user = User.find_primary(uid)
     shop = Shop.find_by_id(sid)
     same_location(uid,sid,user,shop)
     user.notify_good_friend(shop) #好友在一个小时内，在距离2公里以内的其他地点签到过
