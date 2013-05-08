@@ -12,6 +12,7 @@ class ShopInfo
   field :type              #从mapabc导入的商家类型
   field :mid, type:Integer
   field :osm_id, type:Integer
+  field :contact
 
   after_find do |obj|
     obj._id = obj._id.to_i
