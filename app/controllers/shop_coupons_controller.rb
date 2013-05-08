@@ -1,6 +1,7 @@
 # encoding: utf-8
 class ShopCouponsController < ApplicationController
   before_filter :shop_authorize
+  before_filter :owner_authorize, :except => [:index, :new, :create, :newly_down, :newly_use]
   include Paginate
   layout 'shop'
 
@@ -180,4 +181,9 @@ class ShopCouponsController < ApplicationController
     render :json => {text: Del.insert(@coupon)}
   end
 
+  private
+  def owner_authorize
+    @coupon = Coupon.find(params[:id])
+    render :text => '没有权限操作此优惠券' if  @coupon && @coupon.shop_id.to_i != session[:shop_id].to_i
+  end
 end
