@@ -146,9 +146,10 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "不能解除唯一登录帐号的绑定"}.to_json
       return
     end    
-    User.find(session[:user_id]).unset(:wb_uid)
-    $redis.del("wbtoken#{session[:user_id]}")
-    $redis.del("wbexpire#{session[:user_id]}")
+    #User.find(session[:user_id]).unset(:wb_uid)
+    #$redis.del("wbtoken#{session[:user_id]}")
+    #$redis.del("wbexpire#{session[:user_id]}")
+    User.find(session[:user_id]).update_attribute(:wb_hidden, true)
     render :json => {unbind: true}.to_json
   end
   
