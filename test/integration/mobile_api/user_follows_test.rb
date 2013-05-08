@@ -12,9 +12,13 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     luser = User.find('502e6303421aa918ba000005')
     user1 = User.find('502e6303421aa918ba00007c')
     user2 = User.find('502e6303421aa918ba000002')
+    $redis.keys("Fan*").each {|key| $redis.zremrangebyrank(key,0,-1)}
+    $redis.keys("Frd*").each {|key| $redis.zremrangebyrank(key,0,-1)}
+    Rails.cache.delete("UserFollow502e6303421aa918ba000005")
 
     #登录添加好友
     login(luser.id)
+    puts luser.reload.follows_s
     assert_blank luser.reload.follows_s
     assert !user1.reload.follower?(luser.id)
     post "/follows/create",{:user_id => luser.id, :follow_id => user1.id}
