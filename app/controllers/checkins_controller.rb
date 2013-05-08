@@ -126,7 +126,8 @@ class CheckinsController < ApplicationController
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
       CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
       checkin.add_city_redis
-      new_user_nofity(checkin)      
+      new_user_nofity(checkin)   
+      Resque.enqueue(LocationNotice, session[:user_id], params[:shop_id] )   
     end    
     if params[:shop_id]==$llcf.to_s
       c = Coupon.find_by_id("5170b35820f318bbab00000c")
@@ -134,7 +135,6 @@ class CheckinsController < ApplicationController
       Resque.enqueue(XmppNotice, params[:shop_id],params[:user_id],
         "收到1张优惠券: #{c.name}","coupon#{Time.now.to_i}")
     end
-    Resque.enqueue(LocationNotice, session[:user_id], params[:shop_id] )
     checkin
   end
   
