@@ -50,8 +50,6 @@ class CouponTest < ActiveSupport::TestCase
     assert_equal coupon.allow_send_checkin?(user._id), false
     Checkin.mongo_session['checkins'].insert(_id: "502d6303421aa918ba00007c".__mongoize_object_id__,uid: user._id, sid: coupon.shop_id)
     assert_equal coupon.allow_send_checkin?(user._id), false
-    Checkin.mongo_session['checkins'].insert(_id: "502d6303421aa918ba000071".__mongoize_object_id__,uid: user._id, sid: coupon.shop_id)
-    assert_equal coupon.allow_send_checkin?(user._id), false
     Checkin.create(uid: user._id, sid: coupon.shop_id)
     assert_equal coupon.allow_send_checkin?(user._id), true
     #优惠券只能下载一个
