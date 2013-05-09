@@ -19,8 +19,8 @@
     </tr>
     <% @checkins.each do |checkin| %>
       <tr>
-        <td><img class="imgs" src="<%= checkin.user.head_logo.try(:img).try(:url,:t1) %>"><%=link_to checkin.user.name, "/shop_checkins/user?uid=#{checkin.uid}"%></td>
-        <td align="center"><%= img_gender(checkin.user.gender)%></td>
+        <td><img class="imgs" src="<%= checkin.user.head_logo.try(:img).try(:url,:t1) %>"/><%=link_to checkin.user.name, "/shop_checkins/user?uid=#{checkin.uid}"%></td>
+        <td align="center"><%= (checkin.user.show_gender)%></td>
         <td align="center"><%= age(checkin.user.birthday.try(:to_date))%></td>
         <td align="center"><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %></td>
         <td align="center"><%= link_to '历史签到', url_for(:action => 'index', :uid => checkin.user.id) %></td>
