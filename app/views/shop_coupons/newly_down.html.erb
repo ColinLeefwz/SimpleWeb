@@ -13,7 +13,8 @@
       <td valign="center"><%= down.coupon_name %>
         <span class="gray f12">（<%= down.coupon_show_t2 %>）</span>
       </td>
-      <td><%=link_to down.user_name, "/shop_checkins/user?uid=#{down.uid}"  %></td>
+      <td><%=link_to image_tag(down.user.head_logo.try(:img).try(:url,:t1), :class => "imgs"), down.user.head_logo.try(:img).try(:url), :target => 'blank' %>
+        <%=link_to down.user_name, "/shop_checkins/user?uid=#{down.uid}"  %></td>
       <td align="center"><%= (down.user_show_gender)  %></td>
       <td align="center"><%= down.dat.since(8.hours).strftime("%Y-%m-%d %H:%M") %></td>
     </tr>
