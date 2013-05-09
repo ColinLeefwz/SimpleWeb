@@ -82,6 +82,15 @@ class User
     RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
   end
   
+  def warn
+    self.update_attribute(:logo_backup, head_logo_id)
+    self.head_logo_id=nil
+    self.pcount=0
+    self.save!    
+    self.clear_all_cache
+    Xmpp.send_chat($gfuid, self.id , "您好！你的头像容易引起脸脸用户的反感，已被管理员屏蔽。请换一张头像，烦请谅解。多谢你对脸脸的支持😊")
+  end
+  
   def clear_all_cache
     self.del_my_cache
     Rails.cache.delete "UI#{self.id}#{User.first.id}"    
@@ -263,9 +272,18 @@ class User
       do_notify_good_friend(shop)
     end
   end
+  
+  def distance(uid)
+    arr = User.last_loc_cache(uid)
+    return 99999999 if arr.nil? || arr.size<3
+    arr2 = User.last_loc_cache(self.id)
+    return 99999999 if arr2.nil? || arr2.size<3    
+    return shop.get_distance(arr[2],arr2[2])
+  end
     
   def do_notify_good_friend(shop)
     good_friend_ids.each do |uid|
+      next if uid.to_s == $gfuid
       arr = User.last_loc_cache(uid)
       next if arr.nil? || arr.size<3
       next if shop.name==arr[1] #同一个地点，不使用距离提醒
