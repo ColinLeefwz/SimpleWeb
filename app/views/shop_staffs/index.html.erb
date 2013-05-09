@@ -11,7 +11,7 @@
   <% @staffs.each do |staff| %>
     <tr>
       <td>
-        <img class="imgs" src="<%= staff.user.head_logo.try(:img).try(:url,:t1) %>" />
+        <%=link_to image_tag(staff.user.head_logo.try(:img).try(:url,:t1), :class => "imgs"), staff.user.head_logo.try(:img).try(:url), :target => 'blank' %>
         <%= link_to  staff.user.try(:name)||'' , "/shop_checkins/user?uid=#{staff.user_id}" %>
       </td>
       <td align="center"><%= staff.user.show_gender %></td>
