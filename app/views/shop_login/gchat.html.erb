@@ -5,8 +5,6 @@
     <th width="20%" align="left">时间</th>
     <th width="10%" align="left">用户</th>
     <th width="8%" align="left">性别</th>
-    <th width="8%" align="center">年龄</th>
-    <th width="8%" align="center">微博</th>
     <th width="30%" align="center">内容</th>
     <th></th>
   </tr>
@@ -16,10 +14,8 @@
     <tr>
       <td class="bold"><%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M:%S")%></td>
       <td class="bold"><%= link_to user.try(:name)|| '', "/shop_checkins/user?uid=#{chat[0]}" %></td>
-      <td class="bold"><%= img_gender(user.try(:gender)) %></td>
-      <td class="bold"><%= age(user.try(:birthday)) %></td>
-      <td align="bold"><%= link_to('微博', user.weibo_home) if user.try(:weibo_home) %></td>
-      <td align="bold"><%=gchat_img(chat[1]).html_safe %></td>
+      <td class="bold"><%= user.try(:show_gender) %></td>
+      <td align="bold"><%=gchat_img2(chat[1]).html_safe %></td>
     </tr>
   <% end %>
 </table>

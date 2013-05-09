@@ -12,7 +12,7 @@
   </tr>
   <% @photos.each do |photo| %>
     <tr>
-      <td align="center"><%=image_tag photo.img.try(:url, :t2), :class=>"imgs4"  %></td>
+      <td align="center"><%=link_to image_tag(photo.img.try(:url, :t2), :class=>"imgs4"), photo.img.try(:url), :target => "blank"  %></td>
       <td align="center"> <%=link_to photo.user.try(:name)||'', "/shop_checkins/user?uid=#{photo.user_id}"   %></td>
       <td title="<%= photo.desc %>"><%=truncate photo.desc, :length => 10 %></td>
       <td><%= id_to_time(photo.id) %></td>

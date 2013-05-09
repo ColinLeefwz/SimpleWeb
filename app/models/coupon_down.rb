@@ -15,7 +15,7 @@ class CouponDown
   field :data #消费时输入的数据，可以是消费金额／手机号码／服务员编号等
 
   with_options :prefix => true, :allow_nil => true do |option|
-    option.delegate :name, :gender, :birthday, :weibo_home, :to => :user
+    option.delegate :name, :gender, :birthday, :weibo_home,:show_gender, :to => :user
     option.delegate :name, :to => :shop
     option.delegate :name, :to => :sub_shop
     option.delegate :img, :name, :show_t2,  :to => :coupon
