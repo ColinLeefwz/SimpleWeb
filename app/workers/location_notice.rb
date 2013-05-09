@@ -20,6 +20,7 @@ class LocationNotice
     now = Time.now.to_i
     $redis.zrangebyscore("UA#{sid.to_i}", now-3600*3, now, withscores:true).each do |id, time|
       next if uid==id
+      next if id.to_s == $gfuid
       if (now - time) < 3600
         push(id,user,shop)
       else
@@ -36,6 +37,7 @@ class LocationNotice
     now = Time.now.to_i
     uids = $redis.zrangebyscore("UA#{sid.to_i}", 0, now-3600*3)
     user.fan_ids.to_set.intersection(uids).each do |id|
+      next if id.to_s == $gfuid
       Resque.enqueue(XmppMsg, uid, id,
        "#{user.name}刚刚摇了摇手机进入你以前也来过的#{shop.name}，快去和TA打个招呼吧！")
     end
