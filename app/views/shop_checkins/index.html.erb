@@ -15,7 +15,7 @@
       <th width="9%">性别</th>
       <th width="17%" align="center">年龄</th>
       <th width="20%" align="center">签到时间</th>
-      <th width="23%" align="center" colspan="3">操作</th>
+      <th width="15%" align="center" colspan="2">操作</th>
     </tr>
     <% @checkins.each do |checkin| %>
       <tr>
@@ -24,7 +24,6 @@
         <td align="center"><%= age(checkin.user.birthday.try(:to_date))%></td>
         <td align="center"><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %></td>
         <td align="center"><%= link_to '历史签到', url_for(:action => 'index', :uid => checkin.user.id) %></td>
-        <td align="center"><%= link_to '微博', checkin.user.weibo_home %></td>
         <td align="center"><%= ban_link(checkin.user.id.to_s) %></td>
       </tr>
     <% end %>
