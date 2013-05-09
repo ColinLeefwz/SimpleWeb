@@ -20,6 +20,14 @@ module AdminShopsHelper
     text
   end
   
+  def gchat_img2(text)
+    if mat = text.match(/(\[img:(.*)\])/)
+      return text if Photo.find_by_id(mat[2]).nil?
+      text = text.sub(mat[1],"<a href=#{Photo.find(mat[2]).img} target='_blank'><img src='#{Photo.find(mat[2]).img.url(:t2)}' /></a>" )
+    end
+    text
+  end
+
   def type_or_user(shop)
     if shop.creator
       user = User.find_by_id(shop.creator)
