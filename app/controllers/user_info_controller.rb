@@ -8,6 +8,18 @@ class UserInfoController < ApplicationController
     render :json => user_info_cache(params[:id],session[:user_id])
   end
   
+  def search
+    users = User.where({ name: /#{params[:name]}/i})
+    ret = users.map do |u| 
+      hash = u.safe_output
+      hash.merge!({wb_name:u.wb_name, qq_name:u.qq_name})
+      hash.merge!({distance: u.distance(session[:user_id])})
+      hash
+    end
+    ret.sort {|a,b| a["distance"]<=>b["distance"]}
+    render :json => ret.to_json    
+  end
+  
   def logo
     begin
       user = User.find_by_id(params[:id])
