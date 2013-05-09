@@ -20,7 +20,7 @@
   <% @coupons.each do |coupon| %>
 
     <tr>
-      <td><%=image_tag coupon.img.url(:t1), :class=>"imgs4" %></td>
+      <td><%=link_to((image_tag(coupon.img.url(:t1), :class=>"imgs4")), coupon.img.url, :target => "blank#{coupon.id}") %></td>
       <td valign="center"><%= coupon.name %></td>
       <td class="gray" align="center"><%= coupon.show_t2  %></td>
       <td align="center"><%= link_to coupon.down_users.to_a.count, {:action => 'newly_down', :cid => coupon.id} %></td>

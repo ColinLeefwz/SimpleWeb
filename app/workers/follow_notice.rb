@@ -3,10 +3,11 @@
 class FollowNotice
   @queue = :xmpp
 
-  def self.perform(user,tid,location)
-    name = user["name"]
-    xmpp = Xmpp.chat(user["_id"],tid,": #{name}在#{location}看到并关注了你噢~")
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
+  def self.perform(uid,tid)
+    user = User.find_by_id(uid)
+    loc = User.last_loc_cache(tid)
+    loc = User.last_loc_cache(uid) if loc.nil?
+    Xmpp.send_chat(uid,tid,": #{user.name}在#{loc[1]}看到并关注了你噢~")
   end
   
 end
