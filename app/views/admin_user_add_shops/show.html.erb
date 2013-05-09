@@ -30,6 +30,16 @@
       $('#showShop').hide();
     });
 
+    $('#sig').click(function(){
+      if(confirm("确定忽略？"))
+        $.ajax({url: "/admin_user_add_shops/ignore",
+          type: 'get',
+          data: {id: <%= @shop.id.to_i %>},
+          dataType:'script',
+          success: function(){window.close();}
+        })
+    });
+
     $('#sdel').click(function(){
       $.get("/admin_user_add_shops/ajax_del?id=<%= @shop.id.to_i %>", function(){
         window.close();
@@ -64,6 +74,7 @@
   <span style="padding: 0 5px;"> <%= link_to '去百度地图查看',"http://api.map.baidu.com/lbsapi/getpoint/index.html", :target => "blan" %> </span>
   <span style="padding: 0 5px;"><%= link_to '编辑',"#" ,:id => 'cedit'%></span>
   <span style="padding: 0 5px;"><%= link_to '标记删除',"#", :id => 'sdel'%></span>
+  <span style="padding: 0 5px;"><%= link_to '忽略',"#", :id => 'sig'%></span>
   <a id="wclose" style="display:none" href="#" onclick="window.opener.rmshop('<%=@shop.id.to_i%>');window.close();">关闭当前窗口</a>
 </p>
 <div id="showShop">

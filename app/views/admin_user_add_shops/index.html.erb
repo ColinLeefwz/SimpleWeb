@@ -6,10 +6,9 @@
   <p>
     名称:<%= text_field_tag :name, params[:name] %>
     区号: <%= text_field_tag :city, params[:city], :size => 10 %>
-    <br>
-    编辑：<%= select_tag :t,options_for_select([['所有地点','0'],['已编辑地点','1']],params[:t])  %>
-    删除：<%= select_tag :del,options_for_select([['所有商家','0'],['删除商家','1']],params[:del])  %>
-    <br>
+    <br/>
+    处理方式：<%= select_tag :flag,options_for_select([['所有地点','0'],['编辑地点','1'],['标记删除','2'], ['忽略','3']],params[:flag])  %>
+    <br/>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>
@@ -21,6 +20,10 @@
     <th>区号</th>
     <th>创建者</th>
     <th>创建时间</th>
+    <% if params[:flag].in?(["0",'1','2','3']) %>
+      <th>处理方式</th>
+    <% end %>
+    <th></th>
     <th></th>
     <th></th>
   </tr>
@@ -32,8 +35,13 @@
       <td><%= shop.city_fullname %></td>
       <td><%= shop.user.try(:name) %></td>
       <td><%= shop.first_checkin_time if index==0 || index==9%></td>
-      <td><%= link_to '处理', "/admin_user_add_shops/show?id=#{shop.id.to_i}", :target => "blank" %></td>
-      <td><%= link_to '标记删除', "#{}", :onclick => "ajaxDel('#{shop.id.to_i}')" %></td>
+      <% if params[:flag].in?(["0",'1','2','3']) %>
+        <td><%= thand(shop) %></td>
+      <% end %>
+
+      <td><%= link_to '处理', "/admin_user_add_shops/show?id=#{shop.id.to_i}", :target => "blank"  unless shop.i%></td>
+      <td><%= link_to '标记删除', "#", :onclick => "ajaxDel('#{shop.id.to_i}', $(this))" unless shop.i %></td>
+      <td><%= link_to '忽略', "#", :onclick => "ajaxIg('#{shop.id.to_i}', $(this))" unless shop.i %></td>
     </tr>
 
   <% end %>
@@ -50,8 +58,19 @@
     $('#shop'+sid).remove()
   }
 
-  function ajaxDel(sid){
-    $.get("/admin_user_add_shops/ajax_del",{id: sid})
+  function ajaxDel(sid, obj){
+    if(confirm("确定标记删除？"))
+      $.get("/admin_user_add_shops/del",{id: sid})
+  }
+
+  function ajaxIg(sid, obj){
+    if(confirm("确定忽略？"))
+      $.ajax({url: "/admin_user_add_shops/ignore",
+        type: 'get',
+        data: {id: sid},
+        dataType:'json',
+        success: function(){obj.replaceWith('已忽略')}
+      })
   }
 
 </script>
