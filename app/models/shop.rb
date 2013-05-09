@@ -301,7 +301,8 @@ class Shop
 
   def gchat
     $xmpp_ips.count.times do |t|
-      url = "http://#{$xmpp_ips[t]}:5280/api/gchat?room=#{self.id.to_i}"
+
+      url = "http://#{$xmpp_ips[t]}:5280/api/gchat?room=#{21828775}"
       begin
         return JSON.parse(RestClient.get(url))
       rescue
