@@ -19,7 +19,9 @@
     </tr>
     <% @checkins.each do |checkin| %>
       <tr>
-        <td><img class="imgs" src="<%= checkin.user.head_logo.try(:img).try(:url,:t1) %>"/><%=link_to checkin.user.name, "/shop_checkins/user?uid=#{checkin.uid}"%></td>
+        <td>
+          <%=link_to image_tag(checkin.user.head_logo.try(:img).try(:url,:t1), :class => "imgs"), checkin.user.head_logo.try(:img).try(:url), :target => 'blank' %>
+          <%=link_to checkin.user.name, "/shop_checkins/user?uid=#{checkin.uid}"%></td>
         <td align="center"><%= (checkin.user.show_gender)%></td>
         <td align="center"><%= age(checkin.user.birthday.try(:to_date))%></td>
         <td align="center"><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %></td>
