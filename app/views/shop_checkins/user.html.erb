@@ -9,7 +9,7 @@
   <h3 style="margin-bottom:  10px;">个人信息</h3>
   <div style="float: left; width: 200px;">
 <%#*<img src="http://oss.aliyuncs.com/logo/507b5ac0421aa9cf3200000b/t2_0.jpg" />%>
-    <%= image_tag @user.head_logo.try(:img).try(:url, :t2)  %>
+    <%=link_to image_tag(@user.head_logo.try(:img).try(:url, :t2)), @user.head_logo.try(:img).try(:url), :target => "blank"  %>
   </div>
   <div style="float: right; width: 500px" >
     <span >昵  称：</span>
@@ -66,7 +66,7 @@
 
     <% @coupon_downs.each do |use| %>
       <tr>
-        <td width="10%"><%=image_tag use.coupon_img.try(:url,:t1), :class=>"imgs4" %></td>
+        <td width="10%"><%=link_to image_tag(use.coupon_img.try(:url,:t1), :class=>"imgs4"), use.coupon_img.try(:url), :target => 'blank' %></td>
         <td valign="center"><%= use.coupon_name %>
           <span class="gray f12">（<%= use.coupon_show_t2  %>）</span>
         </td>

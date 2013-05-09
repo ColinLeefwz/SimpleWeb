@@ -33,6 +33,8 @@ class AnswerController < ApplicationController
       want(uid,int)
     elsif  txt=="?" || txt=="？"
       faq(uid)
+    elsif txt.downcase=="hi"
+      Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"hi😄")
     elsif txt=="您好" || txt=="你好"
       Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"您好😄")
     elsif txt=="你是" || txt[0,3]=="你是谁"
