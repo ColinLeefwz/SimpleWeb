@@ -263,6 +263,14 @@ class User
       do_notify_good_friend(shop)
     end
   end
+  
+  def distance(uid)
+    arr = User.last_loc_cache(uid)
+    return 99999999 if arr.nil? || arr.size<3
+    arr2 = User.last_loc_cache(self.id)
+    return 99999999 if arr2.nil? || arr2.size<3    
+    return shop.get_distance(arr[2],arr2[2])
+  end
     
   def do_notify_good_friend(shop)
     good_friend_ids.each do |uid|
