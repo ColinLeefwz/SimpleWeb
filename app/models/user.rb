@@ -82,6 +82,15 @@ class User
     RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
   end
   
+  def warn
+    self.update_attribute(:logo_backup, head_logo_id)
+    self.head_logo_id=nil
+    self.pcount=0
+    self.save!    
+    self.clear_all_cache
+    Xmpp.send_chat($gfuid, self.id , "您好！你的头像容易引起脸脸用户的反感，已被管理员屏蔽。请换一张头像，烦请谅解。多谢你对脸脸的支持😊")
+  end
+  
   def clear_all_cache
     self.del_my_cache
     Rails.cache.delete "UI#{self.id}#{User.first.id}"    
