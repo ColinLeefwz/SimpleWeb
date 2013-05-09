@@ -6,19 +6,19 @@ class AdminUserAddShopsController < ApplicationController
 
   def index
     hash = {_id:{"$gt" => 21000000}, creator: {"$ne" => nil}}
-    case params[:t].to_s
-    when ''
-      hash.merge!({t: nil})
+   
+    case params[:flag]
+    when '0'
     when '1'
       hash.merge!({t: {"$gte" => 0}})
+    when '2'
+      hash.merge!({del: 1})
+    when '3'
+      hash.merge!({i: true})
+    else
+      hash.merge!({i: nil})
     end
 
-    case params[:del].to_s
-    when ''
-      hash.merge!({del: {"$exists" => false}})
-    when '1'
-      hash.merge!({del: 1})
-    end
     hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
     hash.merge!({city: params[:city]}) unless params[:city].blank?
     @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
@@ -28,6 +28,16 @@ class AdminUserAddShopsController < ApplicationController
     @shop = Shop.find_by_id(params[:id])
     @shop.lob = @shop.lo_to_lob.reverse.join(',')
     render :layout => true
+  end
+
+  def ignore
+    @shop = Shop.find(params[:id])
+    @shop.update_attribute(:i, true)
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json {render :json => ''}
+      format.js { render :js => "window.opener.rmshop('#{@shop.id.to_i}');"}
+    end
   end
 
   #  def baidu_map
@@ -61,6 +71,7 @@ class AdminUserAddShopsController < ApplicationController
     #    @shop.addr = shop.addr
     @shop.name = shop.name
     @shop.t = shop.t
+    @shop.i = true
     if @shop.save
       
       pshop = Shop.find_by_id(params[:pid])
@@ -80,12 +91,14 @@ class AdminUserAddShopsController < ApplicationController
   def del
     @shop = Shop.find(params[:id])
     @shop.shop_del
+    @shop.update_attribute(:i, true)
     render :js => "rmshop('#{@shop.id.to_i}');"
   end
 
   def ajax_del
     @shop = Shop.find(params[:id])
     @shop.shop_del
+    @shop.update_attribute(:i, true)
     render :js => "window.opener.rmshop('#{@shop.id.to_i}');"
   end
 

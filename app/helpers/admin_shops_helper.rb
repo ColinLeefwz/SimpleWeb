@@ -42,5 +42,11 @@ module AdminShopsHelper
       %Q(<input type="checkbox" value="#{loc.join(',')}" name="shop[lo][]" checked="checked">#{loc.join(',')}<br/>)
     end
   end
+
+  def thand(shop)
+    return "标记删除" if shop.del
+    return "编辑" if shop.t
+    return "忽略" if shop.i
+  end
   
 end
