@@ -283,6 +283,7 @@ class User
     
   def do_notify_good_friend(shop)
     good_friend_ids.each do |uid|
+      next if uid.to_s == $gfuid
       arr = User.last_loc_cache(uid)
       next if arr.nil? || arr.size<3
       next if shop.name==arr[1] #同一个地点，不使用距离提醒
