@@ -18,6 +18,10 @@ class AnswerController < ApplicationController
   
   def admin
     uid = params["uid"]
+    if uid == $gfuid
+      render :text => "1"
+      return
+    end
     txt = params["msg"]
     int = txt.to_i
     if int==1
