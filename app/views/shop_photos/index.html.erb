@@ -2,18 +2,20 @@
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th width="13%" align="center">缩略图</th>
-    <th width="9%" align="center">用户</th>
-    <th width="15%" align="left">描述</th>
-    <th width="15%" align="left">发布时间</th>
+    <th width="12%" align="center">缩略图</th>
+    <th width="20%" align="center">用户</th>
+    <th width="13%" align="left">描述</th>
+    <th width="14%" align="left">发布时间</th>
     <th width="12%" align="left">分享到微博</th>
     <th width="12%" align="left">分享到qq</th>
-    <th width="20%" align="center" colspan="3">操作</th>
+    <th width="15%" align="center" colspan="3">操作</th>
   </tr>
   <% @photos.each do |photo| %>
     <tr>
       <td align="center"><%=link_to image_tag(photo.img.try(:url, :t2), :class=>"imgs4"), photo.img.try(:url), :target => "blank"  %></td>
-      <td align="center"> <%=link_to photo.user.try(:name)||'', "/shop_checkins/user?uid=#{photo.user_id}"   %></td>
+      <td align="center">
+        <%=link_to image_tag(photo.user.try(:head_logo).try(:img).try(:url,:t1), :class => "imgs"), photo.user.try(:head_logo).try(:img).try(:url), :target => 'blank' %>
+        <%=link_to photo.user.try(:name)||'', "/shop_checkins/user?uid=#{photo.user_id}"   %></td>
       <td title="<%= photo.desc %>"><%=truncate photo.desc, :length => 10 %></td>
       <td><%= id_to_time(photo.id) %></td>
       <td><%= photo.weibo ? '是' : '否' %></td>
