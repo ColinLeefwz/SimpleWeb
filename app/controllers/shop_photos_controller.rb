@@ -7,6 +7,7 @@ class ShopPhotosController < ApplicationController
 
   def index
     hash = {:room => session[:shop_id].to_i.to_s}
+    hash.merge!({user_id: params[:uid]}) unless params[:uid].blank?
     sort = {:updated_at =>  -1}
     @photos = paginate("Photo", params[:page], hash, sort,10)
   end
