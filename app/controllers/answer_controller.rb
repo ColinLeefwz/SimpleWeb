@@ -8,7 +8,8 @@ class AnswerController < ApplicationController
     sid = params["sid"]
     uid = params["uid"]
     msg = params["msg"]
-    Xmpp.send_gchat2(uid,sid,uid,msg)
+    mid = params["mid"]    
+    Xmpp.send_gchat2(uid,sid,uid,msg,mid)
     shop = Shop.find_by_id(sid)
     text = shop.answer_text(msg)
     @text = text if ENV["RAILS_ENV"] == "test"
