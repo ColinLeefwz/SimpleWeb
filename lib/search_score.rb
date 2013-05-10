@@ -178,6 +178,7 @@ module SearchScore
     xx[2] += (10+(len-11)*3) if len>11
     xx[2] += (10+(4-len)*3) if len<4
     xx[2] -= x["v"].to_i if x["v"]
+    xx[2] -= 30 if x["password"] #开通密码的商家
     xx[2] -= user_to_score(x["utotal"].to_i)/2.0
     time_score(xx,x)
   end
