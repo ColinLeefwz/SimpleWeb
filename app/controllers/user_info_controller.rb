@@ -16,7 +16,7 @@ class UserInfoController < ApplicationController
       hash.merge!({distance: u.distance(session[:user_id])})
       hash
     end
-    ret.sort {|a,b| a["distance"]<=>b["distance"]}
+    ret.sort {|a,b| b["distance"]<=>a["distance"]}
     render :json => ret.to_json    
   end
   
