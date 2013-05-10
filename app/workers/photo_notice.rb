@@ -4,7 +4,7 @@ class PhotoNotice
   @queue = :normal
 
   def self.perform(pid)
-    photo = Photo.find_by_id(pid)
+    photo = Photo.find_primary(pid)
     user = photo.user
     user.followers.each do |u|
       next if u.id.to_s == $gfuid
