@@ -104,6 +104,7 @@ Memcache在web1和web2中都启动，通过客户端实现负载均衡。Memcach
 9. 用户是否在24小时内创建过地点："ADDSHOP#{user_id}"
 10. 用户在1小时内发送过好友距离提醒：“Notify#{id}”
 11. 用户在12小时内获得过脸脸全部帮助菜单：“HELP#{uid}”
+12. 用户在8小时内发图通知过粉丝：“PhotoFan#{uid}”
 
 
  
