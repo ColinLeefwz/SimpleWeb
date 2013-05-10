@@ -18,7 +18,7 @@
   <tr>
     <% @report.each do |report|   %>
       <td>
-        <%=image_tag report[0].img.url(:t1), :class=>"imgs4" %>
+        <%=link_to image_tag(report[0].img.url(:t1), :class=>"imgs4"), report[0].img.url, :target => "blank" %>
       </td>
       <td>
         <%= report[0].name %>
