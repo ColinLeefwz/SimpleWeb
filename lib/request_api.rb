@@ -24,4 +24,23 @@ module RequestApi
       end
     end
   end
+  module TaoBaoIP
+    def self.fetch_info(ip, err_num=0)
+      begin
+        uri = "http://ip.taobao.com/service/getIpInfo.php?ip=" + ip
+        JSON.parse(RestClient.get(uri))
+      rescue
+        return if (err_num += 1)==4
+        sleep err_num * 10
+        return fetch_info(ip,err_num)
+      end
+    end
+
+    def self.fetch_city(ip)
+      fetch_info(ip)['data']['city']
+    rescue
+      nil
+    end
+
+  end
 end
