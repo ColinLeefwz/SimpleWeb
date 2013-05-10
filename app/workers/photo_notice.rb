@@ -6,6 +6,7 @@ class PhotoNotice
   def self.perform(pid)
     photo = Photo.find_by_id(pid)
     user = photo.user
+    uid = user.id
     user.followers.each do |u|
       str = ": #{photo.user.name}刚刚在#{photo.shop.name}分享了一张图片"
       str += ",#{photo.desc}" unless photo.desc.nil?
@@ -18,7 +19,9 @@ class PhotoNotice
       Resque.enqueue(XmppMsg, user.id, u.id, "[img:#{pid}]", "NOPUSH#{$uuid.generate}")
     end
     shop = photo.shop
-    same_location_realtime(user.id, shop.id, user, shop)
+    Rails.cache.fetch("PhotoRoom#{uid}", :expires_in => 2.hours) do
+      same_location_realtime(user.id, shop.id, user, shop)
+    end
   end
 
   def self.same_location_realtime(uid,sid,user,shop)
@@ -28,6 +31,7 @@ class PhotoNotice
       next if id.to_s == $gfuid
       push(id,user,shop)
     end
+    now
   end
   
 
