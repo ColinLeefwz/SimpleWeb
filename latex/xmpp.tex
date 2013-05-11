@@ -74,6 +74,16 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{enumerate}
 
 
+\subsection{关于照片的类型}
+聊天相关的照片本来分为两种：单聊的照片和聊天室的照片。分别通过photos和photo2s接口获取。但是后来增加了问答类的图片消息和单聊时的群聊照片提醒。所以为了区分这三种照片，规定如下：
+\begin{enumerate}
+\item 在聊天室收到id以“faq”开头的图片消息，说明是问答类的图片消息 ，查看调用photos/show接口；
+\item在单聊时收到id以“U”开头的图片消息，说明是个人单聊的图片消息，查看调用photo2s/show接口;
+\item收到的其它图片消息都是聊天室的照片，包括在聊天室发的照片以及将该照片转发给个人。这类消息查看可以调用photos/show接口，也可以调用photo2s/show接口。但是这类照片还可以点评。点评时获取照片详情的接口则必须是photo/detail接口。
+\end{enumerate}
+
+不管是在单聊和群聊时，图片消息仅仅根据图片id即可判断出类别。
+
 
 \input{./photo.tex}
 
