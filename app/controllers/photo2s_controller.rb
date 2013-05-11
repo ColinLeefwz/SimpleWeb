@@ -9,18 +9,20 @@ class Photo2sController < ApplicationController
   end
   
   def show
-    photo = Photo2.find_by_id(params[:id])
-    photo = Photo.find_by_id(params[:id]) if photo.nil?
-    if params[:size].to_i==0
-      redirect_to photo.img.url
+    if params[:id][0]=="U"
+      id = params[:id][1..-1]
+      if params[:size].to_i==0
+        redirect_to Photo2.img_url(id)
+      else
+        redirect_to Photo2.img_url(id,:t2)
+      end
     else
-      redirect_to photo.img.url(:t2)
+      if params[:size].to_i==0
+        redirect_to Photo.img_url(params[:id])
+      else
+        redirect_to Photo.img_url(params[:id],:t2)
+      end
     end
-#    if params[:size].to_i==0
-#      redirect_to Photo2.img_url(params[:id])
-#    else
-#      redirect_to Photo2.img_url(params[:id],:t2)
-#    end
   end
 
 end
