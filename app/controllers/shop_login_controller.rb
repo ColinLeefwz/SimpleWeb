@@ -11,7 +11,7 @@ class ShopLoginController < ApplicationController
 
   def login
     return redirect_to :action  => 'index' if session[:shop_id]
-    ip = request.env['REMOTE_ADDR']
+    ip = real_ip
     error_num, aen = Rails.cache.read("LE#{ip}").to_s.split(';')
     return  render(:text => "密码错误#{error_num}次，请一个小时后再试") if error_num.to_i == 5
     if request.post?

@@ -8,6 +8,7 @@ class PhotoNotice
     user = photo.user
     uid = user.id
     user.followers.each do |u|
+      next if u.id.to_s == $gfuid
       str = ": #{photo.user.name}刚刚在#{photo.shop.name}分享了一张图片"
       str += ",#{photo.desc}" unless photo.desc.nil?
       if Rails.cache.read("PhotoFan#{uid}")
