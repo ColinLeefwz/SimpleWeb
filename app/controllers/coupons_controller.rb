@@ -39,4 +39,14 @@ class CouponsController < ApplicationController
     render :json => {used: params[:id]}.to_json
   end
   
+  def info
+    hash = params[:ids].split(",").map do |id|
+      cd = CouponDown.find_by_id(id)
+      #raise "优惠券拥有者错误" if cd.uid != session[:user_id]
+      shop = cd.shop
+      {id:id, loc: shop.loc_first}
+    end
+    render :json => hash.to_json
+  end
+  
 end
