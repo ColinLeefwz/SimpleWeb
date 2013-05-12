@@ -124,7 +124,12 @@ class LocateTest < ActiveSupport::TestCase
     ss = Shop.new.find_shops([30.249849, 120.159599], 65, "" , "38:22:d6:87:5f:f0" )
     assert_equal 21624918, ss[0]["_id"]
   end
-  
+
+  def test_locate17
+    ss = Shop.new.find_shops([30.281, 120.110], 65, "502e6303421aa918ba000001" )
+    assert ss.find {|x| x["name"] =~ /台北街头/ }
+  end
+    
   def test_bssid
     s0 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "" , nil ,true)[0]
     s1 = Shop.new.find_shops([ 30.279758, 120.107895 ], 100, "" , "0:23:89:71:6f:c4" ,true)[0]
