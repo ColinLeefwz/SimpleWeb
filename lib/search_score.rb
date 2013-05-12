@@ -46,14 +46,15 @@ module SearchScore
     min_d = score[0][1]
     score.reject!{|s| (s[0]["t"]==0 && s[0]["del"]) } #过期的活动
     if score.length>10
-      score.reject!{|s| s[0]["del"] }
+      score.reject!{|s| s[0]["del"] && !owner?(s,uid) }
     end
     if score.length>5
-      score = score[0,6]+score[6..-1].reject{|s| bad?(s) }
+      score = score[0,6]+score[6..-1].reject{|s| bad?(s) && !owner?(s,uid) }
     end
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
+      xx[2] -= 200 if owner?(xx,uid)
     end
     user = User.find_by_id(uid)
     if user && (Time.now.to_i-user.cati)>3600*24*7 && bssid.nil?
@@ -71,7 +72,7 @@ module SearchScore
     end
     score.sort! {|a,b| a[1]<=>b[1]}
     if score.length>9
-      ret = score[0,9]+score[9..-1].reject{|s| bad?(s) }
+      ret = score[0,9]+score[9..-1].reject{|s| bad?(s) && !owner?(s,uid) }
     else
       ret = score
     end
@@ -83,6 +84,10 @@ module SearchScore
     else
       return ret[0,30].map {|x| x[0]}
     end
+  end
+  
+  def owner?(shop, uid)
+    shop[0]["creator"] && uid.to_s == shop[0]["creator"].to_s
   end
   
   def bad?(shop)
