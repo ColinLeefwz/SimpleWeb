@@ -40,8 +40,17 @@ class AnswerController < ApplicationController
       Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"您好😄")
     elsif txt=="你是" || txt[0,3]=="你是谁"
       Resque.enqueue_in(5.seconds,XmppMsg, $gfuid,uid,"我是脸脸客服😊")
+    elsif txt.match /摇了摇手机/
+      sec = rand(30)
+      Resque.enqueue_in(sec.seconds,XmppMsg, $gfuid,uid,"脸脸网络也摇了摇手机")     
+    elsif txt.match /怎么玩/
+      Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"到每个地方，可以拍照分享照片😊")  
+      Resque.enqueue_in(10.seconds,XmppMsg, $gfuid,uid,"可以在现场和热点里找人聊天")  
+      Resque.enqueue_in(20.seconds,XmppMsg, $gfuid,uid,"还可以邀请好友一起玩。好友在你附近时可以自动提醒😄")        
     elsif txt.bytesize==4
-      Resque.enqueue_in(2.seconds,XmppMsg, $gfuid,uid,"😊")
+      txt = "😄💛🌟😜😊😊😊💤💤💤💤🙏🙏"
+      sec = rand(10)
+      Resque.enqueue_in(sec.seconds,XmppMsg, $gfuid,uid, txt[rand(13)])
     elsif txt.bytesize<=3
       Rails.cache.fetch("HELP#{uid}", :expires_in => 12.hours) do
         help_msg(uid)
