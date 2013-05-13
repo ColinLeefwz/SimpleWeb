@@ -24,6 +24,7 @@ class ShopLoginController < ApplicationController
         return flash.now[:notice] = "密码输入错误，您还有#{allow_err_num - error_num}次机会"
       end
       LoginSuccess.create(:name => params[:id], :login_at => Time.now, :ip => ip, :agent => request.env['HTTP_USER_AGENT']  )
+      Rails.cache.delete("LE#{ip}")
       session[:shop_id] = shop.id
       cookies[:id], cookies[:password] =params[:id],params[:password] if params[:remember]=='1'
       o_uri_path, session[:o_uri_path] = session[:o_uri_path]||'/shop_login/index' , nil
