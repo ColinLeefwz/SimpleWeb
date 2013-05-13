@@ -5,6 +5,7 @@ class LoginSuccess
   field :name
   field :login_at
   field :ip
+  field :agent
 
 end
 
