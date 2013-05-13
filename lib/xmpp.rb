@@ -2,38 +2,38 @@
 
 class Xmpp
 
-  def self.chat(from,to,msg, id=nil)
+  def self.chat(from,to,msg, id=nil, attrs="")
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
-    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat'><body>#{msg2}</body></message>"
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat' #{attrs}><body>#{msg2}</body></message>"
   end
   
   #发送个人聊天消息
-  def self.send_chat(from,to,msg,id=nil)
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.chat(from,to,msg,id)) 
+  def self.send_chat(from,to,msg,id=nil, attrs="")
+    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.chat(from,to,msg,id,attrs)) 
   end
   
-  def self.gchat(from,to,msg, id=nil)
+  def self.gchat(from,to,msg, id=nil, attrs="")
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
-    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from.to_i}@c.dface.cn' type='groupchat'><body>#{msg2}</body></message>"
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from.to_i}@c.dface.cn' type='groupchat' #{attrs}><body>#{msg2}</body></message>"
   end 
   
   #在聊天室发送系统消息
-  def self.send_gchat(from,to,msg, id=nil)
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat(from,to,msg,id)) 
+  def self.send_gchat(from,to,msg, id=nil, attrs="")
+    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat(from,to,msg,id,attrs)) 
   end
 
-  def self.gchat2(from,room,to,msg, id=nil)
+  def self.gchat2(from,room,to,msg, id=nil, attrs="")
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
-    "<message id='#{mid}' to='#{to}@dface.cn' from='#{room.to_i}@c.dface.cn/#{from}' type='groupchat'><body>#{msg2}</body></message>"
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{room.to_i}@c.dface.cn/#{from}' type='groupchat' #{attrs}><body>#{msg2}</body></message>"
   end 
   
   #在聊天室以特定用户身份发消息
-  def self.send_gchat2(from,room,to,msg, id=nil)
+  def self.send_gchat2(from,room,to,msg, id=nil, attrs="")
     return "消息：#{msg}" if ENV["RAILS_ENV"] != "production"
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat2(from,room,to,msg,id))   
+    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat2(from,room,to,msg,id,attrs))   
   end
   
   def self.test
