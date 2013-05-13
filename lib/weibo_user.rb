@@ -68,7 +68,7 @@ module WeiboUser
 
   #马甲帐号设置登录token存到redis
   def self.set_token(name, pass, uid)
-#    return  if  $redis.get("wbtoken#{uid}")
+    #    return  if  $redis.get("wbtoken#{uid}")
     th = do_login(name, pass)
     return if th.nil?
     $redis.set("wbtoken#{uid}",th['access_token'])
@@ -80,5 +80,32 @@ module WeiboUser
       set_token(u[:n], u[:p], u[:u])
     end
   end
+
+
+  ADVTs =  [
+    '刷微博已经out了，赶快下载脸脸APP吧',
+    '脸脸APP能找到同在#XXX的TA，一起停下来说说话',
+    '好巧哦，我也在#XXX，赶紧下载脸脸APP和我聊天吧',
+    '让偶遇变成必然，脸脸让你不再错过',
+    '做此处的地主，玩转脸脸，在这里我是地主我最大',
+    '想认识当前在#XXX的TA吗？脸脸帮你美梦成真',
+    '玩转定位，玩转GPS，下载使用脸脸认识同在现场的Ta，让你的GPS不再独行',
+    '哈哈，我也到#XXX了，用脸脸跟我聊聊吧',
+    '哈哈，你也到#XXX了，用脸脸跟我聊聊吧',
+    '哈哈，你也在#XXX？用脸脸可以看到同在#XXX的人噢',
+    "也太巧了吧，我在脸脸看到你了",
+    '你也在#XXX？听说装一款叫脸脸的APP，还可以收到#XXX的惊喜折扣噢',
+    '原来你也在#XXX?',
+    'HI,下载脸脸找到同在这里的朋友们噢','欢迎下载脸脸，进入#XXX发现更多乐趣',
+    'HI，欢迎使用脸脸，找到在#XXX的优惠折扣，找到同在#XXX的朋友',
+    '用脸脸自己的抵抗力把其他APP赶走，妈妈不用再担心我的学习',
+    '我如果不在用脸脸，就是在下载脸脸的路上',
+    '如何确定你是个地球人，你有手机，你有智能手机，你的手机上有脸脸，鉴定完毕',
+    "脸脸，让回忆无极限",
+    '脸脸，跨越世界，让沟通无障碍',
+    '掏出手机，打开脸脸，摇一摇，然后就能认识#XXX的朋友',
+    "看看谁到过#XXX",
+    "用#脸脸#签到更好玩，能够看到同在#XXX签到的人，还可能获得特别优惠"
+  ]
 
 end
