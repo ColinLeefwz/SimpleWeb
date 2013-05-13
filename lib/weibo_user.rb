@@ -68,7 +68,7 @@ module WeiboUser
 
   #马甲帐号设置登录token存到redis
   def self.set_token(name, pass, uid)
-    return  if  $redis.get("wbtoken#{uid}")
+#    return  if  $redis.get("wbtoken#{uid}")
     th = do_login(name, pass)
     return if th.nil?
     $redis.set("wbtoken#{uid}",th['access_token'])
