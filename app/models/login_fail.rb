@@ -6,6 +6,7 @@ class LoginFail
   field :password
   field :login_at
   field :ip
+  field :agent
 
 end
 
