@@ -10,15 +10,16 @@ class ShopLoginController < ApplicationController
 
 
   def login
-    #     Rails.cache.delete("LE#{real_ip}")
+#    Rails.cache.delete("LE#{real_ip}")
     return redirect_to :action  => 'index' if session[:shop_id]
     if request.post?
       shop =  Shop.find_by_id(params[:id])
       return flash.now[:notice] = 'id没有找到.' if shop.nil?
+      ip = real_ip
+      err_cache = cache_err_num(ip)
+      return  render(:text => "您的ip已经被锁定一小时，请稍后再试!") if !err_cache.nil? && err_cache[0]+1 == err_cache[1]
       if shop.password.blank? || shop.password != params[:password]
-        ip = real_ip
-        error_num, allow_err_num=  err_num(shop.city, ip)
-        return  render(:text => "您的ip已经被锁定一小时，请稍后再试!")    if allow_err_num == error_num
+        error_num, allow_err_num = err_cache ? [err_cache[0] +1, err_cache[1]] :  city_err_num(shop.city, ip)
         Rails.cache.write("LE#{ip}" ,"#{error_num};#{allow_err_num}", :expires_in => 1.hour)
         LoginFail.create(:name => params[:id], :password => params[:password], :login_at => Time.now, :ip => ip, :agent => request.env['HTTP_USER_AGENT'] )
         return flash.now[:notice] = "密码输入错误，您还有#{allow_err_num - error_num}次机会"
@@ -49,21 +50,19 @@ class ShopLoginController < ApplicationController
 
   private
 
-  def err_num(city_code, ip)
-    
+  def cache_err_num(ip)
     err_cache = Rails.cache.read("LE#{ip}")
-    if err_cache.nil?
-      cityname, citycode = RequestApi::TaoBaoIP.fetch_city(ip), nil
-      unless cityname.blank?
-        cityname = cityname.sub(/[市]/, '')
-        citycode= City.where(name: /#{cityname}/).limit(1).to_a.first.try(:code)
-      end
-      [1, (citycode && citycode != city_code) ? 3 : 5]
-    else
-      data = err_cache.split(';').map{|m| m.to_i }
-      data[0] += 1
-      data
+    return if err_cache.nil?
+    err_cache.split(';').map{|m| m.to_i }
+  end
+
+  def city_err_num(city_code, ip)
+    cityname, citycode = RequestApi::TaoBaoIP.fetch_city(ip), nil
+    unless cityname.blank?
+      cityname = cityname.sub(/[市]/, '')
+      citycode= City.where(name: /#{cityname}/).limit(1).to_a.first.try(:code)
     end
+    [1, (citycode && citycode != city_code) ? 3 : 5]
   end
 
 
