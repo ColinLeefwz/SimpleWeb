@@ -9,18 +9,18 @@
     <meta content="0" http-equiv="Expires"/>
     <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
     <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
-<meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
+    <meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
     <title>脸脸 | 商家管理后台</title>
     <link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
     <script src="/javascripts/jquery-1.6.2.min.js"></script>
-<!--[if IE 6]>
-	<%= javascript_include_tag "DD_belatedPNG.js" %>
-	
+    <!--[if IE 6]>
+    <%= javascript_include_tag "DD_belatedPNG.js" %>
+
 	<script type="text/javascript">
 		DD_belatedPNG.fix('.logo2, .logo, .nav a.hover, .nav a:hover, .nav a.index:hover, .nav .s:hover, .nav .s.hover');
-		
+
 	</script>
-<![endif]-->
+    <![endif]-->
     <script>
       $(document).ready(function(){
         $("#name").focus();
@@ -29,7 +29,7 @@
   </head>
   <body>
     <div class="area">
-      <form action="" method="post">
+      <form action="/shop_login/login" method="post">
         <div class="logo">脸脸网</div>
         <div id="Notice" class="notice"><%= notice %></div>
 
