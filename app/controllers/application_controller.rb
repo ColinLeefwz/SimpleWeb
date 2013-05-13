@@ -139,7 +139,10 @@ class ApplicationController < ActionController::Base
   
   def real_ip
     if ENV["RAILS_ENV"] == "production"
-      request.headers["HTTP_X_FORWARDED_FOR"]
+      #logger.warn request.headers["HTTP_X_FORWARDED_FOR"]
+      #logger.warn request.headers["HTTP_X_REAL_IP"]
+      #request.headers["HTTP_X_FORWARDED_FOR"]
+      request.headers["HTTP_X_REAL_IP"]
     else
       request.ip
     end
