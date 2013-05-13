@@ -127,7 +127,7 @@ class CheckinsController < ApplicationController
       CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
       checkin.add_city_redis
       new_user_nofity(checkin)   
-      Resque.enqueue(LocationNotice, session[:user_id], params[:shop_id] )   
+      Resque.enqueue(LocationNotice, session[:user_id], params[:shop_id] ) unless Os.overload?
     end    
     if params[:shop_id]==$llcf.to_s
       c = Coupon.find_by_id("5170b35820f318bbab00000c")
