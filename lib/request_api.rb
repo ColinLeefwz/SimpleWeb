@@ -14,7 +14,7 @@ module RequestApi
         JSON.parse method == :post ? RestClient.post(url, hash[:params]) : RestClient.get(url+ "?" + hash[:params].to_param)
       rescue
         err_num += 1
-        log.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{cl}.#{m} #{method} #{url + "?" + hash[:params].to_param}错误#{err_num}次. #{$!}"
+        log.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{cl}.#{m} #{method} #{url + "?" + hash[:params].to_param}错误#{err_num}次. #{$!}" if log
         if err_num == 4
           Emailer.send_mail("#{hash[:email_title]}","#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{cl}.#{m} #{method} #{url + "?" + hash[:params].to_param}错误. #{$!}").deliver unless hash[:email_title].nil?
           return
