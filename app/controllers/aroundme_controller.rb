@@ -12,6 +12,7 @@ class AroundmeController < ApplicationController
     if is_session_user_kx
       arr << Shop.find_by_id(21830784)
       arr << Shop.find_by_id(21830785)
+      arr << Shop.find_by_id(21830326)
       arr << Shop.find_by_id($llcf)
       arr << Shop.find_by_id($llsc)
       arr << Shop.find_by_id(21830231)
