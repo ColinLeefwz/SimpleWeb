@@ -222,7 +222,7 @@ class Shop
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
     return "收到#{coupons.count}张优惠券: #{name}" if ENV["RAILS_ENV"] != "production"
-    Resque.enqueue(XmppNotice, self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}","coupon#{Time.now.to_i}")
+    Resque.enqueue(XmppNotice, self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
   end
   
   def latest_coupons(n=1)
