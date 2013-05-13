@@ -16,6 +16,12 @@ Unevictable:           0 kB 11
 Mlocked:               0 kB 12
 SwapTotal:             0 kB 13
 =end
+  
+  def self.overload?(load=1)
+    curload = `cat /proc/loadavg`.split(" ")[0].to_f
+    load = `nproc`.to_i if load.nil?
+    curload > load
+  end
 
   # Active / Cached / MemFree / SwapTotal in MB
   def self.mem

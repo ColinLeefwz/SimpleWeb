@@ -74,6 +74,16 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{enumerate}
 
 
+\subsection{关于照片的类型}
+聊天相关的照片本来分为两种：单聊的照片和聊天室的照片。分别通过photos和photo2s接口获取。但是后来增加了问答类的图片消息和单聊时的群聊照片提醒。所以为了区分这三种照片，规定如下：
+\begin{enumerate}
+\item 在聊天室收到id以“faq”开头的图片消息，说明是问答类的图片消息 ，查看调用photos/show接口；
+\item在单聊时收到id以“U”开头的图片消息，说明是个人单聊的图片消息，查看调用photo2s/show接口;
+\item收到的其它图片消息都是聊天室的照片，包括在聊天室发的照片以及将该照片转发给个人。这类消息查看可以调用photos/show接口，也可以调用photo2s/show接口。但是这类照片还可以点评。点评时获取照片详情的接口则必须是photo/detail接口。
+\end{enumerate}
+
+不管是在单聊和群聊时，图片消息仅仅根据图片id即可判断出类别。
+
 
 \input{./photo.tex}
 
@@ -113,6 +123,49 @@ GET & \multicolumn{3}{|c|}{/coupons/img} \\
 \end{tabular}
    \end{center}
 \end{table}
+
+
+
+\subsection{批量获取优惠券详细信息}
+目前优惠券详细信息里只有经纬度这一个信息，以后可能扩展其它信息。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/info} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  ids  & 字符串 & 必填 &  要获取的优惠券的id，多个id以英文","分割  \\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+优惠券的经纬度主要用于优惠券的排序，以实现快速找到前所在的商家的优惠券。
+
+优惠券的排序规则为：没有看过的新优惠券在前，看过的优惠在后，用过的在最后。同种状态的优惠券，距离当前位置小的在前，大的在后。
+
+每次进入优惠券文件夹排序一次，在操作过程中不改变排序。比如查看／使用了优惠券，不改变这个优惠券的位置。只有在下次重新进入的时候，才改变位置。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/coupons/info?ids=518de040c90d8be6840000b5,5171d8d7c90d8b3c2900004a
+返回值：
+
+[
+{"id":"518de040c90d8be6840000b5","loc":[30.2425077887959,120.15320074395899]},
+{"id":"5171d8d7c90d8b3c2900004a","loc":[30.282349,120.117012]}]
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+
 
 
 
