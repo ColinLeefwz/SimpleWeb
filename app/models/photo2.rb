@@ -29,9 +29,9 @@ class Photo2
       return
     end
     if Rails.env == "production"
-      Resque.enqueue(XmppMsg, user_id, to_uid, "[img:#{self.id}]")
+      Resque.enqueue(XmppMsg, user_id, to_uid, "[img:U#{self.id}]")
     else
-      Xmpp.send_chat(user_id, to_uid, "[img:#{self.id}]")
+      Xmpp.send_chat(user_id, to_uid, "[img:U#{self.id}]")
     end
   end
   
