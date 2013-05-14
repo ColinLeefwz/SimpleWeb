@@ -16,4 +16,7 @@ class LogoUploader < CommonPhotoUploader
     process :quality => 100
   end
 
+  def extension_white_list
+    %w(jpg jpeg gif png cache2)
+  end
 end
