@@ -82,7 +82,7 @@ module WeiboUser
   end
 
 
-  ADVTs =  [
+  ADVTS =  [
     '刷微博已经out了，赶快下载脸脸APP吧',
     '脸脸APP能找到同在#XXX的TA，一起停下来说说话',
     '好巧哦，我也在#XXX，赶紧下载脸脸APP和我聊天吧',

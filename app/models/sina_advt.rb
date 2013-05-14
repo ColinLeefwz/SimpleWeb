@@ -3,11 +3,13 @@ class SinaAdvt
   include Mongoid::Document
   extend RequestApi
   store_in session: "dooo"
-  cattr_accessor :mtime, :ftime
+  
   Log =  Logger.new('log/weibo/sina_advt.log', 0, 100 * 1024 * 1024)
   request_sina :create_com, Log  #创建评论接口调用
   request_sina :place_timeline, Log #获取共用位置信息的接口调用
   request_sina :geo_to_address, Log #坐标转实际位置的接口调用
+
+  class << self; attr_accessor :dtime; end
 
   field :wbid
   field :wb_uid #发给聊天室
@@ -23,16 +25,17 @@ class SinaAdvt
     places.each do |place|
       url = "https://api.weibo.com/2/comments/create.json"
       poi = get_poi(place)
-      token = get_token(place['user']['gender'])
+      token = get_token
       params = {"id" => place['id'], "access_token"=> token, "comment" => comment(poi) }
-#      params = {"id" => '3560414669383960', "access_token"=> token, "comment" => comment(poi) }
-      next if  create_com(:url => url, :method => :post, :params => params ).nil?
+      #      params = {"id" => '3560414669383960', "access_token"=> token, "comment" => comment(poi) }
+      next if  create_com(:url => url, :method => :post, :params => params , :email_title => "发布评论语句出错").nil?
       self.create(:wbid => place['id'], :wb_uid => place['user']['id']  )
     end
   end
 
   #  #  private
 
+  #获取最新公共的位置的签到动态
   def self.place_timelines
     url = "https://api.weibo.com/2/place/public_timeline.json"
     response =  place_timeline(:url => url, :method => :get, :params => {:access_token=> $sina_token, :count => 50}, :email_title => "获取最新公共的位置动态接口出错")
@@ -40,14 +43,17 @@ class SinaAdvt
     response['statuses']
   end
 
+  #数组中循环选择评论语句
   def self.comment(poi)
-    "用手机应用#脸脸#" + (poi.blank? ? '' : "在'#{poi}'") + "签到更好玩，能够看到同一地点签到的人，还可能获得特别优惠，赶快试试吧。下载地址： http://www.dface.cn/a?v=20"
+    advts = WeiboUser::ADVTS
+    len = advts.length
+    content = advts[dtime%len]
+    content.gsub(/#XXX/, poi.blank? ? "这里" : poi)+ "下载地址： http://www.dface.cn/a?v=20"
   end
 
+  #获取签到poi的名称
   def self.get_poi(place)
     poi = place['annotations']
-    
-    #测试用， 正式用时取消这行
     unless poi.nil?
       pl =  poi.first['place']
       return pl['title'] if pl.is_a?(Hash)
@@ -70,19 +76,12 @@ class SinaAdvt
     end
   end
 
-  def self.get_token(gender)
-    return '2.007Icg9DMcnDPC5e00252e46alPoHE' #测试用，正式用时取消这行
-    uid = comment_uid(gender)
+  def self.get_token
+    users = WeiboUser::USER
+    len = users.length
+    uid = users[dtime%len][:u]
     $redis.get("wbtoken#{uid}")
   end
   
-  def self.comment_uid(gender)
-    if gender == 'm'
-      @@ftime = @@ftime.to_i+1
-      $fakeusers2[ftime%$fakeusers2.length]
-    else
-      @@mtime = @@mtime.to_i + 1
-      $fakeusers1[mtime%$fakeusers1.length]
-    end
-  end
+
 end
