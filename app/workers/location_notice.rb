@@ -56,14 +56,14 @@ class LocationNotice
       more = ""
     end
     names = couids.to_a[0,5].map {|id| User.find_by_id(id).name}.join(",")
-    Resque.enqueue(XmppNotice, sid, uid, "你的朋友#{names}#{more}以前也来过#{shop.name}")
+    Resque.enqueue(XmppNotice, sid, uid, "你的朋友#{names}#{more}也来过这里")
   end
   
   def self.push(id,user,shop)
     token = User.find_by_id(id).tk
     return unless token
     Resque.enqueue(PushMsg, token,
-     "#{user.name}刚刚摇了摇手机进入#{shop.name}了！", "push_scene")
+     "#{user.name}也进入#{shop.name}了！", "push_scene")
   end
   
 end
