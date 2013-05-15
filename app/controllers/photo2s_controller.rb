@@ -16,6 +16,13 @@ class Photo2sController < ApplicationController
       else
         redirect_to Photo2.img_url(id,:t2)
       end
+    elsif params[:id][0,4]=="Logo"
+        id = params[:id][4..-1]
+        if params[:size].to_i==0
+          redirect_to UserLogo.img_url(id)
+        else
+          redirect_to UserLogo.img_url(id,:t2)
+        end
     else
       if params[:size].to_i==0
         redirect_to Photo.img_url(params[:id])
