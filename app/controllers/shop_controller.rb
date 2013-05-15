@@ -32,15 +32,44 @@ class ShopController < ApplicationController
   end
   
   #签到时输入地点名称查找地点
+  #少于三个字时，只查询附近的可以进入的现场
+  #当大于三个字时
+  #   名称完全匹配时，可以进入虚拟的活动地点
+  #   名称部分匹配时，可以围观
   def add_search
-    if params[:sname].nil? || params[:sname].length>4
+    if params[:sname].nil?
       render :json => [].to_json
       return
     end
     lo = [params[:lat].to_f, params[:lng].to_f]
-    radis = 0.001 + params[:sname].length*0.0005
-    shops = Shop.where({lo:{"$within" => {"$center" => [lo,radis]}}, name:/#{params[:sname]}/}).limit(10)
-    render :json =>  shops.map {|s| {id:s.id,name:s.name} }.to_json
+    if params[:sname].length<3
+      radis = 0.001 + params[:sname].length*0.0005
+      shops = Shop.where({lo:{"$within" => {"$center" => [lo,radis]}}, name:/#{params[:sname]}/}).limit(10)
+      #TODO: 增加缓存，key为经纬度加查询关键字
+      render :json =>  shops.map {|s| {id:s.id,name:s.name, visit:0} }.to_json
+    else
+      ret = []
+      shop = Shop.where({t:0, name:params[:sname]}).first #虚拟的活动地点名称完全匹配时可以进入
+      if shop
+        hash = {id:shop.id,name:shop.name, visit:0}  
+        ret << hash
+      end
+      shop1s = Shop.where({lo:{"$within" => {"$center" => [lo,0.0025]}}, name:/#{params[:sname]}/}).limit(10)
+      shop1s.each do |s| 
+        hash = {id:s.id,name:s.name, visit:0} 
+        ret << hash
+      end
+      if ret.length<1
+        #city = Shop.get_city(lo)
+        shops = Shop.where({lo:{"$within" => {"$center" => [lo,0.03]}}, name:/#{params[:sname]}/}).limit(10)
+        shops.each do |s| 
+          hash = {id:s.id,name:s.name, visit:1}  
+          ret << hash
+        end
+      end
+      render :json =>  ret.to_json
+    end
+
   end
 
   
