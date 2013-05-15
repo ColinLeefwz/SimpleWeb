@@ -20,7 +20,7 @@ class Shop
   field :lo, type:Array #实际的经纬度
   field :city
   field :del,type:Integer   #删除标记, 如果被删除del=1，否则del不存在. 
-  field :t                #脸脸的商家类型
+  field :t ,type:Integer #脸脸的商家类型
   field :password
   field :utotal, type:Integer, default:0 #截至到昨天，该商家的用户总数
   field :shops, type:Array #子商家
