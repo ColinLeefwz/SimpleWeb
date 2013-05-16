@@ -179,14 +179,9 @@ class User
   end
 
   #当前用户的最后位置。 user_id 是查看当前用户的user
-  def last_location( user_id )
-    return {:last => "隐身"} if block?(user_id)
-    loc = last_loc
-    return {:last => ""} if loc.nil? || loc.size==0
-    diff = Time.now.to_i - loc[0]
-    tstr = User.time_desc(diff)
-    dstr = loc[1]
-    {:last => "#{tstr} #{dstr}"}
+  def last_location( user_id=nil )
+    return {:last => "隐身", :time => ""} if user_id && block?(user_id)
+    User.last_loc_to_hash(last_loc)
   end
   
   def write_lat_loc(checkin, shop_name=nil)
@@ -204,6 +199,14 @@ class User
     Rails.cache.fetch("LASTL:#{id}") do
       last_loc_no_cache
     end
+  end
+  
+  def self.last_loc_to_hash(loc)
+    return {:last => "", :time => ""} if loc.nil? || loc.size==0
+    diff = Time.now.to_i - loc[0]
+    tstr = User.time_desc(diff)
+    dstr = loc[1]
+    {:last => "#{tstr} #{dstr}", :time => tstr}
   end
   
   def self.last_loc_cache(id)
