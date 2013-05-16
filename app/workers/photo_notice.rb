@@ -9,7 +9,7 @@ class PhotoNotice
     uid = user.id
     user.followers.each do |u|
       next if u.id.to_s == $gfuid
-      str = ": #{photo.user.name}刚刚在#{photo.shop.name}分享了一张图片"
+      str = ": #{photo.user.name}在#{photo.shop.name}分享了一张图片"
       str += ",#{photo.desc}" unless photo.desc.nil?
       if Rails.cache.read("PhotoFan#{uid}")
         Resque.enqueue(XmppMsg, user.id, u.id, str, "NOPUSH#{$uuid.generate}")
@@ -40,7 +40,7 @@ class PhotoNotice
     token = User.find_by_id(id).tk
     return unless token
     Resque.enqueue(PushMsg, token,
-     "#{user.name}刚刚在#{shop.name}分享了一张照片！")
+     "#{user.name}在#{shop.name}分享了一张照片")
   end
     
 end
