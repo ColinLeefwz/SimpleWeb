@@ -22,7 +22,11 @@ class UserInfoController < ApplicationController
   
   def logo
     begin
-      user = User.find_by_id(params[:id])
+      if session[:user_id].to_s == params[:id]
+        user = User.find_primary(params[:id])
+      else
+        user = User.find_by_id(params[:id])
+      end
       if params[:size].to_i==0
         redirect_to UserLogo.img_url(user.head_logo_id)
       elsif params[:size].to_i==2
