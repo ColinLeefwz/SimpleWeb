@@ -11,19 +11,20 @@ class SinaAdvt
   request_sina :repost, Log # 转发并@
 
   class << self; attr_accessor :dtime;  end
-  @dtime = 0;
+  
 
   field :wbid
   field :wb_uid #发给聊天室
 
   def self.com
-    c = create_comment
-    com if c.nil?
+    c = place_repost
+    place_repost if c.nil?
   end
 
 
   
-  def self.place_post
+  def self.place_repost
+    @dtime = rand(100)
     places = place_timelines
     tokens = WeiboUser::USER2.map{|m|  $redis.get("wbtoken#{m}")}.compact
     return unless places.is_a?(Array)
@@ -39,8 +40,8 @@ class SinaAdvt
 
   #转发并评论指定的微博
   def self.do_repost(wbid, status, token)
-    params = { "id" => wbid,  "status" => status, "token" => token,"is_comment" => 1}
-    params = { "id" => '3560414669383960',  "status" => status, "token" => token,"is_comment" => 1}
+    params = { "id" => wbid,  "status" => status, "access_token" => token,"is_comment" => 1}
+    params = { "id" => '3560414669383960',  "status" => status, "access_token" => token,"is_comment" => 1}
     url = "https://api.weibo.com/2/statuses/repost.json"
     repost(:url => url, :method => :post, :params => params, :email_title => "转发并评论签到微博出错" )
   end
