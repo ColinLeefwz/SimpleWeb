@@ -30,8 +30,8 @@
 
   <% @photos.each do |photo| %>
     <tr>
-      <td><%= link_to photo.shop.try(:name), "/admin_shops/show?id=#{photo.shop.try("id")}" %></td>
-      <td><%= link_to photo.user.try(:name), "/admin_users/show?id=#{photo.user.try('id')}" %></td>
+      <td><%= link_to photo.shop.try(:name)||'' , "/admin_shops/show?id=#{photo.shop.try("id")}" %></td>
+      <td><%= link_to photo.user.try(:name) || '', "/admin_users/show?id=#{photo.user.try('id')}" %></td>
       <td><%= photo.id.generation_time.localtime.strftime("%Y-%m-%d %H:%M")  %></td>
       <td><%= image_tag photo.img.url(:t2) %></td>
       <td title="<%= photo.desc %>"><%=truncate photo.desc, :length => 10 %></td>
