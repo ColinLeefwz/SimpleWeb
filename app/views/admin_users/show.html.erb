@@ -68,10 +68,15 @@
   <%= @user.blacks_s.count %>
 </p>
 
+<p>
+  <b>用户照片:</b>
+  <%=link_to "查看", "/admin_shop_photos?user_id=#{@user.id}" %>
+</p>
+
 <!--
 <p>
   <b>聊天记录:</b>
-  <%=link_to "查看", "/admin_users/chat?id=#{@user.id}" %>
+<%=link_to "查看", "/admin_users/chat?id=#{@user.id}" %>
 </p>
 -->
 
