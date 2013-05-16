@@ -8,8 +8,10 @@ class SinaAdvt
   request_sina :create_com, Log  #创建评论接口调用
   request_sina :place_timeline, Log #获取共用位置信息的接口调用
   request_sina :geo_to_address, Log #坐标转实际位置的接口调用
+  request_sina :repost, Log # 转发并@
 
-  class << self; attr_accessor :dtime; end
+  class << self; attr_accessor :dtime;  end
+  @dtime = 0;
 
   field :wbid
   field :wb_uid #发给聊天室
@@ -19,18 +21,28 @@ class SinaAdvt
     com if c.nil?
   end
 
-  def self.create_comment
+
+  
+  def self.place_post
     places = place_timelines
+    tokens = WeiboUser::USER2.map{|m|  $redis.get("wbtoken#{m}")}.compact
     return unless places.is_a?(Array)
     places.each do |place|
-      url = "https://api.weibo.com/2/comments/create.json"
-      poi = get_poi(place)
-      token = get_token
-      params = {"id" => place['id'], "access_token"=> token, "comment" => comment(poi) }
-      #      params = {"id" => '3560414669383960', "access_token"=> token, "comment" => comment(poi) }
-      next if  create_com(:url => url, :method => :post, :params => params , :email_title => "发布评论语句出错").nil?
+      token = fetch_token(tokens)
+      status =  comment_text( get_poi(place))
+      dtime += 1
+      next unless  do_repost( place['id'], status, token)
       self.create(:wbid => place['id'], :wb_uid => place['user']['id']  )
     end
+  end
+
+
+  #转发并评论指定的微博
+  def self.do_repost(wbid, status, token)
+    params = { "id" => wbid,  "status" => status, "token" => token,"is_comment" => 1}
+    params = { "id" => '3560414669383960',  "status" => status, "token" => token,"is_comment" => 1}
+    url = "https://api.weibo.com/2/statuses/repost.json"
+    repost(:url => url, :method => :post, params => params, :email_title => "转发并评论签到微博出错" )
   end
 
   #  #  private
@@ -44,7 +56,7 @@ class SinaAdvt
   end
 
   #数组中循环选择评论语句
-  def self.comment(poi)
+  def self.comment_text(poi)
     advts = WeiboUser::ADVTS
     len = advts.length
     content = advts[dtime%len]
@@ -76,11 +88,9 @@ class SinaAdvt
     end
   end
 
-  def self.get_token
-    users = WeiboUser::USER
-    len = users.length
-    uid = users[dtime%len][:u]
-    $redis.get("wbtoken#{uid}")
+  def self.fetch_token(tokens)
+    len = tokens.length
+    tokens[dtime%len]
   end
   
 
