@@ -14,6 +14,7 @@ class AdminShopPhotosController < ApplicationController
     end
 
     hash.merge!(:room => params[:sid].to_i.to_s) unless params[:sid].blank?
+    hash.merge!(:user_id => params[:user_id]) unless params[:user_id].blank?
 
     @photos = paginate3("Photo", params[:page], hash, sort)
   end
