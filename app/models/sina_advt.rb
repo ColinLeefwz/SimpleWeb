@@ -30,7 +30,7 @@ class SinaAdvt
     places.each do |place|
       token = fetch_token(tokens)
       status =  comment_text( get_poi(place))
-      dtime += 1
+      self.dtime += 1
       next unless  do_repost( place['id'], status, token)
       self.create(:wbid => place['id'], :wb_uid => place['user']['id']  )
     end
@@ -42,7 +42,7 @@ class SinaAdvt
     params = { "id" => wbid,  "status" => status, "token" => token,"is_comment" => 1}
     params = { "id" => '3560414669383960',  "status" => status, "token" => token,"is_comment" => 1}
     url = "https://api.weibo.com/2/statuses/repost.json"
-    repost(:url => url, :method => :post, params => params, :email_title => "转发并评论签到微博出错" )
+    repost(:url => url, :method => :post, :params => params, :email_title => "转发并评论签到微博出错" )
   end
 
   #  #  private
@@ -50,7 +50,7 @@ class SinaAdvt
   #获取最新公共的位置的签到动态
   def self.place_timelines
     url = "https://api.weibo.com/2/place/public_timeline.json"
-    response =  place_timeline(:url => url, :method => :get, :params => {:access_token=> $sina_token, :count => 50}, :email_title => "获取最新公共的位置动态接口出错")
+    response =  place_timeline(:url => url, :method => :get, :params => {:access_token=> $sina_token, :count => 19}, :email_title => "获取最新公共的位置动态接口出错")
     return unless response.is_a?(Hash)
     response['statuses']
   end
@@ -59,8 +59,9 @@ class SinaAdvt
   def self.comment_text(poi)
     advts = WeiboUser::ADVTS
     len = advts.length
-    content = advts[dtime%len]
-    content.gsub(/#XXX/, poi.blank? ? "这里" : poi)+ "下载地址： http://www.dface.cn/a?v=20"
+    index = dtime%len
+    content = advts[index]
+    content.gsub(/#XXX/, poi.blank? ? "这里" : poi)+ "下载地址： http://www.dface.cn/a?v=20#{index.to_s.rjust(3,'0')}"
   end
 
   #获取签到poi的名称
