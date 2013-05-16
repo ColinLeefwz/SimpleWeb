@@ -65,7 +65,7 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     get "/follow_info/friends?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    data.map{|m| m.delete('last'); m}
+    data.map{|m| m.delete('last');m.delete('time'); m}
     assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
 
     #登录好友列表
@@ -73,7 +73,7 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     get "/follow_info/friends?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    data.map{|m| m.delete('last'); m}
+    data.map{|m| m.delete('last');m.delete('time'); m}
     assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
 
     #登录添加再添加一个好友

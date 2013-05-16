@@ -51,7 +51,7 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     get "/blacklists?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data.map{|m| m.delete('last'); m}, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
+    assert_equal data.map{|m| m.delete('last');m.delete('time'); m}, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
 
    
     #再添加一个黑名单
