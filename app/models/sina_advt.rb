@@ -22,7 +22,7 @@ class SinaAdvt
   end
 
 
-  
+  #获取动态签到微博，并转发并评论
   def self.place_repost
     @dtime = rand(100)
     places = place_timelines
@@ -41,7 +41,7 @@ class SinaAdvt
   #转发并评论指定的微博
   def self.do_repost(wbid, status, token)
     params = { "id" => wbid,  "status" => status, "access_token" => token,"is_comment" => 1}
-    params = { "id" => '3560414669383960',  "status" => status, "access_token" => token,"is_comment" => 1}
+    #    params = { "id" => '3560414669383960',  "status" => status, "access_token" => token,"is_comment" => 1}
     url = "https://api.weibo.com/2/statuses/repost.json"
     repost(:url => url, :method => :post, :params => params, :email_title => "转发并评论签到微博出错" )
   end
@@ -51,7 +51,7 @@ class SinaAdvt
   #获取最新公共的位置的签到动态
   def self.place_timelines
     url = "https://api.weibo.com/2/place/public_timeline.json"
-    response =  place_timeline(:url => url, :method => :get, :params => {:access_token=> $sina_token, :count => 19}, :email_title => "获取最新公共的位置动态接口出错")
+    response =  place_timeline(:url => url, :method => :get, :params => {:access_token=> $sina_token, :count => 50}, :email_title => "获取最新公共的位置动态接口出错")
     return unless response.is_a?(Hash)
     response['statuses']
   end
@@ -62,7 +62,7 @@ class SinaAdvt
     len = advts.length
     index = dtime%len
     content = advts[index]
-    content.gsub(/#XXX/, poi.blank? ? "这里" : poi)+ "下载地址： http://www.dface.cn/a?v=20#{index.to_s.rjust(3,'0')}"
+    content.gsub(/#XXX/, poi.blank? ? "这里" : poi)+ "   下载地址： http://www.dface.cn/a?v=20#{index.to_s.rjust(3,'0')}"
   end
 
   #获取签到poi的名称
