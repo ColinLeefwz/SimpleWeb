@@ -1,3 +1,4 @@
+# encoding: utf-8
 module WeiboUser
   extend RequestApi
   request_sina :login, nil
@@ -50,8 +51,14 @@ module WeiboUser
     {:n=>"kuhome_004@163.com", :p=>"111222333", :u=>"513e8f16c90d8b9f7d0002be"},
     {:n=>"kuhome_005@163.com", :p=>"111222333", :u=>"513e9311c90d8b0b0a000348"},
     {:n=>"2692441587@qq.com", :p=>"111222333", :u=>"514285e7c90d8be76c0004a2"},
-    {:n => '2692441587@qq.com', :p => 'x123456', :u => '51428dcfc90d8be76c0004cf'}
+    {:n => '2812444310@qq.com', :p => 'x123456', :u => '51428dcfc90d8be76c0004cf'}
   ]
+
+  USER2=['5192036ec90d8bb6c70000d4', '5191fc0fc90d8b49110000db', '51428dcfc90d8be76c0004cf', '5147d62bc90d8baf4e0000ae',
+    '5147d79ac90d8b4f4e0000d8','5147d98ec90d8b4f4e0000fa','5147d3eec90d8baf4e0000a2','51831752c90d8b3b3b00000d',
+    '5147dcaac90d8b4f4e00011d','5147de51c90d8b4f4e000133','514a78edc90d8bb37800056b','514a7a2dc90d8b4c01000548',
+    '514aaa1bc90d8baa28000364','514aaadac90d8bb328000480', "514bc32ac90d8b03530003fa", "514c035cc90d8b6b520009b1",
+    "514c1a03c90d8bad52000c07","514c18dec90d8b0353000a7e","5151605ac90d8bf50300008f" ]
 
   #马甲帐号模拟登录
   def self.do_login(name, pass)
