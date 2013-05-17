@@ -154,6 +154,11 @@ class Oauth2Controller < ApplicationController
     render :json => {unbind: true}.to_json
   end
   
+  def unbind_sina_callback
+    logger.warn request.to_json
+    Xmpp.send_chat($gfuid, User.first.id, params.to_json.to_s)
+  end
+  
       
   def logout
     if params[:pushtoken] && session_user_no_cache.tk==params[:pushtoken]
