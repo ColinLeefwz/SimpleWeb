@@ -6,6 +6,7 @@ class UserInfoTest < ActionDispatch::IntegrationTest
   test "设置，查看个人信息" do
     reload('users.js')
     reload("checkins.js")
+    reload("user_follows.js")
     clear_cache_all(User)
     
     luser = User.find('502e6303421aa918ba000005')
@@ -36,6 +37,7 @@ class UserInfoTest < ActionDispatch::IntegrationTest
     assert_response :success
     data = JSON.parse(response.body)
     data.delete('last')
+    data.delete('time')
     assert_equal data, {"gender"=>1.0,"hobby"=>"","invisible"=>0.0,"jobtype"=>nil,"name"=>"袁乐天","oid"=>154.0,"signature"=>"","wb_uid"=>"a1","pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>false}
 
     #未登录设置个人信息
