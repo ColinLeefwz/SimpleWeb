@@ -72,7 +72,7 @@ class UserInfoController < ApplicationController
   def get_self
     user = session_user_no_cache
     hash = user.attr_with_id.merge!(user.head_logo_hash)
-    hash.delete("wb_uid") if self.wb_hidden  == 2  
+    hash.delete("wb_uid") if user.wb_hidden  == 2  
     hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
     render :json => hash.to_json
   end
