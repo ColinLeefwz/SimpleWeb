@@ -51,21 +51,21 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     get "/follow_info/followers?id=#{user1.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data.map{|x| x.delete("last");x}, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
+    assert_equal data.map{|x| x.delete("last");x.delete('time');x}, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
 
     #登录粉丝列表
     login(luser.id)
     get "/follow_info/followers?id=#{user1.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    assert_equal data.map{|x| x.delete("last");x}, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
+    assert_equal data.map{|x| x.delete("last");x.delete('time');x}, [{"name"=>"25","signature"=>"","wb_uid"=>"1644166662","gender"=>0.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000002","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""},{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
 
     #未登录好友列表
     logout
     get "/follow_info/friends?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    data.map{|m| m.delete('last'); m}
+    data.map{|m| m.delete('last');m.delete('time'); m}
     assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
 
     #登录好友列表
@@ -73,7 +73,7 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     get "/follow_info/friends?id=#{luser.id}"
     assert_response :success
     data = JSON.parse(response.body).last['data']
-    data.map{|m| m.delete('last'); m}
+    data.map{|m| m.delete('last');m.delete('time'); m}
     assert_equal data, [{"name"=>"袁乐天","signature"=>"","wb_uid"=>"a1","gender"=>1.0,"birthday"=>"","jobtype"=>nil,"pcount"=>0,"id"=>"502e6303421aa918ba00007c","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}]
 
     #登录添加再添加一个好友
