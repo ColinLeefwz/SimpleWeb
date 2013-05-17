@@ -109,6 +109,7 @@ class User
     hash = self.attributes.merge({id: self._id})
     hash.delete("_id")
     hash.delete("qq")
+    hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
     hash
   end
 
@@ -175,7 +176,6 @@ class User
     hash.delete("follows")
     hash.delete("qq")
     hash.delete("wb_uid") if self.wb_hidden    
-    hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
     hash.merge!( head_logo_hash).merge!( relation_hash(user_id) )
     hash.merge!(last_location(user_id))
   end
