@@ -2,7 +2,7 @@
   <div class="coupon">
     <input type="hidden" name="coupon[t]" value="1"/>
     <input type="button" class="btns" id="Btns" />
-	<input name="coupon[img2]" type="file"   id="Files"/>
+      <input size="12" name="coupon[img2]" type="file" class="none"  id="Files"/>
     <div class="rdiv" >
       <%= f.text_field :name, :value => @coupon.name || '点此输入名称', :class => 'txt', :maxlength=>"14" %>
       <%= f.text_area :desc, :value => @coupon.desc || '点此输入描述', :class => 'atxt'%>
