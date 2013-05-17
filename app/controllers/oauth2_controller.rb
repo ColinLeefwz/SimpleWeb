@@ -131,9 +131,10 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "您没有绑定过qq帐号"}.to_json
       return
     end    
-    User.find(session[:user_id]).unset(:qq)
+    #User.find(session[:user_id]).unset(:qq)
     $redis.del("qqtoken#{session[:user_id]}")
     $redis.del("qqexpire#{session[:user_id]}")
+    session_user_no_cache.update_attribute(:qq_hidden, true)
     render :json => {unbind: true}.to_json
   end
 
@@ -147,9 +148,9 @@ class Oauth2Controller < ApplicationController
       return
     end    
     #User.find(session[:user_id]).unset(:wb_uid)
-    #$redis.del("wbtoken#{session[:user_id]}")
-    #$redis.del("wbexpire#{session[:user_id]}")
-    User.find(session[:user_id]).update_attribute(:wb_hidden, true)
+    $redis.del("wbtoken#{session[:user_id]}")
+    $redis.del("wbexpire#{session[:user_id]}")
+    session_user_no_cache.update_attribute(:wb_hidden, 2)
     render :json => {unbind: true}.to_json
   end
   
@@ -237,6 +238,7 @@ class Oauth2Controller < ApplicationController
   def do_login_wb_done(user,token,expires_in,data)
     $redis.set("wbtoken#{user.id}",token)
     $redis.set("wbexpire#{user.id}",expires_in)
+    user.unset(:wb_hidden) if user.wb_hidden
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
@@ -286,6 +288,7 @@ class Oauth2Controller < ApplicationController
   def do_login_qq_done(user,token,expires_in,data)
     $redis.set("qqtoken#{user.id}",token)
     $redis.set("qqexpire#{user.id}",expires_in)
+    user.unset(:qq_hidden) if user.qq_hidden
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json

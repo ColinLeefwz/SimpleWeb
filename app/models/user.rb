@@ -7,7 +7,7 @@ class User
   field :wb_vs # 微博认证说明
   field :wb_name
   field :wb_g, type: Integer
-  field :wb_hidden, type:Boolean
+  field :wb_hidden, type:Integer # 1代表对他人隐藏自己的微博，2代表解除微博绑定
   field :name # 昵称，最多10个字符
   field :gender, type: Integer #性别
   field :birthday #生日
@@ -23,6 +23,7 @@ class User
   field :atime, type:DateTime #自动抓取的微博用户实际注册脸脸的时间
   field :qq
   field :qq_name
+  field :qq_hidden, type:Boolean #true代表该qq被解除绑定
 
   field :tk  #Push消息的token
   field :city
@@ -108,7 +109,6 @@ class User
     hash = self.attributes.merge({id: self._id})
     hash.delete("_id")
     hash.delete("qq")
-    hash.merge!({qq_openid: self.qq}) if self.qq
     hash
   end
 
@@ -160,8 +160,8 @@ class User
   
   def safe_output(uid=nil)
     hash = self.attributes.slice("name", "signature", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
-    hash.merge!({"wb_uid" => self.wb_uid}) unless self.wb_hidden
-    hash.merge!({qq_openid: self.qq}) if self.qq
+    hash.merge!({"wb_uid" => self.wb_uid}) if self.wb_uid && self.wb_hidden.nil?
+    hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
@@ -173,7 +173,9 @@ class User
     hash = self.attr_with_id
     hash.delete("password")
     hash.delete("follows")
-    hash.delete("wb_uid") if self.wb_hidden
+    hash.delete("qq")
+    hash.delete("wb_uid") if self.wb_hidden    
+    hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
     hash.merge!( head_logo_hash).merge!( relation_hash(user_id) )
     hash.merge!(last_location(user_id))
   end
