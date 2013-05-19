@@ -40,7 +40,12 @@ class CheckinsController < ApplicationController
       end
     end
     shop = gen_new_shop
-    ss = Shop.similar_shops(shop,70)
+    if is_session_user_kx
+      score = 80
+    else
+      score = 70
+    end
+    ss = Shop.similar_shops(shop,score)
     if ss.length>0
       shop = ss[0]
     else
