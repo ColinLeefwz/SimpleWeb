@@ -157,8 +157,7 @@ class Oauth2Controller < ApplicationController
   
   #用户在新浪微博解除对脸脸的授权，回调url
   def unbind_sina_callback
-    if params[:source] == $sina_api_key && (Time.now.to_i - params[:auth_end].to_i)<3600 
-      && params[:verification].size==32
+    if params[:source] == $sina_api_key && (Time.now.to_i - params[:auth_end].to_i)<3600 && params[:verification].size==32
       user = User.where({wb_uid: params[:uid]}).first
       if user
         $redis.del("wbtoken#{user.id}")
