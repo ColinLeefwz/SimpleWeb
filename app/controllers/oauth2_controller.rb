@@ -138,6 +138,7 @@ class Oauth2Controller < ApplicationController
     render :json => {unbind: true}.to_json
   end
 
+  #用户在脸脸客户端解除新浪微博绑定
   def unbind_sina
     if session_user_no_cache.wb_uid.nil?
       render :json => {error: "您没有绑定过新浪微博帐号"}.to_json
@@ -154,9 +155,18 @@ class Oauth2Controller < ApplicationController
     render :json => {unbind: true}.to_json
   end
   
+  #用户在新浪微博解除对脸脸的授权，回调url
   def unbind_sina_callback
-    logger.warn request.to_json
-    Xmpp.send_chat($gfuid, User.first.id, params.to_json.to_s)
+    if params[:source] == $sina_api_key && (Time.now.to_i - params[:auth_end].to_i)<3600 
+      && params[:verification].size==32
+      user = User.where({wb_uid: params[:uid]}).first
+      if user
+        $redis.del("wbtoken#{user.id}")
+        $redis.del("wbexpire#{user.id}")
+        user.update_attribute(:wb_hidden, 2) if user
+      end
+    end
+    render :text => "ok"
   end
   
       
