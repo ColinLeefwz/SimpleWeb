@@ -30,6 +30,7 @@ class Shop
   field :v, type:Integer #加权
   field :creator, type: Moped::BSON::ObjectId #该地点的创建者
   field :seller_id, type: Moped::BSON::ObjectId #负责该地点销售的人员
+  
   field :i, type: Boolean #用户添加的地点 已处理标记
 
 
@@ -79,10 +80,6 @@ class Shop
   
   def photo_count
     Photo.where({room: self.id.to_i.to_s}).count
-  end
-
-  def seller
-    User.find_by_id(seller_id)
   end
 
   def user
