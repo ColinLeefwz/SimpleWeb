@@ -25,6 +25,11 @@ class UserInfoController < ApplicationController
     render :json => hash.to_json   
   end
   
+  def lords
+    user = User.find_by_id(params[:id])
+    render :json => user.lords.map{|x| x.shop.name}.to_json    
+  end
+  
   def search
     users = User.where({ name: /#{params[:name]}/i})
     ret = users.map do |u| 
