@@ -7,6 +7,23 @@ class UserInfoController < ApplicationController
   def get
     render :json => user_info_cache(params[:id],session[:user_id])
   end
+
+  def basic
+    user = User.find_by_id(params[:id])
+    render :json => user.safe_output.to_json
+  end
+    
+  def last_loc
+    user = User.find_by_id(params[:id])
+    hash = {id:params[:id]}.merge(user.last_location(session[:user_id]))
+    render :json => hash.to_json    
+  end
+  
+  def relation
+    user = User.find_by_id(params[:id])
+    hash = {id:params[:id]}.merge(user.relation_hash(session[:user_id]))
+    render :json => hash.to_json   
+  end
   
   def search
     users = User.where({ name: /#{params[:name]}/i})
@@ -91,6 +108,7 @@ class UserInfoController < ApplicationController
       hash[:jobtype] = params[:jobtype]  unless params[:jobtype].nil?
       hash[:hobby] = params[:hobby]  unless params[:hobby].nil?
       if user.update_attributes! hash
+        Rails.cache.delete "UI#{user.id}"    
         render :json => user.attributes.to_json
       else
         render :json => {:error => "update user info failed"}.to_json
@@ -104,5 +122,5 @@ class UserInfoController < ApplicationController
       User.find_by_id(uid).output_with_relation(vid).to_json
     end
   end
-  
+    
 end
