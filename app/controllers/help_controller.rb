@@ -3,7 +3,7 @@
 class HelpController < ApplicationController
 
   def index
-    render :text => "脸脸版本：#{params[:ver]}"
+    #    render :text => "脸脸版本：#{params[:ver]}"
   end
   
 end
