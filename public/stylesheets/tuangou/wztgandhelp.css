@@ -20,7 +20,7 @@
 #paly_notgo ul{line-height:25px;margin:20px 0 0 16px}
 #phone_pic{width:250px;height:284px;background:url(/img/tuangou/paly_08.jpg) no-repeat;margin:20px 0 0 114px}
 
-/* help.html css */
+/* whelp.html css */
 #help-top{ height:75px;background-image: url(/img/tuangou/help_topa.jpg);background-repeat: no-repeat;background-position: center top;margin-bottom:20px; }
 #help-content{overflow:hidden; padding-bottom:10px;}
 #help-left{width:657px;float:left;background:url(/img/tuangou/help_xuxian.jpg) right top repeat-y}
@@ -52,13 +52,13 @@
 
 #group-reg {width:900px;font-size:14px;margin:0 auto;padding:0px 0 12px}
 #group-reg-top-return{
-	width:100%;
-	height:90px;
-	background-image: url(/img/tuangou/pic201104131.jpg);
-	background-repeat: no-repeat;
-	background-position: center top;
-	padding: 0px;
-	margin-bottom:10px;
+    width:100%;
+    height:90px;
+    background-image: url(/img/tuangou/pic201104131.jpg);
+    background-repeat: no-repeat;
+    background-position: center top;
+    padding: 0px;
+    margin-bottom:10px;
 }
 #group-reg-cen{width:810px;min-height:250px; margin:0 auto;}
 #group-return-l{float:left;width:380px;margin:0 0 0 45px; _margin-left:30px; }
