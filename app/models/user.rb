@@ -46,6 +46,10 @@ class User
     ret.follows
   end
   
+  def lords
+    Lord.where({uid:self.id})
+  end
+  
   def blacks_s
     UserBlack.where({uid: self.id})
   end
