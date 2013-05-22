@@ -78,6 +78,11 @@ class AdminsController < ApplicationController
   # DELETE /admins/1.xml
   def dest
     @admin = Admin.find(params[:id])
+    right = Right.find_by_id(@admin.id)
+    if right
+      Rails.cache.delete("#{right.class.name}#{right.id}")
+      right.destroy
+    end
     @admin.destroy
 
     respond_to do |format|
@@ -86,7 +91,7 @@ class AdminsController < ApplicationController
     end
   end
 
-   private
+  private
   def genCondition
     s = ""
     ad = ""

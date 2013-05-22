@@ -30,5 +30,18 @@ class Right
     action_name=="show" || action_name=="index" || action_name=="search" || action_name=="list"
   end
 
+  #相应控制器的操作权限
+  def self.controller_right(right, controller_name)
+    con = right.data.find{|f| f['c'] == controller_name}
+    return 'none' if con.nil?
+    return "r" if con['r']
+    return 'w'
+  end
+
+
+
+  def admin
+    Admin.find_by_id(self._id)
+  end
 
 end
