@@ -156,6 +156,38 @@ last字段，表示用户最后在脸脸上的时间和地点，一个以空格�
 \end{figure}
 
 
+\subsection{获得用户的地主地点列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/lords} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/lords?id=502e6303421aa918ba000001
+返回值：
+
+[{"name":"千粥汇华星路店","lo":[30.281387,120.11969],"t":4,"lat":30.281387,"lng":120.11969,
+"address":"","phone":"","id":21829233,"user":0,"male":0,"female":0},
+{"name":"浦东国际人才城","lo":[31.189001,121.586937],"t":"10","lat":31.189001,"lng":121.586937,
+"address":"","phone":"","id":21830801,"user":0,"male":0,"female":0}]
+
+\end{verbatim}
+\end{figure}
+
+
 \subsection{获得当前登录用户基本信息}
 
 \begin{table}[H]

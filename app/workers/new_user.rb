@@ -41,7 +41,8 @@ class NewUser
       from="微博"
     end
     if ud && ud.os_type==1
-      os = "⛄"
+      ver = ud.ds[0][4]
+      os = "#{ud.os},#{ver}"
     else
       os = ""
     end
