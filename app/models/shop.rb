@@ -191,6 +191,15 @@ class Shop
       hash.merge!({lord:1}) if self.lord.uid==uid
       ret << hash
     end
+    diff = users.size-ret.size
+    if diff>0 #有拉黑或隐身的用户，用马甲帐号代替
+      start = rand($fakeusers1.size-diff)
+      $fakeusers1[start,diff].each do |uid|
+        u = User.find_by_id(uid)
+        hash = u.safe_output(session_uid).merge!({time: ret[-1]["time"]})
+        ret << hash
+      end
+    end
     ret
   end
   
