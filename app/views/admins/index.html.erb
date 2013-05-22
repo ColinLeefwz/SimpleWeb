@@ -14,6 +14,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
   <% for admin in @admins %>
@@ -22,6 +23,7 @@
       <td><%=h admin.pass2 %></td>
       <td><%= link_to '浏览', {:action => :show, :id => admin.id} %></td>
       <td><%= link_to '编辑', edit_admin_path(admin) %></td>
+      <td><%= link_to '分配权限',"/admin_rights/new?id=#{admin.id}"%></td>
       <td><%= link_to '删除', {:action => 'destroy', :id => admin.id}, :onclick => "return confirm('确定删除么？')" %></td>
     </tr>
   <% end %>
