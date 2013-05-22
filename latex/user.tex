@@ -2,7 +2,7 @@
 
 \section{用户基本信息}
 
-\subsection{获得用户基本信息}
+\subsection{获得用户信息}
 
 \begin{table}[H]
    \begin{center}
@@ -41,14 +41,151 @@ wb_uid:1884834632
 "id":1
 }
 
-获得用户基本信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是当前登录用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
-
 [2012－8－8] 新增签名、职业、爱好等字段。
-[2012－8－8] 新增last字段，表示用户最后在脸脸上的时间和地点，一个以空格分割的字符串。
+
+[2013－5－21] 最后位置信息和关系信息都单独提供一个接口，以后这个接口将会取消，获得基本信息调用user\_info/basic接口。
 
 \end{verbatim}
 \end{figure}
 
+
+
+\subsection{获得用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/basic} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get?id=1
+返回值：
+
+{
+"name":null,
+wb_uid:1884834632
+"gender":null,
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
+"birthday":null,
+"signature":"","job":null,"jobtype":null,"hobby":"Weiqi, go",
+"id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{获得用户和当前登录用户的关系}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/relation} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+获得信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是当前登录用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/friend?id=502e6303421aa918ba000001
+返回值：
+{"id":"502e6303421aa918ba000001","friend":true,"follower":true}
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{获得用户最后出现的位置信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/last\_loc} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/last_loc?id=1
+返回值：
+
+{
+"time":1天以前,
+"last": "1天以前 顺旺基(益乐路店)" 
+"id":1
+}
+
+last字段，表示用户最后在脸脸上的时间和地点，一个以空格分割的字符串。
+\end{verbatim}
+\end{figure}
+
+
+\subsection{获得用户的地主地点列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/lords} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/lords?id=502e6303421aa918ba000001
+返回值：
+
+[{"name":"千粥汇华星路店","lo":[30.281387,120.11969],"t":4,"lat":30.281387,"lng":120.11969,
+"address":"","phone":"","id":21829233,"user":0,"male":0,"female":0},
+{"name":"浦东国际人才城","lo":[31.189001,121.586937],"t":"10","lat":31.189001,"lng":121.586937,
+"address":"","phone":"","id":21830801,"user":0,"male":0,"female":0}]
+
+\end{verbatim}
+\end{figure}
 
 
 \subsection{获得当前登录用户基本信息}

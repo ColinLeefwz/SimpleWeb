@@ -85,7 +85,7 @@ class AroundmeController < ApplicationController
     lo = [params[:lat].to_f , params[:lng].to_f]
     city = Shop.get_city(lo)
     sex = session_user.gender
-    users = hot_users_no_cache(city,sex,skip,pcount)
+    users = hot_users_cache(city,sex,skip,pcount)
     ret = []
     users.each do |u|
       next if u.forbidden?
@@ -95,7 +95,7 @@ class AroundmeController < ApplicationController
     diff = pcount-ret.size
     if diff>0
       sex2 = sex==2? 1:2
-      users2 = hot_users_no_cache(city,sex2,skip,diff)
+      users2 = hot_users_cache(city,sex2,skip,diff)
       users2.each {|x| output_hot_user(x,ret)}
     end
     render :json => ret.to_json
