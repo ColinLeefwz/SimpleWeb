@@ -174,13 +174,14 @@ class Shop
   end
   
   def lord
-    Lord.find(self.id)
+    Lord.find_by_id(self.id)
   end
 
   def view_users(session_uid,start,size)
     ret = []
     users = Checkin.get_users_redis(id.to_i,start,size)
     users = [[session_uid,Time.now.to_i]] + users.delete_if{|x| x[0].to_s==session_uid.to_s} if start==0
+    lord = self.lord
     users.each do |uid,cat|
       u = User.find_by_id(uid)
       next if u.nil?
@@ -188,7 +189,7 @@ class Shop
       #next if u.block?(session_uid)
       next if u.invisible.to_i>=2
       hash = u.safe_output(session_uid).merge!({time:Checkin.time_desc(cat)})
-      hash.merge!({lord:1}) if self.lord.uid==uid
+      hash.merge!({lord:1}) if lord && lord.uid==uid
       ret << hash
     end
     diff = users.size-ret.size
