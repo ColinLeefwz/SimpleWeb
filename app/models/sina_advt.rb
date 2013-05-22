@@ -51,7 +51,7 @@ class SinaAdvt
   #获取最新公共的位置的签到动态
   def self.place_timelines
     url = "https://api.weibo.com/2/place/public_timeline.json"
-    response =  place_timeline(:url => url, :method => :get, :params => {:access_token=> $sina_token, :count => WeiboUser::USER2.length * 3}, :email_title => "获取最新公共的位置动态接口出错")
+    response =  place_timeline(:url => url, :method => :get, :params => {:access_token=> $sina_token, :count => WeiboUser::USER2.length}, :email_title => "获取最新公共的位置动态接口出错")
     return unless response.is_a?(Hash)
     response['statuses']
   end
