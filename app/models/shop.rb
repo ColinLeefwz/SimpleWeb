@@ -172,6 +172,10 @@ class Shop
   def notice
     ShopNotice.where(({shop_id: self.id})).last
   end
+  
+  def lord
+    Lord.find(self.id)
+  end
 
   def view_users(session_uid,start,size)
     ret = []
@@ -183,7 +187,9 @@ class Shop
       next if u.forbidden?
       #next if u.block?(session_uid)
       next if u.invisible.to_i>=2
-      ret << u.safe_output(session_uid).merge!({time:Checkin.time_desc(cat)})
+      hash = u.safe_output(session_uid).merge!({time:Checkin.time_desc(cat)})
+      hash.merge!({lord:1}) if self.lord.uid==uid
+      ret << hash
     end
     ret
   end
