@@ -33,6 +33,7 @@ class Lord
   def self.assign(sid,uid)
     lord = Lord.find_by_id(sid)
     if lord
+      return false if lord.uid==uid
       lord.change_dizhu(uid)
     else
       lord = Lord.new
@@ -41,6 +42,7 @@ class Lord
       lord.uat = Time.now
       lord.save!
     end
+    return true
   end
   
   def self.init
