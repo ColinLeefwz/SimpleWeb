@@ -42,7 +42,7 @@ class NewUser
     end
     if ud && ud.os_type==1
       ver = ud.ds[0][4]
-      os = "#{ud.os},#{ver}"
+      os = "#{ud.ds[1]},#{ver}"
     else
       os = ""
     end
