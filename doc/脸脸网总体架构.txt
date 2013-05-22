@@ -171,9 +171,10 @@ resque和resque-scheduler都采用god进行监控和启动。
 god -c god/all.god 
 
 ###Mongodb
-前面提到的几个组件都部署在连接外网的一台服务器上，ip地址192.168.1.21; 而mongodb则部署在内网的另外一台服务器上,ip地址192.168.1.22。
+Mongodb数据库采用了replca set，目前是一主三从配置。
+注意在服务器上建索引必须都要后台执行，也就是加background:true属性。
 
-建立索引：rake db:mongoid:create_indexes
+初始建立索引：rake db:mongoid:create_indexes
 
 如何管理server端的js代码？
 
