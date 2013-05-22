@@ -23,4 +23,9 @@ class Admin
     password[0,1]+"***"+password[password.length-1,1]
   end
 
+  def self.noright
+    noright_ids=self.all.only(:_id).map{|m| m._id} - Right.all.only(:_id).map{|m| m._id}
+    self.find_by_id(noright_ids)
+  end
+
 end
