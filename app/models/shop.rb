@@ -30,6 +30,7 @@ class Shop
   field :v, type:Integer #加权
   field :creator, type: Moped::BSON::ObjectId #该地点的创建者
   field :seller_id, type: Moped::BSON::ObjectId #负责该地点销售的人员
+  
   field :i, type: Boolean #用户添加的地点 已处理标记
 
 
@@ -79,10 +80,6 @@ class Shop
   
   def photo_count
     Photo.where({room: self.id.to_i.to_s}).count
-  end
-
-  def seller
-    User.find_by_id(seller_id)
   end
 
   def user
@@ -175,6 +172,10 @@ class Shop
   def notice
     ShopNotice.where(({shop_id: self.id})).last
   end
+  
+  def lord
+    Lord.find(self.id)
+  end
 
   def view_users(session_uid,start,size)
     ret = []
@@ -186,7 +187,18 @@ class Shop
       next if u.forbidden?
       #next if u.block?(session_uid)
       next if u.invisible.to_i>=2
-      ret << u.safe_output(session_uid).merge!({time:Checkin.time_desc(cat)})
+      hash = u.safe_output(session_uid).merge!({time:Checkin.time_desc(cat)})
+      hash.merge!({lord:1}) if self.lord.uid==uid
+      ret << hash
+    end
+    diff = users.size-ret.size
+    if diff>0 #有拉黑或隐身的用户，用马甲帐号代替
+      start = rand($fakeusers1.size-diff)
+      $fakeusers1[start,diff].each do |uid|
+        u = User.find_by_id(uid)
+        hash = u.safe_output(session_uid).merge!({time: ret[-1]["time"]})
+        ret << hash
+      end
     end
     ret
   end
