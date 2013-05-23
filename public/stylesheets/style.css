@@ -39,8 +39,10 @@ display:block;overflow:hidden;float:left;text-indent:-999em;margin-left:20px;cur
 .slide {position:relative;width:960px;height:0px;margin:0px auto;z-index:99;zoom:1;}
 .slide .slideinner{}
 .slide  .slideinner .pic{width: 435px;height: 155px;top: -380px;left: 566px;position: absolute;background:url(../images/pic.png) 50px 0px no-repeat;}
-.slide  .slideinner .dl {width: 243px;height: 58px;top: -130px;left: 510px;position: absolute;background:url(../images/btn4.png) 0px 0px no-repeat;}
-.slide  .slideinner .dl2 {width: 257px;height: 58px;top: -130px;left: 780px;position: absolute;background:url(../images/btn4.png) right 0px no-repeat;}
+.slide  .slideinner .dl, .slide  .slideinner .dl:hover {width: 243px;height: 58px;top: -130px;left: 510px;position: absolute;background:url(../images/iphone.png) 0px -10px no-repeat;}
+.slide  .slideinner .dl:hover{background:url(../images/iphone.png) 0px -90px no-repeat;}
+.slide  .slideinner .dl2 {width: 270px;height: 58px;top: -130px;left: 780px;position: absolute;background:url(../images/android.png) left -10px no-repeat;}
+.slide  .slideinner .dl2:hover{background:url(../images/android.png) left -90px no-repeat;}
 .slide .slideinner h2 {top: -522px;width: 458px;height: 522px;position: absolute; background:url(../images/index/hand.png) left top no-repeat;}
 .slide  .slideinner h3{width: 300px;height: 60px;top: -80px;left: 580px;position: absolute;background:url(../images/index/btn2.png) center top no-repeat;}
 
