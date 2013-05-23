@@ -32,7 +32,6 @@ class ShopFaqsController < ApplicationController
   def create
     @shop_faq = ShopFaq.new(params[:shop_faq])
     @shop_faq.sid = session[:shop_id]
-    @shop_faq.od = @shop_faq.od
 
     if @shop_faq.save
       redirect_to :action => "show", :id => @shop_faq.id
