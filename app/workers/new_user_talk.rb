@@ -8,8 +8,8 @@ class NewUserTalk
     if user.gender==2
       to = "50bc20fcc90d8ba33600004b" #浦靠谱
     else
-      #to = "50bec2c1c90d8bd12f000086" #amanda林
-      to = User.fake_user(User.find_by_id(uid)).id
+      to = "50bec2c1c90d8bd12f000086" #amanda林
+      #to = User.fake_user(User.find_by_id(uid)).id
     end
     if seq==1
       xmpp1 = Xmpp.chat(to,uid,"hi")
