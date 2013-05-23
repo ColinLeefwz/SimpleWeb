@@ -8,9 +8,11 @@ class ShopFaq
   field :img
   field :od
 
-  validates_presence_of :od, :message => '序号不能是空.'
-  validates_presence_of :title, :message => '标题不能是空.'
-  validates_presence_of :img, :message => "文本和图片至少有一个存在.", :if => "text.blank?"
+  validate do |faq|
+    errors.add(:od, "序号不能是空.") if faq.od.blank?
+    errors.add(:title, "标题不能是空.") if faq.title.blank?
+    errors.add(:img, "文本和图片至少有一个存在.") if faq.text.blank? && faq.img.blank?
+  end
 
   mount_uploader(:img, FaqImgUploader)
   
