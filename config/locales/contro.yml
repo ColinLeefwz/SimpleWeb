@@ -33,5 +33,6 @@ right:
       checkin_loc_accs: '经纬度误差统计'
       checkin_user_many: '多次签到'
   4:
+      admin_login: 登录
       admins: '管理员管理'
       admin_rights: '权限管理'
