@@ -1,6 +1,6 @@
 namespace :test do
   task :prepare do
-    if `ifconfig eth1`.to_s.index("inet addr:42")
+    if `ifconfig eth0`.to_s.index("inet addr:10") && `ifconfig eth1`.to_s.index("inet addr:42")
       file="mongoid.production_test.yml"
     else
       file="mongoid.yml"
