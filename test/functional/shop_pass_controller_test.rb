@@ -2,6 +2,11 @@
 require 'test_helper'
 
 class ShopPassControllerTest < ActionController::TestCase
+
+    def setup
+    reload("shops.js")
+  end
+  
   test '没有登录' do
     get :index
     assert_redirected_to :controller => :shop_login, :action => :login
