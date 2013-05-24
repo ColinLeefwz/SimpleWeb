@@ -22,7 +22,7 @@ class InitController < ApplicationController
       xmpp = $xmpp_ip
     end
     if session[:os] == 1
-      ver = 0.83
+      ver = 1.0
     else
       ver = 2.1
     end
@@ -34,7 +34,7 @@ class InitController < ApplicationController
           ["2.1.0","我的照片墙增加新评论提醒功能\n聊天室发图分享到微信朋友圈功能",true]
          ]
   $android = [
-    ["0.83","重大功能调整",false]    
+    ["1.0","重大功能调整",false]    
   ]
   
   def upgrade
