@@ -79,7 +79,7 @@
 </p>
 <p>
 
-  <%= form_tag "/admin_user_add_shops/send_chat" do %>
+  <%= form_tag "/admin_user_add_shops/post_chat" do %>
     <%= hidden_field_tag :to_uid, @shop.creator %>
     发送消息： <%= text_field_tag :text %>
     <%= submit_tag '发送' %>
