@@ -1,6 +1,0 @@
-/* CSS Document */
-.ultitle {display: block;overflow: hidden;width:204px;margin:0px auto;}
-.ultitle li{display:block;overflow:hidden;}
-.ultitle a{line-height:32px;color:#606060;margin-bottom:5px;background:url(http://img1.1dooo.com/img/shop_space/kadi/titlebg3.jpg);background-position:left top;background-repeat:no-repeat;display:block;width:180px;height:32px;padding-left:24px;}
-.ultitle a:hover, .ultitle .hover{background:url(http://img3.1dooo.com/img/shop_space/kadi/titlebg2.jpg);color:#fff;}
-
