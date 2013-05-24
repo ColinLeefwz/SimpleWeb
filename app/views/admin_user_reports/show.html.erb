@@ -70,7 +70,7 @@
   <a id="wclose" style="display:none" href="#" onclick="window.opener.rmtr('<%=@shop.id.to_i%>');window.close();">关闭当前窗口</a>
 </p>
 <p>
-  <%= form_tag "/admin_user_reports/send_chat" do %>
+  <%= form_tag "/admin_user_reports/post_chat" do %>
     <%= hidden_field_tag :to_uid, @shop.creator %>
     发送消息： <%= text_field_tag :text %>
     <%= submit_tag '发送' %>
