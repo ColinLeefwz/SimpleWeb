@@ -77,6 +77,14 @@
   <span style="padding: 0 5px;"><%= link_to '忽略',"#", :id => 'sig'%></span>
   <a id="wclose" style="display:none" href="#" onclick="window.opener.rmshop('<%=@shop.id.to_i%>');window.close();">关闭当前窗口</a>
 </p>
+<p>
+
+  <%= form_tag "/admin_user_add_shops/send_chat" do %>
+    <%= hidden_field_tag :to_uid, @shop.creator %>
+    发送消息： <%= text_field_tag :text %>
+    <%= submit_tag '发送' %>
+  <% end  %>
+</p>
 <div id="showShop">
   <p>
     <b>商家id:</b>
