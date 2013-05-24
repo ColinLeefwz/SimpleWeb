@@ -41,9 +41,9 @@ class CheckinsController < ApplicationController
     end
     shop = gen_new_shop
     if is_session_user_kx
-      score = 80
+      score = 75
     else
-      score = 70
+      score = 68
     end
     ss = Shop.similar_shops(shop,score)
     if ss.length>0
@@ -155,7 +155,7 @@ class CheckinsController < ApplicationController
   def new_shop_welcome(shop,checkin)
     str = "欢迎！您是第1个来到#{shop.name}的脸脸。置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。"
     Resque.enqueue(XmppNotice, shop.id, params[:user_id], str)
-    Resque.enqueue(XmppRoomMsg, $gfuid, shop.id, params[:user_id], "等#{shop.name}审核通过后，你就是这里的地主啦！👍")
+    Resque.enqueue(XmppRoomMsg, $dduid, shop.id, params[:user_id], "等#{shop.name}审核通过后，你就是这里的地主啦！👍")
     send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
     new_user_nofity(checkin)
     CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
