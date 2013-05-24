@@ -112,7 +112,7 @@ class AdminUserAddShopsController < ApplicationController
     render :json => {:distance => distance}
   end
 
-  def send_chat
+  def post_chat
     Xmpp.send_chat($dduid, params[:to_uid], params[:text])
     render :text => "消息已发送"
   end
