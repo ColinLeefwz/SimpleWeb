@@ -297,7 +297,7 @@ class Shop
   end
 
   def lo_to_lob
-    Shop.lo_to_lob self.lo
+    Shop.lo_to_lob(lo.first.is_a?(Array) ? lo.first : lo)
   end
 
   def get_city
