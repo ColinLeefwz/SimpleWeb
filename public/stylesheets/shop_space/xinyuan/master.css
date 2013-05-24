@@ -1,8 +1,0 @@
-﻿#ranking-time {	width: 298px; height: 212px; padding:0px; margin:0px; overflow:hidden;}
-#ranking-time table{margin:0px;padding:0px;}
-#calendar-content td {line-height: 18px; height: 18px;margin:0px;padding:0px;}
-.number {line-height: 25px; height: 25px;}
-.film-ranking {font-size:12px; height:28px; line-height:28px; color:#000000; background-color:#f9f9f9; margin:0px; padding:0px 16px; }
-.film-ranking-month { font-size:12px; font-weight:bold; color:#bca495; text-align:left; height:30px; line-height:30px; margin:0px 0px 10px; padding:0px 0px 0px 5px; }
-.calendar { font-family:Arial, Helvetica, sans-serif; font-size:14px; cursor:pointer; text-align:center; line-height:24px; color:#000; font-weight:bold }
-#showMovieList { font-size:12px; width:100px; line-height:22px; background-color:#fff; position:absolute; filter:alpha(opacity=87); opacity:0.87; border:#636363 1px solid; z-index:99; text-align:left; padding:10px; margin:0px; display:none; }

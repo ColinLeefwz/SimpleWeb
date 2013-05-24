@@ -244,9 +244,15 @@ class AdminShopsController < ApplicationController
 
 
   def ajaxdel
-    shop = Shop.where({_id: params[:shop_id]}).first
+    shop = Shop.find(params[:shop_id])
     shop.shop_del
     expire_cache_shop(shop.id)
+    render :json => {}
+  end
+
+  def ajaxunsetlob
+    shop = Shop.find(params[:shop_id])
+    shop.unset(:lo)
     render :json => {}
   end
 
