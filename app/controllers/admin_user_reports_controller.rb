@@ -50,6 +50,11 @@ class AdminUserReportsController < ApplicationController
 
   end
 
+  def send_chat
+    Xmpp.send_chat($dduid, params[:to_uid], params[:text])
+    render :text => "消息已发送"
+  end
+
   def ajax_del
     shop = Shop.find(params[:sid])
     shop.shop_del
