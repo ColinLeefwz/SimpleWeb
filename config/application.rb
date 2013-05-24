@@ -14,6 +14,7 @@ $web_ips = ["42.121.252.94","42.121.79.210","42.121.79.211"]
 $xmpp_ip = $xmpp_ips[0]
 $web_ip = $web_ips[1]
 $gfuid = "507f6bf3421aa93f40000005" #脸脸网络
+$dduid = "507f6bf3421aa93f40000005" #脸脸地点审核
 $xpuid = "50bc20fcc90d8ba33600004b" #浦靠谱
 
 $uuid = UUID.new
