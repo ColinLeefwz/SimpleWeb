@@ -112,6 +112,11 @@ class AdminUserAddShopsController < ApplicationController
     render :json => {:distance => distance}
   end
 
+  def send_chat
+    Xmpp.send_chat($dduid, params[:to_uid], params[:text])
+    render :text => "消息已发送"
+  end
+
   def near
     @shop = Shop.find_by_id(params[:id])
     shops = Shop.similar_shops(@shop, 60)

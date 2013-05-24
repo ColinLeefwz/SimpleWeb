@@ -29,7 +29,6 @@
   <tr>
     <th>id</th>
     <th>名称</th>
-    <th>电话</th>
     <th>区号</th>
     <th>加权值</th>
     <th>降权值</th>
@@ -41,15 +40,13 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
   <% @shops.each do |shop| %>
     <tr>
       <td><%= shop.id.to_i %></td>
       <td><%= shop.name %></td>
-
-
-      <td><%= shop.tel %></td>
       <td><%= shop.city_fullname %></td>
       <td><%= shop.v || '无' %></td>
       <td><%= shop.d || '无' %></td>
@@ -60,6 +57,11 @@
       <td><%= shop.password.blank? ?  link_to('开通', "/admin_shops/set_password?id=#{shop.id}") : '' %></td>
       <td><%= link_to('加权', "/admin_shops/upgrade_v?id=#{shop.id}") %></td>
       <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
+      <td>
+        <% if shop.lo %>
+          <a onclick="ajaxunsetlob($(this),<%= shop._id %>, false, '<%= shop.name %>')" >取消坐标</a>
+        <% end %>
+      </td>
       <td>
         <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >标记删除</a>
       </td>
@@ -80,71 +82,79 @@
     obj.children("span:last").show();
   }
 
-  function ajaxupdatelevel(obj,shop_id){
-    var level = obj.parent().children("input[@type='radio']:checked").val()
-    $.post("/admin_shops/ajaxupdatelevel",{level:level, shop_id:shop_id}, function(data) {
-      obj.parent().parent().replaceWith("<td>"+data["level"]+"</td>")
+function ajaxupdatelevel(obj,shop_id){
+  var level = obj.parent().children("input[@type='radio']:checked").val()
+  $.post("/admin_shops/ajaxupdatelevel",{level:level, shop_id:shop_id}, function(data) {
+    obj.parent().parent().replaceWith("<td>"+data["level"]+"</td>")
+  });
+}
+
+function ajaxdel(obj,shop_id,no_confirm, shop_name){
+  text = "确定删除商家 "+shop_name+'？'
+  if(no_confirm || confirm(text))
+    $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
+      obj.parent().parent().hide()
     });
-  }
+}
 
-  function ajaxdel(obj,shop_id,no_confirm, shop_name){
-    text = "确定删除商家 "+shop_name+'？'
-    if(no_confirm || confirm(text))
-      $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
-        obj.parent().parent().hide()
-      });
-  }
+function ajaxunsetlob(obj,shop_id,no_confirm, shop_name){
+  text = "确定取消"+shop_name+'的坐标？'
+  if(no_confirm || confirm(text))
+    $.post("/admin_shops/ajaxunsetlob",{ shop_id:shop_id}, function() {
+      obj.replaceWith("已取消")
+    });
+}
 
-  function showes(){
-    $('.th_level').each(function(){showe($(this))})
-    $('.td_level').each(function(){showe($(this))})
-  }
+function showes(){
+  $('.th_level').each(function(){showe($(this))})
+  $('.td_level').each(function(){showe($(this))})
+}
 
-  function checkall(value){
-    $('.level_'+value).each(function(){$(this).attr('checked','checked')})
-  }
+function checkall(value){
+  $('.level_'+value).each(function(){$(this).attr('checked','checked')})
+}
 
-  function ajaxupdatelevelall(){
-    $('.th_level:first').replaceWith("<th>等级</th>")
-    $(".dhide").each(
-    function(){
-      var subobj = $(this).children("input[@type='submit']:first")
-      ajaxupdatelevel(subobj, subobj.attr('name'))
-    }
-  )
+function ajaxupdatelevelall(){
+  $('.th_level:first').replaceWith("<th>等级</th>")
+  $(".dhide").each(
+  function(){
+    var subobj = $(this).children("input[@type='submit']:first")
+    ajaxupdatelevel(subobj, subobj.attr('name'))
   }
+)
+}
 
-  function batch_del()
-  {
-    if(confirm("确定需要批量删除商家？"))
+function batch_del()
+{
+  if(confirm("确定需要批量删除商家？"))
     $("table .checkbox_shops:checked").each(
-    function(){
-      ajaxdel($(this),$(this).val(), true, '')
-    }
-  )
+  function(){
+    ajaxdel($(this),$(this).val(), true, '')
   }
+)
+}
 
-  function checked_all(checked){
-    $("table .checkbox_shops").each(
-    function() {
-      if(checked == "checked")
-        $(this).attr("checked", 'checked')
-      else
-        $(this).attr("checked", false)
-    }
-  )
+function checked_all(checked){
+  $("table .checkbox_shops").each(
+  function() {
+    if(checked == "checked")
+      $(this).attr("checked", 'checked')
+    else
+      $(this).attr("checked", false)
   }
+)
+}
 
-  function inverse_all(){
-    $("table .checkbox_shops").each(
-    function() {
-      if($(this).attr("checked") == 'checked')
-        $(this).attr("checked", false)
-      else
-        $(this).attr("checked", 'checked')
-    }
-  )
+function inverse_all(){
+  $("table .checkbox_shops").each(
+  function() {
+    if($(this).attr("checked") == 'checked')
+      $(this).attr("checked", false)
+    else
+      $(this).attr("checked", 'checked')
   }
+)
+}
 
 </script>
 
