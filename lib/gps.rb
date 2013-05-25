@@ -26,6 +26,7 @@ module Gps
   end
   
   def min_distance(shop,loc)
+    return 9999999 if shop["lo"].nil?
     if(shop["lo"][0].class==Array)
       shop["lo"].map {|x| get_distance(x,loc)}.min
     else
@@ -42,6 +43,7 @@ module Gps
   end
   
   def loc_first_of(shop)
+    return [] if shop["lo"].nil?
     if shop["lo"][0].class==Array
       shop["lo"][0]
     else
