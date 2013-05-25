@@ -121,6 +121,11 @@ class UserInfoController < ApplicationController
     end
   end
   
+  def set_comment_name
+    CommentName.save_name(session[:user_id], params[:id], params[:name])
+    render :json => {"success" => 1}.to_json
+  end
+  
   private
   def user_info_cache(uid,vid)
     Rails.cache.fetch("UI#{uid}#{vid}", :expires_in => 12.hours) do
