@@ -74,7 +74,7 @@ class AdminUserAddShopsController < ApplicationController
     @shop.i = true
     if @shop.save
       if Lord.assign(@shop.id,@shop.creator)
-        Xmpp.send_chat($gfuid,@shop.creator,": 您创建的地点#{@shop.name}审核通过。恭喜你成为#{@shop.name}的地主👑")
+        Xmpp.send_chat($dduid,@shop.creator,": 您创建的地点#{@shop.name}审核通过。恭喜你成为#{@shop.name}的地主👑")
       end
       
       pshop = Shop.find_by_id(params[:pid])
