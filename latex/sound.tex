@@ -1,0 +1,48 @@
+
+\section{个人聊天时发语音}
+
+\subsection{个人聊天时上传语音}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/sound2s/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ sound[img]  & file & 必须 &  语音文件\\
+ \hline
+ sound[to\_uid]  & 字符串 & 必须 &  接收人的id\\
+\hline
+  sound[sec]  & 整数 & 可选 &  语音长度：秒\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsection{发送消息}
+当语音发送完成后，服务器端发送一个xmpp消息，其中的body内容格式为：
+
+\begin{verbatim}
+[sound:$id]$sec
+
+\end{verbatim}
+
+\subsection{在个人聊天时收到消息后获取语音}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/sound2s/show} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 语音id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
