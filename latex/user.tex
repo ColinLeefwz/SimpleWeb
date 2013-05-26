@@ -283,6 +283,60 @@ POST & \multicolumn{3}{|c|}{/user\_info/set} \\
 \end{figure}
 
 
+\subsection{设置其它用户的备注名}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/user\_info/set\_comment\_name} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 字符串 & 必填 &  被设置备注名的用户的id\\
+\hline
+ name  & 字符串 & 必填 &  用户的名字. 长度小于64\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+当前登录用户给其它用户设置备注名，方便记忆。
+
+\begin{figure}[H]
+\begin{verbatim}
+返回值：{"success" : 1}
+\end{verbatim}
+\end{figure}
+
+
+\subsection{获得当前登录用户设置的所有备注名}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/get\_comment\_names} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必填 &  当前登录用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+当前登录用户给其它用户设置备注名，方便记忆。
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get_comment_names?user_id=502e6303421aa918ba000005
+返回值：
+[{"id":"502e6303421aa918ba000001","s":"yxy"}]
+id是被设置备注名的用户的id，s是备注名。
+\end{verbatim}
+\end{figure}
+
+
+
 \section{用户相册与头像}
 用户相册中的第一张图片就是头像。
 
