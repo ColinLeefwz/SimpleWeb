@@ -22,7 +22,12 @@ class InitController < ApplicationController
       xmpp = $xmpp_ip
     end
     if session[:os] == 1
-      ver = 1.0
+      version = $redis.get("android_version")
+      if version
+        ver = version.to_f
+      else
+        ver = 1.0
+      end
     else
       ver = 2.1
     end
