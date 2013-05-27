@@ -16,6 +16,7 @@ Lianlian::Application.routes.draw do
       post 'crop'
       get 'new2'
       post 'create2'
+      get "resend"
 
     end
   end
