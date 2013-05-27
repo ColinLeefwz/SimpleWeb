@@ -31,6 +31,7 @@ class AroundmeController < ApplicationController
     end
     ret = arr.map{|x| x.safe_output_with_users}
     city = arr[0]["city"]
+    city = arr[1]["city"] if city.nil? || city==""
     coupons = $redis.smembers("ACS#{city}") 
     if coupons
       ret.each_with_index do |xx,i|
