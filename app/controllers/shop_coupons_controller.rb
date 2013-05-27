@@ -146,7 +146,7 @@ class ShopCouponsController < ApplicationController
 
   def resend
     coupon_down = CouponDown.find(params[:id])
-    Resque.enqueue(XmppMsg, "scoupon",coupon_down.uid, coupon_down.message, "#{coupon_down.id}")
+    Xmpp.send_chat("scoupon",coupon_down.uid,coupon_down.message, coupon_down.id)
     render :json => {}
   end
 
