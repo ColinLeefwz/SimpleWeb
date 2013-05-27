@@ -31,7 +31,6 @@
 <script>
   LeftMenu(17);
   function resend(obj, down_id){
-    alert(down_id)
     $.get("/shop_coupons/resend", {id: down_id}, function(){
       obj.replaceWith("已发送")
     })
