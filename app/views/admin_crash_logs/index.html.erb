@@ -1,0 +1,23 @@
+<h1>Listing coupons</h1>
+
+<table>
+  <tr>
+    <th>时间</th>
+    <th>手机型号</th>
+    <th>系统版本</th>
+    <th>app版本</th>
+    <th></th>
+  </tr>
+
+  <% @crash_logs.each do |crash_log| %>
+    <tr>
+      <td><%= id_to_time(crash_log._id) %></td>
+      <td><%= crash_log.try(:PHONE_MODEL) %></td>
+      <td><%= crash_log.try(:ANDROID_VERSION) %></td>
+      <td><%= crash_log.try(:APP_VERSION_NAME) %></td>
+      <td><%= link_to "详情", "/admin_crash_logs/show?id=#{crash_log.id}" %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
