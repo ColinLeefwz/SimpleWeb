@@ -11,6 +11,7 @@ class AroundmeController < ApplicationController
     "519084ddc90d8bc2ee00002c", #蓶ーDéィ衣賴
     "50fde347c90d8b8b7f0000d1", #muak-婷
     "5170d235c90d8b07e8000052", #游源土人
+    "50f8e2ebc90d8bb4260000aa", #大安
   ]
   
   def shops
