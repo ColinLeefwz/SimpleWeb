@@ -11,7 +11,6 @@ class Shop
   include Mongoid::Document
   extend Similarity
   extend GpsOffset
-  attr_accessor :password_confirmation
   
   field :_id, type: Integer
   field :pass
@@ -33,16 +32,6 @@ class Shop
   field :seller_id, type: Moped::BSON::ObjectId #负责该地点销售的人员
   
   field :i, type: Boolean #用户添加的地点 已处理标记
-
-
-  #  validates_confirmation_of :password
-  validates_length_of :password, :minimum => 6, :allow_nil => true
-
-  validate :pass_confirmation
-
-  def pass_confirmation
-    return errors.add(:password, "两次密码不正确.") if self.password_confirmation != self.password
-  end
 
   index({lo: "2d"})
   index({del: 1},{ sparse: true })
