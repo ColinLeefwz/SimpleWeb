@@ -10,7 +10,8 @@ class AdminCrashLogsController < ApplicationController
   end
 
   def show
-    @crash_log = CrashLog.find_by_id(params[:id])
+    @crash_log_hash = CrashLog.find_by_id(params[:id]).attributes
+    @crash_log_hash.delete("_id")
   end
   
 end
