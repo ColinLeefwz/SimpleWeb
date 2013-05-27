@@ -10,14 +10,15 @@ class Photo2sController < ApplicationController
   
   def show
     if params[:id][0]=="U"
-      id = params[:id][1..-1]
+      id = params[:id][1..24]
       if params[:size].to_i==0
         redirect_to Photo2.img_url(id)
       else
         redirect_to Photo2.img_url(id,:t2)
       end
     elsif params[:id][0,4]=="Logo"
-        id = params[:id][4..-1]
+        id = params[:id][4..27]
+        logger.warn "logo id:#{id}"
         if params[:size].to_i==0
           redirect_to UserLogo.img_url(id)
         else

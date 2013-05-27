@@ -87,6 +87,45 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 
 \input{./photo.tex}
+\input{./sound.tex}
+
+
+\section{用户推荐}
+\subsection{ 将个人推荐给好友}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/user\_info/set\_comment\_name} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ fid  & 字符串 & 必填 &  好友的用户id\\
+ \hline
+ uid  & 字符串 & 必填 &  被推荐的用户id\\
+\hline
+ desc  & 字符串 & 可选 &  推荐时的文字\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+当前登录用户给自己的好友fid推荐一个用户uid。
+服务器端收到请求后，会发送下一节格式的Xmpp消息给好友。
+
+\begin{figure}[H]
+\begin{verbatim}
+返回值：{"success" : 1}
+\end{verbatim}
+\end{figure}
+
+
+\subsection{接收个人名片消息}
+在单聊时，可以接收个人名片消息。该消息的格式如下：
+\begin{verbatim}
+[img:Logo$id:$uid]$desc
+其中id是个人头像的id，uid是个人的id.
+\end{verbatim}
+该消息格式兼容单聊时的图片消息的格式。
 
 
 \section{优惠券}

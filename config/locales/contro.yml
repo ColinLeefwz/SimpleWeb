@@ -1,4 +1,4 @@
-menu:  [用户管理,商家管理,活动管理,签到管理,系统权限 ]
+menu:  [用户管理,商家管理,活动管理,签到管理,系统权限 ， 崩溃管理]
 right:
   0:
       admin_users: '用户列表'
@@ -36,3 +36,5 @@ right:
       admin_login: 登录
       admins: '管理员管理'
       admin_rights: '权限管理'
+  5:
+    admin_crash_logs: '安卓崩溃管理'
