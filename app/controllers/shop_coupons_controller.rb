@@ -1,7 +1,7 @@
 # encoding: utf-8
 class ShopCouponsController < ApplicationController
   before_filter :shop_authorize
-  before_filter :owner_authorize, :except => [:index, :new, :create, :newly_down, :newly_use]
+  before_filter :owner_authorize, :except => [:index, :new, :create, :newly_down, :newly_use, :resend]
   include Paginate
   layout 'shop'
 
@@ -141,6 +141,15 @@ class ShopCouponsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to '/admin_coupons' }
       format.json { head :no_content }
+    end
+  end
+
+  def resend
+    Rails.cache.fetch("CD#{params[:id]}", :expires_in => 12.hours) do
+      coupon_down = CouponDown.find(params[:id])
+      Xmpp.send_chat("scoupon",coupon_down.uid,coupon_down.message, coupon_down.id)  if ENV["RAILS_ENV"] == "production"
+      "1"
+      render :json => {}
     end
   end
 
