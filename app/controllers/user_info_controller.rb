@@ -3,6 +3,7 @@
 class UserInfoController < ApplicationController
   
   before_filter :user_login_filter, :except => [:photos, :logo ]
+  before_filter :user_is_session_user, :only => [:get_comment_names]
   
   def get
     render :json => user_info_cache(params[:id],session[:user_id])
@@ -118,6 +119,20 @@ class UserInfoController < ApplicationController
       else
         render :json => {:error => "update user info failed"}.to_json
       end
+    end
+  end
+  
+  def set_comment_name
+    CommentName.save_name(session[:user_id], params[:id], params[:name])
+    render :json => {"success" => 1}.to_json
+  end
+  
+  def get_comment_names
+    cn = CommentName.find_by_id(session[:user_id])
+    if cn
+      render :json => cn.v.to_json
+    else
+      render :json => [].to_json
     end
   end
   
