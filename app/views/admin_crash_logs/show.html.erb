@@ -1,0 +1,10 @@
+<% @crash_log.attributes.each do |key, value| %>
+  <p>
+    <b><%= key %>:</b>
+    <%= value %>
+  </p>
+<% end %>
+<%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %>
+<br/>
+<br/>
+<br/>
