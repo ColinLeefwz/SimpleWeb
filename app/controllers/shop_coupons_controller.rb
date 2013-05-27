@@ -145,9 +145,12 @@ class ShopCouponsController < ApplicationController
   end
 
   def resend
-    coupon_down = CouponDown.find(params[:id])
-    Xmpp.send_chat("scoupon",coupon_down.uid,coupon_down.message, coupon_down.id)
-    render :json => {}
+    Rails.cache.fetch("CD#{params[:id]}", :expires_in => 12.hours) do
+      coupon_down = CouponDown.find(params[:id])
+      Xmpp.send_chat("scoupon",coupon_down.uid,coupon_down.message, coupon_down.id)  if ENV["RAILS_ENV"] == "production"
+      "1"
+      render :json => {}
+    end
   end
 
   def newly_down
