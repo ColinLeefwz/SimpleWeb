@@ -27,9 +27,9 @@
 
   <% @users.each do |user| %>
     <tr>
-      <td><%= user._id %></td>
+      <td><%= link_to user._id, "/admin_users/show?id=#{user.id}" %></td>
       <td><%= user.cat.strftime("%Y-%m-%d %H:%M") %></td>
-      <td><%=image_tag(user.head_logo.img.url(:t1), :size => "50x50") if user.head_logo%><%= user.name %></td>
+      <td><a id="imgt2" href="<%= UserLogo.img_url(user.head_logo_id,:t2) %>"><%=image_tag(UserLogo.img_url(user.head_logo_id,:t1), :size => "50x50") if user.head_logo_id%><%= user.name %></a></td>
       <td><%= user.birthday %></td>
       <td><%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %></td>
       <td><%= user.show_gender %></td>
@@ -42,4 +42,30 @@
 </table>
 
 <%= generate_paginate3.html_safe %>
+
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script> 
+<script type="text/javascript" src="/admin/javascripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script> 
+<script type="text/javascript" src="/admin/javascripts/fancybox/jquery.mousewheel-3.0.4.js"></script> 
+<script type="text/javascript" src="/admin/javascripts/fancybox/jquery.masonry.min.js"></script> 
+
+<link rel="stylesheet" type="text/css" href="/admin/stylesheets/jquery.fancybox-1.3.4.css" />
+<script type="text/javascript">
+  $(document).ready(function() {
+      $("a#imgt2").fancybox({
+        'titlePosition': 'inside'
+      });
+  });
+
+  $(function(){
+
+    var $container = $('#container');
+  
+    $container.imagesLoaded( function(){
+      $container.masonry({
+        itemSelector : '.box'
+      });
+    });
+  
+  });
+</script>
 
