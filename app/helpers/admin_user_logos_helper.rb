@@ -1,0 +1,2 @@
+module AdminUserLogosHelper
+end
