@@ -16,7 +16,6 @@
         <span class="gray f12">（<%= use.coupon_show_t2  %>）</span>
       </td>
       <td>
-        <%=link_to image_tag(use.user.head_logo.try(:img).try(:url,:t1), :class => "imgs"), use.user.head_logo.try(:img).try(:url), :target => 'blank' %>
         <%=link_to use.user_name, "/shop_checkins/user?uid=#{use.uid}"  %></td>
       <td align="center"><%=use.user_show_gender %></td>
       <td align="center"><%= use.vat.since(8.hours).strftime("%Y-%m-%d %H:%M") if use.vat %></td>
