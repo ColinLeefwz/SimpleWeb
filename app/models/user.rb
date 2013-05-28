@@ -36,7 +36,7 @@ class User
   index({wb_uid: 1})
   index({city: 1, gender:1})
   
-  def follows_s
+  def follows
     follows
   end
   
@@ -421,7 +421,7 @@ class User
   end
 
   def sina_friends_not_lianlian_friends
-    sina_friends.delete_if {|x| follows_s.index(x.id)!=nil }
+    sina_friends.delete_if {|x| follows.index(x.id)!=nil }
   end  
   
   def sina_fans
@@ -430,7 +430,7 @@ class User
   end
   
   def sina_fans_not_lianlian_fans
-    sina_fans.delete_if {|x| x.follows_s.index(self.id)!=nil }
+    sina_fans.delete_if {|x| x.follows.index(self.id)!=nil }
   end
   
   def del_test_user
