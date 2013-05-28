@@ -36,14 +36,12 @@ class User
   index({wb_uid: 1})
   index({city: 1, gender:1})
   
-  def follows
-    follows
+  def follow_ids
+    $redis.zrange("Fol#{self.id}",0,-1)
   end
   
   def follows
-    ret = UserFollow.find_by_id(self.id)
-    return [] if ret.nil?
-    ret.follows
+    follow_ids
   end
   
   def lords
@@ -251,7 +249,7 @@ class User
     fan_ids.find {|x| x==user_id.to_s} != nil
   end
 
-  def followers
+  def fans
     users = fan_ids.map {|x| User.find_by_id(x) }
     users.delete(nil)
     users

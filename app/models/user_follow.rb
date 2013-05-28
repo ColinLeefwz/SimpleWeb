@@ -4,23 +4,24 @@ class UserFollow
   include Mongoid::Document
   field :follows, type:Array #关注
   
-  def self.find_or_new(uid)
+  def self.find_or_new(uid, fid)
     begin
       uf = UserFollow.find(uid)
+      uf.add_to_set(:follows, fid)
+      uf.del_my_cache
     rescue
       uf = UserFollow.new
       uf.id = uid
-      uf.follows = []
+      uf.follows = [fid]
       uf.save!
     end
     uf
   end
   
   def self.add(uid,fid)
-    uf = UserFollow.find_or_new(uid)
-    uf.add_to_set(:follows, fid)
-    uf.del_my_cache
+    UserFollow.find_or_new(uid, fid)
     Rails.cache.delete("UI#{fid}#{uid}")
+    add_follows_redis(uid,fid)
     fuser = User.find_by_id(fid)
     if fuser && fuser.friend?(uid)
       add_good_friend_redis(uid,fid)
@@ -33,6 +34,7 @@ class UserFollow
     uf.pull(:follows,fid)
     uf.del_my_cache
     Rails.cache.delete("UI#{fid}#{uid}")
+    del_follows_redis(uid,fid)
     fuser = User.find_by_id(fid)
     if fuser && fuser.friend?(uid)
       del_good_friend_redis(uid,fid)
@@ -80,6 +82,21 @@ class UserFollow
     $redis.zrem("Fan#{fid}",uid)
   end 
   
+  def self.add_follows_redis(uid,fid)
+    u1 = $redis.zcard("Fol#{uid}") || 0
+    $redis.zadd("Fol#{uid}",u1,fid)
+  end
+  
+  def self.del_follows_redis(uid,fid)
+    $redis.zrem("Fol#{uid}",fid)
+  end 
+  
+  def self.init_follows_redis
+    UserFollow.all.each do |uf|
+      next unless uf.follows.size>0
+      uf.follows.each_with_index{|uid,idx| $redis.zadd("Fol#{uf.id}",idx,uid)}
+    end
+  end
   
 
     
