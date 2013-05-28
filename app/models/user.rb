@@ -248,7 +248,7 @@ class User
   end
   
   def follower?(user_id)
-    fan_ids.find {|x| x==user_id.to_s}
+    fan_ids.find {|x| x==user_id.to_s} != nil
   end
 
   def followers
