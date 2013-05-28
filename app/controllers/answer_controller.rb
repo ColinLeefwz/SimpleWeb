@@ -42,7 +42,8 @@ class AnswerController < ApplicationController
       Resque.enqueue_in(5.seconds,XmppMsg, $gfuid,uid,"我是脸脸客服😊")
     elsif txt.match /摇了摇手机/
       sec = rand(30)
-      Resque.enqueue_in(sec.seconds,XmppMsg, $gfuid,uid,"脸脸网络也摇了摇手机")     
+      Resque.enqueue_in(sec.seconds,XmppMsg, $gfuid,uid,"脸脸网络也摇了摇手机")   if sec < 25
+      Resque.enqueue_in(sec.seconds,XmppMsg, $gfuid,uid,"摇手机过猛，手机甩出去了") if sec > 20      
     elsif txt.match /怎么玩/
       Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"到每个地方，可以拍照分享照片😊")  
       Resque.enqueue_in(10.seconds,XmppMsg, $gfuid,uid,"可以在现场和热点里找人聊天")  
