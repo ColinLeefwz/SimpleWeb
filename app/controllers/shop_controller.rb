@@ -120,7 +120,7 @@ class ShopController < ApplicationController
   end
   
   def shop_photo_no_cache(sid,skip,pcount)
-    Photo.where({room:params[:id]}).sort({updated_at: -1}).skip(skip).limit(pcount).to_a
+    Photo.where({room:sid}).sort({updated_at: -1}).skip(skip).limit(pcount).to_a
   end
 
 
