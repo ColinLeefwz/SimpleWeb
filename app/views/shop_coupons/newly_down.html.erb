@@ -20,7 +20,7 @@
       <td align="center"><%= (down.user_show_gender)  %></td>
       <td align="center"><%=to_local down.dat%></td>
       <td align="center"><%=to_local down.sat%></td>
-      <td align="center"><%= link_to '重发', "#", :onclick => "resend($(this), '#{down.id}')"  if down.sat.blank? && Rails.cache.fetch("CD#{down.id}").nil?%></td>
+      <td align="center"><%= link_to '重发', "#", :onclick => "resend($(this), '#{down.id}')"  if down.sat.blank? && down.uat.blank? && Rails.cache.fetch("CD#{down.id}").nil?%></td>
     </tr>
   <% end %>
 </table>
