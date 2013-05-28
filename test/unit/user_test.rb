@@ -12,6 +12,10 @@ class UserTest < ActiveSupport::TestCase
     reload('user_follows.js')    
     $redis.keys("Fan*").each {|key| $redis.zremrangebyrank(key,0,-1)}
     $redis.keys("Frd*").each {|key| $redis.zremrangebyrank(key,0,-1)}
+    $redis.keys("Fol*").each {|key| $redis.zremrangebyrank(key,0,-1)}
+    UserFollow.init_fans_redis
+    UserFollow.init_good_friend_redis
+    UserFollow.init_follows_redis
   end
 
 
@@ -30,7 +34,7 @@ class UserTest < ActiveSupport::TestCase
 
   test ".follows 有关注的人" do
     user = User.find_by_id('502e6303421aa918ba00007c')
-    foll = [User.find_by_id('502e6303421aa918ba000002').id]
+    foll = [User.find_by_id('502e6303421aa918ba000002').id.to_s]
     assert_equal user.follows , foll
   end
 
