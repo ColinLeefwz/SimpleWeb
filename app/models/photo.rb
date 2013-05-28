@@ -46,6 +46,7 @@ class Photo
     if weibo || qq || (wx && wx>0)
       send_coupon
       send_pshop_coupon
+      Lord.assign(room,user_id) if desc && desc.index("我是地主")
       Resque.enqueue(PhotoNotice, self.id) unless Os.overload?
     end
     return if ENV["RAILS_ENV"] == "test"
