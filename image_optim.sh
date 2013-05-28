@@ -6,7 +6,7 @@
 
 for i in `find /mnt/lianlian/public -size +8k -cmin -10  -iname "*.jpg"`
 do
-    if [[ $i != *public/coupon* ]] && [[ $i != *public/uploads* ]]
+    if [[ $i != *public/coupon* ]] && [[ $i != *public/uploads* ]] && [[ $i != *public/phone* ]] && [[ $i != *public/phone2* ]]
         then
         jpegoptim --strip-all $i > /dev/null
         rpath=${i/'/mnt/lianlian/public/'/}
