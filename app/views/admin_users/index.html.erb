@@ -21,7 +21,6 @@
     <th>出生日期</th>	
     <th>wb_uid</th>
     <th>性别</th>
-    <th>关注数</th>
     <th></th>
   </tr>
 
@@ -33,7 +32,6 @@
       <td><%= user.birthday %></td>
       <td><%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %></td>
       <td><%= user.show_gender %></td>
-      <td><%= user.follows_s.count %></td>
       <td>
         <%= link_to '详情', "/admin_users/show?id=#{user.id}" %>
       </td>
