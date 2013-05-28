@@ -65,9 +65,9 @@ class UserFollow
   def self.init_fans_redis
     User.where({auto:{"$ne" => true}}).each do |user|
       next if $redis.zcard("Fan#{user.id}") > 0
-      arr = user.fan_ids.to_a
+      arr = UserFollow.only(:_id).where({follows: user.id}).to_a
       next if arr.size==0
-      arr.each_with_index{|uid,idx| $redis.zadd("Fan#{user.id}",idx,uid)}
+      arr.each_with_index{|uf,idx| $redis.zadd("Fan#{user.id}",idx,uf.id)}
     end
   end
   

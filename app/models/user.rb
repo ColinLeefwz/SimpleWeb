@@ -248,22 +248,21 @@ class User
   end
   
   def follower?(user_id)
-    begin
-      return User.find_by_id(user_id).follows.index(self._id) !=nil
-    rescue
-      return false
-    end
+    fan_ids.find {|x| x==user_id.to_s} != nil
   end
-  
-  def fan_ids
-    UserFollow.only(:_id).where({follows: self.id})
-  end
-  
-  
+
   def followers
-    users = fan_ids.map {|x| User.find_by_id(x.id) }
+    users = fan_ids.map {|x| User.find_by_id(x) }
     users.delete(nil)
     users
+  end
+    
+  def fan_ids
+    $redis.zrange("Fan#{self.id}",0,-1)
+  end
+  
+  def fan_not_friend_ids
+    fan_ids - good_friend_ids
   end
   
   def good_friend_ids
