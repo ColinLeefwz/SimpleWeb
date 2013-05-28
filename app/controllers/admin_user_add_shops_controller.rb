@@ -73,10 +73,7 @@ class AdminUserAddShopsController < ApplicationController
     @shop.t = shop.t
     @shop.i = true
     if @shop.save
-      if Lord.assign(@shop.id,@shop.creator)
-        Xmpp.send_chat($dduid,@shop.creator,": 您创建的地点#{@shop.name}审核通过。恭喜你成为#{@shop.name}的地主👑")
-      end
-      
+      Lord.assign(@shop.id,@shop.creator, true)
       pshop = Shop.find_by_id(params[:pid])
       if pshop
         pshop.shops = pshop.shops.to_a << @shop.id.to_i unless pshop.shops.to_a.include?(@shop.id.to_i)
@@ -88,7 +85,6 @@ class AdminUserAddShopsController < ApplicationController
     else
       render :action => :edit
     end
-    
   end
 
   def del
