@@ -36,10 +36,10 @@ class LocationNotice
   def self.same_location_fans(uid,sid,user,shop)
     now = Time.now.to_i
     uids = $redis.zrangebyscore("UA#{sid.to_i}", 0, now-3600*3)
-    user.fan_ids.to_set.intersection(uids).each do |id|
+    user.fan_not_friend_ids.to_set.intersection(uids).each do |id|
       next if id.to_s == $gfuid
       Resque.enqueue(XmppMsg, uid, id,
-       "#{user.name}刚刚摇了摇手机进入你以前也来过的#{shop.name}，快去和TA打个招呼吧！")
+       "#{user.name}刚刚摇了摇手机进入你以前也来过的#{shop.name}，打个招呼吧！")
     end
   end
   
