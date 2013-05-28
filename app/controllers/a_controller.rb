@@ -11,7 +11,8 @@ class AController < ApplicationController
   end
   
   def down
-    redirect_to "http://oss.aliyuncs.com/dface/dface.apk"
+    ver = android_version
+    redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
   end
   
   def xmpp_test
