@@ -16,7 +16,7 @@
       <td><%=  link_to user.wb_uid.to_s, user.weibo_home %></td>
       <td><%= user.show_gender %></td>
       <td><%= user.blacks_s.count %></td>
-      <td><%= user.follows_s.count %></td>
+      <td><%= user.follows.count %></td>
       <td>
         <%= link_to '详情', "/admin_users/show?id=#{user.id}" %>
       </td>
