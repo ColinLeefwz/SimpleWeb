@@ -159,6 +159,15 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def android_version
+    version = $redis.get("android_version")
+    if version
+      ver = version.to_f
+    else
+      ver = 1.0
+    end
+  end
+  
   def output_users(fs)
     users = []
     page = params[:page] || 1
