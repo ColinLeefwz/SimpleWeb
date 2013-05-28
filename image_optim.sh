@@ -16,12 +16,12 @@ do
 
         if wget --spider  $uname ; then
             html=`find /mnt/lianlian/public -name "*.html"`
-            $html | xargs rpl "/$rpath" "$uname"
-            $html | xargs rpl "$rpath" "$uname"
+            rpl "/$rpath" "$uname" $html
+            rpl "$rpath" "$uname"  $html
             css=`find /mnt/lianlian/public -name "*.css"`
-            $css | xargs rpl "$rpath" "$uname"
-            $css | xargs rpl "/$rpath" "$uname"
-            $css | xargs rpl "../$rpath" "$uname"
+            rpl "../$rpath" "$uname" $css
+            rpl "/$rpath" "$uname" $css
+            rpl "$rpath" "$uname" $css
         fi
     fi
 done
