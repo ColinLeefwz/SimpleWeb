@@ -24,14 +24,14 @@ class UserTest < ActiveSupport::TestCase
     assert_equal User.find_by_id("502e6303421aa918ba00007c").name, '袁乐天'
   end
 
-  test ".follows_s 没有关注的人" do
-    assert_equal User.find_by_id('502e6303421aa918ba000007').follows_s , []
+  test ".follows 没有关注的人" do
+    assert_equal User.find_by_id('502e6303421aa918ba000007').follows , []
   end
 
-  test ".follows_s 有关注的人" do
+  test ".follows 有关注的人" do
     user = User.find_by_id('502e6303421aa918ba00007c')
     foll = [User.find_by_id('502e6303421aa918ba000002').id]
-    assert_equal user.follows_s , foll
+    assert_equal user.follows , foll
   end
 
   test ".reports_s 没有举报的人" do
