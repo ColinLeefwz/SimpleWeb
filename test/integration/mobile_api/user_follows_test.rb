@@ -15,6 +15,9 @@ class UserFollowsTest < ActionDispatch::IntegrationTest
     $redis.keys("Fan*").each {|key| $redis.zremrangebyrank(key,0,-1)}
     $redis.keys("Frd*").each {|key| $redis.zremrangebyrank(key,0,-1)}
     Rails.cache.delete("UserFollow502e6303421aa918ba000005")
+    UserFollow.init_fans_redis
+    UserFollow.init_good_friend_redis
+    UserFollow.init_follows_redis
 
     #登录添加好友
     login(luser.id)

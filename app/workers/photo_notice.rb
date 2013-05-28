@@ -7,7 +7,7 @@ class PhotoNotice
     photo = Photo.find_primary(pid)
     user = photo.user
     uid = user.id
-    user.followers.each do |u|
+    user.fans.each do |u|
       next if u.id.to_s == $gfuid
       str = ": #{photo.user.name}在#{photo.shop.name}分享了一张图片"
       str += ",#{photo.desc}" unless photo.desc.nil?
