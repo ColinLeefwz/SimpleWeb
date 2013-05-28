@@ -21,7 +21,7 @@
       <td><%= user.birthday %></td>
       <td><%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %></td>
       <td><%= user.show_gender %></td>
-      <td><%= user.follows_s.count %></td>
+      <td><%= user.follows.count %></td>
       <td><%= user.blacks_s.count %></td>
       <td><%= user.user_logos.size %></td>
       <td><%= user.checkins.size %>／<%= user.photos.size %></td>

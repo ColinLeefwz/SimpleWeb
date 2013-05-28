@@ -64,7 +64,7 @@
 
 <p>
   <b>关注数:</b>
-  <%=link_to @user.follows_s.count, "/admin_users/follows?id=#{@user.id}" %>
+  <%=link_to @user.follows.count, "/admin_users/follows?id=#{@user.id}" %>
 </p>
 
 <p>

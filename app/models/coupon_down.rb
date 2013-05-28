@@ -22,6 +22,8 @@ class CouponDown
   end
 
   index({cid: 1, uid:1})
+  index({dat: -1})
+  
   
   def shop
     Shop.find_by_id(sid)
