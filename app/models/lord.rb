@@ -36,7 +36,8 @@ class Lord
     if lord
       return false if lord.uid==uid
       lord.change_dizhu(uid)
-      Xmpp.send_chat($dduid, lord.oid, ": 您在#{shop.name}的地主👑被#{User.find_by_id(uid).name}抢走了")
+      Resque.enqueue(XmppMsg, uid, lord.oid, ": 您在#{shop.name}的地主👑被#{User.find_by_id(uid).name}抢走了")
+      Resque.enqueue(XmppMsg, $dduid,uid,": 恭喜你成为#{shop.name}的地主👑")
     else
       lord = Lord.new
       lord.uid = uid
@@ -44,9 +45,9 @@ class Lord
       lord.uat = Time.now
       lord.save!
       if creator
-        Xmpp.send_chat($dduid, uid,": 您创建的地点#{shop.name}审核通过,恭喜你成为地主👑")
+        Resque.enqueue(XmppMsg, $dduid, uid,": 您创建的地点#{shop.name}审核通过,恭喜你成为地主👑")
       else
-        Xmpp.send_chat($dduid,uid,": 恭喜你成为#{shop.name}的地主👑")
+        Resque.enqueue(XmppMsg, $dduid,uid,": 恭喜你成为#{shop.name}的地主👑")
       end
     end
     return true
