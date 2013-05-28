@@ -15,9 +15,9 @@
       管理员： <%= select_tag :id, options_for_select(Admin.noright.map{|m| [m.name, m.id.to_s]}, params[:id] ) %>
     <% end %>
   </p>
-  <%  yaml_data['right'].each do |k, v|%>
+  <%  ControllerName::Right.each do |k, v|%>
     <p>
-      <%  yaml_data['menu'][k] %>
+      <%  ControllerName::Menu[k] %>
       <input  type="radio" name="<%= k%>" onclick ="chec('none', '<%=k %>')"/>无
       <input  type="radio" name="<%= k%>" onclick ="chec('r', '<%=k %>')" />读
       <input  type="radio" name="<%= k%>" onclick ="chec('w', '<%=k %>')"/>写
