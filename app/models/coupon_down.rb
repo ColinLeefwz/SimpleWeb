@@ -81,5 +81,16 @@ class CouponDown
   def share_coupon_img_path
     "/uploads/tmp/cpd_#{self.id}.jpg"
   end
+
+
+  def self.auto_resend(tim = Time.now)
+    self.where({dat: {"$gte" => tim - 180, "$lte" => tim - 30}, sat: nil, uat: nil }).each do |cpd|
+      if ENV["RAILS_ENV"] == "production"
+        Xmpp.send_chat("scoupon",cpd.uid,cpd.message, cpd.id)  
+      else
+        puts "scoupon,#{cpd.uid},#{cpd.message}, #{cpd.id}"
+      end
+    end
+  end
   
 end
