@@ -48,6 +48,7 @@ class Photo
       send_pshop_coupon
       Lord.assign(room,user_id) if desc && desc.index("我是地主")
       Resque.enqueue(PhotoNotice, self.id) unless Os.overload?
+      Rails.cache.delete("UP#{self.user_id}-5")
     end
     return if ENV["RAILS_ENV"] == "test"
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}")
