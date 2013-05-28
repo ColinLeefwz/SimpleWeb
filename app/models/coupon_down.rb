@@ -83,6 +83,7 @@ class CouponDown
   end
 
 
+  #优惠券下发后没有收到时间的， 30秒后至3分钟内自动重发
   def self.auto_resend(tim = Time.now)
     self.where({dat: {"$gte" => tim - 180, "$lte" => tim - 30}, sat: nil, uat: nil }).each do |cpd|
       if ENV["RAILS_ENV"] == "production"
