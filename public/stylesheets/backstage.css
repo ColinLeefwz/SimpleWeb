@@ -86,7 +86,7 @@ display: block;height: 43px;line-height: 43px;text-align: center;width: 122px;te
 padding-left:40px;font-size:14px;padding-right:25px;}
 
 /*登录页样式表 begin*/
-.logo{width:162px;height:71px;display:block;text-indent:-999em;margin:0px auto 50px auto;background:url("../images/logo2.png");}
+.logo{width:202px;height:80px;display:block;text-indent:-999em;margin:0px auto 50px auto;background:url("../images/logo2.png");}
 .area{width:275px;height:448px;position:absolute;left:50%;top:50%;margin-left:-135px;margin-top:-224px;}
 
 .plane{color:#333333;background-color:#F4F4F4;display:block;padding:10px 8px;margin-bottom:15px;overflow:hidden;zoom:1;}
