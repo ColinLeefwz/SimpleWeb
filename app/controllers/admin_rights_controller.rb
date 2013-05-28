@@ -58,7 +58,7 @@ class AdminRightsController < ApplicationController
 
 
   def admin_controller_names
-    data = YAML.load_file(Rails.root.to_s+"/config/locales/contro.yml")["right"]
+    data = ControllerName::Right
     names = []
     data.each_value{|e| names += e.keys}
     names
