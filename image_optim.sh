@@ -9,24 +9,19 @@ do
     if [[ $i != *public/coupon* ]] && [[ $i != *public/uploads* ]]
         then
         jpegoptim --strip-all $i > /dev/null
-        rpath=${i/'/mnt/public'/}
+        rpath=${i/'/mnt/lianlian/public/'/}
          fname=${rpath//\//_}
         #/mnt/Oss/oss2/osscmd put $i "oss://dface/$fname"
          uname="http://oss.aliyun.com/dface/$fname"
 
         if wget --spider  $uname ; then
-            for html in `find /mnt/lianlian/public -name "*.html"`
-            do
-             rpl   "\"$rpath\"" "\"$uname\"" $html
-             rpl   "'$rpath'" "\"$uname\"" $html
-             rpl   "$rpath" "$uname" $html
-            done
-
-            for css in `find /mnt/lianlian/public -name "*.css"`
-            do
-             rpl  "..$rpath" $uname $css
-             rpl  "$rpath" $uname $css
-            done
+            html=`find /mnt/lianlian/public -name "*.html"`
+            $html | xargs rpl "/$rpath" "$uname"
+            $html | xargs rpl "$rpath" "$uname"
+            css=`find /mnt/lianlian/public -name "*.css"`
+            $css | xargs rpl "$rpath" "$uname"
+            $css | xargs rpl "/$rpath" "$uname"
+            $css | xargs rpl "../$rpath" "$uname"
         fi
     fi
 done
