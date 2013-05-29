@@ -55,6 +55,7 @@ class PhotosController < ApplicationController
     sid = photo.room
     if photo.destroy
       expire_cache_shop(sid)
+      Rails.cache.delete("UP#{photo.user_id}-5")
       render :json => {ok:photo.id}.to_json
     else
       render :json => {"error" => "delete #{photo.id} failed."}.to_json
@@ -158,10 +159,28 @@ class PhotosController < ApplicationController
     page = 1 if page==0
     pcount = 5 if pcount==0
     skip = (page-1)*pcount
-    photos = Photo.where({user_id: params[:uid], 
-      "$or" => [ { weibo: true } , { qq: true } ]}).sort({updated_at: -1}).skip(skip).limit(pcount)
+    photos = user_photo_cache(params[:uid], skip, pcount)
     render :json => photos.map {|p| p.output_hash_with_shopname }.to_json
   end
+  
+  def user_photo_cache_key(uid,skip,pcount)
+    "UP#{uid}-#{pcount}"
+  end
+  
+  def user_photo_cache(uid,skip,pcount)
+    if skip>0
+      return user_photo_no_cache(uid,skip,pcount)
+    end
+    Rails.cache.fetch(user_photo_cache_key(uid,skip,pcount)) do
+      user_photo_no_cache(uid,skip,pcount)
+    end
+  end
+  
+  def user_photo_no_cache(uid,skip,pcount)
+    Photo.where({user_id: uid, "$or" => [ { weibo: true } , { qq: true } ]}).
+          sort({updated_at: -1}).skip(skip).limit(pcount).to_a
+  end
+
   
   private 
   def expire_cache_shop(sid)
