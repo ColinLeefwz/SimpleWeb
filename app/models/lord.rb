@@ -30,17 +30,25 @@ class Lord
     self.save!
   end
   
-  def self.assign(sid,uid)
+  def self.assign(sid,uid, creator=false)
+    shop = Shop.find_by_id(sid)
     lord = Lord.find_by_id(sid)
     if lord
       return false if lord.uid==uid
       lord.change_dizhu(uid)
+      Resque.enqueue(XmppMsg, uid, lord.oid, ": 您在#{shop.name}的地主👑被#{User.find_by_id(uid).name}抢走了")
+      Resque.enqueue(XmppMsg, $dduid,uid,": 恭喜你成为#{shop.name}的地主👑")
     else
       lord = Lord.new
       lord.uid = uid
       lord.id = sid
       lord.uat = Time.now
       lord.save!
+      if creator
+        Resque.enqueue(XmppMsg, $dduid, uid,": 您创建的地点#{shop.name}审核通过,恭喜你成为地主👑")
+      else
+        Resque.enqueue(XmppMsg, $dduid,uid,": 恭喜你成为#{shop.name}的地主👑")
+      end
     end
     return true
   end
