@@ -220,8 +220,8 @@ border-bottom:1px solid #ABABAB;margin:0px 4px;overflow:hidden;}
 .text6{width:534px;height:45px;float:left;line-height:45px; font-size:22px;margin-left:60px;border:none;color:#B4B3B4;margin-top:7px;}
 .btn1{width:124px;height:60px;background:url(../images/btn1.png) left top no-repeat;border:none;cursor:pointer;}
 .btn2{width:124px;height:60px;background:url(../images/btn2.png) left top no-repeat;border:none;cursor:pointer;}
-.btn3{width:35px;height:36px;background:url(../images/btn3.png) left top no-repeat;border:none;cursor:pointer;}
-.btn4{float:left; width:89px;height:52px; background:url(../images/btn4.png) left top no-repeat;cursor:pointer;border:none; }
+.btn3{width:35px;height:36px;background:url(http://oss.aliyuncs.com/dface/images_btn3.png) left top no-repeat;border:none;cursor:pointer;}
+.btn4{float:left; width:89px;height:52px; background:url(http://oss.aliyuncs.com/dface/images_btn4.png) left top no-repeat;cursor:pointer;border:none; }
 .btn5{width:556px;height:90px; background:url(../images/btn5.png) left top no-repeat;cursor:pointer;border:none;display:block;}
 /** form over **/
 
