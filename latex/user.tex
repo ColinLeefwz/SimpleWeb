@@ -677,7 +677,7 @@ GET & \multicolumn{3}{|c|}{/follow\_info/followers} \\
 
 
 \subsection{关注列表}
-
+本接口以后将不再支持。
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
@@ -708,7 +708,7 @@ GET & \multicolumn{3}{|c|}{/follow\_info/friends} \\
 
 
 \subsection{双向好友列表}
-
+本接口以后将不再支持。
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
@@ -735,6 +735,25 @@ GET & \multicolumn{3}{|c|}{/follow\_info/good\_friends} \\
 返回的内容格式同粉丝列表一样
 
 这里返回的所有用户，都和当前登录用户互相关注。
+
+
+\subsection{批量获取所有我关注用户的信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/friend\_infos} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的用户基本信息的一个数组。
 
 
 
@@ -842,7 +861,7 @@ GET & \multicolumn{3}{|c|}{/follow\_info/fan\_locs} \\
 \begin{enumerate}
 \item 关注信息要在客户端单独建表，本地完整保存。好友信息是关注信息的子集合。
 \item 当关注信息为空时，调用friend\_infos接口初始化关注信息，然后调用good\_friend\_ids初始化好友信息。
-\item 当用户手动刷新关注／好友列表时，调用friend\_ids／good\_friend\_ids获取最新的关注／好友列表。对于新增的id，调用user\_info/get接口获得用户信息，对于减少的id，取消关注／好友标志。
+\item 当用户手动刷新关注／好友列表时，调用friend\_ids／good\_friend\_ids获取最新的关注／好友列表。对于新增的id，调用user\_info/basic接口获得用户信息，对于减少的id，取消关注／好友标志。
 \item 用户最后出现的地点信息，单独一个接口，每次按需获取。
 \item 原有的friends和good\_friends接口只是为了兼容性而存在，以后不要再调用。
 \item 粉丝接口followers接口不变，每次只缓存最新的20条，手动刷新和加载更多。
