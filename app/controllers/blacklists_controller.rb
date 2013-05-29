@@ -17,6 +17,7 @@ class BlacklistsController < ApplicationController
     ub.bid = Moped::BSON::ObjectId(params[:block_id])
     ub.report = report
     ub.save!
+    ub.add_black_redis
     Resque.enqueue(XmppBlack, session[:user_id], params[:block_id], 'block')
     Resque.enqueue(XmppBlackNotice, session[:user_id], params[:block_id]) if report==1
     render:json => hash.to_json
@@ -25,6 +26,7 @@ class BlacklistsController < ApplicationController
   def delete
     bid = Moped::BSON::ObjectId(params[:block_id])
     UserBlack.delete_all({uid:session[:user_id], bid:bid})
+    UserBlack.del_black_redis(session[:user_id],bid)
     Resque.enqueue(XmppBlack, session[:user_id], params[:block_id], 'unblock')
     render :json => {:deleted => params[:block_id]}.to_json
   end
