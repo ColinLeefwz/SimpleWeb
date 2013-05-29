@@ -57,10 +57,12 @@ class Shop
   end
   
   def city_fullname
-    city = City.where({code:self.city}).first
+    city = City.where({code:self.city}).limit(1).first
     return "" if city.nil?
     city.s.to_s + city.name.to_s
   end
+
+
   
   def notice
     ShopNotice.where({shop_id: self.id}).last

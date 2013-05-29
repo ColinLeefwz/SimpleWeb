@@ -7,11 +7,11 @@ class ShopReport
   field :flag,type: Integer
 
   def shop
-    Shop.find_by_id(self.sid)
+    @shop ||= Shop.find_by_id(self.sid)
   end
 
   def user
-    User.find_by_id(self.uid)
+    @user ||= User.find_by_id(self.uid)
   end
 
   
