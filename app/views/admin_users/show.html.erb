@@ -58,18 +58,18 @@
   <%=link_to @user.user_logos.size, "/admin_users/logos?id=#{@user.id}" %>
 </p>
 <p>
-  <b>签到数:</b>
-  <%=link_to @user.checkins.count, "/admin_checkins?uid=#{@user.id}" %>
+  <b>签到:</b>
+  <%=link_to "查看", "/admin_checkins?uid=#{@user.id}" %>
 </p>
 
 <p>
-  <b>关注数:</b>
-  <%=link_to @user.follows.count, "/admin_users/follows?id=#{@user.id}" %>
+  <b>关注:</b>
+  <%=link_to "查看", "/admin_users/follows?user_id=#{@user.id}" %>
 </p>
 
 <p>
-  <b>黑名单数:</b>
-  <%= @user.blacks_s.count %>
+  <b>黑名单:</b>
+  <%=link_to "查看", "/admin_users/blacks?user_id=#{@user.id}" %>
 </p>
 
 <p>
