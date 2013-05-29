@@ -4,9 +4,9 @@ img{border:none;}
 a{text-decoration:none;color:#333;}
 
 #wrapper{width: 320px;height:562px; background: url("../images/bg8.jpg") repeat-y;margin-left: auto;margin-right: auto;}
-.btn3{width: 208px;height: 72px;display: block;text-indent: -999em;background: url("../images/btn3.png") no-repeat;margin:0 auto}
-.btn4{width: 208px;height: 72px;display: block;text-indent: -999em;background: url("../images/btn4.png") no-repeat;margin:6px auto}
+.btn3{width: 208px;height: 72px;display: block;text-indent: -999em;background: url("http://oss.aliyuncs.com/dface/images_btn3.png") no-repeat;margin:0 auto}
+.btn4{width: 208px;height: 72px;display: block;text-indent: -999em;background: url("http://oss.aliyuncs.com/dface/images_btn4.png") no-repeat;margin:6px auto}
 .page{height:100px;width:180px;margin:0px auto; padding:10px 0 0;line-height:20px;text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);}
-.container{height:296px;background: url("../images/bg9.jpg") no-repeat;padding: 260px 0 0 0;}
+.container{height:296px;background: url("http://oss.aliyuncs.com/dface/images_bg9.jpg") no-repeat;padding: 260px 0 0 0;}
 
 .coming{width:180px;margin:0px auto;padding: 70px 0 0 0;font-size:25px;color:#6e7171;font-weight:bold;font-family:"arial";text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);}
