@@ -49,21 +49,18 @@ class User
     #Lord.where({uid:self.id})
   end
   
-  def blacks_s
-    UserBlack.where({uid: self.id})
+  def black_ids
+    #UserBlack.where({uid: self.id})
+    $redis.zrange("BLACK#{self.id}",0,-1)
   end
-
+  
   def reports_s
     UserBlack.where({uid: self.id, report:1})
   end
 
-  def reported_users
-    reports_s.map {|x| User.find_by_id(x["bid"])}
-  end
-  
   # user_id是否在黑名单中
   def black?(user_id)
-    UserBlack.where({uid: self.id, bid: user_id}).first
+    $redis.zrank("BLACK#{self.id}", user_id) != nil
   end
   
   #是否屏蔽user_id（该用户的最后出现位置，以及在商家用户列表中找到）
