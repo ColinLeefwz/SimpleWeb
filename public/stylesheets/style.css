@@ -9,7 +9,7 @@ h1{display: none}
 .pointer{cursor:pointer;}
 .f12{font-size:12px !important;}
 .ff{font-family:"微软雅黑";text-shadow:0px 0px 2px #ccc;color:#333;}
-.btn{display:block;width:210px;height:65px;background:transparent url(../images/btn.jpg) left top no-repeat;overflow:hidden;text-indent:-999em;}
+.btn{display:block;width:210px;height:65px;background:transparent url(http://oss.aliyuncs.com/dface/images_btn.jpg) left top no-repeat;overflow:hidden;text-indent:-999em;}
 .ml100{margin-left:100px;}
 .mt5{margin-top:5px;}
 .mt20{margin-top:20px;}
@@ -38,14 +38,14 @@ display:block;overflow:hidden;float:left;text-indent:-999em;margin-left:20px;cur
 
 .slide {position:relative;width:960px;height:0px;margin:0px auto;z-index:99;zoom:1;}
 .slide .slideinner{}
-.slide  .slideinner .pic{width: 136px;height: 155px;top: -380px;left: 562px;position: absolute;background:url(../images/pic.png) 0px 0px no-repeat;}
-.slide  .slideinner .pic2{width: 145px;height: 155px;top: -380px;left: 835px;position: absolute;background:url(../images/pic2.png) 0px 0px no-repeat;}
-.slide  .slideinner .dl, .slide  .slideinner .dl:hover {width: 243px;height: 58px;top: -130px;left: 510px;position: absolute;background:url(../images/iphone.png) 0px -10px no-repeat;}
-.slide  .slideinner .dl:hover{background:url(../images/iphone.png) 0px -90px no-repeat;}
-.slide  .slideinner .dl2 {width: 270px;height: 58px;top: -130px;left: 780px;position: absolute;background:url(../images/android.png) left -10px no-repeat;}
-.slide  .slideinner .dl2:hover{background:url(../images/android.png) left -90px no-repeat;}
-.slide .slideinner h2 {top: -522px;width: 458px;height: 522px;position: absolute; background:url(../images/index/hand.png) left top no-repeat;}
-.slide  .slideinner h3{width: 300px;height: 60px;top: -80px;left: 580px;position: absolute;background:url(../images/index/btn2.png) center top no-repeat;}
+.slide  .slideinner .pic{width: 136px;height: 155px;top: -380px;left: 562px;position: absolute;background:url(http://oss.aliyuncs.com/dface/images_pic.png) 0px 0px no-repeat;}
+.slide  .slideinner .pic2{width: 145px;height: 155px;top: -380px;left: 835px;position: absolute;background:url(http://oss.aliyuncs.com/dface/images_pic2.png) 0px 0px no-repeat;}
+.slide  .slideinner .dl, .slide  .slideinner .dl:hover {width: 243px;height: 58px;top: -130px;left: 510px;position: absolute;background:url(http://oss.aliyuncs.com/dface/images_iphone.png) 0px -10px no-repeat;}
+.slide  .slideinner .dl:hover{background:url(http://oss.aliyuncs.com/dface/images_iphone.png) 0px -90px no-repeat;}
+.slide  .slideinner .dl2 {width: 270px;height: 58px;top: -130px;left: 780px;position: absolute;background:url(http://oss.aliyuncs.com/dface/images_android.png) left -10px no-repeat;}
+.slide  .slideinner .dl2:hover{background:url(http://oss.aliyuncs.com/dface/images_android.png) left -90px no-repeat;}
+.slide .slideinner h2 {top: -522px;width: 458px;height: 522px;position: absolute; background:url(http://oss.aliyuncs.com/dface/images_index_hand.png) left top no-repeat;}
+.slide  .slideinner h3{width: 300px;height: 60px;top: -80px;left: 580px;position: absolute;background:url(http://oss.aliyuncs.com/dface/images_index_btn2.png) center top no-repeat;}
 
 .con{margin:1px 0 0 0;width:100%;overflow:hidden;clear:both;height:239px;background:url(../images/index/conbg.jpg) left top repeat-x;}
 .con2{width:900px;margin:1px auto 0px auto;overflow:hidden;clear:both;font-size:14px;line-height:25px;color:#666;font-family:"宋体";}
@@ -61,7 +61,7 @@ display:block;overflow:hidden;float:left;text-indent:-999em;margin-left:20px;cur
 .articleinner{width:100%;position:relative;}
 .articleinner p{margin:15px 0px;padding:0px;}
 
-.footer{clear:both;height:122px;background:url(../images/index/footbg.jpg) left top repeat-x;color:#999;text-shadow: 1px 1px 0px rgba(0, 0, 0, 1); }
+.footer{clear:both;height:122px;background:url(http://oss.aliyuncs.com/dface/images_index_footbg.jpg) left top repeat-x;color:#999;text-shadow: 1px 1px 0px rgba(0, 0, 0, 1); }
 .wrapper {width: 960px;margin: 0 auto;text-align: center;overflow: hidden;}
 .About{margin-top: 39px;margin-bottom: 5px;}
 .About a {color:#999;margin: 0 15px;}
