@@ -44,11 +44,21 @@ class AdminUsersController < ApplicationController
   end
 
   def follows
-    user = User.find_by_id(params[:id])
-    follows = user.follows.map{|m| User.find(m)}
-    @users = paginate_arr(follows, params[:page], 15 )
-    render :file => "/admin_users/users"
+    user = User.find_by_id(params[:user_id])
+    hash = {_id: {"$in" => user.follow_ids}}
+    sort = {_id: -1}
+    @users =  paginate3("User", params[:page], hash, sort)
+    render :file => "/admin_users/index"
   end
+
+  def blacks
+    user = User.find_by_id(params[:user_id])
+    hash = {_id: {"$in" => user.black_ids}}
+    sort = {_id: -1}
+    @users =  paginate3("User", params[:page], hash, sort)
+    render :file => "/admin_users/index"
+  end
+
 
   def chat
     @user = User.find_by_id(params[:id])
