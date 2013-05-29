@@ -44,20 +44,20 @@ class AdminUsersController < ApplicationController
   end
 
   def follows
-    user = User.find(params[:id])
+    user = User.find_by_id(params[:id])
     follows = user.follows.map{|m| User.find(m)}
     @users = paginate_arr(follows, params[:page], 15 )
     render :file => "/admin_users/users"
   end
 
   def chat
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
     chats = @user.chat.sort{|a,b| b[2] <=> a[2]}
     @chats = paginate_arr(chats, params[:page], 50)
   end
 
   def human_chat
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
     chats = @user.human_chat(params[:uid]).sort{|a,b| b[3] <=> a[3]}
     @chats =paginate_arr(chats, params[:page], 50 )
   end
