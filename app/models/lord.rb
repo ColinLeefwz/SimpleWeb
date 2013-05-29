@@ -28,6 +28,8 @@ class Lord
     self.uid = uid
     self.uat = t
     self.save!
+    self.add_lord_redis
+    self.del_old_lord_redis
   end
   
   def self.assign(sid,uid, creator=false)
@@ -44,6 +46,7 @@ class Lord
       lord.id = sid
       lord.uat = Time.now
       lord.save!
+      lord.add_lord_redis
       if creator
         Resque.enqueue(XmppMsg, $dduid, uid,": 您创建的地点#{shop.name}审核通过,恭喜你成为地主👑")
       else
@@ -58,6 +61,25 @@ class Lord
       Lord.assign(s.id, s.creator)
     end
   end
+  
+  def self.init_lord_redis
+    Lord.all.each do |lord|
+      lord.add_lord_redis
+    end
+  end
+  
+  def add_lord_redis
+    key = "LORD#{self.uid}"
+    u1 = $redis.zcard(key) || 0
+    $redis.zadd(key,u1,self.id)
+  end
+  
+  def del_old_lord_redis
+    return if self.oid.nil?
+    key = "LORD#{self.oid}"
+    $redis.zrem(key, self.id)
+  end
+  
   
   
 end
