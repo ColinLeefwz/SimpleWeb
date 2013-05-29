@@ -157,7 +157,7 @@ h1, #header h1 {text-shadow: #3E2C25 5px 5px 1px;text-align: center;}
 
 .btn1{width:124px;height:60px;background:url(../images/btn1.png) left top no-repeat;border:none;cursor:pointer;}
 .btn2{width:124px;height:60px;background:url(../images/btn2.png) left top no-repeat;border:none;cursor:pointer;}
-.btn3{width:35px;height:36px;background:url(../images/btn3.png) left top no-repeat;border:none;cursor:pointer;}
+.btn3{width:35px;height:36px;background:url(http://oss.aliyuncs.com/dface/images_btn3.png) left top no-repeat;border:none;cursor:pointer;}
 .btn4{float:left; width:89px;height:52px; background:url(../images/btn1.gif) left top no-repeat;cursor:pointer;border:none; }
 /** form over **/
 
