@@ -11,8 +11,8 @@ do
         jpegoptim --strip-all $i > /dev/null
         rpath=${i/'/mnt/lianlian/public/'/}
          fname=${rpath//\//_}
-        #/mnt/Oss/oss2/osscmd put $i "oss://dface/$fname"
-         uname="http://oss.aliyun.com/dface/$fname"
+        /mnt/Oss/oss2/osscmd put $i "oss://dface/$fname"
+         uname="http://oss.aliyuncs.com/dface/$fname"
 
         if wget --spider  $uname ; then
             html=`find /mnt/lianlian/public -name "*.html"`
