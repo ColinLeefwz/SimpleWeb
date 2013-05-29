@@ -13,9 +13,11 @@ class UserTest < ActiveSupport::TestCase
     $redis.keys("Fan*").each {|key| $redis.zremrangebyrank(key,0,-1)}
     $redis.keys("Frd*").each {|key| $redis.zremrangebyrank(key,0,-1)}
     $redis.keys("Fol*").each {|key| $redis.zremrangebyrank(key,0,-1)}
+    $redis.keys("BLACK*").each {|key| $redis.zremrangebyrank(key,0,-1)}
     UserFollow.init_fans_redis
     UserFollow.init_good_friend_redis
     UserFollow.init_follows_redis
+    UserBlack.init_black_redis
   end
 
 
@@ -57,7 +59,7 @@ class UserTest < ActiveSupport::TestCase
   test ".black? 用户不在黑名单中" do
     user = User.find_by_id('502e6303421aa918ba000002')
     blackuser  = User.find_by_id('502e6303421aa918ba000007')
-    assert_equal user.black?(blackuser.id), nil
+    assert_equal user.black?(blackuser.id), false
 
   end
 
@@ -76,6 +78,7 @@ class UserTest < ActiveSupport::TestCase
   test ".friend? 关注的user中存在特定的一个user" do
     user = User.find_by_id('502e6303421aa918ba000002')
     foll = User.find_by_id('502e6303421aa918ba000007')
+    debugger
     assert user.friend?(foll.id)
   end
 
