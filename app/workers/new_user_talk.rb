@@ -12,14 +12,27 @@ class NewUserTalk
       #to = User.fake_user(User.find_by_id(uid)).id
     end
     if seq==1
-      xmpp1 = Xmpp.chat(to,uid,"hi")
-      RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp1)
+      Xmpp.send_chat(to, uid, "hi")
     end
     if seq==2
-      shop = Shop.find(sid)
-      xmpp2 = Xmpp.chat(to,uid,"你在#{shop.name}？")
-      RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp2)
+      Xmpp.send_chat(to, uid, "你在#{shop.name}？")
+      chat2(uid) if user.gender==2
     end
+  end
+  
+  def self.chat2(uid)
+    to = "51427b92c90d8b670c00027b" #简单点
+    hour = Time.now.hour
+    if hour<12
+      msg = "早上好🌻🙏"
+    elsif hour<=13
+      msg = "中午好☀🙏"
+    elsif hour<=18
+      msg = "下午好🌷"
+    else
+      msg = "晚上好🌙💤"
+    end
+    Resque.enqueue_in(15.seconds,XmppMsg, to ,uid, msg)
   end
   
 end
