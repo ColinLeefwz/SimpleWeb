@@ -21,6 +21,23 @@ class UserBlack
     User.find_by_id(self.bid)
   end
 
+  def self.init_black_redis
+    UserBlack.all.each do |black|
+      black.add_black_redis
+    end
+  end
+  
+  def add_black_redis
+    key = "BLACK#{self.uid}"
+    u1 = $redis.zcard(key) || 0
+    $redis.zadd(key,u1,self.bid)
+  end
+  
+  def self.del_black_redis(uid,bid)
+    key = "BLACK#{uid}"
+    $redis.zrem(key, bid)
+  end
+  
   
 
 end
