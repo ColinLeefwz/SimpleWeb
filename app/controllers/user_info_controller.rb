@@ -28,7 +28,7 @@ class UserInfoController < ApplicationController
   
   def lords
     user = User.find_by_id(params[:id])
-    render :json => user.lords.map{|x| x.shop.safe_output_with_users}.to_json    
+    render :json => user.lords.map{|id| Shop.find_by_id(id).safe_output_with_users}.to_json    
   end
   
   def search
