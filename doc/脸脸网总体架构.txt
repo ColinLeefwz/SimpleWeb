@@ -83,6 +83,7 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 11. 每个用户的好友的集合，“Frd#{uid}”, 类型为zset, 排序值为加入的顺序。
 12. 每个用户的关注的集合，“Fol#{uid}”, 类型为zset, 排序值为加入的顺序。
 13. 每个用户的粉丝的集合，“Fan#{uid}”, 类型为zset, 排序值为加入的顺序。
+14. 每个用户的领主地点集合,“LORD#{uid}”, 类型为zset, 排序值为加入的顺序。
 11. 一个人被那些人看过,TODO.
 
 
@@ -97,7 +98,8 @@ Memcache在web1和web2中都启动，通过客户端实现负载均衡。Memcach
 1. 所有对象的单个find_by_id缓存: "#{self.class.name}#{_id}"
 2. 注册流程中查看附近的用户缓存：:cache_path => Proc.new { |c| c.params }
 3. 查看热点用户缓存："HOTU#{city}#{sex}#{skip}#{pcount}", :expires_in => 60.minutes
-4. 查看个人信息时的缓存："UI#{uid}#{vid}", :expires_in => 12.hours
+4. 查看个人信息时的缓存："UI#{uid}#{vid}", :expires_in => 12.hours， 待取消（user_info/get接口替换为user_info/basic接口后）
+4. 个人照片墙缓存："UP#{uid}-#{pcount}"
 5. 用户头像列表缓存："ULOGOS#{uid}"
 6. 用户最后出现的地点缓存："LASTL:#{self.id}"
 7. 照片墙第一页的缓存："SP#{sid}-#{pcount}"
