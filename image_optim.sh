@@ -11,7 +11,7 @@ do
     if [[ $i = *public/images* ]] || [[ $i = *public/help* ]]
         then
         jpegoptim --strip-all $i > /dev/null
-        mogrify -strip -quality 70 $i
+        mogrify -strip  $i
         rpath=${i/"$dir/"/}
          fname=${rpath//\//_}
         /mnt/Oss/oss2/osscmd put $i "oss://dface/$fname"
@@ -32,7 +32,7 @@ do
      if [[ $i = *public/images* ]] || [[ $i = *public/help* ]]
         then
         jpegoptim --strip-all $i > /dev/null
-        mogrify -strip -quality 70 $i
+        mogrify -strip  $i
         rpath=${i/"$dir/"/}
          fname=${rpath//\//_}
         /mnt/Oss/oss2/osscmd put $i "oss://dface/$fname"
@@ -53,7 +53,7 @@ do
     if [[ $i = *public/images* ]] || [[ $i = *public/help* ]]
         then
         optipng $i > /dev/null
-        mogrify -strip -quality 80 $i
+        mogrify -strip $i
         rpath=${i/"$dir/"/}
          fname=${rpath//\//_}
         /mnt/Oss/oss2/osscmd put $i "oss://dface/$fname"
