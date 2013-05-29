@@ -8,17 +8,20 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     reload('users.js')
     reload('user_blacks.js')
     clear_cache_all(User)
+    $redis.keys("BLACK*").each {|key| $redis.zremrangebyrank(key,0,-1)}
+    UserBlack.init_black_redis
     luser = User.find('502e6303421aa918ba000005')
     user1 = User.find('502e6303421aa918ba00007c')
     user2 = User.find('502e6303421aa918ba000002')
 
     #登录添加黑名单
     login("502e6303421aa918ba000005")
-    assert_blank luser.blacks_s
+    assert_blank luser.black_ids
     post "/blacklists/create", {:user_id => luser.id, :block_id => user1.id}
     assert_response :success
-    assert luser.reload.blacks_s.detect{|data| data.bid == user1.id}
-    assert_equal luser.reload.blacks_s.count, 1
+    assert luser.reload.black_ids.detect{|id| id == user1.id.to_s}
+    assert luser.black?(user1.id)
+    assert_equal luser.reload.black_ids.count, 1
 
 
 
@@ -27,8 +30,8 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     post "/blacklists/create", {:user_id => luser.id, :block_id => user2.id}
     assert_response :success
     assert_equal response.body, {"error"=>"not login"}.to_json
-    assert_equal luser.reload.blacks_s.count, 1
-    assert luser.reload.blacks_s.detect{|data| data.bid == user1.id}
+    assert_equal luser.reload.black_ids.count, 1
+    assert luser.reload.black_ids.detect{|id| id == user1.id.to_s}
 
     #登录后添加另一个人的黑名单
     logout
@@ -36,8 +39,8 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     post "/blacklists/create", {:user_id => luser.id, :block_id => user2.id}
     assert_response :success
     assert_equal response.body, {"error"=>"user 502e6303421aa918ba000005 != session user 502e6303421aa918ba00007c"}.to_json
-    assert_equal luser.reload.blacks_s.count, 1
-    assert luser.reload.blacks_s.detect{|data| data.bid == user1.id}
+    assert_equal luser.reload.black_ids.count, 1
+    assert luser.reload.black_ids.detect{|id| id == user1.id.to_s}
 
     #注销后黑名单列表
     logout
@@ -58,23 +61,23 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     login("502e6303421aa918ba000005")
     post "/blacklists/create", {:user_id => luser.id, :block_id => user2.id}
     assert_response :success
-    assert luser.reload.blacks_s.detect{|data| data.bid == user2.id }
-    assert_equal luser.reload.blacks_s.count, 2
+    assert luser.reload.black_ids.detect{|id| id == user2.id.to_s }
+    assert_equal luser.reload.black_ids.count, 2
 
     #未登录删除黑名单
     logout
     post '/blacklists/delete', {:user_id => luser.id, :block_id => user1.id}
     assert_response :success
     assert_equal response.body, {"error"=>"not login"}.to_json
-    assert_equal luser.reload.blacks_s.count, 2
-    assert luser.reload.blacks_s.detect{|data| data.bid == user1.id}
+    assert_equal luser.reload.black_ids.count, 2
+    assert luser.reload.black_ids.detect{|id| id == user1.id.to_s}
 
     #登录删除黑名单
     login("502e6303421aa918ba000005")
     post '/blacklists/delete', {:user_id => luser.id, :block_id => user1.id}
     assert_response :success
-    assert_equal luser.reload.blacks_s.count, 1
-    assert_equal luser.reload.blacks_s.detect{|data| data.bid == user1.id}, nil
+    assert_equal luser.reload.black_ids.count, 1
+    assert_equal luser.reload.black_ids.detect{|id| id == user1.id.to_s}, nil
     data = JSON.parse(response.body)
     assert_equal data, {"deleted"=>"502e6303421aa918ba00007c"}
 
@@ -84,15 +87,15 @@ class UserBlacksTest < ActionDispatch::IntegrationTest
     post '/blacklists/delete', {:user_id => luser.id, :block_id => user2.id}
     assert_response :success
     assert_equal response.body, {"error"=>"user 502e6303421aa918ba000005 != session user 502e6303421aa918ba00007c"}.to_json
-    assert_equal luser.reload.blacks_s.count, 1
-    assert luser.reload.blacks_s.detect{|data| data.bid == user2.id}
+    assert_equal luser.reload.black_ids.count, 1
+    assert luser.reload.black_ids.detect{|id| id == user2.id.to_s}
     
     #再删除黑名单
     login("502e6303421aa918ba000005")
     post '/blacklists/delete', {:user_id => luser.id, :block_id => user2.id}
     assert_response :success
-    assert_equal luser.reload.blacks_s.count, 0
-    assert_equal luser.reload.blacks_s.detect{|data| data.bid == user2.id}, nil
+    assert_equal luser.reload.black_ids.count, 0
+    assert_equal luser.reload.black_ids.detect{|id| id == user2.id.to_s}, nil
     data = JSON.parse(response.body)
     assert_equal data, {"deleted"=>"502e6303421aa918ba000002"}
 
