@@ -45,7 +45,8 @@ class User
   end
   
   def lords
-    Lord.where({uid:self.id})
+    $redis.zrange("LORD#{self.id}",0,-1).map {|x| x.to_i}
+    #Lord.where({uid:self.id})
   end
   
   def blacks_s
