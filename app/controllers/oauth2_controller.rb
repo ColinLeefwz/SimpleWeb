@@ -405,6 +405,8 @@ class Oauth2Controller < ApplicationController
     user.password = Digest::SHA1.hexdigest(":dface#{user.qq}")[0,16]
     user.name = info["nickname"]
     user.qq_name = info["nickname"]    
+    user.gender = 1 if info["gender"]=="男"
+    user.gender = 2 if info["gender"]=="女"
     user.save!
     user
   end  
