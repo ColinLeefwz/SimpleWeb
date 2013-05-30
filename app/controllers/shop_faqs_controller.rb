@@ -34,6 +34,7 @@ class ShopFaqsController < ApplicationController
     @shop_faq.sid = session[:shop_id]
 
     if @shop_faq.save
+      $redis.sadd("FaqS#{session_shop.city}", session_shop.id)
       redirect_to :action => "show", :id => @shop_faq.id
     else
       render :action => :new
@@ -43,6 +44,7 @@ class ShopFaqsController < ApplicationController
   def ajax_del
     @shop_faq = ShopFaq.find(params[:id])
     text = (@shop_faq.destroy ? '删除成功.' : nil)
+    $redis.srem("FaqS#{session_shop.city}", session_shop.id) if session_shop.no_faq?
     render :json => {text: text}
   end
 
