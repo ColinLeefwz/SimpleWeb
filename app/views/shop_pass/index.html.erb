@@ -1,5 +1,8 @@
 <div class="title2"><h2>修改密码</h2></div>
 <div class="notice" id="Notice"><%= notice %></div>
+<style>
+  .formlist li .err{margin-left: 5px;width: 200px; color: red;}
+</style>
 
 <%= form_for(@shop, :url => "/shop_pass", :html => {:method => 'post'} ) do |f| %>
   <%if  session_shop.errors.any? %>
@@ -8,13 +11,45 @@
     <% end %>
   <%end%>
   <ul class="formlist">
-    <li><label for="pwd1">原始密码：</label><%= password_field_tag 'oldpass', '',:value => '', :class => "txt"%></li>
-    <li><label for="pwd1">新的密码：</label><%= f.password_field :password, :class => "txt"%></li>
-    <li><label for="pwd1">再次输入：</label><%= f.password_field :password_confirmation, :class => "txt"%></li>
-    <li><input type="submit" value="提 交" class="btn3 ml80"/></li>
+    <li><label for="pwd1">原始密码：</label><%= password_field_tag 'oldpass', '',:value => '', :class => "txt l"%><span id="oldpass_err"></span></li>
+    <li><label for="pwd1">新的密码：</label><%= f.password_field :password, :class => "txt l"%><span id="shop_pass_err"></span></li>
+    <li><label for="pwd1">再次输入：</label><%= f.password_field :password_confirmation, :class => "txt l"%><span id="shop_pass_con_err"></span></li>
+    <li><input type="submit" value="提 交" class="btn3 ml80" onclick="return confirmation()" /></li>
   </ul>
 <% end %>
 
 <script>
-	LeftMenu("12");
+  LeftMenu("12");
+  function confirmation()
+  {
+    $(".err").text('')
+    if($("#oldpass").val()==""){
+      $("#oldpass_err").replaceWith("<span id='oldpass_err' class='err'>原始密码不能是空</span>")
+      return false;
+    }
+
+    if($("#shop_password").val()=="")
+    {
+      $("#shop_pass_err").replaceWith('<span id="shop_pass_err" class="err">新的密码不能是空</span>')
+      return false;
+    }
+    
+    if($("#shop_password").val().length < 6)
+    {
+      $("#shop_pass_err").replaceWith('<span id="shop_pass_err" class="err">新的密码长度必须大于6位</span>')
+      return false;
+    }
+    
+    if($("#shop_password_confirmation").val()=="")
+    {
+      $('#shop_pass_con_err').replaceWith('<span id="shop_pass_con_err" class="err">确认新密码不能是空</span>')
+      return false;
+    }
+    if($("#shop_password").val()!=$("#shop_password_confirmation").val()){
+      $('#shop_pass_con_err').replaceWith('<span id="shop_pass_con_err" class="err">新密码和确认新密码不一致</span>')
+      return false;
+    }
+    return true
+  }
+
 </script>
