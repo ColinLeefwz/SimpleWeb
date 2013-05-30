@@ -248,6 +248,13 @@ class Shop
     coupons = Coupon.where({shop_id: self.id}).sort({_id: -1}).limit(n).to_a
   end
 
+  def no_active?
+    Coupon.where({shop_id: self.id, hidden: nil}).limit(1).only(:_id).blank?
+  end
+
+  def no_faq?
+    ShopFaq.where({sid: self.id}).limit(1).only(:_id).blank?
+  end
 
   def faqs
     ShopFaq.where({sid: self.id}).sort({od: 1})

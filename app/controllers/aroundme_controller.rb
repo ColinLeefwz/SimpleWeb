@@ -32,11 +32,12 @@ class AroundmeController < ApplicationController
     end
     ret = arr.map{|x| x.safe_output_with_users}
     city = arr[0]["city"]
-    city = arr[1]["city"] if city.nil? || city==""
+    city = Shop.get_city(lo)  if city.nil? || city==""
     coupons = $redis.smembers("ACS#{city}") 
     if coupons
       ret.each_with_index do |xx,i|
         ret[i]["coupon"] = 1 if coupons.index(xx["id"].to_i.to_s)
+        ret[i]["city"] = City.city_name(city) if i==0
       end
     end
     render :json =>  ret.to_json
