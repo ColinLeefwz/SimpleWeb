@@ -64,6 +64,7 @@ class ShopShareCouponsController < ApplicationController
         CarrierWave::Workers::StoreAsset.perform("Coupon",@coupon.id.to_s,"img")
       end
       Rails.cache.delete("views/SI#{@coupon.shop_id}.json") if @coupon.text
+      $redis.sadd("ACS#{session_shop.city}", session_shop.id)
       redirect_to :action => :show, :id => @coupon.id
     else
       flash.now[:notice] = '发布失败.'
@@ -105,6 +106,7 @@ class ShopShareCouponsController < ApplicationController
   def ajax_activate
     @coupon = Coupon.find(params[:id])
     @coupon.unset(:hidden)
+    $redis.sadd("ACS#{session_shop.city}", session_shop.id)
     render :json => {:text => "已激活."}
   end
 

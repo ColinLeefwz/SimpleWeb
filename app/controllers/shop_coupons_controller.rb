@@ -81,6 +81,7 @@ class ShopCouponsController < ApplicationController
       if @coupon.t.to_i == 1
         @coupon.gen_img if @coupon.t.to_i == 1
         redirect_to :action => :show, :id => @coupon.id
+        $redis.sadd("ACS#{session_shop.city}", session_shop.id)
       else
         redirect_to :action => :show_img2, :id => @coupon.id
       end
@@ -126,23 +127,13 @@ class ShopCouponsController < ApplicationController
     if @coupon.update_attributes(params[:coupon])
       @coupon.unset(:hint) if params[:hintv] == '0' #使用流程选0， hint = nil
       @coupon.gen_img if @coupon.t.to_i == 1
+      $redis.sadd("ACS#{session_shop.city}", session_shop.id)
       redirect_to :action => :show, :id => @coupon.id
     else
       render :action => :edit
     end
   end
 
-  # DELETE /coupons/1
-  # DELETE /coupons/1.json
-  def destroy
-    @coupon = Coupon.find(params[:id])
-    @coupon.destroy
-
-    respond_to do |format|
-      format.html { redirect_to '/admin_coupons' }
-      format.json { head :no_content }
-    end
-  end
 
   def resend
     Rails.cache.fetch("CD#{params[:id]}", :expires_in => 12.hours) do
@@ -180,14 +171,17 @@ class ShopCouponsController < ApplicationController
   end
 
   def ajax_deply
-    @coupon = Coupon.find(params[:id])
-    text = (@coupon.deply ? '<span class="gray">已停用</span>' : '<span class="red">失败了</span>')
+    coupon = Coupon.find(params[:id])
+    text = (coupon.deply ? '<span class="gray">已停用</span>' : '<span class="red">失败了</span>')
+    $redis.srem("ACS#{session_shop.city}", session_shop.id) if session_shop.no_active?
     render :json => {text: text}
   end
 
   def ajax_del
-    @coupon = Coupon.find(params[:id])
-    render :json => {text: Del.insert(@coupon)}
+    coupon = Coupon.find(params[:id])
+    text = Del.insert(coupon)
+    $redis.srem("ACS#{session_shop.city}", session_shop.id) if session_shop.no_active?
+    render :json => {text: text}
   end
 
   private
