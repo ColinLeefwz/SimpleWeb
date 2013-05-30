@@ -78,21 +78,20 @@ class UserTest < ActiveSupport::TestCase
   test ".friend? 关注的user中存在特定的一个user" do
     user = User.find_by_id('502e6303421aa918ba000002')
     foll = User.find_by_id('502e6303421aa918ba000007')
-    debugger
     assert user.friend?(foll.id)
   end
 
 
-  test ".follower? 没有被特定的人关注" do
+  test ".fan? 没有被特定的人关注" do
     user = User.find_by_id('502e6303421aa918ba00007c')
     foll = User.find_by_id('502e6303421aa918ba000007')
-    assert !user.follower?(foll.id)
+    assert !user.fan?(foll.id)
   end
 
-  test ".follower? 被特定的人关注了" do
+  test ".fan? 被特定的人关注了" do
     foll = User.find_by_id('502e6303421aa918ba00007c')
     user = User.find_by_id('502e6303421aa918ba000007')
-    assert !user.follower?(foll.id)
+    assert !user.fan?(foll.id)
   end
   
   test "set/unset的缓存" do
@@ -116,37 +115,37 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "添加删除好友的缓存" do  
-    UserFollow.del_good_friend_redis("502e6303421aa918ba00007c","502e6303421aa918ba000005")
+    #UserFollow.del_good_friend_redis("502e6303421aa918ba00007c","502e6303421aa918ba000005")
     u1 = User.find("502e6303421aa918ba00007c")
     u2 = User.find("502e6303421aa918ba000005")
     assert_equal u1.friend?(u2.id), false
-    assert_equal u1.follower?(u2.id), false
+    assert_equal u1.fan?(u2.id), false
     assert_equal $redis.zcard("Fan#{u1.id}"), 0
     assert_equal $redis.zcard("Fan#{u2.id}"), 0    
     UserFollow.add(u1.id,u2.id)
     assert_equal u1.friend?(u2.id), true
-    assert_equal u1.follower?(u2.id), false
+    assert_equal u1.fan?(u2.id), false
     assert_equal $redis.zscore("Frd#{u1.id}",u2.id), nil
     assert_equal $redis.zscore("Frd#{u2.id}",u1.id), nil
     assert_equal $redis.zcard("Fan#{u1.id}"), 0
     assert_equal $redis.zcard("Fan#{u2.id}"), 1       
     UserFollow.add(u2.id,u1.id)
     assert_equal u1.friend?(u2.id), true
-    assert_equal u1.follower?(u2.id), true    
+    assert_equal u1.fan?(u2.id), true    
     assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 0
     assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 0    
     assert_equal $redis.zcard("Fan#{u1.id}"), 1
     assert_equal $redis.zcard("Fan#{u2.id}"), 1     
     UserFollow.del(u2.id,u1.id)
     assert_equal u1.friend?(u2.id), true
-    assert_equal u1.follower?(u2.id), false
+    assert_equal u1.fan?(u2.id), false
     assert_equal $redis.zscore("Frd#{u1.id}",u2.id), nil
     assert_equal $redis.zscore("Frd#{u2.id}",u1.id), nil    
     assert_equal $redis.zcard("Fan#{u1.id}"), 0
     assert_equal $redis.zcard("Fan#{u2.id}"), 1       
     UserFollow.add(u2.id,u1.id)
     assert_equal u1.friend?(u2.id), true
-    assert_equal u1.follower?(u2.id), true    
+    assert_equal u1.fan?(u2.id), true    
     assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 0
     assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 0    
     assert_equal $redis.zcard("Fan#{u1.id}"), 1
