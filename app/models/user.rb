@@ -240,11 +240,15 @@ class User
   end
   
   def friend?(user_id)
-    self.follows.index(user_id) !=nil
+    $redis.zrank("Fol#{self.id}", user_id) != nil
   end
   
   def follower?(user_id)
-    fan_ids.find {|x| x==user_id.to_s} != nil
+    fan?(user_id)
+  end
+  
+  def fan?(user_id)
+    $redis.zrank("Fan#{self.id}", user_id) != nil
   end
 
   def fans
