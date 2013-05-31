@@ -62,7 +62,7 @@ class ShopLoginController < ApplicationController
       cityname = cityname.sub(/[市]/, '')
       citycode= City.where(name: /#{cityname}/).limit(1).to_a.first.try(:code)
     end
-    [1, (citycode && citycode != city_code) ? 3 : 5]
+    [1, (citycode && citycode != city_code) ? 5 : 10]
   end
 
 
