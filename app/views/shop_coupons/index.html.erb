@@ -1,13 +1,11 @@
+<script src="/javascripts/grayscale.js" type="text/javascript"></script>
+
 <div class="title2"><h2>签到类优惠券管理</h2></div>
 <div class="items" id="Items">
   <a class ="hover" href="/shop_coupons" style="margin-top: 10px;">签到类</a>
   <a href="/shop_share_coupons" style="margin-top: 10px;">分享类</a>
   <a href="/shop_coupons/new" class="btn4" style="float: right; padding-right: 0px; border-width: 0px; width: 95px;">签到类发布</a>
 </div>
-
-<style>
-  .imgfilter{filter: Alpha(opacity=50);-moz-opacity:.1;opacity:0.5;}
-</style>
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
@@ -23,7 +21,7 @@
   <% @coupons.each do |coupon| %>
 
     <tr>
-      <td><%=link_to((image_tag(coupon.img.url(:t1), :class=>"imgs4 #{coupon.hidden && 'imgfilter'}")), coupon.img.url, :target => "blank#{coupon.id}") %></td>
+      <td><%=link_to((image_tag(coupon.img.url(:t1),:id=>"img_#{coupon.id}", :class=>"imgs4 #{coupon.hidden && 'imgfilter'}")), coupon.img.url,  :target => "blank#{coupon.id}") %></td>
       <td valign="center"><%= coupon.name %></td>
       <td class="gray" align="center"><%= coupon.show_t2  %></td>
       <td align="center"><%= link_to coupon.down_users.to_a.count, {:action => 'newly_down', :cid => coupon.id} %></td>
@@ -58,11 +56,19 @@
 
 <script type ="text/javascript">
   LeftMenu(6);
+  
+  $(document).ready(function(){
+	$("img.imgfilter").each(function(){
+		grayscale($(this));
+	});
+  });
+  
   function ajaxDeply(obj, coupon_id){
     if(confirm("确定停用此优惠券么？"))
     {
       $.get("/shop_coupons/ajax_deply",{id: coupon_id}, function(data) {
-        obj.replaceWith(data['text'])
+        obj.replaceWith(data['text']);
+		grayscale($("#img_"+coupon_id));
       });
     }
   }
@@ -72,7 +78,8 @@
       if(confirm("确定激活此优惠券么？"))
       {
         $.get("/shop_share_coupons/ajax_activate",{id: coupon_id}, function(data) {
-          obj.replaceWith(data['text'])
+          obj.replaceWith(data['text']);
+		  grayscale.reset($("#img_"+coupon_id));
         });
       }
     }
@@ -95,6 +102,8 @@
       });
     }
   }
+  
+  
 </script>
 
 
