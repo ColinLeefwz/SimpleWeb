@@ -4,7 +4,9 @@
   <a class ="hover" href="/shop_share_coupons" style="margin-top: 10px;">分享类</a>
   <a href="/shop_share_coupons/new" class="btn5" style="float: right; padding-right: 0px; border-width: 0px; width: 95px;">分享类发布</a>
 </div>
-
+<style>
+  .imgfilter{filter: Alpha(opacity=50);-moz-opacity:.1;opacity:0.5;}
+</style>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
     <th width="25%" align="left">图片</th>
@@ -18,7 +20,7 @@
   <% @coupons.each do |coupon| %>
 
     <tr>
-      <td><%=image_tag coupon.img.url(:t1), :class=>"imgs4" %></td>
+      <td><%=image_tag coupon.img.url(:t1), :class=>"imgs4 #{coupon.hidden && 'imgfilter'}" %></td>
       <td valign="center"><%= coupon.name %></td>
       <td class="gray" align="center"><%= coupon.show_t2  %></td>
       <td align="center"><%= link_to coupon.down_users.to_a.count, {:controller => 'shop_coupons', :action => 'newly_down', :cid => coupon.id} %></td>
