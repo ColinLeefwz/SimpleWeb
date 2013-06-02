@@ -196,6 +196,7 @@ class Shop
       next if u.invisible.to_i>=2
       hash = u.safe_output(session_uid).merge!({time:Checkin.time_desc(cat)})
       hash.merge!({lord:1}) if lord && lord.uid.to_s==uid.to_s
+      hash.merge!({lord:1}) if creator && creator.to_s==uid.to_s
       ret << hash
     end
     diff = users.size-ret.size
