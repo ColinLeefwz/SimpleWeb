@@ -15,7 +15,7 @@ class Shop
   field :_id, type: Integer
   field :pass
   field :name
-  field :lob, type:Array #百度地图上的经纬度  
+  #field :lob, type:Array #百度地图上的经纬度  
   #field :loc, type:Array #google地图上的经纬度
   field :lo, type:Array #实际的经纬度
   field :city
@@ -32,6 +32,7 @@ class Shop
   field :seller_id, type: Moped::BSON::ObjectId #负责该地点销售的人员
   
   field :i, type: Boolean #用户添加的地点 已处理标记
+  field :utype #用户添加的类型
 
   index({lo: "2d"})
   index({del: 1},{ sparse: true })
