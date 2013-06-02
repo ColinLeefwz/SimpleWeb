@@ -178,7 +178,7 @@ class Shop
   def view_users(session_uid,start,size)
     ret = []
     users = Checkin.get_users_redis(id.to_i,start,size)
-    lord = self.lord
+    lord = self.lord #TODO 性能优化
     if start==0
       users = [[session_uid,Time.now.to_i]] + users.delete_if{|x| x[0].to_s==session_uid.to_s}
       if lord

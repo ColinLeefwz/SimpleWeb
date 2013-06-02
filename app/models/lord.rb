@@ -32,7 +32,19 @@ class Lord
     self.del_old_lord_redis
   end
   
+  def allow_lord?(sid,uid,creator)
+    return true if creator
+    today_sid = Rails.cache.read("JOIN-LORD#{uid}")
+    return true unless today_sid
+    return true if today_sid==sid
+    lord = Lord.find_by_id(sid)
+    return true if lord && lord.oid==uid
+    Resque.enqueue(XmppMsg, $dduid,uid,": 抱歉，一天只能抢一次地主!")
+    return false
+  end
+  
   def self.assign(sid,uid, creator=false)
+    return unless allow_lord?(sid,uid,creator)
     shop = Shop.find_by_id(sid)
     lord = Lord.find_by_id(sid)
     if lord
@@ -52,6 +64,9 @@ class Lord
       else
         Resque.enqueue(XmppMsg, $dduid,uid,": 恭喜你成为#{shop.name}的地主👑")
       end
+    end
+    unless creator
+      Rails.cache.write("JOIN-LORD#{uid}", sid, :expires_in => 6.hours)
     end
     return true
   end
