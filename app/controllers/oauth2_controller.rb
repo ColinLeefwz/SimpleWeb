@@ -163,6 +163,8 @@ class Oauth2Controller < ApplicationController
         $redis.del("wbtoken#{user.id}")
         $redis.del("wbexpire#{user.id}")
         user.update_attribute(:wb_hidden, 2) if user
+        #TODO: 如何通知客户端微博已经取消绑定？
+        #TODO： 如果没有绑定qq，这个用户应该就不能登录了。
       end
     end
     render :text => "ok"
