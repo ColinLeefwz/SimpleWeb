@@ -46,7 +46,7 @@ class Photo
     if weibo || qq || (wx && wx>0)
       send_coupon
       send_pshop_coupon
-      Lord.assign(room,user_id) if desc && desc.index("我是地主")
+      Lord.assign(room,user_id) if t==1 && desc && desc.index("我是地主")
       Resque.enqueue(PhotoNotice, self.id) unless Os.overload?
       Rails.cache.delete("UP#{self.user_id}-5")
     end
