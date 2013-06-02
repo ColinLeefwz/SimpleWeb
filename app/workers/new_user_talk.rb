@@ -15,6 +15,7 @@ class NewUserTalk
       Xmpp.send_chat(to, uid, "hi")
     end
     if seq==2
+      shop = Shop.find_by_id(sid)
       Xmpp.send_chat(to, uid, "你在#{shop.name}？")
       chat2(uid) if user.gender==2
     end
