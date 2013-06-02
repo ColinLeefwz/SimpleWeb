@@ -90,6 +90,7 @@ class CheckinsController < ApplicationController
     shop.city = shop.get_city
     #shop.d = 10
     shop.creator = session[:user_id]
+    shop.utype = params[:type] if params[:type]
     shop
   end
   
