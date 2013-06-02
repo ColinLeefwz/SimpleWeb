@@ -12,12 +12,12 @@ class PhotoNotice
       str = ": #{photo.user.name}在#{photo.shop.name}分享了一张图片"
       str += ",#{photo.desc}" unless photo.desc.nil?
       if Rails.cache.read("PhotoFan#{uid}")
-        Resque.enqueue(XmppMsg, user.id, u.id, str, "NOPUSH#{$uuid.generate}")
+        Resque.enqueue(XmppMsg, user.id, u.id, str, "NOPUSH#{$uuid.generate}", " NOLOG='1' ")
       else
-        Resque.enqueue(XmppMsg, user.id, u.id, str)  
+        Resque.enqueue(XmppMsg, user.id, u.id, str,$uuid.generate," NOLOG='1' ")  
         Rails.cache.write("PhotoFan#{uid}", 1, :expires_in => 8.hours)      
       end
-      Resque.enqueue(XmppMsg, user.id, u.id, "[img:#{pid}]", "NOPUSH#{$uuid.generate}")
+      Resque.enqueue(XmppMsg, user.id, u.id, "[img:#{pid}]", "NOPUSH#{$uuid.generate}", " NOLOG='1' ")
     end
     shop = photo.shop
     Rails.cache.fetch("PhotoRoom#{uid}", :expires_in => 2.hours) do
