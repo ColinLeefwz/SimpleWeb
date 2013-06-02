@@ -52,7 +52,6 @@ class AdminUserReportsController < ApplicationController
 
   def post_chat
     Xmpp.send_chat($dduid, params[:to_uid], params[:text])
-#    Xmpp.send_chat($dduid, '502e6303421aa918ba000007', 'ssssssss')
     render :text => "消息已发送"
   end
 
