@@ -61,6 +61,7 @@ class Lord
       lord.add_lord_redis
       if creator
         Resque.enqueue(XmppMsg, $dduid, uid,": 您创建的地点#{shop.name}审核通过,恭喜你成为地主👑")
+        $redis.sadd("LORD2#{uid}", sid)
       else
         Resque.enqueue(XmppMsg, $dduid,uid,": 恭喜你成为#{shop.name}的地主👑")
       end

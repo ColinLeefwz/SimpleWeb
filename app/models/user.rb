@@ -45,8 +45,9 @@ class User
   end
   
   def lords
-    $redis.zrange("LORD#{self.id}",0,-1).map {|x| x.to_i}
-    #Lord.where({uid:self.id})
+    lord1 = $redis.zrange("LORD#{self.id}",0,-1).map {|x| x.to_i}
+    lord2 = $redis.smembers("LORD2#{self.id}").map {|x| x.to_i}
+    (lord1 + lord2).uniq!
   end
   
   def black_ids
