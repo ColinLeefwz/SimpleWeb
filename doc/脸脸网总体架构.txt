@@ -209,6 +209,9 @@ ejabberd安装时存在一个bug：如果指定用户，要求用户和组名字
 	dseditgroup -o edit -a ylt -u ylt -t user ylt
 	dscacheutil -q group
 
+
+
+
 riak-erlang-client
 
 ###Riak
@@ -216,6 +219,34 @@ riak-erlang-client
 编译：make riak
 运行目录：/mnt/riak/rel/riak
 查看状态：bin/riak-admin member-status
+
+
+####聊天记录
+
+Xmpp聊天时的消息保存在Riak数据库中。其中，聊天室消息格式：
+
+ * bucket：“gchat”
+ * key: 	[日期'yymmdd',聊天室id]
+ * value: [发送者,内容,时间,消息ID]
+
+单聊的消息的格式：
+
+ * bucket：“chat”
+ * key: 	[日期'yymmdd',发送者]
+ * value: [接收者,内容,时间,消息ID]
+ 
+关于聊天消息的Log方式：
+
+ * 手机客户端直接通过xmpp协议发送的消息，通过钩子函数user_send_packet实现自动的Log记录。其中发送到个人的0-9？等单个字符的消息被直接过滤掉了，而发送到聊天室的0开头的数字消息也被过滤掉了。
+ * WEB服务器端通过mod_rest接口发送的消息，目前只有内容以"["开头的才保存到riak中。如果消息中带属性NOLOG，那么也不保存到riak中。
+ * WEB服务器端通过/api/room接口发送的聊天室消息，也全部保存到riak中。
+
+关于在WEB服务器端发送聊天室消息的三种方式：
+
+ * XmppNotice：聊天室的通知消息，发送者是聊天室本身，单人可见。
+ * XmppRoomMsg: 以个人身份在聊天室给另外一个人发消息，单人可见。
+ * XmppRoomMsg2: 以个人身份在聊天室发消息，所有人可见。
+  
 
 ###Tsung
 
