@@ -1,0 +1,18 @@
+<xml>
+  <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+  <FromUserName><![CDATA[<%= params[:xml][:ToUserName]   %>]]></FromUserName>
+  <CreateTime><%= Time.now.to_i %></CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <ArticleCount><%= @picurls.length %></ArticleCount>
+  <Articles>
+    <% @picurls.eacho do |pic| %>
+      <item>
+        <Title><![CDATA[<%= pic['title'] %>]]></Title>
+        <Description><![CDATA[<%= pic['description'] %>]]></Description>
+        <PicUrl><![CDATA[<%= pic['picurl'] %>]]></PicUrl>
+        <Url><![CDATA[<%= pic['url'] %>]]></Url>
+      </item>
+    <% end %>
+  </Articles>
+  <FuncFlag>1</FuncFlag>
+</xml> 
