@@ -15,7 +15,7 @@ class WeixinController < ApplicationController
       @picurls << {"title" => "#{photo.user.name}发布" , "description" => photo.desc, "picurl" => photo.img.url(:t2), "url" => photo.img.url }
       return  render "picurl", :formats => :xml
     when "link"
-      @text = "http://dface.cn"
+      @text = "脸脸官网: http://dface.cn"
       render "text", :formats => :xml
     end
   end
