@@ -1,10 +1,15 @@
+# coding: utf-8
 class WeixinController < ApplicationController
   def index
     return render :text => params['echostr']  if params[:xml].blank?
     case params[:xml][:MsgType]
     when "text"
       @text = params[:xml][:Content]
-      return render "text", :formats => :xml
+      if @text =~ /音乐/
+        return render "music", :formats => :xml
+      else
+        return render "text", :formats => :xml
+      end
     when "location"
       lo = [params[:xml][:Location_X].to_f,params[:xml][:Location_Y].to_f]
       @text = Shop.where({lo:{"$near" =>lo}}).limit(5).only(:name).map{|m| m.name}.join("\n")
