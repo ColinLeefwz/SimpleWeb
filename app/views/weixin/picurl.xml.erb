@@ -5,7 +5,7 @@
   <MsgType><![CDATA[news]]></MsgType>
   <ArticleCount><%= @picurls.length %></ArticleCount>
   <Articles>
-    <% @picurls.eacho do |pic| %>
+    <% @picurls.each do |pic| %>
       <item>
         <Title><![CDATA[<%= pic['title'] %>]]></Title>
         <Description><![CDATA[<%= pic['description'] %>]]></Description>
