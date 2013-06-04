@@ -11,6 +11,7 @@ class Shop
   include Mongoid::Document
   extend Similarity
   extend GpsOffset
+  attr_accessor :lob
   
   field :_id, type: Integer
   field :pass
