@@ -18,20 +18,17 @@
 <script type="text/javascript">
 (function(){
     var mobile_host = "http://www.dface.cn/mini.html";
-    var userAgent = navigator.userAgent,
-        redirect = false;
-
+    var userAgent = navigator.userAgent;
     //判断设备      
-    if(/(mobile|wap|android)/i.test(userAgent)){// if(/(mobile|wap|ipod|android)/i.test(userAgent)){
-       window.location.replace(mobile_host);
+    if(/(mobile|wap|android)/i.test(userAgent)){
+	    if(/pad/i.test(userAgent) || /ting/i.test(userAgent)){  
+	        return;
+	    }
+        window.location.replace(mobile_host);
     }else{
         return;
     }
-    if(/pad/i.test(userAgent) || /ting/i.test(userAgent)){  
-        return;
-    }
 })();
-
 
 </script>
 </head>
