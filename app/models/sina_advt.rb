@@ -24,19 +24,25 @@ class SinaAdvt
 
   #获取动态签到微博，并转发并评论
   def self.place_repost
-    @dtime = rand(100)
+    @dtime = Rails.cache.fetch("SINAADVT").to_i
     places = place_timelines
     tokens = WeiboUser::USER2.map{|m|  $redis.get("wbtoken#{m}")}.compact
     return unless places.is_a?(Array)
     places.each do |place|
+      next unless is_iphone?(place)
       token = fetch_token(tokens)
       status =  comment_text( get_poi(place))
-      self.dtime += 1
+      Rails.cache.set("SINAADVT",  self.dtime += 1)
       next unless  do_repost( place['id'], status, token)
       self.create(:wbid => place['id'], :wb_uid => place['user']['id']  )
     end
   end
 
+  def is_iphone?(place)
+    place['source'] =~ /iPhone|ipad/i
+  rescue
+    nil
+  end
 
   #转发并评论指定的微博
   def self.do_repost(wbid, status, token)
