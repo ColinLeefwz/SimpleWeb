@@ -1,0 +1,63 @@
+本机器：配置.ssh/config
+
+新机器：改密码 passwd
+
+本机器：传安装脚本
+cd /Users/ylt/git/shell_scripts/ali
+scp *.sh root@mongo:./
+
+新机器：
+./setup.sh
+
+
+然后以lian登陆新机器
+scp -r lian@42.121.79.210:.ssh .ssh
+
+
+以root重新登陆安装mongodb:
+ssh root@mongo
+apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" >> /etc/apt/sources.list
+sudo apt-get update
+sudo apt-get upgrade
+apt-get install mongodb-10gen
+rpl "dbpath=/var/lib/mongodb" "dbpath=/mnt/mongodata" /etc/mongodb.conf 
+rpl "# replSet = setname" "replSet = dface" /etc/mongodb.conf 
+mkdir /mnt/mongodata
+chown mongodb:lian /mnt/mongodata
+echo "bind_ip = 127.0.0.1,$ipaddr0" >> /etc/mongodb.conf 
+service mongodb restart
+
+
+配置replica set:
+ssh mongo1
+mongo dface
+比如：rs.add("10.132.36.138:27017")
+
+
+
+
+
+从ext3切换到ext4
+lsof /dev/xvdb1 
+pkill mongod
+umount /dev/xvdb1
+mkfs.ext4  -m 1 /dev/xvdb1 
+tune2fs -m 1 /dev/xvdb1 
+dumpe2fs -h /dev/xvdb1 2> /dev/null | awk -F ':' '{ if($1 == "Reserved block count") { rescnt=$2 } } { if($1 == "Block count") { blkcnt=$2 } } END { print "Reserved blocks: "(rescnt/blkcnt)*100"%" }'
+
+echo '/dev/xvdb1  /mnt ext4    defaults,noatime,nodiratime 0 2' >> /etc/fstab
+mount -a
+chown lian:lian /mnt
+chown mongodb:lian /mnt/mongodata
+
+
+cd /mnt && git clone https://github.com/yuanxinyu/shell_scripts.git
+chown -R lian:lian /mnt/shell_scripts
+然后以lian登陆新机器
+scp -r lian@42.121.79.210:.ssh .ssh
+vim .bash_profile
+echo "export ipaddr0=`ifconfig eth0 |grep "inet addr"| cut -f 2 -d ":"|cut -f 1 -d " "`" >> /mnt/.bash_profile
+echo "export ipaddr1=`ifconfig eth1 |grep "inet addr"| cut -f 2 -d ":"|cut -f 1 -d " "`" >> /mnt/.bash_profile
+
+
