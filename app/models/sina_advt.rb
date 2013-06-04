@@ -22,6 +22,8 @@ class SinaAdvt
   end
 
 
+
+
   #获取动态签到微博，并转发并评论
   def self.place_repost
     @dtime = Rails.cache.fetch("SINAADVT").to_i
@@ -32,17 +34,32 @@ class SinaAdvt
       next unless is_iphone?(place)
       token = fetch_token(tokens)
       status =  comment_text( get_poi(place))
-      Rails.cache.set("SINAADVT",  self.dtime += 1)
-      next unless  do_repost( place['id'], status, token)
+      Rails.cache.write("SINAADVT",  self.dtime += 1)
+      next unless  adaptation( place['id'], status, token)
       self.create(:wbid => place['id'], :wb_uid => place['user']['id']  )
     end
   end
 
-  def is_iphone?(place)
+  def self.is_iphone?(place)
     place['source'] =~ /iPhone|ipad/i
   rescue
     nil
   end
+
+  def self.adaptation(wbid, comment, token)
+    t = Time.now.hour
+    return do_create_com(wbid, comment, token) if  t%3==0
+    return do_repost(wbid, comment, token) 
+  end
+
+  #评论指定的微薄
+  def self.do_create_com(wbid, comment, token)
+    url = "https://api.weibo.com/2/comments/create.json"
+    params = {"id" => wbid, "access_token"=> token, "comment" => comment }
+    #    params = {"id" => '3560414669383960', "access_token"=> token, "comment" => comment }
+    create_com(:url => url, :method => :post, :params => params )
+  end
+
 
   #转发并评论指定的微博
   def self.do_repost(wbid, status, token)
