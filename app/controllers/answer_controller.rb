@@ -67,10 +67,10 @@ class AnswerController < ApplicationController
   
   def msg1(from)
     str = <<-EOF   
-  成为脸脸种子用户要求：
-  1、一个月内摇进10个现场以上
-  2、分享10张现场图片到新浪微博
-  3、邀请好友三个以上
+  要想获得一个地点的地主徽章：
+  1、在该地点现场拍照，并分享到微博或QQ
+  2、分享文字中带上'我是地主'四个字
+  3、如果多人同时抢地主，最新发图的抢到地主
     EOF
     Resque.enqueue(XmppMsg, $gfuid,from,str)
   end
@@ -111,7 +111,7 @@ class AnswerController < ApplicationController
   答：点击其头像后，然后把他拉黑。如果要脸脸协助处理，可以拉黑的同时举报。   
 
   问：我在脸脸的发言和发图会被公开到新浪微博吗？
-  答：不会，除非是您明确点击分享到微博。  
+  答：不会，除非是您明确分享到微博。  
 
   问：现场是什么意思？
   答：现场就是你当前所在的地点。
@@ -121,8 +121,8 @@ class AnswerController < ApplicationController
   
   def help_msg(from)
     str = <<-EOF   
-  脸脸帮助：回复
-  1、如何成为脸脸种子用户?
+  脸脸帮助：回复数字
+  1、如何在脸脸中当上地主?
   2、遇见一位同城异性
   3、遇见一位同龄异性
   4、遇见一位国外异性
