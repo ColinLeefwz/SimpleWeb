@@ -5,7 +5,7 @@ class Xmpp
   def self.chat(from,to,msg, id=nil, attrs="")
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
-    attrs += " NOLOG='1' " if (from.to_s == $gfuid || from.to_s == 'scoupon' || from.to_s == 'sphoto' || msg[0]==':') && msg.index("NOLOG").nil?
+    attrs += " NOLOG='1' " if (from.to_s == $gfuid || from.to_s == 'scoupon' || from.to_s == 'sphoto' || msg[0]==':') && attrs.index("NOLOG").nil?
     "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat' #{attrs}><body>#{msg2}</body></message>"
   end
   
