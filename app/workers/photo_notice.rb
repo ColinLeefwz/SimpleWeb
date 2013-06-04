@@ -21,7 +21,7 @@ class PhotoNotice
     end
     shop = photo.shop
     Rails.cache.fetch("PhotoRoom#{uid}", :expires_in => 2.hours) do
-      same_location_realtime(user.id, shop.id, user, shop)
+      #same_location_realtime(user.id, shop.id, user, shop)
     end
   end
 
