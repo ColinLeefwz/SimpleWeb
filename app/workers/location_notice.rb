@@ -6,6 +6,7 @@ class LocationNotice
   def self.perform(uid,sid)
     user = User.find_primary(uid)
     shop = Shop.find_by_id(sid)
+    return if shop.lo.nil?
     same_location_realtime(uid,sid,user,shop)
     same_location_fans(uid,sid,user,shop)
     same_location_friends(uid,sid,user,shop)    
