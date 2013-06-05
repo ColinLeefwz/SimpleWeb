@@ -52,6 +52,7 @@ class Photo
     end
     return if ENV["RAILS_ENV"] == "test"
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}")
+    Resque.enqueue_in(30.seconds, PhotoLike, self)
   end
   
   def send_wb
