@@ -67,11 +67,9 @@ class AnswerController < ApplicationController
   
   def msg1(from)
     str = <<-EOF   
-  要想获得一个地点的地主徽章：
-  1、在该地点现场拍照，并分享到微博或QQ
+  1、在某地点现场拍照，并分享到微博或QQ
   2、分享文字中带上'我是地主'四个字
-  3、如果多人同时抢地主，最新发图的抢到地主
-  地主徽章效果图如下：
+  即可获得地主徽章，效果图如下：
     EOF
     Resque.enqueue(XmppMsg, $gfuid,from,str)
   end
