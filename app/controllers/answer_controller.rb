@@ -71,18 +71,14 @@ class AnswerController < ApplicationController
   1、在该地点现场拍照，并分享到微博或QQ
   2、分享文字中带上'我是地主'四个字
   3、如果多人同时抢地主，最新发图的抢到地主
+  地主徽章效果图如下：
     EOF
     Resque.enqueue(XmppMsg, $gfuid,from,str)
   end
 
   def msg2(from)
-    str = <<-EOF   
-  你将获得：
-  1、脸脸种子勋章一枚，彰显大姐大/大哥大身份
-  2、优先享受脸脸最新优惠活动
-  赶快行动吧！
-    EOF
-    Resque.enqueue_in(4.seconds, XmppMsg, $gfuid,from,str)
+    str = "[img:U51aea9d4c90d8bbc1200006f]"
+    Resque.enqueue_in(3.seconds, XmppMsg, $gfuid,from,str)
   end
 
   def msg3(from)
