@@ -105,7 +105,7 @@ class UserInfoController < ApplicationController
     else
       user = session_user_no_cache
       hash = {}
-      hash[:name] = params[:name] unless params[:name].nil?
+      hash[:name] = params[:name] unless (params[:name].nil? || params[:name].index("脸脸") )
       hash[:gender] = params[:gender] unless params[:gender].nil?
       hash[:birthday] = params[:birthday]  unless params[:birthday].nil?
       hash[:invisible] = params[:invisible]  unless params[:invisible].nil?
