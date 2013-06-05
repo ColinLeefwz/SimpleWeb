@@ -21,9 +21,6 @@ class SinaAdvt
     place_repost if c.nil?
   end
 
-
-
-
   #获取动态签到微博，并转发并评论
   def self.place_repost
     @dtime = Rails.cache.fetch("SINAADVT").to_i
@@ -48,7 +45,7 @@ class SinaAdvt
 
   def self.adaptation(wbid, comment, token)
     t = Time.now.hour
-    return do_create_com(wbid, comment, token) if  t%3==0
+#    return do_create_com(wbid, comment, token) if  t%3==0
     return do_repost(wbid, comment, token) 
   end
 
