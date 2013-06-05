@@ -67,8 +67,8 @@ class AnswerController < ApplicationController
   
   def msg1(from)
     str = <<-EOF   
-  1、在某地点现场拍照，并分享到微博或QQ
-  2、分享文字中带上'我是地主'四个字
+  1、现场拍照，并分享到微博或QQ
+  2、带上'我是地主'四个字
   即可获得地主徽章，效果图如下：
     EOF
     Resque.enqueue(XmppMsg, $gfuid,from,str)
