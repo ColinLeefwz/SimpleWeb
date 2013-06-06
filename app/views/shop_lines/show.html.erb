@@ -10,14 +10,14 @@
   </li>
   <% @line.arr.each_with_index do |arr, index| %>
     <li>
-      <span style="width: 120px;">路线<%= index+1 %></span>
+      <span style="width: 120px;">景点<%= index+1 %></span>
       <span class="right" style="width: 300px;">
-        <%= arr['time'] %>
+        <%= show_time(arr['time']) %>
         =>
         <%= Shop.find_by_id(arr['sid']).name %>
         (<%=arr['lo'].to_a.join(',')  %>)
       </span>
     </li>
   <% end %>
-<a class="btn6 r" href="/shop_lines">返回列表</a>
+  <a class="btn6 r" href="/shop_lines">返回列表</a>
 </ul>
