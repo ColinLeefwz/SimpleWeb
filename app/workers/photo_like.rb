@@ -9,6 +9,8 @@ class PhotoLike
     user = User.find_by_id(uid)
     like = {id: user.id, name: user.name, t: Time.now}
     photo.push(:like, like)
+  rescue
+    nil
   end
   
 end

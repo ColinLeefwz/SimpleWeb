@@ -1,0 +1,43 @@
+<div class="title2"><h2>线路图</h2></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="20%" align="left">名称</th>
+    <th width="55%" align="left">路线</th>
+    <th width="15%" align="center" colspan="3">操作</th>
+  </tr>
+
+  <% @lines.each do |line| %>
+    <tr>
+      <td>
+        <%= line.name  %>
+      </td>
+      <td>
+        <%=  "#{line.arr.first['time']} #{Shop.find_by_id(line.arr.first["sid"]).name}"  %>
+        ...
+        <%=  "#{line.arr.last['time']} #{Shop.find_by_id(line.arr.last["sid"]).name}"  %>
+      </td>
+      <td>
+        <%= link_to '详情', "/shop_lines/show?id=#{line.id}" %>
+      </td>
+      <td>
+        <%= link_to '编辑', "/shop_lines/edit?id=#{line.id}" %>
+      </td>
+      <td>
+        <%= link_to '删除', "javascript:void(0)", :onclick => "ajaxDel($(this), '#{line.id}')" %>
+      </td>
+    </tr>
+  <%end%>
+</table>
+
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+  <%= link_to '新建线路', '/shop_lines/new', :class=>'btn3 l' %>
+</div>
+
+<script type="text/javascript">
+  LeftMenu(26);
+  function ajaxDel(obj, line_id){
+    if(confirm("确定删除？"))
+      $.get("/shop_lines/del", {id: line_id}, function(){obj.parent().parent().remove()})
+  }
+</script>

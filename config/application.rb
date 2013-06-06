@@ -24,7 +24,7 @@ $llcf = 21828775 #脸脸茶坊
 $llsc = 21830325 #脸脸商城
 $zjkjcyds = 20325453 #浙江科技产业大厦
 
-  $kxs = ["50bec2c1c90d8bd12f000086","502e6303421aa918ba000001","5032e88d421aa91a1e000016","50446058421aa92042000002","50bc20fcc90d8ba33600004b","502e6303421aa918ba000079","50ea8be1c90d8bd530000020","50f15e00c90d8b19230000cc","50dfbcc4c90d8bb84e000061", "5178b595c90d8bdcdb00000b", "512aeb11c90d8ba3020000d0", "51163b3ac90d8b90650001d5","5160f00fc90d8be23000007c"].to_set
+$kxs = ["50bec2c1c90d8bd12f000086","502e6303421aa918ba000001","5032e88d421aa91a1e000016","50446058421aa92042000002","50bc20fcc90d8ba33600004b","502e6303421aa918ba000079","50ea8be1c90d8bd530000020","50f15e00c90d8b19230000cc","50dfbcc4c90d8bb84e000061", "5178b595c90d8bdcdb00000b", "512aeb11c90d8ba3020000d0", "51163b3ac90d8b90650001d5","5160f00fc90d8be23000007c"].to_set
 
 $sina_api_key = "2054816412"  
 $sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  
@@ -32,7 +32,9 @@ $sina_callback = "http://www.dface.cn/oauth2/sina_callback"
 $sina_token = '2.00t9e5PCMcnDPC86e7068cc9yxaMRC'
 
 $qq_api_key = "100379223"  
-$qq_api_key_secret = "3cc1b95d92352d1335eadc7aea01428f"  
+$qq_api_key_secret = "3cc1b95d92352d1335eadc7aea01428f"
+
+$travel=[]
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
