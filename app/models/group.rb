@@ -12,7 +12,7 @@ class Group
   field :hint #加入此团的认证提示信息
   
   def gen_shop
-    shop = Shop.new
+    s = Shop.new
   	s.id = Shop.next_id
   	s.name = name
   	s.psid = admin_sid
