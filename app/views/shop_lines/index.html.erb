@@ -12,9 +12,9 @@
         <%= line.name  %>
       </td>
       <td>
-        <%=  "#{line.arr.first['time']} #{Shop.find_by_id(line.arr.first["sid"]).name}"  %>
+        <%=  "#{show_time(line.arr.first['time'])} #{Shop.find_by_id(line.arr.first["sid"]).name}"  %>
         ...
-        <%=  "#{line.arr.last['time']} #{Shop.find_by_id(line.arr.last["sid"]).name}"  %>
+        <%=  "#{show_time(line.arr.last['time'])} #{Shop.find_by_id(line.arr.last["sid"]).name}"  %>
       </td>
       <td>
         <%= link_to '详情', "/shop_lines/show?id=#{line.id}" %>
