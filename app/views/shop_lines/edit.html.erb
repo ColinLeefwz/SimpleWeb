@@ -33,16 +33,17 @@
 
   <% @line.arr.each_with_index do |arr, index| %>
     <p class="arr">
-      <span class="stex">路线<%= index+1 %></span>
+      <span class="stex">景点<%= index+1 %></span>
       <span  class="sodd">时间:</span>
-      <span class="sven"><%= text_field_tag "arr[time][]", arr['time'], :class => "inputs"%><br/><%= "(如: 8:30或18：00)" if index == 0  %></span>
+      <span class="sven"><%= text_field_tag "arr[time][]", arr['time'], :class => "inputs"%><br/><%= "(如:第2天18点半,填 2:18:30)" if index == 0  %></span>
       <span  class="sodd">商家id:</span>
       <span class="sven"><%= text_field_tag "arr[id][]", arr["sid"], :class => "inputs"%><br/><%= "(脸脸商家的id)" if index ==0 %></span>
+      <a href='#' onclick='del_arr($(this))'> 删除</a>
     </p>
   <% end %>
 
   <p>
-    <a  href="#" onclick="add_arr($(this))">增加路线</a>
+    <a  href="#" onclick="add_arr($(this))">增加景点</a>
   </p>
   <input type="submit" value="提 交" class="btn3 ml50 l"/><%= link_to '返回列表', '/shop_lines', :class=>"link1" %>
 <% end %>
@@ -50,7 +51,7 @@
 <script type="text/javascript">
   function add_arr(obj){
 <%#*$(".arr").each(function(index){alert(index); $(this).remove();})%>
-    str = "<p class='arr'><span class='stex'>路线" + ($(".arr").length+1) +"</span>"
+    str = "<p class='arr'><span class='stex'>景点" + ($(".arr").length+1) +"</span>"
     str += '<span class="sodd">时间:</span><span class="sven"><input id="name" class="inputs" type="text"  name="arr[time][]"/></span>'
     str += '<span class="sodd" >商家id:</span><span class="sven"><input id="name" class="inputs" type="text" name="arr[id][]"/></span>'
     str += "<a href='#' onclick='del_arr($(this))'> 删除</a></p>"
@@ -59,7 +60,7 @@
 
   function del_arr(obj){
     obj.parent().remove();
-    $(".stex").each(function(index){ $(this).text("路线"+ (index+1));})
+    $(".stex").each(function(index){ $(this).text("景点"+ (index+1));})
   }
 
 </script>
