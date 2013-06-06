@@ -75,6 +75,13 @@
           <% unless session_shop.shops.blank? %> <a href="/shop_subshops" name="n14" class="s arrow">内部商家管理</a> <% end %>
           <% if session_shop.has_branch? %><a href="#" name="n20" class="s arrow">分店管理管理</a> <% end %>
           <span class="borderstyle"></span>
+
+          <% if session[:shop_id].in?($travel) %>
+            <span class="tit">拓展功能</span>
+            <a href="/shop_lines" name="n26" class="s arrow">路线图</a>
+            <a href="/shop_groups" name="n27" class="s arrow">旅行团</a>
+            <span class="borderstyle"></span>
+          <% end %>
         </div>
 
       </div>
@@ -84,7 +91,7 @@
     </div>
     <div id="footer">
       <div class="footerinner">&copy; 2012 dface 浙ICP备11027288号<a href="http://www.dface.cn" class="fn ml15">WWW.DFACE.CN</a></div>
-    </div> 
+    </div>
   </body>
 </html>
 
