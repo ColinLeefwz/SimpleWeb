@@ -31,6 +31,7 @@ class Shop
   field :v, type:Integer #加权
   field :creator, type: Moped::BSON::ObjectId #该地点的创建者
   field :seller_id, type: Moped::BSON::ObjectId #负责该地点销售的人员
+  field :group_id, type: Moped::BSON::ObjectId #旅行团id
   
   field :i, type: Boolean #用户添加的地点 已处理标记
   field :utype #用户添加的类型
@@ -348,6 +349,10 @@ class Shop
         next
       end
     end
+  end
+
+  def lines
+    Line.where({admin_sid: self.id}).sort({_id: -1})
   end
   
   def self.next_id
