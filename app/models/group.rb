@@ -40,7 +40,7 @@ class Group
         str += "<br/>"
       else
         str += ",#{u['id']}"  if u['id']
-        str += '\r\n'
+        str += "\r\n"
       end
     end
     str
