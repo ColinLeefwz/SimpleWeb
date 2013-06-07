@@ -10,6 +10,10 @@ class Group
   field :tat, type: Date #结束时间
   field :users, type:Array #团员 [ { name:姓名, phone:手机, sfz:身份证, id:用户id } ]
   field :hint #加入此团的认证提示信息
+
+  with_options :prefix => true, :allow_nil => true do |option|
+    option.delegate :name,  :to => :line
+  end
   
   after_create :gen_shop
 
@@ -22,18 +26,26 @@ class Group
     s.save
   end
 
+  def line
+    Line.find_by_id(line_id)
+  end
+
 
   def show_users(link=true)
     str =""
     users.each do|u|
-      str += "#{u['name']},#{u['phone']},#{u['sfz']},"
+      str += "#{u['name']},#{u['phone']},#{u['sfz']}"
       if link
-        str += "<a href='/shop_checkins/user?uid=#{u['id']}' style='color: #0B99D7'>#{u['id']}</a><br/>" if u['id']
+        str += ",<a href='/shop_checkins/user?uid=#{u['id']}' style='color: #0B99D7'>#{u['id']}</a><br/>" if u['id']
       else
-        str += "#{u['id']}\r\n"
+        str += ",#{u['id']}\r\n"  if u['id']
       end
     end
     str
+  end
+
+  def show_hint
+    ['请输入电话号码', '请输入身份证号码'][hint.to_i]
   end
   
 end
