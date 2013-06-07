@@ -36,9 +36,11 @@ class Group
     users.each do|u|
       str += "#{u['name']},#{u['phone']},#{u['sfz']}"
       if link
-        str += ",<a href='/shop_checkins/user?uid=#{u['id']}' style='color: #0B99D7'>#{u['id']}</a><br/>" if u['id']
+        str += ",<a href='/shop_checkins/user?uid=#{u['id']}' style='color: #0B99D7'>#{u['id']}</a>" if u['id']
+        str += "<br/>"
       else
-        str += ",#{u['id']}\r\n"  if u['id']
+        str += ",#{u['id']}"  if u['id']
+        str += '\r\n'
       end
     end
     str
