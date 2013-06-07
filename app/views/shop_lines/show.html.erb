@@ -1,0 +1,23 @@
+<div class="title2"><h2><%= @line.name %>路线图</h2></div>
+<ul class="formlist">
+  <li>
+    <span style="width: 120px;">名称:</span>
+    <span class="right" style="width: 300px;"><%= @line.name%></span>
+  </li>
+  <li>
+    <span style="width: 60px;"></span>
+    <span class="right" style="width: 300px; font-weight: bold">总路线</span>
+  </li>
+  <% @line.arr.each_with_index do |arr, index| %>
+    <li>
+      <span style="width: 120px;">景点<%= index+1 %></span>
+      <span class="right" style="width: 300px;">
+        <%= show_time(arr['time']) %>
+        =>
+        <%= Shop.find_by_id(arr['sid']).name %>
+        (<%=arr['lo'].to_a.join(',')  %>)
+      </span>
+    </li>
+  <% end %>
+  <a class="btn6 r" href="/shop_lines">返回列表</a>
+</ul>

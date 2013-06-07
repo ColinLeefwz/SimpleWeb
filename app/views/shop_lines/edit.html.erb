@@ -1,0 +1,66 @@
+<div class="title2"><h2>编辑线路图</h2></div>
+<%= form_tag "/shop_lines/update" do  %>
+  <style type="text/css">
+    p {margin: 5px 0;}
+    p .inputs{background-color: #F6F6F6;
+              border: 1px solid #D7DADF;
+              border-radius: 3px 3px 3px 3px;
+              box-shadow: 0 1px 0 #666666 inset;
+              color: #666666;
+              font-size: 14px;
+              padding: 7px;
+              width: 150px;}
+    p span{display: inline-block;  margin: 0px; padding: 0px; color: #5C6C7C; }
+    p .sodd{padding-top:  10px;vertical-align: top; width: 60px; text-align: right;font-size: 14px;padding-right: 10px;}
+    p .sven{ text-align: left;font-size: 12px; width: 170px; overflow: hidden;}
+    p .stex{width: 50px;vertical-align: top;font-weight: bold; }
+
+    form .link1{background: url("../images/sign17.png") no-repeat scroll right center transparent;
+                color: #5C6C7C;
+                float: left;
+                font-size: 14px;
+                margin-top: 10px;
+                padding-left: 40px;
+                padding-right: 25px;}
+    </style>
+    <%= hidden_field_tag :id, @line.id %>
+    <p>
+      <span class="sodd">名称:</span>
+    <span class="sven"><%= text_field_tag :name, @line.name, :class => "inputs"%><br/>(如:西湖二日游)</span>
+  </p>
+
+  <p><h3>总线路</h3></p>
+
+  <% @line.arr.each_with_index do |arr, index| %>
+    <p class="arr">
+      <span class="stex">景点<%= index+1 %></span>
+      <span  class="sodd">时间:</span>
+      <span class="sven"><%= text_field_tag "arr[time][]", arr['time'], :class => "inputs"%><br/><%= "(如:第2天18点半,填 2:18:30)" if index == 0  %></span>
+      <span  class="sodd">商家id:</span>
+      <span class="sven"><%= text_field_tag "arr[id][]", arr["sid"], :class => "inputs"%><br/><%= "(脸脸商家的id)" if index ==0 %></span>
+      <a href='#' onclick='del_arr($(this))'> 删除</a>
+    </p>
+  <% end %>
+
+  <p>
+    <a  href="#" onclick="add_arr($(this))">增加景点</a>
+  </p>
+  <input type="submit" value="提 交" class="btn3 ml50 l"/><%= link_to '返回列表', '/shop_lines', :class=>"link1" %>
+<% end %>
+
+<script type="text/javascript">
+  function add_arr(obj){
+<%#*$(".arr").each(function(index){alert(index); $(this).remove();})%>
+    str = "<p class='arr'><span class='stex'>景点" + ($(".arr").length+1) +"</span>"
+    str += '<span class="sodd">时间:</span><span class="sven"><input id="name" class="inputs" type="text"  name="arr[time][]"/></span>'
+    str += '<span class="sodd" >商家id:</span><span class="sven"><input id="name" class="inputs" type="text" name="arr[id][]"/></span>'
+    str += "<a href='#' onclick='del_arr($(this))'> 删除</a></p>"
+    obj.parent().before(str)
+  }
+
+  function del_arr(obj){
+    obj.parent().remove();
+    $(".stex").each(function(index){ $(this).text("景点"+ (index+1));})
+  }
+
+</script>
