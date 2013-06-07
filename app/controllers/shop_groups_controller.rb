@@ -21,7 +21,6 @@ class ShopGroupsController < ApplicationController
   def create
     group = Group.new(params[:group])
     group.admin_sid = session[:shop_id]
-    group.name = Line.find_by_id(group.line_id).name + group.code
     group.users = users(group.users)
     group.save
     redirect_to :action => "show", :id => group.id
@@ -33,10 +32,7 @@ class ShopGroupsController < ApplicationController
 
   def update
     params["group"].merge!({"users" => users(params[:group][:users])})
-    
     @group.update_attributes(params[:group])
-    @group.name = Line.find_by_id(@group.line_id).name + @group.code
-    @group.save
     redirect_to :action => "show", :id => @group.id
   end
 
