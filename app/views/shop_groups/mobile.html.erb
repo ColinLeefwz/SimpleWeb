@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7, minimum-scale=0.7, user-scalable=yes, target-densitydpi=device-dpi">
+      <title><%= @group.name %>行程</title>
+      <link href="/help/css/help.css" rel="stylesheet"  type="text/css" media="screen"/>
+  </head>
+
+  <style type="text/css">
+    .pad2{padding-top: 50px;width: 460px;margin: 0 auto;font-family: "微软雅黑"; font-size: 21px; letter-spacing: 1px; color: #5A6369;}
+    .pad2 p{border-bottom: 2px solid #E5E0DE; padding: 15px 10px;margin: 0px; width: 100%; background: url("/help/images/arrow1.png") no-repeat scroll 440px center #FFFFFF;}
+    .pad2 p.rar{text-align: right; background: none; background-color:#FFFFFF; }
+    .pad2 p.title{text-align: center; background: none; background-color:#FFFFFF; border: none; }
+    .pad2 p span{display: inline-block; width: 90%;border: 2px solid #5A6369; height: 50px; margin: 0 auto; line-height: 50px;}
+  </style>
+
+
+  <body>
+    <div class="main">
+      <div class="con pad2">
+        <p class="title">
+          <span>
+            <%=  @group.name%>
+          </span>
+        </p>
+
+        <p class="rar">
+          <%= @group.fat.to_date %>
+        </p>
+        <% @line.arr.each do |a| %>
+          <p>
+            <a><%= show_time(a['time']) %> <%= Shop.find_by_id(a['sid']).name %></a>
+          </p>
+        <% end %>
+
+      </div>
+    </div>
+  </body>
+</html>
