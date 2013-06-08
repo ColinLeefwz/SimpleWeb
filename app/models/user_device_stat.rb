@@ -6,4 +6,9 @@ class UserDeviceStat
   field :_id, type: String
   field :cios, type: Integer
   field :card, type: Integer
+
+  field :ios, type: Hash
+  field :ard, type: Hash
+
+
 end
