@@ -12,6 +12,8 @@ module RequestApi
       method = hash[:method]
       begin
         JSON.parse method == :post ? RestClient.post(url, hash[:params]) : RestClient.get(url+ "?" + hash[:params].to_param)
+      rescue RestClient::BadRequest
+        return nil
       rescue
         err_num += 1
         log.error "#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} #{cl}.#{m} #{method} #{url + "?" + hash[:params].to_param}错误#{err_num}次. #{$!}" if log
