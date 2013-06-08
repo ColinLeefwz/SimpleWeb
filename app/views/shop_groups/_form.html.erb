@@ -36,19 +36,3 @@
 
 <input type="submit" value="提 交" class="btn3 ml50 l"/><%= link_to '返回列表', '/shop_groups', :class=>"link1" %>
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#group_line_id").change(function(){
-      line = $(this).find("option:selected").text()
-      code = $("#group_code").val()
-      if(code!='')
-        $("#group_name").val(line+code)
-    })
-
-    $("#group_code").change(function(){
-      line =   $("#group_line_id").find("option:selected").text()
-      code =$(this).val()
-      $("#group_name").val(line+code)
-    })
-  })
-</script>
