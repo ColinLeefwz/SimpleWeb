@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class ShopGroupsController < ApplicationController
-  before_filter :shop_authorize
+  before_filter :shop_authorize, :except => [:mobile]
   before_filter :master_authorize, :only => [:show, :edit, :del, :update]
   include Paginate
   layout 'shop'
@@ -17,6 +17,12 @@ class ShopGroupsController < ApplicationController
     @group = Group.new
   end
 
+  def mobile
+    @group = Group.find_by_id(params[:id])
+    #    @group = Group.last
+    @line = @group.line
+    render :layout => false
+  end
 
   def create
     group = Group.new(params[:group])
