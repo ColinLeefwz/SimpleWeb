@@ -9,8 +9,18 @@
   <% @user_device_stats.each do |user_device_stat| %>
     <tr>
       <td><%= user_device_stat._id %></td>
-      <td><%= user_device_stat.cios %></td>
-      <td><%= user_device_stat.card %></td>
+      <td>
+        今日新增:  <%= user_device_stat.cios %>
+        <br />
+        增长最快:
+         <%= user_device_stat.ios.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:   #{k[1].to_i}"}.take(3).join(';')  %>
+      </td>
+      <td>
+        今日新增:  <%= user_device_stat.card %>
+        <br />
+        增长最快:        
+         <%= user_device_stat.ard.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:   #{k[1].to_i}"}.take(3).join(';')  %>
+      </td>
     </tr>
   <% end %>
 </table>
