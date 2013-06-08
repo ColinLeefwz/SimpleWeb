@@ -13,13 +13,13 @@
         今日新增:  <%= user_device_stat.cios %>
         <br />
         增长最快:
-         <%= user_device_stat.ios.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:   #{k[1].to_i}"}.take(3).join(';')  %>
+         <%= user_device_stat.ios.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:   #{k[1].to_i}"}.take(3).join(';')  if user_device_stat.ios %>
       </td>
       <td>
         今日新增:  <%= user_device_stat.card %>
         <br />
         增长最快:        
-         <%= user_device_stat.ard.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:   #{k[1].to_i}"}.take(3).join(';')  %>
+         <%= user_device_stat.ard.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:   #{k[1].to_i}"}.take(3).join(';') if user_device_stat.ard %>
       </td>
     </tr>
   <% end %>
