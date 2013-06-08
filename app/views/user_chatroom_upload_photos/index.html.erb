@@ -1,0 +1,78 @@
+<style type="text/css">
+#container{margin:auto;width:1100px;}
+#container .col{float:left;width:204px;background:#ececec;margin:5px;text-align:center;}
+.clear:after{clear:both;display:block;visibility:hidden;height:0;overflow:hidden;content:".";}
+.clear{zoom:1;}
+.page{margin:20px 0;}
+.pages{float:right;}
+.page a{float:left;width:21px;height:21px;margin-right:5px;overflow:hidden;text-indent:-2000px;}
+.page .prv{background-position:-27px 0;}
+.page .nxt{background-position:-79px 0;}
+.page .back{background-position:-53px 0;}
+</style>
+<div id="container" class="clear">
+
+<% @users.each do |user| %>
+   <div class="box photo col">
+    <a id="imgt2" href="<%= Photo.img_url(user._id) %>"><%= image_tag(Photo.img_url(user._id), :size => "204x204") if user.user_id%></a>
+  </div>
+<% end %>
+  
+</div>
+
+      <div class="page clear">
+      <div class="pages">
+    <a id="imgt2" href="/user_chatroom_upload_photos?page=2">下一页</a>
+        </div>
+    </div>
+
+
+
+
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script> 
+<script type="text/javascript" src="/admin/javascripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script> 
+<script type="text/javascript" src="/admin/javascripts/fancybox/jquery.mousewheel-3.0.4.pack.js"></script> 
+<script type="text/javascript" src="/admin/javascripts/fancybox/jquery.masonry.min.js"></script> 
+<script type="text/javascript" src="/admin/javascripts/fancybox/jquery.infinitescroll.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/admin/stylesheets/jquery.fancybox-1.3.4.css" />
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $("a#imgt2").fancybox({
+        'titlePosition': 'inside'
+      });
+  });
+
+  $(function(){
+
+    var $container = $('#container');
+  
+    $container.imagesLoaded( function(){
+      $container.masonry({
+        itemSelector : '.box'
+      });
+    });
+  
+  });
+
+$(function(){
+var $container = $('#container');
+$('#container').infinitescroll({
+    navSelector  : "div.page .pages",            
+    nextSelector : "div.page .pages a:first",    
+    itemSelector : ".col"          
+  }, function( newElements ) {
+    var $newElems = $( newElements );
+    $container.masonry( 'appended', $newElems );
+  });
+  
+  
+   $('#container').masonry({
+    itemSelector : '.col',
+    columnWidth : 214
+  });
+  
+});
+
+
+</script>
