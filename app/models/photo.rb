@@ -27,7 +27,7 @@ class Photo
   index({room:1, updated_at:-1})
   
   def self.img_url(id,type=nil)
-    return self.find_by_id(id).img.url(type) if Rails.env !="production"
+    # return self.find_by_id(id).img.url(type) if Rails.env !="production"
     if type
       "http://oss.aliyuncs.com/dface/#{id}/#{type}_0.jpg"
     else
