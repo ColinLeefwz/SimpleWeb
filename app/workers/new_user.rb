@@ -15,7 +15,7 @@ class NewUser
       NewUser.notify(uid,sid, to, od, ud, 2 )
     end
     if ud && ud.os_type==1
-      ["51163b3ac90d8b90650001d5","5160f00fc90d8be23000007c"].each do |to|
+      ["51163b3ac90d8b90650001d5","5160f00fc90d8be23000007c","519d894dc90d8b83ee000008"].each do |to|
         NewUser.notify(uid,sid, to, od, ud)
       end
     end
