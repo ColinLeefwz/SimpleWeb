@@ -13,7 +13,7 @@ class Photo
   field :weibo, type:Boolean #是否分享到新浪微博
   field :qq, type:Boolean  #是否分享到QQ空间
   field :wx, type:Integer   #分享到微信: 1个人,2朋友圈, 3都分享了
-  field :like, type:Array #赞 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间' }]
+  #field :like, type:Array #赞 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间' }]
   field :com, type:Array #评论 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间', 'txt' => "评论", 'hide' => '隐藏'  }]
   field :img
   field :hide, type:Boolean  #隐藏照片
