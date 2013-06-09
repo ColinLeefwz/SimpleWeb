@@ -6,9 +6,7 @@ class PhotoLike
   def self.perform(photo_id)
     photo = Photo.find(photo_id)
     uid = (photo.user.gender.to_i == 2 ? $fakeusers1 : $fakeusers2).sample
-    user = User.find_by_id(uid)
-    like = {id: user.id, name: user.name, t: Time.now}
-    photo.push(:like, like)
+    $redis.zadd("Like#{photo.id}", Time.now.to_i, uid)
   rescue
     nil
   end
