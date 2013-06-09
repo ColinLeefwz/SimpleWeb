@@ -64,10 +64,6 @@ class PhotosController < ApplicationController
 
   def like
     photo = Photo.find(params[:id])
-    if $redis.zscore("Like#{photo.id}", session[:user_id])
-      render :json => {"error" => "already liked photo #{photo.id}"}.to_json
-      return
-    end
     $redis.zadd("Like#{photo.id}", Time.now.to_i, session[:user_id])
     if session[:ver].to_f > 1.4
       Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
