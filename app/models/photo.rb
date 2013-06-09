@@ -52,7 +52,7 @@ class Photo
     end
     return if ENV["RAILS_ENV"] == "test"
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}")
-    Resque.enqueue_in(30.seconds, PhotoLike, self._id)
+    Resque.enqueue_in(30.seconds, PhotoLike, self._id, self.user.gender)
   end
   
   def send_wb
@@ -217,17 +217,14 @@ class Photo
     nil
   end
 
-  #取mongo中的like数据 用likes
-  alias likes like
-
   #like重写， 现在的like是从redis中取
   def like
-    $redis.zrevrange("Like#{self.id}", 0, -1).map{|m| {'t' => Time.at($redis.zrevrank("Like#{self.id}",m)), 'id' => m, 'name' => User.find_by_id(m).try(:name) }}
+    $redis.zrevrange("Like#{self.id}", 0, -1, withscores:true).map{|m| {"t" => Time.at(m[1]), "name" => User.find_by_id(m[0]).try(:name), 'id' => m[0] }}
   end
 
   def self.init_like_redis
     Photo.where({like: {"$exists" => true}}).each do |photo|
-      photo.likes.each{|x| $redis.zadd("Like#{photo.id}", x['t'].to_i, x['id']) }
+      photo.like.each{|x| $redis.zadd("Like#{photo.id}", x['t'].to_i, x['id']) }
     end
   end
 
