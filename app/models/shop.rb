@@ -414,7 +414,7 @@ class Shop
 
   # 多个经纬度的商家， 当两个距离相差10000米，及是异常商家。
   
-  def errshops
+  def self.errshops
     File.open("log/errshops","w+") do |f|
       sat = Time.now
       f.puts "开始执行时间：#{sat}"
@@ -424,7 +424,7 @@ class Shop
         #      Shop.where({_id: {"$in" => [10532152, 10366463,48935]}}).each do |shop|
         begin
           shop.lo.combination(2).to_a.each do |bj|
-            if (dis = ns.get_distance(bj[0], bj[1])) > 10
+            if (dis = ns.get_distance(bj[0], bj[1])) > 10000
               f.puts "错误商家id: #{shop.id}" if id != shop.id
               id = shop.id
               f.puts "            #{bj}相距#{dis}"
