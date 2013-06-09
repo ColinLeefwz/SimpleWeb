@@ -64,15 +64,14 @@ class PhotosController < ApplicationController
 
   def like
     photo = Photo.find(params[:id])
-    if photo.like && photo.like.find{|x| x["id"]==session[:user_id]}
+    if $redis.zscore("Like#{photo.id}", session[:user_id])
       render :json => {"error" => "already liked photo #{photo.id}"}.to_json
       return
     end
-    like = {id:session[:user_id], name: session_user.name, t:Time.now}
-    photo.push(:like, like)
+    $redis.zadd("Like#{photo.id}", Time.now.to_i, session[:user_id])
     if session[:ver].to_f > 1.4
       Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
-      "#{session_user.name} '赞'了你在 #{photo.shop.name} 分享的照片。")
+        "#{session_user.name} '赞'了你在 #{photo.shop.name} 分享的照片。")
     end
     expire_cache_shop(photo.room)
     render :json => like.to_json
@@ -80,9 +79,7 @@ class PhotosController < ApplicationController
   
   def dislike
     photo = Photo.find(params[:id])
-    like = photo.like
-    photo.like = like.delete_if{|x| x["id"]==session[:user_id]}
-    photo.save!
+    $redis.zrem("Like#{photo.id}", session[:user_id])
     expire_cache_shop(photo.room)
     #TODO: 删除操作不更新最后updated_at
     render :json => {ok:photo.id}.to_json
@@ -94,7 +91,7 @@ class PhotosController < ApplicationController
     ret = photo.push(:com, com)
     if session[:ver].to_f > 1.4
       Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
-      "#{session_user.name}评论了你在#{photo.shop.name}分享的照片。")
+        "#{session_user.name}评论了你在#{photo.shop.name}分享的照片。")
     end
     expire_cache_shop(photo.room)
     render :json => com.to_json
@@ -182,7 +179,7 @@ class PhotosController < ApplicationController
   
   def user_photo_no_cache(uid,skip,pcount)
     Photo.where({user_id: uid, "$or" => [ { weibo: true } , { qq: true } ]}).
-          sort({updated_at: -1}).skip(skip).limit(pcount).to_a
+      sort({updated_at: -1}).skip(skip).limit(pcount).to_a
   end
 
   
