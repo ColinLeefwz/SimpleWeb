@@ -216,6 +216,20 @@ class Photo
   rescue
     nil
   end
-  
+
+  #取mongo中的like数据 用likes
+  alias likes like
+
+  #like重写， 现在的like是从redis中取
+  def like
+    $redis.zrevrange("Like#{self.id}", 0, -1).map{|m| {'t' => Time.at($redis.zrevrank("Like#{self.id}",m)), 'id' => m, 'name' => User.find_by_id(m).try(:name) }}
+  end
+
+  def self.init_like_redis
+    Photo.where({like: {"$exists" => true}}).each do |photo|
+      photo.likes.each{|x| $redis.zadd("Like#{photo.id}", x['t'].to_i, x['id']) }
+    end
+  end
+
 
 end
