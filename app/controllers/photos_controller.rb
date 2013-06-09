@@ -70,7 +70,7 @@ class PhotosController < ApplicationController
         "#{session_user.name} '赞'了你在 #{photo.shop.name} 分享的照片。")
     end
     expire_cache_shop(photo.room)
-    render :json => [].to_json
+    render :json => {id:session[:user_id], name: session_user.name, t:Time.now}.to_json
   end
   
   def dislike
