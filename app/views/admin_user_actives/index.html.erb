@@ -1,0 +1,23 @@
+<h1><%= show_aut(@user_active._id) %>的活跃度分析</h1>
+<form action="" >
+  <%= select_tag :id, options_for_select(UserActive.distinct("id"), params[:id])  %>
+  <%= submit_tag '查询' %>
+</form>
+<br/>
+<table border="1">
+  <tr>
+    <th>日期</th>
+    <th>注册数</th>
+    <th>活跃数</th>
+    <th>活跃率(%)</th>
+  </tr>
+  <%@user_active.data.reject{|k,v| k=='register'}.each do |k,v|%>
+    <tr>
+      <td><%=show_aut(k)%></td>
+      <td><%=ua=UserActive.find_by_id(k).data["register"] %></td>
+      <td><%=v%></td>
+      <td><%=(v*100/ua).round(3) %> </td>
+    </tr>
+
+  <% end %>
+</table>
