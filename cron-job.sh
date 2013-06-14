@@ -30,6 +30,7 @@ sleep 1
 /mnt/.rvm/bin/ruby script/rails r  'Photo.fix_error(true)'
 /mnt/.rvm/bin/ruby script/rails r  'UserLogo.fix_error(true)'
 #/mnt/.rvm/bin/ruby script/rails r db/mongo/ip_info.rb
+/mnt/.rvm/bin/ruby script/rails r  'UserActive.do_count'
 
 etime=`date +"%Y-%m-%d %H:%M:%S"`
 stime_int=`date -d  "$stime" +%s`
