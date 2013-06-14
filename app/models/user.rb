@@ -47,7 +47,7 @@ class User
   def lords
     lord1 = $redis.zrange("LORD#{self.id}",0,-1).map {|x| x.to_i}
     lord2 = $redis.smembers("LORD2#{self.id}").map {|x| x.to_i}
-    (lord1 + lord2).uniq!
+    return (lord1 + lord2).uniq   # uniq!会返回nil
   end
   
   def black_ids
