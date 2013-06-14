@@ -47,7 +47,7 @@ class User
   def lords
     lord1 = $redis.zrange("LORD#{self.id}",0,-1).map {|x| x.to_i}
     lord2 = $redis.smembers("LORD2#{self.id}").map {|x| x.to_i}
-    (lord1 + lord2).uniq!
+    return (lord1 + lord2).uniq   # uniq!会返回nil
   end
   
   def black_ids
@@ -219,6 +219,7 @@ class User
   def last_loc_no_cache
     ck = Checkin.where({uid:self._id}).sort({_id:1}).last
     return nil if ck.nil?
+    return nil if ck.shop.nil? || ck.shop.name.nil?
     write_lat_loc(ck)
   end
   
