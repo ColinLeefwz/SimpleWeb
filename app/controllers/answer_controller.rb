@@ -36,7 +36,7 @@ class AnswerController < ApplicationController
       faq(uid)
     elsif txt.downcase=="hi"
       Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"hi😄")
-    elsif txt=="您好" || txt=="你好"
+    elsif txt[0,2]=="您好" || txt[0,2]=="你好"
       Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"您好😄")
     elsif txt=="你是" || txt[0,3]=="你是谁"
       Resque.enqueue_in(5.seconds,XmppMsg, $gfuid,uid,"我是脸脸客服😊")
@@ -52,6 +52,8 @@ class AnswerController < ApplicationController
       txt = "😄💛🌟😜😊😊😊💤💤💤💤🙏🙏"
       sec = rand(10)
       Resque.enqueue_in(sec.seconds,XmppMsg, $gfuid,uid, txt[rand(13)])
+    elsif txt.to_i.to_s==txt
+      want(uid,txt[0].to_i)
     elsif txt.bytesize<=3
       Rails.cache.fetch("HELP#{uid}", :expires_in => 12.hours) do
         help_msg(uid)
