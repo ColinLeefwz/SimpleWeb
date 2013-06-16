@@ -24,14 +24,15 @@ class InitController < ApplicationController
     if session[:os] == 1
       ver = android_version
     else
-      ver = 2.1
+      ver = 2.2
     end
     render :json => {ip: ip, xmpp: xmpp , ver:ver }.to_json
   end
   
   $ios = [
           ["2.0.0","界面全新改版",false],
-          ["2.1.0","我的照片墙增加新评论提醒功能\n聊天室发图分享到微信朋友圈功能",true]
+          ["2.1.0","我的照片墙增加新评论提醒功能\n聊天室发图分享到微信朋友圈功能",true],
+          ["2.2.0","增加了地主👑和抢地主功能\n添加地点功能强化",true],          
          ]
   $android = [
     ["1.0","重大功能调整",false]    
