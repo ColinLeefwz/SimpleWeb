@@ -1,4 +1,5 @@
 # coding: utf-8
+#['2012', '2013-01', '2013-02', '2013-03', '2013-04', '2013-05', '2013-6-1'].each{|a| UserActive.do_count(a) } 相对时间点上的“用户活跃度分析”
 
 class UserActive
   include Mongoid::Document

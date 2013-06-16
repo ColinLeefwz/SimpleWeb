@@ -17,7 +17,7 @@ class NewUserWelcome
       Xmpp.send_gchat2($gfuid,shop.id,user.id,"邀请好友也加入脸脸,看看他们当前都在哪儿，一起玩会更有意思。")
     end
     if seq==4
-      Xmpp.send_chat($gfuid,user.id,"试试回复一个数字0，看看会发生什么！")
+      #Xmpp.send_chat($gfuid,user.id,"试试回复一个数字0，看看会发生什么！")
     end
   end
   
