@@ -6,6 +6,7 @@ class Group
   field :code #团号
   field :line_id, type: Moped::BSON::ObjectId #所属线路
   field :admin_sid, type:Integer #所属旅行社
+  field :sid, type:Integer #旅行团对应的虚拟群  
   field :fat, type: Date  #开始时间
   field :tat, type: Date #结束时间
   field :users, type:Array #团员 [ { name:姓名, phone:手机, sfz:身份证, id:用户id } ]
