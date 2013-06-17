@@ -139,7 +139,6 @@ class Shop
   def safe_output
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
-    hash.merge!({"group_id"=>self.group_id, "group_hint"=>group_hint}) if self.group_id
     hash
   end
   
