@@ -31,7 +31,9 @@ class AroundmeController < ApplicationController
     end
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
-      hash.merge!(x.group_hash(session[:user_id]))
+      ghash = x.group_hash(session[:user_id])
+      #logger.info ghash
+      hash.merge!(ghash)
       hash
     end
     city = arr[0]["city"]
