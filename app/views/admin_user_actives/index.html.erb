@@ -16,7 +16,7 @@
       <td><%=show_aut(k)%></td>
       <td><%=ua=UserActive.find_by_id(k).data["register"] %></td>
       <td><%=v%></td>
-      <td><%=(v*100/ua).round(3) %> </td>
+      <td><%=(v*100.0/ua).round(3) %> </td>
     </tr>
 
   <% end %>
