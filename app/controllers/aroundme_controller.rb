@@ -29,7 +29,11 @@ class AroundmeController < ApplicationController
       arr << Shop.find_by_id($llsc)
       arr << Shop.find_by_id(21830231) #延安路•紫微大街 
     end
-    ret = arr.map{|x| x.safe_output_with_users}
+    ret = arr.map do |x| 
+      hash = x.safe_output_with_users
+      hash.merge!(x.group_hash(session[:user_id]))
+      hash
+    end
     city = arr[0]["city"]
     city = Shop.get_city(lo)  if city.nil? || city==""
     coupons = $redis.smembers("ACS#{city}") 
