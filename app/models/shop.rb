@@ -130,6 +130,12 @@ class Shop
     "请输入验证信息:"
   end
   
+  def group_hash(uid)
+    return {} unless group_id
+    return {} if uid && $redis.sismember("GROUP#{uid}",self.id.to_i) #已加入群的用户不再要求输入hint
+    return {"group_id"=>self.group_id, "group_hint"=>group_hint}
+  end
+  
   def safe_output
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
