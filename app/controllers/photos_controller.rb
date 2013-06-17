@@ -15,7 +15,7 @@ class PhotosController < ApplicationController
     if p.qq && params[:qqtoken] && $redis.get("qqtoken#{session[:user_id]}").nil?
       $redis.set("qqtoken#{session[:user_id]}", params[:qqtoken])
     end    
-    expire_cache_shop(p.room)
+    expire_cache_shop(p.room, p.user_id)
     render :json => p.output_hash_with_username.to_json
   end
   
@@ -54,8 +54,7 @@ class PhotosController < ApplicationController
     end
     sid = photo.room
     if photo.destroy
-      expire_cache_shop(sid)
-      Rails.cache.delete("UP#{photo.user_id}-5")
+      expire_cache_shop(sid, photo.user_id)
       render :json => {ok:photo.id}.to_json
     else
       render :json => {"error" => "delete #{photo.id} failed."}.to_json
@@ -69,7 +68,7 @@ class PhotosController < ApplicationController
       Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
         "#{session_user.name} '赞'了你在 #{photo.shop.name} 分享的照片。")
     end
-    expire_cache_shop(photo.room)
+    expire_cache_shop(photo.room, photo.user_id)
     render :json => {id:session[:user_id], name: session_user.name, t:Time.now}.to_json
   end
   
@@ -89,7 +88,7 @@ class PhotosController < ApplicationController
       Resque.enqueue(XmppMsg, 'sphoto',photo.user_id,
         "#{session_user.name}评论了你在#{photo.shop.name}分享的照片。")
     end
-    expire_cache_shop(photo.room)
+    expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
   end
 
@@ -98,7 +97,7 @@ class PhotosController < ApplicationController
     ru = User.find_by_id(params[:rid])
     com = {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now, rid:ru.id, rname:ru.name}
     ret = photo.push(:com, com)
-    expire_cache_shop(photo.room)
+    expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
   end
     
@@ -107,7 +106,7 @@ class PhotosController < ApplicationController
     com = photo.com
     photo.com = com.delete_if{|x| x["id"]==session[:user_id] && x["txt"]==params[:text]}
     photo.save!
-    expire_cache_shop(photo.room)
+    expire_cache_shop(photo.room, photo.user_id)
     render :json => {ok:photo.id}.to_json
   end
   
@@ -126,7 +125,7 @@ class PhotosController < ApplicationController
     comment["hide"] = true
     photo.com = com
     photo.save!
-    expire_cache_shop(photo.room)
+    expire_cache_shop(photo.room, photo.user_id)
     render :json => {ok:photo.id}.to_json
   end
   
@@ -180,9 +179,10 @@ class PhotosController < ApplicationController
 
   
   private 
-  def expire_cache_shop(sid)
+  def expire_cache_shop(sid,uid=nil)
     Rails.cache.delete("views/SI#{sid}.json")
     Rails.cache.delete("SP#{sid}-5")
+    Rails.cache.delete("UP#{uid}-5") if uid 
   end
   
 

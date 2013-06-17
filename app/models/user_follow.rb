@@ -20,7 +20,6 @@ class UserFollow
   
   def self.add(uid,fid)
     UserFollow.find_or_new(uid, fid)
-    Rails.cache.delete("UI#{fid}#{uid}")
     add_follows_redis(uid,fid) #follows数组在mongodb和redis同时保存，双写
     fuser = User.find_by_id(fid)
     if fuser && fuser.friend?(uid)
