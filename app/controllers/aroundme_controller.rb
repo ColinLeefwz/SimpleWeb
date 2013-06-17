@@ -27,10 +27,7 @@ class AroundmeController < ApplicationController
       arr << Shop.find_by_id(21830326)
       arr << Shop.find_by_id($llcf)
       arr << Shop.find_by_id($llsc)
-      arr << Shop.find_by_id(21830231)
-    end
-    if in_zi_wei_yuan_dian?(lo)
-      arr = [Shop.find_by_id(21830231)] + arr.delete_if{|x| x["_id"].to_s=="21830231"} #延安路•紫微大街 
+      arr << Shop.find_by_id(21830231) #延安路•紫微大街 
     end
     ret = arr.map{|x| x.safe_output_with_users}
     city = arr[0]["city"]
