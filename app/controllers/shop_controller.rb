@@ -46,24 +46,24 @@ class ShopController < ApplicationController
       radis = 0.001 + params[:sname].length*0.0005
       shops = Shop.where({lo:{"$within" => {"$center" => [lo,radis]}}, name:/#{params[:sname]}/}).limit(10)
       #TODO: 增加缓存，key为经纬度加查询关键字
-      render :json =>  shops.map {|s| {id:s.id,name:s.name, visit:0} }.to_json
+      render :json =>  shops.map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
     else
       ret = []
       shop = Shop.where({t:0, name:params[:sname]}).first #虚拟的活动地点名称完全匹配时可以进入
       if shop
-        hash = {id:shop.id,name:shop.name, visit:0}  
+        hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id])) 
         ret << hash
       end
       shop1s = Shop.where({lo:{"$within" => {"$center" => [lo,0.0025]}}, name:/#{params[:sname]}/}).limit(10)
       shop1s.each do |s| 
-        hash = {id:s.id,name:s.name, visit:0} 
+        hash = {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id]))
         ret << hash
       end
       if ret.length<1
         #city = Shop.get_city(lo)
         shops = Shop.where({lo:{"$within" => {"$center" => [lo,0.03]}}, name:/#{params[:sname]}/}).limit(10)
         shops.each do |s| 
-          hash = {id:s.id,name:s.name, visit:1}  
+          hash = {id:s.id,name:s.name, visit:1}.merge!(s.group_hash(session[:user_id]))
           ret << hash
         end
       end
