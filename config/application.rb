@@ -34,7 +34,7 @@ $sina_token = '2.00t9e5PCMcnDPC86e7068cc9yxaMRC'
 $qq_api_key = "100379223"  
 $qq_api_key_secret = "3cc1b95d92352d1335eadc7aea01428f"
 
-$travel=[]
+$travel=[21832384]
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
