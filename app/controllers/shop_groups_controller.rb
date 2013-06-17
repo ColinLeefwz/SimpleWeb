@@ -19,7 +19,7 @@ class ShopGroupsController < ApplicationController
 
   def mobile
     @group = Group.find_by_id(params[:id])
-    #    @group = Group.last
+#    @group = Group.last
     @line = @group.line
     render :layout => false
   end

@@ -26,6 +26,18 @@ class Group
     s.group_id = self.id
     s.save
   end
+  
+  def auth(uid, str)
+    user = users.find{|hash| hash["phone"]==str}
+    if user
+      #user = user.merge!({id:uid})
+      #self.push(:users, user)
+      $redis.sadd("GROUP#{uid}", self.sid)
+      return true
+    else
+      return false
+    end
+  end
 
   def line
     Line.find_by_id(line_id)
