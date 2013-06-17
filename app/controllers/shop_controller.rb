@@ -71,6 +71,17 @@ class ShopController < ApplicationController
     end
 
   end
+  
+  def auth
+    shop = Shop.find_by_id(params[:shop_id])
+    user = User.find_by_id(params[:user_id])
+    flag = shop.group.auth(user.id, params[:txt])
+    if flag
+      render :json => {ret:1}.to_json
+    else
+      render :json => {ret:0}.to_json      
+    end
+  end
 
   
   def users
