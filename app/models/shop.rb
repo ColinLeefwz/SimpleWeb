@@ -120,8 +120,21 @@ class Shop
     Checkin.where({sid:self.id})
   end
   
+  def group
+    Group.find_by_id(group_id)
+  end
+  
+  def group_hint
+    hint = group.hint
+    return hint if hint
+    "请输入验证信息:"
+  end
+  
   def safe_output
-    self.attributes.slice("name", "lo", "t").merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
+    hash = self.attributes.slice("name", "lo", "t")
+    hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
+    hash.merge!({"group_id"=>self.group_id, "group_hint"=>group_hint}) if self.group_id
+    hash
   end
   
   def safe_output_with_users
