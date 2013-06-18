@@ -132,7 +132,7 @@ class Shop
   
   def group_hash(uid)
     return {} unless group_id
-    return {} if uid && $redis.sismember("GROUP#{uid}",self.id.to_i) #已加入群的用户不再要求输入hint
+    return {} if $redis.sismember("GROUP#{uid}",self.id.to_i) #已加入群的用户不再要求输入hint
     return {"group_id"=>self.group_id, "group_hint"=>group_hint}
   end
   
