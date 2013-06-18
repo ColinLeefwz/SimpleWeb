@@ -33,7 +33,7 @@ class ShopGroupsController < ApplicationController
   end
 
   def edit
-    @group.users = @group.show_users(false)
+#    @group.users = @group.show_users(false)
   end
 
   def update
