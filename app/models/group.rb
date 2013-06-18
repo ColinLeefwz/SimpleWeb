@@ -32,7 +32,7 @@ class Group
     if user
       #user = user.merge!({id:uid})
       #self.push(:users, user)
-      $redis.sadd("GROUP#{uid}", self.sid)
+      $redis.sadd("GROUP#{uid}", self.sid.to_i)
       return true
     else
       return false
