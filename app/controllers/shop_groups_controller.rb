@@ -2,7 +2,7 @@
 
 class ShopGroupsController < ApplicationController
   before_filter :shop_authorize, :except => [:mobile]
-  before_filter :master_authorize, :only => [:show, :edit, :del, :update]
+  before_filter :master_authorize, :only => [:show, :edit, :del, :update,:checkins]
   include Paginate
   layout 'shop'
 
@@ -19,7 +19,7 @@ class ShopGroupsController < ApplicationController
 
   def mobile
     @group = Group.find_by_id(params[:id])
-#    @group = Group.last
+    #    @group = Group.last
     @line = @group.line
     render :layout => false
   end
@@ -47,6 +47,16 @@ class ShopGroupsController < ApplicationController
     render :json => {}
   end
 
+  def checkins
+    hash,sort = {},{_id: -1}
+    uids = @group.users.map{|m| m['id']}
+    scid = @group.fat.beginning_of_day.to_i.to_s(16).ljust(24,'0')
+    ecid = @group.tat.end_of_day.to_i.to_s(16).ljust(24,'0')
+    hash.merge!({uid: {"$in" => uids}})
+    hash.merge!({_id: {"$gt" => scid, "$lt" => ecid}})
+    @checkins = paginate("Checkin", params[:page], hash, sort,10)
+  end
+
   private
   def master_authorize
     @group = Group.find(params[:id])
@@ -64,5 +74,7 @@ class ShopGroupsController < ApplicationController
       hash
     end
   end
+
+
 
 end
