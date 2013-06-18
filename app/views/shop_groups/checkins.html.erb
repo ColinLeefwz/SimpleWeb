@@ -1,0 +1,24 @@
+<div class="title2"><h2>旅行签到</h2></div>
+<div class="lists" style="display:block;">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+    <tr>
+      <th width="20%" align="left">用户</th>
+      <th width="9%">性别</th>
+      <th width="17%" align="center">年龄</th>
+      <th width="20%" align="center">签到时间</th>
+    </tr>
+    <% @checkins.each do |checkin| %>
+      <tr>
+        <td>
+          <%=link_to image_tag(UserLogo.img_url(checkin.user.head_logo_id, :t1), :class => "imgs"), UserLogo.img_url(checkin.user.head_logo_id), :target => 'blank' %>
+          <%=link_to checkin.user.name, "/shop_checkins/user?uid=#{checkin.uid}"%></td>
+        <td align="center"><%= (checkin.user.show_gender)%></td>
+        <td align="center"><%= age(checkin.user.birthday.try(:to_date))%></td>
+        <td align="center"><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %></td>
+      </tr>
+    <% end %>
+  </table>
+  <div class="pages mt15">
+    <%= generate_paginate.html_safe %>
+  </div>
+</div>
