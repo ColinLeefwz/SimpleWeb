@@ -223,9 +223,14 @@ class Shop
     diff = users.size-ret.size
     if diff>0 #有拉黑或隐身的用户，用马甲帐号代替
       start = rand($fakeusers1.size-diff)
+      if ret && ret.size>0
+        time = ret[-1]["time"]
+      else
+        time = "3 days"
+      end
       $fakeusers1[start,diff].each do |uid|
         u = User.find_by_id(uid)
-        hash = u.safe_output(session_uid).merge!({time: ret[-1]["time"]})
+        hash = u.safe_output(session_uid).merge!({time: time})
         ret << hash
       end
     end
