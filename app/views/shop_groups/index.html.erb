@@ -3,10 +3,10 @@
   <tr>
     <th width="15%" align="left">路线</th>
     <th width="10%" align="left">团号</th>
-    <th width="26%" align="left">团名</th>
+    <th width="23%" align="left">团名</th>
     <th width="10%" align="left">开始时间</th>
     <th width="10%" align="left">结束时间</th>
-    <th width="15%" align="center" colspan="3">操作</th>
+    <th width="17%" align="center" colspan="3">操作</th>
   </tr>
   <% @groups.each do |group| %>
     <tr>
@@ -20,10 +20,10 @@
         <%= group.name %>
       </td>
       <td>
-        <%= group.fat.to_date %>
+        <%= group.fat.try(:to_date) %>
       </td>
       <td>
-        <%= group.tat.to_date %>
+        <%= group.tat.try(:to_date) %>
       </td>
       <td>
         <%= link_to "详情", "/shop_groups/show?id=#{group.id}" %>
@@ -33,6 +33,9 @@
       </td>
       <td>
         <%= link_to "删除", "javascript:void(0)", :onclick => "ajaxDel($(this),'#{group.id}')" %>
+      </td>
+      <td>
+        <%= link_to "签到", "/shop_groups/checkins?id=#{group.id}" %>
       </td>
 
     </tr>
