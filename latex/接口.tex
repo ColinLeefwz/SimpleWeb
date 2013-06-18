@@ -741,6 +741,43 @@ POST & \multicolumn{3}{|c|}{/checkins/delete} \\
 注意：该请求必须是POST请求。
 
 
+\section{群组与认证}
+脸脸中的现场有两种：聊天室和群组。聊天室和地点绑定，在这儿的人可以加入，不在这儿的人不能加入。群组则是需要权限控制的。群组也分为两种：1.预先设置固定用户的（一般为商业活动相关的，需要预缴费的），实时确定能否加入，2.申请加入，等待群主审核的（一般的QQ群／陌陌群这类）。
+
+\subsection{加入群组的标示}
+在定位时（aroundme/shops）和搜索地点（shop/add\_search）时，如果是有权限控制的群，会有“group\_hint”字段。当用户进入该地点时，需要弹出一个输入框，提示文字为“group\_hint”的内容。当用户输入完成后，调用下面“群组的认证”功能确定能否进入。
+
+
+\subsection{群组的认证}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/shop/auth} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+   \hline
+ shop\_id  & 整数 & 必须 & 商家id\\ 
+  \hline
+ txt  & 字符串 & 必须 & 加入时输入的认证信息\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值：
+\begin{figure}[H]
+\begin{verbatim}
+{ret:0} 代表认证失败
+{ret:1} 代表通过认证
+{ret:2} 代表等待审核
+如果返回值为1，代表可以进入这个地点。进入一个地点时，后台有两个操作：1.加入Xmpp的聊天室，2.发送签到纪录。
+\end{verbatim}
+\end{figure}
+
+当一个用户认证通过后，下次定位时，该地点不带group\_hint”字段，也就不需要重复认证了。
+
+
 \input{user.tex}
 
 \input{xmpp.tex}
