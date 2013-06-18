@@ -24,14 +24,12 @@ class Group
   	s.name = name
   	s.psid = admin_sid
     s.group_id = self.id
+    s.save!
     self.update_attribute(:sid, s.id)
-    s.save
   end
   
   def auth(uid, str)
-    
     user = users.find{|hash| hash["phone"]==str && hash['id'].nil?}
-
     if user
       user.merge!({"id" => uid})
       self.save
