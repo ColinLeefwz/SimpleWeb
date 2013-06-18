@@ -4,7 +4,7 @@
     <tr>
       <th width="20%" align="left">用户</th>
       <th width="9%">性别</th>
-      <th width="17%" align="center">年龄</th>
+      <th width="17%" align="center">景点</th>
       <th width="20%" align="center">签到时间</th>
     </tr>
     <% @checkins.each do |checkin| %>
@@ -13,7 +13,7 @@
           <%=link_to image_tag(UserLogo.img_url(checkin.user.head_logo_id, :t1), :class => "imgs"), UserLogo.img_url(checkin.user.head_logo_id), :target => 'blank' %>
           <%=link_to checkin.user.name, "/shop_checkins/user?uid=#{checkin.uid}"%></td>
         <td align="center"><%= (checkin.user.show_gender)%></td>
-        <td align="center"><%= age(checkin.user.birthday.try(:to_date))%></td>
+        <td align="center"><%= checkin.shop.name%></td>
         <td align="center"><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %></td>
       </tr>
     <% end %>
