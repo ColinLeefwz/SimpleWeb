@@ -24,14 +24,17 @@ class Group
   	s.name = name
   	s.psid = admin_sid
     s.group_id = self.id
+    self.update_attribute(:sid, s.id)
     s.save
   end
   
   def auth(uid, str)
-    user = users.find{|hash| hash["phone"]==str}
+    
+    user = users.find{|hash| hash["phone"]==str && hash['id'].nil?}
+
     if user
-      #user = user.merge!({id:uid})
-      #self.push(:users, user)
+      user.merge!({"id" => uid})
+      self.save
       $redis.sadd("GROUP#{uid}", self.sid.to_i)
       return true
     else
@@ -59,8 +62,8 @@ class Group
     str
   end
 
-  def show_hint
-    ['请输入电话号码', '请输入身份证号码'][hint.to_i]
+  def shop
+    Shop.find_by_id(sid)
   end
   
 end
