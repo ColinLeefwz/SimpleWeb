@@ -1,15 +1,19 @@
 <div class="title2"><h2>旅行团</h2></div>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th width="15%" align="left">路线</th>
-    <th width="10%" align="left">团号</th>
-    <th width="23%" align="left">团名</th>
+    <th width="10%" align="left">id</th>
+    <th width="13%" align="left">路线</th>
+    <th width="8%" align="left">团号</th>
+    <th width="20%" align="left">团名</th>
     <th width="10%" align="left">开始时间</th>
     <th width="10%" align="left">结束时间</th>
     <th width="17%" align="center" colspan="3">操作</th>
   </tr>
   <% @groups.each do |group| %>
     <tr>
+      <td>
+        <%=link_to group.sid||'', "/shop_groups/login?id=#{group.sid}" %>
+      </td>
       <td>
         <%= group.line_name %>
       </td>
