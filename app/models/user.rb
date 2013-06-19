@@ -50,6 +50,14 @@ class User
     return (lord1 + lord2).uniq   # uniq!会返回nil
   end
   
+  def group_ids
+    $redis.smembers("GROUP#{self.id}")
+  end
+  
+  def groups
+    group_ids.map {|id| Shop.find_by_id(id)}
+  end
+  
   def black_ids
     #UserBlack.where({uid: self.id})
     $redis.zrange("BLACK#{self.id}",0,-1)
