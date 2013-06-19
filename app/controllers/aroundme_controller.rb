@@ -29,6 +29,12 @@ class AroundmeController < ApplicationController
       arr << Shop.find_by_id($llsc)
       arr << Shop.find_by_id(21830231) #延安路•紫微大街 
     end
+    if session_user #本人加入的群定位时总是出现
+      head = arr[0..2]
+      tail = arr[3..-1]
+      arr = head + session_user.groups
+      arr = arr + tail if tail
+    end
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
       ghash = x.group_hash(session[:user_id])
