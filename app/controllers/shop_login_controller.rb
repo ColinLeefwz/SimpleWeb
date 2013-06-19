@@ -31,11 +31,12 @@ class ShopLoginController < ApplicationController
       o_uri_path, session[:o_uri_path] = session[:o_uri_path]||'/shop_login/index' , nil
       return redirect_to o_uri_path
     end
-	render :layout => false
+    render :layout => false
   end
 
   def logout
     session[:shop_id] = nil
+    session[:shop_id] = session[:admin_sid]
     redirect_to :action => :login
   end
 
