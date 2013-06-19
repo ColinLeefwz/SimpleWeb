@@ -63,7 +63,9 @@
         <% end %>
       </td>
       <td>
+        <% unless shop.del %>
         <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >标记删除</a>
+        <% end %>
       </td>
 
     </tr>
