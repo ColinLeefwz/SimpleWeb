@@ -76,7 +76,7 @@
           <% if session_shop.has_branch? %><a href="#" name="n20" class="s arrow">分店管理管理</a> <% end %>
           <span class="borderstyle"></span>
 
-          <% if session[:shop_id].in?($travel) %>
+          <% if session[:shop_id].in?($travel) || true%>
             <span class="tit">拓展功能</span>
             <a href="/shop_lines" name="n26" class="s arrow">路线图</a>
             <a href="/shop_groups" name="n27" class="s arrow">旅行团</a>
