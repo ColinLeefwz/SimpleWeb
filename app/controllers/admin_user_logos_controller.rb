@@ -10,6 +10,9 @@ class AdminUserLogosController < ApplicationController
 
     @users =  paginate3("User", params[:page], hash, sort, 40)
 
+    @user_blacks_bid = UserBlack.find_by_id(params[:bid])
+    @user_blacks_id = UserBlack.find_by_id(params[:id])
+
   end
 
 end
