@@ -31,6 +31,7 @@
     <th>排名</th>
     <th>误差</th>
     <th></th>
+    <th></th>
   </tr>
 
   <% @checkins.each do |checkin| %>
@@ -46,19 +47,29 @@
       <td><%= checkin.od.to_i %></td>
       <td><%= checkin.acc %></td>
       <td>
-        <%= link_to '删除', '#', :onclick => "ajaxdel($(this), '#{checkin.id}');" %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+        <%= (link_to '绑定wifi', '#', :onclick => "ajaxbind($(this), '#{checkin.id}');")  unless CheckinBssidStat.bind?(checkin.bssid)  %>
+        </td>
+        <td>
+          <%= link_to '删除', '#', :onclick => "ajaxdel($(this), '#{checkin.id}');" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 
-<%= generate_paginate3.html_safe %>
+  <%= generate_paginate3.html_safe %>
 
-<script type="text/javascript">
-  function ajaxdel(obj, cid){
-    if(confirm("确定删除商家？"))
-      $.post("/admin_checkins/ajaxdel",{id: cid}, function() {
-        obj.parent().parent().hide()
-      });
-  }
-</script>
+  <script type="text/javascript">
+    function ajaxdel(obj, cid){
+      if(confirm("确定删除商家？"))
+        $.post("/admin_checkins/ajaxdel",{id: cid}, function() {
+          obj.parent().parent().hide()
+        });
+    }
+
+    function ajaxbind(obj, cid){
+      if(confirm("确定绑定wifi？"))
+        $.post("/admin_checkins/ajaxbind",{id: cid}, function() {
+          obj.replaceWith('已绑定')
+        });
+    }
+  </script>
