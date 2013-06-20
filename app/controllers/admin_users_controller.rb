@@ -26,7 +26,6 @@ class AdminUsersController < ApplicationController
 
     @users =  paginate3("User", params[:page], hash, sort)
 
-
   end
 
   def show
