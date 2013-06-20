@@ -64,10 +64,18 @@ class AdminCheckinsController < ApplicationController
     @checkin = Checkin.find(params[:id])
   end
 
+  def ajaxbind
+    checkin = Checkin.find(params[:id])
+    ckb = CheckinBssidStat.new
+    ckb._id = checkin.bssid
+    ckb.shop_id = checkin.sid
+    ckb.save
+    render :json => {}
+  end
 
   def ajaxdel
     @checkin = Checkin.find(params[:id])
     @checkin.update_attribute(:del, true)
-    render :js => true
+    render :json => {}
   end
 end
