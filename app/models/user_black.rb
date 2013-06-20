@@ -11,8 +11,12 @@ class UserBlack
 
   index({ uid: 1, bid: 1 })
   index({ report: 1, flag: 1 })
-  
 
+
+  def self.find_buser
+    User.find_by_id(:bid)
+  end
+  
   def user
     User.find_by_id(self.uid)
   end
