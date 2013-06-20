@@ -6,7 +6,13 @@ class CheckinBssidStat
   field :shops, type:Array #{id:商家id,users:[用户id,...]}, 使用该bssid签到的商家及其用户
   field :shop_id, type:Integer #实际所属商家
   field :mobile, type:Boolean #是否是可移动的WIFI
-  
+
+  #bssid 是否绑定
+  def self.bind?(bssid)
+    return unless (ckt =CheckinBssidStat.find_by_id(bssid))
+    return ckt.shop_id
+  end
+
   def self.kx_users(arr)
     arr.map{|x| x.to_s}.to_set & $kxs
   end
