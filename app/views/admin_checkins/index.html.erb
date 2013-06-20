@@ -47,7 +47,7 @@
       <td><%= checkin.od.to_i %></td>
       <td><%= checkin.acc %></td>
       <td>
-        <%= link_to '绑定wifi', '#', :onclick => "ajaxbind($(this), '#{checkin.id}');" %>
+        <%= (link_to '绑定wifi', '#', :onclick => "ajaxbind($(this), '#{checkin.id}');") if checkin.bssid && !CheckinBssidStat.find_by_id(checkin.bssid) %>
       </td>
       <td>
         <%= link_to '删除', '#', :onclick => "ajaxdel($(this), '#{checkin.id}');" %>
@@ -67,7 +67,7 @@
   }
 
   function ajaxbind(obj, cid){
-    if(confirm("确定删除商家？"))
+    if(confirm("确定绑定wifi？"))
       $.post("/admin_checkins/ajaxbind",{id: cid}, function() {
         obj.parent().parent().hide()
       });
