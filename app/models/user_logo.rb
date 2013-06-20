@@ -22,8 +22,7 @@ class UserLogo
     else
       "http://oss.aliyuncs.com/logo/#{id}/0.jpg"
     end
-  end
-  
+  end  
 
   def user
     User.find_by_id(self.user_id)
