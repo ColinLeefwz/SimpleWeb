@@ -9,22 +9,29 @@
 .page .prv{background-position:-27px 0;}
 .page .nxt{background-position:-79px 0;}
 .page .back{background-position:-53px 0;}
+.button{float:left;width:40px;}
 </style>
 <div id="container" class="clear">
 
 <% @users.each do |user| %>
    <div class="box photo col">
-    <a id="imgt2" href="<%= UserLogo.img_url(user.head_logo_id,:t2) %>" title="<%= user._id %>"><%= image_tag(UserLogo.img_url(user.head_logo_id,:t1), :size => "120x120") if user.head_logo_id%></a>
-  </div>
+      <a id="imgt2" href="<%= UserLogo.img_url(user.head_logo_id,:t2) %>" title="<%= user._id %>"><%= image_tag(UserLogo.img_url(user.head_logo_id,:t1), :size => "120x120") if user.head_logo_id%></a>
+      <div class="button"><%= button_to "查看", "/admin_users/show?id=#{user.id}"%></div>
+      <div class="button"><%= button_to "提示", user.prompt%></div>
+      <div class="button">
+        <%= button_to(" 封杀",{}, {:onclick => "return kill($(this), {id: '#{@user_blacks_bid}', ubid: '#{@user_blacks_id}', name: '#{UserBlack.find_buser.try(:name)}'})"}) unless UserBlack.find_buser.try("forbidden?") %>
+        <%= button_to(" 解封",{}, {:onclick => "return unkill($(this), {id: '#{@user_blacks_bid}', ubid: '#{@user_blacks_id}', name: '#{UserBlack.find_buser.try(:name)}'})"}) if UserBlack.find_buser.try("forbidden?") %>
+      </div>
+   </div>
 <% end %>
   
 </div>
 
-      <div class="page clear">
+    <div class="page clear">
       <div class="pages">
-    <a id="imgt2" href="/admin_user_logos?page=2">下一页</a>
-        </div>
-    </div>
+        <a id="imgt2" href="/admin_user_logos?page=2">下一页</a>
+      </div>
+   </div>
 
 
 
@@ -73,6 +80,26 @@ $('#container').infinitescroll({
   });
   
 });
+
+  function kill(obj, param){
+    if(confirm("确定封杀么？")){
+      $.get("/admin_users/kill",param, function() {
+        str = "<input type='submit' value=' 解封\""+ param.name +"\"' onclick='return unkill($(this),"+ JSON.stringify(param) + ")'>"
+        obj.parent().replaceWith(str)
+      });
+    }
+    return false;
+  }
+
+  function unkill(obj, param){
+    if(confirm("确定解封么？")){
+      $.get("/admin_users/unkill",{id: param.id}, function() {
+        str = "<input type='submit' value=\" 封杀'" + param.name + "'\" onclick='return kill($(this), " + JSON.stringify(param) +  ")'>"
+        obj.parent().replaceWith(str)
+      });
+      return false
+    }
+  }
 
 
 </script>

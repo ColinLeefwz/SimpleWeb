@@ -100,6 +100,16 @@ class User
     self.clear_all_cache
     Xmpp.send_chat($gfuid, self.id , "您好！你的头像容易引起脸脸用户的反感，已被管理员屏蔽。请换一张头像，烦请谅解。多谢你对脸脸的支持😊")
   end
+
+  #不是真实头像,提示
+  def prompt
+    self.update_attribute(:logo_backup, head_logo_id)
+    self.head_logo_id=nil
+    self.pcount=0
+    self.save!    
+    self.clear_all_cache
+    Xmpp.send_chat($gfuid, self.id, "欢迎来到脸脸，我们建议您上传真实头像，完善资料，以方便其他人便捷及时的发现您。点击菜单栏“我的”就可以编辑您的个人资料啦~快去试试吧😊")
+  end
   
   def clear_all_cache
     self.del_my_cache
