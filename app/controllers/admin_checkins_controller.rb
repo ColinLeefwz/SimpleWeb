@@ -66,9 +66,7 @@ class AdminCheckinsController < ApplicationController
 
   def ajaxbind
     checkin = Checkin.find(params[:id])
-    return render :json => {} if CheckinBssidStat.find_by_id(checkin.bssid)
-    ckb = CheckinBssidStat.new
-    ckb._id = checkin.bssid
+    ckb = CheckinBssidStat.find(checkin.bssid)
     ckb.shop_id = checkin.sid
     ckb.ssid = checkin.ssid
     ckb.save
