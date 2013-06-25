@@ -1,0 +1,28 @@
+<h1>可信用户</h1>
+<br/>
+
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>注册时间</th>
+    <th>名称</th>
+    <th>wb_uid</th>
+    <th>性别</th>
+    <th></th>
+  </tr>
+
+  <% @kx_users.each do |ku| %>
+    <tr>
+      <td><%= link_to ku._id, "/admin_users/show?id=#{ku.id}" %></td>
+      <td><%= ku.cat.strftime("%Y-%m-%d %H:%M") %></td>
+      <td><a id="imgt2" href="<%= UserLogo.img_url(ku.user_head_logo_id,:t2) %>"><%=image_tag(UserLogo.img_url(ku.user_head_logo_id,:t1), :size => "50x50") if ku.user_head_logo_id%><%= ku.user_name %></a></td>
+      <td><%=link_to(ku.user_wb_uid.to_s, ku.user_weibo_home, :target => '_blank') %></td>
+      <td><%= ku.user_show_gender %></td>
+      <td>
+        <%= link_to '删除', "/admin_kx_users/destory?id=#{ku.id}" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
