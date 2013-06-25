@@ -105,6 +105,10 @@ class ApplicationController < ActionController::Base
     $kxs.find_index(session[:user_id].to_s) != nil
   end
 
+  def is_kx_user?(uid)
+    $redis.sismember('KxUsers', uid)
+  end
+
   def session_user
     u=User.find_by_id(session[:user_id])
     u
