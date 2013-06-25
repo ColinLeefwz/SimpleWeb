@@ -37,6 +37,17 @@ class AdminUsersController < ApplicationController
     @logos = user.user_logos
   end
 
+  def ajax_kx
+    begin
+      kxuser = KxUser.new(type: '脸脸')
+      kxuser._id = params[:id].__mongoize_object_id__
+      kxuser.save
+    rescue
+    end
+    $redis.sadd("KxUsers", kxuser._id)
+    render :nothing => true
+  end
+
   def get_info
     user = User.find_by_id(params[:id])
     render :json => {'info' => user ? "#{user.name} #{user.show_gender}" : "找不到该用户."}
