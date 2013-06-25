@@ -35,23 +35,34 @@ var userDayActive = function(days){
 
     })
     
-    db.user_follows.find({
+    db.users.find({
         _id: {
             $gt: ObjectId(idOfBeginDay),
             $lt: ObjectId(idOfEndDay)
+        }        
+    }).forEach(function(user){
+        if (1 == user.gender) {
+             db.user_follows.find(user._id).forEach(function(user_follow){
+                var muserFollowTotal = user_follow.follows.length
+                muserFollowTotal2 += muserFollowTotal
+            })          
         }
-    }).forEach(function(user_follow){
-        var muserFollowTotal = user_follow.follows.length
-        muserFollowTotal2 += muserFollowTotal
+
+        if (2 == user.gender) {
+            db.user_follows.find(user._id).forEach(function(user_follow){
+                var fuserFollowTotal = user_follow.follows.length
+                fuserFollowTotal2 += fuserFollowTotal
+            })
+        }
     })
      
     
-    db.user_day_active.insert({
+    db.user_day_actives.insert({
         _id: id,
         mulogo: muserPcountSum2/muserDayTotal,
         fulogo: fuserPcountSum2/fuserDayTotal,
         mufollow: muserFollowTotal2/muserDayTotal,
-        fufollow: muserFollowTotal2/fuserDayTotal
+        fufollow: fuserFollowTotal2/fuserDayTotal
     })
 }
 
