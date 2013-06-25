@@ -21,7 +21,8 @@
     <th>出生日期</th>	
     <th>wb_uid</th>
     <th>性别</th>
-	<th>关注数</th>
+    <th>关注数</th>
+    <th></th>
     <th></th>
   </tr>
 
@@ -33,7 +34,10 @@
       <td><%= user.birthday %></td>
       <td><%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %></td>
       <td><%= user.show_gender %></td>
-	  <td><%= user.follow_ids.count %></td>
+      <td><%= user.follow_ids.count %></td>
+      <td>
+        <%= link_to '可信', "javascript:void(0)", :onclick => "ajaxKx($(this), '#{user.id}')" if !$redis.sismember('KxUsers', user.id) %>
+      </td>
       <td>
         <%= link_to '详情', "/admin_users/show?id=#{user.id}" %>
       </td>
@@ -50,10 +54,16 @@
 
 <link rel="stylesheet" type="text/css" href="/admin/stylesheets/jquery.fancybox-1.3.4.css" />
 <script type="text/javascript">
+
+  function ajaxKx(obj, id){
+    $.get("/admin_users/ajax_kx", {id: id}, function(){ obj.replaceWith("已添加")})
+  }
+
+
   $(document).ready(function() {
-      $("a#imgt2").fancybox({
-        'titlePosition': 'inside'
-      });
+    $("a#imgt2").fancybox({
+      'titlePosition': 'inside'
+    });
   });
 
   $(function(){
