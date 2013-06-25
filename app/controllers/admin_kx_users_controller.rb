@@ -12,6 +12,7 @@ class AdminKxUsersController < ApplicationController
 
   def destory
     kx_user = KxUser.find(params[:id])
+    $redis.srem("KxUsers", kx_user.id)
     kx_user.delete
     redirect_to :action => "index"
   end
