@@ -140,6 +140,7 @@ db.shops.remove({name:"码头"})
 db.shops.remove({name:"婚庆"})
 db.shops.remove({t:4,name:/小摊/})
 db.shops.find({name:/臭/})
+db.shops.remove({name:/小卖部/})
 
 
 db.shops.find({name:/[^\-]{5,}-/})
