@@ -3,6 +3,7 @@
 class KxUser
   include Mongoid::Document
   field :type
+  field :name
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :weibo_home,:head_logo_id, :wb_uid, :show_gender, :to => :user
