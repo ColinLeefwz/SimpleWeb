@@ -17,5 +17,15 @@ class AdminKxUsersController < ApplicationController
     redirect_to :action => "index"
   end
  
+  def edit
+    @kx_user = KxUser.find(params[:id])
+  end
+  
+  def update
+    @kx_user = KxUser.find(params[:id])
+    @kx_user.update_attributes(params[:kx_user])
+    redirect_to :action => "index"
+  end
+
 end
 
