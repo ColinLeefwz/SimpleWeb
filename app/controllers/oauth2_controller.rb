@@ -215,6 +215,7 @@ class Oauth2Controller < ApplicationController
           #User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) 
           user.del_my_cache
           user = User.find(params["name"])
+          ptoken = ptoken[0,33] if ptoken[0]=="3" #个推的cid为32位
           user.update_attribute(:tk, ptoken)
         end
         render :text => "1"
