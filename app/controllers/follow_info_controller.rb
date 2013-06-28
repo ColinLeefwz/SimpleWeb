@@ -25,9 +25,12 @@ class FollowInfoController < ApplicationController
   end
   
   def friend_ids
-    who = UserFollow.find_by_id(params[:id])
-    #TODO: 排序
-    render :json =>  who.follows
+    who = User.find_by_id(params[:id])
+    if who.nil?
+      render :json => [].to_json
+      return
+    end
+    render :json => who.friend_ids.to_json
   end
 
   def friend_infos
