@@ -37,7 +37,7 @@ class User
   index({city: 1, gender:1})
   
   def follow_ids
-    $redis.zrange("Fol#{self.id}",0,-1)
+    $redis.zrange("Fol#{self.id}",0,-1).delete_if {|x| x.size==0}
   end
   
   def follows
