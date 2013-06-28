@@ -245,8 +245,8 @@ POST & \multicolumn{3}{|c|}{/coupons/use} \\
 \begin{verbatim}
 “用户密码”+《状态码》+token
 
-状态码为：1代表ios开发设备，2代表实际的发布设备。
-token是一个64位的字符串。
+状态码为：1代表ios开发设备，2代表实际的ios发布设备, 3代表android个推的clientid。
+对于ios设备，token是一个64位的字符串。
 
 比如某用户的密码是“c53b2f16a24c61d9”，
 token是“ea6e4f05b48f4a057816956e567c6feacf14ee28cbbbab67993e263c3dfa2c27”，
@@ -260,6 +260,7 @@ token是“ea6e4f05b48f4a057816956e567c6feacf14ee28cbbbab67993e263c3dfa2c27”�
 \subsection{退出时，报告设备的Push消息token}
 
 用户退出的API接口新增pushtoken参数，以取消Push消息token绑定。
+如果是个推，退出时要接触和个推的绑定。
 
 \subsection{Push消息的发送}
 当有离线消息产生时，xmpp服务器获得用户的状态码以决定给那个Apple Push服务器发消息，以及获得和该用户绑定的token。一个用户只能绑定一个token。
