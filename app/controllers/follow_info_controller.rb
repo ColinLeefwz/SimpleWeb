@@ -30,7 +30,7 @@ class FollowInfoController < ApplicationController
       render :json => [].to_json
       return
     end
-    render :json => who.friend_ids.to_json
+    render :json => who.follow_ids.to_json
   end
 
   def friend_infos
