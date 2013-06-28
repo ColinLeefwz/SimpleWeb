@@ -4,17 +4,17 @@ class AroundmeController < ApplicationController
   before_filter :user_login_filter, :only => [:hot_users, :shops]
   caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
   
-#  $qb_seller = [
-#    "517ccc0ac90d8b49ef000033", #兵临城下
-#    "516bc8cbc90d8b5663000019", #兵临城下
-#    "50dc0d25c90d8bc42a000098", #若博斯
-#    "519084ddc90d8bc2ee00002c", #蓶ーDéィ衣賴
-#    "50fde347c90d8b8b7f0000d1", #muak-婷
-#    "5170d235c90d8b07e8000052", #游源土人
-#    "50f8e2ebc90d8bb4260000aa", #大安
-#    "519987b0c90d8bdb32000072", #油条
-#    "512b60bec90d8b401e000135", #3+
-#  ]
+  #  $qb_seller = [
+  #    "517ccc0ac90d8b49ef000033", #兵临城下
+  #    "516bc8cbc90d8b5663000019", #兵临城下
+  #    "50dc0d25c90d8bc42a000098", #若博斯
+  #    "519084ddc90d8bc2ee00002c", #蓶ーDéィ衣賴
+  #    "50fde347c90d8b8b7f0000d1", #muak-婷
+  #    "5170d235c90d8b07e8000052", #游源土人
+  #    "50f8e2ebc90d8bb4260000aa", #大安
+  #    "519987b0c90d8bdb32000072", #油条
+  #    "512b60bec90d8b401e000135", #3+
+  #  ]
   
   def shops
     lo = [params[:lat].to_f,params[:lng].to_f]
@@ -42,7 +42,7 @@ class AroundmeController < ApplicationController
       hash.merge!(ghash)
       hash
     end
-    city = get_city(arr[0])
+    city = get_city(arr[0], lo)
     coupons = $redis.smembers("ACS#{city}") 
     if coupons
       ret.each_with_index do |xx,i|
@@ -202,7 +202,7 @@ class AroundmeController < ApplicationController
     #[30.24317747, 120.1573636]  [30.24311447, 120.1620166] 
   end
   
-  def get_city(shop)
+  def get_city(shop, lo)
     city = shop["city"]
     city = Shop.get_city(lo)  if city.nil? || city==""
   end
