@@ -216,6 +216,8 @@ wb_uid:1884834632
 微博登陆的话：增加wb_token，wb_expire
 qq登陆的话：增加qq_token，qq_expire
 
+[2013-06-28]  新增wb_hidden,  1代表对他人隐藏自己的微博，2代表解除微博绑定.
+
 \end{verbatim}
 \end{figure}
 
@@ -247,6 +249,8 @@ POST & \multicolumn{3}{|c|}{/user\_info/set} \\
  hobby  & 字符串 & 选填 &  爱好. 长度小于255\\
  \hline
  invisible  & 数字 & 选填 &  0：不隐身,1：对黑名单隐身,2：陌生人隐身, 3：全部隐身\\
+ \hline
+ wb_hidden  & 数字 & 选填 &  0：不隐藏微博, 1代表对他人隐藏自己的微博\\ 
 \hline
 \end{tabular}
    \end{center}
