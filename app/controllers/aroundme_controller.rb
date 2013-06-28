@@ -108,6 +108,7 @@ class AroundmeController < ApplicationController
     lo = [params[:lat].to_f , params[:lng].to_f]
     city = Shop.get_city(lo)
     sex = session_user.gender
+    sex = (sex==2? 1:2) if params[:gender].to_i==1
     users = hot_users_cache(city,sex,skip,pcount)
     ret = []
     users.each do |u|
