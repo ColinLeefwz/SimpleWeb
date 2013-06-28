@@ -205,6 +205,7 @@ class AroundmeController < ApplicationController
   def get_city(shop, lo)
     city = shop["city"]
     city = Shop.get_city(lo)  if city.nil? || city==""
+    city
   end
   
 end
