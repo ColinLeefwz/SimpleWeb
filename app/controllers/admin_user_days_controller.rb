@@ -21,11 +21,13 @@ class AdminUserDaysController < ApplicationController
   end
 
   def tojson
-    @user_days = UserDay.where(:_id.gte => "1980-1-1")
+    @user_days = UserDay.where(:_id.gte => "1990-01-01")
     respond_to do |format|
-      format.html
-      format.json  { render :json => @user_days }
+      format.json
     end
+  end
+ 
+  def charts
   end
 
 
