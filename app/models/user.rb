@@ -180,7 +180,7 @@ class User
   
   def safe_output(uid=nil)
     hash = self.attributes.slice("name", "signature", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
-    hash.merge!({"wb_uid" => self.wb_uid}) if self.wb_uid && self.wb_hidden.nil?
+    hash.merge!({"wb_uid" => self.wb_uid}) if self.wb_uid && (self.wb_hidden.nil? || self.wb_hidden==0)
     hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
@@ -194,7 +194,7 @@ class User
     hash.delete("password")
     hash.delete("follows")
     hash.delete("qq")
-    hash.delete("wb_uid") if self.wb_hidden    
+    hash.delete("wb_uid") if self.wb_hidden && self.wb_hidden>0
     hash.merge!( head_logo_hash).merge!( relation_hash(user_id) )
     hash.merge!(last_location(user_id))
   end
