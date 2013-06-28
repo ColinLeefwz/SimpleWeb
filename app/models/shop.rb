@@ -344,8 +344,16 @@ class Shop
   def self.get_city(lo)
     hash = "%.2f%.1f" %  lo
     field = ("%.2f" %  lo[1])[-1..-1]
-    $redis.hget(hash,field)
+    city = $redis.hget(hash,field)
+    city = get_ex_city(lo) if city.nil?
+    city
   end
+  
+  def self.get_ex_city(lo)
+    key = "%.1f%.1f" 
+    $redis.get(key)
+  end
+  
     
   def self.get_city_mongo(loc)
     shop = Shop.only(:city).where({lo:{'$near' => loc,'$maxDistance' => 0.1}, city:{'$exists' => true}}).first
