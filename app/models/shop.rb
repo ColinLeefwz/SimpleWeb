@@ -350,7 +350,7 @@ class Shop
   end
   
   def self.get_ex_city(lo)
-    key = "%.1f%.1f" 
+    key = "%.1f%.1f" % lo
     $redis.get(key)
   end
   

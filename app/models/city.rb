@@ -13,8 +13,14 @@ class City
   end
   
   def self.city_name(code)
+    if code =~ /^x/
+      o = Oversea.where({country_code: code}).limit(1).first
+      return '海外' if o.nil?
+      return o.country
+    end
+    
     city = City.where({code:code}).first
-    return "海外" if city.nil?
+    return '海外' if city.nil?
     city.name
   end
   
