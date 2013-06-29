@@ -35,6 +35,10 @@ class Shop
   
   field :i, type: Boolean #用户添加的地点 已处理标记
   field :utype #用户添加的类型
+  
+  field :sub_coupon_by_share, type: Boolean #进入大地点收到资地点签到优惠券的触发条件
+  #默认nil 代表签到即可获得，true代表分享后获得，false代表不发送子地点优惠券。
+  
 
   index({lo: "2d"})
   index({del: 1},{ sparse: true })
@@ -261,14 +265,20 @@ class Shop
   def send_coupon(user_id)
     coupons = []
     coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
-    sub_shops.each do |shop|
-      coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(user_id) }
-    end
+    coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
     coupons.each{|coupon| coupon.send_coupon(user_id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
     return "收到#{coupons.count}张优惠券: #{name}" if ENV["RAILS_ENV"] != "production"
     Resque.enqueue(XmppNotice, self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
+  end
+  
+  def allow_sub_coupons(user_id)
+    coupons = []
+    sub_shops.each do |shop|
+      coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(user_id) }
+    end
+    coupons
   end
   
   def latest_coupons(n=1)
