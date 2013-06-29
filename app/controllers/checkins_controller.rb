@@ -120,7 +120,7 @@ class CheckinsController < ApplicationController
       new_shop_welcome(shop,checkin)
       return checkin
     end
-    send_coupon_msg = shop.send_coupon(session[:user_id]) if params[:shop_id]!=21830231 #延安路•紫微大街
+    send_coupon_msg = shop.send_coupon(session[:user_id])
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     if checkin.add_to_redis #当天首次签到
       checkin.save!
