@@ -12,6 +12,19 @@ rescue Exception => e
   puts e
 end
 
+begin
+  Oversea.where({country_code:  {"$exists" => true}}).each do |oversea|
+    lo = oversea.lo
+    hash = "%.0f,%.0f" %  lo
+    #puts "#{lo}, #{hash}"
+    $redis.set("oversea#{hash}",oversea.country_code)
+  end
+rescue Exception => e
+  puts idx
+  puts e
+end
+
+
 
 
 

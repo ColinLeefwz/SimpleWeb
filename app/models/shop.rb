@@ -362,6 +362,10 @@ class Shop
   def self.get_ex_city(lo)
     key = "%.1f%.1f" % lo
     key = "oversea#{key}"
+    city = $redis.get(key)
+    return city if city
+    key = "%.0f,%.0f" % lo
+    key = "oversea#{key}"
     $redis.get(key)
   end
   
