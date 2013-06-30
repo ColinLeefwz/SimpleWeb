@@ -32,7 +32,7 @@ class Lord
     self.del_old_lord_redis
   end
   
-  def allow_lord?(sid,uid,creator)
+  def self.allow_lord?(sid,uid,creator)
     return true if creator
     today_sid = Rails.cache.read("JOIN-LORD#{uid}")
     return true unless today_sid
