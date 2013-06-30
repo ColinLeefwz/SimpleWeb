@@ -211,7 +211,7 @@ class Oauth2Controller < ApplicationController
       user = User.find_primary(params["name"]) if user.nil?
       if user.password == pass
 	      logger.warn "token:#{ptoken}"
-        if ptoken && (user.tk.nil? || user.tk[0] != ptoken[0])
+        if ptoken && (user.tk.nil? || user.tk != ptoken)
           #User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) 
           user.del_my_cache
           user = User.find(params["name"])
