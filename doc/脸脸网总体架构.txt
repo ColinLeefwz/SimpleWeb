@@ -88,7 +88,7 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 16. 每个用户的黑名单集合,“BLACK#{uid}”, 类型为zset, 排序值为加入的顺序。
 17. 照片的赞,“Like#{photo.id}”, 类型为zset, 排序值为Time.now.to_i的顺序。
 18. 用户加入的群组的集合，“GROUP#{uid}”,类型为set。
-19. 海外经纬度到国家的映射，"oversea#{xx.x}#{xx.x}",见gen_gps_oversea.rb
+19. 海外经纬度到国家的映射，"oversea#{xx},#{xx}",见gen_gps_oversea.rb
 20. 可信用户的集合 "KxUsers",类型set, 见 KxUser.init_kx_users_redis
 
 
