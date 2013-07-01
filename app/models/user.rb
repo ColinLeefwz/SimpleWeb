@@ -2,6 +2,7 @@
 
 class User 
   include Mongoid::Document
+  field :phone
   field :wb_uid #微博uid
   field :wb_v, type:Boolean #是否是微博认证用户
   field :wb_vs # 微博认证说明
@@ -129,6 +130,12 @@ class User
     hash.delete("_id")
     hash.delete("qq")
     hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
+    hash
+  end
+  
+  def output_self
+    hash = self.attr_with_id.merge!(self.head_logo_hash)
+    hash.delete("wb_uid") if self.wb_hidden  == 2  
     hash
   end
 

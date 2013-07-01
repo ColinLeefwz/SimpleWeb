@@ -94,9 +94,7 @@ class UserInfoController < ApplicationController
   
   def get_self
     user = session_user_no_cache
-    hash = user.attr_with_id.merge!(user.head_logo_hash)
-    hash.delete("wb_uid") if user.wb_hidden  == 2  
-    render :json => hash.to_json
+    render :json => user.output_self.to_json
   end
 
   def set
