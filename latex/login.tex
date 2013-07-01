@@ -211,12 +211,109 @@ POST & \multicolumn{3}{|c|}{/oauth2/unbind\_sina} \\
 解除成功返回{unbind: true}，否则返回error信息。
 
 
+
+
+\subsection{手机号码获取验证码}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/init} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+调用成功返回{"code":验证码}，如果有错误，错误信息保存在error中。
+同时验证码通过短信的方式发送到使用者的手机。
+用户注册输入验证码时，客户端要先判断验证码是否正确。
+
+
+
+\subsection{手机号码注册}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/register} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+ code  & 字符串 & 必须 &  验证码\\
+\hline
+ password  & 字符串 & 必须 &  用户设置的密码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+调用成功返回生成的用户id，如果有错误，错误信息保存在error中。
+
+
+
+\subsection{手机号码登录}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/login} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+ password  & 字符串 & 必须 &  用户设置的密码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+调用成功返回用户的信息，格式和user\_info\/get\_self相同。如果有错误，错误信息保存在error中。
+
+
+
+\subsection{绑定手机号码}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/bind} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+ code  & 字符串 & 必须 &  验证码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+绑定手机号码要先调用phone\/init获取验证码。
+调用成功返回{bind: true}，如果有错误，错误信息保存在error中。
+
+
+
 \subsection{登录与绑定的状态判断}
 目前，脸脸帐号登录相关方有四个：脸脸web服务器、脸脸xmpp服务器，新浪微博，QQ。
 
 \begin{enumerate}
 
-\item 当访问web接口时，如果返回的error信息是"not login"，此时代表要登录脸脸web服务器。但是脸脸不提供独立的帐户体系，要登陆脸脸Web服务器，必须登陆新浪微博或者QQ中的一个。当脸脸登录时，如果客户端缓存有未过期的新浪微博或者QQ认证信息，要丢弃。Web服务器认证信息保存在\_session\_id中。\_session\_id默认没有过期时间。
+\item 当访问web接口时，如果返回的error信息是"not login"，此时代表要登录脸脸web服务器。但是脸脸不提供独立的帐户体系，要登陆脸脸Web服务器，必须登陆新浪微博或者QQ或者手机号码中的一个。当脸脸登录时，如果客户端缓存有未过期的新浪微博或者QQ认证信息，要丢弃。Web服务器认证信息保存在\_session\_id中。\_session\_id默认没有过期时间。
 \item 如果脸脸\_session\_id包含登录信息（没返回not login）：
 \begin{enumerate}
 
