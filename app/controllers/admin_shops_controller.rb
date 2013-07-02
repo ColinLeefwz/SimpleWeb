@@ -148,7 +148,8 @@ class AdminShopsController < ApplicationController
     end
 
     unless params[:addr].blank?
-      hash.merge!({addr: /#{params[:addr]}/})
+      ids = ShopInfo.where({addr: /#{params[:addr]}/}).only(:_id).map{|m| m.id}
+      hash.merge!(_id: {"$in" => ids})
     end
 
     if hash.empty?
