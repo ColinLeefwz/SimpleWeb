@@ -10,20 +10,20 @@ class PhoneController < ApplicationController
       # send sms 
       code = "123456"
       session[:phone_code] = code
-      render :json => {"code":code}.to_json
+      render :json => {"code"=>code}.to_json
     else
-      render :json => {"error":"手机号码不可用或已被注册"}.to_json
+      render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
     end
   end
   
   def register
     if params[:code] != session[:phone_code]
-      render :json => {"error":"验证码错误"}.to_json
+      render :json => {"error"=>"验证码错误"}.to_json
       return
     end
     user = User.where({phone: params[:phone]}).first
     if user
-      render :json => {"error":"手机号码不可用或已被注册"}.to_json
+      render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
       return      
     end
     user = User.new
@@ -41,8 +41,8 @@ class PhoneController < ApplicationController
   
   def login
     user = User.where({phone: params[:phone]}).first
-    if user.nil? || || user.password.nil? || user.password != params[:password]
-      render :json => {"error":"手机号码或者密码不正确"}.to_json
+    if user.nil?  user.password.nil? || user.password != params[:password]
+      render :json => {"error"=>"手机号码或者密码不正确"}.to_json
       return      
     end
     session[:user_id] = user.id
@@ -52,12 +52,12 @@ class PhoneController < ApplicationController
   
   def bind
     if params[:code] != session[:phone_code]
-      render :json => {"error":"验证码错误"}.to_json
+      render :json => {"error"=>"验证码错误"}.to_json
       return
     end
     user = User.where({phone: params[:phone]}).first
     if user
-      render :json => {"error":"手机号码不可用或已被注册"}.to_json
+      render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
       return      
     end
 #    if session_user_no_cache.phone
@@ -70,7 +70,7 @@ class PhoneController < ApplicationController
   end
   
   def unbind
-    render :json => {"error":"无法解除手机号码的绑定"}.to_json
+    render :json => {"error"=>"无法解除手机号码的绑定"}.to_json
   end
   
   def save_device_info(uid)
