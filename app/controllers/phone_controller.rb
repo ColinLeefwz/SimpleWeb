@@ -76,6 +76,7 @@ class PhoneController < ApplicationController
   def save_device_info(uid)
     ud = session[:user_dev]
     ud.save_to(uid) if ud
+    session[:user_dev] = nil
   end
 
   
