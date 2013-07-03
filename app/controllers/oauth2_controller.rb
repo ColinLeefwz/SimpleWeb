@@ -253,7 +253,7 @@ class Oauth2Controller < ApplicationController
   def do_login_wb_done(user,token,expires_in,data)
     $redis.set("wbtoken#{user.id}",token)
     $redis.set("wbexpire#{user.id}",expires_in)
-    user.unset(:wb_hidden) if user.wb_hidden
+    user.unset(:wb_hidden) if user.wb_hidden==2
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
