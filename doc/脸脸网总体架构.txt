@@ -92,6 +92,16 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 20. 可信用户的集合 "KxUsers",类型set, 见 KxUser.init_kx_users_redis
 
 
+其中，保存在session中的数据有：
+ 
+1. user_id, 当前登录用户的id
+2. shop_id, 当前登录用户的id
+3. admin_id, 当前登录管理员的id
+4. o_uri_path, 当在网站上点击需要登录的链接时，保存此链接并跳转到登录界面。
+5. new_user_flag, 是否是新用户的首次登录, 首次签到后删除。
+6. os, 当前用户os类型
+7. user_dev，用户首次使用脸脸时，暂存的设备信息。当用户成功注册后删除。
+
 
 ###Memcache
 
