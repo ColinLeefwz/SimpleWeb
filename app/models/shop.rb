@@ -76,15 +76,15 @@ class Shop
   end
   
   def top4_photos
-    Photo.where({room: self.id.to_i.to_s}).sort({updated_at: -1}).limit(4).to_a
+    Photo.where({room: self.id.to_i.to_s, hide: nil}).sort({updated_at: -1}).limit(4).to_a
   end
   
   def photos
-    Photo.where({room: self.id.to_i.to_s})
+    Photo.where({room: self.id.to_i.to_s, hide: nil})
   end
   
   def photo_count
-    Photo.where({room: self.id.to_i.to_s}).count
+    Photo.where({room: self.id.to_i.to_s, hide: nil}).count
   end
 
   def user
