@@ -233,7 +233,7 @@ class Oauth2Controller < ApplicationController
       fu = User.find_by_id(params["from"])
     end
     tu = User.find_by_id(params["to"]) #TODO: 商家的Push消息提醒
-    if fu && tu && tu.tk
+    if fu && tu && tu.tk && !tu.no_push
       render :text => "#{tu.tk}#{fu.name}"
     else
       render :text => ""
