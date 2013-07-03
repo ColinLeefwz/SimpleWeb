@@ -7,7 +7,6 @@ class InitController < ApplicationController
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
-    session[:ver]=params[:ver]
     session[:os] = UserDevice.os_type(params[:os])
     session[:user_dev] = UserDevice.init(params[:mac],params[:os],params[:model],params[:ver],
                                           params[:screen_w],params[:screen_h])
@@ -22,7 +21,7 @@ class InitController < ApplicationController
       xmpp = $xmpp_ip
     end
     if session[:os] == 1
-      ver = android_version
+      ver = android_version.to_f
     else
       ver = 2.2
     end

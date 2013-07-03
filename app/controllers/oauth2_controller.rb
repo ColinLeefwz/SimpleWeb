@@ -247,15 +247,13 @@ class Oauth2Controller < ApplicationController
     $redis.del("qqtoken#{session[:user_id]}")
     $redis.del("wbexpire#{session[:user_id]}")
     $redis.del("qqexpire#{session[:user_id]}")
-    ver = session[:ver]
     reset_session
-    session[:ver]=ver
   end
   
   def do_login_wb_done(user,token,expires_in,data)
     $redis.set("wbtoken#{user.id}",token)
     $redis.set("wbexpire#{user.id}",expires_in)
-    user.unset(:wb_hidden) if user.wb_hidden
+    user.unset(:wb_hidden) if user.wb_hidden==2
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
     data.merge!( user.head_logo_hash  )
 	  render :json => data.to_json
@@ -266,7 +264,8 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "你已经绑定了另外一个新浪微博帐号"}.to_json
       return
     end
-    if User.where({wb_uid:wb_uid}).count>0
+    u = User.where({wb_uid:wb_uid}).first
+    if u && u.id != session[:user_id]
       render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
       return
     end
@@ -316,7 +315,8 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "已经绑定了qq帐号"}.to_json
       return
     end
-    if User.where({qq:openid}).count>0
+    u = User.where({qq:openid}).first
+    if u && u.id != sessioin[:user_id]
       render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
       return
     end
@@ -353,6 +353,7 @@ class Oauth2Controller < ApplicationController
   def save_device_info(uid)
     ud = session[:user_dev]
     ud.save_to(uid) if ud
+    session[:user_dev] = nil
   end
     
   def change_auto_user(user)
