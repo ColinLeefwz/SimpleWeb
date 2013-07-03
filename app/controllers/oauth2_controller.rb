@@ -247,9 +247,7 @@ class Oauth2Controller < ApplicationController
     $redis.del("qqtoken#{session[:user_id]}")
     $redis.del("wbexpire#{session[:user_id]}")
     $redis.del("qqexpire#{session[:user_id]}")
-    ver = session[:ver]
     reset_session
-    session[:ver]=ver
   end
   
   def do_login_wb_done(user,token,expires_in,data)
@@ -353,6 +351,7 @@ class Oauth2Controller < ApplicationController
   def save_device_info(uid)
     ud = session[:user_dev]
     ud.save_to(uid) if ud
+    session[:user_dev] = nil
   end
     
   def change_auto_user(user)
