@@ -8,8 +8,15 @@ class InitController < ApplicationController
       return
     end
     session[:os] = UserDevice.os_type(params[:os])
-    session[:user_dev] = UserDevice.init(params[:mac],params[:os],params[:model],params[:ver],
-                                          params[:screen_w],params[:screen_h])
+    ver = params[:ver]
+    ver_arr = ver.split(".")
+    ver = ver_arr[0..2].inject {|sum,x| sum+"."+x}  if ver_arr.size>3 # "2.1.0.2.1.0" -> "2.1.0"
+    if session[:user_id].nil?
+      session[:user_dev] = UserDevice.init(params[:mac],params[:os],params[:model],
+          ver,params[:screen_w],params[:screen_h]) 
+    else
+      UserDevice.update_redis(session[:user_id],session[:os],ver)
+    end
     if "502e6303421aa918ba000001" == session[:user_id].to_s
       ip = $web_ips[2]
     else
