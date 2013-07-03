@@ -8,9 +8,6 @@ class UserDevice
 
   def self.init(mac,os,model,ver,w=nil,h=nil)
     ud = UserDevice.new
-    ver_arr = ver.split(".")
-    # "2.1.0.2.1.0"  -> "2.1.0"
-    ver = ver_arr[0..2].inject {|sum,x| sum+"."+x}  if ver_arr.size>3
     if w
       ud.ds = [ [mac,os,model,ver,w,h] ]
     else
