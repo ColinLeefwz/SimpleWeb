@@ -264,7 +264,8 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "你已经绑定了另外一个新浪微博帐号"}.to_json
       return
     end
-    if User.where({wb_uid:wb_uid}).count>0
+    u = User.where({wb_uid:wb_uid}).first
+    if u && u.id != session[:user_id]
       render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
       return
     end
@@ -314,7 +315,8 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "已经绑定了qq帐号"}.to_json
       return
     end
-    if User.where({qq:openid}).count>0
+    u = User.where({qq:openid}).first
+    if u && u.id != sessioin[:user_id]
       render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
       return
     end
