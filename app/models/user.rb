@@ -27,6 +27,7 @@ class User
   field :qq_hidden, type:Boolean #true代表该qq被解除绑定
 
   field :tk  #Push消息的token
+  field :no_push, type:Boolean #是否接收推送通知
   field :city
     
   #no_wb_logo: 该用户没有设置新浪微博头像

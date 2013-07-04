@@ -2,53 +2,6 @@
 
 \section{用户基本信息}
 
-\subsection{获得用户信息}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-GET & \multicolumn{3}{|c|}{/user\_info/get} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
- id  & 整数 & 必须 &  用户id\\
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/user_info/get?id=1
-返回值：
-
-{
-"name":null,
-wb_uid:1884834632
-"gender":null,
-"logo":"/system/imgs/1/original/clojure.png?1339398140",
-"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
-"birthday":null,
-"friend":true,
-"follower":false,
-"signature":"","job":null,"jobtype":null,"hobby":"Weiqi, go",
-"last": "1天以前 顺旺基(益乐路店)" 
-"id":1
-}
-
-[2012－8－8] 新增签名、职业、爱好等字段。
-
-[2013－5－21] 最后位置信息和关系信息都单独提供一个接口，以后这个接口将会取消，获得基本信息调用user\_info/basic接口。
-
-\end{verbatim}
-\end{figure}
-
-
 
 \subsection{获得用户基本信息}
 
@@ -251,6 +204,8 @@ POST & \multicolumn{3}{|c|}{/user\_info/set} \\
  invisible  & 数字 & 选填 &  0：不隐身,1：对黑名单隐身,2：陌生人隐身, 3：全部隐身\\
  \hline
  wb\_hidden  & 数字 & 选填 &  0：不隐藏微博, 1代表对他人隐藏自己的微博\\ 
+\hline
+ no\_push  & 数字 & 选填 &  0：默认可以push, 1代表不接收push消息提醒。只有android客户端需要设置这个参数\\ 
 \hline
 \end{tabular}
    \end{center}
