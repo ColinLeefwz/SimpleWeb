@@ -1,6 +1,6 @@
 # encoding: utf-8
 module ControllerName
-  Menu = ['用户管理','商家管理','活动管理','签到管理','系统权限' ,'崩溃管理']
+  Menu = ['用户管理','商家管理','活动管理','签到管理','系统权限' ,'客户端管理']
   Right= {
     0=>{"admin_users"=>"用户列表", "admin_kx_users"=>"可信用户", "admin_user_logos" => '头像审核', "admin_blacks"=>"举报用户", "admin_user_days"=>"每日新增",
       "user_device_stats"=>"每日注册机型统计", "admin_user_city_days"=>"每日城市分布","admin_user_actives" => "用户活跃度"},
@@ -14,5 +14,5 @@ module ControllerName
       "user_checkin_stats"=>"用户签到统计", "ip_checkin_stats"=>"ip签到统计", "shop_checkin_alts"=>"签到高度统计",
       "checkin_loc_accs"=>"经纬度误差统计", "checkin_user_many"=>"多次签到"},
     4=>{"admin_login"=>"登录", "admins"=>"管理员管理", "admin_rights"=>"权限管理"},
-    5=>{"admin_crash_logs"=>"安卓崩溃管理"}}
+    5=>{"admin_crash_logs"=>"安卓崩溃管理","admin_versions" => '版本管理'}}
 end

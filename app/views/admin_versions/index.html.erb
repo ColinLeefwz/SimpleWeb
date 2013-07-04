@@ -1,0 +1,44 @@
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script> 
+<h1>版本管理</h1>
+<table border="1">
+  <tr>
+    <th>版本号</th>
+    <th>功能描述</th>
+    <th>强制升级</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @versions.each do |version| %>
+    <tr>
+      <td><%= version.id %></td>
+      <td><%= version.desc %></td>
+      <td><%= version.show_upgrage %></td>
+      <td>
+        <%= link_to '详情', "/admin_versions/show?id=#{version.id}" %>
+      </td>
+      <td>
+        <%= link_to '编辑', "/admin_versions/edit?id=#{version.id}" %>
+      </td>
+      <td>
+        <%= link_to '删除', "javascript:void(0)", :onclick => "ajaxDel($(this), '#{version.id}')" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+<%= link_to '新建', '/admin_versions/new' %>
+
+<%= generate_paginate3.html_safe %>
+<br/><br/>
+
+<script>
+  function ajaxDel(obj, id){
+    $.get("/admin_versions/delete", {id: id}, function(){
+      obj.parent().parent().remove()
+    })
+  }
+
+
+</script>
