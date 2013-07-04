@@ -9,6 +9,12 @@ class PhotoNotice
     uid = user.id
     user.fans.each do |u|
       next if u.id.to_s == $gfuid
+      if UserDevice.user_ver_redis(u.id).to_f>=2.3
+        str = "[img:#{pid}]#{photo.user.name}在#{photo.shop.name}分享了一张图片"
+        str += ",#{photo.desc}" unless photo.desc.nil?
+        Resque.enqueue(XmppMsg, user.id, u.id, str, "FEED#{$uuid.generate}", " NOLOG='1' NOPUSH='1' ")
+        next
+      end
       str = ": #{photo.user.name}在#{photo.shop.name}分享了一张图片"
       str += ",#{photo.desc}" unless photo.desc.nil?
       if Rails.cache.read("PhotoFan#{uid}")

@@ -112,6 +112,7 @@ class UserInfoController < ApplicationController
       hash[:jobtype] = params[:jobtype]  unless params[:jobtype].nil?
       hash[:hobby] = params[:hobby]  unless params[:hobby].nil?
       hash[:wb_hidden] = params[:wb_hidden].to_i  unless params[:wb_hidden].nil?
+      hash[:no_push] = (params[:no_push]=="1")  unless params[:no_push].nil?
       if user.update_attributes! hash
         Rails.cache.delete "UI#{user.id}"    
         render :json => user.attributes.to_json
