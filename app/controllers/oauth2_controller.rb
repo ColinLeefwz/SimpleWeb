@@ -278,10 +278,14 @@ class Oauth2Controller < ApplicationController
         render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
         return
       end
-      session_user_no_cache.update_attribute(:wb_uid, wb_uid)
+      user.update_attribute(:wb_uid, wb_uid)
+      sina_info = SinaUser.get_user_info(wb_uid,token)
+      if sina_info && sina_info["screen_name"]
+        user.update_attribute(:wb_name, sina_info["screen_name"])
+      end
       do_login_wb_done(session_user_no_cache,token,expires_in,data)
     end
-  end  
+  end
     
   def bind_sina2(uid,token,expires_in,data)
     if session_user_no_cache.wb_uid != uid
@@ -335,12 +339,14 @@ class Oauth2Controller < ApplicationController
       end
     else
       u = User.where({qq:openid}).first
-      if u && u.id != sessioin[:user_id]
+      if u && u.id != session[:user_id]
         render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
         return
       end
       #TODO: 调用https://graph.qq.com/oauth2.0/me?access_token= 来判断openid的真实性。
       session_user_no_cache.update_attribute(:qq, openid)
+      info = get_qq_user_info(openid,token)
+      user.update_attribute(:qq_name,info["nickname"]) if info && info["ret"]==0
       do_login_qq_done(session_user_no_cache,token,expires_in,data)
     end
   end
@@ -411,15 +417,11 @@ class Oauth2Controller < ApplicationController
   end
 
   def gen_new_user_qq(openid,token)
-    info = nil
-    begin
-      info = RestClient.get "https://graph.qq.com/user/get_simple_userinfo?access_token=#{token}&oauth_consumer_key=#{$qq_api_key}&openid=#{openid}"
-    rescue Exception => e
-      puts e.backtrace
-      render :json => {error: e.to_s}.to_json
+    info = get_qq_user_info(openid,token)
+    if info.nil?
+      render :json => {error: "未知错误，请重试！"}.to_json
       return nil
     end
-    info = ActiveSupport::JSON.decode(info)
     if info["ret"]!=0
       render :json => {error: info["ret"].to_s+","+info["msg"] }.to_json
       return nil
@@ -434,5 +436,14 @@ class Oauth2Controller < ApplicationController
     user.save!
     user
   end  
+  
+  def get_qq_user_info(openid,token)
+    begin
+      info = RestClient.get "https://graph.qq.com/user/get_simple_userinfo?access_token=#{token}&oauth_consumer_key=#{$qq_api_key}&openid=#{openid}"
+      return ActiveSupport::JSON.decode(info)
+    rescue Exception => e
+      return nil
+    end
+  end
   
 end
