@@ -10,7 +10,7 @@
     <tr>
       <td><%=Time.at(gchat[2]).strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%=link_to gchat[0], "/admin_users/show?id=#{gchat[0]}" %><%= User.find(gchat[0]).name %></td>
-      <td><%=gchat_img(gchat[1]).html_safe %></td>
+      <td><%=to_emoji gchat_img(gchat[1]) %></td>
     </tr>
 
   <% end %>
