@@ -12,7 +12,7 @@
       <td><%=Time.at(chat[3]).strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%=link_to chat[0], "/admin_users/show?id=#{chat[0]}" %><%= User.find_by_id(chat[0]).try(:name) %></td>
       <td><%=link_to chat[1], "/admin_users/show?id=#{chat[1]}" %><%= User.find_by_id(chat[1]).try(:name) %></td>
-      <td><%=to_emoji chat_img(chat[2]).html_safe %></td>
+      <td><%=to_emoji chat_img(chat[2]) %></td>
     </tr>
 
   <% end %>
