@@ -241,7 +241,10 @@ class PhotoTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal data, {"ok"=> photo.id.to_s}
     assert_equal photo.reload.com.count, 1
-    assert_equal photo.com.first, second_re.merge("hide" => true)
+    fcom = photo.reload.com.first
+    fcom['t'] = fcom['t'].localtime.to_s
+    fcom['id'] = fcom['id'].to_s
+    assert_equal fcom, second_re.merge("hide" => true)
 
 
   end
