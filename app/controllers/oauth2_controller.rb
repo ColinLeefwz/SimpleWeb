@@ -259,8 +259,9 @@ class Oauth2Controller < ApplicationController
   end
 
   def bind_sina(wb_uid,token,expires_in,data)
-    if session_user_no_cache.wb_uid
-      if session_user_no_cache.wb_uid != wb_uid
+    user = session_user_no_cache
+    if user.wb_uid
+      if user.wb_uid != wb_uid
         render :json => {error: "绑定新浪微博帐号失败"}.to_json
         return
       else
@@ -269,7 +270,7 @@ class Oauth2Controller < ApplicationController
         else
           logger.error("#{session[:user_id]} 重复绑定wb：#{wb_uid}")
         end
-        do_login_wb_done(session_user_no_cache,token,expires_in,data)
+        do_login_wb_done(user,token,expires_in,data)
       end
     else
       u = User.where({wb_uid:wb_uid}).first
@@ -319,8 +320,9 @@ class Oauth2Controller < ApplicationController
   end
   
   def bind_qq(openid,token,expires_in,data)
-    if session_user_no_cache.qq
-      if session_user_no_cache.qq != openid
+    user = session_user_no_cache
+    if user.qq
+      if user.qq != openid
         render :json => {error: "绑定qq帐号失败"}.to_json
         return
       else
@@ -329,7 +331,7 @@ class Oauth2Controller < ApplicationController
         else
           logger.error("#{session[:user_id]} 重复绑定qq：#{openid}")
         end
-        do_login_qq_done(session_user_no_cache,token,expires_in,data)
+        do_login_qq_done(user,token,expires_in,data)
       end
     else
       u = User.where({qq:openid}).first
