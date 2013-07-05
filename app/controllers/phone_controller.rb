@@ -28,7 +28,7 @@ class PhoneController < ApplicationController
     end
     user = User.new
     user.phone = params[:phone]
-    user.password = params[:password]
+    user.password = slat_hash_pass(params[:password])
     user.name = user.phone
     user.save!
     data = {:id => user.id, :password => user.password, :phone => user.phone}
@@ -41,7 +41,7 @@ class PhoneController < ApplicationController
   
   def login
     user = User.where({phone: params[:phone]}).first
-    if user.nil?  user.password.nil? || user.password != params[:password]
+    if user.nil?  user.password.nil? || user.password != slat_hash_pass(params[:password])
       render :json => {"error"=>"手机号码或者密码不正确"}.to_json
       return      
     end
@@ -79,5 +79,9 @@ class PhoneController < ApplicationController
     session[:user_dev] = nil
   end
 
+  private 
+  def slat_hash_pass(password)
+    Digest::SHA1.hexdigest(":dFace.#{password}@cn")[0,16]
+  end
   
 end
