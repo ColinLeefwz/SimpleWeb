@@ -3,6 +3,17 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+  #emoji表情显示
+  def to_emoji(str)
+    return if str.nil?
+    s = str.gsub(/[^\d\s\w\u4e00-\u9fa5.|()；;,，]/)  do |e|
+      unicode = e.unpack("U").first.to_s(16);
+      Emoji::ED.include?(unicode) ? "<span class='emoji emoji#{unicode}'></span>" : e
+    end
+    s.html_safe
+  end
+
+
   def no_nav
     content_for :nav do
     end
