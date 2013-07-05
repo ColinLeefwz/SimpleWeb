@@ -339,7 +339,7 @@ class Oauth2Controller < ApplicationController
       end
     else
       u = User.where({qq:openid}).first
-      if u && u.id != sessioin[:user_id]
+      if u && u.id != session[:user_id]
         render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
         return
       end
