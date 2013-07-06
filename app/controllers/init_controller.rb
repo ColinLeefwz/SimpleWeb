@@ -13,8 +13,8 @@ class InitController < ApplicationController
     ver_arr = ver.split(".")
     ver = ver_arr[0..2].inject {|sum,x| sum+"."+x}  if ver_arr.size>3 # "2.1.0.2.1.0" -> "2.1.0"
     if session[:user_id].nil?
-      session[:user_dev] = UserDevice.init(params[:mac],params[:os],params[:model],
-          ver,params[:screen_w],params[:screen_h]) 
+      session[:user_dev] = UserDevice.init(params[:mac],params[:os],params[:model],ver,
+        params[:screen_w],params[:screen_h],params[:id],params[:imei],params[:imsi],params[:channel]) 
     else
       UserDevice.update_redis(session[:user_id],session[:os],ver)
     end
