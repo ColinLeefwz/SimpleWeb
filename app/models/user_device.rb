@@ -6,10 +6,10 @@ class UserDevice
   field :_id, type: Moped::BSON::ObjectId
   field :ds, type: Array # [ [mac,os,model,ver,w,h] , ... ]
 
-  def self.init(mac,os,model,ver,w=nil,h=nil)
+  def self.init(mac,os,model,ver,w=nil,h=nil,id=nil,imei=nil,imsi=nil,channel=nil)
     ud = UserDevice.new
     if w
-      ud.ds = [ [mac,os,model,ver,w,h] ]
+      ud.ds = [ [mac,os,model,ver,w,h,id,imei,imsi,channel] ]
     else
       ud.ds = [ [mac,os,model,ver] ]
     end
