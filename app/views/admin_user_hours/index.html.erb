@@ -1,0 +1,35 @@
+<h1>每小时用户新增统计</h1>
+
+<table>
+  <tr>
+    <th>时间</th>
+    <th>男性用户数</th>
+    <th>女性用户数</th>
+    <th>新浪微博</th>
+    <th>QQ</th>	
+    <th>总用户数</th>
+  </tr>
+  <% @user_hours.each do |user_hour| %>
+    <tr>
+      <td>
+        <%= user_hour._id %>
+      </td>
+      <td>
+        <%=link_to user_hour.mtotal.to_i %>
+      </td>
+      <td>
+        <%=link_to user_hour.ftotal.to_i %>
+      </td>
+      <td>
+        <%= user_hour.wb %>
+      </td>
+      <td>
+        <%= user_hour["qq"].to_i  %>
+      </td>
+      <td>
+        <%=link_to user_hour.total.to_i %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>
