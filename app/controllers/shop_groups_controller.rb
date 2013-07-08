@@ -2,7 +2,7 @@
 
 class ShopGroupsController < ApplicationController
   before_filter :shop_authorize, :except => [:mobile]
-  before_filter :master_authorize, :only => [:show, :edit, :del, :update,:checkins]
+  before_filter :master_authorize, :only => [ :edit, :del, :update,:checkins]
   include Paginate
   layout 'shop'
 
@@ -21,6 +21,10 @@ class ShopGroupsController < ApplicationController
     else
       render :text => "不能登录"
     end
+  end
+
+  def show
+     @group = Group.find_primary(params[:id])
   end
 
   def new
@@ -51,6 +55,7 @@ class ShopGroupsController < ApplicationController
     @group.update_attributes(params[:group])
     redirect_to :action => "show", :id => @group.id
   end
+
 
   def del
     @group.delete
