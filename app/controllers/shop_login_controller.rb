@@ -8,6 +8,20 @@ class ShopLoginController < ApplicationController
     render :layout => "shop"
   end
 
+  def tojson
+    hash = {sid: session[:shop_id]}
+    unless params[:name].blank?
+      uids = User.where(:name => /#{params[:name]}/).only(:_id).map { |m| m._id }
+      hash.merge!({uid: {'$in' => uids}})
+    end
+    hash.merge!({uid: params[:uid]}) unless params[:uid].blank?
+    
+    sort = {_id: -1}
+    @checkins = paginate2("Checkin", params[:page], hash, sort, 1000)
+    respond_to do |format|
+      format.json
+    end
+  end
 
   def login
     #   Rails.cache.delete("LE#{real_ip}")
