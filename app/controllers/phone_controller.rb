@@ -7,7 +7,7 @@ class PhoneController < ApplicationController
   def init
     user = User.where({phone: params[:phone]}).first
     if user.nil?
-      # send sms 
+      # send sms = "#{code} (脸脸验证码)"
       code = "123456"
       session[:phone_code] = code
       render :json => {"code"=>code}.to_json

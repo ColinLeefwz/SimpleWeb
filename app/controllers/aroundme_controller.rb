@@ -18,7 +18,24 @@ class AroundmeController < ApplicationController
   
   def shops
     lo = [params[:lat].to_f,params[:lng].to_f]
-    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    if params[:baidu].to_i==1
+      lo1 = Shop.lob_to_lo(lo) if params[:accuracy].to_i>1
+      if params[:gps]
+         begin
+           gps = ActiveSupport::JSON.decode(params[:gps]) 
+           lo2 = [gps["Latitude"],gps["Longitude"]]
+         rescue Exception => e
+           logger.error e
+         end
+      end
+      if lo2.nil?
+        lo = lo1
+      elsif lo1.nil?
+        lo = lo2
+      else
+        lo = lo1 #TODO: 根据经纬度误差加权
+      end
+    end
     arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
     record_gps(lo)
     if is_kx_user?(session[:user_id])
