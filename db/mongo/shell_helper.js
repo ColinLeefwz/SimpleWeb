@@ -53,6 +53,15 @@ var gen_day_id =function(days){
     return [idOfBeginDAy,idOfEndDay, id];
 }
 
+var gen_hour_id = function(hours){
+    var hour = new Date(parseInt(((new Date()).valueOf()/1000)-(hours*60*60))*1000);
+    var id = hour.toLocaleFormat('%Y-%m-%d %H时');
+    var z = '0000000000000000';
+    var idOfBeginHour = parseInt(hour.setMinutes(0,0)/1000).toString(16) + z;
+    var idOfEndHour = parseInt(hour.setMinutes(59,59)/1000).toString(16) + z;
+    return [idOfBeginHour, idOfEndHour, id];
+}
+
 db.system.js.save({
     "_id" : "gen_day_id",
     "value" : gen_day_id
