@@ -7,7 +7,7 @@ class Group
   field :pass #加入时的默认密码，可以没有
   field :line_id, type: Moped::BSON::ObjectId #所属线路
   field :admin_sid, type:Integer #所属旅行社
-  field :sid, type:Integer #旅行团对应的虚拟群  
+  field :sid, type:Integer #旅行团对应的虚拟群, 该虚拟群shop的group_id=self._id
   field :fat, type: Date  #开始时间
   field :tat, type: Date #结束时间
   field :users, type:Array #团员 [ { name:姓名, phone:手机, sfz:身份证, id:用户id } ]
@@ -34,7 +34,12 @@ class Group
   #2. 旅行团，预设人员，输入手机号码进入
   def auth(uid, str)
     if pass
-      return str==pass
+      if str==pass
+        $redis.sadd("GROUP#{uid}", self.sid.to_i)
+        return true
+      else
+        return false
+      end
     end
     user = users.find{|hash| hash["phone"]==str && hash['id'].nil?}
     if user
