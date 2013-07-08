@@ -48,7 +48,7 @@ class AdminShopsController < ApplicationController
   end
 
   def edit
-    @shop = Shop.find_by_id(params[:id])
+    @shop = Shop.find(params[:id])
     @shop_info = @shop.info || ShopInfo.new
   end
 
