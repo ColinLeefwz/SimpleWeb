@@ -1,0 +1,51 @@
+<script type='text/javascript'>
+$(function () {
+    var chart;
+    
+    $(document).ready(function () {
+        
+        // Build the chart
+        $('#piecharts').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '有多少人在使用优惠券呢'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+                percentageDecimals: 1
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '使用率',
+                data: [
+                    ['分享类优惠券',   40.0],
+                    {
+                        name: '签到类优惠券',
+                        y: 45.0,
+                        sliced: true,
+                        selected: true
+                    },
+                    ['没使用',   15.0]
+                ]
+            }]
+        });
+    });
+    
+});
+</script>
+
+<div id="piecharts" style="height: 300px"></div>
