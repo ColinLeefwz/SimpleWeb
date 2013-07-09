@@ -13,7 +13,7 @@
         <%=link_to image_tag(user.head_logo.try(:img).try(:url,:t1), :class => "imgs"), user.head_logo.try(:img).try(:url), :target => 'blank' %>
         <%=link_to  user.name||'', "/shop_checkins/user?uid=#{user.id}"  %></td>
       <td align="center"><%= img_gender(user.gender)  %></td>
-      <td align="center"><%= age(user.birthday.try(:to_date)) %></td>
+      <td align="center"><%= user.age %></td>
       <td align="center"><%= link_to '解除',"/shop_bans/unban?uid=#{user.id.to_s}&page=#{params[:page]}", :onclick => "return confirmUnban()" %></td>
     </tr>
   <% end %>

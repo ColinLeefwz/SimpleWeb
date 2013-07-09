@@ -13,7 +13,7 @@
     <tr>
       <th width="20%" align="left">用户</th>
       <th width="9%">性别</th>
-      <th width="17%" align="center">年龄</th>
+      <th width="17%" align="center">星座</th>
       <th width="20%" align="center">签到时间</th>
       <th width="15%" align="center" colspan="2">操作</th>
     </tr>
@@ -22,8 +22,8 @@
         <td>
           <%=link_to image_tag(checkin.user.head_logo.try(:img).try(:url,:t1), :class => "imgs"), checkin.user.head_logo.try(:img).try(:url), :target => 'blank' %>
           <%=link_to checkin.user.name, "/shop_checkins/user?uid=#{checkin.uid}"%></td>
-        <td align="center"><%= (checkin.user.show_gender)%></td>
-        <td align="center"><%= age(checkin.user.birthday.try(:to_date))%></td>
+        <td align="center"><%= checkin.user.show_gender%></td>
+        <td align="center"><%= checkin.user.gonstellation %></td>
         <td align="center"><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %></td>
         <td align="center"><%= link_to '历史签到', url_for(:action => 'index', :uid => checkin.user.id) %></td>
         <td align="center"><%= ban_link(checkin.user.id.to_s) %></td>
