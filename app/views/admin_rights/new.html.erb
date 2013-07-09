@@ -17,10 +17,11 @@
   </p>
   <%  ControllerName::Right.each do |k, v|%>
     <p>
-      <%  ControllerName::Menu[k] %>
+      <%=  ControllerName::Menu[k] %>
       <input  type="radio" name="<%= k%>" onclick ="chec('none', '<%=k %>')"/>无
       <input  type="radio" name="<%= k%>" onclick ="chec('r', '<%=k %>')" />读
       <input  type="radio" name="<%= k%>" onclick ="chec('w', '<%=k %>')"/>写
+      
     </p>
     <% v.each do |controller_name, cnc| %>
       <span>

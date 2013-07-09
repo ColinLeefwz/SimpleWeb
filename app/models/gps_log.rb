@@ -2,11 +2,18 @@
 
 class GpsLog
   include Mongoid::Document
-  field :uid
+  field :uid,  type: Moped::BSON::ObjectId
   field :lo
-  field :acc
+  field :acc   #误差
   field :bssid
-  field :bd
+  field :bd    #是否百度定位
+  field :speed #速度
+  with_options :prefix => true, :allow_nil => true do |option|
+    option.delegate :name, :to => :user
+  end
+  def user
+    @user ||= User.find_by_id(uid)
+  end
 
 end
 
