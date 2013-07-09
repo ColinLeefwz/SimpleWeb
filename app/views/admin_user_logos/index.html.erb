@@ -19,8 +19,8 @@
       <div class="button"><%= button_to "查看", "/admin_users/show?id=#{user.id}"%></div>
       <div class="button"><%= button_to "提示"%></div>
       <div class="button">
-        <%= button_to(" 封杀",{}, {:onclick => "return kill($(this), {id: '#{@user_blacks_bid}', ubid: '#{@user_blacks_id}', name: '#{UserBlack.find_buser.try(:name)}'})"}) unless UserBlack.find_buser.try("forbidden?") %>
-        <%= button_to(" 解封",{}, {:onclick => "return unkill($(this), {id: '#{@user_blacks_bid}', ubid: '#{@user_blacks_id}', name: '#{UserBlack.find_buser.try(:name)}'})"}) if UserBlack.find_buser.try("forbidden?") %>
+        <%= button_to(" 封杀",{}, {:onclick => "return kill($(this), {id: '#{user.id}', name: '#{user.name}'})"}) unless user.forbidden? %>
+        <%= button_to(" 解封",{}, {:onclick => "return unkill($(this), {id: '#{user.id}',name: '#{user.name}'})"})  if user.forbidden? %>
       </div>
    </div>
 <% end %>
@@ -83,7 +83,7 @@ $('#container').infinitescroll({
 
   function kill(obj, param){
     if(confirm("确定封杀么？")){
-      $.get("/admin_users/kill",param, function() {
+      $.get("/admin_users/kill2",param, function() {
         str = "<input type='submit' value=' 解封\""+ param.name +"\"' onclick='return unkill($(this),"+ JSON.stringify(param) + ")'>"
         obj.parent().replaceWith(str)
       });
