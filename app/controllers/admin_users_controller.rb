@@ -89,6 +89,12 @@ class AdminUsersController < ApplicationController
     user.kill
     render :text => "ok"
   end
+
+  def kill2
+    user = User.find(params[:id])
+    user.kill
+    render :text => "ok"
+  end
   
   def unkill
     @user = User.find(params[:id])
