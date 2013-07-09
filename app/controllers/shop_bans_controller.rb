@@ -8,7 +8,7 @@ class ShopBansController < ApplicationController
   def index
     @shop_ban = ShopBan.find2(session[:shop_id].to_i)
     @bans = paginate_arr(@shop_ban.users, params[:page] )
-    @users = @bans.map{|b| User.find_by_id(b)}
+    @users = @bans.map{|b| User.find_by_id(b)}.to_a
   end
 
 

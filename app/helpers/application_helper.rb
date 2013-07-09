@@ -36,13 +36,6 @@ module ApplicationHelper
     end
   end
 
-  def age(birthday)
-    return if birthday.blank?
-    l = Time.now.to_date
-    b = birthday
-    a = l.year-b.year
-    a-1 if "#{l.month}#{l.day}" < "#{b.month}#{b.day}"
-  end
 
   def link_weibo(user)
     if !user.wb_uid.blank?
@@ -51,6 +44,8 @@ module ApplicationHelper
       "QQ"
     end
   end
+
+  
 
 
   def generate_paginate
