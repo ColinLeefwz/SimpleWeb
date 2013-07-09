@@ -90,10 +90,12 @@ class PhoneController < ApplicationController
   
   def send_sms_ihuiyi(phone, text)
     begin
-      info = RestClient.get "http://106.ihuyi.com/webservice/sms.php?method=Submit&account=cf_llh&password=Fa34c9e&mobile=#{phone}&content=#{text}"
-      puts info
-      return true
+      pass = URI.escape("www.dface.cn20130709")
+      info = RestClient.get "http://106.ihuyi.com/webservice/sms.php?method=Submit&account=cf_llh&password=#{pass}&mobile=#{phone}&content=#{URI.escape(text)}"
+      return info.index("<code>2</code>")>0
     rescue Exception => e
+      puts e
+      puts e.backtrace
       return nil
     end
   end
