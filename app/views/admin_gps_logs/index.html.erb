@@ -1,0 +1,49 @@
+<h1>gps定位日志</h1>
+<%= form_tag '/admin_gps_logs',:method =>:get do %>
+  用户id: <%= text_field_tag :uid, params[:uid] %>
+  bssid: <%= text_field_tag :bssid, params[:bssid] %>
+
+  <%= submit_tag "提交" %>
+<%end%>
+<br/>
+<table border="1">
+  <tr>
+    <th>用户</th>
+    <th>坐标</th>
+    <th>误差</th>
+    <th>bssid</th>
+    <th>百度定位</th>
+    <th>速度</th>
+  </tr>
+
+  <% @gps_logs.each do |gps_log| %>
+    <tr>
+      <td>
+        <%=link_to gps_log.user_name||'', "/admin_users/show?id=#{gps_log.uid}" %>(
+        <%= gps_log.uid %>
+        )
+      </td>
+      <td>
+        <%= gps_log.lo.join(',') %>
+      </td>
+      <td>
+        <%= gps_log.acc %>
+      </td>
+      <td>
+        <%= gps_log.bssid %>
+      </td>
+      <td>
+        <%= gps_log.bd ? "是" : ""%>
+      </td>
+      <td>
+        <%= gps_log.speed %>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
+<br/>
+<br/>
+
