@@ -1,10 +1,20 @@
 # coding: utf-8
 
 class ShopGroupsController < ApplicationController
-  before_filter :shop_authorize, :except => [:mobile]
+  before_filter :shop_authorize, :except => [:mobile, :twocode, :intro]
   before_filter :master_authorize, :only => [ :edit, :del, :update,:checkins]
   include Paginate
   layout 'shop'
+
+  def intro
+    @group = Group.find_by_id(params[:id])
+    render :layout => false
+  end
+
+  def twocode
+    @group = Group.find_by_id(params[:id])
+    render :layout => false
+  end
 
   def index
     hash = {admin_sid: session[:shop_id]}
@@ -24,7 +34,7 @@ class ShopGroupsController < ApplicationController
   end
 
   def show
-     @group = Group.find_primary(params[:id])
+    @group = Group.find_primary(params[:id])
   end
 
   def new
