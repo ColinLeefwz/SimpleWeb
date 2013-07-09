@@ -5,11 +5,12 @@ class LocationNotice
 
   def self.perform(uid,sid)
     user = User.find_primary(uid)
+    diff = Time.now.to_i-user.cati
     shop = Shop.find_by_id(sid)
     return if shop.lo.nil?
     same_location_realtime(uid,sid,user,shop)
-    same_location_fans(uid,sid,user,shop)
-    same_location_friends(uid,sid,user,shop)    
+    same_location_fans(uid,sid,user,shop) if diff<3600*240
+    same_location_friends(uid,sid,user,shop) if diff<3600*240 
     user.notify_good_friend(shop) #好友在一个小时内，在距离2公里以内的其他地点签到过
   end
   
