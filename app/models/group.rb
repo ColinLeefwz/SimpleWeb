@@ -60,5 +60,9 @@ class Group
     Shop.find_by_id(sid)
   end
   
+  def self.find_by_phone(phone)
+    Group.where({"users.phone" => phone})
+  end
+  
 end
 
