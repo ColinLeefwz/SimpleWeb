@@ -1,13 +1,13 @@
 <div class="title2"><h2>旅行团</h2></div>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th width="10%" align="left">id</th>
-    <th width="13%" align="left">路线</th>
-    <th width="8%" align="left">团号</th>
-    <th width="20%" align="left">团名</th>
-    <th width="10%" align="left">开始时间</th>
-    <th width="10%" align="left">结束时间</th>
-    <th width="17%" align="center" colspan="3">操作</th>
+    <th width="5%" align="left">id</th>
+    <th width="9%" align="left">路线</th>
+    <th width="5%" align="left">团号</th>
+    <th width="10%" align="left">团名</th>
+    <th width="7%" align="left">开始时间</th>
+    <th width="7%" align="left">结束时间</th>
+    <th width="24%" align="center" colspan="5">操作</th>
   </tr>
   <% @groups.each do |group| %>
     <tr>
@@ -36,12 +36,14 @@
         <%= link_to "编辑", "/shop_groups/edit?id=#{group.id}" %>
       </td>
       <td>
-        <%= link_to "删除", "javascript:void(0)", :onclick => "ajaxDel($(this),'#{group.id}')" %>
-      </td>
-      <td>
         <%= link_to "签到", "/shop_groups/checkins?id=#{group.id}" %>
       </td>
-
+      <td>
+        <%= link_to "二维码", "/shop_groups/twocode?id=#{group.id}" %>
+      </td>
+      <td>
+        <%= link_to "删除", "javascript:void(0)", :onclick => "ajaxDel($(this),'#{group.id}')" %>
+      </td>
     </tr>
   <% end %>
 </table>
