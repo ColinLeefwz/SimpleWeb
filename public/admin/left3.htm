@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+    <head>
+        <title>脸脸后台管理</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <style type="text/css">
+            <!--
+            /* CSS Tabs */
+            body {
+                margin: 0;
+                font-size: 80%;
+                font-family:  "宋体"; font-size: 12px;
+            }
+            td {font-family:  "宋体"; font-size: 12px;}
+            #button {
+                cursor:pointer;
+                width: 12em;
+                padding: 0 0 1em 0;
+                margin-bottom: 1em;
+                color: #0c25a2;
+            }
+            #button ul{
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                border: none;
+            }
+            #button ul li ul{
+                margin: 0% 0% 0% 8%;
+            }
+            #button li {
+                margin: 0;
+                list-style: none;
+                list-style-image: none;
+            }
+            #button li a {
+                display: block;
+                padding: 3px 3px 2px 32px;
+                color: #000000;
+                text-decoration: none;
+                width: 100%;
+            }
+            html>body #button li a {
+                width: auto;
+            }
+            #button li a:hover {
+                background-color: #a8cef9;
+                color: #3477ff;
+            }
+            #button #current a {
+                background-color: #a8cef9;
+                color: #3477ff;
+            }
+            -->
+        </style>
+        <script language="JavaScript" src="tree.js" type=""></script>
+        <link rel="stylesheet" href="tree.css" />
+    </head>
+
+    <body>
+        <table  border=0 width="100%"  height="100%" cellpadding="0" cellspacing="0"  style="filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#c2d8f2', endColorStr='#f1f6fc', gradientType='0')">
+            <tr><td width="3" bgcolor="#366ab3"></td>
+                <td width="10" ></td>
+                <td align=left valign=top>
+                    <div id="button">
+
+
+                        <ul class="tree">
+                            <li><a onclick="current(this)"  href="#">用户统计</a>
+                                <ul>
+                                   <li id="tag5"><a href="/admin_user_days" onclick="current(this)" target="main">每日新增</a></li>
+                                    <li id="tag5"><a href="/admin_user_hours" onclick="current(this)" target="main">每小时新增</a></li>
+                                    <li id="tag5"><a href="/user_device_stats" onclick="current(this)" target="main">每日注册机型统计</a></li>
+                                    <li id="tag5"><a href="/admin_user_city_days" onclick="current(this)" target="main">每日城市分布</a></li>
+                                    <li id="tag5"><a href="/admin_user_actives" onclick="current(this)" target="main">用户活跃度</a></li>
+                                    <li id="tag5"><a href="/admin_user_day_actives" onclick="current(this)" target="main">用户每日活跃度</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a onclick="current(this)"  href="#">商家统计</a>
+                                <ul>
+                                    <li id="tag5"><a href="/photo_day_stats" onclick="current(this)" target="main">每日照片统计</a></li>
+                                    									
+                                </ul>
+                            </li>
+
+                            <li><a onclick="current(this)"  href="#">活动统计</a>
+                                <ul>
+                                    <li id="tag5"><a href="/checkin_days" onclick="current(this)" target="main">每日签到</a></li>
+                                </ul>
+                                                                <ul>
+                                    <li id="tag5"><a href="/shop_checkin_stats" onclick="current(this)" target="main">商家签到统计</a></li>
+                                </ul>
+                                <ul>
+                                    <li id="tag5"><a href="/user_checkin_stats" onclick="current(this)" target="main">用户签到统计</a></li>
+                                </ul>
+                                <ul>
+                                    <li id="tag5"><a href="/ip_checkin_stats" onclick="current(this)" target="main">ip签到统计</a></li>
+                                </ul>
+                                <ul>
+                                    <li id="tag5"><a href="/shop_checkin_alts" onclick="current(this)" target="main">签到高度统计</a></li>
+                                </ul>
+                                <ul>
+                                    <li id="tag5"><a href="/checkin_loc_accs" onclick="current(this)" target="main">经纬度误差统计</a></li>
+                                </ul>
+
+                            </li>
+
+                            <li><a onclick="current(this)"  href="#">点评统计</a>
+                                <ul>
+                                    <li id="tag5"><a href="" onclick="current(this)" target="main">点评统计</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a onclick="current(this)"  href="#">个人用户统计</a>
+                                <ul>
+                                    <li id="tag5"><a href="" onclick="current(this)" target="main">个人用户统计</a></li>
+                                </ul>
+                            </li>                    
+
+                        </ul>
+
+                    </div>
+                </td></tr>
+        </table>
+        <script>
+            function current(cur){
+                var lis=document.body.getElementsByTagName("li");
+                for(var i=0;i<lis.length;i++){
+                    lis[i].removeAttribute('id');
+                }
+                cur.parentNode.setAttribute('id','current');
+            }
+        </script>
+    </body>
+</html>
+
