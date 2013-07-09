@@ -15,7 +15,7 @@
         <%= link_to  staff.user.try(:name)||'' , "/shop_checkins/user?uid=#{staff.user_id}" %>
       </td>
       <td align="center"><%= staff.user.show_gender %></td>
-      <td align="center"><%= age staff.user.try(:birthday).try(:to_date) %></td>
+      <td align="center"><%= staff.user.age %></td>
       <td align="center"><%=link_to staff.checkin_count(staff.user_id),"/shop_checkins?uid=#{staff.user_id}" %></td>
       <td align="center"><%=link_to '删除',  '#',:onclick => "ajaxDeleteStaff($(this), '#{staff.id}');" %></td>
     </tr>

@@ -571,4 +571,43 @@ class User
     User.find_by_id(uid)
   end
 
+  #年龄
+  def age
+    return  if birthday.blank?
+    Time.now.year - birthday.to_date.year
+  end
+
+  #星座
+  def gonstellation
+    return if birthday.blank?
+    date =  birthday.to_date
+    month= date.month
+    day = date.day
+    case
+    when (month == 1 && day >= 21) || (month == 2 && day <= 19)
+      "水瓶座"
+    when  (month == 2 && day >= 20) || (month == 3 && day <= 20)
+      "双鱼座"
+    when (month == 3 && day >= 21) || (month == 4 && day <= 20)
+      '白羊座'
+    when (month == 4 && day >= 21) || (month == 5 && day <= 21)
+      '金牛座'
+    when (month == 5 && day >= 22) || (month == 6 && day <= 21)
+      '双子座'
+    when (month == 6 && day >= 22) || (month == 7 && day <= 22)
+      '巨蟹座'
+    when (month == 7 && day >= 23) || (month == 8 && day <= 23)
+      '狮子座'
+    when (month == 8 && day >= 24) || (month == 9 && day <= 23)
+      '处女座'
+    when (month == 9 && day >= 24) || (month == 10 && day <= 23)
+      '天秤座'
+    when  (month == 10 && day >= 24) || (month == 11 && day <= 22)
+      '天蝎座'
+    when (month == 11 && day >= 23) || (month == 12 && day <= 21)
+      '射手座'
+    when (month == 12 && day >= 22) || (month == 01 && day <= 20)
+      '魔蝎座'
+    end
+  end
 end

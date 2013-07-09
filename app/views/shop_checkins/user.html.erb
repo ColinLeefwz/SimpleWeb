@@ -14,13 +14,16 @@
   <div style="float: right; width: 500px" >
     <span >昵  称：</span>
     <span style="width: 140px;"><%= @user.name %></span>
-    <span>年  龄：</span>
-    <span style="width: 140px;"><%= age(@user.birthday) %></span>
-    <br/>
     <span>性  别：</span>
     <span style="width: 140px;"><%= @user.show_gender %></span>
+    <br/>
+    <span>年  龄：</span>
+    <span style="width: 140px;"><%= @user.age %></span>
+    <span>星 座：</span>
+    <span style="width: 140px;"><%=@user.gonstellation %></span>
+    <br/>
     <span>爱  好：</span>
-    <span style="width: 140px;"><%= @user.hobby %></span>
+    <span style="width: 380px;"><%= @user.hobby %></span>
     <br/>
     <span  >微博昵称：</span>
     <span style="width: 380px;"><%= link_to @user.wb_name || '' , @user.weibo_home%></span>
