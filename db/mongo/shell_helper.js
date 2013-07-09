@@ -18,8 +18,11 @@ db.system.js.save({
 })
 
 var shop_hz = function(name){
-	var reg = new RegExp(name);
-    return db.shops.find({city:"0571",name:reg});
+    var reg = new RegExp(name);
+    return db.shops.find({
+        city:"0571",
+        name:reg
+    });
 }
 
 db.system.js.save({
@@ -28,14 +31,14 @@ db.system.js.save({
 })
 
 function ensure_exec(fun,dest_coll,start_offset){
-try{
-	if(start_offset==undefined) throw "no start_offset";
-	fun(start_offset);
-}catch(e){
-	print(e);
-	offset = eval("db."+dest_coll+".find().sort({_id:-1}).limit(1)[0]._id");
-	ensure_exec(fun,dest_coll,offset);
-}
+    try{
+        if(start_offset==undefined) throw "no start_offset";
+        fun(start_offset);
+    }catch(e){
+        print(e);
+        offset = eval("db."+dest_coll+".find().sort({_id:-1}).limit(1)[0]._id");
+        ensure_exec(fun,dest_coll,offset);
+    }
 }
 
 db.system.js.save({
@@ -61,6 +64,11 @@ var gen_hour_id = function(hours){
     var idOfEndHour = parseInt(hour.setMinutes(59,59)/1000).toString(16) + z;
     return [idOfBeginHour, idOfEndHour, id];
 }
+
+db.system.js.save({
+    "_id" : "gen_hour_id",
+    "value" : gen_hour_id
+})
 
 db.system.js.save({
     "_id" : "gen_day_id",
