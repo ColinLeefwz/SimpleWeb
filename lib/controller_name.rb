@@ -3,7 +3,8 @@ module ControllerName
   Menu = ['用户管理','商家管理','活动管理','签到管理','系统权限' ,'客户端管理']
   Right= {
     0=>{"admin_users"=>"用户列表", "admin_kx_users"=>"可信用户", "admin_user_logos" => '头像审核', "admin_blacks"=>"举报用户", "admin_user_days"=>"每日新增", "admin_user_hours"=>"每小时新增",
-      "user_device_stats"=>"每日注册机型统计", "admin_user_city_days"=>"每日城市分布","admin_user_actives" => "用户活跃度"},
+      "user_device_stats"=>"每日注册机型统计", "admin_user_city_days"=>"每日城市分布","admin_user_actives" => "用户活跃度",
+    "admin_rekognitions" => "人脸识别"},
     1=>{"admin_shops"=>"商家管理", "admin_user_add_shops"=>"用户添加地点管理", "admin_user_reports"=>"用户地点报错管理",
       "admin_shop_notices"=>"商家公告", "admin_shop_faqs"=>"商家问答", "admin_shop_logos"=>"商家logo",
       "admin_shop_coupons"=>"商家优惠券", "admin_shop_photos"=>"照片墙", "photo_day_stats"=>"每日照片统计",
