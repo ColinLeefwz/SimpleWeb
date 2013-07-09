@@ -7,8 +7,12 @@ class PhoneController < ApplicationController
   def init
     user = User.where({phone: params[:phone]}).first
     if user.nil?
-      # send sms = "#{code} (脸脸验证码)"
       code = "123456"
+      sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
+      unless send_sms_ihuiyi(params[:phone], sms)
+          render :json => {"error"=>"无法给手机#{params[:phone]}发送验证码"}.to_json
+          return
+      end
       session[:phone_code] = code
       render :json => {"code"=>code}.to_json
     else
@@ -41,7 +45,7 @@ class PhoneController < ApplicationController
   
   def login
     user = User.where({phone: params[:phone]}).first
-    if user.nil?  user.password.nil? || user.password != slat_hash_pass(params[:password])
+    if user.nil? || user.password.nil? || user.password != slat_hash_pass(params[:password])
       render :json => {"error"=>"手机号码或者密码不正确"}.to_json
       return      
     end
@@ -82,6 +86,18 @@ class PhoneController < ApplicationController
   private 
   def slat_hash_pass(password)
     Digest::SHA1.hexdigest(":dFace.#{password}@cn")[0,16]
+  end
+  
+  def send_sms_ihuiyi(phone, text)
+    begin
+      pass = URI.escape("www.dface.cn20130709")
+      info = RestClient.get "http://106.ihuyi.com/webservice/sms.php?method=Submit&account=cf_llh&password=#{pass}&mobile=#{phone}&content=#{URI.escape(text)}"
+      return info.index("<code>2</code>")>0
+    rescue Exception => e
+      puts e
+      puts e.backtrace
+      return nil
+    end
   end
   
 end
