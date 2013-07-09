@@ -318,7 +318,7 @@ class User
   end
   
   def notify_distance
-    diff = Time.now.to_i-self.last.cati
+    diff = Time.now.to_i-self.cati
     return 2000 if diff<3600*3
     return 1500 if diff<3600*24
     return 1000 if diff<3600*72
@@ -327,7 +327,7 @@ class User
   end
   
   def notify_time
-    diff = Time.now.to_i-self.last.cati
+    diff = Time.now.to_i-self.cati
     return 7000 if diff<3600*3
     return 5000 if diff<3600*24
     return 3600 if diff<3600*72
