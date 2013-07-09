@@ -304,7 +304,7 @@ class User
   end
 
   def notify_good_friend(shop)    
-    Rails.cache.fetch("Notify#{id}", :expires_in => 60.minutes) do
+    Rails.cache.fetch("Notify#{id}", :expires_in => 100.minutes) do
       do_notify_good_friend(shop)
     end
   end
@@ -316,17 +316,37 @@ class User
     return 99999999 if arr2.nil? || arr2.size<3    
     return Shop.get_distance(arr[2],arr2[2])
   end
+  
+  def notify_distance
+    diff = Time.now.to_i-self.last.cati
+    return 2000 if diff<3600*3
+    return 1500 if diff<3600*24
+    return 1000 if diff<3600*72
+    return 600 if diff<3600*720 
+    return 500  
+  end
+  
+  def notify_time
+    diff = Time.now.to_i-self.last.cati
+    return 7000 if diff<3600*3
+    return 5000 if diff<3600*24
+    return 3600 if diff<3600*72
+    return 1800 if diff<3600*720 
+    return 1200  
+  end
     
   def do_notify_good_friend(shop)
+    notify_dis = notify_distance
+    notify_tm = notify_time
     good_friend_ids.each do |uid|
       next if uid.to_s == $gfuid
       arr = User.last_loc_cache(uid)
       next if arr.nil? || arr.size<3
       next if shop.name==arr[1] #同一个地点，不使用距离提醒
       time = Time.now.to_i - arr[0]
-      next if time>7000
+      next if time>notify_tm
       dis = shop.get_distance(shop.loc_first,arr[2])
-      next if dis>2000
+      next if dis>notify_dis
       user = User.find_by_id(uid)
       if time>3600
         timedesc = "一小时前"
