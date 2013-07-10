@@ -16,7 +16,7 @@ class PhoneController < ApplicationController
         return
     end
     session[:phone_code] = code
-    render :json => {"code"=>code}.to_json
+    render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json
   end
   
   def register
@@ -115,6 +115,7 @@ class PhoneController < ApplicationController
   end
   
   def send_sms_ihuiyi(phone, text)
+    return true if phone[0]=="0"
     begin
       pass = URI.escape("www.dface.cn20130709")
       info = RestClient.get "http://106.ihuyi.com/webservice/sms.php?method=Submit&account=cf_llh&password=#{pass}&mobile=#{phone}&content=#{URI.escape(text)}"
