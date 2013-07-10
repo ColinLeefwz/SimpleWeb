@@ -1,3 +1,4 @@
+<% content_for :ahead, javascript_include_tag("shareweixin.js") %>
 <div class="title2"><h2>旅行团详情</h2></div>
 <ul class="formlist">
   <li>
@@ -30,6 +31,8 @@
       <%= group_show_users(@group.users).html_safe%>
     </span>
   </li>
+
+  <%= link_to "分享到微信", "javascript:void(0)", :onclick => "sharetowx('测试分享','http://#{request.host}/shop_groups/intro?id=#{@group.id}', '', ''); return false;", :class => 'btn6' , :style => "background-image: none"%>
 
   <a class="btn6 r" href="/shop_groups">返回列表</a>
 </ul>
