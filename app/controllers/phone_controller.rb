@@ -1,23 +1,22 @@
 # coding: utf-8
 
 class PhoneController < ApplicationController
-  before_filter :user_login_filter, :only => [:bind, :unbind] 
+  before_filter :user_login_filter, :only => [:bind, :unbind, :change_password] 
   
   
   def init
-    user = User.where({phone: params[:phone]}).first
-    if user.nil?
-      code = "123456"
-      sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
-      unless send_sms_ihuiyi(params[:phone], sms)
-          render :json => {"error"=>"无法给手机#{params[:phone]}发送验证码"}.to_json
-          return
-      end
-      session[:phone_code] = code
-      render :json => {"code"=>code}.to_json
-    else
-      render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
+    #user = User.where({phone: params[:phone]}).first
+    #if user
+    #  render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
+    #end
+    code = "123456"
+    sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
+    unless send_sms_ihuiyi(params[:phone], sms)
+        render :json => {"error"=>"无法给手机#{params[:phone]}发送验证码"}.to_json
+        return
     end
+    session[:phone_code] = code
+    render :json => {"code"=>code}.to_json
   end
   
   def register
@@ -40,7 +39,34 @@ class PhoneController < ApplicationController
     data.merge!({newuser:1})
     session[:user_id] = user.id
     save_device_info(user.id)
+    Resque.enqueue(NewPhoneReg, user.id, user.phone)
+    Rails.cache.write("PHONEREG#{user.id}", 1, :expires_in => 2.hours)
     render :json => data.to_json
+  end
+  
+  def forgot_password
+    if params[:code] != session[:phone_code]
+      render :json => {"error"=>"验证码错误"}.to_json
+      return
+    end
+    user = User.where({phone: params[:phone]}).first
+    if user.nil?
+      render :json => {"error"=>"手机号码不存在"}.to_json
+      return      
+    end
+    user.password = slat_hash_pass(params[:password])
+    user.save!
+    render :json => user.safe_output.to_json
+  end
+  
+  def change_password
+    if params[:oldpass].nil? || user.password != slat_hash_pass(params[:oldpass])
+      render :json => {"error"=>"原密码输入错误"}.to_json
+      return
+    end
+    user.password = slat_hash_pass(params[:password])
+    user.save!
+    render :json => user.safe_output.to_json
   end
   
   def login
