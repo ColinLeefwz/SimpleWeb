@@ -1,6 +1,8 @@
 
-\section{登录和退出}
-\subsection{网页登录接口：oauth2}
+\section{用户帐号系统}
+\subsection{新浪微博相关接口}
+
+\subsubsection{网页登录接口：oauth2}
 
 
 \begin{table}[H]
@@ -52,7 +54,7 @@ logo可以得知用户是否成功上传头像。对于第一次登录的用户�
 \end{verbatim}
 \end{figure}
 
-\subsection{客户端登录接口：xauth}
+\subsubsection{客户端登录接口：xauth}
 \label{hash_algorithm}
 
 \begin{table}[H]
@@ -91,7 +93,7 @@ hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
 
 
 
-\subsection{客户端SSO接口}
+\subsubsection{客户端SSO接口}
 \label{hash_algorithm}
 
 \begin{table}[H]
@@ -117,11 +119,32 @@ POST & \multicolumn{3}{|c|}{/oauth2/sso} \\
 \end{tabular}
    \end{center}
 \end{table}
-手机客户端使用微博SSO登录后，调用本接口。
+当手机客户端安装有新浪官方微博客户端，使用微博SSO登录，调用本接口。
 hash的计算方式为：uid+access\_token+"dface"进行SHA1算法后取前32位。
 
+\subsubsection{解除新浪微博绑定}
 
-\subsection{客户端QQ接口}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/unbind\_sina} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    uid  & 字符串 & 必须 &  当前用户的id\\
+\hline
+    wb\_uid  & 字符串 & 必须 &  新浪微博的uid\\    
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+解除成功返回{unbind: true}，否则返回error信息。
+
+
+
+\subsection{QQ相关接口}
+\subsubsection{QQ登录接口}
 \label{hash_algorithm}
 
 \begin{table}[H]
@@ -149,28 +172,7 @@ POST & \multicolumn{3}{|c|}{/oauth2/qq\_client} \\
 手机客户端使用QQ提供的SDK登录后，调用本接口。
 hash的计算方式为：openid+access\_token+"dface"进行SHA1算法后取前32位。
 
-
-\subsection{退出}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-POST & \multicolumn{3}{|c|}{/oauth2/logout} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
-    pushtoken  & 浮点数 & 可选 &  当前设备的push消息token\\
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-当用户主动退出时，调用本接口并断开XMPP的连接。
-[2012-12-30] 新增pushtoken参数。
-
-
-\subsection{解除QQ绑定}
+\subsubsection{解除QQ绑定}
 
 \begin{table}[H]
    \begin{center}
@@ -191,29 +193,10 @@ POST & \multicolumn{3}{|c|}{/oauth2/unbind\_qq} \\
 新浪微博和QQ只有都处在有效登录状态时，才能解除其中的一个的绑定。
 
 
-\subsection{解除新浪微博绑定}
 
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-POST & \multicolumn{3}{|c|}{/oauth2/unbind\_sina} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
-    uid  & 字符串 & 必须 &  当前用户的id\\
-\hline
-    wb\_uid  & 字符串 & 必须 &  新浪微博的uid\\    
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-解除成功返回{unbind: true}，否则返回error信息。
+\subsection{手机注册接口}
 
-
-
-
-\subsection{手机号码获取验证码}
+\subsubsection{手机号码获取验证码}
 \label{hash_algorithm}
 
 \begin{table}[H]
@@ -234,9 +217,9 @@ POST & \multicolumn{3}{|c|}{/phone/init} \\
 同时验证码通过短信的方式发送到使用者的手机。
 用户注册输入验证码时，客户端要先判断验证码是否正确。
 
+手机号码注册／忘记密码／绑定手机号码都要先调用本接口获取验证码。
 
-
-\subsection{手机号码注册}
+\subsubsection{手机号码注册}
 \label{hash_algorithm}
 
 \begin{table}[H]
@@ -260,8 +243,52 @@ POST & \multicolumn{3}{|c|}{/phone/register} \\
 调用成功返回生成的用户id，如果有错误，错误信息保存在error中。
 
 
+\subsubsection{忘记密码}
+\label{hash_algorithm}
 
-\subsection{手机号码登录}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/forgot\_password} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+ code  & 字符串 & 必须 &  验证码\\
+\hline
+ password  & 字符串 & 必须 &  用户设置的密码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+本接口和手机号码注册接口参数一样，要求相反。手机号码注册要求该手机号码不存在，忘记密码要求该手机号码已注册。
+
+
+\subsubsection{修改密码}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/forgot\_password} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ oldpass  & 字符串 & 必须 &  原来的密码\\
+\hline
+ password  & 字符串 & 必须 &  用户设置的密码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsubsection{手机号码登录}
 \label{hash_algorithm}
 
 \begin{table}[H]
@@ -284,7 +311,7 @@ POST & \multicolumn{3}{|c|}{/phone/login} \\
 
 
 
-\subsection{绑定手机号码}
+\subsubsection{绑定手机号码}
 \label{hash_algorithm}
 
 \begin{table}[H]
@@ -305,6 +332,27 @@ POST & \multicolumn{3}{|c|}{/phone/bind} \\
 
 绑定手机号码要先调用phone\/init获取验证码。
 调用成功返回{bind: true}，如果有错误，错误信息保存在error中。
+
+
+
+\subsection{退出}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/logout} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    pushtoken  & 浮点数 & 可选 &  当前设备的push消息token\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+当用户主动退出时，调用本接口并断开XMPP的连接。
+[2012-12-30] 新增pushtoken参数。
 
 
 
