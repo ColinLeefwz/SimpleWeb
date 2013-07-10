@@ -39,7 +39,7 @@ class UserInfoController < ApplicationController
     pcount = 20 if pcount==0
     users = User.where({ name: /#{params[:name]}/i}).skip((page-1)*pcount).limit(pcount)
     ret = users.map do |u| 
-      hash = u.safe_output
+      hash = u.safe_output.merge(u.relation_hash(session[:user_id]))
       hash.merge!({wb_name:u.wb_name, qq_name:u.qq_name})
       hash.merge!({distance: u.distance(session[:user_id])})
       hash
