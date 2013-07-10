@@ -127,8 +127,14 @@ class AroundmeController < ApplicationController
     skip = (page-1)*pcount
     lo = [params[:lat].to_f , params[:lng].to_f]
     city = Shop.get_city(lo)
-    sex = session_user.gender
-    sex = (sex==2? 1:2) if params[:gender].to_i==1
+    if params[:gender].to_i==0
+      sex = session_user.gender
+      sex = (sex==2? 1:2)
+    elsif params[:gender].to_i==1
+      sex = 1
+    else
+      sex = 2
+    end
     users = hot_users_cache(city,sex,skip,pcount)
     ret = []
     users.each do |u|
