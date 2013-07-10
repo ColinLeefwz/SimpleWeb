@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class UserInfoController < ApplicationController
+  include PhoneUtil
   
   before_filter :user_login_filter, :except => [:photos, :logo ]
   before_filter :user_is_session_user, :only => [:get_comment_names]
@@ -32,12 +33,15 @@ class UserInfoController < ApplicationController
   end
   
   def search
-    #TODO 手机号码精确查询
+    if is_phone?(params[:name])
+      user = User.where({phone:params[:name]}).first
+    end
     page = params[:page].to_i
     pcount = params[:pcount].to_i
     page = 1 if page==0
     pcount = 20 if pcount==0
     users = User.where({ name: /#{params[:name]}/i}).skip((page-1)*pcount).limit(pcount)
+    users = [user] + users if user
     ret = users.map do |u| 
       hash = u.safe_output.merge(u.relation_hash(session[:user_id]))
       hash.merge!({wb_name:u.wb_name, qq_name:u.qq_name})
