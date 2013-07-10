@@ -9,4 +9,15 @@ class AdminUserHoursController < ApplicationController
     @user_hours = paginate3("UserHour", params[:page], hash, sort)
   end
 
+  def tojson
+    @user_hours = UserHour.where({:id.gte => "1990-01-01 12"})
+    respond_to do |format|
+      format.json
+    end
+  end
+
+  def linecharts
+
+  end
+
 end
