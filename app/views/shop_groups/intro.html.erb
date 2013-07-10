@@ -1,49 +1,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes, target-densitydpi=device-dpi">
-<title><%= @group.name %>行程</title>
-<link href="/stylesheets/mini.css" rel="stylesheet"  type="text/css" media="screen"/>
-</head>
-<body>
-	<div class="main">
-		<div class="header">
-			<div class="headerleft"><a href="http://www.dface.cn"/><img src="/images/logo2.png" width="130" align="middle"/></a></div>
-			<div class="headerright"><strong class="word">为你的旅行导游</strong></div>
-		</div>
-		<div class="con">
-			<div class="plane1">
-				<a href="http://dface.cn/a/down" class="btn1">下载 Android 版</a>
-				<a href="https://itunes.apple.com/cn/app/lianlian/id577710538" class="btn1 ml2p">下载 iPhone 版</a>
-			</div>
-			<div class="box1">
-				<div class="title1"><h2><%=@group.name%></h2></div>
-				<div class="plane2"><%= @group.fat.to_date %></div>
-				<ul>
-					<li>第1天8:30<span>脸脸茶坊</span></li>
-					<li>第1天10:00<span>太子湾公园</span></li>
-					<li>第1天12:00<span>壹贰叁南山路</span></li>
-					<li>第1天13:00<span>柳浪闻莺</span></li>
-					<li>第1天15:00<span>淳安千岛湖湖心亭度假村</span></li>
-					<li>第1天17:00<span>淳安千岛湖湖心亭度假村</span></li>
-					<li>第1天19:00<span>懿成大酒店</span></li>
-					<li>第2天8:30<span>罗马广场</span></li>
-					<li>第2天10:00<span>花港观鱼</span></li>
-					<li>第2天11:30<span>丽鑫大酒店客房</span></li>
-					<li>第2天12:30<span>六和塔茶室</span></li>
-				</ul>
-			</div>
-		</div>
-		<div class="footer">
-			<div class="footerleft"><a href="http://www.dface.cn"/><img src="/images/logo2.png" width="130" align="middle"/></a></div>
-			<div class="footerright"><strong class="word">为你的旅行导游</strong></div>
-		</div>
-		<div class="plane2 gay1 lh18 mb20">旅程中的贴心导游<br/>发现、探索、记录、分享你的旅行</div>
-		<div class="plane1">
-			<a href="http://dface.cn/a/down" class="btn1">下载 Android 版</a>
-			<a href="https://itunes.apple.com/cn/app/lianlian/id577710538" class="btn1 ml2p">下载 iPhone 版</a>
-		</div>
-	</div>
-</body>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes, target-densitydpi=device-dpi">
+      <title><%= @group.name %>行程</title>
+      <link href="/stylesheets/mini.css" rel="stylesheet"  type="text/css" media="screen"/>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <div class="headerleft"><a href="http://www.dface.cn"/><img src="/images/logo2.png" width="130" align="middle"/></a></div>
+        <div class="headerright"><strong class="word">为你的旅行导游</strong></div>
+      </div>
+      <div class="con">
+        <div class="plane1">
+          <a href="http://dface.cn/a/down" class="btn1">下载 Android 版</a>
+          <a href="https://itunes.apple.com/cn/app/lianlian/id577710538" class="btn1 ml2p">下载 iPhone 版</a>
+        </div>
+        <div class="box1">
+          <div class="title1"><h2><%=@group.name%></h2></div>
+          <div class="plane2"><%= @group.fat.to_date %></div>
+          <ul>
+            <% @line.arr.each do |a| %>
+              <li>
+                <%= show_time(a['time']) %> <span><%= Shop.find_by_id(a['sid']).name %></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footerleft"><a href="http://www.dface.cn"/><img src="/images/logo2.png" width="130" align="middle"/></a></div>
+        <div class="footerright"><strong class="word">为你的旅行导游</strong></div>
+      </div>
+      <div class="plane2 gay1 lh18 mb20">旅程中的贴心导游<br/>发现、探索、记录、分享你的旅行</div>
+      <div class="plane1">
+        <a href="http://dface.cn/a/down" class="btn1">下载 Android 版</a>
+        <a href="https://itunes.apple.com/cn/app/lianlian/id577710538" class="btn1 ml2p">下载 iPhone 版</a>
+      </div>
+    </div>
+  </body>
 </html>
