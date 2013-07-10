@@ -91,8 +91,10 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 所有消息id以"FEED"开头的，都属于好友动态消息。好友动态消息以红点的方式提醒，不计数。
 \subsection{好友动态中的评论消息}
 所有消息id以"COMMENT"开头的，都属于好友评论消息。评论消息以数字计数。
+\begin{verbatim}
 
 评论消息提醒的消息id格式："COMMENT#{图片id},#{时间}"。
+\end{verbatim}
 
 当同时有动态消息和评论消息时，优先显示评论消息的数字。
 
