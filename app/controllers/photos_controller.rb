@@ -67,7 +67,7 @@ class PhotosController < ApplicationController
     if UserDevice.user_ver_redis(photo.user_id).to_f>=2.3
       Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
         "'赞'了你的照片",
-        "COMMENT#{self.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
+        "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
     end
     expire_cache_shop(photo.room, photo.user_id)
     render :json => {id:session[:user_id], name: session_user.name, t:Time.now}.to_json
@@ -102,7 +102,7 @@ class PhotosController < ApplicationController
     if UserDevice.user_ver_redis(ru.id).to_f>=2.3
       Resque.enqueue(XmppMsg,  session[:user_id], ru.id,
         params[:text],
-        "COMMENT#{self.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
+        "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
     end
     expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
