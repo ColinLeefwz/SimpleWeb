@@ -33,14 +33,20 @@ class Group
   #1. 婚礼现场，预设密码，输入密码进入
   #2. 旅行团，预设人员，输入手机号码进入
   def auth(uid, str)
-    if pass
-      if str==pass
-        $redis.sadd("GROUP#{uid}", self.sid.to_i)
-        return true
-      else
-        return false
-      end
+    return password_auth(uid,str) if pass
+    return phone_auth(uid, str)
+  end
+  
+  def password_auth(uid,str)
+    if str==pass
+      $redis.sadd("GROUP#{uid}", self.sid.to_i)
+      return true
+    else
+      return false
     end
+  end
+  
+  def phone_auth(uid, str)
     user = users.find{|hash| hash["phone"]==str && hash['id'].nil?}
     if user
       user.merge!({"id" => uid})
@@ -62,6 +68,11 @@ class Group
   
   def self.find_by_phone(phone)
     Group.where({"users.phone" => phone})
+  end
+  
+  def self.invalidate_old
+    #TODO: 已过期的群，从key为“UA商家id"中找到所有用户，然后清除redis中的“GROUP#{uid}”数据
+    #cronjob每天执行一次
   end
   
 end
