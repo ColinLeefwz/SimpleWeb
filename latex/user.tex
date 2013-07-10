@@ -30,6 +30,10 @@ GET & \multicolumn{3}{|c|}{/user\_info/basic} \\
 
 {"name":"amanda林","signature":"","wb_v":false,"wb_vs":"","gender":2,"birthday":"1986-2-15","job":"","jobtype":5,"pcount":5,"wb_uid":"1735512691","id":"50bec2c1c90d8bd12f000086","logo":"http://oss.aliyuncs.com/logo/50fe370ec90d8b173a00023c/0.jpg","logo_thumb":"http://oss.aliyuncs.com/logo/50fe370ec90d8b173a00023c/t1_0.jpg","logo_thumb2":"http://oss.aliyuncs.com/logo/50fe370ec90d8b173a00023c/t2_0.jpg"}
 
+如果是微博认证用户，有如下信息
+   :wb_v,  #是否是微博认证用户
+   :wb_vs # 微博认证说明
+  
 \end{verbatim}
 \end{figure}
 
@@ -293,6 +297,30 @@ GET & \multicolumn{3}{|c|}{/user\_info/get\_comment\_names} \\
 id是被设置备注名的用户的id，s是备注名。
 \end{verbatim}
 \end{figure}
+
+
+\subsection{根据用户名查找脸脸用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/search} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ name  & 字符串 & 必须 & 用户的脸脸名字、微博／qq昵称、手机号码等\\ 
+\hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+根据用户的脸脸名字、微博／qq昵称、手机号码等查找脸脸用户。其中手机号码是精确查询，其它是模糊查询。
+
 
 
 
