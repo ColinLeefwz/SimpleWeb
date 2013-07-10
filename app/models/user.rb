@@ -36,6 +36,7 @@ class User
   #validates_uniqueness_of :wb_uid #TODO: 是否name必须唯一，以及添加其它约束
   
   index({wb_uid: 1})
+  index({phone: 1})
   index({city: 1, gender:1})
   
   def follow_ids
