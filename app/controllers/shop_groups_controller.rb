@@ -8,6 +8,7 @@ class ShopGroupsController < ApplicationController
 
   def intro
     @group = Group.find_by_id(params[:id])
+    @line = @group.line
     render :layout => false
   end
 
