@@ -88,7 +88,7 @@ class PhotosController < ApplicationController
     if UserDevice.user_ver_redis(photo.user_id).to_f>=2.3
       Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
         params[:text],
-        "COMMENT#{self.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
+        "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
     end
     expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
