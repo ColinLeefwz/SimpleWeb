@@ -1,0 +1,45 @@
+<h1>Bssid日志</h1>
+<%= form_tag '/admin_bssid_stats',:method =>:get do %>
+  bssid: <%= text_field_tag :bssid, params[:bssid] %>
+  <%= submit_tag "提交" %>
+<%end%>
+<br/>
+<table border="1">
+  <tr>
+    <th>bssid</th>
+    <th>ssid</th>
+    <th>绑定商家</th>
+    <th>是否移动wifi</th>
+    <th>签到商家</th>
+  </tr>
+
+  <% @bssid_stats.each do |bssid_stat| %>
+    <tr>
+      <td>
+        <%= bssid_stat.id %>
+      </td>
+      <td>
+        <%= bssid_stat.ssid %>
+      </td>
+      <td>
+        <%= bssid_stat.shop_id %>
+      </td>
+      <td>
+        <%= bssid_stat.mobile ? '是' : ''%>
+      </td>
+      <td>
+        <% bssid_stat.shops do |s| %>
+          <%=link_to Shop.find_by_id(s['id']).try(:name)||'', "/admin_shops/show?id=#{s['id']}" %>
+          <br/>
+        <% end %>
+      </td>
+
+    </tr>
+
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
+<br/>
+<br/>
+
