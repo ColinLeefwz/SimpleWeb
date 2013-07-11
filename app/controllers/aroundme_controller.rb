@@ -23,7 +23,8 @@ class AroundmeController < ApplicationController
       if params[:gps]
          begin
            gps = ActiveSupport::JSON.decode(params[:gps]) 
-           lo2 = [gps["Latitude"],gps["Longitude"]]
+           acc2 = gps["Accuracy"].to_i
+           lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>1
          rescue Exception => e
            logger.error e
          end
@@ -33,7 +34,7 @@ class AroundmeController < ApplicationController
       elsif lo1.nil?
         lo = lo2
       else
-        lo = lo1 #TODO: 根据经纬度误差加权
+        lo = Shop.new.mid_loc(lo1,params[:accuracy],lo2,acc2)
       end
     end
     arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
@@ -141,12 +142,7 @@ class AroundmeController < ApplicationController
       next if u.forbidden?
       next if u.invisible.to_i>=2
       output_hot_user(u,ret)
-    end
-    diff = pcount-ret.size
-    if diff>0
-      sex2 = sex==2? 1:2
-      users2 = hot_users_cache(city,sex2,skip,diff)
-      users2.each {|x| output_hot_user(x,ret)}
+      break if ret.size>=pcount
     end
     render :json => ret.to_json
   end
@@ -198,20 +194,12 @@ class AroundmeController < ApplicationController
   end
   
   def hot_users_no_cache(city,sex,skip,pcount)
-    sex==1? sexa=2 : sexa=1
-    sex==1? sexb=1 : sexb=2 
-    uids = $redis.zrevrange("HOT#{sexa}U#{city}",skip,skip+pcount-1)
-    diff = uids.size-pcount
-    if diff>0
-      uids += $redis.zrevrange("HOT#{sexb}U#{city}",skip,skip+diff-1)
-    end
-    diff = uids.size-pcount
-    if diff>0
-      if city.length>1
-        uids += $redis.zrevrange("HOT#{sexa}U",skip,skip+diff-1)
-      else
-        uids += $redis.zrevrange("HOT#{sexa}U010",skip,skip+diff-1) 
-      end
+    uids = $redis.zrevrange("HOT#{sex}U#{city}",skip,skip+pcount-1)
+    if city.length>1
+      city2 = city[0] + (city.to_i+1).to_s
+      uids += $redis.zrevrange("HOT#{sex}U#{city2}",skip,skip+pcount-1)
+    else
+      uids += $redis.zrevrange("HOT#{sex}U010",skip,skip+pcount-1) 
     end
     users = uids.map{|id| User.find_by_id(id)}.find_all{|x| x != nil}
     users
