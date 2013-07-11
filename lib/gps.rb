@@ -83,6 +83,8 @@ module Gps
   end
   
   def mid_lo6(lat1,lng1,acc1,lat2,lng2,acc2)
+    acc1 = acc1.to_f
+    acc2 = acc2.to_f
     x = 1.0/acc1 + 1.0/acc2
     a1 = (1.0/acc1)/x
     a2 = (1.0/acc2)/x
