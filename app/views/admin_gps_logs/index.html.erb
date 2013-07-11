@@ -8,6 +8,7 @@
 <br/>
 <table border="1">
   <tr>
+    <th>时间</th>
     <th>用户</th>
     <th>坐标</th>
     <th>误差</th>
@@ -18,6 +19,9 @@
 
   <% @gps_logs.each do |gps_log| %>
     <tr>
+      <td>
+        <%= gps_log.cat.strftime("%Y-%m-%d %H:%M:%S") %>
+      </td>
       <td>
         <%=link_to gps_log.user_name||'', "/admin_users/show?id=#{gps_log.uid}" %>(
         <%= gps_log.uid %>
@@ -30,7 +34,7 @@
         <%= gps_log.acc %>
       </td>
       <td>
-        <%= gps_log.bssid %>
+        <%=link_to gps_log.bssid||'', "/admin_bssid_stats?bssid=#{gps_log.bssid}" %>
       </td>
       <td>
         <%= gps_log.bd ? "是" : ""%>
