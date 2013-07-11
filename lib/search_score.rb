@@ -54,7 +54,7 @@ module SearchScore
     score.each do |xx|
       x=xx[0]
       base_score(xx,x)
-      xx[2] -= 200 if owner?(xx,uid)
+      xx[2] -= 100 if owner?(xx,uid)
     end
     user = User.find_by_id(uid)
     if user && (Time.now.to_i-user.cati)>3600*24*7 && bssid.nil?
