@@ -95,8 +95,7 @@ module SearchScore
   end
   
   def adjust(score,accuracy,min_d)
-    ret = score
-    #ret = -200 if ret < -200 #最多加权2/3后封顶
+    ret = adjust0(score)
     acc = accuracy
     acc = 30 if acc<30
     acc = 1000 if acc>1000
@@ -105,6 +104,21 @@ module SearchScore
     factor = (min_d-acc)/30.0
     factor = 3 if factor>3
     return ret*(1+factor)
+  end
+  
+  def adjust0(score)
+    ret = 0
+    if score<-300
+      ret = (score+300)*0.1
+      score = -300
+    end
+    if score<-200
+      ret += (score+200)*0.2
+      score = -200
+    end   
+    ret = ret + score
+    ret = -300 if ret < -300
+    ret
   end
   
   #对当天有用户的商家加权
