@@ -322,6 +322,15 @@ GET & \multicolumn{3}{|c|}{/user\_info/search} \\
 根据用户的脸脸名字、微博／qq昵称、手机号码等查找脸脸用户。其中手机号码是精确查询，其它是模糊查询。
 
 
+\begin{figure}[H]
+\begin{verbatim}
+返回用户的基本信息，该用户和当前用户的关系信息，距离等。如果是黑名单用户，则有“black:1”。
+
+[{"name":"袁乐天","signature":"","gender":1,"birthday":"","jobtype":null,"pcount":0,"wb_uid":"a1","id":"502e6303421aa918ba00007c","logo":"","logo_thumb":"","logo_thumb2":"","wb_name":null,"qq_name":null,
+"friend":false,"follower":false,"distance":99999999}]
+\end{verbatim}
+\end{figure}
+
 
 
 \section{用户相册与头像}
