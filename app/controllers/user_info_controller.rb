@@ -46,6 +46,7 @@ class UserInfoController < ApplicationController
       hash = u.safe_output.merge(u.relation_hash(session[:user_id]))
       hash.merge!({wb_name:u.wb_name, qq_name:u.qq_name})
       hash.merge!({distance: u.distance(session[:user_id])})
+      hash.merge!({black:1}) if session_user.black?(u.id)
       hash
     end
     ret.sort {|a,b| b["distance"]<=>a["distance"]}
