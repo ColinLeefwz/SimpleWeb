@@ -22,14 +22,14 @@
         <%= bssid_stat.ssid %>
       </td>
       <td>
-        <%= bssid_stat.shop_id %>
+        <%=link_to(Shop.find_by_id(bssid_stat.shop_id).try(:name)||'', "/admin_shops/show?id#{bssid_stat.shop_id}") if bssid_stat.shop_id %>
       </td>
       <td>
         <%= bssid_stat.mobile ? '是' : ''%>
       </td>
       <td>
-        <% bssid_stat.shops do |s| %>
-          <%=link_to Shop.find_by_id(s['id']).try(:name)||'', "/admin_shops/show?id=#{s['id']}" %>
+        <% bssid_stat.shops.each do |s| %>
+          <%=  link_to Shop.find_by_id(s['id']).try(:name)||'', "/admin_shops/show?id=#{s['id']}" %>
           <br/>
         <% end %>
       </td>
