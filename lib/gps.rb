@@ -81,6 +81,17 @@ module Gps
     arr.uniq!
     self.update_attributes!({lo:arr})
   end
+  
+  def mid_lo6(lat1,lng1,acc1,lat2,lng2,acc2)
+    x = 1.0/acc1 + 1.0/acc2
+    a1 = (1.0/acc1)/x
+    a2 = (1.0/acc2)/x
+    [lat1*a1+lat2*a2, lng1*a1+lng2*a2]
+  end
+  
+  def mid_loc(lo1,acc1,lo2,acc2)
+    mid_lo6(lo1[0],lo1[1],acc1,lo2[0],lo2[1],acc2)
+  end
 
   
 end
