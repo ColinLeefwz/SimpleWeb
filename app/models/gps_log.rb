@@ -8,6 +8,8 @@ class GpsLog
   field :bssid
   field :bd    #是否百度定位
   field :speed #速度
+  field :wifi, type: Array
+  field :gps, type: Hash
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :to => :user
   end

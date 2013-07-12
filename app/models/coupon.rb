@@ -42,11 +42,19 @@ class Coupon
   store_in_background :img
   
   field :img2
+  field :num, type:Integer  #优惠券编号， 每个商家的编号独立
+
+
   mount_uploader :img2, Coupon2Uploader
   
   # 生成coupon image, 然后调用img_tmp='', CarrierWave::Workers::StoreAsset.perform("Coupon",id.to_s,"img")
   
   index({ shop_id: 1})
+
+  def self.next_num(sid)
+    coupon = self.where({shop_id:sid}).sort({num: -1}).limit(1).first
+    (coupon && coupon.num) ? coupon.num.succ : 1
+  end
   
   def shop
     Shop.find_by_id(shop_id)
