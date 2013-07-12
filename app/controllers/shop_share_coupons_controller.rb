@@ -42,7 +42,8 @@ class ShopShareCouponsController < ApplicationController
     @coupon = Coupon.new(params[:coupon])
     @coupon.shop_id = session[:shop_id]
     @coupon.t2 = 2
-
+    @coupon.num = Coupon.next_num(@coupon.shop_id)
+    
     unless Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => nil, :t2 => 2}).limit(1).blank?
       return flash.now[:notice] = '该商家已有一张未停用分享类优惠券.'
     end

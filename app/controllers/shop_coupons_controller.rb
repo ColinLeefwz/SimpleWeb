@@ -65,6 +65,7 @@ class ShopCouponsController < ApplicationController
     @coupon = Coupon.new(params[:coupon])
     @coupon.shop_id = session[:shop_id]
     @coupon.t2 = 1
+    @coupon.num = Coupon.next_num(@coupon.shop_id)
     @coupon.process_img_upload = true if @coupon.t.to_i == 2
     if @coupon.img2.blank?
       flash.now[:notice]='请上传图片.'
@@ -76,6 +77,7 @@ class ShopCouponsController < ApplicationController
       flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
       return render :layout => true
     end
+
 
     if @coupon.save
       if @coupon.t.to_i == 1
