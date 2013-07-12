@@ -91,6 +91,13 @@ class CouponDown
     `cd coupon && ./gen_demo.sh '#{coupon.name}' '#{desc}' ../public#{path} #{Photo.img_url(photo_id, :t2)}`
     return path
   end
+  
+  def gen_tmp_checkin_coupon_img
+    path = share_coupon_img_path
+    return path if File.exist?("public"+path)
+    `cd coupon && ./gen_tmp.sh '#{self.download_num}' '#{coupon.img.url}' ../public#{path}`
+    return path
+  end
 
   #优惠券的下载编号。 优惠券的编号 + 当前下载编号
   def download_num
