@@ -15,6 +15,11 @@ class CouponsController < ApplicationController
       redirect_to path
       return
     end
+    if cp.t2==1 && cp.num && cpd.num
+      path = cpd.gen_tmp_checkin_coupon_img
+      redirect_to path
+      return
+    end    
     if params[:size].to_i==0
       redirect_to cp.img.url
     else
