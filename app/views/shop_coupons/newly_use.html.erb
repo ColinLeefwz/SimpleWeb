@@ -1,9 +1,10 @@
 <div class="title2"><h2><%= params[:date] || '' %><%= params[:cid].blank? ? "" : "'#{Coupon.find_by_id(params[:cid]).try(:name)}'" %>使用记录</h2></div>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
-    <th width="35%" align="left" colspan="2">优惠券</th>
+    <th width="28%" align="left" colspan="2">优惠券</th>
     <th width="20%" align="left">用户</th>
     <th width="8%" align="center">性别</th>
+    <th width="10%" align="center">编号</th>
     <th width="8%" align="center">查看时间</th>
     <th width="8%" align="center">使用时间</th>
     <th width="10%" align="center">消费数据</th>
@@ -18,6 +19,7 @@
       <td>
         <%=link_to use.user_name, "/shop_checkins/user?uid=#{use.uid}"  %></td>
       <td align="center"><%=use.user_show_gender %></td>
+      <td align="center"><%= use.download_num%></td>
       <td align="center"><%= use.vat.since(8.hours).strftime("%Y-%m-%d %H:%M") if use.vat %></td>
       <td align="center"><%= use.uat.since(8.hours).strftime("%Y-%m-%d %H:%M") %></td>
       <td align="center"><%= use.data %></td>

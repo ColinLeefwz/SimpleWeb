@@ -37,9 +37,9 @@ class ShopCouponReportsController < ApplicationController
     end
 
     csv_string =  CSV.generate do |csv|
-      csv << ['优惠券名称' , '下载用户',"下载时间","收到时间","查看时间", '使用时间', '分店', '备注']
+      csv << ['优惠券名称' , '下载用户','编号', "下载时间","收到时间","查看时间", '使用时间', '分店', '备注']
       coupon_downs.each do |d|
-        csv << [d.coupon_name, reject_unident(d.user_name), to_local(d.dat), to_local(d.sat), to_local(d.vat), to_local(d.uat), d.sub_shop_name, d.data]
+        csv << [d.coupon_name, reject_unident(d.user_name),d.download_num,  to_local(d.dat), to_local(d.sat), to_local(d.vat), to_local(d.uat), d.sub_shop_name, d.data]
       end
     end
     send_data( csv_string, :type => content_type, :filename => "exp.csv")
