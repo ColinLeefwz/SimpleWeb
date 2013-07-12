@@ -42,7 +42,7 @@ class Coupon
   store_in_background :img
   
   field :img2
-  field :num #优惠券编号， 每个商家的编号独立
+  field :num, type:Integer  #优惠券编号， 每个商家的编号独立
 
 
   mount_uploader :img2, Coupon2Uploader
