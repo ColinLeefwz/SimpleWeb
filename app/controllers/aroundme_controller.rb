@@ -4,18 +4,6 @@ class AroundmeController < ApplicationController
   before_filter :user_login_filter, :only => [:hot_users, :shops]
   caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
   
-  #  $qb_seller = [
-  #    "517ccc0ac90d8b49ef000033", #兵临城下
-  #    "516bc8cbc90d8b5663000019", #兵临城下
-  #    "50dc0d25c90d8bc42a000098", #若博斯
-  #    "519084ddc90d8bc2ee00002c", #蓶ーDéィ衣賴
-  #    "50fde347c90d8b8b7f0000d1", #muak-婷
-  #    "5170d235c90d8b07e8000052", #游源土人
-  #    "50f8e2ebc90d8bb4260000aa", #大安
-  #    "519987b0c90d8bdb32000072", #油条
-  #    "512b60bec90d8b401e000135", #3+
-  #  ]
-  
   def shops
     lo = [params[:lat].to_f,params[:lng].to_f]
     if params[:baidu].to_i==1
@@ -34,11 +22,12 @@ class AroundmeController < ApplicationController
       elsif lo1.nil?
         lo = lo2
       else
-        lo = Shop.new.mid_loc(lo1,params[:accuracy],lo2,acc2)
+        lo = lo1
+        #lo = Shop.new.mid_loc(lo1,params[:accuracy],lo2,acc2)
       end
     end
     arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
-    record_gps(lo)
+    record_gps(lo, gps)
     if is_kx_user?(session[:user_id])
       arr << Shop.find_by_id(21830784)
       arr << Shop.find_by_id(21830785)
@@ -161,14 +150,15 @@ class AroundmeController < ApplicationController
     ret << hash
   end
 
-  def record_gps(lo)
+  def record_gps(lo,gps)
     hash = {uid:session[:user_id], lo:lo, acc:params[:accuracy]}
     hash.merge!(bssid:params[:bssid]) if params[:bssid]
     hash.merge!(bd:params[:baidu]) if params[:baidu]
     if params[:speed]
       speed = params[:speed].to_f 
       hash.merge!(speed:speed) if speed>0.1
-    end    
+    end
+    hash.merge!(gps:gps) if gps
     GpsLog.collection.insert(hash)
   end
   
