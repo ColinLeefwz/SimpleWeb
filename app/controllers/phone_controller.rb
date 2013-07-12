@@ -60,6 +60,7 @@ class PhoneController < ApplicationController
   end
   
   def change_password
+    user = session_user
     if params[:oldpass].nil? || user.password != slat_hash_pass(params[:oldpass])
       render :json => {"error"=>"原密码输入错误"}.to_json
       return
@@ -115,6 +116,7 @@ class PhoneController < ApplicationController
   end
   
   def send_sms_ihuiyi(phone, text)
+    return true if Rails.env != "production"
     return true if phone[0]=="0"
     begin
       pass = URI.escape("www.dface.cn20130709")
