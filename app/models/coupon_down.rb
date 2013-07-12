@@ -13,7 +13,7 @@ class CouponDown
   field :photo_id, type: Moped::BSON::ObjectId # 分享类优惠券的分享图片id
   field :sub_sid, type: Integer #获得主店分享类优惠券时，实际分享发生的分店id
   field :data #消费时输入的数据，可以是消费金额／手机号码／服务员编号等
-  field :num #优惠券下载编号， 每个优惠券独立编号
+  field :num, type:Integer #优惠券下载编号， 每个优惠券独立编号
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :gender, :birthday, :weibo_home,:show_gender, :to => :user
@@ -85,11 +85,17 @@ class CouponDown
     return path if File.exist?("public"+path)
     desc = coupon.desc
     dea = desc.split(/\r\n/)
-    cnum = download_num
-    dea[4] = "优惠券编号: #{cnum}"
+    dea[4] = "优惠券编号: #{download_num}"
     desc = dea.join("\r\n")
 
     `cd coupon && ./gen_demo.sh '#{coupon.name}' '#{desc}' ../public#{path} #{Photo.img_url(photo_id, :t2)}`
+    return path
+  end
+  
+  def gen_tmp_checkin_coupon_img
+    path = share_coupon_img_path
+    return path if File.exist?("public"+path)
+    `cd coupon && ./gen_tmp.sh '#{self.download_num}' '#{coupon.img.url}' ../public#{path}`
     return path
   end
 
