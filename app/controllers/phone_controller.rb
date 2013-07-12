@@ -96,7 +96,9 @@ class PhoneController < ApplicationController
 #      return
 #    end
     user = session_user_no_cache
-    user.update_attribute(:phone, params[:phone])
+    user.password = slat_hash_pass(params[:password])
+    user.phone = params[:phone]
+    user.save!
     render :json => {bind: true}.to_json
   end
   
