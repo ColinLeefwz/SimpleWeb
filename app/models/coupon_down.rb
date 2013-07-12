@@ -85,12 +85,17 @@ class CouponDown
     return path if File.exist?("public"+path)
     desc = coupon.desc
     dea = desc.split(/\r\n/)
-    cnum = "#{coupon.num}#{num.to_s.rjust(3,'0')}"
+    cnum = download_num
     dea[4] = "优惠券编号: #{cnum}"
     desc = dea.join("\r\n")
 
     `cd coupon && ./gen_demo.sh '#{coupon.name}' '#{desc}' ../public#{path} #{Photo.img_url(photo_id, :t2)}`
     return path
+  end
+
+  #优惠券的下载编号。 优惠券的编号 + 当前下载编号
+  def download_num
+    "#{coupon.num}-#{num.to_s.rjust(3,'0')}"
   end
   
   def share_coupon_img_path
