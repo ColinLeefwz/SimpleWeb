@@ -386,7 +386,10 @@ class Shop
     $xmpp_ips.count.times do |t|
       url = "http://#{$xmpp_ips[t]}:5280/api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}"
       begin
-        return JSON.parse(RestClient.get(url))
+        chats=  JSON.parse(RestClient.get(url))
+        rmd = RoomMsgDel.where({room: self.id.to_i}).distinct(:mid)
+        chats.reject!{|c| rmd.include?(c[3])}
+        return chats
       rescue
         next
       end
