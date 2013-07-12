@@ -20,7 +20,8 @@ GET & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/gchat} \\
 \end{tabular}
    \end{center}
 \end{table}
-
+返回值的数据结构：
+[发送者ID,消息内容,以秒表示的时间,消息ID]
 
 \subsection{获得个人聊天的历史记录}
 
@@ -37,6 +38,9 @@ GET & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/chat} \\
 \end{tabular}
    \end{center}
 \end{table}
+返回值的数据结构：
+[接受者ID,消息内容,以秒表示的时间,消息ID]
+
 
 \subsection{获得两人之间的聊天历史记录}
 
@@ -55,6 +59,10 @@ GET & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/chat2} \\
 \end{tabular}
    \end{center}
 \end{table}
+
+返回值的数据结构：
+[发送者ID, 接受者ID,消息内容,以秒表示的时间,消息ID]
+
 
 \subsection{其它内部接口}
 仅用于服务器端的后台内部调用。
