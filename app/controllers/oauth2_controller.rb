@@ -65,10 +65,10 @@ class Oauth2Controller < ApplicationController
       response = RestClient.post 'https://api.weibo.com/oauth2/access_token', 
       :client_id => $sina_api_key, :client_secret => $sina_api_key_secret, :grant_type => 'password', 
       :username => params[:name], :password => params[:pass]
-    rescue RestClient::BadRequest
+    rescue RestClient::BadRequest => bre
       render :json => {:error => "密码或用户名输入错误！"}.to_json
       return
-    rescue Exception
+    rescue Exception => e
       render :json => {:error => "e未知原因的登陆失败，请稍后重试！"}.to_json
       return
     end
