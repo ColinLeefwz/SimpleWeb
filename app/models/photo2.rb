@@ -6,9 +6,9 @@ class Photo2
   field :user_id, type: Moped::BSON::ObjectId
   field :to_uid #发给个人
   field :t, type:Integer #图片类型：1拍照；2选自相册
+  
   field :img
   mount_uploader(:img, Photo2Uploader)
-  
   field :img_tmp
   field :img_processing, type:Boolean
   process_in_background :img
