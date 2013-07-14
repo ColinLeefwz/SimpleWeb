@@ -10,7 +10,8 @@ class Photo2
   mount_uploader(:img, Photo2Uploader)
   
   field :img_tmp
-  store_in_background :img
+  field :img_processing, type:Boolean
+  process_in_background :img
   
   index({ user_id: 1 })
   
