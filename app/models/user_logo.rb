@@ -11,8 +11,9 @@ class UserLogo
   mount_uploader(:img, LogoUploader)
   
   field :img_tmp
-  store_in_background(:img) unless ENV["RAILS_ENV"] == "test"
-  
+  field :img_processing, type:Boolean
+  process_in_background(:img) unless ENV["RAILS_ENV"] == "test"
+    
   index({ user_id: 1, ord: 1 })
   
   
