@@ -34,7 +34,7 @@ gem 'uuid'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'rest-client'
-gem 'carrierwave-aliyun', :git => "git://github.com/yuanxinyu/carrierwave-aliyun.git"
+gem 'carrierwave-aliyun'#, :git => "git://github.com/yuanxinyu/carrierwave-aliyun.git"
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'carrierwave_backgrounder', :git => "git://github.com/yuanxinyu/carrierwave_backgrounder.git"
 
