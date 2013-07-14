@@ -20,8 +20,8 @@ class Photo
   mount_uploader(:img, PhotoUploader)
   
   field :img_tmp
-  #field :img_processing, type:Boolean
-  store_in_background :img
+  field :img_processing, type:Boolean
+  process_in_background :img
     
   index({user_id:1, room:1})
   index({room:1, updated_at:-1})

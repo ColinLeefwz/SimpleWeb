@@ -10,8 +10,9 @@ class Sound2
   mount_uploader(:img, Sound2Uploader)
   
   field :img_tmp
-  store_in_background :img if Rails.env=="production"
-  
+  field :img_processing, type:Boolean
+  process_in_background :img if Rails.env=="production"
+    
   index({ user_id: 1 })
   
   
