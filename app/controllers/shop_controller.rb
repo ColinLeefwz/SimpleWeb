@@ -41,6 +41,10 @@ class ShopController < ApplicationController
       render :json => [].to_json
       return
     end
+    if params[:sname]=="听说" || params[:sname]=="听" || (params[:sname][0]=="听" && params[:sname][-1]=="说")
+      render :json => [Shop.find_by_id(21832930)].map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
+      return
+    end    
     lo = [params[:lat].to_f, params[:lng].to_f]
     if params[:sname].length<3
       radis = 0.002 + params[:sname].length*0.0005
