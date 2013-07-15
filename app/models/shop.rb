@@ -305,6 +305,10 @@ class Shop
     return  unless msg=='0' || msg =~ /^0[1-9]$/
     return answer_text_default if msg=='0'
     faq = self.faq(msg)
+    if faq.nil?
+      shop = Shop.find_by_id($llshop)
+      faq = shop.faq(msg) if shop
+    end
     return answer_text_default if faq.nil?
     if faq.img.blank?
       faq.text
