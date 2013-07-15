@@ -21,6 +21,7 @@ $uuid = UUID.new
 $LOG = Logger.new('log/sina_api.log', 0, 100 * 1024 * 1024)
 
 $llcf = 21828775 #脸脸茶坊
+$llshop = 21830954 #浙江产业大厦11楼脸脸网络
 $llsc = 21830325 #脸脸商城
 $zjkjcyds = 20325453 #浙江科技产业大厦
 
