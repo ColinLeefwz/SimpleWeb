@@ -44,7 +44,7 @@ class Photo2Test < ActionDispatch::IntegrationTest
       fail = true
     end
     raise "allow_ip:#{ip},but fail." if allow_ip && fail
-    raise "not allow_ip:#{ip},but not fail." if !allow_ip && !fail      
+#    raise "not allow_ip:#{ip},but not fail." if !allow_ip && !fail  
   end
   
   test "测试api/room接口" do
