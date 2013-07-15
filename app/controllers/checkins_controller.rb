@@ -210,12 +210,12 @@ class CheckinsController < ApplicationController
     flag1 = send_share_coupon_notice_if_exist(shop)
     flag2 = send_faq_notice_if_exist(shop)
     return if flag1 || flag2
-    order = shop.realtime_user_count+1
-    str = ""
+    #order = shop.realtime_user_count+1
+    #str = ""
     #str += "欢迎！您是第 #{order} 个来到\##{shop.name}\#的脸脸。" if order<=10
-    str += "置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。" if shop.photo_count<4
-    return str if ENV["RAILS_ENV"] != "production"
-    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
+    #str += "置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。" if shop.photo_count<4
+    #return str if ENV["RAILS_ENV"] != "production"
+    #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
   end 
 
 

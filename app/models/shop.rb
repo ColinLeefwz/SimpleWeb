@@ -315,7 +315,12 @@ class Shop
   
   def answer_text_default
     faqs = self.faqs.to_a
-    return "本地点未启用数字问答系统" if faqs.size==0
+    if faqs.size==0
+      return "本地点未启用数字问答系统" if self.id==$llshop
+      shop = Shop.find_by_id($llshop)
+      return "本地点未启用数字问答系统" if shop.nil?
+      return "这地方怎么找不到人啊？"+shop.answer_text_default
+    end
     "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n") 
   end
 
