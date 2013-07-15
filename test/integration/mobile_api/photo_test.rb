@@ -66,18 +66,10 @@ class PhotoTest < ActionDispatch::IntegrationTest
     assert_equal data["weibo"], false
     assert_equal data["desc"],  '一张图片'
     assert_nil data["logo_thumb2"]
-    assert !Photo.last.img_tmp.nil?
     
     assert_equal Photo.last.id, Checkin.last.photos[0]
 
-    #未处理就获得图片
-    begin
-      get "/photos/show?id=#{Photo.last.id}"
-      raise "should throw error"
-    rescue
-    end
-    
-    id = Photo.last.id
+
     #assert_equal Photo.find_by_id(id).to_json, Photo.find(id).to_json
     #奇怪，为什么上面的断言不成立，{img:{img:url}属性不一样！
        

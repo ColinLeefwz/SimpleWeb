@@ -83,7 +83,7 @@ class CouponDown
     raise "图片分享后才能生成分享类优惠券" unless photo_id
     path = share_coupon_img_path
     return path if File.exist?("public"+path)
-    desc = coupon.desc
+    desc = coupon.desc.to_s
     dea = desc.split(/\r\n/)
     dea[4] = "优惠券编号: #{download_num}"
     desc = dea.join("\r\n")
