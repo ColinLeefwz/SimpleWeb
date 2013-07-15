@@ -11,6 +11,7 @@ class CouponTest < ActionDispatch::IntegrationTest
     Coupon.delete_all
     Checkin.delete_all
     CouponDown.delete_all
+    Photo.delete_all
     
     #未登录发布签到优惠券
     post "/shop_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "rulev"=>""}}
