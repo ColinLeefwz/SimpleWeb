@@ -262,8 +262,10 @@ class Shop
     Coupon.where({shop_id: self.id.to_i, hidden: nil, t2: '2'}).sort({_id: -1}).limit(1).to_a[0]
   end
   
-  def send_coupon(user_id)
+  def send_coupon(user_id, limit=2)
     coupons = []
+    #7月18 活动，获取附近活动商家的优惠券
+    coupons += active_shop_coupons(user_id, limit)
     coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
     coupons.each{|coupon| coupon.send_coupon(user_id)}
@@ -271,6 +273,18 @@ class Shop
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
     return "收到#{coupons.count}张优惠券: #{name}" if ENV["RAILS_ENV"] != "production"
     Resque.enqueue(XmppNotice, self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
+  end
+
+  #7月18 活动，获取附近活动商家的优惠券，
+  def active_shop_coupons(user_id, limit)
+    if $ActiveShops.include?(id.to_i)
+      shops = Shop.find($ActiveShops-[self.id])
+      loc = loc_first
+      shops = shops.sort{|f,s| get_distance(f.loc_first, loc) <=> get_distance(s.loc_first, loc) }[0, limit]
+      shops.inject([]){|f,s|  f + s.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }}
+    else
+      []
+    end
   end
   
   def allow_sub_coupons(user_id)
