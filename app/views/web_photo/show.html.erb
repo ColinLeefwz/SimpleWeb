@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>脸脸</title>
+<style type="text/css">
+/* CSS Document */
+*{padding:0px;margin:0px;outline:none;}
+body {font-size: 12px;background:#F2F2F2;font-family:Arial;}
+img{border:none;}
+.l{float:left;}
+a{text-decoration:none;}
+.f18{font-size:18px;}
+.f20{font-size:20px;}
+.p3p{padding:3% !important;}
+.pl3p{padding-left:3% !important;}
+.mt5{margin-top:5px;}
+.ml8p{margin-left:8% !important;}
+.ml10{margin-left:10px;}
+.mb10{margin-bottom:10px}
+.mb20{margin-bottom:20px}
+.wordstyle{font-size:14px;color:#333333;}
+.wordstyle2{font-size:22px;color:#333333;}
+.bold{font-weight:bold;}
+.lh18{line-height:18px !important;}
+.lh25{line-height:25px !important;}
+.gay1{color:#949494 !important}
+a.btn1{width:151px;height:84px;background:url(/admin/image/share_weibo/btn1.png) left top no-repeat;display:block;float:left;margin-right:15px;_margin-right:7px;_display:inline;}
+a.btn1:hover{background-image:url(/admin/image/share_weibo/btn1_2.png);}
+a.btn2{width:151px;height:84px;background:url(/admin/image/share_weibo/btn2.png) left top no-repeat;display:block;float:left;margin-right:15px;_margin-right:7px;_display:inline;}
+a.btn2:hover{background-image:url(/admin/image/share_weibo/btn2_2.png);}
+a.btn3{width: 126px;height: 46px;display: inline-block;text-align:center;background: url("../images/btn5.png") left top no-repeat;
+color:#ffffff;font-size:14px;font-weight:bold;line-height:46px;letter-spacing:-0.5px;}
+a.btn4{width: 252px;height: 92px;display: inline-block;text-align:center;background: url("../images/btn5_1.png") left top no-repeat;
+color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
+
+.clear1{width:100%;height:0px;clear:both;overflow:hidden;zoom:1;}
+
+#BG1{position:absolute;left:0px;top:0px;width:100%;background-image:url(/admin/image/share_weibo/bg1.png);overflow:hidden;}
+#SmallPic{cursor:pointer;}
+#BigPic{cursor:pointer;position:absolute;z-index:5;}
+
+#Main{width:785px;margin:0px auto;position:relative;zoom:1;}
+#Main .mainleft{width:468px;float:left; box-shadow:3px 3px 2px #e6e6e6;border:1px solid #DDDDDD;background-color:#ffffff;}
+#Main .mainright{float:right;zoom:1;overflow:hidden;width:246px;}
+
+.main2{width:640px;margin:0px auto;display:block;overflow:hidden;}
+.con{display:block;overflow:hidden;box-shadow:1px 1px 1px #EAEAEA;border:1px solid #ccc;background-color:#ffffff;width:97%;margin:0px auto;}
+
+.footer{width:100%;margin:20px 0px;overflow:hidden;text-align:center;color:#949494;line-height:30px;font-size:23px;}
+.footer h2{font-size:28px;color:#333;display:block;margin:20px 0px;}
+
+.plane{padding:15px 19px;border-top:none;border-bottom:0px;color:#949494;background:#fff;line-height:18px;}
+
+.plane2{padding:15px 19px;border-top:1px solid #DDDDDD;color:#949494;background:#F8F8F8;line-height:18px;clear:both;overflow:hidden;zoom:1;}
+.plane2 .plane2left{float:left; white-space:nowrap;}
+.plane2 .plane2right{float:right;}
+.plane2 .plane2left img{float:left;margin-right:10px;}
+
+.plane3{margin:30px 0px 50px 0px;color:#949494;line-height:18px;clear:both;overflow:hidden;}
+.plane4{width:100%;overflow:hidden;margin-bottom:45px;clear:both;}
+.plane6{width:100%;margin-bottom:30px;overflow:hidden;text-align:center;}
+.plane7{padding:3% !important;border-bottom:0px;color:#949494;background:#fff;line-height:30px;font-size:25px;}
+.plane8{padding:3% !important;border-top:1px solid #ccc;color:#949494;background:#F8F8F8;line-height:25px;font-size:23px;clear:both;overflow:hidden;zoom:1;}
+.plane8 img{float:left;margin-right:10px;}
+
+.center_image{width:468px;height:468px;}
+</style>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script> 
+	<script src="js/public.js"></script>
+	<script type="text/javascript">
+		(function(){
+		var mobile_host = "mini.html";
+		var userAgent = navigator.userAgent;
+		//判断设备 
+		if(/(mobile|wap|android)/i.test(userAgent)){
+		if(/pad/i.test(userAgent) || /ting/i.test(userAgent)){ 
+		return;
+		}
+		window.location.replace(mobile_host);
+		}else{
+		return;
+		}
+		})();
+	</script>
+</head>
+<body>
+
+	<div id="Main">
+		<div id="BG1" style="width:200px;heigh:200px;"></div>
+		<div class="mainleft" id="MainLeft">
+			<center><%=image_tag Photo.img_url(@photo.id), :class => "center_image"%></center>
+			<div class="plane">
+				斯诺登曝光说，美国国安局持续入侵中国多家主要电信公司，获取百万手机短信信息。而中国移动、中国电信却至今集体失声了，中国移动、中国电信的兴趣主要是赚钱，怎么从自己客户身上赚更多的钱是这些企业的核心目标，至于用户的信息安全以及短信安全问题，对不起，这不关中国运营商的事情。
+			</div>
+			<div class="plane2">
+				<div class="plane2left">
+					<img src="/admin/image/share_weibo/pic3.jpg" alt="" align="left" width="38" height="38"/><span class="wordstyle">赵海斌</span><br/>昨天 13:20&nbsp;&nbsp;|&nbsp;&nbsp;位置：浙江科技产业大厦
+				</div>
+				<div class="plane2right">
+					<span class="mt5 l">分享到&nbsp;&nbsp;</span>
+					<wb:share-button count="n" id="Sina" style="display:none;"></wb:share-button>
+					<img src="/admin/image/share_weibo/pic4.jpg" align="middle" id="SinaBtn" class="ml10"/>
+					<a href="#" class="ml10"><img src="/admin/image/share_weibo/pic5.jpg" align="middle"/></a>
+					<a href="#" class="ml10"><img src="/admin/image/share_weibo/pic6.jpg" align="middle"/></a>
+				</div>
+			</div>
+		</div>
+		<div class="mainright">
+			<a href="http://www.dface.cn" target="_blank"><img src="/admin/image/share_weibo/logo.png" alt="" width="202" height="80"/></a>
+			<div class="plane3">
+				<div class="wordstyle mb10 bold">此时此刻，我知道你也在这里</div>
+				基于现场的移动社交<br/>
+				上线即被推荐为社交类新品排行第一位
+			</div>
+			<div class="plane4">
+				<a href="https://itunes.apple.com/cn/app/lianlian/id577710538" alt="iPhone版" class="btn1"></a>
+				<img src="/admin/image/share_weibo/btn1_code.png" alt=""/>
+			</div>
+			<div class="plane4">
+				<a href="http://dface.cn/a/down" alt="android版" class="btn2"></a>
+				<img src="/admin/image/share_weibo/btn2_code.png" alt=""/>
+			</div>
+		</div>
+		<div class="clear1"></div>
+	</div>
+</body>
+</html>
