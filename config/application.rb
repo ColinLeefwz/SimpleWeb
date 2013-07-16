@@ -38,7 +38,7 @@ $qq_api_key_secret = "3cc1b95d92352d1335eadc7aea01428f"
 $travel=[21832384]
 
 #7月18日活动商家id
-$ActiveShops=[21828775,21831597]
+$ActiveShops=[21828775,21830785]
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
