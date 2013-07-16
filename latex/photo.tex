@@ -339,6 +339,34 @@ GET & \multicolumn{3}{|c|}{/photos/users} \\
 输出格式同上。
 
 
+
+\subsection{其它用户分享到微信}
+看到别人发的照片，分享到自己的微信朋友圈或者微信好友，在客户端完成分享后，调用本接口。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photos/re\_share} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ user\_id  & 字符串 & 必须 & 分享者的用户id\\ 
+  \hline
+ photo\_id  & 字符串 & 必须 & 被分享的图片id\\ 
+ \hline
+ weibo  & 0/1 & 可选  &  是否同步发送到微博，暂时无效\\
+  \hline
+ qq  & 0/1 & 可选  &  是否同步发送到QQ空间，暂时无效\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+本接口主要用于统计用户和照片的分享数量。分享到微信时，采用url类型，url地址为“http://www.dface.cn/webphoto/show?id=图片id”。
+
+
+
 \section{个人聊天时发图}
 
 \subsection{个人聊天时上传图片}
