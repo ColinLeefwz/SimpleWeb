@@ -216,6 +216,10 @@ class Oauth2Controller < ApplicationController
           user.del_my_cache
           user = User.find(params["name"])
           ptoken = ptoken[0,33] if ptoken[0]=="3" #个推的cid为32位
+          if ptoken[0]=="4" #百度云推送
+            len = ptoken.rindex(",")
+            ptoken = ptoken[0,len]
+          end
           user.update_attribute(:tk, ptoken)
         end
         render :text => "1"
