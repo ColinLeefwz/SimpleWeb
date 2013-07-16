@@ -260,8 +260,8 @@ POST & \multicolumn{3}{|c|}{/coupons/use} \\
 \begin{verbatim}
 “用户密码”+《状态码》+token
 
-状态码为：1代表ios开发设备，2代表实际的ios发布设备, 3代表android个推的clientid。
-对于iOS设备，token是一个64位的字符串。对于android设备，如果clientid小于64，以0填充尾部到64位。
+状态码为：1代表ios开发设备，2代表实际的ios发布设备, 3代表android个推的clientid, 4代表百度云推送.
+对于iOS设备，token是一个64位的字符串。对于android设备，如果token小于64，以0填充尾部到64位。百度云推送的token格式为：channel_id,user_id,补齐0到64位）
 
 比如某用户的密码是“c53b2f16a24c61d9”，
 token是“ea6e4f05b48f4a057816956e567c6feacf14ee28cbbbab67993e263c3dfa2c27”，
