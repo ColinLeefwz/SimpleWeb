@@ -80,6 +80,11 @@ class Coupon
   end
 
   def allow_send_checkin?(user_id)
+    # 7月18日 活动，优惠券没使用不发
+    if $ActiveShops.include?(self.shop_id.to_i)
+      return false if  CouponDown.where({sid: shop_id, uid:  user_id}).limit(1).only(:id).first
+    end
+    
     case self.rule.to_i
     when 0
       return !downed_today(user_id)
@@ -91,15 +96,6 @@ class Coupon
       return false if downed(user_id)
       return Checkin.where({sid: self.shop_id, uid: user_id}).count >= self.rulev.to_i
     end
-  end
-
-  alias  allowsc? allow_send_checkin?
-
-  def allow_send_checkin?(user_id)
-    if $ActiveShops.include?(self.shop_id.to_i)
-      return false if  CouponDown.where({sid: shop_id}).limit(1).only(:id).first
-    end
-    allowsc?(user_id)
   end
 
   def use_users
