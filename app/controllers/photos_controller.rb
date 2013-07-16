@@ -37,6 +37,14 @@ class PhotosController < ApplicationController
     end
   end
   
+  def re_share
+    share = PhotoShare.new
+    share.pid = params[:photo_id]
+    share.uid = params[:user_id]
+    share.save!
+    render :json => {"ok":1}.to_json
+  end
+  
   def detail
     render :json => Photo.find_by_id(params[:id]).output_hash_with_username.to_json
   end
