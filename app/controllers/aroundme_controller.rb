@@ -11,12 +11,12 @@ class AroundmeController < ApplicationController
       if params[:gps]
          begin
            gps = ActiveSupport::JSON.decode(params[:gps]) 
+           acc2 = gps["Accuracy"].to_i
+           lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>1
            wifi = ActiveSupport::JSON.decode(params[:wifi]) 
          rescue Exception => e
            logger.error e
          end
-         acc2 = gps["Accuracy"].to_i
-         lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>1
       end
       if lo2.nil?
         lo = lo1
