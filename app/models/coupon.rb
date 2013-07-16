@@ -93,6 +93,15 @@ class Coupon
     end
   end
 
+  alias  allowsc? allow_send_checkin?
+
+  def allow_send_checkin?(user_id)
+    if $ActiveShops.include?(self.shop_id.to_i)
+      return false if  CouponDown.where({sid: shop_id}).limit(1).only(:id).first
+    end
+    allowsc?(user_id)
+  end
+
   def use_users
     CouponDown.where({cid:self.id, uat:{"$exists" => true}}).sort({uat:-1})
   end
