@@ -1,13 +1,13 @@
 # encoding: utf-8
 module ControllerName
-  Menu = ['用户管理','商家管理','活动管理','签到管理','系统权限','客户端管理','用户统计','商家统计','活动统计','点评统计','个人用户统计']
+  Menu = ['用户管理','地点管理','活动管理','签到管理','系统权限','客户端管理','用户统计','商家统计','活动统计','点评统计','个人用户统计']
   Right= {
     0=>{"admin_users"=>"用户列表", "admin_kx_users"=>"可信用户", "admin_user_logos" => '头像审核', "admin_blacks"=>"举报用户", 
       "admin_rekognitions" => "人脸识别"},
-    1=>{"admin_shops"=>"商家管理", "admin_user_add_shops"=>"用户添加地点管理", "admin_user_reports"=>"用户地点报错管理",
+    1=>{"admin_shops"=>"地点管理", "admin_user_add_shops"=>"用户添加地点管理", "admin_user_reports"=>"用户地点报错管理",
       "admin_shop_notices"=>"商家公告", "admin_shop_faqs"=>"商家问答", "admin_shop_logos"=>"商家logo",
       "admin_shop_coupons"=>"商家优惠券", "admin_shop_photos"=>"照片墙", "admin_shop_bans"=>"商家屏蔽用户", "admin_shop_bindwbs"=>"商家绑定微博", "admin_shop_signs"=>"合同管理",
-      "admin_sina_pois"=>"微博商家", "admin_baidu"=>"百度商家"},
+      "admin_sina_pois"=>"微博地点", "admin_baidu"=>"百度地点"},
     2=>{"admin_parties"=>"活动管理"},
     3=>{"admin_checkins"=>"签到管理", "admin_gps_logs" => "gps日志"},
     4=>{"admin_login"=>"登录", "admins"=>"管理员管理", "admin_rights"=>"权限管理"},
