@@ -42,7 +42,7 @@ class PhotosController < ApplicationController
     share.pid = params[:photo_id]
     share.uid = params[:user_id]
     share.save!
-    render :json => {"ok":1}.to_json
+    render :json => {ok:1}.to_json
   end
   
   def detail
