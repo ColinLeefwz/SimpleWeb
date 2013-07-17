@@ -35,10 +35,16 @@ $sina_token = '2.00t9e5PCMcnDPC86e7068cc9yxaMRC'
 $qq_api_key = "100379223"  
 $qq_api_key_secret = "3cc1b95d92352d1335eadc7aea01428f"
 
+#旅行团
 $travel=[21832384]
 
-#7月18日活动商家id
-$ActiveShops=[21828775,21830785]
+#7月18日  合作框架广告推送楼宇地点
+$mansion1 = []
+#7月18日  重点推送楼宇地点
+$mansion2 = []
+#7月18日  合作商家
+$cooperation_shops = [21828775,21830785]
+
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
