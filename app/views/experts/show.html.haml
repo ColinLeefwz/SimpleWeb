@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @expert.name
+%p
+  %b Image url:
+  = image_tag(@expert.image_url)
+%p
+  %b Company:
+  = @expert.company
+%p
+  %b Title:
+  = @expert.title
+
+= link_to 'Edit', edit_expert_path(@expert)
+\|
+= link_to 'Back', experts_path

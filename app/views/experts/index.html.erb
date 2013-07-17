@@ -1,0 +1,33 @@
+<h1>Listing experts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image url</th>
+      <th>Company</th>
+      <th>Title</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @experts.each do |expert| %>
+      <tr>
+        <td><%= expert.name %></td>
+        <td><%= image_tag(expert.image_url)%></td>
+        <td><%= expert.company %></td>
+        <td><%= expert.title %></td>
+        <td><%= link_to 'Show', expert %></td>
+        <td><%= link_to 'Edit', edit_expert_path(expert) %></td>
+        <td><%= link_to 'Destroy', expert, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Expert', new_expert_path %>
