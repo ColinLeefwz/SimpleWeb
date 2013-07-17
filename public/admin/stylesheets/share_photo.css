@@ -41,9 +41,9 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 #Main .mainright{float:right;zoom:1;overflow:hidden;width:246px;}
 
 .main2{width:640px;margin:0px auto;display:block;overflow:hidden;}
-.con{display:block;overflow:hidden;box-shadow:0 1px 5px #ccc;border:1px solid #ccc;border-radius:5px;background-color:#ffffff;width:97%;margin:3% auto 0px auto;}
+.con{display:block;overflow:hidden;box-shadow:0 1px 5px #ccc;border:1px solid #ccc;border-radius:5px;background-color:#ffffff;width:96%;margin:3% auto 0px auto;}
 
-.footer{width:100%;margin:40px 0px;overflow:hidden;text-align:center;color:#949494;line-height:30px;font-size:23px;}
+.footer{width:96%;margin:40px auto;overflow:hidden;text-align:center;color:#949494;line-height:30px;font-size:23px;}
 .footer h2{font-size:28px;color:#333;display:block;margin:20px 0px;}
 .footer2{margin-top:20px;line-height:22px;color:#949494;text-align:center;width:470px;float:left;clear:both;}
 .footer2 a{color:#949494;}
@@ -58,7 +58,7 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 
 .plane3{margin:30px 0px 50px 0px;color:#949494;line-height:22px;clear:both;overflow:hidden;font-size:14px;}
 .plane4{width:100%;overflow:hidden;margin-bottom:45px;clear:both;}
-.plane6{width:100%;margin-bottom:30px;overflow:hidden;text-align:center;}
+.plane6{width:96%;margin:0px auto 30px auto;overflow:hidden;text-align:center;}
 .plane7{padding:3% !important;border-bottom:0px;color:#949494;background:#fff;line-height:30px;font-size:25px;}
 .plane8{padding:3% !important;border-top:2px solid #e2e2e1;color:#949494;background:#F8F8F8;line-height:25px;font-size:23px;clear:both;overflow:hidden;zoom:1;}
 .plane8 img{float:left;margin-right:10px;}
