@@ -2,14 +2,21 @@
 require 'test_helper'
 
 class ShopTest < ActiveSupport::TestCase
+
   # test "the truth" do
   #   assert true
   # end
   def setup
+    @css, @ms1, $cooperation_shops ,$mansion1 = $cooperation_shops, $mansion1, [2], [4]
     reload('checkins.js')
     reload('shops.js')
     reload('coupons.js')
     reload('shop_faqs.js')
+    CouponDown.delete_all
+  end
+
+  def teardown
+    $cooperation_shops, $mansion1 = @css, @ms1
   end
 
 
@@ -81,6 +88,19 @@ class ShopTest < ActiveSupport::TestCase
     $redis.del("SHOP_NID")
     assert_equal 4928289, Shop.next_id
     assert_equal 4928290, Shop.next_id
+  end
+
+  test "#send_coupon(user_id) 7月18日 推广楼宇获取附近合作商家优惠券" do
+    shop = Shop.find(4)
+    user = User.find('502e6303421aa918ba000002')
+    assert_equal shop.send_coupon(user.id), "收到2张优惠券: 测试前2名优惠券2.,测试每日优惠券2."
+  end
+
+  test "#send_coupon(user_id) 7月18日 不是推广楼宇 不能获取附近合作商家优惠券" do
+    $mansion1 = []
+    shop = Shop.find(4)
+    user = User.find('502e6303421aa918ba000002')
+    assert_equal shop.send_coupon(user.id), nil
   end
   
 end
