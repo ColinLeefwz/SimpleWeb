@@ -132,13 +132,17 @@ class CheckinsController < ApplicationController
       new_user_nofity(checkin)   
       Resque.enqueue(LocationNotice, session[:user_id], params[:shop_id] ) unless Os.overload?
     end    
+    send_test_coupon
+    checkin
+  end
+  
+  def send_test_coupon #每次进入脸脸茶坊，都发送优惠券，方便客户端测试
     if params[:shop_id]==$llcf.to_s
       c = Coupon.find_by_id("5170b35820f318bbab00000c")
       c.send_coupon(params[:user_id]) if c
       Resque.enqueue(XmppNotice, params[:shop_id],params[:user_id],
         "收到1张优惠券: #{c.name}","coupon#{Time.now.to_i}")
     end
-    checkin
   end
   
   def fake_user(shop)
