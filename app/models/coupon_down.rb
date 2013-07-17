@@ -54,8 +54,9 @@ class CouponDown
   end
 
   def self.next_num(cid)
-    cpdown = self.where({cid: cid}).sort({num: -1}).limit(1).first
-    (cpdown && cpdown.num) ? cpdown.num.succ : 1
+    $redis.incr("CPD#{cid}")
+    #cpdown = self.where({cid: cid}).sort({num: -1}).limit(1).first
+    #(cpdown && cpdown.num) ? cpdown.num.succ : 1
   end
   
   def self.download(coupon, user_id, photo_id=nil, sid = nil)
