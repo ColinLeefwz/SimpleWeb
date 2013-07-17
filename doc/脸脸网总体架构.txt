@@ -91,6 +91,8 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 19. 海外经纬度到国家的映射，"oversea#{xx},#{xx}",见gen_gps_oversea.rb
 20. 可信用户的集合 "KxUsers",类型set, 见 KxUser.init_kx_users_redis
 21. 每个用户的个人相关信息，"UF#{uid}", 类型为HASH，键值包括:os/ver等。
+22. 每张优惠券的下载数量，"CPD#{coupon_id}", 类型为整数字符串。
+
 
 
 其中，保存在session中的数据有：
