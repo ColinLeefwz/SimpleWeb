@@ -2,15 +2,19 @@
 require 'test_helper'
 
 class CouponTest < ActiveSupport::TestCase
-  $ActiveShops = [1]
   # test "the truth" do
   #   assert true
   # end
   def setup
+    @css, $cooperation_shops = $cooperation_shops, [1]
     reload('coupons.js')
     reload('checkins.js')
     CouponDown.delete_all
     $redis.keys("ckin*").each{|key| $redis.zremrangebyrank(key, 0, -1)}
+  end
+
+  def teardown
+    $cooperation_shops = @css
   end
 
   test "#allow_send_checkin? 规则是每日签到签到优惠，用户下载一次后不能在下载 " do
@@ -80,8 +84,5 @@ class CouponTest < ActiveSupport::TestCase
     CouponDown.last.use(user.id, nil)
     assert_equal coupon.allow_send_checkin?(user._id.to_s), true
   end
-
-
-
   
 end
