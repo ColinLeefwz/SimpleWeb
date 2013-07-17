@@ -1,0 +1,26 @@
+<h1>商家管理</h1>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+
+<%= form_tag '/admin_baidu/lob_to_lo' do %>
+
+  <h3>
+    百度坐标转实际坐标
+  </h3>
+
+  <p>
+    百度坐标: <%= text_field_tag :lob, params[:lob] %>
+    实际坐标:<%= params[:lo] %>
+  </p>
+
+  <h3>
+    实际坐标转百度坐标
+  </h3>
+
+  <p>
+    实际坐标: <%= text_field_tag :lo2, params[:lob] %>
+    百度坐标:<%= params[:lob2] %>
+  </p>
+  <%= submit_tag "提 交" %>
+
+
+<% end %>
