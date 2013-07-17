@@ -16,10 +16,14 @@ class AdminBaiduController < ApplicationController
   def lob_to_lo
     if request.post?
       shop = Shop.new
-      shop.lob = params[:lob].split(/[,]/).map{|f| f.to_f}.reverse
-      params[:lo]= shop.lob_to_lo
-      shop.lo = params[:lo2].split(/[,]/).map{|f| f.to_f}
-      params[:lob2] = shop.lo_to_lob.reverse
+      unless params[:lob].blank?
+        shop.lob = params[:lob].split(/[,]/).map{|f| f.to_f}.reverse
+        params[:lo]= shop.lob_to_lo
+      end
+      unless params[:lo2].blank?
+        shop.lo = params[:lo2].split(/[,]/).map{|f| f.to_f}
+        params[:lob2] = shop.lo_to_lob.reverse
+      end
     end
   end
 
