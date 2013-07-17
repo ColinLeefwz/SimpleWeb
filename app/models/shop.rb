@@ -277,7 +277,7 @@ class Shop
 
   #7月18 活动，获取附近活动商家的优惠券，
   def active_shop_coupons(user_id, limit)
-    if $mansion1.include?(id.to_i) || $mansion1.include?(id.to_i)
+    if $mansion1.include?(id.to_i) || $mansion2.include?(id.to_i)
       shops = Shop.find($cooperation_shops)
       loc = loc_first
       shops = shops.sort{|f,s| get_distance(f.loc_first, loc) <=> get_distance(s.loc_first, loc) }[0, limit]

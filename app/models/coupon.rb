@@ -194,5 +194,14 @@ class Coupon
   def self.init_city_coupon_redis
     Coupon.where({hidden:{"$ne" => 1}}).each {|x| $redis.sadd("ACS#{x.shop.city}", x.shop_id)}
   end
+  
+  def self.init_cpd_count
+    Coupon.all.each do |x|
+      unless $redis.exists("CPD#{x.id}")
+        count = CouponDown.where({cid: x.id}).count
+        $redis.set("CPD#{x.id}",count+1)
+      end
+    end
+  end
 
 end
