@@ -80,8 +80,8 @@ class Coupon
   end
 
   def allow_send_checkin?(user_id)
-    # 7月18日 活动，优惠券没使用不发
-    if $ActiveShops.include?(self.shop_id.to_i)
+    # 7月18日 活动，合作商家优惠券没使用不再发
+    if $cooperation_shops.include?(self.shop_id.to_i)
       return false if  CouponDown.where({sid: shop_id, uid:  user_id, uat: nil}).limit(1).only(:id).first
     end
     
