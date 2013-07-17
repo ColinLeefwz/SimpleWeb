@@ -1,0 +1,12 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$wine_red: #880848;
+
+#header {
+	border-top: 2px solid wine_red;
+	border-bottom: 4px solid wine_red;
+	height: 118px;
+	background: #fff;
+}

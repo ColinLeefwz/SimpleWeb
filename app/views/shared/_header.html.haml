@@ -1,0 +1,17 @@
+#header
+  .section.clearfix
+    %p#mail_message
+    %a{href: "/", title: "Home", rel: "home", id: "logo"}
+      =image_tag "logo.png", alt: "Home"
+
+  #navigation
+    .section
+      %h2 Main menu
+      %ul#main-menu.links.inline.clearfix
+        %li.menu-414.first
+          %a{href: "/"} about us
+        %li.menu-499
+          %a{href: "/"} sessions
+        %li.menu-493.last
+          %a{href: "/"} experts
+
