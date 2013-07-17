@@ -262,7 +262,7 @@ class Shop
     Coupon.where({shop_id: self.id.to_i, hidden: nil, t2: '2'}).sort({_id: -1}).limit(1).to_a[0]
   end
   
-  def send_coupon(user_id, limit=2)
+  def send_coupon(user_id, limit=50)
     coupons = []
     #7月18 活动，获取附近活动商家的优惠券
     coupons += active_shop_coupons(user_id, limit)
