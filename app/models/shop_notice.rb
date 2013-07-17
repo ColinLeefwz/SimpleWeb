@@ -1,7 +1,7 @@
 class ShopNotice
   include Mongoid::Document
   
-  field :shop_id, type: Moped::BSON::ObjectId
+  field :shop_id, type:Integer
   field :title
   #  field :begin, type:DateTime
   #  field :end, type:DateTime
