@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20130718031659) do
+
 
   create_table "experts", force: true do |t|
     t.string   "name"
@@ -24,9 +26,11 @@ ActiveRecord::Schema.define(version: 20130718031659) do
 
   create_table "sessions", force: true do |t|
     t.string   "title"
+
     t.integer  "expert_id"
     t.text     "description"
     t.string   "status"
+
     t.datetime "created_at"
     t.datetime "updated_at"
   end

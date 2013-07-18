@@ -5,6 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
 Expert.delete_all
 Session.delete_all
 
@@ -20,6 +21,7 @@ Expert.create(name: 'Guillaume Maury',
 			  company: 'Prodygia',
 			  title: 'Founder')
 
+
 Session.create(title: 'First Session', 
 	           expert_id: 1,
 			   description: 'just a test',
@@ -29,5 +31,6 @@ Session.create(title: 'Second Session',
 	           expert_id: 2,
 			   description: 'just a test2',
 			   status: 'Prodygia Picks')
+
 
 
