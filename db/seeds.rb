@@ -9,26 +9,26 @@
 Expert.delete_all
 Session.delete_all
 
-Expert.create(name: 'Alessandro Duina',
+peter = Expert.create(name: 'peter',
 			  image_url: 'AD pic.jpg',
 			  company: 'Prodygia',
 			  title: 'Co-Founder'
 			  )
 
 
-Expert.create(name: 'Guillaume Maury',
+allen = Expert.create(name: 'allen',
 			  image_url: 'guillaume profile pic.jpg',
 			  company: 'Prodygia',
 			  title: 'Founder')
 
 
 Session.create(title: 'First Session', 
-	           expert_id: 1,
+	           expert: peter,
 			   description: 'just a test',
 			   status: 'Prodygia Picks')
 			  
 Session.create(title: 'Second Session', 
-	           expert_id: 2,
+	           expert: allen,
 			   description: 'just a test2',
 			   status: 'Prodygia Picks')
 

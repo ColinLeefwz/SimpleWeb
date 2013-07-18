@@ -1,2 +1,20 @@
-%h1 Welcome#index
+%h1 Session
 %p Find me in app/views/welcome/index.html.erb
+
+%table
+  %tr
+    %th Title
+    %th Expert
+    %th Description
+    %th Status
+    %th
+    %th
+
+  - @sessions.each do |session|
+    %tr
+      %td= session.title
+      %td= session.expert.name
+      %td= session.description
+      %td= session.status
+
+%br
