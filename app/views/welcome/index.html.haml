@@ -1,5 +1,5 @@
-%h1 Session
-%p Find me in app/views/welcome/index.html.erb
+
+%h1 Prodygia Picks
 
 %table
   %tr
@@ -7,14 +7,55 @@
     %th Expert
     %th Description
     %th Status
-    %th
+    %th Image
     %th
 
-  - @sessions.each do |session|
+  - @prodygia_picks.each do |session|
     %tr
       %td= session.title
       %td= session.expert.name
       %td= session.description
       %td= session.status
+      %td= image_tag(session.image_url)
 
 %br
+
+%h1 Scheduled Sessions
+
+%table
+  %tr
+    %th Title
+    %th Expert
+    %th Description
+    %th Status
+    %th Image
+    %th
+
+  - @scheduled.each do |session|
+    %tr
+      %td= session.title
+      %td= session.expert.name
+      %td= session.description
+      %td= session.status
+      %td= image_tag(session.image_url)
+
+%br
+
+%h1 Upcoming Sessions
+
+%table
+  %tr
+    %th Title
+    %th Expert
+    %th Description
+    %th Status
+    %th Image
+    %th
+
+  - @upcoming.each do |session|
+    %tr
+      %td= session.title
+      %td= session.expert.name
+      %td= session.description
+      %td= session.status
+      %td= image_tag(session.image_url)
