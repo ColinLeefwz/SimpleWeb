@@ -14,20 +14,8 @@ class CheckinsController < ApplicationController
       render :json => {error: "地点名称不能少于四个字"}.to_json
       return
     end
-    if params[:sname][0,3]=="@@@" #测试人员输入商家id模拟签到
-      shop = Shop.find_by_id(params[:sname][3..-1])
-      if shop.nil? 
-        render :json => {error: "地点不存在：params[:sname][3..-1]"}.to_json
-        return
-      end      
-      if session[:user_id].to_s != shop.seller_id.to_s && !is_kx_user?(session[:user_id]) && !User.is_fake_user?(session[:user_id])
-        render :json => {error: "没权限创建：params[:sname]"}.to_json
-        return
-      end
-      params[:shop_id] = shop.id
-      params[:bssid] = nil
-      do_checkin(shop,true)
-      render :json => shop.safe_output.to_json
+    if params[:sname][0,3]=="@@@"
+      render :json => {error: "没权限创建：params[:sname]"}.to_json
       return
     end
     if !is_kx_user?(session[:user_id])
