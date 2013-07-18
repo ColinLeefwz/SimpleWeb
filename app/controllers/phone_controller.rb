@@ -12,8 +12,8 @@ class PhoneController < ApplicationController
     code = "123456"
     sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
     unless send_sms_ihuiyi(params[:phone], sms)
-        render :json => {"error"=>"无法给手机#{params[:phone]}发送验证码"}.to_json
-        return
+      render :json => {"error"=>"无法给手机#{params[:phone]}发送验证码"}.to_json
+      return
     end
     session[:phone_code] = code
     render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json
@@ -91,10 +91,10 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
       return      
     end
-#    if session_user_no_cache.phone
-#      render :json => {error: "你已经绑定了一个手机号码"}.to_json #可以更换手机号码
-#      return
-#    end
+    #    if session_user_no_cache.phone
+    #      render :json => {error: "你已经绑定了一个手机号码"}.to_json #可以更换手机号码
+    #      return
+    #    end
     user = session_user_no_cache
     user.password = slat_hash_pass(params[:password])
     user.phone = params[:phone]
@@ -118,7 +118,8 @@ class PhoneController < ApplicationController
   end
   
   def send_sms_ihuiyi(phone, text)
-    return true if Rails.env != "production"
+    #用于测试环境, 通过传递flag: true 来模拟发送短信成功。
+    return params[:flag] == 'true' if ENV["RAILS_ENV"] != "production"
     return true if phone[0]=="0"
     begin
       pass = URI.escape("www.dface.cn20130709")
