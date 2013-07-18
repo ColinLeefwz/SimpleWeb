@@ -5,7 +5,9 @@
   = @session.title
 %p
   %b Expert:
-  = @session.expert_id
+  = @session.expert.name
+%p
+  =image_tag(@session.image_url)
 %p
   %b Description:
   = @session.description
