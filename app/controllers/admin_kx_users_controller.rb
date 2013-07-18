@@ -7,6 +7,25 @@ class AdminKxUsersController < ApplicationController
   def index
     hash = {}
     sort = {_id: -1}
+    if !params[:name].blank? &&  params[:id].blank?
+      ids = KxUser.distinct(:id)
+      ids = User.where({_id: {"$in" => ids}, name: /#{params[:name]}/}).only(:_id).distinct(:id)
+      hash.merge!({_id: {"$in" => ids}})
+    end
+
+    unless params[:id].blank?
+      hash.merge!({_id: params[:id]})
+    end
+
+    unless params[:real_name].blank?
+      hash.merge!({name: params[:real_name]})
+    end
+
+    unless params[:type].blank?
+      hash.merge!({type: params[:type]})
+    end
+
+
     @kx_users =  paginate3("KxUser", params[:page], hash, sort)
   end
 
