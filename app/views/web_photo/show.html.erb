@@ -11,7 +11,7 @@
 	<div class="main2">
 		<div class="con">
 			<center><%=image_tag Photo.img_url(@photo.id), :class => "center_image"%></center>
-			<% if @photo.desc %>
+			<% if !@photo.desc.blank? %>
 				<div class="plane7">
 					<%= @photo.desc%>
 				</div>
