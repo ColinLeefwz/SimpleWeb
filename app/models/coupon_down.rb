@@ -17,9 +17,9 @@ class CouponDown
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :gender, :birthday, :weibo_home,:show_gender, :to => :user
-    option.delegate :name, :to => :shop
+    option.delegate :name, :city, :to => :shop
     option.delegate :name, :to => :sub_shop
-    option.delegate :img, :name, :show_t2,  :to => :coupon
+    option.delegate :img, :name, :show_t2, :desc,  :to => :coupon
   end
 
   index({cid: 1, uid:1})

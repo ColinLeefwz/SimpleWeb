@@ -77,10 +77,15 @@
   <%=link_to "查看", "/admin_shop_photos?user_id=#{@user.id}" %>
 </p>
 
+<p>
+  <b>优惠券下载:</b>
+  <%=link_to "查看", "/admin_coupon_reports?uid=#{@user.id}" %>
+</p>
+
 
 <p>
   <b>聊天记录:</b>
-<%=link_to "查看", "/admin_users/chat?id=#{@user.id}" %>
+  <%=link_to "查看", "/admin_users/chat?id=#{@user.id}" %>
 </p>
 
 
