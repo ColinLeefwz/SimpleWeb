@@ -197,10 +197,8 @@ class Coupon
   
   def self.init_cpd_count
     Coupon.all.each do |x|
-      unless $redis.exists("CPD#{x.id}")
-        count = CouponDown.where({cid: x.id}).count
-        $redis.set("CPD#{x.id}",count+1)
-      end
+      count = CouponDown.where({cid: x.id}).count
+      $redis.set("CPD#{x.id}",count+1)
     end
   end
 

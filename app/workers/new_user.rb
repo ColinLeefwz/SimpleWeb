@@ -14,6 +14,9 @@ class NewUser
     ["51163b3ac90d8b90650001d5"].each do |to|
       NewUser.notify(uid,sid, to, od, ud, 2 )
     end
+    ["50ea8be1c90d8bd530000020","513ecdf0c90d8b5901000123"].each do |to|
+      NewUser.notify(uid,sid, to, od, ud, 0, "0571" )
+    end
     if ud && ud.os_type==1
       ["51163b3ac90d8b90650001d5","5160f00fc90d8be23000007c","519d894dc90d8b83ee000008"].each do |to|
         NewUser.notify(uid,sid, to, od, ud)
@@ -29,12 +32,15 @@ class NewUser
     end
   end
   
-  def self.notify(uid,sid, to, od, ud, gender=0)
+  def self.notify(uid,sid, to, od, ud, gender=0, city=nil)
     user = User.find(uid)
     if gender!=0
       return if user.gender!=gender
     end
     shop = Shop.find_primary(sid)
+    if city
+      return if city!=shop.city
+    end
     if user.qq
       from="qq"
     else
