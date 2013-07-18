@@ -22,6 +22,17 @@ allen = Expert.create(name: 'allen',
 			  title: 'Founder')
 
 
+
+# Session.create(title: 'First Session', 
+# 	           expert: peter,
+# 			   description: 'just a test',
+# 			   status: 'Prodygia Picks')
+			  
+# Session.create(title: 'Second Session', 
+# 	           expert: allen,
+# 			   description: 'just a test2',
+# 			   status: 'Prodygia Picks')
+
 Session.create(title: 'Intro Session to Lean Start-Up', 
 	           expert: peter,
 			   description: 'How can lean start-up methods help me build a better business?',
@@ -39,5 +50,6 @@ Session.create(title: 'Find The Happier You',
 	           description: 'How can I be happy despite the challenges of life?',
 	           status: 'Scheduled',
 	           image_url: 'couple on beach large.jpg')
+
 
 
