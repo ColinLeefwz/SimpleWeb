@@ -8,6 +8,7 @@
 <br/>
 <table border="1">
   <tr>
+    <th>id</th>
     <th>时间</th>
     <th>用户</th>
     <th>坐标</th>
@@ -19,6 +20,9 @@
 
   <% @gps_logs.each do |gps_log| %>
     <tr>
+      <td>
+        <%= gps_log.id %>
+      </td>
       <td>
         <%= gps_log.cat.strftime("%Y-%m-%d %H:%M:%S") %>
       </td>
