@@ -1,0 +1,62 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<h1>优惠券下载情况</h1>
+<%= form_tag '/admin_coupon_reports',:method =>:get do %>
+  <p>
+    商家id: <%= text_field_tag :sid, params[:sid], :size => 10 %>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    优惠券id:<%= text_field_tag :cid, params[:cid] , :size => 29%>
+  </p>
+  <p>
+    用户id: <%= text_field_tag :uid, params[:uid] , :size => 29 %>
+    用户昵称：<%= text_field_tag :uname, params[:uname] %>
+  </p>
+
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>商家</th>
+    <th>区号</th>
+    <th>优惠券</th>
+    <th>类型</th>
+    <th>编号</th>
+    <th>用户</th>
+    <th>下载时间</th>
+    <th>收到时间</th>
+    <th>查看时间</th>
+    <th>使用时间</th>
+    <th>消费数据</th>
+  </tr>
+
+  <% @coupon_downs.each do |cpd| %>
+    <tr>
+      <td><%=link_to cpd.shop_name||'', "/admin_shops/show?id=#{cpd.sid}" %><br/> (<%= cpd.sid %>)</td>
+      <td><%= cpd.shop_city %></td>
+      <td><%=link_to cpd.cid, "/admin_shop_coupons/show?id=#{cpd.cid}" %><br/>
+        <%=image_tag cpd.coupon.img && cpd.coupon.img.url(:t1) %>
+      </td>
+      <td><%= cpd.coupon_show_t2 %></td>
+      <td><%= cpd.download_num %></td>
+
+      <td><%=link_to cpd.user_name||'', "/admin_users/show?id=#{cpd.uid}"%> <br/>(<%= cpd.uid %>)</td>
+      <td><%=to_local cpd.dat  %> </td>
+      <td><%=to_local cpd.sat  %> </td>
+      <td><%=to_local cpd.vat  %> </td>
+      <td><%=to_local cpd.uat  %> </td>
+      <td><%= cpd.data %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
+
+<br/>
+<br/>
+<br/>
