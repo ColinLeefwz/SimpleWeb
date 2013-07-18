@@ -5,7 +5,7 @@
   id: <%= text_field_tag :id, params[:id], :size => 30  %>
   姓名: <%= text_field_tag :real_name, params[:real_name]  %>
   来源: <%= select_tag :type, options_for_select(['', '脸脸','企博','马甲'], params[:type]) %>
-  <br/>
+ 
 
   <%= submit_tag "查 找" %>
 <% end %>

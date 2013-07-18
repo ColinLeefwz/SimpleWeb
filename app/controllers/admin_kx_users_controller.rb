@@ -18,7 +18,7 @@ class AdminKxUsersController < ApplicationController
     end
 
     unless params[:real_name].blank?
-      hash.merge!({name: params[:real_name]})
+      hash.merge!({name: /#{params[:real_name]}/})
     end
 
     unless params[:type].blank?
