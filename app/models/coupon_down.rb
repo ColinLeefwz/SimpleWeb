@@ -26,7 +26,7 @@ class CouponDown
   index({dat: -1})
   
   def shop
-    Shop.find_by_id(sid)
+    @_shop ||= Shop.find_by_id(sid)
   end
 
   def sub_shop
@@ -34,11 +34,11 @@ class CouponDown
   end
 
   def user
-    User.find_by_id(uid)
+    @_user ||= User.find_by_id(uid)
   end
   
   def coupon
-    Coupon.find_by_id(cid)
+    @_coupon ||= Coupon.find_by_id(cid)
   end
   
   def photo
