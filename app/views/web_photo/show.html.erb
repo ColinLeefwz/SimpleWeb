@@ -4,27 +4,45 @@
 <head>
 	<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=yes">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>脸脸</title>
+	<title><%= @user.name %>在<%= @photo.shop.name %>的分享</title>
 	<link href="/admin/stylesheets/share_photo.css" rel="stylesheet" type="text/css">
-
 </head>
 <body>
 	<div class="main2">
 		<div class="con">
 			<center><%=image_tag Photo.img_url(@photo.id), :class => "center_image"%></center>
-
-
+			<% if !@photo.desc.blank? %>
+				<div class="plane7">
+					<%= @photo.desc%>
+				</div>
+			<% end %> 
+			<div class="plane8">
+				<div class="plane8left">
+				    <%= image_tag UserLogo.img_url(@userlogo.id), size: "96x96"  %>
+					<!-- <img src="/admin/image/share_weibo/pic7.jpg" alt="" align="left" width="96" height="96"/> -->
+				</div>
+				<div class="plane8left2">
+					<span class="wordstyle2"><%= @user.name %></span>
+					<span class="l"><%= @photo.cat.strftime("%m-%d %H:%M") %></span>
+					<span class="r"><img src="/admin/image/share_weibo/pic8.png" class="mr5"/><%= @photo.shop.name %></span>
+				</div>
+			</div>
 
 		</div>
 		<div class="footer">
-			<a href="http://www.dface.cn/mini.html" target="_blank"><img src="/admin/image/share_weibo/logo.png" align="left"/></a>
-			<h2>此时此刻，我们在这里</h2>
-			<p>基于现场的移动社交</p>
+			<div class="fl">
+				<a href="http://www.dface.cn/mini.html" target="_blank"><img src="/admin/image/share_weibo/logo.png" align="left"/></a>
+			</div>
+			<div class="fr">
+				<h2>此时此刻，我们在这里</h2>
+				<p>脸脸 — 基于现场的移动社交</p>
+			</div>
+			<div class="clear1"></div>
 		</div>
 		<div class="plane6">
 			<a href="http://dface.cn/a/down"><img src="/admin/image/share_weibo/btn6.jpg" class="l"/></a>
 			<a href="https://itunes.apple.com/cn/app/lianlian/id577710538"><img src="/admin/image/share_weibo/btn7.jpg" class="r"/></a>
-		</div>	
+		</div>
 	</div>
 </body>
 </html>

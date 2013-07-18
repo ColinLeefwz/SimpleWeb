@@ -8,6 +8,12 @@ class NewUserTalk
 
     hour = Time.now.hour
     week = Time.now.wday
+
+    if user.gender == 2
+      to = ["50bc20fcc90d8ba33600004b" #“浦靠谱” 运营总监浦希哲
+           ]
+    end
+
     if ((1..5).include?week) && hour > 8 && hour < 19
       if user.gender == 2
         to = ["51418836c90d8bc37b000567" #'怪咖叔叔', 马甲，  运营-孙世杰
@@ -40,12 +46,12 @@ class NewUserTalk
 
     to = to[user.id.generation_time.sec%to.size]
 
-    if seq == 1 && (to != "51418836c90d8bc37b000567")
+    if seq == 1 && (to != "51418836c90d8bc37b000567") && (to != "50bc20fcc90d8ba33600004b")
       Xmpp.send_chat(to, uid, "hi")
     end
-    if seq == 2 && (to == "51418836c90d8bc37b000567")
+    if seq == 2 && (to == "51418836c90d8bc37b000567" || to == "50bc20fcc90d8ba33600004b")
       shop = Shop.find_by_id(sid)
-      Xmpp.send_chat(to, uid, "你在#{shop.name}？")
+      Xmpp.send_chat(to, uid, "hi,你也在#{shop.name}？")
     end
   end
 
