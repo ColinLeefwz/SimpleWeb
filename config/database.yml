@@ -6,6 +6,7 @@ common: &common
 
 
 development:
+  <<: *common
   database: db/development.sqlite3
   
 test:
