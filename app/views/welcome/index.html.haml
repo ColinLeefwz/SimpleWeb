@@ -16,7 +16,7 @@
       %td= session.expert.name
       %td= session.description
       %td= session.status
-      %td= image_tag(session.image_url)
+      %td= link_to image_tag(session.image_url), session_path(@session)
 
 %br
 
@@ -37,7 +37,7 @@
       %td= session.expert.name
       %td= session.description
       %td= session.status
-      %td= image_tag(session.image_url)
+      %td= link_to image_tag(session.image_url), session_path(@session)
 
 %br
 

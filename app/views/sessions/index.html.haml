@@ -4,7 +4,6 @@
   %tr
     %th Title
     %th Expert
-    %th Created date
     %th Description
     %th
     %th
@@ -13,8 +12,7 @@
   - @sessions.each do |session|
     %tr
       %td= session.title
-      %td= link_to "<%= session.expert.name %>"
-      %td= image_tag(session.image_url)
+      %td= session.expert_id
       %td= session.description
       %td= link_to 'Show', session
       %td= link_to 'Edit', edit_session_path(session)
