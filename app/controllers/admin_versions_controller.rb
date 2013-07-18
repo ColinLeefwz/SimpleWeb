@@ -5,7 +5,7 @@ class AdminVersionsController < ApplicationController
 
   def index
     hash = {}
-    sort = {}
+    sort = {_id: -1}
     @versions = paginate3("Version", params[:page], hash, sort)
   end
 
@@ -16,7 +16,8 @@ class AdminVersionsController < ApplicationController
   def create
     @version = Version.new(params[:version])
     @version._id = params[:version][:id]
-    @version.save
+    @version.save!
+    $redis.set("android_version", @version._id)
     redirect_to :action => :show, :id => @version.id
   end
 
