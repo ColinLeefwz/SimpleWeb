@@ -13,7 +13,21 @@
 		<div class="con">
 			<center><%=image_tag Photo.img_url(@photo.id), :class => "center_image"%></center>
 
-
+			<div class="plane7">
+				<%= @photo.desc if @photo.desc%>
+			</div>
+			<div class="plane8">
+				<div class="plane8left">
+				    <%= image_tag UserLogo.img_url(@userlogo.id), size: "96x96"  %>
+					<!-- <img src="/admin/image/share_weibo/pic7.jpg" alt="" align="left" width="96" height="96"/> -->
+				</div>
+				<div class="plane8left2">
+					<span class="wordstyle2"><%= @user.name %></span>
+					<span class="l"><%= @photo.cat.strftime("%m-%d %H:%M") %></span>
+					<span class="r"><img src="/admin/image/share_weibo/pic8.png" class="mr5"/><%= @photo.shop.name %></span>
+				</div>
+				
+			</div>
 
 		</div>
 		<div class="footer">
