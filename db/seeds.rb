@@ -9,28 +9,35 @@
 Expert.delete_all
 Session.delete_all
 
-Expert.create(name: 'Alessandro Duina',
+peter = Expert.create(name: 'peter',
 			  image_url: 'AD pic.jpg',
 			  company: 'Prodygia',
 			  title: 'Co-Founder'
 			  )
 
 
-Expert.create(name: 'Guillaume Maury',
+allen = Expert.create(name: 'allen',
 			  image_url: 'guillaume profile pic.jpg',
 			  company: 'Prodygia',
 			  title: 'Founder')
 
 
-Session.create(title: 'First Session', 
-	           expert_id: 1,
-			   description: 'just a test',
-			   status: 'Prodygia Picks')
+Session.create(title: 'Intro Session to Lean Start-Up', 
+	           expert: peter
+			   description: 'How can lean start-up methods help me build a better business?',
+			   status: 'Upcoming',
+			   image_url: 'compass.jpg')
 			  
-Session.create(title: 'Second Session', 
-	           expert_id: 2,
-			   description: 'just a test2',
-			   status: 'Prodygia Picks')
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: 'hottie business.jpg')
 
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: 'couple on beach large.jpg')
 
 
