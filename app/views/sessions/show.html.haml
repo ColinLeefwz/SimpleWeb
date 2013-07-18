@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @session.title
+%p
+  %b Expert:
+  = @session.expert_id
+%p
+  %b Created date:
+  = @session.created_date
+%p
+  %b Description:
+  = @session.description
+
+= link_to 'Edit', edit_session_path(@session)
+\|
+= link_to 'Back', sessions_path

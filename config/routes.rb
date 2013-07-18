@@ -1,4 +1,6 @@
 Prodygia::Application.routes.draw do
+  resources :sessions
+
   resources :experts
 
   get "welcome/index"
