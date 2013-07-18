@@ -16,6 +16,13 @@ class AdminCouponReportsController < ApplicationController
       uid = User.where({name: /#{params[:uname]}/}).only(:_id).distinct(:_id)
       hash.merge!(uid: {"$in" => uid})
     end
+
+    case params[:isu]
+    when '1'
+      hash.merge!({uat: nil})
+    when '2'
+      hash.merge!({uat: {"$exists" => true}})
+    end
     hash.merge!(uid: params[:uid]) if !params[:uid].blank?
     @coupon_downs = paginate3("CouponDown", params[:page], hash, sort)
   end
