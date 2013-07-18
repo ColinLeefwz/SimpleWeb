@@ -9,6 +9,9 @@
   </p>
   <p>
     优惠券id:<%= text_field_tag :cid, params[:cid] , :size => 29%>
+
+    是否使用：<%= select_tag :isu, options_for_select([['所有', ''],['未使用', '1'],['已使用', '2']], params[:isu]) %>
+
   </p>
   <p>
     用户id: <%= text_field_tag :uid, params[:uid] , :size => 29 %>
