@@ -32,7 +32,7 @@ class Coupon
   field :text #图片分享到微博触发类, 必须包含的文字。
   field :hidden, type:Integer #状态， 1.是停用
   #  field :endt, type:DateTime
-  field :rule #0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。
+  field :rule #t2==1 时 0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。  t2==2时， 0 每日分享优惠， 1首次分享有虎
   field :rulev #1每日前几名签到优惠的数量;3常客累计满多少次签到优惠的数量。
   field :hint  #优惠券使用时的要求输入信息的消费提示
   
@@ -157,12 +157,13 @@ class Coupon
 
   def show_rule
     return if self.rule.blank?
-    ['每日签到优惠', '每日前几名签到优惠','新用户首次签到优惠','累计签到优惠'][self.rule.to_i]
-  end
-
-  def show_rule2
+    return ['每日签到优惠', '每日前几名签到优惠','新用户首次签到优惠','累计签到优惠'][self.rule.to_i] if self.t2.to_i == 1
     ['每日分享优惠','首次分享优惠'][self.rule.to_i]
   end
+
+#  def show_rule2
+#    ['每日分享优惠','首次分享优惠'][self.rule.to_i]
+#  end
 
   def show_t2
     ['签到类','分享类'][self.t2.to_i-1]

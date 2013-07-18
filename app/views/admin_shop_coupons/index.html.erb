@@ -22,9 +22,10 @@
 
 <table border="1">
   <tr>
-    <th>商家id</th>
+    <th>商家</th>
     <th>区号</th>
-    <th>商家名称</th>
+    <th>类型</th>
+    <th>规则</th>
     <th>名称</th>
     <th>详情</th>
     <th>缩略图</th>
@@ -35,10 +36,12 @@
 
   <% @coupons.each do |coupon| %>
     <tr>
-      <td><%= coupon.shop_id.to_i %></td>
+      <td><%=link_to coupon.shop.try(:name), "/admin_shops/show?id=#{coupon.shop_id}" %>(<%= coupon.shop_id.to_i %>)</td>
       <td><%= coupon.shop.try(:city) %></td>
-      <td><%=link_to coupon.shop.try(:name), "/admin_shops/show?id=#{coupon.shop_id}" %></td>
+      <td><%= coupon.show_t2 %></td>
+      <td><%= coupon.show_rule %></td>
       <td><%= coupon.name %></td>
+      
       <td><%=truncate(coupon.desc, :length => 25) %></td>
       <td><%=image_tag coupon.img && coupon.img.url(:t1) %></td>
       <td><%= link_to "详情", "/admin_shop_coupons/show?id=#{coupon.id}" %></td>
