@@ -1,0 +1,78 @@
+<link href="/admin/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+<style>
+input[type="submit"]{
+	background:#fba847;
+	border:none;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomright: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	position:relative;
+	left:5px;
+	height:40px;
+	width: 100px;
+	font-size:19px;
+	margin:0px;
+	font-family:"Source Sans Pro", sans-serif;
+	font-weight:700;
+	color:#fff;
+}
+input[type="text"]{
+	padding:9px;
+	background:#fff;
+	width: 370px;
+	background: none repeat scroll 0 0 #FAFAFA;
+    border: 1px solid #ddd;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+.centered {
+text-align: center;
+}
+.right {
+	color: right;
+}
+</style>
+<br>
+<br>
+<h2 style="text-align:center;">脸脸用户查询</h2>
+<br>
+<br>
+
+  <% @users.each do |user| %>
+<div class="container">
+    <div class="row-fluid">
+        <div class="span12">
+           <div class="centered">
+			<%= form_tag '/web_user_search',:method =>:get do %>
+			  <p>
+			    <%= text_field_tag :id, params[:id], :placeholder => "试试用户id吧 o(∩∩)o"%>
+			    <%= submit_tag "搜一下吧" %>
+			  </p>
+			<% end %>
+			<br>
+			</div>
+		    <div class="row-fluid">
+
+		    <div class="offset2 span10">
+		        <div class="row-fluid">
+		          <div class="span6"><%=image_tag(UserLogo.img_url(user.head_logo_id,:t1), :size => "280x280") if user.head_logo_id%></div>
+		          <div class="span6">
+		            <h4>名称:&nbsp;&nbsp;<%= user.name %><br></h4> 
+		            <h4>Id:&nbsp;&nbsp;<%= user._id%><br></h4>
+		            <h4>注册时间:&nbsp;&nbsp;<%= user.cat.strftime("%Y-%m-%d %H:%M") %><br></h4>
+		            <h4>出生日期:&nbsp;&nbsp;<%= user.birthday %><br></h4>
+		            <h4>微博ID:&nbsp;&nbsp;<%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %><br></h4>
+		            <h4>性别:&nbsp;&nbsp;<%= user.show_gender %><br></h4>
+		            <h4>关注数:&nbsp;&nbsp;<%= user.follow_ids.count %><br></h4>
+		          <div>
+		        </div>
+            </div>
+		    </div>
+        </div>
+  </div>
+</div>
+  <% end %>
