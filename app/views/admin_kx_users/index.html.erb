@@ -1,5 +1,16 @@
 <h1>可信用户</h1>
 <br/>
+<%= form_tag '/admin_kx_users',:method =>:get do %>
+  昵称: <%= text_field_tag :name, params[:name], :size => 10  %>
+  id: <%= text_field_tag :id, params[:id], :size => 30  %>
+  姓名: <%= text_field_tag :real_name, params[:real_name]  %>
+  来源: <%= select_tag :type, options_for_select(['', '脸脸','企博','马甲'], params[:type]) %>
+  <br/>
+
+  <%= submit_tag "查 找" %>
+<% end %>
+<br/>
+
 
 <table border="1">
   <tr>
