@@ -9,7 +9,8 @@
       %h2 Main menu
       %ul#main-menu.links.inline.clearfix
         %li.menu-414.first
-          %a{href: "/"} about us
+          %a
+          =link_to 'About us', welcome_about_us_path
         %li.menu-499
           %a
           =link_to 'Sessions', sessions_path 

@@ -5,4 +5,8 @@ class WelcomeController < ApplicationController
   	@scheduled = Session.where('status' => 'Scheduled')
   	@upcoming = Session.where('status' => 'Upcoming')
   end
+
+  def about_us
+
+  end
 end

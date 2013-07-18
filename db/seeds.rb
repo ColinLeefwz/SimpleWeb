@@ -23,7 +23,7 @@ allen = Expert.create(name: 'allen',
 
 
 Session.create(title: 'Intro Session to Lean Start-Up', 
-	           expert: peter
+	           expert: peter,
 			   description: 'How can lean start-up methods help me build a better business?',
 			   status: 'Upcoming',
 			   image_url: 'compass.jpg')
@@ -32,7 +32,7 @@ Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
-			   image_url: 'hottie business.jpg')
+			   image_url: 'hottie business.jpg' )
 
 Session.create(title: 'Find The Happier You',
 	           expert: allen,
