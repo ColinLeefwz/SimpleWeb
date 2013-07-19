@@ -1,17 +1,22 @@
 
 common: &common
-  adapter: sqlite3
+  adapter: postgresql
+  encoding: unicode
   pool: 5
-  timeout: 5000
+  username:
+  password:
+  min_messages: WARNING
+
 
 
 development:
-  database: db/development.sqlite3
+  <<: *common
+  database: Prodygia_dev
   
 test:
   <<: *common
-  database: db/test.sqlite3
+  database: Prodygia_test
 
 production:
   <<: *common
-  database: db/production.sqlite3
+  database: Prodygia_product
