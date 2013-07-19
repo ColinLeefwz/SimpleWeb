@@ -32,6 +32,6 @@ ActiveRecord::Schema.define(version: 20130718072405) do
     t.string   "image_url"
   end
 
-  add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id"
+  add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
 
 end
