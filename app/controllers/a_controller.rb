@@ -11,7 +11,7 @@ class AController < ApplicationController
   end
   
   def down
-    ver = android_version
+    ver = $redis.get("android_version")
     redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
   end
   
