@@ -172,8 +172,11 @@ class Oauth2Controller < ApplicationController
   
       
   def logout
-    if params[:pushtoken] && session_user_no_cache.tk==params[:pushtoken]
-      session_user_no_cache.unset(:tk)
+    if params[:pushtoken]
+      size = session_user_no_cache.tk.size
+      if session_user_no_cache.tk==params[:pushtoken][0,size]
+        session_user_no_cache.unset(:tk)
+      end
     end
     clear_session_info
     render :json => {"logout" => true}.to_json
