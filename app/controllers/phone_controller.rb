@@ -9,7 +9,11 @@ class PhoneController < ApplicationController
     #if user
     #  render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
     #end
-    code = "123456"
+    if Rails.env == "production"
+      code = rand(999999).to_s
+    else
+      code = "123456"
+    end
     sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
     unless send_sms_ihuiyi(params[:phone], sms)
       render :json => {"error"=>"无法给手机#{params[:phone]}发送验证码"}.to_json

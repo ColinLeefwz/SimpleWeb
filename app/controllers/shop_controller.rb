@@ -43,7 +43,7 @@ class ShopController < ApplicationController
     end
     if params[:sname][0,3]=="@@@" #测试人员输入商家id模拟签到
       shop = Shop.find_by_id(params[:sname][3..-1])  
-      if shop && (session[:user_id].to_s == shop.seller_id.to_s || is_kx_user?(session[:user_id]) && User.is_fake_user?(session[:user_id]) )
+      if shop && (session[:user_id].to_s == shop.seller_id.to_s || is_kx_user?(session[:user_id]) || User.is_fake_user?(session[:user_id]) )
          render :json => [shop].map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
         return
       end
