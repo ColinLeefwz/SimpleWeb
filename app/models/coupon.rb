@@ -40,7 +40,7 @@ class Coupon
   mount_uploader :img, CouponUploader
   field :img_tmp
   #field :img_processing, type:Boolean
-  #process_in_background :img
+  store_in_background :img
     
   field :img2
   field :num, type:Integer  #优惠券编号， 每个商家的编号独立

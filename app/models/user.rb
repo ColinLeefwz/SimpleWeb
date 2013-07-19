@@ -39,6 +39,10 @@ class User
   index({phone: 1})
   index({city: 1, gender:1})
   
+  after_find do |obj|
+    obj.gender = obj.gender.to_i
+  end
+  
   def follow_ids
     $redis.zrange("Fol#{self.id}",0,-1).delete_if {|x| x.size==0}
   end
