@@ -240,3 +240,8 @@ db.shops.update({type:/^教育/,addr:/[0-9]+(楼|层|室)/},{$set:{d:50},$unset:
 db.shops.update({type:/教育/,name:/美吉姆/},{$set:{d:30},$unset:{t:1}},false,true)
 
 db.shops.update({name:/网络$/},{$unset:{t:1}, $set:{d:30}},false,true)
+db.shops.update({name:/休闲$/},{$unset:{t:1}},false,true)
+db.shops.update({name:/葬/},{$unset:{t:1}},false,true)
+db.shops.update({name:/化妆品$/},{$unset:{t:1}, $set:{d:30}},false,true)
+
+db.shops.find({name:/$/})
