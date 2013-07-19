@@ -4,7 +4,6 @@ feature "Index" do
   helper_objects
   
   background do
-  	
   	visit welcome_index_path
   end	
 
@@ -28,5 +27,10 @@ feature "Index" do
     page.find_link('Experts').click
     page.should have_content 'Experts'
   end
+
+  it "should have 3 tables and eache table has 1 entry" do
+  	expect(all('table').count).to eq 3
+    expect(all('tr').count).to eq 6
+  end	
 
 end 
