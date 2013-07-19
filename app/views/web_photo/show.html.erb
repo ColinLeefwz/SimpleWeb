@@ -10,7 +10,7 @@
 <body>
 	<div class="main2">
 		<div class="con">
-			<center><%=image_tag Photo.img_url(@photo.id), :class => "center_image"%></center>
+			<center><%=image_tag Photo.img_url(@photo.id),:class=>"width100p" %></center>
 			<% if !@photo.desc.blank? %>
 				<div class="plane7">
 					<%= @photo.desc%>
@@ -18,7 +18,7 @@
 			<% end %> 
 			<div class="plane8">
 				<div class="plane8left">
-				    <%= image_tag UserLogo.img_url(@userlogo.id), size: "96x96"  %>
+				    <%= image_tag UserLogo.img_url(@userlogo.id), size: "96x96" %>
 					<!-- <img src="/admin/image/share_weibo/pic7.jpg" alt="" align="left" width="96" height="96"/> -->
 				</div>
 				<div class="plane8left2">
@@ -44,7 +44,7 @@
 			<a href="https://itunes.apple.com/cn/app/lianlian/id577710538"><img src="/admin/image/share_weibo/btn7.jpg" class="r"/></a>
 		</div>
 	</div>
-	<script>
+	<!--script>
 		document.getElementById("BigPic1").onload=Pic;
 		function Pic(){
 			var w=document.getElementById("BigPic1").offsetWidth;
@@ -59,7 +59,7 @@
 			}
 			
 		}
-	</script>
+	</script-->
 	
 </body>
 </html>
