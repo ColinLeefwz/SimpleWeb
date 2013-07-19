@@ -17,6 +17,15 @@ class AnswerController < ApplicationController
     render :text => "1"
   end
   
+  def at3
+    if is_kx_user?(params[:from])
+      Xmpp.send_chat(params[:to],params[:from],"test")
+      render :text => "1"      
+    else
+      render :text => "0"      
+    end
+  end
+  
   def admin
     uid = params["uid"]
     if uid == $gfuid
