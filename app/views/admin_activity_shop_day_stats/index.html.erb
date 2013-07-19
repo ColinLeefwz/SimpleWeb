@@ -1,0 +1,39 @@
+<h1>从7-18日起每天活动商家首次签到的数据统计</h1>
+<table>
+  <tr>
+    <th>日期</th>
+    <th>合作框架广告推送楼宇地点</th>
+    <th>重点推送楼宇地点</th>
+    <th>合作商家</th>
+  </tr>
+
+  <% @activity_shop_day_stats.each do |activity_shop_day_stats| %>
+    <tr>
+      <td><%= activity_shop_day_stats._id %></td>
+      <td>
+        今日新增:  <%= activity_shop_day_stats.m1num %>
+        <br />
+        增长最快:<br>
+         <%= activity_shop_day_stats.mansion1.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:#{k[1].to_i}"}.join(' ')  if activity_shop_day_stats.mansion1 %>
+      </td>
+      <td>
+        今日新增:  <%= activity_shop_day_stats.m2num %>
+        <br />
+        增长最快:<br>        
+         <%= activity_shop_day_stats.mansion2.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:#{k[1].to_i}"}.join(' ') if activity_shop_day_stats.mansion2 %>
+      </td>
+      <td>
+        今日新增:  <%= activity_shop_day_stats.csnum %>
+        <br />
+        增长最快:<br>        
+         <%= activity_shop_day_stats.cooperation_shops.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:#{k[1].to_i}"}.join(' ') if activity_shop_day_stats.cooperation_shops %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
+
+
+
+<%= generate_paginate3.html_safe %>
