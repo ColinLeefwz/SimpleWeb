@@ -35,6 +35,10 @@ class Photo
     end
   end
   
+  def share_url
+    "http://www.dface.cn/web_photo/show?id=#{self.id}"
+  end
+  
   
   def after_async_store
     if img.url.nil?
@@ -75,17 +79,16 @@ class Photo
     end
     #shop_wb = BindWb.wb_name(room)
     #str += "@#{shop_wb}" if shop_wb
-    Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
+    Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, share_url)
   end
   
   def send_qq(direct=false)
     title = "我在\##{shop.name}"
     text = "刚刚用脸脸分享了一张图片。(脸脸下载地址: http://www.dface.cn/a?v=18 )"
-    url = "http://www.dface.cn/photos/show?id=#{self.id}&size=0"
     if direct
-      QqPhoto.perform(user_id, title, text, url, desc)
+      QqPhoto.perform(user_id, title, text, share_url, desc)
     else
-      Resque.enqueue(QqPhoto, user_id, title, text, url, desc)
+      Resque.enqueue(QqPhoto, user_id, title, text, share_url, desc)
     end
   end
 
