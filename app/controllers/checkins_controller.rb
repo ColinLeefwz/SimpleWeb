@@ -102,6 +102,7 @@ class CheckinsController < ApplicationController
     checkin.del = true if checkin.acc==5 && checkin.alt==0
     checkin.ip = real_ip
     send_all_notice_msg shop
+
     if new_shop
       checkin.save!
       session_user.write_lat_loc(checkin, shop.name)
@@ -112,6 +113,8 @@ class CheckinsController < ApplicationController
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     if checkin.add_to_redis #当天首次签到
       checkin.save!
+      #听.说 发送默认信息
+      tingshuo_default_answer_text(shop, params[:user_id])
       session_user.write_lat_loc(checkin, shop.name)
       fake_user(shop)
       send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
@@ -211,5 +214,13 @@ class CheckinsController < ApplicationController
     #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
   end 
 
+  def tingshuo_default_answer_text(shop, uid)
+    if shop.id.to_i == 21832930
+      ttext = shop.answer_text('01')
+      Xmpp.send_gchat2($gfuid,shop.id, uid, ttext) if ttext
+    end
+  rescue
+    nil
+  end
 
 end
