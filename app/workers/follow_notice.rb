@@ -4,6 +4,7 @@ class FollowNotice
   @queue = :xmpp
 
   def self.perform(uid,tid)
+    UserFollow.find_or_new(uid, fid)
     user = User.find_by_id(uid)
     loc = User.last_loc_cache(tid)
     loc = User.last_loc_cache(uid) if loc.nil?
