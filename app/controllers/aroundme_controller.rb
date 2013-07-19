@@ -36,6 +36,7 @@ class AroundmeController < ApplicationController
       arr << Shop.find_by_id($llcf)
       arr << Shop.find_by_id($llsc)
       arr << Shop.find_by_id(21830231) #延安路•紫微大街 
+      arr << Shop.find_by_id(21833842) #灵隐寺
     end
     if session_user #本人加入的群定位时总是出现
       if Rails.cache.read("PHONEREG#{session_user.id}")

@@ -239,4 +239,4 @@ db.shops.update({type:/^餐饮/,name:/(老娘舅|大娘水饺|顺旺基|肯德�
 db.shops.update({type:/^教育/,addr:/[0-9]+(楼|层|室)/},{$set:{d:50},$unset:{t:1}},false,true)
 db.shops.update({type:/教育/,name:/美吉姆/},{$set:{d:30},$unset:{t:1}},false,true)
 
-db.shops.find({})
+db.shops.update({name:/网络$/},{$unset:{t:1}, $set:{d:30}},false,true)
