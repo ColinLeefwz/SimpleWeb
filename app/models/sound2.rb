@@ -26,9 +26,9 @@ class Sound2
   
   def after_async_store
     if Rails.env == "production"
-      Resque.enqueue(XmppMsg, user_id, to_uid, "[sound:#{self.id}]#{self.sec}")
+      Resque.enqueue(XmppMsg, user_id, to_uid, "[sound:#{self.id}]#{self.sec}", self.id)
     else
-      Xmpp.send_chat(user_id, to_uid, "[sound:#{self.id}]#{self.sec}")
+      Xmpp.send_chat(user_id, to_uid, "[sound:#{self.id}]#{self.sec}", self.id)
     end
   end
   
