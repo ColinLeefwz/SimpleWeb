@@ -10,6 +10,7 @@ gem 'debugger'
 group :production do
   gem 'unicorn', '~> 4.3'
   gem 'god'
+  gem 'newrelic_rpm'
 end
 
 group :development do
