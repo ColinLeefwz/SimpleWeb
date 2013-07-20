@@ -9,6 +9,7 @@ gem 'debugger'
 
 group :production do
   gem 'unicorn', '~> 4.3'
+  gem 'unicorn-worker-killer'
   gem 'god'
   gem 'newrelic_rpm'
 end
