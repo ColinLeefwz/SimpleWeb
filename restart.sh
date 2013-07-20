@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #see http://unicorn.bogomips.org/SIGNALS.html
-kill -HUP `cat log/unicorn.pid`
+kill -USR2 `cat log/unicorn.pid`
 sleep 2
 
 while true
