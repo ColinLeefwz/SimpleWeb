@@ -184,6 +184,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    unicorn-worker-killer (0.4.1)
+      unicorn (~> 4)
     uuid (2.3.6)
       macaddr (~> 1.0)
     vegas (0.1.11)
@@ -220,6 +222,7 @@ DEPENDENCIES
   resque-scheduler
   rest-client
   unicorn (~> 4.3)
+  unicorn-worker-killer
   uuid
   wirble
   xmpp4r
