@@ -42,7 +42,7 @@ class PhoneController < ApplicationController
     session[:new_user_flag] = true
     data.merge!({newuser:1})
     session[:user_id] = user.id
-    save_device_info(user.id)
+    save_device_info(user.id, true)
     Resque.enqueue(NewPhoneReg, user.id, user.phone)
     Rails.cache.write("PHONEREG#{user.id}", 1, :expires_in => 2.hours)
     render :json => data.to_json
@@ -81,7 +81,7 @@ class PhoneController < ApplicationController
       return      
     end
     session[:user_id] = user.id
-    save_device_info(user.id)
+    save_device_info(user.id, false)
 	  render :json => user.output_self.to_json
   end
   
@@ -108,12 +108,6 @@ class PhoneController < ApplicationController
   
   def unbind
     render :json => {"error"=>"无法解除手机号码的绑定"}.to_json
-  end
-  
-  def save_device_info(uid)
-    ud = session[:user_dev]
-    ud.save_to(uid) if ud
-    session[:user_dev] = nil
   end
 
   private 
