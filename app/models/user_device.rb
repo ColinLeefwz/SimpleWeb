@@ -19,9 +19,7 @@ class UserDevice
   def save_to(uid)
     ud = UserDevice.find_by_id(uid)
     if ud.nil?
-      self._id = uid
-      self.save
-      UserDevice.update_redis(uid, self.os_type, self.ds[0][3])
+      save_new(uid)
     else
       ud.ds.each do |dev|
         return if dev[0] == self.ds[0][0]
@@ -29,6 +27,12 @@ class UserDevice
       ud.push(:ds,self.ds[0])
       UserDevice.update_redis(uid, self.os_type, self.ds[0][3])
     end
+  end
+  
+  def save_new(uid)
+    self._id = uid
+    self.save
+    UserDevice.update_redis(uid, self.os_type, self.ds[0][3])
   end
   
   def UserDevice.update_redis(uid,os,ver)
