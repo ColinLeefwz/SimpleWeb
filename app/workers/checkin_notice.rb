@@ -76,7 +76,7 @@ class CheckinNotice
     #return if shop.faqs.count<1
     text = shop.answer_text_default
     return if text=="本地点未启用数字问答系统"
-    return if text[0,10]=="这地方怎么找不到人啊" && (Time.now.to_i-user.cati<7200) && user.checkins.count<1
+    return if text[0,10]=="这地方怎么找不到人啊" && (Time.now.to_i-user.cati>7200) && user.checkins.count>1
     return text if ENV["RAILS_ENV"] != "production"
     Xmpp.send_gchat2($gfuid,shop.id, user.id, text)
     return true
