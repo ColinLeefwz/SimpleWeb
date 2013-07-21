@@ -313,7 +313,7 @@ class Oauth2Controller < ApplicationController
       Resque.enqueue(WeiboFriend, token,uid,user.id)
       #Resque.enqueue(WeiboFirst, token)
     end
-    save_device_info(user.id)
+    save_device_info(user.id, session[:new_user_flag])
     if user.forbidden?
       render :json => {error:"forbidden."}.to_json
       return
@@ -374,7 +374,7 @@ class Oauth2Controller < ApplicationController
       session[:new_user_flag] = true
       data.merge!({newuser:1})
     end
-    save_device_info(user.id)
+    save_device_info(user.id, session[:new_user_flag])
     if user.forbidden?
       render :json => {error:"forbidden."}.to_json
       return
@@ -383,11 +383,6 @@ class Oauth2Controller < ApplicationController
     do_login_qq_done(user,token,expires_in,data)
   end
   
-  def save_device_info(uid)
-    ud = session[:user_dev]
-    ud.save_to(uid) if ud
-    session[:user_dev] = nil
-  end
     
   def change_auto_user(user)
     user.auto = false
