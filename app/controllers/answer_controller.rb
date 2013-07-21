@@ -19,7 +19,25 @@ class AnswerController < ApplicationController
   
   def at3
     if is_kx_user?(params[:from])
-      Xmpp.send_chat(params[:to],params[:from],"test")
+      user = User.find(params[:to])
+      unless user
+        render :text => "user not exists"
+        return   
+      end
+      ud = UserDevice.find(user.id)
+      os = ""
+      if ud
+        ver = ud.ds[0][3]
+        os = "#{ud.ds[0][1]},#{ver}"
+      end
+      str = <<-EOF   
+      #{user.name} : #{user.show_gender}
+      注册时间: #{user.cat_day}
+      最新动态：#{user.last_location[:last]}
+      签名: #{user.signature}
+      系统: #{os}
+      EOF
+      Xmpp.send_chat(params[:to],params[:from],str)
       render :text => "1"      
     else
       render :text => "0"      
