@@ -20,7 +20,7 @@ class UserFollow
   end
   
   def self.add(uid,fid)
-    #UserFollow.find_or_new(uid, fid) 在FollowNotice里异步执行
+    UserFollow.find_or_new(uid, fid) if Rails.env != "production" #发布时在FollowNotice里异步执行
     add_follows_redis(uid,fid) #follows数组在mongodb和redis同时保存，双写
     fuser = User.find_by_id(fid)
     if fuser && fuser.friend?(uid)
