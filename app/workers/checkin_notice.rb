@@ -4,6 +4,8 @@ class CheckinNotice
   @queue = :normal
 
   def self.perform(ck,new_shop,ssid=nil)
+    #ck = {"_id"=>"51ebe5b220f318cd09000001", "acc"=>148.0, "alt"=>29.476196, "altacc"=>13, "bssid"=>"0:23:89:71:6f:c4", "city"=>"0571", "del"=>nil, "ip"=>"58.100.88.46", "loc"=>[30.279665, 120.108536], "od"=>20, "photos"=>nil, "sex"=>1, "sid"=>21828775, "speed"=>nil, "uid"=>"502e6303421aa918ba000001"}
+    ck.keys.each {|key| ck.delete(key) if ck[key].nil?}
     checkin = Checkin.new(ck)
     shop = Shop.find_by_id(checkin.sid)
     user = User.find_by_id(checkin.uid)
