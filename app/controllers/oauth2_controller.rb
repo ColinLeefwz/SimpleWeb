@@ -66,7 +66,7 @@ class Oauth2Controller < ApplicationController
       :client_id => $sina_api_key, :client_secret => $sina_api_key_secret, :grant_type => 'password', 
       :username => params[:name], :password => params[:pass]
     rescue RestClient::BadRequest => bre
-      render :json => {:error => "密码或用户名输入错误！"}.to_json
+      render :json => {:error => "安装新浪微博官方客户端后才能用微博登录！"}.to_json
       return
     rescue Exception => e
       render :json => {:error => "e未知原因的登陆失败，请稍后重试！"}.to_json

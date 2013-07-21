@@ -30,7 +30,7 @@ $kxs = ["50bec2c1c90d8bd12f000086","519d894dc90d8b83ee000008","502e6303421aa918b
 $sina_api_key = "2054816412"  
 $sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  
 $sina_callback = "http://www.dface.cn/oauth2/sina_callback"
-$sina_token = '2.00t9e5PCMcnDPC86e7068cc9yxaMRC'
+$sina_token = '2.00pCuxtBMcnDPC80fd5370642c9JDB' #7-20
 
 $qq_api_key = "100379223"  
 $qq_api_key_secret = "3cc1b95d92352d1335eadc7aea01428f"
