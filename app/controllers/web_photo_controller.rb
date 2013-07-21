@@ -1,9 +1,9 @@
 class WebPhotoController < ApplicationController
 
   def show
-    @photo = Photo.find(params[:id])
-    @user = User.find(@photo.user_id)
-    @userlogo = UserLogo.where(user_id:@user.id).first
+    @photo = Photo.find_by_id(params[:id])
+    @user = @photo.user
+    @userlogo = @user.head_logo #TODO:参考head_logo_hash
   end
 
 end
