@@ -5,8 +5,8 @@ class CheckinsController < ApplicationController
 
   def create
     raise "user != session user" if params[:user_id].to_s != session[:user_id].to_s
-    ck = do_checkin
-    render :json => ck.to_json
+    do_checkin
+    render :json => {ok:1}.to_json
   end
   
   def new_shop

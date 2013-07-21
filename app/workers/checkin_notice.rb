@@ -3,7 +3,8 @@
 class CheckinNotice
   @queue = :normal
 
-  def self.perform(checkin,new_shop,ssid=nil)
+  def self.perform(ck,new_shop,ssid=nil)
+    checkin = Checkin.new(ck)
     shop = Shop.find_by_id(checkin.sid)
     user = User.find_by_id(checkin.uid)
     if new_shop
