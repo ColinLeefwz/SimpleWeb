@@ -161,7 +161,11 @@ module Mongoid
     def cats
       (Time.at self._id.to_s[0,8].to_i(16)).strftime("%Y-%m-%d %H:%M:%S")
     end
-    
+
+    def cat_day
+      (Time.at self._id.to_s[0,8].to_i(16)).strftime("%Y-%m-%d")
+    end
+        
   end
 end
 
