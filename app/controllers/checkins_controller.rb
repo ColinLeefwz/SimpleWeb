@@ -101,59 +101,27 @@ class CheckinsController < ApplicationController
     checkin.del = true if fake
     checkin.del = true if checkin.acc==5 && checkin.alt==0
     checkin.ip = real_ip
-    send_all_notice_msg shop
-
-    if new_shop
-      checkin.save!
-      session_user.write_lat_loc(checkin, shop.name)
-      new_shop_welcome(shop,checkin)
-      return checkin
+    send_welcome_msg_if_not_invisible(session_user,shop)
+    new_user_nofity(checkin)
+    if Rails.env != "test"
+      Resque.enqueue(CheckinNotice, checkin, new_shop, params[:ssid] )
+    else
+      CheckinNotice.perform(checkin, new_shop, params[:ssid])
     end
-    send_coupon_msg = shop.send_coupon(session[:user_id])
-    @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
-    if checkin.add_to_redis #当天首次签到
-      checkin.save!
-      #听.说 发送默认信息
-      tingshuo_default_answer_text(shop, params[:user_id])
-      session_user.write_lat_loc(checkin, shop.name)
-      fake_user(shop)
-      send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
-      CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
-      checkin.add_city_redis
-      new_user_nofity(checkin)   
-      Resque.enqueue(LocationNotice, session[:user_id], params[:shop_id] ) unless Os.overload?
-    end    
-    send_test_coupon
     checkin
   end
   
-  def send_test_coupon #每次进入脸脸茶坊，都发送优惠券，方便客户端测试
-    if params[:shop_id]==$llcf.to_s
-      c = Coupon.find_by_id("5170b35820f318bbab00000c")
-      c.send_coupon(params[:user_id]) if c
-      Resque.enqueue(XmppNotice, params[:shop_id],params[:user_id],
-        "收到1张优惠券: #{c.name}","coupon#{Time.now.to_i}")
+  def send_welcome_msg_if_not_invisible(user,shop)
+    return if user.invisible==2
+    return user.name if ENV["RAILS_ENV"] != "production"
+    if user.gender.to_i==2
+      message = "#{user.name} 来了~😊"
+    else
+      message = "#{user.name} 来啦~😝"
     end
+    Resque.enqueue(XmppRoomMsg2, shop.id, user.id, message)
   end
-  
-  def fake_user(shop)
-    last_loc = session_user.last_loc
-    if shop.utotal<2 && (last_loc.nil? ||  (Time.now.to_i - last_loc[0]) > 3600*24 )
-      fuser = User.fake_user(session_user)
-      return unless fuser
-      Xmpp.send_gchat2(fuser.id, params[:shop_id], session[:user_id], "#{fuser.name} 来了~😊")
-    end
-  end
-  
-  def new_shop_welcome(shop,checkin)
-    str = "欢迎！您是第1个来到#{shop.name}的脸脸。置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。"
-    Resque.enqueue(XmppNotice, shop.id, params[:user_id], str)
-    Resque.enqueue(XmppRoomMsg, $dduid, shop.id, params[:user_id], "等#{shop.name}审核通过后，你就是这里的地主啦！👍")
-    send_welcome_msg_if_not_invisible(session_user.gender,session_user.name)
-    new_user_nofity(checkin)
-    CheckinBssidStat.insert_checkin(checkin, params[:ssid]) if params[:bssid] && !checkin.del
-  end
-  
+
   def new_user_nofity(checkin)
     if session[:new_user_flag]
       session[:new_user_flag] = nil
@@ -161,66 +129,6 @@ class CheckinsController < ApplicationController
       return  if ENV["RAILS_ENV"] != "production"
       Resque.enqueue(NewUser, checkin.uid,checkin.sid,checkin.od)
     end
-  end
-
-  def send_welcome_msg_if_not_invisible(user_gender, user_name)
-    return if session_user.invisible==2
-    return user_name if ENV["RAILS_ENV"] != "production"
-    if user_gender.to_i==2
-      message = "#{user_name} 来了~😊"
-    else
-      message = "#{user_name} 来啦~😝"
-    end
-    Resque.enqueue(XmppRoomMsg2, params[:shop_id], params[:user_id], message)
-  end
-  
-  def send_notice_if_exist(shop)
-    notice = shop.notice
-    return if notice.nil? || notice.title.nil? || notice.title.length<1
-    return notice.title if ENV["RAILS_ENV"] != "production"
-    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], notice.title)
-  end
-  
-  def send_share_coupon_notice_if_exist(shop)
-    coupon = shop.share_coupon
-    return if coupon.nil?
-    return coupon.share_text_hint if ENV["RAILS_ENV"] != "production"
-    Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], coupon.share_text_hint)
-    return true
-  end
-
-  def send_faq_notice_if_exist(shop)
-    #return if shop.faqs.count<1
-    #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], "本地点开启了数字问答系统，请发送数字0获知详情。")
-    text = shop.answer_text_default
-    return if text=="本地点未启用数字问答系统"
-    return if session[:new_user_flag].nil? && text[0,10]=="这地方怎么找不到人啊"
-    return text if ENV["RAILS_ENV"] != "production"
-    Xmpp.send_gchat2($gfuid,params[:shop_id], params[:user_id], text)
-    return true
-  end
-    
-  def send_all_notice_msg(shop)
-    return if shop.nil?
-    send_notice_if_exist shop
-    flag1 = send_share_coupon_notice_if_exist(shop)
-    flag2 = send_faq_notice_if_exist(shop)
-    return if flag1 || flag2
-    #order = shop.realtime_user_count+1
-    #str = ""
-    #str += "欢迎！您是第 #{order} 个来到\##{shop.name}\#的脸脸。" if order<=10
-    #str += "置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。" if shop.photo_count<4
-    #return str if ENV["RAILS_ENV"] != "production"
-    #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
-  end 
-
-  def tingshuo_default_answer_text(shop, uid)
-    if shop.id.to_i == 21832930
-      ttext = shop.answer_text('01')
-      Xmpp.send_gchat2($gfuid,shop.id, uid, ttext) if ttext
-    end
-  rescue
-    nil
   end
 
 end
