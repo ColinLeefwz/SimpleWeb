@@ -191,6 +191,18 @@ class ApplicationController < ActionController::Base
     render :json => ret.to_json
   end
   
+  def save_device_info(uid, new_user)
+    ud = session[:user_dev]
+    if ud
+      if new_user
+        ud.save_new(uid) 
+      else
+        ud.save_to(uid) if UserDevice.user_ver_redis(uid) != ud.ds[0][3]
+      end
+    end
+    session[:user_dev] = nil
+  end
+  
 
 end
 
