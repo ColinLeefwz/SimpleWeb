@@ -411,6 +411,14 @@ class User
     Photo.where({user_id: _id})
   end
 
+  def user_ver_redis
+    UserDevice.user_ver_redis(self.id)
+  end
+
+  def user_os_redis
+    UserDevice.user_os_redis(self.id)
+  end
+
   def chat
     $xmpp_ips.count.times do |t|
       url = "http://#{$xmpp_ips[t]}:5280/api/chat?uid=#{self.id.to_s}"
@@ -641,4 +649,5 @@ class User
       '魔蝎座'
     end
   end
+
 end
