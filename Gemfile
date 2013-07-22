@@ -8,8 +8,10 @@ gem 'rails', '~> 3.2'
 gem 'debugger'
 
 group :production do
+  gem 'unicorn', '~> 4.3'
   gem 'unicorn-worker-killer'
   gem 'god'
+  gem 'newrelic_rpm'
 end
 
 group :development do
@@ -18,8 +20,6 @@ group :development do
   gem 'xmpp4r'
 end
 
-gem 'newrelic_rpm'
-gem 'unicorn', '~> 4.3'
 #gem 'rack', '~> 1.4'
 gem "oauth2"
 #gem "will_paginate"
