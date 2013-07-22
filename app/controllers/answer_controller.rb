@@ -18,7 +18,7 @@ class AnswerController < ApplicationController
   end
   
   def at3
-    if is_kx_user?(params[:from])
+    if is_kx_user?(params[:from]) || User.is_fake_user?(params[:from]) 
       user = User.find(params[:to])
       unless user
         render :text => "user not exists"
