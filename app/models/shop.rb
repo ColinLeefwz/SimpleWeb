@@ -64,11 +64,8 @@ class Shop
   end
   
   def city_fullname
-    city = City.where({code:self.city}).limit(1).first
-    return "" if city.nil?
-    city.s.to_s + city.name.to_s
+    City.fullname(self.city)
   end
-
 
   
   def notice
