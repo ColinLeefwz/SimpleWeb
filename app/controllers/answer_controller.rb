@@ -34,6 +34,7 @@ class AnswerController < ApplicationController
       #{user.name} : #{user.show_gender}
       注册时间: #{user.cat_day}
       最新动态：#{user.last_location[:last]}
+      头像数量: #{user.pcount}
       签名: #{user.signature}
       系统: #{os}
       EOF
