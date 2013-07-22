@@ -13,6 +13,15 @@
   %b Title:
   = @expert.title
 
+%p
+  %b Sessions:
+
+  - @expert.sessions.each do |session|
+    %p
+      = session.title
+      = image_tag(session.image_url)
+      
+
 = link_to 'Edit', edit_expert_path(@expert)
 \|
 = link_to 'Back', experts_path
