@@ -1,36 +1,37 @@
 require 'spec_helper'
 
 feature "Index" do 
-  helper_objects
+  #helper_objects
   
   background do
   	visit welcome_index_path
   end	
 
-  it "should have links of 'about us', 'sessions' and 'experts'" do 
+  scenario "has links of 'about us', 'sessions' and 'experts'" do 
   	page.should have_link 'About us'
   	page.should have_link 'Sessions'
   	page.should have_link 'Experts'
   end 
 
-  it "should jump to 'About us' page when 'About us' link is clicked" do
+  scenario "goes to 'About us' page when 'About us' link is clicked" do
     page.find_link('About us').click
     page.should have_content 'About us'
   end
 
-  it "should jump to 'Sessions' page when 'Sessions' link is clicked" do
+  scenario "goes to 'Sessions' page when 'Sessions' link is clicked" do
     page.find_link('Sessions').click
     page.should have_content 'Sessions'
   end
 
-  it "should jump to 'Experts' page when 'Experts' link is clicked" do
+  scenario "goes to 'Experts' page when 'Experts' link is clicked" do
     page.find_link('Experts').click
     page.should have_content 'Experts'
   end
 
-  it "should have 3 tables and eache table has 1 entry" do
+  scenario "has 3 tables and eache table has 2 'tr'" do
   	expect(all('table').count).to eq 3
     expect(all('tr').count).to eq 6
   end	
 
+  scenario "goes to responding session's page when the relative image is clicked" 
 end 

@@ -13,12 +13,9 @@
   - @experts.each do |expert|
     %tr
       %td= expert.name
-      %td= image_tag(expert.image_url)
+      %td= link_to image_tag(expert.image_url), expert
       %td= expert.company
       %td= expert.title
-      %td= link_to 'Show', expert
-      %td= link_to 'Edit', edit_expert_path(expert)
-      %td= link_to 'Destroy', expert, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
