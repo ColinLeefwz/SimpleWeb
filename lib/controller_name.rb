@@ -14,7 +14,7 @@ module ControllerName
     5=>{"admin_login"=>"登录", "admins"=>"管理员管理", "admin_rights"=>"权限管理"},
     6=>{"admin_crash_logs"=>"安卓崩溃管理","admin_versions" => '版本管理'},
     7=>{"admin_user_days"=>"每日新增", "admin_user_hours"=>"每小时新增","user_device_stats"=>"每日注册机型统计",
-      "admin_user_city_days"=>"每日城市分布","admin_user_actives" => "用户活跃度"},
+      "admin_user_city_days"=>"每日城市分布","admin_user_actives" => "用户活跃度", "admin_user_day_actives" => "用户每日活跃度"},
     8=>{},
     9=>{"checkin_days"=>"每日签到", "shop_checkin_stats"=>"商家签到统计",
       "user_checkin_stats"=>"用户签到统计", "ip_checkin_stats"=>"ip签到统计", "shop_checkin_alts"=>"签到高度统计",
