@@ -24,6 +24,12 @@ class City
     city.name
   end
   
+  def City.fullname(city)
+    city = City.where({code:city}).limit(1).first
+    return "" if city.nil?
+    city.s.to_s + city.name.to_s
+  end
+  
 
 end
 
