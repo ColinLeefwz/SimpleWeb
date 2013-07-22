@@ -15,7 +15,6 @@ class PhotosController < ApplicationController
     if p.qq && params[:qqtoken] && $redis.get("qqtoken#{session[:user_id]}").nil?
       $redis.set("qqtoken#{session[:user_id]}", params[:qqtoken])
     end
-    CarrierWave::Workers::ProcessAsset.perform("Photo",p.reload.id.to_s,"img")
     expire_cache_shop(p.room, p.user_id)
     render :json => p.output_hash_with_username.to_json
   end

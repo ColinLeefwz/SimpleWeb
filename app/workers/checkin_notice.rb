@@ -20,6 +20,7 @@ class CheckinNotice
     end
     if new_shop
       checkin.save!
+      send_welcome_msg_if_not_invisible(user,shop)
       user.write_lat_loc(checkin, shop.name)
       CheckinBssidStat.insert_checkin(checkin, ssid) if checkin.bssid && !checkin.del
       return
@@ -29,6 +30,7 @@ class CheckinNotice
     if checkin.add_to_redis #当天首次签到
       checkin.save!
       #听.说 发送默认信息
+      send_welcome_msg_if_not_invisible(user,shop)
       tingshuo_default_answer_text(shop, checkin.uid)
       user.write_lat_loc(checkin, shop.name)
       fake_user(user,shop)
@@ -39,6 +41,16 @@ class CheckinNotice
     send_test_coupon(checkin.uid, checkin.sid)
   end
 
+  def self.send_welcome_msg_if_not_invisible(user,shop)
+    return if user.invisible==2
+    return user.name if ENV["RAILS_ENV"] != "production"
+    if user.gender.to_i==2
+      message = "#{user.name} 来了~😊"
+    else
+      message = "#{user.name} 来啦~😝"
+    end
+    Resque.enqueue(XmppRoomMsg2, shop.id, user.id, message)
+  end
   
   def self.send_test_coupon(uid,sid) #每次进入脸脸茶坊，都发送优惠券，方便客户端测试
     if sid==$llcf.to_s
