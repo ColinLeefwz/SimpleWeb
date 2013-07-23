@@ -6,6 +6,9 @@ Array.prototype.in_array=function(e){
 	return (r.test(this.S+this.join(this.S)+this.S));  
 }
 
+var cs={};
+var m1={};
+var m2={};
 var activityShopDayStats = function(days){
     var [idOfBeginDay,idOfEndDay, id] = gen_day_id(days);
     var ntravel = 0,
