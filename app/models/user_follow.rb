@@ -98,6 +98,17 @@ class UserFollow
     end
   end
   
+  def self.check
+    User.all.each do |user|
+      fos = user.follow_ids.to_set
+      fas = user.fan_ids.to_set
+      fis = user.good_friend_ids.to_set
+      unless fos.intersection(fas) == fis
+        puts "error: #{user.to_json}"
+      end
+    end
+  end
+  
 
     
 end

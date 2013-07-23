@@ -16,6 +16,7 @@ $web_ip = $web_ips[1]
 $gfuid = "507f6bf3421aa93f40000005" #脸脸网络
 $dduid = "51418139c90d8bc67b0003bf" #脸脸地点审核
 $xpuid = "50bc20fcc90d8ba33600004b" #浦靠谱
+$yuanid = "502e6303421aa918ba000001" #yuan
 
 $uuid = UUID.new
 $LOG = Logger.new('log/sina_api.log', 0, 100 * 1024 * 1024)
