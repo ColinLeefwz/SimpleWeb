@@ -30,14 +30,13 @@ class AnswerController < ApplicationController
         ver = ud.ds[0][3]
         os = "#{ud.ds[0][1]},脸脸版本#{ver}"
       end
-      hobby = ""
-      hobby = "\n爱好：#{user.hobby}" if hobby
       str = <<-EOF   
 #{user.name} : #{user.show_gender},#{user.age},#{user.gonstellation}
 注册时间: #{user.cat_day}
 最新动态：#{user.last_location[:last]} #{City.fullname(user.city)}
 头像数量: #{user.pcount}
-签名: #{user.signature}  #{hobby}
+签名: #{user.signature}
+爱好: #{user.hobby}
 系统: #{os}
       EOF
       Xmpp.send_chat(params[:to],params[:from],str, $uuid.generate, " NOLOG='1' NOPUSH='1' ")
