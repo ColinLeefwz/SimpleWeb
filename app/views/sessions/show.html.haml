@@ -3,15 +3,19 @@
 %p
   %b Title:
   = @session.title
+
 %p
-  %b Expert:
-  = @session.expert.name
+  %b= @session.expert.name
+%p
+  =image_tag(@session.expert.image_url)
+
 %p
   =image_tag(@session.image_url)
+  
 %p
   %b Description:
   = @session.description
 
 = link_to 'Edit', edit_session_path(@session)
-\|
+|
 = link_to 'Back', sessions_path
