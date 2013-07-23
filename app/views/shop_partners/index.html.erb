@@ -1,0 +1,42 @@
+<div class="title2"><h2>合作商家</h2></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="20%" align="left">商家名称</th>
+    <th width="20%" align="left">所在城市</th>
+    <th width="25%" align="left">地址</th>
+    <th width="20%" align="left">添加时间</th>
+    <th width="10%" align="left" >操作</th>
+  </tr>
+  <% @shops.each_with_index do |shop, index| %>
+    <tr>
+      <td>
+        <%= shop.name  %>
+      </td>
+      <td>
+        <%= shop.city_fullname  %>
+      </td>
+      <td>
+        <%= shop.addr  %>
+      </td>
+      <td>
+        <%= @shopids[index][1].localtime.strftime("%Y-%m-%d %H:%M:%S")  %>
+      </td>
+      <td>
+        <%= link_to "删除", "javascript:void(0)", :onclick => "ajaxDel($(this), '#{shop.id}')"  %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+  <%= link_to '新建合作商家', '/shop_partners/new', :class=>'btn3 l' %>
+</div>
+
+<script type="text/javascript">
+  LeftMenu(28);
+  function ajaxDel(obj, sid){
+    if(confirm("确定删除？"))
+      $.get("/shop_partners/del", {id: sid}, function(){obj.parent().parent().remove()})
+  }
+</script>
