@@ -19,7 +19,9 @@
       <td><%= group.tat %></td>
       <td><%= group.admin_shop_name %></td>
       <td><%= group.line_name %></td>
-      <td><%= link_to '过期', "javascript:void(0)", :gid => group.id %></td>
+      <td>
+        <%= link_to('过期', "javascript:void(0)", :gid => group.id)  unless group.invaildt %>
+      </td>
     </tr>
 
   <% end %>

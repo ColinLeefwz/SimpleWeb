@@ -12,6 +12,7 @@ class Group
   field :tat, type: Date #结束时间
   field :users, type:Array #团员 [ { name:姓名, phone:手机, sfz:身份证, id:用户id } ]
   field :hint #加入此团的认证提示信息
+  field :invaildt, type:Integer #过期类型 1，时间到自动过期， 2 手动过期
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :to => :line
