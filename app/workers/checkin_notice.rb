@@ -14,6 +14,7 @@ class CheckinNotice
     shop = Shop.find_by_id(checkin.sid)
     user = User.find_by_id(checkin.uid)
     if new_shop
+      shop = Shop.find_primary(checkin.sid) if shop.nil?
       new_shop_welcome(user,shop,checkin)
     else
       send_all_notice_msg(user,shop)
