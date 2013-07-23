@@ -11,22 +11,22 @@
     <tr>
       <td><%= activity_shop_day_stats._id %></td>
       <td>
-        今日新增:  <%= activity_shop_day_stats.m1num %>
+        今日新增签到:  <%= activity_shop_day_stats.m1num %>
         <br />
-        增长最快:<br>
-         <%= activity_shop_day_stats.mansion1.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:#{k[1].to_i}"}.join(' ')  if activity_shop_day_stats.mansion1 %>
+        统计:<br>
+         <%= activity_shop_day_stats.show_mansion1s if activity_shop_day_stats.mansion1 %>
       </td>
       <td>
-        今日新增:  <%= activity_shop_day_stats.m2num %>
+        今日新增签到:  <%= activity_shop_day_stats.m2num %>
         <br />
-        增长最快:<br>        
-         <%= activity_shop_day_stats.mansion2.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:#{k[1].to_i}"}.join(' ') if activity_shop_day_stats.mansion2 %>
+        统计:<br>        
+         <%= activity_shop_day_stats.show_mansion2s if activity_shop_day_stats.mansion2 %>
       </td>
       <td>
-        今日新增:  <%= activity_shop_day_stats.csnum %>
+        今日新增签到:  <%= activity_shop_day_stats.csnum %>
         <br />
-        增长最快:<br>        
-         <%= activity_shop_day_stats.cooperation_shops.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:#{k[1].to_i}"}.join(' ') if activity_shop_day_stats.cooperation_shops %>
+        统计:<br>        
+         <%= activity_shop_day_stats.show_cooperation_shops if activity_shop_day_stats.cooperation_shops %>
       </td>
     </tr>
   <% end %>
