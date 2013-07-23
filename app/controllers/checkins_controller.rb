@@ -101,7 +101,6 @@ class CheckinsController < ApplicationController
     checkin.del = true if fake
     checkin.del = true if checkin.acc==5 && checkin.alt==0
     checkin.ip = real_ip
-    send_welcome_msg_if_not_invisible(session_user,shop)
     new_user_nofity(checkin)
     if Rails.env != "test"
       Resque.enqueue(CheckinNotice, checkin, new_shop, params[:ssid] )
@@ -109,17 +108,6 @@ class CheckinsController < ApplicationController
       CheckinNotice.perform(checkin, new_shop, params[:ssid])
     end
     checkin
-  end
-  
-  def send_welcome_msg_if_not_invisible(user,shop)
-    return if user.invisible==2
-    return user.name if ENV["RAILS_ENV"] != "production"
-    if user.gender.to_i==2
-      message = "#{user.name} 来了~😊"
-    else
-      message = "#{user.name} 来啦~😝"
-    end
-    Resque.enqueue(XmppRoomMsg2, shop.id, user.id, message)
   end
 
   def new_user_nofity(checkin)
