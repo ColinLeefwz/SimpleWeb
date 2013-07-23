@@ -1,0 +1,60 @@
+%h1 Prodygia Picks
+
+%table
+  %tr
+    %th Title
+    %th Expert
+    %th Description
+    %th Status
+    %th Image
+    %th
+
+  - @prodygia_picks.each do |session|
+    %tr
+      %td= session.title
+      %td= session.expert.name
+      %td= session.description
+      %td= session.status
+      %td= link_to image_tag(session.image_url), session
+
+%br
+
+%h1 Scheduled Sessions
+
+%table
+  %tr
+    %th Title
+    %th Expert
+    %th Description
+    %th Status
+    %th Image
+    %th
+
+  - @scheduled.each do |session|
+    %tr
+      %td= session.title
+      %td= session.expert.name
+      %td= session.description
+      %td= session.status
+      %td= link_to image_tag(session.image_url), session
+
+%br
+
+%h1 Upcoming Sessions
+
+%table
+  %tr
+    %th Title
+    %th Expert
+    %th Description
+    %th Status
+    %th Image
+    %th
+
+  - @upcoming.each do |session|
+    %tr
+      %td= session.title
+      %td= session.expert.name
+      %td= session.description
+      %td= session.status
+      %td= link_to image_tag(session.image_url), session
