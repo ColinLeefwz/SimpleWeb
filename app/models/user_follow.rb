@@ -10,7 +10,7 @@ class UserFollow
       uf = UserFollow.find(uid)
       uf.add_to_set(:follows, fid)
       uf.del_my_cache
-    rescue
+    rescue Mongoid::Errors::DocumentNotFound => e
       uf = UserFollow.new
       uf.id = uid
       uf.follows = [fid]
