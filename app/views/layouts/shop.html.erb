@@ -10,7 +10,7 @@
     <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
     <title>脸脸 | 商家管理后台</title>
     <link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+    <%= javascript_include_tag "jquery-1.6.2.min.js" %>
     <script>
       $(document).ready(function(){
         if($("#Notice").html()==""){
@@ -76,10 +76,11 @@
           <% if session_shop.has_branch? %><a href="#" name="n20" class="s arrow">分店管理管理</a> <% end %>
           <span class="borderstyle"></span>
 
-          <% if session[:shop_id].in?($travel)%>
+          <% if session[:shop_id].in?($travel) ||  ENV["RAILS_ENV"] != "production"%>
             <span class="tit">拓展功能</span>
             <a href="/shop_lines" name="n26" class="s arrow">路线图</a>
             <a href="/shop_groups" name="n27" class="s arrow">旅行团</a>
+            <a href="/shop_partners" name="n28" class="s arrow">合作商家</a>
             <span class="borderstyle"></span>
           <% end %>
         </div>
