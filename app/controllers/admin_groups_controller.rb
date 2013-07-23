@@ -13,6 +13,7 @@ class AdminGroupsController < ApplicationController
   def invaild
     group = Group.find_by_id(params[:id])
     group.invalidate_old
+    group.update_attribute(:invaildt, 2)
     render :json => {}
   end
 
