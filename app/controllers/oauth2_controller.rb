@@ -216,14 +216,13 @@ class Oauth2Controller < ApplicationController
 	      logger.warn "token:#{ptoken}"
         if ptoken && (user.tk.nil? || user.tk != ptoken)
           #User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) 
-          user.del_my_cache
-          user = User.find(params["name"])
           ptoken = ptoken[0,33] if ptoken[0]=="3" #个推的cid为32位
           if ptoken[0]=="4" #百度云推送
             len = ptoken.rindex(",")
             ptoken = ptoken[0,len]
           end
           user.update_attribute(:tk, ptoken)
+          user.del_my_cache
         end
         render :text => "1"
         return
