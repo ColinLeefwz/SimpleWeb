@@ -1,6 +1,34 @@
 # coding: utf-8
 
 class Xmpp
+  
+  $xmpp_ip_seq=rand($xmpp_ips.size)
+  
+  def self.cur_xmpp_ip
+    $xmpp_ips[$xmpp_ip_seq]
+  end
+  
+  def self.next_xmpp_ip
+    $xmpp_ip_seq += 1
+    $xmpp_ip_seq = 0 if $xmpp_ip_seq >= $xmpp_ips.size
+    $xmpp_ips[$xmpp_ip_seq]
+  end
+  
+  def self.get(path, headers={}, &block)
+    begin 
+      RestClient.get("http://#{cur_xmpp_ip}:5280/#{path}", headers, &block)
+    rescue Errno::ECONNREFUSED => e
+      RestClient.get("http://#{next_xmpp_ip}:5280/#{path}", headers, &block)
+    end
+  end
+  
+  def self.post(path, payload, headers={}, &block)
+    begin 
+      RestClient.post("http://#{cur_xmpp_ip}:5280/#{path}", payload, headers, &block)
+    rescue Errno::ECONNREFUSED => e
+      RestClient.post("http://#{next_xmpp_ip}:5280/#{path}", payload, headers, &block)
+    end
+  end
 
   def self.chat(from,to,msg, id=nil, attrs="")
     msg2 = CGI.escapeHTML(msg)
@@ -11,7 +39,7 @@ class Xmpp
   
   #发送个人聊天消息
   def self.send_chat(from,to,msg,id=nil, attrs="")
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.chat(from,to,msg,id,attrs)) 
+    post("rest", Xmpp.chat(from,to,msg,id,attrs)) 
   end
   
   def self.gchat(from,to,msg, id=nil, attrs="")
@@ -22,7 +50,7 @@ class Xmpp
   
   #在聊天室发送系统消息
   def self.send_gchat(from,to,msg, id=nil, attrs="")
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat(from,to,msg,id,attrs)) 
+    post("rest", Xmpp.gchat(from,to,msg,id,attrs)) 
   end
 
   def self.gchat2(from,room,to,msg, id=nil, attrs="")
@@ -34,7 +62,7 @@ class Xmpp
   #在聊天室以特定用户身份发消息
   def self.send_gchat2(from,room,to,msg, id=nil, attrs="")
     return "消息：#{msg}" if ENV["RAILS_ENV"] != "production"
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", Xmpp.gchat2(from,room,to,msg,id,attrs))   
+    post("rest", Xmpp.gchat2(from,room,to,msg,id,attrs))   
   end
   
   def self.test

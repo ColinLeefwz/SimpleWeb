@@ -14,7 +14,7 @@ class SmsSender
       pass = URI.escape("www.dface.cn20130709")
       info = RestClient.get "http://106.ihuyi.com/webservice/sms.php?method=Submit&account=cf_llh&password=#{pass}&mobile=#{phone}&content=#{URI.escape(text)}"
       unless info.index("<code>2</code>")>0
-        Xmpp.send($gfuid, $yuanid, "短信错误：#{info}")
+        Xmpp.send_chat($gfuid, $yuanid, "短信错误：#{info}")
         raise info
       end
     rescue Exception => e
