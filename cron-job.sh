@@ -25,6 +25,8 @@ sleep 1
 mongo 10.135.44.107/dface /mnt/lianlian/db/mongo/user_day_active.js
 sleep 1
 mongo 10.135.44.107/dface /mnt/lianlian/db/mongo/activity_shop_day_stat.js
+sleep 1
+mongo 10.135.44.107/dface /mnt/lianlian/db/mongo/shop_day_total_stat.js
 sleep 10
 
 /mnt/.rvm/bin/ruby script/rails r  'Checkin.clear_yesterday_redis'

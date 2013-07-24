@@ -60,7 +60,7 @@
 
   <script type="text/javascript">
     function ajaxdel(obj, cid){
-      if(confirm("确定删除商家？"))
+      if(confirm("确定删除签到？"))
         $.post("/admin_checkins/ajaxdel",{id: cid}, function() {
           obj.parent().parent().hide()
         });

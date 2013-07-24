@@ -34,12 +34,12 @@ class FollowInfoController < ApplicationController
   end
 
   def friend_infos
-    who = UserFollow.find_by_id(params[:id])
+    who = User.find_by_id(params[:id])
     if who.nil?
       render :json => [].to_json
       return
     end
-    arr = who.follows.map{|id| User.find_by_id(id)}.find_all{|x| x!=nil}
+    arr = who.follow_ids.map{|id| User.find_by_id(id)}.find_all{|x| x!=nil}
     render :json =>  arr.map{|u| u.safe_output}.to_json
   end
     
