@@ -8,6 +8,7 @@ class NewUserTalk
 
     hour = Time.now.hour
     week = Time.now.wday
+    date = Time.now.strftime("%Y-%m-%d")
 
     if user.gender == 2
       to = ["50bc20fcc90d8ba33600004b" #“浦靠谱” 运营总监浦希哲
@@ -29,8 +30,7 @@ class NewUserTalk
         to = ["51418836c90d8bc37b000567" #'怪咖叔叔', 马甲，  运营-孙世杰
              ]
       else
-        to = ["513ed1e7c90d8b590100016f",  #球球爱嘟嘴, 马甲，运营-董玉华
-              "50bec2c1c90d8bd12f000086"   #amanda林
+        to = ["50bec2c1c90d8bd12f000086"   #amanda林
              ]
       end
 
@@ -45,6 +45,8 @@ class NewUserTalk
     end
 
     to = to[user.id.generation_time.sec%to.size]
+
+    $redis.sadd("PL#{date}#{to}",user.id)
 
     if seq == 1 && (to != "51418836c90d8bc37b000567") && (to != "50bc20fcc90d8ba33600004b")
       Xmpp.send_chat(to, uid, "hi")
