@@ -17,3 +17,7 @@ form p .fw{font-weight: bolder; width: 200px;}
 
 form p .lsven input{ width: 220px;}
 form p .lsven textarea{height: 300px; width: 550px;}
+form a{font-weight: bold;color: #0B99D7; }
+form p select{padding: 2px;}
+.partner {width: 500px; min-height: 50px; position: relative; left: 140px; margin: 5px 0;}
+.divNTemplet {display: none;}

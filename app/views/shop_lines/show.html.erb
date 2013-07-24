@@ -18,6 +18,17 @@
         (<%=arr['lo'].to_a.join(',')  %>)
       </span>
     </li>
+    <% if(partners = @line.partners[arr['sid'].to_s]) %>
+      <li>
+        <% partners.each_with_index do |partner, index| %>
+          <span style="width: 120px;"></span>
+          <span class="right" style="width: 300px;">
+             合作商家<%= index+1 %>
+             <%= Shop.find_by_id(partner).name %>
+          </span>
+        <% end %>
+      </li>
+    <% end %>
   <% end %>
   <a class="btn6 r" href="/shop_lines">返回列表</a>
 </ul>
