@@ -12,8 +12,8 @@ class ShopLinesController < ApplicationController
     @lines = paginate("Line", params[:page], hash, sort,10)
   end
 
-  def new
-    
+  def edit
+    @line_partner = @line.shop_line_partner
   end
 
   def create
@@ -27,6 +27,12 @@ class ShopLinesController < ApplicationController
     end
     @line.arr = arr
     @line.save
+    if params[:partners]
+      shop_line_partner = ShopLinePartner.new
+      shop_line_partner.id = @line.reload.id
+      shop_line_partner.partners = params[:partners]
+      shop_line_partner.save
+    end
     redirect_to :action => "show", :id => @line.id
   end
 
@@ -39,6 +45,13 @@ class ShopLinesController < ApplicationController
     end
     @line.arr = arr
     @line.save
+    if params[:partners]
+      shop_line_partner = ShopLinePartner.find_or_new(@line.reload.id)
+      shop_line_partner.partners = params[:partners]
+      shop_line_partner.save
+    else
+      ShopLinePartner.find_by_id(@line.id).try(:delete)
+    end
     redirect_to :action => "show", :id => @line.id
   end
 
