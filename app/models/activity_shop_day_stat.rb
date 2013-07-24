@@ -10,4 +10,16 @@ class ActivityShopDayStat
   field :m2num, type:Integer #重点推送楼宇地点总数
   field :csnum, type:Integer #合作商家总数
 
+  def show_mansion1s
+    self.mansion1.map{|m| "#{Shop.find_by_id(m[0]).try(:name)}: #{m[1]}"}.join(', ')
+  end
+
+  def show_mansion2s
+    self.mansion2.map{|m| "#{Shop.find_by_id(m[0]).try(:name)}: #{m[1]}"}.join(', ')
+  end
+
+  def show_cooperation_shops
+    self.cooperation_shops.map{|m| "#{Shop.find_by_id(m[0]).try(:name)}: #{m[1]}"}.join(', ')
+  end
+
 end

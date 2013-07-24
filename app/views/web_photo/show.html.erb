@@ -5,7 +5,7 @@
 	<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=yes">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title><%= @user.name %>在<%= @photo.shop.name %>的分享</title>
-	<link href="/admin/stylesheets/share_photo.css" rel="stylesheet" type="text/css">
+	<link href="/web/stylesheets/share_photo.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="main2">
@@ -18,7 +18,7 @@
 			<% end %> 
 			<div class="plane8">
 				<div class="plane8left">
-				    <%= image_tag UserLogo.img_url(@userlogo.id), size: "96x96" %>
+				    <%= image_tag UserLogo.img_url(@user.head_logo_id), size: "96x96" %>
 					<!-- <img src="/admin/image/share_weibo/pic7.jpg" alt="" align="left" width="96" height="96"/> -->
 				</div>
 				<div class="plane8left2">
