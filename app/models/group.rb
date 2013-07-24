@@ -12,9 +12,12 @@ class Group
   field :tat, type: Date #结束时间
   field :users, type:Array #团员 [ { name:姓名, phone:手机, sfz:身份证, id:用户id } ]
   field :hint #加入此团的认证提示信息
+  field :invaildt, type:Integer #过期类型 1，时间到自动过期， 2 手动过期
 
   with_options :prefix => true, :allow_nil => true do |option|
-    option.delegate :name,  :to => :line
+    option.delegate :name, :to => :line
+    option.delegate :name, :to => :shop
+    option.delegate :name, :to => :admin_shop
   end
   
   after_create :gen_shop
@@ -35,6 +38,10 @@ class Group
   def auth(uid, str)
     return password_auth(uid,str) if pass
     return phone_auth(uid, str)
+  end
+
+  def admin_shop
+    @_admin_shop ||= Shop.find_by_id(admin_sid)
   end
   
   def password_auth(uid,str)
@@ -59,20 +66,28 @@ class Group
   end
 
   def line
-    Line.find_by_id(line_id)
+    @_line ||= Line.find_by_id(line_id)
   end
 
+
+
   def shop
-    Shop.find_by_id(sid)
+    @_shop ||= Shop.find_by_id(sid)
   end
   
   def self.find_by_phone(phone)
     Group.where({"users.phone" => phone})
   end
-  
+
+  # 虚拟群组过期
+  def invalidate_old
+    $redis.zrevrange("UA#{sid.to_i}",0,-1).each{|user| $redis.srem("GROUP#{user}", self.sid.to_i) }
+  end
+
   def self.invalidate_old
     #TODO: 已过期的群，从key为“UA商家id"中找到所有用户，然后清除redis中的“GROUP#{uid}”数据
     #cronjob每天执行一次
+    where({tat: 1.days.ago.to_date}).each{|group|  group.invalidate_old }
   end
   
 end
