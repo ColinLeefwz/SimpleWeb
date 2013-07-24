@@ -35,7 +35,7 @@
       <div class="partner">
         <%  ps.each do |m| %>
           <p>
-            <%= select_tag "partners[#{m}][]", options_for_select(session_shop.partners.map{|m| [ Shop.find_by_id(m[0]).try(:name)|| '', m[0]]}.unshift(['选择合作商家','']), m.to_i) %>
+            <%= select_tag "partners[#{arr["sid"]}][]", options_for_select(session_shop.partners.map{|m| [ Shop.find_by_id(m[0]).try(:name)|| '', m[0]]}.unshift(['选择合作商家','']), m.to_i) %>
           </p>
         <% end %>
         <a href="javascript:void(0)" onclick="addSelectPartner($(this))">再加一个</a>
@@ -75,6 +75,11 @@
   }
 
   function del_arr(obj){
+    odiv = obj.parent().next()
+    if(odiv.is('div'))
+    {
+      odiv.remove()
+    }
     obj.parent().remove();
     $(".stex").each(function(index){ $(this).text("景点"+ (index+1));})
   }
