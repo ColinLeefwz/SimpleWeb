@@ -1,0 +1,30 @@
+= form_for @join_expert do |f|
+  - if @join_expert.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@join_expert.errors.count, "error")} prohibited this join_expert from being saved:"
+      %ul
+        - @join_expert.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :Name
+    ='*'
+    %br= f.text_field :Name
+
+  .field
+    = f.label :Location
+    ='*'
+    %br= f.text_field :Location
+
+  .field
+    = f.label :Email
+    ='*'
+    %br= f.text_field :Email
+
+  .field
+    = f.label :Expertise
+    ='*'
+    %br= f.text_area :Expertise
+    
+  .actions
+    = f.submit 'submit'
