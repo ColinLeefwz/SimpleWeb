@@ -1,0 +1,36 @@
+<table border="1">
+  <tr>
+    <th>日期</th>
+    <th>开通商家数(暂无)</th>
+    <th>签到优惠数</th>
+    <th>分享优惠数</th>
+    <th>认证商家签到总人数(暂无)</th>
+    <th>场所签到总人数</th>
+    <th>签到券下载量</th>
+    <th>分享券下载量</th>
+    <th>签到券使用量</th>
+    <th>分享券使用量</th>
+  </tr>
+
+  <% @shopdaytotalstats.each do |shopdaytotalstat| %>
+  <h1 style="text-align:center;">日期:<%= shopdaytotalstat._id %> 区号: <%= shopdaytotalstat.cities %></h1>
+    <tr>
+      <td><%= shopdaytotalstat._id %></td>
+      <td></td>
+      <td><%= shopdaytotalstat.ctcount %></td>
+      <td><%= shopdaytotalstat.stcount %></td>
+      <td></td>
+      <td><%= shopdaytotalstat.cnum %></td>
+      <td><%= shopdaytotalstat.cdcount %></td>
+      <td><%= shopdaytotalstat.sdcount %></td>
+      <td><%= shopdaytotalstat.cucount %></td>
+      <td><%= shopdaytotalstat.sucount %></td>
+    </tr>
+
+  <% end %>
+</table>
+<br />
+<br />
+<%= generate_paginate3.html_safe %>
+
+<%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %>
