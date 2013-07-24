@@ -1,4 +1,7 @@
 <div class="title2"><h2><%= @line.name %>路线图</h2></div>
+<style>
+  ul.formlist li {margin-bottom: 0}
+</style>
 <ul class="formlist">
   <li>
     <span style="width: 120px;">名称:</span>
@@ -19,15 +22,15 @@
       </span>
     </li>
     <% if(partners = @line.partners[arr['sid'].to_s]) %>
-      <li>
-        <% partners.each_with_index do |partner, index| %>
+      <% partners.each_with_index do |partner, index| %>
+        <li>
           <span style="width: 120px;"></span>
           <span class="right" style="width: 300px;">
-             合作商家<%= index+1 %>
-             <%= Shop.find_by_id(partner).name %>
+            合作商家<%= index+1 %>
+            <%= Shop.find_by_id(partner).name %>
           </span>
-        <% end %>
-      </li>
+        </li>
+      <% end %>
     <% end %>
   <% end %>
   <a class="btn6 r" href="/shop_lines">返回列表</a>
