@@ -10,7 +10,7 @@ class UserFollow
       uf = UserFollow.find(uid)
       uf.add_to_set(:follows, fid)
       uf.del_my_cache
-    rescue
+    rescue Mongoid::Errors::DocumentNotFound => e
       uf = UserFollow.new
       uf.id = uid
       uf.follows = [fid]
@@ -95,6 +95,17 @@ class UserFollow
     UserFollow.all.each do |uf|
       next unless uf.follows.size>0
       uf.follows.each_with_index{|uid,idx| $redis.zadd("Fol#{uf.id}",idx,uid)}
+    end
+  end
+  
+  def self.check
+    User.all.each do |user|
+      fos = user.follow_ids.to_set
+      fas = user.fan_ids.to_set
+      fis = user.good_friend_ids.to_set
+      unless fos.intersection(fas) == fis
+        puts "error: #{user.to_json}"
+      end
     end
   end
   
