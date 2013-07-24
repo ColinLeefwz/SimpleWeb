@@ -26,7 +26,7 @@ class InitController < ApplicationController
     if "502e6303421aa918ba000001" == session[:user_id].to_s
       xmpp = $xmpp_ips[3]
     else
-      xmpp = $xmpp_ip
+      xmpp = $xmpp_ips[1]
     end
     if session[:os] == 1
       ver = android_version.to_f
