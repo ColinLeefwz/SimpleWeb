@@ -29,7 +29,6 @@ class WeiboFriend
   def self.friend_notice(user,x)
     name = x.wb_name
     name = x.name if name.nil?
-    xmpp = Xmpp.chat(x.id,user.id,": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。")
-    RestClient.post("http://#{$xmpp_ip[1]}:5280/rest", xmpp) 
+    Xmpp.send_chat(x.id,user.id,": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。")
   end
 end
