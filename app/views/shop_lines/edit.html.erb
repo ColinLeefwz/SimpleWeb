@@ -2,6 +2,16 @@
   <link href="/stylesheets/form.css" rel="stylesheet" type="text/css" />
 <% end %>
 <div class="title2"><h2>编辑线路图</h2></div>
+
+<div class="divNTemplet">
+  <p>
+    <%= select_tag :partner, options_for_select(session_shop.partners.map{|m| [ Shop.find_by_id(m[0]).try(:name)|| '', m[0]]}.unshift(['选择合作商家',''])) %>
+  </p>
+  <a href="javascript:void(0)" onclick="addSelectPartner($(this))">再加一个</a>
+  <a href="javascript:void(0)" onclick="canlePartner($(this))">取消</a>
+</div>
+
+
 <%= form_tag "/shop_lines/update" do  %>
   <%= hidden_field_tag :id, @line.id %>
   <p>
@@ -18,29 +28,90 @@
       <span class="sven"><%= text_field_tag "arr[time][]", arr['time'], :class => "inputs"%><br/><%= "(如:第2天18点半,填 2:18:30)" if index == 0  %></span>
       <span  class="sodd">商家id:</span>
       <span class="sven"><%= text_field_tag "arr[id][]", arr["sid"], :class => "inputs"%><br/><%= "(脸脸商家的id)" if index ==0 %></span>
-      <a href='#' onclick='del_arr($(this))'> 删除</a>
+      <a href='javascript:void(0)' class='atex' onclick="partnerDig($(this))">添加合作商家</a>
+      <a href='javascript:void(0)' onclick='del_arr($(this))'> 删除</a>
     </p>
+    <% if(ps = @line.partners[arr['sid'].to_s])  %>
+      <div class="partner">
+        <%  ps.each do |m| %>
+          <p>
+            <%= select_tag "partners[#{m}][]", options_for_select(session_shop.partners.map{|m| [ Shop.find_by_id(m[0]).try(:name)|| '', m[0]]}.unshift(['选择合作商家','']), m.to_i) %>
+          </p>
+        <% end %>
+        <a href="javascript:void(0)" onclick="addSelectPartner($(this))">再加一个</a>
+        <a href="javascript:void(0)" onclick="canlePartner($(this))">取消</a>
+      </div>
+    <%  end %>
   <% end %>
 
   <p>
-    <a  href="#" onclick="add_arr($(this))">增加景点</a>
+    <a  href="javascript:void(0)" onclick="add_arr($(this))">增加景点</a>
   </p>
   <input type="submit" value="提 交" class="btn3 ml50 l"/><%= link_to '返回列表', '/shop_lines', :class=>"link1" %>
 <% end %>
 
+
 <script type="text/javascript">
+  var json={}
+  $(document).ready(function(){
+    json.divTemplet=$(".divNTemplet").first().clone();
+    json.divTemplet.attr('class', 'partner');
+    // json.select = $(".divNTemplet p").first().clone();
+    json.arr=$("p.arr:last").clone()
+    json.arr.children("span").children('input').val('')
+
+
+    $("form p").each(function(){
+      if($(this).next().is('div')){
+        $(this).children("a:first").hide();
+      }
+    })
+    $(".stex").each(function(index){ $(this).text("景点"+ (index+1));})
+  })
+
   function add_arr(obj){
-<%#*$(".arr").each(function(index){alert(index); $(this).remove();})%>
-    str = "<p class='arr'><span class='stex'>景点" + ($(".arr").length+1) +"</span>"
-    str += '<span class="sodd">时间:</span><span class="sven"><input id="name" class="inputs" type="text"  name="arr[time][]"/></span>'
-    str += '<span class="sodd" >商家id:</span><span class="sven"><input id="name" class="inputs" type="text" name="arr[id][]"/></span>'
-    str += "<a href='#' onclick='del_arr($(this))'> 删除</a></p>"
-    obj.parent().before(str)
+    obj.parent().before(json.arr.clone());
+    $(".stex").each(function(index){ $(this).text("景点"+ (index+1));})
   }
 
   function del_arr(obj){
     obj.parent().remove();
     $(".stex").each(function(index){ $(this).text("景点"+ (index+1));})
+  }
+
+  function partnerDig(obj){
+    sid = obj.parent().children("span:last").children("input").val();
+    if(sid=='')
+    {
+      alert("先添加景点id.")
+    }
+    else
+    {
+      var odiv = json.divTemplet.clone()
+      obj.parent().after(odiv)
+      odiv.children("p").each(function(){$(this).children('select').attr("name", "[partners]["+sid+"][]")})
+      obj.hide();
+    }
+  }
+
+  function addSelectPartner(obj){
+    var oselect = obj.parent().children('p').first();
+    obj.before(oselect.clone());
+  }
+
+  function canlePartner(obj){
+    obj.parent().prev().children().show()
+    obj.parent().remove();
+  }
+
+  function keptPartner(obj){
+    op = obj.parent().parent()
+    if(op.next().is('div')){
+      if(confirm("地点id已改变，是否取消该地点的合作商家")){
+        op.children().show();
+        op.next().remove();
+      }
+    }
   }
 
 </script>
