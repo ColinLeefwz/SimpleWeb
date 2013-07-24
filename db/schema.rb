@@ -11,13 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130718072405) do
+ActiveRecord::Schema.define(version: 20130724061705) do
 
   create_table "experts", force: true do |t|
     t.string   "name"
     t.string   "image_url"
     t.string   "company"
     t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "join_experts", force: true do |t|
+    t.string   "Name"
+    t.string   "Location"
+    t.string   "Email"
+    t.text     "Expertise"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "propose_topics", force: true do |t|
+    t.string   "Name"
+    t.string   "Location"
+    t.string   "Email"
+    t.text     "Topic"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "proposes", force: true do |t|
+    t.string   "Name"
+    t.string   "Location"
+    t.string   "Email"
+    t.text     "Topic"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @join_expert.Name
+%p
+  %b Location:
+  = @join_expert.Location
+%p
+  %b Email:
+  = @join_expert.Email
+%p
+  %b Expertise:
+  = @join_expert.Expertise
+
+= link_to 'Edit', edit_join_expert_path(@join_expert)
+\|
+= link_to 'Back', join_experts_path
