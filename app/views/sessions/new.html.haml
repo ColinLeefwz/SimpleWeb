@@ -1,4 +1,8 @@
-%h1 New session
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js"
+
+%h3 Create a new session
 
 = render 'form'
 
