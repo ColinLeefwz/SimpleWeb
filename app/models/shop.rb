@@ -93,6 +93,11 @@ class Shop
     User.find_by_id(self.seller_id)
   end
 
+  #合作商家
+  def partners
+    shop_partner = ShopPartner.find_by_id(id)
+    (shop_partner&&shop_partner.partners) || []
+  end
 
   #删除商家.
   def shop_del
