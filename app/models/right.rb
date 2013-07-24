@@ -27,7 +27,7 @@ class Right
   end
   
   def self.read_op(action_name)
-    action_name=="show" || action_name=="index" || action_name=="search" || action_name=="list"
+    action_name=="show" || action_name=="index" || action_name=="search" || action_name=="list" || action_name=="chat"
   end
 
   #相应控制器的操作权限
