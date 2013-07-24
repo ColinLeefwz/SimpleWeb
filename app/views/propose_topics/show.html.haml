@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @propose_topic.Name
+%p
+  %b Location:
+  = @propose_topic.Location
+%p
+  %b Email:
+  = @propose_topic.Email
+%p
+  %b Topic:
+  = @propose_topic.Topic
+
+= link_to 'Edit', edit_propose_topic_path(@propose_topic)
+\|
+= link_to 'Back', propose_topics_path
