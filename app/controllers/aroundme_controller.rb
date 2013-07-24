@@ -162,7 +162,7 @@ class AroundmeController < ApplicationController
     end
     hash.merge!(gps:gps) if gps
     hash.merge!(wifi:wifi) if wifi
-    GpsLog.collection.insert(hash)
+    Resque.enqueue(GpsRecord, hash)
   end
   
   def find_shop_key(lo,accu,uid)
