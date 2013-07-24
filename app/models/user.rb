@@ -97,7 +97,7 @@ class User
     self.pcount=0
     self.save!
     self.clear_all_cache
-    RestClient.post("http://#{$xmpp_ip}:5280/api/kill", :user => _id) 
+    Xmpp.post("api/kill", :user => _id) 
   end
   
   def warn
@@ -420,25 +420,11 @@ class User
   end
 
   def chat
-    $xmpp_ips.count.times do |t|
-      url = "http://#{$xmpp_ips[t]}:5280/api/chat?uid=#{self.id.to_s}"
-      begin
-        return JSON.parse(RestClient.get(url))
-      rescue
-        next
-      end
-    end
+    JSON.parse(Xmpp.get("api/chat?uid=#{self.id.to_s}"))
   end
 
   def human_chat(uid)
-    $xmpp_ips.count.times do |t|
-      url = "http://#{$xmpp_ips[t]}:5280/api/chat2?uid1=#{self.id.to_s}&uid2=#{uid}"
-      begin
-        return JSON.parse(RestClient.get(url))
-      rescue
-        next
-      end
-    end
+    JSON.parse(Xmpp.get("api/chat2?uid1=#{self.id.to_s}&uid2=#{uid}"))
   end
   
   def merge_to_checkin(cins,photo)
