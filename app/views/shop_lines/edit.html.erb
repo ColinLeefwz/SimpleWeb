@@ -56,7 +56,7 @@
   $(document).ready(function(){
     json.divTemplet=$(".divNTemplet").first().clone();
     json.divTemplet.attr('class', 'partner');
-    // json.select = $(".divNTemplet p").first().clone();
+    json.select = $(".divNTemplet p").first().clone();
     json.arr=$("p.arr:last").clone()
     json.arr.children("span").children('input').val('')
 
@@ -100,8 +100,7 @@
   }
 
   function addSelectPartner(obj){
-    var oselect = obj.parent().children('p').first();
-    obj.before(oselect.clone());
+    obj.before( json.select.clone());
   }
 
   function canlePartner(obj){
