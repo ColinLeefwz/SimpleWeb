@@ -1,27 +1,38 @@
-%p#notice= notice
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
 
-%p
-  %b Name:
-  = @expert.name
-%p
-  %b Image url:
-  = image_tag(@expert.image_url)
-%p
-  %b Company:
-  = @expert.company
-%p
-  %b Title:
-  = @expert.title
+.container
+  %p#notice= notice
 
-%p
-  %b Sessions:
+  %h3
+    Expert:
+    = @expert.name
 
-  - @expert.sessions.each do |session|
-    %p
-      = session.title
-      = image_tag(session.image_url)
+  %br
+
+  %p
+    = image_tag(@expert.image_url)
+  %p
+    %b Company:
+    = @expert.company
+  %p
+    %b Title:
+    = @expert.title
+  %br
+
+  %h4.muted The expert has following Sessions:
+
+  %table.table.table-striped.table-hover.table-bordered.table-condensed
+    %tr
+      %th Title
+      %th Image
+    - @expert.sessions.each do |session|
+      %tr
+        %td= session.title
+        %td= image_tag(session.image_url)
       
 
-= link_to 'Edit', edit_expert_path(@expert)
-\|
-= link_to 'Back', experts_path
+  = link_to 'Edit', edit_expert_path(@expert)
+  \| 
+  = link_to 'Back', experts_path
