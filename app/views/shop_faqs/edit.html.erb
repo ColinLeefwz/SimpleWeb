@@ -35,10 +35,13 @@
 	    <div class="imgbox">
           <%= image_tag(@shop_faq.img.try(:url, :t2)) %>
         </div>
+        <div class="relative">
 		<input type="button" value="修改图片" class="btn1" id="Btn1"/>
         <span class="words">(可以添加店内菜单、最新活动、宣传海报等图片<br/>
           图片支持格式:jpg jpeg gif png)</span>
-      <%= f.file_field :img, :class => "none" %></td>
+      <%= f.file_field :img, :class => "btn_file10" %>
+        </div>
+        </td>
     </tr>
     <tr>
       <td valign="top">回答</td>

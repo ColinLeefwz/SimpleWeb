@@ -1,7 +1,9 @@
 <div id="imgText">
-  <div class="coupon">
+  <div class="coupon relative">
     <input type="hidden" name="coupon[t]" value="1"/>
-    <input size="12" name="coupon[img2]" type="file" class="none"  id="Files"/>
+    <input  name="coupon[img2]" type="file" class="btn_file1"  />
+    <input  name="coupon[img2]" type="file" class="btn_file2" />
+    <input  name="coupon[img2]" type="file" class="btn_file3" />
     <input type="button" class="btns" id="Btns" />
     <div class="rdiv" >
       <%= f.text_field :name, :value => @coupon.name || '点此输入名称', :class => 'txt' %>
