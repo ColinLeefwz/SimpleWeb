@@ -3,15 +3,13 @@ Prodygia::Application.routes.draw do
   get '/admin', to: redirect('/admin/sign_in')
   get "admin/index"
   
+  resources :experts
+
   resources :contact_messages
 
   resources :propose_topics
 
-  resources :join_experts
-
   resources :sessions
-
-  resources :experts
   
   resources :admin do 
     collection do
@@ -22,8 +20,6 @@ Prodygia::Application.routes.draw do
       post 'authenticate'
     end
   end
-  
-
   
   get "welcome/index"
   # The priority is based upon order of creation: first created -> highest priority.
