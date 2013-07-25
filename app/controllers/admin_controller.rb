@@ -4,7 +4,7 @@ class AdminController < ApplicationController
 		
   end
 
-  def authenticate
+  def authorize
     username = params[:admin][:username]
     password = params[:admin][:password]
     if (username == 'sameer') && (password == '123')

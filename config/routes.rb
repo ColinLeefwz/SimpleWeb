@@ -17,7 +17,7 @@ Prodygia::Application.routes.draw do
     end
 
     collection do
-      post 'authenticate'
+      post 'authorize'
     end
   end
   
