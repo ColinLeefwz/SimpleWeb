@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130725072808) do
+ActiveRecord::Schema.define(version: 20130725085738) do
 
   create_table "contact_messages", force: true do |t|
     t.string   "name"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 20130725072808) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_url",       default: "default.png"
+    t.string   "email"
+    t.boolean  "authorized",      default: false
   end
 
   create_table "propose_topics", force: true do |t|

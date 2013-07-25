@@ -1,4 +1,11 @@
 Prodygia::Application.routes.draw do
+  get "join_request_controller/index"
+  get "join_request_controller/show"
+  get "join_request_controller/destroy"
+  get "join_request_controller/new"
+  get "join_request_controller/edit"
+  get "join_request_controller/create"
+  get "join_request_controller/update"
   resources :experts
 
   resources :contact_messages
