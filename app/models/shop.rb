@@ -268,6 +268,10 @@ class Shop
     coupons = []
     #7月18 活动，获取附近活动商家的优惠券
     coupons += active_shop_coupons(user_id, limit)
+
+    #旅行团 获取优惠券
+    coupons +=  group_partners_coupons(user_id)
+
     coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
     coupons.each{|coupon| coupon.send_coupon(user_id)}
@@ -277,13 +281,29 @@ class Shop
     Resque.enqueue(XmppNotice, self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
   end
 
+  #旅行团 发送合作商家的优惠券
+  #1.判断用户是否加入旅行团，
+  #2. 获取旅行团在本次签到地点的合作商家的优惠券
+  def group_partners_coupons(uid)
+    coupon=[]
+    $redis.smembers("GROUP#{uid}").each do |sid|
+      begin
+        coupon +=  Shop.find_by_id(sid).group.partners_coupons(self.id, uid)
+      rescue
+        next
+      end
+    end
+    return coupon
+  end
+
+
   #7月18 活动，获取附近活动商家的优惠券，
   def active_shop_coupons(user_id, limit)
     if $mansion1.include?(id.to_i) || $mansion2.include?(id.to_i)
       shops = Shop.find($cooperation_shops)
       loc = loc_first
       shops = shops.sort{|f,s| get_distance(f.loc_first, loc) <=> get_distance(s.loc_first, loc) }[0, limit]
-      shops.inject([]){|f,s|  f + s.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }}
+      shops.inject([]){|f,s|  f + s.checkin_coupons.select { |c| c.allow_send_checkin?(user_id, :single => true) }}
     else
       []
     end
