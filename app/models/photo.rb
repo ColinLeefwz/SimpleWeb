@@ -101,7 +101,8 @@ class Photo
     coupon = shop.share_coupon
     return if coupon.nil?
     if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s)
-      return coupon.send_coupon(user_id,self.id)
+      coupon.send_coupon(user_id,self.id)
+      Resque.enqueue(XmppNotice, self.room,user_id,"收到一张分享优惠券: #{coupon.name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
     end
     return nil
   end
@@ -113,6 +114,7 @@ class Photo
     return nil if coupon.nil?
     if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s, shop.id.to_i)
       ret = coupon.send_coupon(user_id,self.id, room)
+      Resque.enqueue(XmppNotice, self.room,user_id,"收到一张分享优惠券: #{coupon.name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
       return [shop.psid,ret]
     end
     return nil
