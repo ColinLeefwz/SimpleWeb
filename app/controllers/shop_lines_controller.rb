@@ -2,7 +2,7 @@
 
 class ShopLinesController < ApplicationController
   before_filter :shop_authorize
-  before_filter :master_authorize, :only => [:show, :edit, :del, :update]
+  before_filter :master_authorize, :only => [ :edit, :del, :update]
   include Paginate
   layout 'shop'
 
@@ -36,6 +36,11 @@ class ShopLinesController < ApplicationController
     redirect_to :action => "show", :id => @line.id
   end
 
+  def show
+    @line = Line.find_primary(params[:id])
+    render :text => "该路线图不是您的，你无权操作！" if @line.admin_sid.to_i != session[:shop_id].to_i
+  end
+
   def update
     @line.name = params[:name]
     arr=[]
@@ -62,7 +67,7 @@ class ShopLinesController < ApplicationController
 
   private
   def master_authorize
-    @line = Line.find(params[:id])
+    @line = Line.find_by_id(params[:id])
     render :text => "该路线图不是您的，你无权操作！" if @line.admin_sid.to_i != session[:shop_id].to_i
   end
 

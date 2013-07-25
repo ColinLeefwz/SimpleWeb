@@ -42,7 +42,7 @@
   $(document).ready(function(){
     json.divTemplet=$(".divNTemplet").first().clone();
     json.divTemplet.attr('class', 'partner');
-   // json.select = $(".divNTemplet p").first().clone();
+    json.select = $(".divNTemplet p").first().clone();
     json.arr=$("p.arr:last")
     $(".stex").each(function(index){ $(this).text("景点"+ (index+1));})
   })
@@ -53,6 +53,11 @@
   }
 
   function del_arr(obj){
+    odiv = obj.parent().next()
+    if(odiv.is('div'))
+    {
+      odiv.remove()
+    }
     obj.parent().remove();
     $(".stex").each(function(index){ $(this).text("景点"+ (index+1));})
   }
@@ -73,8 +78,7 @@
   }
 
   function addSelectPartner(obj){
-    var oselect = obj.parent().children('p').first();
-    obj.before(oselect.clone());
+    obj.before(json.select.clone());
   }
 
   function canlePartner(obj){
