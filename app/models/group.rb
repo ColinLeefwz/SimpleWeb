@@ -22,6 +22,18 @@ class Group
   
   after_create :gen_shop
 
+  #签到地点在旅行团线路上， 获取路线上的本次签到地点的合作商家的优惠券
+  #sid签到地点id， uid => 用户id
+  def partners_coupons(sid,uid)
+    shop_line_partent = ShopLinePartner.find_by_id(line_id)
+    partners = shop_line_partent.partners
+    return [] unless (pids = partners[sid.to_s])
+    shops = Shop.find_by_id(pids)
+    shops.inject([]){|f,s|  f + s.checkin_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) }}
+  rescue
+    []
+  end
+
   def gen_shop
     s = Shop.new
   	s.id = Shop.next_id

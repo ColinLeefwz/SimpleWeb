@@ -79,9 +79,10 @@ class Coupon
     end
   end
 
-  def allow_send_checkin?(user_id)
-    # 7月18日 活动，合作商家优惠券没使用不再发
-    if $cooperation_shops.include?(self.shop_id.to_i)
+  #option[:single] true 时， 优惠券没有使用就不再发送
+  def allow_send_checkin?(user_id, option={})
+
+    if option[:single]
       return false if  CouponDown.where({sid: shop_id, uid:  user_id, uat: nil}).limit(1).only(:id).first
     end
     
@@ -161,9 +162,9 @@ class Coupon
     ['每日分享优惠','首次分享优惠'][self.rule.to_i]
   end
 
-#  def show_rule2
-#    ['每日分享优惠','首次分享优惠'][self.rule.to_i]
-#  end
+  #  def show_rule2
+  #    ['每日分享优惠','首次分享优惠'][self.rule.to_i]
+  #  end
 
   def show_t2
     ['签到类','分享类'][self.t2.to_i-1]
