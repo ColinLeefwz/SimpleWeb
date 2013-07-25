@@ -40,7 +40,10 @@ class ExpertsController < ApplicationController
   # PATCH/PUT /experts/1
   # PATCH/PUT /experts/1.json
   def update
-      redirect_to sessions_url
+      @expert = Expert.find_by(id: params[:id])
+      @expert.authorized = true
+      @expert.save
+      redirect_to @expert
   end
 
   # DELETE /experts/1
