@@ -1,38 +1,49 @@
-= content_for :head do
-  = stylesheet_link_tag "bootstrap.css", media = "all"
-  = javascript_include_tag "bootstrap.js" 
+%p#notice= notice
 
-.container
-  %p#notice= notice
+%p
+  %b Name:
+  = @expert.name
 
-  %h3
-    Expert:
-    = @expert.name
+%p
+  = image_tag(@expert.image_url)
 
-  %br
+%p
+  %b Title:
+  = @expert.title
+%p
+  %b Company:
+  = @expert.company
+%p
+  %b Location:
+  = @expert.location
+%p
+  %b Expertise:
+  = @expert.expertise
+%p
+  %b Favorite quote:
+  = @expert.favorite_quote
+%p
+  %b Career:
+  = @expert.career
+%p
+  %b Education:
+  = @expert.education
+%p
+  %b Web site:
+  = @expert.web_site
+%p
+  %b Article reports:
+  = @expert.article_reports
+%p
+  %b Speeches:
+  = @expert.speeches
+%p
+  %b Additional:
+  = @expert.additional
+%p
+  %b Testimonials:
+  = @expert.testimonials
 
-  %p
-    = image_tag(@expert.image_url)
-  %p
-    %b Company:
-    = @expert.company
-  %p
-    %b Title:
-    = @expert.title
-  %br
-
-  %h4.muted The expert has following Sessions:
-
-  %table.table.table-striped.table-hover.table-bordered.table-condensed
-    %tr
-      %th Title
-      %th Image
-    - @expert.sessions.each do |session|
-      %tr
-        %td= session.title
-        %td= image_tag(session.image_url)
-      
-
-  = link_to 'Edit', edit_expert_path(@expert)
-  \| 
-  = link_to 'Back', experts_path
+= link_to 'Edit', edit_expert_path(@expert)
+\|
+= link_to 'Back', experts_path
