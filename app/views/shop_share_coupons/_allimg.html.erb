@@ -1,10 +1,12 @@
 <div id="allImg">
-  <div class="coupon">
+  <div class="coupon relative">
     <input type="hidden" name="coupon[t]" value="2"/>
     <input type="hidden" value="t" name="flag" />
     <div class="adiv">
       <input type="button" value="" class="btns3" id="Btn1"/>
-      <input name="coupon[img2]" type="file" class="none" id="File1" />
+      <input  name="coupon[img2]" type="file" class="btn_file1"  />
+      <input  name="coupon[img2]" type="file" class="btn_file2"  />
+      <input  name="coupon[img2]" type="file" class="btn_file3" />
     </div>
   </div>
   <%= render :partial => 'form', :locals => {:f => f, :s => true}  %>
