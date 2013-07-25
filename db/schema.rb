@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130724100629) do
+ActiveRecord::Schema.define(version: 20130725054737) do
 
   create_table "contact_messages", force: true do |t|
     t.string   "name"
@@ -30,16 +30,16 @@ ActiveRecord::Schema.define(version: 20130724100629) do
     t.datetime "updated_at"
   end
 
-  create_table "join_experts", force: true do |t|
+  create_table "propose_topics", force: true do |t|
     t.string   "Name"
     t.string   "Location"
     t.string   "Email"
-    t.text     "Expertise"
+    t.text     "Topic"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "propose_topics", force: true do |t|
+  create_table "proposes", force: true do |t|
     t.string   "Name"
     t.string   "Location"
     t.string   "Email"
@@ -59,11 +59,5 @@ ActiveRecord::Schema.define(version: 20130724100629) do
   end
 
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
-
-  create_table "users", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end
