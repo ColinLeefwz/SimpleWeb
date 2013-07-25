@@ -1,8 +1,10 @@
 #header
   .section.clearfix
     %p#mail_message
-    %a{href: "/", title: "Home", rel: "home", id: "logo"}
-      =image_tag "logo.png", alt: "Home"
+
+    %h1
+      %a
+        =link_to 'PDG-alpha', href: "/"
 
   #navigation
     .section
