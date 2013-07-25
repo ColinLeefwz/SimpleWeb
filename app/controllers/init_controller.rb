@@ -23,10 +23,11 @@ class InitController < ApplicationController
     else
       ip = $web_ip
     end
-    if "502e6303421aa918ba000001" == session[:user_id].to_s
-      xmpp = $xmpp_ips[3]
+    if session[:user_id]
+      seq = session[:user_id].to_s[0,8].to_i(16) % $xmpp_ips.size
+      xmpp = $xmpp_ips[seq]
     else
-      xmpp = $xmpp_ip
+      xmpp = Xmpp.cur_xmpp_ip
     end
     if session[:os] == 1
       ver = android_version.to_f

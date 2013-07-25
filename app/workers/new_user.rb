@@ -52,8 +52,7 @@ class NewUser
     else
       os = ""
     end
-    xmpp = Xmpp.chat(uid,to,"#{user.show_gender}:#{od}:#{from}#{os} #{shop.name} #{shop.city_fullname}", "FEED#{$uuid.generate}", " NOLOG='1' NOPUSH='1' ")
-    RestClient.post("http://#{$xmpp_ip}:5280/rest", xmpp) 
+    Xmpp.send_chat(uid,to,"#{user.show_gender}:#{od}:#{from}#{os} #{shop.name} #{shop.city_fullname}", "FEED#{$uuid.generate}", " NOLOG='1' NOPUSH='1' ")
   end
   
 end
