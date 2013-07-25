@@ -3,6 +3,7 @@
 %table
   %tr
     %th Name
+    %th
     %th Title
     %th Company
     %th Location
@@ -22,6 +23,7 @@
   - @experts.each do |expert|
     %tr
       %td= expert.name
+      %td= image_tag(expert.image_url)
       %td= expert.title
       %td= expert.company
       %td= expert.location
