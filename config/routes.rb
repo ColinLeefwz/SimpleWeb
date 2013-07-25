@@ -1,11 +1,11 @@
 Prodygia::Application.routes.draw do
+  resources :experts
+
   resources :contact_messages
 
   resources :propose_topics
 
   resources :sessions
-
-  resources :experts
 
   get "welcome/index"
   # The priority is based upon order of creation: first created -> highest priority.

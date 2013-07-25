@@ -12,14 +12,39 @@ Session.delete_all
 peter = Expert.create(name: 'peter',
 			  image_url: 'AD pic.jpg',
 			  company: 'Prodygia',
-			  title: 'Co-Founder'
+			  title: 'Co-Founder',
+			  location: "Shanghai, China",
+			  expertise: "Doing Business in China",
+			  favorite_quote: "\"Whether you think you can or you think you can\'t-- you\'re right.\"
+- Henry Ford",
+              career: "Prodygia, Co-Founder (current) \n HROne, Board Member (current) \n",
+              education: "Kellogg Business School, Northwestern University, MBA \n Politecnico di Milano, Management Engineering Degree \n",
+              web_site: "www.jljgroup.com \n www.hroneonline.com \n",
+              article_reports: 'Published many industry and strategy reports about the Chinese market. ',
+              speeches: 'Frequent speaker at seminars, conferences, workshops, organized by government and trade organizations, industry associations, chambers of commerce. In China, the United States, Italy, New Zealand, Malaysia. ',
+              additional: 'Interests and hobbies include internet technologies, chess, long-distance running, scuba diving, cooking, NLP, and meditation.',
+              testimonials: "\"Thank you for your precious contribution to the project; we highly appreciate your professionalism.\" \n
+              Ferdinando Gueli, Deputy Trade Commissioner, Italian Trade Commission, Shanghai, China"
 			  )
 
 
 allen = Expert.create(name: 'allen',
-			  image_url: 'guillaume profile pic.jpg',
+			  #image_url: 'guillaume profile pic.jpg',
 			  company: 'Prodygia',
-			  title: 'Founder')
+			  title: 'Founder',
+			  location: "Shanghai, China",
+			  expertise: "Doing Business in China",
+			  favorite_quote: "\"Whether you think you can or you think you can\'t-- you\'re right.\"
+- Henry Ford",
+              career: "Prodygia, Co-Founder (current) \n HROne, Board Member (current) \n",
+              education: "Kellogg Business School, Northwestern University, MBA \n Politecnico di Milano, Management Engineering Degree \n",
+              web_site: "www.jljgroup.com \n www.hroneonline.com \n",
+              article_reports: 'Published many industry and strategy reports about the Chinese market. ',
+              speeches: 'Frequent speaker at seminars, conferences, workshops, organized by government and trade organizations, industry associations, chambers of commerce. In China, the United States, Italy, New Zealand, Malaysia. ',
+              additional: 'Interests and hobbies include internet technologies, chess, long-distance running, scuba diving, cooking, NLP, and meditation.',
+              testimonials: "\"Thank you for your precious contribution to the project; we highly appreciate your professionalism.\" \n
+              Ferdinando Gueli, Deputy Trade Commissioner, Italian Trade Commission, Shanghai, China"
+			  )
 
 
 

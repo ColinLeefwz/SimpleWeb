@@ -1,25 +1,45 @@
-= content_for :head do
-  = stylesheet_link_tag "bootstrap.css", media = "all"
-  = javascript_include_tag "bootstrap.js"
+%h1 Listing experts
 
-.container
-  %h1 Experts
- 
-  %table.table.table-striped.table-hover.table-bordered
+%table
+  %tr
+    %th Name
+    %th
+    %th Title
+    %th Company
+    %th Location
+    %th Expertise
+    %th Favorite quote
+    %th Career
+    %th Education
+    %th Web site
+    %th Article reports
+    %th Speeches
+    %th Additional
+    %th Testimonials
+    %th
+    %th
+    %th
+
+  - @experts.each do |expert|
     %tr
-      %th Name
-      %th Image url
-      %th Company
-      %th Title
-      %th Delete
+      %td= expert.name
+      %td= image_tag(expert.image_url)
+      %td= expert.title
+      %td= expert.company
+      %td= expert.location
+      %td= expert.expertise
+      %td= expert.favorite_quote
+      %td= expert.career
+      %td= expert.education
+      %td= expert.web_site
+      %td= expert.article_reports
+      %td= expert.speeches
+      %td= expert.additional
+      %td= expert.testimonials
+      %td= link_to 'Show', expert
+      %td= link_to 'Edit', edit_expert_path(expert)
+      %td= link_to 'Destroy', expert, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-    - @experts.each do |expert|
-      %tr
-        %td= link_to "#{expert.name}", expert
-        %td= link_to image_tag(expert.image_url), expert
-        %td= expert.company
-        %td= expert.title
-        %td= link_to 'Delete', expert_path(expert), method: :delete, data: {confirm: 'Are you sure?'}
-  %br
+%br
 
-  = link_to 'New Expert', new_expert_path, class: "btn btn-default"
+= link_to 'New Expert', new_expert_path

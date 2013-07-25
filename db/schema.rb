@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130725054737) do
+ActiveRecord::Schema.define(version: 20130725072808) do
 
   create_table "contact_messages", force: true do |t|
     t.string   "name"
@@ -23,11 +23,21 @@ ActiveRecord::Schema.define(version: 20130725054737) do
 
   create_table "experts", force: true do |t|
     t.string   "name"
-    t.string   "image_url"
-    t.string   "company"
     t.string   "title"
+    t.string   "company"
+    t.string   "location"
+    t.text     "expertise"
+    t.text     "favorite_quote"
+    t.text     "career"
+    t.text     "education"
+    t.text     "web_site"
+    t.text     "article_reports"
+    t.text     "speeches"
+    t.text     "additional"
+    t.text     "testimonials"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_url",       default: "default.png"
   end
 
   create_table "propose_topics", force: true do |t|
