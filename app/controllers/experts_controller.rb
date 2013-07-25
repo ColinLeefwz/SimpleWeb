@@ -1,5 +1,5 @@
 class ExpertsController < ApplicationController
-  before_action :set_expert, only: [:show, :edit, :update, :destroy]
+  before_action :set_expert, only: [:show, :edit, :destroy]
 
   # GET /experts
   # GET /experts.json
@@ -40,15 +40,7 @@ class ExpertsController < ApplicationController
   # PATCH/PUT /experts/1
   # PATCH/PUT /experts/1.json
   def update
-    respond_to do |format|
-      if @expert.update(expert_params)
-        format.html { redirect_to @expert, notice: 'Expert was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @expert.errors, status: :unprocessable_entity }
-      end
-    end
+      redirect_to sessions_url
   end
 
   # DELETE /experts/1

@@ -51,6 +51,22 @@ allen = Expert.create(name: 'allen',
 			  )
 
 
+gecko = Expert.create(name: 'Gecko',
+              location: 'Hangzhou, China',
+              email: 'gecko@oc.com',
+              expertise: 'writting',
+              authorized: false
+	          )
+
+jevan = Expert.create(name: 'jevan',
+	          location: 'Hangzhou, China',
+	          email: 'jevan@oc.com',
+	          expertise: 'cooking',
+	          authorized: false
+	          )
+
+
+
 
 # Session.create(title: 'First Session', 
 # 	           expert: peter,

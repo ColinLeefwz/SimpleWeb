@@ -1,0 +1,30 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap", media = "all"
+  = javascript_include_tag "bootstrap" 
+
+.container
+  %h1 Join Requests
+
+  %table.table.table-striped.table-hover.table-bordered
+    %tr
+      %th Name
+      %th Locationz
+      %th Email
+      %th Expertise
+      %th
+      %th
+
+    - @joins.each do |join|
+      %tr
+        %td
+          = join.name
+        %td
+          = join.location
+        %td
+          = join.email
+        %td
+          = join.expertise
+        %td
+          = link_to 'Accept', expert_path(id: join.id), method: :put
+          / = link_to 'Accept', {:controller => "experts", :action => "update", :method => :put, :id => join.id }  (by Eric, not working temprarily)
+  %put
