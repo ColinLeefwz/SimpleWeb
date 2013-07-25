@@ -3,8 +3,6 @@ Prodygia::Application.routes.draw do
 
   resources :propose_topics
 
-  resources :join_experts
-
   resources :sessions
 
   resources :experts
