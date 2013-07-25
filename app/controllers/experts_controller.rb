@@ -4,7 +4,7 @@ class ExpertsController < ApplicationController
   # GET /experts
   # GET /experts.json
   def index
-    @experts = Expert.all
+    @experts = Expert.where(authorized: true)
   end
 
   # GET /experts/1
