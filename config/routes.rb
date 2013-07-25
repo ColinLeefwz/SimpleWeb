@@ -1,4 +1,6 @@
 Prodygia::Application.routes.draw do
+  resources :experts
+
   resources :contact_messages
 
   resources :propose_topics
