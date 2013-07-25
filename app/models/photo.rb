@@ -79,7 +79,7 @@ class Photo
     end
     #shop_wb = BindWb.wb_name(room)
     #str += "@#{shop_wb}" if shop_wb
-    Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, share_url)
+    Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{user_id}"), str, img.url)
   end
   
   def send_qq(direct=false)
