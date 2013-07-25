@@ -1,0 +1,25 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+
+.container
+  %h3.text-center Sign In
+  = form_for :admin, url: authenticate_admin_index_path, html: { class: 'form-horizontal'} do |f|
+    .control-group
+      %label.control-label
+        = f.label :username
+      .controls
+        = f.text_field :username
+    
+    .control-group
+      %label.control-label
+        = f.label :password
+      .controls
+        = f.password_field :password
+  
+    .control-group
+      .controls
+        %label.checkbox
+          = f.check_box :remember_me
+          = f.label :remember_me
+        = f.submit "sign in", class: 'btn'
