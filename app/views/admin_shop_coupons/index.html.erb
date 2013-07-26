@@ -45,8 +45,8 @@
       <td><%=truncate(coupon.desc, :length => 25) %></td>
       <td><%=image_tag coupon.img && coupon.img.url(:t1) %></td>
       <td><%= link_to "详情", "/admin_shop_coupons/show?id=#{coupon.id}" %></td>
-      <td><%= link_to "过期", "#", :onclick => "ajaxLapse($(this), '#{coupon.id}')" %></td>
-      <td><%= link_to "删除", "#", :onclick => "ajaxdel($(this), '#{coupon.id}', '#{coupon.name}')" %></td>
+      <td><%= link_to "过期", "javascript:void(0)", :onclick => "ajaxLapse($(this), '#{coupon.id}')" %></td>
+      <td><%= link_to "删除", "javascript:void(0)", :onclick => "ajaxdel($(this), '#{coupon.id}', '#{coupon.name}')" %></td>
     </tr>
   <% end %>
 </table>

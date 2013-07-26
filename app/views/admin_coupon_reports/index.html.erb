@@ -43,7 +43,7 @@
       <td><%=link_to cpd.shop_name||'', "/admin_shops/show?id=#{cpd.sid}" %><br/> (<%= cpd.sid %>)</td>
       <td><%= cpd.shop_city %></td>
       <td><%=link_to cpd.cid, "/admin_shop_coupons/show?id=#{cpd.cid}" %><br/>
-        <%=image_tag cpd.coupon.img && cpd.coupon.img.url(:t1) %>
+        <%=image_tag cpd.coupon && cpd.coupon.img && cpd.coupon.img.url(:t1) %>
       </td>
       <td><%= cpd.coupon_show_t2 %></td>
       <td><%= cpd.download_num %></td>
