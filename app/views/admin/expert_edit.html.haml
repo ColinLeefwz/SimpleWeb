@@ -1,0 +1,11 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+
+%h1 Editing expert
+
+= render 'expert_form'
+
+= link_to 'Show', expert_admin_index_path
+\|
+= link_to 'Back', experts_admin_index_path

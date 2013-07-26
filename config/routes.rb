@@ -12,6 +12,8 @@ Prodygia::Application.routes.draw do
   resources :sessions
   
   resources :admin do 
+
+
     collection do
       get 'sign_in'
     end
@@ -19,6 +21,31 @@ Prodygia::Application.routes.draw do
     collection do
       post 'authorize'
     end
+
+    collection do 
+      get 'sessions', to: 'admin#session_index'
+      post 'sessions', to: 'admin#session_create'
+      get 'sessions/new', to: 'admin#session_new', as:'session_new'
+
+      get 'sessions/:id/edit', to: 'admin#session_edit', as: 'session_edit'
+      get 'sessions/:id', to: 'admin#session_show', as: 'session'
+      put 'sessions/:id', to: 'admin#session_update'
+      patch 'sessions/:id', to: 'admin#session_update'
+      delete 'sessions/:id', to: 'admin#session_destroy'
+    end
+
+    collection do 
+      get 'experts', to: 'admin#expert_index'
+      post 'experts', to: 'admin#expert_create'
+      get 'experts/new', to: 'admin#expert_new', as: 'expert_new'
+
+      get 'experts/:id/edit', to: 'admin#expert_edit', as: 'expert_edit'
+      get 'experts/:id', to: 'admin#expert_show', as: 'expert'
+      put 'experts/:id', to: 'admin#expert_update'
+      patch 'experts/:id', to: 'admin#expert_update'
+      delete 'experts/:id', to: 'admin#expert_destroy'
+    end    
+
   end
   
   get "welcome/index"

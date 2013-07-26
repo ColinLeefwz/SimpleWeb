@@ -1,0 +1,1 @@
+json.extract! @expert, :name, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials, :created_at, :updated_at
