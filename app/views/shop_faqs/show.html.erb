@@ -7,18 +7,19 @@
   </div>
   <% unless @shop_faq.img.blank? %>
     <div class="headers2">
-      <image src="<%= @shop_faq.shop.logo.try(:img) %>" class="imgs"/>
-      <div><image src="<%= @shop_faq.img %>" class="imgs2"/></div>
+      <image src="<%= @shop_faq.shop.logo.try(:img) || '/images/smalllogo.png' %>" class="imgs"/>
+      <div><image src="<%= ShopFaq.img_url(@shop_faq.id) %>" class="imgs2"/></div>
     </div>
   <% end %>
   <div class="headers3">
-    <image src="<%= @shop_faq.shop.logo.try(:img) %>" class="imgs"/>
+    <image src="<%= @shop_faq.shop.logo.try(:img) || '/images/smalllogo.png'%>" class="imgs"/>
     <div><%= @shop_faq.text %></div>
   </div>
   <div class="submit01"></div>
 </div>
 <div class="plane3 pl100 pt20">
-  <a href="#" class="l ">重新编辑</a><span class="l plr20">|</span><a href="#" class="btn6 pl0 mt0">返回列表</a>
+  <%= link_to "重新编辑", "/shop_faqs/edit?id=#{@shop_faq.id}" , :class => 'l' %>
+  <span class="l plr20">|</span><a href="/shop_faqs" class="btn6 pl0 mt0">返回列表</a>
 </div>
 <script>
   LeftMenu("15");
