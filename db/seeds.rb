@@ -13,6 +13,8 @@ peter = Expert.create(name: 'peter',
 			  image_url: 'AD pic.jpg',
 			  company: 'Prodygia',
 			  title: 'Co-Founder',
+			  email: 'peter@oc.com',
+			  authorized: true,
 			  location: "Shanghai, China",
 			  expertise: "Doing Business in China",
 			  favorite_quote: "\"Whether you think you can or you think you can\'t-- you\'re right.\"
@@ -32,6 +34,8 @@ allen = Expert.create(name: 'allen',
 			  #image_url: 'guillaume profile pic.jpg',
 			  company: 'Prodygia',
 			  title: 'Founder',
+			  email: 'allen@oc.com',
+			  authorized: true,
 			  location: "Shanghai, China",
 			  expertise: "Doing Business in China",
 			  favorite_quote: "\"Whether you think you can or you think you can\'t-- you\'re right.\"
@@ -45,6 +49,22 @@ allen = Expert.create(name: 'allen',
               testimonials: "\"Thank you for your precious contribution to the project; we highly appreciate your professionalism.\" \n
               Ferdinando Gueli, Deputy Trade Commissioner, Italian Trade Commission, Shanghai, China"
 			  )
+
+
+gecko = Expert.create(name: 'Gecko',
+              location: 'Hangzhou, China',
+              email: 'gecko@oc.com',
+              expertise: 'writting',
+              authorized: false
+	          )
+
+jevan = Expert.create(name: 'jevan',
+	          location: 'Hangzhou, China',
+	          email: 'jevan@oc.com',
+	          expertise: 'cooking',
+	          authorized: false
+	          )
+
 
 
 

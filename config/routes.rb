@@ -2,7 +2,14 @@ Prodygia::Application.routes.draw do
 
   get '/admin', to: redirect('/admin/sign_in')
   get "admin/index"
-  
+
+  get "join_request/index"
+  get "join_request/show"
+  get "join_request/destroy"
+  get "join_request/new"
+  get "join_request/edit"
+  get "join_request/create"
+  get "join_request/update"
   resources :experts
 
   resources :contact_messages
@@ -10,10 +17,15 @@ Prodygia::Application.routes.draw do
   resources :propose_topics
 
   resources :sessions
+<<<<<<< HEAD
   
   resources :admin do 
 
 
+=======
+
+  resources :admin do
+>>>>>>> 50e0610db0d127773537e43b071d51182020038b
     collection do
       get 'sign_in'
     end
@@ -47,7 +59,7 @@ Prodygia::Application.routes.draw do
     end    
 
   end
-  
+
   get "welcome/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -90,7 +102,7 @@ Prodygia::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
