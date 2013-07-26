@@ -103,6 +103,8 @@ class CouponDown
   #优惠券的下载编号。 优惠券的编号 + 当前下载编号
   def download_num
     "#{coupon.num}-#{num.to_s.rjust(3,'0')}"
+  rescue
+    ""
   end
   
   def share_coupon_img_path
