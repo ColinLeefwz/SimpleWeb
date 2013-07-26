@@ -2,7 +2,8 @@
   <div class="section clearfix">
     <p id="mail_message"></p>
       <a href="/" title="Home" rel="home" id="logo">
-          <img src="http://www.prodygia.com/sites/all/themes/prodygia/logo.png" alt="Home" />
+          <h1> PDG-DEVELOPING </h1>
+          <!-- <img src="http://www.prodygia.com/sites/all/themes/prodygia/logo.png" alt="Home" /> -->
       </a>
       <div id="name-and-slogan">
         <div id="site-name">
@@ -45,13 +46,13 @@
     <h2>Main menu</h2>
     <ul id="main-menu" class="links inline clearfix">
       <li class="menu-414 first">
-        <a href="/about_us">about us</a>
+        <a><%= link_to 'about us', welcome_about_us_path %></a>
       </li>
       <li class="menu-499">
-        <a href="/sessions" title="">sessions</a>
+        <a><%= link_to 'sessions', sessions_path %></a>
       </li>
       <li class="menu-493 last">
-        <a href="/experts">experts</a>
+        <a><%= link_to 'experts', experts_path %></a>
       </li>
     </ul>              
   </div>
