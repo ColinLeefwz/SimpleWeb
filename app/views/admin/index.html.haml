@@ -1,0 +1,27 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+
+.container
+  .row-fluid
+    .span12
+      %h1 Dashboard
+  .container
+    .row-fluid.row-margin
+      .span2.offset1     
+        / %a.btn.btn-large.btn-block.btn-primary Experts   
+        = link_to 'Sessions', sessions_path, class: "btn btn-large btn-block btn-default"
+
+      .span2
+        /%a.btn.btn-large.btn-block.btn-warning Experts
+        = link_to 'Experts', experts_path, class: "btn btn-large btn-block btn-warning"
+      .span2
+        /%a.btn.btn-large.btn-block.btn-info Expert Requests
+        = link_to 'Expert Requests', join_request_index_path, class: "btn btn-large btn-block btn-info"
+
+      .span2
+        = link_to 'Proposed Topics', propose_topics_path, class: "btn btn-large btn-block btn-success"
+
+      .span2
+        = link_to 'Contact Letters', contact_messages_path, class: "btn btn-large btn-block btn-inverse"
+

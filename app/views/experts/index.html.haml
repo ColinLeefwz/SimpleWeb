@@ -1,11 +1,21 @@
-%h1 Experts
+%h1 Listing experts
 
 %table
   %tr
     %th Name
-    %th Image url
-    %th Company
+    %th
     %th Title
+    %th Company
+    %th Location
+    %th Expertise
+    %th Favorite quote
+    %th Career
+    %th Education
+    %th Web site
+    %th Article reports
+    %th Speeches
+    %th Additional
+    %th Testimonials
     %th
     %th
     %th
@@ -13,9 +23,23 @@
   - @experts.each do |expert|
     %tr
       %td= expert.name
-      %td= link_to image_tag(expert.image_url), expert
-      %td= expert.company
+      %td= image_tag(expert.image_url)
       %td= expert.title
+      %td= expert.company
+      %td= expert.location
+      %td= expert.expertise
+      %td= expert.favorite_quote
+      %td= expert.career
+      %td= expert.education
+      %td= expert.web_site
+      %td= expert.article_reports
+      %td= expert.speeches
+      %td= expert.additional
+      %td= expert.testimonials
+      %td= link_to 'Show', expert
+      %td= link_to 'Edit', edit_expert_path(expert)
+      %td= link_to 'Destroy', expert, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
 %br
 
 = link_to 'New Expert', new_expert_path

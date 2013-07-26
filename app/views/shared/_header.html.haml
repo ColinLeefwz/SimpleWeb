@@ -1,12 +1,14 @@
 #header
   .section.clearfix
     %p#mail_message
-    %a{href: "/", title: "Home", rel: "home", id: "logo"}
-      =image_tag "logo.png", alt: "Home"
+
+    %h1
+      %a
+        =link_to 'PDG-alpha', welcome_index_path
 
   #navigation
     .section
-      %h2 Main menu
+      / %h2 Main menu
       %ul#main-menu.links.inline.clearfix
         %li.menu-414.first
           %a

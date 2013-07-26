@@ -1,0 +1,26 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+
+.container  
+  %h1 Proposed Topics
+
+  %table.table.table-striped.table-hover.table-bordered
+    %tr
+      %th Name
+      %th Location
+      %th Email
+      %th Topic
+      %th Control
+
+    - @propose_topics.each do |propose_topic|
+      %tr
+        %td= link_to "#{propose_topic.Name}", propose_topic
+        %td= propose_topic.Location
+        %td= propose_topic.Email
+        %td= propose_topic.Topic
+        %td= link_to 'Destroy', propose_topic, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+  %br
+
+  =link_to 'Propose a topic', new_propose_topic_path, class: "btn btn-default"
