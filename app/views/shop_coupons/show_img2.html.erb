@@ -37,8 +37,15 @@
   <input type="hidden" id="y" name="y" value="0"/>
   <input type="hidden" id="w" name="w" value="560" />
   <input type="hidden" id="h" name="h" value="190" />
-  
+
   <input type="submit" class="btn3 l" value="下一步">
   <%= link_to '取 消', "/shop_coupons/cancel_crop?id=#{@coupon.id}", :class => 'link1' %>
 </form>
-<script>LeftMenu(6);</script>
+<script>
+  $(document).ready(function(){
+    if ($('.jcrop-holder').first().css('width')=="28px")
+      location.reload()
+  })
+
+  LeftMenu(6);
+</script>
