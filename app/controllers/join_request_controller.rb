@@ -7,6 +7,13 @@ class JoinRequestController < ApplicationController
   end
 
   def destroy
+    id = params[:id]
+    @expert = Expert.find(id)
+    @expert.destroy
+
+    redirect_to  join_request_index_url, notice: "Rejected"
+    
+    #TODO: email function
   end
 
   def new
