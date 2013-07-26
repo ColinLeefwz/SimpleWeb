@@ -1,4 +1,8 @@
 Prodygia::Application.routes.draw do
+
+  get '/admin', to: redirect('/admin/sign_in')
+  get "admin/index"
+  
   resources :experts
 
   resources :contact_messages
@@ -6,13 +10,23 @@ Prodygia::Application.routes.draw do
   resources :propose_topics
 
   resources :sessions
+  
+  resources :admin do 
+    collection do
+      get 'sign_in'
+    end
 
+    collection do
+      post 'authorize'
+    end
+  end
+  
   get "welcome/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root to: "admin#index"
+  root to: "admin#sign_in"
 
   get "welcome/about_us"
   # Example of regular route:
