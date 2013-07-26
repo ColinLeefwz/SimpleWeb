@@ -68,6 +68,7 @@ text-align: center;
 		            <h4>微博ID:&nbsp;&nbsp;<%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %><br></h4>
 		            <h4>性别:&nbsp;&nbsp;<%= user.show_gender %><br></h4>
 		            <h4>关注数:&nbsp;&nbsp;<%= user.follow_ids.count %><br></h4>
+		            <h4>头像数:&nbsp;&nbsp;<%= user.user_logos.size %><br></h4>
 		          <div>
 		        </div>
             </div>
