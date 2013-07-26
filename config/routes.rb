@@ -59,7 +59,7 @@ Prodygia::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root to: "admin#sign_in"
+  root to: "welcome#index"
 
   get "welcome/about_us"
   # Example of regular route:
