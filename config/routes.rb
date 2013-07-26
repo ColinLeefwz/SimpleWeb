@@ -17,15 +17,9 @@ Prodygia::Application.routes.draw do
   resources :propose_topics
 
   resources :sessions
-<<<<<<< HEAD
   
   resources :admin do 
 
-
-=======
-
-  resources :admin do
->>>>>>> 50e0610db0d127773537e43b071d51182020038b
     collection do
       get 'sign_in'
     end

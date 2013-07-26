@@ -54,7 +54,7 @@ class AdminController < ApplicationController
   def session_update
     respond_to do |format|
       if @session.update(session_params)
-        format.html { redirect_to @session, notice: 'Session was successfully updated.' }
+        format.html { redirect_to session_admin_index_path(@session), notice: 'Session was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -90,7 +90,7 @@ class AdminController < ApplicationController
 
     respond_to do |format|
       if @expert.save
-        format.html { redirect_to @expert, notice: 'Expert was successfully created.' }
+        format.html { redirect_to expert_admin_index_path(@expert), notice: 'Expert was successfully created.' }
         format.json { render action: 'show', status: :created, location: @expert }
       else
         format.html { render action: 'new' }
@@ -102,7 +102,7 @@ class AdminController < ApplicationController
   def expert_update
     respond_to do |format|
       if @expert.update(expert_params)
-        format.html { redirect_to @expert, notice: 'Expert was successfully updated.' }
+        format.html { redirect_to expert_admin_index_path(@expert), notice: 'Expert was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -114,7 +114,7 @@ class AdminController < ApplicationController
   def expert_destroy
     @expert.destroy
     respond_to do |format|
-      format.html { redirect_to experts_url }
+      format.html { redirect_to experts_admin_index_url }
       format.json { head :no_content }
     end
   end
