@@ -1,6 +1,6 @@
 class DropExpertTable < ActiveRecord::Migration
 	def up
-		drop_table :experts
+		drop_table :experts if self.table_exists?("experts")
 	end
 
 	def down
