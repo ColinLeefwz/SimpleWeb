@@ -1,0 +1,19 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+  
+%p#notice= notice
+
+%p
+  %b Name:
+  = @contact_message.name
+%p
+  %b Email:
+  = @contact_message.email
+%p
+  %b Message:
+  = @contact_message.message
+
+= link_to 'Edit', edit_contact_message_path(@contact_message)
+\|
+= link_to 'Back', contact_messages_path

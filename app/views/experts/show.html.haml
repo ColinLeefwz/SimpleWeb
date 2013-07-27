@@ -3,24 +3,46 @@
 %p
   %b Name:
   = @expert.name
+
 %p
-  %b Image url:
   = image_tag(@expert.image_url)
+
+%p
+  %b Title:
+  = @expert.title
 %p
   %b Company:
   = @expert.company
 %p
-  %b Title:
-  = @expert.title
-
+  %b Location:
+  = @expert.location
 %p
-  %b Sessions:
-
-  - @expert.sessions.each do |session|
-    %p
-      = session.title
-      = image_tag(session.image_url)
-      
+  %b Expertise:
+  = @expert.expertise
+%p
+  %b Favorite quote:
+  = @expert.favorite_quote
+%p
+  %b Career:
+  = @expert.career
+%p
+  %b Education:
+  = @expert.education
+%p
+  %b Web site:
+  = @expert.web_site
+%p
+  %b Article reports:
+  = @expert.article_reports
+%p
+  %b Speeches:
+  = @expert.speeches
+%p
+  %b Additional:
+  = @expert.additional
+%p
+  %b Testimonials:
+  = @expert.testimonials
 
 = link_to 'Edit', edit_expert_path(@expert)
 \|

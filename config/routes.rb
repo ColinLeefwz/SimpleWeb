@@ -1,14 +1,39 @@
 Prodygia::Application.routes.draw do
+
+  get '/admin', to: redirect('/admin/sign_in')
+  get "admin/index"
+
+  get "join_request/index"
+  get "join_request/show"
+  get "join_request/destroy"
+  get "join_request/new"
+  get "join_request/edit"
+  get "join_request/create"
+  get "join_request/update"
+  resources :experts
+
+  resources :contact_messages
+
+  resources :propose_topics
+
   resources :sessions
 
-  resources :experts
+  resources :admin do
+    collection do
+      get 'sign_in'
+    end
+
+    collection do
+      post 'authorize'
+    end
+  end
 
   get "welcome/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root to: "welcome#index"
+  root to: "admin#sign_in"
 
   get "welcome/about_us"
   # Example of regular route:
@@ -45,7 +70,7 @@ Prodygia::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

@@ -1,13 +1,12 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+
 %p#notice= notice
 
-%p
-  %b Title:
+%h3
+  Session:
   = @session.title
-
-%p
-  %b= @session.expert.name
-%p
-  =image_tag(@session.expert.image_url)
 
 %p
   =image_tag(@session.image_url)
@@ -15,6 +14,17 @@
 %p
   %b Description:
   = @session.description
+
+%br
+
+%h4.muted Expert:
+
+%p
+  =image_tag(@session.expert.image_url)
+
+%h4
+  %b= @session.expert.name
+
 
 = link_to 'Edit', edit_session_path(@session)
 |

@@ -11,13 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130718072405) do
+ActiveRecord::Schema.define(version: 20130725085738) do
+
+  create_table "contact_messages", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "experts", force: true do |t|
     t.string   "name"
-    t.string   "image_url"
-    t.string   "company"
     t.string   "title"
+    t.string   "company"
+    t.string   "location"
+    t.text     "expertise"
+    t.text     "favorite_quote"
+    t.text     "career"
+    t.text     "education"
+    t.text     "web_site"
+    t.text     "article_reports"
+    t.text     "speeches"
+    t.text     "additional"
+    t.text     "testimonials"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_url",       default: "default.png"
+    t.string   "email"
+    t.boolean  "authorized",      default: false
+  end
+
+  create_table "propose_topics", force: true do |t|
+    t.string   "Name"
+    t.string   "Location"
+    t.string   "Email"
+    t.text     "Topic"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
