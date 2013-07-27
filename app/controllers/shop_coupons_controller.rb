@@ -30,6 +30,8 @@ class ShopCouponsController < ApplicationController
 
   def show_img2
     @coupon = Coupon.find_primary(params[:id])
+    img = MiniMagick::Image.from_file("public/#{@coupon.img2}")
+    @width, @height =  img[:width],img[:height]
   end
 
   def crop

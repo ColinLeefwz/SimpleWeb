@@ -33,7 +33,7 @@
       <td valign="top">图片</td>
       <td>
 	    <div class="imgbox">
-          <%= image_tag(ShopFaq.img_url(@shop_faq.id, :t2)) %>
+          <%= image_tag("#{ShopFaq.img_url(@shop_faq.id, :t2)}?time=#{Time.now.to_i}") %>
         </div>
         <div class="relative">
 		<input type="button" value="修改图片" class="btn1" id="Btn1"/>
