@@ -188,8 +188,8 @@ class AroundmeController < ApplicationController
   def hot_users_no_cache(city,sex,skip,pcount)
     uids = $redis.zrevrange("HOT#{sex}U#{city}",skip,skip+pcount-1)
     page = (skip/pcount +1)
-    city2 = city[0] + (city.to_i+page).to_s
-    if city.length>1
+    if city && city.length>1
+      city2 = city[0] + (city.to_i+page).to_s
       uids += $redis.zrevrange("HOT#{sex}U#{city2}",0,pcount-1)
     else
       uids += $redis.zrevrange("HOT#{sex}U010",skip,skip+pcount-1) 
