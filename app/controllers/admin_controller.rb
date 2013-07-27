@@ -1,9 +1,9 @@
 class AdminController < ApplicationController
-	before_action :set_session, only: [:session_show, :session_edit, :session_update, :session_destroy]
-	before_action :set_expert, only: [:expert_show, :expert_edit, :expert_update, :expert_destroy]
+  before_action :set_session, only: [:session_show, :session_edit, :session_update, :session_destroy]
+  before_action :set_expert, only: [:expert_show, :expert_edit, :expert_update, :expert_destroy]
 
-	def index 
-	end
+  def index 
+  end
 
 	def authorize
 		username = params[:admin][:username]

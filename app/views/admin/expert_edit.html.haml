@@ -1,0 +1,59 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+
+%h1 Editing expert
+
+= form_for @expert, url: expert_admin_index_path(@expert) do |f|
+  - if @expert.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@expert.errors.count, "error")} prohibited this expert from being saved:"
+      %ul
+        - @expert.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :company
+    = f.text_field :company
+  .field
+    = f.label :location
+    = f.text_field :location
+  .field
+    = f.label :expertise
+    = f.text_area :expertise
+  .field
+    = f.label :favorite_quote
+    = f.text_area :favorite_quote
+  .field
+    = f.label :career
+    = f.text_area :career
+  .field
+    = f.label :education
+    = f.text_area :education
+  .field
+    = f.label :web_site
+    = f.text_area :web_site
+  .field
+    = f.label :article_reports
+    = f.text_area :article_reports
+  .field
+    = f.label :speeches
+    = f.text_area :speeches
+  .field
+    = f.label :additional
+    = f.text_area :additional
+  .field
+    = f.label :testimonials
+    = f.text_area :testimonials
+  .actions
+    = f.submit 'Save'
+
+= link_to 'Show', expert_admin_index_path
+\|
+= link_to 'Back', experts_admin_index_path

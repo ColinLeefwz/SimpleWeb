@@ -1,0 +1,26 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+  
+.container
+  %h1 Sessions
+
+  %table.table.table-striped.table-hover.table-bordered
+    %tr
+      %th Title
+      %th Expert
+      %th Image
+      %th Description
+      %th Delete
+
+    - @sessions.each do |session|
+      %tr
+        %td= link_to "#{session.title}", session_admin_index_path(session)
+        %td= session.expert.name
+        %td= link_to image_tag(session.image_url), session_admin_index_path(session)
+        %td= session.description
+        %td= link_to 'Delete', session_admin_index_path(session), method: :delete, data: {confirm: 'Are you sure?'}
+
+  %br
+
+  = link_to 'New Session', session_new_admin_index_path, class: "btn btn-default" 
