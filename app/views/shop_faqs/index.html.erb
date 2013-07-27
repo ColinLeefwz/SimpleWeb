@@ -15,7 +15,7 @@
       <td><%= faq.text  %></td>
       <td align="center">
         <% unless faq.img.blank? %>
-          <%=link_to image_tag( ShopFaq.img_url(faq.id, :t2), :class=>"imgs2"), faq.img.url, :target  => "_blank"  %>
+          <%=link_to image_tag( "#{ShopFaq.img_url(faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgs2"), faq.img.url, :target  => "_blank"  %>
         <% end %>
       </td>
       <td align="center">
