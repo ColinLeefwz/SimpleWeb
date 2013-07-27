@@ -63,4 +63,10 @@ ActiveRecord::Schema.define(version: 20130725085738) do
 
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
 
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
 end
