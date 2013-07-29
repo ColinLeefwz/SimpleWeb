@@ -72,7 +72,7 @@ class AdminController < ApplicationController
 	end
 
 	def expert_index
-		@experts = Expert.all
+		@experts = Expert.where(authorized: true)
 	end
 
 	def expert_show
