@@ -6,6 +6,8 @@ class AroundmeController < ApplicationController
   
   def shops
     lo = [params[:lat].to_f,params[:lng].to_f]
+    gps = nil
+    wifi = nil
     if params[:baidu].to_i==1
       lo1 = Shop.lob_to_lo(lo) if params[:accuracy].to_i>1
       if params[:gps] && params[:gps].size>0
@@ -15,17 +17,13 @@ class AroundmeController < ApplicationController
            lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>1
          rescue Exception => e
            Xmpp.error_nofity("gps:#{e.backtrace[0..3]}\n#{params[:gps]}\n")
-           error_log e.backtrace
-           error_log params[:gps]
          end
       end
-      if params[:wifi]
+      if params[:wifi] && params[:wifi].size>0
          begin
            wifi = ActiveSupport::JSON.decode(params[:wifi]) 
          rescue Exception => e
            Xmpp.error_nofity("wifi:#{e.backtrace[0..3]}\n#{params[:wifi]}")
-           error_log e.backtrace
-           error_log params[:wifi]
          end
       end
       if lo2.nil?
@@ -172,7 +170,8 @@ class AroundmeController < ApplicationController
     end
     hash.merge!(gps:gps) if gps
     hash.merge!(wifi:wifi) if wifi
-    Resque.enqueue(GpsRecord, hash)
+    GpsLog.collection.insert(hash)
+    #Resque.enqueue(GpsRecord, hash)
   end
   
   def find_shop_key(lo,accu,uid)
