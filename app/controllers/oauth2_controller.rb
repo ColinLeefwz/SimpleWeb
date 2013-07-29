@@ -274,7 +274,7 @@ class Oauth2Controller < ApplicationController
         if user.wb_hidden==2
           user.set(:wb_hidden, 0) 
         else
-          logger.error("#{session[:user_id]} 重复绑定wb：#{wb_uid}")
+          Xmpp.error_nofity("#{session[:user_id]} 重复绑定wb：#{wb_uid}")
         end
         do_login_wb_done(user,token,expires_in,data)
       end
@@ -339,7 +339,7 @@ class Oauth2Controller < ApplicationController
         if user.qq_hidden
           user.unset(:qq_hidden) 
         else
-          logger.error("#{session[:user_id]} 重复绑定qq：#{openid}")
+          Xmpp.error_nofity("#{session[:user_id]} 重复绑定qq：#{openid}")  
         end
         do_login_qq_done(user,token,expires_in,data)
       end
