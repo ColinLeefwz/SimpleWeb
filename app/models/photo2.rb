@@ -1,3 +1,4 @@
+# encoding: utf-8
 #个人聊天时发送图片
 
 class Photo2
@@ -26,7 +27,7 @@ class Photo2
   
   def after_async_store
     if img.url.nil?
-      Rails.logger.error("async_store3:#{self.class},#{self.id}")
+      Xmpp.error_nofity("图片async处理时img:#{img}的url为空,#{self.class},#{self.id}")
       return
     end
     if Rails.env == "production"
