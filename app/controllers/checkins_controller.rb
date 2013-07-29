@@ -72,6 +72,7 @@ class CheckinsController < ApplicationController
     shop._id = Shop.next_id
     shop.name = params[:sname]
     shop.lo = [params[:lat].to_f, params[:lng].to_f]
+    shop.lo = Shop.lob_to_lo(shop.lo) if params[:baidu]
     shop.city = shop.get_city
     #shop.d = 10
     shop.creator = session[:user_id]
@@ -89,6 +90,7 @@ class CheckinsController < ApplicationController
     checkin.sid = shop.id
     checkin.city = shop.city if shop
     checkin.od = params[:od]
+    checkin.bd = params[:baidu] if params[:baidu]
     checkin.bssid = params[:bssid] if params[:bssid] && !fake
     if params[:altitude]
       checkin.alt = params[:altitude].to_f

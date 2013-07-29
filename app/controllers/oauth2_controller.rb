@@ -172,7 +172,7 @@ class Oauth2Controller < ApplicationController
   
       
   def logout
-    if params[:pushtoken]
+    if params[:pushtoken] && session_user_no_cache.tk
       size = session_user_no_cache.tk.size
       if session_user_no_cache.tk==params[:pushtoken][0,size]
         session_user_no_cache.unset(:tk)
