@@ -36,7 +36,6 @@ class AroundmeController < ApplicationController
       arr << Shop.find_by_id($llcf)
       arr << Shop.find_by_id($llsc)
       arr << Shop.find_by_id(21830231) #延安路•紫微大街 
-      arr << Shop.find_by_id(21833842) #灵隐寺
     end
     if session_user #本人加入的群定位时总是出现
       if Rails.cache.read("PHONEREG#{session_user.id}")
@@ -189,8 +188,8 @@ class AroundmeController < ApplicationController
   def hot_users_no_cache(city,sex,skip,pcount)
     uids = $redis.zrevrange("HOT#{sex}U#{city}",skip,skip+pcount-1)
     page = (skip/pcount +1)
-    city2 = city[0] + (city.to_i+page).to_s
-    if city.length>1
+    if city && city.length>1
+      city2 = city[0] + (city.to_i+page).to_s
       uids += $redis.zrevrange("HOT#{sex}U#{city2}",0,pcount-1)
     else
       uids += $redis.zrevrange("HOT#{sex}U010",skip,skip+pcount-1) 
