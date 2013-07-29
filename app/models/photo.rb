@@ -42,7 +42,7 @@ class Photo
   
   def after_async_store
     if img.url.nil?
-      Rails.logger.error("async_store3:#{self.class},#{self.id}")
+      Xmpp.error_nofity("图片async处理时img:#{img}的url为空")      
       return
     end
     send_wb if weibo
@@ -163,13 +163,13 @@ class Photo
     cin = Checkin.where({uid:self.user_id}).order_by("id desc").limit(1).first
     #加first的时候必须用order_by, 不能用sort
     if cin.nil?
-      logger.error "Error:\tnot checkined, but has photo upoladed, photo.id:#{self.id}" 
+      Xmpp.error_nofity("not checkined, but has photo upoladed, photo.id:#{self.id}")      
       return
     end
     if cin.sid.to_s==self.room
       cin.push(:photos, self.id)
     else
-      logger.error "Error:\tphoto.room:#{self.room} != checkin.sid:#{cin.sid}, photo.id:#{self.id}" 
+      Xmpp.error_nofity("photo.room:#{self.room} != checkin.sid:#{cin.sid}, photo.id:#{self.id}")
     end
   end
   
