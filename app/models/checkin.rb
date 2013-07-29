@@ -15,6 +15,8 @@ class Checkin
   field :speed, type:Float    #速度m/s
   field :bssid #wifi上网时的bssid
   field :city #city 城市
+  field :bd    #是否百度定位
+  
   
   field :photos, type:Array #本次签到期间发该商家的图片
   

@@ -27,7 +27,7 @@
 <% end %>
 
 <div style="margin:10px 0px;">
-  <img id="img2" src="<%= @coupon.img2%>" />
+  <%= image_tag @coupon.img2, :id => "img2", :style => "width: #{@width}; height: #{@height};" %>
 </div>
 <br/><br/>
 <div class="clear1"></div>
@@ -42,10 +42,5 @@
   <%= link_to '取 消', "/shop_coupons/cancel_crop?id=#{@coupon.id}", :class => 'link1' %>
 </form>
 <script>
-  $(document).ready(function(){
-    if ($('.jcrop-holder').first().css('width')=="28px")
-      setTimeout(location.reload(), 1000)
-  })
-
   LeftMenu(6);
 </script>
