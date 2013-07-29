@@ -8,6 +8,7 @@ module SearchScore
     hash = {lo:{"$near" =>loc,"$maxDistance"=>radius}}
     if bssid
       b = CheckinBssidStat.find_by_id(bssid)
+      #TODO: 不查询CheckinBssidStat
       shopids = $redis.smembers("BSSID#{bssid}")
       shopids << b.shop_id if b && b.shop_id && !shopids.find{|x| x.to_i==b.shop_id.to_i}
       hash["_id"] = {"$nin" => shopids} if shopids.size>0
@@ -15,7 +16,7 @@ module SearchScore
         limit = 20
       else
         limit = 100 - shopids.size*5
-        limit = 20 if limit<20
+        limit = 30 if limit<30
       end
     end
     arr = Shop.where(hash).limit(limit).to_a
