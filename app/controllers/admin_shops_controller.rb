@@ -251,6 +251,17 @@ class AdminShopsController < ApplicationController
     render :json => {}
   end
 
+  def ajax_des
+    shop = Shop.find(params[:id])
+    if shop.checkins.limit(1).only(:_id).first
+      render :json => {text: "有签到商家不能删除"}
+    else
+      Del.insert(shop)
+      expire_cache_shop(shop.id)
+      render :json => {}
+    end
+  end
+
   def ajaxunsetlob
     shop = Shop.find(params[:shop_id])
     shop.unset(:lo)
