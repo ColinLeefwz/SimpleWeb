@@ -13,7 +13,7 @@ class WeiboPhoto
     begin
       perform0(token, text, url)
     rescue Exception => e
-      return if e.to_s[0,3]=="403"  || e.to_s[0,3]=="400"
+      #return if e.to_s[0,3]=="403"  || e.to_s[0,3]=="400"
       raise e
     end
   end
