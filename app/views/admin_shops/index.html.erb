@@ -71,7 +71,7 @@
           <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >标记删除</a>
         <% end %>
       </td>
-      <% if session[:admin_id].to_s == '51f77abc20f318bc2b000001' && $redis.zcard("UA#{shop.id}") > 0 %>
+      <% if session[:admin_id].to_s == '51f77abc20f318bc2b000001' && shop.checkins.limit(1).only(:_id).first.nil? %>
         <td>
           <%= link_to '直接删除', "javascript:void(0)", :onclick => "ajaxDes($(this), '#{shop.id}','#{shop.name}')" %>
         </td>
