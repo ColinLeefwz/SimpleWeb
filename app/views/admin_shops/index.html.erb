@@ -41,6 +41,10 @@
     <th></th>
     <th></th>
     <th></th>
+    <% if session[:admin_id].to_s == '51f77abc20f318bc2b000001' %>
+      <th></th>
+    <% end %>
+
   </tr>
 
   <% @shops.each do |shop| %>
@@ -64,10 +68,14 @@
       </td>
       <td>
         <% unless shop.del %>
-        <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >标记删除</a>
+          <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >标记删除</a>
         <% end %>
       </td>
-
+      <% if session[:admin_id].to_s == '51f77abc20f318bc2b000001' && $redis.zcard("UA#{shop.id}") > 0 %>
+        <td>
+          <%= link_to '直接删除', "javascript:void(0)", :onclick => "ajaxDes($(this), '#{shop.id}','#{shop.name}')" %>
+        </td>
+      <% end %>
     </tr>
 
   <% end %>
@@ -84,79 +92,93 @@
     obj.children("span:last").show();
   }
 
-function ajaxupdatelevel(obj,shop_id){
-  var level = obj.parent().children("input[@type='radio']:checked").val()
-  $.post("/admin_shops/ajaxupdatelevel",{level:level, shop_id:shop_id}, function(data) {
-    obj.parent().parent().replaceWith("<td>"+data["level"]+"</td>")
-  });
-}
-
-function ajaxdel(obj,shop_id,no_confirm, shop_name){
-  text = "确定删除商家 "+shop_name+'？'
-  if(no_confirm || confirm(text))
-    $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
-      obj.parent().parent().hide()
+  function ajaxupdatelevel(obj,shop_id){
+    var level = obj.parent().children("input[@type='radio']:checked").val()
+    $.post("/admin_shops/ajaxupdatelevel",{level:level, shop_id:shop_id}, function(data) {
+      obj.parent().parent().replaceWith("<td>"+data["level"]+"</td>")
     });
-}
-
-function ajaxunsetlob(obj,shop_id,no_confirm, shop_name){
-  text = "确定取消"+shop_name+'的坐标？'
-  if(no_confirm || confirm(text))
-    $.post("/admin_shops/ajaxunsetlob",{ shop_id:shop_id}, function() {
-      obj.replaceWith("已取消")
-    });
-}
-
-function showes(){
-  $('.th_level').each(function(){showe($(this))})
-  $('.td_level').each(function(){showe($(this))})
-}
-
-function checkall(value){
-  $('.level_'+value).each(function(){$(this).attr('checked','checked')})
-}
-
-function ajaxupdatelevelall(){
-  $('.th_level:first').replaceWith("<th>等级</th>")
-  $(".dhide").each(
-  function(){
-    var subobj = $(this).children("input[@type='submit']:first")
-    ajaxupdatelevel(subobj, subobj.attr('name'))
   }
-)
-}
 
-function batch_del()
-{
-  if(confirm("确定需要批量删除商家？"))
-    $("table .checkbox_shops:checked").each(
-  function(){
-    ajaxdel($(this),$(this).val(), true, '')
+  function ajaxdel(obj,shop_id,no_confirm, shop_name){
+    text = "确定删除商家 "+shop_name+'？'
+    if(no_confirm || confirm(text))
+      $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
+        obj.parent().parent().hide()
+      });
   }
-)
-}
 
-function checked_all(checked){
-  $("table .checkbox_shops").each(
-  function() {
-    if(checked == "checked")
-      $(this).attr("checked", 'checked')
-    else
-      $(this).attr("checked", false)
-  }
-)
-}
 
-function inverse_all(){
-  $("table .checkbox_shops").each(
-  function() {
-    if($(this).attr("checked") == 'checked')
-      $(this).attr("checked", false)
-    else
-      $(this).attr("checked", 'checked')
+  function ajaxDes(obj,id, shop_name){
+    text = "确定直接删除商家‘"+shop_name+'’？'
+    if(confirm(text)){
+      $.get("/admin_shops/ajax_des",{id: id}, function(data){
+        if(data['text'])
+          obj.replaceWith(data['text'])
+        else
+          obj.parent().parent().hide()
+      })
+    }
   }
-)
-}
+
+  function ajaxunsetlob(obj,shop_id,no_confirm, shop_name){
+    text = "确定取消"+shop_name+'的坐标？'
+    if(no_confirm || confirm(text))
+      $.post("/admin_shops/ajaxunsetlob",{ shop_id:shop_id}, function() {
+        obj.replaceWith("已取消")
+      });
+  }
+
+  function showes(){
+    $('.th_level').each(function(){showe($(this))})
+    $('.td_level').each(function(){showe($(this))})
+  }
+
+  function checkall(value){
+    $('.level_'+value).each(function(){$(this).attr('checked','checked')})
+  }
+
+  function ajaxupdatelevelall(){
+    $('.th_level:first').replaceWith("<th>等级</th>")
+    $(".dhide").each(
+    function(){
+      var subobj = $(this).children("input[@type='submit']:first")
+      ajaxupdatelevel(subobj, subobj.attr('name'))
+    }
+  )
+  }
+
+
+  function batch_del()
+  {
+    if(confirm("确定需要批量删除商家？"))
+      $("table .checkbox_shops:checked").each(
+    function(){
+      ajaxdel($(this),$(this).val(), true, '')
+    }
+  )
+  }
+
+  function checked_all(checked){
+    $("table .checkbox_shops").each(
+    function() {
+      if(checked == "checked")
+        $(this).attr("checked", 'checked')
+      else
+        $(this).attr("checked", false)
+    }
+  )
+  }
+
+  function inverse_all(){
+    $("table .checkbox_shops").each(
+    function() {
+      if($(this).attr("checked") == 'checked')
+        $(this).attr("checked", false)
+      else
+        $(this).attr("checked", 'checked')
+    }
+  )
+  }
 
 </script>
 
