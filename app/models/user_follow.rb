@@ -8,15 +8,24 @@ class UserFollow
     fid = Moped::BSON::ObjectId(fid) if fid.class==String
     begin
       uf = UserFollow.find(uid)
+      return if uf.follows.find{|x| x.to_s==fid.to_s}
       uf.add_to_set(:follows, fid)
       uf.del_my_cache
     rescue Mongoid::Errors::DocumentNotFound => e
-      uf = UserFollow.new
-      uf.id = uid
-      uf.follows = [fid]
-      uf.save!
+      first_add(uid, [fid])
     end
     uf
+  end
+  
+  def self.find_or_news(uid,fids)
+    fids.each{|fid| find_or_new(uid,fid)}
+  end
+  
+  def self.first_add(uid,follows)
+    uf = UserFollow.new
+    uf.id = uid
+    uf.follows = follows
+    uf.save!
   end
   
   def self.add(uid,fid)
@@ -98,16 +107,60 @@ class UserFollow
     end
   end
   
-  def self.check
+  def self.check(in_place_fix=true)
     User.all.each do |user|
-      fos = user.follow_ids.to_set
-      fas = user.fan_ids.to_set
-      fis = user.good_friend_ids.to_set
-      unless fos.intersection(fas) == fis
-        puts "error: #{user.to_json}"
+      check_user(user)
+    end
+  end
+  
+  def self.check_user(user, in_place_fix=true)
+    fos = user.follow_ids.to_set
+    fas = user.fan_ids.to_set
+    fis = user.good_friend_ids.to_set
+    uf = UserFollow.find_by_id(user.id)
+    if uf.nil? 
+      if fos.size==0
+        return
+      else
+        if in_place_fix
+          find_or_news(user.id, user.follow_ids)
+        else
+          puts "3#{user.name}"
+          #hash = {_id:user.id,fos:fos.size, follows:0}
+          #Shop.collection.database.session[:tmp3].insert(hash)
+        end
+      end
+    end
+    foas = fos.intersection(fas)
+    if foas.size > fis.size
+      if in_place_fix
+        foas.each {|uid| add_good_friend_redis(user.id,uid)}
+      else
+        puts "1#{user.name}"
+        #hash = {_id:user.id,fos:fos.size, fas:fas.size, fis:fis.size, foas:foas.size}
+        #Shop.collection.database.session[:tmp1].insert(hash)
+      end
+    end
+    if foas.size < fis.size
+      if in_place_fix
+        foas.each {|uid| add_fans_redis(user.id,uid)}
+      else
+        puts "4#{user.name}"
+        #hash = {_id:user.id,fos:fos.size, fas:fas.size, fis:fis.size, foas:foas.size}
+        #Shop.collection.database.session[:tmp1].insert(hash)
+      end
+    end      
+    if uf && uf.follows && uf.follows.size != fos.size
+      if in_place_fix
+        find_or_news(user.id, user.follow_ids)
+      else
+        puts "2#{user.name}"
+        #hash = {_id:user.id,fos:fos.size, follows:uf.follows.size}
+        #Shop.collection.database.session[:tmp2].insert(hash)
       end
     end
   end
+  
   
 
     
