@@ -3,12 +3,12 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
   <tr>
     <th width="12%" align="center">缩略图</th>
-    <th width="20%" align="center">用户</th>
+    <th width="12%" align="center">用户</th>
     <th width="13%" align="left">描述</th>
     <th width="14%" align="left">发布时间</th>
     <th width="12%" align="left">分享到微博</th>
     <th width="12%" align="left">分享到qq</th>
-    <th width="15%" align="center" colspan="3">操作</th>
+    <th width="20%" align="center" colspan="4">操作</th>
   </tr>
   <% @photos.each do |photo| %>
     <tr>
@@ -21,8 +21,16 @@
       <td><%= photo.weibo ? '是' : '否' %></td>
       <td><%= photo.qq ? '是' : '否' %></td>
       <td><%= link_to '详情', "/shop_photos/show?id=#{photo.id}" %></td>
-      <td><%= link_to '隐藏', "#",:onclick => "ajaxDel($(this), '#{photo.id}')"  unless photo.hide  %></td>
-      <td><%= link_to '显示', "#",:onclick => "ajaxUndel($(this), '#{photo.id}')" if photo.hide %></td>
+      <% if  photo.hide %>
+        <td><%= link_to '显示', "javascript:void(0)",:onclick => "ajaxUndel($(this), '#{photo.id}')" %></td>
+      <% else %>
+        <td><%= link_to '隐藏', "javascript:void(0)",:onclick => "ajaxDel($(this), '#{photo.id}')"  %></td>
+      <% end %>
+      <% if  photo.od %>
+        <td><%= link_to '取消置顶', "javascript:void(0)",:onclick => "ajaxUntop($(this), '#{photo.id}')"%></td>
+      <% else %>
+        <td><%= link_to '置顶', "javascript:void(0)",:onclick => "ajaxTop($(this), '#{photo.id}')"%></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
@@ -45,6 +53,18 @@
       });
     }
   }
+
+  function ajaxTop(obj,id){
+    $.get("/shop_photos/ajax_top", {id: id}, function(){
+      $("tr:first").after(obj.parent().parent())
+    })
+  }
+  function ajaxUntop(obj,id){
+    $.get("/shop_photos/ajax_untop", {id: id}, function(){
+      obj.replaceWith('已取消')
+    })
+  }
+
 
   function ajaxUndel(obj, id){
     if(confirm("确定取消隐藏？")){
