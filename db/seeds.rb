@@ -31,7 +31,7 @@ peter = Expert.create(name: 'peter',
 
 
 allen = Expert.create(name: 'allen',
-			  #image_url: 'guillaume profile pic.jpg',
+			  image_url: 'guillaume profile pic.jpg',
 			  company: 'Prodygia',
 			  title: 'Founder',
 			  email: 'allen@oc.com',
