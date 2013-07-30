@@ -109,10 +109,7 @@ jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":
 	class="field field-name-field-future-session-image field-type-image field-label-hidden"
 	data-thmr="thmr_26">
 <div class="field-items">
-<div class="field-item"><a href="/sessions/china_roadmap"><img
-	typeof="foaf:Image"
-	src="http://www.prodygia.com/sites/default/files/styles/session_home/public/china%20roadmap%20session%20%282%29_1.jpg?itok=Z1SzNR64"
-	width="300" alt="" /></a></div>
+<div class="field-item"><%= link_to image_tag("china roadmap session.jpg"), @sessions.first %></div>
 </div>
 </div>
 
@@ -132,7 +129,7 @@ jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":
 <div
 	class="field">
 <div class="field-items field-name-field-future-session-title session-title">
-<div class="field-item"><a href="/sessions/china_roadmap">China Roadmap</a></div>
+<div class="field-item"><%= link_to "China Roadmap", @sessions.first %></div>
 </div>
 </div>
 <div
@@ -203,10 +200,7 @@ Prodygia</div>
 	class="field field-name-field-future-session-image field-type-image field-label-hidden"
 	data-thmr="thmr_26">
 <div class="field-items">
-<div class="field-item"><a href="/sessions/developing_your_china_roadmap_group_b"><img
-	typeof="foaf:Image"
-	src="http://www.prodygia.com/sites/default/files/styles/session_home/public/china%20roadmap%20session%20%282%29.jpg?itok=tPX1u-Lq"
-	width="300" alt="" /></a></div>
+<div class="field-item"><%= link_to image_tag("china roadmap session.jpg"), @sessions.second%></div>
 </div>
 </div>
 
@@ -226,7 +220,7 @@ Prodygia</div>
 <div
 	class="field">
 <div class="field-items field-name-field-future-session-title session-title">
-<div class="field-item"><a href="/sessions/developing_your_china_roadmap_group_b">Developing Your China Roadmap (Group B)</a></div>
+<div class="field-item"><%= link_to "Developing Your China Roadmap (Group B)", @sessions.second%></div>
 </div>
 </div>
 <div
@@ -297,10 +291,7 @@ Prodygia</div>
 	class="field field-name-field-future-session-image field-type-image field-label-hidden"
 	data-thmr="thmr_26">
 <div class="field-items">
-<div class="field-item"><a href="/sessions/developing_your_china_roadmap_group"><img
-	typeof="foaf:Image"
-	src="http://www.prodygia.com/sites/default/files/styles/session_home/public/china%20roadmap%20session.jpg?itok=lnP5odDD"
-	width="300" alt="" /></a></div>
+<div class="field-item"><%= link_to image_tag("china roadmap session.jpg"), @sessions.third%></div>
 </div>
 </div>
 
@@ -320,7 +311,7 @@ Prodygia</div>
 <div
 	class="field">
 <div class="field-items field-name-field-future-session-title session-title">
-<div class="field-item"><a href="/sessions/developing_your_china_roadmap_group">Developing Your China Roadmap (Group A)</a></div>
+<div class="field-item"><%= link_to "Developing Your China Roadmap (Group A)", @sessions.third %></div>
 </div>
 </div>
 <div
