@@ -4,9 +4,9 @@
     <input type="hidden" name="coupon[t]" value="1"/>
     <div  class="btns" id="Btns" >
     </div>
-    <input  name="coupon[img2]" type="file" class="btn_file1" id="btn_file1" />
-    <input  name="coupon[img2]" type="file" class="btn_file2" id="btn_file2"/>
-    <input  name="coupon[img2]" type="file" class="btn_file3" id="btn_file3"/>
+    <input  name="coupon[img2]" type="file" class="btn_file1 uploadpre"  />
+    <input  name="coupon[img2]" type="file" class="btn_file2 uploadpre" />
+    <input  name="coupon[img2]" type="file" class="btn_file3 uploadpre"/>
 
     <div class="rdiv" >
       <%= f.text_field :name, :value => @coupon.name || '点此输入名称', :class => 'txt', :maxlength=>"14" %>
@@ -17,11 +17,16 @@
 </div>
 <% content_for :ahead do %>
   <script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
+  <script>
+   $(document).ready(function(){
+    imgUploadPreview(".uploadpre", 'Btns')
+     });
+</script>
 <% end %>
+  
 <script>
 
   $(document).ready(function(){
-    imgUploadPreview("input[name='coupon[img2]']", 'Btns')
 
     $("#coupon_name").click(function(){
       if($(this).val()=="点此输入名称"){
