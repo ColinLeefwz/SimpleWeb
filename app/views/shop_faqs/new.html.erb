@@ -34,11 +34,12 @@
       <td valign="top">图片</td>
       <td>
         <div class="relative">
+          <div class="imgbox" id="uploadPreview"></div>
           <input type="button" value="添加图片" class="btn1" id="Btn1"/>
           <span id="imgName" class="words"></span>
           <span class="words">(可以添加店内菜单、最新活动、宣传海报等图片<br/>
             图片支持格式:jpg jpeg gif png)</span>
-           <%= f.file_field :img, :class => "btn_file10" %>
+          <%= f.file_field :img, :class => "btn_file10" %>
         </div>
       </td>
     </tr>
@@ -57,6 +58,15 @@
   </table>
 <%  end %>
 
+<% content_for :ahead do %>
+  <script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
+  <script>
+    $(document).ready(function(){
+      imgUploadPreview("input[name='shop_faq[img]']", 'uploadPreview')
+    })
+  </script>
+<%end%>
+
 <script type ="text/javascript">
   LeftMenu(15);
   $("#Btn1").click(function(){
@@ -66,7 +76,5 @@
     if($(this).val() == '获取wifi密码')
       $(this).val("");
   });
-  $('#shop_faq_img').change(function(){
-    $('#imgName').text($(this).val())
-  })
+
 </script>
