@@ -157,20 +157,20 @@ class Photo
   def output_hash_with_shopname
     shopname = shop.nil?? "" : shop.name
     output_hash.merge!( {shop_name: shopname} )
-  end  
+  end
+  
+  def find_checkin
+    #加first的时候必须用order_by, 不能用sort
+     Checkin.where({uid:self.user_id,sid:self.room}).order_by("id desc").limit(1).first
+  end
   
   def add_to_checkin
-    cin = Checkin.where({uid:self.user_id}).order_by("id desc").limit(1).first
-    #加first的时候必须用order_by, 不能用sort
+    cin = find_checkin
     if cin.nil?
       Xmpp.error_nofity("not checkined, but has photo upoladed, photo.id:#{self.id}")      
       return
     end
-    if cin.sid.to_s==self.room
-      cin.push(:photos, self.id)
-    else
-      Xmpp.error_nofity("photo.room:#{self.room} != checkin.sid:#{cin.sid}, photo.id:#{self.id}")
-    end
+    cin.push(:photos, self.id)
   end
   
   def Photo.init_updated_at
