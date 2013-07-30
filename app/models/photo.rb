@@ -63,12 +63,12 @@ class Photo
   #第一次在room中发送图片，必赞
   #非第一次在room中发图， 10分之一的概率赞
   def rand_like
-    Resque.enqueue_in(40.seconds, PhotoLike, self._id, self.user.gender) if first_in_room? || rand(10).to_i == 0
+    Resque.enqueue_in(40.seconds, PhotoLike, self._id, self.user.gender) if user_first? || rand(10).to_i == 0
   end
 
-  #第一次在room中发图片么？
-  def first_in_room?
-    Photo.where({room: room, user_id: user_id, _id: {"$ne" => _id} }).limit(1).only(:_id).blank?
+  #用户的第一次发图片么？
+  def user_first?
+    Photo.where({user_id: user_id, _id: {"$ne" => _id} }).limit(1).only(:_id).blank?
   end
   
   def send_wb
