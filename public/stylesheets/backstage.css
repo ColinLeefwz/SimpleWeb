@@ -260,7 +260,7 @@ table.shopLogo p{margin-top:10px;}
 .coupon{height: 306px;width: 610px;margin-top: 10px;margin-left: 50px; margin-bottom: 20px; background-image: url('http://oss.aliyuncs.com/dface/images_coupon-list@2x.png');background-repeat: no-repeat;padding: 0px;}
 .coupon .adiv{border: 6px solid #D8D5CE; height: 190px; width: 560px; margin-left: 17px;display: inline-block;margin-top: 20px;}
 .coupon .ldiv{border: 6px solid #D8D5CE;height: 190px; width: 190px;display: inline-block;float: left; margin: 20px 0  20px 20px ;}
-.coupon .btns{border: 6px solid #D8D5CE;height: 207px; width: 194px;float: left;margin: 20px 0  20px 20px ;
+.coupon .btns{border: 6px solid #D8D5CE;height: 197px; width: 194px;float: left;margin: 20px 0  20px 20px ;
 background:transparent url("http://oss.aliyuncs.com/dface/images_pic11.jpg") center top no-repeat;cursor:pointer;}
 .coupon .btns2{border: 6px solid #D8D5CE;height: 207px; width: 194px;float: left;margin: 20px 0  20px 20px ;
 cursor:pointer;}
