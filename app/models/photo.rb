@@ -17,6 +17,7 @@ class Photo
   field :com, type:Array #评论 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间', 'txt' => "评论", 'hide' => '隐藏'  }]
   field :img
   field :hide, type:Boolean  #隐藏照片
+  field :od, type:Integer   #置顶值
   mount_uploader(:img, PhotoUploader)
   
   field :img_tmp
