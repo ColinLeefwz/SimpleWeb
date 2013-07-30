@@ -72,8 +72,8 @@ module SearchScore
       xx[1] += xx[2]
     end
     score.sort! {|a,b| a[1]<=>b[1]}
-    if score.length>9
-      ret = score[0,9]+score[9..-1].reject{|s| bad?(s) && !owner?(s,uid) }
+    if score.length>5
+      ret = score[0,5]+score[5..-1].reject{|s| bad?(s) && !owner?(s,uid) }
     else
       ret = score
     end
