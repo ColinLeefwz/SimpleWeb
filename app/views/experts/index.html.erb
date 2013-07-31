@@ -102,9 +102,13 @@ jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":
         <div class="views-row views-row-1 views-row-odd views-row-first">
     <div id="node-74"
 	class="node node-expert node-teaser clearfix"  about="/experts/alessandro_duina" typeof="sioc:Item foaf:Document">
-
+<!-- 
   
         <h2  property="dc:title" datatype=""><a target="_blank" href="/experts/alessandro_duina">Alessandro Duina</a></h2>
+   -->
+
+  
+        <h2  property="dc:title" datatype=""><%= link_to 'Alessandro Duina', @experts.first %></h2>
   
 		  
   
@@ -115,10 +119,7 @@ jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":
 	class="field field-name-field-portrait field-type-image field-label-hidden"
 	data-thmr="thmr_69">
 <div class="field-items">
-<div class="field-item even"><a target="_blank" href="/experts/alessandro_duina"
-	data-thmr="thmr_70 thmr_73"><img typeof="foaf:Image"
-	src="http://www.prodygia.com/sites/default/files/styles/portrait_expert/public/AD%20pic.jpg?itok=khpWgGjJ"
-	width="116" height="116" alt="" data-thmr="thmr_71 thmr_72" /></a></div>
+<div class="field-item even"><%= link_to image_tag("AD pic.jpg"), @experts.first %></div>
 </div>
 </div>
 <div class="page-experts-wrap">
@@ -187,7 +188,7 @@ jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":
 	class="node node-expert node-teaser clearfix"  about="/experts/guillaume_maury" typeof="sioc:Item foaf:Document">
 
   
-        <h2  property="dc:title" datatype=""><a target="_blank" href="/experts/guillaume_maury">Guillaume Maury</a></h2>
+        <h2  property="dc:title" datatype=""><%= link_to 'Guillaume Maury', @experts.second %></h2>
   
 		  
   
@@ -198,10 +199,7 @@ jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":
 	class="field field-name-field-portrait field-type-image field-label-hidden"
 	data-thmr="thmr_69">
 <div class="field-items">
-<div class="field-item even"><a target="_blank" href="/experts/guillaume_maury"
-	data-thmr="thmr_70 thmr_73"><img typeof="foaf:Image"
-	src="http://www.prodygia.com/sites/default/files/styles/portrait_expert/public/guillaume%20profile%20pic.jpg?itok=CSrdrD56"
-	width="116" height="116" alt="" data-thmr="thmr_71 thmr_72" /></a></div>
+<div class="field-item even"><%= link_to image_tag("guillaume profile pic.jpg"), @experts.second %></div>
 </div>
 </div>
 <div class="page-experts-wrap">
