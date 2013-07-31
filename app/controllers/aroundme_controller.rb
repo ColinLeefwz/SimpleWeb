@@ -6,16 +6,24 @@ class AroundmeController < ApplicationController
   
   def shops
     lo = [params[:lat].to_f,params[:lng].to_f]
+    gps = nil
+    wifi = nil
     if params[:baidu].to_i==1
       lo1 = Shop.lob_to_lo(lo) if params[:accuracy].to_i>1
-      if params[:gps]
+      if params[:gps] && params[:gps].size>0
          begin
            gps = ActiveSupport::JSON.decode(params[:gps]) 
            acc2 = gps["Accuracy"].to_i
            lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>1
+         rescue Exception => e
+           Xmpp.error_nofity("gps:#{e.backtrace[0..3]}\n#{params[:gps]}\n")
+         end
+      end
+      if params[:wifi] && params[:wifi].size>0
+         begin
            wifi = ActiveSupport::JSON.decode(params[:wifi]) 
          rescue Exception => e
-           logger.error e
+           Xmpp.error_nofity("wifi:#{e.backtrace[0..3]}\n#{params[:wifi]}")
          end
       end
       if lo2.nil?
@@ -36,6 +44,7 @@ class AroundmeController < ApplicationController
       arr << Shop.find_by_id($llcf)
       arr << Shop.find_by_id($llsc)
       arr << Shop.find_by_id(21830231) #延安路•紫微大街 
+      arr << Shop.find_by_id(21834274)
     end
     if session_user #本人加入的群定位时总是出现
       if Rails.cache.read("PHONEREG#{session_user.id}")
@@ -161,7 +170,8 @@ class AroundmeController < ApplicationController
     end
     hash.merge!(gps:gps) if gps
     hash.merge!(wifi:wifi) if wifi
-    Resque.enqueue(GpsRecord, hash)
+    GpsLog.collection.insert(hash)
+    #Resque.enqueue(GpsRecord, hash)
   end
   
   def find_shop_key(lo,accu,uid)
