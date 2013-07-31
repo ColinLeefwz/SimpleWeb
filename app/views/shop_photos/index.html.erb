@@ -57,6 +57,7 @@
   function ajaxTop(obj,id){
     $.get("/shop_photos/ajax_top", {id: id}, function(){
       $("tr:first").after(obj.parent().parent())
+      obj.replaceWith("<a href='javascript:void(0)' onclick='ajaxUntop($(this),\""+ id +"\")'>取消置顶</a>")
     })
   }
   function ajaxUntop(obj,id){
