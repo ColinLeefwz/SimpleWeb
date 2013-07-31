@@ -13,6 +13,7 @@ class City
   end
 
   def self.city_name(code)
+    return '海外' if code.nil? || code.size<1
     if code =~ /^x/
       o = $redis.get("CountryName#{code}")
       return '海外' if o.nil?
@@ -20,7 +21,7 @@ class City
     end
     city = $redis.get("CityName#{code}")
     if city.nil?
-      Xmpp.send_chat($gfuid,$yuanid,"城市代码#{code}不存在") if Rails.env=="production"
+      Xmpp.error_nofity("城市代码#{code}不存在")
       return "未知"
     end
     city
