@@ -5,81 +5,15 @@
     <meta content="no-cache" http-equiv="Cache-Control"/>
     <meta content="0" http-equiv="Expires"/>
     <title>地点纠错|脸脸</title>
-    <link href="/phone2/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/mini.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
-    <style>
-      .ne_list div {
-        font-size: 30px;
-        height: 128px;
-        margin-right: 20px;
-        vertical-align: middle;
-      }
-      .ff {float: right;font-size:28px;color:#67a8ff}
-      .clear{clear:both;}
-
-      .s{
-        border-bottom: 1px solid #ABABAB;
-        color: #000000;
-        display: block;
-        font-size: 34px;
-        margin: 0 4px;
-        overflow: hidden;
-        padding: 0 60px 0 20px;
-      }
-      .tex{
-        border-color: #E0E0E0 #BBBBBB;
-        border-radius: 5px 5px 5px 5px;
-        border-style: solid;
-        border-width: 2px;
-        float: left;
-        font-size: 30px;
-        height: 70px;
-        line-height: 70px;
-        padding: 0 7px;
-      }
-
-      .s .shopName{
-        display: inline-block;
-        width:  420px;
-      }
-
-      .s span{
-        min-height: 60px;
-        padding-top: 20px;
-      }
-
-      .rbtn1{
-        background:url('/images/btn/pic1.png') no-repeat scroll left top transparent;
-        border: medium none;
-        cursor: pointer;
-        float: left;
-        height: 84px;
-        width: 240px;
-        font-size: 30px;
-        text-indent:-9999px;
-      }
-      .rbtn2{
-        background:url('/images/btn/pic2.png') no-repeat scroll left top transparent;
-        border: medium none;
-        cursor: pointer;
-        float: left;
-        height: 84px;
-        width: 240px;
-        font-size: 30px;
-        text-indent:-9999px;
-      }
-      .line{width:100%;border-top: 2px solid #a7a7a7;border-bottom: 1px solid #e4e4e4;margin:20px 0}
-      ul{margin:0;padding:0}
-      ul li{float:left;width:50%;}
-
-    </style>
     <script type="text/javascript">
       function showDig(hid){
-        $('#dig').css({"height":$("#main").height()+"px","display":"block"});
-        $('#des').val('');
+		var high=$(window).height()/2;
+        $('#dig').css({"height":$("#Main2").height()+"px","display":"block"});
         $('#sid').val(hid)
         $('#res').css('background-color', '');
-        $("#boxss").css("top",($(document).scrollTop()+200)+"px");
+        $("#boxss").css({"top":($(document).scrollTop()+high)+"px","margin-top":"-225px"});
       }
       function ajaxReport(uid){
         des = $('#des').val();
@@ -98,44 +32,39 @@
       }
     </script>
   </head>
-  <body>
-    <div id="main">
-      <div style="position:absolute;width: 100%; height:100%;font-size: 30px;background: url(/images/btn/dig.png);display: none" id="dig">
-        <div style="position:absolute;background-color:#c9c9c9;border: 2px solid #181818;left:10%;width:80%;height:370px;padding:0px 35px" id="boxss">
-
-          <div>
-	  <ul>
-		<li><input type="radio" id="1" name="radio_bad" action-type="switch" value="1"><label for="1" >地点不存在</label></li>
-		<li><input type="radio" id="2" name="radio_bad" action-type="switch" value="2"><label for="2" >地点重复</label></li>
-		<li><input type="radio" id="3" name="radio_bad" action-type="switch" value="3"><label for="3" >地点更名</label></li>
-		<li><input type="radio" id="4" name="radio_bad" action-type="switch" value="4"><label for="4" >无用地点</label></li>
-	  </ul>
-            <input class="tex" type="text" name="des" style="margin: 50px 0 20px;width:90%;color:#ccc" id="des" value="要不要说明一下呢" onfocus="if (value =='要不要说明一下呢'){value =''}" onblur="if (value ==''){value='要不要说明一下呢'}">
+  <body class="hidden">
+    <div id="Main2">
+      <div id="dig">
+        <div id="boxss">
+		  <ul>
+			<li><input type="radio" id="1" name="radio_bad" action-type="switch" value="1"><label for="1" >地点不存在</label></li>
+			<li><input type="radio" id="2" name="radio_bad" action-type="switch" value="2"><label for="2" >地点重复</label></li>
+			<li><input type="radio" id="3" name="radio_bad" action-type="switch" value="3"><label for="3" >地点更名</label></li>
+			<li><input type="radio" id="4" name="radio_bad" action-type="switch" value="4"><label for="4" >无用地点</label></li>
+		  </ul>
+            <input class="tex" type="text" name="des" id="des">
             <input type="hidden" name="sid" id="sid">
 
-            <div class="clear"></div>
+            <div class="clear1"></div>
             <!--<p style="width: 100%; height:46px;padding:10px 0 0;color:#000" id="res">
               请输入三字以上的错误原因
             </p>--!>
             <div class="line"></div>
             <div class="clear"></div>
-            <input class="rbtn1 ml15 mt4" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
-            <input class="rbtn2 ml15 mt4" type="submit" value=" " onclick="hidReport()">
+            <input class="btn5" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
+            <input class="btn6" type="submit" value=" " onclick="hidReport()">
           </div>
-        </div>
       </div>
-      <div id="con">
-
-
-        <div class="set" style="width:90%">
+	  
+      <div class="con2">
+        <div class="set">
           <% @shops.each do |shop| %>
-            <div class="s" id="shop<%=shop[1]%>">
-              <span style="float: left;" class="shopName"> <%= shop[0]  %>  </span>
+            <div class="shop" id="shop<%=shop[1]%>">
+              <span class="shopName"> <%= shop[0]  %>  </span>
               <span class="ff" onclick ="showDig('<%=shop[1] %>')" > 报错  </span>
             </div>
           <% end %>
         </div>
-
       </div>
     </div>
   </body>
