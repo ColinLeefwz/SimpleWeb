@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes, target-densitydpi=device-dpi">
+      <title><%= @shop.name %>评价</title>
+      <link href="/stylesheets/mini.css" rel="stylesheet"  type="text/css" media="screen"/>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+
+      </div>
+      <div class="con">
+        <%= form_tag "/shop_marks/create" do  %>
+          <p>
+            <%= hidden_field_tag :sid, params[:sid] %>
+            <%= hidden_field_tag :uid, params[:uid] %>
+            <%= hidden_field_tag :gid, params[:gid] unless params[:gid].blank? %>
+
+            评分: <%= select_tag :mark,options_for_select([1,2,3,4,5], 5) %>
+          </p>
+
+          <p>
+            评语: <%=text_area_tag :com   %>
+          </p>
+
+          <%= submit_tag "评  价" %>
+        <% end  %>
+      </div>
+    </div>
+  </body>
+</html>
