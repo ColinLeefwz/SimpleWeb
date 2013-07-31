@@ -69,6 +69,8 @@
         text-indent:-9999px;
       }
       .line{width:100%;border-top: 2px solid #a7a7a7;border-bottom: 1px solid #e4e4e4;margin:20px 0}
+      ul{margin:0;padding:0}
+      ul li{float:left;width:50%;}
 
     </style>
     <script type="text/javascript">
@@ -102,13 +104,19 @@
         <div style="position:absolute;background-color:#c9c9c9;border: 2px solid #181818;left:10%;width:80%;height:370px;padding:0px 35px" id="boxss">
 
           <div>
-            <input class="tex" type="text" name="des" style="margin: 50px 0 20px;width:90%" id="des" >
+	  <ul>
+		<li><input type="radio" id="1" name="radio_bad" action-type="switch" value="1"><label for="1" >地点不存在</label></li>
+		<li><input type="radio" id="2" name="radio_bad" action-type="switch" value="2"><label for="2" >地点重复</label></li>
+		<li><input type="radio" id="3" name="radio_bad" action-type="switch" value="3"><label for="3" >地点更名</label></li>
+		<li><input type="radio" id="4" name="radio_bad" action-type="switch" value="4"><label for="4" >无用地点</label></li>
+	  </ul>
+            <input class="tex" type="text" name="des" style="margin: 50px 0 20px;width:90%;color:#ccc" id="des" value="要不要说明一下呢" onfocus="if (value =='要不要说明一下呢'){value =''}" onblur="if (value ==''){value='要不要说明一下呢'}">
             <input type="hidden" name="sid" id="sid">
 
             <div class="clear"></div>
-            <p style="width: 100%; height:46px;padding:10px 0 0;color:#000" id="res">
+            <!--<p style="width: 100%; height:46px;padding:10px 0 0;color:#000" id="res">
               请输入三字以上的错误原因
-            </p>
+            </p>--!>
             <div class="line"></div>
             <div class="clear"></div>
             <input class="rbtn1 ml15 mt4" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
