@@ -12,7 +12,11 @@ class SinaFriend
 
 
   def insert_ids(wb_uid, token)
-    return if SinaFriend.where({ _id: wb_uid.to_s }).count>0 #性能优化，判断记录是否存在是不加载整条记录
+    begin
+      SinaFriend.find(wb_uid.to_s)
+      return
+    rescue
+    end
     hash =  all_page(wb_uid,token)
     return nil if hash.nil? || hash[:total_number]==0
     SinaFriend.collection.insert(:_id => wb_uid.to_s, :data =>hash)
@@ -30,7 +34,7 @@ class SinaFriend
     SinaUser.where({fetched:{"$ne" => true}}).each do |su|
       insert_ids(su.id,token)
       su.update_attribute(:fetched, true)
-      sleep(0.8)
+      sleep(0.9)
     end
   end
 
