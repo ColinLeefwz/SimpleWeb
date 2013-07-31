@@ -17,6 +17,7 @@ class Photo
   field :com, type:Array #评论 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间', 'txt' => "评论", 'hide' => '隐藏'  }]
   field :img
   field :hide, type:Boolean  #隐藏照片
+  field :od, type:Integer   #置顶值
   mount_uploader(:img, PhotoUploader)
   
   field :img_tmp
@@ -42,7 +43,7 @@ class Photo
   
   def after_async_store
     if img.url.nil?
-      Rails.logger.error("async_store3:#{self.class},#{self.id}")
+      Xmpp.error_nofity("图片async处理时img:#{img}的url为空")      
       return
     end
     send_wb if weibo
@@ -63,12 +64,12 @@ class Photo
   #第一次在room中发送图片，必赞
   #非第一次在room中发图， 10分之一的概率赞
   def rand_like
-    Resque.enqueue_in(40.seconds, PhotoLike, self._id, self.user.gender) if first_in_room? || rand(10).to_i == 0
+    Resque.enqueue_in(40.seconds, PhotoLike, self._id, self.user.gender) if user_first? || rand(10).to_i == 0
   end
 
-  #第一次在room中发图片么？
-  def first_in_room?
-    Photo.where({room: room, user_id: user_id, _id: {"$ne" => _id} }).limit(1).only(:_id).blank?
+  #用户的第一次发图片么？
+  def user_first?
+    Photo.where({user_id: user_id, _id: {"$ne" => _id} }).limit(1).only(:_id).blank?
   end
   
   def send_wb
@@ -157,20 +158,20 @@ class Photo
   def output_hash_with_shopname
     shopname = shop.nil?? "" : shop.name
     output_hash.merge!( {shop_name: shopname} )
-  end  
+  end
+  
+  def find_checkin
+    #加first的时候必须用order_by, 不能用sort
+     Checkin.where({uid:self.user_id,sid:self.room}).order_by("id desc").limit(1).first
+  end
   
   def add_to_checkin
-    cin = Checkin.where({uid:self.user_id}).order_by("id desc").limit(1).first
-    #加first的时候必须用order_by, 不能用sort
+    cin = find_checkin
     if cin.nil?
-      logger.error "Error:\tnot checkined, but has photo upoladed, photo.id:#{self.id}" 
+      Xmpp.error_nofity("not checkined, but has photo upoladed, photo.id:#{self.id}")      
       return
     end
-    if cin.sid.to_s==self.room
-      cin.push(:photos, self.id)
-    else
-      logger.error "Error:\tphoto.room:#{self.room} != checkin.sid:#{cin.sid}, photo.id:#{self.id}" 
-    end
+    cin.push(:photos, self.id)
   end
   
   def Photo.init_updated_at

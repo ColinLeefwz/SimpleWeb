@@ -4,7 +4,8 @@
     <input  name="coupon[img2]" type="file" class="btn_file1"  />
     <input  name="coupon[img2]" type="file" class="btn_file2" />
     <input  name="coupon[img2]" type="file" class="btn_file3" />
-    <input type="button" class="btns" id="Btns" />
+    <div  class="btns" id="Btns" >
+    </div>
     <div class="rdiv" >
       <%= f.text_field :name, :value => @coupon.name || '点此输入名称', :class => 'txt' %>
       <%= f.text_area :desc, :value => @coupon.desc || '点此输入描述', :class => 'atxt' %>
@@ -12,3 +13,12 @@
   </div>
   <%= render :partial => 'form', :locals => {:f => f, :s => false}  %>
 </div>
+
+<% content_for :ahead do %>
+  <script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
+  <script>
+    $(document).ready(function(){
+      imgUploadPreview("input[name='coupon[img2]']", 'Btns')
+    })
+  </script>
+<% end %>

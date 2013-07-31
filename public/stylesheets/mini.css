@@ -4,26 +4,44 @@ img{border:none;}
 a{text-decoration:none;color:#333;}
 li{list-style:none;}
 
+.clear1{width:100%;overflow:hidden;height:0px;clear:both;zoom:1;}
 #wrapper{width: 320px;height:562px; background: url("../images/bg8.jpg") repeat-y;margin-left: auto;margin-right: auto;}
+
+.btn1{width: 126px;height: 46px;display: inline-block;text-align:center;background: url("../images/btn5.png") left top no-repeat;
+color:#ffffff;font-size:14px;font-weight:bold;line-height:46px;letter-spacing:-0.5px;}
 .btn3{width: 208px;height: 72px;display: block;text-indent: -999em;background: url("http://oss.aliyuncs.com/dface/images_btn3.png") no-repeat;margin:0 auto}
 .btn4{width: 208px;height: 72px;display: block;text-indent: -999em;background: url("http://oss.aliyuncs.com/dface/images_btn4.png") no-repeat;margin:6px auto}
+.btn5{background:url('../images/btn/pic1.png') no-repeat scroll left top transparent;border: medium none;cursor: pointer;
+float: left;height: 84px;width: 240px;font-size: 30px;text-indent:-9999px;}
+.btn6{background:url('../images/btn/pic2.png') no-repeat scroll left top transparent;border: medium none;cursor: pointer;
+float: left;height: 84px;width: 240px;font-size: 30px;text-indent:-9999px;}
+	  
 .page{height:100px;width:180px;margin:0px auto; padding:10px 0 0;line-height:20px;text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);}
 .container{height:296px;background: url("http://oss.aliyuncs.com/dface/images_bg9.jpg") no-repeat;padding: 260px 0 0 0;}
 
 .coming{width:180px;margin:0px auto;padding: 70px 0 0 0;font-size:25px;color:#6e7171;font-weight:bold;font-family:"arial";text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);}
-
+.tex{border-color: #E0E0E0 #BBBBBB;border-radius:5px;border-style: solid;border-width: 2px;float: left;font-size: 30px;
+margin: 50px 0 20px;width:90%;color:#ccc;
+height: 70px;line-height: 70px;padding: 0 7px;}
+.hidden{overflow:hidden;}
 .lh18{line-height:18px !important;}
 .gay1{color:#949494 !important}
+
 .title1{width:100%;background-color:#66CC00;color:#fff;text-align:center;border-radius:5px 5px 0px 0px;padding:10px 0px;}
 .title1 h2{font-size:16px;}
-.btn1{width: 126px;height: 46px;display: inline-block;text-align:center;background: url("../images/btn5.png") left top no-repeat;
-color:#ffffff;font-size:14px;font-weight:bold;line-height:46px;letter-spacing:-0.5px;}
-.lh18{line-height:18px;}
+
 .word{color: #5E5E5E;font-size: 14px;}
 .ml20{margin-left:20px;}
 .ml2p{margin-left:2%;}
 .mb20{margin-bottom:20px;}
+
+.set {background-color: #fff;border: 1px solid #C7C7C7;border-radius: 20px;margin: 40px auto 0;overflow: hidden;width:90%;}
+.line{width:100%;border-top: 2px solid #a7a7a7;border-bottom: 1px solid #e4e4e4;margin:20px 0}
+
 .main{width:100%;overflow:hidden;}
+#Main2{min-width:640px;background: url("../images/background.png") repeat scroll 0 0 transparent;color: #5F4536;font-size: 14px;
+overflow: hidden;margin:0px auto;}
+
 .header{width:100%;margin:20px 0px 10px 0px;overflow:hidden;}
 .header .headerleft{width:49%;float:left;text-align:right;margin-right:1%;}
 .header .headerright{width:49%;float:right;text-align:left;padding-top: 20px;margin-left:1%;}
@@ -32,11 +50,20 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:46px;letter-spacing:-0
 .footer .footerright{width:49%;float:right;text-align:left;padding-top: 20px;margin-left:1%;}
 
 .con{width:85%;margin:0px auto;}
+.con2{width: 100%;overflow: auto;}
+
 .box1{width:100%;margin:0px auto;background-color:#fff;}
 .box1 ul{display:block;border-left:2px solid #66CC00;border-right:1px solid #66CC00;border-bottom:1px solid #66CC00;font-size:14px;padding:15px 0px;}
 .box1 ul li{background: url("../images/sign18.png") left 5px no-repeat;color:#949494;padding:10px 5px 10px 30px;margin-left:-10px;}
 .box1 ul li span{margin-left:10px;color:#363636;}
 
-
 .plane1{width:100%;margin-bottom:30px;overflow:hidden;text-align:center;}
 .plane2{border-left:2px solid #66CC00;border-right:1px solid #66CC00;overflow:hidden;text-align:center;color:#868686;background-color:#F2F2F2;line-height:30px;}
+
+.shop{border-bottom: 1px solid #ABABAB;color: #000;display: block;font-size: 34px;margin: 0 4px;overflow: hidden;
+padding: 20px 60px 20px 20px;}
+.shop .shopName{width:400px;float:left;padding-right:20px;}
+.shop  .ff {float: right;font-size:28px;color:#67a8ff}
+
+#dig{position:absolute;width: 100%; height:100%;font-size: 30px;background: url(../images/btn/dig.png);display: none;}
+#boxss{position:absolute;background-color:#c9c9c9;border: 2px solid #181818;left:20%;margin-left:-15.5%;width:80%;height:450px;padding:0px 35px;}

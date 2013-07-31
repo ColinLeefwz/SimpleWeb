@@ -32,16 +32,16 @@
     <tr>
       <td valign="top">图片</td>
       <td>
-	    <div class="imgbox">
+        <div class="imgbox" id="uploadPreview">
           <%= image_tag("#{ShopFaq.img_url(@shop_faq.id, :t2)}?time=#{Time.now.to_i}") %>
         </div>
         <div class="relative">
-		<input type="button" value="修改图片" class="btn1" id="Btn1"/>
-        <span class="words">(可以添加店内菜单、最新活动、宣传海报等图片<br/>
-          图片支持格式:jpg jpeg gif png)</span>
-      <%= f.file_field :img, :class => "btn_file10" %>
+          <input type="button" value="修改图片" class="btn1" id="Btn1"/>
+          <span class="words">(可以添加店内菜单、最新活动、宣传海报等图片<br/>
+            图片支持格式:jpg jpeg gif png)</span>
+          <%= f.file_field :img, :class => "btn_file10" %>
         </div>
-        </td>
+      </td>
     </tr>
     <tr>
       <td valign="top">回答</td>
@@ -58,6 +58,15 @@
     </tr>
   </table>
 <%  end %>
+
+<% content_for :ahead do %>
+  <script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
+  <script>
+    $(document).ready(function(){
+      imgUploadPreview("input[name='shop_faq[img]']", 'uploadPreview')
+    })
+  </script>
+<% end %>
 
 <script type ="text/javascript">
   LeftMenu(15);
