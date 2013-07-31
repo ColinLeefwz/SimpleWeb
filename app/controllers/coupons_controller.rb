@@ -40,7 +40,18 @@ class CouponsController < ApplicationController
   end
       
   def use
-    CouponDown.find(params[:id][0,24]).use(session[:user_id],params[:data])
+    coupon_down = CouponDown.find(params[:id][0,24])
+    coupon_down.use(session[:user_id],params[:data])
+    $redis.smembers("GROUP#{session[:user_id]}").reverse.each do |gid|
+      group = Shop.find_by_id(gid).group
+      if (line = group && group.line)
+        if line.partners.values.flatten.include?(coupon_down.sid.to_s)
+          Xmpp.send_chat($gfuid, session[:user_id], "http://www.dface.cn/shop_marks/new?sid=#{coupon_down.sid}&uid=#{session[:user_id]}&gid=#{gid}")
+          break
+        end
+      end
+    end
+
     render :json => {used: params[:id]}.to_json
   end
   

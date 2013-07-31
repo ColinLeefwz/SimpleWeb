@@ -8,7 +8,7 @@ class ShopPhotosController < ApplicationController
   def index
     hash = {:room => session[:shop_id].to_i.to_s}
     hash.merge!({user_id: params[:uid]}) unless params[:uid].blank?
-    sort = {:updated_at =>  -1}
+    sort = {:od => -1, :updated_at =>  -1}
     @photos = paginate("Photo", params[:page], hash, sort,10)
   end
 
@@ -24,6 +24,19 @@ class ShopPhotosController < ApplicationController
     photo.unset(:hide)
     expire_cache_shop(photo.room)
     render :json => {:text => "已取消"}
+  end
+
+  def ajax_top
+    photo = Photo.find(params[:id])
+    od = Photo.where({room: session[:shop_id].to_s}).max(:od).to_i+1
+    photo.set(:od, od)
+    render :json => {}
+  end
+
+  def ajax_untop
+    photo = Photo.find(params[:id])
+    photo.unset(:od)
+    render :json => {}
   end
 
   def show
