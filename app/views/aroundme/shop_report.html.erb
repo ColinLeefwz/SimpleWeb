@@ -30,19 +30,33 @@
       function hidReport(){
         $('#dig').hide();
       }
+	  $(document).ready(function(){
+		  $("a[name='radio_bad']").click(function(){
+			$("a[name='radio_bad']").removeClass("radios2");
+			$(this).addClass("radios2");
+			$("#radio_button").val($(this).attr("rel"));
+		  });
+	  });
+
     </script>
   </head>
   <body class="hidden">
     <div id="Main2">
       <div id="dig">
         <div id="boxss">
-		  <ul>
-			<li><input type="radio" id="1" name="radio_bad" action-type="switch" value="1"><label for="1" >地点不存在</label></li>
-			<li><input type="radio" id="2" name="radio_bad" action-type="switch" value="2"><label for="2" >地点重复</label></li>
-			<li><input type="radio" id="3" name="radio_bad" action-type="switch" value="3"><label for="3" >地点更名</label></li>
-			<li><input type="radio" id="4" name="radio_bad" action-type="switch" value="4"><label for="4" >无用地点</label></li>
+		  <ul class="list">
+			<li>
+				<a class="radios" id="1" name="radio_bad" action-type="switch" rel="1"></a><label for="1" >地点不存在</label></li>
+			<li>
+				<a class="radios" id="2" name="radio_bad" action-type="switch" rel="2"></a><label for="2" >地点重复</label></li>
+			<li>
+				<a class="radios" id="3" name="radio_bad" action-type="switch" rel="3"></a><label for="3" >地点更名</label></li>
+			<li>
+				<a class="radios" id="4" name="radio_bad" action-type="switch" rel="4"></a><label for="4" >无用地点</label></li>
 		  </ul>
-            <input class="tex" type="text" name="des" id="des">
+			<input type="hidden" name="radio_button" id="radio_button"/>
+			
+            <input class="tex" type="text" name="des" id="des" value="要不要纠正一下呢" onclick="$(this).val('')"/>
             <input type="hidden" name="sid" id="sid">
 
             <div class="clear1"></div>
@@ -52,7 +66,7 @@
             <div class="line"></div>
             <div class="clear"></div>
             <input class="btn5" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
-            <input class="btn6" type="submit" value=" " onclick="hidReport()">
+            <input class="btn6" type="button" value=" " onclick="hidReport()">
           </div>
       </div>
 	  
