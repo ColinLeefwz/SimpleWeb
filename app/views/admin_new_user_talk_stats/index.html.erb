@@ -1,0 +1,84 @@
+<h1>每日陪聊统计</h1>
+<br><br>
+
+<table border="1" >
+
+  <tr>
+    <th>日期</th>
+    <th>陪聊帐号</th>
+    <th>聊过人数</th>
+    <th>有回复的人数</th> 
+    <th>平均聊了几句</th>
+  </tr>
+
+<% @pl_stat.each do |pl_stat| %>
+  <tr><td rowspan="6" ><%= pl_stat.date %></td></tr>
+  <tr>
+     <td rowspan="1">陈家洛</td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[0] %></td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[0]%></td>
+     <td rowspan="1"><%= pl_stat.chat_words_num[0] %></td>
+  </tr>
+  <tr>
+     <td rowspan="1">球球爱嘟嘴</td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[1] %></td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[1]%></td>
+     <td rowspan="1"><%= pl_stat.chat_words_num[1] %></td>
+  </tr>
+  <tr>
+     <td rowspan="1">amanda林</td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[2] %></td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[2]%></td>
+     <td rowspan="1"><%= pl_stat.chat_words_num[2] %></td>
+  </tr>
+  <tr>
+     <td rowspan="1">Jap UU</td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[3] %></td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[3]%></td>
+     <td rowspan="1"><%= pl_stat.chat_words_num[3] %></td>
+  </tr>
+  <tr>
+     <td rowspan="1">可儿</td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[4] %></td>
+     <td rowspan="1"><%= pl_stat.chat_people_num[4]%></td>
+     <td rowspan="1"><%= pl_stat.chat_words_num[4] %></td>
+  </tr>
+<% end %>
+
+  <tr><td rowspan="6" >2013-07-21</td></tr>
+  <tr>
+     <td rowspan="1">51418836c90d8bc37b000567(陈家洛)</td>
+     <td rowspan="1">1</td>
+     <td rowspan="1">1</td>
+     <td rowspan="1">1</td>
+  </tr>
+  <tr>
+     <td rowspan="1">513ed1e7c90d8b590100016f(球球爱嘟嘴)</td>
+     <td rowspan="1">2</td>
+     <td rowspan="1">2</td>
+     <td rowspan="1">2</td>
+  </tr>
+  <tr>
+     <td rowspan="1">50bec2c1c90d8bd12f000086(amanda林)</td>
+     <td rowspan="1">2</td>
+     <td rowspan="1">2</td>
+     <td rowspan="1">3</td>
+  </tr>
+  <tr>
+     <td rowspan="1">51427b92c90d8b670c00027b(Jap UU)</td>
+     <td rowspan="1">2</td>
+     <td rowspan="1">2</td>
+     <td rowspan="1">3</td>
+  </tr>
+  <tr>
+     <td rowspan="1">514190f8c90d8bc67b00054a(可儿)</td>
+     <td rowspan="1">2</td>
+     <td rowspan="1">2</td>
+     <td rowspan="1">3</td>
+  </tr>
+
+</table>
+
+
+
+
