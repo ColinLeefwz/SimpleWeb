@@ -9,17 +9,20 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
     <script type="text/javascript">
       function showDig(hid){
-		var high=$(window).height()/2;
+        var high=$(window).height()/2;
         $('#dig').css({"height":$("#Main2").height()+"px","display":"block"});
         $('#sid').val(hid)
         $('#res').css('background-color', '');
         $("#boxss").css({"top":($(document).scrollTop()+high)+"px","margin-top":"-225px"});
       }
       function ajaxReport(uid){
+        type = $('#radio_button').val()
         des = $('#des').val();
-        if(des.length >= 3){
+        if(des=='要不要纠正一下呢'){
+          des=''
+        }
+        if(type!=''){
           sid = $('#sid').val();
-          type = $('#radio_button').val()
           $.get('/aroundme/report', {sid: sid, des: des, uid: uid, type: type}, function(){
             $('#dig').hide();
             $('#shop'+sid).remove();
@@ -31,13 +34,13 @@
       function hidReport(){
         $('#dig').hide();
       }
-	  $(document).ready(function(){
-		  $("a[name='radio_bad']").click(function(){
-			$("a[name='radio_bad']").removeClass("radios2");
-			$(this).addClass("radios2");
-			$("#radio_button").val($(this).attr("rel"));
-		  });
-	  });
+      $(document).ready(function(){
+        $("a[name='radio_bad']").click(function(){
+          $("a[name='radio_bad']").removeClass("radios2");
+          $(this).addClass("radios2");
+          $("#radio_button").val($(this).attr("rel"));
+        });
+      });
 
     </script>
   </head>
@@ -45,42 +48,42 @@
     <div id="Main2">
       <div id="dig">
         <div id="boxss">
-		  <ul class="list">
-			<li>
-				<a class="radios" id="1" name="radio_bad" action-type="switch" rel="地点不存在"></a><label for="1" >地点不存在</label></li>
-			<li>
-				<a class="radios" id="2" name="radio_bad" action-type="switch" rel="地点重复"></a><label for="2" >地点重复</label></li>
-			<li>
-				<a class="radios" id="3" name="radio_bad" action-type="switch" rel="地点更名"></a><label for="3" >地点更名</label></li>
-			<li>
-				<a class="radios" id="4" name="radio_bad" action-type="switch" rel="无用地点"></a><label for="4" >无用地点</label></li>
-		  </ul>
-			<input type="hidden" name="radio_button" id="radio_button"/>
-			
-            <input class="tex" type="text" name="des" id="des" value="要不要纠正一下呢" onclick="$(this).val('')"/>
-            <input type="hidden" name="sid" id="sid">
+          <ul class="list">
+            <li>
+              <a class="radios" id="1" name="radio_bad" action-type="switch" rel="地点不存在"></a><label for="1" >地点不存在</label></li>
+            <li>
+              <a class="radios" id="2" name="radio_bad" action-type="switch" rel="地点重复"></a><label for="2" >地点重复</label></li>
+            <li>
+              <a class="radios" id="3" name="radio_bad" action-type="switch" rel="地点更名"></a><label for="3" >地点更名</label></li>
+            <li>
+              <a class="radios" id="4" name="radio_bad" action-type="switch" rel="无用地点"></a><label for="4" >无用地点</label></li>
+          </ul>
+          <input type="hidden" name="radio_button" id="radio_button"/>
 
-            <div class="clear1"></div>
-            <!--<p style="width: 100%; height:46px;padding:10px 0 0;color:#000" id="res">
-              请输入三字以上的错误原因
-            </p>--!>
-            <div class="line"></div>
-            <div class="clear"></div>
-            <input class="btn5" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
-            <input class="btn6" type="button" value=" " onclick="hidReport()">
-          </div>
-      </div>
-	  
-      <div class="con2">
-        <div class="set">
-          <% @shops.each do |shop| %>
-            <div class="shop" id="shop<%=shop[1]%>">
-              <span class="shopName"> <%= shop[0]  %>  </span>
-              <span class="ff" onclick ="showDig('<%=shop[1] %>')" > 报错  </span>
-            </div>
-          <% end %>
+          <input class="tex" type="text" name="des" id="des" value="要不要纠正一下呢" onclick="$(this).val('')"/>
+          <input type="hidden" name="sid" id="sid">
+
+          <div class="clear1"></div>
+          <!--<p style="width: 100%; height:46px;padding:10px 0 0;color:#000" id="res">
+            请输入三字以上的错误原因
+          </p>--!>
+          <div class="line"></div>
+          <div class="clear"></div>
+          <input class="btn5" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
+          <input class="btn6" type="button" value=" " onclick="hidReport()">
         </div>
+    </div>
+
+    <div class="con2">
+      <div class="set">
+          <% @shops.each do |shop| %>
+                      <div class="shop" id="shop<%=shop[1]%>">
+                        <span class="shopName"> <%= shop[0]  %>  </span>
+                        <span class="ff" onclick ="showDig('<%=shop[1] %>')" > 报错  </span>
+                      </div>
+          <% end %>
       </div>
     </div>
-  </body>
+  </div>
+</body>
 </html>
