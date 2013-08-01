@@ -224,7 +224,7 @@ class User
     if checkin.nil?
       ret = []
     else
-      ret = [checkin.cati, shop_name, checkin.loc]
+      ret = [checkin.cati, shop_name, checkin.loc, checkin.sid]
     end
     Rails.cache.write("LASTL:#{self.id}", ret)
     ret
@@ -411,11 +411,11 @@ class User
     Photo.where({user_id: _id})
   end
 
-  def user_ver_redis
+  def ver
     UserDevice.user_ver_redis(self.id)
   end
 
-  def user_os_redis
+  def os
     UserDevice.user_os_redis(self.id)
   end
 
