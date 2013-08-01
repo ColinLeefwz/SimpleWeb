@@ -137,12 +137,15 @@ class User
     hash.delete("_id")
     hash.delete("qq")
     hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
+    hash.delete("wb_uid") if self.wb_hidden  == 2  
+    hash.delete("wb_name") if self.wb_hidden  == 2  
+    hash.delete("wb_v") if self.wb_hidden  == 2  
+    hash.delete("qq_name") if self.qq_hidden 
     hash
   end
   
   def output_self
     hash = self.attr_with_id.merge!(self.head_logo_hash)
-    hash.delete("wb_uid") if self.wb_hidden  == 2  
     hash
   end
 
