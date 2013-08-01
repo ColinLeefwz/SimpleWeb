@@ -40,6 +40,10 @@
           $(this).addClass("radios2");
           $("#radio_button").val($(this).attr("rel"));
         });
+		$("label").click(function(){
+			var va=$(this).attr("for");
+			$("a[id="+va+"]").click();
+		});
       });
 
     </script>
@@ -50,17 +54,17 @@
         <div id="boxss">
           <ul class="list">
             <li>
-              <a class="radios" id="1" name="radio_bad" action-type="switch" rel="地点不存在"></a><label for="1" >地点不存在</label></li>
+              <a class="radios" id="N1" name="radio_bad" action-type="switch" rel="地点不存在"></a><label for="N1">地点不存在</label></li>
             <li>
-              <a class="radios" id="2" name="radio_bad" action-type="switch" rel="地点重复"></a><label for="2" >地点重复</label></li>
+              <a class="radios" id="N2" name="radio_bad" action-type="switch" rel="地点重复"></a><label for="N2">地点重复</label></li>
             <li>
-              <a class="radios" id="3" name="radio_bad" action-type="switch" rel="地点更名"></a><label for="3" >地点更名</label></li>
+              <a class="radios" id="N3" name="radio_bad" action-type="switch" rel="地点更名"></a><label for="N3">地点更名</label></li>
             <li>
-              <a class="radios" id="4" name="radio_bad" action-type="switch" rel="无用地点"></a><label for="4" >无用地点</label></li>
+              <a class="radios" id="N4" name="radio_bad" action-type="switch" rel="无用地点"></a><label for="N4">无用地点</label></li>
           </ul>
           <input type="hidden" name="radio_button" id="radio_button"/>
 
-          <input class="tex" type="text" name="des" id="des" value="要不要纠正一下呢" onclick="$(this).val('')"/>
+          <input class="tex" type="text" name="des" id="des" value="要不要说明一下呢？" onclick="$(this).val('')"/>
           <input type="hidden" name="sid" id="sid">
 
           <div class="clear1"></div>
