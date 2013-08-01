@@ -5,6 +5,7 @@ class ShopReport
   field :uid, type: Moped::BSON::ObjectId
   field :des
   field :flag,type: Integer
+  field :type  #报错类型
 
   
   with_options :prefix => true, :allow_nil => true do |option|

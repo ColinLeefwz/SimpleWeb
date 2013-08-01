@@ -19,7 +19,8 @@
         des = $('#des').val();
         if(des.length >= 3){
           sid = $('#sid').val();
-          $.get('/aroundme/report', {sid: sid, des: des, uid: uid}, function(){
+          type = $('#radio_button').val()
+          $.get('/aroundme/report', {sid: sid, des: des, uid: uid, type: type}, function(){
             $('#dig').hide();
             $('#shop'+sid).remove();
           })
@@ -46,13 +47,13 @@
         <div id="boxss">
 		  <ul class="list">
 			<li>
-				<a class="radios" id="1" name="radio_bad" action-type="switch" rel="1"></a><label for="1" >地点不存在</label></li>
+				<a class="radios" id="1" name="radio_bad" action-type="switch" rel="地点不存在"></a><label for="1" >地点不存在</label></li>
 			<li>
-				<a class="radios" id="2" name="radio_bad" action-type="switch" rel="2"></a><label for="2" >地点重复</label></li>
+				<a class="radios" id="2" name="radio_bad" action-type="switch" rel="地点重复"></a><label for="2" >地点重复</label></li>
 			<li>
-				<a class="radios" id="3" name="radio_bad" action-type="switch" rel="3"></a><label for="3" >地点更名</label></li>
+				<a class="radios" id="3" name="radio_bad" action-type="switch" rel="地点更名"></a><label for="3" >地点更名</label></li>
 			<li>
-				<a class="radios" id="4" name="radio_bad" action-type="switch" rel="4"></a><label for="4" >无用地点</label></li>
+				<a class="radios" id="4" name="radio_bad" action-type="switch" rel="无用地点"></a><label for="4" >无用地点</label></li>
 		  </ul>
 			<input type="hidden" name="radio_button" id="radio_button"/>
 			

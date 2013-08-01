@@ -89,7 +89,7 @@ class AroundmeController < ApplicationController
     if user.nil?
       render :json => ""
     else
-      ShopReport.create(:uid => user.id, :sid => params[:sid], :des => params[:des] )
+      ShopReport.create(:uid => user.id, :sid => params[:sid], :des => params[:des], :type => params[:type] )
       render :json => ''
     end
   end
