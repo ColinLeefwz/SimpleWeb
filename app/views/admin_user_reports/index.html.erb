@@ -5,6 +5,7 @@
     <th>商家id</th>
     <th>商家名称</th>
     <th>报错人</th>
+    <th>错误类型</th>
     <th>错误原因</th>
     <th></th>
     <th></th>
@@ -17,6 +18,7 @@
       <td><%= report.sid.to_i %></td>
       <td><%=link_to report.shop_name||'', "/admin_shops/show?id=#{report.sid}" %></td>
       <td><%=link_to report.user_name||'' , "/admin_users/show?id=#{report.uid}" %></td>
+      <td><%= report.type %></td>
       <td><%= report.des %></td>
       <td><%= link_to '删除地点', "#", :onclick => "ajaxDel('#{report.sid.to_i}')" %></td>
       <td><%= link_to '误报', "#", :onclick => "ajaxDistort('#{report.sid.to_i}')" %></td>
