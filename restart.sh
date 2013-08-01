@@ -6,7 +6,7 @@ sleep 2
 
 while true
 do 
-  if tail -n 3 log/unicorn.log | grep "worker=0 ready"
+  if tail -n 3 log/unicorn.log | grep "master complete"
   	then
   	echo "restart successful."
   	break
