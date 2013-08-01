@@ -30,6 +30,10 @@ class Face
         rek.data = arr[0]
         rek.data2 = arr[1] if arr.size>1
         rek.save!
+      else
+        rek = Face.new
+        rek.id = uid
+        rek.save!
       end
     rescue Exception => e
       puts e
@@ -37,12 +41,21 @@ class Face
   end
   
   def self.init
-    Rekognition.all.each do |re|
-      u = re.user
-      next if u.head_logo_id.nil?
-      next if Face.find_by_id(u.id)
-      gen(u.id, UserLogo.img_url(u.head_logo_id))
-      sleep 5
+    File.open("log/weibo/other","w+") do |f|
+      Rekognition.where({}).sort(_id: 1).each do |re|
+        begin
+          u = re.user
+      
+          next if u.head_logo_id.nil?
+          next if Face.find_by_id(u.id)
+          gen(u.id, UserLogo.img_url(u.head_logo_id))
+          f.puts "#{re.id}"
+          sleep 10
+        rescue
+          f.puts "#{re.id}异常"
+          next
+        end
+      end
     end
   end
 
