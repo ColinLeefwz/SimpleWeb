@@ -18,7 +18,10 @@ class UserFollow
   end
   
   def self.find_or_news(uid,fids)
-    fids.each{|fid| find_or_new(uid,fid)}
+    fids.each do |fid| 
+      #puts fid
+      find_or_new(uid,fid)
+    end
   end
   
   def self.first_add(uid,follows)
