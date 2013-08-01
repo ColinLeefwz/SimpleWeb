@@ -7,6 +7,11 @@ class PhotoNotice
     photo = Photo.find_primary(pid)
     user = photo.user
     uid = user.id
+    shop = photo.shop
+    Rails.cache.fetch("PhotoRoom#{uid}", :expires_in => 30.minutes) do
+      same_location_realtime(user.id, shop.id, user, shop)
+    end
+    return if Os.overload?(0.9)
     user.fans.each do |u|
       next if u.id.to_s == $gfuid
       str = "[img:#{pid}]#{photo.user.name}在#{photo.shop.name}分享了一张图片"
@@ -16,10 +21,6 @@ class PhotoNotice
       else
         old_notice(photo, user, u, str)
       end
-    end
-    shop = photo.shop
-    Rails.cache.fetch("PhotoRoom#{uid}", :expires_in => 2.hours) do
-      #same_location_realtime(user.id, shop.id, user, shop)
     end
   end
   
@@ -35,9 +36,11 @@ class PhotoNotice
 
   def self.same_location_realtime(uid,sid,user,shop)
     now = Time.now.to_i
-    $redis.zrangebyscore("UA#{sid.to_i}", now-3600, now).each do |id|
+    $redis.zrangebyscore("UA#{sid.to_i}", now-3600*2, now).each do |id|
       next if uid==id
       next if id.to_s == $gfuid
+      arr = User.last_loc_cache(id)
+      next if arr.nil? || arr[1] != shop.name
       push(id,user,shop)
     end
     now
@@ -47,8 +50,8 @@ class PhotoNotice
   def self.push(id,user,shop)
     token = User.find_by_id(id).tk
     return unless token
-    Resque.enqueue(PushMsg, token,
-     "#{user.name}在#{shop.name}分享了一张照片")
+    Resque.enqueue(PushMsg, token, "脸脸",
+     "#{user.name}在#{shop.name}分享了一张照片，快去看看吧")
   end
     
 end
