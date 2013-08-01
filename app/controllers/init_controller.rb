@@ -30,11 +30,13 @@ class InitController < ApplicationController
       xmpp = Xmpp.cur_xmpp_ip
     end
     if session[:os] == 1
-      ver = android_version.to_f
+      version = android_version
+      ver = version.to_f
     else
+      version = "2.2.2"
       ver = 2.2
     end
-    render :json => {ip: ip, xmpp: xmpp , ver:ver }.to_json
+    render :json => {ip: ip, xmpp: xmpp , ver:ver, version:version }.to_json
   end
   
  $ios = [
