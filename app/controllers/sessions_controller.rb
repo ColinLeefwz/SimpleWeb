@@ -26,39 +26,28 @@ class SessionsController < ApplicationController
   def create
     @session = Session.new(session_params)
 
-    respond_to do |format|
-      if @session.save
-        format.html { redirect_to @session, notice: 'Session was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @session }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @session.errors, status: :unprocessable_entity }
-      end
+    if @session.save
+      redirect_to @session
+    else
+      render action: 'new'
     end
   end
 
   # PATCH/PUT /sessions/1
   # PATCH/PUT /sessions/1.json
   def update
-    respond_to do |format|
       if @session.update(session_params)
-        format.html { redirect_to @session, notice: 'Session was successfully updated.' }
-        format.json { head :no_content }
+        redirect_to @session, notice: 'Session was successfully updated.' 
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @session.errors, status: :unprocessable_entity }
+        render action: 'edit'
       end
-    end
   end
 
   # DELETE /sessions/1
   # DELETE /sessions/1.json
   def destroy
     @session.destroy
-    respond_to do |format|
-      format.html { redirect_to sessions_url }
-      format.json { head :no_content }
-    end
+      redirect_to sessions_url 
   end
 
   private
