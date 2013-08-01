@@ -37,8 +37,8 @@
       <td><%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %></td>
       <td><%= user.show_gender %></td>
       <td><%= user.follow_ids.count %></td>
-      <td><%= user.user_ver_redis %></td>
-      <td><%= user.user_os_redis.to_i == 1 ? "android" : "ios" %></td>
+      <td><%= user.ver %></td>
+      <td><%= user.os.to_i == 1 ? "android" : "ios" %></td>
       <td>
         <%= link_to '可信', "javascript:void(0)", :onclick => "ajaxKx($(this), '#{user.id}')" if !$redis.sismember('KxUsers', user.id) %>
       </td>
