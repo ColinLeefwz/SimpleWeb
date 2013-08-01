@@ -34,10 +34,12 @@ class CheckinNotice
       send_welcome_msg_if_not_invisible(user,shop)
       tingshuo_default_answer_text(shop, checkin.uid)
       user.write_lat_loc(checkin, shop.name)
-      fake_user(user,shop)
-      CheckinBssidStat.insert_checkin(checkin, ssid) if checkin.bssid && !checkin.del
+      unless Os.overload?(0.8)
+        fake_user(user,shop)
+        CheckinBssidStat.insert_checkin(checkin, ssid) if checkin.bssid && !checkin.del
+      end
       checkin.add_city_redis
-      Resque.enqueue(LocationNotice, checkin.uid, checkin.sid ) unless Os.overload?
+      Resque.enqueue(LocationNotice, checkin.uid, checkin.sid )
     end    
     send_test_coupon(checkin.uid, checkin.sid)
   end
