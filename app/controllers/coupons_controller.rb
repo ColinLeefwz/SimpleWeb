@@ -42,12 +42,14 @@ class CouponsController < ApplicationController
   def use
     coupon_down = CouponDown.find(params[:id][0,24])
     coupon_down.use(session[:user_id],params[:data])
-    $redis.smembers("GROUP#{session[:user_id]}").reverse.each do |gid|
-      group = Shop.find_by_id(gid).group
-      if (line = group && group.line)
-        if line.partners.values.flatten.include?(coupon_down.sid.to_s)
-          Xmpp.send_chat($gfuid, session[:user_id], "http://www.dface.cn/shop_marks/new?sid=#{coupon_down.sid}&uid=#{session[:user_id]}&gid=#{gid}")
-          break
+    unless ShopMark.where({sid: coupon_down.sid, uid:  session[:user_id]}).limit(1).first
+      $redis.smembers("GROUP#{session[:user_id]}").reverse.each do |gid|
+        group = Shop.find_by_id(gid).group
+        if (line = group && group.line)
+          if line.partners.values.flatten.include?(coupon_down.sid.to_s)
+            Xmpp.send_chat($gfuid, session[:user_id], "你可以给商家评分哦！http://www.dface.cn/shop_marks/new?sid=#{coupon_down.sid}&uid=#{session[:user_id]}&gid=#{gid}")
+            break
+          end
         end
       end
     end
