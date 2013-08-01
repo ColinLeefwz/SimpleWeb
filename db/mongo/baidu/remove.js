@@ -277,6 +277,7 @@ db.shops.remove({name:/回收/})
 db.shops.remove({name:/搬家/})
 db.shops.remove({name:/^果麦/})
 db.shops.remove({name:/汽配$/})
+db.shops.update({name:/按摩$/},{$set:{d:40},$unset:{t:1}},false,true)
 
 
  
