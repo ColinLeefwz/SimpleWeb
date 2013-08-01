@@ -411,11 +411,11 @@ class User
     Photo.where({user_id: _id})
   end
 
-  def user_ver_redis
+  def ver
     UserDevice.user_ver_redis(self.id)
   end
 
-  def user_os_redis
+  def os
     UserDevice.user_os_redis(self.id)
   end
 
