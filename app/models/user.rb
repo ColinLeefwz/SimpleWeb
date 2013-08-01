@@ -224,7 +224,7 @@ class User
     if checkin.nil?
       ret = []
     else
-      ret = [checkin.cati, shop_name, checkin.loc]
+      ret = [checkin.cati, shop_name, checkin.loc, checkin.sid]
     end
     Rails.cache.write("LASTL:#{self.id}", ret)
     ret

@@ -5,25 +5,25 @@ class LocationNotice
 
   def self.perform(uid,sid)
     user = User.find_primary(uid)
-    diff = Time.now.to_i-user.cati
     shop = Shop.find_by_id(sid)
     return if shop.lo.nil?
     same_location_realtime(uid,sid,user,shop)
+    return if Os.overload?(0.6)
+    diff = Time.now.to_i-user.cati
     same_location_fans(uid,sid,user,shop) if diff<3600*240
     same_location_friends(uid,sid,user,shop) if diff<3600*240 
     user.notify_good_friend(shop) #好友在一个小时内，在距离2公里以内的其他地点签到过
   end
   
   #提醒的条件：
-  #一小时内在同一地点签到过的
+  #半小时内在同一地点签到过的
   #三小时内在同一地点签到过的，且是最后一次签到的
-  # TODO: 如果是android设备，如何push提醒
   def self.same_location_realtime(uid,sid,user,shop)
     now = Time.now.to_i
     $redis.zrangebyscore("UA#{sid.to_i}", now-3600*3, now, withscores:true).each do |id, time|
       next if uid==id
       next if id.to_s == $gfuid
-      if (now - time) < 3600
+      if (now - time) < 1800
         push(id,user,shop)
       else
         arr = User.last_loc_cache(id)
@@ -64,7 +64,6 @@ class LocationNotice
   def self.push(id,user,shop)
     token = User.find_by_id(id).tk
     return unless token
-    return #TODO：暂不提醒
     Resque.enqueue(PushMsg, token,
      "#{user.name}也进入#{shop.name}了！", "push_scene")
   end
