@@ -66,11 +66,13 @@ class AdminController < ApplicationController
   end
 
   def session_destroy
-    @session.destroy
-	respond_to do |format|
-	  format.html { redirect_to sessions_admin_index_path}
-	  format.json { head :no_content }
-	end
+    if @session.destroy
+      redirect_to sessions_admin_index_path
+    end
+	# respond_to do |format|
+	#   format.html { redirect_to sessions_admin_index_path}
+	#   format.json { head :no_content }
+	# end
   end
 
   def expert_index

@@ -188,12 +188,16 @@ describe AdminController do
     context "have not signed in" do
       it "go back to 'sign in' page" do
       	session[:login] = nil
-      	post :session_destroy, id: first_session.id
-      	response.should redirect_to sign_in_admin_index_url
+      	delete :session_destroy, id: first_session.id
+      	response.should redirect_to sign_in_admin_index_path
       end
     end
 
     context "have signed in" do 
+      before :each do
+        session[:login] = true
+      end 
+
       it "deletes a session" do
         first_session.save
         expect{delete :session_destroy, id: first_session.id}.to change{Session.count}.by(-1)
@@ -327,6 +331,10 @@ describe AdminController do
     end 
 
     context "have signed in" do
+      before :each do
+        session[:login] = true
+      end
+
       it "updates the attribute of expert" do
         expect{put :expert_update, id: petter.id, expert: { company: 'test'}}.to change{petter.reload.company}.from('Prodygia').to('test')
       end
