@@ -14,12 +14,12 @@
   <% @shop_reports.each do |report| %>
 
     <tr class="shop<%= report.sid.to_i%>">
-      <td><%= report.shop.id.to_i %></td>
-      <td><%=link_to report.shop.name||'', "/admin_shops/show?id=#{report.sid}" %></td>
-      <td><%=link_to report.user.try(:name)||'' , "/admin_users/show?id=#{report.uid}" %></td>
+      <td><%= report.sid.to_i %></td>
+      <td><%=link_to report.shop_name||'', "/admin_shops/show?id=#{report.sid}" %></td>
+      <td><%=link_to report.user_name||'' , "/admin_users/show?id=#{report.uid}" %></td>
       <td><%= report.des %></td>
-      <td><%= link_to '删除地点', "#", :onclick => "ajaxDel('#{report.shop.id.to_i}')" %></td>
-      <td><%= link_to '误报', "#", :onclick => "ajaxDistort('#{report.shop.id.to_i}')" %></td>
+      <td><%= link_to '删除地点', "#", :onclick => "ajaxDel('#{report.sid.to_i}')" %></td>
+      <td><%= link_to '误报', "#", :onclick => "ajaxDistort('#{report.sid.to_i}')" %></td>
       <td><%= link_to '处理', "/admin_user_reports/show?id=#{report.id}",:target => "blank" %></td>
 
     </tr>
