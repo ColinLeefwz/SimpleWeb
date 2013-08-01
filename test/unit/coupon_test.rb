@@ -66,23 +66,23 @@ class CouponTest < ActiveSupport::TestCase
   test "#allow_send_checkin? 7月18活动 合作商家签到优惠券发送" do
     user = User.find('502e6303421aa918ba000005')
     coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
-    assert_equal coupon.allow_send_checkin?(user._id.to_s), true
+    assert_equal coupon.allow_send_checkin?(user._id.to_s, :single => true), true
   end
 
   test "#allow_send_checkin? 7月18活动 今天发的优惠券使用后不能收到优惠券" do
     user = User.find('502e6303421aa918ba000005')
     coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
     CouponDown.download(coupon, user.id).use(user.id, nil)
-    assert_equal coupon.allow_send_checkin?(user._id.to_s), false
+    assert_equal coupon.allow_send_checkin?(user._id.to_s, :single => true), false
   end
 
   test "#allow_send_checkin? 7月18活动 合作商家昨天优惠券未使用今天不发优惠券， 使用后可以发优惠券" do
     user = User.find('502e6303421aa918ba000005')
     coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
     CouponDown.download(coupon, user.id).update_attribute(:dat, 1.days.ago)
-    assert_equal coupon.allow_send_checkin?(user._id.to_s), false
+    assert_equal coupon.allow_send_checkin?(user._id.to_s, :single => true), false
     CouponDown.last.use(user.id, nil)
-    assert_equal coupon.allow_send_checkin?(user._id.to_s), true
+    assert_equal coupon.allow_send_checkin?(user._id.to_s, :single => true), true
   end
   
 end

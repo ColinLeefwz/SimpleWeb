@@ -102,7 +102,8 @@ class Photo
     coupon = shop.share_coupon
     return if coupon.nil?
     if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s)
-      coupon.send_coupon(user_id,self.id)
+      message = coupon.send_coupon(user_id,self.id)
+      return message if ENV["RAILS_ENV"] != "production"
       Resque.enqueue(XmppNotice, self.room,user_id,"收到一张分享优惠券: #{coupon.name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
     end
     return nil
@@ -162,7 +163,7 @@ class Photo
   
   def find_checkin
     #加first的时候必须用order_by, 不能用sort
-     Checkin.where({uid:self.user_id,sid:self.room}).order_by("id desc").limit(1).first
+    Checkin.where({uid:self.user_id,sid:self.room}).order_by("id desc").limit(1).first
   end
   
   def add_to_checkin
