@@ -1,6 +1,6 @@
 # encoding: utf-8
 module ControllerName
-  Menu = ['用户管理','地点管理','优惠券管理','活动管理','签到管理','系统权限','客户端管理','用户统计','商家统计','活动统计','点评统计','个人用户统计']
+  Menu = ['用户管理','地点管理','优惠券管理','活动管理','签到管理','系统权限','客户端管理','用户统计','商家统计','活动统计','点评统计','个人用户统计', '系统日志']
   Right= {
     0=>{"admin_users"=>"用户列表", "admin_kx_users"=>"可信用户", "admin_user_logos" => '头像审核', "admin_blacks"=>"举报用户", 
       "admin_rekognitions" => "人脸识别"},
@@ -20,6 +20,7 @@ module ControllerName
       "user_checkin_stats"=>"用户签到统计", "ip_checkin_stats"=>"ip签到统计", "shop_checkin_alts"=>"签到高度统计",
       "checkin_loc_accs"=>"经纬度误差统计", "checkin_user_many"=>"多次签到"},
     10=>{},
-    11=>{}
+    11=>{},
+    12=>{'app_logs' => "日志"}
   }
 end
