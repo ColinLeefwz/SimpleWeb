@@ -21,6 +21,6 @@ module ControllerName
       "checkin_loc_accs"=>"经纬度误差统计", "checkin_user_many"=>"多次签到"},
     10=>{},
     11=>{},
-    12=>{'app_logs' => "日志"}
+    12=>{'admin_app_logs' => "日志"}
   }
 end
