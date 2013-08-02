@@ -11,12 +11,12 @@
   <%= link_to('编辑', "/admin_shops/edit?id=#{@shop.id}") %>
   <%= link_to('标记删除', "/admin_shops/del?id=#{@shop.id}") %>
   <br/>
-  <br/>
 
   <%  if @shop.seller  %>
     <%= "已绑定销售人员: #{@shop.seller_name} #{@shop.seller_show_gender}" %>
-    <%= link_to('重新绑定销售人员', '#', :onclick => 'show_sell();', :class => "aSeller") %>
+    <%= link_to('重新绑定销售人员', 'javascript:void(0)', :onclick => 'show_sell();', :class => "aSeller") %>
   <% end %>
+  <br/>
 
 <div id="sellContainer" style="display: <%= @shop.seller ? "none" : '' %>">
   <%= link_to('绑定销售人员', "#", :onclick => 'show_sell();', :class => "aSeller") %>
@@ -27,11 +27,24 @@
   </span>
 </div>
 
+<br/>
+<%= link_to "合并到", "javascript:void(0)" , :onclick => "showFormMerge($(this))" %>
+
+<%= form_tag "/admin_shops/merge_to", :id=> "formMerge", :style => "display: none" do   %>
+  <%= hidden_field_tag :id, @shop.id  %>
+  <%= hidden_field_tag :back_to, request.env['HTTP_REFERER'] %>
+<span>当前地点的坐标/签到/照片墙都会合并到填入的id中，并且当前地点会直接删除。</span>
+<br/>
+  要合并到的id：<%= text_field_tag :mid, '', :onchange => "ajaxGetShop($(this))" %>
+  <span id="errspan"></span>
+  <%= submit_tag "确定"  %>
+<% end %>
+
 
 </p>
 <p>
   <b>商家id:</b>
-  <%= @shop.id.to_i %>
+  <%=link_to @shop.id.to_i, "/admin_shops/show?id=#{@shop.id}" %>
 </p>
 <p>
   <b>商家名称:</b>
@@ -121,4 +134,17 @@
       $('#sellContainer').replaceWith(data['text'])
     })
   }
+
+  function showFormMerge(obj){
+    $("#formMerge").show();
+    obj.hide();
+  }
+
+  function ajaxGetShop(obj){
+    $.get("/admin_shops/get_shop.json", {id: obj.val(), back: ["name"]}, function(data){
+      text = data ? data['name'] : "id错误"
+      $("#errspan").replaceWith("<span>"+ text +"</span>")
+    })
+  }
+
 </script>
