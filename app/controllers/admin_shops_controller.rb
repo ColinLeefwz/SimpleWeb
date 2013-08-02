@@ -126,7 +126,7 @@ class AdminShopsController < ApplicationController
       hash = shop.attributes
       hash= hash.keep_if{|k,v| k.in?(params[:back])} if !params[:back].blank?
     else
-      hash= ''
+      hash= nil
     end
     respond_to do |format|
       format.html{render(:text => hash)}
