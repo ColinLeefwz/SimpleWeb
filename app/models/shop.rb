@@ -147,6 +147,11 @@ class Shop
   def checkins
     Checkin.where({sid:self.id})
   end
+
+  #是否可以删除用户创建的地点。
+  def destory_custom?
+    checkins.distinct(:uid).size <= 1
+  end
   
   def group
     Group.find_by_id(group_id)
