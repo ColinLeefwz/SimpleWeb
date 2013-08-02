@@ -15,7 +15,7 @@ function imgUploadPreview(select, divid){
         
         try{
             var divObj = document.getElementById(divid)
-            if (navigator.userAgent.indexOf("Firefox") > -1) {
+            if (navigator.userAgent.indexOf("Firefox") > -1 || navigator.userAgent.indexOf("Chrome")>-1) {
                 divObj.innerHTML = "<img id='image_view' style='height: 197px; width: 194px' />";
                 imageView = document.getElementById("image_view");
                 imageView.src = window.URL.createObjectURL(this.files[0]);
