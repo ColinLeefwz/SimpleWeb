@@ -37,7 +37,7 @@ class PhotoNotice
   def self.same_location_realtime(uid,sid,user,shop)
     now = Time.now.to_i
     $redis.zrangebyscore("UA#{sid.to_i}", now-3600*2, now).each do |id|
-      next if uid==id
+      next if uid.to_s==id.to_s
       next if id.to_s == $gfuid
       arr = User.last_loc_cache(id)
       next if arr.nil? || arr[1] != shop.name

@@ -21,7 +21,7 @@ class LocationNotice
   def self.same_location_realtime(uid,sid,user,shop)
     now = Time.now.to_i
     $redis.zrangebyscore("UA#{sid.to_i}", now-3600*3, now, withscores:true).each do |id, time|
-      next if uid==id
+      next if uid.to_s==id.to_s
       next if id.to_s == $gfuid
       if (now - time) < 1800
         push(id,user,shop)
