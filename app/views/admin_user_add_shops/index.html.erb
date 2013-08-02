@@ -26,6 +26,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
   <% @shops.each_with_index do |shop, index| %>
@@ -42,6 +43,7 @@
       <td><%= link_to '处理', "/admin_user_add_shops/show?id=#{shop.id.to_i}", :target => "blank"  unless shop.i%></td>
       <td><%= link_to '标记删除', "#", :onclick => "ajaxDel('#{shop.id.to_i}', $(this))" unless shop.i %></td>
       <td><%= link_to '忽略', "#", :onclick => "ajaxIg('#{shop.id.to_i}', $(this))" unless shop.i %></td>
+      <td><%= link_to '直接删除', "#", :onclick => "ajaxDes('#{shop.id.to_i}', $(this))" unless shop.i %></td>
     </tr>
 
   <% end %>
@@ -61,6 +63,16 @@
   function ajaxDel(sid, obj){
     if(confirm("确定标记删除？"))
       $.get("/admin_user_add_shops/del",{id: sid})
+  }
+
+  function ajaxDes(sid, obj){
+    if(confirm("确定直接删除？"))
+      $.get("/admin_user_add_shops/des",{id: sid}, function(data){
+        if(data)
+          obj.parent().parent().remove()
+        else
+          obj.replaceWith("不能删除")
+      })
   }
 
   function ajaxIg(sid, obj){
