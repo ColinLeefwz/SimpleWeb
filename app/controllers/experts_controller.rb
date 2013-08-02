@@ -1,5 +1,5 @@
 class ExpertsController < ApplicationController
-  before_action :set_expert, only: [:show, :edit, :destroy]
+  before_action :set_expert, only: [:show, :edit, :destroy, :update]
 
   # GET /experts
   # GET /experts.json
@@ -26,34 +26,26 @@ class ExpertsController < ApplicationController
   def create
     @expert = Expert.new(expert_params)
 
-    respond_to do |format|
-      if @expert.save
-        format.html { redirect_to @expert, notice: 'Expert was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @expert }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @expert.errors, status: :unprocessable_entity }
-      end
+    if @expert.save
+      redirect_to @expert, notice: 'Expert was successfully created.'
+    else
+      render action: 'new'
     end
   end
 
   # PATCH/PUT /experts/1
   # PATCH/PUT /experts/1.json
   def update
-      @expert = Expert.find_by(id: params[:id])
-      @expert.authorized = true
-      @expert.save
-      redirect_to @expert
+    @expert.authorized = true
+    @expert.save
+    redirect_to @expert
   end
 
   # DELETE /experts/1
   # DELETE /experts/1.json
   def destroy
     @expert.destroy
-    respond_to do |format|
-      format.html { redirect_to experts_url }
-      format.json { head :no_content }
-    end
+    redirect_to experts_url
   end
 
   private

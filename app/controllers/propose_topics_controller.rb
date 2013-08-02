@@ -26,28 +26,20 @@ class ProposeTopicsController < ApplicationController
   def create
     @propose_topic = ProposeTopic.new(propose_topic_params)
 
-    respond_to do |format|
-      if @propose_topic.save
-        format.html { redirect_to @propose_topic, notice: 'Propose topic was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @propose_topic }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @propose_topic.errors, status: :unprocessable_entity }
-      end
+    if @propose_topic.save
+      redirect_to @propose_topic, notice: 'Propose topic was successfully created.'
+    else
+      render action: 'new'
     end
   end
 
   # PATCH/PUT /propose_topics/1
   # PATCH/PUT /propose_topics/1.json
   def update
-    respond_to do |format|
-      if @propose_topic.update(propose_topic_params)
-        format.html { redirect_to @propose_topic, notice: 'Propose topic was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @propose_topic.errors, status: :unprocessable_entity }
-      end
+    if @propose_topic.update(propose_topic_params)
+      redirect_to @propose_topic, notice: 'Propose topic was successfully updated.'
+    else
+      render action: 'edit'
     end
   end
 
@@ -55,10 +47,7 @@ class ProposeTopicsController < ApplicationController
   # DELETE /propose_topics/1.json
   def destroy
     @propose_topic.destroy
-    respond_to do |format|
-      format.html { redirect_to propose_topics_url }
-      format.json { head :no_content }
-    end
+    redirect_to propose_topics_url
   end
 
   private

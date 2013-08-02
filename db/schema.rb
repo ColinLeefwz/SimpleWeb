@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20130725085738) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_url",   default: "default.png"
+    t.string   "image_url"
   end
 
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
