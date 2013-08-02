@@ -109,6 +109,28 @@ class Shop
     end    
     self.update_attribute(:del,1)
   end
+
+  #合并到另一个地点中
+  #合并步骤：１，　先合并签到，　２，合并聊天室发图，　３合并坐标，　４，删除当前商家
+  #
+  def merge_to(sid)
+    to_shop = Shop.find(sid)
+    #合并签到
+    Checkin.where(sid: self.id).each{|checkin|  checkin.set(:sid, to_shop.id)}
+    #合并聊天室发图
+    Photo.where({room: self.id}).each{|photo| photo.set(:room, to_shop.id)}
+
+    #３合并坐标
+    to_lo = to_shop.lo.to_a
+    to_lo = [to_lo] if to_lo.first.is_a?(Float)
+    from_lo = self.lo
+    from_lo = [from_lo] if from_lo.first.is_a?(Float)
+    to_shop.lo = (to_lo + from_lo).uniq
+    to_shop.save
+
+    #删除当前商家
+    Del.insert(self)
+  end
   
   #彻底删除商家
   def del_test_shop

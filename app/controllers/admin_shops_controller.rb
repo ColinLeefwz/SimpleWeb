@@ -120,6 +120,20 @@ class AdminShopsController < ApplicationController
     @shop = Shop.find_primary(params[:id])
   end
 
+  def get_shop
+    shop = Shop.find_by_id(params[:id])
+    if shop
+      hash = shop.attributes
+      hash= hash.keep_if{|k,v| k.in?(params[:back])} if !params[:back].blank?
+    else
+      hash= ''
+    end
+    respond_to do |format|
+      format.html{render(:text => hash)}
+      format.json{render(:json => hash)}
+    end
+  end
+
   def near
     @shop = Shop.find(params[:id])
     if ENV["RAILS_ENV"] == "production"
@@ -280,6 +294,12 @@ class AdminShopsController < ApplicationController
       expire_cache_shop(@shop.id)
       redirect_to :action => "show", :id => @shop.id
     end
+  end
+
+  def merge_to
+    shop= Shop.find(params[:id])
+    shop.merge_to(params[:mid])
+    redirect_to params[:back_to]
   end
 
   private
