@@ -40,6 +40,12 @@ class AdminUserAddShopsController < ApplicationController
     end
   end
 
+  def des
+    shop = Shop.find(params[:id])
+    re = shop.destory_custom? ? shop.del_test_shop : nil
+    render :json => re
+  end
+
   #  def baidu_map
   #    @shop = Shop.find(params[:id])
   #  end
