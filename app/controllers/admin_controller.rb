@@ -3,7 +3,7 @@ class AdminController < ApplicationController
   before_action :set_expert, only: [:expert_show, :expert_edit, :expert_update, :expert_destroy]
   before_action :check, except: [:sign_in, :authorize]
 
-  def index 
+  def index
   end
 
 
@@ -18,7 +18,7 @@ class AdminController < ApplicationController
 	else
 		redirect_to sign_in_admin_index_path
 	end
-  end 
+  end
 
 
   def sign_in
@@ -48,7 +48,7 @@ class AdminController < ApplicationController
 	if @session.save
 	  redirect_to session_admin_index_path(@session)
 	else
-	  render action: 'session_new' 
+	  render action: 'session_new'
 	end
   end
 
@@ -57,14 +57,14 @@ class AdminController < ApplicationController
 	if @session.update(session_params)
 	  redirect_to session_admin_index_path(@session)
 	else
-	  render action: 'session_edit' 
+	  render action: 'session_edit'
 	end
   end
 
 
   def session_destroy
     @session.destroy
-	redirect_to sessions_admin_index_path
+		redirect_to sessions_admin_index_path
   end
 
 
@@ -96,7 +96,7 @@ class AdminController < ApplicationController
   end
 
 
-  def expert_update 
+  def expert_update
 	if @expert.update(expert_params)
 	  redirect_to expert_admin_index_path(@expert)
 	else
