@@ -175,9 +175,9 @@ class User
   
   def head_logo_hash
     if head_logo_id.nil?
-      {:logo => "", :logo_thumb => "", :logo_thumb2 => ""}
+      {:logo => "", :logo_thumb => "", :logo_thumb2 => "", :logoid => "" }
     else
-      {:logo => UserLogo.img_url(head_logo_id), 
+      {:logo => UserLogo.img_url(head_logo_id), :logoid => head_logo_id, 
         :logo_thumb => UserLogo.img_url(head_logo_id, :t1), 
         :logo_thumb2 => UserLogo.img_url(head_logo_id, :t2)}
     end
