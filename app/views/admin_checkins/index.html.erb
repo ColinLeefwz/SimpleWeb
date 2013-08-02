@@ -23,6 +23,7 @@
 
 <table border="1">
   <tr>
+    <th>ID</th>	  
     <th>时间</th>
     <th>用户</th>
     <th>商家</th>
@@ -30,13 +31,15 @@
     <th>bssid</th>
     <th>排名</th>
     <th>误差</th>
+    <th>百度</th>	
     <th></th>
     <th></th>
   </tr>
 
   <% @checkins.each do |checkin| %>
     <tr>
-      <td><%= checkin.cat.strftime("%Y-%m-%d %H:%M:%S")%></td>
+      <td><%= checkin.id %></td>		
+      <td><%= checkin.cat.strftime("%m-%d %H:%M:%S")%></td>
       <td><%=link_to checkin.uid, "/admin_users/show?id=#{checkin.uid}" %> , <%=link_to checkin.user.name, "/admin_users/show?id=#{checkin.uid}" %> </td>
       <td><%=link_to checkin.sid, "/admin_shops/show?id=#{checkin.sid}" %> ,
         <%=link_to checkin.shop.try(:name), "/admin_shops/show?id=#{checkin.sid}" %>,
@@ -46,6 +49,7 @@
       <td><%= checkin.bssid %></td>
       <td><%= checkin.od.to_i %></td>
       <td><%= checkin.acc %></td>
+      <td><%= checkin.bd %></td>
       <td>
         <%= (link_to '绑定wifi', '#', :onclick => "ajaxbind($(this), '#{checkin.id}');")  unless CheckinBssidStat.bind?(checkin.bssid)  %>
         </td>
