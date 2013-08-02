@@ -5,7 +5,7 @@ module SearchScore
   def find_shops(loc,accuracy,uid,bssid=nil,debug=false)
     radius = get_radius(accuracy)
     limit = 100
-    hash = {lo:{"$near" =>loc,"$maxDistance"=>radius}}
+    hash = {lo:{"$near" =>loc,"$maxDistance"=>radius}, del:{"$exists" => false}}
     if bssid
       b = CheckinBssidStat.find_by_id(bssid)
       #TODO: 不查询CheckinBssidStat
@@ -13,10 +13,10 @@ module SearchScore
       shopids << b.shop_id if b && b.shop_id && !shopids.find{|x| x.to_i==b.shop_id.to_i}
       hash["_id"] = {"$nin" => shopids} if shopids.size>0
       if b && b.shop_id
-        limit = 20
+        limit = 30
       else
         limit = 100 - shopids.size*5
-        limit = 30 if limit<30
+        limit = 50 if limit<50
       end
     end
     arr = Shop.where(hash).limit(limit).to_a
@@ -47,7 +47,7 @@ module SearchScore
     min_d = score[0][1]
     score.reject!{|s| (s[0]["t"]==0 && s[0]["del"]) } #过期的活动
     if score.length>10
-      score.reject!{|s| s[0]["del"] && !owner?(s,uid) }
+      #score.reject!{|s| s[0]["del"] && !owner?(s,uid) }
     end
     if score.length>5
       score = score[0,6]+score[6..-1].reject{|s| bad?(s) && !owner?(s,uid) }
