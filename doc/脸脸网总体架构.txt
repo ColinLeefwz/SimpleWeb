@@ -77,7 +77,7 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 6. 百度经纬度纠偏数据，见migrate_baiduoffset.rb。
 6. Rails框架的session数据
 7. 每个城市分性别最新用户签到有序集合："HOT#{x}U#{self.city}"。用于热点用户列表展示。
-8. 每个Wifi签到过的商家id的集合，"BSSID#{bssid}", 用于定位时提供可选商家。
+8. 每个Wifi签到过的商家id的集合，"BSSID#{bssid}", 用于定位时提供可选商家，类型为zset，score为签到的次数。
 9. 每个城市有活跃优惠券的商家，“ACS#{city}”
 10. 每个城市有问答系统的商家，“FaqS#{city}”
 11. 每个用户的好友的集合，“Frd#{uid}”, 类型为zset, 排序值为加入的顺序。
