@@ -4,19 +4,14 @@ module SearchScore
 
   def find_shops(loc,accuracy,uid,bssid=nil,debug=false)
     radius = get_radius(accuracy)
-    limit = 100
+    limit = 80
     hash = {lo:{"$near" =>loc,"$maxDistance"=>radius}, del:{"$exists" => false}}
-    if false && bssid
-      b = CheckinBssidStat.find_by_id(bssid)
-      #TODO: 不查询CheckinBssidStat
-      shopids = $redis.smembers("BSSID#{bssid}")
-      shopids << b.shop_id if b && b.shop_id && !shopids.find{|x| x.to_i==b.shop_id.to_i}
-      hash["_id"] = {"$nin" => shopids} if shopids.size>0
-      if b && b.shop_id
-        limit = 30
-      else
-        limit = 100 - shopids.size*5
-        limit = 50 if limit<50
+    if bssid && bssid.size>10
+      shopids = $redis.zrange("BSSID#{_id}",0,-1).map {|x| x.to_i}
+      if shopids && shopids.size>0
+        hash["_id"] = {"$nin" => shopids}
+        limit = 80 - shopids.size*5
+        limit = 40 if limit<40
       end
     end
     arr = Shop.where(hash).limit(limit).to_a
@@ -27,7 +22,7 @@ module SearchScore
         arr << shop if shop && min_distance(shop,loc)<1500
       end
     end
-    if arr.length>=3
+    if arr.length>=4
       return sort_with_score(arr,loc,accuracy,uid,bssid,debug)
     else
       arr = Shop.where({lo:{"$near" =>loc}}).limit(10).to_a
@@ -64,7 +59,7 @@ module SearchScore
         shop_history_score(xx,x,uid.to_s) unless bssid #没有wifi时，要更依赖历史推荐
       end
     end
-    bssid_score(score,bssid) if bssid
+    bssid_score(score,bssid) if bssid && bssid.size>10
     realtime_score(score)
     content_score(score)
     score.each_with_index do |xx,i|
@@ -143,20 +138,7 @@ module SearchScore
 
   #对用WIFI定位的加权
   def bssid_score(score,bssid)
-    return
-    b = CheckinBssidStat.find_by_id(bssid)
-    unless b.nil?
-      score.each_with_index do |xx,i|
-        xx[2] -= 300 if xx[0]["_id"]==b.shop_id
-        bshop = b.shops.find{|shop| shop["id"]==xx[0]["_id"]}
-        next if bshop.nil?
-        if b.shop_id
-          xx[2] -= (50/b.shops.size+(bshop["users"].size-1)*5)
-        else
-          xx[2] -= (50/b.shops.size+(bshop["users"].size)*20)
-        end
-      end
-    end
+    #TODO: 对用WIFI定位的加权
   end  
   
   #对用户在商家的历史访问加权
