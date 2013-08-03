@@ -6,7 +6,7 @@ class CheckinBssidStat
   #field :shops, type:Array #{id:商家id,users:[用户id,...]}, 使用该bssid签到的商家及其用户
   field :shop_id, type:Integer #实际所属商家
   field :mobile, type:Boolean #是否是可移动的WIFI
-
+  
   #bssid 是否绑定
   def self.bind?(bssid)
     return unless (ckt =CheckinBssidStat.find_by_id(bssid))
@@ -72,6 +72,8 @@ class CheckinBssidStat
   def self.init_bssid_redis
     Checkin.where({bssid:{"$exists" => true}}).each do |ck|
       next if ck.del
+      next if is_kx_user?(ck.uid)
+      next if ck.sid && $fake_shops.find{|id| ck.sid.to_i == id.to_i}
       add_bssid_redis(ck["bssid"],ck["sid"])
     end
   end
