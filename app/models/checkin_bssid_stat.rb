@@ -19,16 +19,21 @@ class CheckinBssidStat
   
   def self.insert(bssid,sid,uid,ssid)
     return if bssid.nil? || bssid.size<10
+    return if is_mobile_wifi_0(bssid,ssid)
     b = CheckinBssidStat.find_by_id(bssid)
     return if b && b.mobile
     if b.nil?
       b = CheckinBssidStat.new
       b._id = bssid
       b.ssid = ssid
-      b.mobile = true if b.is_mobile_wifi
       b.save!
     end
     add_bssid_redis(bssid,sid)
+    if b.is_mobile_wifi
+      Xmpp.error_nofity("发现移动wifi：#{ssid},#{bssid}, 签到商家个数#{b.shop_ids.size}")
+      b.set(:mobile, true)
+      $redis.del("BSSID#{bssid}")
+    end
   end
   
   def is_mobile_wifi
@@ -38,8 +43,12 @@ class CheckinBssidStat
   
   def is_mobile_wifi_0(bssid,ssid)
     return true if bssid[0,10]=="78:52:62:7" #贝尔tr958上网伴侣移动3G无线路由器
-    return true if ssid=="AndroidAp" || ssid=="CMCC" || ssid=="ChinaUnicom"
-    return true if bssid[0,8]=="ChinaNet"
+    return false unless ssid
+    return true if ssid=="AndroidAp" || ssid=="ChinaUnicom"
+    return true if ssid[0,8]=="ChinaNet"
+    return true if ssid[0,4]=="CMCC"
+    return true if ssid[0,10]=="MobileWiFi"
+    return true if ssid =~ /PocketAP/
     return false
   end
   
@@ -63,6 +72,7 @@ class CheckinBssidStat
   
   def shop_distance_large_than(distance)
     ss = shops
+    return false if ss.size<2
     ss.each_with_index do |x,i| 
       return true if x.shop_distance(ss[i-1])>distance
     end
@@ -71,6 +81,7 @@ class CheckinBssidStat
   
   def self.init_bssid_redis
     Checkin.where({bssid:{"$exists" => true}}).each do |ck|
+      next if ck["bssid"].nil? || ck["bssid"].size<10
       next if ck.del
       next if is_kx_user?(ck.uid)
       next if ck.sid && $fake_shops.find{|id| ck.sid.to_i == id.to_i}
@@ -84,14 +95,16 @@ class CheckinBssidStat
   end  
   
   def self.init_mobile_flag
+    arr = []
     CheckinBssidStat.where({"mobile" => {"$ne" => true}}).each do |cbs|
       if cbs.is_mobile_wifi
-        puts cbs.to_json
+        arr << cbs
         cbs.set(:mobile, true) 
       end
     end
-    ""
+    arr
   end
+
   
 end
 
