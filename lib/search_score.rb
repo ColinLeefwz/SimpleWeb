@@ -6,7 +6,7 @@ module SearchScore
     radius = get_radius(accuracy)
     limit = 100
     hash = {lo:{"$near" =>loc,"$maxDistance"=>radius}, del:{"$exists" => false}}
-    if bssid
+    if false && bssid
       b = CheckinBssidStat.find_by_id(bssid)
       #TODO: 不查询CheckinBssidStat
       shopids = $redis.smembers("BSSID#{bssid}")
@@ -143,6 +143,7 @@ module SearchScore
 
   #对用WIFI定位的加权
   def bssid_score(score,bssid)
+    return
     b = CheckinBssidStat.find_by_id(bssid)
     unless b.nil?
       score.each_with_index do |xx,i|

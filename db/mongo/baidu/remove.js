@@ -294,6 +294,7 @@ db.shops.remove({name:/烟行$/})
 db.shops.remove({name:/服务$/})
 db.shops.remove({name:/装饰设计$/})
 db.shops.remove({name:/美甲/})
+db.shops.update({name:/网吧$/},{$unset:{t:1}},false,true)
 
 
 db.shops.find({name:/鞋业/})
