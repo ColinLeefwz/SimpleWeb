@@ -38,13 +38,7 @@ class AroundmeController < ApplicationController
     arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
     record_gps(lo, gps, wifi)
     if is_kx_user?(session[:user_id])
-      arr << Shop.find_by_id(21830784)
-      arr << Shop.find_by_id(21830785)
-      arr << Shop.find_by_id(21830326)
-      arr << Shop.find_by_id($llcf)
-      arr << Shop.find_by_id($llsc)
-      arr << Shop.find_by_id(21830231) #延安路•紫微大街 
-      arr << Shop.find_by_id(21834274)
+      $fake_shops.each {|id| arr << Shop.find_by_id(id)}
     end
     if session_user #本人加入的群定位时总是出现
       if Rails.cache.read("PHONEREG#{session_user.id}")
