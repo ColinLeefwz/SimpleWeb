@@ -9,7 +9,7 @@ class Shop
   include Gps
   include SearchScore
   include Mongoid::Document
-  store_in({:database => "shop"})
+  store_in({:database => "shop"}) if Rails.env != "test"
   
   extend Similarity
   extend GpsOffset
