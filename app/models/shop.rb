@@ -9,6 +9,8 @@ class Shop
   include Gps
   include SearchScore
   include Mongoid::Document
+  store_in({:database => "shop"})
+  
   extend Similarity
   extend GpsOffset
   attr_accessor :lob
