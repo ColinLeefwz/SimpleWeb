@@ -41,7 +41,7 @@ class CheckinBssidStat
     return shop_distance_large_than(3000) #同一wifi签到的点，距离超过3000米
   end
   
-  def is_mobile_wifi_0(bssid,ssid)
+  def self.is_mobile_wifi_0(bssid,ssid)
     return true if bssid[0,10]=="78:52:62:7" #贝尔tr958上网伴侣移动3G无线路由器
     return false unless ssid
     return true if ssid=="AndroidAp" || ssid=="ChinaUnicom"
@@ -50,6 +50,10 @@ class CheckinBssidStat
     return true if ssid[0,10]=="MobileWiFi"
     return true if ssid =~ /PocketAP/
     return false
+  end
+  
+  def is_mobile_wifi_0(bssid,ssid)
+    CheckinBssidStat.is_mobile_wifi_0(bssid,ssid)
   end
   
   def shop_ids
