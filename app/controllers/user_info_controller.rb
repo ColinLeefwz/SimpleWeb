@@ -53,6 +53,7 @@ class UserInfoController < ApplicationController
     render :json => ret.to_json    
   end
   
+  #deprecate
   def logo
     begin
       if session[:user_id].to_s == params[:id]

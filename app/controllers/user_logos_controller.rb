@@ -73,6 +73,7 @@ class UserLogosController < ApplicationController
     end
   end
   
+  #deprecate
   def show
     if params[:size].to_i==0
       redirect_to UserLogo.img_url(params[:id])

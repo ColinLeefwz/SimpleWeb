@@ -34,7 +34,7 @@ class SinaFriend
     SinaUser.where({fetched:{"$ne" => true}}).each do |su|
       insert_ids(su.id,token)
       su.update_attribute(:fetched, true)
-      sleep(0.9)
+      sleep(10*Os.cur_load)
     end
   end
 
