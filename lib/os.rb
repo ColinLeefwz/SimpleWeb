@@ -17,14 +17,13 @@ Mlocked:               0 kB 12
 SwapTotal:             0 kB 13
 =end
   
-  def self.overload?(load_factor=nil)
-    if load_factor.nil?
-      load = `nproc`.to_i
-    else
-      load = `nproc`.to_i * load_factor
-    end
-    curload = `cat /proc/loadavg`.split(" ")[0].to_f
-    curload > load
+  def self.overload?(load_factor=1)
+    load = `nproc`.to_i * load_factor
+    cur_load > load
+  end
+  
+  def self.cur_load
+    `cat /proc/loadavg`.split(" ")[0].to_f
   end
 
   # Active / Cached / MemFree / SwapTotal in MB
