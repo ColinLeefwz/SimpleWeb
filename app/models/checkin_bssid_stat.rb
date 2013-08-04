@@ -26,7 +26,7 @@ class CheckinBssidStat
       b = CheckinBssidStat.new
       b._id = bssid
       b.ssid = ssid
-      b.save!
+      b.save
     end
     add_bssid_redis(bssid,sid)
     if b.is_mobile_wifi
