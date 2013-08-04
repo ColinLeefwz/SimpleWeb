@@ -4,7 +4,7 @@ class SinaFriend
   Logger = Logger.new('log/weibo/sina_friend.log', 0, 100 * 1024 * 1024)
   
   include Mongoid::Document
-  store_in({:database => "sina"})
+  store_in({:database => "sina"})  if Rails.env != "test"
   
   
   field :_id, type: String
