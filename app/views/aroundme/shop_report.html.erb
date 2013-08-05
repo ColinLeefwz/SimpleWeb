@@ -18,7 +18,7 @@
       function ajaxReport(uid){
         type = $('#radio_button').val()
         des = $('#des').val();
-        if(des=='要不要纠正一下呢'){
+        if(des=='要不要说明一下呢'){
           des=''
         }
         if(type!=''){
@@ -33,6 +33,7 @@
       }
       function hidReport(){
         $('#dig').hide();
+		$("a[name='radio_bad']").removeClass("radios2");
       }
       $(document).ready(function(){
         $("a[name='radio_bad']").click(function(){
@@ -81,10 +82,10 @@
     <div class="con2">
       <div class="set">
           <% @shops.each do |shop| %>
-                      <div class="shop" id="shop<%=shop[1]%>">
-                        <span class="shopName"> <%= shop[0]  %>  </span>
-                        <span class="ff" onclick ="showDig('<%=shop[1] %>')" > 报错  </span>
-                      </div>
+			  <div class="shop" id="shop<%=shop[1]%>">
+				<span class="shopName"> <%= shop[0]  %>  </span>
+				<span class="ff" onclick ="showDig('<%=shop[1] %>')" > 报错  </span>
+			  </div>
           <% end %>
       </div>
     </div>
