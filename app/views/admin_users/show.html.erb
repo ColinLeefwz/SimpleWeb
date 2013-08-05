@@ -1,100 +1,99 @@
-<h1>用户详情</h1>
-<p>
-  <b>头像:</b>
-  <br/>
-  <%=image_tag @user.head_logo.try(:img) %>
-</p>
+<link href="/admin/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+<h3 style="text-align:center;">用户详情</h3><br>
+<div class="container-fluid">
+        <div class="offset1 span12">
+            <div class="row-fluid">
+              <div class="span4">
+              <%=image_tag @user.head_logo.try(:img), size:"250x250" %>
+                <h5>用户名:&nbsp;&nbsp;<%= to_emoji @user.name %><br></h5> 
+              <h5>用户id:&nbsp;&nbsp;<%= @user.id %><br></h5><br>
+                <<< <%= link_to '返回用户列表',request.env["HTTP_REFERER"] if request && request.env %>
+              </div>
+              <div class="span3">
+               
+                <h5>密码:&nbsp;&nbsp;<%= @user.password %><br></h5>
+                <h5>wb_uid:&nbsp;&nbsp;<%=link_to(@user.wb_uid.to_s, @user.weibo_home, :target => '_blank') %><br></h5>
+                <h5>性别:&nbsp;&nbsp;<%= @user.show_gender %><br></h5>
+                <h5>生日:&nbsp;&nbsp;<%= @user.birthday %><br></h5>
+                <h5>invisible:&nbsp;&nbsp;<%= @user.invisible %><br></h5>
+                <h5>signature:&nbsp;&nbsp;<%= @user.signature %><br></h5>
+                <h5>job:&nbsp;&nbsp;<%= @user.job %><br></h5>
+                <h5>jobtype:&nbsp;&nbsp;<%= @user.jobtype %><br></h5>
+                <h5>脸脸版本:&nbsp;&nbsp;<%= @user.ver %><br></h5>
+                <h5>os:&nbsp;&nbsp;<%= @user.os %><br></h5>
+                <h5>头像数:&nbsp;&nbsp;<%=link_to @user.user_logos.size, "/admin_users/logos?id=#{@user.id}" %><br></h5>
+              
+              </div>
+              <div class="span4">
+                
+                
+                <h5>签到:&nbsp;&nbsp;<%=link_to "查看", "/admin_checkins?uid=#{@user.id}" %><br></h5>
+                <h5>关注:&nbsp;&nbsp;<%=link_to "查看", "/admin_users/follows?user_id=#{@user.id}" %><br></h5>
+                <h5>黑名单:&nbsp;&nbsp;<%=link_to "查看", "/admin_users/blacks?user_id=#{@user.id}" %><br></h5>
+                <h5>用户照片:&nbsp;&nbsp;<%=link_to "查看", "/admin_shop_photos?user_id=#{@user.id}" %><br></h5>
+                <h5>优惠券下载:&nbsp;&nbsp;<%=link_to "查看", "/admin_coupon_reports?uid=#{@user.id}" %><br></h5>
+                <h5>聊天记录:&nbsp;&nbsp;<%=link_to "查看", "/admin_users/chat?id=#{@user.id}" %><br></h5><br>
+                <h5>头像提醒/屏蔽:&nbsp;&nbsp;
+                <%= button_to "发送提醒文案", {:onclick => "return prompt($(this))"}%>
+                <%= button_to "发送屏蔽文案", {:onclick => "return warn($(this))"}%>
 
-<p>
-  <b>用户:</b>
-  <%=to_emoji @user.name %>  <%= @user.id %>
-</p>
-<p>
-  <b>密码:</b>
-  <%= @user.password %>
-</p>
+                </h5>
+                <span><h5>用户封杀:&nbsp;&nbsp;</h5>
+                   <%= button_to(" 封杀",{}, {:onclick => "return kill($(this), {id: '#{@user.id}', name: '#{@user.name}'})"}) unless @user.forbidden? %>
+                   <%= button_to(" 解封",{}, {:onclick => "return unkill($(this), {id: '#{@user.id}',name: '#{@user.name}'})"})  if @user.forbidden? %>
+                </span>
+                
+              <div>
+            </div>
+          </div>
+</div>
 
-<p>
-  <b>wb_uid:</b>
-  <%=link_to(@user.wb_uid.to_s, @user.weibo_home, :target => '_blank') %>
-</p>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script> 
+<script type="text/javascript">
 
-<p>
-  <b>qq:</b>
-  <%= @user.qq %>
-</p>
+  function kill(obj, param){
+    if(confirm("确定封杀么？")){
+      $.get("/admin_users/kill2",param, function() {
+        str = "<input type='submit' value=' 解封\""+ param.name +"\"' onclick='return unkill($(this),"+ JSON.stringify(param) + ")'>"
+        obj.parent().replaceWith(str)
+      });
+    }
+    return false;
+  }
 
+  function unkill(obj, param){
+    if(confirm("确定解封么？")){
+      $.get("/admin_users/unkill",{id: param.id}, function() {
+        str = "<input type='submit' value=\" 封杀'" + param.name + "'\" onclick='return kill($(this), " + JSON.stringify(param) +  ")'>"
+        obj.parent().replaceWith(str)
+      });
+      return false
+    }
+  }
 
-<p>
-  <b>性别:</b>
-  <%= @user.show_gender %>
-</p>
-
-<p>
-  <b>生日:</b>
-  <%= @user.birthday %>
-</p>
-
-
-<p>
-  <b>invisible:</b>
-  <%= @user.invisible %>
-</p>
-<p>
-  <b>signature:</b>
-  <%= @user.signature %>
-</p>
-<p>
-  <b>job:</b>
-  <%= @user.job %>
-</p>
-<p>
-  <b>jobtype:</b>
-  <%= @user.jobtype %>
-</p>
-<p>
-  <b>脸脸版本:</b>
-  <%= @user.ver %>
-</p>
-<p>
-  <b>ios版本:</b>
-  <%= @user.os %>
-</p>
-
-<p>
-  <b>头像数:</b>
-  <%=link_to @user.user_logos.size, "/admin_users/logos?id=#{@user.id}" %>
-</p>
-<p>
-  <b>签到:</b>
-  <%=link_to "查看", "/admin_checkins?uid=#{@user.id}" %>
-</p>
-
-<p>
-  <b>关注:</b>
-  <%=link_to "查看", "/admin_users/follows?user_id=#{@user.id}" %>
-</p>
-
-<p>
-  <b>黑名单:</b>
-  <%=link_to "查看", "/admin_users/blacks?user_id=#{@user.id}" %>
-</p>
-
-<p>
-  <b>用户照片:</b>
-  <%=link_to "查看", "/admin_shop_photos?user_id=#{@user.id}" %>
-</p>
-
-<p>
-  <b>优惠券下载:</b>
-  <%=link_to "查看", "/admin_coupon_reports?uid=#{@user.id}" %>
-</p>
+  function prompt(obj){
+    if(confirm("确定发送？")){
+      $.get("/admin_users/prompt", function() {
+        str = "<input type='submit' value=\'已发送提醒文案\'>"
+        obj.parent().replaceWith(str)
+      });
+      return false
+    }
+  }
 
 
-<p>
-  <b>聊天记录:</b>
-  <%=link_to "查看", "/admin_users/chat?id=#{@user.id}" %>
-</p>
+  function warn(obj){
+    if(confirm("确定发送？")){
+      $.get("/admin_users/warn", function() {
+        str = "<input type='submit' value=\'已发送屏蔽文案\'>"
+        obj.parent().replaceWith(str)
+      });
+      return false
+    }
+  }
 
 
-<%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %>
+</script>
+
+
+
