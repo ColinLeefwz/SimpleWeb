@@ -1,32 +1,34 @@
 #!/bin/bash
 stime=`date +"%Y-%m-%d %H:%M:%S"`
+master=`mongo --quiet  10.132.36.138/dface is_master.js`
+echo $master
 
 cd /mnt/lianlian
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/checkin_day.js
+mongo $master/dface /mnt/lianlian/db/mongo/checkin_day.js
 sleep 1
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/checkin_shop_stat.js
+mongo $master/dface /mnt/lianlian/db/mongo/checkin_shop_stat.js
 sleep 1
-#mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/checkin_ip_stat.js
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/user_day.js
+#mongo $master/dface /mnt/lianlian/db/mongo/checkin_ip_stat.js
+mongo $master/dface /mnt/lianlian/db/mongo/user_day.js
 sleep 1
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/checkin_user_stat.js
+mongo $master/dface /mnt/lianlian/db/mongo/checkin_user_stat.js
 sleep 1
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/checkin_loc_acc.js
+mongo $master/dface /mnt/lianlian/db/mongo/checkin_loc_acc.js
 sleep 1
-#mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/checkin_user_many.js
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/user_city_day.js
+#mongo $master/dface /mnt/lianlian/db/mongo/checkin_user_many.js
+mongo $master/dface /mnt/lianlian/db/mongo/user_city_day.js
 sleep 1
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/coupon_day_stat.js
+mongo $master/dface /mnt/lianlian/db/mongo/coupon_day_stat.js
 sleep 1
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/user_device_stat.js
+mongo $master/dface /mnt/lianlian/db/mongo/user_device_stat.js
 sleep 1
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/photo_day_stat.js
+mongo $master/dface /mnt/lianlian/db/mongo/photo_day_stat.js
 sleep 1
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/user_day_active.js
+mongo $master/dface /mnt/lianlian/db/mongo/user_day_active.js
 sleep 1
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/activity_shop_day_stat.js
+mongo $master/dface /mnt/lianlian/db/mongo/activity_shop_day_stat.js
 sleep 1
-mongo 10.132.36.138/dface /mnt/lianlian/db/mongo/shop_day_total_stat.js
+mongo $master/dface /mnt/lianlian/db/mongo/shop_day_total_stat.js
 sleep 10
 
 /mnt/.rvm/bin/ruby script/rails r  'Checkin.clear_yesterday_redis'
