@@ -83,7 +83,7 @@ class AdminUsersController < ApplicationController
   end
   
   def kill
-    user = User.find(params[:id])
+    user = User.find_by_id(params[:id])
     user_black = UserBlack.find(params[:ubid])
     user_black.update_attribute(:flag, true)
     user.kill
@@ -91,17 +91,27 @@ class AdminUsersController < ApplicationController
   end
 
   def kill2
-    user = User.find(params[:id])
+    user = User.find_by_id(params[:id])
     user.kill
     render :text => "ok"
   end
   
   def unkill
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
     @user.password=Digest::SHA1.hexdigest(":dface#{@user.wb_uid}")[0,16]
     @user.head_logo_id=@user["logo_backup"]
     @user.save!
     render :text => "ok"
+  end
+
+  def prompt
+    @user = find_by_id(params[:id])
+    @user.prompt
+  end
+
+  def warn
+    @user = find_by_id(params[:id])
+    @user.warn2
   end
 
 end
