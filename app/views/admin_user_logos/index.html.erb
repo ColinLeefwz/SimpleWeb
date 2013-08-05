@@ -16,12 +16,9 @@
 <% @users.each do |user| %>
    <div class="box photo col">
       <a id="imgt2" href="<%= UserLogo.img_url(user.head_logo_id,:t2) %>" title="<%= user._id %>"><%= image_tag(UserLogo.img_url(user.head_logo_id,:t1), :size => "120x120") if user.head_logo_id%></a>
-      <div class="button"><%= button_to "查看", "/admin_users/show?id=#{user.id}"%></div>
-      <div class="button"><%= button_to "提示"%></div>
-      <div class="button">
-        <%= button_to(" 封杀",{}, {:onclick => "return kill($(this), {id: '#{user.id}', name: '#{user.name}'})"}) unless user.forbidden? %>
-        <%= button_to(" 解封",{}, {:onclick => "return unkill($(this), {id: '#{user.id}',name: '#{user.name}'})"})  if user.forbidden? %>
-      </div>
+      
+      <div class="button"><%= link_to "查看", "/admin_users/show?id=#{user.id}",target: "_blank"%></div>
+      
    </div>
 <% end %>
   
@@ -80,26 +77,6 @@ $('#container').infinitescroll({
   });
   
 });
-
-  function kill(obj, param){
-    if(confirm("确定封杀么？")){
-      $.get("/admin_users/kill2",param, function() {
-        str = "<input type='submit' value=' 解封\""+ param.name +"\"' onclick='return unkill($(this),"+ JSON.stringify(param) + ")'>"
-        obj.parent().replaceWith(str)
-      });
-    }
-    return false;
-  }
-
-  function unkill(obj, param){
-    if(confirm("确定解封么？")){
-      $.get("/admin_users/unkill",{id: param.id}, function() {
-        str = "<input type='submit' value=\" 封杀'" + param.name + "'\" onclick='return kill($(this), " + JSON.stringify(param) +  ")'>"
-        obj.parent().replaceWith(str)
-      });
-      return false
-    }
-  }
 
 
 </script>
