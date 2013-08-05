@@ -15,27 +15,25 @@ function imgUploadPreview(select, divid){
         
         try{
             var divObj = document.getElementById(divid)
-            if (navigator.userAgent.indexOf("Firefox") > -1 || navigator.userAgent.indexOf("Chrome")>-1) {
+            if(navigator.userAgent.indexOf("MSIE") > -1&& (navigator.userAgent.indexOf("MSIE 7.0") > -1 || navigator.userAgent.indexOf("MSIE 8.0") > -1)  ){
+                this.select();
+                path = document.selection.createRange().text;
+                divObj.innerHTML = "<img id='preview_size_fake" + "' src='"+
+                "' style='display:none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);visibility:hidden;position: absolute;'/>";
+                divObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);";
+                divObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = path;
+            }
+            else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
+                divObj.innerHTML = "<img id='image_view' style='height: 197px; width: 194px' />";
+                var imageView = document.getElementById("image_view");
+                imageView.src = $(this).val();
+            }
+            else{
                 divObj.innerHTML = "<img id='image_view' style='height: 197px; width: 194px' />";
                 imageView = document.getElementById("image_view");
                 imageView.src = window.URL.createObjectURL(this.files[0]);
             }
-            else{
-                if (navigator.userAgent.indexOf("MSIE 6.0") == -1 && navigator.userAgent.indexOf("MSIE") > -1){
-                    this.select();
-                    path = document.selection.createRange().text;
-                    divObj.innerHTML = "<img id='preview_size_fake" + "' src='"+
-                    "' style='display:none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);visibility:hidden;position: absolute;'/>";
-                    divObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);";
-                    divObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = path;
-                }
-                else
-                {
-                    divObj.innerHTML = "<img id='image_view' style='height: 197px; width: 194px' />";
-                    var imageView = document.getElementById("image_view");
-                    imageView.src = $(this).val();
-                }
-            }
+
         }catch (e) {
             alert("游览器不支持预览图片")
         }
