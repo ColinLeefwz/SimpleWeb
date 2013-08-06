@@ -108,7 +108,7 @@ var sync_to_shops = function(){
     })
 }
 
-checkinShopStat(1000);
+checkinShopStat(1);
 //sync_to_shops(); //将计算获得的商家用户统计数据写回商家表，以方便按用户数排序。
 
 
