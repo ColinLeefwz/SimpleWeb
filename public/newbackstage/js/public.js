@@ -8,6 +8,7 @@ $(document).ready(function(){
 	
 	ua=navigator.userAgent;
 	//ua="ipad";
+	alert(ua);
 	
 	if(documentHeight<=windowHeight){
 		$("#Nav").css("height",windowHeight+"px");
