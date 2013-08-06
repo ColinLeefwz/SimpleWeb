@@ -15,13 +15,4 @@ class ShopBan
     Shop.find_by_id(self._id)
   end
 
-  def self.find2(sid)
-    begin
-      self.find(sid)
-    rescue
-      nil
-    end
-  end
-
-
 end
