@@ -1,6 +1,6 @@
 /* CSS Document */
 *{padding:0px;margin:0px;outline:none;}
-body {font-size: 12px;background:#F2F2F2;font-family:Arial;position:relative;}
+body {font-size: 12px;font-family:Arial;position:relative;background:#F2F2F2 url(../images/bg1.png) left top repeat-x;}
 a{text-decoration:none;}
 img{border:none;}
 ul,ol{list-style:none;}
@@ -66,7 +66,7 @@ ul,ol{list-style:none;}
 .title2 a:hover{color:#369BFF;}
 
 .title3{width:100%;overflow:hidden;clear:both;margin-top:92px;}
-.title3 h2{font-size:18px;color:#2898C4;text-shadow:0 1px 1px #FFFFFF;width:180px;height:20px;text-overflow:ellipsis;display:block;margin: 0 auto;}
+.title3 h2{font-size:18px;color:#2898C4;text-shadow:0 1px 1px #FFFFFF;width:180px;height:20px;text-overflow:ellipsis;display:block;margin: 0 auto;font-family:Arial;}
 
 
 .checkboxs1{width:105px;position:absolute;left:10px;top:440px;display:block;padding:5px 0px;cursor:pointer;}
@@ -99,7 +99,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .main{width:100%;zoom:1;}
 
 .header{background:url(../images/bg1.png) left top repeat-x;width:100%;overflow:hidden;}
-.header .sign{position:absolute;left:0px;top:0px;cursor:pointer;}
+.header .sign{width:61px;height:50px;position:absolute;left:0px;top:0px;cursor:pointer;background:url(../images/line.png) left top no-repeat;}
 .headercon{width:830px;height:50px;position:relative;margin:0px auto;}
 .headercon .toptitle{width:100%;position:absolute;height:50px;line-height:50px;color:#fff;text-align:center;background:transparent url(../images/bg1.png) left top repeat-x;z-index:20;}
 .headercon .logo{position:absolute;top:0px;right:0px;z-index:20;cursor:pointer;}
@@ -115,7 +115,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .con{width:830px;clear:both;margin:50px auto 40px auto;zoom:1;overflow:hidden;}
 
 #LinkBox{width:158px;border:1px solid #C4C4C4;position:absolute;background-color:#fff;line-height:25px;top:80px;left:725px;border-radius:4px;box-shadow:0 5px 7px rgba(0,0,0,0.15);z-index:15;display:none;}
-#LinkBox a.links1{background:url(../images/sign14.png) 12px center no-repeat;padding:7px 7px 7px 37px;border-bottom:1px solid #c4c4c4;display:block;color:#333;cursor:pointer;}
+#LinkBox a.links1{background:url(../images/sign16.png) 12px center no-repeat;padding:7px 7px 7px 37px;border-bottom:1px solid #c4c4c4;display:block;color:#333;cursor:pointer;}
 #LinkBox a.links2{background:url(../images/sign15.png) 12px center no-repeat;padding:7px 7px 7px 37px;display:block;color:#333;}
 #LinkBox a:hover{background-color:#FEE188;cursor:pointer;}
 #LinkBox .linkarrow{background:url(../images/sign13.png) top left no-repeat;width:13px;height:6px;position:absolute;top:-6px;left:50%;margin-left:-6px;}
@@ -229,7 +229,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .phone .imgbox img{margin:0px 2px;}
 .phone .qa{width:244px;height:260px;margin:0px auto;overflow:hidden;}
 .phone #QAC{width:244px;height:250px;overflow-y :scroll;padding-right:18px;}
-.phone .mes{border-radius:8px;font-size:12px;line-height:20px;width:175px;margin:8px auto 8px 18px;color:#fff;background:#C5CBD0 url(../images/sign7.png) 5px 5px no-repeat;padding:3px 0px 3px 27px;text-align:left;}
+.phone .mes{border-radius:8px;font-size:12px;line-height:20px;width:146px;margin:8px auto 8px 42px;color:#fff;background:#C5CBD0 url(../images/sign7.png) 5px 5px no-repeat;padding:3px 0px 3px 27px;text-align:left;}
 .phone .shopanswer{width:210px;position:relative;padding:8px 0px 8px 2px;margin-left:4px;}
 .phone .shopanswer img.head{position:absolute;width:28px;height:28px;left:0px;bottom:6px;}
 .phone .shopanswer .cons{margin-left:36px;border:1px solid #E4E3E3;border-radius:6px;text-align:left;background-color:#FFFCFA;color:#333;position:relative;padding:8px;}
