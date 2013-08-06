@@ -2,7 +2,7 @@
 <div id="Notice" class="notice"><%= notice %></div>
 
 <div id="Sele" style="height: 250px;width: 670px;margin-top: 40px;margin-left: 10px;">
-  <div class="l"><center><a onclick = "imgText()" class="pointer">
+  <div class="l"><center><a onclick = "imgText()" class="pointer" id="img_text">
         <img src="../images/pic7.jpg" /><br/>图文模式</a></center></div>
   <div class="r"><center><a onclick = "allText()" class="pointer">
         <img src="../images/pic8.jpg" /><br/>全图模式</a></center></div>
@@ -11,6 +11,9 @@
 
 <script type="text/javascript">
   LeftMenu("6");
+  $(document).ready(function(){
+    $("#img_text").click()
+  })
   function imgText(){
     $('#couponForm').show();
     $('#Sele').remove();
