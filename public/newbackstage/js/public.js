@@ -1,20 +1,30 @@
 // JavaScript Document
-var documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua;
+var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua;
 
 $(document).ready(function(){
+	windowWidth=$(window).width();
 	documentHeight=$(document).height();
 	windowHeight=$(window).height();
 	messageHeight=$("#Message").height();
 	
 	ua=navigator.userAgent;
 	//ua="ipad";
-	alert(ua);
-	
+	if(windowWidth<=1024){
+		$("div.main").css("width","1024px");	
+	}
 	if(documentHeight<=windowHeight){
 		$("#Nav").css("height",windowHeight+"px");
 		$("#Navcon").css("height",(windowHeight-50)+"px");
 	}
 	
+	$(window).resize(function(){
+		windowWidth=$(window).width();
+		if(windowWidth<=1024){
+			$("div.main").css("width","1024px");
+		}else{
+			$("div.main").css("width","100%");
+		}
+	});
 	$("#OpenLinkBox").click(function(){
 		$("#LinkBox").stop().fadeIn(200).animate({"top":"60px"},300);
 	}).mouseout(function(){
@@ -85,10 +95,22 @@ function NavDiv(){//菜单
 	$(document).mousemove(function(e){
 		if(parseInt(e.pageX)<=160){
 			$("#Nav").stop(true).animate({"left":"0px"},250);
+			windowWidth=$(window).width();
+			if(windowWidth<=1024){
+				$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+			}else{
+				$("div.main").css("width","100%");
+			}
 		}
 	});
 	$("#Nav").mouseout(function(e){
 		$("#Nav").stop(true,true).animate({"left":"-160px"},250);
+		windowWidth=$(window).width();
+		if(windowWidth<=1024){
+			$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+		}else{
+			$("div.main").css("width","100%");
+		}
 	});
 	
 	$("#Btn").toggle(
