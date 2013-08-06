@@ -1,9 +1,9 @@
 #!/bin/bash
+cd /mnt/lianlian
 stime=`date +"%Y-%m-%d %H:%M:%S"`
 master=`mongo --quiet  10.132.36.138/dface is_master.js`
 echo $master
 
-cd /mnt/lianlian
 mongo $master/dface /mnt/lianlian/db/mongo/checkin_day.js
 sleep 1
 mongo $master/dface /mnt/lianlian/db/mongo/checkin_shop_stat.js
