@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="css/public.css" rel="stylesheet" type="text/css">
+	<script src="js/jquery-1.6.2.min.js"></script>
+	<script src="js/jquery.easing.1.3.js" type="text/javascript"></script>
+	<script src="js/jquery.easing.compatibility.js" type="text/javascript"></script>
+	<script src="js/public.js" type="text/javascript"></script>
+	<script src="js/coupon.js" type="text/javascript"></script>
+	<script>
+	$(document).ready(function(){
+		var runing=$("#CB1").attr("checked");
+		if(runing!="checked"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});
+		}else{
+			$(".header").css("overflow","visible");
+		}
+	});
+	</script>
+	<!--script type="text/javascript">
+		(function(){
+			var mobile_host = "http://www.dface.cn/mini.html";
+			var userAgent = navigator.userAgent;
+			//判断设备      
+			if(/(mobile|wap|android)/i.test(userAgent)){
+				if(/pad/i.test(userAgent) || /ting/i.test(userAgent)){  
+					return;
+				}
+				window.location.replace(mobile_host);
+			}else{
+				return;
+			}
+		})();
+	</script-->
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<div class="headercon">
+				<div id="Message">赵海斌刚刚使用了一张分享优惠券惠券</div>
+				<div id="LinkBox">
+					<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
+					<a  class="links2">关闭</a>
+					<span class="linkarrow"></span>
+				</div>
+				<div class="toptitle">
+					<h1>脸脸茶坊</h1>
+					<img src="images/pic1.png" class="logo" id="OpenLinkBox"/>
+				</div>
+			</div>
+			<img src="images/line.png" class="sign" title="打开导航菜单"/>
+		</div>
+		<div id="Nav">
+			<a class="sign"></a>
+			<div id="Navcon">
+				<a href="index.html">首页</a>
+				<span class="navline"></span>
+				<a href="coupon_manage.html">优惠券管理</a>
+				<a href="#">优惠券数据统计</a>
+				<span class="navline"></span>
+				<a href="questions_answers1.html">问答系统</a>
+				<span class="navline"></span>
+				<a href="data_statistics1.html">数据统计</a>
+				<span class="navline"></span>
+				<label class="checkboxs1"><input type="checkbox" class="mr10" id="CB1" >取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		<div class="clear1"></div>
+		<div class="con">
+			<div class="title1"><h2 class="f18">发布优惠券</h2></div>
+			<div class="box5">签到优惠券，图文混排格式  <a href="coupon_manage.html" class="blue1 pl20 f12">选择其他优惠券模式</a></div>
+			<div class="clear1"></div>
+			<form method="post" action="" id="Forms">
+				<div class="box6">
+					<div class="box6message" id="Box6Message">报错提示</div>
+					<div class="boxinner">
+						<a class="btn4" style="background:url(images/pic6.jpg) left top no-repeat;"></a>
+						<div class="box6right1">
+							<input type="text" class="inputs2" value="优惠券主题 不得超过13个文字">
+							<textarea class="textarea3">优惠额度，使用规则、期限等（限90个文字，一行限16个字符）</textarea>
+						</div>
+					</div>
+				</div>
+				<div class="clear1"></div>
+				<div class="box7">
+					<div class="box7plane1">
+						<label>发放规则</label>
+						<select name="select" class="ptb2 plr3">
+							<option value="0">每日签到优惠</option>
+							<option value="1">每日前几名签到优惠</option>
+							<option value="2">新用户首次签到优惠</option>
+							<option value="3">累计签到优惠</option>
+						</select>
+					</div>
+					<div class="box7plane1">
+						<label>发放规则</label>
+						<select name="select" class="ptb2 plr3">
+							<option selected="selected" value="0">展示优惠券，点击后既代表使用了</option>
+							<option value="1">展示优惠券，点击后按要求输入内容，然后确定使用</option>
+						</select>
+					</div>
+					<div class="box7plane1 pt30 mb50">
+						<input type="submit" name="Submit" value="保 存" class="btn2 l"/>
+                        <a class="btn3 l ml20" href="coupon_manage.html">取 消</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>
