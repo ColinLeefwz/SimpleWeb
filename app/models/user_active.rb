@@ -18,7 +18,7 @@ class UserActive
       begin
         etid = Time.new(year, month, eday).end_of_day
       rescue
-        etid = Time.new(year,month).end_of_day
+        etid = Time.new(year,month).end_of_month
       end
     elsif month
       stid = Time.new(year,month)
@@ -58,7 +58,7 @@ class UserActive
     if uaid.nil?
       time = Time.now
       day = time.day
-      return day%7 != 1
+      return if day%7 != 1
       time = time - 1.days
       uaid= "#{time.year}-#{time.month}-#{(time.day+6)/7}"
     end
