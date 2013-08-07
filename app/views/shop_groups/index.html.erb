@@ -12,7 +12,7 @@
   <% @groups.each do |group| %>
     <tr>
       <td>
-        <%=link_to group.sid||'', "/shop_groups/login?id=#{group.sid}" %>
+        <%=link_to group.sid||'', "/shop_login/branch_login?id=#{group.sid}" %>
       </td>
       <td>
         <%= group.line_name %>
