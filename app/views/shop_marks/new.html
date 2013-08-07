@@ -31,7 +31,7 @@
 		
 	  	<div class="box2">
 		<form action="" method="post">
-			<div class="title2">评价：<%= @shop.try(:name) %></div>
+			<div class="title1">脸脸茶坊</div>
 			<div class="box2left">评 分：</div>
 			<div class="box2right">
 				<div class="starbox">
@@ -46,7 +46,7 @@
 				<div class="pj">点击星星打分</div>
 			</div>
 			<div class="box2clear"></div>
-			<div class="box2left">评 语：</div>
+			<div class="box2left">评 价：</div>
 			<div class="box2right">
 				<textarea class="ta"></textarea>
 			</div>
@@ -58,21 +58,7 @@
 			</div>
 		</div>
 	   </form>
-     /* <%= form_tag "/shop_marks/create" do  %>
-          <p>
-            <%= hidden_field_tag :sid, params[:sid] %>
-            <%= hidden_field_tag :uid, params[:uid] %>
-            <%= hidden_field_tag :gid, params[:gid] unless params[:gid].blank? %>
-
-            评分: <%= select_tag :mark,options_for_select([1,2,3,4,5], 5) %>
-          </p>
-
-          <p>
-            评语: <%=text_area_tag :com   %>
-          </p>
-
-          <%= submit_tag "评  价" %>
-        <% end  %>*/  
+    
     </div>
   </body>
 </html>
