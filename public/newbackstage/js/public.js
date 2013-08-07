@@ -273,8 +273,8 @@ function DH(){//数据统计动画
 	$("#Dn2_b1,#Dn2_b3").css({"height":"0px","top":"380px"});
 	$("div.box2left1").css("width","0px");
 
-	$("#Dn2_b0,#Dn2_b2").animate({"height":"380px"},1300,"backout");
-	$("#Dn2_b1,#Dn2_b3").animate({"height":"380px","top":"0px"},1000,"backinout");
+	$("#Dn2_b0,#Dn2_b2").animate({"height":"380px"},1600,"backout");
+	$("#Dn2_b1,#Dn2_b3").animate({"height":"380px","top":"0px"},1300,"backinout");
 	$("div.box2left1").animate({"width":"620px"},1000,"backin");
 	$("div.box2right1").animate({"height":"380px"},1000,"backin");
 }

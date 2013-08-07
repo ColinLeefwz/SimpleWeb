@@ -36,6 +36,7 @@ tmp/*
 public/system/*
 public/coupon/*
 public/uploads/*
+public/*.mp3
 ShopsNearby2/ShopsNearby2.xcodeproj/project.xcworkspace/
 ShopsNearby2/ShopsNearby2.xcodeproj/xcuserdata/
 latex/*.aux
