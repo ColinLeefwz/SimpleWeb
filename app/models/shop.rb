@@ -402,7 +402,7 @@ class Shop
   end
 
   def ban
-    ShopBan.find2(self._id.to_i)
+    ShopBan.find_by_id(self._id.to_i)
   end
 
   def ban_user(uid)
