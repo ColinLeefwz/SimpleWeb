@@ -1,0 +1,28 @@
+<div class="title2"><h2>分店列表</h2></div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab2">
+  <tr>
+    <th width="12%" align="left">id</th>
+    <th width="38%" align="left">商店名称</th>
+    <th width="38%" align="left">地址</th>
+    <th width="10%">电话</th>
+  </tr>
+  <% @shops.each do |shop| %>
+    <tr>
+      <td align="left" title="点击可以登录到分店">
+        <%=link_to shop.id||'', "/shop_login/branch_login?id=#{shop.id}" %>
+      </td>
+
+      <td align="left"><%= shop.name %></td>
+      <td align="left"><%= shop.tel %></td>
+      <td align="center"><%= shop.addr %></td>
+    </tr>
+  <% end %>
+</table>
+<%# debugger %>
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+</div>
+<script type="text/javascript">
+  LeftMenu(20);
+</script>
