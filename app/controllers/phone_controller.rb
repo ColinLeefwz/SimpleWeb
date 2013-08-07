@@ -34,7 +34,7 @@ class PhoneController < ApplicationController
     user = User.new
     user.phone = params[:phone]
     user.password = slat_hash_pass(params[:password])
-    user.name = user.phone
+    user.name = "" #user.phone
     user.save!
     data = {:id => user.id, :password => user.password, :phone => user.phone}
     session[:new_user_flag] = true
