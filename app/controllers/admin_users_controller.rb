@@ -93,7 +93,7 @@ class AdminUsersController < ApplicationController
   def kill2
     user = User.find_by_id(params[:id])
     user.kill
-    render :text => "ok"
+    render :text => "封杀成功"
   end
   
   def unkill
@@ -105,13 +105,15 @@ class AdminUsersController < ApplicationController
   end
 
   def prompt
-    @user = find_by_id(params[:id])
+    @user = User.find_by_id(params[:id])
     @user.prompt
+    render :text => "发送成功"
   end
 
   def warn
-    @user = find_by_id(params[:id])
+    @user = User.find_by_id(params[:id])
     @user.warn2
+    render :text => "发送成功"
   end
 
 end
