@@ -94,45 +94,60 @@ function MessageDiv(){//消息通知框
 }
 
 function NavDiv(){//菜单
-	var i=1;
-	$("#Nav").animate({"left":"-160px"},800);
-	$(document).mousemove(function(e){
-		if(parseInt(e.pageX)<=160){
-			$("#Nav").stop(true).animate({"left":"0px"},250);
-			windowWidth=$(window).width();
-			if(windowWidth<=1024){
-				$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
-			}else{
-				$("div.main").css("width","100%");
-			}
-		}
-	});
-	$("#Nav").mouseout(function(e){
-		$("#Nav").stop(true,true).animate({"left":"-160px"},250);
-		windowWidth=$(window).width();
-		if(windowWidth<=1024){
-			$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
-		}else{
-			$("div.main").css("width","100%");
-		}
-	});
-	
-	$("#Btn").toggle(
-		function(){
-			$("#Btn").addClass("dis");
-			$("#Nav").unbind("mouseout");
-			$(document).unbind("mousemove");
-		},
-		function(){
-			$("#Btn").removeClass("dis");
-			$("#Nav").bind("mouseout",function(){$("#Nav").stop().animate({"left":"-160px"},250);});
-			$(document).bind("mousemove",function(e){
+alert(runing);
+	if(navmove=="on"){
+		$("#Nav").animate({"left":"-160px"},800);
+	}else{
+		$("#Btn").addClass("dis");
+	}
+	if(runing!="checked"){
+		$(document).bind("mousemove",function(e){
+			if(navmove=="on"){
 				if(parseInt(e.pageX)<=160){
-					$("#Nav").stop().animate({"left":"0px"},250);
+					$("#Nav").stop(true).animate({"left":"0px"},250);
+					windowWidth=$(window).width();
+					if(windowWidth<=1024){
+						$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+					}else{
+						$("div.main").css("width","100%");
+					}
+				}	
+			}
+		});
+		$("#Nav").bind("mouseout",function(e){
+			if(navmove=="on"){
+				$("#Nav").stop(true,true).animate({"left":"-160px"},250);
+				windowWidth=$(window).width();
+				if(windowWidth<=1024){
+					$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+				}else{
+					$("div.main").css("width","100%");
 				}
-			});
-		}
-	);
+			}
+		});
+		$("#Btn").bind("click",function(){
+			if(navmove=="on"){
+				navmove="off";
+				$("#Btn").addClass("dis");
+				$("#Nav").unbind("mouseout");
+				$(document).unbind("mousemove");
+			}else if(navmove=="off"){
+				navmove="on";
+				$("#Btn").removeClass("dis");
+				$("#Nav").bind("mouseout",function(){$("#Nav").stop().animate({"left":"-160px"},250);});
+				$(document).bind("mousemove",function(e){
+					if(parseInt(e.pageX)<=160){
+						$("#Nav").stop().animate({"left":"0px"},250);
+					}
+				});
+			}
+		});
+	}else if(running=="checked"){alert(1);
+		$(document).unbind();
+		$("#Nav").unbind();
+		$("#Btn").unbind();
+	}
+	
 }
 function Menus(){//首页：手机头
 	$("a.menu1, a.menu2, a.menu3, a.menu4, a.menu5, a.menu6").css("height","0px");
@@ -152,41 +167,49 @@ function SlideDoor(obj,id){//滑动门二
 	$("#Door"+id).siblings("ul.list2").css("display","none").end().show(500);
 }
 function CouponPlane(){//优惠券管理
-	$("div.box3plane1").css("top","0px");
-	$("div.box3plane2").css("left","-186px");
-	$("div.box3plane3").css("right","-210px");
+	if(runing!="checked"){
+		$("div.box3plane1").css("top","0px");
+		$("div.box3plane2").css("left","-186px");
+		$("div.box3plane3").css("right","-210px");
 	
-	if(/pad/i.test(ua)){
-		$("div.box3inner").click(function(){
-			var obj=$(this);
-			obj.siblings().find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
-			obj.siblings().find("div.box3plane2").css({"left":"-186px"});
-			obj.siblings().find("div.box3plane3").css({"right":"-210px"});
-			obj.find("div.box3plane1").stop(true,true).animate({"top":"-156px"},1100,"expoout");
-			obj.find("div.box3plane2").stop(true,true).animate({"left":"0px"},600);
-			obj.find("div.box3plane3").stop(true,true).animate({"right":"0px"},600);
+		if(/pad/i.test(ua)){
+			$("div.box3inner").bind("click",function(){
+				var obj=$(this);
+				obj.siblings().find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
+				obj.siblings().find("div.box3plane2").css({"left":"-186px"});
+				obj.siblings().find("div.box3plane3").css({"right":"-210px"});
+				obj.find("div.box3plane1").stop(true,true).animate({"top":"-156px"},1100,"expoout");
+				obj.find("div.box3plane2").stop(true,true).animate({"left":"0px"},600);
+				obj.find("div.box3plane3").stop(true,true).animate({"right":"0px"},600);
+				
+				setTimeout(function(){
+					obj.find("div.box3plane2").css({"left":"-186px"});
+					obj.find("div.box3plane3").css({"right":"-210px"});
+					obj.find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
+				},5000);
+			});	
+		}else{
+			$("div.box3inner").stop(true,true).hover(
+			function(){
+				$(this).find("div.box3plane1").stop(true,true).animate({"top":"-156px"},1100,"expoout");
+				$(this).find("div.box3plane2").stop(true,true).animate({"left":"0px"},600);
+				$(this).find("div.box3plane3").stop(true,true).animate({"right":"0px"},600);
+			}
 			
-			setTimeout(function(){
-				obj.find("div.box3plane2").css({"left":"-186px"});
-				obj.find("div.box3plane3").css({"right":"-210px"});
-				obj.find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
-			},5000);
-		});
-		
-	}else{
-		$("div.box3inner").stop(true,true).hover(
-		function(){
-			$(this).find("div.box3plane1").stop(true,true).animate({"top":"-156px"},1100,"expoout");
-			$(this).find("div.box3plane2").stop(true,true).animate({"left":"0px"},600);
-			$(this).find("div.box3plane3").stop(true,true).animate({"right":"0px"},600);
+			,function(){
+				$(this).find("div.box3plane2").css({"left":"-186px"});
+				$(this).find("div.box3plane3").css({"right":"-210px"});
+				$(this).find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
+			});
 		}
-		
-		,function(){
-			$(this).find("div.box3plane2").css({"left":"-186px"});
-			$(this).find("div.box3plane3").css({"right":"-210px"});
-			$(this).find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
-		});
+	}else if(runing=="checked"){alert(1);
+		$("div.box3inner").unbind();
+		$("div.box3plane1").css("top","-186px");
+		$("div.box3plane2").css("left","0px");
+		$("div.box3plane3").css("right","0px");
 	}
+
+	
 }
 
 function Del(id){//问答系统管理：删除
