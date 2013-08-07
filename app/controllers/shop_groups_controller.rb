@@ -2,7 +2,7 @@
 
 class ShopGroupsController < ApplicationController
   before_filter :shop_authorize, :except => [:mobile, :twocode, :intro]
-  before_filter :master_authorize, :only => [ :edit, :del, :update,:checkins]
+  before_filter :master_authorize, :only => [ :edit, :del, :update,:checkins, :show]
   include Paginate
   layout 'shop'
 
