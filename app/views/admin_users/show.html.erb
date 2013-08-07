@@ -37,6 +37,8 @@
                 <%= button_to("发送提醒文案",{}, {:onclick => "return prompt($(this), {id: '#{@user.id}'})"})%>
                 <%= button_to("发送屏蔽文案",{}, {:onclick => "return warn($(this), {id: '#{@user.id}'})"})%>
 
+
+                123
                 </h5>
                 <span><h5>用户封杀:&nbsp;&nbsp;</h5>
                    <%= button_to(" 封杀",{}, {:onclick => "return kill($(this), {id: '#{@user.id}', name: '#{@user.name}'})"}) unless @user.forbidden? %>
