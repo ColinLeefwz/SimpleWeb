@@ -23,17 +23,6 @@ class ShopGroupsController < ApplicationController
     @groups = paginate("Group", params[:page], hash, sort,10)
   end
 
-  def login
-    shop= Shop.find_by_id(params[:id])
-    if shop.psid == session[:shop_id]
-      session[:admin_sid] = session[:shop_id]
-      session[:shop_id] = shop.id
-      redirect_to :controller => :shop_login,:action => "index"
-    else
-      render :text => "不能登录"
-    end
-  end
-
   def show
     @group = Group.find_primary(params[:id])
   end
