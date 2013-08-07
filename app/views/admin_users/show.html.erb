@@ -7,7 +7,7 @@
               <%=image_tag @user.head_logo.try(:img), size:"250x250" %>
                 <h5>用户名:&nbsp;&nbsp;<%= to_emoji @user.name %><br></h5> 
               <h5>用户id:&nbsp;&nbsp;<%= @user.id %><br></h5><br>
-                <<< <%= link_to '返回用户列表',request.env["HTTP_REFERER"] if request && request.env %>
+                <<< <%= link_to '返回用户列表','index/' %>
               </div>
               <div class="span3">
                
@@ -33,67 +33,21 @@
                 <h5>用户照片:&nbsp;&nbsp;<%=link_to "查看", "/admin_shop_photos?user_id=#{@user.id}" %><br></h5>
                 <h5>优惠券下载:&nbsp;&nbsp;<%=link_to "查看", "/admin_coupon_reports?uid=#{@user.id}" %><br></h5>
                 <h5>聊天记录:&nbsp;&nbsp;<%=link_to "查看", "/admin_users/chat?id=#{@user.id}" %><br></h5><br>
-                <h5>头像提醒/屏蔽:&nbsp;&nbsp;
-                <%= button_to("发送提醒文案",{}, {:onclick => "return prompt($(this), {id: '#{@user.id}'})"})%>
-                <%= button_to("发送屏蔽文案",{}, {:onclick => "return warn($(this), {id: '#{@user.id}'})"})%>
 
-                </h5>
-                <span><h5>用户封杀:&nbsp;&nbsp;</h5>
-                   <%= button_to(" 封杀",{}, {:onclick => "return kill($(this), {id: '#{@user.id}', name: '#{@user.name}'})"}) unless @user.forbidden? %>
-                   <%= button_to(" 解封",{}, {:onclick => "return unkill($(this), {id: '#{@user.id}',name: '#{@user.name}'})"})  if @user.forbidden? %>
-                </span>
+                <h5>头像提醒/屏蔽:&nbsp;&nbsp;</h5>
+
+                <%= button_to "发送提醒文案", {:action => "prompt", :id => @user.id}, {:onclick => "return confirm('确定发送欢迎来到脸脸，我们建议您上传真实头像，完善资料，以方便其他人便捷及时的发现您。点击菜单栏我的就可以编辑您的个人资料啦~快去试试吧😊么？')"} %>
+
+                <%= button_to "发送屏蔽文案", {:action => "warn", :id => @user.id}, {:onclick => "return confirm('确定发送您好！你的头像容易引起脸脸用户的反感，请换一张头像，烦请谅解。多谢你对脸脸的支持😊么？')"} %>
                 
+                
+                <h5>用户封杀:&nbsp;&nbsp;</h5>
+                <%= button_to "封杀", {:action => "kill2", :id => @user.id}, {:onclick => "return confirm('确定封杀么？')"} %>
+
               <div>
             </div>
           </div>
 </div>
-
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script> 
-<script type="text/javascript">
-
-  function kill(obj, param){
-    if(confirm("确定封杀么？")){
-      $.get("/admin_users/kill2",param, function() {
-        str = "<input type='submit' value=' 解封\""+ param.name +"\"' onclick='return unkill($(this),"+ JSON.stringify(param) + ")'>"
-        obj.parent().replaceWith(str)
-      });
-    }
-    return false;
-  }
-
-  function unkill(obj, param){
-    if(confirm("确定解封么？")){
-      $.get("/admin_users/unkill",{id: param.id}, function() {
-        str = "<input type='submit' value=\" 封杀'" + param.name + "'\" onclick='return kill($(this), " + JSON.stringify(param) +  ")'>"
-        obj.parent().replaceWith(str)
-      });
-    }
-    return false
-  }
-
-  function prompt(obj, param){
-    if(confirm("确定发送？")){
-      $.get("/admin_users/prompt",param, function() {
-        str = "<input type='submit' value=\'已发送提醒文案\'>"
-        obj.parent().replaceWith(str)
-      });
-    }
-    return false
-  }
-
-
-  function warn(obj, param){
-    if(confirm("确定发送？")){
-      $.get("/admin_users/warn",param, function() {
-        str = "<input type='submit' value=\'已发送屏蔽文案\'>"
-        obj.parent().replaceWith(str)
-      });
-    }
-    return false
-  }
-
-
-</script>
 
 
 
