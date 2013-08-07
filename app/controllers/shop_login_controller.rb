@@ -48,9 +48,20 @@ class ShopLoginController < ApplicationController
     render :layout => false
   end
 
+  def branch_login
+    shop= Shop.find_by_id(params[:id])
+    if shop.psid == session[:shop_id]
+      session[:admin_sid] = session[:shop_id]
+      session[:shop_id] = shop.id
+      redirect_to :controller => :shop_login,:action => "index"
+    else
+      render :text => "不能登录"
+    end
+  end
+
   def logout
-    session[:shop_id] = nil
     session[:shop_id] = session[:admin_sid]
+    session[:admin_sid] = nil
     redirect_to :action => :login
   end
 
