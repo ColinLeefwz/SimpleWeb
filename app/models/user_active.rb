@@ -11,8 +11,7 @@ class UserActive
   def ttoid(uat)
     year, month,week =  uat.split("-").map{|m| m.to_i}
     if week
-      sday = (week-1)*7
-      sday =(sday ==0 ? 1 : sday)
+      sday = (week-1)*7+1
       stid = Time.new(year, month, sday)
       eday = week*7
       begin
