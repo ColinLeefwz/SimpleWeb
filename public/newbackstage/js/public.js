@@ -6,11 +6,15 @@ $(document).ready(function(){
 	documentHeight=$(document).height();
 	windowHeight=$(window).height();
 	messageHeight=$("#Message").height();
-	
+
 	ua=navigator.userAgent;
 	//ua="ipad";
 	if(windowWidth<=1024){
 		$("div.main").css("width","1024px");	
+	}
+	if(/MSIE/i.test(ua)&&documentHeight<=window.screen.height){//针对IE
+		$("#Nav").css("height",documentHeight+"px");
+		$("#Navcon").css("height",(documentHeight-50)+"px");
 	}
 	if(documentHeight<=windowHeight){
 		$("#Nav").css("height",windowHeight+"px");
