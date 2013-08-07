@@ -22,6 +22,7 @@ class ShopMarksController < ApplicationController
     shop_mark.sid = params[:sid]
     shop_mark.uid = params[:uid]
     shop_mark.gid = params[:gid] unless params[:gid].blank?
+    shop_mark.admin_sid = @group.admin_sid
     shop_mark.mark = params[:mark]
     shop_mark.com = params[:com]
     shop_mark.save
@@ -35,6 +36,7 @@ class ShopMarksController < ApplicationController
     group = Group.find_by_id(params[:gid])
     render :text => "不可评价" if user.nil?  || @shop.nil?
     if group
+      @group = group
       render :text => "你不是此旅行团的成员" unless group.users.find{|u| u['id'] == params[:uid]}
       render :text => "此商家不是本次旅行团的合作商家" unless group.line.partners.values.flatten.include?(params[:sid])
     end
