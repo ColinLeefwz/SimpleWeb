@@ -40,18 +40,16 @@ class AdminRightsController < ApplicationController
   def update
     @right = Right.find(params[:id])
     par = params.select{|k,v| k.in?(admin_controller_names)}
+    data =[]
     par.each do |k,v|
       case v
-      when 'none'
-        @right.data.delete_if{|r| r['c'] == k }
       when 'r'
-        next if @right.data.find{|d| d['c'] == k}
-        @right.data << {'c' => k, "r" => true}
+        data << {'c' => k, "r" => true}
       when 'w'
-        next if @right.data.find{|d| d['c'] == k}
-        @right.data << {'c' => k, "r" => false}
+        data << {'c' => k, "r" => false}
       end
     end
+    @right.data = data
     @right.save
     redirect_to :action => "show", :id => @right.id
   end
