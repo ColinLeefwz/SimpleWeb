@@ -4,6 +4,7 @@ class ShopMark
   field :sid, type: Integer   #被评价商家
   field :uid, type: Moped::BSON::ObjectId #评价用户
   field :gid, type: Moped::BSON::ObjectId #旅行团
+  field :admin_sid, type: Integer #所属旅行社
   field :mark, type: Integer #评价得分
   field :com #评语
 
