@@ -152,13 +152,13 @@ function NavDiv(){//菜单
 			});
 			
 			$(document).ontouchstart(function(e){
-				if(parseInt(e.pageX)<=160){
-					x0=parseInt(e.pageX);
+				if(parseInt(e.targetTouches[0].pageX)<=160){
+					x0=parseInt(e.targetTouches[0].pageX);
 				}
 			});
 			$(document).ontouchend(function(e){
-				if(parseInt(e.pageX)<=160){
-					x1=parseInt(e.pageX);
+				if(parseInt(e.targetTouches[0].pageX)<=160){
+					x1=parseInt(e.targetTouches[0].pageX);
 				}
 				if(x0<=160&&x1<=160){
 					if(x1-x0>=10){alert(1);
