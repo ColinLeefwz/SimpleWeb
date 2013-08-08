@@ -9,17 +9,18 @@
 	<script src="/newbackstage/js/jquery.blocksit.min.js"></script>
 	<script src="/newbackstage/js/public.js"></script>
 	<script>
-		var num, runing=$("#CB1").attr("checked");
+		var num, navmove="on", runing;
 		$(document).ready(function(){
+			runing=$("#CB1").attr("class");
 			num=$("#Waterfall div.box4plane2").length;
 
-			if(runing!="checked"){
+			if(runing=="checkboxs1"){
 				NavDiv();
 				ShowDiv();
 				$(window).load(function(){
 					MessageDiv();
 				});
-			}else{
+			}else if(runing=="checkboxs2"){
 				$(".header").css("overflow","visible");
 			}
 			
@@ -77,7 +78,7 @@
 				<span class="navline"></span>
 				<a href="/newbackstage/data_statistics1.html">数据统计</a>
 				<span class="navline"></span>
-				<label class="checkboxs1"><input type="checkbox" class="mr10" id="CB1" >取消动画</label>
+				<label id="CB1" class="checkboxs1">取消动画</label>
 				<span class="navline"></span>
 				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
 			</div>

@@ -10,23 +10,37 @@
 	<script src="/newbackstage/js/jquery.easing.compatibility.js" type="text/javascript"></script>
 	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
 	<script>
-	var navmove="on", runing=$("#CB1").attr("checked");
+	/*var navmove="on", runing;
 	$(document).ready(function(){
-		RuningDH(runing);
-	});
-	function RuningDH(runing){
-		if(runing!="checked"){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
 			NavDiv();
 			CouponPlane();
 			$(window).load(function(){
 				MessageDiv();
 			});
-		}else if(runing=="checked"){
-			NavDiv();
-			CouponPlane();
+		}else if(runing=="checkboxs2"){
 			$(".header").css("overflow","visible");
 		}
-	}
+		
+	});*/
+	var navmove="on", runing;
+	$(document).ready(function(){
+	
+	alert(window.screen.width+"  "+$(document).width()+"   "+$(window).width());
+	
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			CouponPlane();
+			$(window).load(function(){
+				MessageDiv();
+			});
+		}else if(runing=="checkboxs2"){
+			$(".header").css("overflow","visible");
+		}
+		
+	});
 	</script>
 	<!--script type="text/javascript">
 		(function(){
@@ -59,10 +73,10 @@
 					<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
 				</div>
 			</div>
-			<img src="/newbackstage/images/line.png" class="sign" title="打开导航菜单"/>
+			<img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
 		</div>
 		<div id="Nav">
-			<a class="sign"></a>
+			<a class="sign" id="CloseNav"></a>
 			<div id="Navcon">
 				<a href="/newbackstage/index.html">首页</a>
 				<span class="navline"></span>
@@ -73,7 +87,7 @@
 				<span class="navline"></span>
 				<a href="/newbackstage/data_statistics1.html">数据统计</a>
 				<span class="navline"></span>
-				<label class="checkboxs1"><input type="checkbox" class="mr10" id="CB1" onclick="RuningDH($(this).attr(checked))" checked="">取消动画</label>
+				<label class="checkboxs1" id="CB1">取消动画</label>
 				<span class="navline"></span>
 				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
 			</div>
