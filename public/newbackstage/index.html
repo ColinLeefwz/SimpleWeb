@@ -22,7 +22,7 @@
 				MessageDiv();
 			});	
 		}else if(runing=="checkboxs2"){
-			$(".header").css("overflow","visible");
+			AllNoDH();
 		}
 	
 		$('#MyTable1').gvChart({
@@ -36,21 +36,6 @@
 		 });
 	});
 	</script>
-	<!--script type="text/javascript">
-		(function(){
-			var mobile_host = "http://www.dface.cn/mini.html";
-			var userAgent = navigator.userAgent;
-			//判断设备      
-			if(/(mobile|wap|android)/i.test(userAgent)){
-				if(/pad/i.test(userAgent) || /ting/i.test(userAgent)){  
-					return;
-				}
-				window.location.replace(mobile_host);
-			}else{
-				return;
-			}
-		})();
-	</script-->
 </head>
 <body>
 	<div class="main">
@@ -67,10 +52,10 @@
 					<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
 				</div>
 			</div>
-			<img src="/newbackstage/images/line.png" class="sign" title="打开导航菜单" width="61"/>
+			<img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
 		</div>
 		<div id="Nav">
-			<a class="sign"></a>
+			<a class="sign" id="CloseNav"></a>
 			<div id="Navcon">
 				<a href="/newbackstage/index.html">首页</a>
 				<span class="navline"></span>
