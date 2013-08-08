@@ -1,5 +1,5 @@
 // JavaScript Document
-var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua;
+var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua,MessageDivTimer,x0=0,x1=0;
 
 $(document).ready(function(){
 	windowWidth=$(window).width();
@@ -29,6 +29,24 @@ $(document).ready(function(){
 			$("div.main").css("width","100%");
 		}
 	});
+	
+	$("#CB1").click(function(){
+		if($("#CB1").attr("class")=="checkboxs1"){
+			$("#CB1").removeClass("checkboxs1").addClass("checkboxs2");
+			runing="checkboxs2";
+			NavDiv();
+			CouponPlane();
+			MessageDiv();
+		}else if($("#CB1").attr("class")=="checkboxs2"){
+			$("#CB1").removeClass("checkboxs2").addClass("checkboxs1");
+			runing="checkboxs1";
+			NavDiv();
+			CouponPlane();
+			MessageDiv();
+		}
+	});
+	
+	
 	$("#OpenLinkBox").click(function(){
 		$("#LinkBox").stop().fadeIn(200).animate({"top":"60px"},300);
 	}).mouseout(function(){
@@ -78,32 +96,40 @@ function Dn2_divplane(){//首页：最新数据动画
 		$("#Dn2_b"+arr[i]).delay(500+80*i).animate({"top":"0px"},500);
 	}
 }
+
 function MessageDiv(){//消息通知框
-	$("#Message").css("top",-messageHeight+"px");
-	$(".header").css("overflow","visible");
-	$("#Message").animate({"top":"50px"},1000,function(){
-		setTimeout(function(){$("#Message").fadeOut(500,function(){
-			$("#Message").css({"top":-messageHeight+"px", "display":"block"});
-		});},8000);
-	});
-	$("#Message").mouseover(function(){
-		setTimeout(function(){$("#Message").fadeOut(500,function(){
-			$("#Message").css({"top":-messageHeight+"px", "display":"block"});
-		});},2000);
-	});
+	if(runing=="checkboxs1"){
+		$("#Message").css("top",-messageHeight+"px");
+		$(".header").css("overflow","visible");
+		$("#Message").animate({"top":"50px"},1000,function(){
+			MessageDivTimer=setTimeout(function(){$("#Message").fadeOut(500,function(){
+				$("#Message").css({"top":-messageHeight+"px", "display":"block"});
+			});},8000);
+		});
+		$("#Message").mouseover(function(){
+			MessageDivTimer=setTimeout(function(){$("#Message").fadeOut(500,function(){
+				$("#Message").css({"top":-messageHeight+"px", "display":"block"});
+			});},2000);
+		});
+	}else if(runing=="checkboxs2"){
+		clearTimeout(MessageDivTimer);
+		$("#Message").unbind();
+		$(".header").css("overflow","visible");
+		$("#Message").css({"top":"50px","display":"block"});
+	}
 }
 
 function NavDiv(){//菜单
-alert(runing);
 	if(navmove=="on"){
-		$("#Nav").animate({"left":"-160px"},800);
+		$("#Nav").animate({"left":"-160px"},1000);
 	}else{
 		$("#Btn").addClass("dis");
 	}
-	if(runing!="checked"){
-		$(document).bind("mousemove",function(e){
-			if(navmove=="on"){
-				if(parseInt(e.pageX)<=160){
+	if(runing=="checkboxs1"){
+		
+		if(/ipad/i.test(ua)){
+			$("#OpenNav").click(function(){
+				if(navmove=="on"){
 					$("#Nav").stop(true).animate({"left":"0px"},250);
 					windowWidth=$(window).width();
 					if(windowWidth<=1024){
@@ -111,21 +137,77 @@ alert(runing);
 					}else{
 						$("div.main").css("width","100%");
 					}
-				}	
-			}
-		});
-		$("#Nav").bind("mouseout",function(e){
-			if(navmove=="on"){
-				$("#Nav").stop(true,true).animate({"left":"-160px"},250);
-				windowWidth=$(window).width();
-				if(windowWidth<=1024){
-					$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
-				}else{
-					$("div.main").css("width","100%");
 				}
-			}
-		});
-		$("#Btn").bind("click",function(){
+			});
+			$("#CloseNav").click(function(){
+				if(navmove=="on"){
+					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
+					windowWidth=$(window).width();
+					if(windowWidth<=1024){
+						$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+					}else{
+						$("div.main").css("width","100%");
+					}
+				}
+			});
+			
+			$(document).ontouchstart(function(e){
+				if(parseInt(e.pageX)<=160){
+					x0=parseInt(e.pageX);
+				}
+			});
+			$(document).ontouchend(function(e){
+				if(parseInt(e.pageX)<=160){
+					x1=parseInt(e.pageX);
+				}
+				if(x0<=160&&x1<=160){
+					if(x1-x0>=10){alert(1);
+						$("#Nav").stop(true).animate({"left":"0px"},250);
+						windowWidth=$(window).width();
+						if(windowWidth<=1024){
+							$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+						}else{
+							$("div.main").css("width","100%");
+						}
+					}else if(x0-x1>10){alert(2);
+						$("#Nav").stop(true,true).animate({"left":"-160px"},250);
+						windowWidth=$(window).width();
+						if(windowWidth<=1024){
+							$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+						}else{
+							$("div.main").css("width","100%");
+						}
+					}
+				}
+			});
+		}else{
+			$(document).mousemove(function(e){
+				if(navmove=="on"){
+					if(parseInt(e.pageX)<=160){
+						$("#Nav").stop(true).animate({"left":"0px"},250);
+						windowWidth=$(window).width();
+						if(windowWidth<=1024){
+							$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+						}else{
+							$("div.main").css("width","100%");
+						}
+					}	
+				}
+			});
+			$("#Nav").mouseout(function(e){
+				if(navmove=="on"){
+					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
+					windowWidth=$(window).width();
+					if(windowWidth<=1024){
+						$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+					}else{
+						$("div.main").css("width","100%");
+					}
+				}
+			});
+		}
+		
+		$("#Btn").click(function(){
 			if(navmove=="on"){
 				navmove="off";
 				$("#Btn").addClass("dis");
@@ -142,10 +224,13 @@ alert(runing);
 				});
 			}
 		});
-	}else if(running=="checked"){alert(1);
+	}else if(runing=="checkboxs2"){
 		$(document).unbind();
 		$("#Nav").unbind();
 		$("#Btn").unbind();
+		$("#OpenNav").unbind();
+		$("#CloseNav").unbind();
+		$("#Nav").stop(true,true).css("left","0px");	
 	}
 	
 }
@@ -167,13 +252,13 @@ function SlideDoor(obj,id){//滑动门二
 	$("#Door"+id).siblings("ul.list2").css("display","none").end().show(500);
 }
 function CouponPlane(){//优惠券管理
-	if(runing!="checked"){
+	if(runing=="checkboxs1"){
 		$("div.box3plane1").css("top","0px");
 		$("div.box3plane2").css("left","-186px");
 		$("div.box3plane3").css("right","-210px");
 	
-		if(/pad/i.test(ua)){
-			$("div.box3inner").bind("click",function(){
+		if(/ipad/i.test(ua)){
+			$("div.box3inner").click(function(){
 				var obj=$(this);
 				obj.siblings().find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
 				obj.siblings().find("div.box3plane2").css({"left":"-186px"});
@@ -202,7 +287,7 @@ function CouponPlane(){//优惠券管理
 				$(this).find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
 			});
 		}
-	}else if(runing=="checked"){alert(1);
+	}else if(runing=="checkboxs2"){
 		$("div.box3inner").unbind();
 		$("div.box3plane1").css("top","-186px");
 		$("div.box3plane2").css("left","0px");
