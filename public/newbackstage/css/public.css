@@ -111,7 +111,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 #Nav #Navcon{width:100%;height:100%;overflow:hidden;background:url(../images/nav.png) left top repeat-y;}
 #Nav a{display:block;padding-left:12px;color:#333333;line-height:50px;}
 #Nav .navline{border-top:1px solid #F2F2F2;width:141px;display:block;overflow:hidden;height:0px;}
-#Nav .sign{width:100%;height:50px;background:url(../images/pic2.png) left top no-repeat;cursor:pointer;}
+#Nav .sign{width:100%;height:50px;background:url(../images/pic2_1.png) left top no-repeat;cursor:pointer;display:block;overflow:hidden;zoom:1;}
 
 .con{width:830px;clear:both;margin:50px auto 40px auto;zoom:1;overflow:hidden;}
 
@@ -211,7 +211,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 
 .box5{width:100%;margin:20px auto;font-size:14px;color:#333;}
 
-.box6{width:560px;margin:40px 0px 20px 0px;border:1px solid #BCBCBC;border-radius:8px;background-color:#ffffff;position:relative;}
+.box6{width:560px;margin:40px 0px 20px 0px;border:1px solid #BCBCBC;border-radius:8px;background-color:#ffffff;position:relative;overflow:hidden;height:215px;}
 .box6 .boxinner{width:100%;overflow:hidden;z-index:10;position:relative;border-radius:8px;}
 .box6 .box6right1{float:right;width:305px;padding:20px;background-color:#ffffff;}
 .box6 .box6message{width:540px;position:absolute;left:0px;top:0px;text-align:center;padding:10px;z-index:1;font-size:14px;color:#f60;letter-spacing:2px;}

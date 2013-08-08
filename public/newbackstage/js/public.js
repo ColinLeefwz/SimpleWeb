@@ -1,5 +1,5 @@
 // JavaScript Document
-var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua,MessageDivTimer,x0=0,x1=0;
+var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua,MessageDivTimer,CouponPlaneTimer,x0=0,x1=0;
 
 $(document).ready(function(){
 	windowWidth=$(window).width();
@@ -7,7 +7,7 @@ $(document).ready(function(){
 	windowHeight=$(window).height();
 	messageHeight=$("#Message").height();
 
-	ua=navigator.userAgent;
+	ua=navigator.userAgent.toLowerCase();
 	//ua="ipad";
 	if(windowWidth<=1024){
 		$("div.main").css("width","1024px");	
@@ -30,7 +30,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#CB1").click(function(){
+	$("#CB1").click(function(){//取消动画
 		if($("#CB1").attr("class")=="checkboxs1"){
 			$("#CB1").removeClass("checkboxs1").addClass("checkboxs2");
 			runing="checkboxs2";
@@ -124,12 +124,19 @@ function NavDiv(){//菜单
 		$("#Nav").animate({"left":"-160px"},1000);
 	}else{
 		$("#Btn").addClass("dis");
+		$("#Nav").stop(true).animate({"left":"0px"},250);
+		windowWidth=$(window).width();
+		if(windowWidth<=1024){
+			$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+		}else{
+			$("div.main").css("width","100%");
+		}	
 	}
 	if(runing=="checkboxs1"){
-		
 		if(/ipad/i.test(ua)){
-			$("#OpenNav").click(function(){
+			$("#OpenNav").click(function(e){
 				if(navmove=="on"){
+					if($("#Nav").css("left")=="160px") return false;
 					$("#Nav").stop(true).animate({"left":"0px"},250);
 					windowWidth=$(window).width();
 					if(windowWidth<=1024){
@@ -139,7 +146,7 @@ function NavDiv(){//菜单
 					}
 				}
 			});
-			$("#CloseNav").click(function(){
+			$("#CloseNav").click(function(e){
 				if(navmove=="on"){
 					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
 					windowWidth=$(window).width();
@@ -149,37 +156,8 @@ function NavDiv(){//菜单
 						$("div.main").css("width","100%");
 					}
 				}
-			});
-			
-			$(document).ontouchstart(function(e){
-				if(parseInt(e.targetTouches[0].pageX)<=160){
-					x0=parseInt(e.targetTouches[0].pageX);
-				}
-			});
-			$(document).ontouchend(function(e){
-				if(parseInt(e.targetTouches[0].pageX)<=160){
-					x1=parseInt(e.targetTouches[0].pageX);
-				}
-				if(x0<=160&&x1<=160){
-					if(x1-x0>=10){alert(1);
-						$("#Nav").stop(true).animate({"left":"0px"},250);
-						windowWidth=$(window).width();
-						if(windowWidth<=1024){
-							$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
-						}else{
-							$("div.main").css("width","100%");
-						}
-					}else if(x0-x1>10){alert(2);
-						$("#Nav").stop(true,true).animate({"left":"-160px"},250);
-						windowWidth=$(window).width();
-						if(windowWidth<=1024){
-							$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
-						}else{
-							$("div.main").css("width","100%");
-						}
-					}
-				}
-			});
+				e.stopPropagation();
+			});			
 		}else{
 			$(document).mousemove(function(e){
 				if(navmove=="on"){
@@ -211,17 +189,14 @@ function NavDiv(){//菜单
 			if(navmove=="on"){
 				navmove="off";
 				$("#Btn").addClass("dis");
-				$("#Nav").unbind("mouseout");
-				$(document).unbind("mousemove");
+				$("#Nav").unbind();
+				$("#OpenNav").unbind();
+				$("#CloseNav").unbind();
+				$("#Nav").stop(true,true).css({"left":"0px"});
 			}else if(navmove=="off"){
 				navmove="on";
 				$("#Btn").removeClass("dis");
-				$("#Nav").bind("mouseout",function(){$("#Nav").stop().animate({"left":"-160px"},250);});
-				$(document).bind("mousemove",function(e){
-					if(parseInt(e.pageX)<=160){
-						$("#Nav").stop().animate({"left":"0px"},250);
-					}
-				});
+				NavDiv();
 			}
 		});
 	}else if(runing=="checkboxs2"){
@@ -251,8 +226,7 @@ function SlideDoor(obj,id){//滑动门二
 	$(obj).siblings().removeClass("hover").end().addClass("hover");
 	$("#Door"+id).siblings("ul.list2").css("display","none").end().show(500);
 }
-function CouponPlane(){//优惠券管理
-alert(ua);
+function CouponPlane(){
 	if(runing=="checkboxs1"){
 		$("div.box3plane1").css("top","0px");
 		$("div.box3plane2").css("left","-186px");
@@ -268,7 +242,7 @@ alert(ua);
 				obj.find("div.box3plane2").stop(true,true).animate({"left":"0px"},600);
 				obj.find("div.box3plane3").stop(true,true).animate({"right":"0px"},600);
 				
-				setTimeout(function(){
+				CouponPlaneTimer=setTimeout(function(){
 					obj.find("div.box3plane2").css({"left":"-186px"});
 					obj.find("div.box3plane3").css({"right":"-210px"});
 					obj.find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
@@ -289,13 +263,12 @@ alert(ua);
 			});
 		}
 	}else if(runing=="checkboxs2"){
+		clearTimeout(CouponPlaneTimer);
 		$("div.box3inner").unbind();
 		$("div.box3plane1").css("top","-186px");
 		$("div.box3plane2").css("left","0px");
 		$("div.box3plane3").css("right","0px");
 	}
-
-	
 }
 
 function Del(id){//问答系统管理：删除
@@ -367,7 +340,7 @@ function ShowDiv(){//问答系统管理：显示
 		}
 	}
 	x=0;
-	//alert(arr[0]+"   "+arr[1]+"   "+arr[2]+"   "+arr[3]+"   "+arr[4]+"   "+arr[5]+"   "+arr[6]+"   "+arr[7]);
+
 	var timer=setInterval(function(){
 			$("#Div"+arr[x]).fadeIn(650);
 			if(x!=num){
@@ -386,4 +359,13 @@ function DH(){//数据统计动画
 	$("#Dn2_b1,#Dn2_b3").animate({"height":"380px","top":"0px"},1300,"backinout");
 	$("div.box2left1").animate({"width":"620px"},1000,"backin");
 	$("div.box2right1").animate({"height":"380px"},1000,"backin");
+}
+function AllNoDH(){//取消动画
+	$(".header").css("overflow","visible");
+		$("#Nav").animate({"left":"0px"},250);
+	if(windowWidth<=1024){
+		$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+	}else{
+		$("div.main").css("width","100%");
+	}
 }
