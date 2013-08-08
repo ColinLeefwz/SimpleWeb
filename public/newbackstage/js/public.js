@@ -252,6 +252,7 @@ function SlideDoor(obj,id){//滑动门二
 	$("#Door"+id).siblings("ul.list2").css("display","none").end().show(500);
 }
 function CouponPlane(){//优惠券管理
+alert(ua);
 	if(runing=="checkboxs1"){
 		$("div.box3plane1").css("top","0px");
 		$("div.box3plane2").css("left","-186px");
