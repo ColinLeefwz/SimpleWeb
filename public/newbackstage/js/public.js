@@ -120,17 +120,20 @@ function MessageDiv(){//消息通知框
 }
 
 function NavDiv(){//菜单
+	windowWidth=$(window).width();
 	if(navmove=="on"){
 		$("#Nav").animate({"left":"-160px"},1000);
+		if(windowWidth<=1024){
+			$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+		}
 	}else{
 		$("#Btn").addClass("dis");
 		$("#Nav").stop(true).animate({"left":"0px"},250);
-		windowWidth=$(window).width();
 		if(windowWidth<=1024){
 			$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
 		}else{
 			$("div.main").css("width","100%");
-		}	
+		}
 	}
 	if(runing=="checkboxs1"){
 		if(/ipad/i.test(ua)){
@@ -190,12 +193,22 @@ function NavDiv(){//菜单
 				navmove="off";
 				$("#Btn").addClass("dis");
 				$("#Nav").unbind();
+				$(document).unbind("mouseout");
+				$(document).unbind("mouseover");
 				$("#OpenNav").unbind();
 				$("#CloseNav").unbind();
 				$("#Nav").stop(true,true).css({"left":"0px"});
+				if(windowWidth<=1024){
+					$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+				}
 			}else if(navmove=="off"){
 				navmove="on";
 				$("#Btn").removeClass("dis");
+				$("#Nav").unbind();
+				$(document).unbind("mouseout");
+				$(document).unbind("mouseover");
+				$("#OpenNav").unbind();
+				$("#CloseNav").unbind();
 				NavDiv();
 			}
 		});
