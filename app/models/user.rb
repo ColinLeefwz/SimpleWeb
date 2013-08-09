@@ -44,6 +44,37 @@ class User
     obj.gender = obj.gender.to_i
   end
   
+  class << self
+    alias_method :find_by_id_old, :find_by_id
+  end
+  
+  def self.find_by_id(id)
+    if id.to_s.size>10
+      find_by_id_old(id)
+    elsif id.to_s[0]=="s"
+      shop = Shop.find_by_id(id[1..-1])
+      u=User.new
+      u.id = id
+      u.name = shop.name
+      u.password = shop.password
+      u.head_logo_id = shop.logo.id
+      u.phone = u.id
+      u
+    else
+      nil
+    end
+  end
+  
+  def is_shop?
+    self.id.to_s[0]=="s"
+  end
+  
+  
+  #如果当前用户其实是商家，对应的商家帐号
+  def shop
+    Shop.find_by_id(self.id.to_s[1..-1])
+  end
+  
   def follow_ids
     $redis.zrange("Fol#{self.id}",0,-1).delete_if {|x| x.size==0}
   end

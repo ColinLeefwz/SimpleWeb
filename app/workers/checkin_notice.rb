@@ -28,6 +28,10 @@ class CheckinNotice
     end
     send_coupon_msg = shop.send_coupon(checkin.uid)
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
+    if user.is_shop?
+      send_welcome_msg_if_not_invisible(user,shop)
+      return
+    end
     if checkin.add_to_redis #当天首次签到
       checkin.save!
       #听.说 发送默认信息
