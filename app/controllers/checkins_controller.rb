@@ -15,7 +15,7 @@ class CheckinsController < ApplicationController
       return
     end
     if params[:sname][0,3]=="@@@"
-      render :json => {error: "没权限创建：params[:sname]"}.to_json
+      render :json => {error: "没权限创建：#{params[:sname]}"}.to_json
       return
     end
     if !is_kx_user?(session[:user_id])
