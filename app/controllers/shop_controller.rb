@@ -53,6 +53,7 @@ class ShopController < ApplicationController
       return
     end    
     lo = [params[:lat].to_f, params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     if params[:sname].length<3
       radis = 0.002 + params[:sname].length*0.0005
       shops = Shop.where({lo:{"$within" => {"$center" => [lo,radis]}}, name:/#{params[:sname]}/}).limit(10)
