@@ -201,7 +201,7 @@ class Oauth2Controller < ApplicationController
   def auth
     if params[:name][0]=='s'
       shop = Shop.find_by_id(params[:name][1..-1])
-      if (shop && shop.password==params[:pass][0..-66]) || params[:pass][0,4] == 'pass'
+      if (shop && shop.password==params[:pass][0,shop.password.size]) || params[:pass][0,4] == 'pass'
         render :text => "1"
         return
       end
