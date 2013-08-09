@@ -13,6 +13,8 @@ ul,ol{list-style:none;}
 .clear1{width:100%;height:0px;clear:both;overflow:hidden;zoom:1;display:block;}
 .red1{color:#f00;}
 .green1{color:#390;}
+.green2{color:#3b0;}
+.orange1{color:#f60;}
 .gay1{color:#a1a1a1;}
 .blue1{color:#0078B6 !important;}
 .noneborder{border:none !important;}
@@ -21,9 +23,12 @@ ul,ol{list-style:none;}
 
 .pointer{cursor:pointer;}
 
+.imgs4{width:130px;}
+
 .inputs{border:1px solid #d7d7d7;border-radius:15px;width:250px;height:30px;line-height:30px;padding:0px 10px;font-size:12px;color:#868686;}
 .inputs2{border:1px solid #d7d7d7;border-radius:5px;width:280px;height:30px;line-height:30px;padding:0px 10px;font-size:13px;color:#868686;margin-bottom:20px;}
 .inputs3{border:1px solid #d7d7d7;border-radius:5px;width:80px;height:20px;line-height:20px;padding:0px 10px;font-size:12px;color:#868686;}
+.inputs4{border:1px solid #d7d7d7;border-radius:5px;width:280px;height:30px;line-height:30px;padding:0px 10px;font-size:13px;color:#868686;}
 .textarea1{width:280px;height:60px;border:1px solid #d7d7d7;border-radius:15px;padding:10px;font-size:12px;color:#868686;line-height:22px;}
 .textarea2{width:360px;height:110px;border:1px solid #d7d7d7;border-radius:15px;padding:10px;font-size:12px;color:#868686;line-height:22px;}
 .textarea3{width:280px;height:100px;border:1px solid #d7d7d7;border-radius:5px;padding:10px;font-size:13px;color:#868686;line-height:22px;}
@@ -34,13 +39,17 @@ ul,ol{list-style:none;}
 .pl20{padding-left:20px;}
 .pr20{padding-right:20px;}
 .ptb2{padding-top:2px;padding-bottom:2px;}
+.ptb15{padding-top:15px;padding-bottom:15px;}
 .plr3{padding-left:3px;padding-right:3px;}
 .mt0{margin-top:0px !important;}
 .mt10{margin-top:10px !important;}
 .mt20{margin-top:20px !important;}
 .mt50{margin-top:50px;}
 .mt100{margin-top:100px;}
+.mb0{margin-bottom:0px !important;}
+.mb15{margin-bottom:15px !important;}
 .mb50{margin-bottom:50px !important;}
+.ml5{margin-left:5px;}
 .ml10{margin-left:10px;}
 .ml20{margin-left:20px;}
 .ml48{margin-left:48px;}
@@ -114,6 +123,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 #Nav .sign{width:100%;height:50px;background:url(../images/pic2_1.png) left top no-repeat;cursor:pointer;display:block;overflow:hidden;zoom:1;}
 
 .con{width:830px;clear:both;margin:50px auto 40px auto;zoom:1;overflow:hidden;}
+.con2{width:830px;clear:both;margin:50px auto 40px auto;zoom:1;position:relative;}
 
 #LinkBox{width:158px;border:1px solid #C4C4C4;position:absolute;background-color:#fff;line-height:25px;top:80px;left:725px;border-radius:4px;box-shadow:0 5px 7px rgba(0,0,0,0.15);z-index:15;display:none;}
 #LinkBox a.links1{background:url(../images/sign16.png) 12px center no-repeat;padding:7px 7px 7px 37px;border-bottom:1px solid #c4c4c4;display:block;color:#333;cursor:pointer;}
@@ -223,6 +233,14 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
 .tab1 td{padding-bottom:20px;}
 .tab1 .imgstyle{width:100;height:100px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
+
+.tab2{width:100%;overflow:hidden;line-height:25px;border-left:1px solid #ddd;border-top:1px solid #ddd;background-color:#fff;margin-top:20px;}
+.tab2 th{background:url("../images/sign19.png") left top repeat-x;line-height:39px;color:#707070;border-right:1px solid #ddd;border-bottom:1px solid #ddd;padding-left:15px;text-align:left;}
+.tab2 td{line-height:20px;color:#707070;border-right:1px solid #ddd;border-bottom:1px solid #ddd;padding:8px 0px 8px 15px;}
+.tab2 a{color:#00A0E3;}
+.tab2 a:hover{color:#005580;}
+.tab2 .sign1{width:12px;height:12px;background:url("../images/sign20.png") left top no-repeat;display:block;}
+.tab2 .tr.trbg{background-color:#F9F9F9;}
 
 .phone{width:288px;height:455px;position:absolute;left:50%;margin-left:-144px;bottom:21px;background:url(../images/phone.png) left top no-repeat;}
 
