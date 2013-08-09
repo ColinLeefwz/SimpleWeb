@@ -7,6 +7,7 @@
     <th>女性用户数</th>
     <th>新浪微博</th>
     <th>QQ</th>	
+    <th>手机</th>
     <th>总用户数</th>
   </tr>
   <% @user_days.each do |user_day| %>
@@ -25,6 +26,9 @@
       </td>
       <td>
         <%= user_day["qq"].to_i  %>    （ <%= user_day.qq_ratio %> ） 
+      </td>
+      <td>
+        <%= user_day.phone %>
       </td>
       <td>
         <%=link_to user_day.total.to_i, "/admin_user_days/users?id=#{user_day.id}"   %>
