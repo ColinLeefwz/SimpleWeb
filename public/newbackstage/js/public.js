@@ -278,7 +278,7 @@ function CouponPlane(){
 	}else if(runing=="checkboxs2"){
 		clearTimeout(CouponPlaneTimer);
 		$("div.box3inner").unbind();
-		$("div.box3plane1").css("top","-186px");
+		$("div.box3plane1").stop(true,true).css("top","-186px");
 		$("div.box3plane2").css("left","0px");
 		$("div.box3plane3").css("right","0px");
 	}
