@@ -1,5 +1,5 @@
 // JavaScript Document
-var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua;
+var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua,MessageDivTimer,CouponPlaneTimer,x0=0,x1=0;
 
 $(document).ready(function(){
 	windowWidth=$(window).width();
@@ -7,7 +7,7 @@ $(document).ready(function(){
 	windowHeight=$(window).height();
 	messageHeight=$("#Message").height();
 
-	ua=navigator.userAgent;
+	ua=navigator.userAgent.toLowerCase();
 	//ua="ipad";
 	if(windowWidth<=1024){
 		$("div.main").css("width","1024px");	
@@ -29,6 +29,24 @@ $(document).ready(function(){
 			$("div.main").css("width","100%");
 		}
 	});
+	
+	$("#CB1").click(function(){//取消动画
+		if($("#CB1").attr("class")=="checkboxs1"){
+			$("#CB1").removeClass("checkboxs1").addClass("checkboxs2");
+			runing="checkboxs2";
+			NavDiv();
+			CouponPlane();
+			MessageDiv();
+		}else if($("#CB1").attr("class")=="checkboxs2"){
+			$("#CB1").removeClass("checkboxs2").addClass("checkboxs1");
+			runing="checkboxs1";
+			NavDiv();
+			CouponPlane();
+			MessageDiv();
+		}
+	});
+	
+	
 	$("#OpenLinkBox").click(function(){
 		$("#LinkBox").stop().fadeIn(200).animate({"top":"60px"},300);
 	}).mouseout(function(){
@@ -78,32 +96,50 @@ function Dn2_divplane(){//首页：最新数据动画
 		$("#Dn2_b"+arr[i]).delay(500+80*i).animate({"top":"0px"},500);
 	}
 }
+
 function MessageDiv(){//消息通知框
-	$("#Message").css("top",-messageHeight+"px");
-	$(".header").css("overflow","visible");
-	$("#Message").animate({"top":"50px"},1000,function(){
-		setTimeout(function(){$("#Message").fadeOut(500,function(){
-			$("#Message").css({"top":-messageHeight+"px", "display":"block"});
-		});},8000);
-	});
-	$("#Message").mouseover(function(){
-		setTimeout(function(){$("#Message").fadeOut(500,function(){
-			$("#Message").css({"top":-messageHeight+"px", "display":"block"});
-		});},2000);
-	});
+	if(runing=="checkboxs1"){
+		$("#Message").css("top",-messageHeight+"px");
+		$(".header").css("overflow","visible");
+		$("#Message").animate({"top":"50px"},1000,function(){
+			MessageDivTimer=setTimeout(function(){$("#Message").fadeOut(500,function(){
+				$("#Message").css({"top":-messageHeight+"px", "display":"block"});
+			});},8000);
+		});
+		$("#Message").mouseover(function(){
+			MessageDivTimer=setTimeout(function(){$("#Message").fadeOut(500,function(){
+				$("#Message").css({"top":-messageHeight+"px", "display":"block"});
+			});},2000);
+		});
+	}else if(runing=="checkboxs2"){
+		clearTimeout(MessageDivTimer);
+		$("#Message").unbind();
+		$(".header").css("overflow","visible");
+		$("#Message").css({"top":"50px","display":"block"});
+	}
 }
 
 function NavDiv(){//菜单
-alert(runing);
+	windowWidth=$(window).width();
 	if(navmove=="on"){
-		$("#Nav").animate({"left":"-160px"},800);
+		$("#Nav").animate({"left":"-160px"},1000);
+		if(windowWidth<=1024){
+			$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+		}
 	}else{
 		$("#Btn").addClass("dis");
+		$("#Nav").stop(true).animate({"left":"0px"},250);
+		if(windowWidth<=1024){
+			$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+		}else{
+			$("div.main").css("width","100%");
+		}
 	}
-	if(runing!="checked"){
-		$(document).bind("mousemove",function(e){
-			if(navmove=="on"){
-				if(parseInt(e.pageX)<=160){
+	if(runing=="checkboxs1"){
+		if(/ipad/i.test(ua)){
+			$("#OpenNav").click(function(e){
+				if(navmove=="on"){
+					if($("#Nav").css("left")=="160px") return false;
 					$("#Nav").stop(true).animate({"left":"0px"},250);
 					windowWidth=$(window).width();
 					if(windowWidth<=1024){
@@ -111,41 +147,78 @@ alert(runing);
 					}else{
 						$("div.main").css("width","100%");
 					}
-				}	
-			}
-		});
-		$("#Nav").bind("mouseout",function(e){
-			if(navmove=="on"){
-				$("#Nav").stop(true,true).animate({"left":"-160px"},250);
-				windowWidth=$(window).width();
-				if(windowWidth<=1024){
-					$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
-				}else{
-					$("div.main").css("width","100%");
 				}
-			}
-		});
-		$("#Btn").bind("click",function(){
+			});
+			$("#CloseNav").click(function(e){
+				if(navmove=="on"){
+					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
+					windowWidth=$(window).width();
+					if(windowWidth<=1024){
+						$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+					}else{
+						$("div.main").css("width","100%");
+					}
+				}
+				e.stopPropagation();
+			});			
+		}else{
+			$(document).mousemove(function(e){
+				if(navmove=="on"){
+					if(parseInt(e.pageX)<=160){
+						$("#Nav").stop(true).animate({"left":"0px"},250);
+						windowWidth=$(window).width();
+						if(windowWidth<=1024){
+							$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+						}else{
+							$("div.main").css("width","100%");
+						}
+					}	
+				}
+			});
+			$("#Nav").mouseout(function(e){
+				if(navmove=="on"){
+					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
+					windowWidth=$(window).width();
+					if(windowWidth<=1024){
+						$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+					}else{
+						$("div.main").css("width","100%");
+					}
+				}
+			});
+		}
+		
+		$("#Btn").click(function(){
 			if(navmove=="on"){
 				navmove="off";
 				$("#Btn").addClass("dis");
-				$("#Nav").unbind("mouseout");
-				$(document).unbind("mousemove");
+				$("#Nav").unbind();
+				$(document).unbind("mouseout");
+				$(document).unbind("mouseover");
+				$("#OpenNav").unbind();
+				$("#CloseNav").unbind();
+				$("#Nav").stop(true,true).css({"left":"0px"});
+				if(windowWidth<=1024){
+					$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+				}
 			}else if(navmove=="off"){
 				navmove="on";
 				$("#Btn").removeClass("dis");
-				$("#Nav").bind("mouseout",function(){$("#Nav").stop().animate({"left":"-160px"},250);});
-				$(document).bind("mousemove",function(e){
-					if(parseInt(e.pageX)<=160){
-						$("#Nav").stop().animate({"left":"0px"},250);
-					}
-				});
+				$("#Nav").unbind();
+				$(document).unbind("mouseout");
+				$(document).unbind("mouseover");
+				$("#OpenNav").unbind();
+				$("#CloseNav").unbind();
+				NavDiv();
 			}
 		});
-	}else if(running=="checked"){alert(1);
+	}else if(runing=="checkboxs2"){
 		$(document).unbind();
 		$("#Nav").unbind();
 		$("#Btn").unbind();
+		$("#OpenNav").unbind();
+		$("#CloseNav").unbind();
+		$("#Nav").stop(true,true).css("left","0px");	
 	}
 	
 }
@@ -166,14 +239,14 @@ function SlideDoor(obj,id){//滑动门二
 	$(obj).siblings().removeClass("hover").end().addClass("hover");
 	$("#Door"+id).siblings("ul.list2").css("display","none").end().show(500);
 }
-function CouponPlane(){//优惠券管理
-	if(runing!="checked"){
+function CouponPlane(){
+	if(runing=="checkboxs1"){
 		$("div.box3plane1").css("top","0px");
 		$("div.box3plane2").css("left","-186px");
 		$("div.box3plane3").css("right","-210px");
 	
-		if(/pad/i.test(ua)){
-			$("div.box3inner").bind("click",function(){
+		if(/ipad/i.test(ua)){
+			$("div.box3inner").click(function(){
 				var obj=$(this);
 				obj.siblings().find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
 				obj.siblings().find("div.box3plane2").css({"left":"-186px"});
@@ -182,7 +255,7 @@ function CouponPlane(){//优惠券管理
 				obj.find("div.box3plane2").stop(true,true).animate({"left":"0px"},600);
 				obj.find("div.box3plane3").stop(true,true).animate({"right":"0px"},600);
 				
-				setTimeout(function(){
+				CouponPlaneTimer=setTimeout(function(){
 					obj.find("div.box3plane2").css({"left":"-186px"});
 					obj.find("div.box3plane3").css({"right":"-210px"});
 					obj.find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
@@ -202,14 +275,13 @@ function CouponPlane(){//优惠券管理
 				$(this).find("div.box3plane1").stop(true,true).animate({"top":"0px"},1100,"expoout");
 			});
 		}
-	}else if(runing=="checked"){alert(1);
+	}else if(runing=="checkboxs2"){
+		clearTimeout(CouponPlaneTimer);
 		$("div.box3inner").unbind();
 		$("div.box3plane1").css("top","-186px");
 		$("div.box3plane2").css("left","0px");
 		$("div.box3plane3").css("right","0px");
 	}
-
-	
 }
 
 function Del(id){//问答系统管理：删除
@@ -281,7 +353,7 @@ function ShowDiv(){//问答系统管理：显示
 		}
 	}
 	x=0;
-	//alert(arr[0]+"   "+arr[1]+"   "+arr[2]+"   "+arr[3]+"   "+arr[4]+"   "+arr[5]+"   "+arr[6]+"   "+arr[7]);
+
 	var timer=setInterval(function(){
 			$("#Div"+arr[x]).fadeIn(650);
 			if(x!=num){
@@ -300,4 +372,13 @@ function DH(){//数据统计动画
 	$("#Dn2_b1,#Dn2_b3").animate({"height":"380px","top":"0px"},1300,"backinout");
 	$("div.box2left1").animate({"width":"620px"},1000,"backin");
 	$("div.box2right1").animate({"height":"380px"},1000,"backin");
+}
+function AllNoDH(){//取消动画
+	$(".header").css("overflow","visible");
+		$("#Nav").animate({"left":"0px"},250);
+	if(windowWidth<=1024){
+		$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
+	}else{
+		$("div.main").css("width","100%");
+	}
 }
