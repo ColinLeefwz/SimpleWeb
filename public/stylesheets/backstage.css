@@ -86,6 +86,9 @@ display: block;height: 43px;line-height: 43px;text-align: center;width: 122px;te
 .btn6{color:#5C6C7C;background:url("../images/sign17.png") right center no-repeat;margin-top:10px;float:left;
 padding-left:40px;font-size:14px;padding-right:25px;}
 
+.btn7{background:transparent url("../images/btn2.jpg") left -145px no-repeat;border:none;color: #FFFFFF;cursor: pointer;
+display: block;height: 43px;line-height: 43px;text-align: center;width: 122px;text-indent:-999em;}
+
 .btn_file1{position: absolute;width:60px;height:200px;left:150px;top:23px;filter:alpha(Opacity=0);Opacity:0;cursor:pointer;}
 .btn_file2{position: absolute;width:70px;height:200px;left:90px;top:23px;filter:alpha(Opacity=0);Opacity:0;z-index:2;cursor:pointer;}
 .btn_file3{position: absolute;width:70px;height:200px;left:22px;top:23px;filter:alpha(Opacity=0);Opacity:0;z-index:5;cursor:pointer;}
