@@ -1,12 +1,10 @@
 # coding: utf-8
 module ShopLinesHelper
   def show_time(time)
-    ts = time.split(':')
+    ts = time.split('/')
     case ts.length
     when 2
-      "第1天#{ts.join(':')}"
-    when 3
-      "第#{ts.shift}天#{ts.join(':')}"
+      "第#{ts[0]}天#{ts[1]}"
     else
       "时间错误"
     end
