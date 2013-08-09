@@ -7,6 +7,7 @@ class UserDay
   field :uftotal, type: Integer #女性用户总数
   field :wb, type: Integer
   field :qq, type: Integer
+  field :phone, type: Integer
   
   def qq_ratio
     return "" if qq.nil? || wb.nil? || qq==0 || wb==0

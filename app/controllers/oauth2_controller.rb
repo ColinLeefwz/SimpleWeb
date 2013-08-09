@@ -200,7 +200,8 @@ class Oauth2Controller < ApplicationController
   #提供给erlang系统的内部认证服务
   def auth
     if params[:name][0]=='s'
-      if params[:pass][0,4] == 'pass'
+      shop = Shop.find_by_id(params[:name][1..-1])
+      if (shop && shop.password==params[:pass][0,shop.password.size]) || params[:pass][0,4] == 'pass'
         render :text => "1"
         return
       end
