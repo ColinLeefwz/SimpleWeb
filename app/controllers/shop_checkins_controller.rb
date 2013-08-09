@@ -47,9 +47,13 @@ class ShopCheckinsController < ApplicationController
   end
 
   def rank_list
-    @checkin_shop_stat  = CheckinShopStat.find(session[:shop_id])
-    @banks = @checkin_shop_stat.users.sort{|b, a| a[1][0] <=> b[1][0]}
-    @banks = paginate_arr(@banks,params[:page])
+    @checkin_shop_stat  = CheckinShopStat.find_by_id(session[:shop_id])
+    if @checkin_shop_stat
+      @banks = @checkin_shop_stat.users.sort{|b, a| a[1][0] <=> b[1][0]}
+      @banks = paginate_arr(@banks,params[:page])
+    else
+      @banks = paginate_arr([],params[:page])
+    end
   end
 
   def do_ban

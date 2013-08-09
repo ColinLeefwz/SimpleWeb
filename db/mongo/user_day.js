@@ -7,6 +7,7 @@ var userDay = function(days){
     var total = 0;
     var wb = 0;
 	var qq =0;
+    var phone = 0;
 	
     db.users.find({
         _id: {
@@ -31,6 +32,8 @@ var userDay = function(days){
              wb += 1;
         if (user.qq!=null)
              qq += 1;
+        if (user.phone!=null)
+            phone += 1;
     })			 
 	
     db.user_days.insert({
@@ -39,6 +42,7 @@ var userDay = function(days){
         ftotal: ftotal,
 		wb: wb,
 		qq: qq,
+        phone: phone,
         total: total
     })
 }

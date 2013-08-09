@@ -9,18 +9,19 @@
 	<script src="/newbackstage/js/jquery.blocksit.min.js"></script>
 	<script src="/newbackstage/js/public.js"></script>
 	<script>
-		var num, runing=$("#CB1").attr("checked");
+		var num, navmove="on", runing;
 		$(document).ready(function(){
+			runing=$("#CB1").attr("class");
 			num=$("#Waterfall div.box4plane2").length;
 
-			if(runing!="checked"){
+			if(runing=="checkboxs1"){
 				NavDiv();
 				ShowDiv();
 				$(window).load(function(){
 					MessageDiv();
 				});
-			}else{
-				$(".header").css("overflow","visible");
+			}else if(runing=="checkboxs2"){
+				AllNoDH();
 			}
 			
 			$('#Waterfall').BlocksIt({
@@ -30,23 +31,7 @@
 				blockElement: 'div'
 			});				
 		});
-	
 	</script>
-	<!--script type="text/javascript">
-		(function(){
-			var mobile_host = "http://www.dface.cn/mini.html";
-			var userAgent = navigator.userAgent;
-			//判断设备      
-			if(/(mobile|wap|android)/i.test(userAgent)){
-				if(/pad/i.test(userAgent) || /ting/i.test(userAgent)){  
-					return;
-				}
-				window.location.replace(mobile_host);
-			}else{
-				return;
-			}
-		})();
-	</script-->
 </head>
 <body>
 	<div class="main">
@@ -63,10 +48,10 @@
 					<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
 				</div>
 			</div>
-			<img src="/newbackstage/images/line.png" class="sign" title="打开导航菜单"/>
+			<img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
 		</div>
 		<div id="Nav">
-			<a class="sign"></a>
+			<a class="sign" id="CloseNav"></a>
 			<div id="Navcon">
 				<a href="/newbackstage/index.html">首页</a>
 				<span class="navline"></span>
@@ -77,7 +62,7 @@
 				<span class="navline"></span>
 				<a href="/newbackstage/data_statistics1.html">数据统计</a>
 				<span class="navline"></span>
-				<label class="checkboxs1"><input type="checkbox" class="mr10" id="CB1" >取消动画</label>
+				<label id="CB1" class="checkboxs1">取消动画</label>
 				<span class="navline"></span>
 				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
 			</div>
