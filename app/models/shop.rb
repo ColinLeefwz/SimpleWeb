@@ -216,6 +216,11 @@ class Shop
     end
   end
 
+  #旅行社找合作商家的id
+  def self.find_by_tid(tid)
+    where({tid: tid}).limit(1).first
+  end
+
   def logo
     ShopLogo.shop_logo(id)
   end

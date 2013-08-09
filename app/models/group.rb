@@ -2,6 +2,7 @@
 # 旅行团
 class Group
   include Mongoid::Document
+#  field :_id  
   field :name #名称 ， 默认为"线路名称＋团号"
   field :code #团号
   field :pass #加入时的默认密码，可以没有
