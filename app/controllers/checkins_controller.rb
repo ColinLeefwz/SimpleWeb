@@ -15,7 +15,7 @@ class CheckinsController < ApplicationController
       return
     end
     if params[:sname][0,3]=="@@@"
-      render :json => {error: "没权限创建：params[:sname]"}.to_json
+      render :json => {error: "没权限创建：#{params[:sname]}"}.to_json
       return
     end
     if !is_kx_user?(session[:user_id])
@@ -47,7 +47,7 @@ class CheckinsController < ApplicationController
     begin
       cin = Checkin.find(params[:id])
     rescue
-      error_log "\nTry to delete non-exist checkin:#{params[:id]}, #{Time.now}"
+      Xmpp.error_nofity("#{session_user}.name:试图删除不存在的签到:params[:id]")
       render :json => {:deleted => params[:id]}.to_json
       return
     end

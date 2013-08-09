@@ -43,7 +43,7 @@ class UserLogosController < ApplicationController
     begin
       user_logo = UserLogo.find(params[:id])
     rescue
-      error_log "\nTry to delete non-exist logo:#{params[:id]}, #{Time.now}"
+      Xmpp.error_nofity("#{session_user}.name:试图删除不存在的头像:params[:id]")
       render :json => {:deleted => params[:id]}.to_json
       return
     end
@@ -65,6 +65,7 @@ class UserLogosController < ApplicationController
     change_head_logo = (user.head_logo_id==user_logo.id)
     if user_logo.destroy
       user.inc(:pcount, -1)
+      change_head_logo = true if !change_head_logo && user.head_logo_id != user.user_logos[0].id
       user.set(:head_logo_id, user.user_logos[0].id)  if change_head_logo
       expire_cache
       render :json => {:deleted => params[:id]}.to_json
