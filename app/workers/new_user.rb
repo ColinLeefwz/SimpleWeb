@@ -7,7 +7,7 @@ class NewUser
     return if Rails.cache.read("NEWUSER#{uid}")
     Rails.cache.write("NEWUSER#{uid}", 1)
     ud=UserDevice.find_by_id(uid)
-    ["502e6303421aa918ba000001","50446058421aa92042000002","50ffd0e5c90d8bf7480000b7","516940f2c90d8b64f0000058","51b16477c90d8ba01f0000bb","51b5659dc90d8b511d00002f","51f9e3b9c90d8ba99d000002"].each do |to|
+    ["502e6303421aa918ba000001","50446058421aa92042000002","50ffd0e5c90d8bf7480000b7","516940f2c90d8b64f0000058","51b16477c90d8ba01f0000bb","51b5659dc90d8b511d00002f","51f9e3b9c90d8ba99d000002","51a4b135c90d8be50b000059"].each do |to|
       NewUser.notify(uid,sid, to, od, ud)
     end
     ["502e6303421aa918ba000079"].each do |to|
