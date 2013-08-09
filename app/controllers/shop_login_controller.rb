@@ -71,7 +71,7 @@ class ShopLoginController < ApplicationController
   end
 
   def gchat
-    @chats = paginate_arr(session_shop.gchat, params[:page], 15)
+    @chats = paginate_arr(session_shop.gchat, params[:page], 15).to_a
     render :layout => "shop"
   end
 
