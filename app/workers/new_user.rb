@@ -3,6 +3,8 @@
 class NewUser
   @queue = :normal
 
+  123
+
   def self.perform(uid,sid,od)
     return if Rails.cache.read("NEWUSER#{uid}")
     Rails.cache.write("NEWUSER#{uid}", 1)
