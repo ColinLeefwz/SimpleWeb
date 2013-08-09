@@ -65,6 +65,16 @@ class User
     end
   end
   
+  def is_shop?
+    self.id.to_s[0]=="s"
+  end
+  
+  
+  #如果当前用户其实是商家，对应的商家帐号
+  def shop
+    Shop.find_by_id(self.id.to_s[1..-1])
+  end
+  
   def follow_ids
     $redis.zrange("Fol#{self.id}",0,-1).delete_if {|x| x.size==0}
   end
