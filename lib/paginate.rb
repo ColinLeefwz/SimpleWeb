@@ -25,7 +25,7 @@ module Paginate
     @page =  page ? page.to_i : 1
     @pcount =  pcount ? pcount.to_i : 15
     skip = (@page - 1)*@pcount
-    array[skip, @pcount]
+    array[skip, @pcount].to_a
   end
 
   def paginate(model, page =1, hash = {}, sort={}, pcount = 15)
@@ -47,7 +47,7 @@ module Paginate
     @last_page = (@total_entries+@pcount-1)/@pcount
     @page = @last_page if  @page > @last_page && @page > @last_page
     skip = (@page - 1)*@pcount
-    model_or_array[skip, @pcount]
+    model_or_array[skip, @pcount].to_a
   end
 
 
