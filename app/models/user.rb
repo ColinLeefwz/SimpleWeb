@@ -58,6 +58,7 @@ class User
       u.name = shop.name
       u.password = shop.password
       u.head_logo_id = shop.logo.id
+      u.phone = u.id
       u
     else
       nil
