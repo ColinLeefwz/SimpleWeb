@@ -18,7 +18,7 @@ class InitController < ApplicationController
     else
       UserDevice.update_redis(session[:user_id],session[:os],ver)
     end
-    if "502e6303421aa918ba000001" == session[:user_id].to_s
+    if session[:user_id] && ( "502e6303421aa918ba000001" == session[:user_id].to_s || "s" == session[:user_id].to_s[0])
       ip = $web_ips[2]
     else
       ip = $web_ip

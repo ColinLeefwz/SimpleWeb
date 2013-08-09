@@ -75,6 +75,14 @@ class PhoneController < ApplicationController
   
   def login
     user = User.where({phone: params[:phone]}).first
+    if user.nil? && params[:phone] && params[:phone].size<11
+      shop = Shop.find_by_id( params[:phone])
+      if shop && shop.password == params[:password]
+        session[:user_id] = "s#{shop.id}"
+    	  render :json => User.find_by_id(session[:user_id]).output_self.to_json
+        return
+      end
+    end
     if user.nil? || user.password.nil? || user.password != slat_hash_pass(params[:password])
       render :json => {"error"=>"手机号码或者密码不正确"}.to_json
       return      
