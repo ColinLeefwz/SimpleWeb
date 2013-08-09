@@ -4,7 +4,7 @@ class XshopController < ApplicationController
   def create
     errmsg = blank_check(:name, :id, :lat, :lng)
     return render :json => {error: errmsg} if errmsg
-    return render :json => {error:  "id已有"} if Shop.where(tid: params[:id].to_i).limit(1).first
+    return render :json => {error:  "id已有"} if Shop.find_by_tid(params[:id].to_i)
     shop = Shop.new(name: params[:name], lo: [params[:lat].to_f, params[:lng].to_f], t: params[:type], tid: params[:id] )
     shop.city = shop.get_city
     shops = Shop.similar_shops(shop, 75)
@@ -29,9 +29,8 @@ class XshopController < ApplicationController
   end
 
   def find
-    errmsg = blank_check(:id)
-    return render :json => {error: errmsg} if errmsg
-    shop = Shop.where(tid: params[:id].to_i).limit(1).first
+    return render :json => {error: "id必填"} if params[:id].blank?
+    shop = Shop.find_by_tid(params[:id])
     if shop
       render :json => shop.travel_attrs
     else
