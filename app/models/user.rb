@@ -169,7 +169,7 @@ class User
   
 
   def attr_with_id
-    hash = self.attributes.merge({id: self._id, password: self.password})
+    hash = self.attributes.merge({id: self._id, "password" => self.password})
     hash.delete("_id")
     hash.delete("psd")
     hash.delete("qq")
