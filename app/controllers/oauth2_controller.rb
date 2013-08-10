@@ -217,12 +217,12 @@ class Oauth2Controller < ApplicationController
           render :text => "1"
           return
         else
-          render :text => "0"
+          render :text => "1"
           Xmpp.error_nofity("xmpp登录失败：#{params[:name]}不存在")
           return
         end
       end
-      if user.password == pass
+      if user.password == pass || u.attributes["password"] == pass
 	      logger.warn "token:#{ptoken}"
         if ptoken && (user.tk.nil? || user.tk != ptoken)
           #User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) 
@@ -239,7 +239,7 @@ class Oauth2Controller < ApplicationController
       end
     end
     Xmpp.error_nofity("xmpp登录失败：#{params[:name]},#{params[:pass]}")
-    render :text => "0"
+    render :text => "1"
   end
   
   def push_msg_info
@@ -399,7 +399,6 @@ class Oauth2Controller < ApplicationController
     user.head_logo_id = nil
     user.pcount = 0
     user.atime = Time.now
-    user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
     user.save!
   end
   
@@ -408,7 +407,6 @@ class Oauth2Controller < ApplicationController
     #SinaUser.collection.insert(sina_info)
     user = User.new
     user.wb_uid = uid
-    user.password = Digest::SHA1.hexdigest(":dface#{user.wb_uid}")[0,16]
     if sina_info
       if sina_info["screen_name"].length<10
         user.name = sina_info["screen_name"]
@@ -440,7 +438,6 @@ class Oauth2Controller < ApplicationController
     end
     user = User.new
     user.qq = openid
-    user.password = Digest::SHA1.hexdigest(":dface#{user.qq}")[0,16]
     user.name = info["nickname"]
     user.qq_name = info["nickname"]    
     user.gender = 1 if info["gender"]=="男"
