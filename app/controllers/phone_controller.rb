@@ -9,18 +9,19 @@ class PhoneController < ApplicationController
     #if user
     #  render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
     #end
+    fake = (params[:phone][0,3]=="000")
     if Rails.env == "production"
       code = rand(999999).to_s
-      code = "13579" if params[:phone][0,3]=="000"
+      code = "13579" if fake
     else
       code = "123456"
     end
-    if params[:phone].size != 11 || params[:phone].to_i<10000000000
+    if !fake && (params[:phone].size != 11 || params[:phone].to_i<10000000000)
       render :json => {"error" => "#{params[:phone]}不是有效的手机号码。"}.to_json
       return
     end
     sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
-    Resque.enqueue(SmsSender, params[:phone], sms )
+    Resque.enqueue(SmsSender, params[:phone], sms )  unless fake
     session[:phone_code] = code
     render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json
   end
