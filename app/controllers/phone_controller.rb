@@ -39,7 +39,6 @@ class PhoneController < ApplicationController
     user = User.new
     user.phone = params[:phone]
     user.psd = slat_hash_pass(params[:password])
-    user.password = slat_hash_pass(params[:password])
     user.name = "" #user.phone
     user.save!
     data = {:id => user.id, :password => user.password, :phone => user.phone}
@@ -63,7 +62,6 @@ class PhoneController < ApplicationController
       return      
     end
     user.psd = slat_hash_pass(params[:password])
-    user.password = slat_hash_pass(params[:password])
     user.save!
     session[:user_id] = user.id
     render :json => user.safe_output.to_json
@@ -76,7 +74,6 @@ class PhoneController < ApplicationController
       return
     end
     user.psd = slat_hash_pass(params[:password])
-    user.password = slat_hash_pass(params[:password])
     user.save!
     render :json => user.safe_output.to_json
   end
@@ -116,7 +113,6 @@ class PhoneController < ApplicationController
     #    end
     user = session_user_no_cache
     user.psd = slat_hash_pass(params[:password])    
-    user.password = slat_hash_pass(params[:password])
     user.phone = params[:phone]
     user.save!
     render :json => {bind: true}.to_json
