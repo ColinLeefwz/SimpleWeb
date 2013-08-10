@@ -12,7 +12,7 @@ class User
   field :name # 昵称，最多10个字符
   field :gender, type: Integer #性别
   field :birthday #生日
-  field :password #密码
+  #field :password #不再保存该密码，TODO：等稳定后删除数据库的中password
   field :psd #手机登录用户设置的密码
   field :invisible, type: Integer #隐身模式，1对陌生人隐身，2对所有人隐身
   field :signature #签名
@@ -70,6 +70,10 @@ class User
     self.id.to_s[0]=="s"
   end
   
+  #登录Xmpp服务器的密码
+  def password
+    Digest::SHA1.hexdigest(":dface#{self.id}")[0,16]
+  end
   
   #如果当前用户其实是商家，对应的商家帐号
   def shop
@@ -163,7 +167,7 @@ class User
   
 
   def attr_with_id
-    hash = self.attributes.merge({id: self._id})
+    hash = self.attributes.merge({id: self._id, password: self.password})
     hash.delete("_id")
     hash.delete("psd")
     hash.delete("qq")
