@@ -6,6 +6,7 @@ class UserInfoController < ApplicationController
   before_filter :user_login_filter, :except => [:photos, :logo ]
   before_filter :user_is_session_user, :only => [:get_comment_names]
   
+  #deprecate
   def get
     render :json => user_info_cache(params[:id],session[:user_id])
   end
