@@ -38,6 +38,7 @@ class PhoneController < ApplicationController
     end
     user = User.new
     user.phone = params[:phone]
+    user.psd = slat_hash_pass(params[:password])
     user.password = slat_hash_pass(params[:password])
     user.name = "" #user.phone
     user.save!
@@ -61,6 +62,7 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"手机号码不存在"}.to_json
       return      
     end
+    user.psd = slat_hash_pass(params[:password])
     user.password = slat_hash_pass(params[:password])
     user.save!
     session[:user_id] = user.id
@@ -69,10 +71,11 @@ class PhoneController < ApplicationController
   
   def change_password
     user = session_user
-    if params[:oldpass].nil? || user.password != slat_hash_pass(params[:oldpass])
+    if params[:oldpass].nil? || user.psd != slat_hash_pass(params[:oldpass])
       render :json => {"error"=>"原密码输入错误"}.to_json
       return
     end
+    user.psd = slat_hash_pass(params[:password])
     user.password = slat_hash_pass(params[:password])
     user.save!
     render :json => user.safe_output.to_json
@@ -88,7 +91,7 @@ class PhoneController < ApplicationController
         return
       end
     end
-    if user.nil? || user.password.nil? || user.password != slat_hash_pass(params[:password])
+    if user.nil? || user.psd != slat_hash_pass(params[:password])
       render :json => {"error"=>"手机号码或者密码不正确"}.to_json
       return      
     end
@@ -112,6 +115,7 @@ class PhoneController < ApplicationController
     #      return
     #    end
     user = session_user_no_cache
+    user.psd = slat_hash_pass(params[:password])    
     user.password = slat_hash_pass(params[:password])
     user.phone = params[:phone]
     user.save!
