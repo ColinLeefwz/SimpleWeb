@@ -11,8 +11,9 @@ class UserFollow
       return if uf.follows.find{|x| x.to_s==fid.to_s}
       uf.add_to_set(:follows, fid)
       uf.del_my_cache
+      return true
     rescue Mongoid::Errors::DocumentNotFound => e
-      first_add(uid, [fid])
+      return first_add(uid, [fid])
     end
     uf
   end
@@ -28,7 +29,7 @@ class UserFollow
     uf = UserFollow.new
     uf.id = uid
     uf.follows = follows
-    uf.save!
+    uf.save
   end
   
   def self.add(uid,fid)
