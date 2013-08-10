@@ -211,7 +211,7 @@ class Oauth2Controller < ApplicationController
         pass = pass[0..-66]
       end
       user = User.find_by_id(params["name"])
-      if user && user.password == pass
+      if user && (user.password == pass || user.old_password == pass)
         render :text => "1"
         update_token0(params[:name], params[:pass])
         return
