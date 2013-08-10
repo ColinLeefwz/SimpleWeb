@@ -217,9 +217,7 @@ class Oauth2Controller < ApplicationController
         return
       end
     end
-    if params[:name].size!=24 || params[:pass].size!=16+65
-      Xmpp.error_nofity("xmpp登录失败：#{params[:name]},#{params[:pass]}")
-    end
+    Xmpp.error_nofity("xmpp登录失败：#{params[:name]},#{params[:pass]}")
     render :text => "1"
   end
   
@@ -443,21 +441,7 @@ class Oauth2Controller < ApplicationController
   
   def update_token0(id,pass)
     if pass.length>(1+64) #硬编码了token的长度：64
-      ptoken = pass[-65..-1]
-      pass = pass[0..-66]
-      user = User.find_by_id(id)
-      user = User.find_primary(id) if user.nil?
-      return if user.password != pass
-      if ptoken && (user.tk.nil? || user.tk != ptoken)
-        #User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) 
-        ptoken = ptoken[0,33] if ptoken[0]=="3" #个推的cid为32位
-        if ptoken[0]=="4" #百度云推送
-          len = ptoken.rindex(",")
-          ptoken = ptoken[0,len]
-        end
-        user.update_attribute(:tk, ptoken)
-        user.del_my_cache
-      end
+      Resque.enqueue(TokenUpdate, id, pass)
     end
   end
   
