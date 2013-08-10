@@ -89,7 +89,7 @@ class PhoneTest < ActionDispatch::IntegrationTest
     post "/phone/forgot_password",{phone: phone1, code: code, password: '123456789'}
     assert_response :success
     data = JSON.parse(response.body)
-    assert_equal(user.reload.password, Digest::SHA1.hexdigest(":dFace.#{123456789}@cn")[0,16])
+    assert_equal(user.reload.psd, Digest::SHA1.hexdigest(":dFace.#{123456789}@cn")[0,16])
 
     #清空session
     session.destroy
@@ -113,14 +113,14 @@ class PhoneTest < ActionDispatch::IntegrationTest
     assert_response :success
     data = JSON.parse(response.body)
     assert_equal({"error"=>"原密码输入错误"}, data)
-    assert_equal(user.reload.password, Digest::SHA1.hexdigest(":dFace.123456789@cn")[0,16])
+    assert_equal(user.reload.psd, Digest::SHA1.hexdigest(":dFace.123456789@cn")[0,16])
  
     #修改密码， 原始密码正确
     post "/phone/change_password", {oldpass: "123456789", password: '123qwe'}
     assert_response :success
     data = JSON.parse(response.body)
     assert_equal data["id"], user.id.to_s
-    assert_equal(user.reload.password, Digest::SHA1.hexdigest(":dFace.123qwe@cn")[0,16])
+    assert_equal(user.reload.psd, Digest::SHA1.hexdigest(":dFace.123qwe@cn")[0,16])
 
     #退出，新密码登录
     logout
