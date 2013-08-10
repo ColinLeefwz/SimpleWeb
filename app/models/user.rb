@@ -13,6 +13,7 @@ class User
   field :gender, type: Integer #性别
   field :birthday #生日
   field :password #密码
+  field :psd #手机登录用户设置的密码
   field :invisible, type: Integer #隐身模式，1对陌生人隐身，2对所有人隐身
   field :signature #签名
   field :job #职业说明
@@ -164,6 +165,7 @@ class User
   def attr_with_id
     hash = self.attributes.merge({id: self._id})
     hash.delete("_id")
+    hash.delete("psd")
     hash.delete("qq")
     hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
     hash.delete("wb_uid") if self.wb_hidden  == 2  
@@ -665,6 +667,12 @@ class User
       '射手座'
     when (month == 12 && day >= 22) || (month == 01 && day <= 20)
       '魔蝎座'
+    end
+  end
+  
+  def self.migrate_phone_password
+    User.where({phone:{"$exists" => true}, psd:{"$exists" => false}}).each do |user|
+      user.set(:psd, user.password)
     end
   end
 
