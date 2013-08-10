@@ -208,37 +208,21 @@ class Oauth2Controller < ApplicationController
     else
       pass = params[:pass]
       if pass.length>(1+64) #硬编码了token的长度：64
-	      ptoken = params[:pass][-65..-1]
         pass = pass[0..-66]
       end
       user = User.find_by_id(params["name"])
-      if user.nil?
-        if Time.now.to_i-params["name"].to_s[0,8].to_i(16) < 3600
-          render :text => "1"
-          return
-        else
-          render :text => "1"
-          Xmpp.error_nofity("xmpp登录失败：#{params[:name]}不存在")
-          return
-        end
-      end
-      if user.password == pass || u.attributes["password"] == pass
-	      logger.warn "token:#{ptoken}"
-        if ptoken && (user.tk.nil? || user.tk != ptoken)
-          #User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) 
-          ptoken = ptoken[0,33] if ptoken[0]=="3" #个推的cid为32位
-          if ptoken[0]=="4" #百度云推送
-            len = ptoken.rindex(",")
-            ptoken = ptoken[0,len]
-          end
-          user.update_attribute(:tk, ptoken)
-          user.del_my_cache
-        end
+      if user && user.password == pass
         render :text => "1"
+        update_token0(params[:name], params[:pass])
         return
       end
     end
     Xmpp.error_nofity("xmpp登录失败：#{params[:name]},#{params[:pass]}")
+    render :text => "1"
+  end
+  
+  def update_token
+    update_token0(params[:id], params[:pass])
     render :text => "1"
   end
   
@@ -452,6 +436,26 @@ class Oauth2Controller < ApplicationController
       return ActiveSupport::JSON.decode(info)
     rescue Exception => e
       return nil
+    end
+  end
+  
+  def update_token0(id,pass)
+    if pass.length>(1+64) #硬编码了token的长度：64
+      ptoken = pass[-65..-1]
+      pass = pass[0..-66]
+      user = User.find_by_id(id)
+      user = User.find_primary(id) if user.nil?
+      return if user.password != pass
+      if ptoken && (user.tk.nil? || user.tk != ptoken)
+        #User.collection.find({_id:user._id}).update("$set" => {tk:ptoken}) 
+        ptoken = ptoken[0,33] if ptoken[0]=="3" #个推的cid为32位
+        if ptoken[0]=="4" #百度云推送
+          len = ptoken.rindex(",")
+          ptoken = ptoken[0,len]
+        end
+        user.update_attribute(:tk, ptoken)
+        user.del_my_cache
+      end
     end
   end
   
