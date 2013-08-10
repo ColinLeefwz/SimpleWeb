@@ -217,7 +217,9 @@ class Oauth2Controller < ApplicationController
         return
       end
     end
-    Xmpp.error_nofity("xmpp登录失败：#{params[:name]},#{params[:pass]}")
+    if params[:name].size!=24 || params[:pass].size!=16+65
+      Xmpp.error_nofity("xmpp登录失败：#{params[:name]},#{params[:pass]}")
+    end
     render :text => "1"
   end
   
