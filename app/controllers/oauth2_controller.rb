@@ -203,7 +203,7 @@ class Oauth2Controller < ApplicationController
       shop = Shop.find_by_id(params[:name][1..-1])
       if (shop && shop.password==params[:pass][0,shop.password.size]) || params[:pass][0,4] == 'pass'
         render :text => "1"
-        return
+        return    
       end
     else
       pass = params[:pass]
@@ -212,7 +212,16 @@ class Oauth2Controller < ApplicationController
         pass = pass[0..-66]
       end
       user = User.find_by_id(params["name"])
-      user = User.find_primary(params["name"]) if user.nil?
+      if user.nil?
+        if Time.now.to_i-params["name"].to_s[0,8].to_i(16) < 3600
+          render :text => "1"
+          return
+        else
+          render :text => "0"
+          Xmpp.error_nofity("xmpp登录失败：#{params[:name]}不存在")
+          return
+        end
+      end
       if user.password == pass
 	      logger.warn "token:#{ptoken}"
         if ptoken && (user.tk.nil? || user.tk != ptoken)
@@ -229,6 +238,7 @@ class Oauth2Controller < ApplicationController
         return
       end
     end
+    Xmpp.error_nofity("xmpp登录失败：#{params[:name]},#{params[:pass]}")
     render :text => "0"
   end
   
