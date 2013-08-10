@@ -15,6 +15,10 @@ class PhoneController < ApplicationController
     else
       code = "123456"
     end
+    if params[:phone].size != 11 || params[:phone].to_i<10000000000
+      render :json => {"error" => "#{params[:phone]}不是有效的手机号码。"}.to_json
+      return
+    end
     sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
     Resque.enqueue(SmsSender, params[:phone], sms )
     session[:phone_code] = code
