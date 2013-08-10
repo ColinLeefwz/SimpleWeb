@@ -8,6 +8,7 @@ class AroundmeController < ApplicationController
     if session_user.is_shop?
       ret = [session_user.shop.safe_output_with_users]
       render :json =>  ret.to_json
+      return
     end
     lo = [params[:lat].to_f,params[:lng].to_f]
     gps = nil
