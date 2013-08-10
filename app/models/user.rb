@@ -72,6 +72,8 @@ class User
   
   #登录Xmpp服务器的密码
   def password
+    pass = self.attributes["password"]
+    return pass if pass
     Digest::SHA1.hexdigest(":dface#{self.id}")[0,16]
   end
   
