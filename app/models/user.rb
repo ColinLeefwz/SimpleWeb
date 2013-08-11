@@ -111,7 +111,7 @@ class User
   def self.find_by_phone(phone)
     uid = $redis.get("P:#{phone}")
     return User.find_by_id(uid) if uid
-    user = User.where({phone: params[:phone]}).first
+    user = User.where({phone: phone}).first
     $redis.set("P:#{phone}", user.id) if user
     user
   end
