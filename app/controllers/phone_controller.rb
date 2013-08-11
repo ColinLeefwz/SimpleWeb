@@ -31,7 +31,7 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"验证码错误"}.to_json
       return
     end
-    user = User.where({phone: params[:phone]}).first
+    user = User.find_by_phone(params[:phone])
     if user
       render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
       return      
@@ -57,8 +57,9 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"验证码错误"}.to_json
       return
     end
-    user = User.where({phone: params[:phone]}).first
+    user = User.find_by_phone(params[:phone])
     if user.nil?
+      Xmpp.error_nofity("忘记密码时，手机号验证通过，但是数据库中没有这个号码")
       render :json => {"error"=>"手机号码不存在"}.to_json
       return      
     end
@@ -107,7 +108,7 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"验证码错误"}.to_json
       return
     end
-    user = User.where({phone: params[:phone]}).first
+    user = User.find_by_phone(params[:phone])
     if user
       render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
       return      

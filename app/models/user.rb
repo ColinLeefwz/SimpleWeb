@@ -92,25 +92,28 @@ class User
     Shop.find_by_id(self.id.to_s[1..-1])
   end
   
-  def self.find_by_qq(qq)
+  def self.find_by_qq(qq, redis_only=true)
     uid = $redis.get("Q:#{qq}")
     return User.find_by_id(uid) if uid
+    return nil if redis_only
     user = User.where({qq: qq}).first
     $redis.set("Q:#{qq}", user.id) if user
     user
   end
   
-  def self.find_by_wb(wb_uid)
+  def self.find_by_wb(wb_uid, redis_only=true)
     uid = $redis.get("W:#{wb_uid}")
     return User.find_by_id(uid) if uid
+    return nil if redis_only
     user = User.where({wb_uid:wb_uid}).first
     $redis.set("W:#{wb_uid}", user.id) if user
     user
   end
   
-  def self.find_by_phone(phone)
+  def self.find_by_phone(phone, redis_only=true)
     uid = $redis.get("P:#{phone}")
     return User.find_by_id(uid) if uid
+    return nil if redis_only
     user = User.where({phone: phone}).first
     $redis.set("P:#{phone}", user.id) if user
     user
