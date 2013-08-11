@@ -107,12 +107,18 @@ class Oauth2Controller < ApplicationController
   def qq_client
     openid = params[:openid]
     token = params[:access_token]
+    if openid.size!=32 && token.size!=32
+      #发现恶意攻击
+      #/oauth2/qq_client.json  {"openid"=>"7776000", "expires_in"=>"", "bind"=>"0", "hash"=>"f4da7cf73614aeade44424ebfe3fe8a4", "access_token"=>"2DA96569EF12E2E527891397817D67A9", "controller"=>"oauth2", "action"=>"qq_client", "format"=>"json"}
+      Xmpp.error_notify("QQ openid:#{openid}不是32位, token:#{token}") if rand(100)>90
+      render :json => {error: "QQ Error:#{openid},#{token}"}.to_json
+      return
+    end
     hash = Digest::SHA1.hexdigest("#{openid}#{token}dface")[0,32]
     if hash != params[:hash][0,32]
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
-    Xmpp.error_notify("QQ openid:#{openid}不是32位") if openid.size!=32
     data = {qq_openid:openid}
     if params[:bind].to_i==1
       bind_qq(openid,token,params[:expires_in], data)
