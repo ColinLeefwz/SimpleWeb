@@ -351,6 +351,7 @@ class Oauth2Controller < ApplicationController
       end
       #TODO: 调用https://graph.qq.com/oauth2.0/me?access_token= 来判断openid的真实性。
       session_user_no_cache.update_attribute(:qq, openid)
+      $redis.set("Q:#{openid}", session[:user_id])
       info = get_qq_user_info(openid,token)
       user.update_attribute(:qq_name,info["nickname"]) if info && info["ret"]==0
       do_login_qq_done(session_user_no_cache,token,expires_in,data)
@@ -366,7 +367,7 @@ class Oauth2Controller < ApplicationController
   end
 
   def do_login_qq(openid,token,expires_in,data)
-    user = User.where({qq: openid}).first
+    user = User.find_by_qq(openid)
     if user.nil?
       user = gen_new_user_qq(openid,token)
       return if user.nil?
@@ -432,6 +433,7 @@ class Oauth2Controller < ApplicationController
     user.gender = 1 if info["gender"]=="男"
     user.gender = 2 if info["gender"]=="女"
     user.save!
+    $redis.set("Q:#{openid}", user.id)
     user
   end  
   
