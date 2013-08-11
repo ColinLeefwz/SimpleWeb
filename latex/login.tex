@@ -209,6 +209,8 @@ POST & \multicolumn{3}{|c|}{/phone/init} \\
 \hline
  phone  & 字符串 & 必须 &  用户的手机号码\\
 \hline
+ type  & 整数 & 可选 &  1代表注册，2代表绑定，3代表忘记密码\\
+\hline
 \end{tabular}
    \end{center}
 \end{table}
@@ -221,6 +223,8 @@ POST & \multicolumn{3}{|c|}{/phone/init} \\
 用户注册输入验证码时，客户端要先判断验证码的HASH是否正确。
 
 手机号码注册／忘记密码／绑定手机号码都要先调用本接口获取验证码。
+
+[3013-08-11] 增加type参数，表示请求手机验证码的类型
 
 \subsubsection{手机号码注册}
 \label{hash_algorithm}
