@@ -95,7 +95,7 @@ class User
   def self.find_by_qq(qq)
     uid = $redis.get("Q:#{qq}")
     return User.find_by_id(uid) if uid
-    user = User.where({qq: openid}).first
+    user = User.where({qq: qq}).first
     $redis.set("Q:#{qq}", user.id) if user
     user
   end
