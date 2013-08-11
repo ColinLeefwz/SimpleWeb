@@ -209,6 +209,11 @@ class Oauth2Controller < ApplicationController
       pass = params[:pass]
       if pass.length>(1+64) #硬编码了token的长度：64
         pass = pass[0..-66]
+        if params[:name].size==24 && pass.size==16
+          #TODO: 暂时放松对xmpp登录的验证
+          render :text => "1"
+          return
+        end
       end
       user = User.find_by_id(params["name"])
       if user && (user.password == pass || user.old_password == pass)
