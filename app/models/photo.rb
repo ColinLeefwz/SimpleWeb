@@ -104,7 +104,7 @@ class Photo
     if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s)
       message = coupon.send_coupon(user_id,self.id)
       return message if ENV["RAILS_ENV"] != "production"
-      Resque.enqueue(XmppNotice, self.room,user_id,"收到一张分享优惠券: #{coupon.name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
+      Resque.enqueue(XmppNotice, self.room,user_id,"恭喜#{user.name}！收到一张分享优惠券: #{coupon.name},马上领取吧！","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
     end
     return nil
   end

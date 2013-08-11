@@ -63,7 +63,7 @@ class CheckinNotice
     if sid==$llcf.to_s
       c = Coupon.find_by_id("5170b35820f318bbab00000c")
       c.send_coupon(uid) if c
-      Resque.enqueue(XmppNotice, sid,uid, "收到1张优惠券: #{c.name}","coupon#{Time.now.to_i}")
+      Resque.enqueue(XmppNotice, sid,uid, "恭喜！收到1张优惠券: #{c.name}, 马上领取吧！","coupon#{Time.now.to_i}")
     end
   end
   
