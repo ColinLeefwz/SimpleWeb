@@ -93,7 +93,9 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 21. 每个用户的个人相关信息，"UF#{uid}", 类型为HASH，键值包括:os/ver等。
 22. 每张优惠券的下载数量，"CPD#{coupon_id}", 类型为整数字符串。
 23. 每日陪聊用户统计, "PL#{date}#{uid}", 类型为set，值为新用户id。
-24. 城市／国家code到名称的映射，CityName#{code}"和"CountryName#{code}"
+24. 城市／国家code到名称的映射，CityName#{code}"和"CountryName#{code}"。
+25. 用户的qq到用户id的映射，"Q:#{openid}"
+26. 用户的手机号码到用户id的映射，"P:#{phone}"
 
 
 

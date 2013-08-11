@@ -93,7 +93,11 @@ class User
   end
   
   def self.find_by_phone(phone)
-    User.where({phone: params[:phone]}).first
+    uid = $redis.get("P:#{phone}")
+    return User.find_by_id(uid) if uid
+    user = User.where({phone: params[:phone]}).first
+    $redis.set("P:#{phone}", user.id) if user
+    user
   end
   
   def follow_ids
@@ -702,4 +706,10 @@ class User
     end
   end
 
+  def self.init_phone_redis
+    User.where({phone:{"$exists" => true}}).each do |user|
+      $redis.set("P:#{user.phone}", user.id)
+    end
+  end
+  
 end
