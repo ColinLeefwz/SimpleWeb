@@ -96,6 +96,7 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 24. 城市／国家code到名称的映射，CityName#{code}"和"CountryName#{code}"。
 25. 用户的qq到用户id的映射，"Q:#{openid}"
 26. 用户的手机号码到用户id的映射，"P:#{phone}"
+27. 用户的微博uid到用户id的映射，"P:#{wb_uid}"
 
 
 
