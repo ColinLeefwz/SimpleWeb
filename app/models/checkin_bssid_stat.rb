@@ -30,7 +30,7 @@ class CheckinBssidStat
     end
     add_bssid_redis(bssid,sid)
     if b.is_mobile_wifi
-      Xmpp.error_nofity("发现移动wifi：#{ssid},#{bssid}, 签到商家个数#{b.shop_ids.size}")
+      Xmpp.error_notify("发现移动wifi：#{ssid},#{bssid}, 签到商家个数#{b.shop_ids.size}")
       b.set(:mobile, true)
       $redis.del("BSSID#{bssid}")
     end

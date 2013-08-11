@@ -43,7 +43,7 @@ class Photo
   
   def after_async_store
     if img.url.nil?
-      Xmpp.error_nofity("图片async处理时img:#{img}的url为空")      
+      Xmpp.error_notify("图片async处理时img:#{img}的url为空")      
       return
     end
     send_wb if weibo
@@ -169,7 +169,7 @@ class Photo
   def add_to_checkin
     cin = find_checkin
     if cin.nil?
-      Xmpp.error_nofity("not checkined, but has photo upoladed, photo.id:#{self.id}")      
+      Xmpp.error_notify("not checkined, but has photo upoladed, photo.id:#{self.id}")      
       return
     end
     cin.push(:photos, self.id)
