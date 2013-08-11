@@ -59,7 +59,7 @@ class PhoneController < ApplicationController
     end
     user = User.find_by_phone(params[:phone])
     if user.nil?
-      Xmpp.error_nofity("忘记密码时，手机号验证通过，但是数据库中没有这个号码")
+      Xmpp.error_notify("忘记密码时，手机号验证通过，但是数据库中没有这个号码")
       render :json => {"error"=>"手机号码不存在"}.to_json
       return      
     end

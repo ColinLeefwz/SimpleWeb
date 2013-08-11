@@ -21,7 +21,7 @@ class City
     end
     city = $redis.get("CityName#{code}")
     if city.nil?
-      Xmpp.error_nofity("城市代码#{code}不存在")
+      Xmpp.error_notify("城市代码#{code}不存在")
       return "未知"
     end
     city

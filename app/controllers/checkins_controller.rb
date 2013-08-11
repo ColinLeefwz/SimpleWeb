@@ -47,7 +47,7 @@ class CheckinsController < ApplicationController
     begin
       cin = Checkin.find(params[:id])
     rescue
-      Xmpp.error_nofity("#{session_user.name}:试图删除不存在的签到:#{params[:id]}")
+      Xmpp.error_notify("#{session_user.name}:试图删除不存在的签到:#{params[:id]}")
       render :json => {:deleted => params[:id]}.to_json
       return
     end

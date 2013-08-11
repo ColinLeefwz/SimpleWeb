@@ -65,7 +65,7 @@ class Xmpp
     post("rest", Xmpp.gchat2(from,room,to,msg,id,attrs))   
   end
   
-  def self.error_nofity(str, uid=$yuanid)
+  def self.error_notify(str, uid=$yuanid)
     Resque.enqueue(XmppMsg, $gfuid,uid,str)  if Rails.env=="production"
   end
   

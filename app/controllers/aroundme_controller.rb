@@ -11,6 +11,9 @@ class AroundmeController < ApplicationController
       return
     end
     lo = [params[:lat].to_f,params[:lng].to_f]
+    if lo[0]<0.00001 && lo[1]<0.00001 && params[:accuracy].to_i<1
+      render :json =>  {error:"无法获得位置信息"}.to_json
+    end
     gps = nil
     wifi = nil
     if params[:baidu].to_i==1
@@ -21,14 +24,14 @@ class AroundmeController < ApplicationController
            acc2 = gps["Accuracy"].to_i
            lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>1
          rescue Exception => e
-           Xmpp.error_nofity("gps:#{e.backtrace[0..3]}\n#{params[:gps]}\n")
+           Xmpp.error_notify("gps:#{e.backtrace[0..3]}\n#{params[:gps]}\n")
          end
       end
       if params[:wifi] && params[:wifi].size>0
          begin
            wifi = ActiveSupport::JSON.decode(params[:wifi]) 
          rescue Exception => e
-           Xmpp.error_nofity("wifi:#{e.backtrace[0..3]}\n#{params[:wifi]}")
+           Xmpp.error_notify("wifi:#{e.backtrace[0..3]}\n#{params[:wifi]}")
          end
       end
       if lo2.nil?
