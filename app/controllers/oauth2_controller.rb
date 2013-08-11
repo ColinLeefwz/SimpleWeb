@@ -102,13 +102,13 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "WB Error:#{uid},#{token}"}.to_json
       return
     end
-    #TODO: 确认该:access_token是新浪真实授权的
     hash = Digest::SHA1.hexdigest("#{uid}#{token}dface")[0,32]
     if hash != params[:hash][0,32]
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
     data = {:wb_uid => uid}
+    Resque.enqueue(CheckWbToken, uid, token )
     if params[:bind].to_i==1
       bind_sina(uid,token, params[:expires_in], data)
     elsif params[:bind].to_i==2
@@ -134,6 +134,7 @@ class Oauth2Controller < ApplicationController
       return
     end
     data = {qq_openid:openid}
+    Resque.enqueue(CheckQqToken, openid, token )
     if params[:bind].to_i==1
       bind_qq(openid,token,params[:expires_in], data)
     elsif params[:bind].to_i==2
@@ -243,7 +244,7 @@ class Oauth2Controller < ApplicationController
         return
       end
     end
-    Xmpp.error_notify("xmpp登录失败：#{params[:name]},#{params[:pass]}")
+    #Xmpp.error_notify("xmpp登录失败：#{params[:name]},#{params[:pass]}") #暂时放松对xmpp登录的验证
     render :text => "1"
   end
   
@@ -360,7 +361,7 @@ class Oauth2Controller < ApplicationController
         if user.qq_hidden
           user.unset(:qq_hidden) 
         else
-          Xmpp.error_notify("#{session[:user_id]} 重复绑定qq：#{openid}")  
+          Xmpp.error_notify("#{user.name} 重复绑定qq：#{openid}")  
         end
         do_login_qq_done(user,token,expires_in,data)
       end
@@ -370,7 +371,6 @@ class Oauth2Controller < ApplicationController
         render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
         return
       end
-      #TODO: 调用https://graph.qq.com/oauth2.0/me?access_token= 来判断openid的真实性。
       session_user_no_cache.update_attribute(:qq, openid)
       $redis.set("Q:#{openid}", session[:user_id])
       info = get_qq_user_info(openid,token)
