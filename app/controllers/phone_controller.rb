@@ -80,15 +80,19 @@ class PhoneController < ApplicationController
   end
   
   def login
-    user = User.find_by_phone(params[:phone])
-    if user.nil? && params[:phone] && params[:phone].size<11
+    if params[:phone] && params[:phone].size<11
       shop = Shop.find_by_id( params[:phone])
-      if shop && shop.password == params[:password]
-        session[:user_id] = "s#{shop.id}"
-    	  render :json => User.find_by_id(session[:user_id]).output_self.to_json
+      if shop
+        if shop.password == params[:password]
+          session[:user_id] = "s#{shop.id}"
+    	    render :json => User.find_by_id("s#{shop.id}").output_self.to_json
+        else
+          render :json => {"error"=>"用户名或者密码不正确"}.to_json
+        end
         return
       end
     end
+    user = User.find_by_phone(params[:phone])
     if user.nil? || user.psd != slat_hash_pass(params[:password])
       render :json => {"error"=>"手机号码或者密码不正确"}.to_json
       return      
