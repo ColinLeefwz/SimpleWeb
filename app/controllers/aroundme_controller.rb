@@ -5,7 +5,7 @@ class AroundmeController < ApplicationController
   caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
   
   def shops
-    if session_user.is_shop?
+    if session[:user_id] && session_user.is_shop?
       ret = [session_user.shop.safe_output_with_users]
       render :json =>  ret.to_json
       return

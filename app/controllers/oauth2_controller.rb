@@ -158,7 +158,7 @@ class Oauth2Controller < ApplicationController
   #用户在新浪微博解除对脸脸的授权，回调url
   def unbind_sina_callback
     if params[:source] == $sina_api_key && (Time.now.to_i - params[:auth_end].to_i)<3600 && params[:verification].size==32
-      user = User.where({wb_uid: params[:uid]}).first
+      user = User.find_by_wb(params[:uid])
       if user
         $redis.del("wbtoken#{user.id}")
         $redis.del("wbexpire#{user.id}")
@@ -279,7 +279,7 @@ class Oauth2Controller < ApplicationController
         do_login_wb_done(user,token,expires_in,data)
       end
     else
-      u = User.where({wb_uid:wb_uid}).first
+      u = User.find_by_wb(wb_uid)
       if u && u.id != session[:user_id]
         render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
         return
@@ -344,7 +344,7 @@ class Oauth2Controller < ApplicationController
         do_login_qq_done(user,token,expires_in,data)
       end
     else
-      u = User.where({qq:openid}).first
+      u = User.find_by_qq(openid)
       if u && u.id != session[:user_id]
         render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
         return
