@@ -2,13 +2,45 @@
 
 class PhoneController < ApplicationController
   before_filter :user_login_filter, :only => [:bind, :unbind, :change_password] 
+  before_filter :code_match, :only => [:register, :forgot_password, :bind] 
+  
+  def code_match
+    if session[:phone_try].nil? || session[:phone_try]<1 || session[:phone_code].nil?
+      render :json => {"error"=>"验证码错误"}.to_json
+    end
+    if params[:code] != session[:phone_code]
+      session[:phone_try] -= 1
+      session[:phone_try] = nil if session[:phone_try]<1
+      render :json => {"error"=>"验证码错误, 还有#{session[:phone_try]}次机会"}.to_json
+    end
+  end
   
   
   def init
-    #user = User.where({phone: params[:phone]}).first
-    #if user
-    #  render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
-    #end
+    type = params[:type].to_i
+    user = User.find_by_phone(params[:phone])
+    if type==1
+      if user
+        render :json => {"error" => "手机号码#{params[:phone]}不可用或已被注册。"}.to_json
+        return
+      end
+    end
+    if type==2
+      unless session_user
+        render :json => {:error => "not login"}.to_json
+        return
+      end
+      if user && user.id != session_user.id
+        render :json => {"error" => "手机号码#{params[:phone]}不可用或已被注册。"}.to_json
+        return
+      end
+    end   
+    if type==3
+      unless user
+        render :json => {"error" => "#{params[:phone]}不存在。"}.to_json
+        return
+      end
+    end 
     fake = (params[:phone][0,3]=="000")
     if Rails.env == "production"
       code = rand(999999).to_s
@@ -21,16 +53,14 @@ class PhoneController < ApplicationController
       return
     end
     sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
+    #TODO: 短信发送限流
     Resque.enqueue(SmsSender, params[:phone], sms )  unless fake
     session[:phone_code] = code
+    session[:phone_try] = 5
     render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json
   end
   
   def register
-    if params[:code] != session[:phone_code]
-      render :json => {"error"=>"验证码错误"}.to_json
-      return
-    end
     user = User.find_by_phone(params[:phone])
     if user
       render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
@@ -53,13 +83,9 @@ class PhoneController < ApplicationController
   end
   
   def forgot_password
-    if params[:code] != session[:phone_code]
-      render :json => {"error"=>"验证码错误"}.to_json
-      return
-    end
     user = User.find_by_phone(params[:phone])
     if user.nil?
-      Xmpp.error_notify("忘记密码时，手机号验证通过，但是数据库中没有这个号码")
+      Xmpp.error_notify("忘记密码时，手机号#{params[:phone]}验证通过，但是数据库中没有这个号码")
       render :json => {"error"=>"手机号码不存在"}.to_json
       return      
     end
@@ -104,19 +130,14 @@ class PhoneController < ApplicationController
   end
   
   def bind
-    if params[:code] != session[:phone_code]
-      render :json => {"error"=>"验证码错误"}.to_json
-      return
-    end
     user = User.find_by_phone(params[:phone])
-    if user
+    if user && user.id != session_user.id
       render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
       return      
     end
-    #    if session_user_no_cache.phone
-    #      render :json => {error: "你已经绑定了一个手机号码"}.to_json #可以更换手机号码
-    #      return
-    #    end
+    if session_user.phone && params[:phone] != session_user.phone
+      Xmpp.error_nofity("用户手机号码#{session_user.phone}，重新绑定新的手机号码#{params[:phone]}")
+    end
     user = session_user_no_cache
     user.psd = slat_hash_pass(params[:password])    
     user.phone = params[:phone]
