@@ -285,6 +285,7 @@ class Oauth2Controller < ApplicationController
         return
       end
       user.update_attribute(:wb_uid, wb_uid)
+      $redis.set("W:#{wb_uid}", user.id)
       sina_info = SinaUser.get_user_info(wb_uid,token)
       if sina_info && sina_info["screen_name"]
         user.update_attribute(:wb_name, sina_info["screen_name"])
@@ -303,14 +304,13 @@ class Oauth2Controller < ApplicationController
   
   
   def do_login_wb(uid,token,expires_in,data)
-    user = User.where({wb_uid: uid}).first
+    user = User.find_by_wb(uid)
     if user.nil? || user.auto
       user = gen_new_user(uid,token) if user.nil?
       change_auto_user(user) if user.auto
       session[:new_user_flag] = true
       data.merge!({newuser:1})
       Resque.enqueue(WeiboFriend, token,uid,user.id)
-      #Resque.enqueue(WeiboFirst, token)
     end
     save_device_info(user.id, session[:new_user_flag])
     if user.forbidden?
@@ -413,6 +413,7 @@ class Oauth2Controller < ApplicationController
       user.wb_g = user.gender
     end
     user.save!
+    $redis.set("W:#{user.wb_uid}", user.id)
     user
   end
 
