@@ -720,18 +720,27 @@ class User
     User.where({qq:{"$exists" => true}}).each do |user|
       $redis.set("Q:#{user.qq}", user.id)
     end
+    size1 = User.where({qq:{"$exists" => true}}).count
+    size2 = $redis.keys("Q:*").size
+    puts "#{size1} : #{size2}"
   end
 
   def self.init_phone_redis
     User.where({phone:{"$exists" => true}}).each do |user|
       $redis.set("P:#{user.phone}", user.id)
     end
+    size1 = User.where({phone:{"$exists" => true}}).count
+    size2 = $redis.keys("P:*").size
+    puts "#{size1} : #{size2}"
   end
 
   def self.init_wb_redis
     User.where({wb_uid:{"$exists" => true}}).each do |user|
       $redis.set("W:#{user.wb_uid}", user.id)
     end
+    size1 = User.where({wb_uid:{"$exists" => true}}).count
+    size2 = $redis.keys("W:*").size
+    puts "#{size1} : #{size2}"
   end
     
 end

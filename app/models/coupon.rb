@@ -181,8 +181,8 @@ class Coupon
   end
   
   def share_text_hint
-    key = has_text?? ",文字中带'#{text}'#{text.length}个字" : ""
-    "发送分享图片到新浪微博#{key}，即可获得'#{name}'。"
+    key = has_text?? ",文字中带'#{text}'" : ""
+    "点击右下角“+”拍照并分享到微博#{key}，即可获得'#{name}'。"
   end
 
   def allow_activate?

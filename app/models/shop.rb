@@ -312,8 +312,9 @@ class Shop
     coupons.each{|coupon| coupon.send_coupon(user_id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
-    return "收到#{coupons.count}张优惠券: #{name}" if ENV["RAILS_ENV"] != "production"
-    Resque.enqueue(XmppNotice, self.id.to_i,user_id,"收到#{coupons.count}张优惠券: #{name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
+    str = "恭喜#{User.find_by_id(user_id).name}！收到#{coupons.count}张优惠券: #{name},马上领取吧！"
+    return str if ENV["RAILS_ENV"] != "production"
+    Resque.enqueue(XmppNotice, self.id.to_i,user_id,str,"coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
   end
 
   #旅行团 发送合作商家的优惠券
