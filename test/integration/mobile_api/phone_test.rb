@@ -24,8 +24,13 @@ class PhoneTest < ActionDispatch::IntegrationTest
     post "/phone/register",{phone: phone1, code: 'jsfjs', password: '12345678'}
     assert_response :success
     data = JSON.parse(response.body)
-    assert_equal({"error"=>"验证码错误"}, data)
+    assert_equal({"error"=>"验证码错误, 还有4次机会"}, data)
 
+    post "/phone/register",{phone: phone1, code: 'jsfjs', password: '12345678'}
+    assert_response :success
+    data = JSON.parse(response.body)
+    assert_equal({"error"=>"验证码错误, 还有3次机会"}, data)
+    
     #手机号码注册, 正确的验证码
     post "/phone/register",{phone: phone1, code: code, password: '12345678'}
     assert_response :success
@@ -83,7 +88,7 @@ class PhoneTest < ActionDispatch::IntegrationTest
     post "/phone/forgot_password",{phone: phone1, code: '123222', password: '12345678'}
     assert_response :success
     data = JSON.parse(response.body)
-    assert_equal({"error"=>"验证码错误"}, data)
+    assert_equal({"error"=>"验证码错误, 还有4次机会"}, data)
 
     #忘记密码, 存在的手机号码用户忘记密码，发送正确验证码
     post "/phone/forgot_password",{phone: phone1, code: code, password: '123456789'}
@@ -139,6 +144,52 @@ class PhoneTest < ActionDispatch::IntegrationTest
     assert_equal data["id"], user.id.to_s
     assert_equal session[:user_id], user.id
 
+  end
+  
+  
+  test "验证码多次输入失败"  do
+    phone1 = "15267134597"
+    phone2 = "15267134598"
+    code = '123456'
+    reload('users.js')
+
+    #获取验证码成功
+    post "/phone/init", {phone: phone1, flag: true}
+    assert_response :success
+    data = JSON.parse(response.body)
+    assert_equal({"code"=>"56aabeb910e1e22c"}, data)
+
+    #手机号码注册, 错误的验证码
+    post "/phone/register",{phone: phone1, code: 'jsfjs', password: '12345678'}
+    assert_response :success
+    data = JSON.parse(response.body)
+    assert_equal({"error"=>"验证码错误, 还有4次机会"}, data)
+
+    post "/phone/register",{phone: phone1, code: 'jsfjs', password: '12345678'}
+    assert_response :success
+    data = JSON.parse(response.body)
+    assert_equal({"error"=>"验证码错误, 还有3次机会"}, data)
+
+    post "/phone/register",{phone: phone1, code: 'jsfjs', password: '12345678'}
+    assert_response :success
+    data = JSON.parse(response.body)
+    assert_equal({"error"=>"验证码错误, 还有2次机会"}, data)
+    
+    post "/phone/register",{phone: phone1, code: 'jsfjs', password: '12345678'}
+    assert_response :success
+    data = JSON.parse(response.body)
+    assert_equal({"error"=>"验证码错误, 还有1次机会"}, data)
+    
+    post "/phone/register",{phone: phone1, code: 'jsfjs', password: '12345678'}
+    assert_response :success
+    data = JSON.parse(response.body)
+    assert_equal({"error"=>"验证码错误"}, data)
+        
+    #手机号码注册, 正确的验证码，但是也无效
+    post "/phone/register",{phone: phone1, code: code, password: '12345678'}
+    assert_response :success
+    data = JSON.parse(response.body)
+    assert_equal({"error"=>"验证码错误"}, data)
   end
   
 end
