@@ -49,6 +49,8 @@ class NewUser
     end
     if user.qq
       from="qq"
+    elsif user.phone
+      from="手机#{user.phone}"
     else
       from="微博"
     end
