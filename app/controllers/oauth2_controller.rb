@@ -39,6 +39,11 @@ class Oauth2Controller < ApplicationController
     token = @@client.auth_code.get_token(params[:code], :redirect_uri => $sina_callback, :parse => :json )
     uid = token.params["uid"]
     data = {:token=> token.token, :expires_in => token.expires_in, :expires_at => token.expires_at, :wb_uid => uid }
+    if token.token.size!=32 || uid.nil? || uid.match(/^\d+$/).nil?
+      Xmpp.error_notify("微博#{uid}，token:#{token.token}不是32位")
+      render :json => {error: "WB Error:#{uid},#{token.token}"}.to_json
+      return
+    end
     if params[:bind].to_i==1
       bind_sina(uid,token.token,token.expires_in, data)
     elsif params[:bind].to_i==2
@@ -56,6 +61,10 @@ class Oauth2Controller < ApplicationController
 
   #提供给手机客户端的认证服务
   def login
+    if true
+      render :json => {:error => "安装新浪微博官方客户端后才能用微博登录！"}.to_json
+      return
+    end
     hash = Digest::SHA1.hexdigest("#{params[:name]}#{params[:pass]}#{params[:mac]}dface")[0,32]
     if hash != params[:hash][0,32]
       render :json => {error: "hash error: #{hash}."}.to_json
@@ -88,6 +97,11 @@ class Oauth2Controller < ApplicationController
   def sso
     uid = params[:uid]
     token = params[:access_token]
+    if token.size!=32 || uid.nil? || uid.match(/^\d+$/).nil?
+      Xmpp.error_notify("微博#{uid}，token:#{token}不是32位")
+      render :json => {error: "WB Error:#{uid},#{token}"}.to_json
+      return
+    end
     #TODO: 确认该:access_token是新浪真实授权的
     hash = Digest::SHA1.hexdigest("#{uid}#{token}dface")[0,32]
     if hash != params[:hash][0,32]
@@ -107,7 +121,7 @@ class Oauth2Controller < ApplicationController
   def qq_client
     openid = params[:openid]
     token = params[:access_token]
-    if openid.size!=32 && token.size!=32
+    if openid.size!=32 || token.size!=32
       #发现恶意攻击
       #/oauth2/qq_client.json  {"openid"=>"7776000", "expires_in"=>"", "bind"=>"0", "hash"=>"f4da7cf73614aeade44424ebfe3fe8a4", "access_token"=>"2DA96569EF12E2E527891397817D67A9", "controller"=>"oauth2", "action"=>"qq_client", "format"=>"json"}
       Xmpp.error_notify("QQ openid:#{openid}不是32位, token:#{token}") if rand(100)>90
