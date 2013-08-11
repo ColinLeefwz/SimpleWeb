@@ -100,6 +100,14 @@ class User
     user
   end
   
+  def self.find_by_wb(wb_uid)
+    uid = $redis.get("W:#{wb_uid}")
+    return User.find_by_id(uid) if uid
+    user = User.where({wb_uid:wb_uid}).first
+    $redis.set("W:#{wb_uid}", user.id) if user
+    user
+  end
+  
   def self.find_by_phone(phone)
     uid = $redis.get("P:#{phone}")
     return User.find_by_id(uid) if uid
@@ -719,5 +727,11 @@ class User
       $redis.set("P:#{user.phone}", user.id)
     end
   end
-  
+
+  def self.init_wb_redis
+    User.where({wb_uid:{"$exists" => true}}).each do |user|
+      $redis.set("W:#{user.wb_uid}", user.id)
+    end
+  end
+    
 end
