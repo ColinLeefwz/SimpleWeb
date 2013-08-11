@@ -7,11 +7,17 @@ class PhoneController < ApplicationController
   def code_match
     if session[:phone_try].nil? || session[:phone_try]<1 || session[:phone_code].nil?
       render :json => {"error"=>"验证码错误"}.to_json
+      return
     end
     if params[:code] != session[:phone_code]
       session[:phone_try] -= 1
-      session[:phone_try] = nil if session[:phone_try]<1
-      render :json => {"error"=>"验证码错误, 还有#{session[:phone_try]}次机会"}.to_json
+      if session[:phone_try]<1
+        session[:phone_try] = nil 
+        session[:phone_code] = nil 
+        render :json => {"error"=>"验证码错误"}.to_json
+      else
+        render :json => {"error"=>"验证码错误, 还有#{session[:phone_try]}次机会"}.to_json
+      end
     end
   end
   
