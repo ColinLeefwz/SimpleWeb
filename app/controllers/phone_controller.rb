@@ -41,6 +41,7 @@ class PhoneController < ApplicationController
     user.psd = slat_hash_pass(params[:password])
     user.name = "" #user.phone
     user.save!
+    $redis.set("P:#{user.phone}", user.id)
     data = {:id => user.id, :password => user.password, :phone => user.phone}
     session[:new_user_flag] = true
     data.merge!({newuser:1})
@@ -79,7 +80,7 @@ class PhoneController < ApplicationController
   end
   
   def login
-    user = User.where({phone: params[:phone]}).first
+    user = User.find_by_phone(params[:phone])
     if user.nil? && params[:phone] && params[:phone].size<11
       shop = Shop.find_by_id( params[:phone])
       if shop && shop.password == params[:password]
