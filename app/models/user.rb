@@ -57,7 +57,7 @@ class User
       u=User.new
       u.id = id
       u.name = shop.name
-      u.password = shop.password
+      u.psd = shop.password
       u.head_logo_id = shop.logo.id
       u.phone = shop.id
       u
@@ -72,7 +72,15 @@ class User
   
   #登录Xmpp服务器的密码
   def password
-    Digest::SHA1.hexdigest(":dface#{self.id}")[0,16]
+    if is_shop?
+      User.pass_hash(self.psd)
+    else
+      User.pass_hash(self.id)
+    end
+  end
+  
+  def self.pass_hash(pass)
+    Digest::SHA1.hexdigest(":dface#{pass}")[0,16]
   end
   
   def old_password
