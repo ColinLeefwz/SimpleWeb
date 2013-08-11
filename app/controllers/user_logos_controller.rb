@@ -43,7 +43,7 @@ class UserLogosController < ApplicationController
     begin
       user_logo = UserLogo.find(params[:id])
     rescue
-      Xmpp.error_nofity("#{session_user.name}:试图删除不存在的头像:#{params[:id]}")
+      Xmpp.error_notify("#{session_user.name}:试图删除不存在的头像:#{params[:id]}")
       render :json => {:deleted => params[:id]}.to_json
       return
     end

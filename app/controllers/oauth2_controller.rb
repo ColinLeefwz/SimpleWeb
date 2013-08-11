@@ -112,6 +112,7 @@ class Oauth2Controller < ApplicationController
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
+    Xmpp.error_notify("QQ openid:#{openid}不是32位") if openid.size!=32
     data = {qq_openid:openid}
     if params[:bind].to_i==1
       bind_qq(openid,token,params[:expires_in], data)
@@ -222,7 +223,7 @@ class Oauth2Controller < ApplicationController
         return
       end
     end
-    Xmpp.error_nofity("xmpp登录失败：#{params[:name]},#{params[:pass]}")
+    Xmpp.error_notify("xmpp登录失败：#{params[:name]},#{params[:pass]}")
     render :text => "1"
   end
   
@@ -274,7 +275,7 @@ class Oauth2Controller < ApplicationController
         if user.wb_hidden==2
           user.set(:wb_hidden, 0) 
         else
-          Xmpp.error_nofity("#{session[:user_id]} 重复绑定wb：#{wb_uid}")
+          Xmpp.error_notify("#{session[:user_id]} 重复绑定wb：#{wb_uid}")
         end
         do_login_wb_done(user,token,expires_in,data)
       end
@@ -339,7 +340,7 @@ class Oauth2Controller < ApplicationController
         if user.qq_hidden
           user.unset(:qq_hidden) 
         else
-          Xmpp.error_nofity("#{session[:user_id]} 重复绑定qq：#{openid}")  
+          Xmpp.error_notify("#{session[:user_id]} 重复绑定qq：#{openid}")  
         end
         do_login_qq_done(user,token,expires_in,data)
       end
@@ -411,6 +412,8 @@ class Oauth2Controller < ApplicationController
       end
       user.wb_name = sina_info["screen_name"]
       user.wb_g = user.gender
+    else
+      Xmpp.error_notify("微博用户#{uid}新注册时无法获得user_info")
     end
     user.save!
     $redis.set("W:#{user.wb_uid}", user.id)
@@ -420,6 +423,7 @@ class Oauth2Controller < ApplicationController
   def gen_new_user_qq(openid,token)
     info = get_qq_user_info(openid,token)
     if info.nil?
+      Xmpp.error_notify("QQ用户#{openid},#{token}新注册时无法获得user_info")
       render :json => {error: "未知错误，请重试！"}.to_json
       return nil
     end
