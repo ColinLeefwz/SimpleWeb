@@ -84,6 +84,18 @@ class User
     Shop.find_by_id(self.id.to_s[1..-1])
   end
   
+  def self.find_by_qq(qq)
+    uid = $redis.get("Q:#{qq}")
+    return User.find_by_id(uid) if uid
+    user = User.where({qq: openid}).first
+    $redis.set("Q:#{qq}", user.id) if user
+    user
+  end
+  
+  def self.find_by_phone(phone)
+    User.where({phone: params[:phone]}).first
+  end
+  
   def follow_ids
     $redis.zrange("Fol#{self.id}",0,-1).delete_if {|x| x.size==0}
   end
@@ -681,6 +693,12 @@ class User
   def self.migrate_phone_password
     User.where({phone:{"$exists" => true}, psd:{"$exists" => false}}).each do |user|
       user.set(:psd, user.password)
+    end
+  end
+  
+  def self.init_qq_redis
+    User.where({qq:{"$exists" => true}}).each do |user|
+      $redis.set("Q:#{user.qq}", user.id)
     end
   end
 
