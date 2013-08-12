@@ -18,6 +18,7 @@ class Photo
   field :img
   field :hide, type:Boolean  #隐藏照片
   field :od, type:Integer   #置顶值
+
   mount_uploader(:img, PhotoUploader)
   
   field :img_tmp
@@ -26,6 +27,10 @@ class Photo
     
   index({user_id:1, room:1})
   index({room:1, updated_at:-1})
+
+  # validate do |photo|
+  #   errors.add(:img, "至少上传图片哦.") if photo.img.blank?
+  # end
   
   def self.img_url(id,type=nil)
     # return self.find_by_id(id).img.url(type) if Rails.env !="production"
