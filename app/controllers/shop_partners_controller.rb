@@ -7,8 +7,7 @@ class ShopPartnersController < ApplicationController
   def index
     shop_partner = ShopPartner.find_primary(session[:shop_id])
     if shop_partner && !shop_partner.partners.blank?
-      @shopids = paginate_arr(shop_partner.partners, 1, 15)
-#      @shops = Shop.find_by_id(}).to_a
+      @shopids = paginate_arr(shop_partner.partners, params[:page], 15)
       @shops= Shop.where({_id: {"$in" => @shopids.map{|m| m[0].to_i} }})
     else
       @shops =paginate_arr([]).to_a
