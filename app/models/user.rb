@@ -49,14 +49,14 @@ class User
     alias_method :find_by_id_old, :find_by_id
   end
   
-  def self.find_by_id(id)
-    if id.to_s.size>10
-      find_by_id_old(id)
-    elsif id.to_s[0]=="s"
-      shop = Shop.find_by_id(id[1..-1])
+  def self.find_by_id(aid)
+    if aid.to_s.size>10
+      find_by_id_old(aid)
+    elsif aid.to_s[0]=="s"
+      shop = Shop.find_by_id(aid[1..-1])
       logo = shop.logo
       u=User.new
-      u.id = id
+      u.id = aid
       u.name = shop.name
       u.psd = shop.password
       u.head_logo_id = logo.id if logo
