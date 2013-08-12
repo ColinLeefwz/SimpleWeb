@@ -29,7 +29,7 @@ class XlineController < ApplicationController
     if line
       render :json => {data: line.safe_out}
     else
-     render :json => {error: ""}
+     render :json => {error: "id不存在"}
     end
   end
 
