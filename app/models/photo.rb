@@ -32,7 +32,7 @@ class Photo
     if type
       "http://dface.oss.aliyuncs.com/#{id}/#{type}_0.jpg"
     else
-      "http://dface.oss.aliyuncs.com/dface/#{id}/0.jpg"
+      "http://dface.oss.aliyuncs.com/#{id}/0.jpg"
     end
   end
   
