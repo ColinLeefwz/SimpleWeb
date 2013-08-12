@@ -13,6 +13,7 @@ class AroundmeController < ApplicationController
     lo = [params[:lat].to_f,params[:lng].to_f]
     if lo[0]<0.00001 && lo[1]<0.00001 && params[:accuracy].to_i<1
       render :json =>  {error:"无法获得位置信息"}.to_json
+      return
     end
     gps = nil
     wifi = nil
