@@ -45,7 +45,7 @@ class CouponsController < ApplicationController
     unless ShopMark.where({sid: coupon_down.sid, uid:  session[:user_id]}).limit(1).first
       $redis.smembers("GROUP#{session[:user_id]}").reverse.each do |gid|
         group = Shop.find_by_id(gid).group
-        if (line = group && group.line)
+        if ( group && line = group.line)
           if line.partners.values.flatten.include?(coupon_down.sid.to_s)
             Xmpp.send_chat($gfuid, session[:user_id], "你可以给商家评分哦！http://www.dface.cn/shop_marks/new?sid=#{coupon_down.sid}&uid=#{session[:user_id]}&gid=#{gid}")
             break
