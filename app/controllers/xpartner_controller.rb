@@ -4,8 +4,21 @@ class XpartnerController < ApplicationController
   def create
     line = Line.find_by_id(params[:id])
     return render :json => {error: "旅行线路编号不存在"} if line.nil?
-    shop_line_partner = ShopLinePartner.find_or_new(line.id)
-    shop_line_partner.partners = params[:data]
+    shop_line_partner = ShopLinePartner.find_by_id(line.id)
+    return render :json =>{"error" => "旅行线路的合作商家已存在"} if shop_line_partner
+    shop_line_partner = ShopLinePartner.new
+
+    hash = {}
+    tid=nil
+    begin
+      params[:data].each do |key, value|
+        hash[Shop.find_by_tid(tid = key).id] = value.map{|m|  Shop.find_by_tid(tid=m).id}
+      end
+    rescue
+      return render :json => {"error" => "id#{tid}不存在"}
+    end
+
+    shop_line_partner.partners = hash
     shop_line_partner.save
     render :json => {'ok' => shop_line_partner.id }
   end
