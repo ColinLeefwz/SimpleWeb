@@ -3,6 +3,13 @@
 class PhoneController < ApplicationController
   before_filter :user_login_filter, :only => [:bind, :unbind, :change_password] 
   before_filter :code_match, :only => [:register, :forgot_password, :bind] 
+  before_filter :password_check, :only => [:register, :forgot_password, :change_password, :bind] 
+  
+  def password_check
+    if params[:password].nil? || params[:password].size<3
+      render :json => {"error"=>"密码长度太短，请选择一个长一点的密码"}.to_json
+    end
+  end
   
   def code_match
     if session[:phone_try].nil? || session[:phone_try]<1 || session[:phone_code].nil?
