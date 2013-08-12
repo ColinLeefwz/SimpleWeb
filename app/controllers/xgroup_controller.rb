@@ -14,6 +14,15 @@ class XgroupController < ApplicationController
     rescue
       return render :json => {error: 'data数据格式错误'}
     end
+
+    #团建好后，把已经有的用户认证。
+    group.users.map{|m| m['phone']}.each do |ph|
+      user = User.find_by_phone(ph)
+      if user
+        group.phone_auth(user.id, ph)
+      end
+    end
+
     render :json => {ok: group.id}
   end
 
