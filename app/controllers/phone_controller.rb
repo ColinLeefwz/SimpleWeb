@@ -47,7 +47,7 @@ class PhoneController < ApplicationController
         return
       end
     end 
-    fake = (params[:phone][0,3]=="000")
+    fake = fake_phone(params[:phone]) 
     if Rails.env == "production"
       code = rand(999999).to_s
       code = "13579" if fake
@@ -113,7 +113,7 @@ class PhoneController < ApplicationController
   end
   
   def login
-    if params[:phone] && params[:phone].size<11
+    if params[:phone] && params[:phone].size<11 && !fake_phone(params[:phone]) 
       shop = Shop.find_by_id( params[:phone])
       if shop
         if shop.password == params[:password]
@@ -158,6 +158,10 @@ class PhoneController < ApplicationController
   private 
   def slat_hash_pass(password)
     Digest::SHA1.hexdigest(":dFace.#{password}@cn")[0,16]
+  end
+  
+  def fake_phone(phone)
+    phone[0,3]=="000"
   end
   
   
