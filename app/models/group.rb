@@ -2,7 +2,7 @@
 # 旅行团
 class Group
   include Mongoid::Document
-#  field :_id  
+  #  field :_id
   field :name #名称 ， 默认为"线路名称＋团号"
   field :code #团号
   field :pass #加入时的默认密码，可以没有
@@ -21,7 +21,7 @@ class Group
     option.delegate :name, :to => :admin_shop
   end
   
-  after_create :gen_shop
+#  before_create :gen_shop
 
   #签到地点在旅行团线路上， 获取路线上的本次签到地点的合作商家的优惠券
   #sid签到地点id， uid => 用户id
