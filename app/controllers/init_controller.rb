@@ -33,8 +33,8 @@ class InitController < ApplicationController
       version = android_version
       ver = version.to_f
     else
-      version = "2.2.2"
-      ver = 2.2
+      version = "2.3.2"
+      ver = 2.3
     end
     render :json => {ip: ip, xmpp: xmpp , ver:ver, version:version }.to_json
   end
@@ -43,6 +43,7 @@ class InitController < ApplicationController
          ["2.0.0","界面全新改版",false],
          ["2.1.0","我的照片墙增加新评论提醒功能\n聊天室发图分享到微信朋友圈功能",true],
          ["2.2.0","增加了地主👑和抢地主功能\n添加地点功能强化",true],
+         ["2.3.0","增加了手机号码功能\n好友动态提醒",true],
         ]
   
   def upgrade
