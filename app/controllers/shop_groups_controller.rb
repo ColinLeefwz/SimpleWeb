@@ -42,6 +42,7 @@ class ShopGroupsController < ApplicationController
     group = Group.new(params[:group])
     group.admin_sid = session[:shop_id]
     group.users = users(group.users)
+    group.gen_shop
     group.save
     redirect_to :action => "show", :id => group.id
   end

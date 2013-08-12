@@ -34,7 +34,7 @@ class XshopController < ApplicationController
     if shop
       render :json => shop.travel_attrs
     else
-      render :json => {}
+      render :json => {error: 'id不存在'}
     end
   end
 
