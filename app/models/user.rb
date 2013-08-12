@@ -54,11 +54,12 @@ class User
       find_by_id_old(id)
     elsif id.to_s[0]=="s"
       shop = Shop.find_by_id(id[1..-1])
+      logo = shop.logo
       u=User.new
       u.id = id
       u.name = shop.name
       u.psd = shop.password
-      u.head_logo_id = shop.logo.id
+      u.head_logo_id = logo.id if logo
       u.phone = shop.id
       u
     else
