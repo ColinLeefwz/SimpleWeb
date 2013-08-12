@@ -7,12 +7,12 @@ class XpartnerController < ApplicationController
     shop_line_partner = ShopLinePartner.find_by_id(line.id)
     return render :json =>{"error" => "旅行线路的合作商家已存在"} if shop_line_partner
     shop_line_partner = ShopLinePartner.new
-
+    shop_line_partner.id = line.id
     hash = {}
     tid=nil
     begin
       params[:data].each do |key, value|
-        hash[Shop.find_by_tid(tid = key).id] = value.map{|m|  Shop.find_by_tid(tid=m).id}
+        hash[Shop.find_by_tid(tid = key).id.to_s] = value.map{|m|  Shop.find_by_tid(tid=m).id.to_s}
       end
     rescue
       return render :json => {"error" => "id#{tid}不存在"}
