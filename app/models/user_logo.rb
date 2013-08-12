@@ -19,9 +19,9 @@ class UserLogo
   
   def self.img_url(id,type=nil)
     if type
-      "http://oss.aliyuncs.com/logo/#{id}/#{type}_0.jpg"
+      "http://logo.oss.aliyuncs.com/#{id}/#{type}_0.jpg"
     else
-      "http://oss.aliyuncs.com/logo/#{id}/0.jpg"
+      "http://logo.oss.aliyuncs.com/#{id}/0.jpg"
     end
   end  
 
