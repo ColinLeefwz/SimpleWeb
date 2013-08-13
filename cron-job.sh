@@ -46,3 +46,11 @@ stime_int=`date -d  "$stime" +%s`
 etime_int=`date -d  "$etime" +%s`
 inttt=`expr $etime_int - $stime_int`
 echo $stime"开始执行cron,总花费时间："$inttt'秒'>>log/cron-job.log
+
+sleep 600
+/mnt/.rvm/bin/ruby script/rails r  'User.check_wb_redis'
+sleep 60
+/mnt/.rvm/bin/ruby script/rails r  'User.check_qq_redis'
+sleep 60
+/mnt/.rvm/bin/ruby script/rails r  'User.check_phone_redis'
+
