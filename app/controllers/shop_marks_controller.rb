@@ -22,7 +22,7 @@ class ShopMarksController < ApplicationController
     shop_mark.sid = params[:sid]
     shop_mark.uid = params[:uid]
     shop_mark.gid = params[:gid] unless params[:gid].blank?
-    shop_mark.admin_sid = @group.admin_sid
+    shop_mark.admin_sid = @group.admin_sid if @group
     shop_mark.mark = params[:mark]
     shop_mark.com = params[:com]
     shop_mark.save
