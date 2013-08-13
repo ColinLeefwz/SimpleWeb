@@ -87,6 +87,10 @@ class Shop
     Photo.where({room: self.id.to_i.to_s, hide: nil}).count
   end
 
+  def shop_photo
+    Photo.where({user_id: "s#{self.id.to_i.to_s}", hide: nil}).sort({updated_at: -1})
+  end
+
   def user
     return if self.creator.blank?
     user = User.find_by_id(self.creator)
