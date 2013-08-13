@@ -5,10 +5,7 @@ class WebPhotoController < ApplicationController
     @photo = Photo.find_by_id(params[:id])
     if @photo
       @user = @photo.user
-      respond_to do |format|
-        format.html { render :layout => false}
-        format.json { render :json => @user }
-      end
+      render :file => "/web_photo/show.html"
     else
       redirect_to "/404.html"
     end

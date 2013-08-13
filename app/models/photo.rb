@@ -15,7 +15,7 @@ class Photo
   field :wx, type:Integer   #分享到微信: 1个人,2朋友圈, 3都分享了
   #field :like, type:Array #赞 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间' }]
   field :com, type:Array #评论 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间', 'txt' => "评论", 'hide' => '隐藏'  }]
-  field :img
+  # field :img
   field :hide, type:Boolean  #隐藏照片
   field :od, type:Integer   #置顶值
 
@@ -28,9 +28,9 @@ class Photo
   index({user_id:1, room:1})
   index({room:1, updated_at:-1})
 
-  # validate do |photo|
-  #   errors.add(:img, "至少上传图片哦.") if photo.img.blank?
-  # end
+  validate do |photo|
+    errors.add(:img, "至少上传图片哦.") if photo.img.blank?
+  end
   
   def self.img_url(id,type=nil)
     # return self.find_by_id(id).img.url(type) if Rails.env !="production"
