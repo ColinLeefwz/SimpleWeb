@@ -40,7 +40,10 @@ class ApplicationController < ActionController::Base
     rescue  Exception => err
       error_log "\nInternal Server Error: #{err.class.name}, #{Time.now}"
       error_log "#{request.path}  #{request.params}"
-      error_log request.env["HTTP_USER_AGENT"]
+      #error_log request.env["HTTP_USER_AGENT"]
+      if session_user
+        error_log "ver:#{session_user.ver},os:#{session_user.os}"
+      end
       err_str = err.to_s
       error_log err_str
       err.backtrace.each {|x| error_log x}
