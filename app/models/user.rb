@@ -50,9 +50,7 @@ class User
   end
   
   def self.find_by_id(aid)
-    if aid.to_s.size>10
-      find_by_id_old(aid)
-    elsif aid.to_s[0]=="s"
+    if aid.class==String && aid[0]=="s"
       shop = Shop.find_by_id(aid[1..-1])
       logo = shop.logo
       u=User.new
@@ -63,7 +61,7 @@ class User
       u.phone = shop.id
       u
     else
-      nil
+      find_by_id_old(aid)
     end
   end
   
