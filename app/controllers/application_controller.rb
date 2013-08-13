@@ -41,9 +41,9 @@ class ApplicationController < ActionController::Base
       error_log "\nInternal Server Error: #{err.class.name}, #{Time.now}"
       error_log "#{request.path}  #{request.params}"
       #error_log request.env["HTTP_USER_AGENT"]
-      if session_user
-        error_log "ver:#{session_user.ver},os:#{session_user.os}"
-      end
+      #if session_user
+      #  error_log "ver:#{session_user.ver},os:#{session_user.os}"
+      #end
       err_str = err.to_s
       error_log err_str
       err.backtrace.each {|x| error_log x}
@@ -110,11 +110,14 @@ class ApplicationController < ActionController::Base
   end
 
   def session_user
+    return nil if session[:user_id].nil?
     u=User.find_by_id(session[:user_id])
     u
   end
   
   def session_user_no_cache
+    return nil if session[:user_id].nil?
+    return nil if User.is_shop_id?(session[:user_id])
     User.find_primary(session[:user_id])
   end
 

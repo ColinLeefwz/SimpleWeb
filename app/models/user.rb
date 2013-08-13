@@ -47,26 +47,45 @@ class User
   
   class << self
     alias_method :find_by_id_old, :find_by_id
+    alias_method :find_primary_old, :find_primary
+  end
+  
+  def self.find_primary(aid)
+    return nil if aid.nil?
+    if aid.class==String && aid[0]=="s"
+      nil
+    else
+      find_primary_old(aid)
+    end
   end
   
   def self.find_by_id(aid)
+    return nil if aid.nil?
     if aid.class==String && aid[0]=="s"
-      shop = Shop.find_by_id(aid[1..-1])
-      logo = shop.logo
-      u=User.new
-      u.id = aid
-      u.name = shop.name
-      u.psd = shop.password
-      u.head_logo_id = logo.id if logo
-      u.phone = shop.id
-      u
+      gen_user_by_sid(aid)
     else
       find_by_id_old(aid)
     end
   end
   
+  def self.gen_user_by_sid(aid)
+    shop = Shop.find_by_id(aid[1..-1])
+    logo = shop.logo
+    u=User.new
+    u.id = aid
+    u.name = shop.name
+    u.psd = shop.password
+    u.head_logo_id = logo.id if logo
+    u.phone = shop.id
+    u
+  end
+  
+  def self.is_shop_id?(id)
+    id.to_s[0]=="s"
+  end
+  
   def is_shop?
-    self.id.to_s[0]=="s"
+    User.is_shop_id?(self.id)
   end
   
   #登录Xmpp服务器的密码
@@ -166,7 +185,7 @@ class User
     logo = self.head_logo
     self.update_attribute(:logo_backup, head_logo_id)
     user_logos.each {|x| x.destroy} if del_all_logos
-    self.password=nil
+    #self.password=nil
     self.head_logo_id=nil
     self.pcount=0
     self.save!
@@ -180,15 +199,6 @@ class User
     self.pcount=0
     self.save!    
     self.clear_all_cache
-    Xmpp.send_chat($gfuid, self.id , "您好！你的头像容易引起脸脸用户的反感，已被管理员屏蔽。请换一张头像，烦请谅解。多谢你对脸脸的支持😊")
-  end
-
-  def prompt
-    Xmpp.send_chat($gfuid, self.id, "欢迎来到脸脸，我们建议您上传真实头像，完善资料，以方便其他人便捷及时的发现您。点击菜单栏“我的”就可以编辑您的个人资料啦~快去试试吧😊")
-  end
-
-  def warn2
-    Xmpp.send_chat($gfuid, self.id , "您好！你的头像容易引起脸脸用户的反感，已被管理员屏蔽。请换一张头像，烦请谅解。多谢你对脸脸的支持😊")
   end
   
   def clear_all_cache
