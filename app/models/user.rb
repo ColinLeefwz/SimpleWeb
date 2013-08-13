@@ -764,17 +764,75 @@ class User
   def self.check_wb_redis
     $redis.keys("W:*").each do |key|
       wb_uid = key[2..-1]
+      next if wb_uid.size==0
       count = User.where({wb_uid:wb_uid}).count
       if count==0
         if User.find_by_wb(wb_uid).wb_uid.class != Fixnum
           user = User.find(user.id)
           puts user.to_json
+          Xmpp.error_notify("微博#{wb_uid}对应用户count=0")
         end
       end
       if count>1
+        puts "#{wb_uid}:#{count}"
+        Xmpp.error_notify("微博#{wb_uid}不唯一")
         $redis.del("W:#{wb_uid}")
+        user = User.find_by_wb(wb_uid)
+        User.where({wb_uid:wb_uid}).each do |u|
+          next if user.id == u.id
+          u.set(:wb_uid, "_"+u.wb_uid.to_s)
+        end
       end
     end
   end
+  
+  def self.check_qq_redis
+    $redis.keys("Q:*").each do |key|
+      qq = key[2..-1]
+      next if qq.size==0
+      count = User.where({qq:qq}).count
+      if count==0
+          user = User.find_by_qq(qq)
+          puts user.to_json
+          Xmpp.error_notify("QQ#{qq}对应用户count=0")
+      end
+      if count>1
+        puts "#{qq}:#{count}"
+        Xmpp.error_notify("QQ#{qq}不唯一")
+        $redis.del("Q:#{qq}")
+        user = User.find_by_qq(qq)
+        User.where({qq:qq}).each do |u|
+          next if user.id == u.id
+          u.set(:qq, "_"+u.qq.to_s)
+        end
+      end
+    end
+  end
+  
+  def self.check_phone_redis
+    $redis.keys("P:*").each do |key|
+      phone = key[2..-1]
+      next if phone.size==0
+      count = User.where({phone:phone}).count
+      if count==0
+        debugger
+          user = User.find_by_phone(phone)
+          puts "#{phone}:#{user.phone}"
+          puts user.to_json
+          Xmpp.error_notify("手机#{phone}对应用户count=0")
+      end
+      if count>1
+        puts "#{phone}:#{count}"
+        Xmpp.error_notify("手机#{phone}不唯一")
+        $redis.del("Q:#{phone}")
+        user = User.find_by_phone(phone)
+        User.where({phone:phone}).each do |u|
+          next if user.id == u.id
+          u.set(:phone, "_"+u.phone.to_s)
+        end
+      end
+    end
+  end
+
     
 end
