@@ -117,7 +117,7 @@ class CheckinsController < ApplicationController
       session[:new_user_flag] = nil
       session_user.update_attribute(:city, checkin.city)
       return  if ENV["RAILS_ENV"] != "production"
-      Resque.enqueue(NewUser, checkin.uid,checkin.sid,checkin.od)
+      Resque.enqueue(NewUser, checkin.uid,checkin.sid,checkin.od) unless checkin.shop.group_id
     end
   end
 
