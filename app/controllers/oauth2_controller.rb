@@ -330,11 +330,13 @@ class Oauth2Controller < ApplicationController
   def do_login_wb(uid,token,expires_in,data)
     user = User.find_by_wb(uid)
     if user.nil? || user.auto
-      user = gen_new_user(uid,token) if user.nil?
-      change_auto_user(user) if user.auto
-      session[:new_user_flag] = true
-      data.merge!({newuser:1})
-      Resque.enqueue(WeiboFriend, token,uid,user.id)
+      unless User.find_by_wb(uid, false)
+        user = gen_new_user(uid,token) if user.nil?
+        change_auto_user(user) if user.auto
+        session[:new_user_flag] = true
+        data.merge!({newuser:1})
+        Resque.enqueue(WeiboFriend, token,uid,user.id)
+      end
     end
     save_device_info(user.id, session[:new_user_flag])
     if user.forbidden?
@@ -392,10 +394,12 @@ class Oauth2Controller < ApplicationController
   def do_login_qq(openid,token,expires_in,data)
     user = User.find_by_qq(openid)
     if user.nil?
-      user = gen_new_user_qq(openid,token)
-      return if user.nil?
-      session[:new_user_flag] = true
-      data.merge!({newuser:1})
+      unless User.find_by_qq(openid, false)
+        user = gen_new_user_qq(openid,token)
+        return if user.nil?
+        session[:new_user_flag] = true
+        data.merge!({newuser:1})
+      end
     end
     save_device_info(user.id, session[:new_user_flag])
     if user.forbidden?
