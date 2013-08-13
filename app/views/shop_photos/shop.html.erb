@@ -1,0 +1,50 @@
+<div class="title2"><h2>照片墙</h2></div>
+<div id="Notice" class="notice">
+  <div id="error_explanation">
+    <p style="color: green;float:right;"><%= flash[:success] %></p>
+  </div>
+<div class="items" id="Items">
+</div>
+  <a href="/shop_photos" style="margin-top: 10px;">用户图片</a>
+  <a class ="hover" href="/shop_photos/shop" style="margin-top: 10px;">商家图片</a>
+  <a href="/shop_photos/new" class="btn4" style="float: right; padding-right: 0px; border-width: 0px; width: 95px;">图片发布</a>
+</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="10%" align="center">缩略图</th>
+    <th width="20%" align="center">描述</th>
+    <th width="45%" align="center">发布时间</th>
+    <th>操作</th>
+  </tr>
+  <% @shop_photo.each do |shop_photo| %>
+    <tr>
+       <td align="center"><%=link_to image_tag(shop_photo.img.try(:url, :t2), :class=>"imgs4"), shop_photo.img.try(:url), :target => "blank"  %></td>
+      <td align="center"><%=truncate shop_photo.desc, :length => 10 %></td>
+      <td align="center"><%= id_to_time(shop_photo.id)  %></td>
+      <td align="center">
+        <%= link_to '编辑', "/shop_photos/edit?id=#{shop_photo.id}" %>
+        <%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{shop_photo.id}')" %></td>
+    </tr>
+  <% end %>
+</table>
+
+<div class="pages mt15">
+  
+</div>
+
+<script type ="text/javascript">
+  LeftMenu(19);
+  function ajaxDel(obj, photo_id){
+    if(confirm("确定删除此图片和描述么？"))
+    {
+      $.get("/shop_photos/ajax_shop_photo_del",{id: photo_id}, function(data) {
+        if(data['text']){
+          obj.parent().parent().remove();
+        }
+        else{
+          obj.replaceWith('删除失败.')
+        }
+      });
+    }
+  }
+</script>
