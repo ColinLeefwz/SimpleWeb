@@ -1,0 +1,68 @@
+<div class="title2"><h2>照片墙发布图片</h2>设置常见问题，提高服务效率</div>
+
+
+<div id="Notice" class="notice">
+  <% if @shop_photo.errors.any? %>
+    <div id="error_explanation">
+      <h2>照片墙发布图片出错</h2>
+      <ul>
+        <% @shop_photo.errors.messages.values.each do |msg| %>
+          <li><%= msg.join(' ') %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<%= form_for(@shop_photo, :url => '/shop_photos/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab3">
+    <tr>
+      <td valign="top">图片</td>
+      <td>
+        <div class="relative">
+          <div class="imgbox" id="uploadPreview"></div>
+          <input type="button" value="添加图片" class="btn1" id="Btn1"/>
+          <span id="imgName" class="words"></span>
+          <span class="words">(可以添加店内菜单、最新活动、宣传海报等图片<br/>
+            图片支持格式:jpg png)</span>
+          <%= f.file_field :img, :class => "btn_file10" %>
+        </div>
+      </td>
+      <td rowspan="5"><img src="../images/pic6.jpg" /></td>
+    </tr>
+    <tr>
+      <td valign="top">描述</td>
+      <td>
+        <%= f.text_area :desc, :class => "textareas"%>
+        <span class="words">(3-140个字,例如：好吃)</span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <br/>
+        <input type="submit" value="提 交" class="btn3 ml50 l"/><%= link_to '返回列表', '/shop_photos/shop', :class=>"link1" %></td>
+    </tr>
+  </table>
+<% end %>
+
+<% content_for :ahead do %>
+  <script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
+  <script>
+    $(document).ready(function(){
+      imgUploadPreview("input[name='photo[img]']", 'uploadPreview')
+    })
+  </script>
+<% end %>
+
+<script type ="text/javascript">
+  LeftMenu(19);
+  $("#Btn1").click(function(){
+    $("#shop_photos_img").click();
+  });
+  $("#Inputs").focus(function(){
+    if($(this).val() == '获取wifi密码')
+      $(this).val("");
+  });
+
+</script>
