@@ -1,6 +1,13 @@
 <div class="title2">
 	<h2><%= "'#{User.find_by_id(params[:uid]).name}'个人" unless params[:uid].blank? %>照片墙</h2>
-	<a href="#" class="btn7 r">上传照片</a>
+	<!-- <a href="#" class="btn7 r">上传照片</a> -->
+</div>
+
+<div class="items" id="Items">
+  <a class ="hover" href="/shop_photos" style="margin-top: 10px;">用户图片</a>
+  <a href="/shop_photos/shop" style="margin-top: 10px;">商家图片</a>
+<!--   <a href="/shop_photos/new" class="btn4" style="float: right; padding-right: 0px; border-width: 0px; width: 95px;">图片发布</a> -->
+<a href="/shop_photos/new" class="btn4" style="float: right; padding-right: 0px; border-width: 0px; width: 95px;">上传照片</a>
 </div>
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
