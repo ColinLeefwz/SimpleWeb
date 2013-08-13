@@ -1,0 +1,29 @@
+
+.controls
+  %ul
+    %li.sort{"data-sort" => "data-cat", "data-order" => "desc"} Descending
+    %li.sort{"data-sort" => "data-cat", "data-order" => "asc"} Ascending
+    %li.sort{"data-sort" => "default", "data-order" => "asc"} Default
+
+.controls
+  %ul
+    %li.filter{"data-filter" => "all"}Show All
+    %li.filter{"data-filter" => "category_1"}Category 1
+    %li.filter{"data-filter" => "category_2"}Category 2
+    %li.filter{"data-filter" => "category_3"}Category 3
+    %li.filter{"data-filter" => "category_3 category_1"}Category 1 &amp; 3
+
+#Grid
+  .mix.category_1{"data-cat" => "1"} 
+    = image_tag("1.jpg")
+  .mix.category_3{"data-cat" => "3"}
+    = image_tag("2.jpg")
+  .mix.category_2{"data-cat" => "2"}2
+  .mix.category_3{"data-cat" => "3"}3
+  %li.mix.category_2{"data-cat" => "2"}2
+  %li.mix.category_1{"data-cat" => "1"}1
+  %li.gap
+<!-- "gap" elements fill in the gaps in justified <a href="http://www.jqueryscript.net/tags.php?/grid/">grid</a> -->
+
+
+  
