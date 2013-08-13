@@ -46,8 +46,8 @@ class User
   end
   
   class << self
-    alias_method :find_by_id_old, :find_by_id
-    alias_method :find_primary_old, :find_primary
+    alias_method :find_by_id_old, :find_by_id unless method_defined?(:find_by_id_old)
+    alias_method :find_primary_old, :find_primary unless method_defined?(:find_primary_old)
   end
   
   def self.find_primary(aid)
