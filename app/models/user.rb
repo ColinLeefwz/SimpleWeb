@@ -185,12 +185,18 @@ class User
     logo = self.head_logo
     self.update_attribute(:logo_backup, head_logo_id)
     user_logos.each {|x| x.destroy} if del_all_logos
-    #self.password=nil
     self.head_logo_id=nil
     self.pcount=0
+    self.name = "FORBID" + self.name
     self.save!
     self.clear_all_cache
     Xmpp.post("api/kill", :user => _id) 
+  end
+  
+  def unkill
+    self.head_logo_id = self["logo_backup"]
+    self.name = self.name[6..-1] #去掉"FORBID"
+    self.save!
   end
   
   def warn
@@ -210,7 +216,7 @@ class User
   
   #是否是被封杀的用户
   def forbidden?
-    auto!=true && password==nil
+    name[0,6]=="FORBID"
   end
   
 

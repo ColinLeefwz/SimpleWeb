@@ -98,9 +98,7 @@ class AdminUsersController < ApplicationController
   
   def unkill
     @user = User.find_by_id(params[:id])
-    @user.password=Digest::SHA1.hexdigest(":dface#{@user.wb_uid}")[0,16]
-    @user.head_logo_id=@user["logo_backup"]
-    @user.save!
+    @user.unkill
     render :text => "ok"
   end
 
