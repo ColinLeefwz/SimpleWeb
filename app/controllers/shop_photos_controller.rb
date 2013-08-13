@@ -12,11 +12,55 @@ class ShopPhotosController < ApplicationController
     @photos = paginate("Photo", params[:page], hash, sort,10)
   end
 
+  def create
+    @shop_photo = Photo.new(params[:photo])
+    @shop_photo.room = session[:shop_id]
+    @shop_photo.user_id = "s#{session[:shop_id]}"
+
+    if @shop_photo.save
+      flash[:success] = "上传到图片墙成功！"
+      redirect_to :action => "shop"
+    else
+      flash.now[:error] = '上传到图片墙失败！'
+      render :action => :new
+    end
+  end
+
+  def shop
+    @shop_photo = session_shop.shop_photo
+  end
+
+  def edit
+    @shop_photo = Photo.find_by_id(params[:id])
+  end
+
+  def new
+    @shop_photo = Photo.new
+  end
+
+  #商家照片编辑
+  def update
+    @shop_photo = Photo.find_by_id(params[:id])
+    if @shop_photo.update_attributes(params[:photo])
+      redirect_to :action => "shop"
+    else
+      render :action => "edit"
+    end
+  end
+
+  #用户照片隐藏
   def ajax_del
     photo = Photo.find(params[:id])
     photo.update_attribute(:hide, true)
     expire_cache_shop(photo.room)
     render :json => {:text => '已隐藏'}
+  end
+
+  #商家照片删除
+  def ajax_shop_photo_del
+    @shop_photo = Photo.find_by_id(params[:id])
+    text = (@shop_photo.destroy ? '删除成功.' : nil)
+    render :json => {text: text}
   end
 
   def ajax_undel
