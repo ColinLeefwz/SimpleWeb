@@ -74,7 +74,7 @@ class PhoneController < ApplicationController
   end
   
   def register
-    user = User.find_by_phone(params[:phone])
+    user = User.find_by_phone(params[:phone], false)
     if user
       render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
       return      
