@@ -76,10 +76,10 @@ overflow: hidden;margin:0px auto;}
 
 .box2{width:330px;height:214px;margin:0px auto;line-height:41px;}
 .box2 .box2left{float:left;width:50px;padding-right:10px;text-align:right;}
-.box2 .box2right{float:left;width:265px;}
+.box2 .box2right{float:left;width:265px;overflow:hidden;}
 .box2 .starbox{background-color: #FFFCEB; border: 1px solid #F0C36D; float: left;margin-right: 10px;padding: 8px;border-radius:3px;}
 .box2 .star{width:130px;height:25px;background: url("../images/star.png") left -150px no-repeat;}
-.box2 .star a{width:26px;height:25px;display:block;float:left;cursor:pointer;}
+.box2 .star a{width:26px;height:25px;display:block;float:left;cursor:pointer;text-indent: -999em;font-size: 1px;line-height:100px;}
 .box2 .pj{float:left;font-size:12px;color:#666;}
 .box2 .box2clear{clear:both;height:20px;width:100%;overflow:hidden;}
 
