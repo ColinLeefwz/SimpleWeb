@@ -110,7 +110,7 @@ class User
     Shop.find_by_id(self.id.to_s[1..-1])
   end
   
-  def self.find_by_qq(qq, redis_only=true)
+  def self.find_by_qq(qq, redis_only=false)
     uid = $redis.get("Q:#{qq}")
     return User.find_by_id(uid) if uid
     return nil if redis_only
@@ -119,7 +119,7 @@ class User
     user
   end
   
-  def self.find_by_wb(wb_uid, redis_only=true)
+  def self.find_by_wb(wb_uid, redis_only=false)
     uid = $redis.get("W:#{wb_uid}")
     return User.find_by_id(uid) if uid
     return nil if redis_only
@@ -128,7 +128,7 @@ class User
     user
   end
   
-  def self.find_by_phone(phone, redis_only=true)
+  def self.find_by_phone(phone, redis_only=false)
     uid = $redis.get("P:#{phone}")
     return User.find_by_id(uid) if uid
     return nil if redis_only
@@ -759,6 +759,22 @@ class User
     size1 = User.where({wb_uid:{"$exists" => true}}).count
     size2 = $redis.keys("W:*").size
     puts "#{size1} : #{size2}"
+  end
+  
+  def self.check_wb_redis
+    $redis.keys("W:*").each do |key|
+      wb_uid = key[2..-1]
+      count = User.where({wb_uid:wb_uid}).count
+      if count==0
+        if User.find_by_wb(wb_uid).wb_uid.class != Fixnum
+          user = User.find(user.id)
+          puts user.to_json
+        end
+      end
+      if count>1
+        $redis.del("W:#{wb_uid}")
+      end
+    end
   end
     
 end
