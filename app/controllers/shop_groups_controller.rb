@@ -63,6 +63,9 @@ class ShopGroupsController < ApplicationController
 
   def del
     @group.delete
+    Rails.cache.delete("Group#{@group.id}")
+    shop= group.shop
+    shop.delete
     render :json => {}
   end
 
