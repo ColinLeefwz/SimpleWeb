@@ -106,7 +106,7 @@ class Group
     line = self.line
     shop = self.shop
     if line && shop
-      ShopFaq.create(sid: shop.id, title: '旅游线路', text: "http://shop.dface.cn/shop_groups/mobile?id=#{self.id}", od: '01')
+      ShopFaq.create(sid: shop.id, title: '旅游线路', text: "点击下面链接查看路线详情:http://shop.dface.cn/shop_groups/mobile?id=#{self.id}", od: '01')
     end
   end
 
