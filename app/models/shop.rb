@@ -462,7 +462,13 @@ class Shop
   end
   
   def history(skip,count)
-    response = Xmpp.get("api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}")
+    skip = 0 if skip<0
+    begin
+      response = Xmpp.get("api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}")
+    rescue RestClient::ServerBrokeConnection => e
+      Xmpp.error_notify("获取#{self.name}：#{self.id}的聊天历史失败")
+      return []
+    end
     chats=  JSON.parse(response)
     rmd = RoomMsgDel.where({room: self.id.to_i}).distinct(:mid)
     chats.reject!{|c| rmd.include?(c[3])}
