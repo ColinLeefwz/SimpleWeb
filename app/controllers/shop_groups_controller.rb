@@ -44,6 +44,8 @@ class ShopGroupsController < ApplicationController
     group.users = users(group.users)
     group.gen_shop
     group.save
+    group.reload.bat_phone_auth
+    group.create_shop_faq
     redirect_to :action => "show", :id => group.id
   end
 
@@ -54,12 +56,16 @@ class ShopGroupsController < ApplicationController
   def update
     params["group"].merge!({"users" => users(params[:group][:users])})
     @group.update_attributes(params[:group])
+    @group.reload.bat_phone_auth
     redirect_to :action => "show", :id => @group.id
   end
 
 
   def del
     @group.delete
+    Rails.cache.delete("Group#{@group.id}")
+    shop= @group.shop
+    shop.delete
     render :json => {}
   end
 
