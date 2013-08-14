@@ -21,7 +21,7 @@ class Group
     option.delegate :name, :to => :admin_shop
   end
   
-#  before_create :gen_shop
+  #  before_create :gen_shop
 
   #签到地点在旅行团线路上， 获取路线上的本次签到地点的合作商家的优惠券
   #sid签到地点id， uid => 用户id
@@ -33,6 +33,16 @@ class Group
     shops.inject([]){|f,s|  f + s.checkin_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) }}
   rescue
     []
+  end
+
+
+  #旅行团是否在有效时间内
+  def effectual?
+    fatime = self.fat.to_time
+    tatime = self.tat.to_time.end_of_day
+    Time.now.between?(fatime, tatime)
+  rescue
+    true
   end
 
   def gen_shop
@@ -54,7 +64,7 @@ class Group
   end
 
   def admin_shop
-    @_admin_shop ||= Shop.find_by_id(admin_sid)
+    Shop.find_by_id(admin_sid)
   end
   
   def password_auth(uid,str)
@@ -79,13 +89,29 @@ class Group
   end
 
   def line
-    @_line ||= Line.find_by_id(line_id)
+    Line.find_by_id(line_id)
   end
 
+  #批量认证已经有的用户到组中
+  def bat_phone_auth
+    return if self.users.blank?
+    self.users.map{|m| m['phone']}.each do |ph|
+      user = User.find_by_phone(ph)
+      self.phone_auth(user.id, ph)  if user
+    end
+  end
 
+  #自动建立一个问答系统
+  def create_shop_faq
+    line = self.line
+    shop = self.shop
+    if line && shop
+      ShopFaq.create(sid: shop.id, title: '旅游线路', text: "http://shop.dface.cn/shop_groups/mobile?id=#{self.id}", od: '01')
+    end
+  end
 
   def shop
-    @_shop ||= Shop.find_by_id(sid)
+    Shop.find_by_id(sid)
   end
   
   def self.find_by_phone(phone)
