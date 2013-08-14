@@ -1,18 +1,6 @@
 <div class="title2"><h2>照片墙发布图片</h2>设置常见问题，提高服务效率</div>
 
 
-<div id="Notice" class="notice">
-  <% if @shop_photo.errors.any? %>
-    <div id="error_explanation">
-      <h2>照片墙发布图片出错</h2>
-      <ul>
-        <% @shop_photo.errors.messages.values.each do |msg| %>
-          <li><%= msg.join(' ') %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-</div>
 
 <%= form_for(@shop_photo, :url => '/shop_photos/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
 
