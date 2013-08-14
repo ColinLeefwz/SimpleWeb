@@ -37,7 +37,7 @@ class ShopMarksController < ApplicationController
     render :text => "不可评价" if user.nil?  || @shop.nil?
     if group
       @group = group
-      render :text => "你不是此旅行团的成员" unless group.users.find{|u| u['id'] == params[:uid]}
+      render :text => "你不是此旅行团的成员" unless group.users.find{|u| u['id'].to_s == params[:uid]}
       render :text => "此商家不是本次旅行团的合作商家" unless group.line.partners.values.flatten.include?(params[:sid])
     end
   end
