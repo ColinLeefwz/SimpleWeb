@@ -47,7 +47,7 @@ class CouponsController < ApplicationController
         group = Shop.find_by_id(gid).group
         if ( group && line = group.line)
           if line.partners.to_a.flatten.include?(coupon_down.sid.to_s)
-            Xmpp.send_chat($gfuid, session[:user_id], "你在#{coupon_down.shop_name}使用了一张优惠券，体验如何点击下面的链接给个评分吧。http://www.dface.cn/shop_marks/new?sid=#{coupon_down.sid}&uid=#{session[:user_id]}&gid=#{group.id}")
+            Xmpp.send_chat($gfuid, session[:user_id], "你在#{coupon_down.shop_name}使用了一张优惠券，体验如何点击下面的链接给个评分吧:http://www.dface.cn/shop_marks/new?sid=#{coupon_down.sid}&uid=#{session[:user_id]}&gid=#{group.id}")
             break
           end
         end
