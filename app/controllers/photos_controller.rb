@@ -118,9 +118,8 @@ class PhotosController < ApplicationController
     
   def delcomment
     photo = Photo.find(params[:id])
-    com = photo.com
-    photo.com = com.delete_if{|x| x["id"]==session[:user_id] && x["txt"]==params[:text]}
-    photo.save!
+    com = photo.com.delete_if{|x| x["id"]==session[:user_id] && x["txt"]==params[:text]}
+    photo.set(:com, com)
     expire_cache_shop(photo.room, photo.user_id)
     render :json => {ok:photo.id}.to_json
   end
