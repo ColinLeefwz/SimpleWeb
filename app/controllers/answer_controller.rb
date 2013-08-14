@@ -88,6 +88,8 @@ class AnswerController < ApplicationController
         help_msg(uid)
         "1"
       end
+    elsif txt=="ip" && is_kx_user?(uid) 
+      Xmpp.send_chat($gfuid, uid, "Xmpp服务器ip：#{read_ip}", $uuid.generate, " NOLOG='1' NOPUSH='1' ")
     else
       Resque.enqueue(XmppMsg, uid,User.first.id,":反馈："+txt)
     end
