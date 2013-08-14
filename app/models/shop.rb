@@ -319,17 +319,18 @@ class Shop
 
   #旅行团 发送合作商家的优惠券
   #1.判断用户是否加入旅行团，
-  #2. 获取旅行团在本次签到地点的合作商家的优惠券
+  #2.判断旅行社是否生效
+  #3. 获取旅行团在本次签到地点的合作商家的优惠券
   def group_partners_coupons(uid)
-    coupon=[]
     $redis.smembers("GROUP#{uid}").each do |sid|
       begin
-        coupon +=  Shop.find_by_id(sid).group.partners_coupons(self.id, uid)
+        group = Shop.find_by_id(sid).group
+        return  group.partners_coupons(self.id, uid) if group && group.effectual?
       rescue
         next
       end
     end
-    return coupon
+    return []
   end
 
 
