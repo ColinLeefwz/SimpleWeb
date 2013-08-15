@@ -89,14 +89,14 @@ ul,ol{list-style:none;}
 
 .ie6mt5{_margin-top:5px;}
 
-.btn1{width:106px;height:38px;line-height:38px;background:transparent url(../images/btn1.png) left top no-repeat;border:none;text-align:center;display:block;color:#fff;cursor:pointer;}
+.btn1{width:106px;height:38px;line-height:38px;background:transparent url(../images/btn1.png) left top no-repeat;border:none;text-align:center;display:block;color:#fff !important;cursor:pointer;}
 .btn2{width:106px;height:46px;line-height:46px;background:transparent url(../images/btn2.png) left top no-repeat;border:none;text-align:center;color:#fff;display:block;letter-spacing:1px;font-size:14px;cursor:pointer;}
 .btn3{width:86px;height:46px;line-height:46px;background:transparent url(../images/btn3.png) left top no-repeat;border:none;text-align:center;color:#6b6b6b;display:block;letter-spacing:1px;font-size:14px;cursor:pointer;}
 .btn4{width:215px;height:215px;border:none;text-align:center;display:block;cursor:pointer;float:left;z-index:10; position:relative;}
 .btn5{width:42px;height:22px;line-height:22px;background:transparent url(../images/btn4.png) left top no-repeat;border:none;text-align:center;color:#fff;letter-spacing:1px;font-size:12px;cursor:pointer;}
 .btn6{background: transparent url("../images/btn5.jpg") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 25px;line-height: 25px;text-align: center;width: 68px;}
 .btn7{background: transparent url("../images/btn6.png") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 29px;line-height: 29px;text-align: center;width: 93px;}
-.btn8{cursor: pointer;text-align: center;width: 93px;border:1px solid #ccc;color:#00A0E3;padding:5px 8px;background-color:#eaeaea;}
+.btn8{cursor: pointer;text-align: center;width: 93px;height:23px;line-height:23px;border:1px solid #ccc;color:#00A0E3;padding:0px 6px;background-color:#eaeaea;}
 
 .title1{width:100%;overflow:hidden;clear:both;}
 .title1 h2{font-size:14px;color:#333333;}
@@ -143,6 +143,14 @@ background: -ms-linear-gradient(top, #dedede 0%,#dedede 100%); /*兼容IE10浏�
 background: linear-gradient(top, #dedede 0%,#dedede 100%); /*兼容W3C标准的浏览器*/
 filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endColorStr='#dedede',gradientType='0');/*兼容IE浏览器*/
 }
+
+#BG{width:100%;background:url("../images/bg4.png");position:absolute;left:0px;top:0px;z-index:120;}
+#PhotoPlane{width:600px;border:1px solid #ccc;position:absolute;left:50%;top:0px;z-index:121;background-color:#f2f2f2;padding:8px;margin-left:-308px;box-shadow:0 0 5px #FFFFFF;display:none;}
+#PhotoPlane .imgstyle{width:280px;border-left:2px solid #fff;border-top:2px solid #fff; border-right:2px solid #ccc;border-bottom:2px solid #aaa;}
+#PhotoPlane table{line-height:20px;font-size:14px;color:#333;}
+#PhotoPlane table a{color:#00A0E3;}
+#PhotoPlane table a:hover{color:#005580;}
+#PhotoPlane #Close{width:30px;height:30px;cursor:pointer;position:absolute;top:-10px;right:-10px;background:url("../images/close.png");}
 
 .main{width:100%;zoom:1;}
 
@@ -280,6 +288,26 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 
 .box8{overflow:hidden;border:1px dashed #aaa;padding:5px;height:185px;margin-top:20px;}
 .box8 .imgstyle2{width:80px;height:80px;margin:5px;}
+
+.box9{width:820px;overflow:hidden;position:relative;margin-top:12px;margin-left:5px;}
+.box9 .box9plane{width:152px;height:152px;position:absolute;border:1px solid #ccc;display:block;border-collapse:collapse;display:block;text-align:center;overflow:hidden;cursor:pointer;}
+.box9 .box9plane .m{position:absolute;width:152px;height:152px;background:url("../images/bg3.png");overflow:hidden;z-index:10;top:0px;left:0px;display:none;}
+.box9 .box9plane .bm{background:url("../images/bg5.png") !important;}
+.box9 .box9plane .m span{padding-top:45%;color:#fff;display:block;width:140px;margin:0px auto;}
+.box9 .box9plane img{width:152px;height:152px;}
+.box9 .box9plane .bj{position:absolute;text-align:center;left:0px;bottom:-25px;width:152px;height:25px;z-index:20;background:url("../images/bg3.png");}
+.box9 .box9plane .bbj{background:url("../images/bg5.png") !important;}
+.box9 .n1{width:28px;height:25px;background:url("../images/sign30.png") center center no-repeat;display:inline-block;cursor:pointer;}
+.box9 .n2{width:28px;height:25px;background:url("../images/sign26.png") center center no-repeat;display:inline-block;cursor:pointer;}
+.box9 .n3{width:28px;height:25px;background:url("../images/sign27.png") center center no-repeat;display:inline-block;cursor:pointer;}
+.box9 .n4{width:28px;height:25px;background:url("../images/sign28.png") center center no-repeat;display:inline-block;cursor:pointer;}
+.box9 .n5{width:28px;height:25px;background:url("../images/sign29.png") center center no-repeat;display:inline-block;cursor:pointer;}
+.box9 .imgstyle{width:280px;border-left:2px solid #fff;border-top:2px solid #fff; border-right:2px solid #ccc;border-bottom:2px solid #aaa;}
+.box9 table{line-height:20px;font-size:14px;color:#333;}
+.box9 table a{color:#00A0E3;}
+.box9 table a:hover{color:#005580;}
+
+.box10{overflow:hidden; margin-top:20px;}
 
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
 .tab1 td{padding-bottom:20px;}
