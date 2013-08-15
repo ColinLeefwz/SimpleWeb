@@ -51,7 +51,7 @@ class ShopPhotosController < ApplicationController
   #用户照片隐藏
   def ajax_del
     photo = Photo.find(params[:id])
-    photo.update_attribute(:hide, true)
+    photo.set(:hide, true)
     expire_cache_shop(photo.room)
     render :json => {:text => '已隐藏'}
   end

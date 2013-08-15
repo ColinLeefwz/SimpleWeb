@@ -217,20 +217,23 @@ class Photo
 
   #隐藏评论
   def hidecom(uid, t)
-    comment = com.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
+    ncom = com
+    comment = ncom.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
     return if comment.nil?
     comment["hide"] = true
-    self.save!
+    self.set(:com, ncom)
+
   rescue
     nil
   end
 
   #取消评论的隐藏
   def unhidecom(uid, t)
-    comment = com.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
+    ncom = com
+    comment = ncom.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
     return if comment.nil?
     comment.delete("hide")
-    self.save!
+    self.set(:com, ncom)
   rescue
     nil
   end
