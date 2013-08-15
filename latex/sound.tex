@@ -1,34 +1,104 @@
 
 \section{个人聊天时发语音}
 
-\subsection{个人聊天时上传语音}
+\subsection{获取七牛云存储的文件上传token}
 
 \begin{table}[H]
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-POST & \multicolumn{3}{|c|}{/sound2s/create} \\
+POST & \multicolumn{3}{|c|}{/sound2s/uptoken} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
- sound[img]  & file & 必须 &  语音文件\\
- \hline
- sound[to\_uid]  & 字符串 & 必须 &  接收人的id\\
-\hline
-  sound[sec]  & 整数 & 可选 &  语音长度：秒\\
+ user\_id  & 字符串 & 必须 &  当前登录用户的id\\
  \hline
 \end{tabular}
    \end{center}
 \end{table}
 
 
+\subsection{上传文件}
+
+调用七牛的API上传文件，其中包含的参数有：
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{七牛的上传模式2：高级上传（带回调）} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ uptoken  & 字符串 & 必须 &  上一步获得的token\\
+ \hline
+ file  & 文件 & 必须 &  要上传的文件\\
+ \hline
+ bucket  & 字符串 & 必须 & 必须是"sound"\\
+ \hline
+ key  & 字符串 & 必须 &  UUID的主键\\
+  \hline
+ callback\_params  & 字符串 & 必须 &  回调参数\\
+ \hline    
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+回调参数的格式："sec=&from=&to=&id=&key=$(etag)&size=$(fsize)"
+其中sec是声音的长度（秒），
+from是发送者的uid，
+to是接受者的uid,
+id是客户端生成的UUID主键key,
+"key=$(etag)&size=$(fsize)"这一段则不做改变。
+
+
+\end{verbatim}
+
+      
+\subsection{上传成功后的回调}
+文件上传成功后，七牛服务器会回调脸脸服务器的接口，然后把响应转发给客户端。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/sound2s/callback} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+  sec  & 整数 & 可选 &  语音长度：秒\\
+  \hline
+ from  & 字符串 & 必须 &  发送者uid\\
+ \hline
+ to  & 字符串 & 必须 &  接受者uid\\
+ \hline
+ id  & 字符串 & 必须 &  语音文件的id，也就是客户端生成的key\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：本接口不需要客户端调用。
+
+\begin{verbatim}
+
+比如上一步中callback_params 的输入：
+"sec=3&from=fid&to=tid&id=1376548998&key=$(etag)&size=$(fsize)"
+
+本接口的输出如下：
+{"from"=>"fid", "sec"=>"3", "size"=>"691", "to"=>"tid"
+"id"=>"1376548710", "key"=>"FgaFYWcGt7w4f60v4NG2DB8zKSNV" } 
+\end{verbatim}
+
+
 \subsection{发送消息}
-当语音发送完成后，服务器端发送一个xmpp消息，其中的body内容格式为：
+语音上传完成后，服务器端发送一个xmpp消息，其中的body内容格式为：
 
 \begin{verbatim}
 [sound:$id]$sec
 
 \end{verbatim}
+
 
 \subsection{在个人聊天时收到消息后获取语音}
 \begin{table}[H]
