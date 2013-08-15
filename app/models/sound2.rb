@@ -29,10 +29,6 @@ class Sound2
   end
   
   def self.callback
-    snd = Sound2.new
-    snd._id = params[:key]
-    snd.sec = params[:sec]
-    snd.save!
     snd.after_async_store
   end
   
