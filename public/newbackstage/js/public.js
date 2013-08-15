@@ -1,7 +1,7 @@
 // JavaScript Document
 var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua,MessageDivTimer,CouponPlaneTimer,x0=0,x1=0;
 
-$(document).ready(function(){
+$(window).load(function(){
 	windowWidth=$(window).width();
 	documentHeight=$(document).height();
 	windowHeight=$(window).height();
@@ -58,6 +58,7 @@ $(document).ready(function(){
 			NavDiv();
 			CouponPlane();
 			MessageDiv();
+			Photo();
 		}
 	});
 	
@@ -395,5 +396,31 @@ function AllNoDH(){//取消动画
 		$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
 	}else{
 		$("div.main").css("width","100%");
+	}
+}
+function Photo(){//照片墙动画
+	var arr=new Array($("div.box9plane").length);
+	var ns, box9planeTimer;
+	if(runing="checkboxs1"&&noing=="run"){
+		for(ns=0;ns<$("div.box9plane").length;ns++){
+			arr[ns]=parseInt($("div.box9plane").eq(ns).css("top"));
+			$("div.box9plane").eq(ns).css("top","666px");
+		}
+		ns=0;
+		box9planeTimer=setInterval(function(){
+			$("div.box9plane").eq(ns).animate({"top":arr[ns]+"px"},500);
+			ns++;
+			if(ns==$("div.box9plane").length){clearInterval(box9planeTimer);}
+		},250);	
+	}else if(runing="checkboxs2"){
+		clearInterval(box9planeTimer);
+		if($("div.box9plane").eq(ns).html()!=""){
+			$('#Waterfall').BlocksIt({
+				numOfCol: 5,
+				offsetX: 10,
+				offsetY: 8,
+				blockElement: 'div'
+			});	
+		}
 	}
 }
