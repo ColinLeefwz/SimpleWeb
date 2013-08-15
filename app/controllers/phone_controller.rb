@@ -1,9 +1,10 @@
 # coding: utf-8
 
 class PhoneController < ApplicationController
-  before_filter :user_login_filter, :only => [:bind, :unbind, :change_password] 
+  before_filter :user_login_filter, :only => [:bind, :unbind, :change_password, :set_password] 
   before_filter :code_match, :only => [:register, :forgot_password, :bind] 
-  before_filter :password_check, :only => [:register, :forgot_password, :change_password, :bind] 
+  before_filter :password_check, :only => [:register, :forgot_password, :change_password, :set_password] 
+  before_filter :user_is_session_user, :only => [:set_password]
   
   def password_check
     if params[:password].nil? || params[:password].size<3
@@ -152,14 +153,30 @@ class PhoneController < ApplicationController
       Xmpp.error_nofity("用户手机号码#{session_user.phone}，重新绑定新的手机号码#{params[:phone]}")
     end
     user = session_user_no_cache
-    user.psd = slat_hash_pass(params[:password])    
+    #user.psd = slat_hash_pass(params[:password])  if params[:password]
     user.phone = params[:phone]
     user.save!
     render :json => {bind: true}.to_json
   end
   
+  def set_password
+    user = session_user_no_cache
+    user.set(:psd, slat_hash_pass(params[:password]) )
+    render :json => {set_password: true}.to_json
+  end
+  
   def unbind
-    render :json => {"error"=>"无法解除手机号码的绑定"}.to_json
+    user = session_user_no_cache
+    if user.phone != params[:phone]
+      str = "要解除绑定的手机号码#{params[:phone]}不是以前绑定的那个#{user.phone}"
+      Xmpp.error_notify(str)
+      render :json => {"error"=>str}.to_json
+    elsif !(user.has_qq? || user.has_wb?)
+      render :json => {"error"=>"至少有一种以上的绑定关系才能解绑"}.to_json
+    else
+      user.set(:phone_hidden, true)
+      render :json => {bind: true}.to_json
+    end
   end
 
   private 
