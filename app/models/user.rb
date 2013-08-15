@@ -575,6 +575,17 @@ class User
   
   def del_test_user
     self.del_my_cache
+    if self.qq
+      $redis.del("Q:#{self.qq}")
+      $redis.del("qqtoken#{self.id}")
+      $redis.del("qqexpire:#{self.id}")
+    end
+    if self.wb_uid
+      $redis.del("W:#{self.wb_uid}")
+      $redis.del("wbtoken#{self.id}")
+      $redis.del("wbexpire:#{self.id}")
+    end
+    $redis.del("P:#{self.phone}")
     user_logos.each {|x| x.destroy}
     photos.each {|x| x.destroy}
     Checkin.where({uid: _id}).each {|x| x.destroy}
