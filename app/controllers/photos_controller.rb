@@ -130,7 +130,7 @@ class PhotosController < ApplicationController
       render :json => {"error" => "user #{session[:user_id]} isn't photo's owner."}.to_json
       return
     end
-    res = photo.hidecom
+    res = photo.hidecom(params[:uid], params[:text])
     return render :json => {"error" => res}.to_json if res
     expire_cache_shop(photo.room, photo.user_id)
     render :json => {ok:photo.id}.to_json
