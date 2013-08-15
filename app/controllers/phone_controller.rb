@@ -4,8 +4,17 @@ class PhoneController < ApplicationController
   before_filter :user_login_filter, :only => [:bind, :unbind, :change_password, :set_password] 
   before_filter :code_match, :only => [:register, :forgot_password, :bind] 
   before_filter :password_check, :only => [:register, :forgot_password, :change_password, :set_password] 
-  before_filter :user_is_session_user, :only => [:set_password]
-  
+  before_filter :phone_check, :only => [:unbind, :set_password, :upload_address_list] 
+
+  def phone_check
+    user = session_user
+    if user.phone != params[:phone]
+      str = "手机号码#{params[:phone]}不是以前绑定的那个#{user.phone}"
+      Xmpp.error_notify(str)
+      render :json => {"error"=>str}.to_json
+    end
+  end
+    
   def password_check
     if params[:password].nil? || params[:password].size<3
       render :json => {"error"=>"密码长度太短，请选择一个长一点的密码"}.to_json
@@ -167,16 +176,21 @@ class PhoneController < ApplicationController
   
   def unbind
     user = session_user_no_cache
-    if user.phone != params[:phone]
-      str = "要解除绑定的手机号码#{params[:phone]}不是以前绑定的那个#{user.phone}"
-      Xmpp.error_notify(str)
-      render :json => {"error"=>str}.to_json
-    elsif !(user.has_qq? || user.has_wb?)
+    if !(user.has_qq? || user.has_wb?)
       render :json => {"error"=>"至少有一种以上的绑定关系才能解绑"}.to_json
     else
       user.set(:phone_hidden, true)
       render :json => {bind: true}.to_json
     end
+  end
+  
+  def upload_address_list
+    ua = UserAddr.new
+    ua.id = session_user.id
+    ua.phone = params[:phone]
+    ua.list = params[:list]
+    ua.save!
+    render :json => {imported: ua.list.size}.to_json
   end
 
   private 
