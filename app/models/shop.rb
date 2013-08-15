@@ -323,17 +323,18 @@ class Shop
 
   #旅行团 发送合作商家的优惠券
   #1.判断用户是否加入旅行团，
-  #2. 获取旅行团在本次签到地点的合作商家的优惠券
+  #2.判断旅行社是否生效
+  #3. 获取旅行团在本次签到地点的合作商家的优惠券
   def group_partners_coupons(uid)
-    coupon=[]
     $redis.smembers("GROUP#{uid}").each do |sid|
       begin
-        coupon +=  Shop.find_by_id(sid).group.partners_coupons(self.id, uid)
+        group = Shop.find_by_id(sid).group
+        return  group.partners_coupons(self.id, uid) if group && group.effectual?
       rescue
         next
       end
     end
-    return coupon
+    return []
   end
 
 
@@ -461,7 +462,13 @@ class Shop
   end
   
   def history(skip,count)
-    response = Xmpp.get("api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}")
+    skip = 0 if skip<0
+    begin
+      response = Xmpp.get("api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}")
+    rescue RestClient::ServerBrokeConnection => e
+      Xmpp.error_notify("获取#{self.name}：#{self.id}的聊天历史失败")
+      return []
+    end
     chats=  JSON.parse(response)
     rmd = RoomMsgDel.where({room: self.id.to_i}).distinct(:mid)
     chats.reject!{|c| rmd.include?(c[3])}
