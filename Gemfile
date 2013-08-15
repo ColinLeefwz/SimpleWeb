@@ -11,6 +11,9 @@ gem "haml-rails"
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
+gem 'devise'
+gem 'omniauth-facebook'
+gem 'social-share-button'
 
 group :doc do
   gem 'sdoc', require: false

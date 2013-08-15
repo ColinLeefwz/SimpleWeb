@@ -2,11 +2,49 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$wine_red: #880848;
+.controls {
+display: inline-block;
+}
+.controls li {
+margin-left: 20px;
+display: inline;
+cursor: pointer;
+}
+.controls li.active {
+font-weight: 700;
+}
+#Grid {
+width: 960px;
+font-size: 0.1px;
+margin: 0 auto;
 
-#header {
-	border-top: 2px solid wine_red;
-	border-bottom: 4px solid wine_red;
-	height: 118px;
-	background: #fff;
+  .column{
+    vertical-align: top;
+    width: 310px;
+    display: inline-block;
+  }
+}
+
+#Grid:after {
+content: '';
+display: inline-block;
+width: 100%;
+}
+
+#Grid .mix {
+border-radius: 5px;
+box-shadow:2px 2px 3px #aaaaaa;
+display: none;
+margin-right: 10px;
+opacity: 0;
+width: 300px;
+vertical-align: top;
+margin-bottom: 10px;
+font-size: 30px;
+text-align: center;
+
+  img {
+    border-radius: 5px;
+    width: 100%;
+  }
 }

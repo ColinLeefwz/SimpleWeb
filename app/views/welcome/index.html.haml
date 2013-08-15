@@ -17,8 +17,10 @@
   .column
     .mix.category_1{"data-cat" => "1"} 
       = image_tag("1.jpg")
+      = social_share_button_tag("asd")
     .mix.category_3{"data-cat" => "3"}
       = image_tag("6.jpg")
+      = render 'linked_in_share_button'
   .column
     .mix.category_3{"data-cat" => "3"}
       = image_tag("2.jpg")

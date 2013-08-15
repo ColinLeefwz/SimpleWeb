@@ -12,11 +12,6 @@
 	  background: #fff;
   }
 
-  #header.section {
-	  width: 960px;
-	  margin: 0 auto;
-  }
-
   #logo {
 	  float: left;
 	  text-transform: lowercase;
@@ -26,6 +21,20 @@
   a {
       text-decoration: none;
   }     
+
+  #user_nav {
+      float: right;
+      height: 38px;
+      margin-top: 40px;
+      vertical-align: bottom;
+
+    a{
+      margin:0 5px auto;
+      font-size: 12px;
+    }
+  }
+
+
 
   #navigation {
 	  margin: -45px 0 0;
