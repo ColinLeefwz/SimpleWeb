@@ -47,3 +47,5 @@ gem 'resque-scheduler', :require => 'resque_scheduler'
 gem 'rake', '~> 10.0.1'
 gem 'dalli'
 
+gem 'qiniu-rs', :git => "https://github.com/qiniu/ruby-sdk.git"
+
