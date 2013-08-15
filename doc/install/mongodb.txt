@@ -38,6 +38,20 @@ mongo dface
 
 
 
+配置tmpfs的mongodb
+修改/etc/mongodb.conf,设置"directoryperdb=true"
+mkdir /mnt/mongodata/shop
+chown -R mongodb:lian /mnt/mongodata
+echo 'tmpfs /mnt/mongodata/shop tmpfs defaults,noatime,mode=1777,nosuid,size=8000M 0 0' >> /etc/fstab
+#mount -t tmpfs -o size=4000M tmpfs /mnt/mongodata/shop/
+复制shops数据
+mongodump -d dface -c shops 
+mongorestore  -d shop -c shops dump/dface/shops.bson 
+mongooplog  --from localhost:27017 --host localhost:26017 -d dface -c shops
+
+
+
+
 从ext3切换到ext4
 lsof /dev/xvdb1 
 pkill mongod
@@ -49,7 +63,7 @@ dumpe2fs -h /dev/xvdb1 2> /dev/null | awk -F ':' '{ if($1 == "Reserved block cou
 echo '/dev/xvdb1  /mnt ext4    defaults,noatime,nodiratime 0 2' >> /etc/fstab
 mount -a
 chown lian:lian /mnt
-chown mongodb:lian /mnt/mongodata
+chown -R mongodb:lian /mnt/mongodata
 
 
 cd /mnt && git clone https://github.com/yuanxinyu/shell_scripts.git
