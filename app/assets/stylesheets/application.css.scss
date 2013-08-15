@@ -8,6 +8,7 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require social-share-button
  *= require_self
  *= require_tree .
  */
@@ -15,56 +16,11 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: ‘Lucida Console’, Monaco, monospace;
   font-size: 12px;
   color: #444444;
   text-align: center;
   line-height: 18px;
 }
 
-.controls {
-display: inline-block;
-}
-.controls li {
-margin-left: 20px;
-display: inline;
-cursor: pointer;
-}
-.controls li.active {
-font-weight: 700;
-}
-#Grid {
-width: 960px;
-font-size: 0.1px;
-margin: 0 auto;
 
-  .column{
-    vertical-align: top;
-    width: 310px;
-    display: inline-block;
-  }
-}
-
-#Grid:after {
-content: '';
-display: inline-block;
-width: 100%;
-}
-
-#Grid .mix {
-border-radius: 5px;
-box-shadow:2px 2px 3px #aaaaaa;
-display: none;
-margin-right: 10px;
-opacity: 0;
-width: 300px;
-vertical-align: top;
-margin-bottom: 10px;
-font-size: 30px;
-text-align: center;
-
-  img {
-    border-radius: 5px;
-    width: 100%;
-  }
-}
