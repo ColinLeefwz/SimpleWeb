@@ -101,6 +101,7 @@ class ShopPhotosController < ApplicationController
     photo = Photo.find(params[:id])
     result = photo.hidecom(params[:uid], params[:txt])
     return render :json => {:text => result } if result
+    Rails.cache.delete("Photo#{photo.id.to_s}")
     expire_cache_shop(photo.room)
     render nothing: true
   end
@@ -109,6 +110,7 @@ class ShopPhotosController < ApplicationController
     photo = Photo.find(params[:id])
     result = photo.unhidecom(params[:uid], params[:txt])
     return render :json => {:text => result } if result
+    Rails.cache.delete("Photo#{photo.id.to_s}")
     expire_cache_shop(photo.room)
     render nothing: true
   end
