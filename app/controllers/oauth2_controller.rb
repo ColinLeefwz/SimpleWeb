@@ -223,6 +223,7 @@ class Oauth2Controller < ApplicationController
 
   #提供给erlang系统的内部认证服务
   def auth
+    # TODO: 保证请求的ip来自$xmpp_ips
     if params[:name][0]=='s'
       shop = Shop.find_by_id(params[:name][1..-1])
       if (shop && User.pass_hash(shop.password)==params[:pass][0,16]) || params[:pass][0,10] == 'passWD1234'
@@ -246,16 +247,18 @@ class Oauth2Controller < ApplicationController
         return
       end
     end
-    #Xmpp.error_notify("xmpp登录失败：#{params[:name]},#{params[:pass]}") #暂时放松对xmpp登录的验证
+    Xmpp.error_notify("xmpp登录失败：#{params[:name]},#{params[:pass]}") #暂时放松对xmpp登录的验证
     render :text => "1"
   end
   
   def update_token
+    # TODO: 保证请求的ip来自$xmpp_ips
     update_token0(params[:id], params[:pass])
     render :text => "1"
   end
   
   def push_msg_info
+    # TODO: 保证请求的ip来自$xmpp_ips
     logger.warn "params['from'],params['to']"
     if params["from"][0]=='s'
       fu = Shop.find_by_id(params["from"][1..-1])
