@@ -16,13 +16,8 @@ class XgroupController < ApplicationController
     end
 
     #团建好后，把已经有的用户认证。
-    group.users.map{|m| m['phone']}.each do |ph|
-      user = User.find_by_phone(ph)
-      if user
-        group.phone_auth(user.id, ph)
-      end
-    end
-
+    group.reload.bat_phone_auth
+    group.create_shop_faq
     render :json => {ok: group.id}
   end
 
