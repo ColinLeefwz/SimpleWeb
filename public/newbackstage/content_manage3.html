@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/public.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/jquery.blocksit.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<div class="headercon">
+				<div id="Message">赵海斌刚刚使用了一张分享优惠券惠券</div>
+				<div id="LinkBox">
+					<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
+					<a  class="links2">退出</a>
+					<span class="linkarrow"></span>
+				</div>
+				<div class="toptitle">
+					<h1>脸脸茶坊</h1>
+					<img src="images/pic1.png" class="logo" id="OpenLinkBox"/>
+				</div>
+			</div>
+			<img src="images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="index.html">首页</a>
+				<span class="navline"></span>
+				<a href="coupon_manage.html">优惠券管理</a>
+				<a href="coupon_data_stistics4.html">优惠券数据统计</a>
+				<span class="navline"></span>
+				<a href="data_statistics1.html">数据统计</a>
+				<span class="navline"></span>
+				<a href="content_manage1.html">内容管理</a>
+				<span class="navline"></span>
+				<a href="sign_manage1.html">签到管理</a>
+				<span class="navline"></span>
+				<a href="seller_set1.html">商家设置</a>
+				<span class="navline"></span>
+				<a href="questions_answers1.html">问答系统</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		<div class="clear1"></div>
+		<div class="con">
+			<div class="title1 mb30"><h2 class="f18">内容管理</h2></div>
+			<div class="submenu">
+				<ul>
+					<li class="hover"><a href="content_manage1.html">管理照片墙</a></li>
+					<li><a href="content_manage2.html">管理聊天室</a></li>
+				</ul>
+				<div class="r wordstyle">
+					<form action="content_manage1.html" method="post">
+						<select name="select" class="p3 r mr10">
+							<option value="显示全部图片">显示全部图片</option>
+							<option value="只显示用户图片">只显示用户图片</option>
+							<option value="只显示商家图片">只显示商家图片</option>
+						</select>
+						<a href="content_manage3.html" class="btn8 r mr10">上传照片</a>
+					</form>
+				</div>
+			</div>
+			<div class="clear1"></div>				
+			<div class="box9">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt20">
+					  <tr>
+						<td width="9%" height="30" align="right" class="pr20">图&nbsp;片：</td>
+						<td width="91%" height="30"><a href="#" class="btn1">上传图片</a></td>
+					  </tr>
+					  <tr>
+					    <td height="30" rowspan="2" align="right" class="pr20">&nbsp;</td>
+						<td height="15"><img src="images/pic16.jpg" width="150" height="150"/></td>
+					  </tr>
+					  <tr>
+					    <td height="15" class="gay1 f12">(可以添加店内菜单、最新活动、宣传海报等图片<br>
+图片支持格式:jpg jpeg gif png)</td>
+				      </tr>
+					  <tr>
+					    <td height="30" align="right" valign="top" class="pr20">描&nbsp;述：</td>
+						<td height="30"><textarea class="textarea3"></textarea><br/>
+							<span class="gay1 f12">(3-140个字,例如：好吃)</span>						</td>
+					  </tr>
+					  <tr>
+					    <td height="30" class="pl20">&nbsp;</td>
+					    <td height="30"><span class="pl20">
+					      <input type="submit" name="Submit" value="提 交" class="btn2 l"/>
+                          <a class="btn3 l ml20" href="/newbackstage/content_manage1.html">取 消</a></span></td>
+				      </tr>
+			  </table>	
+			</div>
+			
+	  </div>
+	</div>
+<script defer="defer">
+var navmove="off", runing;
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");	
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+		noing="norun"
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+});
+
+</script>
+</body>
+</html>
