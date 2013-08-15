@@ -352,7 +352,7 @@ POST & \multicolumn{3}{|c|}{/phone/set\_password} \\
 \hline
  password  & 字符串 & 必须 &  用户设置的密码\\
  \hline
- user\_id  & 字符串 & 必须 &  用户的id\\
+ phone  & 字符串 & 必须 &  用户的手机号码\\
 \hline
 \end{tabular}
    \end{center}
@@ -376,10 +376,35 @@ POST & \multicolumn{3}{|c|}{/phone/unbind} \\
 \end{tabular}
    \end{center}
 \end{table}
-
 至少有一种以上的绑定关系才能解绑。
 
 
+\subsubsection{上传手机通讯录}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/upload\_address\_list} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+ \hline
+ list  & json字符串 & 必须 &  通讯录\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\begin{verbatim}
+list是一个json字符串表示的数组，其中每一个条目是一个hash, 格式如下：
+[{"id":323,"number":"(0571)28996083","name":"***"},...]
+
+返回值为“{imported: 导入的通讯录的条数}”。
+\end{verbatim}
 
 
 
