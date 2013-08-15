@@ -150,7 +150,7 @@ class Photo
   def output_hash
     hash = {id: self._id, user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo, qq:self.qq}
     hash.merge!( logo_thumb_hash)
-    hash.merge!( {like:self.like, comment:self.com, time:cati} )
+    hash.merge!( {like:self.like, comment: self.com.to_a.select{|m| !m['hide']}, time:cati} )
   end
   
   def output_hash_with_username
