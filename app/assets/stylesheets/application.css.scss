@@ -34,38 +34,37 @@ cursor: pointer;
 font-weight: 700;
 }
 #Grid {
-width: 940px;
-text-align: justify;
+width: 960px;
 font-size: 0.1px;
 margin: 0 auto;
+
+  .column{
+    vertical-align: top;
+    width: 310px;
+    display: inline-block;
+  }
 }
+
 #Grid:after {
 content: '';
 display: inline-block;
 width: 100%;
 }
+
 #Grid .mix {
+border-radius: 5px;
+box-shadow:2px 2px 3px #aaaaaa;
 display: none;
+margin-right: 10px;
 opacity: 0;
 width: 300px;
-height: 300px;
 vertical-align: top;
-margin-bottom: 20px;
-background: #ccc;
-color: #fff;
+margin-bottom: 10px;
 font-size: 30px;
 text-align: center;
-line-height: 200px;
-  
 
-}
-
-#Grid .mix image {
-  width: 300px;
-  height: 300px;
-}
-
-#Grid .gap {
-display: inline-block;
-width: 200px;
+  img {
+    border-radius: 5px;
+    width: 100%;
+  }
 }

@@ -14,15 +14,21 @@
     %li.filter{"data-filter" => "category_3 category_1"}Category 1 &amp; 3
 
 #Grid
-  .mix.category_1{"data-cat" => "1"} 
-    = image_tag("1.jpg")
-  .mix.category_3{"data-cat" => "3"}
-    = image_tag("2.jpg")
-  .mix.category_2{"data-cat" => "2"}2
-  .mix.category_3{"data-cat" => "3"}3
-  %li.mix.category_2{"data-cat" => "2"}2
-  %li.mix.category_1{"data-cat" => "1"}1
-  %li.gap
+  .column
+    .mix.category_1{"data-cat" => "1"} 
+      = image_tag("1.jpg")
+    .mix.category_3{"data-cat" => "3"}
+      = image_tag("6.jpg")
+  .column
+    .mix.category_3{"data-cat" => "3"}
+      = image_tag("2.jpg")
+    .mix.category_2{"data-cat" => "2"}
+      = image_tag("4.jpg") 
+  .column
+    .mix.category_2{"data-cat" => "2"}
+      = image_tag("5.jpg")
+    .mix.category_1{"data-cat" => "1"}
+      = image_tag("3.jpg")
 <!-- "gap" elements fill in the gaps in justified <a href="http://www.jqueryscript.net/tags.php?/grid/">grid</a> -->
 
 
