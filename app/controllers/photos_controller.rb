@@ -130,15 +130,8 @@ class PhotosController < ApplicationController
       render :json => {"error" => "user #{session[:user_id]} isn't photo's owner."}.to_json
       return
     end
-    com = photo.com
-    comment = com.find{|x| x["id"].to_s==params[:uid] && x["txt"]==params[:text]}
-    if comment.nil?
-      render :json => {"error" => "comment #{params[:text]} not found."}.to_json
-      return
-    end
-    comment["hide"] = true
-    photo.com = com
-    photo.save!
+    res = photo.hidecom
+    return render :json => {"error" => res}.to_json if res
     expire_cache_shop(photo.room, photo.user_id)
     render :json => {ok:photo.id}.to_json
   end
