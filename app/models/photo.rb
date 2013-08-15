@@ -216,26 +216,23 @@ class Photo
 
 
   #隐藏评论
-  def hidecom(uid, t)
+  def hidecom(uid, txt)
     ncom = com
-    comment = ncom.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
-    return if comment.nil?
+    comment = ncom.find{|x| x['id'].to_s == uid && x['txt'] == txt }
+    return "comment #{txt} not found." if comment.nil?
     comment["hide"] = true
     self.set(:com, ncom)
-
-  rescue
-    nil
+    return nil
   end
 
   #取消评论的隐藏
-  def unhidecom(uid, t)
+  def unhidecom(uid, txt)
     ncom = com
-    comment = ncom.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
-    return if comment.nil?
+    comment = ncom.find{|x| x['id'].to_s == uid && x['txt'] == txt }
+    return "comment #{txt} not found." if comment.nil?
     comment.delete("hide")
     self.set(:com, ncom)
-  rescue
-    nil
+    return nil
   end
 
   #like重写， 现在的like是从redis中取
