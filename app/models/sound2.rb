@@ -14,17 +14,18 @@ class Sound2
       :scope => "sound", 
       :expires_in => 720000, 
       :callback_url => "http://42.121.79.211/sound2s/callback",
-      :callback_body => "sec=$(x:sec)&key=$(etag)&size=$(fsize)&uid=$(endUser)",
-      :callback_body_type => "application/x-www-form-urlencoded",
-      :customer => uid}
+      :callback_body => "sec=$(x:sec)&from=$(x:from)&to=$(x:to)&id=$(x:id)&key=$(etag)&size=$(fsize)",
+      :callback_body_type => "application/x-www-form-urlencoded"
+    }
     Qiniu::RS.generate_upload_token(upopts)
   end
   
   def self.test_upload
-    token = uptoken("uid")
+    token = uptoken("12345")
     local_file = 'public/images/arrow.png'
+    key = Time.now.to_i.to_s
     data = Qiniu::RS.upload_file :uptoken => token, :file => local_file, :bucket =>"sound", 
-      :key => Time.now.to_i.to_s, :callback_params => {sec:10}
+      :key => key, :callback_params => "sec=3&from=fid&to=tid&id=#{key}&key=$(etag)&size=$(fsize)"
     data
   end
   
