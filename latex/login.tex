@@ -218,13 +218,9 @@ POST & \multicolumn{3}{|c|}{/phone/init} \\
 调用成功返回{"code":HASH后的验证码}，如果有错误，错误信息保存在error中。
 同时验证码通过短信的方式发送到使用者的手机。
 
-验证码hash的计算方式为：验证码+"@dface.cn"进行SHA1算法后取前16位。
-
-用户注册输入验证码时，客户端要先判断验证码的HASH是否正确。
-
 手机号码注册／忘记密码／绑定手机号码都要先调用本接口获取验证码。
 
-[3013-08-11] 增加type参数，表示请求手机验证码的类型
+[3013-08-11] 增加type参数，表示请求手机验证码的类型。同时取消客户端对验证码的HASH是否正确的判断
 
 \subsubsection{手机号码注册}
 \label{hash_algorithm}
@@ -332,8 +328,6 @@ POST & \multicolumn{3}{|c|}{/phone/bind} \\
  phone  & 字符串 & 必须 &  用户的手机号码\\
 \hline
  code  & 字符串 & 必须 &  验证码\\
- \hline
- password  & 字符串 & 必须 &  密码\\
 \hline
 \end{tabular}
    \end{center}
@@ -341,6 +335,77 @@ POST & \multicolumn{3}{|c|}{/phone/bind} \\
 
 绑定手机号码要先调用phone\/init获取验证码。
 调用成功返回{bind: true}，如果有错误，错误信息保存在error中。
+
+[2013-8-15] 取消参数password, 绑定手机号码时可以不用输入手机号码。
+
+
+\subsubsection{绑定手机后设置密码}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/set\_password} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ password  & 字符串 & 必须 &  用户设置的密码\\
+ \hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+如果已经设置了密码后要修改密码，不能调用本接口。
+
+
+\subsubsection{解除手机号码绑定}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/unbind} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+至少有一种以上的绑定关系才能解绑。
+
+
+\subsubsection{上传手机通讯录}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/upload\_address\_list} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+ \hline
+ list  & json字符串 & 必须 &  通讯录\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\begin{verbatim}
+list是一个json字符串表示的数组，其中每一个条目是一个hash, 格式如下：
+[{"id":323,"number":"(0571)28996083","name":"***"},...]
+
+返回值为“{imported: 导入的通讯录的条数}”。
+\end{verbatim}
+
 
 
 

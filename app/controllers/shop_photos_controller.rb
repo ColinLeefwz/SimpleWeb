@@ -51,7 +51,7 @@ class ShopPhotosController < ApplicationController
   #用户照片隐藏
   def ajax_del
     photo = Photo.find(params[:id])
-    photo.update_attribute(:hide, true)
+    photo.set(:hide, true)
     expire_cache_shop(photo.room)
     render :json => {:text => '已隐藏'}
   end
@@ -99,16 +99,20 @@ class ShopPhotosController < ApplicationController
 
   def hide_com
     photo = Photo.find(params[:id])
-    result = photo.hidecom(params[:uid], params[:t])
+    result = photo.hidecom(params[:uid], params[:txt])
+    return render :json => {:text => result } if result
+    Rails.cache.delete("Photo#{photo.id.to_s}")
     expire_cache_shop(photo.room)
-    render :json => {:text => result ? 0 : 1 }
+    render nothing: true
   end
 
   def unhide_com
     photo = Photo.find(params[:id])
-    result = photo.unhidecom(params[:uid], params[:t])
+    result = photo.unhidecom(params[:uid], params[:txt])
+    return render :json => {:text => result } if result
+    Rails.cache.delete("Photo#{photo.id.to_s}")
     expire_cache_shop(photo.room)
-    render :json => {:text => result ? 0 : 1 }
+    render nothing: true
   end
 
   private 
