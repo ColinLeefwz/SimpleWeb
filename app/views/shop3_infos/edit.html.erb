@@ -1,0 +1,58 @@
+
+
+
+
+    <div class="con2">
+      <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+      <div class="submenu">
+        <ul>
+          <li class="hover"><a href="/shop3_infos">基本设置</a></li>
+          <li><a href="/shop3_pass">修改密码</a></li>
+          <li><a href="/shop3_staffs">员工管理</a></li>
+          <li><a href="/shop3_bindwbs">绑定微博</a></li>
+          <li><a href="/shop3_bans">屏蔽用户</a></li>
+          <li><a href="/shop3_marks">用户评分</a></li>
+          <li><a href="/shop3_notice">公告管理</a></li>
+        </ul>
+      </div>
+      <%= form_tag "/shop3_infos/update" do %>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
+                      <tr>
+                        <td width="17%" align="right" valign="top" class="pr20">名&nbsp;称</td>
+                        <td><%= text_field_tag :name, @shop.name, :class => "inputs2 mb10" %></td>
+                        <!-- <td><input type="text" class="inputs2 mb10" value=""/></td> -->
+                        <td width="17%" align="right" valign="top" class="pr20">Logo</td>
+                        <td align="left" valign="top"><a href="#" class="btn1">上传图片</a></td>
+                      </tr>
+            <tr>
+                        <td align="right" valign="top" class="pr20">地&nbsp;址</td>
+                        <td><%= text_field_tag "shop_info[addr]", @shop.addr, :class => "inputs2 mb10" %></td>
+                        <!-- <td><input type="text" class="inputs2 mb10" value=""/></td> -->
+                        <td width="16%">&nbsp;</td>
+                        <td rowspan="3"><img src="/newbackstage/images/sign4.jpg" class="imgstyle2"/>
+              <img src="/newbackstage/images/sign4.jpg" class="imgstyle3 ml15 mb75"/> </td>
+            </tr>
+                      <tr>
+                        <td align="right" valign="top" class="pr20">联系人</td>
+                        <td><%= text_field_tag "shop_info[contact]", @shop.contact, :class => "inputs2 mb10" %></td>
+                        <!-- <td><input type="text" class="inputs2 mb10" value=""/></td> -->
+                        <td width="16%">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td align="right" valign="top" class="pr20">电&nbsp;话</td>
+                        <td><%= text_field_tag "shop_info[phone]", @shop.phone, :class => "inputs2 mb10" %></td>
+                        <!-- <td><input type="text" class="inputs2 mb10" value=""/></td> -->
+                        <td width="16%">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td align="center">
+                        <%= submit_tag "提交",  :class => "btn2" %>
+                        <!-- <input type="submit" name="Submit" value="提 交" class="btn2"/> -->
+                        </td>
+                        <td>&nbsp;</td>
+                        <td align="left"><a class="btn3" href="/shop3_infos">取 消</a></td>
+                      </tr>
+                    </table>
+          <% end %>
+    </div>
