@@ -45,24 +45,16 @@ module ApplicationHelper
     end
   end
 
-  
-
-
-  def generate_paginate
-    if (@total_entries+@pcount-1)/@pcount > 1
-      html = "<form methods='get' action='#{url_for(request.params)}'>"
-      html += %q(<div class="pagination r">)
-      html += link_to "上一页",request.params.merge!(:page => @page -1),:class => "prev_page"  if @page != 1
-      html += "<span class='current'>第<input type='text' name='page' value='#{@page}'>页</span>"
-      request.params.delete_if{|k, v| ['controller', 'action', 'page'].include?(k)}.each{|k,v| html += "<input type='hidden' name='#{k}' value='#{v}' />" }
-      html += "<a href='#' class='sum_page'>共#{(@total_entries+@pcount-1)/@pcount }页</a>"
-      html +=  link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page
-      html += "</div>"
-      html += "</form>"
+ 
+  def generate_paginate(n=1)
+    if params[:controller] =~ /3/
+      render :partial => "/layouts/paginage", :locals => {:var => 4}
     else
-      ''
+      render :partial => "/layouts/paginage", :locals => {:var => n}
     end
   end
+
+  
   
   def generate_paginate2
     html = "<form methods='get' action='#{url_for(request.params)}'>"
@@ -87,6 +79,16 @@ module ApplicationHelper
     html +=  link_to "未页",request.params.merge!(:page => -1), :class => "next_page"  if @page
     html += "</div>"
     html += "</form>"
+  end
+
+  def select_pages(page, total_page)
+    if page <=2
+      1.upto(total_page).to_a[0,5]
+    elsif (page+2) > total_page
+      total_page.downto(1).to_a[0,5].reverse
+    else
+      (page-2).upto(page+2).to_a[0,5]
+    end
   end
 
 end
