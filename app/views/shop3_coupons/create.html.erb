@@ -1,0 +1,24 @@
+<div class="title2"><h2>发布优惠券</h2></div>
+  <div id="Notice" class="notice"><%= notice %></div>
+<%= form_for(@coupon, :url => '/shop3_coupons/create',:html => { :multipart => true } ) do |f| %>
+
+  <% if @coupon.errors.any? %>
+    <div id="error_explanation">
+      <h2>发布优惠券出错了</h2>
+      <ul>
+        <% @coupon.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% case @coupon.t.to_i  %>
+  <% when 1 %>
+    <%= render :partial => 'imgtext', :locals => {:f => f}  %>
+  <% when 2 %>
+    <%= render :partial => 'allimg', :locals => {:f => f}  %>
+  <% end  %>
+<%  end %>
+<%= link_to '返回列表', '/shop3_coupons', :class=>"btn6 r" %>
+
