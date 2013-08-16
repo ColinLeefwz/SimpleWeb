@@ -1,0 +1,90 @@
+
+		<div class="con">
+			<div class="title1"><h2 class="f18">问答系统</h2></div>
+			<div class="box4">
+				<div class="box4left">试试回复：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>05 => 特色小吃推荐<br/>06 => 分享优惠活动</div>
+				<div class="box4right">
+
+
+<%= form_for(@shop_faq, :url => '/shop3_faqs/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
+    <tr>
+      <td width="20%" align="right" valign="middle" class="pr20">回复数字</td>
+      <td width="86%"><%= f.select :od, ["01","02","03","04","05","06","07","08","09"] - session_shop.faqs.map{|m| "0#{m.od.to_i}"},{}, {:class => "ptb2 plr3"} %></td>
+    </tr>
+    <tr>
+      <td width="20%" align="right" valign="middle" class="pr20">标题</td>
+      <td>
+        <%= f.text_field :title, :class => "inputs", :placeholder=>"3-12个字,如:获取wifi密码", :id=>"Inputs1" %>
+      </td>
+    </tr>
+
+    <tr>
+      <td width="20%" align="right" valign="middle" class="pr20">配图</td>
+      <td><a href="#" class="btn1" id="Btn1">上传图片</a></td>
+      <td><input class="btn1 btn1_hide" id="shop_faq_img" name="shop_faq[img]" type="file" /></td>
+
+    </tr>
+
+    <tr>
+        <td width="20%" align="right" valign="middle" class="pr20">&nbsp;</td>
+        <td><div src="/newbackstage/images/sign4.jpg" class='imgstyle' id="uploadPreview"></div></td>
+        <!-- <td><img src="/newbackstage/images/sign4.jpg" class='imgstyle' id="uploadPreview" /></td> -->
+
+    </tr>
+    
+    <tr>
+          <td width="20%" align="right" valign="top" class="pr20">回答</td>
+          <td><%= f.text_area :text, :class => "textarea2",:placeholder=>"3-140个字,例如：本店wifi密码：321123", :id=>"Inputs2"%></td>
+    </tr>
+                      
+    <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" name="Submit" value="提 交" class="btn2 l"/>
+        <%= link_to '取 消', '/shop3_faqs', :class=>"btn3 l ml20" %>
+    </tr>
+
+  </table>
+<%  end %>
+
+
+				</div>
+			</div>
+			
+		</div>
+
+<script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
+
+<script>
+  $(document).ready(function(){
+      imgUploadPreview("input[name='shop_faq[img]']", 'uploadPreview')
+  })
+
+  $("#Btn1").click(function(){
+    $("#shop_faq_img").click();
+  });
+
+  // $("#Inputs1").focus(function(){
+  //   if($(this).val() == '3-12个字,如:获取wifi密码')
+  //     $(this).val("");
+  // });
+
+  // $("#Inputs2").focus(function(){
+  //   if($(this).val() == '3-140个字,例如：本店wifi密码：321123')
+  //     $(this).val("");
+  // });
+
+  var navmove="on", runing;
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+  });
+</script>

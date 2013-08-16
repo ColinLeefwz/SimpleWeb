@@ -1,0 +1,73 @@
+		<div class="con">
+			<div class="title1"><h2 class="f18">问答系统</h2></div>
+			<div class="box4">
+				<div class="box4left">
+					还没有设置问答系统，请创建 ===》
+				</div>
+				<div class="box4right changebox4right" id="Waterfall" >
+					<div class="box4plane1" rel="0" id="Div0"><a class="wordpoistion" href="/shop3_faqs/new">创建问答</a></div>
+
+
+               <% @shop_faqs.each do |faq| %>
+					<div class="box4plane2" rel="<%= faq.od[1,3]%>" id="<%= "Div"+faq.od[1,3]%>">
+						<div class="title2">
+							<h2><%= faq.od%></h2>
+							<%= link_to '编辑', "/shop3_faqs/edit?id=#{faq.id}",:class => "pointer" %>
+							<%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{faq.id}')" %>
+							<!-- <a class="pointer" onclick="Del(1)">删除</a>
+							<a href="/newbackstage/questions_answers2.html">编辑</a> -->
+						</div>
+						<div class="box4con1">
+							<!-- <img src="/newbackstage/images/pic5.jpg" align="left" class="imgstyle"> -->
+							<% unless faq.img.blank? %>
+                            <%=link_to image_tag( "#{ShopFaq.img_url(faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgstyle"), faq.img.url, :target  => "_blank"  %>
+                            <% end %>
+							<%= faq.text  %>
+						</div>
+					</div>
+				<% end %>
+					
+				</div>
+			</div>
+			
+		</div>
+
+    <script src="/newbackstage/js/jquery.blocksit.min.js"></script>
+	<script>
+
+  function ajaxDel(obj, faq_id){
+    if(confirm("确定删除此问答么？"))
+    {
+      $.get("/shop3_faqs/ajax_del",{id: faq_id}, function(data) {
+        if(data['text']){
+          obj.parent().parent().remove();
+        }
+        else{
+          obj.replaceWith('删除失败.')
+        }
+      });
+    }
+  }
+		var num, navmove="on", runing;
+		$(document).ready(function(){
+			runing=$("#CB1").attr("class");
+			num=$("#Waterfall div.box4plane2").length;
+
+			if(runing=="checkboxs1"){
+				NavDiv();
+				ShowDiv();
+				$(window).load(function(){
+					MessageDiv();
+				});
+			}else if(runing=="checkboxs2"){
+				AllNoDH();
+			}
+			
+			$('#Waterfall').BlocksIt({
+				numOfCol: 2,
+				offsetX: 10,
+				offsetY: 8,
+				blockElement: 'div'
+			});				
+		});
+	</script>
