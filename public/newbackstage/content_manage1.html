@@ -16,7 +16,7 @@
 			<span id="Close"></span>
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			  <tr>
-				<td width="50%" rowspan="8"><img src="images/pic15.jpg" class="imgstyle"/></td>
+				<td width="50%" rowspan="10"><img src="images/pic15.jpg" class="imgstyle"/></td>
 				<td width="19%" height="30" class="pl20">用 户：</td>
 			    <td width="31%" height="30">脸脸合一</td>
 			  </tr>
@@ -37,8 +37,12 @@
 			    <td height="30">赵海斌, 天真独朗</td>
 			  </tr>
 			  <tr>
-			    <td height="30" class="pl20">显&nbsp;示：</td>
-			    <td height="30"><a href="#">隐藏</a></td>
+			    <td height="30" class="blue1 pl20">操&nbsp;作：</td>
+			    <td height="30">
+					<a href="#" class="n2" title="已置顶"></a>
+					<a class="n4" onclick="OC(this)" title="隐藏"></a>
+					<a class="n6" href="#" title="删除"></a>
+				</td>
 		      </tr>
 			  <tr>
 			    <td height="30" class="pl20">描&nbsp;述：</td>
@@ -54,17 +58,15 @@
 		<div class="header">
 			<div class="headercon">
 				<div id="Message">赵海斌刚刚使用了一张分享优惠券惠券</div>
-				<div id="LinkBox">
-					<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
-					<a  class="links2">退出</a>
-					<span class="linkarrow"></span>
-				</div>
-				<div class="toptitle">
-					<h1>脸脸茶坊</h1>
-					<img src="images/pic1.png" class="logo" id="OpenLinkBox"/>
-				</div>
+				<div class="toptitle"><h1>脸脸茶坊</h1></div>
 			</div>
-			<img src="images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
+			<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
+			<img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
+			<div id="LinkBox">
+				<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
+				<a  class="links2">退出</a>
+				<span class="linkarrow"></span>
+			</div>
 		</div>
 		<div id="Nav">
 			<a class="sign" id="CloseNav"></a>
@@ -114,9 +116,9 @@
 					<div class="m"><span>描述文本</span></div>
 					<div class="bj">
 						<a onclick="OpenDiv()" class="n1" title="详情"></a>
-						<a href="#" class="n2" title="置顶"></a>
+						<a href="#" class="n2_1" title="已置顶"></a>
 						<a href="content_manage3.html" class="n3" title="编辑"></a>
-						<a class="n4" onclick="OC(this)" title="隐藏"></a>
+						<a class="n6" href="#" title="删除"></a>
 					</div>
 				</div>
 				<div class="box9plane">
@@ -124,9 +126,9 @@
 					<div class="m"><span>描述文本</span></div>
 					<div class="bj">
 						<a onclick="OpenDiv()" class="n1" title="详情"></a>
-						<a href="#" class="n2" title="置顶"></a>
+						<a href="#" class="n2_1" title="已置顶"></a>
 						<a href="content_manage3.html" class="n3" title="编辑"></a>
-						<a class="n4" onclick="OC(this)" title="隐藏"></a>
+						<a class="n6" href="#" title="删除"></a>
 					</div>
 				</div>
 				<div class="box9plane">
@@ -134,7 +136,27 @@
 					<div class="m"><span>描述文本描述文本描述文本描述文本</span></div>
 					<div class="bj">
 						<a onclick="OpenDiv()" class="n1" title="详情"></a>
-						<a href="#" class="n2" title="置顶"></a>
+						<a href="#" class="n2_1" title="已置顶"></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n4" onclick="OC(this)" title="隐藏"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic14.jpg"/>
+					<div class="m"><span>描述文本</span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a href="#" class="n2_1" title="已置顶"></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n4" onclick="OC(this)" title="隐藏"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic14.jpg"/>
+					<div class="m"><span>描述文本</span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a href="#" class="n2_1" title="已置顶"></a>
 						<a href="content_manage3.html" class="n3" title="编辑"></a>
 						<a class="n4" onclick="OC(this)" title="隐藏"></a>
 					</div>
@@ -196,7 +218,7 @@
 						<a onclick="OpenDiv()" class="n1" title="详情"></a>
 						<a href="#" class="n2" title="置顶"></a>
 						<a href="content_manage3.html" class="n3" title="编辑"></a>
-						<a class="n4" onclick="OC(this)" title="隐藏"></a>
+						<a class="n6" href="#" title="删除"></a>
 					</div>
 				</div>
 				<div class="box9plane">
@@ -206,27 +228,7 @@
 						<a onclick="OpenDiv()" class="n1" title="详情"></a>
 						<a href="#" class="n2" title="置顶"></a>
 						<a href="content_manage3.html" class="n3" title="编辑"></a>
-						<a class="n4" onclick="OC(this)" title="隐藏"></a>
-					</div>
-				</div>
-				<div class="box9plane">
-					<img src="images/pic14.jpg"/>
-					<div class="m"><span>描述文本</span></div>
-					<div class="bj">
-						<a onclick="OpenDiv()" class="n1" title="详情"></a>
-						<a href="#" class="n2" title="置顶"></a>
-						<a href="content_manage3.html" class="n3" title="编辑"></a>
-						<a class="n4" onclick="OC(this)" title="隐藏"></a>
-					</div>
-				</div>
-				<div class="box9plane">
-					<img src="images/pic14.jpg"/>
-					<div class="m"><span>描述文本</span></div>
-					<div class="bj">
-						<a onclick="OpenDiv()" class="n1" title="详情"></a>
-						<a href="#" class="n2" title="置顶"></a>
-						<a href="content_manage3.html" class="n3" title="编辑"></a>
-						<a class="n4" onclick="OC(this)" title="隐藏"></a>
+						<a class="n6" href="#" title="删除"></a>
 					</div>
 				</div>
 				<div class="box9plane">
