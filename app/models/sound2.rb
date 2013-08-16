@@ -6,22 +6,31 @@ class Sound2
   field :user_id, type: Moped::BSON::ObjectId
   field :to_uid #发给个人
   field :sec, type:Integer #语音长度：秒
-  field :img
-  mount_uploader(:img, Sound2Uploader)
-  
-  field :img_tmp
-  field :img_processing, type:Boolean
-  process_in_background :img if Rails.env=="production"
-    
+
   index({ user_id: 1 })
   
+  def self.uptoken(uid)
+    upopts = {
+      :scope => "sound", 
+      :expires_in => 720000, 
+      :callback_url => "http://42.121.79.211/sound2s/callback",
+      :callback_body => "sec=$(x:sec)&from=$(x:from)&to=$(x:to)&id=$(x:id)&key=$(etag)&size=$(fsize)",
+      :callback_body_type => "application/x-www-form-urlencoded"
+    }
+    Qiniu::RS.generate_upload_token(upopts)
+  end
   
-  def self.img_url(id,type=nil)
-    if type
-      "http://oss.aliyuncs.com/dface2/#{id}/#{type}_0.aac"
-    else
-      "http://oss.aliyuncs.com/dface2/#{id}/0.aac"
-    end
+  def self.test_upload
+    token = uptoken("12345")
+    local_file = 'public/images/arrow.png'
+    key = Time.now.to_i.to_s
+    data = Qiniu::RS.upload_file :uptoken => token, :file => local_file, :bucket =>"sound", 
+      :key => key, :callback_params => "sec=3&from=fid&to=tid&id=#{key}&key=$(etag)&size=$(fsize)"
+    data
+  end
+  
+  def self.callback
+    snd.after_async_store
   end
   
   def after_async_store
