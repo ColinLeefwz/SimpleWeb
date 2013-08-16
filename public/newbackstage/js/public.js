@@ -114,7 +114,8 @@ function Dn2_divplane(){//首页：最新数据动画
 }
 
 function MessageDiv(){//消息通知框
-	if(runing=="checkboxs1"){
+	$("#Message").css("display","none");
+	/*if(runing=="checkboxs1"){
 		$("#Message").css("top",-messageHeight+"px");
 		$(".header").css("overflow","visible");
 		$("#Message").animate({"top":"50px"},1000,function(){
@@ -132,7 +133,7 @@ function MessageDiv(){//消息通知框
 		$("#Message").unbind();
 		$(".header").css("overflow","visible");
 		$("#Message").css({"top":"50px","display":"block"});
-	}
+	}*/
 }
 
 function NavDiv(){//菜单
