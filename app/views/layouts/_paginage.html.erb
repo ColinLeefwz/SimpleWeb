@@ -1,0 +1,41 @@
+<%  case var %>
+<%when 1%>
+  <% if (@total_entries+@pcount-1)/@pcount > 1 %>
+    <%=form_tag  :method => "get", :action => url_for(request.params) do %>
+      <div class="pagination r">
+        <%= link_to "上一页", request.params.merge!(:page => @page -1),:class => "prev_page"   if @page != 1 %>
+        <span class='current'>第<%= text_field_tag :page, @page  %>页</span>
+        <% request.params.delete_if{|k, v| ['controller', 'action', 'page'].include?(k)}.each  do |k,v|  %>
+          <%= hidden_field_tag k, v  %>
+        <% end %>
+        <a href='#' class='sum_page'>共<%= (@total_entries+@pcount-1)/@pcount %>页</a>
+        <%= link_to "下一页",request.params.merge!(:page => @page + 1), :class => "next_page"  if @page   %>
+      </div>
+    <% end %>
+  <% end %>
+
+<% when 4%>
+  <% if @total_entries > @pcount %>
+    <div class="pagination r">
+      <ul>
+        <% if @page ==1 %>
+          <li class="disabled"><a>&lt;&lt;</a></li>
+        <% else %>
+          <li><%= link_to "&lt;&lt;".html_safe, request.params.merge!(:page => @page -1) %></li>
+        <% end %>
+
+        <% select_pages(@page, (@total_entries+@pcount-1)/@pcount).each do |page| %>
+          <li class="<%= (@page == page)? "hover" : '' %>">
+            <%= link_to page,   request.params.merge!(:page => page)%>
+          </li>
+        <% end %>
+
+        <% if (@total_entries+@pcount-1)/@pcount == @page %>
+          <li class="disabled"><a class="next">&gt;&gt;</a></li>
+        <% else %>
+          <li><%= link_to "&gt;&gt;".html_safe, request.params.merge(:page => @page +1)   %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
