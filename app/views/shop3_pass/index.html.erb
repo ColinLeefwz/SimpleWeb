@@ -1,0 +1,92 @@
+<!-- <div class="title2"><h2>修改密码</h2></div>
+<div class="notice" id="Notice"><%= notice %></div>
+<style>
+  .formlist li .err{margin-left: 5px;width: 200px; color: red;}
+</style>
+
+ -->
+
+
+
+
+    <div class="con">
+      <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+      <div class="submenu">
+        <ul>
+          <li><a href="/shop3_infos">基本设置</a></li>
+          <li class="hover"><a href="/shop3_pass">修改密码</a></li>
+          <li><a href="/shop3_staffs">员工管理</a></li>
+          <li><a href="/shop3_bindwbs">绑定微博</a></li>
+          <li><a href="/shop3_bans">屏蔽用户</a></li>
+          <li><a href="/shop3_marks">用户评分</a></li>
+          <li><a href="/shop3_notice">公告管理</a></li>
+        </ul>
+      </div>
+<%= form_for(@shop, :url => "/shop3_pass", :html => {:method => 'post'} ) do |f| %>
+  <%if  session_shop.errors.any? %>
+    <% session_shop.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  <%end%>
+      <!-- <form method="post" action="seller_set1.html"/> -->
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
+            <tr>
+                        <td width="17%" align="right" valign="top" class="pr20">旧密码</td>
+                        <td><%= password_field_tag 'oldpass', '',:value => '', :class => "inputs2 mb10"%><span id="oldpass_err"></span></td>
+                        <!-- <td><input type="password" class="inputs2 mb10" value=""/></td> -->
+                      </tr>
+                      <tr>
+                        <td align="right" valign="top" class="pr20">新密码</td>
+                        <td><%= f.password_field :password, :class => "inputs2 mb10"%><span id="shop_pass_err"></span></td>
+                        <!-- <td><input type="password" class="inputs2 mb10" value=""/></td> -->
+                      </tr>
+                      <tr>
+                        <td align="right" valign="top" class="pr20">确认密码</td>
+                        <td><%= f.password_field :password_confirmation, :class => "inputs2 mb10"%><span id="shop_pass_con_err"></span></td>
+                        <!-- <td><input type="password" class="inputs2 mb10" value=""/></td> -->
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td><input type="submit" name="Submit" value="提 交" class="btn2 l"/>                          
+            <!--a class="btn3 l ml110" href="/newbackstage/questions_answers3.html">取 消</a-->
+            </td>
+                      </tr>
+                    </table>
+<% end %>
+      <!-- </form> -->
+    </div>
+
+<script>
+  function confirmation()
+  {
+    $(".err").text('')
+    if($("#oldpass").val()==""){
+      $("#oldpass_err").replaceWith("<span id='oldpass_err' class='err'>原始密码不能是空</span>")
+      return false;
+    }
+
+    if($("#shop_password").val()=="")
+    {
+      $("#shop_pass_err").replaceWith('<span id="shop_pass_err" class="err">新的密码不能是空</span>')
+      return false;
+    }
+    
+    if($("#shop_password").val().length < 6)
+    {
+      $("#shop_pass_err").replaceWith('<span id="shop_pass_err" class="err">新的密码长度必须大于6位</span>')
+      return false;
+    }
+    
+    if($("#shop_password_confirmation").val()=="")
+    {
+      $('#shop_pass_con_err').replaceWith('<span id="shop_pass_con_err" class="err">确认新密码不能是空</span>')
+      return false;
+    }
+    if($("#shop_password").val()!=$("#shop_password_confirmation").val()){
+      $('#shop_pass_con_err').replaceWith('<span id="shop_pass_con_err" class="err">新密码和确认新密码不一致</span>')
+      return false;
+    }
+    return true
+  }
+
+</script>
