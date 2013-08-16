@@ -150,7 +150,7 @@ class Photo
   def output_hash
     hash = {id: self._id, user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo, qq:self.qq}
     hash.merge!( logo_thumb_hash)
-    hash.merge!( {like:self.like, comment:self.com, time:cati} )
+    hash.merge!( {like:self.like, comment: self.com.to_a.select{|m| !m['hide']}, time:cati} )
   end
   
   def output_hash_with_username
@@ -216,23 +216,23 @@ class Photo
 
 
   #隐藏评论
-  def hidecom(uid, t)
-    comment = com.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
-    return if comment.nil?
+  def hidecom(uid, txt)
+    ncom = com
+    comment = ncom.find{|x| x['id'].to_s == uid && x['txt'] == txt }
+    return "comment #{txt} not found." if comment.nil?
     comment["hide"] = true
-    self.save!
-  rescue
-    nil
+    self.set(:com, ncom)
+    return nil
   end
 
   #取消评论的隐藏
-  def unhidecom(uid, t)
-    comment = com.find{|x| x['id'].to_s == uid && x['t'].localtime.to_s == t }
-    return if comment.nil?
+  def unhidecom(uid, txt)
+    ncom = com
+    comment = ncom.find{|x| x['id'].to_s == uid && x['txt'] == txt }
+    return "comment #{txt} not found." if comment.nil?
     comment.delete("hide")
-    self.save!
-  rescue
-    nil
+    self.set(:com, ncom)
+    return nil
   end
 
   #like重写， 现在的like是从redis中取
