@@ -23,4 +23,10 @@ class SmsSender
     end
   end
   
+  def self.ihuiyi_remain
+    pass = URI.escape("www.dface.cn20130709")
+    info = RestClient.get "http://106.ihuyi.com/webservice/sms.php?method=GetNum&account=cf_llh&password=#{pass}"
+    
+  end
+  
 end
