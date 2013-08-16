@@ -64,6 +64,7 @@ $(window).load(function(){
 	
 	
 	$("#OpenLinkBox").click(function(){
+		clearTimeout(LinkBoxTimer);
 		$("#LinkBox").stop().fadeIn(200).animate({"top":"60px"},300);
 	}).mouseout(function(){
 		LinkBoxTimer=setTimeout(function(){
@@ -221,7 +222,7 @@ function NavDiv(){//菜单
 				}
 			}else if(navmove=="off"){
 				navmove="on";
-				$("#Btn").removeClass("dis");
+				$("#Btn").removeClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 固定左侧导航");
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
 				$(document).unbind("mouseover");
@@ -229,6 +230,9 @@ function NavDiv(){//菜单
 				$("#CloseNav").unbind();
 				NavDiv();
 			}
+		});
+		$("#Btn").mouseover(function(){
+			$("Nav").stop(true,true).animate({"top":"0px"});				 
 		});
 	}else if(runing=="checkboxs2"){
 		$(document).unbind();
