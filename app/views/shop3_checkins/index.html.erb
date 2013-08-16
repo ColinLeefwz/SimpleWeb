@@ -1,0 +1,61 @@
+
+
+		<div class="con">
+			<div class="title1 mb30"><h2 class="f18">签到设置</h2></div>
+			<div class="submenu">
+				<ul>
+					<li class="hover"><a href="/shop3_checkins/index">最新签到</a></li>
+					<li class="<%= 'hover' if params[:flag] == 'week' %>"><a href="/shop3_checkins/rank?flag=week">周排行</a></li>
+					<li class="<%= 'hover' if params[:flag] == 'month' %>"><a href="/shop3_checkins/rank?flag=month">月排行</a></li>
+					<li><a href="/shop3_checkins/rank_list">总排行</a></li>
+				</ul>
+	<!-- 			<div class="r wordstyle">
+					<form method="post" action="">
+						显示&nbsp;
+						<select class="p3" name="select">
+							<option value="10">10</option>
+							<option value="10">20</option>
+							<option value="10">30</option>
+						</select>
+						&nbsp;条/记录
+					</form>
+				</div> -->
+			</div>
+<!-- 			<form method="post" action=""/>
+				  <div class="search">
+					搜索
+					<select class="p3 mlr10" name="select">
+						<option value="全部">全部</option>
+						<option value="用户名">用户名</option>
+						<option value="时间">时间</option>
+					</select>
+					<input type="text" class="inputs5">
+					<input type="submit" class="btn6 ml10" value="提 交">
+				</div> -->
+				<table width="100%" cellspacing="0" cellpadding="0" class="tab2">
+					<tr id="Tr0">
+						<th width="842">用户名</th>
+						<th width="303">签到时间</th>
+						<th width="227">&nbsp;</th>
+					</tr> 
+				<% @checkins.each do |checkin| %>
+				<tr id="Tr1">
+				  <td valign="middle">
+				    <%=link_to image_tag(checkin.user.head_logo.try(:img).try(:url,:t1), :class => "imgstyle"), checkin.user.head_logo.try(:img).try(:url), :target => 'blank' %>
+				     <%=link_to checkin.user.name, "/shop3_checkins/user?uid=#{checkin.uid}",:class => "f14"%>
+				     <img align="absmiddle" class="ml10" src="images/man.png"><br/>
+				     星座：<%= checkin.user.gonstellation %><br/> 年龄：23岁</td>
+				  <td><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %><br/>(签到次数34次)</td>
+				  <td width="227" align="center">
+				  <%= link_to '历史签到', url_for(:action => 'index', :uid => checkin.user.id),:class => "mr10" %>
+				  <%= shop3_ban_link(checkin.user.id.to_s) %>
+			      </td>
+				</tr>
+				<% end %>
+
+		  	</table>
+			<div class="pagination">
+              <%= generate_paginate2.html_safe %>
+		   </div>
+		<!-- </form> -->
+	  </div>
