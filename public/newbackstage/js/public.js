@@ -64,6 +64,7 @@ $(window).load(function(){
 	
 	
 	$("#OpenLinkBox").click(function(){
+		clearTimeout(LinkBoxTimer);
 		$("#LinkBox").stop().fadeIn(200).animate({"top":"60px"},300);
 	}).mouseout(function(){
 		LinkBoxTimer=setTimeout(function(){
@@ -114,6 +115,7 @@ function Dn2_divplane(){//首页：最新数据动画
 }
 
 function MessageDiv(){//消息通知框
+	$(".header").css("overflow","visible");
 	$("#Message").css("display","none");
 	/*if(runing=="checkboxs1"){
 		$("#Message").css("top",-messageHeight+"px");
@@ -144,7 +146,7 @@ function NavDiv(){//菜单
 			$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
 		}
 	}else{
-		$("#Btn").addClass("dis");
+		$("#Btn").addClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 已固定导航");
 		$("#Nav").stop(true).animate({"left":"0px"},250);
 		if(windowWidth<=1024){
 			$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
@@ -208,7 +210,7 @@ function NavDiv(){//菜单
 		$("#Btn").click(function(){
 			if(navmove=="on"){
 				navmove="off";
-				$("#Btn").addClass("dis");
+				$("#Btn").addClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 已固定导航");;
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
 				$(document).unbind("mouseover");
@@ -220,7 +222,7 @@ function NavDiv(){//菜单
 				}
 			}else if(navmove=="off"){
 				navmove="on";
-				$("#Btn").removeClass("dis");
+				$("#Btn").removeClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 固定左侧导航");
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
 				$(document).unbind("mouseover");
@@ -228,6 +230,9 @@ function NavDiv(){//菜单
 				$("#CloseNav").unbind();
 				NavDiv();
 			}
+		});
+		$("#Btn").mouseover(function(){
+			$("Nav").stop(true,true).animate({"top":"0px"});				 
 		});
 	}else if(runing=="checkboxs2"){
 		$(document).unbind();
