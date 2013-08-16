@@ -283,7 +283,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
 .tab1 td{padding-bottom:20px;}
-.tab1 .imgstyle{width:100px;height:100px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
+.tab1 .imgstyle{width:194px;height:194px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
 .tab1 .imgstyle2{width:150px;height:150px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
 .tab1 .imgstyle3{width:75px;height:75px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
 .tab1 tr.change td{padding:5px 0px;}
@@ -348,7 +348,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .btn_file1{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -235px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
 .btn_file2{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -160px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
 .btn_file3{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -85px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
-
+.btn1_hide{filter:alpha(Opacity=0);Opacity:0;}
 /**程序调试用 over**/
 
 
