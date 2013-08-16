@@ -131,11 +131,11 @@ module Similarity
       citys << x.name
     end
     name_score = 65*name_similar(shop1["name"],shop2["name"],citys,province,shop1,shop2) + 5*str_similar(shop1["name"],shop2["name"])
-    addr_score = 12*addr_similar(shop1["addr"],shop2["addr"],citys,province,shop1,shop2)
+    addr_score = 12*addr_similar(shop1.addr,shop2.addr,citys,province,shop1,shop2)
     type_score = 4*(shop1["t"]==shop2["t"]? 1:0) + 4*(shop1["type"]==shop2["type"]? 1:0)
-    puts "distance: #{distance(shop1,shop2)}"  if $0=="script/rails"
+    #puts "distance: #{distance(shop1,shop2)}"  if $0=="script/rails"
     dist_score = dist_score(distance(shop1,shop2))
-    puts [name_score,addr_score,type_score,dist_score] if $0=="script/rails"
+    #puts [name_score,addr_score,type_score,dist_score] if $0=="script/rails"
     return name_score+addr_score+type_score+dist_score
   end
 
