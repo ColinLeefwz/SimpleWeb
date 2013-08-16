@@ -1,0 +1,59 @@
+
+
+<div class="box7">
+
+  <div class="box7plane1">
+     <label>发放规则</label>
+     <%= f.select :rule, [['每日签到优惠', 0],['每日前几名签到优惠',1],['新用户首次签到优惠', 2],["累计签到优惠", 3]],{}, {:class => "ptb2 plr3", :onchange => "show_rulev($(this).val())"} %>
+  </div>
+
+  <div id="rulev" class="box7plane1" style="display:<%= [1,3].include?(@coupon.rule.to_i) ? '' : 'none' %>">
+     <label id="lt"><%= rulev_lable(@coupon.rule.to_i) %></label>
+     <%= f.text_field :rulev, :class => "inputs4"%>
+  </div>
+
+  <div class="box7plane1">
+    <label>使用流程</label>
+    <%=  select_tag :hintv, options_for_select([['展示优惠券，点击后既代表使用了', 0],['展示优惠券，点击后按要求输入内容，然后确定使用',1]], @coupon.hint ? 1 : 0) , {:class => "ptb2 plr3", :onchange => "show_hint($(this).val())"} %>
+
+  </div>
+
+  <div id='hint1' class="box7plane1" style="display: <%= @coupon.hint.blank? ? 'none' : '' %>">
+    <label>使用时输入内容的提示</label>
+    <%= f.text_field :hint,  :class => "inputs4 w235"  %>
+    <span class="f13 green2 ml10">例: 请输入此次消费的金额/请输入您的桌号/请输入您的手机号码</span>
+  </div>
+  <div class="box7plane1 pt30 mb50">
+    <%= f.submit "保 存", :class => "btn2 l", :style => "display: #{@coupon.hint.blank? ? '' : 'none'}"  %>
+    <a class="btn3 l ml20" href="/newbackstage/coupon_manage.html">取 消</a>
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  function show_rulev(rv){
+    if(rv == '1' || rv == '3')
+    { 
+      $('#rulev').css("display","block");
+      lt = rv == '1' ? '前几名' : "累计次数";
+      $('#lt').replaceWith('<label id="lt">' + lt + '</label>');
+      $("#btnn3").css("display","none");
+    }
+    else{
+      $('#rulev').css("display","none");
+      // $("#btnn3").css("display","block");
+    }
+  }
+
+  function show_hint(rv){
+    if(rv == '1'){
+      // $("input[type='submit']:first").hide()
+      $('#hint1').show()
+    }
+    else{
+      $('#hint1').hide()
+      // $("input[type='submit']").show()
+    }
+  }
+</script>
