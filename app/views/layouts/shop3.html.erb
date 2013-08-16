@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= session_shop.name %>欢迎您</title>
+	<link href="/newbackstage/css/public.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/jquery.gvChart-1.0.1.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<script>
+	gvChartInit();
+	var navmove="on", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			Dn2_divplane();
+			NavDiv();
+			Menus();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+	
+		$('#MyTable1').gvChart({
+			 chartType: 'AreaChart',
+			 gvSettings: {
+				 vAxis: { title: '人数' },
+				 hAxis: { title: '时间' },
+				 width: 828,
+				 height: 315
+			 }
+		 });
+	});
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<div class="headercon">
+				<div id="Message">创建成功</div>
+				<div id="LinkBox">
+					<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
+					<a href="/shop3_login/logout" class="links2">退出</a>
+					<span class="linkarrow"></span>
+				</div>
+				<div class="toptitle">
+					<h1><%= session_shop.name %></h1>
+					<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
+				</div>
+			</div>
+			<img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="/shop3_login">首页</a>
+				<span class="navline"></span>
+				<a href="/shop3_coupons">优惠券管理</a>
+				<a href="/shop3_coupons/newly_down">优惠券数据统计</a>
+				<span class="navline"></span>
+				<a href="/shop3_faqs">问答系统</a>
+				<span class="navline"></span>
+				<a href="/shop3_data">数据统计</a>
+				<span class="navline"></span>
+				<a href="/shop3_content/user_photo">内容管理</a>
+				<span class="navline"></span>
+				<a href="/shop3_checkins/rank_list">签到管理</a>
+				<span class="navline"></span>
+				<a href="seller_set1.html">商家设置</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		<div class="clear1"></div>
+        <%= yield %>
+
+	</div>
+</body>
+</html>
