@@ -154,14 +154,18 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 #PhotoPlane table a{color:#00A0E3;}
 #PhotoPlane table a:hover{color:#005580;}
 #PhotoPlane #Close{width:30px;height:30px;cursor:pointer;position:absolute;top:-10px;right:-10px;background:url("../images/close.png");}
-
+#PhotoPlane .n2{width:28px;height:25px;background:url("../images/sign26_2.png") center center no-repeat;display:inline-block;cursor:pointer;}
+#PhotoPlane .n2_1{width:28px;height:25px;background:url("../images/sign26_1.png") center center no-repeat;display:inline-block;cursor:pointer;}
+#PhotoPlane .n4{width:28px;height:25px;background:url("../images/sign28.png") center center no-repeat;display:inline-block;cursor:pointer;}
+#PhotoPlane .n5{width:28px;height:25px;background:url("../images/sign29.png") center center no-repeat;display:inline-block;cursor:pointer;}
+#PhotoPlane .n6{width:28px;height:25px;background:url("../images/sign31.png") center center no-repeat;display:inline-block;cursor:pointer;}
 .main{width:100%;zoom:1;}
 
 .header{background:url(../images/bg1.png) left top repeat-x;width:100%;overflow:hidden;}
 .header .sign{width:61px;height:50px;position:absolute;left:0px;top:0px;cursor:pointer;background:url(../images/line.png) left top no-repeat;}
+.header .logo{position:absolute;top:0px;right:5px;z-index:20;cursor:pointer;}
 .headercon{width:830px;height:50px;position:relative;margin:0px auto;}
 .headercon .toptitle{width:100%;position:absolute;height:50px;line-height:50px;color:#fff;text-align:center;background:transparent url(../images/bg1.png) left top repeat-x;z-index:20;}
-.headercon .logo{position:absolute;top:0px;right:0px;z-index:20;cursor:pointer;}
 .headercon h1{font-size:18px;color:#FFFFFF;}
 .headercon #Message{position:absolute;top:50px;left:0px;width:800px;border:1px solid #D7D7D7;border-top:none;border-radius:0px 0px 8px 8px;background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40px;z-index:15;padding:0px 14px;}
 
@@ -182,11 +186,11 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .con{width:830px;clear:both;margin:50px auto 40px auto;zoom:1;overflow:hidden;}
 .con2{width:830px;clear:both;margin:50px auto 40px auto;zoom:1;position:relative;}
 
-#LinkBox{width:158px;border:1px solid #C4C4C4;position:absolute;background-color:#fff;line-height:25px;top:80px;left:725px;border-radius:4px;box-shadow:0 5px 7px rgba(0,0,0,0.15);z-index:15;display:none;}
+#LinkBox{width:158px;border:1px solid #C4C4C4;position:absolute;background-color:#fff;line-height:25px;top:80px;right:15px;border-radius:4px;box-shadow:0 5px 7px rgba(0,0,0,0.15);z-index:15;display:none;}
 #LinkBox a.links1{background:url(../images/sign16.png) 12px center no-repeat;padding:7px 7px 7px 37px;border-bottom:1px solid #c4c4c4;display:block;color:#333;cursor:pointer;}
 #LinkBox a.links2{background:url(../images/sign15.png) 12px center no-repeat;padding:7px 7px 7px 37px;display:block;color:#333;}
 #LinkBox a:hover{background-color:#FEE188;cursor:pointer;}
-#LinkBox .linkarrow{background:url(../images/sign13.png) top left no-repeat;width:13px;height:6px;position:absolute;top:-6px;left:50%;margin-left:-6px;}
+#LinkBox .linkarrow{background:url(../images/sign13.png) top left no-repeat;width:13px;height:6px;position:absolute;top:-6px;right:15px;margin-left:-6px;}
 .box1{width:100%;height:475px;padding-bottom:20px;position:relative;background:url(../images/line2.png) center bottom no-repeat;text-align:center;}
 .box1 .box1dot1, .box1 .box1dot2, .box1 .box1dot3, .box1 .box1dot4, .box1 .box1dot5, .box1 .box1dot6{display:block;position:absolute;width:16px;height:16px;z-index:9;background:url(../images/sign10.png) left top no-repeat;left:308px;top:158px;}
 .box1 .box1line1, .box1 .box1line2, .box1 .box1line3, .box1 .box1line4, .box1 .box1line5, .box1 .box1line6{display:block;position:absolute;width:138px;height:4px;z-index:8;background: url(../images/sign11.png) left top no-repeat;left:173px;top:164px;}
@@ -302,9 +306,11 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .box9 .box9plane .bbj{background:url("../images/bg5.png") !important;}
 .box9 .n1{width:28px;height:25px;background:url("../images/sign30.png") center center no-repeat;display:inline-block;cursor:pointer;}
 .box9 .n2{width:28px;height:25px;background:url("../images/sign26.png") center center no-repeat;display:inline-block;cursor:pointer;}
+.box9 .n2_1{width:28px;height:25px;background:url("../images/sign26_1.png") center center no-repeat;display:inline-block;cursor:pointer;}
 .box9 .n3{width:28px;height:25px;background:url("../images/sign27.png") center center no-repeat;display:inline-block;cursor:pointer;}
 .box9 .n4{width:28px;height:25px;background:url("../images/sign28.png") center center no-repeat;display:inline-block;cursor:pointer;}
 .box9 .n5{width:28px;height:25px;background:url("../images/sign29.png") center center no-repeat;display:inline-block;cursor:pointer;}
+.box9 .n6{width:28px;height:25px;background:url("../images/sign31.png") center center no-repeat;display:inline-block;cursor:pointer;}
 .box9 .imgstyle{width:280px;border-left:2px solid #fff;border-top:2px solid #fff; border-right:2px solid #ccc;border-bottom:2px solid #aaa;}
 .box9 table{line-height:20px;font-size:14px;color:#333;}
 .box9 table a{color:#00A0E3;}
