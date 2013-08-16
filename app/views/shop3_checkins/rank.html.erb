@@ -1,134 +1,47 @@
-	
-
-<div class="title2"><h2><%= {'week' => '周', 'month' => '月'}[params[:flag]] %>排行</h2>统计来访用户，看看谁最爱你们</div>
-<div class="items" id="Items">
-  <a class ="<%= 'hover' if params[:flag] == 'week' %>" href="/shop_checkins/rank?flag=week" >周排行</a>
-  <a class ="<%= 'hover' if params[:flag] == 'month' %>" href="/shop_checkins/rank?flag=month" >月排行</a>
-  <a href="/shop_checkins/rank_list">总排行</a>
-</div>
-<div class="lists" style="display:block;">
-  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-    <tr>
-      <th width="12%" class="bold" align="left">No</th>
-      <th width="33%" align="left">用户</th>
-      <th width="20%" align="center">性别</th>
-      <th width="15%" align="center">签到次数</th>
-    </tr>
-    <% @banks.each_with_index do |bank, index| %>
-      <tr>
-        <% user = User.find(bank[0])  %>
-        <td class="bold"><%= (index+1).to_s.rjust(3, '0') %></td>
-        <td>
-          <%=link_to image_tag(user.head_logo.try(:img).try(:url,:t1), :class => "imgs"), user.head_logo.try(:img).try(:url), :target => 'blank' %>
-          <%=link_to user.name, "/shop_checkins/user?uid=#{user.id}" %></td>
-        <td align="center"><%= user.show_gender%></td>
-        <td align="center"><%= bank[1] %></td>
-      </tr>
-    <% end %>
-  </table>
-
-  <div class="pages mt15">
-    <%= generate_paginate.html_safe %>
-  </div>
-</div>
-
-<script>
-  LeftMenu(22);
-</script>
-
-
-
-
 
 		<div class="con">
 			<div class="title1 mb30"><h2 class="f18">签到管理</h2></div>
 			<div class="submenu">
 				<ul>
-					<li><a href="newest">最新签到</a></li>
+					<li><a href="index">最新签到</a></li>
 					<li class="<%= 'hover' if params[:flag] == 'week' %>"><a href="rank?flag=week">周排行</a></li>
 					<li class="<%= 'hover' if params[:flag] == 'month' %>"><a href="rank?flag=month">月排行</a></li>
 					<li><a href="rank_list">总排行</a></li>
 				</ul>
 			</div>
-			<form method="post" action=""/>
 				<table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40">
 					<tr>
 						<th width="991">用户名</th>
 						<th width="199" class="textcenter" style="padding-left:0px;">签到次数</th>
 						<th width="182" class="textcenter" style="padding-left:0px;">No.</th>
 					</tr> 
+				<% @banks.each_with_index do |bank, index| %>
 				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁
+				  <% user = User.find(bank[0])  %>
+				  <td valign="middle"><%=link_to image_tag(user.head_logo.try(:img).try(:url,:t1), :class => "imgstyle2"), user.head_logo.try(:img).try(:url), :target => 'blank' %><%=link_to user.name, "/shop_checkins/user?uid=#{user.id}", :class => "f14" %><img align="absmiddle" class="ml10" src=<%= user.gender.to_i==1?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %> ><br/>
+				  <span class="pr10">星座：<%= user.gonstellation %></span> 年龄：23岁
 				  </td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center"><span class="red2 f13">第一名</span></td>
+				  <td align="center"><%= bank[1] %></td>
+				  <td width="182" align="center" class="
+				  <% case (index+1).to_i %>
+				  <% when 1 %>
+				  <%= 'red2 f13'%>
+				  <% when 2 %>
+				  <%= 'green1 f13' %>
+				  <% when 3 %>
+				  <%= 'blue1 f13' %>
+				  <% end %>
+				  "><span>第<%= (index+1).to_s %>名</span></td>
 				</tr>
-				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁</td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center"><span class="green1 f13">第二名</span></td>
-				</tr>
-				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁</td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center"><span class="blue1 f13">第三名</span></td>
-				</tr>
-				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁</td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center">第四名</td>
-				</tr>
-				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁</td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center">第五名</td>
-				</tr>
-				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁</td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center">第六名</td>
-				</tr>
-				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁</td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center">第七名</td>
-				</tr>
-				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁</td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center">第八名</td>
-				</tr>
-				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁</td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center">第九名</td>
-				</tr>
-				<tr>
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle2" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁</td>
-				  <td align="center">34次</td>
-				  <td width="182" align="center">第十名</td>
-				</tr>
+				<% end %>
 	  	  </table>
 			<div class="pagination">
-				<ul>
-					<li class="disabled"><a href="#" class="pre">&lt;&lt;</a></li>
-					<li class="hover"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#" class="next">&gt;&gt;</a></li>
-				</ul>
+              <%= generate_paginate2.html_safe %>
 		   </div>
-		</form>
 	  </div>
+
+	  <script type="text/javascript">
+        $(document).read(function(){
+        	$(".tab2 tr:odd").addClass("trbg");
+        })
+	  </script>>
