@@ -23,28 +23,21 @@ margin: 0 auto;
     width: 310px;
     display: inline-block;
   }
-}
 
-#Grid:after {
-content: '';
-display: inline-block;
-width: 100%;
-}
-
-#Grid .mix {
-border-radius: 5px;
-box-shadow:2px 2px 3px #aaaaaa;
-display: none;
-margin-right: 10px;
-opacity: 0;
-width: 300px;
-vertical-align: top;
-margin-bottom: 10px;
-font-size: 30px;
-text-align: center;
-
-  img {
+  .box {
     border-radius: 5px;
-    width: 100%;
+    box-shadow:2px 2px 3px #aaaaaa;
+    margin-right: 10px;
+    width: 300px;
+    vertical-align: top;
+    margin-bottom: 10px;
+    font-size: 30px;
+    text-align: center;
+
+    img {
+      border-radius: 5px;
+      width: 100%;
+    }
   }
 }
+
