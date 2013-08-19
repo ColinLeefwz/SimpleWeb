@@ -25,9 +25,10 @@ class PlStat
     num = []
     sum = 0
     (0..pl_people.length-1).each do |y|
-      utnl = User.find_by_id(pl_people[y]).user_talk_new(date).length
+      pl = User.find_by_id(pl_people[y])
+      utnl = pl.user_talk_new(date).length
       (0..utnl-1).each do |x|
-        sum2 = @pl1.human_chat(User.find_by_id(@pl1.chat[x][0]).id).length
+        sum2 = pl.human_chat(User.find_by_id(pl.chat[x][0]).id).length
         sum += sum2
       end
     end
@@ -53,7 +54,7 @@ class PlStat
   #类方法，cron的调用接口，每天执行一次
   def self.do_count(date = nil)
     if date.nil?
-      date = Time.now.strftime("%Y-%m-%d")
+      date = 1.days.ago.strftime("%Y-%m-%d")
   	end
     ua = self.new
     ua.do_count(date)
