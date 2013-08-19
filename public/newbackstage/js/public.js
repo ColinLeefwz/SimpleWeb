@@ -249,9 +249,9 @@ function Menus(){//首页：手机头
 	$("a.menu1, a.menu2, a.menu3, a.menu4, a.menu5, a.menu6").css("height","0px");
 	$("span.box1line1, span.box1line2, span.box1line3").css({"width":"0px","left":"320px"});
 	$("span.box1line4,span.box1line5, span.box1line6").css({"width":"0px"});
-	$("span.box1line1, span.box1line2, span.box1line3").animate({"width":"138px","left":"173px"},2000);
-	$("span.box1line4").animate({"width":"179px"},2000);
-	$("span.box1line5, span.box1line6").animate({"width":"138px"},2000,function(){
+	$("span.box1line1, span.box1line2, span.box1line3").animate({"width":"138px","left":"173px"},1400);
+	$("span.box1line4").animate({"width":"179px"},1400);
+	$("span.box1line5, span.box1line6").animate({"width":"138px"},1400,function(){
 		$("a.menu1, a.menu2, a.menu3, a.menu4, a.menu5, a.menu6").animate({"height":"55px"},500);
 	});
 }
