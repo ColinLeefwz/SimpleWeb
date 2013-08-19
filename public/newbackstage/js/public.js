@@ -146,7 +146,7 @@ function NavDiv(){//菜单
 			$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
 		}
 	}else{
-		$("#Btn").addClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 已固定导航");
+		$("#Btn").addClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 取消固定导航");
 		$("#Nav").stop(true).animate({"left":"0px"},250);
 		if(windowWidth<=1024){
 			$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
@@ -181,6 +181,18 @@ function NavDiv(){//菜单
 				e.stopPropagation();
 			});			
 		}else{
+			$("#Nav").mouseout(function(e){
+				if(navmove=="on"){
+					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
+					windowWidth=$(window).width();
+					if(windowWidth<=1024){
+						$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+					}else{
+						$("div.main").css("width","100%");
+					}
+				}
+			});
+			
 			$(document).mousemove(function(e){
 				if(navmove=="on"){
 					if(parseInt(e.pageX)<=160){
@@ -194,23 +206,12 @@ function NavDiv(){//菜单
 					}	
 				}
 			});
-			$("#Nav").mouseout(function(e){
-				if(navmove=="on"){
-					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
-					windowWidth=$(window).width();
-					if(windowWidth<=1024){
-						$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
-					}else{
-						$("div.main").css("width","100%");
-					}
-				}
-			});
 		}
 		
 		$("#Btn").click(function(){
 			if(navmove=="on"){
 				navmove="off";
-				$("#Btn").addClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 已固定导航");;
+				$("#Btn").addClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 取消固定导航");;
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
 				$(document).unbind("mouseover");
@@ -222,12 +223,8 @@ function NavDiv(){//菜单
 				}
 			}else if(navmove=="off"){
 				navmove="on";
+				//$("#Message").mouseover();
 				$("#Btn").removeClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 固定左侧导航");
-				$("#Nav").unbind();
-				$(document).unbind("mouseout");
-				$(document).unbind("mouseover");
-				$("#OpenNav").unbind();
-				$("#CloseNav").unbind();
 				NavDiv();
 			}
 		});
