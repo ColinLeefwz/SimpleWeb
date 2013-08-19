@@ -25,9 +25,11 @@ class PlStat
     num = []
     (0..pl_people.length-1).each do |y|
       sum = 0
+      puts "1212"
       pl = User.find_by_id(pl_people[y])
       utnl = pl.user_talk_new(date).length
       (0..utnl-1).each do |x|
+        puts "+--------+"
         sum2 = pl.human_chat(User.find_by_id(pl.chat[x][0]).id).length
         sum += sum2
       end
@@ -40,9 +42,13 @@ class PlStat
   def do_count(date)
   	# user_talk_new(date)
     self.date = date
+    puts "----------1---------"
     self.pl_people_num = chat_people_num(date)
+    puts "----------2---------"
     self.pl_reply_num = chat_people_num(date)
+    puts "----------3---------"
     self.pl_words_num = chat_words_num(date)
+    puts "----------4---------"
     self.save
   end
 
