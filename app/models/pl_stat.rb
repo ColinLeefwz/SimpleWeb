@@ -23,14 +23,15 @@ class PlStat
                "51427b92c90d8b670c00027b","514190f8c90d8bc67b00054a"]
     # num = User.find_by_id(pl_people[n]).user_talk_new.length
     num = []
-    sum = 0
     (0..pl_people.length-1).each do |y|
+      sum = 0
       pl = User.find_by_id(pl_people[y])
       utnl = pl.user_talk_new(date).length
       (0..utnl-1).each do |x|
         sum2 = pl.human_chat(User.find_by_id(pl.chat[x][0]).id).length
         sum += sum2
       end
+      num.push(sum)
     end
     num
   end
