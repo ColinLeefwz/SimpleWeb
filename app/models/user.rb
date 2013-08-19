@@ -274,6 +274,10 @@ class User
         :logo_thumb2 => UserLogo.img_url(head_logo_id, :t2)}
     end
   end
+
+  def user_talk_new(date)
+    $redis.smembers("PL#{date}#{self.id}")
+  end
   
   def self.init_pcount
     User.all.each {|x| x.set(:pcount, x.user_logos.size)}
