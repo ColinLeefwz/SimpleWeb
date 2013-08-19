@@ -223,7 +223,11 @@ function NavDiv(){//菜单
 				}
 			}else if(navmove=="off"){
 				navmove="on";
-				//$("#Message").mouseover();
+				$("#Nav").unbind();
+				$(document).unbind("mouseout");
+				$(document).unbind("mouseover");
+				$("#OpenNav").unbind();
+				$("#CloseNav").unbind();
 				$("#Btn").removeClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 固定左侧导航");
 				NavDiv();
 			}
@@ -404,10 +408,10 @@ function AllNoDH(){//取消动画
 function Photo(){//照片墙动画
 	var arr=new Array($("div.box9plane").length);
 	var ns, box9planeTimer;
-	if(runing="checkboxs1"&&noing=="run"){
+	if(runing=="checkboxs1"&&noing=="run"){
 		for(ns=0;ns<$("div.box9plane").length;ns++){
 			arr[ns]=parseInt($("div.box9plane").eq(ns).css("top"));
-			$("div.box9plane").eq(ns).css("top","666px");
+			$("div.box9plane").eq(ns).css("top","666px"); 
 		}
 		ns=0;
 		box9planeTimer=setInterval(function(){
@@ -415,7 +419,7 @@ function Photo(){//照片墙动画
 			ns++;
 			if(ns==$("div.box9plane").length){clearInterval(box9planeTimer);}
 		},250);	
-	}else if(runing="checkboxs2"){
+	}else if(runing=="checkboxs2"){
 		clearInterval(box9planeTimer);
 		if($("div.box9plane").eq(ns).html()!=""){
 			$('#Waterfall').BlocksIt({
