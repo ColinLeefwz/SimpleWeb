@@ -1,52 +1,7 @@
 <% content_for :ahead do %>
   <script src="/newbackstage/js/jquery.blocksit.min.js"></script>
 <% end %>
-<div id="BG"></div>
-<div id="PhotoPlane">
-  <span id="Close"></span>
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td width="50%" rowspan="10"><img src="images/pic15.jpg" class="imgstyle"/></td>
-      <td width="19%" height="30" class="pl20">用 户：</td>
-      <td width="31%" height="30">脸脸合一</td>
-    </tr>
-    <tr>
-      <td height="30" class="pl20">发布时间：</td>
-      <td height="30">2012-05-12</td>
-    </tr>
-    <tr>
-      <td height="30" class="pl20">分享到微博：</td>
-      <td height="30">是</td>
-    </tr>
-    <tr>
-      <td height="30" class="pl20">分享到QQ：</td>
-      <td height="30">是</td>
-    </tr>
-    <tr>
-      <td height="30" class="pl20">赞：</td>
-      <td height="30">赵海斌, 天真独朗</td>
-    </tr>
-    <tr>
-      <td height="30" class="blue1 pl20">操&nbsp;作：</td>
-      <td height="30">
-        <a href="#" class="n2" title="已置顶"></a>
-        <a class="n4" onclick="OC(this)" title="隐藏"></a>
-        <a class="n6" href="#" title="删除"></a>
-      </td>
-    </tr>
-    <tr>
-      <td height="30" class="pl20">描&nbsp;述：</td>
-      <td height="30">很诱人</td>
-    </tr>
-    <tr>
-      <td height="30" class="pl20">评&nbsp;论：</td>
-      <td height="30">真的吗？</td>
-    </tr>
-  </table>
 
-</div>
-
-<div class="clear1"></div>
 <div class="con">
   <div class="title1 mb30"><h2 class="f18">内容管理</h2></div>
   <div class="submenu">
@@ -75,46 +30,25 @@
 
     <% @photos.each do |photo| %>
       <div class="box9plane">
-        <%= image_tag photo.img.try(:url, :t2)  %>
-        <div class="m"><span><%= truncate photo.desc, :length => 20 %></span></div>
+        <%= image_tag photo.img.try(:url, :t2) || "/newbackstage/images/pic14.jpg" %>
+        <div class="m"><span><%= link_to("dddd".to_s.truncate(20), "/shop3_content/show_photo?id=#{photo.id}") %></span></div>
+        
         <div class="bj">
-          <a onclick="OpenDiv()" class="n1" title="详情"></a>
-          <a href="#" class="n2_1" title="已置顶"></a>
-          <a href="content_manage3.html" class="n3" title="编辑"></a>
+          <%= link_to "", "/shop3_content/show_photo?id=#{photo.id}", :class => "n1", :title => '详情' %>
+          <% if photo.od %>
+            <a  class="n2_1" title="已置顶"></a>
+          <% else %>
+            <a  class="n2" title="置顶"></a>
+          <% end %>
+            
           <a class="n4" onclick="OC(this)" title="隐藏"></a>
         </div>
       </div>
     <% end %>
 
 
-
-
-
-
-
-    <div class="box9plane">
-      <img src="/newbackstage/images/pic14.jpg"/>
-      <div class="m"><span>描述文本</span></div>
-      <div class="bj">
-        <a onclick="OpenDiv()" class="n1" title="详情"></a>
-        <a href="#" class="n2" title="置顶"></a>
-        <a href="content_manage3.html" class="n3" title="编辑"></a>
-        <a class="n4" onclick="OC(this)" title="隐藏"></a>
-      </div>
-    </div>
   </div>
-  <div class="pagination">
-    <ul>
-      <li class="disabled"><a href="#" class="pre">&lt;&lt;</a></li>
-      <li class="hover"><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li><a href="#" class="next">&gt;&gt;</a></li>
-    </ul>
-  </div>
-</div>
+  <%= generate_paginate.html_safe %>
 </div>
 <script defer="defer">
   var navmove="off", runing, noing="run";
