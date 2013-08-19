@@ -32,6 +32,8 @@ ul,ol{list-style:none;}
 .nonerightborder{border-right:none !important;}
 .wordstyle{font-size:12px;color:#707070;}
 .noraml{font-weight:normal;}
+.visible{overflow:visible !important;}
+.opacity_55{filter: Alpha(Opacity=55);Opacity:0.55;}
 
 .w150{width:150px !important;}
 .w235{width:235px !important;}
@@ -169,7 +171,9 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .header .logo{position:absolute;top:0px;right:5px;z-index:20;cursor:pointer;}
 .headercon{width:830px;height:50px;position:relative;margin:0px auto;}
 .headercon .toptitle{width:100%;position:absolute;height:50px;line-height:50px;color:#fff;text-align:center;background:transparent url(../images/bg1.png) left top repeat-x;z-index:20;}
-.headercon h1{font-size:18px;color:#FFFFFF;font-family:"微软雅黑";letter-spacing:2px;}
+.headercon h1{font-size:20px;color:#FFFFFF;font-family:"微软雅黑";letter-spacing:2px;}
+.headercon h1 a{color:#fff;}
+.headercon h1 a:hover{text-decoration:underline;}
 .headercon #Message{position:absolute;top:50px;left:0px;width:800px;border:1px solid #D7D7D7;border-top:none;border-radius:0px 0px 8px 8px;background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40px;z-index:15;padding:0px 14px;}
 
 .submenu{background:url("../images/line3.png") left bottom repeat-x;font-size:14px;line-height:30px;padding-top:10px;overflow:hidden;border-radius:0px 0px 10px 0px;}
@@ -378,7 +382,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .phone .imgbox img{margin:0px 2px;}
 .phone .qa{width:244px;height:260px;margin:0px auto;overflow:hidden;}
 .phone #QAC{width:244px;height:250px;overflow:hidden;padding-right:18px;}/*overflow-y:scroll;*/
-.phone .mes{border-radius:8px;font-size:12px;line-height:20px;width:146px;margin:8px auto 8px 42px;color:#fff;background:#C5CBD0 url(../images/sign7.png) 5px 5px no-repeat;padding:3px 0px 3px 27px;text-align:left;}
+.phone .mes{border-radius:8px;font-size:12px;line-height:17px;width:150px;margin:8px auto 8px 42px;color:#fff;background:#C5CBD0 url(../images/sign7.png) 5px 5px no-repeat;padding:3px 0px 3px 27px;text-align:left;}
 .phone .mes a{color:#fff;}
 .phone .shopanswer{width:210px;position:relative;padding:8px 0px 8px 2px;margin-left:4px;}
 .phone .shopanswer img.head{position:absolute;width:28px;height:28px;left:0px;bottom:6px;}

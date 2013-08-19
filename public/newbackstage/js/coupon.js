@@ -1,12 +1,15 @@
 $(document).ready(function(){
 	$("input.inputs2").click(function(){
-		$(this).addClass("onfocs").val("");
+		$(this).addClass("onfocs");
+		if($(this).val()=="优惠券主题 不得超过13个文字"){
+			$(this).val("");	
+		}
 	}).keyup(function(){
 		var len=$(this).val().length;
 		if(len>13){
 			$("#Box6Message").html("标题超出13个文字");
 			$(this).removeClass("onfocs").addClass("onfocs2");
-			$("#Box6Message").animate({"top":"-40px"});
+			$("#Box6Message").animate({"top":"-40px"},500);
 		}else{
 			$(this).removeClass("onfocs2").addClass("onfocs");
 			$("#Box6Message").animate({"top":"0px"});
@@ -19,13 +22,16 @@ $(document).ready(function(){
 		}
 	});
 	$("textarea").click(function(){
-//		$(this).addClass("onfocs").val("");
+		$(this).addClass("onfocs");
+		if($(this).val()=="优惠额度，使用规则、期限等，不超过90字"){
+			$(this).val("");
+		}
 	}).keyup(function(){
 		var len=$(this).val().length;
 		if(len>90){
 			$("#Box6Message").html("内容超出90个文字");
 			$(this).removeClass("onfocs").addClass("onfocs2");
-			$("#Box6Message").animate({"top":"-40px"});
+			$("#Box6Message").animate({"top":"-40px"},500);
 		}else{
 			$(this).removeClass("onfocs2").addClass("onfocs");
 			$("#Box6Message").animate({"top":"0px"});
