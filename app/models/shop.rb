@@ -458,7 +458,9 @@ class Shop
   end
 
   def gchat
-    return JSON.parse(Xmpp.get("api/gchat?room=#{self.id.to_i}"))
+    JSON.parse(Xmpp.get("api/gchat2?room=#{self.id.to_i}&skip=0&count=200"))
+  rescue
+    return []
   end
   
   def history(skip,count)
