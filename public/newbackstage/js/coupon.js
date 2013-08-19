@@ -19,7 +19,7 @@ $(document).ready(function(){
 		}
 	});
 	$("textarea").click(function(){
-		$(this).addClass("onfocs").val("");
+//		$(this).addClass("onfocs").val("");
 	}).keyup(function(){
 		var len=$(this).val().length;
 		if(len>90){
