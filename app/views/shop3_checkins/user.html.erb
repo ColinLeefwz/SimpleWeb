@@ -1,96 +1,4 @@
-<div class="title2"><h2>用户详情</h2></div>
 
-<style>
-  .martop{margin-top: 20px; margin-bottom: 10px;}
-  .martop span{display: inline-block;font-size: 14px; color: #505050; margin: 3px; width: 90px;}
-  .martop a{color: #0B99D7;}
-</style>
-<div  style="height: 220px;" id="userInfo" class ="martop">
-  <h3 style="margin-bottom:  10px;">个人信息</h3>
-  <div style="float: left; width: 200px;">
-<%#*<img src="http://oss.aliyuncs.com/logo/507b5ac0421aa9cf3200000b/t2_0.jpg" />%>
-    <%=link_to image_tag(@user.head_logo.try(:img).try(:url, :t2)), @user.head_logo.try(:img).try(:url), :target => "blank"  %>
-  </div>
-  <div style="float: right; width: 500px" >
-    <span >昵  称：</span>
-    <span style="width: 140px;"><%= @user.name %></span>
-    <span>性  别：</span>
-    <span style="width: 140px;"><%= @user.show_gender %></span>
-    <br/>
-    <span>年  龄：</span>
-    <span style="width: 140px;"><%= @user.age %></span>
-    <span>星 座：</span>
-    <span style="width: 140px;"><%=@user.gonstellation %></span>
-    <br/>
-    <span>爱  好：</span>
-    <span style="width: 380px;"><%= @user.hobby %></span>
-    <br/>
-    <span  >微博昵称：</span>
-    <span style="width: 380px;"><%= link_to @user.wb_name || '' , @user.weibo_home%></span>
-    <br/>
-    <span>qq昵称：</span>
-    <span style="width: 380px;"><%= @user.qq_name %></span>
-    <br/>
-    <span>职业说明：</span>
-    <span style="width: 380px;"><%= @user.job %></span>
-    <br/>
-    <span>个性签名：</span>
-    <span style="width: 380px;"><%= @user.signature %></span>
-  </div>
-</div>
-
-<div style="height:  50px; " class ="martop">
-  <h3>照片信息</h3>
-  <span>
-    所有照片:
-  </span>
-  <span style="width: 480px;">
-    <%= link_to '查看', "/shop_photos?uid=#{@user.id}"  %>
-  </span>
-</div>
-
-<div style="height:  70px; " class ="martop">
-  <h3>签到信息</h3>
-  <span >
-    最后签到时间:
-  </span>
-  <span style="width: 480px;">
-    <%= @user.latest_checkin_time_shop(session[:shop_id]) %>
-  </span>
-  <br/>
-  <span>
-    累计签到次数:
-  </span>
-  <span style="width: 480px;">
-    <%= link_to "#{@user.total_checkin_shop(session[:shop_id])}", "/shop_checkins?uid=#{@user.id}"  %>
-  </span>
-</div>
-
-<div  class ="martop">
-  <h3> 优惠信息</h3>
-  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
-    <tr>
-      <th width="20%" align="left" colspan="2">优惠券</th>
-      <th width="15%" align="center">下载时间</th>
-      <th width="15%" align="center">查看时间</th>
-      <th width="15%" align="center">使用时间</th>
-      <th width="10%" align="center">消费数据</th>
-    </tr>
-
-    <% @coupon_downs.each do |use| %>
-      <tr>
-        <td width="10%"><%=link_to image_tag(use.coupon_img.try(:url,:t1), :class=>"imgs4"), use.coupon_img.try(:url), :target => 'blank' %></td>
-        <td valign="center"><%= use.coupon_name %>
-          <span class="gray f12">（<%= use.coupon_show_t2  %>）</span>
-        </td>
-        <td align="center"><%= to_local(use.dat) %></td>
-        <td align="center"><%= to_local(use.vat)  %></td>
-        <td align="center"><%= to_local(use.uat)%></td>
-        <td align="center"><%= use.data %></td>
-      </tr>
-    <% end %>
-  </table>
-</div>
 
 
 
@@ -102,37 +10,45 @@
 			</div>
 			<table width="650" cellspacing="0" cellpadding="0" class="tab3">
 			  <tr>
-				<td width="31%" rowspan="8" align="right" valign="top" class="pr20"><img src="images/pic12.jpg" class="imgstyle"></td>
-				<td height="20" colspan="2" valign="top" class="red2 f14">昵 称： 安卓的安卓</td>
+				<td width="31%" rowspan="8" align="right" valign="top" class="pr20">
+				<%=link_to image_tag(@user.head_logo.try(:img).try(:url, :t2)), @user.head_logo.try(:img).try(:url), :target => "blank",:class => "imgstyle" %>
+				<!-- <img src="images/pic12.jpg" class="imgstyle"></td> -->
+				<td height="20" colspan="2" valign="top" class="red2 f14">昵 称： <%= @user.name %></td>
 			  </tr>
 			  <tr>
-				<td width="34%" height="20" valign="top">性 别： 女</td>
-			    <td width="35%" height="20" valign="top">年 龄： -87</td>
+				<td width="34%" height="20" valign="top">性 别： <%= @user.show_gender %></td>
+			    <td width="35%" height="20" valign="top">年 龄： <%= @user.age %></td>
 			  </tr>
 			  <tr>
-				<td height="20" valign="top">星 座： 双鱼座 </td>
-			    <td height="20" valign="top">爱 好： '好哥哥 嗯可能去 </td>
+				<td height="20" valign="top">星 座： <%=@user.gonstellation %> </td>
+			    <td height="20" valign="top">爱 好： <%= @user.hobby %> </td>
 			  </tr>
 			  <tr>
-				<td height="20" valign="top">微博昵称： <a href="#">上古野人momo</a> </td>
-			    <td height="20" valign="top">QQ昵称：</td>
+				<td height="20" valign="top">微博昵称： <%= link_to @user.wb_name || '' , @user.weibo_home%> </td>
+			    <td height="20" valign="top">QQ昵称：<%= @user.qq_name %></td>
 			  </tr>
 			  <tr>
-				<td height="20" colspan="2" valign="top">职业说明： 歼击机' </td>
+				<td height="20" colspan="2" valign="top">职业说明： <%= @user.job %> </td>
 			  </tr>
 			  <tr>
-				<td height="20" colspan="2" valign="top">个性签名： '编辑部那些事'</td>
+				<td height="20" colspan="2" valign="top">个性签名： <%= @user.signature %></td>
 			  </tr>
 			  <tr>
-			    <td height="20" colspan="2" valign="top">签到信息：</td>
+			    <!-- <td height="20" colspan="2" valign="top">签到信息：</td> -->
 	          </tr>
 			  <tr>
-			    <td valign="top">累计签到：42次</td>
-		        <td valign="top">最近签到：2次</td>
+			    <td valign="top">累计签到：<%= link_to "#{@user.total_checkin_shop(session[:shop_id])}", "/shop_checkins?uid=#{@user.id}"  %>次</td>
+		        <td valign="top">最后签到时间：<%= @user.latest_checkin_time_shop(session[:shop_id]) %></td>
 			  </tr>
 		  </table> 
-			 <div class="title1 mt20"><h2 class="l">安卓的安卓de照片墙</h2><a href="content_manage1.html" class="r">更多&gt;&gt;</a></div>
-			 <div class="box8"><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a><a href="#"><img src="images/pic13.jpg" class="imgstyle2"/></a>
+			 <div class="title1 mt20"><h2 class="l"><%= @user.name %>照片墙</h2>
+             <%= link_to '查看', "/shop3_content/user_photo?uid=#{@user.id}", :class => "r"  %>
+			 <!-- <a href="content_manage1.html" class="r">更多&gt;&gt;</a></div> -->
+			 <div class="box8">
+			 <% @photos.each do |photo| %>
+			   <%=link_to image_tag(photo.img.try(:url, :t2), :class=>"imgstyle2"), photo.img.try(:url), :target => "blank"  %>
+			 <% end %>
+
 			 </div>
 			<div class="title1 mt40"><h2 class="l">优惠券信息</h2></div>
 			<table width="100%" cellpadding="0" cellspacing="0" class="tab2">
@@ -143,76 +59,15 @@
 					<th width="95">使用时间</th>
 					<th width="70">消费数据</th>
 				</tr> 
+				<% @coupon_downs.each do |use| %>
 				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
+				  <td><a href="" title="查看详情"><%= use.coupon_name %><span class="gay1">（<%= use.coupon_show_t2 %>）</span></a></td>
+				  <td width="95"><%= to_local(use.dat) %></td>
+				  <td width="95"><%= to_local(use.vat) %></td>
+				  <td width="95"><%= to_local(use.uat) %></td>
+				  <td width="70" align="center"><%= use.data %></td>
 				</tr>
-				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
-				</tr>
-				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
-				</tr>
-				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
-				</tr>
-				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
-				</tr>
-				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
-				</tr>
-				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
-				</tr>
-				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
-				</tr>
-				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
-				</tr>
-				<tr class="change">
-				  <td><a href="coupon_issuing3.html" title="查看详情">华夏时代广场优惠券五折 <span class="gay1">（签到类）</span></a></td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 12:04</td>
-				  <td width="95">2013-08-09 14:08</td>
-				  <td width="70" align="center">服务员浦靠谱认证通过</td>
-				</tr>
+				<% end %>
 		  </table>
 		  <div class="pagination">
 		  	<ul>
