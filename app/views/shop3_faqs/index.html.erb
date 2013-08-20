@@ -3,14 +3,21 @@
 			<div class="title1"><h2 class="f18">问答系统</h2></div>
 			<div class="box4">
 				<div class="box4left">
-					还没有设置问答系统，请创建 ===》
+				<% @shop_faqs.each do |faq| %>
+				   <% if faq.blank?%>
+					 还没有设置问答系统，请创建 ===》
+					 <% else %>
+                     <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> <%= faq.od%> =>  <%= faq.title%><br/>
+			      <% end %>
+			    <% end %>
 				</div>
+
 				<div class="box4right changebox4right" id="Waterfall" >
 					<div class="box4plane1" rel="0" id="Div0"><a class="wordpoistion" href="/shop3_faqs/new">创建问答</a></div>
 					<div class="box4plane4"></div>
 
-
-               <% @shop_faqs.each do |faq| %>
+          <% @shop_faqs.each do |faq| %>
+               
 					<div class="box4plane2" rel="<%= faq.od[1,3]%>" id="<%= "Div"+faq.od[1,3]%>">
 						<div class="title2">
 							<h2><%= faq.od%></h2>
