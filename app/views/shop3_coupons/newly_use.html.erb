@@ -2,6 +2,9 @@
 
 
 		<div class="con2">
+      <div class="title1 mb30">
+        <h2 class="f18 l">优惠券管理</h2>
+      </div>
 			<div class="submenu">
 				<ul>
 					<li><a href="/shop3_coupons/list">优惠券列表</a></li>
@@ -62,3 +65,18 @@
 		  </div>
 			
 		</div>
+<script>
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$(".tab2 tr:odd").addClass("trbg");
+});
+</script>
