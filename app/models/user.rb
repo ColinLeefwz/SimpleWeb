@@ -747,7 +747,7 @@ class User
   end
   
   def has_wb?
-    self.wb_uid && self.wb_uid.size>0 && self.wb_hidden<2
+    self.wb_uid && self.wb_uid.size>0 && self.wb_hidden.to_i <2
   end
   
   def has_qq?
@@ -822,9 +822,9 @@ class User
       next if qq.size==0
       count = User.where({qq:qq}).count
       if count==0
-          user = User.find_by_qq(qq)
-          puts user.to_json
-          Xmpp.error_notify("QQ#{qq}对应用户count=0")
+        user = User.find_by_qq(qq)
+        puts user.to_json
+        Xmpp.error_notify("QQ#{qq}对应用户count=0")
       end
       if count>1
         puts "#{qq}:#{count}"
@@ -846,10 +846,10 @@ class User
       count = User.where({phone:phone}).count
       if count==0
         debugger
-          user = User.find_by_phone(phone)
-          puts "#{phone}:#{user.phone}"
-          puts user.to_json
-          Xmpp.error_notify("手机#{phone}对应用户count=0")
+        user = User.find_by_phone(phone)
+        puts "#{phone}:#{user.phone}"
+        puts user.to_json
+        Xmpp.error_notify("手机#{phone}对应用户count=0")
       end
       if count>1
         puts "#{phone}:#{count}"
