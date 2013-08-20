@@ -1,9 +1,9 @@
 		<div class="con">
 			<div class="title1"><h2 class="f18">发布优惠券</h2></div>
-			<div class="box5"><span>签到优惠券，</span> 图文混排格式  <a href="/shop3_coupons" class="blue1 pl20 f12">选择其他优惠券模式</a></div>
+			<div class="box5"><span>分享类优惠券，</span> 图文混排格式  <a href="/shop3_coupons" class="blue1 pl20 f12">选择其他优惠券模式</a></div>
 			<div class="clear1"></div>
 
-			<%= form_for(@coupon, :url => '/shop3_coupons/create',:html => { :multipart => true, :id => 'Forms' } ) do |f| %>
+			<%= form_for(@coupon, :url => '/shop3_share_coupons/create',:html => { :multipart => true, :id => 'Forms' } ) do |f| %>
                <%= render :partial => 'imgtext', :locals => {:f => f}  %>
             <% end %>
 

@@ -24,12 +24,12 @@ function imgUploadPreview(select, divid){
                 divObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
             }
             else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
-                divObj.innerHTML = "<img id='image_view' style='height: 197px; width: 194px' />";
+                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
             }
             else{
-                divObj.innerHTML = "<img id='image_view' style='height: 197px; width: 194px' />";
+                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 imageView = document.getElementById("image_view");
                 imageView.src = window.URL.createObjectURL(this.files[0]);
             }
