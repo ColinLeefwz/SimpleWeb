@@ -85,7 +85,7 @@
 				<span class="navline"></span>
 				<a href="questions_answers1.html">问答系统</a>
 				<span class="navline"></span>
-				<label id="CB1" class="checkboxs1">取消动画</label>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
 				<span class="navline"></span>
 				<a id="Btn"><img src="images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
 			</div>
@@ -133,7 +133,7 @@
 				</div>
 				<div class="box9plane">
 					<img src="images/pic14.jpg"/>
-					<div class="m"><span<a href="content_manage4.html">>描述文本描述文本描述文本描述文本</a></span></div>
+					<div class="m"><span>描述文本描述文本描述文本描述文本</a></span></div>
 					<div class="bj">
 						<a onclick="OpenDiv()" class="n1" title="详情"></a>
 						<a href="#" class="n2_1" title="已置顶"></a>
@@ -258,7 +258,7 @@
 						<a onclick="OpenDiv()" class="n1" title="详情"></a>
 						<a href="#" class="n2" title="置顶"></a>
 						<a href="content_manage3.html" class="n3" title="编辑"></a>
-						<a class="n4" onclick="OC(this)" title="隐藏"></a>
+						<a class="n5" onclick="OC(this)" title="显示"></a>
 					</div>
 				</div>
 				<div class="box9plane">
@@ -268,7 +268,7 @@
 						<a onclick="OpenDiv()" class="n1" title="详情"></a>
 						<a href="#" class="n2" title="置顶"></a>
 						<a href="content_manage3.html" class="n3" title="编辑"></a>
-						<a class="n4" onclick="OC(this)" title="隐藏"></a>
+						<a class="n5" onclick="OC(this)" title="显示"></a>
 					</div>
 				</div>
 				<div class="box9plane">
@@ -334,7 +334,7 @@ $(document).ready(function(){
 		$(window).load(function(){
 			MessageDiv();
 		});
-		noing="norun"
+		noing="norun"; 
 	}else if(runing=="checkboxs2"){
 		AllNoDH();
 	}
@@ -361,6 +361,9 @@ $(document).ready(function(){
 			}
 		);
 	}
+	
+	$("div.bj a.n5").parents("div.box9plane").addClass("opacity_55");
+	
 /*	$("#Close").click(function(){
 		$("#PhotoPlane,#BG").css("display","none");
 	});*/
@@ -384,10 +387,12 @@ function OC(obj){
 		$(obj).removeClass().addClass("n5").attr("title","显示");
 		$(obj).parent().addClass("bbj");
 		$(obj).parent().siblings().addClass("bm");
+		$(obj).parents("div.box9plane").addClass("opacity_55");
 	}else{
 		$(obj).removeClass().addClass("n4").attr("title","隐藏");
 		$(obj).parent().removeClass("bbj");
 		$(obj).parent().siblings().removeClass("bm");
+		$(obj).parents("div.box9plane").removeClass("opacity_55");
 	}
 }
 </script>

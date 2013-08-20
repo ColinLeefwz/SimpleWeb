@@ -223,7 +223,11 @@ function NavDiv(){//菜单
 				}
 			}else if(navmove=="off"){
 				navmove="on";
-				//$("#Message").mouseover();
+				$("#Nav").unbind();
+				$(document).unbind("mouseout");
+				$(document).unbind("mouseover");
+				$("#OpenNav").unbind();
+				$("#CloseNav").unbind();
 				$("#Btn").removeClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 固定左侧导航");
 				NavDiv();
 			}
@@ -245,9 +249,9 @@ function Menus(){//首页：手机头
 	$("a.menu1, a.menu2, a.menu3, a.menu4, a.menu5, a.menu6").css("height","0px");
 	$("span.box1line1, span.box1line2, span.box1line3").css({"width":"0px","left":"320px"});
 	$("span.box1line4,span.box1line5, span.box1line6").css({"width":"0px"});
-	$("span.box1line1, span.box1line2, span.box1line3").animate({"width":"138px","left":"173px"},2000);
-	$("span.box1line4").animate({"width":"179px"},2000);
-	$("span.box1line5, span.box1line6").animate({"width":"138px"},2000,function(){
+	$("span.box1line1, span.box1line2, span.box1line3").animate({"width":"138px","left":"173px"},1400);
+	$("span.box1line4").animate({"width":"179px"},1400);
+	$("span.box1line5, span.box1line6").animate({"width":"138px"},1400,function(){
 		$("a.menu1, a.menu2, a.menu3, a.menu4, a.menu5, a.menu6").animate({"height":"55px"},500);
 	});
 }
@@ -404,10 +408,10 @@ function AllNoDH(){//取消动画
 function Photo(){//照片墙动画
 	var arr=new Array($("div.box9plane").length);
 	var ns, box9planeTimer;
-	if(runing="checkboxs1"&&noing=="run"){
+	if(runing=="checkboxs1"&&noing=="run"){
 		for(ns=0;ns<$("div.box9plane").length;ns++){
 			arr[ns]=parseInt($("div.box9plane").eq(ns).css("top"));
-			$("div.box9plane").eq(ns).css("top","666px");
+			$("div.box9plane").eq(ns).css("top","666px"); 
 		}
 		ns=0;
 		box9planeTimer=setInterval(function(){
@@ -415,7 +419,7 @@ function Photo(){//照片墙动画
 			ns++;
 			if(ns==$("div.box9plane").length){clearInterval(box9planeTimer);}
 		},250);	
-	}else if(runing="checkboxs2"){
+	}else if(runing=="checkboxs2"){
 		clearInterval(box9planeTimer);
 		if($("div.box9plane").eq(ns).html()!=""){
 			$('#Waterfall').BlocksIt({
