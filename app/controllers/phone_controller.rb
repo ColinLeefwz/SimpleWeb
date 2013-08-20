@@ -159,7 +159,7 @@ class PhoneController < ApplicationController
       return      
     end
     if session_user.phone && params[:phone] != session_user.phone
-      Xmpp.error_nofity("用户手机号码#{session_user.phone}，重新绑定新的手机号码#{params[:phone]}")
+      Xmpp.error_notify("用户手机号码#{session_user.phone}，重新绑定新的手机号码#{params[:phone]}")
     end
     user = session_user_no_cache
     #user.psd = slat_hash_pass(params[:password])  if params[:password]
@@ -180,7 +180,7 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"至少有一种以上的绑定关系才能解绑"}.to_json
     else
       user.set(:phone_hidden, true)
-      render :json => {bind: true}.to_json
+      render :json => {unbind: true}.to_json
     end
   end
   
