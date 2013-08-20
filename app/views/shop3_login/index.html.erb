@@ -1,3 +1,20 @@
+ <script type="text/javascript">
+
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		Dn2_divplane();
+		NavDiv();
+		Menus();
+		$(window).load(function(){
+			MessageDiv();
+		});	
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+});
+
+ </script>
 		<div class="con">
 			<div class="box1">
 				<div class="menus">
@@ -21,36 +38,29 @@
 					<a href="/shop3_data" class="menu6">数据统计</a>
 				</div>
 				<div class="phone">
-					<div class="title3"><h2><%= session_shop.name %></h2></div>
-					<div class="imgbox">
-						<img src="/newbackstage/images/pic7.png"/><img src="/newbackstage/images/pic8.png"/><img src="/newbackstage/images/pic7.png"/><img src="/newbackstage/images/pic8.png"/><img src="/newbackstage/images/pic9.png"/>
+					<div class="title3"><h2><%= link_to session_shop.name, "/shop3_login" %></h2></div>
+					<div class="imgbox"><a href="/shop3_content/user_photo">
+						<img src="/newbackstage/images/pic7.png"/><img src="/newbackstage/images/pic8.png"/><img src="/newbackstage/images/pic7.png"/><img src="/newbackstage/images/pic8.png"/><img src="/newbackstage/images/pic9.png"/></a>
 					</div>
 					<div class="qa">
 						<div id="QAC">
-							<div class="mes">Hi~ 欢迎来到<%= session_shop.name %></div>
+							<div class="mes"><a href="/shop3_content/gchat">Hi~ 欢迎来到<%= session_shop.name %></a></div>
 							<div class="shopanswer">
 								<img src="/newbackstage/images/sign8.png" class="head"/>
 								<div class="cons">
-									<img src="/newbackstage/images/sign9.png" class="small_arrow"/>
+									<img src="/newbackstage/images/sign9.png" class="small_arrow"/><a href="/shop3_faqs">
 									试试回复：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>05 => 特色小吃推荐
+									</a>
 								</div>
 							</div>
-							<div class="mes">分享图片到新浪微博，文字中带有“好吃”的字样，即可得到“绿茶湖滨店”10元代金券</div>
-							<div class="mes">Hi~ 欢迎来到绿茶餐厅湖滨店</div>
-							<div class="shopanswer">
-								<img src="/newbackstage/images/sign8.png" class="head"/>
-								<div class="cons">
-									<img src="/newbackstage/images/sign9.png" class="small_arrow"/>
-									试试回复：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>05 => 特色小吃推荐
-								</div>
-							</div>
+							<div class="mes"><a href="/shop3_coupons">分享图片到新浪微博，文字中带有“好吃”的字样，......</a></div>
 						</div>
 					</div>
 				</div>
 			</div>
 			
 			
-			<div class="box2">
+ 			<div class="box2" style="display:none;">
 				<div class="title1"><h2>最新数据</h2></div>
 				<div class="box2inner" id="Dn2">
 					<div class="box2plane" style="top:0px;left:0px;" id="Dn2_b0">
@@ -111,7 +121,7 @@
 				</div>
 			</div>
 			
-			<div class="box2">
+ 			<div class="box2" style="display:none;">
 				<div class="title1"><h2>最近24小时数据统计</h2></div>
 				<div class="box2inner2">
 					<ul class="list">
@@ -180,8 +190,12 @@
 									<td>700</td>
 								</tr>
 							</tbody>
-						</table>						
+						</table>
 					</div>
 				</div>
+			</div>
+
+			<div class="box2">
+			<%= render :partial => "linecharts" %>
 			</div>
 		</div>
