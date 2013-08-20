@@ -48,7 +48,7 @@
 				<tr class="change">
 				  <td width="50"><%= use.download_num%></td>
 				  <td><a href="coupon_issuing3.html" title="查看详情"><%= use.coupon_name %> <span class="gay1">（<%= use.coupon_show_t2  %>）</span></a></td>
-				  <td><%=link_to use.user_name, "/shop_checkins/user?uid=#{use.uid}"  %></td>
+				  <td><%=link_to use.user_name, "/shop3_checkins/user?uid=#{use.uid}"  %></td>
 				  <td width="95"><%= use.vat.since(8.hours).strftime("%Y-%m-%d %H:%M") if use.vat %></td>
 				  <td width="95"><%= use.uat.since(8.hours).strftime("%Y-%m-%d %H:%M") %></td>
 				  <td width="70" align="center"><%= use.data %></td>
