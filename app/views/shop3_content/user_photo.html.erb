@@ -34,9 +34,9 @@
         <div class="bj">
           <%= link_to "", "/shop3_content/show_photo?id=#{photo.id}", :class => "n1 photolinkcon", :title => '详情' %>
           <% if photo.od %>
-            <a  class="n2_1 photolinkcon" onclick="ajaxUnTop(this, '<%= photo.id %>' )" title="取消置顶"></a>
+            <a  class="n2_1 photolinkcon" onclick="ajaxUOT(this, '<%= photo.id %>' )" title="取消置顶"></a>
           <% else %>
-            <a  class="n2 photolinkcon" onclick="ajaxTop(this, '<%= photo.id %>' )" title="置顶"></a>
+            <a  class="n2 photolinkcon" onclick="ajaxUOT(this, '<%= photo.id %>' )" title="置顶"></a>
           <% end %>
 
           <% if photo.hide %>
@@ -122,35 +122,35 @@
         $("#PhotoPlane").fadeIn(600);
 }*/
   function OC(obj, id){
-    if($(obj).attr("class")=="n4"){
-      $.get("/shop3_content/ajax_del", {id: id}, function(){
-        $(obj).removeClass().addClass("n5").attr("title","显示");
-        $(obj).parent().addClass("bbj");
-        $(obj).parent().siblings().addClass("bm");
-        $(obj).parents("div.box9plane").addClass("opacity_55");
-        $(obj).parents("div.box9plane").find(".photolinkcon").hide()
-      })
-    }else{
-      $.get("/shop3_content/ajax_undel", {id: id}, function(){
-        $(obj).removeClass().addClass("n4").attr("title","隐藏");
-        $(obj).parent().removeClass("bbj");
-        $(obj).parents("div.box9plane").find(".photolinkcon").show()
-        $(obj).parent().siblings().removeClass("bm");
-        $(obj).parents("div.box9plane").removeClass("opacity_55");
-      })
+    if(confirm("确定"+$(obj).attr("title"))){
+      if($(obj).attr("class")=="n4"){
+        $.get("/shop3_content/ajax_del", {id: id}, function(){
+          $(obj).removeClass().addClass("n5").attr("title","显示");
+          $(obj).parent().addClass("bbj");
+          $(obj).parent().siblings().addClass("bm");
+          $(obj).parents("div.box9plane").addClass("opacity_55");
+          $(obj).parents("div.box9plane").find(".photolinkcon").hide()
+        })
+      }else{
+        $.get("/shop3_content/ajax_undel", {id: id}, function(){
+          $(obj).removeClass().addClass("n4").attr("title","隐藏");
+          $(obj).parent().removeClass("bbj");
+          $(obj).parents("div.box9plane").find(".photolinkcon").show()
+          $(obj).parent().siblings().removeClass("bm");
+          $(obj).parents("div.box9plane").removeClass("opacity_55");
+        })
+      }
     }
   }
 
-  function ajaxUnTop(obj, id){
-    $.get("/shop_photos/ajax_untop", {id: id}, function(){
-      $(obj).removeClass("n2_1").addClass('n2').attr("title","置顶");
-    })
-  }
-
-  function ajaxTop(obj, id){
-    $.get("/shop_photos/ajax_top", {id: id}, function(){
-      $(obj).removeClass("n2").addClass('n2_1').attr("title","取消置顶");
-    })
+  function ajaxUOT(obj, id){
+    var text = $(obj).attr("title")
+    if(confirm("确定"+ text)){
+      if(text == "置顶")
+        $.get("/shop_photos/ajax_top", {id: id}, function(){ $(obj).removeClass("n2").addClass('n2_1').attr("title","取消置顶");})
+      else
+        $.get("/shop_photos/ajax_untop", {id: id}, function(){$(obj).removeClass("n2_1").addClass('n2').attr("title","置顶"); })
+    }
   }
 
 </script>
