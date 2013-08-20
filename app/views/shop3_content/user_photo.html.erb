@@ -26,22 +26,25 @@
   </div>
   <div class="clear1"></div>
   <div class="box9" id="Waterfall">
-
-
     <% @photos.each do |photo| %>
       <div class="box9plane">
         <%= image_tag photo.img.try(:url, :t2) || "/newbackstage/images/pic14.jpg" %>
-        <div class="m"><span><%= link_to("dddd".to_s.truncate(20), "/shop3_content/show_photo?id=#{photo.id}") %></span></div>
-        
+        <div class="m"><span><%= link_to(photo.desc.to_s.truncate(20), "/shop3_content/show_photo?id=#{photo.id}") %></span></div>
+
         <div class="bj">
-          <%= link_to "", "/shop3_content/show_photo?id=#{photo.id}", :class => "n1", :title => '详情' %>
+          <%= link_to "", "/shop3_content/show_photo?id=#{photo.id}", :class => "n1 photolinkcon", :title => '详情' %>
           <% if photo.od %>
-            <a  class="n2_1" title="已置顶"></a>
+            <a  class="n2_1 photolinkcon" onclick="ajaxUnTop(this, '<%= photo.id %>' )" title="取消置顶"></a>
           <% else %>
-            <a  class="n2" title="置顶"></a>
+            <a  class="n2 photolinkcon" onclick="ajaxTop(this, '<%= photo.id %>' )" title="置顶"></a>
           <% end %>
-            
-          <a class="n4" onclick="OC(this)" title="隐藏"></a>
+
+          <% if photo.hide %>
+            <a class="n5" onclick="OC(this, '<%= photo.id %>')" title="显示"></a>
+          <%else%>
+            <a class="n4" onclick="OC(this, '<%= photo.id %>')" title="隐藏"></a>
+          <% end %>
+
         </div>
       </div>
     <% end %>
@@ -69,7 +72,7 @@
       $(window).load(function(){
         MessageDiv();
       });
-      noing="norun"
+      noing="norun";
     }else if(runing=="checkboxs2"){
       AllNoDH();
     }
@@ -96,33 +99,58 @@
       }
     );
     }
-    $("#Close").click(function(){
-      $("#PhotoPlane,#BG").css("display","none");
-    });
+
+    $("div.bj a.n5").parents("div.box9plane").addClass("opacity_55");
+    $("div.bj a.n5").parents("div.box9plane").find(".photolinkcon").hide()
+
+    /*	$("#Close").click(function(){
+                $("#PhotoPlane,#BG").css("display","none");
+        });*/
   });
-  function OpenDiv(){
-    var top;
-    documentHeight=$(document).height();
-    windowHeight=$(window).height();
-    if(documentHeight<=windowHeight){
-      $("#BG").css({"height":windowHeight+"px","display":"block"});
-    }else{
-      $("#BG").css({"height":documentHeight+"px","display":"block"});
-    }
-    $("#PhotoPlane").css("display","block");
-    top=$(document).scrollTop()+(windowHeight-$("#PhotoPlane").height())/2;
-    $("#PhotoPlane").css({"top":top+"px","display":"none"});
-    $("#PhotoPlane").fadeIn(600);
-  }
-  function OC(obj){
+  /*function OpenDiv(){
+        var top;
+        documentHeight=$(document).height();
+        windowHeight=$(window).height();
+        if(documentHeight<=windowHeight){
+                $("#BG").css({"height":windowHeight+"px","display":"block"});
+        }else{
+                $("#BG").css({"height":documentHeight+"px","display":"block"});
+        }
+        $("#PhotoPlane").css("display","block");
+        top=$(document).scrollTop()+(windowHeight-$("#PhotoPlane").height())/2;
+        $("#PhotoPlane").css({"top":top+"px","display":"none"});
+        $("#PhotoPlane").fadeIn(600);
+}*/
+  function OC(obj, id){
     if($(obj).attr("class")=="n4"){
-      $(obj).removeClass().addClass("n5").attr("title","显示");
-      $(obj).parent().addClass("bbj");
-      $(obj).parent().siblings().addClass("bm");
+      $.get("/shop3_content/ajax_del", {id: id}, function(){
+        $(obj).removeClass().addClass("n5").attr("title","显示");
+        $(obj).parent().addClass("bbj");
+        $(obj).parent().siblings().addClass("bm");
+        $(obj).parents("div.box9plane").addClass("opacity_55");
+        $(obj).parents("div.box9plane").find(".photolinkcon").hide()
+      })
     }else{
-      $(obj).removeClass().addClass("n4").attr("title","隐藏");
-      $(obj).parent().removeClass("bbj");
-      $(obj).parent().siblings().removeClass("bm");
+      $.get("/shop3_content/ajax_undel", {id: id}, function(){
+        $(obj).removeClass().addClass("n4").attr("title","隐藏");
+        $(obj).parent().removeClass("bbj");
+        $(obj).parents("div.box9plane").find(".photolinkcon").show()
+        $(obj).parent().siblings().removeClass("bm");
+        $(obj).parents("div.box9plane").removeClass("opacity_55");
+      })
     }
   }
+
+  function ajaxUnTop(obj, id){
+    $.get("/shop_photos/ajax_untop", {id: id}, function(){
+      $(obj).removeClass("n2_1").addClass('n2').attr("title","置顶");
+    })
+  }
+
+  function ajaxTop(obj, id){
+    $.get("/shop_photos/ajax_top", {id: id}, function(){
+      $(obj).removeClass("n2").addClass('n2_1').attr("title","取消置顶");
+    })
+  }
+
 </script>
