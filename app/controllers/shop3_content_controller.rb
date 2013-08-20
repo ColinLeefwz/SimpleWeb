@@ -16,6 +16,10 @@ class Shop3ContentController < ApplicationController
 
   end
 
+  def show_photo
+    @photo = Photo.find_by_id(params[:id])
+  end
+
   def gchat
     @chats = paginate_arr(session_shop.gchat, params[:page], 15).to_a
   end
