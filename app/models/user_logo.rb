@@ -60,6 +60,8 @@ class UserLogo
     else
       1
     end
+  rescue
+    11
   end
   
   before_create do |logo|
@@ -70,7 +72,7 @@ class UserLogo
     UserLogo.where({img_tmp:{"$ne" => nil}}).sort({_id:-1}).limit(pcount).each do |logo|
       next if (Time.now.to_i-logo.id.generation_time.to_i < 60)
       begin
-       CarrierWave::Workers::StoreAsset.perform("UserLogo",logo.id.to_s,"img")
+        CarrierWave::Workers::StoreAsset.perform("UserLogo",logo.id.to_s,"img")
       rescue Errno::ENOENT => e
         puts "#{logo.id}, 图片有数据库记录，但是文件不存在。"
         if delete_error
