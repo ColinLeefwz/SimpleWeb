@@ -211,7 +211,7 @@ function NavDiv(){//菜单
 		$("#Btn").click(function(){
 			if(navmove=="on"){
 				navmove="off";
-				$("#Btn").addClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 取消固定导航");;
+				$("#Btn").addClass("dis").html("<img src='newbackstage/images/sign1.png' align='absmiddle'/> 取消固定导航");;
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
 				$(document).unbind("mouseover");
@@ -228,7 +228,7 @@ function NavDiv(){//菜单
 				$(document).unbind("mouseover");
 				$("#OpenNav").unbind();
 				$("#CloseNav").unbind();
-				$("#Btn").removeClass("dis").html("<img src='images/sign1.png' align='absmiddle'/> 固定左侧导航");
+				$("#Btn").removeClass("dis").html("<img src='newbackstage/images/sign1.png' align='absmiddle'/> 固定左侧导航");
 				NavDiv();
 			}
 		});
