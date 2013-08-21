@@ -18,10 +18,13 @@
 				<% @banks.each_with_index do |bank, index| %> 
 				<tr>
 				  <% user = User.find(bank[0]) %>
-				  <td valign="middle"><%=link_to image_tag(user.head_logo.try(:img).try(:url,:t1), :class => "imgstyle2"), user.head_logo.try(:img).try(:url), :target => 'blank' %>
+				  <td valign="middle">
+				  <a href="/shop3_checkins/user?uid=<%=user.id%>">
+				  <%=image_tag(user.head_logo.try(:img).try(:url,:t1), :class => "imgstyle2",:align => 'left')%>
+                  </a>
                   <%=link_to user.name, "/shop3_checkins/user?uid=#{user.id}",:class => "f14" %>
 				  <img align="absmiddle" class="ml10" src=<%= user.gender.to_i==1?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>><br/>
-				  <span class="pr10">星座：双鱼座</span> 年龄：23岁
+				  <span class="pr10">星座：<%= user.gonstellation %></span> 年龄：<%= user.age %>岁
 				  </td>
 				  <td align="center"><%= bank[1][0].to_i %>次</td>
 				  <td width="182" align="center"><span class="
@@ -42,3 +45,19 @@
                <%= generate_paginate2.html_safe %>
 		   </div>
 	  </div>
+
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$(".tab2 tr:odd").addClass("trbg");
+});
+</script>
