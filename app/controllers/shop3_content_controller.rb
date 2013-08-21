@@ -6,24 +6,43 @@ class Shop3ContentController < ApplicationController
   layout 'shop3'
 
   def user_photo
-    hash = {:room => session[:shop_id].to_i.to_s}
+    hash = {:room => session[:shop_id].to_i.to_s, :user_id => {"$ne" => "s#{session[:shop_id]}" }}
     hash.merge!({user_id: params[:uid]}) unless params[:uid].blank?
     sort = {:od => -1, :updated_at =>  -1}
     @photos = paginate("Photo", params[:page], hash, sort,15)
   end
 
   def shop_photo
-
+    hash = {:room => session[:shop_id].to_i.to_s, :user_id => "s#{session[:shop_id]}" }
+    sort = {:od => -1, :updated_at =>  -1}
+    @photos = paginate("Photo", params[:page], hash, sort,15)
   end
 
   def show_photo
     @photo = Photo.find_by_id(params[:id])
   end
 
+  def edit_photo
+    @photo = Photo.find(params[:id])
+  end
+
   def gchat
+    @mids = RoomMsgDel.where({room: session[:shop_id].to_i}).distinct(:id)
     @chats = paginate_arr(session_shop.gchat, params[:page], 15).to_a
   end
 
+  def ajax_pb
+    rmd = RoomMsgDel.new(:time => params[:time], :uid  => params[:uid], :text => params[:text], :room => session[:shop_id].to_i)
+    rmd._id = params[:id]
+    rmd.save
+    render :json => {}
+  end
+
+  def ajax_unpb
+    rmd = RoomMsgDel.find_by_id(params[:id])
+    rmd.delete if rmd
+    render :json => {}
+  end
 
 
   #用户照片隐藏
