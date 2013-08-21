@@ -13,6 +13,7 @@ class PlStat
     (0..pl_people.length-1).each do |x|
       utnl = User.find_by_id(pl_people[x]).user_talk_new(date).length
       num.push(utnl)
+      puts "----people1--------"
     end
     return num
   end
@@ -26,11 +27,13 @@ class PlStat
       sum = 0
       pl = User.find_by_id(pl_people[y])
       utnl = pl.user_talk_new(date).length
+      puts "----reply1--------"
       (0..utnl-1).each do |x|
         sum2 = pl.human_chat(User.find_by_id(pl.chat[x][0]).id).length
         if sum2 < 2
           sum += 1
         end
+        puts "----reply2--------"
       end
       num.push(utnl-sum)
     end
@@ -49,6 +52,7 @@ class PlStat
       (0..utnl-1).each do |x|
         sum2 = pl.human_chat(User.find_by_id(pl.chat[x][0]).id).length
         sum += sum2
+        puts "----words1--------"
       end
       num.push(sum)
     end
@@ -58,9 +62,13 @@ class PlStat
   #计算当前pl_stat, 并保存到mongo中
   def do_count(date)
     self.date = date
+    puts "-------------1------------"
     self.pl_people_num = chat_people_num(date)
+    puts "-------------2------------"
     self.pl_reply_num = chat_reply_num(date)
+    puts "-------------3------------"
     self.pl_words_num = chat_words_num(date)
+    puts "-------------4------------"
     self.save
   end
 
