@@ -12,7 +12,7 @@
           <li><a href="/shop3_notice">公告管理</a></li>
         </ul>
         <div class="r wordstyle">
-          <form method="post" action="">
+<!--           <form method="post" action="">
             显示&nbsp;
             <select class="p3" name="select">
               <option value="10">10</option>
@@ -20,11 +20,11 @@
               <option value="10">30</option>
             </select>
             &nbsp;条/记录
-          </form>
+          </form> -->
         </div>
       </div>
       <form method="post" action=""/>
-          <div class="search">
+<!--           <div class="search">
           搜索
           <select class="p3 mlr10" name="select">
             <option value="全部">全部</option>
@@ -33,20 +33,24 @@
           </select>
           <input type="text" class="inputs5">
           <input type="submit" class="btn6 ml10" value="提 交">
-        </div>
+        </div> -->
         <table width="100%" cellspacing="0" cellpadding="0" class="tab2">
           <tr id="Tr0">
             <th width="842">用户名</th>
             <th width="303">最近签到</th>
             <th width="227">&nbsp;</th>
           </tr> 
+       <% @staffs.each do |staff| %>
         <tr id="Tr1">
-          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-          年龄：23岁<br/>
-          签到次数：34次          </td>
-          <td>2012-12-22 18:33 </td>
+          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><%= link_to  staff.user.try(:name)||'' , "/shop3_checkins/user?uid=#{staff.user_id}",:class => "f14" %>
+        <img align="absmiddle" class="ml10" src=<%= staff.user.gender.to_i==1?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>><br/>
+          <!-- <img align="absmiddle" class="ml10" src="images/man.png"><br/> -->
+          年龄：<%= staff.user.age %><br/>
+          签到次数：<%=link_to staff.checkin_count(staff.user_id),"/shop3_checkins?uid=#{staff.user_id}" %>次          </td>
+          <!-- <td>2012-12-22 18:33 </td> -->
           <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="1" title="删除">删除</a></td>
+          <%=link_to '删除',  '#',:onclick => "ajaxDeleteStaff($(this), '#{staff.id}');" ,:class => "del"%>
+            <!-- <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="1" title="删除">删除</a></td> -->
         </tr>
         <tr id="Tr2">
           <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
@@ -56,73 +60,10 @@
           <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
             <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="2" title="删除">删除</a></td>
         </tr>
-        <tr id="Tr3">
-          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-          年龄：23岁<br/>
-          签到次数：34次          </td>
-          <td>2012-12-22 18:33 </td>
-          <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="3" title="删除">删除</a></td>
-        </tr>
-        <tr id="Tr4">
-          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-          年龄：23岁<br/>
-          签到次数：34次          </td>
-          <td>2012-12-22 18:33 </td>
-          <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="4" title="删除">删除</a></td>
-        </tr>
-        <tr id="Tr5">
-          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-          年龄：23岁<br/>
-          签到次数：34次          </td>
-          <td>2012-12-22 18:33 </td>
-          <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="5" title="删除">删除</a></td>
-        </tr>
-        <tr id="Tr6">
-          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-          年龄：23岁<br/>
-          签到次数：34次          </td>
-          <td>2012-12-22 18:33 </td>
-          <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="6" title="删除">删除</a></td>
-        </tr>
-        <tr id="Tr7">
-          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-          年龄：23岁<br/>
-          签到次数：34次          </td>
-          <td>2012-12-22 18:33 </td>
-          <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="7" title="删除">删除</a></td>
-        </tr>
-        <tr id="Tr8">
-          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-          年龄：23岁<br/>
-          签到次数：34次          </td>
-          <td>2012-12-22 18:33 </td>
-          <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="8" title="删除">删除</a></td>
-        </tr>
-        <tr id="Tr9">
-          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-          年龄：23岁<br/>
-          签到次数：34次          </td>
-          <td>2012-12-22 18:33 </td>
-          <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="9" title="删除">删除</a></td>
-        </tr>
-        <tr id="Tr10">
-          <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-          年龄：23岁<br/>
-          签到次数：34次          </td>
-          <td>2012-12-22 18:33 </td>
-          <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="10" title="删除">删除</a></td>
-        </tr>
+       <% end %>
         </table>
       <div class="pagination">
-        <ul>
+<!--         <ul>
           <li class="disabled"><a href="#" class="pre">&lt;&lt;</a></li>
           <li class="hover"><a href="#">1</a></li>
           <li><a href="#">2</a></li>
@@ -130,7 +71,32 @@
           <li><a href="#">4</a></li>
           <li><a href="#">5</a></li>
           <li><a href="#" class="next">&gt;&gt;</a></li>
-        </ul>
+        </ul> -->
        </div>
     </form>
     </div>
+
+<script type="text/javascript">
+  function ajaxDeleteStaff(obj, id){
+    if(confirm("确定删除该员工？"))
+      $.post("/shop_staffs/ajax_delete_staff",{id: id}, function() {
+        obj.parent().parent().remove();
+      });
+  }
+</script>
+
+<script defer="defer">
+$(document).ready(function(){
+  runing=$("#CB1").attr("class");
+  if(runing=="checkboxs1"){
+    NavDiv();
+    $(window).load(function(){
+      MessageDiv();
+    });
+  }else if(runing=="checkboxs2"){
+    AllNoDH();
+  }
+  
+  $(".tab2 tr:odd").addClass("trbg");
+});
+</script>
