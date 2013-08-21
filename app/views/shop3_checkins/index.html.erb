@@ -20,7 +20,9 @@
 
 				<tr id="Tr1">
 				  <td valign="middle">
-				    <%=link_to image_tag(checkin.user.head_logo.try(:img).try(:url,:t1), :class => "imgstyle"), checkin.user.head_logo.try(:img).try(:url), :target => 'blank',:align => "left" %>
+				  <a href="/shop3_checkins/user?uid=<%=checkin.uid%>" >
+				    <%= image_tag(checkin.user.head_logo.try(:img).try(:url,:t1), :class => "imgstyle",:align => "left")%>
+				  </a>
 				     <%=link_to checkin.user.name, "/shop3_checkins/user?uid=#{checkin.uid}",:class => "f14"%>
 				     <img align="absmiddle" class="ml10" src=<%= checkin.user.show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>><br/>
 				     星座：<%= checkin.user.gonstellation %><br/> 
