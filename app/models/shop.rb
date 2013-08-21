@@ -462,7 +462,8 @@ class Shop
   rescue
     return []
   end
-  
+
+  #消息返回格式[uid, text, time, id]
   def history(skip,count)
     skip = 0 if skip<0
     begin
@@ -472,7 +473,7 @@ class Shop
       return []
     end
     chats=  JSON.parse(response)
-    rmd = RoomMsgDel.where({room: self.id.to_i}).distinct(:mid)
+    rmd = RoomMsgDel.where({room: self.id.to_i}).distinct(:_id)
     chats.reject!{|c| rmd.include?(c[3])}
     return chats
   end
