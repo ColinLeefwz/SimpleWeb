@@ -4,9 +4,9 @@
   <div class="title1 mb30"><h2 class="f18">内容管理</h2></div>
   <div class="submenu">
     <ul>
-      <li><a href="content_manage1.html">用户图片</a></li>
-      <li><a href="content_manage1.html">商家图片</a></li>
-      <li  class="hover"><a href="gchat">管理聊天室</a></li>
+      <li ><a href="user_photo">用户图片</a></li>
+      <li><a href="shop_photo">商家图片</a></li>
+      <li class="hover"><a href="gchat">管理聊天室</a></li>
     </ul>
     <div class="r wordstyle">
 
@@ -15,23 +15,27 @@
 
   <table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40 f13">
     <tr>
-      <th width="392">用户</th>
-      <th width="980" class="textcenter" style="padding-left:0px;">内容</th>
+      <th width="292">用户</th>
+      <th width="619" class="textcenter" style="padding-left:0px;">内容</th>
+      <th width="94" class="textcenter" style="padding-left:0px;">&nbsp;</th>
     </tr>
+
     <% @chats.each do |chat| %>
 
       <% user = User.find_by_id(chat[0]) %>
       <tr>
         <td valign="middle">
           <a title="查看详情" href="user.html">
-            <%= image_tag UserLogo.img_url(user.head_logo_id,:t2), :class=> "imgstyle2", :align=>"left"  %>
+            <%= image_tag UserLogo.img_url(user.try(:head_logo_id),:t2), :class=> "imgstyle2", :align=>"left"  %>
           </a>
-          <a href="user.html"><%= user.name %></a><br/>
+          <a href="user.html"><%= user.try(:name) %></a><br/>
           发表时间：<%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M:%S") %></td>
-        <td width="980" class="img_con"><%=gchat_img2(chat[1]).html_safe %></td>
+        <td><%=gchat_img2(chat[1]).html_safe %></td>
+        <td align="center" valign="middle">
+          <%= link_to "", "javascript:void(0)", :class => @mids.include?(chat[3])? "nopb" : "pb", :title => @mids.include?(chat[3])? "显示" : "屏蔽", :onclick => "ajaxNOH($(this), '#{chat[0]}', '#{chat[1]}', '#{chat[2]}', '#{chat[3]}')"  %>
+        </td>
       </tr>
     <% end %>
-
   </table>
   <%= generate_paginate.html_safe %>
 </div>
@@ -49,4 +53,22 @@
     }
     $(".tab2 tr:odd").addClass("trbg");
   });
+
+  function ajaxNOH (obj, uid, text, time, id){
+    title = obj.attr("title")
+    if(confirm("确定"+title)){
+      if(title=="屏蔽"){
+        $.get("/shop3_content/ajax_pb",{uid: uid, text: text, time: time, id: id}, function(){
+          obj.removeClass().addClass("nopb").attr("title", '显示')
+        })
+      }
+      else
+      {
+        $.get("/shop3_content/ajax_unpb",{id: id}, function(){
+          obj.removeClass().addClass("pb").attr("title", '屏蔽')
+        })
+      }
+    }
+  }
+
 </script>
