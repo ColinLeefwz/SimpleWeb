@@ -12,7 +12,7 @@
 					<li class="hover"><a href="/shop3_coupons/newly_use">最新使用记录</a></li>
 					<li><a href="/shop3_coupon_reports">统计报表</a></li>
 				</ul>
-				<div class="r wordstyle">
+<!-- 				<div class="r wordstyle">
 					<form action="" method="post">
 						显示&nbsp;
 						<select name="select" class="p3">
@@ -22,9 +22,9 @@
 						</select>
 						&nbsp;条/记录
 					</form>
-				</div>
+				</div> -->
 			</div>
-			<div class="search">
+<!-- 			<div class="search">
 				搜索
 				<select name="select" class="p3 mlr10">
 					<option value="全部">全部</option>
@@ -36,7 +36,7 @@
 				</select>
 				<input type="text" class="inputs5"/>
 				<input type="submit" value="提 交" class="btn6 ml10"/>
-			</div>
+			</div> -->
 			<table width="100%" cellpadding="0" cellspacing="0" class="tab2">
 				<tr>
 					<th width="50">编号</th>
@@ -50,7 +50,7 @@
 				<% @uses.each do |use| %>
 				<tr class="change">
 				  <td width="50"><%= use.download_num%></td>
-				  <td><a href="coupon_issuing3.html" title="查看详情"><%= use.coupon_name %> <span class="gay1">（<%= use.coupon_show_t2  %>）</span></a></td>
+				  <td><a href="show?id=<%= use.cid %>"><%= use.coupon_name %></a> <span class="gay1">（<%= use.coupon_show_t2  %>）</span></td>
 				  <td><%=link_to use.user_name, "/shop3_checkins/user?uid=#{use.uid}"  %></td>
 				  <td width="95"><%= use.vat.since(8.hours).strftime("%Y-%m-%d %H:%M") if use.vat %></td>
 				  <td width="95"><%= use.uat.since(8.hours).strftime("%Y-%m-%d %H:%M") %></td>
