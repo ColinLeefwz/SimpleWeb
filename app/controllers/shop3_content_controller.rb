@@ -26,6 +26,17 @@ class Shop3ContentController < ApplicationController
     @photo = Photo.find(params[:id])
   end
 
+
+  def update_photo
+    @shop_photo = Photo.find_by_id(params[:id])
+    if @shop_photo.update_attributes(params[:photo])
+      redirect_to :action => "shop_photo"
+    else
+      render :action => "edit_photo"
+    end
+  end
+
+
   def gchat
     @mids = RoomMsgDel.where({room: session[:shop_id].to_i}).distinct(:id)
     @chats = paginate_arr(session_shop.gchat, params[:page], 15).to_a
