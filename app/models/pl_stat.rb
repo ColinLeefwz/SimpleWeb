@@ -75,7 +75,7 @@ class PlStat
   #类方法，cron的调用接口，每天执行一次
   def self.do_count(date = nil)
     if date.nil?
-      date = 6.days.ago.strftime("%Y-%m-%d")
+      date = 1.days.ago.strftime("%Y-%m-%d")
   	end
     ua = self.new
     ua.do_count(date)
