@@ -32,68 +32,52 @@
             $("#coupon_img").click();
             // imgUploadPreview("input[name='coupon[img]']", 'Btns')
           });
-function initPlaceHolders(){
-  if('placeholder' in document.createElement('input')){ //如果浏览器原生支持placeholder
-    return ;
-  }
-  function target (e){
-    var e=e||window.event;
-    return e.target||e.srcElement;
-  };
-  function _getEmptyHintEl(el){
-    var hintEl=el.hintEl;
-    return hintEl && g(hintEl);
-  };
-  function blurFn(e){
-    var el=target(e);
-    if(!el || el.tagName !='INPUT' && el.tagName !='TEXTAREA') return;//IE下，onfocusin会在div等元素触发 
-    var emptyHintEl=el.__emptyHintEl;
-    if(emptyHintEl){
-      //clearTimeout(el.__placeholderTimer||0);
-      //el.__placeholderTimer=setTimeout(function(){//在360浏览器下，autocomplete会先blur再change
-        if(el.value) emptyHintEl.style.display='none';
-        else emptyHintEl.style.display='';
-      //},600);
-    }
-  };
-  function focusFn(e){
-    var el=target(e);
-    if(!el || el.tagName !='INPUT' && el.tagName !='TEXTAREA') return;//IE下，onfocusin会在div等元素触发 
-    var emptyHintEl=el.__emptyHintEl;
-    if(emptyHintEl){
-      //clearTimeout(el.__placeholderTimer||0);
-      emptyHintEl.style.display='none';
-    }
-  };
-  if(document.addEventListener){//ie
-    document.addEventListener('focus',focusFn, true);
-    document.addEventListener('blur', blurFn, true);
-  }
-  else{
-    document.attachEvent('onfocusin',focusFn);
-    document.attachEvent('onfocusout',blurFn);
-  }
 
-  var elss=[document.getElementsByTagName('input'),document.getElementsByTagName('textarea')];
-  for(var n=0;n<2;n++){
-    var els=elss[n];
-    for(var i =0;i<els.length;i++){
-      var el=els[i];
-      var placeholder=el.getAttribute('placeholder'),
-        emptyHintEl=el.__emptyHintEl;
-      if(placeholder && !emptyHintEl){
-        emptyHintEl=document.createElement('span');
-        emptyHintEl.innerHTML=placeholder;
-        emptyHintEl.className='placeholder';
-        emptyHintEl.onclick=function (el){return function(){try{el.focus();}catch(ex){}}}(el);
-        if(el.value) emptyHintEl.style.display='none';
-        el.parentNode.insertBefore(emptyHintEl,el);
-        el.__emptyHintEl=emptyHintEl;
-      }
+var doc = document,
+inputs = doc.getElementsByTagName('input'),
+ 
+// 检测 placeholder 支持
+supportPlaceholder = 'placeholder' in doc.createElement('input'),
+ 
+/*
+ * 创建 placeholder
+ * @param {ELEMENT} input 传入的 input 对象
+ * @return {VOID}
+ * @author: sofish Lin http://sofish.de
+ */
+placeholder = function (input) {
+    var text = input.getAttribute('placeholder'),
+        defaultValue = input.defaultValue;
+ 
+    // 制作一个假 placeholder
+    // 需要 css 配合，在 JS 中设置 style 并不太好
+    input.value = text;
+ 
+    // 聚焦去掉假 placeholder
+    input.onfocus = function () {
+        if (input.value === defaultValue || input.value === text) {
+            this.value = '';
+        }
     }
-  }
+ 
+    // 当失焦值为空时，补回 placeholder 的值
+    input.onblur = function () {
+        if (input.value === '') {
+            this.value = text;
+        }
+    }
+};
+ 
+if (!supportPlaceholder) {
+    for (var i = 0, len = inputs.length; i < len; i++) {
+        var input = inputs[i],
+            text = input.getAttribute('placeholder');
+ 
+        // 当 input[type=text] 并且 placeholder 值不为空是执行
+        if (input.type === 'text' && text) {
+            placeholder(input);
+        }
+    }
 }
-
-initPlaceHolders();
         </script>
         
