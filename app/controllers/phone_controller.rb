@@ -185,8 +185,7 @@ class PhoneController < ApplicationController
   end
   
   def upload_address_list
-    ua = UserAddr.new
-    ua.id = session_user.id
+    ua = UserAddr.find_or_new(session_user.id)
     ua.phone = params[:phone]
     ua.list = params[:list]
     ua.save!
