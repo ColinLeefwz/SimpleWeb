@@ -15,15 +15,13 @@
   </div>
   <div class="clear1"></div>
   <div class="box9">
-    <%= form_for :photo, :url => "/shop3_content/update_photo" do |f| %>
+    <%= form_for :photo, :url => "/shop3_content/create_photo" do |f| %>
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt20">
-        <%= hidden_field_tag  :id,  @photo.id %>
         <tr>
           <td width="9%" height="30" align="right" class="pr20">图&nbsp;片：</td>
           <td width="91%" height="30"><a href="#" class="btn1">上传图片</a>
             <span style="position: relative;">
               <%= f.file_field :img, :style => " cursor: pointer;width: 1px; height: 32px; position: absolute;top: -20px;opacity: 0;", :size => 1  %>
-
             </span>
           </td>
         </tr>
@@ -33,7 +31,6 @@
 
           <td height="15">
             <div id="uploadPreview" class="imgstyle">
-              <%= image_tag Photo.img_url(@photo.id)+"?time=#{Time.now}" %>
             </div>
           </td>
         </tr>
