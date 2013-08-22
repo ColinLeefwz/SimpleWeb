@@ -7,8 +7,8 @@
             <!-- <input type="button" class="btn4 coupon_uploadpreview" id="Btn2"/> -->
             
             <input name="coupon[img2]" type="file" class="btn_file1 uploadpre"  />
-            <input  name="coupon[img2]" type="file" class="btn_file2 uploadpre" />
-            <input  name="coupon[img2]" type="file" class="btn_file3 uploadpre" />
+            <!-- <input  name="coupon[img2]" type="file" class="btn_file2 uploadpre" /> -->
+            <!-- <input  name="coupon[img2]" type="file" class="btn_file3 uploadpre" /> -->
             <div class="btn4 coupon_uploadpreview" id="Btns" ></div>
             <!-- <a class="btn4 coupon_uploadpreview"></a> -->
             <div class="box6right1">
@@ -28,13 +28,13 @@
         <script>
           $(document).ready(function(){
             imgUploadPreview(".uploadpre", 'Btns')
+            $('input, text').placeholder();
+            $('input, textarea').placeholder();
           });
-          $("#Btn2").click(function(){
-            $("#coupon_img").click();
+          $("#Btns").click(function(){
+            $(".uploadpre").click();
             // imgUploadPreview("input[name='coupon[img]']", 'Btns')
           });
-          $('input, text').placeholder();
-          $('input, textarea').placeholder();
 
         </script>
         
