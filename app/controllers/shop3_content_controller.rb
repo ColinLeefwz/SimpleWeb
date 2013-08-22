@@ -28,7 +28,7 @@ class Shop3ContentController < ApplicationController
 
   def create_photo
     @shop_photo = Photo.new(params[:photo])
-    @shop_photo.room = session[:shop_id]
+    @shop_photo.room = session[:shop_id].to_i.to_s
     @shop_photo.user_id = "s#{session[:shop_id]}"
 
     if @shop_photo.save
