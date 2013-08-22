@@ -26,7 +26,7 @@ $llshop = 21830954 #浙江产业大厦11楼脸脸网络
 $llsc = 21830325 #脸脸商城
 $zjkjcyds = 20325453 #浙江科技产业大厦
 
-$fake_shops = [$llcf, $llsc, 21830784, 21830785, 21830326, 21830231]
+$fake_shops = [$llcf, $llsc, 21830784, 21830785, 21830326, 21830231, 21835409]
 
 def is_kx_user?(uid)
   $redis.sismember('KxUsers', uid)
