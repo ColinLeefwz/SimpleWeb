@@ -1,4 +1,7 @@
 		<div class="con2">
+      <div class="title1 mb30">
+        <h2 class="f18 l">优惠券管理</h2>
+      </div>
 			<div class="submenu">
 				<ul>
 					<li><a href="/shop3_coupons/list">优惠券列表</a></li>
@@ -9,7 +12,7 @@
 
 			</div>
 			<div class="search textleft">
-			   <%= form_tag '/shop_coupon_reports',:method =>:get, :onsubmit => "return check_day()" do %>
+			   <%= form_tag '/shop3_coupon_reports',:method =>:get, :onsubmit => "return check_day()" do %>
 				搜索日期&nbsp;
 				<%= text_field_tag :day, params[:day]|| Time.now.to_date, :class => "inputs5"%>
 				<!-- <input type="text" class="inputs5"/> -->
@@ -51,6 +54,21 @@
 		</div>
 
 <script>
+
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$(".tab2 tr:odd").addClass("trbg");
+});
+
   function submit_export(){
     var patrn=/^20\d\d-(0\d|1[0-2])-(0\d|[12]\d|[3][01])$/;
     if(!patrn.exec($('#stime').val())){alert('开始时间不是有效的日期'); return false;}

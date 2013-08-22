@@ -49,8 +49,9 @@
         <% @coupons.each do |coupon| %>
         <tr id="Tr1">
           <td>
-   
-          <%=link_to((image_tag(coupon.img.url(:t1),:id=>"img_#{coupon.id}", :class=>"l #{coupon.hidden && 'imgfilter'}",:width => "130")), coupon.img.url,  :target => "blank#{coupon.id}") %>
+         <a href="show?id=<%= coupon.id%>">
+          <%=image_tag(coupon.img.url(:t1),:id=>"img_#{coupon.id}", :class=>"l #{coupon.hidden && 'imgfilter'}",:width => "130") %>
+        </a>
           <a href="show?id=<%= coupon.id%>" title="查看详情"><span class="l ml10"><%= coupon.name %><br/><span class="gay1">（<%= coupon.show_t2  %>）</span></span></a>
           </td>
           <td width="80" class="textcenter"><%= link_to coupon.down_users.to_a.count, {:action => 'newly_down', :cid => coupon.id} %></td>         
@@ -63,7 +64,7 @@
           <a href="#" class="act" title="激活">激活</a>
             <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="5" title="删除">删除</a>   -->        
 
-        <%=link_to '编辑', ("edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑",:style => "display:none" if coupon.down_users.blank? %>
+        <%=link_to '编辑', ("edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑",:style => ("display:none" if !coupon.down_users.blank?)  %>
         <% if coupon.hidden == 1 %>
           <%= link_to '激活', '#', :onclick => "ajaxActivate($(this), '#{coupon.id}', #{coupon.allow_activate?})", :class => "act", :title => "激活" %>
         <% else %>
