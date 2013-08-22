@@ -11,7 +11,7 @@
 					<li><a href="/shop3_coupon_reports">统计报表</a></li>
 				</ul>
 				<div class="r">
-				<form action="" method="post">
+<!-- 				<form action="" method="post">
 					显示&nbsp;
 					<select name="select" class="p3">
 						<option value="10">10</option>
@@ -19,10 +19,10 @@
 						<option value="10">30</option>
 					</select>
 					&nbsp;条/记录
-				</form>
+				</form> -->
 				</div>
 			</div>
-			<div class="search">
+<!-- 			<div class="search">
 				搜索
 				<select name="select" class="p3 mlr10">
 					<option value="全部">全部</option>
@@ -34,7 +34,7 @@
 				</select>
 				<input type="text" class="inputs5"/>
 				<input type="submit" value="提 交" class="btn6 ml10"/>
-			</div>
+			</div> -->
 
 
 			<table width="100%" cellpadding="0" cellspacing="0" class="tab2">
@@ -51,7 +51,7 @@
 				<% @downs.each do |down| %>
 				<tr>
 				  <td width="55"><%= down.download_num%></td>
-				  <td><%= down.coupon_name %><span class="gay1">（<%= down.coupon_show_t2 %>）</span></a></td>				  
+				  <td><a href="show?id=<%= down.cid %>"><%= down.coupon_name %><span class="gay1">（<%= down.coupon_show_t2 %>）</span></a></td>				  
 				  <td><%=link_to down.user_name, "/shop3_checkins/user?uid=#{down.uid}"  %></td>
 				  <td><%= (down.user_show_gender) %></td>
 				  <td width="100"><%=to_local down.dat%></td>
