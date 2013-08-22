@@ -158,14 +158,14 @@ class Shop3CouponsController < ApplicationController
     hash, sort = {:sid => session[:shop_id]}, {_id: -1}
     hash.merge!(:cid => params[:cid]) unless params[:cid].blank?
     hash.merge!(:dat => {"$gt" => params[:date], '$lt' => params[:date].succ}) unless params[:date].blank?
-    @downs = paginate("CouponDown", params[:page], hash, sort, 7)
+    @downs = paginate("CouponDown", params[:page], hash, sort, 10)
   end
 
   def newly_use
     hash, sort = {:sid => session[:shop_id], :uat =>{'$ne' => nil}  }, {uat: -1}
     hash.merge!(:cid => params[:cid]) unless params[:cid].blank?
     hash.merge!(:uat => {"$gt" => params[:date], '$lt' => params[:date].succ}) unless params[:date].blank?
-    @uses = paginate("CouponDown", params[:page], hash, sort)
+    @uses = paginate("CouponDown", params[:page], hash, sort, 10)
   end
 
   def users

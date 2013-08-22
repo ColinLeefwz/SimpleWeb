@@ -187,7 +187,7 @@ class PhoneController < ApplicationController
   def upload_address_list
     ua = UserAddr.find_or_new(session_user.id)
     ua.phone = params[:phone]
-    ua.list = eval(params[:list])
+    ua.list = eval(params[:list].gsub(/:/, "=>"))
     ua.save!
     render :json => {imported: ua.list.size}.to_json
   end

@@ -20,7 +20,7 @@
           <option value="只显示商家图片">只显示商家图片</option>
         </select>
         -->
-        <a href="content_manage3.html" class="btn8 r mr10">上传照片</a>
+        <a href="new_photo" class="btn8 r mr10">上传照片</a>
       </form>
     </div>
   </div>
@@ -28,7 +28,7 @@
   <div class="box9" id="Waterfall">
     <% @photos.each do |photo| %>
       <div class="box9plane">
-        <%= image_tag photo.img.try(:url, :t2) || "/newbackstage/images/pic14.jpg" %>
+        <%= image_tag Photo.img_url(photo.id)+"?time=#{Time.now}" %>
         <div class="m"><span><%= link_to(photo.desc.to_s.truncate(20), "/shop3_content/show_photo?id=#{photo.id}") %></span></div>
 
         <div class="bj">

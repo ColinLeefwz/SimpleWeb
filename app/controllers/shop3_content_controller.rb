@@ -22,9 +22,38 @@ class Shop3ContentController < ApplicationController
     @photo = Photo.find_by_id(params[:id])
   end
 
+  def new_photo
+    @photo = Photo.new
+  end
+
+  def create_photo
+    @shop_photo = Photo.new(params[:photo])
+    @shop_photo.room = session[:shop_id].to_i.to_s
+    @shop_photo.user_id = "s#{session[:shop_id]}"
+
+    if @shop_photo.save
+      flash[:success] = "上传到图片墙成功！"
+      redirect_to :action => "shop_photo"
+    else
+      flash.now[:error] = '上传到图片墙失败！'
+      render :action => "new_photo"
+    end
+  end
+
   def edit_photo
     @photo = Photo.find(params[:id])
   end
+
+
+  def update_photo
+    @shop_photo = Photo.find_by_id(params[:id])
+    if @shop_photo.update_attributes(params[:photo])
+      redirect_to :action => "shop_photo"
+    else
+      render :action => "edit_photo"
+    end
+  end
+
 
   def gchat
     @mids = RoomMsgDel.where({room: session[:shop_id].to_i}).distinct(:id)
