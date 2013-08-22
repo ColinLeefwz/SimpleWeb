@@ -26,6 +26,17 @@ class Shop3ContentController < ApplicationController
     @photo = Photo.new
   end
 
+  def delete_photo
+    photo = Photo.find(params[:id])
+    Rails.cache.delete("Photo#{photo.id}")
+    photo.delete
+    respond_to do |format|
+      format.html {redirect_to :action => "shop_photo"}
+      format.json { render :json => {} }
+    end
+    
+  end
+
   def create_photo
     @shop_photo = Photo.new(params[:photo])
     @shop_photo.room = session[:shop_id].to_i.to_s

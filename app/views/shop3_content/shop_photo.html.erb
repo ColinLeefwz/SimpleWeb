@@ -26,13 +26,13 @@
   </div>
   <div class="clear1"></div>
   <div class="box9" id="Waterfall">
-    <% @photos.each do |photo| %>
+    <% @photos.each_with_index do |photo, index| %>
       <div class="box9plane">
         <%= image_tag Photo.img_url(photo.id)+"?time=#{Time.now}" %>
         <div class="m"><span><%= link_to(photo.desc.to_s.truncate(20), "/shop3_content/show_photo?id=#{photo.id}") %></span></div>
 
         <div class="bj">
-          <%= link_to "", "/shop3_content/show_photo?id=#{photo.id}", :class => "n1 photolinkcon", :title => '详情' %>
+          <%= link_to "", "/shop3_content/show_photo?id=#{photo.id}&flag=shop", :class => "n1 photolinkcon", :title => '详情' %>
           <% if photo.od %>
             <a  class="n2_1 photolinkcon" onclick="ajaxUOT(this, '<%= photo.id %>' )" title="取消置顶"></a>
           <% else %>
@@ -40,7 +40,7 @@
           <% end %>
 
           <%= link_to "", "/shop3_content/edit_photo?id=#{photo.id}", :class => "n3", :title => "编辑" %>
-          <%= link_to "", "javascript:void(0)", :title => "删除", :class => "n6" %>
+          <%= link_to "", "javascript:void(0)", :title => "删除", :class => "n6 link_ns", :rel=> index, :photo_id => photo.id %>
         </div>
       </div>
     <% end %>
@@ -102,6 +102,36 @@
     /*	$("#Close").click(function(){
                 $("#PhotoPlane,#BG").css("display","none");
         });*/
+
+    $("div.box9plane a.n6").click(function(){
+
+      if(confirm("确定删除？")){
+        var photo_id = $(this).attr("photo_id")
+        var x,y,rel;
+        rel=parseInt($(this).attr("rel"));
+        $.get("/shop3_content/delete_photo.json", {id: photo_id}, function(){
+          $("div.box9plane").stop(true,true);
+          
+          x=$("div.box9plane").eq(rel).css("left"); y=$("div.box9plane").eq(rel).css("top");
+          $("div.box9plane").eq(rel).remove();
+          for(i=rel;i<$("div.box9plane").length;i++){
+            $("div.box9plane").eq(i).animate({"left":x,"top":y},300);
+            x=$("div.box9plane").eq(i).css("left");
+            y=$("div.box9plane").eq(i).css("top");
+          }
+          
+          for(i=0; i<$("a.link_ns").length; i++){
+            $("a.link_ns").eq(i).attr("rel",i);
+          }
+         
+        })
+      }
+    });
+    
+
+
+
+
   });
   /*function OpenDiv(){
         var top;
