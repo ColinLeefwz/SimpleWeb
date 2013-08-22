@@ -51,7 +51,7 @@
 				<% @downs.each do |down| %>
 				<tr>
 				  <td width="55"><%= down.download_num%></td>
-				  <td><a href="show?id=<%= down.id %>"><%= down.coupon_name %><span class="gay1">（<%= down.coupon_show_t2 %>）</span></a></td>				  
+				  <td><a href="show?id=<%= down.cid %>"><%= down.coupon_name %><span class="gay1">（<%= down.coupon_show_t2 %>）</span></a></td>				  
 				  <td><%=link_to down.user_name, "/shop3_checkins/user?uid=#{down.uid}"  %></td>
 				  <td><%= (down.user_show_gender) %></td>
 				  <td width="100"><%=to_local down.dat%></td>
