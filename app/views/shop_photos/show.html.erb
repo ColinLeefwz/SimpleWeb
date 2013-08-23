@@ -44,9 +44,9 @@
         <span class="right" style="width: 80px;"><%= c["hide"] ? "隐藏" : "显示"   %></span>
         <span class="right" style="width: 100px;">
           <% if c['hide'] %>
-            <%= link_to '显示', "#", :onclick => "ajaxUnhide($(this), '#{@photo.id}', '#{c['id']}','#{c['t']}')"  %>
+            <%= link_to '显示', "javascript:void(0)", :onclick => "ajaxUnhide($(this), '#{@photo.id}', '#{c['id']}','#{c['txt']}')"  %>
           <% else %>
-            <%= link_to '隐藏', "#", :onclick => "ajaxHide($(this), '#{@photo.id}', '#{c['id']}','#{c['t']}')"  %>
+            <%= link_to '隐藏', "javascript:void(0)", :onclick => "ajaxHide($(this), '#{@photo.id}', '#{c['id']}','#{c['txt']}')"  %>
           <% end %>
         </span>
       </li>
@@ -58,25 +58,26 @@
 
 <script type ="text/javascript">
   LeftMenu(19);
-  function ajaxHide(obj, id, uid, t){
+  function ajaxHide(obj, id, uid, txt){
     if(confirm("确定隐藏此评论"))
     {
-      $.get("/shop_photos/hide_com",{id: id,uid: uid, t: t}, function(data) {
-        if(data['text']==0)
-          obj.replaceWith('已隐藏')
+      $.get("/shop_photos/hide_com",{id: id,uid: uid, txt: txt}, function(data) {
+        if(data['text'])
+          obj.replaceWith(data['text'])
         else
-          obj.replaceWith('隐藏失败')
+          obj.replaceWith('已隐藏')
       });
     }
   }
-  function ajaxUnhide(obj, id, uid, t){
+  function ajaxUnhide(obj, id, uid, txt){
     if(confirm("确定显示此评论"))
     {
-      $.get("/shop_photos/unhide_com",{id: id,uid: uid, t: t}, function(data) {
-        if(data['text']==0)
-          obj.replaceWith('已显示')
+      $.get("/shop_photos/unhide_com",{id: id,uid: uid, txt: txt}, function(data) {
+        if(data['text'])
+          obj.replaceWith(data['text'])
         else
-          obj.replaceWith('显示失败')
+          obj.replaceWith('已显示')
+  
       });
     }
   }
