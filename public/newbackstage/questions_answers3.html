@@ -12,7 +12,9 @@
 		var num, navmove="on", runing;
 		$(document).ready(function(){
 			runing=$("#CB1").attr("class");
-			num=$("#Waterfall div.box4plane2").length;
+			try{
+				num=$("#Waterfall div.box4plane2").length;
+			}catch(e){}
 
 			if(runing=="checkboxs1"){
 				NavDiv();
