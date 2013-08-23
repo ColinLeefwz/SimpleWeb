@@ -2,13 +2,12 @@
 	<div class="title1"><h2 class="f18">问答系统</h2></div>
 	<div class="box4">
 		<div class="box4left">
+		<% if @shop_faqs.blank? %>
+		还没有设置问答系统，请创建 ===》
+		<% end %>
 		<% @shop_faqs.each do |faq| %>
-		   <% if faq.blank?%>
-			 还没有设置问答系统，请创建 ===》
-			 <% else %>
 			 <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
 				<a href="/shop3_faqs/edit?id=<%=faq.id%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
-		  <% end %>
 		<% end %>
 		</div>
 		<div class="box4right changebox4right" id="Waterfall" >
