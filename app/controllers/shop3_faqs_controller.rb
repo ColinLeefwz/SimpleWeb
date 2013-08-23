@@ -10,6 +10,7 @@ class Shop3FaqsController < ApplicationController
   
   def new
     @shop_faq = ShopFaq.new
+	@shop_faqs = session_shop.faqs
   end
 
   def edit
