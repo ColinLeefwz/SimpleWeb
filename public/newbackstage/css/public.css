@@ -301,6 +301,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .box7 .box7plane1 label{margin-right:15px;}
 
 .box8{overflow:hidden;border:1px dashed #aaa;padding:5px;height:185px;margin-top:20px;}
+.half{height:92.5px;}
 .box8 .imgstyle2{width:80px;height:80px;margin:5px;}
 
 .box9{width:820px;overflow:hidden;position:relative;margin-top:12px;margin-left:5px;}
@@ -426,9 +427,9 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 /**程序调试用 begin**/
 .coupon_uploadpreview{background:url(/newbackstage/images/pic6.jpg) left top no-repeat;}
 .img_upload{opacity: 0;margin-top: -40px;position: absolute;}
-.btn_file1{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -235px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
-.btn_file2{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -160px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
-.btn_file3{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -85px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
+.btn_file1{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -235px;position: absolute;text-align: center;top: 0;width: 350px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
+.btn_file2{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -160px;position: absolute;text-align: center;top: 0;width: 350px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
+.btn_file3{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -85px;position: absolute;text-align: center;top: 0;width: 350px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
 .btn1_hide{filter:alpha(Opacity=0);Opacity:0;}
 /**程序调试用 over**/
 
