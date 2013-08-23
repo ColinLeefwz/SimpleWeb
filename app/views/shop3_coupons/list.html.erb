@@ -63,7 +63,7 @@
           <a href="#" class="act" title="激活">激活</a>
             <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="5" title="删除">删除</a>   -->        
 
-        <%=link_to '编辑', ("edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑",:style => ("display:none" if !coupon.down_users.blank?)  %>
+        <%=link_to '编辑', ("edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑",:style => ("display:none" if !coupon.down_users.blank? || coupon.hidden == 1)  %>
         <% if coupon.hidden == 1 %>
           <%= link_to '激活', '#', :onclick => "ajaxActivate($(this), '#{coupon.id}', #{coupon.allow_activate?})", :class => "act", :title => "激活" %>
         <% else %>
