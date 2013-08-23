@@ -39,6 +39,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .relative{position:relative;}
 .filebox1, .filebox2{display:none;}
 .del2{overflow:hidden;}
+.imgfilter{ filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);}
 
 .w150{width:150px !important;}
 .w235{width:235px !important;}
@@ -109,7 +110,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .btn6{background: transparent url("../images/btn5.jpg") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 25px;line-height: 25px;text-align: center;width: 68px;}
 .btn7{background: transparent url("../images/btn6.png") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 29px;line-height: 29px;text-align: center;width: 93px;}
 .btn8{cursor: pointer;text-align: center;width: 93px;height:23px;line-height:23px;border:1px solid #ccc;color:#00A0E3;padding:0px 6px;background-color:#eaeaea;}
-.btn9{width:95px;height:33px;line-height:33px;background:transparent url(../images/btn7.png) left top no-repeat;border:none;text-align:center;display:block;color:#fff !important;cursor:pointer;}
+.btn9{width:110px;height:35px;line-height:35px;background:transparent url(../images/btn7.png) left top no-repeat;border:none;text-align:center;display:block;color:#fff !important;cursor:pointer;}
 .btn10{background: transparent url("../images/btn8.jpg") left top no-repeat;border: none;color: #FFFFFF !important;cursor: pointer;height: 25px;line-height: 25px;text-align: center;width: 55px;}
 
 .title1{width:100%;overflow:hidden;clear:both;}
@@ -279,7 +280,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .box3 .box3inner .box3plane3 a:hover{color:#f00;}
 .box3 .box3inner .box3plane3 a.linkhover:hover{color:#390 !important;}
 
-.box4{width:100%;margin-top:40px;overflow:hidden;font-size:14px;}
+.box4{width:100%;margin-top:40px;overflow:hidden;font-size:14px;word-break:break-all;}
 .box4 .box4left{line-height:25px;padding:18px;width:140px;float:left;background-color:#fff;border:1px solid #D7D7D7;border-radius:8px;}
 .box4 .box4left a{color:#000;}
 .box4 .box4left a:hover{color:#369bff;}
@@ -308,7 +309,6 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .box7 .box7plane1 label{margin-right:15px;}
 
 .box8{overflow:hidden;border:1px dashed #aaa;padding:5px;height:185px;margin-top:20px;}
-.half{height:92.5px;}
 .box8 .imgstyle2{width:80px;height:80px;margin:5px;}
 
 .box9{width:820px;overflow:hidden;position:relative;margin-top:12px;margin-left:5px;}
@@ -436,9 +436,9 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 /**程序调试用 begin**/
 .coupon_uploadpreview{background:url(/newbackstage/images/pic6.jpg) left top no-repeat;}
 .img_upload{opacity: 0;margin-top: -40px;position: absolute;}
-.btn_file1{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -235px;position: absolute;text-align: center;top: 0;width: 350px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
-.btn_file2{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -160px;position: absolute;text-align: center;top: 0;width: 350px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
-.btn_file3{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -85px;position: absolute;text-align: center;top: 0;width: 350px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
+.btn_file1{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -235px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
+.btn_file2{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -160px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
+.btn_file3{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -85px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
 .btn1_hide{filter:alpha(Opacity=0);Opacity:0;}
 /**程序调试用 over**/
 
