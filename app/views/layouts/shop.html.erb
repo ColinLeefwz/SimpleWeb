@@ -46,6 +46,14 @@
           <a href="/shop_login/index" class="index" name="n0">脸脸首页
             <span class="sign"></span>
           </a>
+          <% if session[:shop_id].in?($travel) ||  ENV["RAILS_ENV"] != "production"%>
+            <span class="tit">拓展功能</span>
+            <a href="/shop_lines" name="n26" class="s arrow">路线图</a>
+            <a href="/shop_groups" name="n27" class="s arrow">旅行团</a>
+            <a href="/shop_partners" name="n28" class="s arrow">合作商家</a>
+            <a href="/shop_partner_marks" name="n31" class="s arrow">合作商家评分</a>
+            <span class="borderstyle"></span>
+          <% end %>
           <span class="tit">优惠券管理</span>
           <a href="/shop_coupons" class="s arrow" name="n6">列表</a>
           <a href="/shop_coupons/newly_down" class="s arrow" name="n17">最新下载记录</a>
@@ -79,14 +87,7 @@
           <% if session_shop.has_branch? %><a href="/shop_branchs" name="n20" class="s arrow">分店管理</a> <% end %>
           <span class="borderstyle"></span>
 
-          <% if session[:shop_id].in?($travel) ||  ENV["RAILS_ENV"] != "production"%>
-            <span class="tit">拓展功能</span>
-            <a href="/shop_lines" name="n26" class="s arrow">路线图</a>
-            <a href="/shop_groups" name="n27" class="s arrow">旅行团</a>
-            <a href="/shop_partners" name="n28" class="s arrow">合作商家</a>
-            <a href="/shop_partner_marks" name="n31" class="s arrow">合作商家评分</a>
-            <span class="borderstyle"></span>
-          <% end %>
+
         </div>
 
       </div>

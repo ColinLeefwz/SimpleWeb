@@ -1,0 +1,39 @@
+		<div class="con">
+			<div class="title1"><h2 class="f18">优惠券 详情</h2></div>
+				<div class="box6">
+					<div class="boxinner">
+					   <%=  image_tag(@coupon.img) %>
+						<!-- <a class="btn4" style="background:url(images/pic6.jpg) left top no-repeat;"></a> -->
+						<div class="box6right1">
+						   <% if @coupon.t == 2 %>
+							<span class="ws1"><%= @coupon.name%></span>
+						   <% end  %>
+							<span class="ws2">优惠额度，使用规则、期限等（限90个文字，一行限16个字符）</span>
+						</div>
+					</div>
+				</div>
+				<div class="clear1"></div>
+				<div class="box7 mt0">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 gay2">
+				  <tr class="change">
+					<td width="43%">发放规则：<%= @coupon.show_rule%></td>
+					<% if [1,3].include?(@coupon.rule.to_i) %>
+                      <td width="57%"><%= rulev_lable(@coupon.rule.to_i) %><%= @coupon.rulev%></td>
+                      
+                    <% end %>
+				  </tr>
+				  <tr class="change">
+					<td colspan="2">使用流程：<%= ['展示优惠券，点击后既代表使用了','展示优惠券，点击后按要求输入内容，然后确定使用'][@coupon.hint.blank? ? 0 : 1] %> </td>
+				  </tr>
+				  <% unless @coupon.hint.blank? %>
+				  <tr class="change">
+					<td colspan="2">使用时输入内容提示：<%= @coupon.hint%></td>
+				  </tr>
+				  <% end %>
+				</table>
+					<div class="box7plane1 pt30 mb50">
+                        <%= link_to '返 回', 'list', :class=>"btn2" %>
+					</div>
+				</div>
+		</div>
+

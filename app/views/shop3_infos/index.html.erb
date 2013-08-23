@@ -1,0 +1,54 @@
+		<div class="con">
+			<div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+			<div class="submenu">
+				<ul>
+					<li class="hover"><a href="/shop3_infos">基本设置</a></li>
+					<li><a href="/shop3_pass">修改密码</a></li>
+					<li><a href="/shop3_staffs">员工管理</a></li>
+					<li><a href="/shop3_bindwbs">绑定微博</a></li>
+					<li><a href="/shop3_bans">屏蔽用户</a></li>
+					<li><a href="/shop3_marks">用户评分</a></li>
+					<li><a href="/shop3_notice">公告管理</a></li>
+				</ul>
+			</div>
+			<form method="post" action="/shop3_infos/edit"/>
+				  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt50 gay3">
+                      <tr>
+                        <td width="18%" rowspan="5" align="center" valign="top"><img src="/newbackstage/images/sign4.jpg" class="imgstyle4 mt5"/></td>
+                        <td width="82%" align="left" valign="top" class="red1">商家ID：<%= @shop.id %></td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top">商家名称：<%= @shop.name %></td>
+                      </tr>
+					  <tr>
+                        <td align="left" valign="top">地址：<%= @shop.addr %></td>
+                      </tr>
+					  <tr>
+                        <td align="left" valign="top">联系人：<%= @shop.contact %></td>
+                      </tr>
+					  <tr>
+                        <td align="left" valign="top">电话：<%= @shop.phone %></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td align="left"><input type="submit" name="Submit" value="编 辑" class="btn2"/></td>
+                      </tr>
+                    </table>
+			</form>
+	  </div>
+
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$(".tab2 tr:odd").addClass("trbg");
+});
+</script>

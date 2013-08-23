@@ -1,7 +1,7 @@
 // JavaScript Document
 var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua,MessageDivTimer,CouponPlaneTimer,x0=0,x1=0;
 
-$(document).ready(function(){
+$(window).load(function(){
 	windowWidth=$(window).width();
 	documentHeight=$(document).height();
 	windowHeight=$(window).height();
@@ -58,11 +58,13 @@ $(document).ready(function(){
 			NavDiv();
 			CouponPlane();
 			MessageDiv();
+			Photo();
 		}
 	});
 	
 	
 	$("#OpenLinkBox").click(function(){
+		clearTimeout(LinkBoxTimer);
 		$("#LinkBox").stop().fadeIn(200).animate({"top":"60px"},300);
 	}).mouseout(function(){
 		LinkBoxTimer=setTimeout(function(){
@@ -113,7 +115,9 @@ function Dn2_divplane(){//首页：最新数据动画
 }
 
 function MessageDiv(){//消息通知框
-	if(runing=="checkboxs1"){
+	$(".header").css("overflow","visible");
+	$("#Message").css("display","none");
+	/*if(runing=="checkboxs1"){
 		$("#Message").css("top",-messageHeight+"px");
 		$(".header").css("overflow","visible");
 		$("#Message").animate({"top":"50px"},1000,function(){
@@ -131,7 +135,7 @@ function MessageDiv(){//消息通知框
 		$("#Message").unbind();
 		$(".header").css("overflow","visible");
 		$("#Message").css({"top":"50px","display":"block"});
-	}
+	}*/
 }
 
 function NavDiv(){//菜单
@@ -142,7 +146,7 @@ function NavDiv(){//菜单
 			$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
 		}
 	}else{
-		$("#Btn").addClass("dis");
+		$("#Btn").addClass("dis").html("<img src='/newbackstage/images/sign1.png' align='absmiddle'/> 取消固定导航");
 		$("#Nav").stop(true).animate({"left":"0px"},250);
 		if(windowWidth<=1024){
 			$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
@@ -177,6 +181,18 @@ function NavDiv(){//菜单
 				e.stopPropagation();
 			});			
 		}else{
+			$("#Nav").mouseout(function(e){
+				if(navmove=="on"){
+					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
+					windowWidth=$(window).width();
+					if(windowWidth<=1024){
+						$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+					}else{
+						$("div.main").css("width","100%");
+					}
+				}
+			});
+			
 			$(document).mousemove(function(e){
 				if(navmove=="on"){
 					if(parseInt(e.pageX)<=160){
@@ -190,23 +206,14 @@ function NavDiv(){//菜单
 					}	
 				}
 			});
-			$("#Nav").mouseout(function(e){
-				if(navmove=="on"){
-					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
-					windowWidth=$(window).width();
-					if(windowWidth<=1024){
-						$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
-					}else{
-						$("div.main").css("width","100%");
-					}
-				}
-			});
 		}
 		
 		$("#Btn").click(function(){
 			if(navmove=="on"){
 				navmove="off";
-				$("#Btn").addClass("dis");
+
+				$("#Btn").addClass("dis").html("<img src='/newbackstage/images/sign1.png' align='absmiddle'/> 取消固定导航");;
+
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
 				$(document).unbind("mouseover");
@@ -218,14 +225,19 @@ function NavDiv(){//菜单
 				}
 			}else if(navmove=="off"){
 				navmove="on";
-				$("#Btn").removeClass("dis");
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
 				$(document).unbind("mouseover");
 				$("#OpenNav").unbind();
 				$("#CloseNav").unbind();
+
+				$("#Btn").removeClass("dis").html("<img src='/newbackstage/images/sign1.png' align='absmiddle'/> 固定左侧导航");
+
 				NavDiv();
 			}
+		});
+		$("#Btn").mouseover(function(){
+			$("Nav").stop(true,true).animate({"top":"0px"});				 
 		});
 	}else if(runing=="checkboxs2"){
 		$(document).unbind();
@@ -241,9 +253,9 @@ function Menus(){//首页：手机头
 	$("a.menu1, a.menu2, a.menu3, a.menu4, a.menu5, a.menu6").css("height","0px");
 	$("span.box1line1, span.box1line2, span.box1line3").css({"width":"0px","left":"320px"});
 	$("span.box1line4,span.box1line5, span.box1line6").css({"width":"0px"});
-	$("span.box1line1, span.box1line2, span.box1line3").animate({"width":"138px","left":"173px"},2000);
-	$("span.box1line4").animate({"width":"179px"},2000);
-	$("span.box1line5, span.box1line6").animate({"width":"138px"},2000,function(){
+	$("span.box1line1, span.box1line2, span.box1line3").animate({"width":"138px","left":"173px"},1400);
+	$("span.box1line4").animate({"width":"179px"},1400);
+	$("span.box1line5, span.box1line6").animate({"width":"138px"},1400,function(){
 		$("a.menu1, a.menu2, a.menu3, a.menu4, a.menu5, a.menu6").animate({"height":"55px"},500);
 	});
 }
@@ -341,7 +353,7 @@ function Del(id){//问答系统管理：删除
 	},670);
 }
 function ShowDiv(){//问答系统管理：显示
-	var num=parseInt($("div.box4plane2:last").attr("rel"));
+	var num=parseInt($("div.box4plane2:last").attr("rel")) ? parseInt($("div.box4plane2:last").attr("rel")): 0;
 	var opacity=1,n,i=0,x=0,z=0;
 	var arr=new Array(num);
 	
@@ -395,5 +407,31 @@ function AllNoDH(){//取消动画
 		$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
 	}else{
 		$("div.main").css("width","100%");
+	}
+}
+function Photo(){//照片墙动画
+	var arr=new Array($("div.box9plane").length);
+	var ns, box9planeTimer;
+	if(runing=="checkboxs1"&&noing=="run"){
+		for(ns=0;ns<$("div.box9plane").length;ns++){
+			arr[ns]=parseInt($("div.box9plane").eq(ns).css("top"));
+			$("div.box9plane").eq(ns).css("top","666px"); 
+		}
+		ns=0;
+		box9planeTimer=setInterval(function(){
+			$("div.box9plane").eq(ns).animate({"top":arr[ns]+"px"},500);
+			ns++;
+			if(ns==$("div.box9plane").length){clearInterval(box9planeTimer);}
+		},250);	
+	}else if(runing=="checkboxs2"){
+		clearInterval(box9planeTimer);
+		if($("div.box9plane").eq(ns).html()!=""){
+			$('#Waterfall').BlocksIt({
+				numOfCol: 5,
+				offsetX: 10,
+				offsetY: 8,
+				blockElement: 'div'
+			});	
+		}
 	}
 }

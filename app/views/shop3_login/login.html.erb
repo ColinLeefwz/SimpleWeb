@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes" >
+    <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="no-cache" http-equiv="Cache-Control"/>
+    <meta content="0" http-equiv="Expires"/>
+    <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+    <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+    <meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
+    <title>脸脸 | 商家管理后台</title>
+    <link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
+    <script src="/javascripts/jquery-1.6.2.min.js"></script>
+    <!--[if IE 6]>
+    <%= javascript_include_tag "DD_belatedPNG.js" %>
+
+  <script type="text/javascript">
+    DD_belatedPNG.fix('.logo2, .logo, .nav a.hover, .nav a:hover, .nav a.index:hover, .nav .s:hover, .nav .s.hover');
+
+  </script>
+    <![endif]-->
+    <script>
+      $(document).ready(function(){
+        $("#name").focus();
+      });
+    </script>
+  </head>
+  <body>
+    <div class="area">
+      <form action="/shop3_login/login" method="post">
+        <div class="logo">脸脸网</div>
+        <div id="Notice" class="notice"><%= notice %></div>
+
+        <div class="plane"><label>商家id</label>
+          <%= text_field_tag :id, params[:id],:id => "name", :class => "txt", :onblur => "find_shop($(this).val())" %>
+          <span id="shopName"></span>
+        </div>
+
+        <div class="plane"><label for="pwd">密&nbsp;&nbsp;码</label>
+          <%= password_field_tag :password, params[:password], :maxLength=>"16",:id =>'pwd', :class => 'txt'  %>
+        </div>
+        <div class="plane2">
+          <input type="submit" value="登 录" class="btn"/>
+          <span class="plane2inner">&copy; 2012 dface 浙ICP备11027288号<a href="http://www.dface.cn" class="fn ml15">WWW.DFACE.CN</a></span>
+        </div>
+      </form>
+    </div>
+
+  </body>
+</html>
+
+<script type="text/javascript">
+  function find_shop(uid){
+    $.get("/shop3_login/find_shop",{id: uid}, function(data){
+      $("#shopName").replaceWith("<span id='shopName'>" + data['text'] + "</span>")
+    })
+  }
+</script>
