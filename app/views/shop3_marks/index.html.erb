@@ -23,7 +23,7 @@
 
     <% @shop_marks.each do |mark| %>
       <tr>
-        <td width="269"><a href="#"><%= mark.user_name %></a><br/></td>
+        <td width="269"><%= link_to mark.user_name, "/shop3_checkins/user?uid=#{mark.uid}" %><br/></td>
         <td width="150"><%= mark.cat.strftime("%Y-%m-%d %H:%M:%S")   %> </td>
         <td width="69" class="p0 textcenter"><%= mark.mark.to_i %>分</td>
         <td width="674"><%= mark.com   %></td>
