@@ -111,12 +111,14 @@ class Shop3ContentController < ApplicationController
     photo = Photo.find(params[:id])
     od = Photo.where({room: session[:shop_id].to_s}).max(:od).to_i+1
     photo.set(:od, od)
+    expire_cache_shop(photo.room)
     render :json => {}
   end
 
   def ajax_untop
     photo = Photo.find(params[:id])
     photo.unset(:od)
+    expire_cache_shop(photo.room)
     render :json => {}
   end
 
