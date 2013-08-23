@@ -36,10 +36,22 @@
 		        <td valign="top">最后签到时间：<%= @user.latest_checkin_time_shop(session[:shop_id]) %></td>
 			  </tr>
 		  </table> 
-			 <div class="title1 mt20"><h2 class="l"><%= @user.name %>照片墙</h2>
-             <%= link_to '查看', "/shop3_content/user_photo?uid=#{@user.id}", :class => "r"  %>
+
 			 <!-- <a href="content_manage1.html" class="r">更多&gt;&gt;</a></div> -->
+
+			 <% if @photos.count < 9 && @photos.count>0 %>
+			 <div class="title1 mt20"><h2 class="l"><%= @user.name %>  照片墙</h2>
+             <%= link_to '查看', "/shop3_content/user_photo?uid=#{@user.id}", :class => "r"  %>
+			 <div class="box8 half">
+			 <% elsif @photos.count > 8%>
+			 <div class="title1 mt20"><h2 class="l"><%= @user.name %>  照片墙</h2>
+             <%= link_to '查看', "/shop3_content/user_photo?uid=#{@user.id}", :class => "r"  %>
 			 <div class="box8">
+			 <% else %>
+			 <div class="title1 mt20"><h2 class="l" style="display:none"><%= @user.name %>  照片墙</h2>
+             <%= link_to '查看', "/shop3_content/user_photo?uid=#{@user.id}", :class => "r",:style => "display:none"%>
+			 <div class="box8" style="display:none">
+			 <% end %>
 
 			 <% @photos.each do |photo| %>
 			   <%=link_to image_tag(photo.img.try(:url, :t2), :class=>"imgstyle2"), photo.img.try(:url), :target => "blank"  %>
