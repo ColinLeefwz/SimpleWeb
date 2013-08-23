@@ -20,7 +20,7 @@ class Shop3FaqsController < ApplicationController
   def update
     @shop_faq = ShopFaq.find(params[:id])
     if @shop_faq.update_attributes(params[:shop_faq])
-      redirect_to :action => "show", :id => @shop_faq.id
+      redirect_to :action => "index"
     else
       render :action => :edit
     end
