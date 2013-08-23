@@ -8,7 +8,7 @@
   </div>
 
   <div id="rulev" class="box7plane1" style="display:<%= [1,3].include?(@coupon.rule.to_i) ? '' : 'none' %>">
-     <label id="lt"><%= rulev_lable(@coupon.rule.to_i) %></label>
+     <label id="lt"><%= rulev_lable(@coupon.rule.to_i)%></label>
      <%= f.text_field :rulev, :class => "inputs4"%>
   </div>
 

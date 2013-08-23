@@ -25,6 +25,7 @@ ul,ol{list-style:none;}
 .gay2{color:#333 !important;}
 .gay3{color:#595959 !important;}
 .gay4{color:#666 !important;}
+.gay5{color:#999 !important;}
 .blue1{color:#0078B6 !important;}
 .blue2{color:#00BFF3 !important;}
 .blue3{color:#369bff !important;}
@@ -37,7 +38,7 @@ ul,ol{list-style:none;}
 .opacity_55{filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);
 filter: alpha(opacity=60);opacity:0.6;}
 .relative{position:relative;}
-.filebox1, .filebox2{display:none;}
+.filebox1, .filebox2, .filebox3, .filebox4, .filebox5{display:none;}
 .del2{overflow:hidden;}
 .imgfilter{ filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);}
 
@@ -110,7 +111,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .btn6{background: transparent url("../images/btn5.jpg") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 25px;line-height: 25px;text-align: center;width: 68px;}
 .btn7{background: transparent url("../images/btn6.png") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 29px;line-height: 29px;text-align: center;width: 93px;}
 .btn8{cursor: pointer;text-align: center;width: 93px;height:23px;line-height:23px;border:1px solid #ccc;color:#00A0E3;padding:0px 6px;background-color:#eaeaea;}
-.btn9{width:110px;height:35px;line-height:35px;background:transparent url(../images/btn7.png) left top no-repeat;border:none;text-align:center;display:block;color:#fff !important;cursor:pointer;}
+.btn9{width:95px;height:29px;line-height:29px;background-color:#00AAEE;border:1px #0099CC solid;text-align:center;display:block;color:#fff !important;cursor:pointer;border-radius:5px;}
 .btn10{background: transparent url("../images/btn8.jpg") left top no-repeat;border: none;color: #FFFFFF !important;cursor: pointer;height: 25px;line-height: 25px;text-align: center;width: 55px;}
 
 .title1{width:100%;overflow:hidden;clear:both;}
@@ -297,7 +298,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 
 .box5{width:100%;margin:20px auto;font-size:14px;color:#333;}
 
-.box6{width:560px;margin:40px 0px 20px 0px;border:1px solid #BCBCBC;border-radius:8px;background-color:#ffffff;position:relative;overflow:hidden;height:215px;}
+.box6{width:560px;margin:40px 0px 20px 0px;border:1px solid #BCBCBC;border-radius:8px;background-color:#ffffff;position:relative;height:215px;}
 .box6 .boxinner{width:100%;overflow:hidden;z-index:10;position:relative;border-radius:8px;}
 .box6 .box6right1{float:right;width:305px;padding:20px;background-color:#ffffff;}
 .box6 .box6message{width:540px;position:absolute;left:0px;top:0px;text-align:center;padding:10px;z-index:1;font-size:14px;color:#f60;letter-spacing:2px;}
