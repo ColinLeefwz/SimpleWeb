@@ -48,9 +48,12 @@
           年龄：<%= staff.user.age %><br/>
           签到次数：<%=link_to staff.checkin_count(staff.user_id),"/shop3_checkins?uid=#{staff.user_id}" %>次          </td>
         <!-- <td>2012-12-22 18:33 </td> -->
-        <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
+        <td width="227" align="center">
+          <%= link_to "历史签到", "/shop3_checkins?uid=#{staff.user_id}",:class => "mr10" %>
           <%=link_to '删除',  '#',:onclick => "ajaxDeleteStaff($(this), '#{staff.id}');" ,:class => "del"%>
+
           <!-- <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="1" title="删除">删除</a></td> -->
+        </td>
       </tr>
 
     <% end %>
