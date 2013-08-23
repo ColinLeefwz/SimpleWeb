@@ -121,5 +121,23 @@ class CouponDown
       end
     end
   end
+
+
+  #听说分享有礼手动发送优惠券
+  def ting_shuo_fen_xiang_you_li
+    coupon_ids = ["521717fd20f3186318000010", "5217185720f31885bf000003", "521718e120f3186318000014", "5217165720f318ab8a00000f",
+      "521718a020f3186318000012", "5217193020f318ab8a000012", "521714e120f318631800000c"]
+    users = ["52134bc1c90d8b05da000001", "5212d611c90d8b99ae000005", "5210c7b3c90d8b527e000001", "51d62e51c90d8b81d0000033",
+      "51dda3cdc90d8b811a000004", "5212c541c90d8b1ef4000001", "51f48e43c90d8b424d000001", "51d6b618c90d8b5ad600012e",
+      "51d656c6c90d8b5ad6000073", "5215f462c90d8ba0a6000004", "5215fd66c90d8b020c000006", "51e16de3c90d8b672200024d", "51da1894c90d8b69be000001", '502e6303421aa918ba000007']
+    coupon_ids.each do |cid|
+      users.each {|uid|  CouponDown.download(Coupon.find(cid), uid)}
+    end
+  end
   
 end
+
+
+
+
+
