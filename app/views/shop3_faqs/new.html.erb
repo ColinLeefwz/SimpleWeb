@@ -42,7 +42,7 @@
     
     <tr>
 	  <td width="20%" align="right" valign="top" class="pr20">回答</td>
-	  <td><%= f.text_area :text, :class => "textarea2", :id=>"Inputs2",:value=>"3-140个字,例如：本店wifi密码：321123"%></td>
+	  <td><%= f.text_area :text, :class => "textarea2", :id=>"Inputs2",:value=>"3-140个字,例如：本店wifi密码：321123", :wrap=>"physical"%></td>
     </tr>           
     <tr>
 		<td>&nbsp;</td>
@@ -60,7 +60,7 @@
 <script src="/newbackstage/js/questions_answers.js" type="text/javascript"></script>
 <script>
 $(document).ready(function(){
-	imgUploadPreview("input[name='shop_faq[img]']", 'uploadPreview');
+	imgUploadPreview2("input[name='shop_faq[img]']", 'uploadPreview');
     runing=$("#CB1").attr("class");
     if(runing=="checkboxs1"){
       NavDiv();
@@ -74,7 +74,7 @@ $(document).ready(function(){
 		$("#shop_faq_img").click();
 	});
 	$("input[name='shop_faq[img]']").click(function(){
-		imgUploadPreview(this, 'uploadPreview');
+		imgUploadPreview2(this, 'uploadPreview');
 	});
 });
 </script>
