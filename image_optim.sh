@@ -8,7 +8,7 @@ css=`find $dir/stylesheets -name "*.css"`
 
 for i in $jpgs
 do
-    if [[ $i = *public/images* ]] || [[ $i = *public/help* ]]
+    if [[ `echo $i|grep 'public/images'` ]] || [[ `echo $i|grep 'public/help'` ]]
         then
         jpegoptim --strip-all $i > /dev/null
         mogrify -strip  $i
@@ -29,7 +29,7 @@ done
 
 for i in $jpegs
 do
-     if [[ $i = *public/images* ]] || [[ $i = *public/help* ]]
+     if [[ `echo $i|grep 'public/images'` ]] || [[ `echo $i|grep 'public/help'` ]]
         then
         jpegoptim --strip-all $i > /dev/null
         mogrify -strip  $i
@@ -50,7 +50,7 @@ done
 
 for i in $pngs
 do
-    if [[ $i = *public/images* ]] || [[ $i = *public/help* ]]
+    if [[ `echo $i|grep 'public/images'` ]] || [[ `echo $i|grep 'public/help'` ]]
         then
         optipng $i > /dev/null
         mogrify -strip $i
