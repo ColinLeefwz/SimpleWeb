@@ -20,6 +20,11 @@
       <td align="center">
         <%= link_to '编辑', "/shop_photos/edit?id=#{shop_photo.id}" %>
         <%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{shop_photo.id}')" %></td>
+        <% if shop_photo.od %>
+        <td><%= link_to '取消置顶', "javascript:void(0)",:onclick => "ajaxUntop($(this), '#{shop_photo.id}')"%></td>
+      <% else %>
+        <td><%= link_to '置顶', "javascript:void(0)",:onclick => "ajaxTop($(this), '#{shop_photo.id}')"%></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
@@ -42,5 +47,17 @@
         }
       });
     }
+  }
+
+  function ajaxTop(obj,id){
+    $.get("/shop_photos/ajax_top", {id: id}, function(){
+      $("tr:first").after(obj.parent().parent())
+      obj.replaceWith("<a href='javascript:void(0)' onclick='ajaxUntop($(this),\""+ id +"\")'>取消置顶</a>")
+    })
+  }
+  function ajaxUntop(obj,id){
+    $.get("/shop_photos/ajax_untop", {id: id}, function(){
+      obj.replaceWith('已取消')
+    })
   }
 </script>
