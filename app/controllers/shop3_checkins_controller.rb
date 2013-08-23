@@ -28,7 +28,8 @@ class Shop3CheckinsController < ApplicationController
     sort = {:od => -1, :updated_at =>  -1}
     @user = User.find_by_id(params[:uid])
     @coupon_downs = CouponDown.where({sid: session[:shop_id], uid: @user.id}).sort({_id: -1})
-    @photos = paginate("Photo", params[:img], hash, sort,18)
+    # @photos = paginate("Photo", params[:img], hash, sort,18)
+    @photos = Photo.where({user_id:params[:uid]})
   end
 
   def rank
