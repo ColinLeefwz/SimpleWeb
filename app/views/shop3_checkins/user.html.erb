@@ -32,7 +32,7 @@
 			    <!-- <td height="20" colspan="2" valign="top">签到信息：</td> -->
 	          </tr>
 			  <tr>
-			    <td valign="top">累计签到：<%= link_to "#{@user.total_checkin_shop(session[:shop_id])}", "/shop_checkins?uid=#{@user.id}"  %>次</td>
+			    <td valign="top">累计签到：<%= @user.total_checkin_shop(session[:shop_id])%>次</td>
 		        <td valign="top">最后签到时间：<%= @user.latest_checkin_time_shop(session[:shop_id]) %></td>
 			  </tr>
 		  </table> 
