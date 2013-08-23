@@ -48,7 +48,7 @@ class ShopTest < ActiveSupport::TestCase
     user = User.find('502e6303421aa918ba00007c')
     shop = Shop.find(1)
     Checkin.create!(uid: user._id, sid: shop.id)
-    assert_equal("收到4张优惠券: 测试首次优惠券,测试前2名优惠券,测试每日优惠券.,测试每日优惠券2.", shop.send_coupon(user.id))
+    assert_equal("恭喜袁乐天！收到4张优惠券: 测试首次优惠券,测试前2名优惠券,测试每日优惠券.,测试每日优惠券2.,马上领取吧！", shop.send_coupon(user.id))
   end
 
   test "#send_coupon(user_id) 老用户当天第一次满累计签到三天，累计签到3次，发送每日签到优惠，每日前几名签到优惠，子商家只收到每日签到优惠.第二次签到没有" do
@@ -56,7 +56,7 @@ class ShopTest < ActiveSupport::TestCase
     user = User.find('502e6303421aa918ba000002')
     shop = Shop.find(1)
     Checkin.create!(uid: user._id, sid: shop.id)
-    assert_equal('收到5张优惠券: 测试累计优惠券,测试首次优惠券,测试前2名优惠券,测试每日优惠券.,测试每日优惠券2.', shop.send_coupon(user.id))
+    assert_equal('恭喜25！收到5张优惠券: 测试累计优惠券,测试首次优惠券,测试前2名优惠券,测试每日优惠券.,测试每日优惠券2.,马上领取吧！', shop.send_coupon(user.id))
   end
 
   test "#answer_text(msg) 回复0" do
@@ -93,7 +93,7 @@ class ShopTest < ActiveSupport::TestCase
   test "#send_coupon(user_id) 7月18日 推广楼宇获取附近合作商家优惠券" do
     shop = Shop.find(4)
     user = User.find('502e6303421aa918ba000002')
-    assert_equal shop.send_coupon(user.id), "收到2张优惠券: 测试前2名优惠券2.,测试每日优惠券2."
+    assert_equal shop.send_coupon(user.id), "恭喜25！收到2张优惠券: 测试前2名优惠券2.,测试每日优惠券2.,马上领取吧！"
   end
 
   test "#send_coupon(user_id) 7月18日 不是推广楼宇 不能获取附近合作商家优惠券" do

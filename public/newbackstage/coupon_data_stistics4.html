@@ -16,25 +16,22 @@
 		<div class="header">
 			<div class="headercon">
 				<div id="Message">赵海斌刚刚使用了一张分享优惠券惠券</div>
-				<div id="LinkBox">
-					<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
-					<a  class="links2">退出</a>
-					<span class="linkarrow"></span>
-				</div>
-				<div class="toptitle">
-					<h1>脸脸茶坊</h1>
-					<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
-				</div>
+				<div class="toptitle"><h1>脸脸茶坊</h1></div>
 			</div>
+			<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
 			<img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
+			<div id="LinkBox">
+				<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
+				<a  class="links2">退出</a>
+				<span class="linkarrow"></span>
+			</div>
 		</div>
 		<div id="Nav">
 			<a class="sign" id="CloseNav"></a>
 			<div id="Navcon">
 				<a href="/newbackstage/index.html">首页</a>
 				<span class="navline"></span>
-				<a href="/newbackstage/coupon_manage.html">优惠券管理</a>
-				<a href="coupon_data_stistics4.html">优惠券数据统计</a>
+				<a href="coupon_data_stistics4.html">优惠券管理</a>
 				<span class="navline"></span>
 				<a href="/newbackstage/data_statistics1.html">数据统计</a>
 				<span class="navline"></span>
@@ -46,14 +43,17 @@
 				<span class="navline"></span>
 				<a href="/newbackstage/questions_answers1.html">问答系统</a>
 				<span class="navline"></span>
-				<label id="CB1" class="checkboxs1">取消动画</label>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
 				<span class="navline"></span>
 				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
 			</div>
 		</div>
 		<div class="clear1"></div>
 		<div class="con">
-			<div class="title1 mb30"><h2 class="f18">优惠券数据统计</h2></div>
+			<div class="title1 mb30">
+				<h2 class="f18 l">优惠券管理</h2>
+				<a href="coupon_manage.html" class="r btn9">发布优惠券</a>
+			</div>
 			<div class="submenu">
 				<ul>
 					<li class="hover"><a href="coupon_data_stistics4.html">优惠券列表</a></li>
@@ -96,13 +96,13 @@
 				</tr> 
 				<tr id="Tr1">
 				  <td><a href="coupon_issuing3.html" title="查看详情"><img src="images/pic10.jpg" class="l" width="130"/><span class="l ml10">华夏时代广场优惠券五折 <br/><span class="gay1">（签到类）</span></span></a></td>
-				  <td width="80" class="textcenter">1000</td>				  
+				  <td width="80" class="textcenter">1000</td>
 				  <td width="80" class="textcenter">800</td>
 				  <td width="45" class="textcenter">有效</td>
 				  <td width="135" valign="middle" class="textcenter">
 				  	<a href="coupon_issuing.html" class="edit" title="编辑">编辑</a>
 				 	<a href="#" class="act" title="激活">激活</a>
-				  	<a onclick="Del(this,$(this).attr('rel'))" class="del" rel="1" title="删除">删除</a>				  </td>
+				  	<a onclick="Del(this,$(this).attr('rel'))" class="del" rel="1" title="删除">删除</a></td>
 			    </tr>
 				<tr id="Tr2">
 				  <td><a href="coupon_issuing3.html" title="查看详情"><img src="images/pic10.jpg" class="l" width="130"/><span class="l ml10">华夏时代广场优惠券五折 <br/><span class="gay1">（签到类）</span></span></a></td>

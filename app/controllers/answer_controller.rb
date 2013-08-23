@@ -63,6 +63,8 @@ class AnswerController < ApplicationController
       want(uid,int)
     elsif  txt=="?" || txt=="？"
       faq(uid)
+    elsif txt=="ip" && is_kx_user?(uid) 
+      Xmpp.send_chat($gfuid, uid, "Xmpp服务器ip：#{read_ip}", $uuid.generate, " NOLOG='1' NOPUSH='1' ")      
     elsif txt.downcase=="hi"
       Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"hi😄")
     elsif txt[0,2]=="您好" || txt[0,2]=="你好"
@@ -88,8 +90,6 @@ class AnswerController < ApplicationController
         help_msg(uid)
         "1"
       end
-    elsif txt=="ip" && is_kx_user?(uid) 
-      Xmpp.send_chat($gfuid, uid, "Xmpp服务器ip：#{read_ip}", $uuid.generate, " NOLOG='1' NOPUSH='1' ")
     else
       Resque.enqueue(XmppMsg, uid,User.first.id,":反馈："+txt)
     end

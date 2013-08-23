@@ -26,6 +26,8 @@ class User
   field :qq
   field :qq_name
   field :qq_hidden, type:Boolean #true代表该qq被解除绑定
+  field :phone_hidden, type:Boolean #true代表该手机被解除绑定
+  
 
   field :tk  #Push消息的token
   field :no_push, type:Boolean #是否接收推送通知
@@ -225,11 +227,12 @@ class User
     hash.delete("_id")
     hash.delete("psd")
     hash.delete("qq")
-    hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
+    hash.merge!({qq_openid: self.qq}) if self.has_qq?
     hash.delete("wb_uid") if self.wb_hidden  == 2  
     hash.delete("wb_name") if self.wb_hidden  == 2  
     hash.delete("wb_v") if self.wb_hidden  == 2  
     hash.delete("qq_name") if self.qq_hidden 
+    hash.delete("phone") if self.phone_hidden 
     hash
   end
   
@@ -271,6 +274,10 @@ class User
         :logo_thumb2 => UserLogo.img_url(head_logo_id, :t2)}
     end
   end
+
+  def user_talk_new(date)
+    $redis.smembers("PL#{date}#{self.id}")
+  end
   
   def self.init_pcount
     User.all.each {|x| x.set(:pcount, x.user_logos.size)}
@@ -287,7 +294,7 @@ class User
   def safe_output(uid=nil)
     hash = self.attributes.slice("name", "signature", "wb_v", "wb_vs", "gender", "birthday", "logo", "job", "jobtype","pcount")
     hash.merge!({"wb_uid" => self.wb_uid}) if self.wb_uid && (self.wb_hidden.nil? || self.wb_hidden==0)
-    hash.merge!({qq_openid: self.qq}) if self.qq && !self.qq_hidden
+    hash.merge!({qq_openid: self.qq}) if self.has_qq?
     hash.merge!({id: self._id}).merge!( head_logo_hash)
   end
   
@@ -739,6 +746,18 @@ class User
     end
   end
   
+  def has_wb?
+    self.wb_uid && self.wb_uid.size>0 && self.wb_hidden.to_i <2
+  end
+  
+  def has_qq?
+    self.qq && self.qq.size>0 && !self.qq_hidden
+  end
+
+  def has_phone?
+    self.phone && self.phone.size>0 && !self.phone_hidden
+  end
+    
   def self.migrate_phone_password
     User.where({phone:{"$exists" => true}, psd:{"$exists" => false}}).each do |user|
       user.set(:psd, user.password)
@@ -803,9 +822,9 @@ class User
       next if qq.size==0
       count = User.where({qq:qq}).count
       if count==0
-          user = User.find_by_qq(qq)
-          puts user.to_json
-          Xmpp.error_notify("QQ#{qq}对应用户count=0")
+        user = User.find_by_qq(qq)
+        puts user.to_json
+        Xmpp.error_notify("QQ#{qq}对应用户count=0")
       end
       if count>1
         puts "#{qq}:#{count}"
@@ -827,10 +846,10 @@ class User
       count = User.where({phone:phone}).count
       if count==0
         debugger
-          user = User.find_by_phone(phone)
-          puts "#{phone}:#{user.phone}"
-          puts user.to_json
-          Xmpp.error_notify("手机#{phone}对应用户count=0")
+        user = User.find_by_phone(phone)
+        puts "#{phone}:#{user.phone}"
+        puts user.to_json
+        Xmpp.error_notify("手机#{phone}对应用户count=0")
       end
       if count>1
         puts "#{phone}:#{count}"
