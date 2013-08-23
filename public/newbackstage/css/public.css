@@ -291,7 +291,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .box4 .box4plane2{line-height:20px;width:308px;border:1px solid #D7D7D7;border-radius:8px 8px 0px 0px;overflow:hidden;position:absolute;top:0px;background-color:#ffffff;}
 .box4 .box4con1{display:block;clear:both;padding:8px;font-size:12px;line-height:20px;overflow:hidden;}
 .box4 .imgstyle{width:100px;height:100px;margin-right:10px;}
-.box4 .changebox4right{margin-left:20px;margin-top:-8px;width:632px;}
+.box4 .changebox4right{margin-left:20px;margin-top:-8px;width:632px;min-height:160px;}
 .box4 .box4plane2 .shade{width:100%;position:absolute;left:0px;top:0px;background: url("../images/bg.png") repeat scroll left top transparent;color:#369BFF;cursor: pointer;text-align: center;z-index: 5;}
 
 .box5{width:100%;margin:20px auto;font-size:14px;color:#333;}
