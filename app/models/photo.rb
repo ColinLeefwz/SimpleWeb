@@ -51,6 +51,8 @@ class Photo
     send_qq if qq
     if weibo || qq || (wx && wx>0)
       send_coupon
+      #听说分享， 发送关联商家的分享优惠券
+      ting_shuo_send_share
       send_pshop_coupon
       Lord.assign(room,user_id) if t==1 && desc && desc.index("我是地主")
       Resque.enqueue(PhotoNotice, self.id) unless Os.overload?
@@ -60,6 +62,24 @@ class Photo
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}")
     rand_like
   end
+
+
+  #听说发关联分享优惠券
+  def ting_shuo_send_share
+    if self.room.to_i == 21832930
+      shop_ids = %w(21833421 21833440 21833441 21833442 21833438 21833144 21835450 21833443)
+      shop_ids.each do |sid|
+        shop = Shop.find_by_id(sid)
+        coupon = shop.share_coupon
+        if coupon
+          if CouponDown.where({cid: coupon.id, uid: self.user_id}).blank?
+            CouponDown.download(coupon, self.user_id, self._id )
+          end
+        end
+      end
+    end
+  end
+
 
   #马甲随机赞
   #第一次在room中发送图片，必赞
