@@ -1,6 +1,6 @@
 #header
-  %a#logo{:href => "/", :title => "Home", :rel => "home"}
-    = image_tag("logo.png") 
+  #logo
+    = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
   #user_nav
     - if user_signed_in?
       %a Hello, 

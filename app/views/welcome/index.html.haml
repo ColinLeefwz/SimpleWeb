@@ -1,4 +1,6 @@
+/ .fb-root
 
+/ .fb-like{"data-href" => "http://developers.facebook.com/docs/reference/plugins/like", "data-width" => "450", "data-show-faces" => "false", "data-send" => "false"}
 .controls
   %ul
     %li Descending
@@ -13,25 +15,52 @@
     %li Category 3
     %li Category 1 &amp; 3
 
-#Grid
-  .column
-    .box
-      = image_tag("1.jpg")
+    / - total = number_column(session)
+
+    /   - total.first.each do |f|
+    / .column
+
+#container
+  - @sessions.each do |session|
+    .item
+      = image_tag(session.image_url)
+      %p= session.title
+      %p= session.expert.name
+      %p Description:
+      %p= session.description
+      %p Status:
+      %p= session.status
       = social_share_button_tag("asd")
-    .box
-      = image_tag("6.jpg")
       = render 'linked_in_share_button'
-  .column
-    .box
-      = image_tag("2.jpg")
-    .box
-      = image_tag("4.jpg") 
-  .column
-    .box
-      = image_tag("5.jpg")
-    .box
-      = image_tag("3.jpg")
-<!-- "gap" elements fill in the gaps in justified <a href="http://www.jqueryscript.net/tags.php?/grid/">grid</a> -->
+
+:javascript
+  var container = document.querySelector('#container');
+  var msnry = new Masonry( container, {
+  // options
+    columnWidth: 300,
+    itemSelector: '.item',
+    gutter: 10
+  });
+      
+/ .box
+/   = image_tag("6.jpg")
+/   = 
+/ .box
+/   = image_tag("1.jpg")
+
+/   = social_share_button_tag("asd")
+/ .column
+/   .box
+/     = image_tag("2.jpg")
+/     %a{:href => "#",  :onclick => "window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 'facebook-share-dialog', 'width=626,height=436'); return false;"} facebook
+
+/   .box
+/     = image_tag("4.jpg") 
+/ .column
+/   .box
+/     = image_tag("5.jpg")
+/   .box
+/     = image_tag("3.jpg")
 
 
   

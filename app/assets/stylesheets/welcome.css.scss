@@ -13,31 +13,26 @@ cursor: pointer;
 .controls li.active {
 font-weight: 700;
 }
-#Grid {
-width: 960px;
-font-size: 0.1px;
-margin: 0 auto;
+#container {
+  width: 920px;
+  margin: 0 auto;
 
-  .column{
-    vertical-align: top;
-    width: 310px;
-    display: inline-block;
-  }
-
-  .box {
+  .item {
     border-radius: 5px;
-    box-shadow:2px 2px 3px #aaaaaa;
-    margin-right: 10px;
+    box-shadow: 0 1px 5px -1px rgba(170, 180, 190, 1); 
     width: 300px;
-    vertical-align: top;
-    margin-bottom: 10px;
-    font-size: 30px;
     text-align: center;
+    margin-bottom: 35px;
+    display: block;
+
 
     img {
       border-radius: 5px;
       width: 100%;
     }
+    
+    p{
+      font-size: 12px;
+    }
   }
 }
-

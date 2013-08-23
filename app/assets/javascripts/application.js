@@ -11,13 +11,8 @@
 // about supported directives.
 //
 //= require social-share-button
-//= require jquery
+//= require jquery.min.js
 //= require jquery_ujs
 //= require turbolinks
+//= require masonry.pkgd.min.js
 //= require_tree .
-
-
-$(function(){
-  $('#Grid').mixitup();
-});
-
