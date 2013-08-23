@@ -3,7 +3,7 @@
  **/
 
 function imgUploadPreview(select, divid){
-    
+
     $(select).change(function(){
         var picPath =  this.value
         var type = picPath.substring(picPath.lastIndexOf(".") + 1, picPath.length).toLowerCase();
@@ -16,13 +16,15 @@ function imgUploadPreview(select, divid){
         try{
             var divObj = document.getElementById(divid)
             if(navigator.userAgent.indexOf("MSIE") > -1&& (navigator.userAgent.indexOf("MSIE 7.0") > -1|| navigator.userAgent.indexOf("MSIE 9.0") > -1 || navigator.userAgent.indexOf("MSIE 8.0") > -1)  ){
-                this.select();
+				this.select();
                 this.blur();
                 var path = document.selection.createRange().text;
                 document.selection.empty();
                 path = "file:///" + path.replace("\\",'/');
-                divObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
-            }
+                document.getElementById("image_view").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
+				document.getElementById("image_view").src ="http://shop.dface.cn/images/clear.gif";
+				//divObj.innerHTML="<img id='image_view1' style='background:url(file:///"+$(select).val()+") center center no-repeat;height: 100%; width: 100%;'/>";
+			}
             else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
                 divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 var imageView = document.getElementById("image_view");
@@ -35,7 +37,7 @@ function imgUploadPreview(select, divid){
             }
 
         }catch (e) {
-            alert("游览器不支持预览图片")
+            //alert("游览器不支持预览图片")
         }
     });
 }
