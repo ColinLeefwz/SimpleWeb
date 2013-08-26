@@ -599,6 +599,11 @@ class User
     self.destroy
   end
   
+  def change_phone_redis(newphone)
+    $redis.del("P:#{self.phone}")
+    $redis.set("P:#{newphone}", user.id)
+  end
+  
   
   #目前导入的虚拟帐户被脸脸用户加关注的用户，需要人工联系
   def self.auto_todo
