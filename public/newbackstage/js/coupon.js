@@ -50,6 +50,7 @@ $(document).ready(function(){
 	$("#Forms").submit(function(){
 		var n=$("input.inputs2").val();
 		var t1=$("textarea.textarea3").val();
+		var imgsrc=$("#uploadPreview img").attr("src");
 		if(n.length==""||n=="优惠券主题 不得超过13个文字"||n=="必填"){
 			$("input.inputs2").addClass("onfocs").val("必填").focus();
 			return false;
@@ -67,6 +68,39 @@ $(document).ready(function(){
 			$("textarea.textarea3").removeClass("onfocs").addClass("onfocs2");
 			$("#Box6Message").animate({"top":"-40px"},300);
 			return false;
-		}			
-	});						   
+		}
+		if(imgsrc=="/newbackstage/images/pic6.jpg"||imgsrc==""){
+			$("#Box6Message").html("请上传一张优惠券图片");
+			$("#Box6Message").animate({"top":"-40px"},300);
+			return false;
+		}
+		if($("#rulev").css("display")=="block"){
+			if($("#coupon_rulev").val()==""){
+				$("#rulev span").css("display","inline").text("不得为空");
+				return false;
+			}else if(isNaN($("#coupon_rulev").val())){
+				$("#rulev span").css("display","inline").text("必须为数字");
+				return false;
+			}
+		}
+	});
 });
+function show_rulev(rv){
+	if(rv =="1"){ 
+		$("#rulev").css("display","block");
+		$("#rulev label").text("前几名");
+	}else if(rv=="3"){
+		$("#rulev").css("display","block");
+		$("#rulev label").text("累计次数");
+	}else{
+		$('#rulev').css("display","none");
+	}
+}
+
+function show_hint(rv){
+	if(rv =="1"){
+		$("#hint1").show()
+	}else{
+		$("#hint1").hide()
+	}
+}
