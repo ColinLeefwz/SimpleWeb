@@ -207,8 +207,10 @@ function NavDiv(){//菜单
 		}
 		
 		$("#Btn").click(function(){
-			if(navmove=="on"){
-				navmove="off";
+			// if(navmove=="on"){
+			   if(window.localStorage.navmove == "on"){
+				// navmove="off";
+				window.localStorage.navmove = "off";
 
 				$("#Btn").addClass("dis").html("<img src='/newbackstage/images/sign1.png' align='absmiddle'/> 取消固定导航");;
 
@@ -221,8 +223,10 @@ function NavDiv(){//菜单
 				if(windowWidth<=1024){
 					$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
 				}
-			}else if(navmove=="off"){
-				navmove="on";
+			// }else if(navmove=="off"){
+			  }else if(window.localStorage.navmove = "off"){
+				// navmove="on";
+				window.localStorage.navmove = "on";
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
 				$(document).unbind("mouseover");
