@@ -601,7 +601,7 @@ class User
   
   def change_phone_redis(oldphone,newphone)
     $redis.del("P:#{oldphone}")
-    $redis.set("P:#{newphone}", user.id)
+    $redis.set("P:#{newphone}", self.id)
   end
   
   
