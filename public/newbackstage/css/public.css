@@ -45,6 +45,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .w150{width:150px !important;}
 .w235{width:235px !important;}
 .w700{width:700px !important;}
+.h140{height:140px !important;}
 
 .pointer{cursor:pointer;}
 
@@ -55,9 +56,13 @@ filter: alpha(opacity=60);opacity:0.6;}
 .inputs3{border:1px solid #d7d7d7;border-radius:5px;width:80px;height:20px;line-height:20px;padding:0px 10px;font-size:12px;color:#868686;}
 .inputs4{border:1px solid #d7d7d7;border-radius:5px;width:280px;height:30px;line-height:30px;padding:0px 10px;font-size:13px;color:#868686;}
 .inputs5{border:1px solid #d7d7d7;border-radius:5px;width:200px;height:25px;line-height:25px;padding:0px 10px;font-size:13px;color:#868686;}
+.inputs6{border:1px solid #d7d7d7;border-radius:15px;width:250px;height:30px;line-height:30px;padding:0px 10px;
+font-size:12px;color:#868686;position:absolute;left:0px;top:0px;z-index:100;}
 .textarea1{width:280px;height:60px;border:1px solid #d7d7d7;border-radius:15px;padding:10px;font-size:12px;color:#868686;line-height:22px;}
 .textarea2{width:360px;height:110px;border:1px solid #d7d7d7;border-radius:15px;padding:10px;font-size:12px;color:#868686;line-height:22px;}
 .textarea3{width:280px;height:100px;border:1px solid #d7d7d7;border-radius:5px;padding:10px;font-size:13px;color:#868686;line-height:22px;}
+.textarea4{width:360px;height:110px;border:1px solid #d7d7d7;border-radius:15px;padding:10px;font-size:12px;
+color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .onfocs{border:1px solid #47A0FA !important;color:#369BFF;box-shadow:0px 0px 12px #369BFF;}
 .onfocs2{border:1px solid #FD6D6D !important;color:#FD6D6D;box-shadow:0px 0px 12px #FD6D6D;background-color:#eee;}
 .fieldset1{display:block;border:1px solid #bbb;padding:5px 10px 10px 10px;min-height:120px;width:400px;border-radius:8px;}
@@ -195,7 +200,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 #Nav #Navcon{width:100%;height:100%;overflow:hidden;background:url(../images/nav.png) left top repeat-y;}
 #Nav a{display:block;padding-left:12px;color:#333333;line-height:50px;}
 #Nav .navline{border-top:1px solid #F2F2F2;width:141px;display:block;overflow:hidden;height:0px;}
-#Nav .sign{width:100%;height:50px;background:url(../images/pic2_1.png) left top no-repeat;cursor:pointer;display:block;overflow:hidden;zoom:1;}
+#Nav .sign{width:100%;height:50px;background:url(../images/pic2.png) left top no-repeat;cursor:pointer;display:block;overflow:hidden;zoom:1;}
 
 .con{width:830px;clear:both;margin:50px auto 40px auto;zoom:1;overflow:hidden;}
 .con2{width:830px;clear:both;margin:50px auto 40px auto;zoom:1;position:relative;}
@@ -351,6 +356,9 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .box11 .n5{width:28px;height:25px;background:url("../images/sign29.png") center center no-repeat;display:inline-block;cursor:pointer;}
 .box11 .n6{width:28px;height:25px;background:url("../images/sign31.png") center center no-repeat;display:inline-block;cursor:pointer;}
 
+.box12{position:relative;display:block;height:32px;}
+.box12 span#Mes1{position:absolute;left:0px;top:0px;line-height:30px;color:#FF6600;}
+.box12 span#Mes2{position:absolute;left:0px;top:0px;line-height:30px;color:#FF6600;}
 
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
 .tab1 td{padding-bottom:20px;}

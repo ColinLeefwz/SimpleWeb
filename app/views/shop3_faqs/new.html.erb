@@ -20,8 +20,11 @@
     <tr>
       <td width="20%" align="right" valign="middle" class="pr20">标题</td>
       <td>
-        <%= f.text_field :title, :class => "inputs", :id=>"Inputs1", :value=>"3-12个字,如:获取wifi密码" %>
-      </td>
+		<div class="box12">
+			<%= f.text_field :title, :class =>"inputs6", :id=>"Inputs1", :value=>"3-12个字,如:获取wifi密码" %>
+			<span id="Mes1"></span>
+		</div>
+	  </td>
     </tr>
 
     <tr>
@@ -42,8 +45,13 @@
     
     <tr>
 	  <td width="20%" align="right" valign="top" class="pr20">回答</td>
-	  <td><%= f.text_area :text, :class => "textarea2", :id=>"Inputs2",:value=>"3-140个字,例如：本店wifi密码：321123", :wrap=>"physical"%></td>
-    </tr>           
+	  <td>
+		<div class="box12 h140">
+			<%= f.text_area :text, :class => "textarea4", :id=>"Inputs2",:value=>"3-140个字,例如：本店wifi密码：321123", :wrap=>"physical"%>
+			<span id="Mes2"></span>
+		</div>
+	  </td>
+	</tr>           
     <tr>
 		<td>&nbsp;</td>
 		<td><input type="submit" name="Submit" value="提 交" class="btn2 l"/>
