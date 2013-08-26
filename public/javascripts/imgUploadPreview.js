@@ -3,7 +3,6 @@
  **/
 
 function imgUploadPreview2(select, divid){
-
     $(select).change(function(){
         var picPath =  this.value
         var type = picPath.substring(picPath.lastIndexOf(".") + 1, picPath.length).toLowerCase();
@@ -24,16 +23,16 @@ function imgUploadPreview2(select, divid){
                 document.getElementById("image_view").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
 				document.getElementById("image_view").src ="http://shop.dface.cn/images/clear.gif";
 				//divObj.innerHTML="<img id='image_view1' style='background:url(file:///"+$(select).val()+") center center no-repeat;height: 100%; width: 100%;'/>";
-			}
-            else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
-                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
+			}else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
+				divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
-            }
-            else{
+				
+            }else{
                 divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 imageView = document.getElementById("image_view");
                 imageView.src = window.URL.createObjectURL(this.files[0]);
+				alert(document.getElementById("image_view").window.URL.createObjectURL(this.files[0]));
             }
 
         }catch (e) {
@@ -44,7 +43,6 @@ function imgUploadPreview2(select, divid){
 
 
 function imgUploadPreview(select, divid){
-    
     $(select).change(function(){
         var picPath =  this.value
         var type = picPath.substring(picPath.lastIndexOf(".") + 1, picPath.length).toLowerCase();
@@ -69,10 +67,11 @@ function imgUploadPreview(select, divid){
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
             }
-            else{
+            else{alert(3);
                 divObj.innerHTML = "<img id='image_view' style='height: 197px; width: 194px' />";
                 imageView = document.getElementById("image_view");
                 imageView.src = window.URL.createObjectURL(this.files[0]);
+				//alert(window.URL.createObjectURL(this.files[0]));
             }
 
         }catch (e) {
