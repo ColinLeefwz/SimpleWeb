@@ -113,6 +113,7 @@ class PhoneController < ApplicationController
       return      
     end
     user.psd = slat_hash_pass(params[:password])
+    user.unset(:phone_hidden)  if user.phone_hidden
     user.save!
     session[:user_id] = user.id
     render :json => user.safe_output.to_json
