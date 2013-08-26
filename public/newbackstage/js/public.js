@@ -1,13 +1,11 @@
 // JavaScript Document
 var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua,MessageDivTimer,CouponPlaneTimer,x0=0,x1=0;
-
+ua=navigator.userAgent.toLowerCase();
 $(window).load(function(){
 	windowWidth=$(window).width();
 	documentHeight=$(document).height();
 	windowHeight=$(window).height();
 	messageHeight=$("#Message").height();
-
-	ua=navigator.userAgent.toLowerCase();
 	//ua="ipad";
 	if(windowWidth<=1024){
 		$("div.main").css("width","1024px");	
@@ -141,9 +139,9 @@ function MessageDiv(){//消息通知框
 function NavDiv(){//菜单
 	windowWidth=$(window).width();
 	if(navmove=="on"){
-		$("#Nav").animate({"left":"-160px"},1000);
+		$("#Nav").css({"left":"-160px"});
 		if(windowWidth<=1024){
-			$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+			$("div.main").stop(true).css({"width":"1024px","padding-left":"0px"});
 		}
 	}else{
 		$("#Btn").addClass("dis").html("<img src='/newbackstage/images/sign1.png' align='absmiddle'/> 取消固定导航");
@@ -168,7 +166,7 @@ function NavDiv(){//菜单
 					}
 				}
 			});
-			$("#CloseNav").click(function(e){
+			$("#CloseNav").click(function(){
 				if(navmove=="on"){
 					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
 					windowWidth=$(window).width();
