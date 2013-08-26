@@ -11,7 +11,7 @@ class XpartnerController < ApplicationController
     hash = {}
     tid=nil
     begin
-      params[:data].each do |key, value|
+      JSON.parse(params[:data]).each do |key, value|
         hash[Shop.find_by_tid(tid = key).id.to_s] = value.map{|m|  Shop.find_by_tid(tid=m).id.to_s}
       end
     rescue

@@ -5,7 +5,7 @@ class XgroupController < ApplicationController
     errmsg = blank_check(:id, :data)
     return render :json => {error: errmsg} if errmsg
     return render :json => {error: "id已有"} if Group.find_by_id(params[:id])
-    data = params[:data]
+    data = JSON.parse(params[:data])
     begin
       group = Group.new(name: data['name'], line_id: data['line_id'], fat: data['fat'], tat: data['tat'], code: data['tid'], users: data['users'],admin_sid: 21834762 )
       group.id = params[:id]
