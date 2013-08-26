@@ -147,6 +147,7 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"手机号码或者密码不正确"}.to_json
       return      
     end
+    user.unset(:phone_hidden)  if user.phone_hidden
     session[:user_id] = user.id
     save_device_info(user.id, false)
 	  render :json => user.output_self.to_json
@@ -162,8 +163,8 @@ class PhoneController < ApplicationController
       Xmpp.error_notify("用户手机号码#{session_user.phone}，重新绑定新的手机号码#{params[:phone]}")
     end
     user = session_user_no_cache
-    #user.psd = slat_hash_pass(params[:password])  if params[:password]
     user.phone = params[:phone]
+    user.unset(:phone_hidden)  if user.phone_hidden
     user.save!
     render :json => {bind: true}.to_json
   end
