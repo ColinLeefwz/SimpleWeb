@@ -599,8 +599,8 @@ class User
     self.destroy
   end
   
-  def change_phone_redis(newphone)
-    $redis.del("P:#{self.phone}")
+  def change_phone_redis(oldphone,newphone)
+    $redis.del("P:#{oldphone}")
     $redis.set("P:#{newphone}", user.id)
   end
   
