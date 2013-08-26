@@ -14,10 +14,11 @@ class ShopPhotosController < ApplicationController
 
   def create
     @shop_photo = Photo.new(params[:photo])
-    @shop_photo.room = session[:shop_id]
+    @shop_photo.room = session[:shop_id].to_s
     @shop_photo.user_id = "s#{session[:shop_id]}"
 
     if @shop_photo.save
+      expire_cache_shop(session[:shop_id])
       flash[:success] = "上传到图片墙成功！"
       redirect_to :action => "shop"
     else
@@ -42,6 +43,7 @@ class ShopPhotosController < ApplicationController
   def update
     @shop_photo = Photo.find_by_id(params[:id])
     if @shop_photo.update_attributes(params[:photo])
+      expire_cache_shop(session[:shop_id])
       redirect_to :action => "shop"
     else
       render :action => "edit"
