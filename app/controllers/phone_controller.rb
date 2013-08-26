@@ -192,6 +192,7 @@ class PhoneController < ApplicationController
     ua.phone = params[:phone]
     ua.list = JSON.parse(params[:list])
     ua.save!
+    session_user_no_cache.set(:pmatch, true)
     render :json => {imported: ua.list.size}.to_json
   end
 
