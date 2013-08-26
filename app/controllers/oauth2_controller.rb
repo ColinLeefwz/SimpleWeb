@@ -284,6 +284,7 @@ class Oauth2Controller < ApplicationController
   end
   
   def do_login_wb_done(user,token,expires_in,data)
+    user.set(:wb_hidden, 0) if user.wb_hidden.to_i==2
     $redis.set("wbtoken#{user.id}",token)
     $redis.set("wbexpire#{user.id}",expires_in)
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
@@ -298,11 +299,7 @@ class Oauth2Controller < ApplicationController
         render :json => {error: "绑定新浪微博帐号失败"}.to_json
         return
       else
-        if user.wb_hidden==2
-          user.set(:wb_hidden, 0) 
-        else
-          Xmpp.error_notify("#{session[:user_id]} 重复绑定wb：#{wb_uid}")
-        end
+        Xmpp.error_notify("#{session[:user_id]} 重复绑定wb：#{wb_uid}") unless user.wb_hidden.to_i==2
         do_login_wb_done(user,token,expires_in,data)
       end
     else
@@ -351,6 +348,7 @@ class Oauth2Controller < ApplicationController
   end
   
   def do_login_qq_done(user,token,expires_in,data)
+    user.unset(:qq_hidden)  if user.qq_hidden
     $redis.set("qqtoken#{user.id}",token)
     $redis.set("qqexpire#{user.id}",expires_in)
     data.merge!( {:id => user.id, :password => user.password, :name => user.name, :gender => user.gender} )
@@ -365,11 +363,7 @@ class Oauth2Controller < ApplicationController
         render :json => {error: "绑定qq帐号失败"}.to_json
         return
       else
-        if user.qq_hidden
-          user.unset(:qq_hidden) 
-        else
-          Xmpp.error_notify("#{user.name} 重复绑定qq：#{openid}")  
-        end
+        Xmpp.error_notify("#{user.name} 重复绑定qq：#{openid}")  unless user.qq_hidden
         do_login_qq_done(user,token,expires_in,data)
       end
     else

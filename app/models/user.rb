@@ -27,6 +27,7 @@ class User
   field :qq_name
   field :qq_hidden, type:Boolean #true代表该qq被解除绑定
   field :phone_hidden, type:Boolean #true代表该手机被解除绑定
+  field :pmatch, type:Boolean #true代表启用通讯录匹配
   
 
   field :tk  #Push消息的token
@@ -597,6 +598,11 @@ class User
     photos.each {|x| x.destroy}
     Checkin.where({uid: _id}).each {|x| x.destroy}
     self.destroy
+  end
+  
+  def change_phone_redis(oldphone,newphone)
+    $redis.del("P:#{oldphone}")
+    $redis.set("P:#{newphone}", self.id)
   end
   
   
