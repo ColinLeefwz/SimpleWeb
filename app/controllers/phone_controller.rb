@@ -162,7 +162,7 @@ class PhoneController < ApplicationController
     end
     if session_user.phone && params[:phone] != session_user.phone
       Xmpp.error_notify("用户手机号码#{session_user.phone}，重新绑定新的手机号码#{params[:phone]}")
-      session_user.change_phone_redis(params[:phone])
+      session_user.change_phone_redis(session_user.phone, params[:phone])
     end
     user = session_user_no_cache
     user.phone = params[:phone]
