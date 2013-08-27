@@ -2,7 +2,8 @@
  *  图片上传预览， select文件选择框， divid： 图片要预览的id
  **/
 
-function imgUploadPreview2(select, divid){
+function imgUploadPreview2(select, divid){//问答系统
+
     $(select).change(function(){
         var picPath =  this.value
         var type = picPath.substring(picPath.lastIndexOf(".") + 1, picPath.length).toLowerCase();
@@ -23,16 +24,16 @@ function imgUploadPreview2(select, divid){
                 document.getElementById("image_view").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
 				document.getElementById("image_view").src ="http://shop.dface.cn/images/clear.gif";
 				//divObj.innerHTML="<img id='image_view1' style='background:url(file:///"+$(select).val()+") center center no-repeat;height: 100%; width: 100%;'/>";
-			}else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
-				divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
+			}
+            else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
+                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
-				
-            }else{
+            }
+            else{
                 divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 imageView = document.getElementById("image_view");
                 imageView.src = window.URL.createObjectURL(this.files[0]);
-				alert(document.getElementById("image_view").window.URL.createObjectURL(this.files[0]));
             }
 
         }catch (e) {
@@ -42,7 +43,7 @@ function imgUploadPreview2(select, divid){
 }
 
 
-function imgUploadPreview(select, divid){
+function imgUploadPreview(select, divid){//优惠券
     $(select).change(function(){
         var picPath =  this.value
         var type = picPath.substring(picPath.lastIndexOf(".") + 1, picPath.length).toLowerCase();
@@ -55,27 +56,28 @@ function imgUploadPreview(select, divid){
         try{
             var divObj = document.getElementById(divid)
             if(navigator.userAgent.indexOf("MSIE") > -1&& (navigator.userAgent.indexOf("MSIE 7.0") > -1|| navigator.userAgent.indexOf("MSIE 9.0") > -1 || navigator.userAgent.indexOf("MSIE 8.0") > -1)  ){
-                this.select();
+				this.select();
                 this.blur();
                 var path = document.selection.createRange().text;
                 document.selection.empty();
                 path = "file:///" + path.replace("\\",'/');
-                divObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
-            }
+                document.getElementById("image_view").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
+				document.getElementById("image_view").src ="http://shop.dface.cn/images/clear.gif";
+				//divObj.innerHTML="<img id='image_view1' style='background:url(file:///"+$(select).val()+") center center no-repeat;height: 100%; width: 100%;'/>";
+			}
             else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
-                divObj.innerHTML = "<img id='image_view' style='height: 197px; width: 194px' />";
+                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
             }
-            else{alert(3);
-                divObj.innerHTML = "<img id='image_view' style='height: 197px; width: 194px' />";
+            else{
+                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 imageView = document.getElementById("image_view");
                 imageView.src = window.URL.createObjectURL(this.files[0]);
-				//alert(window.URL.createObjectURL(this.files[0]));
             }
 
         }catch (e) {
-            alert("游览器不支持预览图片")
+            //alert("游览器不支持预览图片")
         }
     });
 }
