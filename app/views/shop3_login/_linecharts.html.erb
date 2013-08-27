@@ -13,7 +13,20 @@ $(function() {
                     data[i][1] 
                 ])
             }
-
+        Highcharts.setOptions({
+            lang: {
+                    loading: 'Loading...',
+                    months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                    decimalPoint: '.',
+                    numericSymbols: ['k', 'M', 'G', 'T', 'P', 'E'], // SI prefixes used in axis labels
+                    resetZoom: 'Reset zoom',
+                    resetZoomTitle: 'Reset zoom level 1:1',
+                    thousandsSep: ','
+            }
+        });
+        
         $('#linecharts').highcharts('StockChart', {
 
             rangeSelector : {
@@ -75,19 +88,7 @@ $(function() {
             ]
         });
 
-        Highcharts.setOptions({
-            lang: {
-                    loading: 'Loading...',
-                    months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                    shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                    weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                    decimalPoint: '.',
-                    numericSymbols: ['k', 'M', 'G', 'T', 'P', 'E'], // SI prefixes used in axis labels
-                    resetZoom: 'Reset zoom',
-                    resetZoomTitle: 'Reset zoom level 1:1',
-                    thousandsSep: ','
-            }
-        });
+
 
     });
 
