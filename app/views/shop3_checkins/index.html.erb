@@ -1,7 +1,5 @@
-
-
 <div class="con">
-  <div class="title1 mb30"><h2 class="f18">签到设置</h2></div>
+  <div class="title1 mb30"><h2 class="f18">签到管理</h2></div>
   <div class="submenu">
     <ul>
       <li class="hover"><a href="/shop3_checkins/index">最新签到</a></li>
@@ -33,13 +31,10 @@
           <%= shop3_ban_link(checkin.uid.to_s) %>
         </td>
       </tr>
-
     <% end %>
-
   </table>
-  <div class="pagination">
+
     <%= generate_paginate %>
-  </div>
 </div>
 
 <script defer="defer">
