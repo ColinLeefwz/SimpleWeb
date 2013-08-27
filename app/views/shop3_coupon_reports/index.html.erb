@@ -40,21 +40,18 @@
 					<th width="100" class="textcenter pl0">下载次数</th>
 					<th width="100" class="textcenter pl0">使用次数</th>
 				</tr> 
+				<% @report.each do |report| %>
 				<tr>
-				  <% @report.each do |report|   %>
-
 				  <td><a href="coupon_issuing3.html" title="查看详情"><%= report[0].name %><span class="gay1">（签到类）</span></a></td>
 				  <td width="150" align="center"><%= params[:day] %></td>
 				  <td width="100" align="center"><%= link_to report[1], "/shop3_coupons/newly_down?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}"%></td>
 				  <td width="100" align="center"><%=link_to report[2], "/shop3_coupons/newly_use?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}" %></td>
-				  <% end %>
 				</tr>
-
-		     </table>			
+				<% end %>
+		     </table>
 		</div>
 
 <script>
-
 $(document).ready(function(){
 	runing=$("#CB1").attr("class");
 	if(runing=="checkboxs1"){
