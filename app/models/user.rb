@@ -760,6 +760,11 @@ class User
     self.qq && self.qq.size>0 && !self.qq_hidden
   end
 
+  #在商家中的最后一次签到
+  def last_checkin(shop_id)
+    Checkin.where({sid: shop_id, uid: self.id}).sort({_id: -1}).limit(1).first
+  end
+
   def has_phone?
     self.phone && self.phone.size>0 && !self.phone_hidden
   end
