@@ -2,15 +2,7 @@
 			<div class="title1"><h2 class="f18">优惠券 详情</h2></div>
 				<div class="box6">
 					<div class="boxinner">
-					   <div class="btn4">
-							<%=  image_tag(@coupon.img,:style=>"width:100%;height:100%;")%>
-						</div>
-						<div class="box6right1">
-						   <% if @coupon.t == 2 %>
-							<span class="ws1"><%= @coupon.name%></span>
-						   <% end  %>
-							<span class="ws2">优惠额度，使用规则、期限等（限90个文字，一行限16个字符）</span>
-						</div>
+					   <%=  image_tag(@coupon.img,:style=>"width:100%;height:100%;")%>
 					</div>
 				</div>
 				<div class="clear1"></div>
