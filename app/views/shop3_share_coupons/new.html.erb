@@ -12,7 +12,7 @@
 <script src="/newbackstage/js/coupon.js" type="text/javascript"></script>
 <script defer="defer">
 $(document).ready(function(){
-	imgUploadPreview2("input[name='shop_faq[img]']", 'uploadPreview2');
+	imgUploadPreview("input[name='coupon[img2]']", 'uploadPreview');
 	runing=$("#CB1").attr("class");
 	if(runing=="checkboxs1"){
 		NavDiv();
@@ -23,11 +23,11 @@ $(document).ready(function(){
 		AllNoDH();
 	}
 	
-	$("input[name='shop_faq[img]']").click(function(){
-		imgUploadPreview2(this, 'uploadPreview2');
+	$("input[name='coupon[img2]']").click(function(){
+		imgUploadPreview(this, 'uploadPreview');
 	});
-	$("#uploadPreview2").click(function(){
-		$("#shop_faq_img").click();
+	$("#uploadPreview").click(function(){
+		$("#shop_coupon_img").click();
 	});
 });
 </script>
