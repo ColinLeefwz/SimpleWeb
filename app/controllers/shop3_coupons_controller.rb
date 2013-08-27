@@ -182,7 +182,7 @@ class Shop3CouponsController < ApplicationController
 
   def ajax_deply
     coupon = Coupon.find(params[:id])
-    text = (coupon.deply ? '<span class="gray">已停用</span>' : '<span class="red">失败了</span>')
+    text = (coupon.deply ? '已停用' : '失败了')
     $redis.srem("ACS#{session_shop.city}", session_shop.id) if session_shop.no_active?
     render :json => {text: text}
   end
