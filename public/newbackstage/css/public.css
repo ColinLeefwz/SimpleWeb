@@ -42,6 +42,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .del2{overflow:hidden;}
 .imgfilter{ filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);}
 
+.w55{width:55px !important;}
 .w150{width:150px !important;}
 .w235{width:235px !important;}
 .w700{width:700px !important;}
@@ -104,6 +105,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .mr24{margin-right:24px;}
 .mlr5 {margin-left:5px;margin-right:5px;}
 .mlr10{margin-left:10px;margin-right:10px;}
+.m_auto{margin-left:auto !important;margin-right:auto !important;}
 .lh20{line-height:20px !important;}
 
 .ie6mt5{_margin-top:5px;}
@@ -118,6 +120,8 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .btn8{cursor: pointer;text-align: center;width: 93px;height:23px;line-height:23px;border:1px solid #ccc;color:#00A0E3;padding:0px 6px;background-color:#eaeaea;}
 .btn9{width:95px;height:29px;line-height:29px;background-color:#00AAEE;border:1px #0099CC solid;text-align:center;display:block;color:#fff !important;cursor:pointer;border-radius:5px;}
 .btn10{background: transparent url("../images/btn8.jpg") left top no-repeat;border: none;color: #FFFFFF !important;cursor: pointer;height: 25px;line-height: 25px;text-align: center;width: 55px;}
+.btn11{width:95px;height:25px;line-height:25px;border:1px #0099CC solid;text-align:center;display:block;
+color:#fff !important;cursor:pointer;background-color:#00AAEE;}
 
 .title1{width:100%;overflow:hidden;clear:both;}
 .title1 h2{font-size:14px;color:#333333;font-family:"微软雅黑";}
@@ -175,8 +179,12 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 #PhotoPlane .n4{width:28px;height:25px;background:url("../images/sign28.png") center center no-repeat;display:inline-block;cursor:pointer;}
 #PhotoPlane .n5{width:28px;height:25px;background:url("../images/sign29.png") center center no-repeat;display:inline-block;cursor:pointer;}
 #PhotoPlane .n6{width:28px;height:25px;background:url("../images/sign31.png") center center no-repeat;display:inline-block;cursor:pointer;}
+#MesDiv{width:280px;height:100px;border:1px solid #ccc;position:absolute;left:50%;top:0px;z-index:121;font-size:14px;
+background-color:#f2f2f2;padding:8px;margin-left:-140px;box-shadow:0 0 5px #FFFFFF;display:none;line-height:25px;}
+#DelDiv{width:180px;height:100px;border:1px solid #ccc;position:absolute;left:50%;top:0px;z-index:121;font-size:14px;
+background-color:#f2f2f2;padding:8px;margin-left:-90px;box-shadow:0 0 5px #FFFFFF;display:none;line-height:25px;}
 
-.main{width:100%;zoom:1;}
+.main{width:100%;zoom:1; }
 
 .header{background:url(../images/bg1.png) left top repeat-x;width:100%;overflow:hidden;}
 .header .sign{width:61px;height:50px;position:absolute;left:0px;top:0px;cursor:pointer;background:url(../images/line.png) left top no-repeat;}
@@ -235,7 +243,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 
 .box2{width:100%;margin-top:40px;overflow:hidden;}
 .box2 .box2inner, .box2 .box2inner3{width:100%;overflow:hidden;position:relative;height:242px;margin-top:15px;}
-.box2 .box2inner .box2plane, .box2 .box2inner3 .box2plane3{width:260px;height:225px;background-color:#fff;border:1px solid #D7D7D7;position:absolute;color:#5E5E5E;text-align:center;padding-top:15px;zoom:1;overflow:hidden;}
+.box2 .box2inner .box2plane, .box2 .box2inner3 .box2plane3{width:200px;height:225px;background-color:#fff;border:1px solid #D7D7D7;position:absolute;color:#5E5E5E;text-align:center;padding-top:15px;zoom:1;overflow:hidden;}
 .box2 .box2inner .uparrow, .box2 .box2inner3 .uparrow{font-size:28px;color:#0078B6;padding-right:15px;background:url(../images/arrow1.png) right 10px no-repeat;}
 .box2 .box2inner .box2plane{padding-top:0px;height:240px;}
 .box2 .box2inner .downarrow, .box2 .box2inner3 .downarrow{font-size:28px;color:#0078B6;padding-right:15px;background:url(../images/arrow2.png) right 10px no-repeat;}
