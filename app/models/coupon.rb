@@ -115,7 +115,25 @@ class Coupon
     cpd = CouponDown.where({cid:self.id, uid: user_id}).sort({_id:-1}).limit(1).to_a
     return false if cpd.nil? || cpd.size==0
     return cpd[0].dat.to_date == Time.now.to_date
-  end  
+  end
+
+  def self.shop_downed_week(room)
+    sweek = Time.now.beginning_of_year.utc
+    eweek = Time.now.end_of_year.utc
+    CouponDown.where({sid:room,dat:{"$gt" => sweek,"$lt" => eweek}}).sort({_id:-1}).limit(10)
+  end
+
+  def self.shop_use_week(room)
+    sweek = Time.now.beginning_of_year.utc
+    eweek = Time.now.end_of_year.utc
+    CouponDown.where({sid:room,uat:{"$gt" => sweek,"$lt" => eweek}}).sort({_id:-1}).limit(10)
+  end
+
+  def self.shop_checkin_week(room)
+    sweek = Time.now.beginning_of_year.to_i.to_s(16).ljust(24,'0')
+    eweek = Time.now.end_of_year.to_i.to_s(16).ljust(24,'0')
+    Checkin.where({sid:room,id:{"$gt" => sweek, "$lt" => eweek}}).sort({_id:-1}).limit(10)
+  end
   
   def self.gen_demo(sid)
     demo = Coupon.new
