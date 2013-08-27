@@ -8,7 +8,7 @@ $(window).load(function(){
 	messageHeight=$("#Message").height();
 	//ua="ipad";
 	if(windowWidth<=1024){
-		$("div.main").css("width","1024px");	
+		$("div.main").css("width","1024px");
 	}
 	if(/MSIE/i.test(ua)&&documentHeight<=window.screen.height){//针对IE
 		$("#Nav").css("height",documentHeight+"px");
