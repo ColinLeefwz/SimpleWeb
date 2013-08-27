@@ -1,0 +1,1 @@
+<%= raw @downs.map { |b| [DateTime.parse(b.dat.strftime("%Y-%m-%d")).to_time.to_i*1000, 1] }.group_by{|m| m[0]}.map{|f,s| [f, s.count]}.reverse %>
