@@ -117,7 +117,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .btn5{width:42px;height:22px;line-height:22px;background:transparent url(../images/btn4.png) left top no-repeat;border:none;text-align:center;color:#fff;letter-spacing:1px;font-size:12px;cursor:pointer;}
 .btn6{background: transparent url("../images/btn5.jpg") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 25px;line-height: 25px;text-align: center;width: 68px;}
 .btn7{background: transparent url("../images/btn6.png") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 29px;line-height: 29px;text-align: center;width: 93px;}
-.btn8{cursor: pointer;text-align: center;width: 93px;height:23px;line-height:23px;border:1px solid #ccc;color:#00A0E3;padding:0px 6px;background-color:#eaeaea;}
+.btn8{cursor: pointer;text-align: center;width: 93px;height:23px;line-height:23px;border:1px solid #ccc;color:#00A0E3;padding:0px 6px;background-color:#eaeaea;font-size:12px;}
 .btn9{width:95px;height:29px;line-height:29px;background-color:#00AAEE;border:1px #0099CC solid;text-align:center;display:block;color:#fff !important;cursor:pointer;border-radius:5px;}
 .btn10{background: transparent url("../images/btn8.jpg") left top no-repeat;border: none;color: #FFFFFF !important;cursor: pointer;height: 25px;line-height: 25px;text-align: center;width: 55px;}
 .btn11{width:95px;height:25px;line-height:25px;border:1px #0099CC solid;text-align:center;display:block;
@@ -258,8 +258,13 @@ background-color:#f2f2f2;padding:8px;margin-left:-90px;box-shadow:0 0 5px #FFFFF
 .box2 .box2inner2 .list li.hover{color:#000;background-color:#fff;}
 .box2 .box2inner3{height:414px;margin-top:20px;}
 .box2 .box2inner3 .list li{line-height:14px;}
+<<<<<<< Updated upstream
 .box2 .box2inner3 .box2plane3{height:380px;}
 .box2 .box2inner4{overflow:hidden;position:relative;height:422px;border:1px solid #D7D7D7;margin-top:15px;background-color:#ffffff;}
+=======
+.box2 .box2inner3 .box2plane3{width:270px;height:380px;}
+.box2 .box2inner4{overflow:hidden;position:relative;height:350px;border:1px solid #D7D7D7;margin-top:15px;background-color:#ffffff;}
+>>>>>>> Stashed changes
 .box2 .box2inner4 .list4{width:100%;height:35px;line-height:35px;color:#949494;display:block;overflow:hidden;background:url(../images/bg2.png) left top repeat-x;font-size:14px;position:relative;}
 .box2 .box2inner4 .list4 li{float:left;padding:0px 20px;display:block;cursor:pointer;}
 .box2 .box2inner4 .list4 li.yourself{background:url(../images/sign5.png) 20px center no-repeat;padding-left:40px;border-left:1px solid #d7d7d7;}
@@ -372,6 +377,8 @@ background-color:#f2f2f2;padding:8px;margin-left:-90px;box-shadow:0 0 5px #FFFFF
 .tab1 td{padding-bottom:20px;}
 .tab1 .uploadbox {width:194px;height:194px;}
 .tab1 .uploadbox img{width:194px;height:194px;border-radius:6px;box-shadow:0px 0px 5px #aaa;}
+.tab1 .uploadbox2 {width:150px;height:150px;}
+.tab1 .uploadbox2 img{width:150px;height:150px;border-radius:6px;box-shadow:0px 0px 5px #aaa;}
 .tab1 .imgstyle{width:194px;height:194px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
 .tab1 .imgstyle2{width:150px;height:150px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
 .tab1 .imgstyle3{width:75px;height:75px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
