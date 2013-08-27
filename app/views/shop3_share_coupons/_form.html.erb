@@ -17,6 +17,7 @@
 	<div id='hint1' class="box7plane1" style="display: <%= @coupon.hint.blank? ? 'none' : '' %>">
 		<label>使用时输入内容的提示</label>
 		<%= f.text_field :hint,  :class => "inputs4 w235"  %>
+		<span class="f13 green2 ml10">例: 请输入此次消费的金额/请输入您的桌号/请输入您的手机号码</span>
 	</div>
 	
 	<div class="box7plane1 pt30 mb50">
@@ -24,31 +25,3 @@
 		<a class="btn3 l ml20" href="/shop3_share_coupons/list">取 消</a>
 	</div>
 </div>
-
-
-<script type="text/javascript">
-  function show_rulev(rv){
-    if(rv == '1' || rv == '3')
-    { 
-      $('#rulev').css("display","block");
-      lt = rv == '1' ? '前几名' : "累计次数";
-      $('#lt').replaceWith('<label id="lt">' + lt + '</label>');
-      $("#btnn3").css("display","none");
-    }
-    else{
-      $('#rulev').css("display","none");
-      // $("#btnn3").css("display","block");
-    }
-  }
-
-  function show_hint(rv){
-    if(rv == '1'){
-      // $("input[type='submit']:first").hide()
-      $('#hint1').show()
-    }
-    else{
-      $('#hint1').hide()
-      // $("input[type='submit']").show()
-    }
-  }
-</script>
