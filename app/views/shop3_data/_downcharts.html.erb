@@ -1,14 +1,14 @@
 <script type='text/javascript'>
 
-var checkin = [];
+var down = [];
 
 $(function() {
 
-    $.getJSON('/shop3_login/tojson.json', function(data) {
+    $.getJSON('/shop3_data/down_json.json', function(data) {
         // Create the chart
 
             for (i = 0; i < data.length; i++) {
-                checkin.push([
+                down.push([
                     data[i][0], // the date
                     data[i][1] 
                 ])
@@ -27,7 +27,7 @@ $(function() {
             }
         });
         
-        $('#linecharts').highcharts('StockChart', {
+        $('#downcharts').highcharts('StockChart', {
 
             rangeSelector : {
                 buttons: [{
@@ -69,13 +69,13 @@ $(function() {
 
 
             title : {
-                text : '每日签到'
+                text : '每日优惠券下载量'
             },
             
             series : [
                 {
-                    name : '签到',
-                    data : checkin,
+                    name : '优惠券下载量',
+                    data : down,
                     yAxis: 0,
                     tooltip: {
                         valueDecimals: 2,
@@ -95,5 +95,5 @@ $(function() {
 
 </script>
 
-<script src="http://code.highcharts.com/stock/highstock.js"></script>
-<div id="linecharts" style="height: 400px;"></div>
+<!-- <script src="http://code.highcharts.com/stock/highstock.js"></script> -->
+<div id="downcharts" style="height: 400px;width: 800px"></div>
