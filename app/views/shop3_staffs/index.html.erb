@@ -21,6 +21,7 @@
                   </select>
                   &nbsp;条/记录
                 </form> -->
+      <a href="/shop3_staffs/new" class="btn8 r mr10">从签到中添加</a>
     </div>
   </div>
   <form method="post" action=""/>
@@ -42,15 +43,20 @@
     </tr>
     <% @staffs.each do |staff| %>
       <tr id="Tr1">
-        <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><%= link_to  staff.user.try(:name)||'' , "/shop3_checkins/user?uid=#{staff.user_id}",:class => "f14" %>
-          <img align="absmiddle" class="ml10" src=<%= staff.user.gender.to_i==1?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>><br/>
+        <td valign="middle">
+          <%= link_to image_tag(UserLogo.img_url(staff.user.head_logo_id, :t1),:class=>"imgstyle", :align => "left"),"/shop3_checkins/user?uid=#{staff.user_id}"  %>
+          <%= link_to  staff.user.try(:name)||'' , "/shop3_checkins/user?uid=#{staff.user_id}",:class => "f14" %>
+          <img align="absmiddle" class="ml10" src=<%= staff.user.gender.to_i==1?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %> /><br/>
           <!-- <img align="absmiddle" class="ml10" src="images/man.png"><br/> -->
           年龄：<%= staff.user.age %><br/>
           签到次数：<%=link_to staff.checkin_count(staff.user_id),"/shop3_checkins?uid=#{staff.user_id}" %>次          </td>
         <!-- <td>2012-12-22 18:33 </td> -->
+        <td>
+          <%= staff.user.last_checkin(session[:shop_id]).cat.strftime("%Y-%m-%d %H:%M:%S") %>
+        </td>
         <td width="227" align="center">
           <%= link_to "历史签到", "/shop3_checkins?uid=#{staff.user_id}",:class => "mr10" %>
-          <%=link_to '删除',  '#',:onclick => "ajaxDeleteStaff($(this), '#{staff.id}');" ,:class => "del"%>
+          <%=link_to '删除',  'javascript:void(0)',:onclick => "ajaxDeleteStaff($(this), '#{staff.id}');" ,:class => "del"%>
 
           <!-- <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="1" title="删除">删除</a></td> -->
         </td>
