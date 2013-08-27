@@ -223,10 +223,10 @@ class User
   end
   
 
-  def attr_with_id
+  def attr_with_id(hide_psd=true)
     hash = self.attributes.merge({id: self._id, "password" => self.password})
     hash.delete("_id")
-    hash.delete("psd")
+    hash.delete("psd") if hide_psd
     hash.delete("qq")
     hash.merge!({qq_openid: self.qq}) if self.has_qq?
     hash.delete("wb_uid") if self.wb_hidden  == 2  
@@ -238,7 +238,7 @@ class User
   end
   
   def output_self
-    hash = self.attr_with_id.merge!(self.head_logo_hash)
+    hash = self.attr_with_id(false).merge!(self.head_logo_hash)
     hash
   end
 
