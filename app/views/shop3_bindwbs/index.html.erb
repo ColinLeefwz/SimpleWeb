@@ -26,41 +26,27 @@
       <% end %>
 
 
-      <br/>
-      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
         <tr >
           <td width="11%" ></td>
           <td width="60%" valign="center"> 您还没有绑定微博,现在就来绑定吧</td>
         </tr>
 
         <tr>
-          <td width="20%" align="right" valign="middle" class="pr20">(微博)登录名</td>
-          <td>
-            <div class="box12">
-              <%= f.text_field :login_name, :class =>"inputs6", :id=>"Inputs1" %>
-            </div>
-            
-          </td>
+          <td width="17%" align="right" valign="top" class="pr20">(微博)登录名</td>
+          <td><%= f.text_field :login_name, :class => "inputs2 mb10"%>(如:lianlian@126.com)</td>
         </tr>
 
         <tr>
-          <td width="20%" align="right" valign="middle" class="pr20">(微博)uid</td>
-          <td>
-            <div class="box12">
-              <%= f.text_field :wb_uid, :class =>"inputs6", :id=>"Inputs1" %>
-            </div>
-          </td>
+          <td width="17%" align="right" valign="top" class="pr20">(微博)uid</td>
+          <td><%= f.text_field :wb_uid, :class => "inputs2 mb10"%>(如:123456. 来自:http://weibo.com/u/123456)</td>
         </tr>
-
 
         <tr>
-          <td width="20%" align="right" valign="middle" class="pr20">(微博)昵称</td>
-          <td>
-            <div class="box12">
-              <%= f.text_field :name, :class =>"inputs6", :id=>"Inputs1" %>
-            </div>
-          </td>
+          <td width="17%" align="right" valign="top" class="pr20">(微博)昵称</td>
+          <td><%= f.text_field :name, :class => "inputs2 mb10"%>(如: 脸脸)</td>
         </tr>
+
         <tr>
           <td>&nbsp;</td>
           <td><input type="submit" name="Submit" value="提 交" class="btn2 l"/> </td>
