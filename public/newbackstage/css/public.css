@@ -363,7 +363,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
 .tab1 td{padding-bottom:20px;}
 .tab1 .uploadbox {width:194px;height:194px;}
-.tab1 .uploadbox img{width:194px;height:194px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
+.tab1 .uploadbox img{width:194px;height:194px;border-radius:6px;box-shadow:0px 0px 5px #aaa;}
 .tab1 .imgstyle{width:194px;height:194px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
 .tab1 .imgstyle2{width:150px;height:150px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
 .tab1 .imgstyle3{width:75px;height:75px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
