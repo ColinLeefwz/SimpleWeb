@@ -17,7 +17,9 @@
       <tr id="Tr<%= index+1%>">
         <td valign="middle">
 		<%= link_to image_tag(UserLogo.img_url(user.try(:head_logo_id),:t2), :class=> "imgstyle2", :align=>"left"), "/shop3_checkins/user?uid=#{chat[0]}"  %>
-          <%=link_to user.try(:name)||'', "/shop3_checkins/user?uid=#{chat[0]}" %><br/>
+          <%=link_to user.try(:name)||'', "/shop3_checkins/user?uid=#{chat[0]}" %>
+		<img src=<%= user.show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>  class="ml10" align="absmiddle"/>
+		  <br/>
           发表时间：<%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%=gchat_img2(chat[1]).html_safe %></td>
 		<% if @mids.include?(chat[3])%>
