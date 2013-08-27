@@ -44,9 +44,8 @@
           <th width="100">操作</th>
         </tr> 
 
-
         <% @coupons.each_with_index do |coupon, index| %>
-        <tr id="Tr<%= index+1%>">
+        <tr id="Tr<%= index+1 %>">
           <td>
 			<a href="show?id=<%= coupon.id%>" title="查看详情">
 				<%=image_tag(coupon.img.url(:t1),:id=>"img_#{coupon.id}", :class=>"l #{coupon.hidden && 'imgfilter'}",:width => "130") %>
@@ -68,9 +67,9 @@
 
         <%=link_to '编辑', ("edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑",:style => ("display:none" if !coupon.down_users.blank? || coupon.hidden == 1)  %>
         <% if coupon.hidden == 1 %>
-		  <a onclick="ajaxCD($(this),'<%=coupon.id%>',<%=coupon.allow_activate?%>,'<%= index%>')" class="act" title="激活此优惠券">激活此优惠券</a>
+		  <a onclick="ajaxCD($(this),'<%=coupon.id%>',<%=coupon.allow_activate?%>,'<%= index+1%>')" class="act" title="激活此优惠券">激活此优惠券</a>
 		<% else %>
-		  <a onclick="ajaxDeply(this, '<%=coupon.id%>')" class="act2" title="停用此优惠券">停用此优惠券</a>
+		  <a onclick="ajaxCD($(this), '<%=coupon.id%>',<%=coupon.allow_activate?%>,'<%= index+1%>')" class="act2" title="停用此优惠券">停用此优惠券</a>
         <% end %>
 		 <a onclick="ajaxDel(this,'<%=coupon.id%>')" class ="del" title ="删除" <%= style="display:none" if !coupon.down_users.blank?%> >删除</a>
         <%= (link_to '删除', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')", :class => "del",:title => "删除") if !coupon.down_users.blank?  %>
@@ -97,7 +96,6 @@ $(document).ready(function(){
     }else if(runing=="checkboxs2"){
       AllNoDH();
     }
-
     $(".tab2 tr:odd").addClass("trbg");
 });
 
@@ -106,26 +104,34 @@ function Cancel(obj,dt){
 	$(obj).removeClass().html("删除").attr("title","删除").addClass("del").attr("onclick","Del(this,$(this).attr('rel'))");
 }
  
-  function ajaxDeply(obj, coupon_id){
-    if(confirm("确定停用此优惠券么？"))
-    {
-      $.get("/shop3_coupons/ajax_deply",{id: coupon_id}, function(data) {
-        obj.replaceWith(data['text']);
-    $("#img_"+coupon_id).addClass("imgfilter");
-      });
-    }
-  }
 
-  function ajaxCD(obj,coupon_id,allow,index){
-    if(!allow){
-      if(confirm("确定激活此优惠券么？")){
+
+function ajaxCD(obj,coupon_id,allow,index){
+    if(allow==true){
         $.get("/shop3_share_coupons/ajax_activate",{id: coupon_id}, function(data) {
-			obj.replaceWith(data['text']);
-			$("#img_"+coupon_id).removeClass("imgfilter");
+			if(data['text']=="已激活."){
+				$("#img_"+coupon_id).removeClass("imgfilter");
+				$("#Tr"+index+" td").eq(3).removeClass("gay4").addClass("red2").html("有效");
+				obj.prev().attr("href","edit?id="+coupon_id).css("display","inline-block");
+				obj.removeClass().html(data['text']);
+				setTimeout(function(){
+					obj.addClass("act2").attr("onclick","ajaxCD($(this), '"+coupon_id+"',false,'"+index+"')");
+				},1000);
+			}
+
         });
-      }
-    }else{
-      alert('不能激活,已有一张有效的同规则优惠券。')
+    }else if(allow==false){
+		$.get("/shop3_coupons/ajax_deply",{id: coupon_id}, function(data) {
+			if(data['text']=="已停用"){
+				$("#img_"+coupon_id).addClass("imgfilter");
+				$("#Tr"+index+" td").eq(3).removeClass("red2").addClass("gay4").html("已停用");
+				obj.prev().attr("href","edit?id="+coupon_id).css("display","none");
+				obj.removeClass().html(data['text']);
+				setTimeout(function(){
+					obj.addClass("act").attr("onclick","ajaxCD($(this), '"+coupon_id+"' ,true,'"+index+"')");
+				},1000);
+			}
+		});
     }
   }
 
@@ -140,7 +146,6 @@ function ajaxDel(obj, coupon_id){
 			$(obj).fadeIn(500);
 		}else if(i<=0){
 			clearInterval(delTimer);
-			return false;
 			$.get("/shop3_coupons/ajax_del",{id: coupon_id}, function(data) {
 				if(data['text']){
 					$("#Tr"+n).hide(300,function(){
