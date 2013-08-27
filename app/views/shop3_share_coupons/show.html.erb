@@ -2,13 +2,7 @@
 			<div class="title1"><h2 class="f18">优惠券详情</h2></div>
 				<div class="box6">
 					<div class="boxinner">
-						<a class="btn4" style="background: url('/images/btn/coupon.png') repeat scroll left top transparent;"></a>
-						<div class="box6right1">
-							<input type="text" class="inputs2" value="<%= @coupon.name %>">
-							<textarea class="textarea3"><%= @coupon.desc.gsub("\r\n","<br/>").html_safe %></textarea>
-						</div>
-					   
-						<!-- <a class="btn4" style="background:url(images/pic6.jpg) left top no-repeat;"></a> -->
+						<%=  image_tag(@coupon.img,:style=>"width:100%;height:100%;")%>
 					</div>
 				</div>
 				<div class="clear1"></div>
