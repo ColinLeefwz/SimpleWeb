@@ -13,13 +13,13 @@
   </div>
   <% if @bind_wb.new_record? %>
     <%= form_for(@bind_wb, :url => '/shop3_bindwbs/create',:html => {  :id => 'cform' } ) do |f| %>
-     <%= flash[:notice] %>
-
-      <table width="750" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40">
-        <tr >
-          <td colspan="2" align="center" class="orange1">您还没有绑定微博,现在就来绑定吧</td>
+      <table width="750" border="0" cellspacing="0" cellpadding="0" class="tab1 mt20">
+	    <tr id="MesTr1" class="none">
+          <td colspan="2" align="center" class="orange1"><%= flash[:notice] %></td>
         </tr>
-
+        <tr id="MesTr2">
+          <td colspan="2" align="center" class="green1">您还没有绑定微博,现在就来绑定吧</td>
+        </tr>
         <tr>
           <td width="17%" align="right" valign="top" class="pr20">微博登录名</td>
           <td><%= f.text_field :login_name, :class => "inputs2 mb10"%>
@@ -80,7 +80,11 @@ $(document).ready(function(){
 	}
   
 	$(".tab2 tr:odd").addClass("trbg");
-	
+
+	if($("#MesTr1 td").html()!=""){
+		$("#MesTr1").removeClass();
+		$("#MesTr2").addClass("none");
+	}
 	$("#wbdel").click(function(){
 		if(!confirm("确定解除微博绑定么？"))
 	  return false;
