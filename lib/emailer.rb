@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'rexml/document'
 class Emailer < ActionMailer::Base
   def send_mail(name,body)
     mail(:subject => name,
