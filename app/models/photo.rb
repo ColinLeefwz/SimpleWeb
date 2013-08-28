@@ -257,7 +257,7 @@ class Photo
 
   #like重写， 现在的like是从redis中取
   def like
-    $redis.zrevrange("Like#{self.id}", 0, -1, withscores:true).map{|m| {"t" => Time.at(m[1]), "name" => User.find_by_id(m[0]).try(:name), 'id' => m[0] }}
+    $redis.zrevrange("Like#{self.id}", 0, -1, withscores:true).to_a.map{|m| {"t" => Time.at(m[1]), "name" => User.find_by_id(m[0]).try(:name), 'id' => m[0] }}
   end
 
   def self.init_like_redis
