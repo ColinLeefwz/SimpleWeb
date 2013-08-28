@@ -3,7 +3,7 @@
 			<div class="title1"><h2 class="f18 l">用户信息</h2>
 				<a onclick="history.back();" class="r pointer btn10">返回</a>
 			</div>
-			<table width="650" cellspacing="0" cellpadding="0" class="tab3">
+			<table width="700" cellspacing="0" cellpadding="0" class="tab3">
 			  <tr>
 				<td width="31%" rowspan="8" align="right" valign="top" class="pr20">
 				<%=link_to image_tag(@user.head_logo.try(:img).try(:url, :t2)), @user.head_logo.try(:img).try(:url), :target => "blank",:class => "imgstyle" %>
@@ -19,7 +19,7 @@
 			    <td height="20" valign="top">爱 好： <%= @user.hobby %> </td>
 			  </tr>
 			  <tr>
-				<td height="20" valign="top">微博昵称： <%= link_to @user.wb_name || '' , @user.weibo_home%> </td>
+				<td height="20" valign="top">微博昵称： <%= link_to @user.wb_name || '' , @user.weibo_home, :target=>"_blank"%> </td>
 			    <td height="20" valign="top">QQ昵称：<%= @user.qq_name %></td>
 			  </tr>
 			  <tr>
