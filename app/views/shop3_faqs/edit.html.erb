@@ -1,7 +1,20 @@
 <div class="con">
 	<div class="title1"><h2 class="f18">问答系统</h2></div>
       <div class="box4">
-        <div class="box4left">编辑<%= @shop_faq.od.rjust(2,"0")%>：<br/><%= @shop_faq.od.rjust(2,"0")%> => <%= @shop_faq.title%></div>
+        <div class="box4left">
+    <% if @shop_faqs.blank? %>
+    还没有设置问答系统，请创建 ===》
+    <% end %>
+    <% @shop_faqs.each do |faq| %>
+       <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
+       <% if faq.od == @shop_faq.od %>
+       <a href="/shop3_faqs/edit?id=<%=faq.id%>" style="color:blue;"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
+       <% else %>
+       <a href="/shop3_faqs/edit?id=<%=faq.id%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
+       <% end %>
+    <% end %>
+        </div>
+        
         <div class="box4right">
 <%= form_for(@shop_faq, :url => "/shop3_faqs/update?id=#{@shop_faq.id}",:html => { :multipart => true, :id => 'cform' } ) do |f| %>
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">

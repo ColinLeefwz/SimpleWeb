@@ -14,6 +14,7 @@ class Shop3FaqsController < ApplicationController
   end
 
   def edit
+    @shop_faqs = session_shop.faqs
     @shop_faq = ShopFaq.find(params[:id])
   end
 

@@ -54,7 +54,7 @@
 			 <% end %>
 
 			 <% @photos.each do |photo| %>
-			   <%=link_to image_tag(photo.img.try(:url, :t2), :class=>"imgstyle2"), photo.img.try(:url), :target => "blank"  %>
+			   <%=link_to image_tag(photo.img.try(:url, :t2), :class=>"imgstyle2"), "/shop3_content/show_photo?id=#{photo.id}", :target => "blank"  %>
 			 <% end %>
 
 			 </div>
@@ -78,3 +78,19 @@
 				<% end %>
 		  </table>
 	  </div>
+
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$(".tab2 tr:odd").addClass("trbg");
+});
+</script>
