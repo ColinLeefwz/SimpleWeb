@@ -168,7 +168,7 @@ class User
   end
   
   def black_xmpp_list
-    Xmpp.post("api/blocklist",:uid => self.uid)
+    Xmpp.post("api/blocklist",:uid => self.id)
   end
   
   
