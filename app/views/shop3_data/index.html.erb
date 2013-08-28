@@ -4,7 +4,7 @@
 				<div class="box2inner3" id="Dn2">
 
 					<div class="box2plane3" style="top:0px;left:0px;" id="Dn2_b0">
-						<span class="uparrow"><%= link_to @shop_checkin_week_num, "/shop3_checkins/rank_list"%></span>
+						<span class="uparrow"><%= link_to @shop_checkin_week_num, "/shop3_checkins/rank?flag=week&page=1"%></span>
 						<span class="ws">本周签到</span>
 						<ul class="list">
 						    <% @shop_checkin_week.each do |checkin| %>
@@ -61,7 +61,7 @@
 
                 				<div class="box2right1">
 					
-					<div class="box2inner4">
+					<div class="box2inner4 h423">
 							<ul class="list">
 								<li class="hover" onClick="SlideDoor(this,6)">每日签到</li>
 								<li onClick="SlideDoor(this,7)">每日优惠券下载量</li>
