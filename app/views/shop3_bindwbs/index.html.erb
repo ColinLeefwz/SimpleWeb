@@ -13,16 +13,7 @@
   </div>
   <% if @bind_wb.new_record? %>
     <%= form_for(@bind_wb, :url => '/shop3_bindwbs/create',:html => {  :id => 'cform' } ) do |f| %>
-      <% if @bind_wb.errors.any? %>
-        <div id="error_explanation">
-          <h2>绑定出错了</h2>
-          <ul>
-            <% @bind_wb.errors.messages.each do |k,msg| %>
-              <li><%= msg.join('') %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+     <%= flash[:notice] %>
 
       <table width="750" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40">
         <tr >
