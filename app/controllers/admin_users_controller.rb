@@ -32,6 +32,15 @@ class AdminUsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def change_gender
+    @user = User.find(params[:id])
+    if request.post?
+      @user.set(:gender, params[:gender].to_i)
+      Rails.cache.delete("User#{@user.id}")
+      return redirect_to :action => :show, :id => @user.id
+    end
+  end
+
   def logos
     user = User.find(params[:id])
     @logos = user.user_logos
