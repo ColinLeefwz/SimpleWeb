@@ -42,7 +42,7 @@ class ShopLoginController < ApplicationController
       Rails.cache.delete("LE#{ip}")
       session[:shop_id] = shop.id
       cookies[:id], cookies[:password] =params[:id],params[:password] if params[:remember]=='1'
-      o_uri_path, session[:o_uri_path] = session[:o_uri_path]||'/shop_login/index' , nil
+      o_uri_path, session[:o_uri_path] = '/shop3_login/index' , nil
       return redirect_to o_uri_path
     end
     render :layout => false
