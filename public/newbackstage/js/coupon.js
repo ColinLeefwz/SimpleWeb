@@ -1,4 +1,7 @@
 $(document).ready(function(){
+	if($("#Box6Message").html()!=""){
+		$("#Box6Message").animate({"top":"-40px"},300);
+	}
 	$("input.inputs2").click(function(){
 		$(this).addClass("onfocs");
 	}).keyup(function(){
