@@ -12,30 +12,8 @@
           <li><a href="/shop3_coupon_reports">统计报表</a></li>
         </ul>
         <div class="r">
-<!--         <form action="" method="post">
-          显示&nbsp;
-          <select name="select" class="p3">
-            <option value="10">10</option>
-            <option value="10">20</option>
-            <option value="10">30</option>
-          </select>
-          &nbsp;条/记录
-        </form> -->
         </div>
       </div>
-<!--       <div class="search">
-        搜索
-        <select name="select" class="p3 mlr10">
-          <option value="全部">全部</option>
-          <option value="编号">编号</option>
-          <option value="用户">用户</option>
-          <option value="优惠券">优惠券</option>
-          <option value="下载时间">下载时间</option>
-          <option value="收到时间">收到时间</option>
-        </select>
-        <input type="text" class="inputs5"/>
-        <input type="submit" value="提 交" class="btn6 ml10"/>
-      </div> -->
       <table width="100%" cellpadding="0" cellspacing="0" class="tab2">
         <tr class="change" id="Tr0">
           <th class="textleft pl15">优惠券</th>
@@ -59,10 +37,7 @@
 
 
           <td width="135" valign="middle" class="textcenter">
-<!--             <a href="coupon_issuing.html" class="edit" title="编辑">编辑</a>
-          <a href="#" class="act" title="激活">激活</a>
-            <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="5" title="删除">删除</a>   -->        
-
+        
         <%=link_to '编辑', ("edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑"%>
         <% if coupon.hidden == 1 %>
           <%= link_to '激活', '#', :onclick => "ajaxActivate($(this), '#{coupon.id}', #{coupon.allow_activate?})", :class => "act", :title => "激活" %>
