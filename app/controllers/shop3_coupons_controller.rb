@@ -77,13 +77,13 @@ class Shop3CouponsController < ApplicationController
     @coupon.process_img_upload = true if @coupon.t.to_i == 2
     if @coupon.img2.blank?
       flash.now[:notice]='请上传图片.'
-      return :action => :new
+      return render :action => :new
     end
 
     #    debugger
     if @coupon.rule && Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :t2 => 1, :rule => @coupon.rule  }).limit(1).any?
       flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
-      return :action => :new
+      return render :action => :new
     end
 
 
@@ -96,7 +96,7 @@ class Shop3CouponsController < ApplicationController
         redirect_to :action => :show_img2, :id => @coupon.id
       end
     else
-      render :action => :new
+      render render :action => :new
     end
   end
 
