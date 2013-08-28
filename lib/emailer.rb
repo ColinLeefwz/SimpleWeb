@@ -103,6 +103,9 @@ class Emailer < ActionMailer::Base
         合作商家优惠券使用情况统计，共下载#{xiazai}次 使用#{shiyong}次 使用率(#{(shiyong*100/xiazai.to_f).round(3)})%
 
          #{xzd.shop.name} 下载#{xzd.dcount}次 使用#{xzd.ucount}次
+
+         短信剩余量: #{REXML::Document.new(SmsSender.ihuiyi_remain).root.elements['num'].text}条
+
       DAYSTAT
     end
 
