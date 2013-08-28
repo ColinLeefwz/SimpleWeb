@@ -21,15 +21,21 @@
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
       <tr>
         <td width="17%" align="right" valign="top" class="pr20">旧密码</td>
-        <td><%= password_field_tag 'oldpass', '',:value => '', :class => "inputs2 mb10"%><span id="oldpass_err"></span></td>
+        <td><%= password_field_tag 'oldpass','',:class => "inputs2 mb10"%>
+			<span class="err"></span>
+		</td>
       </tr>
       <tr>
         <td align="right" valign="top" class="pr20">新密码</td>
-        <td><%= f.password_field :password, :class => "inputs2 mb10"%><span id="shop_pass_err"></span></td>
+        <td><%= f.password_field :password, :class => "inputs2 mb10"%>
+		<span class="err"></span>
+		</td>
       </tr>
       <tr>
         <td align="right" valign="top" class="pr20">确认密码</td>
-        <td><%= f.password_field :password_confirmation, :class => "inputs2 mb10"%><span id="shop_pass_con_err"></span></td>
+        <td><%= f.password_field :password_confirmation, :class => "inputs2 mb10"%>
+			<span class="err"></span>
+		</td>
       </tr>
       <tr>
         <td>&nbsp;</td>
@@ -39,54 +45,19 @@
     </table>
   <% end %>
 </div>
-
-<script>
-  function confirmation()
-  {
-    $(".err").text('')
-    if($("#oldpass").val()==""){
-      $("#oldpass_err").replaceWith("<span id='oldpass_err' class='err'>原始密码不能是空</span>")
-      return false;
-    }
-
-    if($("#shop_password").val()=="")
-    {
-      $("#shop_pass_err").replaceWith('<span id="shop_pass_err" class="err">新的密码不能是空</span>')
-      return false;
-    }
-    
-    if($("#shop_password").val().length < 6)
-    {
-      $("#shop_pass_err").replaceWith('<span id="shop_pass_err" class="err">新的密码长度必须大于6位</span>')
-      return false;
-    }
-    
-    if($("#shop_password_confirmation").val()=="")
-    {
-      $('#shop_pass_con_err').replaceWith('<span id="shop_pass_con_err" class="err">确认新密码不能是空</span>')
-      return false;
-    }
-    if($("#shop_password").val()!=$("#shop_password_confirmation").val()){
-      $('#shop_pass_con_err').replaceWith('<span id="shop_pass_con_err" class="err">新密码和确认新密码不一致</span>')
-      return false;
-    }
-    return true
-  }
-
-</script>
-
+<script src="/newbackstage/js/shop_info.js" type="text/javascript"></script>
 <script defer="defer">
-  $(document).ready(function(){
-    runing=$("#CB1").attr("class");
-    if(runing=="checkboxs1"){
-      NavDiv();
-      $(window).load(function(){
-        MessageDiv();
-      });
-    }else if(runing=="checkboxs2"){
-      AllNoDH();
-    }
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
   
-    $(".tab2 tr:odd").addClass("trbg");
-  });
+	$(".tab2 tr:odd").addClass("trbg");
+});
 </script>
