@@ -7,7 +7,7 @@
         <%=image_tag @user.head_logo.try(:img), size:"250x250" %>
         <h5>用户名:&nbsp;&nbsp;<%= to_emoji @user.name %><br></h5>
         <h5>用户id:&nbsp;&nbsp;<%= @user.id %><br></h5><br>
-        <% if session[:admin_id] == '520ddb9b20f3184b43000031' %>
+        <% if session[:admin_id].to_s == '520ddb9b20f3184b43000031' %>
             <%= link_to '修改性别',"/admin_users/change_gender?id=#{@user.id}" %><br/>
           <% end %>
         <<< <%= link_to '返回用户列表','index/' %>
