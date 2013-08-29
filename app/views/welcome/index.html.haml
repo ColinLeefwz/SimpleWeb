@@ -34,14 +34,16 @@
       = render 'linked_in_share_button'
 
 :javascript
-  var container = document.querySelector('#container');
-  var msnry = new Masonry( container, {
-  // options
-    columnWidth: 300,
-    itemSelector: '.item',
-    gutter: 10
+
+  docReady(function() {
+    var container = document.querySelector('#container');
+    var msnry = new Masonry( container, {
+    // options
+      columnWidth: 300,
+      itemSelector: '.item',
+      gutter: 5
+    });
   });
-      
 / .box
 /   = image_tag("6.jpg")
 /   = 

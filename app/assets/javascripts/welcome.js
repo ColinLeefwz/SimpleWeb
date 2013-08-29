@@ -1,12 +1,22 @@
-if(document.readyState === "complete") {
-  var container = document.querySelector('#container');
-  var msnry = new Masonry( container, {
-  // options
-    columnWidth: 300,
-    itemSelector: '.item',
-    gutter: 10
+
+$(document).ready(function(){
+  docReady(function() {
+    var container = document.querySelector('#container');
+    var msnry = new Masonry( container, {
+    // options
+      columnWidth: 300,
+      itemSelector: '.item',
+      gutter: 5
+    });
   });
-}
+
+  $(window).scroll(function()
+  {
+//     alert(""+$(window).scrollTop());
+//     alert($(document).height());
+//     alert($(window).height());
+  });
+});
 	
   // $("img.lazy").lazyload({
   //   effect : "fadeIn"
@@ -19,4 +29,5 @@ if(document.readyState === "complete") {
   //   js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
   //   fjs.parentNode.insertBefore(js, fjs);
   // }(document, 'script', 'facebook-jssdk'));
+
 
