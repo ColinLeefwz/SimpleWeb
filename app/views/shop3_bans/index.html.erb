@@ -17,9 +17,6 @@
       <th width="1215">用户名</th>
       <th width="157">&nbsp;</th>
     </tr>
-
-
-
     <% @users.each_with_index do |user, index| %>
 
       <tr id="Tr<%= index+1 %>">
@@ -31,13 +28,8 @@
         </td>
 
         <td width="157" align="center">
-          <a onclick="Del(this,$(this).attr('rel'), '<%= user.id %>')" class="del" rel="<%= index+1 %>" title="删除">删除</a></td>
+          <a onclick="Del(this,$(this).attr('rel'), '<%= user.id %>')" class="del" rel="<%= index+1 %>" title="删除"></a></td>
       </tr>
-
-
-
-
-
 
     <% end %>
   </table>

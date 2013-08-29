@@ -12,31 +12,8 @@
 					<li class="hover"><a href="/shop3_coupons/newly_use">最新使用记录</a></li>
 					<li><a href="/shop3_coupon_reports">统计报表</a></li>
 				</ul>
-<!-- 				<div class="r wordstyle">
-					<form action="" method="post">
-						显示&nbsp;
-						<select name="select" class="p3">
-							<option value="10">10</option>
-							<option value="10">20</option>
-							<option value="10">30</option>
-						</select>
-						&nbsp;条/记录
-					</form>
-				</div> -->
 			</div>
-<!-- 			<div class="search">
-				搜索
-				<select name="select" class="p3 mlr10">
-					<option value="全部">全部</option>
-					<option value="编号">编号</option>
-					<option value="用户">用户</option>
-					<option value="优惠券">优惠券</option>
-					<option value="查看时间">查看时间</option>
-					<option value="使用时间">使用时间</option>
-				</select>
-				<input type="text" class="inputs5"/>
-				<input type="submit" value="提 交" class="btn6 ml10"/>
-			</div> -->
+
 			<table width="100%" cellpadding="0" cellspacing="0" class="tab2">
 				<tr>
 					<th width="50">编号</th>
@@ -45,7 +22,7 @@
 					<th width="105">查看时间</th>
 					<th width="105">使用时间</th>
 					<th width="70">消费数据</th>
-				</tr>s
+				</tr>
 				<% @uses.each do |use| %>
 				<tr class="change">
 				  <td width="50"><%= use.download_num%></td>
@@ -56,13 +33,9 @@
 				  <td width="70" align="center"><%= use.data %>&nbsp;</td>
 				</tr>
 				<% end %>
-
-
 		  </table>
-		  <div class="pagination">
 		  	<%= generate_paginate.html_safe %>
-		  </div>
-			
+
 		</div>
 <script>
 $(document).ready(function(){
