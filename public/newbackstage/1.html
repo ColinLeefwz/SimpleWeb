@@ -1,39 +1,42 @@
-<!DOCTYPE HTML>
- 2 <html>
- 3 <head>
- 4 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
- 5 <title>html5 图片上传预览</title>
- 6 <script src="js/jquery-1.6.2.min.js" type="text/javascript"></script>
- 7 <script type="text/javascript">
- 8 $(function(){
- 9     $("input[type='file']").change(function(evt){
-10         var files = evt.target.files; 
-11 
-12         for (var i = 0, f; f = files[i]; i++) {
-13 
-14           if (!f.type.match('image.*')) {
-15             continue;
-16           }
-17 
-18           var reader = new FileReader();
-19 
-20           reader.onload = (function(theFile) {
-21             return function(e) {                                
-22              $("#list img").attr("src",e.target.result);  //预览图片的位置                 
-23             };
-24           })(f);
-25 
-26           reader.readAsDataURL(f);
-27         }
-28     });
-29 })
-30 
-31 </script>
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
 </head>
 <body>
-<form enctype="multipart/form-data" action="" method="post">
-  <input type="file" name="imageUpload" />
-   <div id="list"><img src=""></div>
-</form>
+<p>
+	<label>请选择一个图像文件：</label>
+	<input type="file" id="demo_input" />
+</p> 
+<div id="demo_result">
+	  <!-- 这里用来显示读取结果 -->
+</div> 
+
+<script src="js/jquery-1.6.2.min.js"></script>
+<script>
+if ( typeof FileReader === 'undefined' ){
+        demo_result.innerHTML = "<p class='warn'>抱歉，你的浏览器不支持 FileReader</p>";
+        demo_input.setAttribute( 'disabled','disabled' );
+} else {
+        demo_input.addEventListener( 'change',readFile,false );
+}
+
+function readFile(){
+        var file = $("#demo_input").get(0).files[0];
+
+/*		if(!/image\/\w+/.test(file.type)){
+                alert("请确保文件为图像类型");
+                return false;
+        }*/
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){alert(1);
+                demo_result.innerHTML = '<img src="'+this.result+'" alt=""/>'
+        }
+}
+
+</script>
+
+
 </body>
 </html>
