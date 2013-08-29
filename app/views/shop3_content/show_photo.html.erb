@@ -1,5 +1,11 @@
+<div id="BG"></div>
+<div id="DelDiv">
+	<center><br/>确定删除这张图片？</center>
+	<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+	<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
 <div class="con">
-  <div class="title1 mb30"><h2 class="f18">内容管理</h2></div>
+  <div class="title1 mb30"><h2 class="f18">照片墙管理</h2></div>
   <div class="submenu">
     <ul>
       <li <%= @photo.user_id == "s#{session[:shop_id]}" ||  "class=hover" %>><a href="user_photo">用户图片</a></li>
@@ -43,7 +49,7 @@
 
           <% if @photo.user_id == "s#{session[:shop_id]}" %>
             <%= link_to "", "/shop3_content/edit_photo?id=#{@photo.id}", :class => "n3", :title => "编辑" %>
-            <%= link_to "", "/shop3_content/delete_photo?id=#{@photo.id}", :class => "n6", :title => "删除" %>
+            <%= link_to "", "javascript:void(0)", :class => "n6", :title => "删除", :rel=> @photo.id %>
           <% else %>
             <% if @photo.hide %>
               <a class="n5" onclick="OC(this, '<%= @photo.id %>')" title="显示"></a>
@@ -88,20 +94,42 @@
 
 </div>
 <script defer="defer">
-  $(document).ready(function(){
-    runing=$("#CB1").attr("class");
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
 
-    if(runing=="checkboxs1"){
-      NavDiv();
-      Photo();
-      $(window).load(function(){
-        MessageDiv();
-      });
-      noing="norun"
-    }else if(runing=="checkboxs2"){
-      AllNoDH();
-    }
-  });
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$("div.box11 table a.n6").click(function(){
+		var top;
+		var id=$(this).attr("rel");
+		documentHeight=$(document).height();
+		windowHeight=$(window).height();
+		if(documentHeight<=windowHeight){
+			$("#BG").css({"height":windowHeight+"px","display":"block"});
+		}else{
+			$("#BG").css({"height":documentHeight+"px","display":"block"});
+		}
+		$("#DelDiv").css("display","block");
+		top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+		$("#DelDiv").css({"top":top+"px","display":"none"});
+		$("#DelDiv").fadeIn(600);
+
+
+		$("#DelBtn").click(function(){
+			$("#DelDiv,#BG").css("display","none");
+			$.get("/shop3_content/delete_photo.json", {id: id}, function(){
+				window.location.href="/shop3_content/shop_photo";
+			});
+		});
+    });
+});
 function OC(obj, id){
   if($(obj).attr("class")=="n4"){
 	$.get("/shop3_content/ajax_del", {id: id}, function(){
@@ -158,5 +186,10 @@ function ajaxUOH(obj, id, uid, txt){
 	  obj.removeClass("n2").addClass('n1');
 	});
   }
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
 }
 </script>
