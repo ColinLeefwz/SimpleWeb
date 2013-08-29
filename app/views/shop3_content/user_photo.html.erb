@@ -92,22 +92,22 @@
   });
   
 function OC(obj, id){//显示与隐藏
-  if($(obj).attr("class")=="n4"){
+  if($(obj).hasClass("n4")){
 	$.get("/shop3_content/ajax_del", {id: id}, function(){
-	  $(obj).removeClass().addClass("n5").attr("title","显示");
+	  $(obj).removeClass("n4").addClass("n5").attr("title","显示");
 	  $(obj).parent().addClass("bbj");
 	  $(obj).parent().siblings().addClass("bm");
 	  $(obj).parents("div.box9plane").addClass("opacity_55");
 	  $(obj).parents("div.box9plane").find(".photolinkcon").hide()
-	})
+	});
   }else{
 	$.get("/shop3_content/ajax_undel", {id: id}, function(){
-	  $(obj).removeClass().addClass("n4").attr("title","隐藏");
+	  $(obj).removeClass("n5").addClass("n4").attr("title","隐藏");
 	  $(obj).parent().removeClass("bbj");
 	  $(obj).parents("div.box9plane").find(".photolinkcon").show()
 	  $(obj).parent().siblings().removeClass("bm");
 	  $(obj).parents("div.box9plane").removeClass("opacity_55");
-	})
+	});
   }
 }
 

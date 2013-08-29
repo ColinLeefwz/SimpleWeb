@@ -126,6 +126,23 @@ POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/unblock} \\
 \end{table}
 
 
+\subsubsection{获取用户屏蔽列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/blocklist} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid  & 字符串 & 必填 &  发起解除屏蔽请求的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
 \subsubsection{杀掉用户会话}
 
 \begin{table}[H]

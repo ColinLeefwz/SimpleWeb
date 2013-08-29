@@ -55,6 +55,11 @@ class InitController < ApplicationController
       render :json => $ios[-1].to_json
     end
   end
+  
+  def debug
+    Resque.enqueue(XmppMsg, params[:uid1], params[:uid2], params[:str])
+    render :json => {ok:1}.to_json
+  end
 
   
   

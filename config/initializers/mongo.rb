@@ -127,6 +127,7 @@ module Mongoid
       #base.set_callback(:save, :after,  :update_my_cache)
       base.set_callback(:destroy, :after,  :del_my_cache)
       base.class_eval do
+        return if method_defined?(:add_to_set_without_cache)
         alias_method :add_to_set_without_cache, :add_to_set
         alias_method :add_to_set, :add_to_set_cache
         alias_method :inc_without_cache, :inc

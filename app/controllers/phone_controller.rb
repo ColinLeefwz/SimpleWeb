@@ -80,7 +80,7 @@ class PhoneController < ApplicationController
     Resque.enqueue(SmsSender, params[:phone], sms )  unless fake
     session[:phone_code] = code
     session[:phone_try] = 5
-    render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json
+    render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json #TODO: 取消code
   end
   
   def register
@@ -110,7 +110,7 @@ class PhoneController < ApplicationController
     if user.nil?
       Xmpp.error_notify("忘记密码时，手机号#{params[:phone]}验证通过，但是数据库中没有这个号码")
       render :json => {"error"=>"手机号码不存在"}.to_json
-      return      
+      return
     end
     user.psd = slat_hash_pass(params[:password])
     user.unset(:phone_hidden)  if user.phone_hidden
@@ -162,6 +162,9 @@ class PhoneController < ApplicationController
     end
     if session_user.phone && params[:phone] != session_user.phone
       Xmpp.error_notify("用户手机号码#{session_user.phone}，重新绑定新的手机号码#{params[:phone]}")
+      ua = UserAddr.find_by_id(session_user.id)
+      ua.delete if ua
+      session_user.set(:pmatch, false)
       session_user.change_phone_redis(session_user.phone, params[:phone])
     end
     user = session_user_no_cache
@@ -189,8 +192,11 @@ class PhoneController < ApplicationController
   
   def upload_address_list
     ua = UserAddr.find_or_new(session_user.id)
+    Xmpp.error_notify("用户#{session_user.name}，#{ua.phone}已经有通讯录了") if ua.phone
     ua.phone = params[:phone]
-    ua.list = JSON.parse(params[:list])
+    list = JSON.parse(params[:list])
+    list.delete_if {|x| x["number"].size<6}
+    ua.list = list
     ua.save!
     session_user_no_cache.set(:pmatch, true)
     render :json => {imported: ua.list.size}.to_json
