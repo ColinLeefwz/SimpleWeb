@@ -108,5 +108,10 @@ $(document).ready(function(){
 		offsetY: 8,
 		blockElement: 'div'
 	});
+	for(var div_i=0;div_i<num;div_i++){
+		if(!$("div.box4plane2").eq(div_i).find("img").length){//如果没有图片
+			$("div.box4plane2").eq(div_i).find(".box4plane3").css("width","100%");
+		}
+	}
 });
 </script>

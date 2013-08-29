@@ -59,8 +59,8 @@
           </tr>
         <% end %>
 
-        <% @share_coupons.each do |coupon| %>
-        <tr id="Tr1">
+        <% @share_coupons.each_with_index do |coupon, index| %>
+        <tr id="Tr<%= @coupons.count+index+1%>">
           <td>
    
           <%=link_to((image_tag(coupon.img.url(:t1),:id=>"img_#{coupon.id}", :class=>"l #{coupon.hidden && 'imgfilter'}",:width => "130")), coupon.img.url,  :target => "blank#{coupon.id}") %>
