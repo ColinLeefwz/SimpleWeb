@@ -22,9 +22,9 @@
 				</div>
 				<div class="box4con1">
 					<% unless faq.img.blank? %>
-					<%=link_to image_tag( "#{ShopFaq.img_url(faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgstyle", :align => "left"), faq.img.url, :target  => "_blank"  %>
+					<%=image_tag( "#{ShopFaq.img_url(faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgstyle l", :align => "left")%>
 					<% end %>
-					<%= faq.text%>
+					<div class="box4plane3"><%= faq.text%></div>
 				</div>
 			</div>
 		<% end %>

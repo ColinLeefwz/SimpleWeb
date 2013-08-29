@@ -8,7 +8,7 @@
     <% @shop_faqs.each do |faq| %>
        <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
        <% if faq.od == @shop_faq.od %>
-       <a href="/shop3_faqs/edit?id=<%=faq.id%>" class="blue1"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
+       <a href="/shop3_faqs/edit?id=<%=faq.id%>" class="blue3"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
        <% else %>
        <a href="/shop3_faqs/edit?id=<%=faq.id%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
        <% end %>
