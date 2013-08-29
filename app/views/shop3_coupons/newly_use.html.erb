@@ -42,19 +42,18 @@
 					<th width="50">编号</th>
 					<th>优惠券</th>
 					<th>用户</th>
-					<th width="95">查看时间</th>
-					<th width="95">使用时间</th>
+					<th width="105">查看时间</th>
+					<th width="105">使用时间</th>
 					<th width="70">消费数据</th>
-				</tr> 
-
+				</tr>s
 				<% @uses.each do |use| %>
 				<tr class="change">
 				  <td width="50"><%= use.download_num%></td>
 				  <td><a href="show?id=<%= use.cid %>"><%= use.coupon_name %></a> <span class="gay1">（<%= use.coupon_show_t2  %>）</span></td>
 				  <td><%=link_to use.user_name, "/shop3_checkins/user?uid=#{use.uid}"  %><img src=<%= use.user_show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %> class="ml10" align="absmiddle"/></td>
-				  <td width="95"><%= use.vat.since(8.hours).strftime("%Y-%m-%d %H:%M") if use.vat %></td>
-				  <td width="95"><%= use.uat.since(8.hours).strftime("%Y-%m-%d %H:%M") %></td>
-				  <td width="70" align="center"><%= use.data %></td>
+				  <td width="95"><%= use.vat.since(8.hours).strftime("%Y-%m-%d %H:%M") if use.vat %>&nbsp;</td>
+				  <td width="95"><%= use.uat.since(8.hours).strftime("%Y-%m-%d %H:%M") %>&nbsp;</td>
+				  <td width="70" align="center"><%= use.data %>&nbsp;</td>
 				</tr>
 				<% end %>
 
