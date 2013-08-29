@@ -110,7 +110,7 @@ class PhoneController < ApplicationController
     if user.nil?
       Xmpp.error_notify("忘记密码时，手机号#{params[:phone]}验证通过，但是数据库中没有这个号码")
       render :json => {"error"=>"手机号码不存在"}.to_json
-      return      
+      return
     end
     user.psd = slat_hash_pass(params[:password])
     user.unset(:phone_hidden)  if user.phone_hidden
