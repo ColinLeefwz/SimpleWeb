@@ -7,6 +7,7 @@
 	<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
 	<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
 </div>
+<div class="clear1"></div>
 <div class="con">
   <div class="title1 mb30"><h2 class="f18">照片墙管理</h2></div>
   <div class="submenu">
@@ -92,7 +93,6 @@
     $("div.bj a.n5").parents("div.box9plane").find(".photolinkcon").hide()
 
 
-
     $("div.box9plane a.n6").click(function(){
 		var top;
 		documentHeight=$(document).height();
@@ -166,7 +166,7 @@ function ZD(obj, id){//置顶
 }
 
 function QXZD(obj, id){//取消置顶
-	var x,y,a,b,rel,i;
+	var x,y,a,b,rel,i;alert(1);
 	var num=$("div.box9plane").length;
 
 	x=$("div.box9plane").eq(num-1).css("left"); y=$("div.box9plane").eq(num-1).css("top");
