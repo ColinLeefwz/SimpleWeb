@@ -47,9 +47,7 @@
 		  <% else %> 
 			<td width="45" class="textcenter red2">有效</td>
 		  <% end %>
-		  
           <td width="135" valign="middle" class="textcenter">        
-
         <%=link_to '', ("edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑",:style => ("display:none" if !coupon.down_users.blank? || coupon.hidden == 1)  %>
         <% if coupon.hidden == 1 %>
 		  <a onclick="ajaxCD($(this),'<%=coupon.id%>',<%=coupon.allow_activate?%>,'<%= index+1%>')" class="act" title="激活此优惠券"></a>
@@ -58,7 +56,6 @@
         <% end %>
 			<%= (link_to '', 'javascript:void(0)', :onclick => "ajaxDel('#{coupon.id}', '#{index}')", :class => "del",:title => "删除") if coupon.down_users.blank?  %>
 		</td>
-
           </tr>
         <% end %>
 
