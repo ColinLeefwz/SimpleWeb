@@ -82,19 +82,157 @@ Session.create(title: 'Intro Session to Lean Start-Up',
 	           expert: peter,
 			   description: 'How can lean start-up methods help me build a better business?',
 			   status: 'Upcoming',
-			   image_url: 'compass.jpg')
+			   image_url: '1.jpg')
 			  
 Session.create(title: 'Communicating With Chinese', 
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
-			   image_url: 'hottie business.jpg' )
+			   image_url: '2.jpg' )
 
 Session.create(title: 'Find The Happier You',
 	           expert: allen,
 	           description: 'How can I be happy despite the challenges of life?',
 	           status: 'Scheduled',
-	           image_url: 'couple on beach large.jpg')
+	           image_url: '3.jpg')
+
+Session.create(title: 'Intro Session to Lean Start-Up', 
+	           expert: peter,
+			   description: 'How can lean start-up methods help me build a better business?',
+			   status: 'Upcoming',
+			   image_url: '4.jpg')
+			  
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: '5.jpg' )
+
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: '6.jpg')
+			  
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: '2.jpg' )
+
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: '3.jpg')
+
+Session.create(title: 'Intro Session to Lean Start-Up', 
+	           expert: peter,
+			   description: 'How can lean start-up methods help me build a better business?',
+			   status: 'Upcoming',
+			   image_url: '4.jpg')
+			  
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: '5.jpg' )
+
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: '6.jpg')
+			  
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: '2.jpg' )
+
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: '3.jpg')
+
+Session.create(title: 'Intro Session to Lean Start-Up', 
+	           expert: peter,
+			   description: 'How can lean start-up methods help me build a better business?',
+			   status: 'Upcoming',
+			   image_url: '4.jpg')
+			  
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: '5.jpg' )
+
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: '6.jpg')
+			  
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: '2.jpg' )
+
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: '3.jpg')
+
+Session.create(title: 'Intro Session to Lean Start-Up', 
+	           expert: peter,
+			   description: 'How can lean start-up methods help me build a better business?',
+			   status: 'Upcoming',
+			   image_url: '4.jpg')
+			  
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: '5.jpg' )
+
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: '6.jpg')
+			  
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: '2.jpg' )
+
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: '3.jpg')
+
+Session.create(title: 'Intro Session to Lean Start-Up', 
+	           expert: peter,
+			   description: 'How can lean start-up methods help me build a better business?',
+			   status: 'Upcoming',
+			   image_url: '4.jpg')
+			  
+Session.create(title: 'Communicating With Chinese', 
+	           expert: peter,
+			   description: 'What cultural differences should I know when communicating with Chinese?',
+			   status: 'Prodygia Picks',
+			   image_url: '5.jpg' )
+
+Session.create(title: 'Find The Happier You',
+	           expert: allen,
+	           description: 'How can I be happy despite the challenges of life?',
+	           status: 'Scheduled',
+	           image_url: '6.jpg')
 
 
 

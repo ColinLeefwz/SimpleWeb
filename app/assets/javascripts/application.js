@@ -10,7 +10,9 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require social-share-button
+//= require jquery.min.js
 //= require jquery_ujs
 //= require turbolinks
+//= require masonry.pkgd.min.js
 //= require_tree .
