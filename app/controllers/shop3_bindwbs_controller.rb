@@ -20,12 +20,13 @@ class Shop3BindwbsController < ApplicationController
     if @bind_wb.save
       redirect_to :action => "index"
     else
-       flash.now[:notice] == '绑定失败,请检查微博uid和昵称的正确性.'
+      flash.now[:notice] == '绑定失败,请检查微博uid和昵称的正确性.'
     end
   end
 
   def del
     @bind_wb = BindWb.find(session[:shop_id])
+    Rails.cache.delete("BindWb#{@bind_wb.id}")
     @bind_wb.delete
     redirect_to :action => "index"
   end
