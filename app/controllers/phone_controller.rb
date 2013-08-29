@@ -162,7 +162,8 @@ class PhoneController < ApplicationController
     end
     if session_user.phone && params[:phone] != session_user.phone
       Xmpp.error_notify("用户手机号码#{session_user.phone}，重新绑定新的手机号码#{params[:phone]}")
-      UserAddr.find(session_user.id).delete
+      ua = UserAddr.find_by_id(session_user.id)
+      ua.delete if ua
       session_user.set(:pmatch, false)
       session_user.change_phone_redis(session_user.phone, params[:phone])
     end
