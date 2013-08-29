@@ -32,6 +32,7 @@ ul,ol{list-style:none;}
 .noneborder{border:none !important;}
 .noneleftborder{border-left:none !important;}
 .nonerightborder{border-right:none !important;}
+.none{display:none !important;}
 .wordstyle{font-size:12px;color:#707070;}
 .noraml{font-weight:normal;}
 .visible{overflow:visible !important;}
@@ -72,6 +73,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .fieldset1{display:block;border:1px solid #bbb;padding:5px 10px 10px 10px;min-height:120px;width:400px;border-radius:8px;}
 .fieldset1 legend{padding:0px 10px;margin-left:10px;font-size:14px;}
 
+.pt5{padding-top:5px !important;}
 .pt10{padding-top:10px !important;}
 .pt30{padding-top:30px !important;}
 .pl0{padding-left:0px !important;}
@@ -82,6 +84,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .ptb2{padding-top:2px;padding-bottom:2px;}
 .ptb15{padding-top:15px;padding-bottom:15px;}
 .plr3{padding-left:3px;padding-right:3px;}
+.pb0{padding-bottom:0px !important;}
 .p3{padding:3px;}
 .mt0{margin-top:0px !important;}
 .mt5{margin-top:5px !important;}
@@ -381,11 +384,12 @@ background-color:#f2f2f2;padding:8px;margin-left:-90px;box-shadow:0 0 5px #FFFFF
 .box11 table a{color:#00A0E3;}
 .box11 table a:hover{color:#005580;}
 .box11 #Close{width:30px;height:30px;cursor:pointer;position:absolute;top:-10px;right:-10px;background:url("../images/close.png");}
-.box11 .n2{width:28px;height:25px;background:url("../images/sign26_2.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box11 .n2_1{width:28px;height:25px;background:url("../images/sign26_1.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box11 .n4{width:28px;height:25px;background:url("../images/sign28.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box11 .n5{width:28px;height:25px;background:url("../images/sign29.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box11 .n6{width:28px;height:25px;background:url("../images/sign31.png") center center no-repeat;display:inline-block;cursor:pointer;}
+.box11 .n2{float:left;width:28px;height:28px;background:url("../images/sign35.jpg") center center no-repeat;display:inline-block;cursor:pointer;margin-right:22px;}
+.box11 .n2_1{float:left;width:28px;height:28px;background:url("../images/sign34.jpg") center center no-repeat;display:inline-block;cursor:pointer;margin-right:22px;}
+.box11 .n4{float:left;width:28px;height:28px;background:url("../images/sign36.jpg") center center no-repeat;display:inline-block;cursor:pointer;margin-right:22px;}
+.box11 .n5{float:left;width:28px;height:28px;background:url("../images/sign37.jpg") center center no-repeat;display:inline-block;cursor:pointer;margin-right:22px;}
+.box11 .n6{float:left;width:28px;height:28px;background:url("../images/sign38.jpg") center center no-repeat;display:inline-block;cursor:pointer;margin-right:22px;}
+.box11 .ns{width:50px;height:28px;line-height:28px;float:left;display:inline-block;margin-right:15px;color:#000;cursor:pointer;}
 
 .box12{position:relative;display:block;height:32px;}
 .box12 span#Mes1{position:absolute;left:0px;top:0px;line-height:30px;color:#FF6600;}
@@ -422,7 +426,7 @@ background-color:#f2f2f2;padding:8px;margin-left:-90px;box-shadow:0 0 5px #FFFFF
 .tab2 tr a.cancel{color:#F74747;cursor:pointer;padding:4px 10px;font-size:13px;display:inline-block;}
 .tab2 .imgstyle{width:60px;height:60px;border-radius:5px;border:1px solid #ccc;padding:1px;margin-right:15px;}
 .tab2 .imgstyle2{width:45px;height:45px;border-radius:5px;border:1px solid #ccc;padding:1px;margin-right:15px;}
-.tab2 td.img_con img{width:90px;margin-right:10px;margin-bottom:5px;}
+.tab2 td.img_con img{width:90px;margin-right:10px;margin-bottom:5px;word-break:break-all}
 .tab2 tr th.pc{padidng-left:0px !important;padding-right:0px !important;text-align:center;}
 .tab2 .pb{width:25px;height:25px;background:url("../images/sign33.png") center center no-repeat;display:inline-block;cursor:pointer;}
 .tab2 .nopb{width:25px;height:25px;background:url("../images/sign32.png") center center no-repeat;display:inline-block;cursor:pointer;}
@@ -463,13 +467,15 @@ background-color:#f2f2f2;padding:8px;margin-left:-90px;box-shadow:0 0 5px #FFFFF
 
 /**评论 begin**/
 .comment {clear: both;margin-top: 15px;overflow: hidden;}
-.comment dl {display: block;width: 100%;background: url(../images/dashed.gif) repeat-x left bottom;padding-top: 15px;padding-bottom: 10px;color: #6eafe3;overflow:hidden;zoom:1;line-height: 20px;}
+.comment dl {display: block;width: 100%;background: url(../images/dashed.gif) repeat-x left bottom;
+height:60px;padding-top: 15px;padding-bottom: 10px;color: #6eafe3;overflow:hidden;zoom:1;line-height: 20px;}
 .comment a { color: #0082cb; }
 .comment a:hover { color: #fd8703; }
 .comment dl dt {float: right;text-align: left;width: 740px;padding-right:10px;display: block;position:relative;}
 .comment dt .n1{display:inline-block;cursor:pointer;position:absolute;right:10px;top:15px;text-align:center;color:#FC3E46;font-size:13px;padding:1px 3px;}
-.comment dt a.n1:hover{border:1px solid #fd8703;color:#fd8703;padding:0px 3px;}
-.comment dt .n2{display:inline-block;cursor:pointer;position:absolute;right:10px;top:15px;text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;height:auto;}
+.comment dt a.n1:hover{border:1px solid #fd8703;color:#fd8703;padding:0px 3px;border-radius:6px;}
+.comment dt .n2{display:inline-block;cursor:pointer;position:absolute;right:10px;top:15px;margin-right:0px;
+text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;height:auto;border-radius:6px;}
 .comment dt a.n2:hover{border:1px solid #fd8703;color:#fd8703;padding:0px 3px;}
 .comment .dd_img {float: left;margin-right: 10px;display: block;width:54px;padding-left:10px;}
 .comment .dd_img img {padding: 1px;height: 50px;width: 50px;border: 1px solid #ccc;}

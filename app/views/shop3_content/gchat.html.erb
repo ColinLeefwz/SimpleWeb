@@ -21,7 +21,7 @@
 		<img src=<%= user.show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>  class="ml10" align="absmiddle"/>
 		  <br/>
           发表时间：<%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M:%S") %></td>
-        <td><%=gchat_img2(chat[1]).html_safe %></td>
+        <td class="img_con"><%=gchat_img2(chat[1]).html_safe %></td>
 		<% if @mids.include?(chat[3])%>
 		    <td class="gay4">已屏蔽</td>
 		<%else%>
