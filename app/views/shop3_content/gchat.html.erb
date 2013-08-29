@@ -15,19 +15,19 @@
 
       <% user = User.find_by_id(chat[0]) %>
       <tr id="Tr<%= index+1%>">
-        <td valign="middle">
+        <td valign="middle" width="292">
 		<%= link_to image_tag(UserLogo.img_url(user.try(:head_logo_id),:t2), :class=> "imgstyle2", :align=>"left"), "/shop3_checkins/user?uid=#{chat[0]}"  %>
           <%=link_to user.try(:name)||'', "/shop3_checkins/user?uid=#{chat[0]}" %>
 		<img src=<%= user.show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>  class="ml10" align="absmiddle"/>
 		  <br/>
           发表时间：<%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M:%S") %></td>
-        <td class="img_con"><%=gchat_img2(chat[1]).html_safe %></td>
+        <td class="img_con" width="555"><%=gchat_img2(chat[1]).html_safe %></td>
 		<% if @mids.include?(chat[3])%>
-		    <td class="gay4">已屏蔽</td>
+		    <td class="gay4" width="64">已屏蔽</td>
 		<%else%>
-			 <td class="red3">已显示</td>
+			 <td class="red3" width="64">已显示</td>
 		<%end%>
-		<td align="center" valign="middle">
+		<td align="center" valign="middle" width="64">
           <%= link_to "", "javascript:void(0)", :class => @mids.include?(chat[3])? "nopb" : "pb", :title => @mids.include?(chat[3])? "显示" : "屏蔽", :onclick => "ajaxNOH($(this), '#{chat[0]}', '#{chat[1]}', '#{chat[2]}', '#{chat[3]}','#{index+1}')"  %>
         </td>
       </tr>
