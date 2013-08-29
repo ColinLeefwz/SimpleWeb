@@ -18,7 +18,7 @@ $(document).ready(function(){
 			sp.next().css("display","inline").html("新密码长度小于6位");
 		}else if(spc.val()==""){
 			spc.next().css("display","inline").html("确认密码不能是空");
-		}else if(
+		}else{
 			spc.next().css("display","inline").html("新密码和确认密码不一致");
 		}
 	});

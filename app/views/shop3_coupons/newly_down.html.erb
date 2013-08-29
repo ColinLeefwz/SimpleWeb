@@ -39,18 +39,18 @@
 				<th width="55">编号</th>
 				<th>优惠券</th>
 				<th>用户</th>
-				<th width="100">下载时间</th>
-				<th width="100">收到时间</th>
-				<th width="55"></th>
+				<th width="105">下载时间</th>
+				<th width="105">收到时间</th>
+				<th width="45">&nbsp;</th>
 			</tr> 
 			<% @downs.each do |down| %>
 			<tr>
-			  <td width="55"><%= down.download_num%></td>
+			  <td><%= down.download_num%></td>
 			  <td><a href="show?id=<%= down.cid %>"><%= down.coupon_name %><span class="gay1">（<%= down.coupon_show_t2 %>）</span></a></td>
 			  <td><%=link_to down.user_name, "/shop3_checkins/user?uid=#{down.uid}"  %><img src=<%= down.user_show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>  class="ml10" align="absmiddle"/></td>
-			  <td width="100"><%=to_local down.dat%></td>
-			  <td width="100"><%=to_local down.sat%></td>
-			  <td width="55" align="center"><%= link_to '', "#", :onclick => "Send(this, '#{down.id}')",:class => "sign1",:title => '重发'  if down.sat.blank? && down.uat.blank? && Rails.cache.fetch("CD#{down.id}").nil?%></td>
+			  <td width="105"><%=to_local down.dat%>&nbsp;</td>
+			  <td width="105"><%=to_local down.sat%>&nbsp;</td>
+			  <td width="45" align="center"><%= link_to '', "#", :onclick => "Send(this, '#{down.id}')",:class => "sign1",:title => '重发'  if down.sat.blank? && down.uat.blank? && Rails.cache.fetch("CD#{down.id}").nil?%></td>
 			</tr>
 			<% end %>
 		</table>
