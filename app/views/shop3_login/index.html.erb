@@ -195,7 +195,26 @@ $(document).ready(function(){
 				</div>
 			</div>
 
-			<div class="box2">
-			<%= render :partial => "linecharts" %>
+<br><div class="title1"><a href="shop3_data"><h2 class="f18">数据统计</h2></a></div>
+	<div class="box2">
+		<div class="box2right1">
+			
+			<div class="box2inner4 h423">
+					<ul class="list">
+						<li class="hover" onClick="SlideDoor(this,6)">签到统计</li>
+						<li onClick="SlideDoor(this,7)">优惠券下载量</li>
+						<li class="noneborder" onClick="SlideDoor(this,8)">优惠券使用量</li>
+					</ul>
+					<ul class="list2" id="Door6">
+						<%= render :partial => "shop3_login/linecharts" %>
+					</ul>
+					<ul class="list2" id="Door7" style="display:none;">
+						<%= render :partial => "shop3_data/downcharts" %>
+					</ul>
+					<ul class="list2" id="Door8" style="display:none;">
+						<%= render :partial => "shop3_data/usecharts" %>
+					</ul>
 			</div>
+		</div>
+	</div>
 		</div>
