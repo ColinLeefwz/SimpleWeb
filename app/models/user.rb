@@ -508,8 +508,8 @@ class User
     Checkin.where({uid: _id, del: {"$exists" => false}}).sort({_id:-1})
   end
 
-  def is_staff?
-    !Staff.where({user_id: id}).empty?
+  def is_staff?(shop_id)
+    !Staff.where({user_id: id, shop_id: shop_id}).empty?
   end
   
   def room_photos
