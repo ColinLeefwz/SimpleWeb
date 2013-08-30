@@ -9,13 +9,13 @@ class Shop3ContentController < ApplicationController
     hash = {:room => session[:shop_id].to_i.to_s, :user_id => {"$ne" => "s#{session[:shop_id]}" }}
     hash.merge!({user_id: params[:uid]}) unless params[:uid].blank?
     sort = {:od => -1, :updated_at =>  -1}
-    @photos = paginate("Photo", params[:page], hash, sort,15)
+    @photos = paginate("Photo", params[:page], hash, sort,20)
   end
 
   def shop_photo
     hash = {:room => session[:shop_id].to_i.to_s, :user_id => "s#{session[:shop_id]}" }
     sort = {:od => -1, :updated_at =>  -1}
-    @photos = paginate("Photo", params[:page], hash, sort,15)
+    @photos = paginate("Photo", params[:page], hash, sort,20)
   end
 
   def show_photo
