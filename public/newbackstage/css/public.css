@@ -368,13 +368,13 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .box9 .box9plane img{width:152px;height:152px;}
 .box9 .box9plane .bj{position:absolute;text-align:center;left:0px;bottom:-25px;width:152px;height:25px;z-index:20;background:url("../images/bg3.png");}
 .box9 .box9plane .bbj{text-algin:right;}
-.box9 .n1{width:28px;height:25px;background:url("../images/sign30.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box9 .n2{width:28px;height:25px;background:url("../images/sign26.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box9 .n2_1{width:28px;height:25px;background:url("../images/sign26_1.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box9 .n3{width:28px;height:25px;background:url("../images/sign27.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box9 .n4{width:28px;height:25px;background:url("../images/sign28.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box9 .n5{width:28px;height:25px;background:url("../images/sign29.png") center center no-repeat;display:inline-block;cursor:pointer;}
-.box9 .n6{width:28px;height:25px;background:url("../images/sign31.png") center center no-repeat;display:inline-block;cursor:pointer;}
+.box9 .n1{width:28px;height:25px;background:url("../images/sign30.png") center center no-repeat;display:inline-block;cursor:pointer;zoom:1;}
+.box9 .n2{width:28px;height:25px;background:url("../images/sign26.png") center center no-repeat;display:inline-block;cursor:pointer;zoom:1;}
+.box9 .n2_1{width:28px;height:25px;background:url("../images/sign26_1.png") center center no-repeat;display:inline-block;cursor:pointer;zoom:1;}
+.box9 .n3{width:28px;height:25px;background:url("../images/sign27.png") center center no-repeat;display:inline-block;cursor:pointer;zoom:1;}
+.box9 .n4{width:28px;height:25px;background:url("../images/sign28.png") center center no-repeat;display:inline-block;cursor:pointer;zoom:1;}
+.box9 .n5{width:28px;height:25px;background:url("../images/sign29.png") center center no-repeat;display:inline-block;cursor:pointer;zoom:1;}
+.box9 .n6{width:28px;height:25px;background:url("../images/sign31.png") center center no-repeat;display:inline-block;cursor:pointer;zoom:1;}
 .box9 .imgstyle{width:280px;border-left:2px solid #fff;border-top:2px solid #fff; border-right:2px solid #ccc;border-bottom:2px solid #aaa;}
 .box9 table{line-height:20px;font-size:14px;color:#333;}
 .box9 table a{color:#00A0E3;}
