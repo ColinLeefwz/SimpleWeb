@@ -88,11 +88,14 @@ $(document).ready(function(){
 			$("#Box6Message").animate({"top":"-40px"},300);
 			return false;
 		}
-		if(imgsrc=="/newbackstage/images/pic6.jpg"||imgsrc==""){
-			$("#Box6Message").html("请上传一张优惠券图片");
-			$("#Box6Message").animate({"top":"-40px"},300);
-			return false;
-		}
+                
+                if($("#uploadPreview").attr("rel")!="share"){
+                    if(imgsrc=="/newbackstage/images/pic6.jpg"||imgsrc==""){
+                            $("#Box6Message").html("请上传一张优惠券图片");
+                            $("#Box6Message").animate({"top":"-40px"},300);
+                            return false;
+                    }
+                }
 		if($("#rulev").css("display")=="block"){
 			if($("#coupon_rulev").val()==""){
 				$("#coupon_rulev").addClass("onfocus2");
