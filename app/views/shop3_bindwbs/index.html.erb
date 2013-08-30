@@ -1,3 +1,9 @@
+<div id="BG"></div>
+<div id="DelDiv">
+	<center><br/>确定删除这名员工？</center>
+	<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+	<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
 <div class="con">
   <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
   <div class="submenu">
@@ -59,8 +65,9 @@
         <td><%= @bind_wb.login_name %></td>
         <td width="244" align="center"><%= @bind_wb.name %></td>
         <td width="264" align="center">
-          <%= link_to "微博", @bind_wb.weibo_home, :target => "_blank" %>
-          <%= link_to '解除', '/shop3_bindwbs/del', :id => "wbdel" %></td>
+          <%= link_to "微博", @bind_wb.weibo_home, :target => "_blank", :class=>"ns1"%>
+			<a onclick="Del();" class="del" href="javascript:void(0)" title="解除"></a>
+		  </td>
       </tr>
     </table>
   <% end %>
@@ -85,9 +92,28 @@ $(document).ready(function(){
 		$("#MesTr1").removeClass();
 		$("#MesTr2").addClass("none");
 	}
-	$("#wbdel").click(function(){
-		if(!confirm("确定解除微博绑定么？"))
-	  return false;
-	});
 });
+function Del(){
+	var top;
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if(documentHeight<=windowHeight){
+		$("#BG").css({"height":windowHeight+"px","display":"block"});
+	}else{
+		$("#BG").css({"height":documentHeight+"px","display":"block"});
+	}
+	$("#DelDiv").css("display","block");
+	top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+	$("#DelDiv").css({"top":top+"px","display":"none"});
+	$("#DelDiv").fadeIn(600);
+
+	$("#DelBtn").click(function(){
+		window.location.href="/shop3_bindwbs/del";
+	});
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
 </script>
