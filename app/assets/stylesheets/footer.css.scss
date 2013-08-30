@@ -1,8 +1,15 @@
 #footer{
-  div{
-    display: inline-block;
-  }
+  border-top: 4px solid #880848;
+  border-bottom: 2px solid #880848;
+  height: 50px;
 
   .links{
+    a{
+      vertical-align: middle;
+      margin-right: 20px;
+      font-size: 18px;
+      color: #880848;
+      text-decoration: none;
+     }
   }
 }
