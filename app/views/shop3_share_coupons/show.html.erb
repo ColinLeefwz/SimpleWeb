@@ -2,7 +2,17 @@
 			<div class="title1"><h2 class="f18">优惠券详情</h2></div>
 				<div class="box6">
 					<div class="boxinner">
-						<%=  image_tag(@coupon.img,:style=>"width:100%;height:100%;")%>
+						<% if !@coupon.img.blank? %>
+							<%=image_tag(@coupon.img,:style=>"width:100%;height:100%;")%>
+						<% else %>
+							<div class="btn4 auto">
+								<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic16_1.jpg"/>
+							</div>
+							<div class="box6right1">
+								<span class="inputs2 block">优惠券名称</span>
+								<span class="textarea3 block">一个星期又过去啦。</span>
+							</div>
+						<% end %>
 					</div>
 				</div>
 				<div class="clear1"></div>
@@ -12,7 +22,6 @@
 					<td width="43%">发放规则：<%= @coupon.show_rule %></td>
 					<% if [1,3].include?(@coupon.rule.to_i) %>
                       <td width="57%"><%= rulev_lable(@coupon.rule.to_i) %><%= @coupon.rulev%></td>
-                      
                     <% end %>
 				  </tr>
 				  <tr class="change">
@@ -28,7 +37,7 @@
 				  <% end %>
 				</table>
 					<div class="box7plane1 pt30 mb50">
-                        <%= link_to '返 回', 'list', :class=>"btn2" %>
+                        <%= link_to '返 回', '/shop3_coupons/list', :class=>"btn2" %>
 					</div>
 				</div>
 		</div>
