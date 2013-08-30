@@ -110,7 +110,7 @@ display: block;height: 43px;line-height: 43px;text-align: center;width: 122px;te
 .plane span{color: #00B8FF;position: absolute;right:10px}
 
 .plane2{clear:both;overflow:hidden;zoom:1;}
-.plane2 input.btn{background-color:#00B8FF;color:#ffffff;width:100px;padding:10px 0px;float:right;border:none;cursor:pointer;_padding:8px 0px;}
+.plane2 input.btn{background-color:#00B8FF;color:#ffffff;width:100px;height:35px;line-height:35px;float:right;border:none;cursor:pointer;}
 .plane2 a{color:#00B8FF;float:left;}
 .plane2 a:hover{color:#ff7700;}
 .plane2 .plane2inner{color: #666;display:block;padding-top:160px;clear:both;overflow:hidden;text-align:center;}
