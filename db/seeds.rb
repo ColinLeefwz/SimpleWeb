@@ -65,26 +65,15 @@ jevan = Expert.create(name: 'jevan',
 	          authorized: false
 	          )
 
-
-
-
-# Session.create(title: 'First Session', 
-# 	           expert: peter,
-# 			   description: 'just a test',
-# 			   status: 'Prodygia Picks')
-			  
-# Session.create(title: 'Second Session', 
-# 	           expert: allen,
-# 			   description: 'just a test2',
-# 			   status: 'Prodygia Picks')
-
-Session.create(title: 'Intro Session to Lean Start-Up', 
+#### TODO: init new sessions with the "content_type"
+=begin
+Session.create(title: 'Intro Session to Lean Start-Up',
 	           expert: peter,
 			   description: 'How can lean start-up methods help me build a better business?',
 			   status: 'Upcoming',
 			   image_url: '1.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -96,13 +85,13 @@ Session.create(title: 'Find The Happier You',
 	           status: 'Scheduled',
 	           image_url: '3.jpg')
 
-Session.create(title: 'Intro Session to Lean Start-Up', 
+Session.create(title: 'Intro Session to Lean Start-Up',
 	           expert: peter,
 			   description: 'How can lean start-up methods help me build a better business?',
 			   status: 'Upcoming',
 			   image_url: '4.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -113,8 +102,8 @@ Session.create(title: 'Find The Happier You',
 	           description: 'How can I be happy despite the challenges of life?',
 	           status: 'Scheduled',
 	           image_url: '6.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -126,13 +115,13 @@ Session.create(title: 'Find The Happier You',
 	           status: 'Scheduled',
 	           image_url: '3.jpg')
 
-Session.create(title: 'Intro Session to Lean Start-Up', 
+Session.create(title: 'Intro Session to Lean Start-Up',
 	           expert: peter,
 			   description: 'How can lean start-up methods help me build a better business?',
 			   status: 'Upcoming',
 			   image_url: '4.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -143,8 +132,8 @@ Session.create(title: 'Find The Happier You',
 	           description: 'How can I be happy despite the challenges of life?',
 	           status: 'Scheduled',
 	           image_url: '6.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -156,13 +145,13 @@ Session.create(title: 'Find The Happier You',
 	           status: 'Scheduled',
 	           image_url: '3.jpg')
 
-Session.create(title: 'Intro Session to Lean Start-Up', 
+Session.create(title: 'Intro Session to Lean Start-Up',
 	           expert: peter,
 			   description: 'How can lean start-up methods help me build a better business?',
 			   status: 'Upcoming',
 			   image_url: '4.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -173,8 +162,8 @@ Session.create(title: 'Find The Happier You',
 	           description: 'How can I be happy despite the challenges of life?',
 	           status: 'Scheduled',
 	           image_url: '6.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -186,13 +175,13 @@ Session.create(title: 'Find The Happier You',
 	           status: 'Scheduled',
 	           image_url: '3.jpg')
 
-Session.create(title: 'Intro Session to Lean Start-Up', 
+Session.create(title: 'Intro Session to Lean Start-Up',
 	           expert: peter,
 			   description: 'How can lean start-up methods help me build a better business?',
 			   status: 'Upcoming',
 			   image_url: '4.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -203,8 +192,8 @@ Session.create(title: 'Find The Happier You',
 	           description: 'How can I be happy despite the challenges of life?',
 	           status: 'Scheduled',
 	           image_url: '6.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -216,13 +205,13 @@ Session.create(title: 'Find The Happier You',
 	           status: 'Scheduled',
 	           image_url: '3.jpg')
 
-Session.create(title: 'Intro Session to Lean Start-Up', 
+Session.create(title: 'Intro Session to Lean Start-Up',
 	           expert: peter,
 			   description: 'How can lean start-up methods help me build a better business?',
 			   status: 'Upcoming',
 			   image_url: '4.jpg')
-			  
-Session.create(title: 'Communicating With Chinese', 
+
+Session.create(title: 'Communicating With Chinese',
 	           expert: peter,
 			   description: 'What cultural differences should I know when communicating with Chinese?',
 			   status: 'Prodygia Picks',
@@ -233,6 +222,7 @@ Session.create(title: 'Find The Happier You',
 	           description: 'How can I be happy despite the challenges of life?',
 	           status: 'Scheduled',
 	           image_url: '6.jpg')
+=end
 
 
 
