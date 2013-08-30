@@ -14,5 +14,6 @@
 //= require jquery.min.js
 //= require jquery_ujs
 //= require turbolinks
+//= require scrolltopcontrol.js
 //= require masonry.pkgd.min.js
 //= require_tree .

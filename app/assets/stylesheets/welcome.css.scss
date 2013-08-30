@@ -1,19 +1,15 @@
-// Place all the styles related to the welcome controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  margin: 0;
+  padding: 0;
+  font-family: ‘Lucida Console’, Monaco, monospace;
+  font-size: 12px;
+  color: #444444;
+  text-align: center;
+  line-height: 18px;
+  background: rgb(240,242,244);
+}
 
-.controls {
-display: inline-block;
-}
-.controls li {
-margin-left: 1.4035%;
-display: inline;
-cursor: pointer;
-}
-.controls li.active {
-font-weight: 700;
-}
-#container {
+.#container {
   width: 93.561404%; //   64.561404%;
   margin: 0 auto;
 
@@ -23,7 +19,6 @@ font-weight: 700;
     text-align: center;
     margin-bottom: 2.45614%;
     display: block;
-
 
     img {
       width: 100%;
