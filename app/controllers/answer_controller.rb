@@ -9,11 +9,11 @@ class AnswerController < ApplicationController
     uid = params["uid"]
     msg = params["msg"]
     mid = params["mid"]    
-    Xmpp.send_gchat2(uid,sid,uid,msg,mid)
+    #Xmpp.send_gchat2(uid,sid,uid,msg,mid, nil, " NOLOG='1' ")
     shop = Shop.find_by_id(sid)
     text = shop.answer_text(msg)
     @text = text if ENV["RAILS_ENV"] == "test"
-    Xmpp.send_gchat2($gfuid,sid,uid, text) if text
+    Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", " NOLOG='1' ") if text
     render :text => "1"
   end
   
