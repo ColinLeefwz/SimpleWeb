@@ -51,8 +51,7 @@ class Photo
     send_qq if qq
     if weibo || qq || (wx && wx>0)
       send_coupon
-      #听说分享， 发送关联商家的分享优惠券
-      ting_shuo_send_share
+
       send_pshop_coupon
       Lord.assign(room,user_id) if t==1 && desc && desc.index("我是地主")
       Resque.enqueue(PhotoNotice, self.id) unless Os.overload?
