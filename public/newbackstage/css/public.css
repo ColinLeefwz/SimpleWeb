@@ -45,6 +45,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .err{font-size:13px;margin-left:20px;color:#f60;display:none;}
 .radius5{border-radius:5px !important;}
 .nobg{background-image:none !important;}
+.ns1{cursor: pointer;display: inline-block;float: left;padding: 10px 0px 10px 20px;}
 
 .w55{width:55px !important;}
 .w150{width:150px !important;}
