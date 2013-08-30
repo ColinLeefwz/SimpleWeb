@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130815053230) do
+ActiveRecord::Schema.define(version: 20130830093830) do
 
   create_table "contact_messages", force: true do |t|
     t.string   "name"
@@ -58,7 +58,10 @@ ActiveRecord::Schema.define(version: 20130815053230) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_url"
+    t.string   "image_url",    default: "default.png"
+    t.string   "content_type"
+    t.string   "catalog"
+    t.string   "video_url"
   end
 
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
