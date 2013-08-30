@@ -13,7 +13,7 @@ class Shop3CouponsController < ApplicationController
 
   def list
     hash = {:shop_id => session[:shop_id]}
-    sort = {:t2 => 1, :hidden => 1, :_id => -1}
+    sort = {:hidden => 1,:t2 => 1,  :_id => -1}
     @coupons = paginate("Coupon", params[:page], hash, sort,10)
   end
 
@@ -178,6 +178,13 @@ class Shop3CouponsController < ApplicationController
       @users = @coupon.users.to_a.select{|s| s['uat']}.sort{|x,y| y['uat'] <=> x['uat']}
       @users = paginate_arr(@users, params[:page],10 )
     end
+  end
+
+  def ajax_activate
+    @coupon = Coupon.find(params[:id])
+    @coupon.unset(:hidden)
+    $redis.sadd("ACS#{session_shop.city}", session_shop.id)
+    render :json => {:text => "已激活."}
   end
 
   def ajax_deply
