@@ -42,7 +42,7 @@
 				</tr> 
 				<% @report.each do |report| %>
 				<tr>
-				  <td><a href="/shop3_coupons/show?id=<%= report.cid %>" title="<%= report[0].name %>"><%= report[0].name %><span class="gay1"><%= coupon.show_t2  %> — <%= coupon.show_rule%></span></a></td>
+				  <td><a href="/shop3_coupons/show?id=<%= report[0].cid %>" title="<%= report[0].name %>"><%= report[0].name %><span class="gay1"><%= coupon.show_t2  %> — <%= coupon.show_rule%></span></a></td>
 				  <td width="150" align="center"><%= params[:day] %></td>
 				  <td width="100" align="center"><%= link_to report[1], "/shop3_coupons/newly_down?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}"%></td>
 				  <td width="100" align="center"><%=link_to report[2], "/shop3_coupons/newly_use?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}" %></td>
