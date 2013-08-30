@@ -25,8 +25,8 @@ class Shop3BindwbsController < ApplicationController
   end
 
   def del
-    @bind_wb = BindWb.find(session[:shop_id])
-    Rails.cache.delete("BindWb#{@bind_wb.id}")
+    @bind_wb = BindWb.find(session[:shop_id].to_i)
+    Rails.cache.delete("BindWb#{@bind_wb.id.to_i}")
     @bind_wb.delete
     redirect_to :action => "index"
   end

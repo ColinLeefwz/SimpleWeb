@@ -16,7 +16,7 @@ class SimilarShop
           flag = ss.find{|x| x.id<shop.id}
           next if flag
           data = [{id: shop.id, name: shop.name}]
-          ss.each {|x|  data << {id: x.id, name: x.name, dis: [] }}
+          ss.each {|x|  data << {id: x.id, name: x.name, dis: Shop.new.get_distance(x.loc_first, shop.loc_first) }}
           self.create(city: city, data: data)
         end
       rescue
