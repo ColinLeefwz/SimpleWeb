@@ -59,32 +59,7 @@
           </tr>
         <% end %>
 
-        <% @share_coupons.each_with_index do |coupon, index| %>
-        <tr id="Tr<%= @coupons.count+index+1%>">
-          <td>
-   
-          <%=link_to((image_tag(coupon.img.url(:t1),:id=>"img_#{coupon.id}", :class=>"l #{coupon.hidden && 'imgfilter'}",:width => "130")), coupon.img.url,  :target => "blank#{coupon.id}") %>
-          <a href="show?id=<%= coupon.id%>" title="查看详情"><span class="l ml10"><%= coupon.name %><br/><span class="gay1"><%= coupon.show_t2  %> — <%= coupon.show_rule%></span></span></a>
-          </td>
-          <td width="80" class="textcenter"><%= link_to coupon.down_users.to_a.count, {:action => 'newly_down', :cid => coupon.id} %></td>         
-          <td width="80" class="textcenter"><%= link_to coupon.use_users.to_a.count,{:action => 'newly_use', :cid => coupon.id} %></td>
-          <td width="45" class="textcenter"><%= coupon.hidden ? "已停用" : '有效' %></td>
 
-
-          <td width="135" valign="middle" class="textcenter">
-        
-        <%=link_to '', ("edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑"%>
-        <% if coupon.hidden == 1 %>
-          <%= link_to '', '#', :onclick => "ajaxActivate($(this), '#{coupon.id}', #{coupon.allow_activate?})", :class => "act", :title => "激活" %>
-        <% else %>
-          <%= link_to '', '#', :onclick => "ajaxDeply($(this), '#{coupon.id}')",:class => "act2",:title => "停用" %>
-        <% end %>
-        <%= (link_to '', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')", :class => "del",:title => "删除") if coupon.down_users.blank?  %>
-
-        </td>
-
-          </tr>
-        <% end %>
 
       </table>
       <div class="pagination">
