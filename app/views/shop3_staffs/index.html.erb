@@ -60,7 +60,7 @@
           <%= staff.user.last_checkin(session[:shop_id]).cat.strftime("%Y-%m-%d %H:%M:%S") %>
         </td>
         <td width="227" align="center">
-          <%= link_to "历史签到", "/shop3_checkins?uid=#{staff.user_id}",:class => "mr10" %>
+          <%= link_to "历史签到", "/shop3_checkins?uid=#{staff.user_id}",:class => "ns1" %>
           <%=link_to '',  'javascript:void(0)',:onclick => "ajaxDel('#{staff.id}','#{index+1}');" ,:class => "del"%>
         </td>
       </tr>
