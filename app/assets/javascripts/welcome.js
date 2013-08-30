@@ -4,9 +4,9 @@ $(document).ready(function(){
     var container = document.querySelector('#container');
     var msnry = new Masonry( container, {
     // options
-      columnWidth: 300,
+      columnWidth: 100,
       itemSelector: '.item',
-      gutter: 3
+      gutter: 50
     });
   });
 
