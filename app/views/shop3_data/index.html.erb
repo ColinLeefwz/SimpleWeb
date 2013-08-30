@@ -36,22 +36,42 @@
 	</div>
 
 	<div class="box2">
-		<div class="title1"><h2><a name="md0">每日统计</a></h2></div>
+		<!-- <div class="title1"><h2><a name="md0">每日统计</a></h2></div> -->
 		<div class="box2right1">
 			
 			<div class="box2inner4 h423">
 					<ul class="list">
-						<li class="hover" onClick="SlideDoor(this,6)">每日签到</li>
-						<li onClick="SlideDoor(this,7)">每日优惠券下载量</li>
-						<li class="noneborder" onClick="SlideDoor(this,8)">每日优惠券使用量</li>
+						<li class="hover">签到统计</li>
 					</ul>
-					<ul class="list2" id="Door6">
+					<ul class="list2">
 						<%= render :partial => "shop3_login/linecharts" %>
 					</ul>
-					<ul class="list2" id="Door7" style="display:none;">
+			</div>
+		</div>
+	</div>
+
+	<div class="box2">
+		<div class="box2right1">
+			
+			<div class="box2inner4 h423">
+					<ul class="list">
+						<li class="hover">优惠券下载量</li>
+					</ul>
+					<ul class="list2">
 						<%= render :partial => "downcharts" %>
 					</ul>
-					<ul class="list2" id="Door8" style="display:none;">
+			</div>
+		</div>
+	</div>
+
+	<div class="box2">
+		<div class="box2right1">
+			
+			<div class="box2inner4 h423">
+					<ul class="list">
+						<li class="hover">优惠券使用量</li>
+					</ul>
+					<ul class="list2">
 						<%= render :partial => "usecharts" %>
 					</ul>
 			</div>
