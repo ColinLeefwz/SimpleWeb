@@ -65,6 +65,7 @@ jevan = Expert.create(name: 'jevan',
 	          authorized: false
 	          )
 
+Session.delete_all
 #### TODO: init new sessions with the "content_type"
 =begin
 Session.create(title: 'Intro Session to Lean Start-Up',
