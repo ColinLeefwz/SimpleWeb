@@ -80,10 +80,9 @@
   });
 
   function ajaxAddStaff(obj, uid){
-	$.post("/shop3_staffs/ajax_add_staff",{id: uid}, function(data) {});
+	$.post("/shop3_staffs/ajax_add_staff",{id: uid}, function(data) {
 	obj.addClass("red2").html("请稍等");
-	setTimeout(function(){
-		obj.replaceWith("添加完成");
-	},1000);
+	obj.replaceWith("添加完成");
+	});
   }
 </script>
