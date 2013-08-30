@@ -12,11 +12,9 @@ class Shop3CouponsController < ApplicationController
   end
 
   def list
-    hash = {:shop_id => session[:shop_id], :t2 => 1}
-    sort = {:hidden => 1, :_id => -1}
+    hash = {:shop_id => session[:shop_id]}
+    sort = {:t2 => 1, :hidden => 1, :_id => -1}
     @coupons = paginate("Coupon", params[:page], hash, sort,10)
-    hash2 = {:shop_id => session[:shop_id], :t2 => 2}
-    @share_coupons = paginate("Coupon", params[:page], hash2, sort,10)
   end
 
   # GET /coupons/1
