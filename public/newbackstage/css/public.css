@@ -37,6 +37,7 @@ ul,ol{list-style:none;}
 .wordstyle{font-size:12px;color:#707070;}
 .noraml{font-weight:normal;}
 .visible{overflow:visible !important;}
+.block{display:block;}
 .opacity_55{filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);
 filter: alpha(opacity=60);opacity:0.6;}
 .relative{position:relative;}
@@ -56,7 +57,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .h423{height:423px !important;}
 
 .pointer{cursor:pointer;}
-
+.auto{cursor:auto !important;}
 .imgs4{width:130px;}
 
 .inputs{border:1px solid #d7d7d7;border-radius:15px;width:250px;height:30px;line-height:30px;padding:0px 10px;font-size:12px;color:#868686;}
