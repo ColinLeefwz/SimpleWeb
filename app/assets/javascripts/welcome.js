@@ -6,7 +6,7 @@ $(document).ready(function(){
     // options
       columnWidth: 300,
       itemSelector: '.item',
-      gutter: 5
+      gutter: 3
     });
   });
 

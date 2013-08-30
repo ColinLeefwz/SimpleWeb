@@ -1,24 +1,7 @@
 / .fb-root
 
 / .fb-like{"data-href" => "http://developers.facebook.com/docs/reference/plugins/like", "data-width" => "450", "data-show-faces" => "false", "data-send" => "false"}
-.controls
-  %ul
-    %li Descending
-    %li Ascending
-    %li Default
 
-.controls
-  %ul
-    %li Show All
-    %li Category 1
-    %li Category 2
-    %li Category 3
-    %li Category 1 &amp; 3
-
-    / - total = number_column(session)
-
-    /   - total.first.each do |f|
-    / .column
 
 #container
   - @sessions.each do |session|

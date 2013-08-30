@@ -6,7 +6,7 @@
 display: inline-block;
 }
 .controls li {
-margin-left: 20px;
+margin-left: 1.4035%;
 display: inline;
 cursor: pointer;
 }
@@ -14,25 +14,23 @@ cursor: pointer;
 font-weight: 700;
 }
 #container {
-  width: 920px;
+  width: 93.561404%; //   64.561404%;
   margin: 0 auto;
 
   .item {
-    border-radius: 5px;
-    box-shadow: 0 1px 5px -1px rgba(170, 180, 190, 1); 
-    width: 300px;
+    box-shadow: 0 0.0625em 0.3125em -0.0625em rgba(170, 180, 190, 1); 
+    width: 18em;//  21.052632%;
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 2.45614%;
     display: block;
 
 
     img {
-      border-radius: 5px;
       width: 100%;
     }
     
     p{
-      font-size: 12px;
-    }
+      font-size: 0.75em;
+     }
   }
 }
