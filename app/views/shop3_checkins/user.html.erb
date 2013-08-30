@@ -69,7 +69,7 @@
 				</tr> 
 				<% @coupon_downs.each do |use| %>
 				<tr class="change">
-				  <td><a href="" title="查看详情"><%= use.coupon_name %><span class="gay1">（<%= use.coupon_show_t2 %>）</span></a></td>
+				  <td><a href="/shop3_coupons/show?id=<%= use.cid%>" title="<%= use.coupon_name %>"><%= use.coupon_name %><span class="gay1">（<%= use.coupon_show_t2 %>）</span></a></td>
 				  <td width="95"><%= to_local(use.dat) %></td>
 				  <td width="95"><%= to_local(use.vat) %></td>
 				  <td width="95"><%= to_local(use.uat) %></td>
