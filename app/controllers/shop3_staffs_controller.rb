@@ -20,7 +20,7 @@ class Shop3StaffsController < ApplicationController
 
   def ajax_add_staff
     user = User.find_by_id(params[:id])
-    if user.is_staff?
+    if user.is_staff?(session[:shop_id])
       text = "已是员工"
     else
       staff = Staff.new({user_id: user.id, shop_id: session_shop.id})
