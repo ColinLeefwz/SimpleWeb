@@ -34,7 +34,7 @@ function imgUploadPreview2(select, divid){//问答系统
 					reader.onload = function(e){
 						$("#"+divid).html("<img style='height: 100%; width: 100%;' id='image_view'  src='"+this.result+"'/>");
 					}
-			}else{				 
+			}else{ 
                 divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 imageView = document.getElementById("image_view");
                 imageView.src = window.URL.createObjectURL(this.files[0]);
@@ -73,6 +73,13 @@ function imgUploadPreview(select, divid){//优惠券
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
             }else if(/ipad/i.test(ua)){
+				 var file = $(this).get(0).files[0];
+				 var reader = new FileReader();
+					reader.readAsDataURL(file);
+					reader.onload = function(e){
+						$("#"+divid).html("<img style='height: 100%; width: 100%;' id='image_view'  src='"+this.result+"'/>");
+					}
+			}if(/ipad/i.test(ua)){
 				 var file = $(this).get(0).files[0];
 				 var reader = new FileReader();
 					reader.readAsDataURL(file);
@@ -122,6 +129,13 @@ function imgUploadPreview3(select, divid){//商家设置
 					reader.readAsDataURL(file);
 					reader.onload = function(e){
 						$("#"+divid).html("<img style='height: 100%; width: 100%;' id='image_view'  src='"+this.result+"'/>");
+					}
+			}if(/ipad/i.test(ua)){
+				 var file = $(this).get(0).files[0];
+				 var reader = new FileReader();
+					reader.readAsDataURL(file);
+					reader.onload = function(e){
+						$("#"+divid).html("<img id='image_view' class='imgstyle2'  src='"+this.result+"'/><img id='image_view2' class='imgstyle3 ml15 mb75' src='"+this.result+"' />");
 					}
 			}else{
                 divObj.innerHTML = "<img id='image_view' class='imgstyle2'/><img id='image_view2' class='imgstyle3 ml15 mb75'/>";
