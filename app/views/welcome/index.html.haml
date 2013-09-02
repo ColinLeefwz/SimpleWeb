@@ -18,7 +18,7 @@
       - if session.video_url
         = video_tag session.video_url, controls: 'controls'
       -else
-        = image_tag(session.image_url)
+        = image_tag(session.cover.url)
       -# %p= session.title
       -# %p= session.expert.name
       -# %p Description:

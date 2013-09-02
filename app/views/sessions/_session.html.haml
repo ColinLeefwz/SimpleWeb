@@ -1,6 +1,6 @@
 - @sessions.each do |session|
   .box
-    %p= image_tag(session.image_url)
+    %p= image_tag(session.cover.url)
     %p= session.title
     %p= session.expert.name
     %p Description:
