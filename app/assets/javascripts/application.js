@@ -16,4 +16,5 @@
 //= require masonry.pkgd.min
 //= require bootstrap
 //= require imagesloaded.pkgd.min
+//= require scrolltopcontrol
 //= require_tree .
