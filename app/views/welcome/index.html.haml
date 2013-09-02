@@ -19,11 +19,12 @@
         = video_tag session.video_url, controls: 'controls'
       -else
         = image_tag(session.cover.url)
-      -# %p= session.title
-      -# %p= session.expert.name
-      -# %p Description:
-      -# %p= session.description
-      -# %p Status:
-      -# %p= session.status
-      -# = social_share_button_tag("asd")
-      -# = render 'linked_in_share_button'
+      .title
+        = session.title
+      %p Expert: #{session.expert.name}
+      %p Description:
+      %p= session.description
+      %p Status:
+      %p= session.status
+      = social_share_button_tag("asd")
+      = render 'linked_in_share_button'
