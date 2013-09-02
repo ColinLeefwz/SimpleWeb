@@ -1,27 +1,14 @@
--# .controls
--#   %ul
--#     %li Descending
--#     %li Ascending
--#     %li Default
-
--# .controls
--#   %ul
--#     %li Show All
--#     %li Category 1
--#     %li Category 2
--#     %li Category 3
--#     %li Category 1 &amp; 3
-
 #content
   - @sessions.each do |session|
     .item
-      = image_tag(session.image_url)
-      .title
-        = session.title
-      %p Expert: #{session.expert.name}
-      %p Description:
-      %p= session.description
-      %p Status:
-      %p= session.status
-      = social_share_button_tag("asd")
-      = render 'linked_in_share_button'
+      .thumbnail
+        = image_tag(session.image_url)
+      .caption
+        .title
+          = session.title
+        %p Expert: #{session.expert.name}
+        %p Description:
+        %p= session.description
+        %p Status: #{session.status}
+        = social_share_button_tag("asd")
+        = render 'linked_in_share_button'
