@@ -6,7 +6,6 @@ class AdminController < ApplicationController
   def index
   end
 
-
   def authorize
 	username = params[:admin][:username]
 	password = params[:admin][:password]
@@ -117,7 +116,7 @@ class AdminController < ApplicationController
 	end
 
 	def session_params
-		params.require(:session).permit(:title, :expert_id, :description)
+		params.require(:session).permit(:title, :expert_id, :description, :cover)
 	end
 
 	def set_expert

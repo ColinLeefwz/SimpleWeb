@@ -9,11 +9,11 @@
 Expert.delete_all
 Session.delete_all
 
-peter = Expert.create(name: 'peter',
+Alex = Expert.create(name: 'Alex',
 			  image_url: 'AD pic.jpg',
 			  company: 'Prodygia',
 			  title: 'Co-Founder',
-			  email: 'peter@oc.com',
+			  email: 'alex@oc.com',
 			  authorized: true,
 			  location: "Shanghai, China",
 			  expertise: "Doing Business in China",
@@ -30,11 +30,11 @@ peter = Expert.create(name: 'peter',
 			  )
 
 
-allen = Expert.create(name: 'allen',
+Nick = Expert.create(name: 'Nick',
 			  image_url: 'guillaume profile pic.jpg',
 			  company: 'Prodygia',
 			  title: 'Founder',
-			  email: 'allen@oc.com',
+			  email: 'nick@oc.com',
 			  authorized: true,
 			  location: "Shanghai, China",
 			  expertise: "Doing Business in China",
@@ -68,27 +68,99 @@ jevan = Expert.create(name: 'jevan',
 Session.delete_all
 
 Session.create(title: 'Intro Session to Lean Start-Up',
-               expert: peter,
+               expert: Alex,
                description: 'How can lean start-up methods help me build a better business?',
-               status: 'Upcoming', 
-               image_url: '/images/session_image/china roadmap session(2)_1.jpg',
+               status: 'Upcoming',
+               image_url: 'china.jpg',
                content_type: "live",
                catalog: "culture")
 
 Session.create(title: 'Communicating With Chinese',
-               expert: peter, 
-               description: 'What cultural differences should I know when communicating with Chinese?', 
+               expert: Alex,
+               description: 'What cultural differences should I know when communicating with Chinese?',
                status: 'Prodygia Picks',
-               image_url: '/images/session_image/shutterstock_111034730.jpg',
+               image_url: 'shutterstock.jpg',
                content_type: "video",
-               catalog: "business",
-               video_url: "/videos/movie.ogg")
+               catalog: "business")
 
 Session.create(title: 'Find The Happier You',
-               expert: allen,
+               expert: Nick,
                description: 'How can I be happy despite the challenges of life?',
                status: 'Scheduled',
-               image_url: '3.jpg',
+               image_url: 'test.jpg',
                content_type: "text",
                catalog: "entrepreneurship")
+
+Session.create(title: 'Rails',
+               expert: Nick,
+               description: 'What cultural differences should I know when communicating with Chinese?',
+               status: 'Prodygia Picks',
+               image_url: 'shutterstock.jpg',
+               content_type: "video",
+               catalog: "business",
+               video_url: "movie.ogg")
+Session.create(title: 'Intro Session to Lean Start-Up',
+	                      expert: Alex,
+			                     description: 'How can lean start-up methods help me build a better business?',
+					                    status: 'Upcoming',
+							                   image_url: 'china.jpg',
+									                  content_type: "live",
+											                 catalog: "culture")
+
+Session.create(title: 'Communicating With Chinese',
+	                      expert: Alex,
+			                     description: 'What cultural differences should I know when communicating with Chinese?',
+					                    status: 'Prodygia Picks',
+							                   image_url: 'shutterstock.jpg',
+									                  content_type: "video",
+											                 catalog: "business")
+
+Session.create(title: 'Find The Happier You',
+	                      expert: Nick,
+			                     description: 'How can I be happy despite the challenges of life?',
+					                    status: 'Scheduled',
+							                   image_url: 'social_media.jpg',
+									                  content_type: "text",
+											                 catalog: "entrepreneurship")
+
+Session.create(title: 'Rails',
+	                      expert: Nick,
+			                     description: 'What cultural differences should I know when communicating with Chinese?',
+					                    status: 'Prodygia Picks',
+							                   image_url: 'shutterstock.jpg',
+									                  content_type: "video",
+											                 catalog: "business",
+													                video_url: "movie.ogg")
+Session.create(title: 'Intro Session to Lean Start-Up',
+	                      expert: Alex,
+			                     description: 'How can lean start-up methods help me build a better business?',
+					                    status: 'Upcoming',
+							                   image_url: 'china.jpg',
+									                  content_type: "live",
+											                 catalog: "culture")
+
+Session.create(title: 'Communicating With Chinese',
+	                      expert: Alex,
+			                     description: 'What cultural differences should I know when communicating with Chinese?',
+					                    status: 'Prodygia Picks',
+							                   image_url: 'shutterstock.jpg',
+									                  content_type: "video",
+											                 catalog: "business")
+
+Session.create(title: 'Find The Happier You',
+	                      expert: Nick,
+			                     description: 'How can I be happy despite the challenges of life?',
+					                    status: 'Scheduled',
+							                   image_url: 'social_media.jpg',
+									                  content_type: "text",
+											                 catalog: "entrepreneurship")
+
+Session.create(title: 'Rails',
+	                      expert: Nick,
+			                     description: 'What cultural differences should I know when communicating with Chinese?',
+					                    status: 'Prodygia Picks',
+							                   image_url: 'shutterstock.jpg',
+									                  content_type: "video",
+                                                                                          catalog: "business",
+													                video_url: "movie.ogg")
 

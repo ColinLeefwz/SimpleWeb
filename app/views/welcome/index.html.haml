@@ -1,68 +1,30 @@
-/ .fb-root
+-# .controls
+-#   %ul
+-#     %li Descending
+-#     %li Ascending
+-#     %li Default
 
-/ .fb-like{"data-href" => "http://developers.facebook.com/docs/reference/plugins/like", "data-width" => "450", "data-show-faces" => "false", "data-send" => "false"}
-.controls
-  %ul
-    %li Descending
-    %li Ascending
-    %li Default
+-# .controls
+-#   %ul
+-#     %li Show All
+-#     %li Category 1
+-#     %li Category 2
+-#     %li Category 3
+-#     %li Category 1 &amp; 3
 
-.controls
-  %ul
-    %li Show All
-    %li Category 1
-    %li Category 2
-    %li Category 3
-    %li Category 1 &amp; 3
-
-    / - total = number_column(session)
-
-    /   - total.first.each do |f|
-    / .column
-
-#container
+#content
   - @sessions.each do |session|
     .item
-      = image_tag(session.image_url)
-      %p= session.title
-      %p= session.expert.name
+      - if session.video_url
+        = video_tag session.video_url, controls: 'controls'
+      -else
+        = image_tag(session.cover.url)
+      .title
+        = session.title
+      %p Expert: #{session.expert.name}
       %p Description:
       %p= session.description
       %p Status:
       %p= session.status
       = social_share_button_tag("asd")
       = render 'linked_in_share_button'
-
-:javascript
-
-  docReady(function() {
-    var container = document.querySelector('#container');
-    var msnry = new Masonry( container, {
-    // options
-      columnWidth: 300,
-      itemSelector: '.item',
-      gutter: 5
-    });
-  });
-/ .box
-/   = image_tag("6.jpg")
-/   = 
-/ .box
-/   = image_tag("1.jpg")
-
-/   = social_share_button_tag("asd")
-/ .column
-/   .box
-/     = image_tag("2.jpg")
-/     %a{:href => "#",  :onclick => "window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 'facebook-share-dialog', 'width=626,height=436'); return false;"} facebook
-
-/   .box
-/     = image_tag("4.jpg") 
-/ .column
-/   .box
-/     = image_tag("5.jpg")
-/   .box
-/     = image_tag("3.jpg")
-
-
-  

@@ -1,38 +1,51 @@
-// Place all the styles related to the welcome controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+//.item {
+//	width: 150px;
+//	display: inline-block;
+//	vertical-align: top;
+//	margin-bottom: 12px;
+//}
 
-.controls {
-display: inline-block;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: ‘Lucida Console’, Monaco, monospace;
+  font-size: 12px;  // 0.75em;//  12px;
+  color: #444444;
+  text-align: center;
+  line-height:18px; // 1.125em;
+  background: rgb(240,242,244);
 }
-.controls li {
-margin-left: 20px;
-display: inline;
-cursor: pointer;
-}
-.controls li.active {
-font-weight: 700;
-}
-#container {
-  width: 920px;
+
+#content {
+  //width: 93.561404%; //   64.561404%;
+  min-height: 450px;
   margin: 0 auto;
 
   .item {
-    border-radius: 5px;
-    box-shadow: 0 1px 5px -1px rgba(170, 180, 190, 1); 
-    width: 300px;
+    -webkit-box-shadow: 0 6px 12px rgba(170, 180, 190, 1); 
+            box-shadow: 0 6px 12px rgba(170, 180, 190, 1); 
+    width:330px;// 20.0em;//  21.052632%;
+    margin: 20px;
+    border-width: 1px;
     text-align: center;
-    margin-bottom: 35px;
-    display: block;
-
-
-    img {
-      border-radius: 5px;
-      width: 100%;
-    }
+    //margin-bottom:12px; // 2.3em;//  2.45614%;
     
+    img{
+      padding: 10px;
+    }
+ 
+    video{
+      padding: 10px;
+    }
+
+    .title {
+      font-size: 15px;
+      margin: 5px;
+      font-weight: bold;
+    }
+
     p{
-      font-size: 12px;
+      font-size: 13px;
     }
   }
 }
