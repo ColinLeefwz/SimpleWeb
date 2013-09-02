@@ -206,6 +206,7 @@ function NavDiv(){//菜单
 			});
 		}
 
+
 		$("#Btn").click(function(){
 			   if($.cookie( 'navmove' ) || navmove=="on"){
 				navmove="off";
@@ -213,6 +214,7 @@ function NavDiv(){//菜单
 				removecookie();
 				$.cookie( 'navmove', 'off', { path: '/' } );
 				
+
 
 				$("#Btn").addClass("dis").html("<img src='/newbackstage/images/sign1.png' align='absmiddle'/> 取消固定导航");;
 
@@ -225,11 +227,13 @@ function NavDiv(){//菜单
 				if(windowWidth<=1024){
 					$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
 				}
+
 			  }else if($.cookie( 'navmove' ) || navmove=="off"){
 				navmove="on";
 				// window.localStorage.navmove = "on";
 				removecookie();
 				$.cookie( 'navmove', 'on', { path: '/' } );
+
 
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
@@ -255,6 +259,7 @@ function NavDiv(){//菜单
 	}
 	
 }
+
 function removecookie(){//清除每次生成的多余路径
 	$.removeCookie('navmove', { path: '/shop3_coupons/' });
 	$.removeCookie('navmove', { path: '/shop3_content/' });
@@ -262,6 +267,7 @@ function removecookie(){//清除每次生成的多余路径
 	$.removeCookie('navmove', { path: '/shop3_staffs/' });
 	// $.removeCookie('navmove', { path: '/*' });
 }
+
 function Menus(){//首页：手机头
 	$("a.menu1, a.menu2, a.menu3, a.menu4, a.menu5, a.menu6").css("height","0px");
 	$("span.box1line1, span.box1line2, span.box1line3").css({"width":"0px","left":"320px"});
