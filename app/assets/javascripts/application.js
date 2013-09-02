@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require masonry.pkgd.min
 //= require bootstrap
+//= require imagesloaded.pkgd.min
 //= require_tree .

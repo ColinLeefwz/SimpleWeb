@@ -1,8 +1,9 @@
 $(document).ready(function(){
-	var container = $('#content');
-
-	container.masonry({
-		itemSelector: '.item',
-		isFitWidth: true
-	})
-})
+  var container = $('#content');
+  container.imagesLoaded(function(){
+    container.masonry({
+      itemSelector: '.item',
+      isFitWidth: true,
+    });
+  });
+});

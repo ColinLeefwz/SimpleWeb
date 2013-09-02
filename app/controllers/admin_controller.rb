@@ -6,7 +6,6 @@ class AdminController < ApplicationController
   def index
   end
 
-
   def authorize
 	username = params[:admin][:username]
 	password = params[:admin][:password]
