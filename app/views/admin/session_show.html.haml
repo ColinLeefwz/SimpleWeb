@@ -9,8 +9,10 @@
   = @session.title
 
 %p
-  =image_tag(@session.image_url)
+  =image_tag(@session.cover.url)
   
+%p
+  =@session.cover.url
 %p
   %b Description:
   = @session.description

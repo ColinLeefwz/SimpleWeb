@@ -15,7 +15,10 @@
 #content
   - @sessions.each do |session|
     .item
-      = image_tag(session.image_url)
+      - if session.video_url
+        = video_tag session.video_url, controls: 'controls'
+      -else
+        = image_tag(session.cover.url)
       .title
         = session.title
       %p Expert: #{session.expert.name}

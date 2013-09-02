@@ -14,6 +14,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'social-share-button'
+gem 'paperclip'
 
 group :doc do
   gem 'sdoc', require: false
