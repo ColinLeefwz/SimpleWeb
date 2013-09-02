@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20130830093830) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_url",    default: "default.png"
+    t.string   "image_url"
     t.string   "content_type"
     t.string   "catalog"
     t.string   "video_url"
