@@ -70,25 +70,33 @@ Session.delete_all
 Session.create(title: 'Intro Session to Lean Start-Up',
                expert: peter,
                description: 'How can lean start-up methods help me build a better business?',
-               status: 'Upcoming', 
-               image_url: '/images/session_image/china roadmap session(2)_1.jpg',
+               status: 'Upcoming',
+               image_url: 'china_roadmap_session_1.jpg',
                content_type: "live",
                catalog: "culture")
 
 Session.create(title: 'Communicating With Chinese',
-               expert: peter, 
-               description: 'What cultural differences should I know when communicating with Chinese?', 
+               expert: peter,
+               description: 'What cultural differences should I know when communicating with Chinese?',
                status: 'Prodygia Picks',
-               image_url: '/images/session_image/shutterstock_111034730.jpg',
+               image_url: 'shutterstock_111034730.jpg',
                content_type: "video",
-               catalog: "business",
-               video_url: "/videos/movie.ogg")
+               catalog: "business")
 
 Session.create(title: 'Find The Happier You',
                expert: allen,
                description: 'How can I be happy despite the challenges of life?',
                status: 'Scheduled',
-               image_url: '3.jpg',
+               image_url: 'social_media_for_filip3.jpg',
                content_type: "text",
                catalog: "entrepreneurship")
+
+Session.create(title: 'Rails',
+               expert: peter,
+               description: 'What cultural differences should I know when communicating with Chinese?',
+               status: 'Prodygia Picks',
+               image_url: 'shutterstock_111034730.jpg',
+               content_type: "video",
+               catalog: "business",
+               video_url: "movie.ogg")
 
