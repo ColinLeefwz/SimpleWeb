@@ -70,7 +70,12 @@ class Coupon
     return true
   end
 
-  def allow_send_share?(user_id, sid = nil)
+  #option[:single] true 时， 优惠券没有使用就不再发送
+  def allow_send_share?(user_id, option={})
+    if option[:single]
+      return false if  CouponDown.where({sid: shop_id, uid:  user_id, uat: nil}).limit(1).only(:id).first
+    end
+    
     case self.rule.to_i
     when 0
       return !downed_today(user_id)

@@ -30,7 +30,7 @@ class Group
     partners = shop_line_partent.partners
     return [] unless (pids = partners[sid.to_s])
     shops = Shop.find_by_id(pids)
-    shops.inject([]){|f,s|  f + s.checkin_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) }}
+    shops.inject([]){|f,s|  f + s.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) }}
   rescue
     []
   end

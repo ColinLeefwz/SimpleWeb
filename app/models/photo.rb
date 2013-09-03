@@ -52,7 +52,6 @@ class Photo
     if weibo || qq || (wx && wx>0)
       send_coupon
 
-      send_pshop_coupon
       Lord.assign(room,user_id) if t==1 && desc && desc.index("我是地主")
       Resque.enqueue(PhotoNotice, self.id) unless Os.overload?
       #Rails.cache.delete("UP#{self.user_id}-5")
@@ -60,23 +59,6 @@ class Photo
     return if ENV["RAILS_ENV"] == "test"
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}")
     rand_like
-  end
-
-
-  #听说发关联分享优惠券
-  def ting_shuo_send_share
-    if self.room.to_i == 21832930
-      shop_ids = %w(21833421 21833440 21833441 21833442 21833438 21833144 21835450 21833443)
-      shop_ids.each do |sid|
-        shop = Shop.find_by_id(sid)
-        coupon = shop.share_coupon
-        if coupon
-          if CouponDown.where({cid: coupon.id, uid: self.user_id}).blank?
-            CouponDown.download(coupon, self.user_id, self._id )
-          end
-        end
-      end
-    end
   end
 
 
@@ -119,27 +101,58 @@ class Photo
       coupons = shop.allow_sub_coupons(user_id)
       coupons.each{|coupon| coupon.send_coupon(user_id)}
     end
+
+    coupon_names = []
+    ####总店的分享优惠券
+    coupon_names += send_pshop_coupon
+    ####合作商家的分享优惠券
+    coupon_names += send_partner_coupons
+
     coupon = shop.share_coupon
     return if coupon.nil?
     if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s)
-      message = coupon.send_coupon(user_id,self.id)
-      return message if ENV["RAILS_ENV"] != "production"
-      Resque.enqueue(XmppNotice, self.room,user_id,"恭喜#{user.name}！收到一张分享优惠券: #{coupon.name},马上领取吧！","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
+      coupon.send_coupon(user_id,self.id)
+      coupon_names << coupon.name
     end
+    return nil if coupon_names.blank?
+    message = "恭喜#{user.name}！收到#{coupon_names.count}张分享优惠券: #{coupon_names.join(',').truncate(50)},马上领取吧！"
+    return message if ENV["RAILS_ENV"] != "production"
+    Resque.enqueue(XmppNotice, self.room,user_id, message,"coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
     return nil
   end
 
+  #分店分享图片后， 推送总店的“分享类优惠券”
+  #返回值： 总店分享类优惠券的名称
   def send_pshop_coupon
-    return nil if shop.psid.blank?
-    return nil if (pshop = Shop.find_by_id(shop.psid)).nil?
+    return [] if shop.psid.blank?
+    return [] if (pshop = Shop.find_by_id(shop.psid)).nil?
     coupon = pshop.share_coupon
-    return nil if coupon.nil?
-    if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s, shop.id.to_i)
-      ret = coupon.send_coupon(user_id,self.id, room)
-      Resque.enqueue(XmppNotice, self.room,user_id,"收到一张分享优惠券: #{coupon.name}","coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
-      return [shop.psid,ret]
+    return [] if coupon.nil?
+    if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s)
+      coupon.send_coupon(user_id,self.id, room)
+      return [coupon.name]
     end
-    return nil
+    return []
+  end
+
+
+  #合作商家发送“分享优惠券”, 合作商家优惠券没有使用的话不发送
+  def send_partner_coupons
+    coupon_names = []
+    shop_partner = ShopPartner.find_by_id(self.room)
+    if shop_partner
+      if shop_partner.coupon_t.to_i == 2 || shop_partner.coupon_t.to_i == 3
+        shop_partner.partners.to_a.each do |partner|
+          next if (shop = Shop.find_by_id(partner[0])).nil?
+          next if (coupon = shop.share_coupon).nil?
+          if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s, :single => true)
+            coupon.send_coupon(user_id,self.id)
+            coupon_names << coupon.name
+          end
+        end
+      end
+    end
+    return coupon_names
   end
   
   def user
