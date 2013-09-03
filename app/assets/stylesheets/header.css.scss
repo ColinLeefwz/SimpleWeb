@@ -1,19 +1,19 @@
 #header {
   min-width: 200px;
   width: 100%;
-  border-top: 2px solid  #880848;
-  border-bottom: 4px solid #880848;
+  -webkit-box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
+  box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
   height: 118px;
   background: #fff;
   display: inline-block; 
-
+  margin-bottom: 50px;
   #logo {
     float: left;
     text-transform: lowercase;
     margin-top: 20px;
   }
 
-  #user_nav {
+  #user_status {
     float: right;
     height: 38px;
     margin-top: 40px;
@@ -21,8 +21,24 @@
 
       a{
         margin:0 5px auto;
-        font-size: 12px;
+        font-size: 15px;
        	text-decoration: none;
        }
+   }
+
+   #nav {
+     margin-top: 100px;
+     height: 18px;
+     ul{
+       li{
+	 font-size: 15px;
+	 padding-right: 10px;
+         display: inline-block;
+           a:hover{
+             cursor: pointer;
+             text-decoration: underline; //#880848;	
+	   }
+	}
+     }
    }
 }
