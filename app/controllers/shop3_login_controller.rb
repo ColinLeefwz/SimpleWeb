@@ -5,6 +5,11 @@ class Shop3LoginController < ApplicationController
   include Paginate
 
   def index
+    @shop_faqs = session_shop.faqs
+    hash = {:room => session[:shop_id].to_i.to_s, :user_id => {"$ne" => "s#{session[:shop_id]}" }}
+    hash.merge!({user_id: params[:uid]}) unless params[:uid].blank?
+    sort = {:od => -1, :updated_at =>  -1}
+    @photos = paginate("Photo", params[:page], hash, sort,4)
     render :layout => "shop3"
   end
 

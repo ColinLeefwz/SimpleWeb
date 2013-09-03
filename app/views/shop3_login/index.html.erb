@@ -40,7 +40,13 @@ $(document).ready(function(){
 				<div class="phone">
 					<div class="title3"><h2><%= link_to session_shop.name, "/shop3_login" %></h2></div>
 					<div class="imgbox"><a href="/shop3_content/user_photo">
-						<img src="/newbackstage/images/pic7.png"/><img src="/newbackstage/images/pic8.png"/><img src="/newbackstage/images/pic7.png"/><img src="/newbackstage/images/pic8.png"/><img src="/newbackstage/images/pic9.png"/></a>
+
+                        <% @photos.each do |photo| %>
+                        <%= image_tag photo.img.try(:url, :t2) || "/newbackstage/images/pic9.jpg" %>
+                        <% end %>
+                        <img src="/newbackstage/images/pic9.png"/>
+
+						</a>
 					</div>
 					<div class="qa">
 						<div id="QAC">
@@ -48,8 +54,16 @@ $(document).ready(function(){
 							<div class="shopanswer">
 								<img src="/newbackstage/images/sign8.png" class="head"/>
 								<div class="cons">
-									<img src="/newbackstage/images/sign9.png" class="small_arrow"/><a href="/shop3_faqs">
-									试试回复：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>05 => 特色小吃推荐
+									<img src="/newbackstage/images/sign9.png" class="small_arrow"/>
+									<a href="/shop3_faqs">
+		<% if @shop_faqs.blank? %>
+		还没有设置问答系统?<br/>请创建
+		例如：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>05 => 特色小吃推荐
+		<% end %>
+		<% @shop_faqs.each do |faq| %>
+			 <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
+				<%= faq.od%>&nbsp;=>&nbsp;<%= faq.title[0,9]%>...<br/>
+		<% end %>
 									</a>
 								</div>
 							</div>
