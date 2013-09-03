@@ -54,7 +54,6 @@ class AdminController < ApplicationController
 		end
 
 		if params[:session][:video]
-			# TODO save the uploaded video to public/uploads
 			uploaded_io = params[:session][:video]
 			# video_url_path = Rails.root.join('public', 'uploads', uploaded_io.original_filename)
 			video_url_path = Rails.root.join('app', 'assets', 'videos', uploaded_io.original_filename)
@@ -62,7 +61,6 @@ class AdminController < ApplicationController
 				file.write(uploaded_io.read)
 			end
 			@session.video_url = "#{uploaded_io.original_filename}"
-			logger.info "the uploaded video path is: #{video_url_path}"
 		end
 
 		# @session = Session.new(session_params)
