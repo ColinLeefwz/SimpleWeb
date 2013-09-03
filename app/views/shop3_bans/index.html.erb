@@ -9,12 +9,13 @@
       <li class="hover"><a href="/shop3_bans">屏蔽用户</a></li>
       <li><a href="/shop3_marks">用户评分</a></li>
       <li><a href="/shop3_notice">公告管理</a></li>
+	  <li><a href="/shop3_branchs">分店列表</a></li>
     </ul>
   </div>
 
   <table width="100%" cellspacing="0" cellpadding="0" class="tab2">
     <tr id="Tr0">
-      <th width="1215">用户名</th>
+      <th width="770">用户名</th>
       <th width="157">&nbsp;</th>
     </tr>
     <% @users.each_with_index do |user, index| %>
@@ -37,7 +38,6 @@
 </div>
 
 <script defer="defer">
-  var navmove="off", runing;
   $(document).ready(function(){
     runing=$("#CB1").attr("class");
     if(runing=="checkboxs1"){
