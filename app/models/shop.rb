@@ -76,7 +76,11 @@ class Shop
   end
   
   def top4_photos
-    Photo.where({room: self.id.to_i.to_s, hide: nil}).sort({od: -1, updated_at: -1}).limit(4).to_a
+    if self.id == 21834120
+      Photo.where({room: self.id.to_i.to_s, hide: nil, user_id: "s21834120"}).sort({od: -1, updated_at: -1}).limit(4).to_a
+    else
+      Photo.where({room: self.id.to_i.to_s, hide: nil}).sort({od: -1, updated_at: -1}).limit(4).to_a
+    end
   end
   
   def photos
@@ -465,6 +469,8 @@ class Shop
 
   #消息返回格式[uid, text, time, id]
   def history(skip,count)
+    #人才市场
+    return [] if self.id == 21834120 
     skip = 0 if skip<0
     begin
       response = Xmpp.get("api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}")
