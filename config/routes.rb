@@ -59,5 +59,10 @@ Prodygia::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root to: "welcome#index"
-  get "/about_us", to: redirect('/about_us')
+  get "/about_us", to: "welcome#about_us"
+  get "/blog", to: "welcome#blog"
+  get "/experts_list", to: "welcome#experts_list"
+  get "/faq", to: "welcome#faq"
+  get "/terms", to: "welcome#terms"
+  get "/privacy", to: "welcome#privacy"
  end
