@@ -1,14 +1,12 @@
 #footer{
-  border-top: 4px solid #880848;
-  border-bottom: 2px solid #880848;
+  background-image: url(foot_bg.gif);
   height: 50px;
   width: 100%; 
-  position: absolute;
+  position: fixed;
   bottom: 0px;
 
   .links{
     a{
-      vertical-align: middle;
       margin-right: 20px;
       font-size: 18px;
       text-decoration: none;

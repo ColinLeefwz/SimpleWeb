@@ -8,7 +8,21 @@ class WelcomeController < ApplicationController
   end
   
   def about_us
-
   end
+  
+  def blog
+  end
+
+  def experts_list
+  end
+
+  def faq
+  end
+
+  def terms
+  end
+
+  def privacy
+  end 
 
 end
