@@ -447,7 +447,7 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .phone{width:288px;height:455px;position:absolute;left:50%;margin-left:-144px;bottom:21px;background:url(../images/phone.png) left top no-repeat;}
 
 .phone .imgbox{margin:13px 2px 10px 2px;}
-.phone .imgbox img{margin:0px 2px;}
+.phone .imgbox img{margin:0px;}
 .phone .qa{width:244px;height:260px;margin:0px auto;overflow:hidden;}
 .phone #QAC{width:244px;height:250px;overflow:hidden;padding-right:18px;}/*overflow-y:scroll;*/
 .phone .mes{border-radius:8px;font-size:12px;line-height:17px;width:150px;margin:8px auto 8px 42px;color:#fff;background:#C5CBD0 url(../images/sign7.png) 5px 5px no-repeat;padding:3px 0px 3px 27px;text-align:left;}
