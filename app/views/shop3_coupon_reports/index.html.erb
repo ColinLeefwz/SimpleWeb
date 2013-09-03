@@ -21,8 +21,8 @@
 				<div class="clear1"></div>
 				<br/><br/>
 				<span class="red1 f15">自定义导出:</span><br/><br/>
+				<%= button_to '导出昨日数据', "/shop3_coupon_reports/csv_export", :class => "btn7  r" %>
 				<%= form_tag "/shop3_coupon_reports/csv_export" do  %>
-				<%= button_to '导出今日数据', "/shop3_coupon_reports/csv_export", :class => "btn7  r" %>
 				<!-- <input type="submit" value="导出今日数据" class="btn7  r"/> -->
 				开始日期<%= text_field_tag :stime,@day||Time.now.to_date, :class => "inputs5 mlr10 w150" %>
 				<!-- <input type="text" class="inputs5 mlr10 w150"/> -->

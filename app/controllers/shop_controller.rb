@@ -142,7 +142,11 @@ class ShopController < ApplicationController
   end
   
   def shop_photo_no_cache(sid,skip,pcount)
+    if sid.to_i == 21834120
+      Photo.where({room:sid, hide: nil, user_id: "s21834120"}).sort({od: -1, updated_at: -1}).skip(skip).limit(pcount).to_a
+    else
     Photo.where({room:sid, hide: nil}).sort({od: -1, updated_at: -1}).skip(skip).limit(pcount).to_a
+    end
   end
 
 
