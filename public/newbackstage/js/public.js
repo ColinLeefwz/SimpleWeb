@@ -60,15 +60,25 @@ $(window).load(function(){
 		}
 	});
 	
+	$("#NowPage").click(function(){
+		clearTimeout(LinkBoxTimer);
+		$("#PageNum").stop().fadeIn(200);
+	});
+	$("#PageNum").mouseover(function(){
+		$("#PageNum").css("display","block");
+	}).mouseout(function(){
+		$("#PageNum").css("display","none");
+	});
 	
-	$("#OpenLinkBox").click(function(){
+/*	$("#OpenLinkBox").click(function(){ //右侧脸脸图标，打开弹出菜单
 		clearTimeout(LinkBoxTimer);
 		$("#LinkBox").stop().fadeIn(200).animate({"top":"60px"},300);
 	}).mouseout(function(){
 		LinkBoxTimer=setTimeout(function(){
-			$("#LinkBox").css({"display":"none","top":"80px"});				 
+			$("#LinkBox").css({"display":"none","top":"80px"});	
 		},1000);
 	});
+
 	$("#LinkBox").mouseover(function(){
 		clearTimeout(LinkBoxTimer);
 		$(this).css({"display":"block","top":"60px"});
@@ -80,6 +90,7 @@ $(window).load(function(){
 	$("#LinkBox a.links2").click(function(){
 		window.location.href='http://shop.dface.cn';
 	});
+	*/
 });
 
 function Dn2_divplane(){//首页：最新数据动画
