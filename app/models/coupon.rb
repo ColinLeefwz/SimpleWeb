@@ -123,20 +123,20 @@ class Coupon
   end
 
   def self.shop_downed_week(room)
-    sweek = Time.now.beginning_of_year.utc
-    eweek = Time.now.end_of_year.utc
+    sweek = Time.now.beginning_of_week.utc
+    eweek = Time.now.end_of_week.utc
     CouponDown.where({sid:room,dat:{"$gt" => sweek,"$lt" => eweek}}).sort({_id:-1}).limit(10)
   end
 
   def self.shop_use_week(room)
-    sweek = Time.now.beginning_of_year.utc
-    eweek = Time.now.end_of_year.utc
+    sweek = Time.now.beginning_of_week.utc
+    eweek = Time.now.end_of_week.utc
     CouponDown.where({sid:room,uat:{"$gt" => sweek,"$lt" => eweek}}).sort({_id:-1}).limit(10)
   end
 
   def self.shop_checkin_week(room)
-    sweek = Time.now.beginning_of_year.to_i.to_s(16).ljust(24,'0')
-    eweek = Time.now.end_of_year.to_i.to_s(16).ljust(24,'0')
+    sweek = Time.now.beginning_of_week.to_i.to_s(16).ljust(24,'0')
+    eweek = Time.now.end_of_week.to_i.to_s(16).ljust(24,'0')
     Checkin.where({sid:room,id:{"$gt" => sweek, "$lt" => eweek}}).sort({_id:-1}).limit(10)
   end
   

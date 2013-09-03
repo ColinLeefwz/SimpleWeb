@@ -194,7 +194,7 @@ background: linear-gradient(top, #dedede 0%,#dedede 100%); /*兼容W3C标准的�
 filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endColorStr='#dedede',gradientType='0');/*兼容IE浏览器*/
 }
 
-#BG{width:100%;background:url("../images/bg4.png");position:absolute;left:0px;top:0px;z-index:120;}
+#BG{width:100%;background:url("../images/bg4.png");position:absolute;left:0px;top:0px;z-index:120;height:0px;}
 #PhotoPlane{width:600px;border:1px solid #ccc;position:absolute;left:50%;top:0px;z-index:121;background-color:#f2f2f2;padding:8px;margin-left:-308px;box-shadow:0 0 5px #FFFFFF;display:none;}
 #PhotoPlane .imgstyle{width:280px;border-left:2px solid #fff;border-top:2px solid #fff; border-right:2px solid #ccc;border-bottom:2px solid #aaa;}
 #PhotoPlane table{line-height:20px;font-size:14px;color:#333;}
@@ -419,7 +419,7 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .tab2 td{line-height:20px;color:#707070;border-right:1px solid #ddd;border-bottom:1px solid #ddd;padding:8px 10px;}
 .tab2 a{color:#00A0E3;}
 .tab2 a:hover{color:#005580;}
-.tab2 .sign1{width:24px;height:24px;background:url("../images/sign20.png") center center no-repeat;display:block; cursor:pointer;}
+.tab2 .sign1{width:24px;height:24px;background:url("../images/sign20.png") center center no-repeat;display:inline-block; cursor:pointer;}
 .tab2 .sign2{width:24px;height:24px;background:url("../images/sign21.gif") center center no-repeat;display:block;}
 .tab2 tr.trbg{background-color:#F9F9F9;}
 .tab2 tr.change td{padding-left:5px !important;padding-right:5px !important;}
@@ -447,7 +447,7 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .phone{width:288px;height:455px;position:absolute;left:50%;margin-left:-144px;bottom:21px;background:url(../images/phone.png) left top no-repeat;}
 
 .phone .imgbox{margin:13px 2px 10px 2px;}
-.phone .imgbox img{margin:0px 2px;}
+.phone .imgbox img{margin:0px;}
 .phone .qa{width:244px;height:260px;margin:0px auto;overflow:hidden;}
 .phone #QAC{width:244px;height:250px;overflow:hidden;padding-right:18px;}/*overflow-y:scroll;*/
 .phone .mes{border-radius:8px;font-size:12px;line-height:17px;width:150px;margin:8px auto 8px 42px;color:#fff;background:#C5CBD0 url(../images/sign7.png) 5px 5px no-repeat;padding:3px 0px 3px 27px;text-align:left;}
@@ -458,7 +458,7 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .phone .shopanswer .cons .small_arrow{position:absolute;left:-8px;bottom:-1px;}
 .phone .shopanswer .cons a{color:#333;}
 
-/**页码 begin**/
+/**页码 begin/
 .pagination{display:block;margin-top:20px;clear:both;overflow:hidden;line-height:28px;}
 .pagination ul{display:block;overflow:hidden;float:right;border-left:1px solid #D9D9D9;background-color:#fafafa;}
 .pagination ul li{display:block;overflow:hidden;float:left;border:1px solid #D9D9D9;border-left:none;}
@@ -468,6 +468,21 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .pagination ul li:hover{background-color:#EAEFF2;}
 .pagination .disabled{background-color:#f9f9f9 !important;color:#999; cursor:auto !important;}
 .pagination .disabled a{color:#999 !important; cursor:auto !important;}
+/**页码 over**/
+
+/**页码 begin**/
+.pagination{display:block;margin-top:50px;clear:both;line-height:20px;height:20px;position:relative;}
+.pagination .page{float:right;}
+.pagination .pre, .pagination .next{margin:0 5px; background-color:#fafafa;border:1px solid #D9D9D9;border-radius:2px;cursor: pointer;
+display:block;float:left;vertical-align: middle;height: 20px;line-height: 20px;padding: 0 9px 0 10px;}
+.pagination #NowPage{line-height: 24px;color: #0A8CD2;float:left;padding:0 15px 0 10px;margin-right:10px;display:block;
+background: url(../images/sign39.gif) no-repeat right center;cursor: pointer;}
+.pagination #PageNum{overflow-y: scroll;position:absolute;border: 1px solid #cdcdcd;background: #fff;bottom: 30px;left:685px;
+width:80px;height:117px;text-align:center;line-height:20px;display:none;}
+.pagination #PageNum a{color:#595959;display:block;margin:3px 1px 2px 1px;}
+.pagination #PageNum a:hover{background:#E7E7E7;}
+.pagination #PageNum a.ths{color:#C1C0C0;}
+.pagination #PageNum a.ths:hover{background-color:transparent;}
 /**页码 over**/
 
 .search{width:100%;overflow:hidden;text-align:center;margin:40px 0 30px;font-size:13px;}

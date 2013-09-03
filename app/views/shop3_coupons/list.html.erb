@@ -96,14 +96,18 @@
 
   function ajaxCD(obj,coupon_id,allow,index){
     if(allow==true){
-      $.get("/shop3_coupons/ajax_activate",{id: coupon_id}, function(data) {
+      $.get("/shop3_coupons/ajax_activate",{id: coupon_id}, function(data) {alert(data['text']);
         if(data['text']=="已激活."){
           $("#img_"+coupon_id).removeClass("imgfilter");
           $("#Tr"+index+" td").eq(3).removeClass("gay4").addClass("red2").html("有效");
           obj.prev().attr("href","edit?id="+coupon_id).css("display","inline-block");
           obj.removeClass().html(data['text']);
           setTimeout(function(){
-            obj.addClass("act2").attr("onclick","ajaxCD($(this), '"+coupon_id+"',false,'"+index+"')").html("");
+			obj.removeAttr("onclick").unbind("click");
+			
+            obj.addClass("act2").bind("click",function(){
+				ajaxCD($(this),coupon_id,false,index);
+			}).html("");
           },1000);
         }else{
           OpenDiv();
@@ -117,7 +121,10 @@
           obj.prev().attr("href","edit?id="+coupon_id).css("display","none");
           obj.removeClass().html(data['text']);
           setTimeout(function(){
-            obj.addClass("act").attr("onclick","ajaxCD($(this), '"+coupon_id+"' ,true,'"+index+"')").html("");
+			obj.removeAttr("onclick").unbind("click");
+            obj.addClass("act").bind("click",function(){
+				ajaxCD($(this),coupon_id,true,index);
+			}).html("");
           },1000);
         }
       });

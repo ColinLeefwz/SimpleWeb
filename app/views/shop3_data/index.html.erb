@@ -15,7 +15,7 @@
 
 			<div class="box2plane3" style="top:0px;left:284px;" id="Dn2_b1">
 				<span class="uparrow nobg"><%= link_to @shop_downed_week_num, "/shop3_coupons/newly_down" %></span>
-				<span class="ws">本周优惠券下载量</span>
+				<span class="ws">本周优惠券下载</span>
 				<ul class="list">
 					<% @shop_downed_week.each do |down| %>
 					<li><span class="l"><%= link_to User.find_by_id(down.uid).name, "/shop3_checkins/user?uid=#{down.uid}"%></span><span class="r gay1"><%= down.dat.strftime("%m-%d %H:%M")%></span></li>
@@ -25,7 +25,7 @@
 
 			<div class="box2plane3" style="top:0px;left:568px;" id="Dn2_b2">
 				<span class="downarrow nobg"><%= link_to @shop_use_week_num, "shop3_coupons/newly_use" %></span>
-				<span class="ws">本周优惠券使用量</span>
+				<span class="ws">本周优惠券使用</span>
 				<ul class="list">
 					<% @shop_use_week.each do |use| %>
 					<li><span class="l"><%= link_to User.find_by_id(use.uid).name, "/shop3_checkins/user?uid=#{use.uid}" %></span><span class="r gay1"><%= use.dat.strftime("%m-%d %H:%M") %></span></li>
