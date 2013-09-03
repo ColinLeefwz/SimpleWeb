@@ -219,7 +219,7 @@ function NavDiv(){//菜单
 
 
 		$("#Btn").click(function(){
-			   if($.cookie( 'navmove' ) || navmove=="on"){
+			   if($.cookie( 'navmove' ) =="on"){
 				navmove="off";
 				// window.localStorage.navmove = "off";
 				removecookie();
@@ -239,7 +239,7 @@ function NavDiv(){//菜单
 					$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
 				}
 
-			  }else if($.cookie( 'navmove' ) || navmove=="off"){
+			  }else if($.cookie( 'navmove' ) =="off"){
 				navmove="on";
 				// window.localStorage.navmove = "on";
 				removecookie();

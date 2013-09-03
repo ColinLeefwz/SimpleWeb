@@ -57,6 +57,14 @@ $(function() {
                 selected : 5 // all
             },
 
+            xAxis: {
+                labels: {
+                      formatter: function() {
+                       return  Highcharts.dateFormat('%m月%d日', this.value);
+                      }
+                }
+             },
+
             yAxis: [
                         {
                             top: 80,
