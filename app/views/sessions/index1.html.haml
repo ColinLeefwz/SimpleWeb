@@ -17,7 +17,7 @@
       %tr
         %td= link_to "#{session.title}", session
         %td= session.expert.name
-        %td= link_to image_tag(session.image_url), session
+        %td= link_to image_tag(session.cover.url), session
         %td= session.description
         %td= link_to 'Delete', session_path(session), method: :delete, data: {confirm: 'Are you sure?'}
 

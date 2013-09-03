@@ -1,9 +1,8 @@
-
 body {
   margin: 0;
   padding: 0;
   font-family: ‘Lucida Console’, Monaco, monospace;
-  font-size: 12px;  // 0.75em;//  12px;
+  font-size: 12px;
   color: #444444;
   text-align: center;
   //line-height:18px; // 1.125em;
@@ -11,18 +10,16 @@ body {
 }
 
 #content {
-  //width: 93.561404%; //   64.561404%;
   min-height: 450px;
   margin: 0 auto;
 
   .item {
     -webkit-box-shadow: 0 6px 12px rgba(170, 180, 190, 1); 
             box-shadow: 0 6px 12px rgba(170, 180, 190, 1); 
-    width:330px;// 20.0em;//  21.052632%;
+    width:330px;
     margin: 20px;
     border-width: 1px;
     text-align: center;
-    //margin-bottom:12px; // 2.3em;//  2.45614%;
     
     .thumbnail{
       padding: 10px;

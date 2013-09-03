@@ -19,8 +19,8 @@
     = f.label :expert_id
     = f.select :expert_id, Expert.all.collect{ |e| [e.name, e.id]}
   .field
-    = f.label :image_url
-    = f.text_field :image_url
+    = f.label :cover
+    = f.file_field :cover
   .field
     = f.label :description
     = f.text_area :description
