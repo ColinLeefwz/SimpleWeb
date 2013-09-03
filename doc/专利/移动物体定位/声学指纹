@@ -1,0 +1,77 @@
+声学指纹(Acoustic fingerprint)是通过特定算法从音频信号中提取的一段数字摘要，用于识别声音样本或者快速定位音频数据库中的相似音频。
+
+音频压缩技术的进步以及大容量存储器的出现使得互联网上出现了以音乐为主的海量音频信息，手工选取某首歌曲很多时候已经变得不可能，这直接促使产生了可以进行音乐自动识别的数字音频指纹技术。
+
+应用[编辑]
+
+声学指纹的实践应用包括：识别歌曲、记录、旋律、音调、广告；广播监控；点对点网络监控；声效库管理；视频文件识别，甚至更多。
+
+属性[编辑]
+
+音频指纹是指可以代表一段音乐重要声学特征的基于内容的紧致数字签名，其主要目的是建立一种有效机制来比较两个音频数据的感知听觉质量。注意这里不是直接比较通常很大的音频数据本身，而是比较其相应通常较小的数字指纹。大量音频数据的指纹和其相应的元数据比如歌曲名称、词曲作者、歌词等内容一起存储在一个数据库中，并采用指纹作为相应元数据的索引。
+
+一个音频指纹系统通常包括两个部分：即一个计算听觉重要特征的指纹提取算法和一个在指纹数据库中进行有效搜索的比对算法。当要识别一段未知音频时，首先按照指纹提取算法计算其音频特征，然后和数据库中存储的大量音频指纹相比对从而进行识别。一个有效的指纹提取算法和指纹比对算法能够在数据库中正确识别出可能经受各种信号处理失真的未知音频的原始版本。若识别到对应的原始指纹，则可提取出相应的元数据信息返回给用户。
+
+一个健壮的声学指纹识别算法必须考虑到声音的感知特性。如果两段音频文件人们听起来是一样的，即便它们的二进制表示形式不一样，它们的声学指纹也应该是相同的或者非常相似的。（因此，声学指纹从严格意义上讲并不属于——真正的指纹——必须能够区分数据上任何细小的差别。）
+
+不同的音频压缩技术（包括：MP3、WMA、Vorbis等）在对音频文件的二进制编码方式上虽然有较大差别，但是却不影响音频文件播放的效果。健壮的声学指纹识别算法应该能够正确的识别出经过压缩的音频文件，甚至在音频质量有明显下降的情况下也能够正确识别。在用于广播监控时，声学指纹识别算法还应能忽略模拟传输对音频造成影响。
+
+另一方面，优秀的声学指纹识别算法能够在众多音频记录中识别出特殊的主记录。在用于法庭证物时，声学指纹必须保证其准确性。
+
+实现[编辑]
+
+Midomi，利用上传使用者哼出的或录制的乐曲片段搜索对应的音乐曲目。（网址：http://www.midomi.com ）
+
+
+Acoustic fingerprint
+From Wikipedia, the free encyclopedia
+For acoustic emissions of ships and submarines, see Acoustic signature.
+
+This article's use of external links may not follow Wikipedia's policies or guidelines. Please improve this article by removing excessive or inappropriate external links, and converting useful links where appropriate into footnote references. (June 2011)
+
+This article needs additional citations for verification. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed. (June 2011)
+An acoustic fingerprint is a condensed digital summary, deterministically generated from an audio signal, that can be used to identify an audio sample or quickly locate similar items in an audio database.[1]
+
+Practical uses of acoustic fingerprinting include identifying songs, melodies, tunes, or advertisements; sound effect library management; and video file identification. Media identification using acoustic fingerprints can be used to monitor the use of specific musical works and performances on radio broadcast, records, CDs and peer-to-peer networks. This identification has been used in copyright compliance, licensing, and other monetization schemes.
+
+Contents  [hide] 
+1 Attributes
+2 Implementations
+3 See also
+4 References
+5 External links
+Attributes[edit]
+
+A robust acoustic fingerprint algorithm must take into account the perceptual characteristics of the audio. If two files sound alike to the human ear, their acoustic fingerprints should match, even if their binary representations are quite different. Acoustic fingerprints are not bitwise fingerprints, which must be sensitive to any small changes in the data. Acoustic fingerprints are more analogous to human fingerprints where small variations that are insignificant to the features the fingerprint uses are tolerated. One can imagine the case of a smeared human fingerprint impression which can accurately be matched to another fingerprint sample in a reference database; acoustic fingerprints work in a similar way.
+
+Perceptual characteristics often exploited by audio fingerprints include average zero crossing rate, estimated tempo, average spectrum, spectral flatness, prominent tones across a set of bands, and bandwidth.
+
+Most audio compression techniques (AAC, MP3, WMA, Vorbis) will make radical changes to the binary encoding of an audio file, without radically affecting the way it is perceived by the human ear. A robust acoustic fingerprint will allow a recording to be identified after it has gone through such compression, even if the audio quality has been reduced significantly. For use in radio broadcast monitoring, acoustic fingerprints should also be insensitive to analog transmission artifacts.
+
+On the other hand, a good acoustic fingerprint algorithm must be able to identify a particular master recording among all the productions of an artist or group. For use as evidence in a court of law, an acoustic fingerprint method must be forensic in its accuracy.[citation needed]
+
+Implementations[edit]
+
+This is a list of notable acoustic fingerprinting products.
+
+Proprietary
+All Media Guide's LASSO is a commercial service that uses acoustic fingerprinting, and other techniques, to recognize music. (U.S. Patent 7,277,766)
+Audible Magic Corporation is a commercial venture that provides electronic media identification and copyright management solutions using proprietary acoustic fingerprinting technology U.S. Patent 5,918,223 based on original research by Muscle Fish Consulting[2]
+AudioID is a commercial technology for automatically identifying audio material using acoustic fingerprints. It was developed by the German Fraunhofer Institute.
+BMAT Vericast[3] is a global music identification service that monitors millions of songs over 2000 radios and televisions across more than 50 countries worldwide. The solution provides real time recognition and auditable reporting based on an audio fingerprint that is resistant to signal alterations such as voice over, broadcast mastering or noisy channel degradation.
+YouTube's Content ID is able to identify audio/visual part of copyrighted content. In case if whole third party content is matched or only certain portion, user can check whether the content is properly identified or misidentified.
+Gracenote's MusicID is a commercial product that uses acoustic fingerprinting along with other methods to identify music.
+The Nero Multimedia Suite Nero (software suite) version 9 and 10 uses Gracenote to add metadata like author, title and genre to an audio file.
+Sony Ericsson's TrackID software uses Gracenote to identify songs being recorded via cell phone in a way similar to Shazam.
+Winamp version 5.5 uses Gracenote to power automatic playlist generation with "Nullsoft Playlist Generator" plugin that comes with the software.
+Midomi is a commercial service that can match music clips, as well as identifying a song that is sung or hummed
+Moodagent is a commercial service from Syntonetic that combines digital signal processing and AI techniques to create music profiles that incorporate characteristics such as mood, emotion, genre, style, instrument, vocals, orchestration, production, and beat/tempo.
+SoundHound, an acoustic fingerprint-based service with web and mobile platforms (Android, iOS, Windows Phone) that allows songs or hummed tunes to be identified using the Midomi service.
+Shazam, an acoustic fingerprint-based service allows for songs to be identified via cell phone.
+Tunatic by Wildbits is an application that allows identifying music while being played, analyzing the songs and comparing with the information on a server
+Open source
+MusicBrainz, a free and open content project for a music database that uses AcoustID's free database of audio fingerprints, which aims to map its fingerprints to the MusicBrainz database. MusicBrainz also used MusicIP's Open Fingerprint Architecture[4] for fingerprinting and the AmpliFIND (formerly MusicDNS) service for identifying audio files since 2006,[5] but is phasing out AmpliFIND in favour of the open source AcoustID, after AmpliFIND was acquired by Gracenote in 2011.[6]
+Last.fm's own acoustic fingerprinting application[7] was released in 2007.[8] The technology is now included in the Last.fm client software.
+AcoustID is an open source project that aims to create a free database of audio fingerprints with mapping to the MusicBrainz metadata database and provide a web service for audio file identification using this database.
+Echoprint is an open source music fingerprint and resolving framework powered by the The Echo Nest.
+
