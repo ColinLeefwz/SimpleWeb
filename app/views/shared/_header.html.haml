@@ -1,22 +1,21 @@
-#header
-  #logo
-    = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
-  #user_nav
-    - if user_signed_in?
-      %a Hello, 
-      %a= current_user.email
-      = link_to 'Sign out', destroy_user_session_path, :method => :delete
-    - else
-      = link_to 'Sign in', new_user_session_path
-      = link_to 'Sign up', new_user_registration_path
+#logo
+  = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
+#user_nav
+  - if user_signed_in?
+    %a Hello, 
+    %a= current_user.email
+    = link_to 'Sign out', destroy_user_session_path, :method => :delete
+  - else
+    = link_to 'Sign in', new_user_session_path
+    = link_to 'Sign up', new_user_registration_path
 
-  
 
-      
+
+
 /        <div class="region region-header">
 /         <div id="block-mailchimp-lists-prodygia-newsletter" class="block block-mailchimp-lists">
 
-    
+
 /           <div class="content">
 /             <form class="mailchimp-lists-user-subscribe-form" action="/" method="post" id="mailchimp-lists-user-subscribe-form-prodygia-newsletter" accept-charset="UTF-8">
 /               <div>

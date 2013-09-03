@@ -1,69 +1,28 @@
-.header {
-
-  div {
-        display: block;
-      }
-
-  #header {
-  	  border-top: 2px solid  #880848;
-	  border-bottom: 4px solid #880848;
-	  height: 118px;
-	  background: #fff;
-  }
+#header {
+  min-width: 200px;
+  width: 100%;
+  border-top: 2px solid  #880848;
+  border-bottom: 4px solid #880848;
+  height: 118px;
+  background: #fff;
+  display: inline-block; 
 
   #logo {
-	  float: left;
-	  text-transform: lowercase;
-	  margin-top: 20px;
+    float: left;
+    text-transform: lowercase;
+    margin-top: 20px;
   }
-
-  a {
-      text-decoration: none;
-  }     
 
   #user_nav {
-      float: right;
-      height: 38px;
-      margin-top: 40px;
-      vertical-align: bottom;
+    float: right;
+    height: 38px;
+    margin-top: 40px;
+    vertical-align: bottom;
 
-    a{
-      margin:0 5px auto;
-      font-size: 12px;
-    }
-  }
-
-  #navigation {
-	  margin: -45px 0 0;
-  }
-
-  #navigation .section {
-	  width: 960px;
-	  margin: 0 auto;
-  }
-
-  h2 {
-	  font-size: 30px;
-	  margin-bottom: 30px;
-	  font-weight: normal;
-  /*	visibility: hidden;*/
-  }
-
-  #main-menu {
-	  float: right;
-  }
-
-  ul.links.inline {
-	  display: inline;
-	  padding-left: 0;
-  }
-
-  ul.inline li {
-	  display: inline;
-	  list-style-type: none;
-	  padding: 0 0.5em;
-  }
-  .checkbox{
-      margin: 0 auto;
-  } 
-} 
+      a{
+        margin:0 5px auto;
+        font-size: 12px;
+       	text-decoration: none;
+       }
+   }
+}
