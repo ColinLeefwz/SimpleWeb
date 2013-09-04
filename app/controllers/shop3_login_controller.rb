@@ -64,6 +64,18 @@ class Shop3LoginController < ApplicationController
     render :json => {:text => shop ? shop.name : '错误id.'}
   end
 
+
+  def branch_login
+    shop= Shop.find_by_id(params[:id])
+    if shop.psid == session[:shop_id]
+      session[:admin_sid] = session[:shop_id]
+      session[:shop_id] = shop.id
+      redirect_to :controller => :shop3_login,:action => "index"
+    else
+      render :text => "不能登录"
+    end
+  end
+
   def gchat
     @chats = paginate_arr(session_shop.gchat, params[:page], 10)
     render :layout => "shop3"
