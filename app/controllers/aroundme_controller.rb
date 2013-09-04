@@ -53,6 +53,9 @@ class AroundmeController < ApplicationController
       if Rails.cache.read("PHONEREG#{session_user.id}")
         arr = session_user.groups + arr  #手机号码注册用户首次定位
       else
+        if is_shop_staff?(session[:user_id])
+          arr = session_user.staffs + arr
+        end
         head = arr[0..2]
         tail = arr[3..-1]
         arr = head + session_user.groups
