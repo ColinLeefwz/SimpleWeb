@@ -1,17 +1,6 @@
 <div class="con">
-  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
-  <div class="submenu">
-    <ul>
-      <li><a href="/shop3_infos">基本设置</a></li>
-      <li><a href="/shop3_pass">修改密码</a></li>
-      <li><a href="/shop3_staffs">员工管理</a></li>
-      <li><a href="/shop3_bindwbs">绑定微博</a></li>
-      <li><a href="/shop3_bans">屏蔽用户</a></li>
-      <li><a href="/shop3_marks">用户评分</a></li>
-      <li><a href="/shop3_notice">公告管理</a></li>
-      <% if session_shop.has_branch? %><li class="hover"><a href="/shop3_branchs">分店列表</a></li><%end%>
-    </ul>
-  </div>
+  <div class="title1 mb30"><h2 class="f18">内部商家列表</h2></div>
+
   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab2">
     <tr>
       <th width="12%">ID</th>
@@ -21,7 +10,7 @@
     </tr>
     <% @shops.each do |shop|  %>
       <tr>
-        <td><%= link_to shop.id.to_i, "/shop3_login/branch_login?id=#{shop.id}" %></td>
+        <td><%= shop.id.to_i %></td>
         <td ><%= shop.name %></td>
         <td ><%= shop.addr %></td>
         <td ><%= shop.tel %></td>
@@ -29,7 +18,7 @@
     <% end %>
 
   </table>
-  <%= generate_paginate %>
+<%= generate_paginate %>
 </div>
 <script defer="defer">
   $(document).ready(function(){
