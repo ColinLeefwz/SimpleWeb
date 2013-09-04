@@ -34,10 +34,6 @@ def is_kx_user?(uid)
   $redis.sismember('KxUsers', uid)
 end
 
-def is_shop_staff?(uid)
-  $redis.hexists('STAFF', uid)
-end
-
 
 $sina_api_key = "2054816412"  
 $sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  

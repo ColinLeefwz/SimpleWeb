@@ -234,5 +234,9 @@ class AroundmeController < ApplicationController
     city = Shop.get_city(lo)  if city.nil? || city==""
     city
   end
+
+  def is_shop_staff?(uid)
+    $redis.hexists('STAFF', uid)
+  end
   
 end
