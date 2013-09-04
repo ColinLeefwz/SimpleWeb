@@ -1,6 +1,6 @@
 #logo
   = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
-#user_nav
+#user_status
   - if user_signed_in?
     %a Hello, 
     %a= current_user.email
@@ -8,9 +8,20 @@
   - else
     = link_to 'Sign in', new_user_session_path
     = link_to 'Sign up', new_user_registration_path
+#nav 
+  %ul
+    %li 
+      %a All
+    %li 
+      %a Business
+    %li 
+      %a Entrepreneurship
+    %li 
+      %a Culture
+    %li 
+      %a Content type
 
-
-
+  %span.selector
 
 /        <div class="region region-header">
 /         <div id="block-mailchimp-lists-prodygia-newsletter" class="block block-mailchimp-lists">

@@ -44,18 +44,11 @@ class AdminController < ApplicationController
 
 	def session_create
 		content_type = params[:session][:content_type]
-		case content_type
-		when 'ArticleSession'
-			@session = ArticleSession.new session_params
-		when 'VideoSession'
-			@session = VideoSession.new session_params
-		when 'LiveSession'
-			@session = LiveSession.new session_params
-		end
+		@session = Object.const_get(content_type.camelize).new session_params
 
 		if params[:session][:video]
 			uploaded_io = params[:session][:video]
-			# video_url_path = Rails.root.join('public', 'uploads', uploaded_io.original_filename)
+			# TODO: the url may be wrong. can we use Paperclip instead?
 			video_url_path = Rails.root.join('app', 'assets', 'videos', uploaded_io.original_filename)
 			File.open(video_url_path, 'wb') do |file|
 				file.write(uploaded_io.read)
@@ -63,7 +56,6 @@ class AdminController < ApplicationController
 			@session.video_url = "#{uploaded_io.original_filename}"
 		end
 
-		# @session = Session.new(session_params)
 		if @session.save
 			redirect_to session_admin_index_path(@session)
 		else
