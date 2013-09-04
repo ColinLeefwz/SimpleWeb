@@ -4,6 +4,3 @@ $ ->
     container.masonry
       itemSelector: '.item',
       isFitWidth: true
-
-msnry.bindResize()
-container.masonry('bindResize')
