@@ -59,6 +59,10 @@ class AroundmeController < ApplicationController
         arr = arr + tail if tail
       end
     end
+    city = get_city(arr[0], lo)
+    if city=="0571"
+      arr = arr[0,2]+[Shop.find_by_id(21830231)]+arr[2..-1] #湖滨购物节（摩登不夜城）
+    end
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
       ghash = x.group_hash(session[:user_id])
@@ -66,7 +70,6 @@ class AroundmeController < ApplicationController
       hash.merge!(ghash)
       hash
     end
-    city = get_city(arr[0], lo)
     coupons = $redis.smembers("ACS#{city}") 
     if coupons
       ret.each_with_index do |xx,i|

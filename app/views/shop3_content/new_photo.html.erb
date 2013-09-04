@@ -7,8 +7,8 @@
     </ul>
   </div>
   <div class="clear1"></div>
-  <div class="box9">
-    <%= form_for :photo, :url => "/shop3_content/create_photo", :html =>{:id=>"Forms"} do |f| %>
+  <div class="box9"> 
+    <%= form_for :photo, :url => "/shop3_content/create_photo", :html =>{:multipart => true,:id=>"Forms"} do |f| %>
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt20">
         <tr>
           <td width="9%" height="30" align="right" class="pr20">图&nbsp;片：</td>

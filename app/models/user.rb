@@ -161,6 +161,10 @@ class User
   def groups
     group_ids.map {|id| Shop.find_by_id(id)}
   end
+
+  def staffs
+    $redis.hgetall("STAFF").map {|k,v| Shop.find_by_id(v)}
+  end
   
   def black_ids
     #UserBlack.where({uid: self.id})
