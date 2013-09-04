@@ -73,7 +73,7 @@ class Coupon
   #option[:single] true 时， 优惠券没有使用就不再发送
   def allow_send_share?(user_id, option={})
     if option[:single]
-      return false if  CouponDown.where({sid: shop_id, uid:  user_id, uat: nil}).limit(1).only(:id).first
+      return false if CouponDown.where(uid: user_id, cid: self.id, uat: nil).limit(1).only(:id).first
     end
     
     case self.rule.to_i
@@ -88,7 +88,7 @@ class Coupon
   def allow_send_checkin?(user_id, option={})
 
     if option[:single]
-      return false if  CouponDown.where({sid: shop_id, uid:  user_id, uat: nil}).limit(1).only(:id).first
+      return false if CouponDown.where(uid: user_id, cid: self.id, uat: nil).limit(1).only(:id).first
     end
     
     case self.rule.to_i
