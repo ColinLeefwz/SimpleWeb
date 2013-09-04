@@ -1,7 +1,3 @@
-= content_for :head do
-  = stylesheet_link_tag "bootstrap.css", media = "all"
-  = javascript_include_tag "bootstrap.js"
-
 %h3 Create a new session
 
 = form_for @session, url: sessions_admin_index_path do |f|
@@ -19,8 +15,14 @@
     = f.label :expert_id
     = f.select :expert_id, Expert.all.collect{ |e| [e.name, e.id]}
   .field
+    = f.label :content_type
+    = f.select :content_type, ['ArticleSession', 'VideoSession', 'LiveSession']
+  .field
     = f.label :cover
     = f.file_field :cover
+  .field
+    = f.label :video
+    = f.file_field :video
   .field
     = f.label :description
     = f.text_area :description
