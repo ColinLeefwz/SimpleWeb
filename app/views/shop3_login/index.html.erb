@@ -60,8 +60,9 @@ $(document).ready(function(){
 		还没有设置问答系统?<br/>请创建
 		例如：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>05 => 特色小吃推荐
 		<% end %>
+		<%= "试试回复：</br>".html_safe%> 
 		<% @shop_faqs.each do |faq| %>
-			 <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
+			 
 				<%= faq.od%>&nbsp;=>&nbsp;
 				<% if faq.title.length < 9 %>
 				<%= faq.title %><br/>
