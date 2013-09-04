@@ -10,7 +10,7 @@
 		</div>
 		<div class="box6right1">
 			<%= f.text_field :name, :value => @coupon.name || '优惠券主题 不得超过13个文字', :class => 'inputs2' %>
-			<%= f.text_area :desc, :value => @coupon.desc || '优惠额度，使用规则、期限等，不超过90字', :class => 'textarea3'%>
+			<%= f.text_area :desc, :value => @coupon.desc || '优惠额度，使用规则、期限等，不超过90字', :class => 'textarea3', :wrap=>"physical"%>
 		</div>
 	</div>
 </div>
