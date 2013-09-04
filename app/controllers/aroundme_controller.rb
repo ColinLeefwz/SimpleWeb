@@ -50,12 +50,12 @@ class AroundmeController < ApplicationController
       $fake_shops.each {|id| arr << Shop.find_by_id(id)}
     end
     if session_user #本人加入的群定位时总是出现
+      if is_shop_staff?(session[:user_id])
+        arr = session_user.staffs + arr
+      end
       if Rails.cache.read("PHONEREG#{session_user.id}")
         arr = session_user.groups + arr  #手机号码注册用户首次定位
       else
-        if is_shop_staff?(session[:user_id])
-          arr = session_user.staffs + arr
-        end
         head = arr[0..2]
         tail = arr[3..-1]
         arr = head + session_user.groups
