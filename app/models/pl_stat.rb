@@ -29,7 +29,7 @@ class PlStat
       puts "----reply1--------"
       (0..utnl-1).each do |x|
         sum2 = pl.human_chat(User.find_by_id(pl.chat[x][0]).id).length
-        if sum2 < 2
+        if sum2 < 3
           sum += 1
         end
       end
