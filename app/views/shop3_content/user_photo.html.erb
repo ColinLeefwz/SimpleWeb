@@ -112,7 +112,6 @@ function OC(obj, id){//显示与隐藏
 }
 
 function ZD(obj, id){//置顶
-	alert(2);
 	var x,y,a,b,rel,rel2,i;
 
 	x=$("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("left")? $("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("left"):0; 
@@ -151,7 +150,7 @@ function ZD(obj, id){//置顶
 }
 
 function QXZD(obj, id){//取消置顶
-	var x,y,a,b,rel,i;alert(1);
+	var x,y,a,b,rel,i;
 	var num=$("div.box9plane").length;
 
 	x=$("div.box9plane").eq(num-1).css("left"); y=$("div.box9plane").eq(num-1).css("top");
