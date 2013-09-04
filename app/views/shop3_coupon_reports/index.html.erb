@@ -13,25 +13,13 @@
 			</div>
 			<div class="search textleft">
 			   <%= form_tag '/shop3_coupon_reports',:method =>:get, :onsubmit => "return check_day()" do %>
-				搜索日期&nbsp;
-				<%= text_field_tag :day, params[:day]|| Time.now.to_date, :class => "inputs5"%>
-				<!-- <input type="text" class="inputs5"/> -->
-				<input type="submit" value="提 交" class="btn6 ml10"/>
+				<span class="red1 f15">搜索日期:</span><br/><br/>
+				开始日期<%= text_field_tag :day, params[:day]|| Time.now.to_date, :class => "inputs5 mlr10 w150"%>
+				结束日期<%= text_field_tag :day, params[:day]|| Time.now.to_date, :class => "inputs5 mlr10 w150"%>
+				<input type="submit" value="查 询" class="btn6 ml10"/>
 			   <% end %>
 				<div class="clear1"></div>
-				<br/><br/>
-				<span class="red1 f15">自定义导出:</span><br/><br/>
-				<%= form_tag "/shop3_coupon_reports/csv_export" do  %>
-				<%= button_to '导出今日数据', "/shop3_coupon_reports/csv_export", :class => "btn7  r" %>
-				<!-- <input type="submit" value="导出今日数据" class="btn7  r"/> -->
-				开始日期<%= text_field_tag :stime,@day||Time.now.to_date, :class => "inputs5 mlr10 w150" %>
-				<!-- <input type="text" class="inputs5 mlr10 w150"/> -->
-				结束日期<%= text_field_tag :etime,@day||Time.now.to_date, :class => "inputs5 mlr10 w150" %>
-				<!-- <input type="text" class="inputs5 mlr10 w150"/> -->
-
-				<!-- <input type="submit" value="导出" class="btn6 ml10"/> -->
-				<%= submit_tag "导出", :onclick => "return submit_export();",:class => "btn6 ml10" %>
-				<% end %>
+				
 			</div>
 			<table width="100%" cellpadding="0" cellspacing="0" class="tab2">
 				<tr>
@@ -40,21 +28,31 @@
 					<th width="100" class="textcenter pl0">下载次数</th>
 					<th width="100" class="textcenter pl0">使用次数</th>
 				</tr> 
+				<% @report.each do |report| %>
 				<tr>
-				  <% @report.each do |report|   %>
-
-				  <td><a href="coupon_issuing3.html" title="查看详情"><%= report[0].name %><span class="gay1">（签到类）</span></a></td>
+				  <td><a href="/shop3_coupons/show?id=<%= report[0].id %>" title="<%= report[0].name %>"><%= report[0].name %><span class="gay1"></span></a></td>
 				  <td width="150" align="center"><%= params[:day] %></td>
 				  <td width="100" align="center"><%= link_to report[1], "/shop3_coupons/newly_down?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}"%></td>
 				  <td width="100" align="center"><%=link_to report[2], "/shop3_coupons/newly_use?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}" %></td>
-				  <% end %>
 				</tr>
-
-		     </table>			
+				<% end %>
+				<tr>
+					<td colspan="2"><strong>总计</strong></td>
+					<td width="100" align="center">110次数</td>
+					<td width="100" align="center">110次数</td>
+				</tr>
+		     </table>
+			 <br/><br/>
+			<span class="red1 f15">自定义导出:</span><br/><br/>
+			<%= button_to '导出昨日数据', "/shop3_coupon_reports/csv_export", :class => "btn7  r" %>
+			<%= form_tag "/shop3_coupon_reports/csv_export" do  %>
+			开始日期<%= text_field_tag :stime,@day||Time.now.to_date, :class => "inputs5 mlr10 w150" %>
+			结束日期<%= text_field_tag :etime,@day||Time.now.to_date, :class => "inputs5 mlr10 w150" %>
+			<%= submit_tag "导 出", :onclick => "return submit_export();",:class => "btn6 ml10" %>
+			<% end %>
 		</div>
 
 <script>
-
 $(document).ready(function(){
 	runing=$("#CB1").attr("class");
 	if(runing=="checkboxs1"){

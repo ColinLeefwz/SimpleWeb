@@ -70,7 +70,12 @@ class Coupon
     return true
   end
 
-  def allow_send_share?(user_id, sid = nil)
+  #option[:single] true 时， 优惠券没有使用就不再发送
+  def allow_send_share?(user_id, option={})
+    if option[:single]
+      return false if CouponDown.where(uid: user_id, cid: self.id, uat: nil).limit(1).only(:id).first
+    end
+    
     case self.rule.to_i
     when 0
       return !downed_today(user_id)
@@ -83,7 +88,7 @@ class Coupon
   def allow_send_checkin?(user_id, option={})
 
     if option[:single]
-      return false if  CouponDown.where({sid: shop_id, uid:  user_id, uat: nil}).limit(1).only(:id).first
+      return false if CouponDown.where(uid: user_id, cid: self.id, uat: nil).limit(1).only(:id).first
     end
     
     case self.rule.to_i
@@ -115,7 +120,25 @@ class Coupon
     cpd = CouponDown.where({cid:self.id, uid: user_id}).sort({_id:-1}).limit(1).to_a
     return false if cpd.nil? || cpd.size==0
     return cpd[0].dat.to_date == Time.now.to_date
-  end  
+  end
+
+  def self.shop_downed_week(room)
+    sweek = Time.now.beginning_of_week.utc
+    eweek = Time.now.end_of_week.utc
+    CouponDown.where({sid:room,dat:{"$gt" => sweek,"$lt" => eweek}}).sort({_id:-1}).limit(10)
+  end
+
+  def self.shop_use_week(room)
+    sweek = Time.now.beginning_of_week.utc
+    eweek = Time.now.end_of_week.utc
+    CouponDown.where({sid:room,uat:{"$gt" => sweek,"$lt" => eweek}}).sort({_id:-1}).limit(10)
+  end
+
+  def self.shop_checkin_week(room)
+    sweek = Time.now.beginning_of_week.to_i.to_s(16).ljust(24,'0')
+    eweek = Time.now.end_of_week.to_i.to_s(16).ljust(24,'0')
+    Checkin.where({sid:room,id:{"$gt" => sweek, "$lt" => eweek}}).sort({_id:-1}).limit(10)
+  end
   
   def self.gen_demo(sid)
     demo = Coupon.new

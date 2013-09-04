@@ -113,6 +113,50 @@ GET & \multicolumn{3}{|c|}{https://42.121.79.210/init/upgrade} \\
 
 
 
+\section{调试时发送Xmpp断言信息}
+
+客户端在一些关键逻辑部分，可以加入Xmpp信息发送。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/init/debug} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ uid1  & 字符串 & 必须 &  发送者id\\
+ \hline
+ uid2  & 字符串 & 必须 &  接受者id\\ 
+ \hline
+ str  & 字符串 & 必须 &  要发送的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+其中，接受者id必须是开发者在脸脸的uid。
+
+\begin{verbatim}
+本接口的调用场景如：
+
+1. if(必须成立的条件) {
+       ...
+    }else{
+       发送Xmpp信息
+    }
+
+2. try {
+       ...
+    }catch{
+       发送Xmpp信息
+    }
+
+3. 函数入口处的参数检查
+    if(arg==null) 发送Xmpp信息
+    
+\end{verbatim}
+
+
+
 \input{./login.tex}
 
 

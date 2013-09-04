@@ -27,6 +27,7 @@ class User
   field :qq_name
   field :qq_hidden, type:Boolean #true代表该qq被解除绑定
   field :phone_hidden, type:Boolean #true代表该手机被解除绑定
+  field :pmatch, type:Boolean #true代表启用通讯录匹配
   
 
   field :tk  #Push消息的token
@@ -160,11 +161,20 @@ class User
   def groups
     group_ids.map {|id| Shop.find_by_id(id)}
   end
+
+  def staffs
+    $redis.hget("STAFF",self.id).to_a.map {|k| Shop.find_by_id(k)}
+  end
   
   def black_ids
     #UserBlack.where({uid: self.id})
     $redis.zrange("BLACK#{self.id}",0,-1)
   end
+  
+  def black_xmpp_list
+    Xmpp.post("api/blocklist",:uid => self.id)
+  end
+  
   
   def reports_s
     UserBlack.where({uid: self.id, report:1})
@@ -222,10 +232,10 @@ class User
   end
   
 
-  def attr_with_id
+  def attr_with_id(hide_psd=true)
     hash = self.attributes.merge({id: self._id, "password" => self.password})
     hash.delete("_id")
-    hash.delete("psd")
+    hash.delete("psd") if hide_psd
     hash.delete("qq")
     hash.merge!({qq_openid: self.qq}) if self.has_qq?
     hash.delete("wb_uid") if self.wb_hidden  == 2  
@@ -237,7 +247,7 @@ class User
   end
   
   def output_self
-    hash = self.attr_with_id.merge!(self.head_logo_hash)
+    hash = self.attr_with_id(false).merge!(self.head_logo_hash)
     hash
   end
 
@@ -502,8 +512,8 @@ class User
     Checkin.where({uid: _id, del: {"$exists" => false}}).sort({_id:-1})
   end
 
-  def is_staff?
-    !Staff.where({user_id: id}).empty?
+  def is_staff?(shop_id)
+    !Staff.where({user_id: id, shop_id: shop_id}).empty?
   end
   
   def room_photos
@@ -597,6 +607,11 @@ class User
     photos.each {|x| x.destroy}
     Checkin.where({uid: _id}).each {|x| x.destroy}
     self.destroy
+  end
+  
+  def change_phone_redis(oldphone,newphone)
+    $redis.del("P:#{oldphone}")
+    $redis.set("P:#{newphone}", self.id)
   end
   
   
@@ -752,6 +767,11 @@ class User
   
   def has_qq?
     self.qq && self.qq.size>0 && !self.qq_hidden
+  end
+
+  #在商家中的最后一次签到
+  def last_checkin(shop_id)
+    Checkin.where({sid: shop_id, uid: self.id}).sort({_id: -1}).limit(1).first
   end
 
   def has_phone?

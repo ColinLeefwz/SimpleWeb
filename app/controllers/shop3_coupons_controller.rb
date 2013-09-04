@@ -12,9 +12,9 @@ class Shop3CouponsController < ApplicationController
   end
 
   def list
-    hash = {:shop_id => session[:shop_id], :t2 => 1}
-    sort = {:hidden => 1, :_id => -1}
-    @coupons = paginate("Coupon", params[:page], hash, sort,10)    
+    hash = {:shop_id => session[:shop_id]}
+    sort = {:hidden => 1,:t2 => 1,  :_id => -1}
+    @coupons = paginate("Coupon", params[:page], hash, sort,10)
   end
 
   # GET /coupons/1
@@ -77,13 +77,13 @@ class Shop3CouponsController < ApplicationController
     @coupon.process_img_upload = true if @coupon.t.to_i == 2
     if @coupon.img2.blank?
       flash.now[:notice]='请上传图片.'
-      return render :layout => true
+      return render :action => :new
     end
 
     #    debugger
     if @coupon.rule && Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :t2 => 1, :rule => @coupon.rule  }).limit(1).any?
       flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
-      return render :layout => true
+      return render :action => :new
     end
 
 
@@ -96,7 +96,7 @@ class Shop3CouponsController < ApplicationController
         redirect_to :action => :show_img2, :id => @coupon.id
       end
     else
-      render :layout => true
+      render render :action => :new
     end
   end
 
@@ -180,9 +180,16 @@ class Shop3CouponsController < ApplicationController
     end
   end
 
+  def ajax_activate
+    @coupon = Coupon.find(params[:id])
+    @coupon.unset(:hidden)
+    $redis.sadd("ACS#{session_shop.city}", session_shop.id)
+    render :json => {:text => "已激活."}
+  end
+
   def ajax_deply
     coupon = Coupon.find(params[:id])
-    text = (coupon.deply ? '<span class="gray">已停用</span>' : '<span class="red">失败了</span>')
+    text = (coupon.deply ? '已停用' : '失败了')
     $redis.srem("ACS#{session_shop.city}", session_shop.id) if session_shop.no_active?
     render :json => {text: text}
   end

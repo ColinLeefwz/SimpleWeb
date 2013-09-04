@@ -76,7 +76,11 @@ class Shop
   end
   
   def top4_photos
-    Photo.where({room: self.id.to_i.to_s, hide: nil}).sort({od: -1, updated_at: -1}).limit(4).to_a
+    if self.id == 21834120
+      Photo.where({room: self.id.to_i.to_s, hide: nil, user_id: "s21834120"}).sort({od: -1, updated_at: -1}).limit(4).to_a
+    else
+      Photo.where({room: self.id.to_i.to_s, hide: nil}).sort({od: -1, updated_at: -1}).limit(4).to_a
+    end
   end
   
   def photos
@@ -291,28 +295,42 @@ class Shop
     return shops.map {|x| Shop.find_by_id(x)}.reject {|x| x.nil?}
   end
 
+  #签到类的所有优惠券
   def checkin_coupons
     Coupon.where({shop_id: self.id, hidden: {'$exists' => false}, t2: 1, rule: {"$ne" => nil}}).sort({_id: -1})
   end
 
+  #签到类的每日分享优惠券
   def checkin_eday_coupons
     Coupon.where({shop_id: self.id, hidden: {'$exists' => false}, t2: 1, rule: '0'}).sort({_id: -1})
   end
 
+  #分享类优惠券
   def share_coupon
     Coupon.where({shop_id: self.id.to_i, hidden: nil, t2: '2'}).sort({_id: -1}).limit(1).to_a[0]
   end
+
   
   def send_coupon(user_id, limit=50)
     coupons = []
-    #7月18 活动，获取附近活动商家的优惠券
+    #7月18 活动，获取附近活动商家的“每日签到优惠券”
     coupons += active_shop_coupons(user_id, limit)
 
-    #旅行团 获取优惠券
+    #旅行团 获取旅游景点上合作商家的 “每日签到优惠券”
     coupons +=  group_partners_coupons(user_id)
 
+    #当前地点的合作商家的“每日签到优惠券”
+    coupons += partner_coupons(user_id)
+
+    #总店的“每日签到优惠券”
+    coupons += pshop_coupon(user_id)
+
+    #当前商家的签到优惠券
     coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
+
+    #内部地点的“每日签到优惠券”
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
+
     coupons.each{|coupon| coupon.send_coupon(user_id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
@@ -321,9 +339,15 @@ class Shop
     Resque.enqueue(XmppNotice, self.id.to_i,user_id,str,"coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
   end
 
+  #总店的优惠券
+  def pshop_coupon(uid)
+    return [] if (pshop = Shop.find_by_id(psid)).nil?
+    pshop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) }
+  end
+
   #旅行团 发送合作商家的优惠券
   #1.判断用户是否加入旅行团，
-  #2.判断旅行社是否生效
+  #2.判断旅行团是否生效
   #3. 获取旅行团在本次签到地点的合作商家的优惠券
   def group_partners_coupons(uid)
     $redis.smembers("GROUP#{uid}").each do |sid|
@@ -337,6 +361,21 @@ class Shop
     return []
   end
 
+  #合作商家发送“签到优惠券”, 只发合作商家的每日签到优惠， 并且合作商家优惠券没有使用的话不发送
+  def partner_coupons(uid)
+    coupons = []
+    shop_partner = ShopPartner.find_by_id(self.id)
+    if shop_partner
+      if shop_partner.coupon_t.to_i==3 || shop_partner.coupon_t.to_i == 1
+        shop_partner.partners.to_a.each do |partner|
+          shop = Shop.find_by_id(partner[0])
+          coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) } if shop
+        end
+      end
+    end
+    return coupons
+  end
+
 
   #7月18 活动，获取附近活动商家的优惠券，
   def active_shop_coupons(user_id, limit)
@@ -344,7 +383,7 @@ class Shop
       shops = Shop.find($cooperation_shops)
       loc = loc_first
       shops = shops.sort{|f,s| get_distance(f.loc_first, loc) <=> get_distance(s.loc_first, loc) }[0, limit]
-      shops.inject([]){|f,s|  f + s.checkin_coupons.select { |c| c.allow_send_checkin?(user_id, :single => true) }}
+      shops.inject([]){|f,s|  f + s.checkin_eday_coupons.select { |c| c.allow_send_checkin?(user_id, :single => true) }}
     else
       []
     end
@@ -465,6 +504,8 @@ class Shop
 
   #消息返回格式[uid, text, time, id]
   def history(skip,count)
+    #人才市场
+    return [] if self.id == 21834120 
     skip = 0 if skip<0
     begin
       response = Xmpp.get("api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}")

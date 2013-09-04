@@ -1,4 +1,9 @@
-
+<div id="BG"></div>
+<div id="DelDiv">
+	<center><br/>确定删除这名员工？</center>
+	<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+	<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
 <div class="con">
   <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
   <div class="submenu">
@@ -10,6 +15,7 @@
       <li><a href="/shop3_bans">屏蔽用户</a></li>
       <li><a href="/shop3_marks">用户评分</a></li>
       <li><a href="/shop3_notice">公告管理</a></li>
+	 <% if session_shop.has_branch? %> <li><a href="/shop3_branchs">分店列表</a></li><%end%>
     </ul>
     <div class="r wordstyle">
       <!--           <form method="post" action="">
@@ -21,6 +27,7 @@
                   </select>
                   &nbsp;条/记录
                 </form> -->
+      <a href="/shop3_staffs/new" class="btn12 r mr10">从签到中添加</a>
     </div>
   </div>
   <form method="post" action=""/>
@@ -40,19 +47,22 @@
       <th width="303">最近签到</th>
       <th width="227">&nbsp;</th>
     </tr>
-    <% @staffs.each do |staff| %>
-      <tr id="Tr1">
-        <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><%= link_to  staff.user.try(:name)||'' , "/shop3_checkins/user?uid=#{staff.user_id}",:class => "f14" %>
-          <img align="absmiddle" class="ml10" src=<%= staff.user.gender.to_i==1?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>><br/>
-          <!-- <img align="absmiddle" class="ml10" src="images/man.png"><br/> -->
-          年龄：<%= staff.user.age %><br/>
-          签到次数：<%=link_to staff.checkin_count(staff.user_id),"/shop3_checkins?uid=#{staff.user_id}" %>次          </td>
-        <!-- <td>2012-12-22 18:33 </td> -->
-        <td width="227" align="center">
-          <%= link_to "历史签到", "/shop3_checkins?uid=#{staff.user_id}",:class => "mr10" %>
-          <%=link_to '删除',  '#',:onclick => "ajaxDeleteStaff($(this), '#{staff.id}');" ,:class => "del"%>
+    <% @staffs.each_with_index do |staff, index| %>
+      <tr id="Tr<%= index+1%>">
+        <td valign="middle">
+          <%= link_to image_tag(UserLogo.img_url(staff.user.head_logo_id, :t1),:class=>"imgstyle", :align => "left"),"/shop3_checkins/user?uid=#{staff.user_id}"  %>
+          <%= link_to  staff.user.try(:name)||'' , "/shop3_checkins/user?uid=#{staff.user_id}",:class => "f14" %>
+          <img align="absmiddle" class="ml10" src=<%= staff.user.gender.to_i==1?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %> /><br/>
 
-          <!-- <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="1" title="删除">删除</a></td> -->
+          年龄：<%= staff.user.age %><br/>
+          签到次数：<%=link_to staff.checkin_count(staff.user_id),"/shop3_checkins?uid=#{staff.user_id}" %>次
+		  </td>
+        <td>
+          <%= staff.user.last_checkin(session[:shop_id]).cat.strftime("%Y-%m-%d %H:%M:%S") %>
+        </td>
+        <td width="227" align="center">
+          <%= link_to "历史签到", "/shop3_checkins?uid=#{staff.user_id}",:class => "ns1" %>
+          <%=link_to '',  'javascript:void(0)',:onclick => "ajaxDel('#{staff.id}','#{index+1}');" ,:class => "del"%>
         </td>
       </tr>
 
@@ -61,27 +71,48 @@
   <%= generate_paginate.html_safe %>
 </div>
 
-<script type="text/javascript">
-  function ajaxDeleteStaff(obj, id){
-    if(confirm("确定删除该员工？"))
-      $.post("/shop_staffs/ajax_delete_staff",{id: id}, function() {
-        obj.parent().parent().remove();
-      });
-  }
-</script>
-
 <script defer="defer">
-  $(document).ready(function(){
-    runing=$("#CB1").attr("class");
-    if(runing=="checkboxs1"){
-      NavDiv();
-      $(window).load(function(){
-        MessageDiv();
-      });
-    }else if(runing=="checkboxs2"){
-      AllNoDH();
-    }
-  
-    $(".tab2 tr:odd").addClass("trbg");
-  });
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	$(".tab2 tr:odd").addClass("trbg");
+});
+
+function ajaxDel(id,index){
+	var top;
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if(documentHeight<=windowHeight){
+		$("#BG").css({"height":windowHeight+"px","display":"block"});
+	}else{
+		$("#BG").css({"height":documentHeight+"px","display":"block"});
+	}
+	$("#DelDiv").css("display","block");
+	top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+	$("#DelDiv").css({"top":top+"px","display":"none"});
+	$("#DelDiv").fadeIn(600);
+
+	$("#DelBtn").click(function(){
+		$.post("/shop_staffs/ajax_delete_staff",{id: id}, function() {
+			$("#BG, #DelDiv").css("display","none");
+			$("#Tr"+index).fadeOut(300,function(){
+				$(this).remove();
+			});
+		});
+	});
+}
+
+
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
 </script>

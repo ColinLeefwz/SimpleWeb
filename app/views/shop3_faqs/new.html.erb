@@ -1,4 +1,4 @@
-﻿<div class="con">
+<div class="con">
 	<div class="title1"><h2 class="f18">问答系统</h2></div>
 	<div class="box4">
 		<div class="box4left">
@@ -20,8 +20,11 @@
     <tr>
       <td width="20%" align="right" valign="middle" class="pr20">标题</td>
       <td>
-        <%= f.text_field :title, :class => "inputs", :id=>"Inputs1", :value=>"3-12个字,如:获取wifi密码" %>
-      </td>
+		<div class="box12">
+			<%= f.text_field :title, :class =>"inputs6 radius5", :id=>"Inputs1", :value=>"3-12个字,如:获取wifi密码" %>
+			<span id="Mes1"></span>
+		</div>
+	  </td>
     </tr>
 
     <tr>
@@ -42,8 +45,13 @@
     
     <tr>
 	  <td width="20%" align="right" valign="top" class="pr20">回答</td>
-	  <td><%= f.text_area :text, :class => "textarea2", :id=>"Inputs2",:value=>"3-140个字,例如：本店wifi密码：321123", :wrap=>"physical"%></td>
-    </tr>           
+	  <td>
+		<div class="box12 h140">
+			<%= f.text_area :text, :class => "textarea4 radius5", :id=>"Inputs2",:value=>"3-140个字,例如：本店wifi密码：321123", :wrap=>"physical"%>
+			<span id="Mes2"></span>
+		</div>
+	  </td>
+	</tr>           
     <tr>
 		<td>&nbsp;</td>
 		<td><input type="submit" name="Submit" value="提 交" class="btn2 l"/>
@@ -60,7 +68,6 @@
 <script src="/newbackstage/js/questions_answers.js" type="text/javascript"></script>
 <script>
 $(document).ready(function(){
-	imgUploadPreview2("input[name='shop_faq[img]']", 'uploadPreview');
     runing=$("#CB1").attr("class");
     if(runing=="checkboxs1"){
       NavDiv();
@@ -70,6 +77,9 @@ $(document).ready(function(){
     }else if(runing=="checkboxs2"){
       AllNoDH();
     }
+	if(!/MSIE/i.test(ua)){
+		$("input[name='shop_faq[img]']").not(":first").remove();
+	}
 	$("#Btn1").click(function(){
 		$("#shop_faq_img").click();
 	});

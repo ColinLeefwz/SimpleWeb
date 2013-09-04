@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+</head>
+<body>
+<p>
+	<label>请选择一个图像文件：</label>
+	<input type="file" id="demo_input" />
+</p> 
+<div id="demo_result">
+	  <!-- 这里用来显示读取结果 -->
+</div> 
+
+<script src="js/jquery-1.6.2.min.js"></script>
+<script>
+if ( typeof FileReader === 'undefined' ){
+        demo_result.innerHTML = "<p class='warn'>抱歉，你的浏览器不支持 FileReader</p>";
+        demo_input.setAttribute( 'disabled','disabled' );
+} else {
+        demo_input.addEventListener( 'change',readFile,false );
+}
+
+function readFile(){
+        var file = $("#demo_input").get(0).files[0];
+
+/*		if(!/image\/\w+/.test(file.type)){
+                alert("请确保文件为图像类型");
+                return false;
+        }*/
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){alert(1);
+                demo_result.innerHTML = '<img src="'+this.result+'" alt=""/>'
+        }
+}
+
+</script>
+
+
+</body>
+</html>

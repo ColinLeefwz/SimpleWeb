@@ -48,7 +48,7 @@ class ShopLoginControllerTest < ActionController::TestCase
     post :login, :id => 2, :password => '1234561'
     assert_equal "密码输入错误，您还有1次机会", flash[:notice]
     post :login, :id => 2, :password => '123456'
-    assert_redirected_to "/shop_login/index"
+    assert_redirected_to "/shop3_login/index"
   end
 end
 

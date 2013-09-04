@@ -40,7 +40,13 @@ $(document).ready(function(){
 				<div class="phone">
 					<div class="title3"><h2><%= link_to session_shop.name, "/shop3_login" %></h2></div>
 					<div class="imgbox"><a href="/shop3_content/user_photo">
-						<img src="/newbackstage/images/pic7.png"/><img src="/newbackstage/images/pic8.png"/><img src="/newbackstage/images/pic7.png"/><img src="/newbackstage/images/pic8.png"/><img src="/newbackstage/images/pic9.png"/></a>
+
+                        <% @photos.each do |photo| %>
+                        <%= image_tag(photo.img.try(:url, :t2),:size => "45x45") || image_tag("/newbackstage/images/pic9.jpg") %>
+                        <% end %>
+                        <img src="/newbackstage/images/pic9.png"/>
+
+						</a>
 					</div>
 					<div class="qa">
 						<div id="QAC">
@@ -48,8 +54,22 @@ $(document).ready(function(){
 							<div class="shopanswer">
 								<img src="/newbackstage/images/sign8.png" class="head"/>
 								<div class="cons">
-									<img src="/newbackstage/images/sign9.png" class="small_arrow"/><a href="/shop3_faqs">
-									试试回复：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>05 => 特色小吃推荐
+									<img src="/newbackstage/images/sign9.png" class="small_arrow"/>
+									<a href="/shop3_faqs">
+		<% if @shop_faqs.blank? %>
+		还没有设置问答系统?<br/>请创建
+		例如：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>05 => 特色小吃推荐
+		<% end %>
+		<%= "试试回复：</br>".html_safe%> 
+		<% @shop_faqs.each do |faq| %>
+			 
+				<%= faq.od%>&nbsp;=>&nbsp;
+				<% if faq.title.length < 9 %>
+				<%= faq.title %><br/>
+				<% else %>
+				<%= faq.title[0,9]%>...<br/>
+				<% end %>
+		<% end %>
 									</a>
 								</div>
 							</div>
@@ -195,7 +215,25 @@ $(document).ready(function(){
 				</div>
 			</div>
 
-			<div class="box2">
-			<%= render :partial => "linecharts" %>
+	<div class="box2">
+		<div class="title1"><h2><a class="gay2" href="shop3_data">数据统计</a></h2></div>
+		<div class="box2right1">
+			<div class="box2inner4 h423">
+					<ul class="list">
+						<li class="hover" onClick="SlideDoor(this,6)">签到统计</li>
+						<li onClick="SlideDoor(this,7)">优惠券下载量</li>
+						<li class="noneborder" onClick="SlideDoor(this,8)">优惠券使用量</li>
+					</ul>
+					<ul class="list2" id="Door6">
+						<%= render :partial => "shop3_login/linecharts" %>
+					</ul>
+					<ul class="list2" id="Door7" style="display:none;">
+						<%= render :partial => "shop3_data/downcharts" %>
+					</ul>
+					<ul class="list2" id="Door8" style="display:none;">
+						<%= render :partial => "shop3_data/usecharts" %>
+					</ul>
 			</div>
+		</div>
+	</div>
 		</div>

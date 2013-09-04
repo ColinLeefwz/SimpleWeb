@@ -1,16 +1,14 @@
 // JavaScript Document
 var windowWidth,documentHeight,windowHeight,messageHeight,LinkBoxTimer,ua,MessageDivTimer,CouponPlaneTimer,x0=0,x1=0;
-
+ua=navigator.userAgent.toLowerCase();
 $(window).load(function(){
 	windowWidth=$(window).width();
 	documentHeight=$(document).height();
 	windowHeight=$(window).height();
 	messageHeight=$("#Message").height();
-
-	ua=navigator.userAgent.toLowerCase();
 	//ua="ipad";
 	if(windowWidth<=1024){
-		$("div.main").css("width","1024px");	
+		$("div.main").css("width","1024px");
 	}
 	if(/MSIE/i.test(ua)&&documentHeight<=window.screen.height){//针对IE
 		$("#Nav").css("height",documentHeight+"px");
@@ -62,15 +60,25 @@ $(window).load(function(){
 		}
 	});
 	
+	$("#NowPage").click(function(){
+		clearTimeout(LinkBoxTimer);
+		$("#PageNum").stop().fadeIn(200);
+	});
+	$("#PageNum").mouseover(function(){
+		$("#PageNum").css("display","block");
+	}).mouseout(function(){
+		$("#PageNum").css("display","none");
+	});
 	
-	$("#OpenLinkBox").click(function(){
+/*	$("#OpenLinkBox").click(function(){ //右侧脸脸图标，打开弹出菜单
 		clearTimeout(LinkBoxTimer);
 		$("#LinkBox").stop().fadeIn(200).animate({"top":"60px"},300);
 	}).mouseout(function(){
 		LinkBoxTimer=setTimeout(function(){
-			$("#LinkBox").css({"display":"none","top":"80px"});				 
+			$("#LinkBox").css({"display":"none","top":"80px"});	
 		},1000);
 	});
+
 	$("#LinkBox").mouseover(function(){
 		clearTimeout(LinkBoxTimer);
 		$(this).css({"display":"block","top":"60px"});
@@ -82,6 +90,7 @@ $(window).load(function(){
 	$("#LinkBox a.links2").click(function(){
 		window.location.href='http://shop.dface.cn';
 	});
+	*/
 });
 
 function Dn2_divplane(){//首页：最新数据动画
@@ -141,9 +150,9 @@ function MessageDiv(){//消息通知框
 function NavDiv(){//菜单
 	windowWidth=$(window).width();
 	if(navmove=="on"){
-		$("#Nav").animate({"left":"-160px"},1000);
+		$("#Nav").css({"left":"-160px"});
 		if(windowWidth<=1024){
-			$("div.main").stop(true).animate({"width":"1024px","padding-left":"0px"});
+			$("div.main").stop(true).css({"width":"1024px","padding-left":"0px"});
 		}
 	}else{
 		$("#Btn").addClass("dis").html("<img src='/newbackstage/images/sign1.png' align='absmiddle'/> 取消固定导航");
@@ -168,7 +177,7 @@ function NavDiv(){//菜单
 					}
 				}
 			});
-			$("#CloseNav").click(function(e){
+			$("#CloseNav").click(function(){
 				if(navmove=="on"){
 					$("#Nav").stop(true,true).animate({"left":"-160px"},250);
 					windowWidth=$(window).width();
@@ -207,10 +216,16 @@ function NavDiv(){//菜单
 				}
 			});
 		}
-		
+
+
 		$("#Btn").click(function(){
-			if(navmove=="on"){
+			   if($.cookie( 'navmove' ) =="on"){
 				navmove="off";
+				// window.localStorage.navmove = "off";
+				removecookie();
+				$.cookie( 'navmove', 'off', { path: '/' } );
+				
+
 
 				$("#Btn").addClass("dis").html("<img src='/newbackstage/images/sign1.png' align='absmiddle'/> 取消固定导航");;
 
@@ -223,8 +238,14 @@ function NavDiv(){//菜单
 				if(windowWidth<=1024){
 					$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});
 				}
-			}else if(navmove=="off"){
+
+			  }else if($.cookie( 'navmove' ) =="off"){
 				navmove="on";
+				// window.localStorage.navmove = "on";
+				removecookie();
+				$.cookie( 'navmove', 'on', { path: '/' } );
+
+
 				$("#Nav").unbind();
 				$(document).unbind("mouseout");
 				$(document).unbind("mouseover");
@@ -249,6 +270,15 @@ function NavDiv(){//菜单
 	}
 	
 }
+
+function removecookie(){//清除每次生成的多余路径
+	$.removeCookie('navmove', { path: '/shop3_coupons/' });
+	$.removeCookie('navmove', { path: '/shop3_content/' });
+	$.removeCookie('navmove', { path: '/shop3_checkins/' });
+	$.removeCookie('navmove', { path: '/shop3_staffs/' });
+	// $.removeCookie('navmove', { path: '/*' });
+}
+
 function Menus(){//首页：手机头
 	$("a.menu1, a.menu2, a.menu3, a.menu4, a.menu5, a.menu6").css("height","0px");
 	$("span.box1line1, span.box1line2, span.box1line3").css({"width":"0px","left":"320px"});
@@ -391,14 +421,14 @@ function ShowDiv(){//问答系统管理：显示
 		},180);
 }
 function DH(){//数据统计动画
-	$("#Dn2_b0,#Dn2_b2,div.box2right1").css("height","0px");
-	$("#Dn2_b1,#Dn2_b3").css({"height":"0px","top":"380px"});
-	$("div.box2left1").css("width","0px");
+	$("#Dn2_b0,#Dn2_b2").css("height","0px");
+	$("#Dn2_b1").css({"height":"0px","top":"380px"});
+	//$("div.box2left1").css("width","0px");
 
 	$("#Dn2_b0,#Dn2_b2").animate({"height":"380px"},1600,"backout");
-	$("#Dn2_b1,#Dn2_b3").animate({"height":"380px","top":"0px"},1300,"backinout");
-	$("div.box2left1").animate({"width":"620px"},1000,"backin");
-	$("div.box2right1").animate({"height":"380px"},1000,"backin");
+	$("#Dn2_b1").animate({"height":"380px","top":"0px"},1300,"backinout");
+	//$("div.box2left1").animate({"width":"620px"},1000,"backin");
+	//$("div.box2right1").animate({"height":"380px"},1000,"backin");
 }
 function AllNoDH(){//取消动画
 	$(".header").css("overflow","visible");

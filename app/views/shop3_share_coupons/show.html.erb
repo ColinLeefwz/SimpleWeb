@@ -2,13 +2,17 @@
 			<div class="title1"><h2 class="f18">优惠券详情</h2></div>
 				<div class="box6">
 					<div class="boxinner">
-						<a class="btn4" style="background: url('/images/btn/coupon.png') repeat scroll left top transparent;"></a>
-						<div class="box6right1">
-							<input type="text" class="inputs2" value="<%= @coupon.name %>">
-							<textarea class="textarea3"><%= @coupon.desc.gsub("\r\n","<br/>").html_safe %></textarea>
-						</div>
-					   
-						<!-- <a class="btn4" style="background:url(images/pic6.jpg) left top no-repeat;"></a> -->
+						<% if !@coupon.img.blank? %>
+							<%=image_tag(@coupon.img,:style=>"width:100%;height:100%;")%>
+						<% else %>
+							<div class="btn4 auto">
+								<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic16_1.jpg"/>
+							</div>
+							<div class="box6right1">
+								<span class="inputs2 block"><%=  @coupon.name  %></span>
+								<span class="textarea3 block"><%= @coupon.desc %></span>
+							</div>
+						<% end %>
 					</div>
 				</div>
 				<div class="clear1"></div>
@@ -18,7 +22,6 @@
 					<td width="43%">发放规则：<%= @coupon.show_rule %></td>
 					<% if [1,3].include?(@coupon.rule.to_i) %>
                       <td width="57%"><%= rulev_lable(@coupon.rule.to_i) %><%= @coupon.rulev%></td>
-                      
                     <% end %>
 				  </tr>
 				  <tr class="change">
@@ -34,7 +37,7 @@
 				  <% end %>
 				</table>
 					<div class="box7plane1 pt30 mb50">
-                        <%= link_to '返 回', 'list', :class=>"btn2" %>
+                        <%= link_to '返 回', '/shop3_coupons/list', :class=>"btn2" %>
 					</div>
 				</div>
 		</div>

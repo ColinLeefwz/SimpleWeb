@@ -1,12 +1,16 @@
+<div id="BG"></div>
+<div id="DelDiv">
+	<center><br/>确定删除这张图片？</center>
+	<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+	<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
 <div class="con">
-  <div class="title1 mb30"><h2 class="f18">内容管理</h2></div>
+  <div class="title1 mb30"><h2 class="f18">照片墙管理</h2><a onclick="history.back();" class="r pointer btn10">返回</a></div>
   <div class="submenu">
     <ul>
       <li <%= @photo.user_id == "s#{session[:shop_id]}" ||  "class=hover" %>><a href="user_photo">用户图片</a></li>
       <li <%= @photo.user_id == "s#{session[:shop_id]}" && "class=hover"  %>><a href="shop_photo">商家图片</a></li>
-      <li><a href="gchat">管理聊天室</a></li>
     </ul>
-
   </div>
   <div class="clear1"></div>
   <div class="box11">
@@ -45,7 +49,7 @@
 
           <% if @photo.user_id == "s#{session[:shop_id]}" %>
             <%= link_to "", "/shop3_content/edit_photo?id=#{@photo.id}", :class => "n3", :title => "编辑" %>
-            <%= link_to "", "/shop3_content/delete_photo?id=#{@photo.id}", :class => "n6", :title => "删除" %>
+            <%= link_to "", "javascript:void(0)", :class => "n6", :title => "删除", :rel=> @photo.id %>
           <% else %>
             <% if @photo.hide %>
               <a class="n5" onclick="OC(this, '<%= @photo.id %>')" title="显示"></a>
@@ -54,13 +58,11 @@
             <% end %>
           <% end %>
 
-
-
         </td>
       </tr>
       <tr>
-        <td valign="top" class="pl20">描&nbsp;述：</td>
-        <td valign="top"><%=@photo.desc %></td>
+        <td valign="top" class="pl20 pt5">描&nbsp;述：</td>
+        <td valign="top" class="pt5"><%=@photo.desc %></td>
       </tr>
     </table>
     <% unless  @photo.com.blank? %>
@@ -92,75 +94,102 @@
 
 </div>
 <script defer="defer">
-  var navmove="off", runing, noing="run";
-  $(document).ready(function(){
-    runing=$("#CB1").attr("class");
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
 
-    if(runing=="checkboxs1"){
-      NavDiv();
-      Photo();
-      $(window).load(function(){
-        MessageDiv();
-      });
-      noing="norun"
-    }else if(runing=="checkboxs2"){
-      AllNoDH();
-    }
-  });
-  function OC(obj, id){
-    if(confirm("确定"+$(obj).attr("title"))){
-      if($(obj).attr("class")=="n4"){
-        $.get("/shop3_content/ajax_del", {id: id}, function(){
-          $(obj).removeClass().addClass("n5").attr("title","显示");
-          $(obj).parent().addClass("bbj");
-          $(obj).parent().siblings().addClass("bm");
-        })
-      }else{
-        $.get("/shop3_content/ajax_undel", {id: id}, function(){
-          $(obj).removeClass().addClass("n4").attr("title","隐藏");
-          $(obj).parent().removeClass("bbj");
-          $(obj).parent().siblings().removeClass("bm");
-        })
-      }
-    }
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$("div.box11 table a.n6").click(function(){
+		var top;
+		var id=$(this).attr("rel");
+		documentHeight=$(document).height();
+		windowHeight=$(window).height();
+		if(documentHeight<=windowHeight){
+			$("#BG").css({"height":windowHeight+"px","display":"block"});
+		}else{
+			$("#BG").css({"height":documentHeight+"px","display":"block"});
+		}
+		$("#DelDiv").css("display","block");
+		top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+		$("#DelDiv").css({"top":top+"px","display":"none"});
+		$("#DelDiv").fadeIn(600);
+
+
+		$("#DelBtn").click(function(){
+			$("#DelDiv,#BG").css("display","none");
+			$.get("/shop3_content/delete_photo.json", {id: id}, function(){
+				window.location.href="/shop3_content/shop_photo";
+			});
+		});
+    });
+});
+function OC(obj, id){
+  if($(obj).attr("class")=="n4"){
+	$.get("/shop3_content/ajax_del", {id: id}, function(){
+		$(obj).removeClass().addClass("ns").html("已隐藏");
+		setTimeout(function(){
+			$(obj).html("").removeClass().addClass('n5').attr("title","显示");
+		},1000);
+	});
+  }else{
+	$.get("/shop3_content/ajax_undel", {id: id}, function(){
+		$(obj).removeClass().addClass("ns").html("已显示");
+		setTimeout(function(){
+			$(obj).html("").removeClass().addClass('n4').attr("title","隐藏");
+		},1000);
+	})
   }
+}
 
-  function ajaxUOT(obj, id){
-    var text = $(obj).attr("title")
-    if(confirm("确定"+ text)){
-      if(text == "置顶")
-        $.get("/shop_photos/ajax_top", {id: id}, function(){ $(obj).removeClass("n2").addClass('n2_1').attr("title","取消置顶");})
-      else
-        $.get("/shop_photos/ajax_untop", {id: id}, function(){$(obj).removeClass("n2_1").addClass('n2').attr("title","置顶"); })
-    }
+function ajaxUOT(obj, id){
+var text = $(obj).attr("title")
+  if(text == "置顶")
+	$.get("/shop_photos/ajax_top", {id: id}, function(){
+		$(obj).removeClass().addClass("ns").html("已取消");
+		setTimeout(function(){
+			$(obj).html("").removeClass().addClass('n2_1').attr("title","取消置顶");
+		},1000);
+	});
+  else
+	$.get("/shop_photos/ajax_untop", {id: id}, function(){
+		$(obj).removeClass().addClass('ns').html("已置顶");
+		setTimeout(function(){
+			$(obj).html("").removeClass().addClass('n2').attr("title","置顶");
+		},1000);
+	});
+}
+
+function ajaxUOH(obj, id, uid, txt){
+	var text = $(obj).html()
+  if(text=="显示"){
+	$.get("/shop3_content/unhide_com",{id: id,uid: uid, txt: txt}, function(data) {
+	  if(data['text'])
+		obj.replaceWith(data['text'])
+	  else
+		obj.html("隐藏")
+	  obj.removeClass("n1").addClass('n2');
+	});
   }
-
-  function ajaxUOH(obj, id, uid, txt){
-    var text = $(obj).html()
-    if(confirm("确定"+ text +"评论"))
-    {
-      if(text=="显示")
-      {
-        $.get("/shop3_content/unhide_com",{id: id,uid: uid, txt: txt}, function(data) {
-          if(data['text'])
-            obj.replaceWith(data['text'])
-          else
-            obj.html("隐藏")
-          obj.removeClass("n1").addClass('n2');
-        });
-      }
-      else
-      {
-        $.get("/shop3_content/hide_com",{id: id,uid: uid, txt: txt}, function(data) {
-          if(data['text'])
-            obj.replaceWith(data['text'])
-          else
-            obj.html("显示")
-          obj.removeClass("n2").addClass('n1');
-        });
-      }
-    }
+  else{
+	$.get("/shop3_content/hide_com",{id: id,uid: uid, txt: txt}, function(data) {
+	  if(data['text'])
+		obj.replaceWith(data['text'])
+	  else
+		obj.html("显示")
+	  obj.removeClass("n2").addClass('n1');
+	});
   }
-
-
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
 </script>

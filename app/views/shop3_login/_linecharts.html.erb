@@ -13,7 +13,20 @@ $(function() {
                     data[i][1] 
                 ])
             }
-
+        Highcharts.setOptions({
+            lang: {
+                    loading: 'Loading...',
+                    months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                    decimalPoint: '.',
+                    numericSymbols: ['k', 'M', 'G', 'T', 'P', 'E'], // SI prefixes used in axis labels
+                    resetZoom: 'Reset zoom',
+                    resetZoomTitle: 'Reset zoom level 1:1',
+                    thousandsSep: ','
+            }
+        });
+        
         $('#linecharts').highcharts('StockChart', {
 
             rangeSelector : {
@@ -44,11 +57,16 @@ $(function() {
                 selected : 5 // all
             },
 
+            xAxis: {
+                labels: {
+                      formatter: function() {
+                       return  Highcharts.dateFormat('%m月%d日', this.value);
+                      }
+                }
+             },
+
             yAxis: [
                         {
-                            title: {
-                                    text: '每日签到'
-                            },
                             top: 80,
                             height: 210,
                             lineWidth: 2,
@@ -59,7 +77,7 @@ $(function() {
 
 
             title : {
-                text : '每日签到统计'
+                text : '每日签到'
             },
             
             series : [
@@ -75,19 +93,7 @@ $(function() {
             ]
         });
 
-        Highcharts.setOptions({
-            lang: {
-                    loading: 'Loading...',
-                    months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                    shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                    weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                    decimalPoint: '.',
-                    numericSymbols: ['k', 'M', 'G', 'T', 'P', 'E'], // SI prefixes used in axis labels
-                    resetZoom: 'Reset zoom',
-                    resetZoomTitle: 'Reset zoom level 1:1',
-                    thousandsSep: ','
-            }
-        });
+
 
     });
 

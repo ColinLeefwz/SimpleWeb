@@ -12,15 +12,15 @@ class Shop3StaffsController < ApplicationController
   end
 
   def new
-    staff_ids = Staff.where({shop_id: session_shop.id}).map{|s| s.user_id}
-    checkin = Checkin.where({sid: session_shop.id}).sort_by{|s| s.id}.group_by{|g| g.uid}
-    @users = (checkin.keys - staff_ids ).reverse.map{|m| User.find_by_id(m) }
-    @users = paginate_arr(@users, params[:page], 10)
+    staff_ids =Staff.where({shop_id: session[:shop_id]}).distinct(:user_id)
+    checkin_uids = Checkin.where({sid: session[:shop_id]}).distinct(:uid)
+    uids = paginate_arr((checkin_uids-staff_ids),params[:page], 10)
+    @users = User.find_by_id(uids)
   end
 
   def ajax_add_staff
     user = User.find_by_id(params[:id])
-    if user.is_staff?
+    if user.is_staff?(session[:shop_id])
       text = "已是员工"
     else
       staff = Staff.new({user_id: user.id, shop_id: session_shop.id})

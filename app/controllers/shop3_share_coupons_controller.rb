@@ -45,11 +45,13 @@ class Shop3ShareCouponsController < ApplicationController
     @coupon.num = Coupon.next_num(@coupon.shop_id)
     
     unless Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => nil, :t2 => 2}).limit(1).blank?
-      return flash.now[:notice] = '该商家已有一张未停用分享类优惠券.'
+      flash.now[:notice] = '该商家已有一张未停用分享类优惠券.'
+      return render :action => :new
     end
 
     if @coupon.t.to_i == 2
-      return flash.now[:notice] = '请上传图片.' if @coupon.img2.blank?
+      flash.now[:notice] = '请上传图片.' if @coupon.img2.blank?
+      return render :action => :new
     end
 
     if @coupon.save
@@ -69,6 +71,8 @@ class Shop3ShareCouponsController < ApplicationController
       redirect_to :action => :show, :id => @coupon.id
     else
       flash.now[:notice] = '发布失败.'
+      return render :action => :new
+     
     end
   end
 

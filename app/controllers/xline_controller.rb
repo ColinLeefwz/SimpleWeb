@@ -5,7 +5,7 @@ class XlineController < ApplicationController
     errmsg = blank_check(:id, :data)
     return render :json => {error: errmsg} if errmsg
     return render :json => {error: "id已有"} if Line.find_by_id(params[:id])
-    data = params[:data]
+    data = JSON.parse(params[:data])
     begin
       arr = []
       data['arr'].each do |m|

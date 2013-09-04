@@ -3,29 +3,17 @@
 <% end %>
 
 <div class="con">
-  <div class="title1 mb30"><h2 class="f18">内容管理</h2></div>
+  <div class="title1 mb30"><h2 class="f18">照片墙管理</h2></div>
   <div class="submenu">
     <ul>
       <li class="hover"><a href="user_photo">用户图片</a></li>
       <li><a href="shop_photo">商家图片</a></li>
-      <li><a href="gchat">管理聊天室</a></li>
     </ul>
-    <div class="r wordstyle">
-
-      <form action="" method="post">
-        <!--
-        <select name="select" class="p3 r mr10">
-          <option value="显示全部图片">显示全部图片</option>
-          <option value="只显示用户图片">只显示用户图片</option>
-          <option value="只显示商家图片">只显示商家图片</option>
-        </select>
-        -->
-      </form>
-    </div>
   </div>
   <div class="clear1"></div>
   <div class="box9" id="Waterfall">
-    <% @photos.each do |photo| %>
+  
+    <% @photos.each_with_index do |photo, index| %>
       <div class="box9plane">
         <%= image_tag photo.img.try(:url, :t2) || "/newbackstage/images/pic14.jpg" %>
         <div class="m"><span><%= link_to(photo.desc.to_s.truncate(20), "/shop3_content/show_photo?id=#{photo.id}") %></span></div>
@@ -33,15 +21,15 @@
         <div class="bj">
           <%= link_to "", "/shop3_content/show_photo?id=#{photo.id}", :class => "n1 photolinkcon", :title => '详情' %>
           <% if photo.od %>
-            <a  class="n2_1 photolinkcon" onclick="ajaxUOT(this, '<%= photo.id %>' )" title="取消置顶"></a>
+            <a  class="n2_1 photolinkcon" onclick="QXZD(this, '<%= photo.id %>' )" title="取消置顶"></a>
           <% else %>
-            <a  class="n2 photolinkcon" onclick="ajaxUOT(this, '<%= photo.id %>' )" title="置顶"></a>
+            <a  class="n2 photolinkcon" onclick="ZD(this, '<%= photo.id %>' )" title="置顶"></a>
           <% end %>
 
           <% if photo.hide %>
-            <a class="n5" onclick="OC(this, '<%= photo.id %>')" title="显示"></a>
+            <a class="n5 link_ns" onclick="OC(this, '<%= photo.id %>')" title="显示" rel="<%= index%>"></a>
           <%else%>
-            <a class="n4" onclick="OC(this, '<%= photo.id %>')" title="隐藏"></a>
+            <a class="n4 link_ns" onclick="OC(this, '<%= photo.id %>')" title="隐藏" rel="<%= index%>"></a>
           <% end %>
 
         </div>
@@ -53,7 +41,7 @@
   <%= generate_paginate.html_safe %>
 </div>
 <script defer="defer">
-  var navmove="off", runing, noing="run";
+  var noing="run";
   $(document).ready(function(){
     runing=$("#CB1").attr("class");
     ua=navigator.userAgent.toLowerCase();
@@ -88,68 +76,109 @@
       });
     }else{
       $("div.box9plane").hover(
-      function(){
-        $(this).find("div.m").fadeIn(300);
-        $(this).find("div.bj").animate({"bottom":"0px"},300);
-      },
-      function(){
-        $(this).find("div.m").fadeOut(300);
-        $(this).find("div.bj").animate({"bottom":"-25px"},300);
-      }
-    );
+		  function(){
+			$(this).find("div.m").fadeIn(300);
+			$(this).find("div.bj").animate({"bottom":"0px"},300);
+		  },
+		  function(){
+			$(this).find("div.m").fadeOut(300);
+			$(this).find("div.bj").animate({"bottom":"-25px"},300);
+		  }
+		);
     }
 
     $("div.bj a.n5").parents("div.box9plane").addClass("opacity_55");
     $("div.bj a.n5").parents("div.box9plane").find(".photolinkcon").hide()
-
-    /*	$("#Close").click(function(){
-                $("#PhotoPlane,#BG").css("display","none");
-        });*/
   });
-  /*function OpenDiv(){
-        var top;
-        documentHeight=$(document).height();
-        windowHeight=$(window).height();
-        if(documentHeight<=windowHeight){
-                $("#BG").css({"height":windowHeight+"px","display":"block"});
-        }else{
-                $("#BG").css({"height":documentHeight+"px","display":"block"});
-        }
-        $("#PhotoPlane").css("display","block");
-        top=$(document).scrollTop()+(windowHeight-$("#PhotoPlane").height())/2;
-        $("#PhotoPlane").css({"top":top+"px","display":"none"});
-        $("#PhotoPlane").fadeIn(600);
-}*/
-  function OC(obj, id){
-    if(confirm("确定"+$(obj).attr("title"))){
-      if($(obj).attr("class")=="n4"){
-        $.get("/shop3_content/ajax_del", {id: id}, function(){
-          $(obj).removeClass().addClass("n5").attr("title","显示");
-          $(obj).parent().addClass("bbj");
-          $(obj).parent().siblings().addClass("bm");
-          $(obj).parents("div.box9plane").addClass("opacity_55");
-          $(obj).parents("div.box9plane").find(".photolinkcon").hide()
-        })
-      }else{
-        $.get("/shop3_content/ajax_undel", {id: id}, function(){
-          $(obj).removeClass().addClass("n4").attr("title","隐藏");
-          $(obj).parent().removeClass("bbj");
-          $(obj).parents("div.box9plane").find(".photolinkcon").show()
-          $(obj).parent().siblings().removeClass("bm");
-          $(obj).parents("div.box9plane").removeClass("opacity_55");
-        })
-      }
-    }
+  
+function OC(obj, id){//显示与隐藏
+  if($(obj).hasClass("n4")){
+	$.get("/shop3_content/ajax_del", {id: id}, function(){
+	  $(obj).removeClass("n4").addClass("n5").attr("title","显示");
+	  $(obj).parent().addClass("bbj");
+	  $(obj).parent().siblings().addClass("bm");
+	  $(obj).parents("div.box9plane").addClass("opacity_55");
+	  $(obj).parents("div.box9plane").find(".photolinkcon").hide()
+	});
+  }else{
+	$.get("/shop3_content/ajax_undel", {id: id}, function(){
+	  $(obj).removeClass("n5").addClass("n4").attr("title","隐藏");
+	  $(obj).parent().removeClass("bbj");
+	  $(obj).parents("div.box9plane").find(".photolinkcon").show()
+	  $(obj).parent().siblings().removeClass("bm");
+	  $(obj).parents("div.box9plane").removeClass("opacity_55");
+	});
   }
+}
 
-  function ajaxUOT(obj, id){
-    var text = $(obj).attr("title")
-    if(confirm("确定"+ text)){
-      if(text == "置顶")
-        $.get("/shop_photos/ajax_top", {id: id}, function(){ $(obj).removeClass("n2").addClass('n2_1').attr("title","取消置顶");})
-      else
-        $.get("/shop_photos/ajax_untop", {id: id}, function(){$(obj).removeClass("n2_1").addClass('n2').attr("title","置顶"); })
-    }
-  }
+function ZD(obj, id){//置顶
+	var x,y,a,b,rel,rel2,i;
+
+	x=$("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("left")? $("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("left"):0; 
+	y=$("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("top")? $("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("top"):5;
+	rel=parseInt($("div.box9plane a.n2_1").parents("div.box9plane:last").next().find("a.link_ns").attr("rel"))?parseInt($("div.box9plane a.n2_1").parents("div.box9plane:last").next().find("a.link_ns").attr("rel")):0;
+
+	a=$("div.box9plane").eq(rel+1).css("left");
+	b=$("div.box9plane").eq(rel+1).css("top");
+	rel2=parseInt($(obj).siblings("a.link_ns").attr("rel"));
+	if(rel==rel2){
+		$("div.box9plane").eq(rel2).find("a.n2").removeClass("n2").addClass("n2_1").attr("onclick","QXZD(this,'"+id+"')");return false;
+	}
+
+	for(i=rel;i<=rel2;i++){
+		if(i<rel2){
+			$("div.box9plane").eq(i).animate({"left":a,"top":b},500);
+			a=$("div.box9plane").eq(i+1).next().css("left");
+			b=$("div.box9plane").eq(i+1).next().css("top");
+		}else if(i==rel2){
+			$("div.box9plane").eq(rel2).animate({"left":x,"top":y},500,function(){
+				$("div.box9plane").eq(rel2).find("a.n2").removeAttr("onclick").unbind("click");
+				$("div.box9plane").eq(rel2).find("a.n2").removeClass("n2").addClass("n2_1").attr("title","取消置顶");
+				$("div.box9plane").eq(rel2).find("a.n2_1").bind("click",function(){
+					QXZD(this,id);
+				});
+
+				var obj=$("div.box9plane").eq(rel2);
+				$("div.box9plane").eq(rel).before(obj);
+				for(i=0; i<$("div.box9plane a.link_ns").length; i++){
+					$("div.box9plane a.link_ns").eq(i).attr("rel",i);
+				}
+			});
+		}
+	}
+	$.get("/shop_photos/ajax_top", {id: id}, function(){});//置顶后台操作页面
+}
+
+function QXZD(obj, id){//取消置顶
+	var x,y,a,b,rel,i;
+	var num=$("div.box9plane").length;
+
+	x=$("div.box9plane").eq(num-1).css("left"); y=$("div.box9plane").eq(num-1).css("top");
+	a=$(obj).parents("div.box9plane").css("left");
+	b=$(obj).parents("div.box9plane").css("top");
+	
+	rel=parseInt($(obj).parents("div.box9plane").find("a.link_ns").attr("rel"));
+	
+	$("div.box9plane").eq(rel).fadeOut(0);
+	for(i=(rel+1);i<=num;i++){
+		if(i<num){
+			$("div.box9plane").eq(i).animate({"left":a,"top":b},500);
+			a=$("div.box9plane").eq(i-1).next().css("left");
+			b=$("div.box9plane").eq(i-1).next().css("top");
+		}else if(i==num){
+			$("div.box9plane").eq(rel).css({"left":x,"top":y}).fadeIn(750,function(){
+				$("div.box9plane").eq(rel).find("a.n2_1").removeClass("n2_1").addClass("n2").attr("onclick","ZD(this,'"+id+"')").attr("title","置顶");
+				var obj=$("div.box9plane").eq(rel);
+				if($("div.box9plane a.link_ns").length!=1){
+					$("div.box9plane").eq(num-1).after(obj);
+				}
+				for(i=0; i<$("div.box9plane a.link_ns").length; i++){
+					$("div.box9plane a.link_ns").eq(i).attr("rel",i);
+				}
+			});
+		}
+	}
+	$.get("/shop_photos/ajax_untop", {id: id}, function(){ });//取消置顶后台操作页面
+}
 
 </script>
