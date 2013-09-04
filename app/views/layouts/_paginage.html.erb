@@ -48,9 +48,17 @@
             <%= link_to "第#{page}页", request.params.merge!(:page => page) %>
           <% end %>
         </div>
-        <%= link_to "上一页", request.params.merge!(:page => @page-1), :class => "pre" if @page != 1 %>
+		<% if @page == 1 %>
+			<a class="pre dis">上一页</a>
+		<%else%>
+			<%= link_to "上一页", request.params.merge!(:page => @page-1), :class => "pre" %>
+		<%end%>
         <span id="NowPage">第<%= @page %>页</span>
-        <%= link_to "下一页", request.params.merge!(:page => @page+1),:class=>"next" if @page != (@total_entries+@pcount-1)/@pcount %>
+		<% if @page == (@total_entries+@pcount-1)/@pcount %>
+			<a class="next dis">下一页</a>
+		<% else %>
+			<%= link_to "下一页", request.params.merge!(:page => @page+1),:class=>"next"  %>
+		<% end %>
       </div>
     </div>
   <% end %>

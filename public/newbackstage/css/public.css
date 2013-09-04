@@ -454,7 +454,7 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .phone .mes a{color:#fff;}
 .phone .shopanswer{width:210px;position:relative;padding:8px 0px 8px 2px;margin-left:4px;}
 .phone .shopanswer img.head{position:absolute;width:28px;height:28px;left:0px;bottom:6px;}
-.phone .shopanswer .cons{margin-left:36px;border:1px solid #E4E3E3;border-radius:6px;text-align:left;background-color:#FFFCFA;color:#333;position:relative;padding:8px;}
+.phone .shopanswer .cons{margin-left:36px;border:1px solid #E4E3E3;border-radius:6px;text-align:left;background-color:#FFFCFA;color:#333;position:relative;padding:8px;height:90px;}
 .phone .shopanswer .cons .small_arrow{position:absolute;left:-8px;bottom:-1px;}
 .phone .shopanswer .cons a{color:#333;}
 
@@ -474,7 +474,7 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .pagination{display:block;margin-top:50px;clear:both;line-height:20px;height:20px;position:relative;}
 .pagination .page{float:right;}
 .pagination .pre, .pagination .next{margin:0 5px; background-color:#fafafa;border:1px solid #D9D9D9;border-radius:2px;cursor: pointer;
-display:block;float:left;vertical-align: middle;height: 20px;line-height: 20px;padding: 0 9px 0 10px;}
+display:block;float:left;vertical-align: middle;height: 20px;line-height: 20px;padding: 0 9px 0 10px;color:#565656;}
 .pagination #NowPage{line-height: 24px;color: #0A8CD2;float:left;padding:0 15px 0 10px;margin-right:10px;display:block;
 background: url(../images/sign39.gif) no-repeat right center;cursor: pointer;}
 .pagination #PageNum{overflow-y: scroll;position:absolute;border: 1px solid #cdcdcd;background: #fff;bottom: 30px;left:685px;
@@ -483,6 +483,7 @@ width:80px;height:117px;text-align:center;line-height:20px;display:none;}
 .pagination #PageNum a:hover{background:#E7E7E7;}
 .pagination #PageNum a.ths{color:#C1C0C0;}
 .pagination #PageNum a.ths:hover{background-color:transparent;}
+.pagination a.dis{color:#999;}
 /**页码 over**/
 
 .search{width:100%;overflow:hidden;text-align:center;margin:40px 0 30px;font-size:13px;}
