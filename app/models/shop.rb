@@ -322,6 +322,9 @@ class Shop
     #当前地点的合作商家的“每日签到优惠券”
     coupons += partner_coupons(user_id)
 
+    #总店的“每日签到优惠券”
+    coupons += pshop_coupon(user_id)
+
     #当前商家的签到优惠券
     coupons += self.checkin_coupons.select { |c| c.allow_send_checkin?(user_id) }
 
@@ -334,6 +337,12 @@ class Shop
     str = "恭喜#{User.find_by_id(user_id).name}！收到#{coupons.count}张优惠券: #{name},马上领取吧！"
     return str if ENV["RAILS_ENV"] != "production"
     Resque.enqueue(XmppNotice, self.id.to_i,user_id,str,"coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
+  end
+
+  #总店的优惠券
+  def pshop_coupon(uid)
+    return [] if (pshop = Shop.find_by_id(psid)).nil?
+    pshop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) }
   end
 
   #旅行团 发送合作商家的优惠券
