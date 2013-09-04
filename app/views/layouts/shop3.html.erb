@@ -14,7 +14,7 @@
 
     <%= yield :ahead %>
     <script type="text/javascript">
-    var navmove = ($.cookie('navmove')==null?"off":$.cookie('navmove')), runing;
+    var navmove = ($.cookie('navmove')==null?$.cookie( 'navmove', 'off', { path: '/' } ):$.cookie('navmove')), runing;
     </script>
 </head>
 <body>
