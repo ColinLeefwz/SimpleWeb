@@ -9,7 +9,7 @@
 			<li><a href="/shop3_bans">屏蔽用户</a></li>
 			<li><a href="/shop3_marks">用户评分</a></li>
 			<li><a href="/shop3_notice">公告管理</a></li>
-			<li><a href="/shop3_branchs">分店列表</a></li>
+			<% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
 		</ul>
 	</div>
 	<%= form_tag "/shop3_infos/update" do %>

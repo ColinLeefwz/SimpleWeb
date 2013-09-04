@@ -5,7 +5,7 @@ class Shop3LoginController < ApplicationController
   include Paginate
 
   def index
-    @shop_faqs = session_shop.faqs
+    @shop_faqs = session_shop.faqs.limit(5)
     hash = {:room => session[:shop_id].to_i.to_s, :user_id => {"$ne" => "s#{session[:shop_id]}" }}
     hash.merge!({user_id: params[:uid]}) unless params[:uid].blank?
     sort = {:od => -1, :updated_at =>  -1}
@@ -62,6 +62,18 @@ class Shop3LoginController < ApplicationController
   def find_shop
     shop = Shop.find_by_id(params[:id])
     render :json => {:text => shop ? shop.name : '错误id.'}
+  end
+
+
+  def branch_login
+    shop= Shop.find_by_id(params[:id])
+    if shop.psid == session[:shop_id]
+      session[:admin_sid] = session[:shop_id]
+      session[:shop_id] = shop.id
+      redirect_to :controller => :shop3_login,:action => "index"
+    else
+      render :text => "不能登录"
+    end
   end
 
   def gchat

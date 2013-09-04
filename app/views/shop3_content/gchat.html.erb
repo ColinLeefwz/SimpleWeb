@@ -20,7 +20,7 @@
           <%=link_to user.try(:name)||'', "/shop3_checkins/user?uid=#{chat[0]}" %>
 		<img src=<%= user.show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>  class="ml10" align="absmiddle"/>
 		  <br/>
-          发表时间：<%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M") %></td>
         <td class="img_con" width="555"><%=gchat_img2(chat[1]).html_safe %></td>
 		<% if @mids.include?(chat[3])%>
 		    <td class="gay4" width="64">已屏蔽</td>

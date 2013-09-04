@@ -66,20 +66,14 @@ function imgUploadPreview(select, divid){//优惠券
                 document.selection.empty();
                 path = "file:///" + path.replace("\\",'/');
                 document.getElementById("image_view").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
-				document.getElementById("image_view").src ="http://shop.dface.cn/images/clear.gif";
+				document.getElementById("image_view").src="http://shop.dface.cn/images/clear.gif";
+
 				//divObj.innerHTML="<img id='image_view1' style='background:url(file:///"+$(select).val()+") center center no-repeat;height: 100%; width: 100%;'/>";
 			}else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
-                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
+				divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
             }else if(/ipad/i.test(ua)){
-				 var file = $(this).get(0).files[0];
-				 var reader = new FileReader();
-					reader.readAsDataURL(file);
-					reader.onload = function(e){
-						$("#"+divid).html("<img style='height: 100%; width: 100%;' id='image_view'  src='"+this.result+"'/>");
-					}
-			}if(/ipad/i.test(ua)){
 				 var file = $(this).get(0).files[0];
 				 var reader = new FileReader();
 					reader.readAsDataURL(file);
@@ -129,13 +123,6 @@ function imgUploadPreview3(select, divid){//商家设置
 					reader.readAsDataURL(file);
 					reader.onload = function(e){
 						$("#"+divid).html("<img style='height: 100%; width: 100%;' id='image_view'  src='"+this.result+"'/>");
-					}
-			}if(/ipad/i.test(ua)){
-				 var file = $(this).get(0).files[0];
-				 var reader = new FileReader();
-					reader.readAsDataURL(file);
-					reader.onload = function(e){
-						$("#"+divid).html("<img id='image_view' class='imgstyle2'  src='"+this.result+"'/><img id='image_view2' class='imgstyle3 ml15 mb75' src='"+this.result+"' />");
 					}
 			}else{
                 divObj.innerHTML = "<img id='image_view' class='imgstyle2'/><img id='image_view2' class='imgstyle3 ml15 mb75'/>";

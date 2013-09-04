@@ -5,7 +5,8 @@ class ShopLoginController < ApplicationController
   include Paginate
 
   def index
-    render :layout => "shop"
+#    render :layout => "shop"
+    redirect_to :controller => "shop3_login"
   end
 
   def tojson

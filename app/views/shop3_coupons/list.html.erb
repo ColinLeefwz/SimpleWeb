@@ -96,7 +96,7 @@
 
   function ajaxCD(obj,coupon_id,allow,index){
     if(allow==true){
-      $.get("/shop3_coupons/ajax_activate",{id: coupon_id}, function(data) {alert(data['text']);
+      $.get("/shop3_coupons/ajax_activate",{id: coupon_id}, function(data) {//alert(data['text']);
         if(data['text']=="已激活."){
           $("#img_"+coupon_id).removeClass("imgfilter");
           $("#Tr"+index+" td").eq(3).removeClass("gay4").addClass("red2").html("有效");
