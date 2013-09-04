@@ -16,26 +16,46 @@
 
 <% when 4%>
   <% if @total_entries > @pcount %>
+    <!--
+        新版商家后台的第一版分页
+        <div class="pagination">
+          <ul>
+    <% if @page ==1 %>
+                            <li class="disabled"><a>&lt;&lt;</a></li>
+    <% else %>
+                            <li><%= link_to "&lt;&lt;".html_safe, request.params.merge!(:page => @page -1) %></li>
+    <% end %>
+
+    <% select_pages(@page, (@total_entries+@pcount-1)/@pcount).each do |page| %>
+                            <li class="<%= (@page == page)? "hover" : '' %>">
+      <%= link_to page,   request.params.merge!(:page => page)%>
+                            </li>
+    <% end %>
+
+    <% if (@total_entries+@pcount-1)/@pcount == @page %>
+                            <li class="disabled"><a class="next">&gt;&gt;</a></li>
+    <% else %>
+                            <li><%= link_to "&gt;&gt;".html_safe, request.params.merge(:page => @page +1)   %></li>
+    <% end %>
+          </ul>
+        </div>
+    -->
+
     <div class="pagination">
-      <ul>
-        <% if @page ==1 %>
-          <li class="disabled"><a>&lt;&lt;</a></li>
-        <% else %>
-          <li><%= link_to "&lt;&lt;".html_safe, request.params.merge!(:page => @page -1) %></li>
-        <% end %>
-
-        <% select_pages(@page, (@total_entries+@pcount-1)/@pcount).each do |page| %>
-          <li class="<%= (@page == page)? "hover" : '' %>">
-            <%= link_to page,   request.params.merge!(:page => page)%>
-          </li>
-        <% end %>
-
-        <% if (@total_entries+@pcount-1)/@pcount == @page %>
-          <li class="disabled"><a class="next">&gt;&gt;</a></li>
-        <% else %>
-          <li><%= link_to "&gt;&gt;".html_safe, request.params.merge(:page => @page +1)   %></li>
-        <% end %>
-      </ul>
+      <div class="page">
+        <div id="PageNum" style="display: none;">
+          <% 1.upto((@total_entries+@pcount-1)/@pcount) do |page|  %>
+            <%= link_to "第#{page}页", request.params.merge!(:page => page) %>
+          <% end %>
+        </div>
+        <%= link_to "上一页", request.params.merge!(:page => @page-1), :class => "pre" if @page != 1 %>
+        <span id="NowPage">第<%= @page %>页</span>
+        <%= link_to "下一页", request.params.merge!(:page => @page+1),:class=>"next" if @page != (@total_entries+@pcount-1)/@pcount %>
+      </div>
     </div>
   <% end %>
 <% end %>
+
+
+
+
