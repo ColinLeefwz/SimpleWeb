@@ -48,7 +48,7 @@ class NewUserTalk
 
     $redis.sadd("PL#{date}#{to}",user.id)
 
-    if seq == 1 && (to != "51418836c90d8bc37b000567") && (to != "50bc20fcc90d8ba33600004b")
+    if seq == 1 && (to != "51418836c90d8bc37b000567")
       Xmpp.send_chat(to, uid, "hi")
     end
     if seq == 2 && (to == "51418836c90d8bc37b000567" || to == "50bc20fcc90d8ba33600004b")
