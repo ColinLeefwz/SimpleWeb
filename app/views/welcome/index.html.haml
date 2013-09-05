@@ -3,7 +3,7 @@
     .item
       .thumbnail
         - if session.video_url
-          = video_tag session.video_url, controls: 'controls'
+          = image_tag session.cover.url, class: 'video-play', data: {source: session.video_url }
         -else
           = image_tag(session.cover.url)
       .caption
