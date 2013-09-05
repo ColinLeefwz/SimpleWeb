@@ -29,7 +29,7 @@ class PlStat
       puts "----reply1--------"
       (0..utnl-1).each do |x|
         sum2 = pl.human_chat(User.find_by_id(pl.chat[x][0]).id).length
-        if sum2 < 2
+        if sum2 < 3
           sum += 1
         end
       end
@@ -68,7 +68,7 @@ class PlStat
   #类方法，cron的调用接口，每天执行一次
   def self.do_count(date = nil)
     if date.nil?
-      date =  Time.now.strftime("%Y-%m-%d")
+      date =  1.days.ago.strftime("%Y-%m-%d")
   	end
     ua = self.new
     ua.do_count(date)

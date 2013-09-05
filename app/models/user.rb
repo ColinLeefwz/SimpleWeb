@@ -163,7 +163,7 @@ class User
   end
 
   def staffs
-    $redis.hgetall("STAFF").map {|k,v| Shop.find_by_id(v)}
+    $redis.hget("STAFF",self.id).to_a.map {|k| Shop.find_by_id(k)}
   end
   
   def black_ids
