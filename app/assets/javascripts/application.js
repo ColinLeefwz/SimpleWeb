@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require masonry.pkgd.min
+//= require jquery.throttledresize
 //= require bootstrap
 //= require imagesloaded.pkgd.min
 //= require scrolltopcontrol
