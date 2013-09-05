@@ -1,14 +1,17 @@
 #content.container
   - @sessions.each do |session|
     .item
+      .box-header
+        = image_tag(session.expert.image_url)
+        = session.expert.name
+      .title
+        = session.title
       .thumbnail
         - if session.video_url
           = video_tag session.video_url, controls: 'controls'
         -else
           = image_tag(session.cover.url)
       .caption
-        .title
-          = session.title
         %p Expert: #{session.expert.name}
         %p Description:
         %p= session.description
