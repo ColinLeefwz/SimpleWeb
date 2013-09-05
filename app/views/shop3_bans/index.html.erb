@@ -23,7 +23,7 @@
       <tr id="Tr<%= index+1 %>">
         <td valign="middle">
           <%= link_to image_tag(UserLogo.img_url(user.head_logo_id, :t1), :align => "left", :class => "imgstyle"), "/shop3_checkins/user?uid=#{user.id}",:title=>"查看详情"  %>
-          <%= link_to user.name, "/shop3_checkins/user?uid=#{user.id}"  %><br/>
+          <%= link_to user.name, "/shop3_checkins/user?uid=#{user.id}", :class=>"f14"  %><br/>
           年龄：<%= user.age %>岁<br/>
 
         </td>

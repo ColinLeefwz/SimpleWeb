@@ -58,8 +58,8 @@ $(document).ready(function(){
 									<a href="/shop3_faqs">
 		<% if @shop_faqs.blank? %>
 		还没有设置问答系统?<br/>请创建
-		例如：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>05 => 特色小吃推荐
-		<% end %>
+		例如：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>
+		<% elsif %>
 		<%= "试试回复：</br>".html_safe%> 
 		<% @shop_faqs.each do |faq| %>
 			 
@@ -69,6 +69,7 @@ $(document).ready(function(){
 				<% else %>
 				<%= faq.title[0,9]%>...<br/>
 				<% end %>
+		<% end %>
 		<% end %>
 									</a>
 								</div>
