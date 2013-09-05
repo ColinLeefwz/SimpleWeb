@@ -8,13 +8,22 @@ class Shop3CouponReportsController < ApplicationController
 
 
   def index
-    if  !params[:day].blank? && params[:day] != Time.now.to_date.to_s
-      coupon_day_stat = CouponDayStat.where({sid: session[:shop_id], day: params[:day]}).limit(1).to_a.first
-      @day = params[:day]
-      @report = coupon_day_stat ? coupon_day_stat.data.map{|x,y| [Coupon.find_by_id(x), y[0].to_i, y[1].to_i]} : []
-    else
-      coupon_downs = CouponDown.where({sid: session[:shop_id], dat: {"$gte" => Time.now.to_date}}).only(:cid, :uat)
+    # if  !params[:day].blank? && params[:day] != Time.now.to_date.to_s
+    #   coupon_day_stat = CouponDayStat.where({sid: session[:shop_id], day: params[:day]}).limit(1).to_a.first
+    #   @day = params[:day]
+    #   @report = coupon_day_stat ? coupon_day_stat.data.map{|x,y| [Coupon.find_by_id(x), y[0].to_i, y[1].to_i]} : []
+    # else
+    #   coupon_downs = CouponDown.where({sid: session[:shop_id], dat: {"$gte" => Time.now.to_date}}).only(:cid, :uat)
+    #   @report = coupon_downs.group_by{|g| g.coupon}.map{|x,y| [x,y.count, y.count{|c| c.uat}]}
+    # end
+    if params[:sday] && params[:eday]
+      hash = {sid: session[:shop_id], dat: {"$gte" => params[:sday], "$lte" => params[:eday]}}
+      coupon_downs = CouponDown.where(hash).only(:cid, :uat)
       @report = coupon_downs.group_by{|g| g.coupon}.map{|x,y| [x,y.count, y.count{|c| c.uat}]}
+    else
+      coupon_day_stat = CouponDayStat.where({sid: session[:shop_id], day: {"$gte" => params[:sday], "$lte" => params[:eday]}}).limit(1).to_a.first
+      @day = params[:sday]
+      @report = coupon_day_stat ? coupon_day_stat.data.map{|x,y| [Coupon.find_by_id(x), y[0].to_i, y[1].to_i]} : []
     end
   end
 
