@@ -23,6 +23,13 @@ body {
     .thumbnail{
       padding: 10px;
       border-width: 0px;
+
+      img {
+        width: 100%;
+      }
+      video{
+        width: 100%;
+      }
     }
 
     .caption{
