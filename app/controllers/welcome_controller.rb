@@ -7,22 +7,22 @@ class WelcomeController < ApplicationController
     @sessions = Session.all
   end
   
-  def about_us
+  def contact
   end
   
-  def blog
-  end
-
-  def experts_list
-  end
-
   def faq
   end
 
-  def terms
+  def for_experts
+  end
+
+  def for_members
   end
 
   def privacy
+  end
+
+  def terms
   end 
 
 end
