@@ -3,7 +3,9 @@
     .item
       .thumbnail
         - if session.video_url
-          = video_tag session.video_url, controls: 'controls'
+          .video-img{data: {source: session.video_url}}
+            = image_tag session.cover.url, class: 'video-play'
+            = image_tag "video_play_icon.png", class: 'play-video-icon'
         -else
           = image_tag(session.cover.url)
       .caption
