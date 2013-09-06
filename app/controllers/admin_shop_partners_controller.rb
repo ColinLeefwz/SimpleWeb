@@ -17,15 +17,6 @@ class AdminShopPartnersController < ApplicationController
     render :json => ''
   end
 
-  def edit
-    @shop_partner = ShopPartner.find(params[:id])
-  end
-
-  def update
-    shop_partner = ShopPartner.find(params[:id])
-    shop_partner.update_attribute(:coupon_t, params[:coupon_t])
-    redirect_to :action => "index", :id => shop_partner.id
-  end
 
   def ajax_add_partner
     shop = Shop.find_by_id(params[:id])

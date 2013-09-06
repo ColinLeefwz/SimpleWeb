@@ -138,18 +138,14 @@ class Photo
 
   #合作商家发送“分享优惠券”, 合作商家优惠券没有使用的话不发送
   def send_partner_coupons
+    return [] if  $travel.include?(self.room.to_i)
     coupon_names = []
-    shop_partner = ShopPartner.find_by_id(self.room)
-    if shop_partner
-      if shop_partner.coupon_t.to_i == 2 || shop_partner.coupon_t.to_i == 3
-        shop_partner.partners.to_a.each do |partner|
-          next if (shop = Shop.find_by_id(partner[0])).nil?
-          next if (coupon = shop.share_coupon).nil?
-          if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s, :single => true)
-            coupon.send_coupon(user_id,self.id)
-            coupon_names << coupon.name
-          end
-        end
+    shop.partners.each do |partner|
+      next if (s = Shop.find_by_id(partner[0])).nil?
+      next if (coupon = s.share_coupon).nil?
+      if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s, :single => true)
+        coupon.send_coupon(user_id,self.id)
+        coupon_names << coupon.name
       end
     end
     return coupon_names
