@@ -41,28 +41,16 @@ class AdminController < ApplicationController
   def session_edit
   end
 
+	def session_create
+		content_type = session_params[:content_type]
+		@session = Object.const_get(content_type.camelize).new session_params
 
-  def session_create
-    content_type = params[:session][:content_type]
-    @session = Object.const_get(content_type.camelize).new session_params
-
-    if params[:session][:video]
-      uploaded_io = params[:session][:video]
-      # TODO: the url may be wrong. can we use Paperclip instead?
-      video_url_path = Rails.root.join('app', 'assets', 'videos', uploaded_io.original_filename)
-      File.open(video_url_path, 'wb') do |file|
-        file.write(uploaded_io.read)
-      end
-      @session.video_url = "#{uploaded_io.original_filename}"
-    end
-
-    if @session.save
-      redirect_to session_admin_index_path(@session)
-    else
-      render action: 'session_new'
-    end
-  end
-
+		if @session.save
+			redirect_to session_admin_index_path(@session)
+		else
+			render action: 'session_new'
+		end
+	end
 
   def session_update
     if @session.update(session_params)
@@ -127,9 +115,26 @@ class AdminController < ApplicationController
     @session = Session.find(params[:id])
   end
 
-  def session_params
-    params.require(:session).permit(:title, :expert_id, :category, :content_type, :cover, :video, :description)
-  end
+	def session_params
+    session = params.require(:session).permit(:title, :expert_id, :category, :content_type, :cover, :video, :description)
+		session = params.require(:session).permit(:title, :expert_id, :description, :cover, :content_type, :video)
+		session.delete :video
+		session[:video_url] = video_url
+		session
+	end
+
+	def video_url
+		video_url = 
+			if params[:session][:video]
+				uploaded_io = params[:session][:video]
+				# TODO: the url may be wrong. can we use Paperclip instead?
+				video_url_path = Rails.root.join('app', 'assets', 'videos', uploaded_io.original_filename)
+				File.open(video_url_path, 'wb') do |file|
+					file.write(uploaded_io.read)
+				end
+				video_url = "#{uploaded_io.original_filename}"
+			end
+	end
 
   def set_expert
     @expert = Expert.find(params[:id])
