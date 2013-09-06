@@ -9,24 +9,41 @@ body {
   background: rgb(240,242,244);
 }
 
+.video-img {
+	cursor: pointer;
+	position: relative;
+
+	.video-play{
+		cursor: pointer;
+	}
+	
+	.play-video-icon{
+		position: absolute;
+		width: 20%;
+		display: block;
+		top: 40%;
+		left: 40%;
+		z-index: 10;
+	}
+}
 
 #content{
-  
+
   .item {
-    -webkit-box-shadow: 0 6px 12px rgba(170, 180, 190, 1); 
-            box-shadow: 0 6px 12px rgba(170, 180, 190, 1); 
+    -webkit-box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
+            box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
     width:330px;
     margin: 20px;
     border-width: 1px;
     text-align: center;
-    
+
     .thumbnail{
       padding: 10px;
       border-width: 0px;
 
-      img {
-        width: 100%;
-      }
+      // img {
+      //   width: 100%;
+      // }
       video{
         width: 100%;
       }
