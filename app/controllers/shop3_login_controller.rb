@@ -10,6 +10,7 @@ class Shop3LoginController < ApplicationController
     hash.merge!({user_id: params[:uid]}) unless params[:uid].blank?
     sort = {:od => -1, :updated_at =>  -1}
     @photos = paginate("Photo", params[:page], hash, sort,4)
+    @shop_notice = session_shop.notice
     render :layout => "shop3"
   end
 
