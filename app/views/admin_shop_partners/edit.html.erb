@@ -1,0 +1,10 @@
+<%= form_tag "/admin_shop_partners/update"  do %>
+
+  <%= hidden_field_tag :id, @shop_partner.id %>
+  <p>
+    优惠券发送： <%=select_tag :coupon_t, options_for_select([["不发送优惠券",0], ['发送合作商家签到券',1],['发送合作商家的分享券',2], ['发送合作商家签到/分享券',3]], @shop_partner.coupon_t.to_i)   %>
+  </p>
+  <p>
+    <%= submit_tag "提交" %>
+  </p>
+<% end %>

@@ -2,9 +2,14 @@
 class ShopPartner
   include Mongoid::Document
   field :_id, type: Integer #旅行社id或楼宇id或其它id
-  field :partners, type: Array #合作商家的id [[合作商家,添加时间]]
+  field :partners, type: Array #合作商家的id [['合作商家',添加时间]]
   field :coupon_t, type: Integer  #1 => 发送合作商家签到优惠券， 2 => 发送合作商家的分享券， 3 => 合作的商家签到/分享券都发。 nil => 都不发送(旅行社是这种情况)
   
+
+
+def shop
+  Shop.find_by_id(id)
+end
 
   def self.find_or_new(id)
     shop_partner = self.find_by_id(id)
@@ -15,4 +20,10 @@ class ShopPartner
     end
     shop_partner
   end
+
+
+  def show_coupon_t
+    ['不发送优惠券', "发送合作商家签到券",'发送合作商家的分享券', '发送合作商家签到/分享券'][coupon_t.to_i]
+  end
 end
+
