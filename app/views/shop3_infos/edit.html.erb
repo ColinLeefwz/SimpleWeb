@@ -23,7 +23,7 @@
 				<a class="btn1" id="Btn1">上传图片</a>
 <!-- 				<input class="filebox1" id="shop_info_img" name="shop_info[img]" type="file" />
 				<input class="filebox2" id="shop_info_img" name="shop_info[img]" type="file" /> -->
-				<input class="filebox1" id="img" name="img" type="file" />
+				<input class="filebox1" id="img" name="shop_logo[img]" type="file" />
 			</td>
 		  </tr>
 		<tr>
@@ -62,7 +62,7 @@
 <script src="/newbackstage/js/shop_info.js" type="text/javascript"></script>
 <script defer="defer">
 $(document).ready(function(){
-	imgUploadPreview3("input[name='shop_info[img]']", 'uploadPreview');
+	imgUploadPreview3("input[name='shop_logo[img]']", 'uploadPreview');
 	runing=$("#CB1").attr("class");
 	if(runing=="checkboxs1"){
 		NavDiv();
@@ -78,7 +78,7 @@ $(document).ready(function(){
 	$("#Btn1").click(function(){
 		$("#img").click();
 	});
-	$("input[name='img']").click(function(){
+	$("input[name='shop_logo[img]']").click(function(){
 		imgUploadPreview3(this, 'uploadPreview');
 	});
 });
