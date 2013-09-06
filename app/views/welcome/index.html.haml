@@ -17,7 +17,10 @@
         = session.title.titleize
       -if session.video_url
         .cover
-          = video_tag session.video_url, controls: 'controls'
+          .video-img{data: {source: session.video_url}}
+            = image_tag session.cover.url, class: 'video-play'
+            = image_tag "video_play_icon.png", class: 'play-video-icon'
+
       -elsif !session.cover.url.eql?"/covers/original/missing.png"
         .cover
           = image_tag(session.cover.url)
