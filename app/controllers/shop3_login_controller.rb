@@ -11,6 +11,7 @@ class Shop3LoginController < ApplicationController
     sort = {:od => -1, :updated_at =>  -1}
     @photos = paginate("Photo", params[:page], hash, sort,4)
     @shop_notice = session_shop.notice
+    @shop_coupons = session_shop.coupons
     render :layout => "shop3"
   end
 

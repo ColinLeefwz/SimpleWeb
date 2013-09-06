@@ -78,7 +78,11 @@ $(document).ready(function(){
 									</a>
 								</div>
 							</div>
-							<div class="mes"><a href="/shop3_coupons/list">还没有优惠信息，立即发布</a></div>
+							<% if @shop_coupons.blank? %>
+							<div class="mes"><a href="/shop3_coupons">还没有优惠信息，立即发布</a></div>
+							<% else %>
+							<div class="mes"><a href="/shop3_coupons/list">点击右下角“+”拍照并分享到微博，文字中带指定关键字,即可获得'<%= session_shop.name %>折扣券'。</a></div>
+							<% end %>
 						</div>
 					</div>
 				</div>

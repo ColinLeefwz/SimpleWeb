@@ -75,6 +75,10 @@ class Shop
     ShopNotice.where({shop_id: self.id}).last
   end
   
+  def coupons
+    Coupon.where({shop_id: self.id}).last
+  end
+  
   def top4_photos
     if self.id == 21834120
       Photo.where({room: self.id.to_i.to_s, hide: nil, user_id: "s21834120"}).sort({od: -1, updated_at: -1}).limit(4).to_a
