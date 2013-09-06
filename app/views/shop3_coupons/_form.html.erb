@@ -12,7 +12,7 @@
 
 	<div class="box7plane1">
 		<label>使用流程</label>
-		<%=select_tag :hintv, options_for_select([['展示优惠券，点击后既代表使用了', 0],['展示优惠券，点击后按要求输入内容，然后确定使用',1]], @coupon.hint ? 1 : 0) , {:class => "ptb2 plr3", :onchange => "show_hint($(this).val())"} %>
+		<%=select_tag :hintv, options_for_select([['展示优惠券，点击后即代表使用了', 0],['展示优惠券，点击后按要求输入内容，然后确定使用',1]], @coupon.hint ? 1 : 0) , {:class => "ptb2 plr3", :onchange => "show_hint($(this).val())"} %>
 	</div>
 
 	<div id='hint1' class="box7plane1" style="display: <%= @coupon.hint.blank? ? 'none' : '' %>">
