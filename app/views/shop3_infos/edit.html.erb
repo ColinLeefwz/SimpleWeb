@@ -12,7 +12,8 @@
 			<% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
 		</ul>
 	</div>
-	<%= form_tag "/shop3_infos/update" do %>
+	<%= form_tag "/shop3_infos/update", :html => { :multipart => true } do %>
+
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
 		  <tr>
 			<td width="17%" align="right" valign="top" class="pr20">名&nbsp;称</td>
@@ -20,8 +21,9 @@
 			<td width="17%" align="right" valign="top" class="pr20">Logo</td>
 			<td align="left" valign="top" class="relative">
 				<a class="btn1" id="Btn1">上传图片</a>
-				<input class="filebox1" id="shop_info_img" name="shop_info[img]" type="file" />
-				<input class="filebox2" id="shop_info_img" name="shop_info[img]" type="file" />
+<!-- 				<input class="filebox1" id="shop_info_img" name="shop_info[img]" type="file" />
+				<input class="filebox2" id="shop_info_img" name="shop_info[img]" type="file" /> -->
+				<input class="filebox1" id="img" name="img" type="file" />
 			</td>
 		  </tr>
 		<tr>
@@ -74,9 +76,9 @@ $(document).ready(function(){
 	$(".tab2 tr:odd").addClass("trbg");
   
 	$("#Btn1").click(function(){
-		$("#shop_info_img").click();
+		$("#img").click();
 	});
-	$("input[name='shop_info[img]']").click(function(){
+	$("input[name='img']").click(function(){
 		imgUploadPreview3(this, 'uploadPreview');
 	});
 });

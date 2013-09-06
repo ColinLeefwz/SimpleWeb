@@ -6,6 +6,13 @@ class Shop3InfosController < ApplicationController
 
   def index
     @shop = Shop.find_primary(session[:shop_id])
+
+    if params[:id]
+      @shop_logo = ShopLogo.find_primary(params[:id])
+    else
+      @shop_logo = ShopLogo.shop_logo(session[:shop_id])
+    end
+
   end
 
   def edit
@@ -23,6 +30,16 @@ class Shop3InfosController < ApplicationController
     sinfo.phone = si.phone
     sinfo.save
     @shop.save
+
+    @shop_logo = ShopLogo.shop_logo(session[:shop_id])
+    if @shop_logo
+      @shop_logo.update_attributes(params[:shop_logo])
+    else
+      @shop_logo = ShopLogo.new(params[:shop_logo])
+      @shop_logo.shop_id = session[:shop_id]
+      @shop_logo.save
+    end
+
     redirect_to :action => "index"
   end
 

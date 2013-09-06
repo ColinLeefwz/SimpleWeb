@@ -8,6 +8,14 @@ class ShopLogo
   mount_uploader(:img, LogoUploader)
 
 
+  def self.img_url(sid,type=nil)
+    if type
+      "http://oss.aliyuncs.com/logo/#{sid}/#{type}_0.jpg"
+    else
+      "http://oss.aliyuncs.com/logo/#{sid}/0.jpg"
+    end
+  end
+
   def self.shop_logo(shop_id)
     (self.where({shop_id: shop_id}).sort({_id: -1}).entries).first
   end
