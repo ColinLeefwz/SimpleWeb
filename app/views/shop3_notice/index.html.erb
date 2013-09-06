@@ -18,7 +18,7 @@
     <tr>
       <td valign="top" align="right" class="pr20">&nbsp;</td>
       <td colspan="3">
-        <%= text_area_tag :text,@shop_notice.try(:title)||"用于在脸脸客户端显示公告" , :class =>  "textarea3 w700", :id => "noticeTitle" %>
+        <%= text_area_tag :text,@shop_notice.try(:title) , :class =>  "textarea3 w700", :id => "noticeTitle",:placeholder => "用于在脸脸客户端显示公告" %>
       </td>
     </tr>
     <tr>
@@ -60,9 +60,9 @@ $("textarea").click(function(){
 
 function ajaxCreateNotice(notice_id){
 	var title = $("#noticeTitle").val();
-	if(title==""){
-		title="用于在脸脸客户端显示公告";
-	}
+	// if(title==""){
+	// 	title="用于在脸脸客户端显示公告";
+	// }
 	$.get("/shop_shop_notices/ajax_release", {id: notice_id, title: title}, function(data){
 		$("#ShowTitle").show();
 		$("#ShowTitle").text(data["title"]);

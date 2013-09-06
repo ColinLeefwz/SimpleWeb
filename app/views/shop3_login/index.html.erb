@@ -32,7 +32,7 @@ $(document).ready(function(){
 					<span class="box1line6"></span>
 					<a href="/shop3_content/user_photo" class="menu1">照片墙管理</a>
 					<a href="/shop3_faqs" class="menu2">问答系统</a>
-					<a href="/shop3_coupons" class="menu3">优惠券管理</a>
+					<a href="/shop3_coupons/list" class="menu3">优惠券管理</a>
 					<a href="/shop3_infos" class="menu4">商家设置</a>
 					<a href="/shop3_content/gchat" class="menu5">聊天内容</a>
 					<a href="/shop3_data" class="menu6">数据统计</a>
@@ -50,7 +50,11 @@ $(document).ready(function(){
 					</div>
 					<div class="qa">
 						<div id="QAC">
-							<div class="mes"><a href="/shop3_notice">Hi~ 欢迎来到<%= session_shop.name %></a></div>
+						<% if @shop_notice.title.blank? %>
+							<div class="mes"><a href="/shop3_notice">还没有公告，立即发布</a></div>
+						<% else %>
+						    <div class="mes"><a href="/shop3_notice"><%= @shop_notice.title %></a></div>
+						<% end %>
 							<div class="shopanswer">
 								<img src="/newbackstage/images/sign8.png" class="head"/>
 								<div class="cons">
@@ -74,7 +78,7 @@ $(document).ready(function(){
 									</a>
 								</div>
 							</div>
-							<div class="mes"><a href="/shop3_coupons">分享图片到新浪微博，文字中带有“好吃”的字样，......</a></div>
+							<div class="mes"><a href="/shop3_coupons/list">还没有优惠信息，立即发布</a></div>
 						</div>
 					</div>
 				</div>
