@@ -363,15 +363,11 @@ class Shop
 
   #合作商家发送“签到优惠券”, 只发合作商家的每日签到优惠， 并且合作商家优惠券没有使用的话不发送
   def partner_coupons(uid)
+    return [] if  $travel.include?(self.id.to_i)
     coupons = []
-    shop_partner = ShopPartner.find_by_id(self.id)
-    if shop_partner
-      if shop_partner.coupon_t.to_i==3 || shop_partner.coupon_t.to_i == 1
-        shop_partner.partners.to_a.each do |partner|
-          shop = Shop.find_by_id(partner[0])
-          coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) } if shop
-        end
-      end
+    partners.each do |partner|
+      shop = Shop.find_by_id(partner[0])
+      coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) } if shop
     end
     return coupons
   end
