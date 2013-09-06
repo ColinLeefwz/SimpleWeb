@@ -17,10 +17,19 @@
     = f.text_field :title
   .field
     = f.label :expert_id
-    = f.text_field :expert_id
+    = f.select :expert_id, Expert.all.collect{ |e| [e.name, e.id]}
+  .field
+    = f.label :category
+    = f.select :category, Session::CATEGORY
+  .field
+    = f.label :content_type
+    = f.select :content_type, ['ArticleSession', 'VideoSession', 'LiveSession']
   .field
     = f.label :cover
     = f.file_field :cover
+  .field
+    = f.label :video
+    = f.file_field :video
   .field
     = f.label :description
     = f.text_area :description

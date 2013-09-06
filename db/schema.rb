@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130903100347) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20130906123850) do
 
   create_table "contact_messages", force: true do |t|
     t.string   "name"
@@ -62,12 +59,12 @@ ActiveRecord::Schema.define(version: 20130903100347) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "content_type"
-    t.string   "catalog"
     t.string   "video_url"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
+    t.string   "category"
   end
 
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
