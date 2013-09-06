@@ -1,11 +1,12 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: ‘Lucida Console’, Monaco, monospace;
-  font-size: 12px;
+  // font-family: 'Lucida Console', Monaco, monospace;
+	font-family: 'LatoRegular';
+
+  font-size: 20px;
   color: #444444;
   text-align: center;
-  //line-height:18px; // 1.125em;
   background: rgb(240,242,244);
 }
 
@@ -16,7 +17,7 @@ body {
 	.video-play{
 		cursor: pointer;
 	}
-	
+
 	.play-video-icon{
 		position: absolute;
 		width: 20%;
@@ -54,12 +55,14 @@ body {
       border-width: 0px;
 
       .title {
-        font-size: 15px;
+				font-family: 'LatoBold';
+        font-size: 35px;
         margin: 5px;
         font-weight: bold;
       }
 
       p{
+				font-family: 'LatoLight';
         font-size: 13px;
       }
     }
