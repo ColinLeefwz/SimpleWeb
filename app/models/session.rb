@@ -1,4 +1,5 @@
 class Session < ActiveRecord::Base
+  CATEGOTY = %w(bigpicture, business, entrepreneurship, technology, culture)
   belongs_to :expert
 
 	default_scope { order "created_at desc" }
