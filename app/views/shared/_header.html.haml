@@ -22,7 +22,16 @@
       %a Technology
     %li 
       %a Culture
-
+    %li
+      .dropdown
+        %a.dropdown-toggle#dLable{data: {toggle: "dropdown", target: "#"}, role: "button", href: "#"}
+          Content Type
+          %b.caret 
+        %ul.dropdown-menu{role: "menu", aria: {labelledby: "dLabel"}} 
+          %li All
+          %li Live
+          %li Video
+          %li Article
   %span.selector
 
 /        <div class="region region-header">
