@@ -11,7 +11,7 @@ class NewUserTalk
     date = Time.now.strftime("%Y-%m-%d")
 
     if user.gender == 2
-      to = ["50bc20fcc90d8ba33600004b" #“浦靠谱” 运营总监浦希哲
+      to2 = ["50bc20fcc90d8ba33600004b" #“浦靠谱” 运营总监浦希哲
            ]
     end
 
@@ -50,6 +50,7 @@ class NewUserTalk
 
     if seq == 1 && (to != "51418836c90d8bc37b000567")
       Xmpp.send_chat(to, uid, "hi")
+      Xmpp.send_chat(to2[0], uid, "hi")
     end
     if seq == 2 && (to == "51418836c90d8bc37b000567")
       shop = Shop.find_by_id(sid)
