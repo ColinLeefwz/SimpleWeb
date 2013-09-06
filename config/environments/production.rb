@@ -1,6 +1,11 @@
 Prodygia::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+	# add fonts to assets
+	config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+
+	# precompile additional assets
+	config.assets.precompile += %w[.svg, .eot .woff .tff]
   # Code is not reloaded between requests.
   config.cache_classes = true
 
