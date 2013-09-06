@@ -13,3 +13,19 @@
 			 url(font-path('lato-regular-webfont.woff')) format('woff'),
 			 url(font-path('lato-regular-webfont.svg') + "#Latoreg") format('svg');
 }
+
+@font-face{
+	font-family: 'Latolight';
+	src: url(font-path('lato-light-webfont.ttf')) format('turetype'),
+			 url(font-path('lato-light-webfont.eot')) format('embedded-opentype'),
+			 url(font-path('lato-light-webfont.woff')) format('woff'),
+			 url(font-path('lato-light-webfont.svg') + "#Latolight") format('svg');
+}
+
+@font-face{
+	font-family: 'Latolightitalic';
+	src: url(font-path('lato-lightitalic-webfont.ttf')) format('turetype'),
+			 url(font-path('lato-lightitalic-webfont.eot')) format('embedded-opentype'),
+			 url(font-path('lato-lightitalic-webfont.woff')) format('woff'),
+			 url(font-path('lato-lightitalic-webfont.svg') + "#Latolightitalic") format('svg');
+}
