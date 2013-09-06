@@ -2,20 +2,35 @@
   - @sessions.each do |session|
     .item
       .box-header
-        = image_tag(session.expert.image_url)
-        = session.expert.name
+        .portrait
+          = image_tag(session.expert.image_url)
+          = session.expert.name
+        .content-type
+          -if session.content_type.eql?"LiveSession"
+            = image_tag("livestreaming.png")
+          -elsif session.content_type.eql?"ArticleSession"
+            = image_tag("text.png")
+          -elsif session.content_type.eql?"VideoSession"
+            = image_tag("video.png")
+          %p= session.content_type
       .title
-        = session.title
-      .thumbnail
-        - if session.video_url
+        = session.title.titleize
+      -if session.video_url
+        .cover
           = video_tag session.video_url, controls: 'controls'
-        -else
+      -elsif !session.cover.url.eql?"/covers/original/missing.png"
+        .cover
           = image_tag(session.cover.url)
+      -else 
+
       .caption
-        %p Expert: #{session.expert.name}
-        %p Description:
-        %p= session.description
-        %p Status:
-        %p= session.status
+        - if (session.cover.url) && (!session.cover.url.eql? "/covers/original/missing.png")
+          %p= truncate(session.description, length: 300)
+        - else 
+          %p= truncate(session.description, length: 600)
+        - if session.content_type.eql?"LiveSession"
+          %p= link_to 'Learn more'
+        - else
+          %p= link_to 'Continue reading'
         = social_share_button_tag("asd")
         = render 'linked_in_share_button'
