@@ -1,11 +1,14 @@
 #footer{
-  background-image: url(foot_bg.gif);
+  background: #ffffff ;
   height: 30px;
   width: 100%; 
   position: fixed;
   bottom: 0px;
+  -webkit-box-shadow: 0 -6px 12px rgba(170, 180, 190, 1);
+     box-shadow: 0 -6px 12px rgba(170, 180, 190, 1);
 
   .links{
+    margin-top: 6px;
     a{
       margin-right: 20px;
       font-size: 18px;
