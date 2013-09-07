@@ -1,36 +1,57 @@
 #logo
   = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
-#user_status
-  - if user_signed_in?
-    %a Hello, 
-    %a= current_user.email
-    = link_to 'Sign out', destroy_user_session_path, :method => :delete
-  - else
-    = link_to 'Sign in', new_user_session_path
-    = link_to 'Sign up', new_user_registration_path
-#nav 
-  %ul
-    %li
-      %a All
-    %li 
-      %a Big Picture
-    %li 
-      %a Business
-    %li 
-      %a Entrepreneurship
-    %li 
-      %a Technology
-    %li 
-      %a Culture
-    %li
-      .dropdown
-        %a.dropdown-toggle#dLable{data: {toggle: "dropdown", target: "#"}, role: "button", href: "#"}
-          Content Type
-          %b.caret 
-        %ul.dropdown-menu{role: "menu", aria: {labelledby: "dLabel"}} 
-          %li All
-          %li Live
-          %li Video
-          %li Article
-  %span.selector
+/#user_status
+/  - if user_signed_in?
+/    %a Hello, 
+/    %a= current_user.email
+/    = link_to 'Sign out', destroy_user_session_path, :method => :delete
+/  - else
+/    = link_to 'Sign in', new_user_session_path
+/    = link_to 'Sign up', new_user_registration_path
 
+
+#nav_container.clearfix
+  %ul#nav_bar.clearfix
+
+    %li.category
+      %a{href: "#all"}all
+      %ul.subcategory
+        %li
+
+
+    %li.category
+      %a{href: "#macro"}macro
+      %ul.subcategory
+        %li
+
+
+    %li.category
+      %a{href: "#business"}business
+      %ul.subcategory
+        %li
+
+
+    %li.category
+      %a{href: "#entrepreneurship"}entrepreneurship
+      %ul.subcategory
+        %li
+
+
+    %li.category
+      %a{href: "#tech"}tech
+      %ul.subcategory
+        %li
+
+
+    %li.category
+      %a{href: "#culture"}culture
+      %ul.subcategory
+        %li
+
+
+    %li.category
+      %a{href: "#format"}format
+      %ul.subcategory
+        %li
+
+  %a#pull{href: "#menu"}menu
