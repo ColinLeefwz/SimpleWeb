@@ -1,14 +1,6 @@
-#logo
-  = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
-/#user_status
-/  - if user_signed_in?
-/    %a Hello, 
-/    %a= current_user.email
-/    = link_to 'Sign out', destroy_user_session_path, :method => :delete
-/  - else
-/    = link_to 'Sign in', new_user_session_path
-/    = link_to 'Sign up', new_user_registration_path
-
+#logo_container
+  #logo
+    = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
 
 #nav_container.clearfix
   %ul#nav_bar.clearfix
@@ -18,36 +10,30 @@
       %ul.subcategory
         %li
 
-
     %li.category
       %a{href: "#macro"}macro
       %ul.subcategory
         %li
-
 
     %li.category
       %a{href: "#business"}business
       %ul.subcategory
         %li
 
-
     %li.category
       %a{href: "#entrepreneurship"}entrepreneurship
       %ul.subcategory
         %li
-
 
     %li.category
       %a{href: "#tech"}tech
       %ul.subcategory
         %li
 
-
     %li.category
       %a{href: "#culture"}culture
       %ul.subcategory
         %li
-
 
     %li.category
       %a{href: "#format"}format
