@@ -29,3 +29,11 @@
 			 url(font-path('lato-lightitalic-webfont.woff')) format('woff'),
 			 url(font-path('lato-lightitalic-webfont.svg') + "#Latolightitalic") format('svg');
 }
+
+@font-face{
+	font-family: 'Latoitalic';
+	src: url(font-path('lato-italic-webfont.ttf')) format('turetype'),
+			 url(font-path('lato-italic-webfont.eot')) format('embedded-opentype'),
+			 url(font-path('lato-italic-webfont.woff')) format('woff'),
+			 url(font-path('lato-italic-webfont.svg') + "#Latoitalic") format('svg');
+}
