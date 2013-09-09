@@ -27,7 +27,7 @@
       -else 
 
       .caption
-        - if (session.cover.url) && (!session.cover.url.eql?ii"")
+        - if (session.cover.url) && (!session.cover.url.eql?"")
           %p= truncate(session.description, length: 300)
         - else 
           %p= truncate(session.description, length: 600)
