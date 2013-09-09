@@ -4,7 +4,8 @@
       .box-header
         .portrait
           = image_tag(session.expert.image_url)
-          = session.expert.name
+          .expert-name
+            = session.expert.name
         .content-type
           -if session.content_type.eql?"LiveSession"
             = image_tag("livestreaming.png")
@@ -24,16 +25,19 @@
       -elsif !session.cover.url.eql?"/covers/original/missing.png"
         .cover
           = image_tag(session.cover.url)
-      -else 
+      -else
 
       .caption
         - if (session.cover.url) && (!session.cover.url.eql? "/covers/original/missing.png")
-          %p= truncate(session.description, length: 300)
-        - else 
-          %p= truncate(session.description, length: 600)
-        - if session.content_type.eql?"LiveSession"
-          %p= link_to 'Learn more'
+          %p.description= truncate(session.description, length: 300)
         - else
-          %p= link_to 'Continue reading'
-        = social_share_button_tag("asd")
-        = render 'linked_in_share_button'
+          %p.description= truncate(session.description, length: 600)
+        - if session.content_type.eql?"LiveSession"
+          %p.learn-more= link_to 'Learn more'
+        - else
+          %p.learn-more= link_to 'Continue reading'
+        .social-share-icons
+          = render 'social_share'
+
+        -# = social_share_button_tag("asd")
+        -# = render 'linked_in_share_button'
