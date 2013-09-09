@@ -324,5 +324,28 @@ db.shops.remove({name:/布艺店$/})
 db.shops.remove({name:/灯饰$/})
 11904937
 
-db.shops.find({name:/肉串/})
+11902903
+db.shops.remove({name:/提货点/})
+db.shops.remove({name:/服务站/})
+db.shops.update({name:/洗衣/},{$set:{d:30},$unset:{t:1}},false,true)
+
+db.shops.remove({name:/装璜材料商店$/})
+db.shops.remove({name:/装璜材料店$/})
+db.shops.remove({name:/装璜商店$/})
+db.shops.remove({name:/装璜店$/})
+db.shops.remove({name:/装璜$/})
+
+db.shops.remove({name:/修车行/})
+db.shops.remove({name:/组装部$/})
+
+db.shops.update({name:/油漆店$/},{$set:{d:40},$unset:{t:1}},false,true)
+db.shops.update({name:/五金店$/},{$set:{d:40},$unset:{t:1}},false,true)
+db.shops.update({name:/批发店$/},{$set:{d:40},$unset:{t:1}},false,true)
+db.shops.update({name:/建材店$/},{$set:{d:40},$unset:{t:1}},false,true)
+
+db.shops.find({name:/油漆店$/})
+
+
+
+
 
