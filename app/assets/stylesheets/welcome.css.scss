@@ -41,7 +41,7 @@ body {
 		border-width: 1px;
 		text-align: center;
 
-    line-height: 2em;
+    line-height: 30px;
 
 		.box-header{
 			border-bottom: thin solid #cccccc;
@@ -56,7 +56,7 @@ body {
 					margin: 10px;
 				}
 				.expert-name {
-					font-size: $box_header_font_size;
+					font-size: $box_header_font_size + 4;
 					font-family: 'Latoitalic';
 					display: inline-block;
 					color: #B3B3B3;
@@ -72,8 +72,9 @@ body {
 					height: 30px;
 				}
 				p{
-					font-size: $box_header_font_size;
-					font-family: Latolight;
+					font-size: $box_header_font_size + 2;
+					font-family: Latobold;
+					color: #B3B3B3;
 				}
 			}
 		}
@@ -82,7 +83,8 @@ body {
 			font-family: Latoreg;
 			font-size: 22px;
 			color: #6D6D6D;
-			margin: 5px;
+			text-align: left;
+			margin: 10px;
 			font-weight: bold;
 			letter-spacing: 0.5px;
 		}
@@ -114,6 +116,7 @@ body {
 				a{
 					text-align: left;
 					font-family: Latoitalic;
+					font-weight: bold;
 					font-size: $box_header_font_size;
 					color: #AF6A82;
 				}
