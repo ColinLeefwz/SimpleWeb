@@ -35,6 +35,13 @@ class SinaFriend
       insert_ids(su.id,token)
       su.update_attribute(:fetched, true)
       sleep(10*Os.cur_load)
+      today = Time.now
+      hour = today.hour
+      if(hour>0 && hour<8)
+        sleep(1+10*Os.cur_load)
+      else
+        sleep(30)
+      end
     end
   end
 

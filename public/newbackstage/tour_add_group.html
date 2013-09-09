@@ -11,6 +11,10 @@
 	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
 </head>
 <body>
+<div id="BG"></div>
+<div id="RWM">
+  <img src="/newbackstage/images/api.png" onclick="Close2()"/>
+</div>
 	<div class="main">
 		<div class="header">
 			<div class="headercon">
@@ -51,51 +55,61 @@
 		</div>
 		<div class="clear1"></div>
 		<div class="con">
-			<div class="title1 mb30">
-				<h2 class="f18 l">拓展功能</h2>
-			</div>
+			<div class="title1 mb30"><h2 class="f18">拓展功能</h2></div>
 			<div class="submenu">
 				<ul>
-					<li class="hover"><a href="route.html">线路图</a></li>
-					<li><a href="tour_group.html">旅行团</a></li>
+					<li><a href="route.html">线路图</a></li>
+					<li class="hover"><a href="tour_group.html">旅行团</a></li>
 					<li><a href="business_cooperation.html">合作商家</a></li>
 					<li><a href="business_cooperation_code.html">合作商家评分</a></li>
 				</ul>
-				</div>
-				<form method="post" action="">
-				  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40">
-                      <tr>
-                        <td width="50" align="right" valign="middle" class="pr20">名称</td>
-                        <td><input type="text" class="inputs4" value="如：获取本店wifi密码"/></td>
+			</div>
+			<form method="post" action=""/>
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tab1 mt40">
+                     <tr>
+                        <td valign="middle" align="right" class="pr20">路 线</td>
+                        <td>
+							<select class="ptb2 plr3" name="select">
+								<option value="01">地狱五日游</option>
+								<option value="01">菜市桥两晚游</option>
+							</select>
+						</td>
                       </tr>
                       <tr>
-                        <td width="50" align="right" valign="middle" class="pr20">景点</td>
-                        <td>
-							时间：<input type="text" class="inputs4 w180" value="如:第2天18点半,填 2/18:30"/> <span class="mlr10">商家ID：</span><input type="text" class="inputs4 w180" value="脸脸商家的ID"/>
-							<div class="box"><span>脸脸茶坊</span><span>脸脸茶坊</span><span>脸脸茶坊</span><span>脸脸茶坊</span><span>脸脸茶坊</span></div>
+                        <td valign="middle" align="right" class="pr20">团 号</td>
+                        <td><input type="text" value="" class="inputs4"> </td>
+                      </tr>
+					   <td valign="middle" align="right" class="pr20">团 名</td>
+                        <td><input type="text" value="" class="inputs4"> <span class="gay1 f12 ml10">默认为"线路名称＋团号",可修改</span></td>
+					  </tr>
+					  </tr>
+					   <td valign="middle" align="right" class="pr20">开始日期</td>
+                        <td><input type="text" value="" class="inputs4"></td>
+					  </tr>
+					  </tr>
+					   <td valign="middle" align="right" class="pr20">结束日期</td>
+                        <td><input type="text" value="" class="inputs4"></td>
+					  </tr>
+					  </tr>
+					   <td valign="middle" align="right" class="pr20">认证提示</td>
+                        <td><select class="ptb2 plr3" name="select">
+								<option value="01">01</option>
+								<option value="01">01</option>
+							</select> <span class="gay1 f12 ml10">加入此团的认证提示信息</span></td>
+					  </tr>
+                      <tr>
+                        <td valign="top" align="right" class="pr20">团 员</td>
+                        <td><textarea class="textarea3 w400"></textarea><br/>
+						<span class="gay1 f12 ml10">每一行分别填入姓名,手机, 身份证,并用逗号隔开.没有可不用填。如: 张三，， 360419XXXXXX4419</span>
 						</td>
                       </tr>
                       <tr>
                         <td>&nbsp;</td>
-                        <td><input type="submit" name="Submit" value="提 交" class="btn2 l"/>
-                        <a class="btn3 l ml20" href="/newbackstage/questions_answers3.html">取 消</a></td>
+                        <td><input type="submit" class="btn2 l" value="提 交" name="Submit">
+                        <a href="/newbackstage/questions_answers3.html" class="btn3 l ml20">取 消</a></td>
                       </tr>
                     </table>
-				</form>
-			<div class="pagination">
-			  <div class="page">
-					<div style="display: none;" id="PageNum">
-						<a href="#">第1页</a>
-						<a href="#">第2页</a>
-						<a href="#">第3页</a>
-						<a href="#">第4页</a>
-						<a href="#">第5页</a>
-					</div>
-					<a class="pre dis">上一页</a>
-					<span id="NowPage">第1页</span>
-					<a class="next" href="#">下一页</a>
-			  </div>
-			</div>
+			</form>
 	  </div>
 	</div>
 <script defer="defer">
@@ -110,7 +124,7 @@ $(document).ready(function(){
 	}else if(runing=="checkboxs2"){
 		AllNoDH();
 	}
-	
+
 	$(".tab2 tr:odd").addClass("trbg");
 });
 </script>

@@ -53,6 +53,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .w150{width:150px !important;}
 .w180{width:180px !important;}
 .w235{width:235px !important;}
+.w400{width:400px !important;}
 .w700{width:700px !important;}
 .h140{height:140px !important;}
 .h423{height:423px !important;}
@@ -213,6 +214,8 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 background-color:#f2f2f2;padding:8px;margin-left:-140px;box-shadow:0 0 5px #FFFFFF;display:none;line-height:25px;}
 #DelDiv{width:180px;height:100px;border:1px solid #ccc;position:absolute;left:50%;top:0px;z-index:121;font-size:14px;
 background-color:#f2f2f2;padding:8px;margin-left:-90px;box-shadow:0 0 5px #FFFFFF;display:none;line-height:25px;}
+#RWM{width:300px;height:300px;border:1px solid #ccc;position:absolute;left:50%;top:0px;z-index:121;padding:8px;margin-left:-150px;
+box-shadow:0 0 5px #FFFFFF;display:none;}
 
 .main{width:100%;zoom:1; }
 
