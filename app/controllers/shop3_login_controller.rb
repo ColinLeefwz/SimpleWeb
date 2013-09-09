@@ -58,6 +58,7 @@ class Shop3LoginController < ApplicationController
   def logout
     session[:shop_id] = nil
     session[:shop_id] = session[:admin_sid]
+    session[:admin_sid] = nil
     redirect_to :action => :login
   end
 

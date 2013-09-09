@@ -59,7 +59,10 @@
             <a href="/shop3_subshops">内部商家</a>
           <% end %>
           <span class="navline"></span>
-          <a href="/shop3_login/logout">退出</a>
+
+          <a href="/shop3_login/logout">
+          <%= session[:admin_sid] ? "返回总店" : "退出" %>
+          </a>
           <span class="navline"></span>
           <label id="CB1" class="checkboxs1" style="display:none;">取消动画</label>
           <span class="navline"></span>
