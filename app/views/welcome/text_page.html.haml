@@ -1,0 +1,24 @@
+.header-box
+  .left-side
+    .portrait
+      = image_tag("#{@session.expert.image_url}")
+    .expert-name
+      %span by #{@session.expert.name}
+  .right-side
+    .social-buttons
+      = image_tag("linked_in.png")
+      = image_tag("like.png")
+    .category-name 
+      = @session.content_type
+ 
+.article-box
+  .title
+    %h1= @session.title
+    %p originally published on "#{@session.created_at}"
+  -if @session.cover.url.eql?""
+    .image
+      = image_tag(@session.cover.url)
+  .main-content
+    %p= @session.description
+    
+

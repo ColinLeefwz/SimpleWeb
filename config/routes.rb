@@ -65,4 +65,6 @@ Prodygia::Application.routes.draw do
   get "/for_members", to: "welcome#for_members"
   get "/privacy", to: "welcome#privacy"
   get "/terms", to: "welcome#terms"
+  get "video_page/:id", to: "welcome#video_page", as: 'video_page'
+  get "text_page/:id", to: "welcome#text_page", as: 'text_page'
  end

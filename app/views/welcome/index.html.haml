@@ -21,19 +21,19 @@
             = image_tag session.cover.url, class: 'video-play'
             = image_tag "video_play_icon.png", class: 'play-video-icon'
 
-      -elsif !session.cover.url.eql?"/covers/original/missing.png"
+      -elsif !session.cover.url.eql?""
         .cover
           = image_tag(session.cover.url)
       -else 
 
       .caption
-        - if (session.cover.url) && (!session.cover.url.eql? "/covers/original/missing.png")
+        - if (session.cover.url) && (!session.cover.url.eql?ii"")
           %p= truncate(session.description, length: 300)
         - else 
           %p= truncate(session.description, length: 600)
         - if session.content_type.eql?"LiveSession"
-          %p= link_to 'Learn more'
+          %p= link_to 'Learn more', video_page_path(session)
         - else
-          %p= link_to 'Continue reading'
+          %p= link_to 'Continue reading', text_page_path(session)
         = social_share_button_tag("asd")
         = render 'linked_in_share_button'
