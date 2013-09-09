@@ -12,6 +12,7 @@
   }
 
   #nav_container {
+    margin-top: 1%;
     width: 100%;
 
     #nav_bar{
@@ -38,37 +39,6 @@
       } /* end of category*/
     } /*end of nav_bar*/
 
-    #pull{
-      display: none; 
-    }
   } /*end of nav_container in desktop*/
 
-
-  @media screen and (max-width: 600px){
-    #nav_container{
-        margin-top: 3%;
-        height: auto;
-      #nav_bar{
-        width: 100%;
-        display: none; 
-      }
-
-      .category{
-        display: inline;
-        width: 100%;
-        float: left;
-        position: relative;
-        text-align: left;
-        text-indent: 5%;
-        border-bottom: 1px solid #CCCCCC;
-      }
-
-      #pull{
-        display: block;
-        width: 100%;
-        position: relative; 
-        background-color: #fff;
-      }
-    }/*end of nav_container in 600px */
-  }/*end of @media*/
 }  /*end of header*/

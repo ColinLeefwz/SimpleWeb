@@ -3,7 +3,7 @@
     = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
 
 #nav_container.clearfix
-  %ul#nav_bar.clearfix
+  %ul#nav_bar.clearfix.visible-desktop
 
     %li.category
       %a{href: "#all"}all
@@ -40,4 +40,11 @@
       %ul.subcategory
         %li
 
-  %a#pull{href: "#menu"}menu
+  %select#collapsed_navbar.span12.hidden-desktop
+    %option all
+    %option macro
+    %option business
+    %option entrepreneurship
+    %option tech
+    %option culture
+    %option format
