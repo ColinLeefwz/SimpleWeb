@@ -36,5 +36,8 @@
           %p.learn-more= link_to 'Learn more'
         - else
           %p.learn-more= link_to 'Continue reading'
-        = social_share_button_tag("asd")
-        = render 'linked_in_share_button'
+        .social-share-icons
+          = render 'social_share'
+
+        -# = social_share_button_tag("asd")
+        -# = render 'linked_in_share_button'
