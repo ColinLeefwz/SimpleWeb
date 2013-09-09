@@ -15,6 +15,7 @@ gem 'devise'
 gem 'omniauth-facebook'
 gem 'social-share-button'
 gem 'paperclip'
+gem 'tinymce-rails'
 
 group :doc do
   gem 'sdoc', require: false

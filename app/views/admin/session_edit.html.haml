@@ -1,6 +1,5 @@
-= content_for :head do
-  = stylesheet_link_tag "bootstrap.css", media = "all"
-  = javascript_include_tag "bootstrap.js" 
+= tinymce_assets
+
 
 %h1 Editing session
 
@@ -32,7 +31,8 @@
     = f.file_field :video
   .field
     = f.label :description
-    = f.text_area :description
+    = f.text_area :description, :class => "tinymce"
+    = tinymce
   .actions
     = f.submit 'Save'
 
