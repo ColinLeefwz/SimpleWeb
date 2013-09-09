@@ -1,0 +1,33 @@
+#main-content
+  %h1.video-page-title #{@session.title}
+  .video-page-hint 
+    %p what should i know when starting a business in China?
+  .video-page-info-box
+    .video-page-image.video-page-image-border
+      = image_tag(@session.cover.url)
+    .video-page-info
+      .video-page-expert-category
+        .video-page-expert-info
+          .video-page-expert-portrait
+            .video-page-image-border
+              = image_tag(@session.expert.image_url)
+            %p= @session.expert.company 
+          .video-page-expert-name-title
+            %h2= @session.expert.name
+            %p= @session.expert.title
+        .video-page-category-info
+          %h2 Category
+          %p= @session.content_type
+      .video-page-other-info
+        %p= @session.expert.location
+        %p= @session.created_at
+        %p Virtual
+        %p EUR: 49.00
+      .video-page-others
+        %p Click below to now!
+        .enroll-button
+          %p= link_to 'Enroll now!'
+        %p= link_to 'Tell A Friend'
+
+  .video-page-video-frame
+    = video_url(@session.video_url)
