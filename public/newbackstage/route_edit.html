@@ -204,28 +204,31 @@ function AddCompany(index){
 }
 
 function AddDiv_Td(){
-alert($("#Tr"+bq+" td").eq(1).find(".box13").html());
-	if($("#Tr"+bq+" td").eq(1).find(".box13").html()==""){alert(2);
+	if($("#Tr"+bq+" td").eq(1).find(".box13").html()==undefined){
 		var html="<div class='box13'>";
 		for(var i=0;i<$("#AddDiv ul li a").length;i++){
 			if($("#AddDiv ul li a").eq(i).attr("class")=="checkboxs2"){
 				html+="<span>"+$("#AddDiv ul li a").eq(i).html()+"</span>"
 			}
 		}
-		html+="</div>";
+		html+="<a onclick='Del("+bq+")' class='pointer blue3 ml20'>[ 取消 ]</a></div>";
 		$("#Tr"+bq+" td").eq(1).append(html);
-	}else{alert(1);
+	}else{
 		var html="";
 		for(var i=0;i<$("#AddDiv ul li a").length;i++){
 			if($("#AddDiv ul li a").eq(i).attr("class")=="checkboxs2"){
 				html+="<span>"+$("#AddDiv ul li a").eq(i).html()+"</span>"
 			}
 		}
+		html+="<a onclick='Del("+bq+")' class='pointer blue3 ml20'>[ 取消 ]</a>"
 		$("#Tr"+bq+" td").eq(1).find(".box13").html(html);
 	}
 	$("#AddDiv,#BG").css("display","none");
 	$("#Tr"+bq+" td").eq(1).find(".box13").css("display","none");
 	$("#Tr"+bq+" td").eq(1).find(".box13").fadeIn(600);
+}
+function Del(index){
+	$("#Tr"+index+" td").eq(1).find(".box13").remove();
 }
 </script>
 </body>
