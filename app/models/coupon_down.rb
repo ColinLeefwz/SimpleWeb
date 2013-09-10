@@ -14,6 +14,8 @@ class CouponDown
   field :sub_sid, type: Integer #获得主店分享类优惠券时，实际分享发生的分店id
   field :data #消费时输入的数据，可以是消费金额／手机号码／服务员编号等
   field :num, type:Integer #优惠券下载编号， 每个优惠券独立编号
+  field :del, type:Boolean #是否被用户删除
+  field :status, type:Integer #优惠券的状态 ，1代表未使用的，2代表已使用的，4代表已过期的，8代表未激活的
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :gender, :birthday, :weibo_home,:show_gender, :to => :user
@@ -121,7 +123,13 @@ Shop.find_by_id(sid)
       end
     end
   end
+
   
+  def output_hash
+    hash = self.attributes.slice("id", "status", "hint", "dat", "uat")
+    hash.merge!( {seq:download_num, name:coupon.name, shop:shop.name, shop_id:shop.id} ) 
+  end
+
 end
 
 
