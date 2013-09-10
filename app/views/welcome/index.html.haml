@@ -13,12 +13,12 @@
             = image_tag("text.png")
           -elsif session.content_type.eql?"VideoSession"
             = image_tag("video.png")
-          %p= session.content_type
+          %p= session.category
       .title
         = session.title.titleize
-      -if session.video_url
+      -if session.content_type == "VideoSession"
         .cover
-          .video-img{data: {source: session.video_url}}
+          .video-img{data: {source: session.video.url}}
             = image_tag session.cover.url, class: 'video-play'
             = image_tag "video_play_icon.png", class: 'play-video-icon'
 
@@ -28,16 +28,14 @@
       -else
 
       .caption
-        - if (session.cover.url) && (!session.cover.url.eql? "/covers/original/missing.png")
+        - if (session.cover.url) && (!session.cover.url.eql?"/covers/original/missing.png")
           %p.description= truncate(session.description, length: 300)
         - else
           %p.description= truncate(session.description, length: 600)
-        - if session.content_type.eql?"LiveSession"
-          %p.learn-more= link_to 'Learn more'
+        - if session.content_type.eql?"ArticleSession"
+          %p.learn-more= link_to 'Continue reading', text_page_path(session)
         - else
-          %p.learn-more= link_to 'Continue reading'
+          %p.learn-more= link_to 'Learn more', video_page_path(session)
         .social-share-icons
           = render 'social_share'
 
-        -# = social_share_button_tag("asd")
-        -# = render 'linked_in_share_button'
