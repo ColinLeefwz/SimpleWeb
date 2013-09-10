@@ -51,8 +51,8 @@ body {
 			  float: left;
 				img{
 					border-radius: 52px;
-					width: 25px;
-					height: 25px;
+					width: 50px;
+					height: 50px;
 					margin: 10px;
 				}
 				.expert-name {
@@ -84,9 +84,10 @@ body {
 			font-size: 22px;
 			color: #6D6D6D;
 			text-align: left;
-			margin: 10px 10px 0px 10px;
+			margin: 0px 10px 5px 10px;
 			font-weight: bold;
 			letter-spacing: 0.5px;
+			line-height: 25px;
 		}
 
 		.cover{
@@ -104,10 +105,10 @@ body {
 
 			p.description{
 				text-align: left;
-
 				font-family: Lato;
 				font-size: 14px;
 				color: #575757;
+				line-height: 18px;
 			}
 			p.learn-more {
 				text-align: left;
