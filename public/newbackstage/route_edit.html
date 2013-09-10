@@ -121,7 +121,7 @@
 <script defer="defer">
 var navmove="off", runing,num,bq;
 num=$(".tab1 tr").length;
-num-=2;
+num-=2; bq=num;
 $(document).ready(function(){
 	runing=$("#CB1").attr("class");
 	if(runing=="checkboxs1"){
@@ -132,10 +132,9 @@ $(document).ready(function(){
 	}else if(runing=="checkboxs2"){
 		AllNoDH();
 	}
-	
+
 	$(".tab2 tr:odd").addClass("trbg");
-	
-		
+
 	$("#AddDiv ul li a").click(function(){
 		if($(this).attr("class")=="checkboxs1"){
 			$(this).removeClass("checkboxs1").addClass("checkboxs2");
@@ -205,7 +204,7 @@ function AddCompany(index){
 }
 
 function AddDiv_Td(){
-	
+alert($("#Tr"+bq+" td").eq(1).find(".box13").html());
 	if($("#Tr"+bq+" td").eq(1).find(".box13").html()==""){alert(2);
 		var html="<div class='box13'>";
 		for(var i=0;i<$("#AddDiv ul li a").length;i++){
