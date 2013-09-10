@@ -25,4 +25,11 @@ class WelcomeController < ApplicationController
   def terms
   end 
 
+  def video_page
+    @session = Session.find(params[:id])
+  end
+
+  def text_page
+    @session = Session.find(params[:id])
+  end
 end
