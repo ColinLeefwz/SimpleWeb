@@ -118,7 +118,7 @@ class AdminController < ApplicationController
   end
 
   def session_params
-    params.require(:session).permit(:title, :expert_id, :category, :content_type, :video, :cover, :description)
+    params.require(:session).permit(:title, :expert_id, :category, :content_type, :video, :cover, :description, :location, :price)
   end
 
   def set_expert
