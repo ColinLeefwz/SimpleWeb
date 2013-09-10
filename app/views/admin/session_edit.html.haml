@@ -17,6 +17,12 @@
     = f.label :expert_id
     = f.select :expert_id, Expert.all.collect{ |e| [e.name, e.id]}
   .field
+    = f.label :location
+    = f.text_field :location
+  .field
+    = f.label :price
+    = f.text_field :price
+  .field
     = f.label :category
     = f.select :category, Session::CATEGORY
   .field
