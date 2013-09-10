@@ -51,12 +51,12 @@ body {
 			  float: left;
 				img{
 					border-radius: 52px;
-					width: 50px;
-					height: 50px;
+					width: 25px;
+					height: 25px;
 					margin: 10px;
 				}
 				.expert-name {
-					font-size: $box_header_font_size + 4;
+					font-size: 14px;
 					font-family: 'Latoitalic';
 					display: inline-block;
 					color: #B3B3B3;
@@ -72,7 +72,7 @@ body {
 					height: 30px;
 				}
 				p{
-					font-size: $box_header_font_size + 2;
+					font-size: 14px;
 					font-family: Latobold;
 					color: #B3B3B3;
 				}
@@ -84,7 +84,7 @@ body {
 			font-size: 22px;
 			color: #6D6D6D;
 			text-align: left;
-			margin: 10px;
+			margin: 10px 10px 0px 10px;
 			font-weight: bold;
 			letter-spacing: 0.5px;
 		}
@@ -105,9 +105,9 @@ body {
 			p.description{
 				text-align: left;
 
-				font-family: Latobold;
-				font-size: $box_header_font_size;
-				color: #7C7C7C;
+				font-family: Lato;
+				font-size: 14px;
+				color: #575757;
 			}
 			p.learn-more {
 				text-align: left;
@@ -116,8 +116,7 @@ body {
 				a{
 					text-align: left;
 					font-family: Latoitalic;
-					font-weight: bold;
-					font-size: $box_header_font_size;
+					font-size: 14px;
 					color: #AF6A82;
 				}
 			}
