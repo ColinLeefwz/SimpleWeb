@@ -17,6 +17,8 @@ gem 'social-share-button'
 gem 'paperclip'
 gem 'tinymce-rails'
 
+gem 'truncate_html'
+
 group :doc do
   gem 'sdoc', require: false
 end
