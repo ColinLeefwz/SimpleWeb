@@ -20,7 +20,7 @@
     border-radius: 3px;
     padding-top: 15px;
     padding-bottom: 5px;
-    padding-left: 10px;
+    padding-left:20px;
     }
 
   .video-page-image-border{
@@ -29,27 +29,26 @@
 
   .video-page-info-box{
     border: 4px solid #ffffff;
-    height: 320px;
-
+    height: 275px;
+    padding: 30px 30px 30px 20px;
     .video-page-image{
       float: left;
-      margin-left: 50px;
-      margin-top: 25px;
       img{
-        width: 400px;
+        width: 420px;
 	height: 270px;
       }
     }
 
     .video-page-info{
-      margin-top: 25px;
       float: right;
-      margin-right: 50px;
+      width:420px;
       height: 270px;
+      font-size:15px;
       .video-page-expert-category{
         .video-page-expert-info{
           border-right: thin solid #000000;
 	  float: left;
+	  width: 280px;
 	  .video-page-expert-portrait{
 	    float: left;
               img{
@@ -58,26 +57,43 @@
               }
 	  }
 	  .video-page-expert-name-title{
-	    float: right;
-	    margin-left: 20px;
-	    margin-right: 20px;
+	    float: left;
+	    margin-left: 15px;
+	    margin-right: 15px;
+	    width: 174px;
+	    word-wrap: break-word;
+	    word-break: break-word;
+	    .video-page-expert-name-value{
+	    	font-size: 22px;
+		line-height:1.2;
+		font-weight:bold;
+	        color:#666;	
+	    }
 	  }
 	}
 	.video-page-category-info{
-          float: right;       
-	  margin-left: 20px;
+          float: left;       
+	  margin-left: 15px;
+	  .video-page-category-info-title {
+	    font-size: 22px;
+	    line-height:1.2;
+	    font-weight:bold;
+	    font-style:italic;
+	    color:#666;
+	  }
         }
       }
       .video-page-location-info{
         float: left;
 	text-align: left;
-	margin-top: 50px;					
+	margin-top: 30px;					
 	.location-info{
 	 margin-left: 20px;
 	}
 	.location-icon-background{
           background-image: image_url("location_icon.png"); 
 	  background-repeat: no-repeat;
+	  margin-bottom:15px;
         }
 
 	#location-icon1{
@@ -100,14 +116,17 @@
       .outline-font{
         color: #880848;
 	font-size: 20px;
+	a {
+	  text-decoration:underline;
+	}
       }
 
       .video-page-others{
         float: right;
-	width: 110px;
-	margin-top: 50px;
-	margin-left: 50px;
-	text-align: right;
+	width: 140px;
+	margin-top: 30px;
+	margin-left: 20px;
+	text-align: center;
 	font-size: 13px;
       }     
 	a{
@@ -115,7 +134,6 @@
 	  color: #880848;
 	  font-size: 20px;
 	}
-
         .enroll-button{
           a{
 	  display: block;
@@ -126,6 +144,7 @@
 	  cursor: pointer;
 	  font-weight: bold;
 	  text-align: center;
+	  padding:15px;
           }
         }
       }

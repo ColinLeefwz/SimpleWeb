@@ -13,10 +13,12 @@
               = image_tag(@session.expert.image_url)
             %p= @session.expert.company
           .video-page-expert-name-title
-            %h2= @session.expert.name
+            .video-page-expert-name-value
+              = @session.expert.name
             %p= @session.expert.title
         .video-page-category-info
-          %h2 Category
+          .video-page-category-info-title
+            Category
           %p= @session.category
       .video-page-location-info
         %p#location-icon1.location-icon-background
