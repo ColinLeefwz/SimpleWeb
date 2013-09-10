@@ -1,6 +1,6 @@
 #main-content
   %h1.video-page-title #{@session.title}
-  .video-page-hint 
+  .video-page-hint
     %p what should i know when starting a business in China?
   .video-page-info-box
     .video-page-image.video-page-image-border
@@ -11,7 +11,7 @@
           .video-page-expert-portrait
             .video-page-image-border
               = image_tag(@session.expert.image_url)
-            %p= @session.expert.company 
+            %p= @session.expert.company
           .video-page-expert-name-title
             %h2= @session.expert.name
             %p= @session.expert.title
@@ -36,8 +36,8 @@
         .enroll-button
           %p= link_to 'Enroll now!'
         %p.outline-font= link_to 'Tell A Friend'
-  -if @session.video_url
+  -if @session.content_type == "VideoSession"
     .video-page-video-frame
-      = video_tag @session.video_url, controls: 'controls' 
+      = video_tag @session.video.url, controls: 'controls'
   .video-page-summary
     %p= @session.description

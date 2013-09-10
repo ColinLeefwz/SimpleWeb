@@ -6,11 +6,10 @@
       %span by #{@session.expert.name}
   .text-page-right-side
     .text-page-social-buttons
-      = image_tag("linked_in.png")
-      = image_tag("like.png")
-    .text-page-category-name 
+      = render 'social_share'
+    .text-page-category-name
       = @session.category
- 
+
 .text-page-article-box
   .text-page-title
     %h1= @session.title
@@ -20,5 +19,5 @@
       = image_tag(@session.cover.url)
   .text-page-main-content
     %p= @session.description
-    
+
 

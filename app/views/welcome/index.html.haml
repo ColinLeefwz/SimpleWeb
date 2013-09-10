@@ -30,12 +30,12 @@
       .caption
         - if (session.cover.url) && (!session.cover.url.eql?"/covers/original/missing.png")
           %p.description= truncate(session.description, length: 300)
-        - else 
+        - else
           %p.description= truncate(session.description, length: 600)
         - if session.content_type.eql?"ArticleSession"
           %p.learn-more= link_to 'Continue reading', text_page_path(session)
         - else
           %p.learn-more= link_to 'Learn more', video_page_path(session)
         .social-share-icons
-          = render 'linked_in_share_button'
+          = render 'social_share'
 
