@@ -133,8 +133,12 @@
 
     .video-page-video-frame{
       border: 10px solid #ffffff;
-      height: 600px;
+      margin: 0 auto;
+      width: 600px;
       margin-top: 20px;
+      video{
+	width: 100%;
+      }
     }
 
     .video-page-summary{ 

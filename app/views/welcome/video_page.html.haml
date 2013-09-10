@@ -17,7 +17,7 @@
             %p= @session.expert.title
         .video-page-category-info
           %h2 Category
-          %p= @session.content_type
+          %p= @session.category
       .video-page-location-info
         %p#location-icon1.location-icon-background
           %span.location-info
@@ -38,6 +38,6 @@
         %p.outline-font= link_to 'Tell A Friend'
   -if @session.video_url
     .video-page-video-frame
-      = video_tag @session.video_url, controls: 'controls', width: '930', height: '600'
+      = video_tag @session.video_url, controls: 'controls' 
   .video-page-summary
     %p= @session.description
