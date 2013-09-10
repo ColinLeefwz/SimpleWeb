@@ -29,9 +29,9 @@
 
       .caption
         - if (session.cover.url) && (!session.cover.url.eql?"/covers/original/missing.png")
-          %p.description= truncate(session.description, length: 300)
+          %p.description= truncate_html(session.description, length: 300, omission: '...')
         - else
-          %p.description= truncate(session.description, length: 600)
+          %p.description= truncate_html(session.description, length: 600, omission: '...')
         - if session.content_type.eql?"ArticleSession"
           %p.learn-more= link_to 'Continue reading', text_page_path(session)
         - else
