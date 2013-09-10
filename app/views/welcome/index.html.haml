@@ -31,9 +31,9 @@
           %p= truncate(session.description, length: 300)
         - else 
           %p= truncate(session.description, length: 600)
-        - if session.content_type.eql?"LiveSession"
-          %p= link_to 'Learn more', video_page_path(session)
-        - else
+        - if session.content_type.eql?"ArticleSession"
           %p= link_to 'Continue reading', text_page_path(session)
+        - else
+          %p= link_to 'Learn more', video_page_path(session)
         = social_share_button_tag("asd")
         = render 'linked_in_share_button'
