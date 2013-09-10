@@ -14,7 +14,7 @@ class GpsLog
     option.delegate :name, :to => :user
   end
   def user
-    @user ||= User.find_by_id(uid)
+  User.find_by_id(uid)
   end
 
 end

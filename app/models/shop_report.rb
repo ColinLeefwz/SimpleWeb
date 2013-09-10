@@ -15,11 +15,11 @@ class ShopReport
 
 
   def shop
-    @shop ||= Shop.find_by_id(self.sid)
+    Shop.find_by_id(self.sid)
   end
 
   def user
-    @user ||= User.find_by_id(self.uid)
+     User.find_by_id(self.uid)
   end
 
   

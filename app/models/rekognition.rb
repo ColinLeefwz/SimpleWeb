@@ -41,7 +41,7 @@ class Rekognition
 
 
   def user
-    @user ||= User.find_by_id(_id)
+    User.find_by_id(_id)
   end
 
 end
