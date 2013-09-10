@@ -29,7 +29,7 @@
 
   .video-page-info-box{
     border: 4px solid #ffffff;
-    height: 350px;
+    height: 320px;
 
     .video-page-image{
       float: left;
@@ -37,7 +37,7 @@
       margin-top: 25px;
       img{
         width: 400px;
-	height: 300px;
+	height: 270px;
       }
     }
 
@@ -45,6 +45,7 @@
       margin-top: 25px;
       float: right;
       margin-right: 50px;
+      height: 270px;
       .video-page-expert-category{
         .video-page-expert-info{
           border-right: thin solid #000000;
@@ -96,9 +97,16 @@
     }
 
     .video-page-video-frame{
-      border: 5px solid #ffffff;
-      width: 930px;
+      border: 10px solid #ffffff;
+      height: 600px;
       margin-top: 20px;
+    }
+
+    .video-page-summary{ 
+      padding: 15px 30px;
+      margin-top: 20px;
+      background: white;
+      font-size: 13pt;
     }
   }
 

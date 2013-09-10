@@ -28,6 +28,8 @@
         .enroll-button
           %p= link_to 'Enroll now!'
         %p= link_to 'Tell A Friend'
-
-  .video-page-video-frame
-    = video_url(@session.video_url)
+  -if @session.video_url
+    .video-page-video-frame
+      = video_tag @session.video_url, controls: 'controls', width: '930', height: '600'
+  .video-page-summary
+    %p= @session.description
