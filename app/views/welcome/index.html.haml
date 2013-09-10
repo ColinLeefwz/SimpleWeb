@@ -4,7 +4,8 @@
       .box-header
         .portrait
           = image_tag(session.expert.image_url)
-          = session.expert.name
+          .expert-name
+            = session.expert.name
         .content-type
           -if session.content_type.eql?"LiveSession"
             = image_tag("livestreaming.png")
@@ -15,25 +16,26 @@
           %p= session.content_type
       .title
         = session.title.titleize
-      -if session.video_url
+      -if session.content_type == "VideoSession"
         .cover
-          .video-img{data: {source: session.video_url}}
+          .video-img{data: {source: session.video.url}}
             = image_tag session.cover.url, class: 'video-play'
             = image_tag "video_play_icon.png", class: 'play-video-icon'
 
       -elsif !session.cover.url.eql?"/covers/original/missing.png"
         .cover
           = image_tag(session.cover.url)
-      -else 
+      -else
 
       .caption
         - if (session.cover.url) && (!session.cover.url.eql?"/covers/original/missing.png")
-          %p= truncate(session.description, length: 300)
+          %p.description= truncate(session.description, length: 300)
         - else 
-          %p= truncate(session.description, length: 600)
+          %p.description= truncate(session.description, length: 600)
         - if session.content_type.eql?"ArticleSession"
-          %p= link_to 'Continue reading', text_page_path(session)
+          %p.learn-more= link_to 'Continue reading', text_page_path(session)
         - else
-          %p= link_to 'Learn more', video_page_path(session)
-        = social_share_button_tag("asd")
-        = render 'linked_in_share_button'
+          %p.learn-more= link_to 'Learn more', video_page_path(session)
+        .social-share-icons
+          = render 'linked_in_share_button'
+

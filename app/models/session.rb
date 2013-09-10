@@ -9,4 +9,8 @@ class Session < ActiveRecord::Base
     path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
     url: "/system/sessions/:attachment/:id_partition/:style/:filename"
 
+  has_attached_file :video,
+    path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
+    url: "/system/sessions/:attachment/:id_partition/:style/:filename"
+
 end

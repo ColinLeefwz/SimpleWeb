@@ -1,4 +1,7 @@
+= tinymce_assets
+
 %h3 Create a new session
+
 
 = form_for @session, url: sessions_admin_index_path do |f|
   - if @session.errors.any?
@@ -28,7 +31,8 @@
     = f.file_field :video
   .field
     = f.label :description
-    = f.text_area :description
+    = f.text_area :description, :class => "tinymce", :rows => 30, :cols => 30
+    = tinymce
   .actions
     = f.submit 'Save'
 
