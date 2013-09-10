@@ -15,7 +15,7 @@ class AnswerController < ApplicationController
     @text = text if ENV["RAILS_ENV"] == "test"
     attrs = " NOLOG='1' "
     attrs += " url='http://www.dface.cn' "
-    Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs) if text
+    Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, "<x xmln='dface.url'>http://www.google.com</x>") if text
     render :text => "1"
   end
   
