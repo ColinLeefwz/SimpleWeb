@@ -2,43 +2,54 @@
   #logo
     = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
 
-#nav_container.clearfix
-  %ul#nav_bar.clearfix.visible-desktop
+%nav
+  %ul.visible-desktop
 
     %li.category
       %a{href: "#all"}all
-      %ul.subcategory
-        %li
 
     %li.category
       %a{href: "#macro"}macro
       %ul.subcategory
-        %li
+        %li economy
+        %li macro trends
+        %li going global
 
     %li.category
       %a{href: "#business"}business
       %ul.subcategory
-        %li
+        %li strategy
+        %li market research
+        %li company setup
+        %li recruiment
 
     %li.category
       %a{href: "#entrepreneurship"}entrepreneurship
       %ul.subcategory
-        %li
+        %li lean startup
+        %li funding
+        %li agile development
 
     %li.category
       %a{href: "#tech"}tech
       %ul.subcategory
-        %li
+        %li mobile
+        %li social media
+        %li apps/software
 
     %li.category
       %a{href: "#culture"}culture
       %ul.subcategory
-        %li
+        %li language
+        %li spirituality
+        %li travel
 
     %li.category
       %a{href: "#format"}format
       %ul.subcategory
-        %li
+        %li video
+        %li live
+        %li article
 
   %select#collapsed_navbar.span12.hidden-desktop
     %option all
