@@ -18,6 +18,6 @@
     .text-page-image
       = image_tag(@session.cover.url)
   .text-page-main-content
-    %p= @session.description
+    %p= @session.description.html_safe
 
 
