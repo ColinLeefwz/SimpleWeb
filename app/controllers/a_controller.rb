@@ -7,7 +7,13 @@ class AController < ApplicationController
     c.time = Time.now
     c.agent = request.env["HTTP_USER_AGENT"]
     c.save
-    render :file => "~/lianlian/public/mini.html", :use_full_path => true 
+    case params[:v]
+    when '24'
+      render :file => "~/lianlian/public/zhaopin.html", :use_full_path => true
+    else
+      render :file => "~/lianlian/public/mini.html", :use_full_path => true 
+    end
+    
   end
   
   def down
