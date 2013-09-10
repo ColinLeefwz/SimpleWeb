@@ -6,8 +6,11 @@
   box-shadow: 0 0px 6px rgba(170, 180, 190, 1);
 
   #logo_container{
+    max-width: 21%;
     #logo {
-      max-width: 25%;
+      display: inline-block;
+      margin-top: 5%;
+      margin-left: 5%;
     }
   }
 
