@@ -68,19 +68,54 @@
 	  margin-left: 20px;
         }
       }
-      .video-page-other-info{
+      .video-page-location-info{
         float: left;
 	text-align: left;
-	margin-top: 50px;
+	margin-top: 50px;					
+	.location-info{
+	 margin-left: 20px;
+	}
+	.location-icon-background{
+          background-image: image_url("location_icon.png"); 
+	  background-repeat: no-repeat;
+        }
+
+	#location-icon1{
+	  background-position: 0 0;
+        }
+
+	#location-icon2{
+	  background-position: 0 -40px;
+        }
+
+	#location-icon3{
+	  background-position: 0 -60px;
+	}
+
+	#location-icon4{
+	  background-position: 0 -80px;
+	}
       }
       
+      .outline-font{
+        color: #880848;
+	font-size: 20px;
+      }
+
       .video-page-others{
         float: right;
+	width: 110px;
 	margin-top: 50px;
 	margin-left: 50px;
-	text-align: left;
+	text-align: right;
 	font-size: 13px;
-      }
+      }     
+	a{
+	  margin-bottom: 15px;
+	  color: #880848;
+	  font-size: 20px;
+	}
+
         .enroll-button{
           a{
 	  display: block;

@@ -18,16 +18,24 @@
         .video-page-category-info
           %h2 Category
           %p= @session.content_type
-      .video-page-other-info
-        %p= @session.expert.location
-        %p= @session.created_at
-        %p Virtual
-        %p EUR: 49.00
+      .video-page-location-info
+        %p#location-icon1.location-icon-background
+          %span.location-info
+            = @session.expert.location
+        %p#location-icon2.location-icon-background
+          %span.location-info
+            = @session.created_at
+        %p#location-icon3.location-icon-background
+          %span.location-info
+            Virtual
+        %p#location-icon4.location-icon-background
+          %span.location-info.outline-font
+            EUR: 49.00
       .video-page-others
-        %p Click below to now!
+        %p Click below to entroll now!
         .enroll-button
           %p= link_to 'Enroll now!'
-        %p= link_to 'Tell A Friend'
+        %p.outline-font= link_to 'Tell A Friend'
   -if @session.video_url
     .video-page-video-frame
       = video_tag @session.video_url, controls: 'controls', width: '930', height: '600'
