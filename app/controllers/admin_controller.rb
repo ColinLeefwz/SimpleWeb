@@ -46,16 +46,6 @@ class AdminController < ApplicationController
     content_type = params[:session][:content_type]
     @session = Object.const_get(content_type.camelize).new session_params
 
-    if params[:session][:video]
-      uploaded_io = params[:session][:video]
-      # TODO: the url may be wrong. can we use Paperclip instead?
-      video_url_path = Rails.root.join('app', 'assets', 'videos', uploaded_io.original_filename)
-      File.open(video_url_path, 'wb') do |file|
-        file.write(uploaded_io.read)
-      end
-      @session.video_url = "#{uploaded_io.original_filename}"
-    end
-
     if @session.save
       redirect_to session_admin_index_path(@session)
     else
@@ -128,7 +118,7 @@ class AdminController < ApplicationController
   end
 
   def session_params
-    params.require(:session).permit(:title, :expert_id, :category, :content_type, :cover, :description)
+    params.require(:session).permit(:title, :expert_id, :category, :content_type, :video, :cover, :description)
   end
 
   def set_expert
