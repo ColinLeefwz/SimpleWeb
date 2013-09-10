@@ -1,4 +1,4 @@
-= tinymce_assets
+//= tinymce_assets
 
 %h3 Create a new session
 
@@ -31,8 +31,8 @@
     = f.file_field :video
   .field
     = f.label :description
-    = f.text_area :description, :class => "tinymce", :rows => 30, :cols => 30
-    = tinymce
+    = f.text_area :description, :class => "tinymce"
+    //= tinymce
   .actions
     = f.submit 'Save'
 
