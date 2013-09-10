@@ -118,6 +118,16 @@ class Group
     Group.where({"users.phone" => phone})
   end
 
+  def show_invaildt
+    ['时间到自动过期', '手动过期'][invaildt-1]
+  end
+
+  #加入群组的用户
+  def add_users
+   uids =  $redis.zrange("UA#{sid.to_i}", 0, -1)
+   User.where({_id: {"$in" => uids}})
+  end
+
   # 虚拟群组过期
   def invalidate_old
     $redis.zrevrange("UA#{sid.to_i}",0,-1).each{|user| $redis.srem("GROUP#{user}", self.sid.to_i) }

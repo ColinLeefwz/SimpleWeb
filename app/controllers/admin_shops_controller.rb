@@ -150,7 +150,7 @@ class AdminShopsController < ApplicationController
 
   def find_shops
     @shop = Shop.find(params[:pid])
-    hash,sort = {},{}
+    hash =  {del: {"$exists" => false}}
 
     unless params[:loc].blank?
       lo = params[:loc].split(',')

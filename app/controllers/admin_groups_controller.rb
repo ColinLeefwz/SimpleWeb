@@ -10,6 +10,40 @@ class AdminGroupsController < ApplicationController
     @groups =  paginate3("Group", params[:page], hash, sort)
   end
 
+  def new
+    @group = Group.new
+  end
+
+  def create
+    group = Group.new(params[:group])
+    group.save
+    group.gen_shop
+    redirect_to :action => :show, :id => group.id
+  end
+
+  def edit
+    @group = Group.find_by_id(params[:id])
+  end
+
+  def update
+    @group = Group.find(params[:id])
+    if @group.update_attributes(params[:group])
+      redirect_to :action => :show, :id => @group.id
+    else
+      render :action => :edit
+    end
+  end
+
+  def show
+    @group = Group.find_primary(params[:id])
+  end
+
+  def users
+     @group = Group.find_primary(:params[:id])
+     @users = User.where({id: {'$in' => $redis.smembers("group#{@group.sid}")}})
+  end
+
+
   def invaild
     group = Group.find_by_id(params[:id])
     group.invalidate_old

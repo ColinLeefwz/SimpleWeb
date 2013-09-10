@@ -36,7 +36,7 @@ class AdminBranchsController < ApplicationController
     @pshop = Shop.find(params[:psid].to_i)
    
     if !params[:city].blank? && !params[:name].blank?
-      hash = {}
+      hash = {del: {"$exists" => false}}
       if params[:fun] == 'true'
         hash.merge!({:city => params[:city], :name => params[:name]})
       else
