@@ -12,7 +12,13 @@
   =image_tag(@session.cover.url)
   
 %p
-  =@session.cover.url
+  location:
+  =@session.location
+
+%p
+  price:
+  =number_to_currency(@session.price, :unit => "EUR ")
+
 %p
   %b Description:
   = @session.description
