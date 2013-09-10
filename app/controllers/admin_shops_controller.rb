@@ -137,7 +137,7 @@ class AdminShopsController < ApplicationController
   def near
     @shop = Shop.find(params[:id])
     if ENV["RAILS_ENV"] == "production"
-      @shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.loc_first, 0.01]}}})
+      @shops = Shop.where({:lo => {"$within" => {"$center" => [@shop.loc_first, 0.01]}}, :del =>   {"$exists" => false}})
     else
       @shops = Shop.where({}).limit(5)
     end
@@ -150,7 +150,7 @@ class AdminShopsController < ApplicationController
 
   def find_shops
     @shop = Shop.find(params[:pid])
-    hash =  {del: {"$exists" => false}}
+    hash =  {}
 
     unless params[:loc].blank?
       lo = params[:loc].split(',')
@@ -169,6 +169,7 @@ class AdminShopsController < ApplicationController
     if hash.empty?
       @shops = []
     else
+      hash.merge!(del: {"$exists" => false})
       @shops = Shop.where(hash)
       @shops -= [@shop]
     end

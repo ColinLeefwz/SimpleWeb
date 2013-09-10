@@ -36,5 +36,9 @@
 
 <p>
   <b>已加入群组用户:</b>
-  <%= @group.add_users.map{|m| m.name}.join(', ') %>
+  <% @group.add_users.each do |user| %>
+  <br/>
+  <b></b>
+  <%= user.id %>,<%=link_to user.name, "/admin_users/show?id=#{user.id}", :target => "_blank" %>
+  <% end %>
 </p>

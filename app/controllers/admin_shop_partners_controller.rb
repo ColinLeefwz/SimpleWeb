@@ -42,7 +42,7 @@ class AdminShopPartnersController < ApplicationController
     @shop_partner = ShopPartner.find_or_new(params[:id])
 
     if !params[:city].blank? && !params[:name].blank?
-      hash = {}
+     hash = {del: {"$exists" => false}}
       if params[:fun] == 'true'
         hash.merge!({:city => params[:city], :name => params[:name]})
       else

@@ -49,6 +49,7 @@ class Group
     s = Shop.new
   	s.id = Shop.next_id
   	s.name = name
+    s.t = 0
   	s.psid = admin_sid
     s.group_id = self.id
     s.save!

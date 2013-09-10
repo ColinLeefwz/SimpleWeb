@@ -15,10 +15,12 @@
     <th></th>
   </tr>
 
+
+
   <% @groups.each do |group| %>
     <tr>
       <td><%= group.name %></td>
-      <td><%= group.shop_name %></td>
+      <td><%=link_to group.shop_name||'', "/admin_shops/show?id=#{group.sid}", :target => "_blank" %></td>
       <td><%= group.hint %></td>
       <td><%= group.pass %></td>
       <td><%= group.fat %></td>
