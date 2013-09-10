@@ -1,7 +1,8 @@
 # coding: utf-8
 
 class CouponsController < ApplicationController
-  before_filter :user_login_filter, :only => :use
+  #before_filter :user_login_filter, :only => [:list, :use, :delete]
+  #before_filter :user_is_session_user, :only => [:list, :delete]
 
   def img
     cpd = CouponDown.find(params[:id][0,24])
@@ -53,10 +54,37 @@ class CouponsController < ApplicationController
         end
       end
     end
-
     render :json => {used: params[:id]}.to_json
   end
   
+  def list
+    page = params[:page].to_i
+    pcount = params[:pcount].to_i
+    page = 1 if page==0
+    pcount = 10 if pcount==0
+    skip = (page-1)*pcount
+    cds = CouponDown.where({user_id: session[:user_id], del:{"$exists" => false}}).sort({dat: -1}).skip(skip).limit(pcount)
+    render :json => cds.map {|p| p.output_hash }.to_json
+  end
+  
+  def delete
+    begin
+      cpd = CouponDown.find(params[:id])
+    rescue
+      Xmpp.error_notify("#{session_user.name}:试图删除不存在的优惠券:#{params[:id]}")
+      render :json => {:deleted => params[:id]}.to_json
+      return
+    end
+    if cpd.uid != session[:user_id]
+      Xmpp.error_notify("#{session_user.name}: 优惠券用户id#{cpd.uid} != #{session[:user_id]}")
+      render :json => {:error => "删除优惠券出错"}.to_json
+      return
+    end
+    cpd.set(:del,true)
+    render:json => {:deleted => params[:id] }.to_json
+  end
+  
+  #deprecated
   def info
     hash = params[:ids].split(",").map do |id|
       cd = CouponDown.find_by_id(id)

@@ -21,7 +21,11 @@ class Sound2sController < ApplicationController
   end
 
   def show
-    redirect_to "http://sound.qiniudn.com/#{params[:id]}"
+    url = "http://sound.qiniudn.com/#{params[:id]}"
+    if params[:type]
+      url += "?avthumb/params[:type]"
+    end
+    redirect_to url
   end
 
 end

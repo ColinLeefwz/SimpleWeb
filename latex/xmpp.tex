@@ -12,6 +12,7 @@
 \item 只要用户登录，其xmpp协议中的presence就是在线，没有其它状态。
 \item 聊天室中，消息id以ckn开头的消息代表是用户首次进入聊天室发送的通知类消息，客户端根据这个ckn头确定是否有新的人进入了聊天室。
 \item 聊天室中，消息id以FAQ开头的是问答消息。
+\item 在聊天室收到的id以“coupon”开头的消息时，点击该消息要能跳转到优惠券文件夹。
 \item 脸脸中的隐身也和xmpp中的隐身状态无关。
 \item xmpp中的任意两个用户可以发送消息，不管对方是否隐身，只要对方未设置黑名单即可。如果对方未登录，那么就是离线消息。
 \end{enumerate}
@@ -161,6 +162,64 @@ POST & \multicolumn{3}{|c|}{/user\_info/set\_comment\_name} \\
  所有优惠券都统一显示在会话中的“优惠券”文件夹中。优惠券的消息状态和其他消息同样处理。
 \end{verbatim}
 
+
+\subsection{获取优惠券列表}
+当用户收到优惠券以后，先根据优惠券的Xmpp消息显示“优惠券生成中...”的效果，然后起http请求拿到优惠券列表。
+优惠券Xmpp消息给的是优惠券的基本信息，本接口给的是优惠券的详细信息。
+
+关于优惠券的排序，默认按时间排序，最新的在最前面。
+相同时间同一批收到的优惠券，按距离排序。
+当前所在商家的优惠券自动置顶。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/list} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  user\_id  & 字符串 & 必填 &  用户的id  \\
+\hline
+ \  status  & 数字 & 必填 &  优惠券的状态 ，1代表未使用的，2代表已使用的，4代表已过期的，8代表未激活的。状态可以叠加，比如9代表未使用和未激活的\\
+\hline
+ lat  & 浮点数 & 可选 & 经度\\
+\hline
+ lng  &  浮点数 & 可选 & 纬度\\ 
+ \hline
+ \ sid  &  整数 & 可选 & 当前现场的商家id\\ 
+  \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为10\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/coupons/list?
+返回值：
+
+[
+{"id":"518de040c90d8be6840000b5","loc":[30.2425077887959,120.15320074395899]},
+{"id":"5171d8d7c90d8b3c2900004a","loc":[30.282349,120.117012]}]
+
+id是该优惠券的id, name是优惠券的名称、shop是商家的名称，dat是该张优惠券的下发时间, status是状态， hint是优惠券使用提示, seq是优惠券的流水号。
+ 
+\end{verbatim}
+\end{figure}
+
+
+
+
+
+ 
+
 \subsection{优惠券展示}
 优惠券以图片的方式展示，由服务器端生成该图片。当用户进入优惠券文件夹查看优惠券时，调用下面的接口获得优惠券的图片。
 
@@ -181,50 +240,6 @@ GET & \multicolumn{3}{|c|}{/coupons/img} \\
 \end{table}
 
 
-
-\subsection{批量获取优惠券详细信息}
-目前优惠券详细信息里只有经纬度这一个信息，以后可能扩展其它信息。
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-GET & \multicolumn{3}{|c|}{/coupons/info} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
- \  ids  & 字符串 & 必填 &  要获取的优惠券的id，多个id以英文","分割  \\
- \hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-优惠券的经纬度主要用于优惠券的排序，以实现快速找到前所在的商家的优惠券。
-
-优惠券的排序规则为：没有看过的新优惠券在前，看过的优惠在后，用过的在最后。没看过的优惠券，没有获得经纬度信息的距离算作0。同种状态的优惠券，距离当前位置小的在前，大的在后。
-
-每次进入优惠券文件夹排序一次，在操作过程中不改变排序。比如查看／使用了优惠券，不改变这个优惠券的位置。只有在下次重新进入的时候，才改变位置。
-
-例子：
-
-\begin{figure}[H]
-\begin{verbatim}
-访问：/coupons/info?ids=518de040c90d8be6840000b5,5171d8d7c90d8b3c2900004a
-返回值：
-
-[
-{"id":"518de040c90d8be6840000b5","loc":[30.2425077887959,120.15320074395899]},
-{"id":"5171d8d7c90d8b3c2900004a","loc":[30.282349,120.117012]}]
-
-
-\end{verbatim}
-\end{figure}
-
-
-
-
-
-
-
 \subsection{优惠券使用}
 目前，所有优惠券都只支持单次使用，使用后即过期。当用户确认使用优惠券时，调用如下的接口：
 \begin{table}[H]
@@ -237,6 +252,8 @@ POST & \multicolumn{3}{|c|}{/coupons/use} \\
 \hline
  \  id  & 字符串 & 必填 &  该优惠券的id  \\
  \hline
+ \ sid  &  整数 & 可选 & 当前现场的商家id\\  
+ \hline
  \  data  & 字符串 & 可选 &  优惠券使用时填写的信息  \\
 \hline
 \end{tabular}
@@ -247,8 +264,27 @@ POST & \multicolumn{3}{|c|}{/coupons/use} \\
 
 当优惠券有hint字段时，使用时带上消费者输入的data。
 
+优惠券使用时，增加一个可选的参数sid，代表当前现场的商家id。如果用户没有摇入任何商家，sid不传。
 
-在聊天室收到的id以“coupon”开头的消息时，点击该消息要能跳转到优惠券文件夹。
+\subsection{优惠券删除}
+
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  id  & 字符串 & 必填 &  该优惠券的id  \\
+\hline
+ \  user\_id  & 字符串 & 必填 &  用户的id  \\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
 
 \input{./xmpp_web.tex}
 
