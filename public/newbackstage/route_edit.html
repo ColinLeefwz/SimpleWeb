@@ -204,9 +204,9 @@ function AddCompany(index){
 	}
 }
 
-function AddDiv_Td(){
-	
-	if($("#Tr"+bq+" td").eq(1).find(".box13").html()==""){alert(2);
+function AddDiv_Td(bq){
+	alert($("#Tr"+bq+" td").eq(1).find(".box13").html());
+	if($("#Tr"+bq+" td").eq(1).find(".box13").html()==" "){alert(2);
 		var html="<div class='box13'>";
 		for(var i=0;i<$("#AddDiv ul li a").length;i++){
 			if($("#AddDiv ul li a").eq(i).attr("class")=="checkboxs2"){

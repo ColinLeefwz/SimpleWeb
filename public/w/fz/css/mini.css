@@ -8,7 +8,7 @@ li{list-style:none;}
 .r{float:right;}
 
 .clear1{width:100%;overflow:hidden;height:0px;clear:both;zoom:1;}
-#wrapper{width: 320px;height:593px; background: url("../images/bg8.jpg") repeat-y;margin-left: auto;margin-right: auto;}
+#wrapper{width: 320px;background: url("../images/bg8.jpg") repeat-y;margin-left: auto;margin-right: auto;}
 .bg1{background: url("../images/background.png") repeat scroll 0 0 transparent;}
 textarea.ta{padding:8px;width:238px;height:72px;color:#666;background-color:#fff;border-radius:3px;border: 1px solid #ccc;box-shadow: 1px 1px 3px #ccc inset;font-size:12px;}
 
@@ -24,10 +24,10 @@ float: left;height: 84px;width: 240px;font-size: 30px;text-indent:-9999px;}
 .btn6{background:url('../images/btn/pic2.png') no-repeat scroll left top transparent;border: medium none;cursor: pointer;
 float: right;height: 84px;width: 240px;font-size: 30px;text-indent:-9999px;}
 
-.page{height:100px;width:180px;margin:0px auto; padding:10px 0 0;line-height:30px;text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+.page{width:180px;margin:0px auto; padding:10px 0 0;line-height:30px;text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
 font-size:14px;color:#209FD7;}
 .page p{display:block;margin:0px;padding:0px;}
-.container{height:296px;background: url("../images/bg9_1.jpg") no-repeat;padding: 260px 0 0 0;}
+.container{background: url("../images/bg9_1.jpg") no-repeat;padding: 260px 0 20px 0;overflow:hidden;}
 
 .radios{background: url("../images/sign19.jpg") left top no-repeat;width:25px;height:25px;display:inline-block;margin-right:10px;cursor:pointer;}
 .radios2{background: url("../images/sign20.jpg") left top no-repeat !important;width:25px;height:25px;display:inline-block;margin-right:10px;cursor:pointer;}
