@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 20130910100504) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
   end

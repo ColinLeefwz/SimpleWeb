@@ -15,7 +15,10 @@
             = image_tag("video.png")
           %p= session.category
       .title
-        = session.title.titleize
+        -if session.content_type.eql?"ArticleSession"
+          = link_to "#{session.title}", text_page_path(session)
+        -else 
+          = link_to "#{session.title}", video_page_path(session)
       -if session.content_type == "VideoSession"
         .cover
           .video-img{data: {source: session.video.url}}
@@ -24,7 +27,10 @@
 
       -elsif !session.cover.url.eql?"/covers/original/missing.png"
         .cover
-          = image_tag(session.cover.url)
+          -if session.content_type.eql?"ArticleSession"
+            = link_to image_tag(session.cover.url), text_page_path(session)
+          -else 
+            = link_to image_tag(session.cover.url), video_page_path(session)
       -else
 
       .caption
