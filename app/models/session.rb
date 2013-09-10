@@ -1,5 +1,5 @@
 class Session < ActiveRecord::Base
-  CATEGORY = %w(Big_Picture Business Entrepreneurship Technology Culture).freeze
+  CATEGORY = %w(macro business entrepreneurship tech culture).freeze
 
   belongs_to :expert
 
