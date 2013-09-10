@@ -39,7 +39,7 @@
         a:hover{
           cursor: pointer;
 	  text-decoration: none;
-	  background-color: #efefef;
+	  background-color: #eee;
         }
 
         .subcategory{
@@ -51,12 +51,11 @@
 
           li{
 	    margin: 0;
-	    border: 0px solid #880848;
             //display: inline;
 	    font-size: 17px;
-	    color: white;
+	    color: #575757;
 	    padding: 10px 10px;
-	    background-color: #880848;
+	    background-color: #eee;
 	    float: left;
           }
 
@@ -76,9 +75,9 @@
       } /* end of category*/
 
       .category:hover{
-        background-color: #880848; 
+        background-color: #eee; 
 	a{
-          color: white;	
+          color: #575757;	
 	}
       }
 
