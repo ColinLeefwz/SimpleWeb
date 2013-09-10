@@ -27,11 +27,6 @@
     结束时间:<br />
     <%= f.text_field :tat %>(如: <%= Time.now.strftime("%Y-%m-%d") %>,可以不填 )
   </p>
-   <p>
-    过期类型:<br />
-    <%= f.select :invaildt, options_for_select([["手动过期",2],['时间到自动过期', 1]],@group.invaildt || 2) %>
-  </p>
-
 
   <p>
     <%= f.submit "保存" %>
