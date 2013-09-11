@@ -7,15 +7,17 @@ class CouponDown
   field :sid, type: Integer #商家
   field :uid, type: Moped::BSON::ObjectId #用户
   field :dat, type: DateTime  #下载时间
+  field :d_sid, type: Integer #下载时的商家
   field :sat, type: DateTime #收到时间
   field :vat, type: DateTime #查看时间
   field :uat, type: DateTime  #使用时间
+  field :u_sid, type: Integer #使用时的商家
   field :photo_id, type: Moped::BSON::ObjectId # 分享类优惠券的分享图片id
-  field :sub_sid, type: Integer #获得主店分享类优惠券时，实际分享发生的分店id
+  field :sub_sid, type: Integer #获得主店分享类优惠券时，实际分享发生的分店id, 用:d_sid替换
   field :data #消费时输入的数据，可以是消费金额／手机号码／服务员编号等
   field :num, type:Integer #优惠券下载编号， 每个优惠券独立编号
   field :del, type:Boolean #是否被用户删除
-  field :status, type:Integer #优惠券的状态 ，1代表未使用的，2代表已使用的，4代表已过期的，8代表未激活的
+  field :st, type:Integer #优惠券的状态 ，nil／1代表未使用的，2代表已使用的，4代表已过期的，8代表未激活的
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :gender, :birthday, :weibo_home,:show_gender, :to => :user
@@ -26,6 +28,11 @@ class CouponDown
 
   index({cid: 1, uid:1})
   index({dat: -1})
+  
+  def status
+    return 1 if st.inl?
+    st
+  end
   
   def shop
 Shop.find_by_id(sid)
@@ -79,6 +86,7 @@ Shop.find_by_id(sid)
     raise "你没有获取这张优惠券" if self.uid!=user_id
     self.uat = Time.now
     self.data = data if data
+    self.st = 2
     self.save!
   end
   
@@ -126,10 +134,30 @@ Shop.find_by_id(sid)
 
   
   def output_hash
-    hash = self.attributes.slice("id", "status", "hint", "dat", "uat")
-    hash.merge!( {seq:download_num, name:coupon.name, shop:shop.name, shop_id:shop.id} ) 
+    hash = self.attributes.slice("id", "dat", "uat")
+    hash.merge!( {seq:download_num, name:coupon.name, shop:shop.name, shop_id:shop.id, status:st} ) 
+    hash.merge!( {hint:coupon.hint} ) if coupon.hint
+    hash
   end
 
+
+  #听说分享有礼手动发送优惠券
+  def self.ting_shuo_fen_xiang_you_li
+    coupon_ids = ["521717fd20f3186318000010", "5217185720f31885bf000003", "521718e120f3186318000014", "5217165720f318ab8a00000f",
+      "521718a020f3186318000012", "5217193020f318ab8a000012", "521714e120f318631800000c"]
+    users = ["52134bc1c90d8b05da000001", "5212d611c90d8b99ae000005", "5210c7b3c90d8b527e000001", "51d62e51c90d8b81d0000033",
+      "51dda3cdc90d8b811a000004", "5212c541c90d8b1ef4000001", "51f48e43c90d8b424d000001", "51d6b618c90d8b5ad600012e",
+      "51d656c6c90d8b5ad6000073", "5215f462c90d8ba0a6000004", "5215fd66c90d8b020c000006", "51e16de3c90d8b672200024d", "51da1894c90d8b69be000001", '502e6303421aa918ba000007']
+    coupon_ids.each do |cid|
+      users.each {|uid|  CouponDown.download(Coupon.find(cid), uid)}
+    end
+  end
+  
+  def self.init_status
+    CouponDown.where({uat:{"$exists" => true}, st:{"$exists" => false} }).each{|cd| cd.set(:st, 2)}
+    #TODO: 一个月以前未使用的优惠券，设置st=4
+  end
+  
 end
 
 

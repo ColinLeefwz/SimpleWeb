@@ -1,8 +1,8 @@
 # coding: utf-8
 
 class CouponsController < ApplicationController
-  #before_filter :user_login_filter, :only => [:list, :use, :delete]
-  #before_filter :user_is_session_user, :only => [:list, :delete]
+  before_filter :user_login_filter, :only => [:list, :use, :delete]
+  before_filter :user_is_session_user, :only => [:list, :delete]
 
   def img
     cpd = CouponDown.find(params[:id][0,24])
@@ -63,7 +63,16 @@ class CouponsController < ApplicationController
     page = 1 if page==0
     pcount = 10 if pcount==0
     skip = (page-1)*pcount
-    cds = CouponDown.where({user_id: session[:user_id], del:{"$exists" => false}}).sort({dat: -1}).skip(skip).limit(pcount)
+    st = params[:status].to_i
+    hash = {user_id: session[:user_id], del:{"$exists" => false}}
+    if st==0
+      hash.merge!({"$or" => [{st:8}, {st:{"$exists" => false}}] })
+    elsif st==1
+      hash.merge!({st:{"$exists" => false}})
+    else
+      hash.merge!({st: st})
+    end
+    cds = CouponDown.where(hash).sort({dat: -1}).skip(skip).limit(pcount)
     render :json => cds.map {|p| p.output_hash }.to_json
   end
   
