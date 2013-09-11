@@ -4,9 +4,19 @@ html,body{
 
 
 #wrap{
-  min-height: 100%;
-  height: auto !important;
+  width: 100%;
+  min-height:100%;
+  display: table;
+}
+
+#main{
+  height: auto;
   margin: 0 auto -2em;
+  width: 100%;
+}
+
+.block{
+  display: table-row;
 }
 
 #footer{
