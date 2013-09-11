@@ -26,13 +26,14 @@
             = @session.expert.location
         %p#location-icon2.location-icon-background
           %span.location-info
-            = @session.created_at
+            = @session.created_at.to_formatted_s(:short)
         %p#location-icon3.location-icon-background
           %span.location-info
             Virtual
         %p#location-icon4.location-icon-background
           %span.location-info.outline-font
-            EUR: 49.00
+            = number_to_currency("#{@session.price}", :unit => "EUR:")
+
       .video-page-others
         %p Click below to entroll now!
         .enroll-button
