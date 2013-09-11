@@ -120,7 +120,7 @@ class Group
   end
 
   def show_invaildt
-    ['时间到自动过期', '手动过期'][invaildt-1]
+    ['', '时间到自动过期', '手动过期'][invaildt.to_i]
   end
 
   #加入群组的用户

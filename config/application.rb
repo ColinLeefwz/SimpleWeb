@@ -28,7 +28,7 @@ $zjkjcyds = 20325453 #浙江科技产业大厦
 $llkfcs = 21835409 #脸脸开发测试场所
 $cezyfd = 21835801 #脸脸开发测试场所的分店
 
-$fake_shops = [$llcf, $llsc, 21830784, 21830785, 21830326, 21830231, $llkfcs, $cezyfd, 21830719, 21833842]
+#$fake_shops = [$llcf, $llsc, 21830784, 21830785, 21830326, 21830231, $llkfcs, $cezyfd, 21830719, 21833842]  ##存在redis中， $redis.smembers("FakeShops")
 
 def is_kx_user?(uid)
   $redis.sismember('KxUsers', uid)
