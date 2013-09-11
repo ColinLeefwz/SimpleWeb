@@ -67,12 +67,12 @@ class PhotoTest < ActiveSupport::TestCase
     CouponDown.delete_all
     message = photo.send_pshop_coupon
     assert_equal ["测试分享优惠券"], message
-    assert CouponDown.last.dat.to_date == Time.now.to_date && CouponDown.last.sub_sid.to_i == 111
+    assert CouponDown.last.dat.to_date == Time.now.to_date && CouponDown.last.d_sid.to_i == 111
     assert_equal photo.send_coupon, nil
     CouponDown.last.update_attribute(:dat, 1.days.ago )
     message = photo.send_pshop_coupon
     assert_equal ["测试分享优惠券"],message
-    assert_equal CouponDown.where({cid: '507fc5bfc9ad42d756a412e5', sub_sid: 111}).to_a.length, 2
+    assert_equal CouponDown.where({cid: '507fc5bfc9ad42d756a412e5', d_sid: 111}).to_a.length, 2
     assert_equal photo.send_coupon, nil
     photo1 = Photo.create!({:user_id => User.first.id, :room => 111, :desc => '我们一起分享吧'})
     assert_equal photo1.send_coupon, nil
@@ -86,9 +86,9 @@ class PhotoTest < ActiveSupport::TestCase
     CouponDown.delete_all
     message = photo.send_pshop_coupon
     assert_equal ["测试分享优惠券"], message
-    assert CouponDown.last.dat.to_date == Time.now.to_date && CouponDown.last.sub_sid.to_i == 111
+    assert CouponDown.last.dat.to_date == Time.now.to_date && CouponDown.last.d_sid.to_i == 111
     assert_equal photo.send_coupon, nil
-    CouponDown.create!(cid: '507fc5bfc9ad42d756a412e6', uid: User.first.id, dat: 1.days.ago, sub_sid: 111 )
+    CouponDown.create!(cid: '507fc5bfc9ad42d756a412e6', uid: User.first.id, dat: 1.days.ago, d_sid: 111 )
     assert_equal photo.send_coupon, nil
   end
 

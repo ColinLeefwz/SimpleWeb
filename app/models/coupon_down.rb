@@ -11,7 +11,7 @@ class CouponDown
   field :sat, type: DateTime #收到时间
   field :vat, type: DateTime #查看时间
   field :uat, type: DateTime  #使用时间
-  field :u_sid, type: Integer #使用时的商家
+  field :u_sid, type: Integer #使用时的商家, 发布商家和下载商家是精确的，而使用商家不一定。因为不摇到现场也可以使用优惠券。
   field :photo_id, type: Moped::BSON::ObjectId # 获得优惠券的分享图片id
   #field :sub_sid, type: Integer #获得主店分享类优惠券时，实际分享发生的分店id, 用:d_sid替换
   field :data #消费时输入的数据，可以是消费金额／手机号码／服务员编号等
@@ -75,7 +75,7 @@ class CouponDown
     cpdown.uid = user_id
     cpdown.dat = Time.now
     cpdown.photo_id = photo_id if photo_id
-    cpdown.d_sid = sid if sid && sid!=self.sid
+    cpdown.d_sid = sid if sid && sid != cpdown.sid
     cpdown.num = next_num(coupon.id)
     cpdown.save!
     cpdown.gen_share_coupon_img if coupon.t2.to_i == 2 && photo_id 

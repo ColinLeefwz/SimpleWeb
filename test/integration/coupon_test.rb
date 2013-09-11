@@ -222,7 +222,7 @@ class CouponTest < ActionDispatch::IntegrationTest
     post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '111', 'weibo' => 1 }}
     async_process_photo
     assert_response :success
-    assert parent_coupon.reload.down_users.find{|du| du.uid.to_s == '502e6303421aa918ba000005' && du.dat.to_date == Time.now.to_date && du.sub_sid.to_i == 111  }
+    assert parent_coupon.reload.down_users.find{|du| du.uid.to_s == '502e6303421aa918ba000005' && du.dat.to_date == Time.now.to_date && du.d_sid.to_i == 111  }
     assert branch_coupon.reload.down_users.find{|du| du.uid.to_s == '502e6303421aa918ba000005' && du.dat.to_date == Time.now.to_date }
     
     #清空优惠券下载记录
@@ -243,7 +243,7 @@ class CouponTest < ActionDispatch::IntegrationTest
     assert parent_coupon.reload.down_users.find{|du| du.uid.to_s == '502e6303421aa918ba000005' && du.dat.to_date == Time.now.to_date  }
 
     #分店优惠券清空下载记录
-    CouponDown.delete_all(:sub_sid => 111)
+    CouponDown.delete_all(:d_sid => 111)
     #分店分享优惠券添加关键字
     branch_coupon.update_attribute(:text, "分店分享")
 
@@ -270,7 +270,7 @@ class CouponTest < ActionDispatch::IntegrationTest
     post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '111', 'weibo' => 1, 'desc' => "分店分享一次，还可以总店分享一次" }}
     async_process_photo
     assert_response :success
-    assert parent_coupon.reload.down_users.find{|du| du.uid.to_s == '502e6303421aa918ba000005' && du.dat.to_date == Time.now.to_date && du.sub_sid.to_i == 111  }
+    assert parent_coupon.reload.down_users.find{|du| du.uid.to_s == '502e6303421aa918ba000005' && du.dat.to_date == Time.now.to_date && du.d_sid.to_i == 111  }
 
     #总店优惠券在分店1分享后， 在分店2不能被分享。
     post "/photos/create", {"photo" => {'img' =>  Rack::Test::UploadedFile.new(IMG, "image/jpeg"), 'room' => '112', 'weibo' => 1, 'desc' => "分店分享一次，还可以总店分享一次" }}

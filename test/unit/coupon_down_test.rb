@@ -21,7 +21,7 @@ class CouponDownTest < ActiveSupport::TestCase
     coupon = Coupon.find('507fc5bfc9ad42d756a412e1')
     user = User.find('502e6303421aa918ba00007c')
     user2 = User.find('502e6303421aa918ba000002')
-    assert_equal CouponDown.download(coupon, user.id,nil, 111).attributes.slice("cid", "sid","uid", 'sub_sid'), {"cid"=>coupon.id, "sid"=>1, "uid"=> user.id, 'sub_sid' => 111}
+    assert_equal CouponDown.download(coupon, user.id,nil, 111).attributes.slice("cid", "sid","uid", 'd_sid'), {"cid"=>coupon.id, "sid"=>1, "uid"=> user.id, 'd_sid' => 111}
   end
 
   test "#use(user_id, data) 用户没下载使用优惠券报错" do
