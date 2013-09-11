@@ -1,91 +1,90 @@
 #header {
-  width: 100%;
-  background: #fff;
-  margin-bottom: 25px;
-  -webkit-box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
-  box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
+	width: 100%;
+	background: #fff;
+	margin-bottom: 25px;
+	-webkit-box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
+	box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
 
-  #logo_container{
-    max-width: 21%;
-    #logo {
-      display: inline-block;
-      margin-top: 5%;
-      margin-left: 5%;
-    }
-  }
-
-  nav{
-    margin-top: 1%;
-    width: 100%;
-
-    ul{
-      padding: 0;
-      margin: 0 auto;
-      //padding-bottom: 5px;
-      list-style-type: none;
-
-      .category{
-        // position: relative;
-        display: inline-block;
-	margin-right: 5px;
-
-        a{
-          text-align: center; 
-	  color: #575757;
-	  font-size: 14px;
-	  padding-left: 3%;
-	  padding-right: 3%;
-        }
-        a:hover{
-          cursor: pointer;
-	  text-decoration: none;
-	  background-color: #efefef;
-        }
-
-        .subcategory{
-	  padding: 0;
-	  margin: 0;
-          position: absolute;
-          list-style-type: none;           
-          display: none;
-
-          li{
-	    margin: 0;
-	    border: 0px solid #880848;
-            //display: inline;
-	    font-size: 17px;
-	    color: white;
-	    padding: 10px 10px;
-	    background-color: #880848;
-	    float: left;
-          }
-
-	  li:hover {
-	    background-color: #ddd; 
-	  }
-        }
-
-	.subcategory > li:last-of-type{
-          padding-right: 5px;	
+	#logo_container{
+		max-width: 21%;
+		#logo {
+			display: inline-block;
+			margin-top: 5%;
+			margin-left: 5%;
+		}
 	}
 
-	.subcategory > li:first-of-type{
-          padding-left: 5px;	
-	}
+	nav{
+		margin-top: 1%;
+		width: 100%;
 
-      } /* end of category*/
+		ul{
+			padding: 0;
+			margin: 0 auto;
+			//padding-bottom: 5px;
+			list-style-type: none;
 
-      .category:hover{
-        background-color: #880848; 
-	a{
-          color: white;	
-	}
-      }
+			.category{
+				// position: relative;
+				display: inline-block;
+				margin-right: 5px;
 
-      // .category:hover .subcategory{  display: block; } CSS way of displaying dropdown menu
+				a{
+					text-align: center;
+					color: #575757;
+					font-size: 16px;
+					padding-left: 5%;
+					padding-right: 5%;
+				}
+				a:hover{
+					cursor: pointer;
+					text-decoration: none;
+					background-color: #eee;
+				}
 
-    } /*end of nav_bar*/
+				.subcategory{
+					padding: 0;
+					margin: 0;
+					position: absolute;
+					list-style-type: none;
+					display: none;
 
-  } /*end of nav_container in desktop*/
+					li{
+						margin: 0;
+						//display: inline;
+						font-size: 14px;
+						color: #575757;
+						padding: 5px 10px;
+						background-color: #eee;
+						float: left;
+					}
+
+					li:hover {
+						background-color: #ddd;
+					}
+				}
+
+				.subcategory > li:last-of-type{
+					padding-right: 5px;
+				}
+
+				.subcategory > li:first-of-type{
+					padding-left: 5px;
+				}
+
+			} /* end of category*/
+
+			.category:hover{
+				background-color: #eee;
+				a{
+					color: #575757;
+				}
+			}
+
+			// .category:hover .subcategory{  display: block; } CSS way of displaying dropdown menu
+
+		} /*end of nav_bar*/
+
+	} /*end of nav_container in desktop*/
 
 }  /*end of header*/

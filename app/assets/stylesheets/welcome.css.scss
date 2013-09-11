@@ -107,9 +107,9 @@ body {
 			padding: 10px;
 			border-width: 0px;
 
-			p.description{
+			.description{
 				text-align: left;
-				font-family: Lato;
+				font-family: Latoreg;
 				font-size: 14px;
 				color: #575757;
 				line-height: 18px;
@@ -131,10 +131,20 @@ body {
 				.social-share {
 					width: 8%;
 				}
-
-
 			}
-
 		}
 	}
 }
+
+// Isotope Filtering
+.isotope-item{
+	z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+	pointer-events: none;
+	z-index: 1;
+}
+
+
+

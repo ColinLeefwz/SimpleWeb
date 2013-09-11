@@ -18,4 +18,5 @@
 //= require bootstrap
 //= require imagesloaded.pkgd.min
 //= require scrolltopcontrol
+//= require jquery.isotope.min
 //= require_tree .
