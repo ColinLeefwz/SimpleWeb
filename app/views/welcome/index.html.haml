@@ -13,24 +13,23 @@
             = image_tag("text.png")
           -elsif session.content_type.eql?"VideoSession"
             = image_tag("video.png")
+          -elsif session.content_type.eql?"Announcement"
+            = image_tag("announcement.png")
           %p= session.category
       .title
         -if session.content_type.eql?"ArticleSession"
           = link_to "#{session.title}", text_page_path(session)
         -else
           = link_to "#{session.title}", video_page_path(session)
-      -if session.content_type == "VideoSession"
+      -if (session.content_type == "VideoSession") || (session.content_type == "LiveSession") || (session.content_type == "Announcement") && (!session.video.url.eql?"/videos/original/missing.png")
         .cover
           .video-img{data: {source: session.video.url}}
             = image_tag session.cover.url, class: 'video-play'
             = image_tag "video_play_icon.png", class: 'play-video-icon'
 
-      -elsif !session.cover.url.eql?"/covers/original/missing.png"
+      -elsif (session.content_type.eql?"ArticleSession") && (!session.cover.url.eql?"/covers/original/missing.png")
         .cover
-          -if session.content_type.eql?"ArticleSession"
-            = link_to image_tag(session.cover.url), text_page_path(session)
-          -else
-            = link_to image_tag(session.cover.url), video_page_path(session)
+          = link_to image_tag(session.cover.url), text_page_path(session)
       -else
 
       .caption
