@@ -6,17 +6,17 @@
   %ul.visible-desktop
 
     %li.category
-      %a{href: "#all"}all
+      %a.filters{href: "#all", data: {filter: '*'}}all
 
     %li.category
-      %a{href: "#macro"}macro
+      %a.filters{href: "#macro", data: {filter: '.macro'}}macro
       %ul.subcategory
         %li economy
         %li macro trends
         %li going global
 
     %li.category
-      %a{href: "#business"}business
+      %a.filters{href: "#business", data: {filter: '.business'}}business
       %ul.subcategory
         %li strategy
         %li market research
@@ -24,28 +24,28 @@
         %li recruiment
 
     %li.category
-      %a{href: "#entrepreneurship"}entrepreneurship
+      %a.filters{href: "#entrepreneurship", data: {filter: '.entrepreneurship'}}entrepreneurship
       %ul.subcategory
         %li lean startup
         %li funding
         %li agile development
 
     %li.category
-      %a{href: "#tech"}tech
+      %a.filters{href: "#tech", data: {filter: '.tech'}}tech
       %ul.subcategory
         %li mobile
         %li social media
         %li apps/software
 
     %li.category
-      %a{href: "#culture"}culture
+      %a.filters{href: "#culture", data: {filter: '.culture'}}culture
       %ul.subcategory
         %li language
         %li spirituality
         %li travel
 
     %li.category
-      %a{href: "#format"}format
+      %a.filters{href: "#format", data: {filter: '.format'}}format
       %ul.subcategory
         %li video
         %li live
