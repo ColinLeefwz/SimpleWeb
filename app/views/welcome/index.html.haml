@@ -1,6 +1,6 @@
 #content.container
   - @sessions.each do |session|
-    .item
+    %div{class: "item #{session.category.downcase}"}
       .box-header
         .portrait
           = image_tag(session.expert.image_url)
@@ -19,7 +19,7 @@
       .title
         -if session.content_type.eql?"ArticleSession"
           = link_to "#{session.title}", text_page_path(session)
-        -else 
+        -else
           = link_to "#{session.title}", video_page_path(session)
       -if (session.content_type == "VideoSession") || (session.content_type == "LiveSession") || (session.content_type == "Announcement") && (!session.video.url.eql?"/videos/original/missing.png")
         .cover
