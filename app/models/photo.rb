@@ -99,7 +99,7 @@ class Photo
   def send_coupon
     if shop.sub_coupon_by_share
       coupons = shop.allow_sub_coupons(user_id)
-      coupons.each{|coupon| coupon.send_coupon(user_id)}
+      coupons.each{|coupon| coupon.send_coupon(user_id,self.id,self.room.to_i)}
     end
 
     coupon_names = []
@@ -111,7 +111,7 @@ class Photo
     coupon = shop.share_coupon
     return if coupon.nil?
     if coupon.share_text_match(desc) && coupon.allow_send_share?(user_id.to_s)
-      coupon.send_coupon(user_id,self.id)
+      coupon.send_coupon(user_id,self.id,self.room.to_i)
       coupon_names << coupon.name
     end
     return nil if coupon_names.blank?

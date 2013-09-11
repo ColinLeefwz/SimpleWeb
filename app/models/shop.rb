@@ -335,7 +335,7 @@ class Shop
     #内部地点的“每日签到优惠券”
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
 
-    coupons.each{|coupon| coupon.send_coupon(user_id)}
+    coupons.each{|coupon| coupon.send_coupon(user_id,nil,self.id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
     str = "恭喜#{User.find_by_id(user_id).name}！收到#{coupons.count}张优惠券: #{name},马上领取吧！"

@@ -42,7 +42,7 @@ class CouponsController < ApplicationController
       
   def use
     coupon_down = CouponDown.find(params[:id][0,24])
-    coupon_down.use(session[:user_id],params[:data])
+    coupon_down.use(session[:user_id],params[:data],params[:sid])
     unless ShopMark.where({sid: coupon_down.sid, uid:  session[:user_id]}).limit(1).first
       $redis.smembers("GROUP#{session[:user_id]}").reverse.each do |gid|
         group = Shop.find_by_id(gid).group

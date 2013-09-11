@@ -4,7 +4,7 @@ class CouponDown
   include Mongoid::Document
 
   field :cid, type: Moped::BSON::ObjectId #优惠券
-  field :sid, type: Integer #商家
+  field :sid, type: Integer #发布商家
   field :uid, type: Moped::BSON::ObjectId #用户
   field :dat, type: DateTime  #下载时间
   field :d_sid, type: Integer #下载时的商家
@@ -12,8 +12,8 @@ class CouponDown
   field :vat, type: DateTime #查看时间
   field :uat, type: DateTime  #使用时间
   field :u_sid, type: Integer #使用时的商家
-  field :photo_id, type: Moped::BSON::ObjectId # 分享类优惠券的分享图片id
-  field :sub_sid, type: Integer #获得主店分享类优惠券时，实际分享发生的分店id, 用:d_sid替换
+  field :photo_id, type: Moped::BSON::ObjectId # 获得优惠券的分享图片id
+  #field :sub_sid, type: Integer #获得主店分享类优惠券时，实际分享发生的分店id, 用:d_sid替换
   field :data #消费时输入的数据，可以是消费金额／手机号码／服务员编号等
   field :num, type:Integer #优惠券下载编号， 每个优惠券独立编号
   field :del, type:Boolean #是否被用户删除
@@ -35,11 +35,11 @@ class CouponDown
   end
   
   def shop
-Shop.find_by_id(sid)
+    Shop.find_by_id(sid)
   end
 
   def sub_shop
-    Shop.find_by_id(sub_sid)
+    Shop.find_by_id(d_sid)
   end
 
   def user
@@ -75,18 +75,19 @@ Shop.find_by_id(sid)
     cpdown.uid = user_id
     cpdown.dat = Time.now
     cpdown.photo_id = photo_id if photo_id
-    cpdown.sub_sid = sid if sid
+    cpdown.d_sid = sid if sid && sid!=self.sid
     cpdown.num = next_num(coupon.id)
     cpdown.save!
-    cpdown.gen_share_coupon_img if photo_id
+    cpdown.gen_share_coupon_img if coupon.t2.to_i == 2 && photo_id 
     cpdown
   end
   
-  def use(user_id, data)
+  def use(user_id, data, sid = nil)
     raise "你没有获取这张优惠券" if self.uid!=user_id
     self.uat = Time.now
     self.data = data if data
     self.st = 2
+    self.u_sid = sid if sid && sid!=self.sid
     self.save!
   end
   
