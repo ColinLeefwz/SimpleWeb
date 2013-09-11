@@ -27,8 +27,8 @@
     = f.select :category, Session::CATEGORY
   .field
     = f.label :content_type
-    = f.select :content_type, ['ArticleSession', 'VideoSession', 'LiveSession']
-  .field
+    = f.select :content_type, %w(Announcement ArticleSession VideoSession LiveSession)
+ .field
     = f.label :cover
     = f.file_field :cover
   .field
