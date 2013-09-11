@@ -64,7 +64,7 @@ class CouponsController < ApplicationController
     pcount = 10 if pcount==0
     skip = (page-1)*pcount
     st = params[:status].to_i
-    hash = {user_id: session[:user_id], del:{"$exists" => false}}
+    hash = {uid: session[:user_id], del:{"$exists" => false}}
     if st==0
       hash.merge!({"$or" => [{st:8}, {st:{"$exists" => false}}] })
     elsif st==1
