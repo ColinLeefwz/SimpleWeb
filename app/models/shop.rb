@@ -350,7 +350,7 @@ class Shop
   #总店的优惠券
   def pshop_coupon(uid)
     return [] if (pshop = Shop.find_by_id(psid)).nil?
-    pshop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) }
+    pshop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid) }
   end
 
   #旅行团 发送合作商家的优惠券
