@@ -42,4 +42,4 @@
     .video-page-video-frame
       = video_tag @session.video.url, controls: 'controls'
   .video-page-summary
-    %p= @session.description
+    %p= @session.description.html_safe
