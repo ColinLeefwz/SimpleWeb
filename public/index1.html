@@ -14,8 +14,13 @@
 
 <a href="/oauth2/sina_new">个人新浪微博登录</a><br><br>
 
-<a href="#" onclick="document.getElementById('xauth_login').style.display='block'">个人新浪微博登录Xauth</a><br><br>
+<a href="#" onclick="document.getElementById('xauth_login').style.display='block'">手机登录／Xauth</a><br><br>
 <div id="xauth_login" style="display:none">
+	<form action="/phone/login">
+		手机:<input type="text" name="phone" value="" size="40">
+		pass:<input type="text" name="password">
+		<input type="submit" name="submit" value="login">
+	</form>
 <form action="/oauth2/login">
 	name:<input type="text" name="name" value="yuanxinyu.hangzhou@gmail.com" size="40">
 	pass:<input type="text" name="pass">
@@ -27,11 +32,6 @@
 	name:<input type="text" name="name" value="jishu@1dooo.com" size="40">
 	pass:<input type="text" name="pass">
 	<input type="hidden" name="hash" value="df28db876821ac9dfeb0363d1cfa90fb">
-	<input type="submit" name="submit" value="login">
-</form>
-<form action="/phone/login">
-	手机:<input type="text" name="phone" value="" size="40">
-	pass:<input type="text" name="password">
 	<input type="submit" name="submit" value="login">
 </form>
 </div>

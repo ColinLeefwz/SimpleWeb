@@ -14,7 +14,7 @@ module SearchScore
         limit = 40 if limit<40
       end
     end
-    arr = Shop.where(hash).limit(limit).to_a
+    arr = Shop.where2(hash,{limit:limit}).to_a
     arr.uniq_by! {|x| x["_id"]}
     if shopids
       shopids.each do |x| 
@@ -25,7 +25,7 @@ module SearchScore
     if arr.length>=4
       return sort_with_score(arr,loc,accuracy,uid,bssid,debug)
     else
-      arr = Shop.where({lo:{"$near" =>loc}}).limit(10).to_a
+      arr = Shop.where2({lo:{"$near" =>loc}},{limit:10}).to_a
       arr.uniq_by! {|x| x["_id"]}
       return sort_with_score(arr,loc,accuracy,uid,bssid,debug)[0,5]
     end

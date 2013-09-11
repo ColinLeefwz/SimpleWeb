@@ -588,6 +588,18 @@ class Shop
   def type
     info.nil?? nil:info.type
   end
-
+  
+  def self.node(ip)
+    nodes = Shop.collection.database.session.cluster.nodes
+    nod = nodes.find{|x| x.ip_address==ip}
+    return nod if nod
+    return nodes[0]
+  end
+  
+  #使用内存数据库查询商家表
+  def self.where2(hash, options={})
+    options.merge!({flags: [:slave_ok]})
+    node("10.135.44.107").query("shop","shops", hash, options).documents.map {|x| Shop.instantiate(x)}
+  end
         
 end
