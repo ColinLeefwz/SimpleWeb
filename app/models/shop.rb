@@ -246,13 +246,17 @@ class Shop
   end
   
   def lord
-    Lord.find_by_id(self.id)
+    Lord.find_by_id(self.id, "0")
   end
 
   def view_users(session_uid,start,size)
     ret = []
     users = Checkin.get_users_redis(id.to_i,start,size)
-    lord = self.lord #TODO 性能优化
+    if users.size>3
+      lord = self.lord
+    else
+      lord = nil
+    end
     if start==0
       users = [[session_uid,Time.now.to_i]] + users.delete_if{|x| x[0].to_s==session_uid.to_s}
       if lord

@@ -10,12 +10,15 @@ module Mongoid
       "#{self.name}#{id}"
     end
     
-    def find_by_id(id)
+    def find_by_id(id, save_nil = nil)
       key = my_cache_key(id)
       begin
         cache = Rails.cache.read(key)
         Rails.logger.debug "read cache:#{key} =>> #{cache}"
-        return cache unless cache.nil?
+        unless cache.nil?
+          return nil if save_nil && cache==save_nil
+          return cache
+        end
       rescue
       end
       begin
@@ -23,6 +26,7 @@ module Mongoid
         Rails.cache.write(key,ret)
         ret
       rescue
+        Rails.cache.write(key,save_nil) if save_nil
         Rails.logger.info "#{self.name}: #{id} not exists."
         nil
       end
