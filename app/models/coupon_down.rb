@@ -30,7 +30,7 @@ class CouponDown
   index({dat: -1})
   
   def status
-    return 1 if st.inl?
+    return 1 if st.nil?
     st
   end
   
@@ -135,8 +135,8 @@ class CouponDown
 
   
   def output_hash
-    hash = self.attributes.slice("id", "dat", "uat")
-    hash.merge!( {seq:download_num, name:coupon.name, shop:shop.name, shop_id:shop.id, status:st} ) 
+    hash = self.attributes.slice("dat", "uat")
+    hash.merge!( {id:_id,seq:download_num, name:coupon.name, shop:shop.name, shop_id:shop.id, status:self.status} ) 
     hash.merge!( {hint:coupon.hint} ) if coupon.hint
     hash
   end
