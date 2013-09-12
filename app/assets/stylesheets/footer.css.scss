@@ -1,20 +1,10 @@
-html,body{
-  height: 100%;
-}
-
-
-#wrap{
-  min-height: 100%;
-  height: auto !important;
-  margin: 0 auto -2em;
-}
-
 #footer{
   background: #ffffff ;
-  height: 2em;
   width: 100%;
   -webkit-box-shadow: 0 -6px 12px rgba(170, 180, 190, 1);
   box-shadow: 0 -6px 12px rgba(170, 180, 190, 1);
+  position: fixed;
+  bottom: 0;
 
   .links{
     margin: 0 auto;
