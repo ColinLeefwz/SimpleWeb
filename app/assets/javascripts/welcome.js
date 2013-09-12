@@ -1,41 +1,72 @@
 jQuery(document).ready(function($) {
-  var container = $('#content');
-  var containerWidth = container.width();
+	$.Isotope.prototype._getCenteredMasonryColumns = function() {
+		this.width = this.element.width();
 
-  // getContainerWidth();
-  // changeColumns();
-  // initEvents();
-  initPlugins();
+		var parentWidth = this.element.parent().width();
 
-  function changeColumns() {
-    var w_w = $(window).width();
-    if( w_w <= 600 ) n = 1;
-    else if( w_w <= 768 ) n = 2;
-    else if( w_w > 768)  n = 3;
-  }
+		// i.e. options.masonry && options.masonry.columnWidth
+		var colW = this.options.masonry && this.options.masonry.columnWidth ||
+	// or use the size of the first item
+	this.$filteredAtoms.outerWidth(true) ||
+	// if there's no items, use size of container
+	parentWidth;
 
-  function getCOntainerWidth(){
-    containerWidth = container.width();
-  }
+var cols = Math.floor( parentWidth / colW );
+cols = Math.max( cols, 1 );
 
-  function initEvents() {
-    $(window).on( 'throttledresize', function( event ) {
-      getContainerWidth();
-      changeColumns();
-      initPlugins();
-    });
-  }
+// i.e. this.masonry.cols = ....
+this.masonry.cols = cols;
+// i.e. this.masonry.columnWidth = ...
+this.masonry.columnWidth = colW;
+	};
 
-  function initPlugins(){
-    container.imagesLoaded( function(){
-      container.masonry({
-        itemSelector : '.item',
-			  isFitWidth: true
-       // isAnimated : true,
-       // animationOptions: {
-       //   duration: 400
-       // }
-      });
-    });
-  }
+	$.Isotope.prototype._masonryReset = function() {
+		// layout-specific props
+		this.masonry = {};
+		// FIXME shouldn't have to call this again
+		this._getCenteredMasonryColumns();
+		var i = this.masonry.cols;
+		this.masonry.colYs = [];
+		while (i--) {
+			this.masonry.colYs.push( 0 );
+		}
+	};
+
+	$.Isotope.prototype._masonryResizeChanged = function() {
+		var prevColCount = this.masonry.cols;
+		// get updated colCount
+		this._getCenteredMasonryColumns();
+		return ( this.masonry.cols !== prevColCount );
+	};
+
+	$.Isotope.prototype._masonryGetContainerSize = function() {
+		var unusedCols = 0,
+				i = this.masonry.cols;
+		// count unused columns
+		while ( --i ) {
+			if ( this.masonry.colYs[i] !== 0 ) {
+				break;
+			}
+			unusedCols++;
+		}
+
+		return {
+			height : Math.max.apply( Math, this.masonry.colYs ),
+						 // fit container to columns that have been used;
+						 width : (this.masonry.cols - unusedCols) * this.masonry.columnWidth
+		};
+	};
+
+	var container = $('#content');
+
+	initPlugins();
+	function initPlugins(){
+		container.imagesLoaded( function(){
+			container.isotope({
+				layoutMode: 'masonry'
+
+			})
+		});
+	}
+
 });
