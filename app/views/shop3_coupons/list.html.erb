@@ -19,6 +19,13 @@
       <li><a href="/shop3_coupons/newly_down">最新下载记录</a></li>
       <li><a href="/shop3_coupons/newly_use">最新使用记录</a></li>
       <li><a href="/shop3_coupon_reports">统计报表</a></li>
+      <% unless session_shop.shops.blank? %>
+        <li><a href="/shop3_internal_report">内部商家统计</a></li>
+      <% end %>
+
+      <% if session_shop.has_branch? %>
+        <li><a href="/shop3_coupon_reports">分店统计</a></li>
+      <% end %>
     </ul>
     <div class="r">
     </div>
@@ -103,11 +110,11 @@
           obj.prev().attr("href","edit?id="+coupon_id).css("display","inline-block");
           obj.removeClass().html(data['text']);
           setTimeout(function(){
-			obj.removeAttr("onclick").unbind("click");
+            obj.removeAttr("onclick").unbind("click");
 			
             obj.addClass("act2").bind("click",function(){
-				ajaxCD($(this),coupon_id,false,index);
-			}).html("");
+              ajaxCD($(this),coupon_id,false,index);
+            }).html("");
           },1000);
         }else{
           OpenDiv();
@@ -121,10 +128,10 @@
           obj.prev().attr("href","edit?id="+coupon_id).css("display","none");
           obj.removeClass().html(data['text']);
           setTimeout(function(){
-			obj.removeAttr("onclick").unbind("click");
+            obj.removeAttr("onclick").unbind("click");
             obj.addClass("act").bind("click",function(){
-				ajaxCD($(this),coupon_id,true,index);
-			}).html("");
+              ajaxCD($(this),coupon_id,true,index);
+            }).html("");
           },1000);
         }
       });
