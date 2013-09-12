@@ -12,7 +12,7 @@ $ ->
 	$('select#collapsed_navbar').on 'change', ->
 		option = $(this).find(":selected")
 		selector = option.data 'filter'
-		console.log selector
-		$container.isotope {
-			filter: selector
-		}
+		if selector != '.format'
+			$container.isotope {
+				filter: selector
+			}
