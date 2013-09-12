@@ -6,8 +6,10 @@ $ ->
 	$container = $('#content')
 	$('nav li.category .filters').on 'click', ->
 		selector = $(this).data('filter')
-		$container.isotope
-		  filter: selector
+		$container.isotope {
+		  filter: selector,
+			animationEngine: 'best-available'
+		}
 		$(".filters").css('background', 'white')
 		$(this).css('background', '#eee')
 
