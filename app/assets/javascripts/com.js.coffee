@@ -1,15 +1,18 @@
 $ ->
-
 	$('.video-img').on 'click', ->
 		video_source = $(this).data('source')
 		$(this).replaceWith("<video src='#{video_source}' controls='controls'>")
+
 	$container = $('#content')
 	$('nav li.category .filters').on 'click', ->
 		selector = $(this).data('filter')
 		$container.isotope {
-		  filter: selector,
-			animationEngine: 'best-available'
+		  filter: selector
 		}
-		$(".filters").css('background', 'white')
-		$(this).css('background', '#eee')
-
+	$('select#collapsed_navbar').on 'change', ->
+		option = $(this).find(":selected")
+		selector = option.data 'filter'
+		console.log selector
+		$container.isotope {
+			filter: selector
+		}

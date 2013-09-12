@@ -53,10 +53,10 @@
         %li announcement
 
   %select#collapsed_navbar.span12.hidden-desktop
-    %option all
-    %option macro
-    %option business
-    %option entrepreneurship
-    %option tech
-    %option culture
-    %option format
+    %option.filters{data: {filter: '*'}} all
+    %option.filters{data: {filter: '.macro'}} macro
+    %option.filters{data: {filter: '.business'}} business
+    %option.filters{data: {filter: '.entrepreneurship'}} entrepreneurship
+    %option.filters{data: {filter: '.tech'}} tech
+    %option.filters{data: {filter: '.culture'}} culture
+    %option.filters{data: {filter: '.format'}} format
