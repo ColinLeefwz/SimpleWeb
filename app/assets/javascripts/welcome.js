@@ -1,12 +1,12 @@
 jQuery(document).ready(function($) {
   var container = $('#content');
   var containerWidth = container.width();
-  
-  getContainerWidth();
-  changeColumns();
-  initEvents();
+
+  // getContainerWidth();
+  // changeColumns();
+  // initEvents();
   initPlugins();
-  
+
   function changeColumns() {
     var w_w = $(window).width();
     if( w_w <= 600 ) n = 1;
@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
   function getCOntainerWidth(){
     containerWidth = container.width();
   }
-  
+
   function initEvents() {
     $(window).on( 'throttledresize', function( event ) {
       getContainerWidth();
@@ -25,12 +25,12 @@ jQuery(document).ready(function($) {
       initPlugins();
     });
   }
-  
+
   function initPlugins(){
     container.imagesLoaded( function(){
       container.masonry({
         itemSelector : '.item',
-        columnWidth :  containerWidth / n,
+			  isFitWidth: true
        // isAnimated : true,
        // animationOptions: {
        //   duration: 400
@@ -38,4 +38,4 @@ jQuery(document).ready(function($) {
       });
     });
   }
-}); 
+});

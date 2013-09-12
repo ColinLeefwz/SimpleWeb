@@ -9,11 +9,10 @@
     #wrap
       #header
         = render "shared/header"
-      #main
-        = yield
+      = yield
 
-      #footer.block
-        = render "shared/footer"
+    #footer
+      = render "shared/footer"
     = javascript_include_tag "application", "data-turbolinks-track" => true
 
 
