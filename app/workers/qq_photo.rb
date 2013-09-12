@@ -9,7 +9,7 @@ class QqPhoto
     do_share(token,openid, title, text, url,comment)
   end
   
-  def self.do_share(token,openid,title, text, url, comment)
+  def self.do_share(token,openid,title, text, url, comment, img)
     response = RestClient.post("https://graph.qq.com/share/add_share",
     :access_token => token,
     :oauth_consumer_key => $qq_api_key,
@@ -18,7 +18,7 @@ class QqPhoto
     :comment => comment,
     :url => url,
     :summary => text,
-    :images => url,
+    :images => img,
     :site => "http://www.dface.cn",
     :fromurl => "http://www.dface.cn/a?v=16",
     :nswb => 0)
