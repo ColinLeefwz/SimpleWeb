@@ -54,29 +54,28 @@ class ShopController < ApplicationController
     end    
     lo = [params[:lat].to_f, params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
-    if params[:sname].length<3
-      radis = 0.01 + params[:sname].length*0.002
-      shops = Shop.where2({lo:{"$within" => {"$center" => [lo,radis]}}, name:/#{params[:sname]}/}, {limit:10})
+    if params[:sname].length==1
+      shops = Shop.where2({lo:{"$within" => {"$center" => [lo,0.01]}}, name:/#{params[:sname]}/, del:{"$exists" => false}}, {limit:10})
       render :json =>  shops.map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
     else
       ret = []
-      #shop = Shop.where({t:0, name:params[:sname]}).first #虚拟的活动地点名称完全匹配时可以进入
-      #if shop
-      #  hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id])) 
-      #  ret << hash
-      #end
-      shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.015]}}, name:/#{params[:sname]}/},{limit:10})
+      shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})        
       shop1s.each do |s| 
         hash = {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id]))
         ret << hash
       end
-      if ret.length<1
+      #10结果, 100%
+      #0结果, 50%
+      shop = Shop.where({t:0, name:params[:sname]}).first #虚拟的活动地点名称按相似度50%～100%匹配
+      if shop
+        hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id])) 
+        ret << hash
+      end
+      if ret.size<3
         #city = Shop.get_city(lo)
-        shops = Shop.where({lo:{"$within" => {"$center" => [lo,0.03]}}, name:/#{params[:sname]}/}).limit(10)
-        shops.each do |s| 
-          hash = {id:s.id,name:s.name, visit:1}.merge!(s.group_hash(session[:user_id]))
-          ret << hash
-        end
+        #if city
+        #  shop1s = Shop.where2({city:city, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})
+        #end
       end
       render :json =>  ret.to_json
     end
