@@ -1,0 +1,9 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js"
+
+%h3 Propose a Topic
+
+= render 'form'
+
+= link_to 'Back', propose_topics_path

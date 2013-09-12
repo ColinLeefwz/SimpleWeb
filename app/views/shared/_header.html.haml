@@ -1,20 +1,62 @@
-#header
-  .section.clearfix
-    %p#mail_message
-    %a{href: "/", title: "Home", rel: "home", id: "logo"}
-      =image_tag "logo.png", alt: "Home"
+#logo_container
+  #logo
+    = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
 
-  #navigation
-    .section
-      %h2 Main menu
-      %ul#main-menu.links.inline.clearfix
-        %li.menu-414.first
-          %a
-          =link_to 'About us', welcome_about_us_path
-        %li.menu-499
-          %a
-          =link_to 'Sessions', sessions_path 
-        %li.menu-493.last
-          %a 
-          =link_to 'Experts', experts_path
+%nav
+  %ul.visible-desktop
 
+    %li.category
+      %a.filters{href: "#all", data: {filter: '*'}}all
+
+    %li.category
+      %a.filters{href: "#macro", data: {filter: '.macro'}}macro
+      %ul.subcategory
+        %li economy
+        %li macro trends
+        %li going global
+
+    %li.category
+      %a.filters{href: "#business", data: {filter: '.business'}}business
+      %ul.subcategory
+        %li strategy
+        %li market research
+        %li company setup
+        %li recruiment
+
+    %li.category
+      %a.filters{href: "#entrepreneurship", data: {filter: '.entrepreneurship'}}entrepreneurship
+      %ul.subcategory
+        %li lean startup
+        %li funding
+        %li agile development
+
+    %li.category
+      %a.filters{href: "#tech", data: {filter: '.tech'}}tech
+      %ul.subcategory
+        %li mobile
+        %li social media
+        %li apps/software
+
+    %li.category
+      %a.filters{href: "#culture", data: {filter: '.culture'}}culture
+      %ul.subcategory
+        %li language
+        %li spirituality
+        %li travel
+
+    %li.category
+      %a.filters{href: "#format", data: {filter: '.format'}}format
+      %ul.subcategory
+        %li video
+        %li live
+        %li article
+        %li announcement
+
+  %select#collapsed_navbar.span12.hidden-desktop
+    %option all
+    %option macro
+    %option business
+    %option entrepreneurship
+    %option tech
+    %option culture
+    %option format

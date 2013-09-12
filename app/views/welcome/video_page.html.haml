@@ -1,0 +1,46 @@
+#main-content
+  %h1.video-page-title #{@session.title}
+  .video-page-hint
+    %p what should i know when starting a business in China?
+  .video-page-info-box
+    .video-page-image.video-page-image-border
+      = image_tag(@session.cover.url)
+    .video-page-info
+      .video-page-expert-category
+        .video-page-expert-info
+          .video-page-expert-portrait
+            .video-page-image-border
+              = image_tag(@session.expert.image_url)
+            %p= @session.expert.company
+          .video-page-expert-name-title
+            .video-page-expert-name-value
+              = @session.expert.name
+            %p= @session.expert.title
+        .video-page-category-info
+          .video-page-category-info-title
+            Category
+          %p= @session.category
+      .video-page-location-info
+        %p#location-icon1.location-icon-background
+          %span.location-info
+            = @session.expert.location
+        %p#location-icon2.location-icon-background
+          %span.location-info
+            = @session.created_at.to_formatted_s(:short)
+        %p#location-icon3.location-icon-background
+          %span.location-info
+            Virtual
+        %p#location-icon4.location-icon-background
+          %span.location-info.outline-font
+            = number_to_currency("#{@session.price}", :unit => "EUR:")
+
+      .video-page-others
+        %p Click below to entroll now!
+        .enroll-button
+          %p= link_to 'Enroll now!'
+        %p.outline-font= link_to 'Tell A Friend'
+  -if !@session.video.url.eql?"/videos/original/missing.png"
+    .video-page-video-frame
+      = video_tag @session.video.url, controls: 'controls'
+  .video-page-summary
+    %p= @session.description.html_safe

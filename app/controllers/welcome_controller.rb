@@ -2,14 +2,34 @@ class WelcomeController < ApplicationController
   
 
   def index
-  	#TODO => Retrieving Multiple Objects in Batches
-  	@prodygia_picks = Session.where('status' => 'Prodygia Picks')
-  	@scheduled = Session.where('status' => 'Scheduled')
-  	@upcoming = Session.where('status' => 'Upcoming')
+    #TODO => Retrieving Multiple Objects in Batches
+    # @sessions = Session.all
+    @sessions = Session.all
   end
   
-  def about_us
-
+  def contact
+  end
+  
+  def faq
   end
 
+  def for_experts
+  end
+
+  def for_members
+  end
+
+  def privacy
+  end
+
+  def terms
+  end 
+
+  def video_page
+    @session = Session.find(params[:id])
+  end
+
+  def text_page
+    @session = Session.find(params[:id])
+  end
 end

@@ -1,0 +1,22 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+
+%p#notice= notice
+
+%h3 
+  Proposed Topic:
+  = @propose_topic.Name
+%h4
+  %b Location:
+  = @propose_topic.Location
+%h4
+  %b Email:
+  = @propose_topic.Email
+%h4
+  %b Topic:
+  = @propose_topic.Topic
+
+= link_to 'Edit', edit_propose_topic_path(@propose_topic)
+\|
+= link_to 'Back', propose_topics_path

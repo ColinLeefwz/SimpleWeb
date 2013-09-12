@@ -1,0 +1,10 @@
+- sessions.each do |session|
+  .box
+    %p= image_tag(session.cover.url)
+	%p= session.title
+	%p= session.expert.name
+	%p Description:
+	%p= session.description
+	%p Status:
+	= session.status
+	%p= render 'linked_in_share_button'

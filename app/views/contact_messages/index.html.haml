@@ -1,0 +1,24 @@
+= content_for :head do
+  = stylesheet_link_tag "bootstrap.css", media = "all"
+  = javascript_include_tag "bootstrap.js" 
+
+.container
+  %h1 Contact Messages
+
+  %table.table.table-striped.table-hover.table-bordered
+    %tr
+      %th Name
+      %th Email
+      %th Message
+      %th Control
+
+    - @contact_messages.each do |contact_message|
+      %tr
+        %td= link_to "#{contact_message.name}", contact_message
+        %td= contact_message.email
+        %td= contact_message.message
+        %td= link_to 'Destroy', contact_message, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+  %br
+
+  = link_to 'New Contact message', new_contact_message_path
