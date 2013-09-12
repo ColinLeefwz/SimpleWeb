@@ -8,6 +8,4 @@ $ ->
 		selector = $(this).data('filter')
 		$container.isotope
 		  filter: selector
-		$(".filters").css('background', 'white')
-		$(this).css('background', '#eee')
 
