@@ -1,6 +1,6 @@
 
 
-module InternalCouponStat
+module InternalCoupon
   DaDian = [21828768,3916696,3872771]
   ZongDian = [21835960, 1217422]
 
@@ -9,8 +9,8 @@ module InternalCouponStat
   def self.do_stat(day)
     time =   day.days.ago
 
-    start_id = time.beginning_of_day.to_i.to_s(16).ljust(24,'0')
-    end_id = time.end_of_day.to_i.to_s(16).ljust(24,'0')
+    start_id = time.beginning_of_day
+    end_id = time.end_of_day
 
 
     day = day.days.ago.strftime("%Y-%m-%d")
@@ -40,7 +40,7 @@ module InternalCouponStat
           end
           cuse +=1
         end
-        data[shop.id] = shop_data
+        data[shop.id] = shop_data unless shop_data.blank?
       end
       InternalCouponStat.create(cdown: cdown, cuse: cuse, day: day, sid: s.id, data: data)
      
@@ -71,9 +71,9 @@ module InternalCouponStat
           end
           cuse +=1
         end
-        data[shop.id] = shop_data
+        data[shop.id] = shop_data unless shop_data.blank?
       end
-      InternalCouponStat.create(cdown: cdown, cuse: cuse, day: day, sid: s.id, data: data)
+      InternalCouponStat.create(cdown: cdown, cuse: cuse, day: day, sid: s.id, data: data) 
 
     end
     
@@ -82,4 +82,4 @@ module InternalCouponStat
 end
 
 
-1.times{|t| InternalCouponStat.do_stat(t+1)}
+1.times{|t| InternalCoupon.do_stat(t+1)}

@@ -40,6 +40,7 @@ sleep 1
 #/mnt/.rvm/bin/ruby script/rails r db/mongo/ip_info.rb
 /mnt/.rvm/bin/ruby script/rails r  'UserActive.do_count'
 /mnt/.rvm/bin/ruby script/rails r  'PlStat.do_count'
+/mnt/.rvm/bin/ruby script/rails r  /mnt/lianlian/db/mongo/internal_coupon_stat.rb
 
 etime=`date +"%Y-%m-%d %H:%M:%S"`
 stime_int=`date -d  "$stime" +%s`
