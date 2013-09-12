@@ -30,6 +30,9 @@ ul,ol{list-style:none;}
 .blue2{color:#00BFF3 !important;}
 .blue3{color:#369bff !important;}
 
+
+.inputchange{border:2px solid #D8D5CE !important;width:310px !important;}
+.textareachange{border:2px solid #D8D5CE !important;width:310px !important;height:120px !important;}
 .noneborder{border:none !important;}
 .noneleftborder{border-left:none !important;}
 .nonerightborder{border-right:none !important;}
@@ -128,7 +131,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .btn1{width:106px;height:38px;line-height:38px;background:transparent url(../images/btn1.png) left top no-repeat;border:none;text-align:center;display:block;color:#fff !important;cursor:pointer;}
 .btn2{width:106px;height:46px;line-height:46px;background:transparent url(../images/btn2.png) left top no-repeat;border:none;text-align:center;color:#fff;display:block;letter-spacing:1px;font-size:14px;cursor:pointer;}
 .btn3{width:86px;height:46px;line-height:46px;background:transparent url(../images/btn3.png) left top no-repeat;border:none;text-align:center;color:#6b6b6b;display:block;letter-spacing:1px;font-size:14px;cursor:pointer;}
-.btn4{width:215px;height:215px;border:none;text-align:center;display:block;cursor:pointer;float:left;z-index:10; position:relative;}
+.btn4{width:195px;height:195px;border: 6px solid #D8D5CE;text-align:center;display:block;cursor:pointer;float:left;z-index:10; position:relative;margin:20px 0px 0px 20px;}
 .btn5{width:42px;height:22px;line-height:22px;background:transparent url(../images/btn4.png) left top no-repeat;border:none;text-align:center;color:#fff;letter-spacing:1px;font-size:12px;cursor:pointer;}
 .btn6{background: transparent url("../images/btn5.jpg") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 25px;line-height: 25px;text-align: center;width: 68px;}
 .btn7{background: transparent url("../images/btn6.png") left top no-repeat;border: none;color: #FFFFFF;cursor: pointer;height: 29px;line-height: 29px;text-align: center;width: 93px;}
@@ -359,9 +362,9 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 
 .box5{width:100%;margin:20px auto;font-size:14px;color:#333;}
 
-.box6{width:560px;margin:40px 0px 20px 0px;border:1px solid #BCBCBC;border-radius:8px;background-color:#ffffff;position:relative;height:215px;}
-.box6 .boxinner{width:100%;overflow:hidden;z-index:10;position:relative;border-radius:8px;}
-.box6 .box6right1{float:right;width:305px;padding:20px;background-color:#ffffff;}
+.box6{width:610px;margin:40px 0px 20px 0px;background:transparent url("../images/pic21.png") no-repeat left top;position:relative;height:310px;}
+.box6 .boxinner{width:590px;overflow:hidden;z-index:10;position:relative;border-radius:8px;margin:0px auto;background-color:#fff;}
+.box6 .box6right1{float:left;width:305px;padding:20px;}
 .box6 .box6message{width:540px;position:absolute;left:0px;top:0px;text-align:center;padding:10px;z-index:1;font-size:14px;color:#f60;letter-spacing:2px;}
 .box6 .ws1{color: #666;font-size: 14px;height: 30px;line-height: 30px;margin-bottom: 10px;padding: 0 10px;width: 280px;display:block;}
 .box6 .ws2{color: #868686;font-size: 13px;height: 120px;line-height: 22px;padding: 0px 10px;width: 280px;display:block;}
