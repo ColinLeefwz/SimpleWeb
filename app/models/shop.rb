@@ -432,10 +432,10 @@ class Shop
     end
     
     return answer_text_default if faq.nil?
-    if faq.img.blank?
+    if faq.img.blank? && faq.url.blank?
       faq.text
     else
-      "[img:faq#{faq._id}]#{faq.text}"
+      "[img:faq#{faq._id}]#{faq.text}#{faq.url}"
     end
   end
   

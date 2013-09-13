@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class Shop3FaqsController < ApplicationController
-  before_filter :shop_authorize
+  before_filter :shop_authorize, :except => [:show]
   layout 'shop3'
 
   def index
@@ -29,11 +29,13 @@ class Shop3FaqsController < ApplicationController
 
   def show
     @shop_faq = ShopFaq.find_primary(params[:id])
+    render :layout => false
   end
 
   def create
     @shop_faq = ShopFaq.new(params[:shop_faq])
     @shop_faq.sid = session[:shop_id]
+    @shop_faq.url = "http://www.dface.cn/shop3_faqs/show?#{@shop_faq.id}"
 
     if @shop_faq.save
       $redis.sadd("FaqS#{session_shop.city}", session_shop.id)

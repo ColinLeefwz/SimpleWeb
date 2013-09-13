@@ -1,0 +1,10 @@
+<div class="con">
+  <div class="title1"><h2 class="f18"><%= @shop_faq.od %></h2></div>
+  <div class="title1"><h2 class="f18">问题：<%= @shop_faq.title %></h2></div>
+  <div class="title1"><h2 class="f18">解答：<%= @shop_faq.text %></h2></div>
+  <div class="title1"><h2 class="f18"><%= image_tag("#{ShopFaq.img_url(@shop_faq.id, :t2)}?time=#{Time.now.to_i}") %></h2></div>
+  <div class="box4">
+    <div class="box4left">
+    </div>
+  </div>
+</div>
