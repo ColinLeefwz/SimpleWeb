@@ -7,14 +7,11 @@ module InternalCoupon
 
 
   def self.do_stat(day)
-    time =   day.days.ago
+    time =   day.days.ago.localtime
 
-    start_id = time.beginning_of_day
-    end_id = time.end_of_day
-
-
+    start_time = time.beginning_of_day
+    end_time = time.end_of_day
     day = day.days.ago.strftime("%Y-%m-%d")
-
 
     #大地点内部小地点统计
     DaDian.each do |sid|
@@ -23,7 +20,7 @@ module InternalCoupon
       
       Shop.where({_id: {"$in" => s.shops}}).each do |shop|
         shop_data = {}
-        CouponDown.where({sid: shop.id, dat: {"$gte" => start_id, "$lte" =>  end_id}}).each do |coupon_down|
+        CouponDown.where({sid: shop.id, dat: {"$gte" => start_time, "$lte" =>  end_time}}).each do |coupon_down|
           if scd = shop_data[coupon_down.cid.to_s]
             shop_data[coupon_down.cid.to_s] = [scd.first+1, scd.last]
           else
@@ -32,7 +29,7 @@ module InternalCoupon
           cdown += 1
         end
 
-        CouponDown.where({sid: shop.id, uat: {"$gte" => start_id, "$lte" =>  end_id}}).each do |coupon_down|
+        CouponDown.where({sid: shop.id, uat: {"$gte" => start_time, "$lte" =>  end_time}}).each do |coupon_down|
           if scd = shop_data[coupon_down.cid.to_s]
             shop_data[coupon_down.cid.to_s] = [scd.first, scd.last+1]
           else
@@ -54,7 +51,7 @@ module InternalCoupon
 
       s.branchs.each do |shop|
         shop_data = {}
-        CouponDown.where({sid: shop.id, dat: {"$gte" => start_id, "$lte" =>  end_id}}).each do |coupon_down|
+        CouponDown.where({sid: shop.id, dat: {"$gte" => start_time, "$lte" =>  end_time}}).each do |coupon_down|
           if scd = shop_data[coupon_down.cid.to_s]
             shop_data[coupon_down.cid.to_s] = [scd.first+1, scd.last]
           else
@@ -63,7 +60,7 @@ module InternalCoupon
           cdown += 1
         end
 
-        CouponDown.where({sid: shop.id, uat: {"$gte" => start_id, "$lte" =>  end_id}}).each do |coupon_down|
+        CouponDown.where({sid: shop.id, uat: {"$gte" => start_time, "$lte" =>  end_time}}).each do |coupon_down|
           if scd = shop_data[coupon_down.cid.to_s]
             shop_data[coupon_down.cid.to_s] = [scd.first, scd.last+1]
           else

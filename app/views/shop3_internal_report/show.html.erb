@@ -20,16 +20,7 @@
     </ul>
 
   </div>
-  <div class="search textleft">
-    <%= form_tag '/shop3_internal_report',:method =>:get, :onsubmit => "return check_day()" do %>
-      <span class="red1 f15">搜索日期:</span><br/><br/>
-      开始日期<%= text_field_tag :sday, params[:sday]|| Time.now.to_date, :class => "inputs5 mlr10 w150"%>
-      结束日期<%= text_field_tag :eday, params[:eday]|| Time.now.to_date, :class => "inputs5 mlr10 w150"%>
-      <input type="submit" value="查 询" class="btn6 ml10"/>
-    <% end %>
-    <div class="clear1"></div>
 
-  </div>
   <table width="100%" cellpadding="0" cellspacing="0" class="tab2">
     <tr>
        <th width="150" class="textcenter pl0">商家</th>
