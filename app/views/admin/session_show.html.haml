@@ -3,33 +3,22 @@
   %h3
     Session:
     = @session.title
-
-  %p
-    =image_tag(@session.cover.url)
-    
+  %p= image_tag(@session.cover.url)
   %p
     location:
     =@session.location
-
   %p
     price:
     =number_to_currency(@session.price, :unit => "EUR ")
-
   %p
     %b Description:
     = @session.description
-
   %br
-
   %h4.muted Expert:
-
-  %p
-    =image_tag(@session.expert.image_url)
+  %p= image_tag(@session.expert.image_url)
 
   %h4
     %b= @session.expert.name
-
-
   = link_to 'Edit', session_edit_admin_index_path(@session)
   |
   = link_to 'Back', sessions_admin_index_path

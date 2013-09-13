@@ -1,7 +1,3 @@
-= content_for :head do
-  = stylesheet_link_tag "bootstrap.css", media = "all"
-  = javascript_include_tag "bootstrap.js" 
-
 %h1 Editing expert
 
 = form_for @expert, url: expert_admin_index_path(@expert) do |f|
