@@ -13,7 +13,8 @@
 .text-page-article-box
   .text-page-title
     %h1= @session.title
-    %p originally published on "#{@session.created_at.to_date.to_formatted_s(:short)}"
+    %p
+      = "originally published on #{@session.created_at.to_date.to_formatted_s(:short)}"
   -if @session.cover.url.eql?""
     .text-page-image
       = image_tag(@session.cover.url)
