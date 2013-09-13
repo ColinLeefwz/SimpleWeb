@@ -84,8 +84,8 @@ class ShopCouponsController < ApplicationController
     if @coupon.save
       if @coupon.t.to_i == 1
         @coupon.gen_img if @coupon.t.to_i == 1
+        sadd_city_coupon_redis
         redirect_to :action => :show, :id => @coupon.id
-        $redis.sadd("ACS#{session_shop.city}", session_shop.id)
       else
         redirect_to :action => :show_img2, :id => @coupon.id
       end
@@ -131,7 +131,7 @@ class ShopCouponsController < ApplicationController
     if @coupon.update_attributes(params[:coupon])
       @coupon.unset(:hint) if params[:hintv] == '0' #使用流程选0， hint = nil
       @coupon.gen_img if @coupon.t.to_i == 1
-      $redis.sadd("ACS#{session_shop.city}", session_shop.id)
+      sadd_city_coupon_redis
       redirect_to :action => :show, :id => @coupon.id
     else
       render :action => :edit
@@ -177,18 +177,35 @@ class ShopCouponsController < ApplicationController
   def ajax_deply
     coupon = Coupon.find(params[:id])
     text = (coupon.deply ? '<span class="gray">已停用</span>' : '<span class="red">失败了</span>')
-    $redis.srem("ACS#{session_shop.city}", session_shop.id) if session_shop.no_active?
+    srem_city_coupon_redis
     render :json => {text: text}
   end
 
   def ajax_del
     coupon = Coupon.find(params[:id])
     text = Del.insert(coupon)
-    $redis.srem("ACS#{session_shop.city}", session_shop.id) if session_shop.no_active?
+    srem_city_coupon_redis
     render :json => {text: text}
   end
 
   private
+
+  def sadd_city_coupon_redis
+    $redis.sadd("ACS#{session_shop.city}", session_shop.id)
+    session_shop.branchs.each do |shop|
+      $redis.sadd("ACS#{shop.city}", shop.id)
+    end
+  end
+
+  def srem_city_coupon_redis
+    if session_shop.no_active?
+      $redis.srem("ACS#{session_shop.city}", session_shop.id)
+      session_shop.branchs.each do |shop|
+        $redis.srem("ACS#{shop.city}", shop.id) if shop.no_active?
+      end
+    end
+  end
+
   def owner_authorize
     @coupon = Coupon.find(params[:id])
     render :text => '没有权限操作此优惠券' if  @coupon && @coupon.shop_id.to_i != session[:shop_id].to_i

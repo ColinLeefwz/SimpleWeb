@@ -43,7 +43,7 @@
       <tr id="Tr<%= index+1 %>">
         <td>
           <a href="<%= ["/shop3_coupons", '/shop3_share_coupons'][coupon.t2-1] %>/show?id=<%= coupon.id%>" title="查看详情">
-            <%=image_tag(coupon.img.url(:t1),:id=>"img_#{coupon.id}", :class=>"l #{coupon.hidden && 'imgfilter'}",:width => "130") %>
+            <%=image_tag(coupon.img.url(:t1) && coupon.img.url(:t1) + "?t=#{Time.now}" ,:id=>"img_#{coupon.id}", :class=>"l #{coupon.hidden && 'imgfilter'}",:width => "130") %>
             <span class="l ml10"><%= coupon.name %><br/><span class="gay1"><%= coupon.show_t2  %> — <%= coupon.show_rule%></span></span>
           </a>
         </td>
@@ -58,15 +58,15 @@
 
 
           <% if coupon.t2.to_i == 1 %>
-            <%=link_to '', ("edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑"%>
+            <%=link_to '', ("edit?id=#{coupon.id}"  ), :class => "edit",:title => "编辑" if coupon.down_users.blank? && coupon.hidden !=1%>
           <% elsif coupon.t2.to_i == 2  %>
-            <%=link_to '', ("/shop3_share_coupons/edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 ), :class => "edit",:title => "编辑"%>
+            <%=link_to '', ("/shop3_share_coupons/edit?id=#{coupon.id}"  ), :class => "edit",:title => "编辑" if coupon.down_users.blank? && coupon.hidden !=1%>
           <% end %>
 
           <% if coupon.hidden == 1 %>
-            <a onclick="ajaxCD($(this),'<%=coupon.id%>',<%=coupon.allow_activate?%>,'<%= index+1%>')" class="act" title="激活此优惠券"></a>
+            <a onclick="ajaxCD($(this),'<%=coupon.id%>',true,'<%= index+1%>')" class="act" title="激活此优惠券"></a>
           <% else %>
-            <a onclick="ajaxCD($(this), '<%=coupon.id%>',<%=coupon.allow_activate?%>,'<%= index+1%>')" class="act2" title="停用此优惠券"></a>
+            <a onclick="ajaxCD($(this), '<%=coupon.id%>',false,'<%= index+1%>')" class="act2" title="停用此优惠券"></a>
           <% end %>
           <%= (link_to '', 'javascript:void(0)', :onclick => "ajaxDel('#{coupon.id}', '#{index+1}')", :class => "del",:title => "删除") if coupon.down_users.blank?  %>
 

@@ -6,7 +6,7 @@
 		<input class="filebox4" id="shop_coupon_img" name="coupon[img2]" type="file" />
 		<input class="filebox5" id="shop_coupon_img" name="coupon[img2]" type="file" />
 		<div class="btn4" id="uploadPreview" rel="chenk">
-			<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic6.jpg"/>
+                  <img id="image_view" style="width:100%;height:100%;" src="<%= @coupon.img2.blank? ? "/newbackstage/images/pic6.jpg"  : @coupon.img2.to_s+"?t=#{Time.now}"  %>"/>
 		</div>
 
 		<div class="box6right1">
@@ -14,7 +14,7 @@
 			<%= f.text_area :desc, :value => @coupon.desc || '优惠额度，使用规则、期限等，不超过90字', :class => 'textarea3 textareachange', :style=>"word-wrap:normal;", :wrap=>"off";%>
 		</div>
 	</div>
-	<div class="box6date">日期：XXXX-XX-XX</div>
+	<div class="box6date">XXXX-XX-XX XX:XX</div>
 </div>
 
 <div class="clear1"></div>
