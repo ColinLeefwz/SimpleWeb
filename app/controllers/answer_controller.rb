@@ -11,11 +11,17 @@ class AnswerController < ApplicationController
     mid = params["mid"]    
     #Xmpp.send_gchat2(uid,sid,uid,msg,mid, nil, " NOLOG='1' ")
     shop = Shop.find_by_id(sid)
+    sfurl = shop.faq(msg).url
     text = shop.answer_text(msg)
     @text = text if ENV["RAILS_ENV"] == "test"
     attrs = " NOLOG='1' "
-    attrs += " url='http://www.dface.cn' "
-    ext = "<x xmlns='dface.url'>http://dface.cn</x>"
+    if sfurl.nil?
+      attrs += " url='http://www.dface.cn' " 
+      ext = "<x xmlns='dface.url'>http://dface.cn</x>"
+    else
+      attrs += " url='#{sfurl}' " 
+      ext = "<x xmlns='dface.url'>#{sfurl}</x>"
+    end
     Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext) if text
     render :text => "1"
   end
