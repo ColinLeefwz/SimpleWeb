@@ -35,7 +35,7 @@ class Shop3FaqsController < ApplicationController
   def create
     @shop_faq = ShopFaq.new(params[:shop_faq])
     @shop_faq.sid = session[:shop_id]
-    @shop_faq.url = "http://www.dface.cn/shop3_faqs/show?#{@shop_faq.id}"
+    @shop_faq.url = "http://shop.dface.cn/shop3_faqs/show?id=#{@shop_faq.id}"
 
     if @shop_faq.save
       $redis.sadd("FaqS#{session_shop.city}", session_shop.id)
