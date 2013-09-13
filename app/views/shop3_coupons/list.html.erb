@@ -20,11 +20,11 @@
       <li><a href="/shop3_coupons/newly_use">最新使用记录</a></li>
       <li><a href="/shop3_coupon_reports">统计报表</a></li>
       <% unless session_shop.shops.blank? %>
-        <li><a href="/shop3_internal_report">内部商家统计</a></li>
+        <li><a href="/shop3_internal_report?type=internal">内部商家统计</a></li>
       <% end %>
 
       <% if session_shop.has_branch? %>
-        <li><a href="/shop3_coupon_reports">分店统计</a></li>
+        <li><a href="/shop3_internal_report?type=branch">分店统计</a></li>
       <% end %>
     </ul>
     <div class="r">

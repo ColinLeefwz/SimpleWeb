@@ -1,6 +1,8 @@
 <div class="con2">
   <div class="title1 mb30">
-    <h2 class="f18 l">优惠券管理</h2>
+    <h2 class="f18 l">
+      <%=  params[:type] == 'internal' ? "内部商家优惠券每日统计" : '分店优惠券每日统计'%>
+    </h2>
   </div>
   <div class="submenu">
     <ul>
@@ -10,11 +12,11 @@
       <li ><a href="/shop3_coupon_reports">统计报表</a></li>
 
       <% unless session_shop.shops.blank? %>
-        <li class="hover"><a href="/shop3_internal_report">内部商家统计</a></li>
+        <li <%= params[:type] == 'internal' ? "class=hover" : "" %>><a href="/shop3_internal_report?type=internal">内部商家统计</a></li>
       <% end %>
 
       <% if session_shop.has_branch? %>
-        <li class="hover"><a href="/shop3_internal_report">分店统计</a></li>
+        <li <%= params[:type] == 'internal' ? "" : "class=hover" %>><a href="/shop3_internal_report?type=branch">分店统计</a></li>
       <% end %>
 
     </ul>
