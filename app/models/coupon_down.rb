@@ -55,11 +55,19 @@ class CouponDown
   end
    
   def message
-    date = (dat.to_time+3600*8).strftime('%Y-%m-%d %H：%M')
-    s = "[优惠券:#{coupon.name}:#{shop.name}:#{id}:#{date}"
+    s = "[优惠券:#{coupon.name}:#{shop.name}:#{id}:#{d_date}"
     s += ":#{coupon.hint}" if coupon.hint
     s += "]"
     s
+  end
+  
+  def d_date
+    (dat.to_time+3600*8).strftime('%Y-%m-%d %H：%M')
+  end
+  
+  def u_date
+    return "" if uat.nil?
+    (uat.to_time+3600*8).strftime('%Y-%m-%d %H：%M')
   end
 
   def self.next_num(cid)
@@ -135,8 +143,7 @@ class CouponDown
 
   
   def output_hash
-    hash = self.attributes.slice("dat", "uat")
-    hash.merge!( {id:_id,seq:download_num, name:coupon.name, shop:shop.name, shop_id:shop.id, status:self.status} ) 
+    hash = {id:_id, dat:d_date, uat: u_date, seq:download_num, name:coupon.name, shop:shop.name, shop_id:shop.id, status:self.status}
     hash.merge!( {hint:coupon.hint} ) if coupon.hint
     hash
   end
