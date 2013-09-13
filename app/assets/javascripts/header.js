@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
   var nav = $("nav");
   var subcategory = $(".subcategory");
