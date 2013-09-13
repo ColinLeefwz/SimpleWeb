@@ -426,14 +426,8 @@ class Shop
     return answer_text_default if msg=='0'
     faq = self.faq(msg)
 
-    #问答为空时，先去总店找
     if faq.nil?
-      shop = self.pshop
-      faq = shop.faq(msg) if shop
-    end
-
-    if faq.nil?
-      shop = Shop.find_by_id($llshop)
+      shop = self.pshop || Shop.find_by_id($llshop)
       faq = shop.faq(msg) if shop
     end
     
