@@ -11,18 +11,24 @@ class AnswerController < ApplicationController
     mid = params["mid"]    
     #Xmpp.send_gchat2(uid,sid,uid,msg,mid, nil, " NOLOG='1' ")
     shop = Shop.find_by_id(sid)
-    sfurl = shop.faq(msg).url
-    text = shop.answer_text(msg)
-    @text = text if ENV["RAILS_ENV"] == "test"
-    attrs = " NOLOG='1' "
-    if sfurl.nil?
-      attrs += " url='http://www.dface.cn' " 
-      ext = "<x xmlns='dface.url'>http://dface.cn</x>"
+    text_faq = shop.answer_text(msg)
+    @text = text_faq if ENV["RAILS_ENV"] == "test"
+    if text_faq
+      attrs = " NOLOG='1' "
+      ext = nil
+      if text_faq.class == ShopFaq
+        if text_faq.url
+          attrs += " url='#{text_faq.url}' " 
+          ext = "<x xmlns='dface.url'>#{text_faq.url}</x>"
+        end
+        text = text_faq.output
+      else
+        text = text_faq
+      end
+      Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
     else
-      attrs += " url='#{sfurl}' " 
-      ext = "<x xmlns='dface.url'>#{sfurl}</x>"
+      Xmpp.error_notify("问答返回nil:#{sid},#{uid},#{msg}")
     end
-    Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext) if text
     render :text => "1"
   end
   

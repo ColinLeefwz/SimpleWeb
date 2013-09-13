@@ -420,35 +420,37 @@ class Shop
   def faq(od)
     ShopFaq.where({sid: self.id, od: od}).first
   end
-
-  def answer_text(msg)
-    return  unless msg=='0' || msg =~ /^0[1-9]$/
-    return answer_text_default if msg=='0'
+  
+  def find_faq_by_num(msg)
     faq = self.faq(msg)
-
     if faq.nil?
       shop = self.pshop || Shop.find_by_id($llshop)
       faq = shop.faq(msg) if shop
     end
-    
-    return answer_text_default if faq.nil?
-    if faq.img.blank?
-      faq.text
-    else
-      "[img:faq#{faq._id}]#{faq.text}"
+    faq
+  end
+  
+  def find_faqs
+    faqs = self.faqs
+    if faqs.nil? || faqs.size==0
+      shop = self.pshop || Shop.find_by_id($llshop)
+      faqs = shop.faqs if shop
     end
+    faqs
+  end
+
+  def answer_text(msg)
+    return nil unless msg=='0' || msg =~ /^0[1-9]$/
+    return answer_text_default if msg=='0'
+    faq = find_faq_by_num(msg)
+    return answer_text_default if faq.nil?
+    faq
   end
   
   def answer_text_default
-    faqs = self.faqs.to_a
+    faqs = self.find_faqs.to_a
     if faqs.size==0
-      ps = self.pshop
-      return ps.answer_text_default if ps
-      return "本地点未启用数字问答系统" if self.id==$llshop
-      shop = Shop.find_by_id($llshop)
-      return "本地点未启用数字问答系统" if shop.nil?
-      return "这地方怎么找不到人啊？"+shop.answer_text_default
-      
+      return "本地点未启用数字问答系统"
     end
     "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n") 
   end

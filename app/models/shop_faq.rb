@@ -34,6 +34,15 @@ class ShopFaq
     Shop.find_by_id(sid)
   end
   
+  def output
+    if img.blank?
+      text
+    else
+      "[img:faq#{_id}]#{text}"
+    end
+  end
+  
+  
   def self.init_city_faq_redis
     ShopFaq.all.each {|x| $redis.sadd("FaqS#{x.shop.city}", x.sid)}
   end

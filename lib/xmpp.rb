@@ -82,5 +82,9 @@ class Xmpp
       raise cur_ip
     end
   end
+  
+  def self.test_server_msg(uid)
+    100.times {|x| Xmpp.send_chat($gfuid,uid,x.to_s);sleep 1}
+  end
 
 end

@@ -22,6 +22,7 @@ class FollowsController < ApplicationController
       return
     end
     #TODO: 检查params[:fid]在自己的好友列表中
+    #TODO: 保存数据库记录UserRecommend
     #Resque.enqueue(XmppMsg, session[:user_id], params[:fid], ": 推荐一个用户#{desc}")
     str = "[img:Logo#{user.head_logo_id}:#{params[:uid]}]"
     Resque.enqueue(XmppMsg, session[:user_id], params[:fid], str, params[:mid])
