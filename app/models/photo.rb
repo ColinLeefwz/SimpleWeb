@@ -88,10 +88,11 @@ class Photo
   def send_qq(direct=false)
     title = "我在\##{shop.name}"
     text = "刚刚用脸脸分享了一张图片。(脸脸下载地址: http://www.dface.cn/a?v=18 )"
+    img_url = Photo.img_url(self.id, :t2)
     if direct
-      QqPhoto.perform(user_id, title, text, share_url, desc)
+      QqPhoto.perform(user_id, title, text, share_url, desc, img_url)
     else
-      Resque.enqueue(QqPhoto, user_id, title, text, share_url, desc)
+      Resque.enqueue(QqPhoto, user_id, title, text, share_url, desc, img_url)
     end
   end
 
