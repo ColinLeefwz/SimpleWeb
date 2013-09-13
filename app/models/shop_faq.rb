@@ -3,9 +3,11 @@ class ShopFaq
   include Mongoid::Document
 
   field :sid, type: Integer
-  field :title
-  field :text
-  field :img
+  field :title #问题
+  field :text #简单回答，或者标题
+  field :img #回答的图片
+  field :url #回答点开的链接
+  field :content #回答点开的内容
   field :od
 
   validate do |faq|
