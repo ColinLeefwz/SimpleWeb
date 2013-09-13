@@ -425,10 +425,18 @@ class Shop
     return  unless msg=='0' || msg =~ /^0[1-9]$/
     return answer_text_default if msg=='0'
     faq = self.faq(msg)
+
+    #问答为空时，先去总店找
+    if faq.nil?
+      shop = self.pshop
+      faq = shop.faq(msg) if shop
+    end
+
     if faq.nil?
       shop = Shop.find_by_id($llshop)
       faq = shop.faq(msg) if shop
     end
+    
     return answer_text_default if faq.nil?
     if faq.img.blank?
       faq.text
@@ -440,10 +448,13 @@ class Shop
   def answer_text_default
     faqs = self.faqs.to_a
     if faqs.size==0
+      ps = self.pshop
+      return ps.answer_text_default if ps
       return "本地点未启用数字问答系统" if self.id==$llshop
       shop = Shop.find_by_id($llshop)
       return "本地点未启用数字问答系统" if shop.nil?
       return "这地方怎么找不到人啊？"+shop.answer_text_default
+      
     end
     "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n") 
   end
@@ -454,6 +465,11 @@ class Shop
 
   def has_branch?
     Shop.where({psid: self._id}).limit(1).only(:_id).any?
+  end
+
+  #总店
+  def pshop
+    Shop.find_by_id(psid) unless psid.blank?
   end
 
   def ban
