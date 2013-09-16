@@ -1,4 +1,4 @@
-= form_for @expert do |f|
+= form_for @expert, url: url do |f|
   - if @expert.errors.any?
     #error_explanation
       %h2= "#{pluralize(@expert.errors.count, "error")} prohibited this expert from being saved:"
@@ -18,6 +18,9 @@
   .field
     = f.label :location
     = f.text_field :location
+  .field
+    = f.label :image_url
+    = f.text_field :image_url
   .field
     = f.label :expertise
     = f.text_area :expertise
@@ -47,3 +50,4 @@
     = f.text_area :testimonials
   .actions
     = f.submit 'Save'
+
