@@ -17,6 +17,7 @@ ActiveAdmin.register Session do
     column :price, sortable: :price do |session|
       number_to_currency(session.price, unit: "USD: ")
     end
+    default_actions
   end
 
   controller do

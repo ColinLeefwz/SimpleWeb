@@ -11,7 +11,7 @@ ActiveAdmin.register Expert do
     column :company
     column :location
     column :email
-
+    default_actions
   end
 
 
