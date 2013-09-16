@@ -2,7 +2,7 @@ ActiveAdmin.register Session do
 
   index do
     column :cover do |session|
-      image_tag(session.cover.url, size: "50x50")
+      image_tag(session.cover.url, width: "50")
     end
     column :title do |session|
       link_to(session.title, admin_session_path(session))
@@ -25,7 +25,7 @@ ActiveAdmin.register Session do
     f.inputs do
       f.input :title
       f.input :expert
-      f.input :cover
+      f.input :cover, as: :file, label: 'cover'# , hint: f.template.image_tag(f.object.cover.url)
       f.input :status
       f.input :content_type
       f.input :description

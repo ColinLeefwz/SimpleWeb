@@ -5,7 +5,7 @@ ActiveAdmin.register Expert do
       link_to(expert.name, admin_expert_path(expert))
     end
     column "Avatar", :image_url do |expert|
-      image_tag(expert.image_url, size: "50x50")
+      image_tag(expert.image_url, width: "50")
     end
     column :title
     column :company
