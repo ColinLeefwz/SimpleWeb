@@ -58,6 +58,6 @@ class SessionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def session_params
-      params.require(:session).permit(:title, :expert_id, :created_date, :description)
+      params.require(:session).permit(:title, :expert_id, :created_date, :description, :cover, :status, :content_type, :category, :location, :price, :video)
     end
 end

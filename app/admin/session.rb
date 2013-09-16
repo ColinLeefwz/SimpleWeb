@@ -21,11 +21,11 @@ ActiveAdmin.register Session do
   end
 
 
-  form do |f|
-    f.inputs do
+  form html: {enctype: "multipart/form-data"} do |f|
+    f.inputs "Session", multipart: true do
       f.input :title
       f.input :expert
-      f.input :cover, as: :file, label: 'cover'# , hint: f.template.image_tag(f.object.cover.url)
+      f.input :cover, as: :file , hint: f.template.image_tag(f.object.cover.url)
       f.input :status
       f.input :content_type
       f.input :description
@@ -39,7 +39,7 @@ ActiveAdmin.register Session do
 
   controller do
     def permitted_params
-      params.permit session: [:title, :expert_id, :created_date, :description]
+      params.permit session: [:title, :expert_id, :created_date, :description, :cover, :status, :content_type, :category, :location, :price, :video]
     end
   end
 
