@@ -42,6 +42,8 @@ module AdminShopsHelper
   end
 
   def edit_lo(loc)
+    return ""  if loc.nil?
+
     if loc.first.is_a?(Array)
       loc.inject("") do |f, lo|
         f + %Q(<input type="checkbox" value="#{lo.join(',')}" name="shop[lo][]" checked="checked">#{lo.join(',')}<br/>)

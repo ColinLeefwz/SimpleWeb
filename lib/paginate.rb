@@ -12,6 +12,18 @@ module Paginate
     @colls = cons.where(hash).skip(skip).limit(@pcount).sort(sort)
   end
 
+  #Shop.where2 专用
+  def shop_paginate(page=1, hash={},sort={},pcount= 15)
+    @page =  page ? page.to_i : 1
+    if @page < 0
+      sort = {:_id => -1} if sort.blank?
+      sort.keys.each{|k| sort[k] = sort[k]*-1}
+    end
+    @pcount =  pcount ? pcount.to_i : 15
+    skip = (@page.abs - 1)*@pcount
+    @colls = Shop.where2({"$query"=>hash, "$orderby"=>sort},{limit: @pcount, skip: skip  })
+  end
+
   def paginate2(model,page=1, hash={},sort={},pcount={})
     #    @page =  page ? page.to_i : 1
     @page = page.to_i <= 1 ? 1 :  page.to_i

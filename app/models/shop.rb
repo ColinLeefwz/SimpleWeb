@@ -610,8 +610,15 @@ class Shop
   
   #使用内存数据库查询商家表
   def self.where2(hash, options={})
-    options.merge!({flags: [:slave_ok]})
-    node("10.135.44.107").query("shop","shops", hash, options).documents.map {|x| Shop.instantiate(x)}
+    if Rails.env == "production"
+      options.merge!({flags: [:slave_ok]})
+      node("10.135.44.107").query("shop","shops", hash, options).documents.map {|x| Shop.instantiate(x)}
+    else
+      ca = Shop.where(hash["$query"]|| hash)
+      options.each{|k, v| ca= ca.send(k,v)}
+      ca.send("sort", hash["$orderby"]|| hash)
+      ca
+    end
   end
         
 end
