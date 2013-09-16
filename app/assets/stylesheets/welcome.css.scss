@@ -1,53 +1,29 @@
 $box_header_font_size: 18px;
-
-
+$white: #ffffff;
+$shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
 body {
 	margin: 0;
 	padding: 0;
 	font-family: 'Latoreg';
-
 	font-size: 13px;
-	color: #444444;
 	text-align: center;
 	background-image: image-url("bg.jpg");
-}
 
-.video-img {
-	cursor: pointer;
-	position: relative;
-
-	.video-play{
-		cursor: pointer;
-	}
-
-	.play-video-icon{
-		position: absolute;
-		width: 20%;
-		display: block;
-		top: 40%;
-		left: 40%;
-		z-index: 10;
-	}
+  a{
+    color: #575757;
+  }
 }
 
 #content{
-	height: 80%;
 	margin: 0 auto;
 
 	.item {
-		background: #ffffff;
-		-webkit-box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
-		box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
-		width:330px;
+		background: $white;
+		-webkit-box-shadow: $shadow_param;
+		box-shadow: $shadow_param;
+		width: 330px;
 		margin: 20px;
-		border-width: 1px;
-		text-align: center;
-
 		line-height: 30px;
-
-		a{
-			color: #575757;
-		}
 
 		.box-header{
 			border-bottom: thin solid #cccccc;
@@ -98,7 +74,18 @@ body {
 
 		.cover{
 			padding: 10px;
-			border-width: 0px;
+      .video-img {
+        cursor: pointer;
+        position: relative;
+
+        .play-video-icon{
+          position: absolute;
+          width: 20%;
+          top: 40%;
+          left: 40%;
+          z-index: 10;
+        }
+      }
 
 			video{
 				width: 100%;
@@ -107,9 +94,8 @@ body {
 
 		.caption{
 			padding: 10px;
-			border-width: 0px;
-
-			.description{
+			
+      .description{
 				text-align: left;
 				font-family: Latoreg;
 				font-size: 14px;
@@ -121,7 +107,6 @@ body {
 				padding-left: 5px;
 
 				a{
-					text-align: left;
 					font-family: Latoitalic;
 					font-size: 14px;
 					color: #AF6A82;
@@ -147,41 +132,3 @@ body {
 	pointer-events: none;
 	z-index: 1;
 }
-
-// Filter Animation
-// .isotope,
-// .isotope .isotope-item {
-// 	-webkit-transition-duration: 0.8s;
-// 	-moz-transition-duration: 0.8s;
-// 	-ms-transition-duration: 0.8s;
-// 	transition-duration: 0.8s;
-// }
-
-// .isotope{
-// 	-webkit-transition-property: height, width;
-// 	-moz-transition-property: height, width;
-// 	-ms-transition-property: height, width;
-// 	transition-property: height, width;
-// }
-
-// .isotope .isotope-item {
-// 	-webkit-transition-property: -webkit-transform, opacity;
-// 	-moz-transition-property:    -moz-transform, opacity;
-// 	-ms-transition-property:     -ms-transform, opacity;
-// 	-o-transition-property:      -o-transform, opacity;
-// 	transition-property:         transform, opacity;
-// }
-
-// /**** disabling Isotope CSS3 transitions ****/
-
-// .isotope.no-transition,
-// .isotope.no-transition .isotope-item,
-// .isotope .isotope-item.no-transition {
-// 	-webkit-transition-duration: 0s;
-// 	-moz-transition-duration: 0s;
-// 	-ms-transition-duration: 0s;
-// 	-o-transition-duration: 0s;
-// 	transition-duration: 0s;
-// }
-
-
