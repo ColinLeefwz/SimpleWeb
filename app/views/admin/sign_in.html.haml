@@ -1,7 +1,3 @@
-= content_for :head do
-  = stylesheet_link_tag "bootstrap.css", media = "all"
-  = javascript_include_tag "bootstrap.js" 
-
 .container
   %h3.text-center Sign In
   = form_for :admin, url: authorize_admin_index_path, html: { class: 'form-horizontal'} do |f|

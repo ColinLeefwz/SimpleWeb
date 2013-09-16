@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
 
   private
     def check
-      logger.info "this is application check method, the session is : #{session[:login]}"
       if session[:login] == nil
         redirect_to sign_in_admin_index_path
       end
