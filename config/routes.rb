@@ -3,7 +3,6 @@ Prodygia::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # devise_for :users
-  # ActiveAdmin.routes(self)
 
   get "join_request/index"
   get "join_request/show"
