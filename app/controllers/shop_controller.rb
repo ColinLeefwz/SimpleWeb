@@ -66,11 +66,11 @@ class ShopController < ApplicationController
       end
       #10结果, 100%
       #0结果, 50%
-      shop = Shop.where({t:0, name:params[:sname]}).first #虚拟的活动地点名称按相似度50%～100%匹配
-      if shop
-        hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id])) 
-        ret << hash
-      end
+#      shop = Shop.where({t:0, name:params[:sname]}).first #虚拟的活动地点名称按相似度50%～100%匹配
+#      if shop
+#        hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id]))
+#        ret << hash
+#      end
       if ret.size<3
         #city = Shop.get_city(lo)
         #if city
@@ -78,10 +78,9 @@ class ShopController < ApplicationController
         #end
       end
 
-
-      if ret.size == 0 
-        city = Shop.get_city(lo)
-        ids = $redis.zrange("GSN#{city}", 0, -1, withscores: true).select{|gs|  Shop.str_similar(params[:sname], gs[0]) > 0.5}.map{|m| m[1]}
+      #商家查询个数小于10， 按群组的相似度查询群组
+      if ret.size < 10
+        ids = $redis.zrange("GSN", 0, -1, withscores: true).select{|gs|  Shop.str_similar(params[:sname], gs[0]) >= (0.5+ret.size*0.05)}.map{|m| m[1]}
         unless ids.blank?
           Shop.where2({_id: {"$in" => ids}}).each do |shop|
              hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id]))

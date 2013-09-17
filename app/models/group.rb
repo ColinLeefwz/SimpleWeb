@@ -130,12 +130,12 @@ class Group
   #群组从redis删除
   def rm_redis_shop_name
     s = self.shop
-    $redis.zremrangebyscore("GSN#{s.city}",s.id,s.id) if s
+    $redis.zremrangebyscore("GSN",s.id,s.id) if s
   end
 
   def zadd_redis_shop_name
     s= self.shop
-    $redis.zadd("GSN#{s.city}", s.id.to_i, s.name) if s && !s.city.nil?
+    $redis.zadd("GSN", s.id.to_i, s.name) if s && !s.city.nil?
   end
 
   #加入群组的用户
