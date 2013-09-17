@@ -1,7 +1,7 @@
 .text-page-header-box
   .text-page-left-side
     .text-page-portrait
-      = image_tag("#{@session.expert.image_url}")
+      = image_tag("#{@session.expert.avatar.url}")
     .text-page-expert-name
       %span by #{@session.expert.name}
   .text-page-right-side
