@@ -15,9 +15,8 @@ gem 'devise'
 gem 'omniauth-facebook'
 gem 'social-share-button'
 gem 'paperclip'
-gem 'tinymce-rails'
-
-gem 'truncate_html'
+gem 'truncate_html'  # make truncate html_safe
+gem 'activeadmin', github: 'gregbell/active_admin', branch: 'rails4'
 
 group :doc do
   gem 'sdoc', require: false
