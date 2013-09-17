@@ -5,7 +5,7 @@ ActiveAdmin.register Expert do
       link_to(expert.name, admin_expert_path(expert))
     end
     column "Avatar", :image_url do |expert|
-      image_tag(expert.image_url, width: "50")
+      link_to image_tag(expert.image_url, width: "50"), admin_expert_path(expert)
     end
     column :title
     column :company
@@ -28,6 +28,24 @@ ActiveAdmin.register Expert do
       f.input :testimonials
       f.input :additional
       f.actions
+    end
+  end
+
+
+  show do |expert|
+    attributes_table do
+      row :name
+      row "avatar", :image_url do
+        image_tag expert.image_url, width: "70"
+      end
+      row :email
+      row :title
+      row :company
+      row :location
+      row :expertise
+      row :web_site
+      row :testimonials
+      row :additional
     end
   end
 

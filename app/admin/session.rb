@@ -2,7 +2,7 @@ ActiveAdmin.register Session do
 
   index do
     column :cover do |session|
-      image_tag(session.cover.url, width: "50")
+      link_to image_tag(session.cover.url, width: "50"), admin_session_path(session)
     end
     column :title do |session|
       link_to(session.title, admin_session_path(session))
@@ -45,7 +45,7 @@ ActiveAdmin.register Session do
         link_to session.expert.name, admin_expert_path(session.expert_id)
       end
       row :cover do
-        image_tag session.cover.url
+        image_tag session.cover.url, width: "70"
       end
       row :status
       row :content_type
