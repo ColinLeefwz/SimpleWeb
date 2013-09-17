@@ -4,18 +4,9 @@ Prodygia::Application.routes.draw do
   ActiveAdmin.routes(self)
   # devise_for :users
 
-  get "join_request/index"
-  get "join_request/show"
-  get "join_request/destroy"
-  get "join_request/new"
-  get "join_request/edit"
-  get "join_request/create"
-  get "join_request/update"
   resources :experts
 
   resources :contact_messages
-
-  resources :propose_topics
 
   get "welcome/index"
   # The priority is based upon order of creation: first created -> highest priority.
@@ -23,6 +14,7 @@ Prodygia::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root to: "welcome#index"
+
   get "/about_us", to: "welcome#about_us"
   get "/faq", to: "welcome#faq"
   get "/for_experts", to: "welcome#for_experts"
