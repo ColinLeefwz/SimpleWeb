@@ -2,7 +2,8 @@
 <h1>
   修改群组
 </h1>
-<%= form_for(@group, :url => "/admin_groups/create") do |f| %>
+<%= form_for(@group, :url => "/admin_groups/update") do |f| %>
+  <%= hidden_field_tag :id,@group.id %>
   <p>
     名称:<br />
     <%= f.text_field :name %>
@@ -13,7 +14,7 @@
     <%= f.text_field :hint %>（加入此团的认证提示信息）
   </p>
 
-    <p>
+  <p>
     密码：<br />
     <%= f.text_field :pass %>（加入时的默认密码，可以没有）
   </p>
@@ -28,6 +29,11 @@
     <%= f.text_field :tat %>(如: <%= Time.now.strftime("%Y-%m-%d") %>,可以不填 )
   </p>
 
+
+  <p>
+    区号:<br />
+    <%= text_field_tag :city, @group.shop.city  %>(必填)
+  </p>
 
 
   <p>

@@ -13,7 +13,7 @@
     <%= f.text_field :hint %>（加入此团的认证提示信息）
   </p>
 
-    <p>
+  <p>
     密码：<br />
     <%= f.text_field :pass %>（加入时的默认密码，可以没有）
   </p>
@@ -27,6 +27,18 @@
     结束时间:<br />
     <%= f.text_field :tat %>(如: <%= Time.now.strftime("%Y-%m-%d") %>,可以不填 )
   </p>
+
+  <p>
+    地点id:<br />
+    <%= text_field_tag :sid %>(可以不填；如填,已经有的地点将会加密 )
+  </p>
+
+  <p>
+    区号:<br />
+    <%= text_field_tag :city %>(必填.如地点id填写,区号可以不填)
+  </p>
+
+
 
   <p>
     <%= f.submit "保存" %>

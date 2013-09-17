@@ -77,6 +77,19 @@ class ShopController < ApplicationController
         #  shop1s = Shop.where2({city:city, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})
         #end
       end
+
+
+      if ret.size == 0 
+        city = Shop.get_city(lo)
+        ids = $redis.zrange("GSN#{city}", 0, -1, withscores: true).select{|gs|  Shop.str_similar(params[:sname], gs[0]) > 0.5}.map{|m| m[1]}
+        unless ids.blank?
+          Shop.where2({_id: {"$in" => ids}}).each do |shop|
+             hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id]))
+             ret << hash
+          end
+        end
+      end
+
       render :json =>  ret.to_json
     end
 

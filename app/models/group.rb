@@ -45,16 +45,20 @@ class Group
     true
   end
 
-  def gen_shop
-    s = Shop.new
-  	s.id = Shop.next_id
-  	s.name = name
-    s.t = 0
-  	s.psid = admin_sid
-    s.group_id = self.id
-    s.save!
+  def gen_shop(option={})
+    option.symbolize_keys!
+    if option[:sid].blank?
+      s = Shop.new(name: name, t: 0, psid: admin_sid, group_id: id, city: option[:city] )
+      s.id = Shop.next_id
+      s.save!
+    else
+      s = Shop.find(option[:sid])
+      s.set(:group_id, id )
+    end
     self.update_attribute(:sid, s.id)
   end
+
+  
   
   #加入一个群目前有两种情况
   #1. 婚礼现场，预设密码，输入密码进入
@@ -123,15 +127,27 @@ class Group
     ['', '时间到自动过期', '手动过期'][invaildt.to_i]
   end
 
+  #群组从redis删除
+  def rm_redis_shop_name
+    s = self.shop
+    $redis.zremrangebyscore("GSN#{s.city}",s.id,s.id) if s
+  end
+
+  def zadd_redis_shop_name
+    s= self.shop
+    $redis.zadd("GSN#{s.city}", s.id.to_i, s.name) if s && !s.city.nil?
+  end
+
   #加入群组的用户
   def add_users
-   uids =  $redis.zrange("UA#{sid.to_i}", 0, -1)
-   User.where({_id: {"$in" => uids}})
+    uids =  $redis.zrange("UA#{sid.to_i}", 0, -1)
+    User.where({_id: {"$in" => uids}})
   end
 
   # 虚拟群组过期
   def invalidate_old
     $redis.zrevrange("UA#{sid.to_i}",0,-1).each{|user| $redis.srem("GROUP#{user}", self.sid.to_i) }
+    rm_redis_shop_name
   end
 
   def self.invalidate_old
@@ -139,6 +155,13 @@ class Group
     #cronjob每天执行一次
     where({tat: 1.days.ago.to_date}).each{|group|  group.invalidate_old }
   end
-  
+
+
+  def self.init_shop_name_to_redis
+    self.all.each do |group|
+      group.zadd_redis_shop_name
+    end
+  end
+
 end
 

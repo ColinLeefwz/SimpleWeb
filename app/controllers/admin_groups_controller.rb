@@ -17,7 +17,8 @@ class AdminGroupsController < ApplicationController
   def create
     group = Group.new(params[:group])
     group.save
-    group.gen_shop
+    group.gen_shop(city: params[:city], sid: params[:sid])
+    group.zadd_redis_shop_name
     redirect_to :action => :show, :id => group.id
   end
 
@@ -28,6 +29,7 @@ class AdminGroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
     if @group.update_attributes(params[:group])
+      @group.shop.update_attributes({name: @group.name, city: params[:city]})
       redirect_to :action => :show, :id => @group.id
     else
       render :action => :edit
@@ -39,8 +41,8 @@ class AdminGroupsController < ApplicationController
   end
 
   def users
-     @group = Group.find_primary(:params[:id])
-     @users = User.where({id: {'$in' => $redis.smembers("group#{@group.sid}")}})
+    @group = Group.find_primary(:params[:id])
+    @users = User.where({id: {'$in' => $redis.smembers("group#{@group.sid}")}})
   end
 
 
