@@ -18,7 +18,7 @@ ActiveAdmin.register Expert do
   form do |f|
     f.inputs do
       f.input :name
-      f.input :image_url
+      f.input :avatar, as: :file
       f.input :email
       f.input :title
       f.input :company
@@ -35,8 +35,8 @@ ActiveAdmin.register Expert do
   show do |expert|
     attributes_table do
       row :name
-      row "avatar", :image_url do
-        image_tag expert.image_url, width: "70"
+      row :avatar do
+        image_tag expert.avatar.url, width: "70"
       end
       row :email
       row :title
@@ -52,7 +52,7 @@ ActiveAdmin.register Expert do
 
   controller do
     def permitted_params
-      params.permit expert: [:name, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials]
+      params.permit expert: [:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials]
     end
   end
 end
