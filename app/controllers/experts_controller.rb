@@ -4,7 +4,7 @@ class ExpertsController < ApplicationController
   # GET /experts
   # GET /experts.json
   def index
-    @experts = Expert.where(authorized: true)
+    @experts = Expert.all
   end
 
   # GET /experts/1
@@ -36,7 +36,6 @@ class ExpertsController < ApplicationController
   # PATCH/PUT /experts/1
   # PATCH/PUT /experts/1.json
   def update
-    @expert.authorized = true
     @expert.save
     redirect_to @expert
   end
