@@ -7,7 +7,7 @@ class WelcomeController < ApplicationController
     @sessions = Session.all
   end
   
-  def contact
+  def about_us
   end
   
   def faq

@@ -1,0 +1,12 @@
+.container
+  .row-fluid
+    .span12
+      %h1 Dashboard
+  .container
+    .row-fluid.row-margin
+      .span6
+        = link_to 'Sessions', sessions_admin_index_path, class: "btn btn-large btn-block btn-default"
+
+      .span6
+        = link_to 'Experts', experts_admin_index_path, class: "btn btn-large btn-block btn-warning"
+        
