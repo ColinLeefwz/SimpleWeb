@@ -1,45 +1,5 @@
-//= tinymce_assets
-
 %h1 Editing session
-
-= form_for @session, url: session_admin_index_path do |f|
-  - if @session.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@session.errors.count, "error")} prohibited this session from being saved:"
-      %ul
-        - @session.errors.full_messages.each do |msg|
-          %li= msg
-
-  .field
-    = f.label :title
-    = f.text_field :title
-  .field
-    = f.label :expert_id
-    = f.select :expert_id, Expert.all.collect{ |e| [e.name, e.id]}
-  .field
-    = f.label :location
-    = f.text_field :location
-  .field
-    = f.label :price
-    = f.text_field :price
-  .field
-    = f.label :category
-    = f.select :category, Session::CATEGORY
-  .field
-    = f.label :content_type
-    = f.select :content_type, %w(Announcement ArticleSession VideoSession LiveSession)
-  .field
-    = f.label :cover
-    = f.file_field :cover
-  .field
-    = f.label :video
-    = f.file_field :video
-  .field
-    = f.label :description
-    = f.text_area :description, :class => "tinymce"
-    //= tinymce
-  .actions
-    = f.submit 'Save'
+= render 'session_form', url: session_admin_index_path
 
 = link_to 'Show', session_admin_index_path
 \|

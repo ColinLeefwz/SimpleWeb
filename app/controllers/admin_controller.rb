@@ -9,8 +9,6 @@ class AdminController < ApplicationController
   def authorize
     username = params[:admin][:username]
     password = params[:admin][:password]
-    logger.info "username is #{username}"
-    logger.info "password is #{password}"
     if (username == 'sameer') && (password == '123')
       session[:login] = true
       render 'index'
@@ -23,24 +21,19 @@ class AdminController < ApplicationController
   def sign_in
   end
 
-
   def session_index
     @sessions = Session.all
   end
 
-
   def session_show
   end
-
 
   def session_new
     @session = Session.new
   end
 
-
   def session_edit
   end
-
 
   def session_create
     content_type = params[:session][:content_type]
@@ -53,7 +46,6 @@ class AdminController < ApplicationController
     end
   end
 
-
   def session_update
     if @session.update(session_params)
       redirect_to session_admin_index_path(@session)
@@ -62,55 +54,46 @@ class AdminController < ApplicationController
     end
   end
 
-
   def session_destroy
     @session.destroy
     redirect_to sessions_admin_index_path
   end
 
-
   def expert_index
     @experts = Expert.where(authorized: true)
   end
 
-
   def expert_show
   end
-
 
   def expert_new
     @expert = Expert.new
   end
 
-
   def expert_edit
   end
-
 
   def expert_create
     @expert = Expert.new(expert_params)
     if @expert.save
       redirect_to expert_admin_index_path(@expert)
     else
-      render action: 'expert_new'
+      render 'expert_new'
     end
   end
-
 
   def expert_update
     if @expert.update(expert_params)
       redirect_to expert_admin_index_path(@expert)
     else
-      render action: 'expert_edit'
+      render 'expert_edit'
     end
   end
-
 
   def expert_destroy
     @expert.destroy
     redirect_to experts_admin_index_url
   end
-
 
   private
   def set_session
