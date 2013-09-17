@@ -59,11 +59,4 @@ class ExpertsController < ApplicationController
       params.require(:expert).permit(:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials)
     end
 
-    # def check
-    #   if session[:login] == nil
-    #     logger.info("check is used")
-    #     redirect_to sign_in_admin_index_path
-    #   end
-    #   # logger.info("session login" + session[:login].to_s)
-    # end
 end

@@ -21,7 +21,7 @@ ActiveAdmin.register Expert do
       f.input :avatar, as: :file
       f.input :email
       f.input :title
-      f.input :company
+      f.input :company, :as => :ckeditor
       f.input :location
       f.input :expertise
       f.input :web_site
