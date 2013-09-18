@@ -1,8 +1,9 @@
 .static-pages-container
   .static-pages-info
     .static-pages-title
-      = @static_pages.title
+      %h1
+        = @static_page.title.capitalize
     .static-pages-content
-      = @static_pages.content
+      = @static_page.content
   .static-pages-image
-    = @static_pages.image.url
+    = image_tag(@static_page.image.url)
