@@ -5,5 +5,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  belongs_to :rolable, polymorphic: true
+	has_many :owned_sessions, class_name: 'Session', foreign_key: 'owner_id'
+	has_many :followed_sessions, class_name: 'Session'
 end
