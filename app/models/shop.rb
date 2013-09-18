@@ -616,7 +616,7 @@ class Shop
     else
       ca = Shop.where(hash["$query"]|| hash)
       options.each{|k, v| ca= ca.send(k,v)}
-      ca.send("sort", hash["$orderby"]|| hash)
+      ca.send("sort", hash["$orderby"]|| {})
       ca
     end
   end

@@ -1,10 +1,10 @@
 # coding: utf-8
 
-class ShopLinesController < ApplicationController
+class Shop3LinesController < ApplicationController
   before_filter :shop_authorize
   before_filter :master_authorize, :only => [ :edit, :del, :update]
+  layout 'shop3'
   include Paginate
-  layout 'shop'
 
   def index
     hash = {admin_sid: session[:shop_id]}
@@ -12,9 +12,15 @@ class ShopLinesController < ApplicationController
     @lines = paginate("Line", params[:page], hash, sort,10)
   end
 
-
   def edit
     @line_partner = @line.shop_line_partner
+    ids = session_shop.partners.map{|m| m[0]}
+    @partners = Shop.where2({_id: {"$in" => ids}})
+  end
+
+  def new
+    ids = session_shop.partners.map{|m| m[0]}
+    @partners = Shop.where2({_id: {"$in" => ids}})
   end
 
   def create
@@ -24,7 +30,8 @@ class ShopLinesController < ApplicationController
     arr=[]
     params[:arr][:time].each do |t|
       shop = Shop.find_by_id(params[:arr][:id].shift)
-      arr << {:time => t, :sid => shop.id, :lo => shop.lo } if shop
+      time2= params[:arr][:time2].shift
+      arr << {:time => t,:time2 => time2, :sid => shop.id, :lo => shop.lo } if shop
     end
     @line.arr = arr
     @line.save
@@ -47,7 +54,8 @@ class ShopLinesController < ApplicationController
     arr=[]
     params[:arr][:time].each do |t|
       shop = Shop.find_by_id(params[:arr][:id].shift)
-      arr << {:time => t, :sid => shop.id, :lo => shop.lo } if shop
+      time2= params[:arr][:time2].shift
+      arr << {:time => t,:time2 => time2, :sid => shop.id, :lo => shop.lo } if shop
     end
     @line.arr = arr
     @line.save
@@ -56,7 +64,8 @@ class ShopLinesController < ApplicationController
       shop_line_partner.partners = params[:partners]
       shop_line_partner.save
     else
-      ShopLinePartner.find_by_id(@line.id).try(:delete)
+      @line.shop_line_partner.try(:delete)
+      Rails.cache.delete("ShopLinePartner#{@line.id}")
     end
     redirect_to :action => "show", :id => @line.id
   end

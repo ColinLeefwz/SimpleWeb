@@ -38,8 +38,10 @@
         <a class="sign" id="CloseNav"></a>
         <div id="Navcon">
           <a href="/shop3_login">首页</a>
-		  <span class="navline"></span>
-		  <a href="/newbackstage/line.html" style="display:none">拓展功能</a>
+          <span class="navline"></span>
+          <% if session[:shop_id].in?($travel) ||  ENV["RAILS_ENV"] != "production"%>
+            <a href="/shop3_lines">拓展功能</a>
+          <%end%>
           <span class="navline" style="display:none"></span>
           <a href="/shop3_coupons/list">优惠券管理</a>
           <span class="navline"></span>
@@ -61,7 +63,7 @@
           <span class="navline"></span>
 
           <a href="/shop3_login/logout">
-          <%= session[:admin_sid] ? "返回总店" : "退出" %>
+            <%= session[:admin_sid] ? "返回总店" : "退出" %>
           </a>
           <span class="navline"></span>
           <label id="CB1" class="checkboxs1" style="display:none;">取消动画</label>

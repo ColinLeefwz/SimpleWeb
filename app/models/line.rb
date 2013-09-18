@@ -15,6 +15,11 @@ class Line
     (shop_line_partner && shop_line_partner.partners)||{}
   end
 
+  #一个线路点上的合作商家
+  def place_partners(sid)
+    partners[sid.to_s]||[]
+  end
+
 
   def safe_out
     a = self.arr.map do |m|
