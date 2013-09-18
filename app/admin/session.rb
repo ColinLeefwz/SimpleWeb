@@ -27,9 +27,9 @@ ActiveAdmin.register Session do
       f.input :expert
       f.input :cover, as: :file # , hint: f.template.image_tag(f.object.cover.url)
       f.input :status
-      f.input :content_type
+      f.input :content_type, as: :select, collection: Session::CONTENT_TYPE
       f.input :description, :input_html => { :class => 'ckeditor' }
-      f.input :category
+      f.input :category, as: :select, collection: Session::CATEGORY
       f.input :video
       f.input :location
       f.input :price
