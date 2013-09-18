@@ -4,7 +4,7 @@ class ExpertsController < ApplicationController
   # GET /experts
   # GET /experts.json
   def index
-    @experts = Expert.where(authorized: true)
+    @experts = Expert.all
   end
 
   # GET /experts/1
@@ -36,7 +36,6 @@ class ExpertsController < ApplicationController
   # PATCH/PUT /experts/1
   # PATCH/PUT /experts/1.json
   def update
-    @expert.authorized = true
     @expert.save
     redirect_to @expert
   end
@@ -56,14 +55,7 @@ class ExpertsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def expert_params
-      params.require(:expert).permit(:name, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials)
+      params.require(:expert).permit(:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials)
     end
 
-    # def check
-    #   if session[:login] == nil
-    #     logger.info("check is used")
-    #     redirect_to sign_in_admin_index_path
-    #   end
-    #   # logger.info("session login" + session[:login].to_s)
-    # end
 end

@@ -17,6 +17,7 @@ gem 'social-share-button'
 gem 'paperclip'
 gem 'truncate_html'  # make truncate html_safe
 gem 'activeadmin', github: 'gregbell/active_admin', branch: 'rails4'
+gem 'ckeditor'
 
 group :doc do
   gem 'sdoc', require: false

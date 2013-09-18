@@ -1,8 +1,8 @@
 - sessions.each do |session|
-  %div{class: "item #{session.category.downcase}"}
+  %div{class: "item #{session.category.downcase} #{session.content_type.downcase}"}
     .box-header
       .portrait
-        = image_tag(session.expert.image_url)
+        = image_tag(session.expert.avatar.url)
         .expert-name
           = session.expert.name
       .content-type
