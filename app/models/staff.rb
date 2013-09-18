@@ -16,5 +16,13 @@ class Staff
   def checkin_count(uid)
     Checkin.where({sid: shop_id, uid: uid}).count
   end
+  
+  def self.is_staff(uid,sid)
+    $redis.sismember("STAFF#{uid}", sid)
+  end
+  
+  def self.shops(uid)
+    $redis.smembers("STAFF#{uid}")
+  end
 
 end

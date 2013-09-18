@@ -57,6 +57,8 @@ class AroundmeController < ApplicationController
         tail = arr[3..-1]
         arr = head + session_user.groups
         arr = arr + tail if tail
+        staffs = session_user.belong_shops
+        arr = arr + staffs if staffs.size>0
       end
     end
     city = get_city(arr[0], lo)
@@ -229,8 +231,4 @@ class AroundmeController < ApplicationController
     city
   end
 
-  def is_shop_staff?(uid)
-    $redis.hexists('STAFF', uid)
-  end
-  
 end

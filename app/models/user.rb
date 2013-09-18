@@ -162,8 +162,8 @@ class User
     group_ids.map {|id| Shop.find_by_id(id)}
   end
 
-  def staffs
-    $redis.hget("STAFF",self.id).to_a.map {|k| Shop.find_by_id(k)}
+  def belong_shops
+    Staff.shops(self.id).map {|id| Shop.find_by_id(id)}
   end
   
   def black_ids
