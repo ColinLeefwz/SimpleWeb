@@ -23,10 +23,10 @@ ActiveAdmin.register Expert do
       f.input :title
       f.input :company
       f.input :location
-      f.input :expertise
-      f.input :web_site
-      f.input :testimonials
-      f.input :additional
+      f.input :expertise, :input_html => { :class => 'ckeditor' }
+      f.input :web_site, :input_html => { :class => 'ckeditor' }
+      f.input :testimonials, :input_html => { :class => 'ckeditor' }
+      f.input :additional, :input_html => { :class => 'ckeditor' }
       f.actions
     end
   end
@@ -42,10 +42,18 @@ ActiveAdmin.register Expert do
       row :title
       row :company
       row :location
-      row :expertise
-      row :web_site
-      row :testimonials
-      row :additional
+      row :expertise do
+        expert.expertise.html_safe
+      end
+      row :web_site do
+        expert.web_site.html_safe
+      end
+      row :testimonials do
+        expert.testimonials.html_safe
+      end
+      row :additional do
+        expert.additional.html_safe
+      end
     end
   end
 
