@@ -32,6 +32,9 @@ class CheckinNotice
       send_welcome_msg_if_not_invisible(user,shop)
       return
     end
+    if !$redis.smembers("STAFF#{checkin.uid}").blank? #假如是员工
+      send_staff_welcome(user,shop)
+    end
     if checkin.add_to_redis #当天首次签到
       checkin.save!
       #听.说 发送默认信息
@@ -120,6 +123,11 @@ class CheckinNotice
     #return str if ENV["RAILS_ENV"] != "production"
     #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
   end 
+
+  #每次如果有员工在加入的商家签到，在最新动态里欢迎提示
+  def self.send_staff_welcome(user,shop)
+    Xmpp.send_chat($gfuid, user.id,"欢迎来到#{shop.name}", "FEED#{$uuid.generate}")
+  end
 
   def self.tingshuo_default_answer_text(shop, uid)
     if shop.id.to_i == 21832930
