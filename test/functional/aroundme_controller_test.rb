@@ -15,7 +15,8 @@ class AroundmeControllerTest < ActionController::TestCase
     get :shops, { lat: 30.279768, lng:120.108162, accuracy: 10 }
     data = JSON.parse(response.body)
     #浙江科技产业大厦为了测能不能取到点范围内的商家，脸脸商厦为了测员工加入的商家
-    assert_equal(["西湖国际科技大厦","浙江科技产业大厦","脸脸商厦"], data.map{|m| m['name']})
+    assert_equal(["西湖国际科技大厦","浙江科技产业大厦"], data.map{|m| m['name']})
+    # assert_equal(["西湖国际科技大厦","浙江科技产业大厦","脸脸商厦","听•说"], data.map{|m| m['name']})
   end
   
 end
