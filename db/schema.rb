@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130918095257) do
+ActiveRecord::Schema.define(version: 20130919022712) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(version: 20130918095257) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.boolean  "authorized"
   end
 
   create_table "propose_topics", force: true do |t|
@@ -123,6 +122,7 @@ ActiveRecord::Schema.define(version: 20130918095257) do
     t.datetime "video_updated_at"
     t.string   "location"
     t.decimal  "price"
+    t.string   "language"
   end
 
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
