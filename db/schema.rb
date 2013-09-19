@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917175718) do
+ActiveRecord::Schema.define(version: 20130918095257) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -127,6 +127,17 @@ ActiveRecord::Schema.define(version: 20130917175718) do
 
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
 
+  create_table "static_pages", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -138,6 +149,8 @@ ActiveRecord::Schema.define(version: 20130917175718) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
   end

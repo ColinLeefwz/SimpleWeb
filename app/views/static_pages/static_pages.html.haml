@@ -1,0 +1,9 @@
+.static-pages-container
+  .static-pages-info
+    .static-pages-title
+      %h1
+        = @static_page.title.capitalize
+    .static-pages-content
+      = @static_page.content.html_safe
+  .static-pages-image
+    = image_tag(@static_page.image.url)
