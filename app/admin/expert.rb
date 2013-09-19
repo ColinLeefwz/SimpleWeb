@@ -66,19 +66,19 @@ ActiveAdmin.register Expert do
 			end
 
 			row :expertise do |expert|
-				expert.profile.location
+				expert.profile.expertise
 			end
 
 			row :web_site do |expert|
-				expert.profile.location
+				expert.profile.web_site
 			end
 
 			row :testimonials do |expert|
-				expert.profile.location
+				expert.profile.testimonials
 			end
 
 			row :additional do |expert|
-				expert.profile.location
+				expert.profile.additional
 			end
 		end
 	end
