@@ -4,9 +4,9 @@ ActiveAdmin.register Expert do
 		column :name do |expert|
 			link_to(expert.name, admin_expert_path(expert))
 		end
-		# column "Avatar", :image_url do |expert|
-		#   link_to image_tag(expert.avatar.url, width: "50"), admin_expert_path(expert)
-		# end
+		column "Avatar", :image_url do |expert|
+		  link_to image_tag(expert.avatar.url, width: "50"), admin_expert_path(expert)
+		end
 		column :title do |e|
 			e.profile.title
 		end
@@ -28,7 +28,7 @@ ActiveAdmin.register Expert do
 		f.inputs do
 			f.input :first_name
 			f.input :last_name
-			# f.input :avatar, as: :file
+			f.input :avatar, as: :file
 			f.input :email
 			f.input :password, as: :password if f.object.new_record?
 
@@ -49,9 +49,9 @@ ActiveAdmin.register Expert do
 	show do |expert|
 		attributes_table do
 			row :name
-			# row :avatar do
-			#   image_tag expert.avatar.url, width: "70"
-			# end
+			row :avatar do
+			  image_tag expert.avatar.url, width: "70"
+			end
 			row :email
 			row :title do |expert|
 				expert.profile.title
@@ -88,7 +88,7 @@ ActiveAdmin.register Expert do
 		def update
 			@expert = Expert.find params[:id]
 			expert_attributes = params[:expert]
-			@expert.update_attributes! first_name: expert_attributes[:first_name], last_name: expert_attributes[:last_name], email: expert_attributes[:email]
+			@expert.update_attributes! first_name: expert_attributes[:first_name], last_name: expert_attributes[:last_name], email: expert_attributes[:email], avatar: expert_attributes[:avatar]
 
 			@profile = ExpertProfile.find params[:expert][:profile_attributes][:id]
 
@@ -100,7 +100,7 @@ ActiveAdmin.register Expert do
 
 		def create
 			expert_attributes = params[:expert]
-			@expert = Expert.create(first_name: expert_attributes[:first_name], last_name: expert_attributes[:last_name], email: expert_attributes[:email], password: expert_attributes[:password])
+			@expert = Expert.create(first_name: expert_attributes[:first_name], last_name: expert_attributes[:last_name], email: expert_attributes[:email], password: expert_attributes[:password], avatar: expert_attributes[:avatar])
 
 			profile_attributes = params[:expert][:profile_attributes]
 			@profile = @expert.build_profile title: profile_attributes[:title], company: profile_attributes[:company], location: profile_attributes[:location], expertise: profile_attributes[:expertise], web_site: profile_attributes[:web_site], testimonials: profile_attributes[:testimonials], additional: profile_attributes[:additional]
@@ -111,7 +111,7 @@ ActiveAdmin.register Expert do
 
 		def permitted_params
 			# params.permit expert: [:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials]
-			params.permit expert: [:name, :first_name, :last_name, :password, :email, :profile]
+			params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :profile]
 		end
 	end
 end
