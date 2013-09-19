@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
 
 	has_many :owned_sessions, class_name: 'Session', foreign_key: 'owner_id'
 	has_many :followed_sessions, class_name: 'Session'
+
 end

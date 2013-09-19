@@ -30,8 +30,9 @@ ActiveAdmin.register Expert do
 			f.input :last_name
 			# f.input :avatar, as: :file
 			f.input :email
+			f.input :password, as: :password if f.object.new_record?
 
-			f.inputs name: "Profiles", for: :profile do |profile_form|
+			f.inputs name: "Profiles", for: [:profile, f.object.profile || ExpertProfile.new] do |profile_form|
 				profile_form.input :title
 				profile_form.input :company
 				profile_form.input :location
@@ -86,20 +87,31 @@ ActiveAdmin.register Expert do
 	controller do
 		def update
 			@expert = Expert.find params[:id]
+			expert_attributes = params[:expert]
+			@expert.update_attributes! first_name: expert_attributes[:first_name], last_name: expert_attributes[:last_name], email: expert_attributes[:email]
+
 			@profile = ExpertProfile.find params[:expert][:profile_attributes][:id]
 
 			profile_attributes = params[:expert][:profile_attributes]
-			profile_attributes.delete :id
-			logger.info "profile attr is: #{profile_attributes}"
 			@profile.update_attributes title: profile_attributes[:title], company: profile_attributes[:company], location: profile_attributes[:location], expertise: profile_attributes[:expertise], web_site: profile_attributes[:web_site], testimonials: profile_attributes[:testimonials], additional: profile_attributes[:additional]
-			# @profile.update_attributes(profile_attributes)
+
+			redirect_to admin_expert_path @expert
+		end
+
+		def create
+			expert_attributes = params[:expert]
+			@expert = Expert.create(first_name: expert_attributes[:first_name], last_name: expert_attributes[:last_name], email: expert_attributes[:email], password: expert_attributes[:password])
+
+			profile_attributes = params[:expert][:profile_attributes]
+			@profile = @expert.build_profile title: profile_attributes[:title], company: profile_attributes[:company], location: profile_attributes[:location], expertise: profile_attributes[:expertise], web_site: profile_attributes[:web_site], testimonials: profile_attributes[:testimonials], additional: profile_attributes[:additional]
+			@profile.save
 
 			redirect_to admin_expert_path @expert
 		end
 
 		def permitted_params
 			# params.permit expert: [:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials]
-			params.permit expert: [:name, :profile]
+			params.permit expert: [:name, :first_name, :last_name, :password, :email, :profile]
 		end
 	end
 end
