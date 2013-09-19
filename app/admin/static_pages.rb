@@ -12,7 +12,7 @@ ActiveAdmin.register StaticPages do
     f.inputs "static pages" do
       f.input :title
       f.input :content, :input_html => {:class => 'ckeditor'}
-      f.input :image, as: :file
+      #f.input :image, as: :file
       f.actions
     end
   end
