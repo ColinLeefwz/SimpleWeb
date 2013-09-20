@@ -1,6 +1,7 @@
 $(document).ready ->
-  $("#footer_select").bind "change", ->
-#    document.location.href = $(this).val()
+#  $('.dropdown-toggle').dropdown()
+  $("#footer-select").bind "change", ->
+    document.location.href = $(this).val()
 #    if ($(this).selected)
 #      alert "test"
-    $("#about-us").selected = true
+#    $("#about-us").selected = true
