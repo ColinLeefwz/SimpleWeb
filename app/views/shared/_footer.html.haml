@@ -1,3 +1,13 @@
 .links
-  = link_to 'About us', about_us_path
-  = link_to 'FAQ', faq_path
+  .visible-desktop
+    = link_to 'about us', '/about_us' 
+    = link_to 'faq', '/faq'  
+    = link_to 'for experts', '/for_experts'
+    = link_to 'terms', '/terms'
+    = link_to 'privacy', '/privacy'
+
+  //.dropdown
+  //  %button.btn button
+  //  %ul.dropdown-menu{:role => 'menu', 'aria-labelledby' =>  'dropdownMenu'}
+  //    %li
+  //      =link_to 'Action', '/about_us', tabindex: '-1'
