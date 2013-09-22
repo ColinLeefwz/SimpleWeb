@@ -64,19 +64,6 @@ class ShopController < ApplicationController
         hash = {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id]))
         ret << hash
       end
-      #10结果, 100%
-      #0结果, 50%
-#      shop = Shop.where({t:0, name:params[:sname]}).first #虚拟的活动地点名称按相似度50%～100%匹配
-#      if shop
-#        hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id]))
-#        ret << hash
-#      end
-      if ret.size<3
-        #city = Shop.get_city(lo)
-        #if city
-        #  shop1s = Shop.where2({city:city, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})
-        #end
-      end
 
       #商家查询个数小于10， 按群组的相似度查询群组
       if ret.size < 10
@@ -89,6 +76,7 @@ class ShopController < ApplicationController
         end
       end
 
+      ret.uniq!
       render :json =>  ret.to_json
     end
 
