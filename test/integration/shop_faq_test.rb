@@ -56,15 +56,15 @@ class ShopFaqTest < ActionDispatch::IntegrationTest
     assert_equal assigns[:text], "试试回复：\n01=>获取wifi密码.\n02=>商家图片.\n03=>今天特色."
     #发送01
     get "/answer/shop?sid=#{Shop.find(1).id}&uid=502e6303421aa918ba000005&msg=01"
-    assert_equal assigns[:text], '1111'
+    assert_equal assigns[:text].text, '1111'
 
     #发送02
     get "/answer/shop?sid=#{Shop.find(1).id}&uid=502e6303421aa918ba000005&msg=02"
-    assert_equal assigns[:text], "[img:faq#{faq2.id.to_s}]"
+    assert_equal assigns[:text], faq2
 
     #发送03
     get "/answer/shop?sid=#{Shop.find(1).id}&uid=502e6303421aa918ba000005&msg=03"
-    assert_equal assigns[:text], "[img:faq#{faq3.id.to_s}]今天特色是没有特色"
+    assert_equal assigns[:text], faq3
 
     #发送04
     get "/answer/shop?sid=#{Shop.find(1).id}&uid=502e6303421aa918ba000005&msg=04"

@@ -66,7 +66,7 @@ class ShopTest < ActiveSupport::TestCase
   
   test "#answer_text(msg) 回复01" do
     shop = Shop.find(1)
-    assert_equal shop.answer_text('01'), "答案1"
+    assert_equal shop.answer_text('01').text, "答案1"
   end
 
   test "#answer_text(msg) 回复06" do
@@ -86,8 +86,8 @@ class ShopTest < ActiveSupport::TestCase
   
   test "商家id自增" do
     $redis.del("SHOP_NID")
-    assert_equal 4928289, Shop.next_id
-    assert_equal 4928290, Shop.next_id
+    assert_equal 21830326, Shop.next_id
+    assert_equal 21830327, Shop.next_id
   end
 
   test "#send_coupon(user_id) 7月18日 推广楼宇获取附近合作商家优惠券" do
