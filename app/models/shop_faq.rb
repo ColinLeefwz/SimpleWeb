@@ -3,12 +3,16 @@ class ShopFaq
   include Mongoid::Document
 
   field :sid, type: Integer
+  field :od #数字排序
   field :title #问题
-  field :text #简单回答，或者标题
+  
+  field :text #简单回答，或者摘要
   field :img #回答的图片
+  
   field :url #回答点开的链接
+  
+  field :head #回答点开的内容头部
   field :content #回答点开的内容
-  field :od
 
   validate do |faq|
     errors.add(:od, "序号不能是空.") if faq.od.blank?
