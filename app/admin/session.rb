@@ -10,6 +10,9 @@ ActiveAdmin.register Session do
     column "Expert", :expert_id do |session|
       link_to session.expert.name, admin_expert_path(session.expert_id)
     end
+    column :always_show do |session|
+      session.always_show.to_s
+    end
     column :status
     column :content_type
     column :category
@@ -25,6 +28,7 @@ ActiveAdmin.register Session do
     f.inputs "Session", multipart: true do
       f.input :title
       f.input :expert
+      f.input :always_show
       f.input :cover, as: :file # , hint: f.template.image_tag(f.object.cover.url)
       f.input :status
       f.input :content_type, as: :select, collection: Session::CONTENT_TYPE
@@ -43,6 +47,9 @@ ActiveAdmin.register Session do
       row :title
       row :expert do
         link_to session.expert.name, admin_expert_path(session.expert_id)
+      end
+      row :always_show do
+        session.always_show.to_s
       end
       row :cover do
         image_tag session.cover.url, width: "70"
@@ -63,7 +70,7 @@ ActiveAdmin.register Session do
 
   controller do
     def permitted_params
-      params.permit session: [:title, :expert_id, :created_date, :description, :cover, :status, :content_type, :category, :location, :price, :video]
+      params.permit session: [:title, :expert_id, :always_show, :created_date, :description, :cover, :status, :content_type, :category, :location, :price, :video]
     end
   end
 

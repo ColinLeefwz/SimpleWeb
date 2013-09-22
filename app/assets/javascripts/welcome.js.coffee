@@ -61,14 +61,14 @@ $ ->
 
 	$container = $('#content')
 	$('nav li .filters').on 'click', ->
-		selector = $(this).data('filter')
+		selector = $(this).data('filter') + ', .always_show'
 		$container.isotope {
 			filter: selector
 		}
 
 	$('select#collapsed_navbar').on 'change', ->
 		option = $(this).find(":selected")
-		selector = option.data 'filter'
+		selector = option.data('filter') + ', .always_show'
 		if selector != '.format'
 			$container.isotope {
 				filter: selector
