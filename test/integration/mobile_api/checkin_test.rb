@@ -25,9 +25,10 @@ class CheckinTest < ActionDispatch::IntegrationTest
     `rake db:mongoid:create_indexes RAILS_ENV=test`
     login("502e6303421aa918ba000001");
     assert_difference 'Shop.count' do
-    assert_difference 'Checkin.count' do
-      post "/checkins/new_shop",{"user_id"=>"502e6303421aa918ba000001",  "sname"=>"添加地点1", "altitude"=>"28.416849", "od"=>"1", "altacc"=>"13", "lat"=>"30.279768", "lng"=>"120.108162", "accuracy"=>"95"}
-    end
+      assert_difference 'Checkin.count' do
+        $redis.del("SHOP_NID")
+        post "/checkins/new_shop",{"user_id"=>"502e6303421aa918ba000001",  "sname"=>"添加地点1", "altitude"=>"28.416849", "od"=>"1", "altacc"=>"13", "lat"=>"30.279768", "lng"=>"120.108162", "accuracy"=>"95"}
+      end
     end
     assert_equal Shop.last.name, "添加地点1"
   end
