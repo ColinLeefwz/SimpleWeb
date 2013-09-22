@@ -61,6 +61,7 @@ class AroundmeController < ApplicationController
         arr = arr + staffs if staffs.size>0
       end
     end
+    arr.uniq!
     city = get_city(arr[0], lo)
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
