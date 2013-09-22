@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130919022712) do
+ActiveRecord::Schema.define(version: 20130921053544) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20130919022712) do
     t.string   "location"
     t.decimal  "price"
     t.string   "language"
+    t.boolean  "always_show",        default: false
   end
 
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
@@ -149,8 +150,6 @@ ActiveRecord::Schema.define(version: 20130919022712) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
   end
