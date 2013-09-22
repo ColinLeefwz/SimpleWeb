@@ -1,13 +1,24 @@
 .links
   .visible-desktop
-    = link_to 'about us', '/about_us' 
-    = link_to 'faq', '/faq'  
-    = link_to 'for experts', '/for_experts'
-    = link_to 'terms', '/terms'
-    = link_to 'privacy', '/privacy'
+    = link_to 'About Us', '/about_us' 
+    = link_to 'FAQ', '/faq'  
+    = link_to 'For Experts', '/for_experts'
+    = link_to 'Terms', '/terms'
+    = link_to 'Privacy', '/privacy'
 
-  //.dropdown
-  //  %button.btn button
-  //  %ul.dropdown-menu{:role => 'menu', 'aria-labelledby' =>  'dropdownMenu'}
-  //    %li
-  //      =link_to 'Action', '/about_us', tabindex: '-1'
+  %select#footer-select.hidden-desktop
+    %option{value: '/'}info
+    %option{value: '/about_us'}about us
+    %option{value: '/faq'}faq
+    %option{value: '/for_experts'}for experts
+    %option{value: '/terms'}terms
+    %option{value: '/privacy'}privacy
+//  .dropdown
+//    %a{:href => '#', :class => 'btn dropdown-toggle', 'data-toggle' => 'dropdown'}action 
+//    %ul.dropdown-menu{:role => 'menu', 'aria-labelledby' => 'dLabel'}
+//      %li
+//        = link_to 'About Us', '/about_us', tabindex: '-1'
+//      %li
+//        = link_to 'FAQ', '/faq',  tabindex: '-1' 
+
+

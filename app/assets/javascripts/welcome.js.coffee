@@ -60,7 +60,7 @@ $ ->
 		$(this).replaceWith("<video src='#{video_source}' controls='controls'>")
 
 	$container = $('#content')
-	$('nav li.category .filters').on 'click', ->
+	$('nav li .filters').on 'click', ->
 		selector = $(this).data('filter') + ', .always_show'
 		$container.isotope {
 			filter: selector
