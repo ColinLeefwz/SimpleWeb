@@ -1,4 +1,4 @@
-class Expert < User
+class Expert < Member
 	has_one :profile, class_name: 'ExpertProfile'
 	accepts_nested_attributes_for :profile
 
