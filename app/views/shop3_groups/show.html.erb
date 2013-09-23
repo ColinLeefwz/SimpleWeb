@@ -1,0 +1,49 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">拓展功能</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_lines">线路图</a></li>
+      <li class="hover"><a>旅行团</a></li>
+      <li><%= link_to "合作商家", "/shop3_partners" %></li>
+      <li><%= link_to "合作商家评分", "/shop3_partners/mark" %></li>
+    </ul>
+    <div class="r wordstyle">
+
+    </div>
+  </div>
+  <table width="100%" cellspacing="0" cellpadding="0" border="0" class="tab1 mt40">
+    <tr>
+      <td width="100" valign="middle" align="right" class="pr20">路 线</td>
+      <td><%= @group.line_name %></td>
+    </tr>
+    <tr>
+      <td valign="middle" align="right" class="pr20">团 号</td>
+      <td><%= @group.code %></td>
+    </tr>
+    <tr>
+      <td valign="middle" align="right" class="pr20">团 名</td>
+      <td><%= @group.name %></td>
+    </tr>
+    <tr>
+      <td valign="middle" align="right" class="pr20">开始日期</td>
+      <td><%= @group.fat %></td>
+    </tr>
+    <tr>
+      <td valign="middle" align="right" class="pr20">结束日期</td>
+      <td><%= @group.tat %></td>
+    </tr>
+    <tr>
+      <td valign="middle" align="right" class="pr20">认证提示</td>
+      <td><%= @group.hint %></td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" class="pr20">团 员</td>
+      <td><%= group_show_users(@group.users).html_safe%>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><a href="/shop3_groups" class="btn2 l">返 回</a></td>
+    </tr>
+  </table>
+</div>

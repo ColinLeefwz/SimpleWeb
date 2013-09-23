@@ -2,41 +2,35 @@
   <div class="title1 mb30"><h2 class="f18">拓展功能</h2></div>
   <div class="submenu">
     <ul>
-      <li class="hover"><a>线路图</a></li>
+      <li><a href="/shop3_lines">线路图</a></li>
       <li><%= link_to "旅行团", "/shop3_groups" %></li>
-      <li><%= link_to "合作商家", "/shop3_partners" %></li>
+      <li class="hover"><a>合作商家</a></li>
       <li><%= link_to "合作商家评分", "/shop3_partners/mark" %></li>
     </ul>
     <div class="r wordstyle">
-      <a href="/shop3_lines/new" class="btn9">新建线路图</a>
+      <a href="/shop3_partners/new" class="btn9">新建合作商家</a>
     </div>
   </div>
-
-  <table width="100%" cellspacing="0" cellpadding="0" class="tab2">
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40">
     <tr id="Tr0">
-      <th width="235">名称</th>
-      <th width="500">线路</th>
-      <th width="95">&nbsp;</th>
+      <th width="200">商家名称</th>
+      <th width="150">所在城市</th>
+      <th width="315">地址</th>
+      <th width="120">添加时间</th>
+      <th width="45"></th>
     </tr>
 
-    <%  @lines.each do |line| %>
-      <tr>
-        <td valign="middle">
-          <%= link_to line.name, "/shop3_lines/show?id=#{line.id}", :class => "f14" %>
-        </td>
-        <td>
-          <%=  show_time(line.arr.first['time'])  %>
-          ...
-          <%=  show_time(line.arr.last['time2'])  %>
-        </td>
-        <td align="center">
-          <%= link_to "","/shop3_lines/edit?id=#{line.id}", :class => "edit mr10", :title => "编辑"  %>
-          <%= link_to "", "javascript:void(0)", :class => "del", :title => "删除", :onclick => "Del(this, '#{line.id}')"%>
-        </td>
+    <% @shops.each_with_index do |shop, index| %>
+      <tr id="Tr<%= index+1 %>">
+        <td><%= shop.name  %></td>
+        <td><%= shop.city_fullname  %></td>
+        <td><%= shop.addr  %> </td>
+        <td><%= @shopids[index][1].localtime.strftime("%Y-%m-%d %H:%M:%S")  %></td>
+        <td><%= link_to "", 'javascript:void(0)', :class => "del", :onclick => "Del(this, '#{shop.id}')", :title => "删除" %></td>
       </tr>
-
-    <% end %>
+    <% end  %>
   </table>
+
   <%= generate_paginate %>
 </div>
 
@@ -55,7 +49,7 @@
 
     $(".tab2 tr:odd").addClass("trbg");
   });
-  function Del(obj,id){
+  function Del(obj,sid){
     var delTimer,i=3;
     $(obj).removeAttr("onclick").removeClass().attr("title","").addClass("cancel").html("取消&nbsp;"+i);
     delTimer=setInterval(function(){
@@ -66,16 +60,16 @@
         $(obj).fadeIn(500);
       }else if(i<=0){
         clearInterval(delTimer);
-        $.post("/shop3_lines/del", {id: id}, function(){
+        $.get("/shop3_partners/del", {id: sid}, function(){
           $(obj).parent().parent().remove()
-        })
+        });
       }
     },700);
 
     $(obj).attr("onclick","Cancel(this,"+delTimer+")");
   }
-  function Cancel(obj,dt, id){
+  function Cancel(obj,dt){
     clearInterval(dt);
-    $(obj).removeClass().html("").attr("title","删除").addClass("del").attr("onclick",id);
+    $(obj).removeClass().html("").attr("title","删除").addClass("del").attr("onclick","Del(this,$(this).attr('rel'))");
   }
 </script>

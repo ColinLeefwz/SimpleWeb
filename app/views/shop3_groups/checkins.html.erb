@@ -1,0 +1,39 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18 l">拓展功能</h2>
+    <a href="/shop3_groups" class="btn10 r">返回</a>
+  </div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_lines">线路图</a></li>
+      <li class="hover"><a>旅行团</a></li>
+      <li><%= link_to "合作商家", "/shop3_partners" %></li>
+      <li><%= link_to "合作商家评分", "/shop3_partners/mark" %></li>
+    </ul>
+    <div class="r wordstyle">
+
+    </div>
+  </div>
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2">
+    <tr id="Tr0">
+      <th width="670">用户名</th>
+      <th>景点</th>
+    </tr>
+
+    <% @checkins.each do |checkin| %>
+
+
+      <tr>
+        <td valign="middle">
+          <%=link_to image_tag(UserLogo.img_url(checkin.user.try(:head_logo_id), :t1), :class => "imgstyle2",:align=>"left"), "/shop3_checkins/user?uid=#{checkin.uid}", :title => "查看详情"%>
+          <%= link_to checkin.user.try(:name) || '', "/shop3_checkins/user?uid=#{checkin.uid}", :class => "f14" %>
+          <br/>
+          签到时间：2012-12-22 18:33
+          <%= checkin.cat.to_time.localtime.strftime("%Y-%m-%d %H:%M:%S") %>
+        </td>
+        <td class="f14"><%= checkin.shop.name%></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= generate_paginate %>
+</div>
