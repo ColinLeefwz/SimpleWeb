@@ -26,7 +26,7 @@ class Shop3DataController < ApplicationController
     hash.merge!({uid: params[:uid]}) unless params[:uid].blank?
     
     sort = {_id: -1}
-    @downs = paginate2("CouponDown", params[:page], hash, sort, 1000)
+    @downs = paginate2("CouponDown", params[:page], hash, sort, 10000)
     respond_to do |format|
       format.json
     end
@@ -41,7 +41,7 @@ class Shop3DataController < ApplicationController
     hash.merge!({uid: params[:uid]}) unless params[:uid].blank?
     
     sort = {_id: -1}
-    @uses = paginate2("CouponDown", params[:page], hash, sort, 1000)
+    @uses = paginate2("CouponDown", params[:page], hash, sort, 10000)
     respond_to do |format|
       format.json
     end
