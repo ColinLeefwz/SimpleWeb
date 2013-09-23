@@ -37,7 +37,7 @@
       .video-page-others
         %p Click below to entroll now!
         .enroll-button
-          %p= link_to 'Enroll now!'
+          %p= link_to 'Enroll now!', enroll_session_path(@session)
         %p.outline-font= link_to 'Tell A Friend'
   -if !@session.video.url.eql?"/videos/original/missing.png"
     .video-page-video-frame
