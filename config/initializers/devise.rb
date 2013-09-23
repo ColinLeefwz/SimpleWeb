@@ -76,6 +76,12 @@ Devise.setup do |config|
   # passing :skip => :sessions to `devise_for` in your config/routes.rb
   config.skip_session_storage = [:http_auth]
 
+  # By default, Devise cleans up the CSRF token on authentication to
+  # avoid CSRF token fixation attacks. This means that, when using AJAX
+  # requests for sign in and sign up, you need to get a new CSRF token
+  # from the server. You can disable this option at your own risk.
+  # config.clean_up_csrf_token_on_authentication = true
+
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 10. If
   # using other encryptors, it sets how many times you want the password re-encrypted.
@@ -86,7 +92,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "ec4ddc324a9bfeaf73b27fab99565008e0d6973861af2896fc6cc7d7da7fb90c220bd318d659c1caa797051d28c17ccce2c9956c6e987c6bc51d9fa82078eb64"
+  # config.pepper = "1450c7795152792554447add55e8bc78701019ec5413ada46e73beb90fcd14504ce44757a5bbaab2fb2ebdca45c8fd632c4b01d6bd9f907669922f6436ba379d"
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
