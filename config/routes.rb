@@ -89,6 +89,8 @@ Lianlian::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   #match ':controller(/:action(/:id(.:format)))'
+  match "esprit" => redirect("/w/esprit")
+
   match ':controller/:action' => ":controller#:action"
   match ':controller/:action(.:format)'  => ":controller#:action"
   match ':controller' => ":controller#index"
