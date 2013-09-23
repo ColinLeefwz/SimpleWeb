@@ -9,11 +9,11 @@
           .video-page-expert-portrait
             .video-page-image-border
               = image_tag(@session.expert.avatar.url)
-            %p= @session.expert.company
+            %p= @session.expert.profile.company
           .video-page-expert-name-title
             .video-page-expert-name-value
               = @session.expert.name
-            %p= @session.expert.title
+            %p= @session.expert.profile.title
         .video-page-category-info
           .video-page-category-info-title
             Category
@@ -21,7 +21,7 @@
       .video-page-location-info
         %p#location-icon1.location-icon-background
           %span.location-info
-            = @session.expert.location
+            = @session.expert.profile.location
         %p#location-icon2.location-icon-background
           %span.location-info
             -# = @session.created_at.to_formatted_s(:short)
