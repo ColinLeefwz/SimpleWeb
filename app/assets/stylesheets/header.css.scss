@@ -8,13 +8,26 @@ $font-color: #575757;
   box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
 
   #logo_container{
-    max-width: 18%;
+    // max-width: 18%;
     #logo {
       display: inline-block;
-      margin-top: 5%;
-      margin-left: 5%;
+      // margin-top: 5%;
+      // margin-left: 5%;
+			margin-top: 8px;
+			margin-left: 13px;
+			width: 17%;
     }
   }
+
+	#user-session {
+		margin-right: 5%;
+		margin-top: 2%;
+	}
+
+	.fixed {
+		clear: both;
+	}
+
 
   nav{
     margin-top: 1%;

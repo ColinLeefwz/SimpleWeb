@@ -1,12 +1,10 @@
 #logo_container
-  #logo
+  #logo.pull-left
     = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
-  #user-session
-    - if user_signed_in?
-      = link_to "Log Out", destroy_user_session_path, method: :delete
-    - else
-      = link_to "Sign Up", new_user_registration_path
-      = link_to "Sign In", new_user_session_path
+
+  #user-session.pull-right
+    = render 'shared/user_session'
+  .fixed
 
 %nav
   %ul.visible-desktop
