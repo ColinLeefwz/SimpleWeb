@@ -1,42 +1,62 @@
 <!DOCTYPE html>
-<html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
-</head>
-<body>
-<p>
-	<label>请选择一个图像文件：</label>
-	<input type="file" id="demo_input" />
-</p> 
-<div id="demo_result">
-	  <!-- 这里用来显示读取结果 -->
-</div> 
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+	<style type="text/css">
+	<!--
+		.box{width:800px;margin:0px auto;position:relative;}
+		#UploadButton{width:70px;height:22px;}
+		#UploadPic{width:300px;}
+		.filebox{position:absolute;left:0px;top:0px;width:70px;height:22px;filter: alpha(opacity=0);opacity:0;}
+		.none{display:none;}
+	-->
+	</style>
+  </head>
+  <body>
+  <div class="box">
+	<form enctype="multipart/form-data" method="post">
+		<input type="button" value="上传图片" id="UploadButton" onClick="ImageUpload('UploadFile')"/>
+		<input id="UploadFile" type="file" onClick="ImageUpload('UploadFile')"/><!--在火狐、谷歌浏览器中，只需要在UploadButton元素上写上onClick="ImageUpload('UploadFile')"就行，为了兼容Opera、IE才在这里加上onClick="ImageUpload('UploadFile')"-->
+		<div id="UploadBox">
+				<img id="UploadPic" src="images/sign4.jpg">
+		</div>
+	</form>
+  </div>
 
-<script src="js/jquery-1.6.2.min.js"></script>
 <script>
-if ( typeof FileReader === 'undefined' ){
-        demo_result.innerHTML = "<p class='warn'>抱歉，你的浏览器不支持 FileReader</p>";
-        demo_input.setAttribute( 'disabled','disabled' );
-} else {
-        demo_input.addEventListener( 'change',readFile,false );
+var ua=navigator.userAgent.toLowerCase();//将浏览器类型字符串转换为小写,以方便下面的if条件判断。
+if(/msie/i.test(ua)||/opera/i.test(ua)){//Opera 浏览器，file上传框架必须显示（可以全透明）才能执行ImageUpload()函数。而IE浏览器，必须鼠标真正点击到file上传框架才能将图片上传到服务器。
+	document.getElementById("UploadFile").className="filebox";
+}else{
+	document.getElementById("UploadFile").className="none";
 }
 
-function readFile(){
-        var file = $("#demo_input").get(0).files[0];
+function ImageUpload(target){
+	var obj=document.getElementById(target);
+	var pic=document.getElementById("UploadPic");
 
-/*		if(!/image\/\w+/.test(file.type)){
-                alert("请确保文件为图像类型");
-                return false;
-        }*/
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function(e){alert(1);
-                demo_result.innerHTML = '<img src="'+this.result+'" alt=""/>'
-        }
+	obj.click();//打开上传对话框
+	obj.onchange=function(){
+		if(/msie/i.test(ua)){//IE浏览器可以直接取值
+			//pic.src=obj.value;//经测试IE用此种写法在服务器可能会有问题。
+			//因此IE在服务器上运行时一般采用如下方法：
+			obj.select();
+			var path=document.selection.createRange().text;
+			pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
+			pic.src="images/clear.gif";
+			//alert(path);
+		}else{//火狐、谷歌、Opera、需要通过生成FileReader()来专门实现图片显示
+			var reader = new FileReader();
+			reader.readAsDataURL(obj.files[0]);
+			reader.onload = function(e){
+				pic.src=this.result; 
+			}
+		}
+	}
 }
-
 </script>
-
-
-</body>
+  
+  </body>
 </html>
