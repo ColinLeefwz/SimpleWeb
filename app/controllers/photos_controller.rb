@@ -71,11 +71,13 @@ class PhotosController < ApplicationController
 
   def like
     photo = Photo.find(params[:id])
-    $redis.zadd("Like#{photo.id}", Time.now.to_i, session[:user_id])
-    if UserDevice.user_ver_redis(photo.user_id).to_f>=2.3
-      Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
-        "'赞'了你的照片",
-        "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
+    flag = $redis.zadd("Like#{photo.id}", Time.now.to_i, session[:user_id])
+    if flag && UserDevice.user_ver_redis(photo.user_id).to_f>=2.3
+      Rails.cache.fetch("Like#{photo.id}#{session[:user_id]}") do
+        Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
+          "'赞'了你的照片",
+          "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
+      end
     end
     expire_cache_shop(photo.room, photo.user_id)
     render :json => {id:session[:user_id], name: session_user.name, t:Time.now}.to_json
