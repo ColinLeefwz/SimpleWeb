@@ -1,22 +1,31 @@
-%h2 Enroll Page in Sessions
-
 #review-order
-  %h3 Review your order
-  .title
-    = image_tag @session.expert.avatar.url
-    .primary-title
-      = @session.title
-    .second-title
-      = "by #{@session.expert.name}"
-  .body
-    .beginning-date
-      = @session.start_date.to_date.to_formatted_s()
-    .type
-      = @session.content_type.split(/(?=[A-Z])/)[0]
-    .price
-      = @session.price
-    .pay
-      = link_to 'Paypal', "#"
+  .title Review your order
+  .content
+    .session-title
+      = image_tag @session.expert.avatar.url, class: 'pull-left'
+      .primary-title
+        = @session.title
+      .second-title
+        = "by #{@session.expert.name}"
+    .body
+      %p.beginning-date.info-icon-bg
+        %span.order-info
+          = @session.start_date.to_date.to_formatted_s()
+      %p.type.info-icon-bg
+        %span.order-info
+          = @session.content_type.split(/(?=[A-Z])/)[0]
+      %p.price.info-icon-bg
+        %span.order-info
+          = @session.price
+      .pay
+        %form{action: "https://www.sandbox.paypal.com/cgi-bin/webscr", method: "post", name: "_xclick"}
+          %input{name: "cmd", type: "hidden", value: "_xclick"}
+          %input{name: "business", type: "hidden", value: "me@mybusiness.com"}
+          %input{name: "currency_code", type: "hidden", value: "USD"}
+          %input{name: "item_name", type: "hidden", value: "Teddy Bear"}
+          %input{name: "amount", type: "hidden", value: "12.99"}
+          %input{alt: "Make payments with PayPal - it's fast, free and secure!", border: "0", name: "submit", src: "http://www.paypalobjects.com/zh_XC/i/btn/btn_buynow_LG.gif", type: "image"}
+        -# = link_to 'Paypal', "#"
 
 #create-account
   %h3 Create an account
