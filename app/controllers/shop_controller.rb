@@ -32,10 +32,6 @@ class ShopController < ApplicationController
   end
   
   #签到时输入地点名称查找地点
-  #少于三个字时，只查询附近的可以进入的现场
-  #当大于三个字时
-  #   名称完全匹配时，可以进入虚拟的活动地点
-  #   名称部分匹配时，可以围观
   def add_search
     if params[:sname].nil?
       render :json => [].to_json
@@ -48,10 +44,6 @@ class ShopController < ApplicationController
         return
       end
     end
-    if params[:sname]=="听说" || params[:sname]=="听" || (params[:sname][0]=="听" && params[:sname][-1]=="说")
-      render :json => [Shop.find_by_id(21832930)].map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
-      return
-    end    
     lo = [params[:lat].to_f, params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     if params[:sname].length==1
@@ -59,27 +51,25 @@ class ShopController < ApplicationController
       render :json =>  shops.map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
     else
       ret = []
+      # TODO: 默认搜索同城， 国外搜国家
       shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})        
       shop1s.each do |s| 
         hash = {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id]))
+        # TODO: 判断距离, 大于1000米+误差，visit:1
         ret << hash
       end
-
       #商家查询个数小于10， 按群组的相似度查询群组
       if ret.size < 10
-        ids = $redis.zrange("GSN", 0, -1, withscores: true).select{|gs|  Shop.str_similar(params[:sname], gs[0]) >= (0.5+ret.size*0.05)}.map{|m| m[1]}
-        unless ids.blank?
-          Shop.where2({_id: {"$in" => ids}}).each do |shop|
-             hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id]))
-             ret << hash
-          end
+        ids = $redis.zrange("GSN", 0, -1, withscores: true).select{|gs|  Shop.str_similar(params[:sname], gs[0]) >= (0.6+ret.size*0.04)}.map{|m| m[1]}
+        ids.each do |id|
+          shop = Shop.find_by_id(id)
+          hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id]))
+          ret << hash
         end
       end
-
       ret.uniq!
       render :json =>  ret.to_json
     end
-
   end
   
   def auth
@@ -102,7 +92,13 @@ class ShopController < ApplicationController
     users = shop.view_users(session[:user_id],(page-1)*pcount,pcount)
     render :json => users.to_json
   end
-  
+
+  def user6s
+    shop = Shop.find_by_id(params[:id])
+    users = shop.view_user6s(session[:user_id])
+    render :json => users.to_json
+  end
+    
   def info
     shop = Shop.find_by_id(params[:id])
     render :json => shop.safe_output_with_staffs.to_json
