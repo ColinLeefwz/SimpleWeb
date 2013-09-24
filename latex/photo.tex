@@ -190,14 +190,19 @@ POST & \multicolumn{3}{|c|}{/photos/comment} \\
    \end{center}
 \end{table}
 
-返回的数据结构是评论的数组。
+[2013－9－24] 新增sid，表示发表评论的用户所在现场的id。同时，如果评论者的sid和图片的商家id一致，那么会在聊天室中发布一条动态消息，消息id以COMMENT开头。评论消息的格式和普通图片消息一致。
+
+\begin{figure}[H]
+\begin{verbatim}
+返回的数据结构是评论的数组：
  id: 评论人的id
  name: 评论人的名字
  txt:评论的内容
  t:时间
  rid:被回复者的id
  rname: 被回复者的名字
-
+\end{verbatim}
+\end{figure}
 
 \subsection{对聊天室图片点评进行回复}
 

@@ -535,6 +535,25 @@ GET & \multicolumn{3}{|c|}{/shop/users} \\
 在商家的用户的统计数据根据签到来统计，而签到则是当用户进入商家聊天室时自动后台发送。
 
 
+
+\subsection{根据商家ID获得最新的6个用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/user6s} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+只有当商家用户数大于3时，这个接口才返回数据；否则返回空数组。
+客户端自行控制是显示5个还是6个用户头像。
+
 \subsection{根据商家ID获得商家的聊天室历史}
 商家的图片来自个人在聊天室的发图。\label{photowall}
 
