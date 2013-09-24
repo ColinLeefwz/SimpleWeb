@@ -57,7 +57,7 @@ class CheckinNotice
     else
       message = "#{user.name} 来啦~😝"
     end
-    Resque.enqueue(XmppRoomMsg2, shop.id, user.id, message)
+    Resque.enqueue(XmppRoomMsg2, shop.id, user.id, message, "ckn#{$uuid.generate}")
   end
   
   def self.send_test_coupon(uid,sid) #每次进入脸脸茶坊，都发送优惠券，方便客户端测试
