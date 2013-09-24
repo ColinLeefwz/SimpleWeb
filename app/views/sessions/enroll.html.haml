@@ -1,7 +1,7 @@
 %h2 Enroll Page in Sessions
-%h3 Review your order
 
 #review-order
+  %h3 Review your order
   .title
     = image_tag @session.expert.avatar.url
     .primary-title
@@ -10,9 +10,30 @@
       = "by #{@session.expert.name}"
   .body
     .beginning-date
-
+      = @session.start_date.to_date.to_formatted_s()
     .type
       = @session.content_type.split(/(?=[A-Z])/)[0]
     .price
       = @session.price
+    .pay
+      = link_to 'Paypal', "#"
+
+#create-account
+  %h3 Create an account
+  .existing-account
+    = raw "#{link_to "Login", new_user_session_path} to an existing account"
+  .create-pay
+    .omniauth
+      = "FaceBook"
+      = "LinkedIn"
+    %hr
+    .create
+      = simple_form_for :user, url: user_registration_path do |f|
+        = f.input :first_name
+        = f.input :last_name
+        = f.input :email
+        = f.input :password
+        = f.button :submit, value: 'Paypal'
+
+
 
