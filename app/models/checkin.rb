@@ -171,6 +171,7 @@ LUA
   def add_city_redis
     x = self.sex
     x = 1 if x!=2
+    return if self.sid.to_i == 21835409 #技术测试专用
     $redis.zadd("HOT#{x}U#{self.city}",self.cati, self.uid)
   end
   
