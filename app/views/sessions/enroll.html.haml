@@ -1,0 +1,18 @@
+%h2 Enroll Page in Sessions
+%h3 Review your order
+
+#review-order
+  .title
+    = image_tag @session.expert.avatar.url
+    .primary-title
+      = @session.title
+    .second-title
+      = "by #{@session.expert.name}"
+  .body
+    .beginning-date
+
+    .type
+      = @session.content_type.split(/(?=[A-Z])/)[0]
+    .price
+      = @session.price
+
