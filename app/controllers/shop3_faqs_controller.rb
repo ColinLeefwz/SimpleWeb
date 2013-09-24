@@ -10,7 +10,8 @@ class Shop3FaqsController < ApplicationController
   
   def new
     @shop_faq = ShopFaq.new
-	@shop_faqs = session_shop.faqs
+    # @shop_faq.save!
+	  @shop_faqs = session_shop.faqs
   end
 
   def edit
@@ -29,6 +30,7 @@ class Shop3FaqsController < ApplicationController
 
   def show
     @shop_faq = ShopFaq.find_primary(params[:id])
+    @shop = session_shop
     render :layout => false
   end
 
@@ -51,5 +53,12 @@ class Shop3FaqsController < ApplicationController
     render :json => {text: text}
   end
 
+  def article_image_upload
+    image = Image.new
+    image.article_id = params[:id]
+    image.img = params[:upfile]
+    image.save!
+    render :json=>{:url => image.img.url, 'state'=>'SUCCESS', :title=>params[:pictitle]}  
+  end
 
 end

@@ -68,3 +68,33 @@ $(document).ready(function(){
 		}
 	});
 });
+
+
+function show_link_rulev(rv){
+	if(rv =="0"){ 
+		$("#editor_none_block").css("display","none");
+		$("#rulev").css("display","block");
+		// $("#rulev label").text("外部链接");
+	}else if(rv=="1"){
+		$("#rulev").css("display","none");
+		$("#editor_none_block").css("display","block");
+	}
+}
+
+function select_radio(ro){
+	if(ro == "0"){
+		$("#link2").attr("disabled",true);
+		$("#link2").removeAttr("abled",true);
+		$("#link1").attr("abled",true);
+		$("#link1").removeAttr("disabled",true);
+		$('#link3').attr("abled",true);
+		$("#link3").removeAttr("disabled",true);
+	}else if(ro == "1"){
+		$("#link1").attr("disabled",true);
+		$("#link1").removeAttr("abled",true);
+		$("#link2").attr("abled",true);
+		$("#link2").removeAttr("disabled",true);
+		$('#link3').attr("disabled",true);
+		$("#link3").removeAttr("abled",true);
+    }
+}

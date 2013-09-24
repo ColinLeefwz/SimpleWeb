@@ -100,6 +100,9 @@ class PhotosController < ApplicationController
         params[:text],
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
     end
+    if params[:sid] && params[:sid]==photo.room
+      Resque.enqueue(XmppRoomMsg2, params[:sid], session[:user_id], "[img:#{self._id}]评论:#{com.txt}", "COMMENT#{$uuid.generate}")
+    end
     expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
   end
