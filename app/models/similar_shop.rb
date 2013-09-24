@@ -8,33 +8,46 @@ class SimilarShop
   
 
   #初始化城市相似的商家
+  #city是初始化某个城市， simv 是相似度
   def self.init(city, simv=55)
     Shop.where({city: city, t:{"$exists" => true}, _id:{"$gt" => 1202842}}).sort({_id:1}).each do |shop|
-      begin
-        ss = Shop.similar_shops(shop,simv)
-        if ss.size>0
-          flag = ss.find{|x| x.id<shop.id}
-          next if flag
-          data = [{id: shop.id, name: shop.name}]
-          ss.each {|x|  data << {id: x.id, name: x.name, dis: Shop.new.get_distance(x.loc_first, shop.loc_first) }}
-          self.create(city: city, data: data)
-        end
-      rescue
-        next
-      end
+      produce(shop,simv)
     end
+  end
+
+  #继续初始化城市相似的商家， 继续上次中断时最后一个id开始
+  def self.reinit(city, simv=55)
+    lss = SimilarShop.where({city: city}).sort({"data.0.id"=> -1}).first
+    stid = lss.data.first['id'].to_i
+    Shop.where({city: city, t:{"$exists" => true}, _id:{"$gt" => stid}}).sort({_id: 1}).each  do |shop|
+      produce(shop,simv)
+    end
+
+    #SimilarShop.where({data: {"$elemMatch"=>{"id" => 1207785}}})
+  end
+
+
+  def self.produce(shop,simv)
+    puts "/#{shop.id}/"
+    ss = Shop.similar_shops(shop,simv)
+    return if ss.blank?
+    flag = ss.find{|x| x.id<shop.id}
+    return if flag
+    data = [{id: shop.id, name: shop.name}]
+    ss.each {|x|  data << {id: x.id, name: x.name, dis: Shop.new.get_distance(x.loc_first, shop.loc_first) }}
+    self.create(city: shop.city, data: data)
   end
 
 
   def show_flag
-  case flag
-  when nil
-    '未处理'
-  when false
-    "暂不处理"
-  when true
-    '处理完成'
-  end
+    case flag
+    when nil
+      '未处理'
+    when false
+      "暂不处理"
+    when true
+      '处理完成'
+    end
   end
 
 end
