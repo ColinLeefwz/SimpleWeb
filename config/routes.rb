@@ -95,5 +95,7 @@ Lianlian::Application.routes.draw do
   match ':controller/:action(.:format)'  => ":controller#:action"
   match ':controller' => ":controller#index"
 
+  match 'shop3_faqs/article_image_upload/:id' => 'shop3_faqs#article_image_upload'
+
   
 end

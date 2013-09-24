@@ -11,5 +11,13 @@ class Image
   field :img_processing, type:Boolean
   process_in_background :img
     
+  def self.img_url(id,type=nil)
+    if type
+      "http://dface.oss.aliyuncs.com/#{id}/#{type}_0.jpg"
+    else
+      "http://dface.oss.aliyuncs.com/#{id}/0.jpg"
+    end
+  end
 
+  
 end

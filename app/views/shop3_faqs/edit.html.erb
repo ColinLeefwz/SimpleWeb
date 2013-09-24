@@ -59,8 +59,18 @@
     <tr>
     <td width="20%" align="right" valign="top" class="pr20">链接</td>
     <td>
-      <%= f.text_field :url,:class=>"inputs2  radius5" %>
-    </td>
+    <%= f.radio_button :link_rule, '0',:onchange=>"select_radio($(this).val())"%>可编辑页面链接<br>
+
+    <%= f.text_field :url,:class=>"inputs2 radius5",:id=>"link1",:placeholder => "http://" %><br>
+<%= f.radio_button :link_rule, '1',:onchange=>"select_radio($(this).val())"%>可编辑页面链接<br>
+
+  <div id="editor_none_block" style="display:block;" >
+    <%= f.text_field :head, :class=>"inputs2 radius5",:id=>"link2", :placeholder => "链接页标题" %>
+    <div id="link3">
+    <%= f.text_area :content, :id=>"myEditor" %>
+    </div>
+  </div>
+  </td>
     </tr> 
 
     <tr>
@@ -98,4 +108,68 @@ $(document).ready(function(){
 		imgUploadPreview2(this, 'uploadPreview');
 	});
 });
+
+$(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+  if(!/MSIE/i.test(ua)){
+    $("input[name='shop_faq[img]']").not(":first").remove();
+  }
+  $("#Btn1").click(function(){
+    $("#shop_faq_img").click();
+  });
+  $("input[name='shop_faq[img]']").click(function(){
+    imgUploadPreview2(this, 'uploadPreview');
+  });
+});
+
+Lianlian = window.Lianlian = {};
+
+(function() {
+
+  Lianlian.Blog = {
+    init: function() {
+      var me;
+      me = this;
+      return me.newBlog();
+    },
+    newBlog: function() {
+
+      var editor_a;
+      editor_a = new baidu.editor.ui.Editor({
+        autoHeightEnabled:false,
+        initialFrameWidth:320,
+        initialFrameHeight:200,
+        imageUrl:"/shop3_faqs/article_image_upload/<%= @shop_faq.id%>",
+        imagePath:"",
+        initialContent: ""
+      });
+      editor_a.render('myEditor');
+      return $('.new_blog_form .submit').click(function() {
+        var content, title;
+        editor_a.sync();
+        title = $('#blog_title').val();
+        content = editor_a.getContent();
+        if (title.length === 0) {
+          $('#blog_title').addClass('error_border');
+        }
+        if (title.length > 0 && content !== '<p><br /></p>') {
+          return $(this).parents('form').submit();
+        }
+      });
+    }
+  };
+
+  $(document).ready(function() {
+    return Lianlian.Blog.init();
+  });
+
+}).call(this);
 </script>

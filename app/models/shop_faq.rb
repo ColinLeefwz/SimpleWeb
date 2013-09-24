@@ -9,6 +9,8 @@ class ShopFaq
   field :text #简单回答，或者摘要
   field :img #回答的图片
   
+  field :link_rule
+
   field :url #回答点开的链接
   
   field :head #回答点开的内容头部
