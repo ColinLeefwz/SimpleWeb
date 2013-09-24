@@ -293,7 +293,22 @@ class Shop
     end
     ret
   end
-  
+
+  def view_user6s(session_uid)
+    ret = []
+    users = Checkin.get_users_redis(id.to_i,0,6)
+    users = users.delete_if{|x| x[0].to_s==session_uid.to_s}
+    return [] if users.size<3
+    users.each do |uid,cat|
+      u = User.find_by_id(uid)
+      next if u.nil?
+      next if u.forbidden?
+      hash = u.safe_output(session_uid)
+      ret << hash
+    end
+    ret
+  end
+    
   def users
     Checkin.get_users_redis(id.to_i,0,-1).map {|x| User.find_by_id(x[0])}
   end
