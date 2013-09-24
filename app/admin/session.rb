@@ -37,6 +37,7 @@ ActiveAdmin.register Session do
       f.input :video
       f.input :location
       f.input :price
+			f.input :start_date
       f.actions
     end
   end
