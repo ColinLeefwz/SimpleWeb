@@ -8,6 +8,12 @@ Prodygia::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+	resources :sessions do
+		member do
+			get :enroll
+		end
+	end
+
   root to: "welcome#index"
 
   get "/:page", to: 'static_pages#static'
