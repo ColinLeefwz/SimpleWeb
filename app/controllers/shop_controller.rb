@@ -56,7 +56,7 @@ class ShopController < ApplicationController
       shop1s.each do |s| 
         hash = {id:s.id, name:s.name }.merge!(s.group_hash(session[:user_id]))
         distance = s.min_distance(s,lo)
-        if distance>2000
+        if distance>2000 && !s.group_id
           hash.merge!( {visit:1} )
         else
           hash.merge!( {visit:0} )
