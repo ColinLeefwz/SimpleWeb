@@ -1,57 +1,59 @@
-#review-order
-  .title Review your order
-  .content
-    .session-title
-      = image_tag @session.expert.avatar.url, class: 'pull-left'
-      .primary-title
-        = @session.title
-      .second-title
-        = "by #{@session.expert.name}"
-    .body
-      %p.beginning-date.info-icon-bg
-        %span.order-info
-          = @session.start_date.to_date.to_formatted_s()
-      %p.type.info-icon-bg
-        %span.order-info
-          = @session.content_type.split(/(?=[A-Z])/)[0]
-      %p.price.info-icon-bg
-        %span.order-info
-          = @session.price
-      .pay
-        %form.paypal-button{action: "https://www.paypal.com/cgi-bin/webscr", method: "post", style: "opacity: 1;", target: "_top"}
-          %input{name: "button", type: "hidden", value: "buynow"}
-          %input{name: "business", type: "hidden", value: "H2VTF9RB8TEXS"}
-          %input{name: "item_name", type: "hidden", value: "#{@session.title}"}
-          %input{name: "quantity", type: "hidden", value: "1"}
-          %input{name: "amount", type: "hidden", value: "0.01"}
-          %input{name: "currency_code", type: "hidden", value: "USD"}
-          %input{name: "shipping", type: "hidden", value: "0.00"}
-          %input{name: "tax", type: "hidden", value: "0.00"}
-          %input{name: "notify_url", type: "hidden", value: ""}
-          %input{name: "cmd", type: "hidden", value: "_xclick"}
-          %input{name: "bn", type: "hidden", value: "JavaScriptButton_buynow"}
-          %input{name: "env", type: "hidden", value: "www"}
-          %button.paypal-button.large{type: "submit"}
-            = "Buy Now"
+#order-wrapper
 
-        -# = link_to 'Paypal', "#"
+  #order
+    #order-header
+      %span Review your order
 
-#create-account
-  %h3 Create an account
-  .existing-account
-    = raw "#{link_to "Login", new_user_session_path} to an existing account"
-  .create-pay
-    .omniauth
-      = "FaceBook"
-      = "LinkedIn"
-    %hr
-    .create
-      = simple_form_for :user, url: user_registration_path do |f|
-        = f.input :first_name
-        = f.input :last_name
-        = f.input :email
-        = f.input :password
-        = f.button :submit, value: 'Paypal'
+    #order-detail
+      .item-wrapper
+        #avatar.icon
+          = image_tag @session.expert.avatar.url
+        #title.item
+          = @session.title
+
+      .item-wrapper
+        #fake.icon
+        #expert.item
+          = "by #{@session.expert.name}"
+
+      .item-wrapper
+        #time-icon.icon
+          = image_tag "time.png"
+        #time.item 
+          = @session.start_date.to_formatted_s(:time_for_order).html_safe
+
+      .item-wrapper
+        #content-type-icon.icon
+          = image_tag "content_type.png"
+        #content-type.item
+          = @session.content_type[0..-8]  # ***Session
+      
+      .item-wrapper
+        #price-icon.icon
+          = image_tag "price.png"
+        #price.item
+          = number_to_currency(@session.price) + "(USD)"
+        #paypal-button
+          = button_to "Buy now"
+
+
+
+
+  #account
+    #account-header
+      %span Create an account
+      #login
+        = raw "#{link_to "Login", new_user_session_path} to an existing account"
+    #account-detail
+      #social-login 
+      #quick-register-form
+        =simple_form_for :user, url: user_registration_path do |f|
+          =f.input :first_name
+          =f.input :last_name
+          =f.input :email
+          =f.input :password
+          =f.button :submit, value: 'Paypal'
+      #paypal-button
 
 
 
