@@ -1,6 +1,7 @@
-<div class="con">
+<div class="con2">
 	<div class="title1"><h2 class="f18">问答系统</h2></div>
-      <div class="box4">
+	<%= form_for(@shop_faq, :url => "/shop3_faqs/update?id=#{@shop_faq.id}",:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+      <div class="box4 w1120">
         <div class="box4left">
     <% if @shop_faqs.blank? %>
     还没有设置问答系统，请创建 ===》
@@ -14,9 +15,7 @@
        <% end %>
     <% end %>
         </div>
-        
-        <div class="box4right">
-<%= form_for(@shop_faq, :url => "/shop3_faqs/update?id=#{@shop_faq.id}",:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+        <div class="box4right w480">
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
     <tr>
       <td width="20%" align="right" valign="middle" class="pr20">回复数字</td>
@@ -55,24 +54,6 @@
 		</div>
 	  </td>
     </tr>
-
-    <tr>
-    <td width="20%" align="right" valign="top" class="pr20">详细内容</td>
-    <td>
-    <%= f.radio_button :link_rule, '0',:onchange=>"select_radio($(this).val())"%>外部链接<br>
-
-    <%= f.text_field :url,:class=>"inputs2 radius5",:id=>"link1",:placeholder => "http://" %><br>
-<%= f.radio_button :link_rule, '1',:onchange=>"select_radio($(this).val())"%>编辑详细内容<br>
-
-  <div id="editor_none_block" style="display:block;" >
-    <%= f.text_field :head, :class=>"inputs2 radius5",:id=>"link2", :placeholder => "标题" %>
-    <div id="link3">
-    <%= f.text_area :content, :id=>"myEditor" %>
-    </div>
-  </div>
-  </td>
-    </tr> 
-
     <tr>
         <td>&nbsp;</td>
         <td>
@@ -81,8 +62,30 @@
 		</td>
     </tr>
   </table>
+ </div>
+ <div class="box4right2">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
+	<tr>
+		<td align="left" class="pb10">详细内容</td>
+	</tr>
+	<tr>
+		<td>
+			<span class="l mr20"><%= f.radio_button :link_rule, '0',:onchange=>"select_radio($(this).val())"%>&nbsp;&nbsp;外部链接</span>
+			<span class="l"><%= f.radio_button :link_rule, '1',:onchange=>"select_radio($(this).val())"%>&nbsp;&nbsp;编辑详细内容</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="relative del2">
+			<%= f.text_field :url,:class=>"inputs2 radius5 relative",:id=>"link1",:placeholder => "http://" %>
+			<%= f.text_field :head, :class=>"inputs2 radius5 w300",:style=>"margin-left:400px;" ,:id=>"link2", :placeholder => "标题" %>
+			<div id="link3" class="relative" style="margin-left:400px;">
+				<%= f.text_area :content, :id=>"myEditor" %>
+			</div>
+		</td>
+    </tr>
+	</table>
+ </div>
 <%  end %>
-        </div>
       </div>
 </div>
 
@@ -107,6 +110,10 @@ $(document).ready(function(){
 	$("input[name='shop_faq[img]']").click(function(){
 		imgUploadPreview2(this, 'uploadPreview');
 	});
+	
+	ro = <%= @shop_faq.link_rule %>;
+	
+	select_radio(ro);
 });
 
 $(document).ready(function(){

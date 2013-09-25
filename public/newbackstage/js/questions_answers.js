@@ -83,18 +83,16 @@ function show_link_rulev(rv){
 
 function select_radio(ro){
 	if(ro == "0"){
-		$("#link2").attr("disabled",true);
-		$("#link2").removeAttr("abled",true);
-		$("#link1").attr("abled",true);
-		$("#link1").removeAttr("disabled",true);
-		$('#link3').attr("abled",true);
-		$("#link3").removeAttr("disabled",true);
+		$("#link2, #link3").animate({"margin-left":"400px"},function(){
+			$("#link2, #link3").css("display","none");
+			$("#link1").css({"display":"block","background-color":"#ffffff"});
+			$("#link1").removeAttr("disabled").animate({"margin-left":"0px"});
+		});
 	}else if(ro == "1"){
-		$("#link1").attr("disabled",true);
-		$("#link1").removeAttr("abled",true);
-		$("#link2").attr("abled",true);
-		$("#link2").removeAttr("disabled",true);
-		$('#link3').attr("disabled",true);
-		$("#link3").removeAttr("abled",true);
+		$("#link1").animate({"margin-left":"400px"},function(){
+			$("#link1").css("display","none");
+			$("#link2, #link3").css("display","block");
+			$("#link2, #link3").animate({"margin-left":"0px"});
+		});
     }
 }

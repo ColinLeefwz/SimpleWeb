@@ -59,9 +59,11 @@ filter: alpha(opacity=60);opacity:0.6;}
 .w150{width:150px !important;}
 .w180{width:180px !important;}
 .w235{width:235px !important;}
+.w300{width:300px !important;}
 .w400{width:400px !important;}
 .w480{width:480px !important;}
 .w700{width:700px !important;}
+.w1120{width:1120px !important;}
 .h140{height:140px !important;}
 .h423{height:423px !important;}
 
@@ -354,6 +356,7 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .box4 .box4left a{color:#000;}
 .box4 .box4left a:hover{color:#369bff;}
 .box4 .box4right{float:left;position:relative;width:652px;}
+.box4 .box4right2{float:left;position:relative;width:335px;overflow:hidden;padding-left:15px;}
 .box4 .box4plane1{line-height:20px;width:308px;height:146px;border:2px dashed #D7D7D7;border-radius:8px;overflow:hidden;position:absolute;top:0px;text-align:center;}
 .box4 .box4plane4{margin-left:20px;margin-top:168px;line-height:20px;}
 .box4 .box4plane1 a{width:100%;height:46px;background:#ffffff url(../images/sign2.png) center 40px no-repeat;color:#000;display:block;padding-top:100px;}
