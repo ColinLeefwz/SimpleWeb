@@ -39,8 +39,8 @@
       <tr>
         <td><a href="/shop3_coupons/show?id=<%= report[0].id %>" title="<%= report[0].name %>"><%= report[0].name %><span class="gay1"></span></a></td>
         <td width="150" align="center"><%= params[:sday] %> ~ <%= params[:eday] %></td>
-        <td width="100" align="center"><%= link_to report[1], "/shop3_coupons/newly_down?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}"%></td>
-        <td width="100" align="center"><%=link_to report[2], "/shop3_coupons/newly_use?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}" %></td>
+        <td width="100" align="center"><%= link_to report[1], "/shop3_coupons/newly_down?cid=#{report[0].id}&sday=#{params[:sday]}&eday=#{params[:eday]}"%></td>
+        <td width="100" align="center"><%=link_to report[2], "/shop3_coupons/newly_use?cid=#{report[0].id}&sday=#{params[:sday]}&eday=#{params[:eday]}" %></td>
       </tr>
     <% end %>
     <tr>
