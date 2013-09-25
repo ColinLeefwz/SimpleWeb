@@ -100,7 +100,7 @@ class PhotosController < ApplicationController
         params[:text],
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
     end
-    comment_send_to_room
+    comment_send_to_room(photo,com)
     expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
   end
@@ -115,7 +115,7 @@ class PhotosController < ApplicationController
         params[:text],
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
     end
-    # comment_send_to_room #评论的评论暂时不发送到聊天室
+    # comment_send_to_room(photo) #评论的评论暂时不发送到聊天室
     expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
   end
@@ -196,9 +196,9 @@ class PhotosController < ApplicationController
     Rails.cache.delete("UP#{uid}-5") if uid 
   end
   
-  def comment_send_to_room
+  def comment_send_to_room(photo,com)
     if params[:sid] && params[:sid]==photo.room
-      Resque.enqueue(XmppRoomMsg2, params[:sid], session[:user_id], "[img:#{self._id}]评论:#{com.txt}", "COMMENT#{$uuid.generate}")
+      Resque.enqueue(XmppRoomMsg2, params[:sid], session[:user_id], "[img:#{photo.id}]评论:#{com.txt}", "COMMENT#{$uuid.generate}")
     end
   end
   
