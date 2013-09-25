@@ -54,12 +54,12 @@ class ShopController < ApplicationController
       # TODO: 默认搜索同城， 国外搜国家
       shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})        
       shop1s.each do |s| 
-        hash = {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id]))
+        hash = {id:s.id, name:s.name }.merge!(s.group_hash(session[:user_id]))
         distance = s.min_distance(s,lo)
-        if distance>0.1
-          hash.merge!( {visit:0} )
-        else
+        if distance>2000
           hash.merge!( {visit:1} )
+        else
+          hash.merge!( {visit:0} )
         end
         ret << hash
       end
