@@ -11,7 +11,13 @@ Prodygia::Application.routes.draw do
 	resources :sessions do
 		member do
 			get :enroll
+			get :buy_now
 		end
+	end
+
+	resources :orders do
+		get :execute
+		get :cancel
 	end
 
   root to: "welcome#index"
@@ -20,4 +26,6 @@ Prodygia::Application.routes.draw do
 
   get "video_page/:id", to: "welcome#video_page", as: 'video_page'
   get "text_page/:id", to: "welcome#text_page", as: 'text_page'
+
+	get "/paypal_callback", to: 'session#paypal_callback'
  end

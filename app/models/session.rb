@@ -5,6 +5,7 @@ class Session < ActiveRecord::Base
 	self.inheritance_column = 'content_type'
 
   belongs_to :expert
+	has_many :orders
 
 	has_and_belongs_to_many :enroll_users, class_name: 'User'
 

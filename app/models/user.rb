@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 	# has_many :followed_sessions, class_name: 'Session'
 
 	has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
+	has_many :orders
 
 	has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 

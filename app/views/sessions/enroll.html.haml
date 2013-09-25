@@ -18,23 +18,7 @@
         %span.order-info
           = @session.price
       .pay
-        %form.paypal-button{action: "https://www.paypal.com/cgi-bin/webscr", method: "post", style: "opacity: 1;", target: "_top"}
-          %input{name: "button", type: "hidden", value: "buynow"}
-          %input{name: "business", type: "hidden", value: "H2VTF9RB8TEXS"}
-          %input{name: "item_name", type: "hidden", value: "#{@session.title}"}
-          %input{name: "quantity", type: "hidden", value: "1"}
-          %input{name: "amount", type: "hidden", value: "0.01"}
-          %input{name: "currency_code", type: "hidden", value: "USD"}
-          %input{name: "shipping", type: "hidden", value: "0.00"}
-          %input{name: "tax", type: "hidden", value: "0.00"}
-          %input{name: "notify_url", type: "hidden", value: ""}
-          %input{name: "cmd", type: "hidden", value: "_xclick"}
-          %input{name: "bn", type: "hidden", value: "JavaScriptButton_buynow"}
-          %input{name: "env", type: "hidden", value: "www"}
-          %button.paypal-button.large{type: "submit"}
-            = "Buy Now"
-
-        -# = link_to 'Paypal', "#"
+        = link_to 'Paypal', buy_now_session_path(@session)
 
 #create-account
   %h3 Create an account
