@@ -137,6 +137,10 @@ function imgUploadPreview3(select, divid){//商家设置
 }
 
 var uploadimgtimer, emObj, sidObj;
+$(document).ready(function(){
+	emObj=$("#EM").html()
+	sidObj=$("#SmallImgDiv").html();
+});
 function ImageUpload(target){//优惠券
 
 	var obj , pic , sid;
@@ -147,8 +151,7 @@ function ImageUpload(target){//优惠券
 	}
 	pic=document.getElementById("UploadPic");
 	sid=document.getElementById("SmallImgDiv");
-	emObj=$("#EM").clone();
-	sidObj=$("#SmallImgDiv").clone();
+
 	obj.click();//打开上传对话框
 	obj.onchange=function(){
 		if(/msie/i.test(ua)){//IE浏览器可以直接取值
@@ -240,17 +243,21 @@ function Cut(){
 		if(/msie/i.test(ua)){
 			$(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css({"display":"block","height":h+"px"});
 		}
+		if(/ipad/i.test(ua)){
+			$("body").unbind("touchmove");
+		}
 	});
 	
-	$("#CutArea").mousedown(function(){
-		$("#CutArea").mousemove(function(e){
+	if(/ipad/i.test(ua)){
+		$("body").bind("touchmove",function(e){e.stopPropagation();return false;});
+		$("#CutArea").bind("touchmove",function(e){
 			var cutdiv_left=$("#CutDiv").offset().left;
 			var cutdiv_top=$("#CutDiv").offset().top;
 			var mouse_left=e.pageX;
 			var mouse_top=e.pageY;
 			var cutarea_w=parseInt($("#CutArea").css("width"));
 			var cutarea_h=parseInt($("#CutArea").css("height"));
-			var hraf_w=cutarea_w/2, hraf_h=cutarea_h/2;			
+			var hraf_w=cutarea_w/2, hraf_h=cutarea_h/2;
 			if(mouse_left-cutdiv_left-hraf_w<0){
 				mouse_left=cutdiv_left+hraf_w;
 			}
@@ -270,16 +277,80 @@ function Cut(){
 			$("#CutBG4").css({"width":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","top":cutarea_h+mouse_top-cutdiv_top-hraf_h+"px","height":h-(cutarea_h+mouse_top-cutdiv_top-hraf_h)+"px"});
 			$("#SmallImgDiv img").css({"margin-left":-(mouse_left-cutdiv_left-hraf_w)+"px","margin-top":-(mouse_top-cutdiv_top-hraf_h)+"px"});
 		});
-		$("#CutArea").mouseup(function(){
-			$(this).unbind("mousemove");							   
+		/*document.body.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
+		//documentById("CutArea").addEventListener('touchmove', function(e) {alert(2);}, true);
+		document.addEventListener('touchmove', img_mousedown, false);
+		function img_mousedown(e){
+			var cutdiv_left=$("#CutDiv").offset().left;
+				var cutdiv_top=$("#CutDiv").offset().top;
+				var mouse_left=e.pageX;
+				var mouse_top=e.pageY;
+				var cutarea_w=parseInt($("#CutArea").css("width"));
+				var cutarea_h=parseInt($("#CutArea").css("height"));
+				var hraf_w=cutarea_w/2, hraf_h=cutarea_h/2;
+				if(mouse_left-cutdiv_left-hraf_w<0){
+					mouse_left=cutdiv_left+hraf_w;
+				}
+				if(mouse_top-cutdiv_top-hraf_h<0){
+					mouse_top=cutdiv_top+hraf_h;
+				}
+				if(mouse_left-cutdiv_left-hraf_w>w-cutarea_w){
+					mouse_left=w-cutarea_w+cutdiv_left+hraf_w;
+				}
+				if(mouse_top-cutdiv_top-hraf_h>h-cutarea_h){
+					mouse_top=h-cutarea_h+cutdiv_top+hraf_h;
+				}
+				$("#CutArea").css({"left":mouse_left-cutdiv_left-hraf_w+"px","top":mouse_top-cutdiv_top-hraf_h+"px"});
+				$("#CutBG1").css({"width":mouse_left-cutdiv_left-hraf_w+"px","height":cutarea_h+mouse_top-cutdiv_top-hraf_h+"px"});
+				$("#CutBG2").css({"width":cutarea_w+"px","height":mouse_top-cutdiv_top-hraf_h+"px","left":mouse_left-cutdiv_left-hraf_w+"px"});
+				$("#CutBG3").css({"left":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","width":w-(cutarea_w+mouse_left-cutdiv_left-hraf_w)+"px","height":h+"px"});
+				$("#CutBG4").css({"width":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","top":cutarea_h+mouse_top-cutdiv_top-hraf_h+"px","height":h-(cutarea_h+mouse_top-cutdiv_top-hraf_h)+"px"});
+				$("#SmallImgDiv img").css({"margin-left":-(mouse_left-cutdiv_left-hraf_w)+"px","margin-top":-(mouse_top-cutdiv_top-hraf_h)+"px"});
+		}*/
+	
+	}else{
+		$("#CutArea").mousedown(function(){
+			$("#CutArea").mousemove(function(e){
+				var cutdiv_left=$("#CutDiv").offset().left;
+				var cutdiv_top=$("#CutDiv").offset().top;
+				var mouse_left=e.pageX;
+				var mouse_top=e.pageY;
+				var cutarea_w=parseInt($("#CutArea").css("width"));
+				var cutarea_h=parseInt($("#CutArea").css("height"));
+				var hraf_w=cutarea_w/2, hraf_h=cutarea_h/2;
+				if(mouse_left-cutdiv_left-hraf_w<0){
+					mouse_left=cutdiv_left+hraf_w;
+				}
+				if(mouse_top-cutdiv_top-hraf_h<0){
+					mouse_top=cutdiv_top+hraf_h;
+				}
+				if(mouse_left-cutdiv_left-hraf_w>w-cutarea_w){
+					mouse_left=w-cutarea_w+cutdiv_left+hraf_w;
+				}
+				if(mouse_top-cutdiv_top-hraf_h>h-cutarea_h){
+					mouse_top=h-cutarea_h+cutdiv_top+hraf_h;
+				}
+				$("#CutArea").css({"left":mouse_left-cutdiv_left-hraf_w+"px","top":mouse_top-cutdiv_top-hraf_h+"px"});
+				$("#CutBG1").css({"width":mouse_left-cutdiv_left-hraf_w+"px","height":cutarea_h+mouse_top-cutdiv_top-hraf_h+"px"});
+				$("#CutBG2").css({"width":cutarea_w+"px","height":mouse_top-cutdiv_top-hraf_h+"px","left":mouse_left-cutdiv_left-hraf_w+"px"});
+				$("#CutBG3").css({"left":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","width":w-(cutarea_w+mouse_left-cutdiv_left-hraf_w)+"px","height":h+"px"});
+				$("#CutBG4").css({"width":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","top":cutarea_h+mouse_top-cutdiv_top-hraf_h+"px","height":h-(cutarea_h+mouse_top-cutdiv_top-hraf_h)+"px"});
+				$("#SmallImgDiv img").css({"margin-left":-(mouse_left-cutdiv_left-hraf_w)+"px","margin-top":-(mouse_top-cutdiv_top-hraf_h)+"px"});
+			});
+			$("#CutArea").mouseup(function(){
+				$(this).unbind("mousemove");
+			});
 		});
-	});
+	}
 }
 function NoCut(){
 	$('#UpImg').fadeOut(500);
-	$("#EM").replaceWith(emObj);
-	$("#SmallImgDiv").replaceWith(sidObj);
+	$("#EM").html(emObj);
+	$("#SmallImgDiv").html(sidObj);
 	$("#CutDiv").css("display","none");
+	if(/ipad/i.test(ua)){
+		$("body").unbind("touchmove");
+	}
 	if(/msie/i.test(ua)){
 		$(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css({"display":"block"});
 	}
