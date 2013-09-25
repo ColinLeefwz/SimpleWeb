@@ -167,11 +167,13 @@ LUA
       ck.add_city_redis
     end
   end
+
+  #UnBroadcast => [21828775,21830325,21830326,21830784,21830785,21835409,21835801]
   
   def add_city_redis
     x = self.sex
     x = 1 if x!=2
-    return if self.sid.to_i == 21835409 #技术测试专用
+    return if $redis.smembers("UnBroadcast").include?(self.sid.to_s)
     $redis.zadd("HOT#{x}U#{self.city}",self.cati, self.uid)
   end
   
