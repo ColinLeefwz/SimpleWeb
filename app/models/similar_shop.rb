@@ -10,7 +10,7 @@ class SimilarShop
   #初始化城市相似的商家
   #city是初始化某个城市， simv 是相似度
   def self.init(city, simv=55)
-    Shop.where({city: city, t:{"$exists" => true}, _id:{"$gt" => 1202842}}).sort({_id:1}).each do |shop|
+    Shop.where({city: city, t:{"$exists" => true}}).sort({_id:1}).each do |shop|
       produce(shop,simv)
     end
   end
@@ -29,6 +29,7 @@ class SimilarShop
 
   def self.produce(shop,simv)
     puts "/#{shop.id}/"
+    return if shop.lo.blank?
     ss = Shop.similar_shops(shop,simv)
     return if ss.blank?
     flag = ss.find{|x| x.id<shop.id}
