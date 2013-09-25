@@ -111,7 +111,7 @@ $(document).ready(function(){
 		imgUploadPreview2(this, 'uploadPreview');
 	});
 	
-	ro = <%= @shop_faq.link_rule %>;
+	ro = <%= @shop_faq.link_rule.nil? ? 0 : @shop_faq.link_rule %>;
 	
 	select_radio(ro);
 });
