@@ -42,7 +42,7 @@ class Shop3CouponReportsController < ApplicationController
       end
       coupon_downs = CouponDown.where(hash)
     else
-      coupon_downs = CouponDown.where({dat: {"$gt" => Time.now.to_date}, sid: session[:shop_id]})
+      coupon_downs = CouponDown.where({dat: {"$gt" => 1.days.ago.to_date, "$lt" => Time.now.to_date}, sid: session[:shop_id]})
     end
 
     csv_string =  CSV.generate do |csv|
