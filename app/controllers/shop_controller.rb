@@ -55,7 +55,12 @@ class ShopController < ApplicationController
       shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})        
       shop1s.each do |s| 
         hash = {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id]))
-        # TODO: 判断距离, 大于1000米+误差，visit:1
+        distance = s.min_distance(s,lo)
+        if distance>0.1
+          hash.merge!( {visit:0} )
+        else
+          hash.merge!( {visit:1} )
+        end
         ret << hash
       end
       #商家查询个数小于10， 按群组的相似度查询群组

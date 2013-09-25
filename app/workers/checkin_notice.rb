@@ -32,10 +32,9 @@ class CheckinNotice
       send_welcome_msg_if_not_invisible(user,shop)
       return
     end
-    send_staff_welcome(user,shop)
     if checkin.add_to_redis #当天首次签到
       checkin.save!
-      #听.说 发送默认信息
+      send_staff_welcome(user,shop)
       send_welcome_msg_if_not_invisible(user,shop)
       tingshuo_default_answer_text(shop, checkin.uid)
       user.write_lat_loc(checkin, shop.name)
