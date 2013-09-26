@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
 		@session = Session.find params[:id]
 		@order = @session.orders.build
 		# TODO add current_user to order
+		@order.user = current_user
 
 		if @order.save
 			@order.approve_url = create_payment_with_paypal(@session)
