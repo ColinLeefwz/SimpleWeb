@@ -11,12 +11,10 @@ function imgUploadPreview2(select, divid){//问答系统
             alert("请上传jpg/png格式图片");
             return false;
         }
-        
 
         try{
-            var divObj = document.getElementById(divid);alert(1);
-            if(navigator.userAgent.indexOf("MSIE") > -1&& (navigator.userAgent.indexOf("MSIE 7.0") > -1|| navigator.userAgent.indexOf("MSIE 9.0") > -1 || navigator.userAgent.indexOf("MSIE 8.0") > -1)||(/chrome/i.test(ua)&&/safari/i.test(ua))  ){
-				alert(22);
+            var divObj = document.getElementById(divid);
+            if(navigator.userAgent.indexOf("MSIE") > -1&& (navigator.userAgent.indexOf("MSIE 7.0") > -1|| navigator.userAgent.indexOf("MSIE 9.0") > -1 || navigator.userAgent.indexOf("MSIE 8.0") > -1)  ){
 				this.select();
                 this.blur();
                 var path = document.selection.createRange().text;
@@ -29,18 +27,14 @@ function imgUploadPreview2(select, divid){//问答系统
 				divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
-            }else if(/ipad/i.test(ua)){
+            }else{
 				 var file = $(this).get(0).files[0];
 				 var reader = new FileReader();
 					reader.readAsDataURL(file);
 					reader.onload = function(e){
 						$("#"+divid).html("<img style='height: 100%; width: 100%;' id='image_view'  src='"+this.result+"'/>");
 					}
-			}else{
-                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
-                imageView = document.getElementById("image_view");
-                imageView.src = window.URL.createObjectURL(this.files[0]);
-            }
+			}
 
         }catch (e) {
             //alert("游览器不支持预览图片")
