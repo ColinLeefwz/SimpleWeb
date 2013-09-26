@@ -75,11 +75,12 @@
                     float: left;
                     margin-left: 15px;
                     .video-page-category-info-title {
-                        font-size: 22px;
-                        line-height:1.2;
-                        font-weight:bold;
-                        font-style:italic;
-                        color:#666;
+                      font-style: normal;
+                      font-family: 'Latobold';
+                      font-weight: normal;
+                      font-size: 22px;
+                      line-height:1.2;
+                      color:#666;
                     }
                 }
             }
@@ -117,7 +118,13 @@
             .outline-font{
                 color: #880848;
                 a {
-                    text-decoration:underline;
+                    text-decoration: none;
+                    font-size: 1.3em;
+                    color: #777;
+                }
+
+                a:hover {
+                  color: #880848;
                 }
             }
 
@@ -153,7 +160,7 @@
     .video-page-video-frame{
         border: 10px solid #ffffff;
         margin: 0 auto;
-        width: 600px;
+        width: 450px;
         margin-top: 20px;
         video{
             width: 100%;
@@ -164,10 +171,27 @@
         padding: 15px 30px;
         margin-top: 20px;
         background: white;
+        font-size: 16px;
+
+        h1{
+          font-size: 1.6em;
+          margin-bottom: 0.4em;
+        }
+
+        h2{
+          font-size: 1.4em;
+          margin-bottom: 0.2em;
+          padding-top: 0.3em;
+        }
+
+        h3{
+          margin-bottom: 0;
+          font-size: 1.2em;
+          padding-top: 0;
+        }
+
         p{
-          font-size: 13pt;
           line-height: 1.5;
-          text-indent: 25px;
         }
     }
 }
