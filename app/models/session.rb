@@ -4,7 +4,10 @@ class Session < ActiveRecord::Base
 
 	self.inheritance_column = 'content_type'
 
+	after_initialize :set_default
+
   belongs_to :expert
+	has_many :orders
 
 	has_and_belongs_to_many :enroll_users, class_name: 'User'
 
@@ -18,4 +21,7 @@ class Session < ActiveRecord::Base
     path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
     url: "/system/sessions/:attachment/:id_partition/:style/:filename"
 
+	def set_default
+		self.price ||= 0.00
+	end
 end

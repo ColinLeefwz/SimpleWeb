@@ -34,8 +34,9 @@ $font-color: #575757;
     width: 100%;
 
     ul{
-      margin: 0 auto;
+      margin: 0 auto;  /* TODO: it is actually overriden by bootstrap, need revise */
       list-style-type: none;
+      text-align: center;
 
       .category, #format{
         display: inline-block;

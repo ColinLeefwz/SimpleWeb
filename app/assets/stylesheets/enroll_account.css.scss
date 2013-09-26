@@ -1,0 +1,25 @@
+#account{
+  #account-header{
+    margin-top: 10px;
+  }
+
+  #account-detail{
+    border: 4px solid #ffffff;
+  }
+}
+
+
+#account-detail #quick-register-form{
+  .user_first_name{
+    margin-right: 40px;
+  }
+  .user_first_name, .user_last_name{
+    display: inline-block;
+  }
+  #user_first_name, #user_last_name{
+    width: 120px;
+  }
+  #user_email, #user_password{
+    width: 298px;
+  }
+}

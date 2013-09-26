@@ -7,7 +7,6 @@ body {
 	padding: 0;
 	font-family: 'Latoreg';
 	font-size: 13px;
-	text-align: center;
 	background-image: image-url("bg.jpg");
 
   a{
@@ -71,6 +70,11 @@ body {
 			font-weight: bold;
 			letter-spacing: 0.5px;
 			line-height: 25px;
+
+			a:hover{
+			  text-decoration: none;
+			  color: #777777;
+			}
 		}
 
 		.cover{
@@ -111,6 +115,11 @@ body {
 					font-family: Latoitalic;
 					font-size: 14px;
 					color: #AF6A82;
+				}
+
+				a:hover{
+				  text-decoration: none;
+				  color: #575757;
 				}
 			}
 			.social-share-icons {
