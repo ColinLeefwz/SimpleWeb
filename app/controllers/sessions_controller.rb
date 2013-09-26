@@ -13,9 +13,10 @@ class SessionsController < ApplicationController
 	def buy_now
 		@session = Session.find params[:id]
 		@order = @session.orders.build
+		# TODO add current_user to order
 
 		if @order.save
-			@order.approve_url = create_with_paypal(@session)
+			@order.approve_url = create_payment_with_paypal(@session)
 
 			if @order.approve_url
 				redirect_to @redirect_url
@@ -30,10 +31,8 @@ class SessionsController < ApplicationController
 	end
 
 	private
-	def create_with_paypal(paid_session)
-		logger.info "create with paypal"
-		price = paid_session.price.to_s
-		logger.info "the price is #{price}"
+	def create_payment_with_paypal(paid_session)
+		# price = paid_session.price.to_s
 		@payment = Payment.new({
 			:intent =>  "sale",
 
@@ -75,9 +74,6 @@ class SessionsController < ApplicationController
 			@order.update_attributes payment_id: @payment.id
 
 			@redirect_url = @payment.links.find{|v| v.method == "REDIRECT" }.href
-			logger.info "Payment[#{@payment.id}]"
-			logger.info "Redirect: #{@redirect_url}"
-			logger.info "approve_url will be #{@redirect_url}"
 		else
 			logger.info "line 88, create failed"
 		end

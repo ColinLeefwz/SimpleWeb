@@ -1,4 +1,10 @@
 #main-content
+  #flash
+    - if flash[:success]
+      .alert.alert-success
+        %button{ type: "button", class: 'close', data: { dismiss: 'alert' } } &times;
+        = flash[:success]
+
   %h1.video-page-title #{@session.title}
   .video-page-info-box
     .video-page-image.video-page-image-border
