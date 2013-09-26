@@ -7,7 +7,7 @@ $(document).ready(function(){
 			$(this).val("3-12个字,如:获取wifi密码");
 		}else if($(this).val().length<3){
 			$(this).addClass("onfocs2");
-			$("#Mes1").html("少于3个字").animate({"left":"290px"},500);
+			$("#Mes1").html("少于3个字").slideDown(500);
 		}
 	}).keydown(function(){
 		if($(this).val()=="3-12个字,如:获取wifi密码"||$(this).val()=="必填"){
@@ -17,10 +17,10 @@ $(document).ready(function(){
 		var len=$(this).val().length;
 		if(len>12){
 			$(this).removeClass("onfocs").addClass("onfocs2");
-			$("#Mes1").html("超出12个文字").animate({"left":"290px"},500);
+			$("#Mes1").html("超出12个文字").slideDown(500);
 		}else{
 			$(this).removeClass("onfocs2").addClass("onfocs");
-			$("#Mes1").css({"left":"0px"});
+			$("#Mes1").slideUp(500);
 		}
 	});
 	$("textarea").click(function(){
@@ -29,11 +29,11 @@ $(document).ready(function(){
 		$(this).removeClass("onfocs");
 		if($(this).val()==""){
 			$(this).val("例如：本店wifi密码：321123");
-		}else if($(this).val().length<3){
+		}else if($(this).val().length>1000){
 			$(this).addClass("onfocs2");
-			$("#Mes2").html("少于3个字").animate({"left":"400px"},500);
+			$("#Mes2").html("超过1000个字").slideDown(500);
 		}else{
-			$("#Mes2").css({"left":"0px"});
+			$("#Mes2").slideUp(500);
 		}
 	}).keydown(function(){
 		if($(this).val()=="例如：本店wifi密码：321123"||$(this).val()=="必填"){
@@ -41,7 +41,7 @@ $(document).ready(function(){
 		}
 	}).keyup(function(){
 		$(this).removeClass("onfocs2").addClass("onfocs");
-		$("#Mes2").css({"left":"0px"});
+		$("#Mes2").slideUp(500);
 	});
 	
 	$("#cform").submit(function(){
@@ -55,21 +55,46 @@ $(document).ready(function(){
 			return false;
 		}else if(n.length<3){
 			$("input.inputs6").addClass("onfocs2").focus();
-			$("#Mes1").html("少于3个字").animate({"left":"290px"},500);
+			$("#Mes1").html("少于3个字").slideDown(500);
 			return false;
 		}else if(n.length>12){
 			$("input.inputs6").addClass("onfocs2").focus();
-			$("#Mes1").html("超出12个文字").animate({"left":"290px"},500);
+			$("#Mes1").html("超出12个文字").slideDown(500);
 			return false;
 		}
 		if(t2.length==""||t2=="必填"||t2=="例如：本店wifi密码：321123"){
 			$("textarea.textarea4").addClass("onfocs").val("必填").focus();
 			return false;
+		}else if(t2>1000){
+			$("textarea.textarea4").addClass("onfocs2").focus();
+			$("#Mes2").html("超过1000个字").slideDown(500);
+			return false;
 		}
 	});
 });
-
-
+$(window).load(function(){
+	$(window).unbind("resize");
+	$(window).resize(function(){
+		windowWidth=$(window).width();
+		documentHeight=$(document).height();
+		windowHeight=$(window).height();
+		if(windowWidth<=1024){
+			$("div.main").css("width","1200px");
+			if(parseInt($("#Nav").css("left"))==0){
+				$("div.main").stop(true).animate({"width":"1040px","padding-left":"160px"});
+			}
+		}else{
+			$("div.main").css({"width":"100%","padding-left":"0px"});
+		}
+		if(documentHeight<=windowHeight){
+			$("#Nav").css("height",windowHeight+"px");
+			$("#Navcon").css("height",(windowHeight-50)+"px");
+		}else{
+			$("#Nav").css("height",documentHeight+"px");
+			$("#Navcon").css("height",(documentHeight-50)+"px");
+		}
+	});
+});
 function show_link_rulev(rv){
 	if(rv =="0"){ 
 		$("#editor_none_block").css("display","none");
