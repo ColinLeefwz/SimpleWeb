@@ -74,14 +74,17 @@ $(document).ready(function(){
 });
 $(window).load(function(){
 	$(window).unbind("resize");
+	if(windowWidth<=1024){
+		$("div.main").css({"width":"1150px","padding-left":"50px"});
+	}
 	$(window).resize(function(){
 		windowWidth=$(window).width();
 		documentHeight=$(document).height();
 		windowHeight=$(window).height();
 		if(windowWidth<=1024){
-			$("div.main").css("width","1200px");
+			$("div.main").css("width","1150px");
 			if(parseInt($("#Nav").css("left"))==0){
-				$("div.main").stop(true).animate({"width":"1040px","padding-left":"160px"});
+				$("div.main").stop(true).animate({"width":"1150px","padding-left":"50px"});
 			}
 		}else{
 			$("div.main").css({"width":"100%","padding-left":"0px"});

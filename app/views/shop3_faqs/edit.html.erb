@@ -1,7 +1,7 @@
 <div class="con2">
 	<div class="title1"><h2 class="f18">问答系统</h2></div>
 	<%= form_for(@shop_faq, :url => "/shop3_faqs/update?id=#{@shop_faq.id}",:html => { :multipart => true, :id => 'cform' } ) do |f| %>
-      <div class="box4 w1120">
+      <div class="box4 w950">
         <div class="box4left">
     <% if @shop_faqs.blank? %>
     还没有设置问答系统，请创建 ===》
@@ -66,8 +66,8 @@
 	</tr>
 	<tr>
 		<td>
-			<span class="l mr20"><%= f.radio_button :link_rule, '0',:onchange=>"select_radio($(this).val())"%>&nbsp;&nbsp;外部链接</span>
-			<span class="l"><%= f.radio_button :link_rule, '1',:onchange=>"select_radio($(this).val())"%>&nbsp;&nbsp;编辑详细内容</span>
+			<span class="l mr20"><%= f.radio_button :link_rule, '0',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;外部链接</span>
+			<span class="l"><%= f.radio_button :link_rule, '1',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;编辑详细内容</span>
 		</td>
 	</tr>
 	<tr>
@@ -100,38 +100,20 @@ $(document).ready(function(){
 	}else if(runing=="checkboxs2"){
 		AllNoDH();
 	}
+	if(!/MSIE/i.test(ua)){
+		$("input[name='shop_faq[img]']").not(":first").remove();
+	}
 	$("#Btn1").click(function(){
 		$("#shop_faq_img").click();
 	});
 	$("input[name='shop_faq[img]']").click(function(){
 		imgUploadPreview2(this, 'uploadPreview');
 	});
-	
-	ro = <%= @shop_faq.link_rule.nil? ? 0 : @shop_faq.link_rule %>;
-	
-	select_radio(ro);
 });
 
-$(document).ready(function(){
-    runing=$("#CB1").attr("class");
-    if(runing=="checkboxs1"){
-      NavDiv();
-      $(window).load(function(){
-        MessageDiv();
-      });
-    }else if(runing=="checkboxs2"){
-      AllNoDH();
-    }
-  if(!/MSIE/i.test(ua)){
-    $("input[name='shop_faq[img]']").not(":first").remove();
-  }
-  $("#Btn1").click(function(){
-    $("#shop_faq_img").click();
-  });
-  $("input[name='shop_faq[img]']").click(function(){
-    imgUploadPreview2(this, 'uploadPreview');
-  });
-});
+ro = <%= @shop_faq.link_rule.nil? ? 0 : @shop_faq.link_rule %>;
+
+select_radio(ro);
 
 Lianlian = window.Lianlian = {};
 
