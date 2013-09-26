@@ -58,7 +58,7 @@ class SessionsController < ApplicationController
 				:item_list => {
 					:items => [{
 						:name => paid_session.title,
-						:sku => "item",
+						# :sku => "item",
 						:price => '%.2f' % paid_session.price,
 						:currency => "USD",
 						:quantity => 1 }]},
