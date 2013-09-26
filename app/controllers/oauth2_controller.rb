@@ -199,7 +199,7 @@ class Oauth2Controller < ApplicationController
     user = session_user_no_cache
     if params[:pushtoken] && params[:pushtoken].size>=64
       user.unset(:tk) if user.tk
-      if user.tk && params[:pushtoken].index(user.tk).nil?
+      if user.tk && params[:pushtoken].index(user.tk[1..-1]).nil?
         Xmpp.error_notify("退出的#{params[:pushtoken]} 和 #{user.tk}不一致")
       end
     end

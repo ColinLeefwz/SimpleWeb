@@ -9,6 +9,6 @@ class CheckinDay
   field :shops, type:Array
 
   def show_shops
-    self.shops.map{|m| "#{Shop.find_by_id(m[0]).try(:name)}: #{m[1]}"}.join(', ')
+    self.shops.map{|m| "#{Shop.find_by_id(m[0].to_i).try(:name)}: #{m[1]}"}.join(', ')
   end
 end
