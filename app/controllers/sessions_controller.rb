@@ -1,63 +1,84 @@
+require 'paypal-sdk-rest'
+include PayPal::SDK::REST
+include PayPal::SDK::Core::Logging
+
 class SessionsController < ApplicationController
-  before_action :set_session, only: [:show, :edit, :update, :destroy]
 
-  # GET /sessions
-  # GET /sessions.json
-  def index
-    @sessions = Session.all
-  end
+	before_action :set_session, only: [:show, :edit, :update, :destroy]
 
-  # GET /sessions/1
-  # GET /sessions/1.json
-  def show
-  end
+	def enroll
+		@session = Session.find params[:id]
+	end
 
-  # GET /sessions/new
-  def new
-    @session = Session.new
-  end
+	def buy_now
+		@session = Session.find params[:id]
+		@order = @session.orders.build
+		# TODO add current_user to order
+		@order.user = current_user
 
-  # GET /sessions/1/edit
-  def edit
-  end
+		if @order.save
+			@order.approve_url = create_payment_with_paypal(@session)
 
-  # POST /sessions
-  # POST /sessions.json
-  def create
-    @session = Session.new(session_params)
+			if @order.approve_url
+				redirect_to @redirect_url
+			else
+				logger.info "enrolled successfully"
+				redirect_to session_path(@session)
+			end
+		else
+			render :create, alert: @order.errors.to_a.join(", ")
+		end
 
-    if @session.save
-      redirect_to @session
-    else
-      render action: 'new'
-    end
-  end
+	end
 
-  # PATCH/PUT /sessions/1
-  # PATCH/PUT /sessions/1.json
-  def update
-      if @session.update(session_params)
-        redirect_to @session, notice: 'Session was successfully updated.' 
-      else
-        render action: 'edit'
-      end
-  end
+	private
+	def create_payment_with_paypal(paid_session)
+		# price = paid_session.price.to_s
+		@payment = Payment.new({
+			:intent =>  "sale",
 
-  # DELETE /sessions/1
-  # DELETE /sessions/1.json
-  def destroy
-    @session.destroy
-      redirect_to sessions_url 
-  end
+			# ###Payer
+			# A resource representing a Payer that funds a payment
+			# Payment Method as 'paypal'
+			:payer =>  {
+				:payment_method =>  "paypal" },
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_session
-      @session = Session.find(params[:id])
-    end
+			# ###Redirect URLs
+			:redirect_urls => {
+				:return_url => order_execute_url(@order.id),
+				:cancel_url => "http://localhost:3000/" },
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def session_params
-      params.require(:session).permit(:title, :expert_id, :always_show, :created_date, :description, :cover, :status, :content_type, :category, :location, :price, :video)
-    end
+			# ###Transaction
+			# A transaction defines the contract of a
+			# payment - what is the payment for and who
+			# is fulfilling it.
+			:transactions =>  [{
+
+				# Item List
+				:item_list => {
+					:items => [{
+						:name => paid_session.title,
+						:sku => "item",
+						:price => '%.2f' % paid_session.price,
+						:currency => "USD",
+						:quantity => 1 }]},
+
+				# ###Amount
+				# Let's you specify a payment amount.
+				:amount =>  {
+					:total =>  '%.2f' % paid_session.price,
+					:currency =>  "USD" },
+					:description =>  "This is the payment transaction description." }]})
+
+
+		if @payment.create
+			@order.update_attributes payment_id: @payment.id
+
+			@redirect_url = @payment.links.find{|v| v.method == "REDIRECT" }.href
+		else
+			logger.info "line 88, create failed"
+		end
+
+	end
 end
+

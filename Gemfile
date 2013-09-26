@@ -1,4 +1,5 @@
-source 'https://rubygems.org'
+# source 'https://rubygems.org'
+source 'http://ruby.taobao.org'
 
 ruby '2.0.0'
 gem 'rails', '4.0.0'
@@ -18,6 +19,9 @@ gem 'paperclip'
 gem 'truncate_html'  # make truncate html_safe
 gem 'activeadmin', github: 'gregbell/active_admin', branch: 'rails4'
 gem 'ckeditor'
+gem 'simple_form'
+gem 'paypal-sdk-core'
+gem 'paypal-sdk-rest'
 
 group :doc do
   gem 'sdoc', require: false

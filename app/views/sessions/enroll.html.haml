@@ -1,0 +1,55 @@
+#order-wrapper
+
+  #order
+    #order-header
+      %span Review your order
+
+    #order-detail
+      .item-wrapper
+        #avatar.icon
+          = image_tag @session.expert.avatar.url
+        #title.item
+          = @session.title
+
+      .item-wrapper
+        #fake.icon
+        #expert.item
+          = "by #{@session.expert.name}"
+
+      .item-wrapper
+        #time-icon.icon
+          = image_tag "time.png"
+        #time.item
+          = @session.start_date.to_formatted_s(:time_for_order).html_safe if @session.start_date
+
+
+      .item-wrapper
+        #content-type-icon.icon
+          = image_tag "content_type.png"
+        #content-type.item
+          = @session.content_type[0..-8]  # ***Session
+
+      .item-wrapper
+        #price-icon.icon
+          = image_tag "price.png"
+        #price.item
+          = number_to_currency(@session.price) + "(USD)" if @session.price
+        #paypal-button
+          = button_to "Buy Now", buy_now_session_path(@session), method: :get
+          -# = link_to "Buy Now", buy_now_session_path(@session), class: 'btn'
+
+  #account
+    #account-header
+      %span Create an account
+      #login
+        = raw "#{link_to "Login", new_user_session_path} to an existing account"
+    #account-detail
+      #social-login
+      #quick-register-form
+        =simple_form_for :user, url: user_registration_path do |f|
+          =f.input :first_name
+          =f.input :last_name
+          =f.input :email
+          =f.input :password
+          =f.button :submit, value: 'Paypal'
+      #paypal-button

@@ -37,6 +37,7 @@ ActiveAdmin.register Session do
       f.input :video
       f.input :location
       f.input :price
+			f.input :start_date
       f.actions
     end
   end
@@ -65,12 +66,13 @@ ActiveAdmin.register Session do
       end
       row :location
       row :price
+			row :start_date
     end
   end
 
   controller do
     def permitted_params
-      params.permit session: [:title, :expert_id, :always_show, :created_date, :description, :cover, :status, :content_type, :category, :location, :price, :video]
+      params.permit session: [:title, :expert_id, :always_show, :created_date, :description, :cover, :status, :content_type, :category, :location, :price, :video, :start_date]
     end
   end
 
