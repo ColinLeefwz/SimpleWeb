@@ -20,7 +20,8 @@
         #time-icon.icon
           = image_tag "time.png"
         #time.item
-          = @session.start_date.to_formatted_s(:time_for_order).html_safe
+          = @session.start_date.to_formatted_s(:time_for_order).html_safe if @session.start_date
+
 
       .item-wrapper
         #content-type-icon.icon
@@ -32,7 +33,7 @@
         #price-icon.icon
           = image_tag "price.png"
         #price.item
-          = number_to_currency(@session.price) + "(USD)"
+          = number_to_currency(@session.price) + "(USD)" if @session.price
         #paypal-button
           = button_to "Buy Now", buy_now_session_path(@session), method: :get
           -# = link_to "Buy Now", buy_now_session_path(@session), class: 'btn'
