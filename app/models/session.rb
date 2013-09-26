@@ -22,6 +22,6 @@ class Session < ActiveRecord::Base
     url: "/system/sessions/:attachment/:id_partition/:style/:filename"
 
 	def set_default
-		self.price = 0.00
+		self.price ||= 0.00
 	end
 end
