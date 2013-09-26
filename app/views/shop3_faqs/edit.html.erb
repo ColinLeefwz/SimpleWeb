@@ -15,7 +15,7 @@
        <% end %>
     <% end %>
         </div>
-        <div class="box4right w480">
+        <div class="box4right w400 pl20">
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
     <tr>
       <td width="20%" align="right" valign="middle" class="pr20">回复数字</td>
@@ -24,10 +24,8 @@
     <tr>
       <td width="20%" align="right" valign="middle" class="pr20">问题</td>
       <td>
-		<div class="box12">
-			<%= f.text_field :title, :class => "inputs6 radius5", :id=>"Inputs1" %>
-			<span id="Mes1"></span>
-		</div>
+		<%= f.text_field :title, :class => "inputs6 radius5 relative", :id=>"Inputs1" %>
+		<div id="Mes1"></div>
       </td>
     </tr>
     <tr>
@@ -48,10 +46,8 @@
     <tr>
       <td width="20%" align="right" valign="top" class="pr20">简述</td>
       <td>
-		<div class="box12 h140">
-			<%= f.text_area :text, :class => "textarea4 radius5", :style=>"word-wrap:normal", :id=>"Inputs2"%>
-			<span id="Mes2"></span>
-		</div>
+			<%= f.text_area :text, :class => "textarea4 radius5 relative", :style=>"word-wrap:normal", :id=>"Inputs2"%>
+			<div id="Mes2"></div>
 	  </td>
     </tr>
     <tr>
