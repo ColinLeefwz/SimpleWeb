@@ -69,18 +69,14 @@ function imgUploadPreview(select, divid){//优惠券
 				divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
-            }else if(/ipad/i.test(ua)){
+            }else{
 				 var file = $(this).get(0).files[0];
 				 var reader = new FileReader();
 					reader.readAsDataURL(file);
 					reader.onload = function(e){
 						$("#"+divid).html("<img style='height: 100%; width: 100%;' id='image_view'  src='"+this.result+"'/>");
 					}
-			}else{
-                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
-                imageView = document.getElementById("image_view");
-                imageView.src = window.URL.createObjectURL(this.files[0]);
-            }
+			}
         }catch(e){}
     });
 }
@@ -113,21 +109,14 @@ function imgUploadPreview3(select, divid){//商家设置
 				var imageView2 = document.getElementById("image_view2");
                 imageView.src = $(this).val();
 				imageView2.src = $(this).val();
-            }else if(/ipad/i.test(ua)){
+            }else {
 				 var file = $(this).get(0).files[0];
 				 var reader = new FileReader();
 					reader.readAsDataURL(file);
 					reader.onload = function(e){
 						$("#"+divid).html("<img style='height: 100%; width: 100%;' id='image_view'  src='"+this.result+"'/>");
 					}
-			}else{
-                divObj.innerHTML = "<img id='image_view' class='imgstyle2'/><img id='image_view2' class='imgstyle3 ml15 mb75'/>";
-                imageView = document.getElementById("image_view");
-				imageView2 = document.getElementById("image_view2");
-                imageView.src = window.URL.createObjectURL(this.files[0]);
-				imageView2.src = window.URL.createObjectURL(this.files[0]);
-            }
-
+			}
         }catch (e) {}
     });
 }
