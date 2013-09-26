@@ -130,7 +130,7 @@ class CheckinNotice
   #每次如果有员工在加入的商家签到，在最新动态里欢迎提示
   def self.send_staff_welcome(user,shop)
     shop.staffs.each do |uid|
-      Xmpp.send_chat(user.id, uid,"有新用户来到#{shop.name}", "FEED#{$uuid.generate}")
+      Xmpp.send_chat(user.id, uid,"有新用户来到#{shop.name}", "FEED#{$uuid.generate}", " NOLOG='1' ")
     end
   end
 
