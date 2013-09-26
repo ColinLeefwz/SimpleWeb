@@ -2,7 +2,7 @@
 
   #order
     #order-header
-      %span Review your order
+      %span.header Review your order
 
     #order-detail
       .item-wrapper
@@ -39,9 +39,10 @@
 
   #account
     #account-header
-      %span Create an account
+      %span.header Create an account
       #login
         = raw "#{link_to "Login", new_user_session_path} to an existing account"
+
     #account-detail
       #social-login
       #quick-register-form

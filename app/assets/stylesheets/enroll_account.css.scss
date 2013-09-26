@@ -1,6 +1,12 @@
 #account{
   #account-header{
     margin-top: 10px;
+    .header{
+      font-family: LatoBold;
+      font-size: 25px;
+      text-align: left;
+      margin-bottom: 0.5%;
+    }
   }
 
   #account-detail{
