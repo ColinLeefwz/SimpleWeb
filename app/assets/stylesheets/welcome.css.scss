@@ -71,6 +71,11 @@ body {
 			font-weight: bold;
 			letter-spacing: 0.5px;
 			line-height: 25px;
+
+			a:hover{
+			  text-decoration: none;
+			  color: #777777;
+			}
 		}
 
 		.cover{
@@ -111,6 +116,11 @@ body {
 					font-family: Latoitalic;
 					font-size: 14px;
 					color: #AF6A82;
+				}
+
+				a:hover{
+				  text-decoration: none;
+				  color: #575757;
 				}
 			}
 			.social-share-icons {
