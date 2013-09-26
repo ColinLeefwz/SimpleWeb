@@ -196,10 +196,11 @@ class Oauth2Controller < ApplicationController
   
       
   def logout
-    if params[:pushtoken] && session_user_no_cache.tk
-      size = session_user_no_cache.tk.size
-      if session_user_no_cache.tk==params[:pushtoken][0,size]
-        session_user_no_cache.unset(:tk)
+    user = session_user_no_cache
+    if params[:pushtoken] && params[:pushtoken].size>=64
+      user.unset(:tk) if user.tk
+      if user.tk && params[:pushtoken].index(user.tk[1..-1]).nil?
+        Xmpp.error_notify("退出的#{params[:pushtoken]} 和 #{user.tk}不一致")
       end
     end
     clear_session_info

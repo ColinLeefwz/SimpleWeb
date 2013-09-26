@@ -11,7 +11,7 @@
 				<a href="/shop3_faqs/edit?id=<%=faq.id%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
 		<% end %>
 		</div>
-<div class="box4right w480">
+<div class="box4right w400 pl20">
 
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
     <tr>
@@ -21,10 +21,8 @@
     <tr>
       <td width="20%" align="right" valign="middle" class="pr20">问题</td>
       <td>
-		<div class="box12">
-			<%= f.text_field :title, :class =>"inputs6 radius5", :id=>"Inputs1", :value=>"3-12个字,如:获取wifi密码" %>
-			<span id="Mes1"></span>
-		</div>
+		<%= f.text_field :title, :class =>"inputs6 radius5 relative", :id=>"Inputs1", :value=>"3-12个字,如:获取wifi密码" %>
+		<div id="Mes1"></div>
 	  </td>
     </tr>
 
@@ -47,10 +45,8 @@
     <tr>
 	  <td width="20%" align="right" valign="top" class="pr20">简述</td>
 	  <td>
-		<div class="box12 h140">
-			<%= f.text_area :text, :class => "textarea4 radius5", :style=>"word-wrap : normal", :id=>"Inputs2",:value=>"例如：本店wifi密码：321123"%>
-			<span id="Mes2"></span>
-		</div>
+		<%= f.text_area :text, :class => "textarea4 radius5 relative", :style=>"word-wrap : normal", :id=>"Inputs2",:value=>"例如：本店wifi密码：321123"%>
+		<div id="Mes2"></div>
 	  </td>
 	</tr>
     <tr>
@@ -65,13 +61,10 @@
 				</div>
 <div class="box4right2">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
-    <tr>
-		<td align="left" class="pb10">详细内容</td>
-	</tr>
 	<tr>
 		<td>
-			<span class="l mr20"><%= f.radio_button :link_rule, '0',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;外部链接</span>
-			<span class="l"><%= f.radio_button :link_rule, '1',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;编辑详细内容</span>
+			<span class="l mr20"><%= f.radio_button :link_rule, '0',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;链接到一个网页</span>
+			<span class="l"><%= f.radio_button :link_rule, '1',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;创建详情页</span>
 		</td>
 	</tr>
 	<tr>

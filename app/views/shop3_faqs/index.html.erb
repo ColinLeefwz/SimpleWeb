@@ -5,9 +5,10 @@
 		<% if @shop_faqs.blank? %>
 		还没有设置问答系统，请创建 ===》
 		<% end %>
+		<% st=0 %>
 		<% @shop_faqs.each do |faq| %>
 			 <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
-				<a href="/shop3_faqs/edit?id=<%=faq.id%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
+				<a href="/shop3_faqs/edit?id=<%=faq.id%>" id="Link<%= st+=1%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
 		<% end %>
 		</div>
 		<div class="box4right changebox4right" id="Waterfall" >
@@ -70,6 +71,8 @@ function ajaxDel(obj, faq_id, rel_id){//问答系统管理：删除
 						delay+=0.4;
 					}
 				}
+				$("div.box4left a#Link"+rel_id).next().remove().end().remove();
+				$("div.box4plane1 a").removeClass().addClass("wordpoistion").html("创建问答").attr("href","/shop3_faqs/new");
 				$.get("/shop3_faqs/ajax_del",{id: faq_id}, function(data) {
 					if(data['text']){
 					  div.remove();
@@ -113,5 +116,6 @@ $(document).ready(function(){
 			$("div.box4plane2").eq(div_i).find(".box4plane3").css("width","100%");
 		}
 	}
+	if($("div.box4plane2:last").attr("rel")==9){$("div.box4plane1 a").removeClass().addClass("wordpoistion2").html("只能创建9个，请删除一个再创建").removeAttr("href");}
 });
 </script>
