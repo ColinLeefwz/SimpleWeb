@@ -12,9 +12,12 @@ function imgUploadPreview2(select, divid){//问答系统
             return false;
         }
         
+		
+alert(ua);
         try{
             var divObj = document.getElementById(divid);
             if(navigator.userAgent.indexOf("MSIE") > -1&& (navigator.userAgent.indexOf("MSIE 7.0") > -1|| navigator.userAgent.indexOf("MSIE 9.0") > -1 || navigator.userAgent.indexOf("MSIE 8.0") > -1)  ){
+				alert(1);
 				this.select();
                 this.blur();
                 var path = document.selection.createRange().text;
@@ -24,7 +27,8 @@ function imgUploadPreview2(select, divid){//问答系统
 				document.getElementById("image_view").src ="http://shop.dface.cn/images/clear.gif";
 				//divObj.innerHTML="<img id='image_view1' style='background:url(file:///"+$(select).val()+") center center no-repeat;height: 100%; width: 100%;'/>";
 			}else if(navigator.userAgent.indexOf("MSIE") > -1&& navigator.userAgent.indexOf("MSIE 6.0") > -1 ){
-                divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
+                alert(2);
+				divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 var imageView = document.getElementById("image_view");
                 imageView.src = $(this).val();
             }else if(/ipad/i.test(ua)){
@@ -34,7 +38,8 @@ function imgUploadPreview2(select, divid){//问答系统
 					reader.onload = function(e){
 						$("#"+divid).html("<img style='height: 100%; width: 100%;' id='image_view'  src='"+this.result+"'/>");
 					}
-			}else{ 
+			}else{
+			alert(3);
                 divObj.innerHTML = "<img id='image_view' style='height: 100%; width: 100%;' />";
                 imageView = document.getElementById("image_view");
                 imageView.src = window.URL.createObjectURL(this.files[0]);
@@ -276,38 +281,7 @@ function Cut(){
 			$("#CutBG3").css({"left":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","width":w-(cutarea_w+mouse_left-cutdiv_left-hraf_w)+"px","height":h+"px"});
 			$("#CutBG4").css({"width":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","top":cutarea_h+mouse_top-cutdiv_top-hraf_h+"px","height":h-(cutarea_h+mouse_top-cutdiv_top-hraf_h)+"px"});
 			$("#SmallImgDiv img").css({"margin-left":-(mouse_left-cutdiv_left-hraf_w)+"px","margin-top":-(mouse_top-cutdiv_top-hraf_h)+"px"});
-		});
-		/*document.body.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
-		//documentById("CutArea").addEventListener('touchmove', function(e) {alert(2);}, true);
-		document.addEventListener('touchmove', img_mousedown, false);
-		function img_mousedown(e){
-			var cutdiv_left=$("#CutDiv").offset().left;
-				var cutdiv_top=$("#CutDiv").offset().top;
-				var mouse_left=e.pageX;
-				var mouse_top=e.pageY;
-				var cutarea_w=parseInt($("#CutArea").css("width"));
-				var cutarea_h=parseInt($("#CutArea").css("height"));
-				var hraf_w=cutarea_w/2, hraf_h=cutarea_h/2;
-				if(mouse_left-cutdiv_left-hraf_w<0){
-					mouse_left=cutdiv_left+hraf_w;
-				}
-				if(mouse_top-cutdiv_top-hraf_h<0){
-					mouse_top=cutdiv_top+hraf_h;
-				}
-				if(mouse_left-cutdiv_left-hraf_w>w-cutarea_w){
-					mouse_left=w-cutarea_w+cutdiv_left+hraf_w;
-				}
-				if(mouse_top-cutdiv_top-hraf_h>h-cutarea_h){
-					mouse_top=h-cutarea_h+cutdiv_top+hraf_h;
-				}
-				$("#CutArea").css({"left":mouse_left-cutdiv_left-hraf_w+"px","top":mouse_top-cutdiv_top-hraf_h+"px"});
-				$("#CutBG1").css({"width":mouse_left-cutdiv_left-hraf_w+"px","height":cutarea_h+mouse_top-cutdiv_top-hraf_h+"px"});
-				$("#CutBG2").css({"width":cutarea_w+"px","height":mouse_top-cutdiv_top-hraf_h+"px","left":mouse_left-cutdiv_left-hraf_w+"px"});
-				$("#CutBG3").css({"left":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","width":w-(cutarea_w+mouse_left-cutdiv_left-hraf_w)+"px","height":h+"px"});
-				$("#CutBG4").css({"width":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","top":cutarea_h+mouse_top-cutdiv_top-hraf_h+"px","height":h-(cutarea_h+mouse_top-cutdiv_top-hraf_h)+"px"});
-				$("#SmallImgDiv img").css({"margin-left":-(mouse_left-cutdiv_left-hraf_w)+"px","margin-top":-(mouse_top-cutdiv_top-hraf_h)+"px"});
-		}*/
-	
+		});	
 	}else{
 		$("#CutArea").mousedown(function(){
 			$("#CutArea").mousemove(function(e){
