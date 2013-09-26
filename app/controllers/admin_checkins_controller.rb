@@ -56,6 +56,8 @@ class AdminCheckinsController < ApplicationController
       lo = params[:loc].split(',')
       hash.merge!({ lo: { "$within" => { "$center" => [lo, 0.1]} }}) if lo.length == 2
     end
+
+
     
     @checkins = paginate3("Checkin", params[:page], hash, sort  )
   end

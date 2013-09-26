@@ -17,6 +17,9 @@
     排名： <%= text_field_tag :od, params[:od], :size => 10  %>
     误差： <%= text_field_tag :acc, params[:acc], :size => 10  %>
     <br/>
+    商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
+    用户id:<%= text_field_tag :uid, params[:uid],:size => 20 %>
+    <br/>
     <%= submit_tag "查 找" %>
   </p>
 <% end %>

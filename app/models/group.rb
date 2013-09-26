@@ -35,6 +35,10 @@ class Group
     []
   end
 
+  def delete
+    shop.unset(:group_id) if shop
+    super
+  end
 
   #旅行团是否在有效时间内
   def effectual?
