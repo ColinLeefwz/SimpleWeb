@@ -360,8 +360,9 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .box4 .box4right2{float:left;position:relative;width:335px;overflow:hidden;padding-left:15px;}
 .box4 .box4plane1{line-height:20px;width:308px;height:146px;border:2px dashed #D7D7D7;border-radius:8px;overflow:hidden;position:absolute;top:0px;text-align:center;}
 .box4 .box4plane4{margin-left:20px;margin-top:168px;line-height:20px;}
-.box4 .box4plane1 a{width:100%;height:46px;background:#ffffff url(../images/sign2.png) center 40px no-repeat;color:#000;display:block;padding-top:100px;}
-.box4 .box4plane1 a:hover{background:#fff url(../images/sign3.png) center 40px no-repeat;}
+.box4 .box4plane1 a.wordpoistion{width:100%;height:46px;background:#ffffff url(../images/sign2.png) center 40px no-repeat;color:#000;display:block;padding-top:100px;}
+.box4 .box4plane1 a.wordpoistion:hover{background:#fff url(../images/sign3.png) center 40px no-repeat;}
+.box4 .box4plane1 a.wordpoistion2{width:100%;height:51px;background:#ffffff url(../images/sign2_1.png) center 35px no-repeat;color:#999;display:block;padding-top:95px;cursor:text;}
 .box4 .box4plane2{line-height:20px;width:308px;border:1px solid #D7D7D7;border-radius:8px 8px 0px 0px;overflow:hidden;position:absolute;top:0px;background-color:#ffffff;}
 .box4  .box4plane3{width:160px;float:left;}
 .box4 .box4con1{display:block;clear:both;padding:8px;font-size:12px;line-height:20px;overflow:hidden;}
