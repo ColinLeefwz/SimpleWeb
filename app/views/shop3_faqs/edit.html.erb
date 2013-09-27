@@ -1,3 +1,6 @@
+<style>
+	#edui1_bottombar{display:none;}
+</style>
 <div class="con2">
 	<div class="title1"><h2 class="f18">问答系统</h2></div>
 	<%= form_for(@shop_faq, :url => "/shop3_faqs/update?id=#{@shop_faq.id}",:html => { :multipart => true, :id => 'cform' } ) do |f| %>
@@ -72,10 +75,19 @@
 	</tr>
 	<tr>
 		<td class="relative del2">
-			<%= f.text_field :url,:class=>"inputs2 radius5 relative",:id=>"link1",:placeholder => "http://" %>
-			<%= f.text_field :head, :class=>"inputs2 radius5 w300",:style=>"margin-left:400px;" ,:id=>"link2", :placeholder => "标题" %>
-			<div id="link3" class="relative" style="margin-left:400px;">
-				<%= f.text_area :content, :id=>"myEditor" %>
+			<%= f.text_field :url,:class=>"inputs2 radius5 relative",:id=>"link1", :placeholder => "http://", :disabled=>"disabled"%>
+			<div id="LinkDiv">
+				<div class="linkdivleft">
+					<%= f.text_field :head, :class=>"inputs2 radius5 w300",:id => "link2", :placeholder => "标题" %>
+					<div id="link3">
+						<%= f.text_area :content, :id=>"myEditor" %>
+						<input type="button" class="mt10 btn15 r mr5" id="Preview" value="预览"/>
+					</div>
+				</div>
+				<div id="CellPhone">
+					<iframe src="http://www.baidu.com" scrolling="no" frameborder="0"></iframe>
+					<input type="button" class="mt10 btn16 ml100" id="Edit" value="编辑"/>
+				</div>
 			</div>
 		</td>
     </tr>

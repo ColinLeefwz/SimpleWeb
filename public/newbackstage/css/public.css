@@ -66,6 +66,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .w950{width:950px !important;}
 .w1120{width:1120px !important;}
 .h140{height:140px !important;}
+.h400{height:400px !important;}
 .h423{height:423px !important;}
 
 .pointer{cursor:pointer;}
@@ -123,6 +124,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .ml15{margin-left:15px;}
 .ml20{margin-left:20px;}
 .ml48{margin-left:48px;}
+.ml100{margin-left:100px;}
 .ml110{margin-left:110px;}
 .mr5{margin-right:5px;}
 .mr10{margin-right:10px;}
@@ -165,6 +167,10 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#00AAEE',endCo
 }
 .btn13{border:none;color:#FFFFFF;cursor:pointer;height:30px;line-height:30px;text-align:center;width:68px;background-color:#00AAEE;}
 .btn14{border:none;color:#FFFFFF;cursor:pointer;height:30px;line-height:30px;text-align:center;width:68px;background-color:#858585;}
+.btn15{border:1px solid #1482F1;border-radius:3px;color:#FFFFFF;cursor:pointer;height:27px;line-height:27px;
+letter-spacing:2px;text-align:center;width:60px;background-color:#3399FF;}
+.btn16{border:1px solid #ccc;border-radius:3px;color:#818181;cursor:pointer;height:27px;line-height:27px;
+letter-spacing:2px;text-align:center;width:60px;background-color:#f8f8f8;}
 .btn2change{position:absolute;right:140px;bottom:30px;}
 .btn3change{position:absolute;right:30px;bottom:30px;}
 
@@ -448,6 +454,10 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .tab1 tr.change td{padding:5px 0px;}
 .tab1 tr.change2 td{padding:0px 10px;}
 .tab1 div#Mes1, .tab1 div#Mes2{display:none;color:#FF6600;padding:10px 0px 0px 5px;clear:both;overflow:hidden;}
+div#LinkDiv{width:616px;position:relative;overflow:hidden;margin-left:400px;display:none;}
+div#LinkDiv .linkdivleft{float:left;width:330px;}
+div#CellPhone{float:right;width:266px;height:466px;background:url(../images/cellphone.png) left top no-repeat;margin-left:20px;}
+div#CellPhone iframe{height: 280px;margin-left: 20px;margin-top: 120px;width: 226px;}
 
 
 .tab2{width:100%;overflow:hidden;line-height:25px;border-left:1px solid #ddd;border-top:1px solid #ddd;background-color:#fff;margin-top:20px;}
