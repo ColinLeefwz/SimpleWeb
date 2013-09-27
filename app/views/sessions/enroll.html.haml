@@ -48,6 +48,8 @@
       #account-detail
         #social-login
         #quick-register-form
+          =link_to image_tag("fb_signin.png")
+          =link_to image_tag("linkedin_signin.png") 
           =simple_form_for :user, url: sign_up_buy_session_path(@session) do |f|
             =f.input :first_name
             =f.input :last_name
