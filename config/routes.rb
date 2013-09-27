@@ -12,6 +12,7 @@ Prodygia::Application.routes.draw do
 		member do
 			get :enroll
 			get :buy_now
+			post :sign_up_buy
 		end
 	end
 
