@@ -13,7 +13,6 @@ class SessionsController < ApplicationController
 	def buy_now
 		@session = Session.find params[:id]
 		@order = @session.orders.build
-		# TODO add current_user to order
 		@order.user = current_user
 
 		if @order.save

@@ -2,7 +2,7 @@
 
   #order
     #order-header
-      %span Review your order
+      %span.header Review your order
 
     #order-detail
       .item-wrapper
@@ -33,23 +33,25 @@
         #price-icon.icon
           = image_tag "price.png"
         #price.item
-          = number_to_currency(@session.price) + "(USD)" if @session.price
-        #paypal-button
-          = button_to "Buy Now", buy_now_session_path(@session), method: :get
-          -# = link_to "Buy Now", buy_now_session_path(@session), class: 'btn'
+          = number_to_currency(@session.price) + "(USD)"
+          - if user_signed_in?
+            %span.paypal-button
+              = link_to image_tag("paypal_button.png"), buy_now_session_path(@session)
 
-  #account
-    #account-header
-      %span Create an account
-      #login
-        = raw "#{link_to "Login", new_user_session_path} to an existing account"
-    #account-detail
-      #social-login
-      #quick-register-form
-        =simple_form_for :user, url: user_registration_path do |f|
-          =f.input :first_name
-          =f.input :last_name
-          =f.input :email
-          =f.input :password
-          =f.button :submit, value: 'Paypal'
-      #paypal-button
+  - if not user_signed_in?
+    #account
+      #account-header
+        %span.header Create an account
+        #login
+          = raw "#{link_to "Login", new_user_session_path, class: 'link'} to an existing account"
+
+      #account-detail
+        #social-login
+        #quick-register-form
+          =simple_form_for :user, url: user_registration_path do |f|
+            =f.input :first_name
+            =f.input :last_name
+            =f.input :email
+            =f.input :password
+            =f.button :submit, value: '', class: 'paypal-register-button'
+          %span#hint Create account and pay with Paypal
