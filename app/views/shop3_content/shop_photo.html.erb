@@ -23,7 +23,7 @@
   <div class="box9" id="Waterfall">
     <% @photos.each_with_index do |photo, index| %>
       <div class="box9plane">
-        <%= image_tag Photo.img_url(photo.id)+"?time=#{Time.now}" %>
+        <%= image_tag photo.img.url+"?time=#{Time.now}" %>
         <div class="m"><span><%= link_to(photo.desc.to_s.truncate(20), "/shop3_content/show_photo?id=#{photo.id}") %></span></div>
 
         <div class="bj">

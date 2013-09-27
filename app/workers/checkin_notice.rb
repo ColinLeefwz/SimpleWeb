@@ -90,9 +90,14 @@ class CheckinNotice
   
   def self.send_notice_if_exist(user,shop)
     notice = shop.notice
-    return if notice.nil? || notice.title.nil? || notice.title.length<1
-    return notice.title if ENV["RAILS_ENV"] != "production"
-    Resque.enqueue(XmppNotice, shop.id, user.id, notice.title)
+    return if notice.nil?
+    photo = notice.photo
+    if photo.nil?
+      return if notice.title.blank?
+      Resque.enqueue(XmppNotice, shop.id, user.id, notice.title)
+    else
+      Resque.enqueue(XmppRoomMsg,photo.user_id,shop.id, user.id, "[img:#{photo._id}]#{photo.desc}")
+    end
   end
   
   def self.send_share_coupon_notice_if_exist(user,shop)

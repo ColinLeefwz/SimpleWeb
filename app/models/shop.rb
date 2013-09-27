@@ -72,7 +72,7 @@ class Shop
 
   
   def notice
-    ShopNotice.where({shop_id: self.id}).last
+    ShopNotice.find_by_id(self._id)
   end
   
   def coupons
@@ -239,10 +239,6 @@ class Shop
 
   def staffs
     Staff.only(:user_id).where({shop_id: self.id}).map {|x| x.user_id}
-  end
-
-  def notice
-    ShopNotice.where(({shop_id: self.id})).last
   end
   
   def lord

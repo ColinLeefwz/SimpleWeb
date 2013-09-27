@@ -10,63 +10,92 @@
       <li><a href="/shop3_bans">屏蔽用户</a></li>
       <li><a href="/shop3_marks">用户评分</a></li>
       <li  class="hover"><a href="/shop3_notice">公告管理</a></li>
-	  <% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
+      <% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
     </ul>
   </div>
-  <form method="post" onsubmit="return false;"/>
-  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
-    <tr>
-      <td valign="top" align="right" class="pr20">&nbsp;</td>
-      <td colspan="3">
-        <%= text_area_tag :text,@shop_notice.try(:title) , :class =>  "textarea3 w700", :id => "noticeTitle",:placeholder => "用于在脸脸客户端显示公告" %>
-      </td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td align="left">
-        <%= submit_tag "提交", :class => "btn2", :onclick => "ajaxCreateNotice('#{@shop_notice.try(:id)||''}')", :style=>"display:none" %>
-      </td>
-      <td>&nbsp;</td>
-      <td align="left">&nbsp;</td>
-    </tr>
-  </table>
+
+  <%= link_to "文本模式", "/shop3_notice?title=true" %>
+  <a href="/shop3_notice/edit">从商家图片中选择</a>
+  <a href="/shop3_notice/del">取消公告</a>
+
+  <% if @shop_notice.try(:photo_id) && params[:title].blank? %>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
+      <tr>
+
+        <td valign="top" align="right" class="pr20">&nbsp;</td>
+        <td width="300"><%= image_tag @shop_notice.photo.img.url, :alt=>"0", :style => "width: 152px; height: 152px;" %></td>
+        <td><%= @shop_notice.photo_desc %></td>
+        <td width=""></td>
+      </tr>
+      <tr>
+        <td valign="top" align="right" class="pr20">&nbsp;</td>
+        <td width="300">
+
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+
+  <%  else %>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
+      <tr>
+        <td valign="top" align="right" class="pr20">&nbsp;</td>
+        <td colspan="3">
+          <%= text_area_tag :text,@shop_notice.try(:title) , :class =>  "textarea3 w700", :id => "noticeTitle",:placeholder => "用于在脸脸客户端显示公告" %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>&nbsp;</td>
+        <td align="left">
+          <%= submit_tag "提交", :class => "btn2", :onclick => "ajaxCreateNotice('#{@shop_notice.try(:id)||''}')", :style=>"display:none" %>
+        </td>
+        <td>&nbsp;</td>
+        <td align="left">&nbsp;</td>
+      </tr>
+
+    </table>
+  <% end %>
+
 
 </div>
 
 <script defer="defer">
-$(document).ready(function(){
-  runing=$("#CB1").attr("class");
-  if(runing=="checkboxs1"){
-    NavDiv();
-    $(window).load(function(){
-      MessageDiv();
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+
+  $("textarea").click(function(){
+    $(this).addClass("onfocs");
+    $(".btn2").show();
+    if($(this).val()=="用于在脸脸客户端显示公告"){
+      $(this).val("");
+    }
+  }).blur(function(){
+    $(this).removeClass("onfocs");
+  });
+
+  function ajaxCreateNotice(notice_id){
+    var title = $("#noticeTitle").val();
+    // if(title==""){
+    // 	title="用于在脸脸客户端显示公告";
+    // }
+    $.get("/shop3_notice/ajax_release", {id: notice_id, title: title}, function(data){
+      $("#ShowTitle").show();
+      $("#ShowTitle").text(data["title"]);
+      $(".btn2").hide();
     });
-  }else if(runing=="checkboxs2"){
-    AllNoDH();
   }
-
-$(".tab2 tr:odd").addClass("trbg");
-});
-
-$("textarea").click(function(){
-	$(this).addClass("onfocs");
-	$(".btn2").show();
-	if($(this).val()=="用于在脸脸客户端显示公告"){
-		$(this).val("");
-	}
-}).blur(function(){
-	$(this).removeClass("onfocs"); 
-});
-
-function ajaxCreateNotice(notice_id){
-	var title = $("#noticeTitle").val();
-	// if(title==""){
-	// 	title="用于在脸脸客户端显示公告";
-	// }
-	$.get("/shop_shop_notices/ajax_release", {id: notice_id, title: title}, function(data){
-		$("#ShowTitle").show();
-		$("#ShowTitle").text(data["title"]);
-		$(".btn2").hide();
-	});
-}
 </script>
