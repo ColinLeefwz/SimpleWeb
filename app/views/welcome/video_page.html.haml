@@ -37,8 +37,11 @@
             Virtual
         %p#location-icon4.location-icon-background
           %span.location-info.outline-font
-            -# = number_to_currency("#{@session.price}", :unit => "USD:")
-            = number_to_currency("  To be announced", :unit => "USD:")
+            - if @session.price == 0
+              Free
+            - else
+              = number_to_currency("#{@session.price}", :unit => "USD:")
+
 
       .video-page-others
         %p Click below to entroll now!
