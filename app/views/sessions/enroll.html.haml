@@ -47,6 +47,7 @@
 
       #account-detail
         #social-login
+          = link_to "Sign In with Facebook", user_omniauth_authorize_path(:facebook)
         #quick-register-form
           =simple_form_for :user, url: user_registration_path do |f|
             =f.input :first_name

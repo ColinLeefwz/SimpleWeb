@@ -22,6 +22,8 @@ gem 'ckeditor'
 gem 'simple_form'
 gem 'paypal-sdk-core'
 gem 'paypal-sdk-rest'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :doc do
   gem 'sdoc', require: false
