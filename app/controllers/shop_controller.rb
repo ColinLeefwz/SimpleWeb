@@ -46,7 +46,7 @@ class ShopController < ApplicationController
       else
         dis = "%d0米" % (distance/10)
       end
-      {id:s.id,name:s.name, visit:0, distance:dis }
+      {id:s.id,name:s.name, visit:0, distance:dis, "lat"=>s.loc_first[0], "lng"=>s.loc_first[1] }
     end
     if params[:sname][0,3]=="@@@" #测试人员输入商家id模拟签到
       shop = Shop.find_by_id(params[:sname][3..-1])  
