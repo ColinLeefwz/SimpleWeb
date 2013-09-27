@@ -8,12 +8,13 @@ Prodygia::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  resources :sessions do
-    member do
-      get :enroll
-      get :buy_now
-    end
-  end
+	resources :sessions do
+		member do
+			get :enroll
+			get :buy_now
+			post :sign_up_buy
+		end
+	end
 
   resources :orders do
     get :execute
