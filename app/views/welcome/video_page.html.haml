@@ -27,7 +27,10 @@
       .video-page-location-info
         %p#location-icon1.location-icon-background
           %span.location-info
-            = @session.expert.profile.location
+            - if @session.expert.profile.location.eql?""
+              = "To be announced"
+            - else
+              = @session.expert.profile.location
         %p#location-icon2.location-icon-background
           %span.location-info
             - if @session.start_date == nil
@@ -40,7 +43,7 @@
         %p#location-icon4.location-icon-background
           %span.location-info.outline-font
             - if @session.price == 0
-              Free
+              = "Free"
             - else
               = number_to_currency("#{@session.price}", :unit => "USD:")
 
