@@ -1,27 +1,22 @@
 \section{XMPP协议接口}
 
 
-\subsection{与Openfire聊天服务器接口}
-脸脸网的XMPP服务器采用的是Openfire。
+\subsection{与Xmpp协议的不同}
 
 \begin{enumerate}
-\item 脸脸网的用户id加上"@dface.cn"就是openfire的jid，两个系统的密码一致。登录xmpp时的resource使用机器特定的字符串，以区分一个帐号在多台设备上登录。
-\item 商家的id加上"@c.dface.cn"就是现场聊天室的jid。
-\item 脸脸的用户名就是openfire的用户名，且也就是聊天时的用户名。Xmpp协议允许用户在加入聊天室时取一个名字，脸脸的聊天室应该忽略该名字。脸脸用户加入聊天室的时候，其jid格式为"roomid@c.dface.cn/uid"。
 \item 脸脸中的关注和粉丝关系是单向的，和xmpp中的好友roster关系无关。
 \item 只要用户登录，其xmpp协议中的presence就是在线，没有其它状态。
-\item 聊天室中，消息id以ckn开头的消息代表是用户首次进入聊天室发送的通知类消息，客户端根据这个ckn头确定是否有新的人进入了聊天室。
-\item 聊天室中，消息id以FAQ开头的是问答消息。
-\item 聊天室中，消息id以COMMENT开头的是图片的评论消息。
-\item 在聊天室收到的id以“coupon”开头的消息时，点击该消息要能跳转到优惠券文件夹。
 \item 脸脸中的隐身也和xmpp中的隐身状态无关。
-\item xmpp中的任意两个用户可以发送消息，不管对方是否隐身，只要对方未设置黑名单即可。如果对方未登录，那么就是离线消息。
+\item 脸脸中的任意两个用户可以发送消息，不管对方是否隐身，只要对方未设置黑名单即可。如果对方未登录，那么就是离线消息。
 \end{enumerate}
 
-所有的消息（包括单聊和聊天室），要保证消息id的唯一性，建议使用uuid生成消息的id。客户端发送的消息，由客户端生成这个id；服务器端发送的消息，由服务器端生成这个id。
-
-目前，在发图的时候，存在同时收到两张一样的图片的消息的BUG。为了处理这个BUG，客户端在收到图片消息时，如果消息的图片ID一样，不重复显示图片。但是图片id以faq开头的图片消息不需要判断图片id重复的问题。
-
+\subsection{脸脸Xmpp的JID}
+\begin{enumerate}
+\item 脸脸网的用户id加上"@dface.cn"就是Xmpp的jid。
+登录时的resource格式为: '操作系统脸脸版本-月日-时:分'，其中操作系统为i或者a。
+\item 商家的id加上"@c.dface.cn"就是现场聊天室的jid。Xmpp协议允许用户在加入聊天室时取一个名字，脸脸的聊天室应该忽略该名字。脸脸用户加入聊天室的时候，其jid格式为"roomid@c.dface.cn/uid"。
+\end{enumerate}
+例如：个人登录Xmpp服务器后的完整JID如“502e6303421aa918ba000005@dface.cn/i2.3.4-0927-09:34”，进入聊天室的完整JID如"1234@c.dface.cn/502e6303421aa918ba000005"。
 
 
 \subsection{脸脸中的聊天用户的三种类型}
@@ -32,6 +27,24 @@
 \item个人，其jid为'个人id@dface.cn'。
 \end{enumerate}
 如果一个jid以字母s开头，那么它一定是商家。
+
+
+
+
+\subsection{消息ID}
+所有的消息（包括单聊和聊天室），要保证消息id的唯一性，建议使用uuid生成消息的id。客户端发送的消息，由客户端生成这个id；服务器端发送的消息，由服务器端生成这个id。
+
+目前，在发图的时候，存在同时收到两张一样的图片的消息的BUG。为了处理这个BUG，客户端在收到图片消息时，如果消息的图片ID一样，不重复显示图片。但是图片id以faq开头的图片消息不需要判断图片id重复的问题。
+
+
+
+\subsection{聊天室的特定格式消息}
+\begin{enumerate}
+\item 聊天室中，消息id以ckn开头的消息代表是用户首次进入聊天室发送的通知类消息，客户端根据这个ckn头确定是否有新的人进入了聊天室。
+\item 聊天室中，消息id以FAQ开头的是问答消息。
+\item 聊天室中，消息id以COMMENT开头的是图片的评论消息。
+\item 在聊天室收到的id以“coupon”开头的消息时，点击该消息要能跳转到优惠券文件夹。
+\end{enumerate}
 
 
 \subsection{摇一摇及其消息格式}
@@ -237,10 +250,13 @@ GET & \multicolumn{3}{|c|}{/coupons/img} \\
  \  id  & 字符串 & 必填 &  该优惠券的id  \\
 \hline
  size  & 整数 & 可选 &  目前0代表原图(580, 224)；1代表缩略图，大小为(290,112)。默认为1。\\ 
+ \hline
+ \  seq  & 整数 & 可选 &  0代码客户端没有seq，1代表客户端支持显示seq，默认为0 \\
 \hline
 \end{tabular}
    \end{center}
 \end{table}
+2.4以后的版本，都要传递seq=1，这样服务器端才不会重复生成seq.
 
 
 \subsection{优惠券使用}

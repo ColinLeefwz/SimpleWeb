@@ -11,12 +11,13 @@ class CouponsController < ApplicationController
       render :json => {error: "你没有获取到过这张优惠券"}.to_json
       return
     end
+    gen_seq = params[:seq].to_s!="1"
     if cp.t2==2 && cp.img.url.nil?
-      path = cpd.gen_share_coupon_img
+      path = cpd.gen_share_coupon_img(gen_seq)
       redirect_to path
       return
     end
-    if cp.t2==1 && cp.num && cpd.num
+    if cp.t2==1 && cp.num && cpd.num && gen_seq
       path = cpd.gen_tmp_checkin_coupon_img
       redirect_to path
       return
@@ -72,7 +73,14 @@ class CouponsController < ApplicationController
     else
       hash.merge!({st: st})
     end
-    cds = CouponDown.where(hash).sort({dat: -1}).skip(skip).limit(pcount)
+    if st==2
+      sort_hash = {uat: -1}
+    else
+      sort_hash = {dat: -1}
+      #TODO: 默认按时间排序,最新的在最前面。相同时间同一批收到的优惠券,按距离排序。
+      #当前所在商家的优惠券自动置顶。
+    end
+    cds = CouponDown.where(hash).sort(sort_hash).skip(skip).limit(pcount)
     render :json => cds.map {|p| p.output_hash }.to_json
   end
   

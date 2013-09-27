@@ -219,6 +219,8 @@ POST & \multicolumn{3}{|c|}{/photos/recomment} \\
  rid  & 字符串 & 必须 & 被回复者的id\\
    \hline
  text  & 字符串 & 必须 & 评论的内容\\
+  \hline
+ sid  & 字符串 & 可选 & 当前用户所在现场的id\\  
 \hline
 \end{tabular}
    \end{center}
@@ -226,6 +228,8 @@ POST & \multicolumn{3}{|c|}{/photos/recomment} \\
 这里的rid是被回复者的id，而发布回复者的id是从session中自动获取的。
 
 这里的回复其实是针对人的，如果一个人在一张图片下发布了多个评论，那么这里的回复不针对特定的那条评论。
+
+[2013－9－24] 新增sid，表示发表评论的用户所在现场的id。
 
 
 \subsection{对聊天室图片删除点评}

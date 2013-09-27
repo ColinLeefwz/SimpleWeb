@@ -187,6 +187,9 @@ class Shop
   def safe_output
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
+    total = $redis.get("suac#{self.id.to_i}")
+    total = self.utotal.to_i if total.nil?
+    hash.merge!( {"user"=>total})
     hash
   end
   
@@ -292,15 +295,28 @@ class Shop
 
   def view_user6s(session_uid)
     ret = []
-    users = Checkin.get_users_redis(id.to_i,0,6)
+    users = Checkin.get_users_redis(id.to_i,0,15)
     users = users.delete_if{|x| x[0].to_s==session_uid.to_s}
     return [] if users.size<3
-    users.each do |uid,cat|
+    output = lambda do |uid,sex|
       u = User.find_by_id(uid)
-      next if u.nil?
-      next if u.forbidden?
+      return if sex && u.gender!=sex
+      return if u.nil?
+      return if u.forbidden?
       hash = u.safe_output(session_uid)
       ret << hash
+    end
+    users[0,3].each do |uid,cat|
+      output.call(uid,nil)
+    end
+    return ret if users.size==3
+    users[3..-1].each do |uid,cat|
+      output.call(uid, 2)
+      return ret if ret.size>=6
+    end
+    users[3..-1].each do |uid,cat|
+      output.call(uid, 1)
+      return ret if ret.size>=6
     end
     ret
   end
