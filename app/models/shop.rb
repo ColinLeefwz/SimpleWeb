@@ -296,15 +296,28 @@ class Shop
 
   def view_user6s(session_uid)
     ret = []
-    users = Checkin.get_users_redis(id.to_i,0,6)
+    users = Checkin.get_users_redis(id.to_i,0,15)
     users = users.delete_if{|x| x[0].to_s==session_uid.to_s}
     return [] if users.size<3
-    users.each do |uid,cat|
+    output = lambda do |uid,sex|
       u = User.find_by_id(uid)
-      next if u.nil?
-      next if u.forbidden?
+      return if sex && u.gender!=sex
+      return if u.nil?
+      return if u.forbidden?
       hash = u.safe_output(session_uid)
       ret << hash
+    end
+    users[0,3].each do |uid,cat|
+      output.call(uid,nil)
+    end
+    return ret if users.size==3
+    users[3..-1].each do |uid,cat|
+      output.call(uid, 2)
+      return ret if ret.size>=6
+    end
+    users[3..-1].each do |uid,cat|
+      output.call(uid, 1)
+      return ret if ret.size>=6
     end
     ret
   end

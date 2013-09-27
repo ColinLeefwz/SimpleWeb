@@ -53,6 +53,9 @@ event回执消息丢失的处理分析：
 2.2当服务器端收到消息时，如果presence为unavailable，presence设置为active。
 2.3发送单聊消息设置临时队列，收到回执删除，超时移动到offline表。
 
+3.服务器Web端推送消息的可靠性
+/api/rest接口发送消息
+
 
 链接检测
 服务器端ping：29秒／32秒，超时presence设置为unavailable。
