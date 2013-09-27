@@ -23,13 +23,11 @@ class OrdersController < ApplicationController
 	def execute
 		order = Order.find(params[:order_id])
 		@payment = Payment.find(order.payment_id)
-		@session = order.session.id
+		@session = order.session
 		if @payment.execute(payer_id: params[:PayerID])
-			logger.info "finish enroll"
-			redirect_to video_page_path @session
-			# redirect_to session_path(@session)
+			current_user.enroll_session @session
+			redirect_to video_page_path(@session), flash: { success: "Enrolled Successful !" }
 		else
-			logger.info "enrolled failed"
 			redirect_to session_path(@session)
 		end
 	end

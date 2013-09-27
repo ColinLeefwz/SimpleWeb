@@ -20,7 +20,8 @@
         #time-icon.icon
           = image_tag "time.png"
         #time.item
-          = @session.start_date.to_formatted_s(:time_for_order).html_safe
+          = @session.start_date.to_formatted_s(:time_for_order).html_safe if @session.start_date
+
 
       .item-wrapper
         #content-type-icon.icon
