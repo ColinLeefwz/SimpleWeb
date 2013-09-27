@@ -10,8 +10,29 @@ class SessionsController < ApplicationController
 		@session = Session.find params[:id]
 	end
 
+	def sign_up_buy
+		@session = Session.find params[:id]
+		@member = Member.new(member_params)
+		if @member.save
+			sign_in @member
+			paypal_pay
+		else
+			redirect_to session_path(@session), alert: "Can not sign up you !"
+		end
+
+	end
+
 	def buy_now
 		@session = Session.find params[:id]
+		paypal_pay
+	end
+
+	private
+	def member_params
+		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+	end
+
+	def paypal_pay
 		@order = @session.orders.build
 		@order.user = current_user
 
@@ -30,7 +51,6 @@ class SessionsController < ApplicationController
 
 	end
 
-	private
 	def create_payment_with_paypal(paid_session)
 		# price = paid_session.price.to_s
 		@payment = Payment.new({
@@ -77,7 +97,6 @@ class SessionsController < ApplicationController
 		else
 			logger.info "line 88, create failed"
 		end
-
 	end
 end
 

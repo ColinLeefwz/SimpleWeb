@@ -2,7 +2,7 @@ Prodygia::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks" }
 
-	resources :users
+  resources :users
 
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -12,13 +12,14 @@ Prodygia::Application.routes.draw do
 		member do
 			get :enroll
 			get :buy_now
+			post :sign_up_buy
 		end
 	end
 
-	resources :orders do
-		get :execute
-		get :cancel
-	end
+  resources :orders do
+    get :execute
+    get :cancel
+  end
 
   root to: "welcome#index"
 
@@ -27,5 +28,5 @@ Prodygia::Application.routes.draw do
   get "video_page/:id", to: "welcome#video_page", as: 'video_page'
   get "text_page/:id", to: "welcome#text_page", as: 'text_page'
 
-	get "/paypal_callback", to: 'session#paypal_callback'
- end
+  get "/paypal_callback", to: 'session#paypal_callback'
+end

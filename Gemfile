@@ -13,7 +13,9 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'devise'
+gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-linkedin'
 gem 'social-share-button'
 gem 'paperclip'
 gem 'truncate_html'  # make truncate html_safe
@@ -22,8 +24,6 @@ gem 'ckeditor'
 gem 'simple_form'
 gem 'paypal-sdk-core'
 gem 'paypal-sdk-rest'
-gem 'omniauth'
-gem 'omniauth-facebook'
 
 group :doc do
   gem 'sdoc', require: false

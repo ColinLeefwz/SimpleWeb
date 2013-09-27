@@ -47,9 +47,10 @@
 
       #account-detail
         #social-login
-          = link_to "Sign In with Facebook", user_omniauth_authorize_path(:facebook)
+          =link_to "Facebook", user_omniauth_authorize_path(:facebook)
+          =link_to "Linked In", user_omniauth_authorize_path(:linkedin)
         #quick-register-form
-          =simple_form_for :user, url: user_registration_path do |f|
+          =simple_form_for :user, url: sign_up_buy_session_path(@session) do |f|
             =f.input :first_name
             =f.input :last_name
             =f.input :email

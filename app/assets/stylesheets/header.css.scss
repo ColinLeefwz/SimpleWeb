@@ -22,6 +22,17 @@ $font-color: #575757;
 	#user-session {
 		margin-right: 5%;
 		margin-top: 2%;
+    a{
+      padding-left: 10px;
+      color: #777;
+      font-size: 14px;
+      font-family: 'Latoreg';
+    }
+    
+    a:hover, a:focus{
+      text-decoration: none;
+      color: #880848;
+    } 
 	}
 
 	.fixed {
