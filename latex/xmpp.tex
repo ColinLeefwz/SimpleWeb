@@ -250,10 +250,13 @@ GET & \multicolumn{3}{|c|}{/coupons/img} \\
  \  id  & 字符串 & 必填 &  该优惠券的id  \\
 \hline
  size  & 整数 & 可选 &  目前0代表原图(580, 224)；1代表缩略图，大小为(290,112)。默认为1。\\ 
+ \hline
+ \  seq  & 整数 & 可选 &  0代码客户端没有seq，1代表客户端支持显示seq，默认为0 \\
 \hline
 \end{tabular}
    \end{center}
 \end{table}
+2.4以后的版本，都要传递seq=1，这样服务器端才不会重复生成seq.
 
 
 \subsection{优惠券使用}

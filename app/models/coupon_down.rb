@@ -99,13 +99,13 @@ class CouponDown
     self.save!
   end
   
-  def gen_share_coupon_img
+  def gen_share_coupon_img(gen_seq=true)
     raise "图片分享后才能生成分享类优惠券" unless photo_id
     path = share_coupon_img_path
     return path if File.exist?("public"+path)
     desc = coupon.desc.to_s
     dea = desc.split(/\r\n/)
-    dea[4] = "优惠券编号: #{download_num}"
+    dea[4] = "优惠券编号: #{download_num}" if gen_seq
     desc = dea.join("\r\n")
 
     `cd coupon && ./gen_demo.sh '#{coupon.name}' '#{desc}' ../public#{path} #{Photo.img_url(photo_id, :t2)}`

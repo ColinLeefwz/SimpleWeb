@@ -11,12 +11,13 @@ class CouponsController < ApplicationController
       render :json => {error: "你没有获取到过这张优惠券"}.to_json
       return
     end
+    gen_seq = params[:seq].to_s!="1"
     if cp.t2==2 && cp.img.url.nil?
-      path = cpd.gen_share_coupon_img
+      path = cpd.gen_share_coupon_img(gen_seq)
       redirect_to path
       return
     end
-    if cp.t2==1 && cp.num && cpd.num
+    if cp.t2==1 && cp.num && cpd.num && gen_seq
       path = cpd.gen_tmp_checkin_coupon_img
       redirect_to path
       return
