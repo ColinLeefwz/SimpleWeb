@@ -77,6 +77,8 @@ class CouponsController < ApplicationController
       sort_hash = {uat: -1}
     else
       sort_hash = {dat: -1}
+      #TODO: 默认按时间排序,最新的在最前面。相同时间同一批收到的优惠券,按距离排序。
+      #当前所在商家的优惠券自动置顶。
     end
     cds = CouponDown.where(hash).sort(sort_hash).skip(skip).limit(pcount)
     render :json => cds.map {|p| p.output_hash }.to_json

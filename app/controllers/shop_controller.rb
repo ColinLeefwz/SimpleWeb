@@ -37,24 +37,33 @@ class ShopController < ApplicationController
       render :json => [].to_json
       return
     end
+    lo = [params[:lat].to_f, params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    def output(s,lo)
+      distance = s.min_distance(s,lo)
+      if distance>=1000
+        dis = "%.1f公里" % (distance/1000.0)
+      else
+        dis = "%d0米" % (distance/10)
+      end
+      {id:s.id,name:s.name, visit:0, distance:dis }
+    end
     if params[:sname][0,3]=="@@@" #测试人员输入商家id模拟签到
       shop = Shop.find_by_id(params[:sname][3..-1])  
       if shop && (session[:user_id].to_s == shop.seller_id.to_s || is_kx_user?(session[:user_id]) || User.is_fake_user?(session[:user_id]) )
-         render :json => [shop].map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
+         render :json => [shop].map {|s| output(s,lo).merge!(s.group_hash(session[:user_id])) }.to_json
         return
       end
     end
-    lo = [params[:lat].to_f, params[:lng].to_f]
-    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     if params[:sname].length==1
       shops = Shop.where2({lo:{"$within" => {"$center" => [lo,0.01]}}, name:/#{params[:sname]}/, del:{"$exists" => false}}, {limit:10})
-      render :json =>  shops.map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
+      render :json =>  shops.map {|s| output(s,lo).merge!(s.group_hash(session[:user_id])) }.to_json
     else
       ret = []
       # TODO: 默认搜索同城， 国外搜国家
       shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})        
       shop1s.each do |s| 
-        hash = {id:s.id, name:s.name }.merge!(s.group_hash(session[:user_id]))
+        hash = output(s,lo).merge!(s.group_hash(session[:user_id]))
         distance = s.min_distance(s,lo)
         if distance>2000 && !s.group_id
           hash.merge!( {visit:1} )
@@ -68,7 +77,7 @@ class ShopController < ApplicationController
         ids = $redis.zrange("GSN", 0, -1, withscores: true).select{|gs|  Shop.str_similar(params[:sname], gs[0]) >= (0.6+ret.size*0.04)}.map{|m| m[1]}
         ids.each do |id|
           shop = Shop.find_by_id(id)
-          hash = {id:shop.id,name:shop.name, visit:0}.merge!(shop.group_hash(session[:user_id]))
+          hash = output(s,lo).merge!(shop.group_hash(session[:user_id]))
           ret << hash
         end
       end
@@ -113,7 +122,8 @@ class ShopController < ApplicationController
     shop = Shop.find_by_id(params[:id])
     skip = params[:skip].to_i
     pcount = params[:pcount].to_i
-    pcount = 10 if pcount==0
+    pcount = 5 if pcount==0
+    #TODO: 过滤消息
     render :json => shop.history(skip,pcount).to_json
   end
   
