@@ -47,6 +47,7 @@
 
       #account-detail
         #social-login
+          =link_to "Linked In", user_omniauth_authorize_path(:linkedin)
         #quick-register-form
           =simple_form_for :user, url: sign_up_buy_session_path(@session) do |f|
             =f.input :first_name
