@@ -187,6 +187,9 @@ class Shop
   def safe_output
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
+    total = $redis.get("suac#{self.id.to_i}")
+    total = self.utotal.to_i if total.nil?
+    hash.merge!( {"user"=>total})
     hash
   end
   

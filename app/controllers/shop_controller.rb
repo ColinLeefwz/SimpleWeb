@@ -112,6 +112,11 @@ class ShopController < ApplicationController
     users = shop.view_user6s(session[:user_id])
     render :json => users.to_json
   end
+  
+  def basic
+    shop = Shop.find_by_id(params[:id])
+    render :json => shop.safe_output.to_json
+  end
     
   def info
     shop = Shop.find_by_id(params[:id])
