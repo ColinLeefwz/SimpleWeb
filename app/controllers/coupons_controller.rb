@@ -105,10 +105,10 @@ class CouponsController < ApplicationController
     hash = params[:ids].split(",").map do |id|
       cpd = CouponDown.find_by_id(id)
       if cpd.nil? || cpd.uid != session[:user_id]
-        {"#{id}":"0"}
+        {"#{id}" => "0"}
       else
         cpd.set(:del,true)
-        {"#{id}":"1"}
+        {"#{id}" => "1"}
       end
     end
     render :json => hash.to_json
@@ -120,10 +120,10 @@ class CouponsController < ApplicationController
       id = arr[0]
       cpd = CouponDown.find_by_id(id)
       if cpd.nil? || cpd.uid != session[:user_id]
-        {"#{id}":"0"}
+        {"#{id}" => "0"}
       else
         cpd.use(session[:user_id],arr[2],arr[1])
-        {"#{id}":"1"}
+        {"#{id}" => "1"}
       end
     end
     render :json => hash.to_json
