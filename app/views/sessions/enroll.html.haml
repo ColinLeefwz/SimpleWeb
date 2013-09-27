@@ -47,11 +47,11 @@
 
       #account-detail
         #social-login
-          =link_to "Facebook", user_omniauth_authorize_path(:facebook)
-          =link_to "Linked In", user_omniauth_authorize_path(:linkedin)
+          -# =link_to "Facebook", user_omniauth_authorize_path(:facebook)
+          -# =link_to "Linked In", user_omniauth_authorize_path(:linkedin)
         #quick-register-form
-          =link_to image_tag("fb_signin.png")
-          =link_to image_tag("linkedin_signin.png") 
+          =link_to image_tag("fb_signin.png"), user_omniauth_authorize_path(:facebook)
+          =link_to image_tag("linkedin_signin.png"), user_omniauth_authorize_path(:linkedin)
           %HR
           =simple_form_for :user, url: sign_up_buy_session_path(@session) do |f|
             =f.input :first_name
