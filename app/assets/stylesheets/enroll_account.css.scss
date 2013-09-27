@@ -1,15 +1,38 @@
 #account{
+  margin-top: 3em;
+}
+
+
+#account{
   #account-header{
-    margin-top: 10px;
+    margin-top: 3em;
+    margin-bottom: 0.5%;
+    .header{
+      font-family: LatoBold;
+      font-size: 25px;
+      text-align: left;
+      margin-bottom: 0.5%;
+    }
+    .link{
+      text-decoration: underline;
+    }
   }
 
   #account-detail{
     border: 4px solid #ffffff;
+    #hint{
+      font-family: Latoitalic;
+      color: #575757;
+    }
   }
 }
 
 
 #account-detail #quick-register-form{
+  width: 70%;
+  margin-left: 1em;
+  margin-top: 1em;
+
   .user_first_name{
     margin-right: 40px;
   }
@@ -21,5 +44,14 @@
   }
   #user_email, #user_password{
     width: 298px;
+  }
+
+  .paypal-register-button{
+    width: 112px;
+    height: 24px;
+    border: white;
+    background: image_url('paypal_button.png') no-repeat;
+    background-color:white;
+    margin-top: 1em;
   }
 }

@@ -1,9 +1,3 @@
-span{
-    font-family: LatoBold;
-    font-size: 25px;
-    text-align: left;
-    margin-bottom: 0.5%;
-}
 
 #order-wrapper{
  width: 40%;
@@ -13,6 +7,14 @@ span{
 
 
 #order{
+  #order-header{
+    .header{
+      font-family: LatoBold;
+      font-size: 25px;
+      text-align: left;
+      margin-bottom: 0.5%;
+    }
+  }
 
   #order-detail{
     border: 4px solid #ffffff;
@@ -25,6 +27,7 @@ span{
   .item-wrapper{
     margin-left: 1em;
     margin-top: 1em;
+    margin-bottom: 1em;
     width: 100%;
     .icon{
       width:10%;
@@ -65,7 +68,7 @@ span{
     color: #575757;
   }
 
-  #paypal-button{
-    display: inline-block;
+  .paypal-button{
+    margin-left: 45%;
   }
 }

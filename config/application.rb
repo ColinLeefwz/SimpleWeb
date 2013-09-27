@@ -9,6 +9,7 @@ Bundler.require(:default, Rails.env)
 module Prodygia
   class Application < Rails::Application
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'controllers', '{**}')]
 
 		config.assets.precompile += Ckeditor.assets
 		config.assets.precompile += %w(ckeditor/*)
