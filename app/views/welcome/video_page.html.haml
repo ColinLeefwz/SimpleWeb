@@ -30,8 +30,10 @@
             = @session.expert.profile.location
         %p#location-icon2.location-icon-background
           %span.location-info
-            -# = @session.created_at.to_formatted_s(:short)
-            = "To be announced"
+            - if @session.start_date == nil
+              = "To be announced"
+            - else 
+              = @session.start_date.to_formatted_s(:short)
         %p#location-icon3.location-icon-background
           %span.location-info
             Virtual
