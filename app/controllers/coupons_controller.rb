@@ -73,7 +73,12 @@ class CouponsController < ApplicationController
     else
       hash.merge!({st: st})
     end
-    cds = CouponDown.where(hash).sort({dat: -1}).skip(skip).limit(pcount)
+    if st==2
+      sort_hash = {uat: -1}
+    else
+      sort_hash = {dat: -1}
+    end
+    cds = CouponDown.where(hash).sort(sort_hash).skip(skip).limit(pcount)
     render :json => cds.map {|p| p.output_hash }.to_json
   end
   
