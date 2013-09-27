@@ -78,19 +78,19 @@ body {
 		}
 
 		.cover{
-			padding: 10px;
-      .video-img {
-        cursor: pointer;
-        position: relative;
+		  padding: 15px;
+          .video-img {
+            cursor: pointer;
+            position: relative;
 
-        .play-video-icon{
-          position: absolute;
-          width: 20%;
-          top: 40%;
-          left: 40%;
-          z-index: 10;
+          .play-video-icon{
+            position: absolute;
+            width: 20%;
+            top: 40%;
+            left: 40%;
+            z-index: 10;
+          }
         }
-      }
 
 			video{
 				width: 100%;
