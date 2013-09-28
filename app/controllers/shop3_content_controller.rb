@@ -61,7 +61,7 @@ class Shop3ContentController < ApplicationController
   def update_photo
     @shop_photo = Photo.find_by_id(params[:id])
     if @shop_photo.update_attributes(params[:photo])
-      expire_cache_shop(photo.room)
+      expire_cache_shop(@shop_photo.room)
       redirect_to :action => "shop_photo"
     else
       render :action => "edit_photo"
