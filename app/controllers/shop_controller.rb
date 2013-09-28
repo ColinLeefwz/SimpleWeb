@@ -80,7 +80,7 @@ class ShopController < ApplicationController
         ids = $redis.zrange("GSN", 0, -1, withscores: true).select{|gs|  Shop.str_similar(params[:sname], gs[0]) >= (0.6+ret.size*0.04)}.map{|m| m[1]}
         ids.each do |id|
           shop = Shop.find_by_id(id)
-          hash = output(s,lo).merge!(shop.group_hash(session[:user_id]))
+          hash = output(shop,lo).merge!(shop.group_hash(session[:user_id]))
           ret << hash
         end
       end
