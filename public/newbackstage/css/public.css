@@ -563,7 +563,9 @@ text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;heig
 #UpImg .upimgdiv{clear:both;padding-top:20px;overflow:hidden;position:relative;width:100%;}
 #UpImg #EM{overflow:hidden;display:block;margin:0px auto;}
 #UpImg #CutDiv{overflow:hidden;display:block;position:absolute;top:0px;z-index:20;}
-#UpImg #CutArea{width:252px;height:252px;position:absolute;overflow:hidden;z-index:21;cursor: move;}
+#UpImg #CutArea{width:252px;height:252px;position:absolute;overflow:hidden;z-index:21;cursor: move;filter:progid:DXImageTransform.Microsoft.Matrix(SizingMethod='auto expand');}
+
+
 #UpImg #CutBG1, #UpImg #CutBG2, #UpImg #CutBG3, #UpImg #CutBG4{position:absolute;overflow:hidden;display:block;z-index:21;filter:alpha(Opacity=50);Opacity:0.5;background-color:#000;}
 #UpImg #CutBG1{left:0px;}
 /**上传图片组件 over**/
