@@ -30,6 +30,7 @@ class Shop3ContentController < ApplicationController
     photo = Photo.find(params[:id])
     Rails.cache.delete("Photo#{photo.id}")
     photo.delete
+    expire_cache_shop(photo.room)
     respond_to do |format|
       format.html {redirect_to :action => "shop_photo"}
       format.json { render :json => {} }
@@ -44,6 +45,7 @@ class Shop3ContentController < ApplicationController
 
     if @shop_photo.save
       flash[:success] = "上传到图片墙成功！"
+      expire_cache_shop(session[:shop_id])
       redirect_to :action => "shop_photo"
     else
       flash.now[:error] = '上传到图片墙失败！'
@@ -59,6 +61,7 @@ class Shop3ContentController < ApplicationController
   def update_photo
     @shop_photo = Photo.find_by_id(params[:id])
     if @shop_photo.update_attributes(params[:photo])
+      expire_cache_shop(photo.room)
       redirect_to :action => "shop_photo"
     else
       render :action => "edit_photo"
@@ -97,6 +100,7 @@ class Shop3ContentController < ApplicationController
   def ajax_shop_photo_del
     @shop_photo = Photo.find_by_id(params[:id])
     text = (@shop_photo.destroy ? '删除成功.' : nil)
+    expire_cache_shop(photo.room)
     render :json => {text: text}
   end
 
