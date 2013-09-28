@@ -14,23 +14,11 @@ class AnswerController < ApplicationController
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"
     if text_faq
-      attrs = " NOLOG='1' "
-      ext = nil
       if text_faq.class == ShopFaq
-        if text_faq.url && text_faq.link_rule == '0'
-          attrs += " url='#{text_faq.url}' " 
-          ext = "<x xmlns='dface.url'>#{text_faq.url}</x>"
-        end
-        if text_faq.content && text_faq.link_rule == '1'
-          purl = "http://shop.dface.cn/shop3_faqs/show?id=#{text_faq.id}"
-          attrs += " url='#{purl}' "
-          ext = "<x xmlns='dface.url'>#{purl}</x>"
-        end
-        text = text_faq.output
+        text_faq.send_to_room(uid,sid)
       else
-        text = text_faq
+        Xmpp.send_gchat2($gfuid,sid,uid, text_faq, "FAQ#{sid}#{uid}#{Time.now.to_i}")
       end
-      Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
     else
       Xmpp.error_notify("问答返回nil:#{sid},#{uid},#{msg}")
     end
