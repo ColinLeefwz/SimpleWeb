@@ -1,26 +1,24 @@
-<div class="con">
-  <div class="title1"><h2 class="f18"><%= @shop_faq.od %></h2></div>
-  <div class="title1"><h2 class="f18">问题：<%= @shop_faq.title %></h2></div>
-  <div class="title1"><h2 class="f18">解答：<%= @shop_faq.text %></h2></div>
-  <div class="title1"><h2 class="f18"><%= image_tag("#{ShopFaq.img_url(@shop_faq.id, :t2)}?time=#{Time.now.to_i}") %></h2></div>
-  <div class="title1"><h2 class="f18"><%= image_tag @shop_faq.img.url  %></h2></div>
- <div class="title1"><h2 class="f18"><%= image_tag("#{Image.img_url(@shop_faq.id)}") %></h2></div>
-  <div class="title1"><h2 class="f18"><%= @shop_faq.head  %></h2></div>
-  <div class="title1"><h2 class="f18"><%= @shop_faq.content.html_safe  %></h2></div>
+<style type="text/css">
+p{
+ margin:0px;
+ padidng:0px;
+ font-size:40px;
 
-  <div class="box4">
-    <div class="box4left">
-    </div>
-  </div>
-</div>
+}
+h1{
+  margin:0px;
+  padidng:0px;
+  font-size:60px;
+}
+</style>
 
 
-  <h2><%= @shop_faq.head %></h2>
-  <p><%= @shop_faq.cat.strftime("%Y-%m-%d") %> &nbsp;&nbsp;&nbsp;&nbsp;</p>
+  <h1><%= @shop_faq.head %></h1>
+  <h3><%= @shop_faq.cat.strftime("%Y-%m-%d") %></h3>
 
    <%= image_tag @shop_faq.img.url,:style => "width:100%"%>
 
-<p>
-<%= @shop_faq.content.html_safe  %>
-</p>
+
+<%= @shop_faq.content.html_safe %>
+
 
