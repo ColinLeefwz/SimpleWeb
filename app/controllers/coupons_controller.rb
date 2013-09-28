@@ -101,6 +101,34 @@ class CouponsController < ApplicationController
     render:json => {:deleted => params[:id] }.to_json
   end
   
+  def batch_delete
+    hash = params[:ids].split(",").map do |id|
+      cpd = CouponDown.find_by_id(id)
+      if cpd.nil? || cpd.uid != session[:user_id]
+        {"#{id}" => "0"}
+      else
+        cpd.set(:del,true)
+        {"#{id}" => "1"}
+      end
+    end
+    render :json => hash.to_json
+  end
+  
+  def batch_use
+    hash = params[:infos].split(",").map do |info|
+      arr = info.split("-")
+      id = arr[0]
+      cpd = CouponDown.find_by_id(id)
+      if cpd.nil? || cpd.uid != session[:user_id]
+        {"#{id}" => "0"}
+      else
+        cpd.use(session[:user_id],arr[2],arr[1])
+        {"#{id}" => "1"}
+      end
+    end
+    render :json => hash.to_json
+  end
+  
   #deprecated
   def info
     hash = params[:ids].split(",").map do |id|

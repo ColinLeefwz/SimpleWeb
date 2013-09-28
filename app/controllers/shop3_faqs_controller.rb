@@ -11,7 +11,7 @@ class Shop3FaqsController < ApplicationController
   def new
     @shop_faq = ShopFaq.new
     # @shop_faq.save!
-	  @shop_faqs = session_shop.faqs
+    @shop_faqs = session_shop.faqs
   end
 
   def edit
@@ -34,16 +34,34 @@ class Shop3FaqsController < ApplicationController
     render :layout => false
   end
 
+  def preview
+    @shop_faq = ShopFaq.find_primary(params[:id])
+    render :layout => false
+  end
+
   def create
     @shop_faq = ShopFaq.new(params[:shop_faq])
     @shop_faq.sid = session[:shop_id]
 
-    if @shop_faq.save
-      $redis.sadd("FaqS#{session_shop.city}", session_shop.id)
-      redirect_to :action => "index"
-    else
-      render :action => :new
-    end
+      if @shop_faq.save
+        $redis.sadd("FaqS#{session_shop.city}", session_shop.id)
+        redirect_to :action => "index"
+      else
+        render :action => :new
+      end
+  end
+
+  #异步预览，预览一次数据库会生成一次sid：nil的记录，用户看不到，得定期清理 TODO
+  def ajax_preview
+    @shop_faq = ShopFaq.new
+    @shop_faq.od = params[:od]
+    @shop_faq.title = params[:title]
+    @shop_faq.text = params[:text]
+    @shop_faq.head = params[:head]
+    @shop_faq.content = params[:content]
+    @shop_faq.save!
+    
+    render :json => {id: @shop_faq.id}
   end
 
   def ajax_del

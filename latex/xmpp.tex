@@ -305,6 +305,42 @@ GET & \multicolumn{3}{|c|}{/coupons/delete} \\
 \end{table}
 
 
+\subsection{优惠券批量使用}
+本接口用于数据同步。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  infos  & 字符串 & 必填 &  批量使用信息 \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+不同的优惠券以,分割，同一张优惠券内发送三个参数id-sid-data。
+
+\subsection{优惠券批量删除}
+
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/batch\_delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  ids  & 字符串 & 必填 &  该优惠券的id,以“,”分割  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
 \input{./xmpp_web.tex}
 
 

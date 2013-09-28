@@ -74,6 +74,16 @@ $(document).ready(function(){
 	
 	$("#Preview").click(function(){
 		$("#LinkDiv").animate({"margin-left":"-330px"});
+    	var od = $('#shop_faq_od').val();
+    	var title = $('#Inputs1').val();
+    	var text = $('#Inputs1').val();
+    	var head = $('#link2').val();
+    	var content = $('#baidu_editor_0').contents().find('body').html()
+
+  		$.post("/shop3_faqs/ajax_preview",{od:od, title:title, text:text, head:head, content:content},function(data){
+  			var pid = data['id'];
+  			$('#previewIframe').attr("src",'/shop3_faqs/preview?id='+pid);  
+  		})
 	});
 	$("#Edit").click(function(){
 		$("#LinkDiv").animate({"margin-left":"0px"});

@@ -17,9 +17,14 @@ class AnswerController < ApplicationController
       attrs = " NOLOG='1' "
       ext = nil
       if text_faq.class == ShopFaq
-        if text_faq.url
+        if text_faq.url && text_faq.link_rule == '0'
           attrs += " url='#{text_faq.url}' " 
           ext = "<x xmlns='dface.url'>#{text_faq.url}</x>"
+        end
+        if text_faq.content && text_faq.link_rule == '1'
+          purl = "http://shop.dface.cn/shop3_faqs/show?id=#{text_faq.id}"
+          attrs += " url='#{purl}' "
+          ext = "<x xmlns='dface.url'>#{purl}</x>"
         end
         text = text_faq.output
       else
