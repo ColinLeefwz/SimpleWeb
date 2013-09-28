@@ -204,8 +204,7 @@ function AddCompany(index){
 }
 
 function AddDiv_Td(){
-alert($("#Tr"+bq+" td").eq(1).find(".box13").html());
-	if($("#Tr"+bq+" td").eq(1).find(".box13").html()==""){alert(2);
+	if($("#Tr"+bq+" td").eq(1).find(".box13").html()==undefined){
 		var html="<div class='box13'>";
 		for(var i=0;i<$("#AddDiv ul li a").length;i++){
 			if($("#AddDiv ul li a").eq(i).attr("class")=="checkboxs2"){
@@ -214,7 +213,7 @@ alert($("#Tr"+bq+" td").eq(1).find(".box13").html());
 		}
 		html+="</div>";
 		$("#Tr"+bq+" td").eq(1).append(html);
-	}else{alert(1);
+	}else{
 		var html="";
 		for(var i=0;i<$("#AddDiv ul li a").length;i++){
 			if($("#AddDiv ul li a").eq(i).attr("class")=="checkboxs2"){
