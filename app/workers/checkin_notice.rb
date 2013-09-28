@@ -99,15 +99,6 @@ class CheckinNotice
       return if notice.title.blank?
       Resque.enqueue(XmppNotice, shop.id, user.id, notice.title)
     end
-
-
-    photo = notice.photo
-    if photo.nil?
-      return if notice.title.blank?
-      Resque.enqueue(XmppNotice, shop.id, user.id, notice.title)
-    else
-      Resque.enqueue(XmppRoomMsg,photo.user_id,shop.id, user.id, "[img:#{photo._id}]#{photo.desc}")
-    end
   end
   
   def self.send_share_coupon_notice_if_exist(user,shop)
