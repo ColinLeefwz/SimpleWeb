@@ -10,12 +10,12 @@ class Shop3NoticeController < ApplicationController
 
     ShopNotice.where({}).sort({_id: -1}).each do |sn|
       begin
-      nsn = ShopNotice.new()
-      nsn._id = sn.shop_id
-      nsn.title = sn.title
-      nsn.save
-    rescue
-      next
+        nsn = ShopNotice.new()
+        nsn._id = sn.shop_id
+        nsn.title = sn.title
+        nsn.save
+      rescue
+        next
       end
     end
 
@@ -25,10 +25,22 @@ class Shop3NoticeController < ApplicationController
     shop_notice = ShopNotice.find_or_new(session[:shop_id])
     shop_notice.title = params[:title]
     shop_notice.save
-    shop_notice.unset(:photo_id)
     render :json => {:title => shop_notice.title, :id => shop_notice.id }
   end
 
+  def faqs
+    @shop_faqs = session_shop.faqs
+  end
+
+  def from_faq
+    faq = ShopFaq.find_by_id(params[:id])
+    if faq
+      shop_notice = ShopNotice.find_or_new(session[:shop_id])
+      shop_notice.faq_id = faq.id
+      shop_notice.save
+    end
+    redirect_to :action => "index"
+  end
 
   def edit
     hash = {:room => session[:shop_id].to_i.to_s, :user_id => "s#{session[:shop_id]}" }
@@ -41,7 +53,6 @@ class Shop3NoticeController < ApplicationController
     if photo
       shop_notice = ShopNotice.find_or_new(session[:shop_id])
       shop_notice.photo_id = photo.id
-      shop_notice.unset(:title)
       shop_notice.save
     end
     redirect_to :action => "index"

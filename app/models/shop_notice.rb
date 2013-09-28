@@ -4,6 +4,7 @@ class ShopNotice
   field :_id, type: Integer
   field :title
   field :photo_id, type: Moped::BSON::ObjectId #从商家图片中选择一张做公告
+  field :faq_id, type: Moped::BSON::ObjectId #从商家问题中选择一个做公告
 
   index({ shop_id: 1})
 
@@ -22,11 +23,18 @@ class ShopNotice
       sn = self.new
       sn.id = id
     end
+    sn.unset(:title)
+    sn.unset(:photo_id)
+    sn.unset(:faq_id)
     sn
   end
 
   def photo
     Photo.find_by_id(photo_id)
+  end
+
+  def faq
+    ShopFaq.find_by_id(faq_id)
   end
   
 end

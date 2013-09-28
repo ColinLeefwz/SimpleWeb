@@ -91,6 +91,16 @@ class CheckinNotice
   def self.send_notice_if_exist(user,shop)
     notice = shop.notice
     return if notice.nil?
+    if (photo=notice.photo)
+      Resque.enqueue(XmppRoomMsg,photo.user_id,shop.id, user.id, "[img:#{photo._id}]#{photo.desc}")
+    elsif(faq=notice.faq)
+      faq.send_to_room(user.id)
+    else
+      return if notice.title.blank?
+      Resque.enqueue(XmppNotice, shop.id, user.id, notice.title)
+    end
+
+
     photo = notice.photo
     if photo.nil?
       return if notice.title.blank?
