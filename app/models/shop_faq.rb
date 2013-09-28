@@ -48,6 +48,35 @@ class ShopFaq
     end
   end
   
+  def attr_ext
+    attrs = " NOLOG='1' "
+    ext = nil
+    if self.url && self.link_rule == '0'
+      attrs += " url='#{self.url}' " 
+      ext = "<x xmlns='dface.url'>#{self.url}</x>"
+    end
+    if self.content && self.link_rule == '1'
+      purl = "http://shop.dface.cn/shop3_faqs/show?id=#{self.id}"
+      attrs += " url='#{purl}' "
+      ext = "<x xmlns='dface.url'>#{purl}</x>"
+    end
+    [attrs,ext]
+  end
+  
+  def send_to_room(uid, sid=nil)
+    sid = self.sid if sid.nil?
+    attrs, ext = self.attr_ext
+    text = self.output
+    Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
+  end
+  
+  def send_to_user(uid)
+    attrs, ext = self.attr_ext
+    text = self.output
+    Xmpp.chat($gfuid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
+    Xmpp.send_chat($gfuid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
+  end
+  
   
   def self.init_city_faq_redis
     ShopFaq.all.each {|x| $redis.sadd("FaqS#{x.shop.city}", x.sid)}
