@@ -40,6 +40,9 @@ class PhotosController < ApplicationController
     share = PhotoShare.new
     share.pid = params[:photo_id]
     share.uid = params[:user_id]
+    share.weibo = true if params[:weibo]=='1'
+    share.qq = true if params[:qq]=='1'
+    share.wx = params[:wx] unless params[:wx].blank?
     share.save!
     render :json => {ok:1}.to_json
   end

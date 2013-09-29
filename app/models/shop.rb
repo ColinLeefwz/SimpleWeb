@@ -341,8 +341,9 @@ class Shop
   end
 
   #分享类优惠券
-  def share_coupon
-    Coupon.where({shop_id: self.id.to_i, hidden: nil, t2: '2'}).sort({_id: -1}).limit(1).to_a[0]
+  def share_coupon(scd=0)
+    coupon = Coupon.where({shop_id: self.id.to_i, hidden: nil, t2: '2'}).sort({_id: -1}).limit(1).to_a[0]
+    coupon.scd.to_i == scd ? coupon : nil
   end
 
   
