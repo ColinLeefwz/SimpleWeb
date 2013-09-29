@@ -38,6 +38,8 @@ class Coupon
   field :rule #t2==1 时 0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。  t2==2时， 0 每日分享优惠， 1首次分享有虎
   field :rulev #1每日前几名签到优惠的数量;3常客累计满多少次签到优惠的数量。
   field :hint  #优惠券使用时的要求输入信息的消费提示
+  field :scd, type: Integer  #share_condition, 分享优惠券触发条件， 0， 个人拍照分享， 1. 分享指定问答。
+  field :faq_id, type: Moped::BSON::ObjectId  #分享触发条件是“分享指定问答”时， faqs的id
   
   field :img
   mount_uploader :img, CouponUploader
@@ -48,6 +50,10 @@ class Coupon
   field :img2
   field :num, type:Integer  #优惠券编号， 每个商家的编号独立
 
+
+  with_options :prefix => true, :allow_nil => true do |option|
+    option.delegate :od, :title,  :to => :faq
+  end
 
   mount_uploader :img2, Coupon2Uploader
   
@@ -182,6 +188,12 @@ class Coupon
     self.update_attribute(:hidden, 1)
   end
 
+
+  def faq
+    ShopFaq.find_by_id(faq_id)
+  end
+
+
   def show_rule
     return if self.rule.blank?
     return ['每日签到优惠', '每日前几名签到优惠','新用户首次签到优惠','累计签到优惠'][self.rule.to_i] if self.t2.to_i == 1
@@ -196,6 +208,11 @@ class Coupon
     ['签到类','分享类'][self.t2.to_i-1]
   end
   
+  def show_scd
+    return ""  if self.scd.blank?
+    ['个人拍照分享', '分享指定问答'][self.scd]
+  end
+
   def has_text?
     text!=nil && text.length>0
   end

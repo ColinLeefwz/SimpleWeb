@@ -53,6 +53,8 @@ class ShopShareCouponsController < ApplicationController
     end
 
     if @coupon.save
+      @coupon.unset(:faq_id) if @coupon.scd != 1
+
       case @coupon.t.to_i
       when 1
         @coupon.gen_img unless @coupon.img2.blank?
@@ -93,6 +95,7 @@ class ShopShareCouponsController < ApplicationController
     end
    
     if @coupon.update_attributes(params[:coupon])
+      @coupon.unset(:faq_id) if @coupon.scd != 1
       @coupon.unset(:hint) if params[:hintv] == '0' #使用流程选0， hint = nil
       if @coupon.t.to_i == 1
         @coupon.gen_img if !@coupon.img.blank? || !@coupon.img2.blank?
