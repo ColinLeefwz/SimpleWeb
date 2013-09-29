@@ -1,24 +1,39 @@
 <style type="text/css">
 p{
  margin:0px;
- padidng:0px;
- font-size:40px;
+ padding:0px;
+ line-height:85px;
+ font-size:60px;
 
 }
 h1{
   margin:0px;
-  padidng:0px;
-  font-size:60px;
+  padding:0px;
+  font-size:70px;
 }
+h3{
+  margin:0px;
+  padding:0px;
+  font-size:50px;
+}
+.frontimg{
+  margin-bottom:70px;
+}
+
 </style>
 
+  <br><h1><%= @shop_faq.head %></h1><br>
+  <h3><%= @shop_faq.cat.strftime("%Y-%m-%d") %></h3><br>
 
-  <h1><%= @shop_faq.head %></h1>
-  <h3><%= @shop_faq.cat.strftime("%Y-%m-%d") %></h3>
-
-   <%= image_tag @shop_faq.img.url,:style => "width:100%"%>
+   <%= image_tag @shop_faq.img.url,:style => "width:100%", :class => "frontimg"%><br>
 
 
 <%= @shop_faq.content.html_safe %>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+$('p').attr("line-height","85px")
+</script>
+
 
 
