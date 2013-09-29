@@ -1,4 +1,7 @@
 <style type="text/css">
+body{
+  margin:40px 40px;
+}
 p{
  margin:0px;
  padding:0px;
@@ -13,8 +16,10 @@ h1{
 }
 h3{
   margin:0px;
+  margin-bottom:60px;
   padding:0px;
   font-size:50px;
+  color:#BEBEBE;
 }
 .frontimg{
   margin-bottom:70px;
@@ -22,13 +27,16 @@ h3{
 
 </style>
 
-  <br><h1><%= @shop_faq.head %></h1><br>
+<body>
+  <h1><%= @shop_faq.head %></h1><br>
   <h3><%= @shop_faq.cat.strftime("%Y-%m-%d") %></h3><br>
 
    <%= image_tag @shop_faq.img.url,:style => "width:100%", :class => "frontimg"%><br>
 
 
 <%= @shop_faq.content.html_safe %>
+</body>
+
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
