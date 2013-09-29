@@ -122,7 +122,12 @@ function ZD(obj, id){//置顶
 	b=$("div.box9plane").eq(rel+1).css("top");
 	rel2=parseInt($(obj).siblings("a.link_ns").attr("rel"));
 	if(rel==rel2){
-		$("div.box9plane").eq(rel2).find("a.n2").removeClass("n2").addClass("n2_1").attr("onclick","QXZD(this,'"+id+"')");return false;
+		$("div.box9plane").eq(rel2).find("a.n2").removeAttr("onclick").unbind("click");
+		$("div.box9plane").eq(rel2).find("a.n2").removeClass("n2").addClass("n2_1").attr("title","取消置顶");
+		$("div.box9plane").eq(rel2).find("a.n2_1").bind("click",function(){
+			QXZD(this,id);
+		});	
+		return false;
 	}
 
 	for(i=rel;i<=rel2;i++){
@@ -167,7 +172,12 @@ function QXZD(obj, id){//取消置顶
 			b=$("div.box9plane").eq(i-1).next().css("top");
 		}else if(i==num){
 			$("div.box9plane").eq(rel).css({"left":x,"top":y}).fadeIn(750,function(){
-				$("div.box9plane").eq(rel).find("a.n2_1").removeClass("n2_1").addClass("n2").attr("onclick","ZD(this,'"+id+"')").attr("title","置顶");
+				$("div.box9plane").eq(rel).find("a.n2_1").removeAttr("onclick").unbind("click");
+				$("div.box9plane").eq(rel).find("a.n2_1").removeClass("n2_1").addClass("n2").attr("title","置顶");
+				$("div.box9plane").eq(rel).find("a.n2").bind("click",function(){
+					ZD(this,id);
+				});
+				
 				var obj=$("div.box9plane").eq(rel);
 				if($("div.box9plane a.link_ns").length!=1){
 					$("div.box9plane").eq(num-1).after(obj);
