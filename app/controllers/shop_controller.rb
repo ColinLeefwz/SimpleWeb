@@ -131,8 +131,8 @@ class ShopController < ApplicationController
     skip = params[:skip].to_i
     pcount = params[:pcount].to_i
     pcount = 5 if pcount==0
-    #TODO: 过滤消息
-    render :json => shop.history(skip,pcount).to_json
+    arr = shop.history(skip,pcount)
+    render :json => arr.to_json
   end
   
   def photos

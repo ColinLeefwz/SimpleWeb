@@ -73,7 +73,6 @@ class ShopFaq
   def send_to_user(uid)
     attrs, ext = self.attr_ext
     text = self.output
-    Xmpp.chat($gfuid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
     Xmpp.send_chat($gfuid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
   end
   
