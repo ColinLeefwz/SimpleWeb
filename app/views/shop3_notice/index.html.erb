@@ -1,44 +1,40 @@
 <div class="clear1"></div>
 <div class="con2">
-  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
-  <div class="submenu">
-    <ul>
-      <li><a href="/shop3_infos">基本设置</a></li>
-      <li><a href="/shop3_pass">修改密码</a></li>
-      <li><a href="/shop3_staffs">员工管理</a></li>
-      <li><a href="/shop3_bindwbs">绑定微博</a></li>
-      <li><a href="/shop3_bans">屏蔽用户</a></li>
-      <li><a href="/shop3_marks">用户评分</a></li>
-      <li  class="hover"><a href="/shop3_notice">公告管理</a></li>
-      <% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
-    </ul>
-  </div>
-
-  <%= link_to "文本模式", "/shop3_notice?title=true" %>
-  <a href="/shop3_notice/edit">从商家图片中选择</a>
-  <a href="/shop3_notice/del">取消公告</a>
+	<div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+		<div class="submenu">
+			<ul>
+				<li><a href="/shop3_infos">基本设置</a></li>
+				<li><a href="/shop3_pass">修改密码</a></li>
+				<li><a href="/shop3_staffs">员工管理</a></li>
+				<li><a href="/shop3_bindwbs">绑定微博</a></li>
+				<li><a href="/shop3_bans">屏蔽用户</a></li>
+				<li><a href="/shop3_marks">用户评分</a></li>
+				<li  class="hover"><a href="/shop3_notice">公告管理</a></li>
+				<% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
+			</ul>
+		</div>  
   <% if @shop_notice.try(:photo_id) && params[:title].blank? %>
-
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
+	<div class="notice_submenu">
+		<%= link_to "文本模式", "/shop3_notice?title=true",:class=>"linkbtn"%>
+		<a href="/shop3_notice/edit" class="linkbtn2">从商家图片中选择</a>
+		<a href="/shop3_notice/faqs" class="linkbtn">从商家问答中选择</a>
+		<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
+	</div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab3 mt20 pt10">
       <tr>
-
-        <td valign="top" align="right" class="pr20">&nbsp;</td>
-        <td width="300"><%= image_tag @shop_notice.photo.img.url, :alt=>"0", :style => "width: 152px; height: 152px;" %></td>
-        <td><%= @shop_notice.photo_desc %></td>
-        <td width=""></td>
-      </tr>
-      <tr>
-        <td valign="top" align="right" class="pr20">&nbsp;</td>
-        <td width="300">
-
-        </td>
-        <td></td>
-        <td></td>
+        <td width="158"><%= image_tag @shop_notice.photo.img.url, :alt=>"0", :class => "imgstyle2" %></td>
+        <td valign="top"><%= @shop_notice.photo_desc %></td>
       </tr>
     </table>
 
   <%  else %>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
+	<div class="notice_submenu">
+		<%= link_to "文本模式", "/shop3_notice?title=true",:class=>"linkbtn2"%>
+		<a href="/shop3_notice/edit" class="linkbtn">从商家图片中选择</a>
+		<a href="/shop3_notice/faqs" class="linkbtn">从商家问答中选择</a>
+		<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
+	</div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt20 pt10">
       <tr>
         <td valign="top" align="right" class="pr20">&nbsp;</td>
         <td colspan="3">
@@ -54,7 +50,6 @@
         <td>&nbsp;</td>
         <td align="left">&nbsp;</td>
       </tr>
-
     </table>
   <% end %>
 

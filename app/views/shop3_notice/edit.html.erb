@@ -1,5 +1,8 @@
 <% content_for :ahead do %>
   <script src="/newbackstage/js/jquery.blocksit.min.js"></script>
+  <style>
+	.box9 .box9plane .m{cursor:pointer;}
+  </style>
 <% end %>
 <div id="BG"></div>
 <div id="DelDiv">
@@ -26,8 +29,12 @@
 
     </div>
   </div>
-  <%= link_to "文本模式", "/shop3_notice?title=true" %>
-  <a href="/shop3_notice/edit">从商家图片中选择</a>
+  <div class="notice_submenu">
+	<%= link_to "文本模式", "/shop3_notice?title=true",:class=>"linkbtn"%>
+	<a href="/shop3_notice/edit" class="linkbtn2">从商家图片中选择</a>
+	<a href="/shop3_notice/faqs" class="linkbtn">从商家问答中选择</a>
+	<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
+  </div>
   <div class="clear1"></div>
   <div class="box9" id="Waterfall">
     <% @photos.each_with_index do |photo, index| %>

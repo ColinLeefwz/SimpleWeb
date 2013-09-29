@@ -171,6 +171,8 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#00AAEE',endCo
 letter-spacing:2px;text-align:center;width:60px;background-color:#3399FF;}
 .btn16{border:1px solid #ccc;border-radius:3px;color:#818181;cursor:pointer;height:27px;line-height:27px;
 letter-spacing:2px;text-align:center;width:60px;background-color:#f8f8f8;}
+.btn17{border:1px solid #ccc;border-radius:3px;color:#818181;cursor:pointer;padding:0px 5px;*padding-top:2px;padding-top:3px\9;margin-top:4px;line-height:20px;
+text-align:center;background-color:#f8f8f8;}
 .btn2change{position:absolute;right:140px;bottom:30px;}
 .btn3change{position:absolute;right:30px;bottom:30px;}
 
@@ -266,6 +268,13 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .submenu li a{color:#fff;display:block;padding:3px 13px;font-family:"微软雅黑";}
 .submenu li.hover{color:#00A0E3;background:#F2F2F2;border:1px solid #ccc;border-bottom:0px;margin:0px 1px;}
 .submenu li.hover a{color:#00A0E3;}
+
+/**公告管理子栏目 begin**/
+.notice_submenu{display:block;overflow:hidden;border:1px solid #D7D7D7;border-top:none;margin:0px 8px 0px 1px;line-height:30px;padding:5px 0px 5px 20px;font-size:13px;}
+.notice_submenu a{color:#00A0E3;}
+.notice_submenu .linkbtn{float:left;padding:0px 20px 0px 20px;background:url(../images/sign41.jpg) left center no-repeat;}
+.notice_submenu .linkbtn2{float:left;padding:0px 20px 0px 20px;background:url(../images/sign42.jpg) left center no-repeat;}
+/**公告管理子栏目 over**/
 
 
 #Nav{width:160px;height:100%;position:absolute;left:0px;top:0px;font-size:14px;z-index:99;}
@@ -492,6 +501,7 @@ div#CellPhone iframe{height: 280px;margin-left: 20px;margin-top: 120px;width: 22
 .tab3 a{color:#00A0E3;}
 .tab3 a:hover{color:#005580;}
 .tab3 .imgstyle{width:200px;height:200px;border:1px solid #ccc;padding:1px;}
+.tab3 tr td img.imgstyle2{width:152px;height:152px;padding:2px;border:1px solid #aaa;box-shadow:0 0 5px #B0B0B0;}
 
 .phone{width:288px;height:455px;position:absolute;left:50%;margin-left:-144px;bottom:21px;background:url(../images/phone.png) left top no-repeat;}
 
@@ -563,9 +573,7 @@ text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;heig
 #UpImg .upimgdiv{clear:both;padding-top:20px;overflow:hidden;position:relative;width:100%;}
 #UpImg #EM{overflow:hidden;display:block;margin:0px auto;}
 #UpImg #CutDiv{overflow:hidden;display:block;position:absolute;top:0px;z-index:20;}
-#UpImg #CutArea{width:252px;height:252px;position:absolute;overflow:hidden;z-index:21;cursor: move;filter:progid:DXImageTransform.Microsoft.Matrix(SizingMethod='auto expand');}
-
-
+#UpImg #CutArea{width:252px;height:252px;position:absolute;overflow:hidden;z-index:21;cursor: move;}
 #UpImg #CutBG1, #UpImg #CutBG2, #UpImg #CutBG3, #UpImg #CutBG4{position:absolute;overflow:hidden;display:block;z-index:21;filter:alpha(Opacity=50);Opacity:0.5;background-color:#000;}
 #UpImg #CutBG1{left:0px;}
 /**上传图片组件 over**/
