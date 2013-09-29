@@ -13,13 +13,12 @@ class NewUserTalk
     to2 = ["50bc20fcc90d8ba33600004b" #“浦靠谱” 运营总监浦希哲
           ]
 
-    if ((0..0).include?week) && hour > 8 && hour < 24
+    if ((0..6).include?week) && hour > 8 && hour < 24
       if user.gender == 2
         to = ["51418836c90d8bc37b000567"
              ]
       else
-        to = ["513ed1e7c90d8b590100016f",
-              "50bec2c1c90d8bd12f000086"
+        to = ["50bec2c1c90d8bd12f000086"
              ]
       end
     end
