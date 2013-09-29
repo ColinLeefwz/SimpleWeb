@@ -559,10 +559,7 @@ class Shop
       Xmpp.error_notify("获取#{self.name}：#{self.id}的聊天历史失败")
       return []
     end
-    chats=  JSON.parse(response)
-    rmd = RoomMsgDel.where({room: self.id.to_i}).distinct(:_id)
-    chats.reject!{|c| rmd.include?(c[3])}
-    return chats
+    JSON.parse(response)
   end
 
   def lines
