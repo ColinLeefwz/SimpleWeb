@@ -24,6 +24,9 @@ h3{
 .frontimg{
   margin-bottom:70px;
 }
+#content img{
+  width:80%;
+}
 
 </style>
 
@@ -33,8 +36,9 @@ h3{
 
    <%= image_tag @shop_faq.img.url,:style => "width:100%", :class => "frontimg"%><br>
 
-
+<div id="content">
 <%= @shop_faq.content.html_safe %>
+</div>
 </body>
 
 
