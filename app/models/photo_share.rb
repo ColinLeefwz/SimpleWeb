@@ -11,7 +11,6 @@ class PhotoShare
   #  attr_accessor :shared   # 被分享的对象
   after_create :async_send
 
-
   def async_send
     shared = parse_pid
     return if shared.nil?
@@ -40,15 +39,19 @@ class PhotoShare
     Resque.enqueue(WeiboPhoto, $redis.get("wbtoken#{uid}"), str, shared.img.url)
   end
 
+  def share_url
+    "http://www.dface.cn/web_photo/show?id=#{self.id}"
+  end
+
   def send_qq(shared,direct=false)
     title = "我在\##{shared.shop.name}"
     text = "刚刚用脸脸分享了一张图片。(脸脸下载地址: http://www.dface.cn/a?v=18 )"
     str = "我刚刚用\#脸脸\##{shared.shop.name}分享了一张图片"
     img_url = shared.img.url(:t2)
     if direct
-      QqPhoto.perform(uid, title, text, '', str, img_url)
+      QqPhoto.perform(uid, title, text, share_url, str, img_url)
     else
-      Resque.enqueue(QqPhoto, uid, title, text, '', str, img_url)
+      Resque.enqueue(QqPhoto, uid, title, text,share_url, str, img_url)
     end
   end
 

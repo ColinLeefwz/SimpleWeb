@@ -86,7 +86,7 @@ class CouponDown
     cpdown.d_sid = sid if sid && sid != cpdown.sid
     cpdown.num = next_num(coupon.id)
     cpdown.save!
-    cpdown.gen_share_coupon_img if coupon.t2.to_i == 2 && photo_id 
+    cpdown.gen_share_coupon_img if coupon.img.blank?
     cpdown
   end
   
