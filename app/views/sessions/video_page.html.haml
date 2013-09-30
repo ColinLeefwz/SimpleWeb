@@ -35,7 +35,7 @@
           %span.location-info
             - if @session.start_date == nil
               = "To be announced"
-            - else 
+            - else
               = @session.start_date.to_formatted_s(:short)
         %p#location-icon3.location-icon-background
           %span.location-info
@@ -45,14 +45,17 @@
             - if @session.price == 0
               = "Free"
             - else
-              = number_to_currency("#{@session.price}", :unit => "$") 
+              = number_to_currency("#{@session.price}", :unit => "$")
               USD
 
       .video-page-others
         %p Click below to entroll now!
         .enroll-button
-          - enroll_text = (user_signed_in? and (current_user.enrolled_sessions.include? @session)) ? "Enrolled" : "Enroll Now!"
-          %p= link_to enroll_text, enroll_session_path(@session)
+          - if (user_signed_in? and (current_user.enrolled_sessions.include? @session))
+            %p.enroll-text
+              = "Enrolled"
+          -else
+            %p= link_to "Enroll Now!", enroll_session_path(@session), class: 'enroll-text'
         %p.outline-font= link_to 'Tell A Friend'
   -if !@session.video.url.eql?"/videos/original/missing.png"
     .video-page-video-frame
