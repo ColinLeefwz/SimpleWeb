@@ -27,6 +27,7 @@ Prodygia::Application.routes.draw do
 
   get "video_page/:id", to: "welcome#video_page", as: 'video_page'
   get "text_page/:id", to: "welcome#text_page", as: 'text_page'
+  get "session/:id", to: "welcome#session_page", as: 'session_page' 
 
   get "/paypal_callback", to: 'session#paypal_callback'
 end

@@ -25,11 +25,12 @@ class WelcomeController < ApplicationController
   def terms
   end 
 
-  def video_page
+  def session_page
     @session = Session.find(params[:id])
-  end
-
-  def text_page
-    @session = Session.find(params[:id])
+    if @session.is_a?ArticleSession
+      render 'text_page'
+    else 
+      render 'video_page'
+    end
   end
 end

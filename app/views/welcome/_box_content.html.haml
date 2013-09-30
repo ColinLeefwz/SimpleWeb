@@ -8,30 +8,26 @@
         .expert-name
           = session.expert.name
       .content-type
-        -if session.content_type.eql?"LiveSession"
+        -if session.is_a?LiveSession
           = image_tag("livestreaming.png")
-        -elsif session.content_type.eql?"ArticleSession"
+        -elsif session.is_a?ArticleSession
           = image_tag("text.png")
-        -elsif session.content_type.eql?"VideoSession"
+        -elsif session.is_a?VideoSession
           = image_tag("video.png")
-        -elsif session.content_type.eql?"Announcement"
+        -elsif session.is_a?Announcement
           = image_tag("announcement.png")
         %p= session.category
     .title
-      -if session.content_type.eql?"ArticleSession"
-        = link_to "#{session.title}", text_page_path(session)
-      -else
-        = link_to "#{session.title}", video_page_path(session)
-    -if (session.content_type == "VideoSession") || (session.content_type == "Announcement") && (!session.video.url.eql?"/videos/original/missing.png")
+      = link_to "#{session.title}", session_page_path(session)
+    -if (session.is_a?VideoSession) || (session.is_a?Announcement) && (!session.video.url.eql?"/videos/original/missing.png")
       .cover
         .video-img{data: {source: session.video.url}}
           = image_tag session.cover.url, class: 'video-play'
           = image_tag "video_play_icon.png", class: 'play-video-icon'
 
-    -elsif (session.content_type.eql?"ArticleSession") || (session.content_type == "LiveSession")  && (!session.cover.url.eql?"/covers/original/missing.png")
+    -elsif (session.is_a?ArticleSession) || (session.is_a?LiveSession)  && (!session.cover.url.eql?"/covers/original/missing.png")
       .cover
-        - path = (session.is_a? ArticleSession) ? text_page_path(session) : video_page_path(session)
-        = link_to image_tag(session.cover.url), path
+        = link_to image_tag(session.cover.url), session_page_path(session)
     -else
 
     .caption
@@ -39,9 +35,9 @@
         %div.description= truncate_html(session.description, length: 300, omission: '...')
       - else
         %div.description= truncate_html(session.description, length: 600, omission: '...')
-      - if session.content_type.eql?"ArticleSession"
-        %p.learn-more= link_to 'Continue reading', text_page_path(session)
+      - if session.is_a?ArticleSession
+        %p.learn-more= link_to 'Continue reading', session_page_path(session)
       - else
-        %p.learn-more= link_to 'Learn more', video_page_path(session)
+        %p.learn-more= link_to 'Learn more', session_page_path(session)
       .social-share-icons
         = render 'social_share'
