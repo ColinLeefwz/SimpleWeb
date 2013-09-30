@@ -1,9 +1,22 @@
 .devise-style {
-  width: 40%;
-  margin: 0 auto;
+ width: 40%;
+ margin: 0 auto; 
+ margin-bottom: 50px;
+ text-align: center;
 }
 
-.social_sign_in img{
-  width: 35%;
+.devise-style .social-login{
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 1em;
+  img{
+    width: 45%;
+  }
+}
 
+.devise-style form{
+  
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 1em;
 }
