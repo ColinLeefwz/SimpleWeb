@@ -27,7 +27,20 @@ class SessionsController < ApplicationController
 		paypal_pay
 	end
 
+  def show
+    # @session = Session.find(params[:id])
+    if @session.is_a?ArticleSession
+      render 'text_page'
+    else 
+      render 'video_page'
+    end
+  end
+
 	private
+  def set_session
+    @session = Session.find(params[:id])
+  end
+
 	def member_params
 		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
 	end

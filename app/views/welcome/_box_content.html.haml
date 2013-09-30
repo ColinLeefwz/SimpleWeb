@@ -8,17 +8,10 @@
         .expert-name
           = session.expert.name
       .content-type
-        -if session.is_a?LiveSession
-          = image_tag("livestreaming.png")
-        -elsif session.is_a?ArticleSession
-          = image_tag("text.png")
-        -elsif session.is_a?VideoSession
-          = image_tag("video.png")
-        -elsif session.is_a?Announcement
-          = image_tag("announcement.png")
+        = image_tag(get_image_tag(session))
         %p= session.category
     .title
-      = link_to "#{session.title}", session_page_path(session)
+      = link_to "#{session.title}", session_path(session)
     -if (session.is_a?VideoSession) || (session.is_a?Announcement) && (!session.video.url.eql?"/videos/original/missing.png")
       .cover
         .video-img{data: {source: session.video.url}}
@@ -27,7 +20,7 @@
 
     -elsif (session.is_a?ArticleSession) || (session.is_a?LiveSession)  && (!session.cover.url.eql?"/covers/original/missing.png")
       .cover
-        = link_to image_tag(session.cover.url), session_page_path(session)
+        = link_to image_tag(session.cover.url),session_path(session)
     -else
 
     .caption
@@ -35,9 +28,7 @@
         %div.description= truncate_html(session.description, length: 300, omission: '...')
       - else
         %div.description= truncate_html(session.description, length: 600, omission: '...')
-      - if session.is_a?ArticleSession
-        %p.learn-more= link_to 'Continue reading', session_page_path(session)
-      - else
-        %p.learn-more= link_to 'Learn more', session_page_path(session)
+      - text = (session.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
+      %p.learn-more= link_to text, session_path(session)
       .social-share-icons
         = render 'social_share'

@@ -1,9 +1,6 @@
 class WelcomeController < ApplicationController
-  
 
   def index
-    #TODO => Retrieving Multiple Objects in Batches
-    # @sessions = Session.all
     @sessions = Session.all
   end
   
@@ -24,13 +21,4 @@ class WelcomeController < ApplicationController
 
   def terms
   end 
-
-  def session_page
-    @session = Session.find(params[:id])
-    if @session.is_a?ArticleSession
-      render 'text_page'
-    else 
-      render 'video_page'
-    end
-  end
 end
