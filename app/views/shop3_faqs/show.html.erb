@@ -1,3 +1,5 @@
+<html>
+<head>
 <style type="text/css">
 body{
   margin:40px 40px;
@@ -5,7 +7,7 @@ body{
 p{
  margin:0px;
  padding:0px;
- line-height:85px;
+ line-height:1.8;
  font-size:60px;
 
 }
@@ -25,10 +27,11 @@ h3{
   margin-bottom:70px;
 }
 #content img{
-  width:80%;
+  max-width:100%;
 }
 
 </style>
+</head>
 
 <body>
   <h1><%= @shop_faq.head %></h1><br>
@@ -40,12 +43,7 @@ h3{
 <%= @shop_faq.content.html_safe %>
 </div>
 </body>
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript">
-$('p').attr("line-height","85px")
-</script>
+</html>
 
 
 
