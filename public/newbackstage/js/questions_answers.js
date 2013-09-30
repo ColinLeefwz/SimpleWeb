@@ -28,7 +28,7 @@ $(document).ready(function(){
 	}).blur(function(){
 		$(this).removeClass("onfocs");
 		if($(this).val()==""){
-			$(this).val("3-140个字,例如：本店wifi密码：321123");
+			$(this).val("例如：本店wifi密码：321123");
 		}else if($(this).val().length<3){
 			$(this).addClass("onfocs2");
 			$("#Mes2").html("少于3个字").animate({"left":"400px"},500);
@@ -36,18 +36,12 @@ $(document).ready(function(){
 			$("#Mes2").css({"left":"0px"});
 		}
 	}).keydown(function(){
-		if($(this).val()=="3-140个字,例如：本店wifi密码：321123"||$(this).val()=="必填"){
+		if($(this).val()=="例如：本店wifi密码：321123"||$(this).val()=="必填"){
 			$(this).val("");
 		}
 	}).keyup(function(){
-		var len=$(this).val().length;
-		if(len>140){
-			$(this).removeClass("onfocs").addClass("onfocs2");
-			$("#Mes2").html("超出140个文字").animate({"left":"400px"},300);
-		}else{
-			$(this).removeClass("onfocs2").addClass("onfocs");
-			$("#Mes2").css({"left":"0px"});
-		}
+		$(this).removeClass("onfocs2").addClass("onfocs");
+		$("#Mes2").css({"left":"0px"});
 	});
 	
 	$("#cform").submit(function(){
@@ -68,17 +62,8 @@ $(document).ready(function(){
 			$("#Mes1").html("超出12个文字").animate({"left":"290px"},500);
 			return false;
 		}
-
-		if(t2.length==""||t2=="必填"||t2=="3-140个字,例如：本店wifi密码：321123"){
+		if(t2.length==""||t2=="必填"||t2=="例如：本店wifi密码：321123"){
 			$("textarea.textarea4").addClass("onfocs").val("必填").focus();
-			return false;
-		}else if(t2.length<3){
-			$("textarea.textarea4").addClass("onfocs2").focus();
-			$("#Mes2").html("少于3个字").animate({"left":"400px"},500);
-			return false;
-		}else if(t2.length>140){
-			$("textarea.textarea4").addClass("onfocs2").focus();
-			$("#Mes2").html("超出140个文字").animate({"left":"400px"},500);
 			return false;
 		}
 	});
