@@ -46,7 +46,7 @@
           = raw "#{link_to "Login", new_user_session_path, class: 'link'} to an existing account"
 
       #account-detail
-        #social-login
+        .social-login
           =link_to image_tag("facebook_signin.png"), user_omniauth_authorize_path(:facebook)
           =link_to image_tag("linkedin_signin.png"), user_omniauth_authorize_path(:linkedin)
           %HR
