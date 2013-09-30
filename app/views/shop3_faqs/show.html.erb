@@ -4,7 +4,7 @@
 <head>
 <style type="text/css">
 body{
-  margin:20px 20px;
+  margin:20px 15px;
 }
 p{
  margin:0px;
@@ -16,13 +16,13 @@ p{
 h1{
   margin:0px;
   padding:0px;
-  font-size:25px;
+  font-size:20px;
 }
 h3{
   margin:0px;
   margin-bottom:10px;
   padding:0px;
-  font-size:16px;
+  font-size:14px;
   color:#BEBEBE;
 }
 .frontimg{
@@ -30,16 +30,19 @@ h3{
 }
 #content img{
   max-width:100%;
+  display: block;
+  margin: 5px 0px;
 }
+
 
 </style>
 </head>
 
 <body>
-  <h1><%= @shop_faq.head %></h1><br>
-  <h3><%= @shop_faq.cat.strftime("%Y-%m-%d") %></h3><br>
+  <h1><%= @shop_faq.head %></h1>
+  <h3><%= @shop_faq.cat.strftime("%Y-%m-%d") %></h3>
 
-   <%= image_tag @shop_faq.img.url,:style => "width:100%", :class => "frontimg"%><br>
+   <%= image_tag @shop_faq.img.url,:style => "width:100%", :class => "frontimg"%>
 
 <div id="content">
 <%= @shop_faq.content.html_safe %>
