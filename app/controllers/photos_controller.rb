@@ -82,15 +82,14 @@ class PhotosController < ApplicationController
           "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
       end
     end
-    expire_cache_shop(photo.room, photo.user_id)
+    #expire_cache_shop(photo.room, photo.user_id)
     render :json => {id:session[:user_id], name: session_user.name, t:Time.now}.to_json
   end
   
   def dislike
     photo = Photo.find(params[:id])
     $redis.zrem("Like#{photo.id}", session[:user_id])
-    expire_cache_shop(photo.room)
-    #TODO: 删除操作不更新最后updated_at
+    #expire_cache_shop(photo.room)
     render :json => {ok:photo.id}.to_json
   end  
   
@@ -98,6 +97,7 @@ class PhotosController < ApplicationController
     photo = Photo.find(params[:id])
     com = {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now}
     ret = photo.push(:com, com)
+    photo.set(:updated_at, Time.now)
     if UserDevice.user_ver_redis(photo.user_id).to_f>=2.3
       Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
         params[:text],
@@ -113,12 +113,13 @@ class PhotosController < ApplicationController
     ru = User.find_by_id(params[:rid])
     com = {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now, rid:ru.id, rname:ru.name}
     ret = photo.push(:com, com)
+    photo.set(:updated_at, Time.now)
     if UserDevice.user_ver_redis(ru.id).to_f>=2.3
       Resque.enqueue(XmppMsg,  session[:user_id], ru.id,
         params[:text],
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
     end
-    comment_send_to_room(photo,com) #评论的评论暂时不发送到聊天室
+    comment_send_to_room(photo,com)
     expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
   end
