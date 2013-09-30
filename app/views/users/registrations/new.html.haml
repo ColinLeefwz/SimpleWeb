@@ -1,17 +1,20 @@
-.devise-style.sign-up
+.devise-style
   .social-login
     %h2 Sign up
     = render "devise/shared/links"
-  .devise-form
-    = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  .sign-up-form
+    =simple_form_for :user, url: registration_path(resource_name) do |f|
       = devise_error_messages!
-      %div
-        = f.label :email
-        = f.email_field :email, :autofocus => true
-      %div
-        = f.label :password
-        = f.password_field :password
-      %div
-        = f.label :password_confirmation
-        = f.password_field :password_confirmation
-      %div= f.submit "Sign up"
+      = render 'sessions/form_fields', f: f
+      =f.button :submit, value: 'Sign up'
+    -# = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+    -#   %div
+    -#     = f.label :email
+    -#     = f.email_field :email, :autofocus => true
+    -#   %div
+    -#     = f.label :password
+    -#     = f.password_field :password
+    -#   %div
+    -#     = f.label :password_confirmation
+    -#     = f.password_field :password_confirmation
+    -#   %div= f.submit "Sign up"
