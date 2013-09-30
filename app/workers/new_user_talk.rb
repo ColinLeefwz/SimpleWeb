@@ -23,7 +23,7 @@ class NewUserTalk
       end
     end
 
-    to = to[user.id.generation_time.sec%to.size]
+    to = to[user.id.generation_time.sec%1]
 
     $redis.sadd("PL#{date}#{to}",user.id)
 
