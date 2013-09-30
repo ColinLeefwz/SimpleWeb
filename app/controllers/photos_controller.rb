@@ -202,7 +202,7 @@ class PhotosController < ApplicationController
   
   def comment_send_to_room(photo,com)
     if params[:sid] && params[:sid]==photo.room
-      Resque.enqueue(XmppRoomMsg2, params[:sid], session[:user_id], "[img:#{photo.id}]评论：#{com[:txt]}", "COMMENT#{$uuid.generate}")
+      Resque.enqueue(XmppRoomMsg2, params[:sid], session[:user_id], "[img:#{photo.id}]评论：#{com[:txt]}", "COMMENT#{com[:id]}#{Time.now.to_i}", 1)
     end
   end
   
