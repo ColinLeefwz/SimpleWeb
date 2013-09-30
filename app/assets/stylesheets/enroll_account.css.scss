@@ -28,26 +28,41 @@
 }
 
 
-#account-detail #quick-register-form{
+#account-detail #social-login{
   width: 70%;
+  margin: 0 auto;
+  margin-top: 1em;
+  img{
+    width: 45%;
+  }
+}
+
+#account-detail #quick-register-form{
   margin-left: 1em;
   margin-top: 1em;
  
-  img{
-    width: 154px;
-  }
+  .simple_form{
+    width: 70%;
+    margin: 0 auto;
 
-  .user_first_name{
-    margin-right: 40px;
-  }
-  .user_first_name, .user_last_name{
-    display: inline-block;
-  }
-  #user_first_name, #user_last_name{
-    width: 120px;
-  }
-  #user_email, #user_password{
-    width: 298px;
+    .user_first_name{
+      margin-right: 8%;
+    }
+    .user_first_name, .user_last_name{
+      display: inline-block;
+    }
+    .user_first_name, .user_last_name{
+      width: 30%;
+    }
+    #user_first_name, #user_last_name{
+      width: 100%;
+    }
+    .user_email, .user_password{
+      width: 69%;
+    }
+    #user_email, #user_password{
+      width: 100%;
+    }
   }
 
   .paypal-register-button{
