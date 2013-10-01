@@ -28,49 +28,11 @@
 }
 
 
-#account-detail .social-login{
-  width: 70%;
-  margin: 0 auto;
+#paypal-register-button{
+  width: 112px;
+  height: 24px;
+  border: white;
+  background: image_url('paypal_button.png') no-repeat;
+  background-color:white;
   margin-top: 1em;
-  img{
-    width: 45%;
-  }
-}
-
-.quick-register-form{
-  margin-left: 1em;
-  margin-top: 1em;
-
-  .simple_form{
-    width: 70%;
-    margin: 0 auto;
-
-    .user_first_name{
-      margin-right: 8%;
-    }
-    .user_first_name, .user_last_name{
-      display: inline-block;
-    }
-    .user_first_name, .user_last_name{
-      width: 30%;
-    }
-    #user_first_name, #user_last_name{
-      width: 100%;
-    }
-    .user_email, .user_password{
-      width: 69%;
-    }
-    #user_email, #user_password{
-      width: 100%;
-    }
-  }
-
-  .paypal-register-button{
-    width: 112px;
-    height: 24px;
-    border: white;
-    background: image_url('paypal_button.png') no-repeat;
-    background-color:white;
-    margin-top: 1em;
-  }
 }

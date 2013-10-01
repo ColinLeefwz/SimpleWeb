@@ -1,49 +1,30 @@
 .devise-style {
-	width: 40%;
-	margin: 0 auto;
-	margin-bottom: 50px;
-
-	text-align: center;
+  width: 40%;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  label{
+    display: inline;
+  }
 }
 
-.devise-style .social-login{
-	width: 70%;
-	margin: 0 auto;
-	margin-top: 1em;
-	img{
-		width: 45%;
-	}
-}
-
-.devise-style form{
-	width: 70%;
-	margin: 0 auto;
-	margin-top: 1em;
-}
-
-.sign-up-form{
-
-  .simple_form{
-    width: 70%;
+.devise-form{
+    width: 220px;
     margin: 0 auto;
 
-    .user_first_name{
-      margin-right: 8%;
-    }
     .user_first_name, .user_last_name{
       display: inline-block;
+      width: 50%;
+      float: left;
+    }  
+
+    #user_first_name{
+      width: 80%;
     }
-    .user_first_name, .user_last_name{
-      width: 30%;
+
+    #user_last_name{
+      width: 86%;
     }
-    #user_first_name, #user_last_name{
-      width: 90%;
+    .user_email{
+      clear: both;
     }
-    .user_email, .user_password{
-      // width: 69%;
-    }
-    #user_email, #user_password{
-      // width: 68%;
-    }
-	}
 }
