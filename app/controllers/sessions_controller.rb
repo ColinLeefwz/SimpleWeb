@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
 
 	before_action :set_session, only: [:show, :edit, :update, :destroy]
 
+
 	def enroll
 		@session = Session.find params[:id]
 	end
@@ -73,7 +74,6 @@ class SessionsController < ApplicationController
 			if @order.approve_url
 				redirect_to @redirect_url
 			else
-				logger.info "enrolled successfully"
 				redirect_to session_path(@session)
 			end
 		else
@@ -126,7 +126,6 @@ class SessionsController < ApplicationController
 
 			@redirect_url = @payment.links.find{|v| v.method == "REDIRECT" }.href
 		else
-			logger.info "line 88, create failed"
 		end
 	end
 end
