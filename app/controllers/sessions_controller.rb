@@ -10,6 +10,29 @@ class SessionsController < ApplicationController
 		@session = Session.find params[:id]
 	end
 
+	def free_confirm
+		@session = Session.find params[:id]
+		current_user.enroll_session @session
+		redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
+	end
+
+	def sign_up_confirm
+		@session = Session.find params[:id]
+		@member = Member.new(member_params)
+		if @member.save
+			sign_in @member
+			current_user.enroll_session @session
+			redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
+		else
+			redirect_to session_path(@session), alert: "Can not sign up you !"
+		end
+	end
+
+	def buy_now
+		@session = Session.find params[:id]
+		paypal_pay
+	end
+
 	def sign_up_buy
 		@session = Session.find params[:id]
 		@member = Member.new(member_params)
@@ -22,16 +45,11 @@ class SessionsController < ApplicationController
 
 	end
 
-	def buy_now
-		@session = Session.find params[:id]
-		paypal_pay
-	end
-
   def show
     # @session = Session.find(params[:id])
     if @session.is_a?ArticleSession
       render 'text_page'
-    else 
+    else
       render 'video_page'
     end
   end
