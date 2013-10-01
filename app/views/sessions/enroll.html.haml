@@ -40,7 +40,7 @@
                 = link_to image_tag("paypal_button.png"), buy_now_session_path(@session)
             -else
               %span.confirm-button
-                = link_to "Confirm", free_confirm_session_path(@session)
+                = link_to "Confirm", free_confirm_session_path(@session), class: 'btn'
 
   - if not user_signed_in?
     #account
