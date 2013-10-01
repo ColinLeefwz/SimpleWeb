@@ -184,12 +184,16 @@ class Shop
     return {"group_id"=>self.group_id, "group_hint"=>group_hint}
   end
   
+  def total_user
+    total = $redis.get("suac#{self.id.to_i}")
+    total = self.utotal.to_i if total.nil?
+    total
+  end
+  
   def safe_output
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
-    total = $redis.get("suac#{self.id.to_i}")
-    total = self.utotal.to_i if total.nil?
-    hash.merge!( {"user"=>total})
+    hash.merge!( {"user"=>total_user})
     hash
   end
   
@@ -453,20 +457,18 @@ class Shop
   
   def find_faq_by_num(msg)
     faq = self.faq(msg)
-    if faq.nil?
-      shop = self.pshop || Shop.find_by_id($llshop)
-      faq = shop.faq(msg) if shop
-    end
-    faq
+    return if faq
+    return self.pshop.faq(msg) if self.pshop
+    #return Shop.find_by_id($llshop).faq(msg) if self.total_user==0
+    return nil
   end
   
   def find_faqs
     faqs = self.faqs
-    if faqs.nil? || faqs.size==0
-      shop = self.pshop || Shop.find_by_id($llshop)
-      faqs = shop.faqs if shop
-    end
-    faqs
+    return faqs if faqs.size>0
+    return self.pshop.faqs if self.pshop
+    #return Shop.find_by_id($llshop).faqs  if self.total_user==0
+    return nil
   end
 
   def answer_text(msg)
