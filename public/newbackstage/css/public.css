@@ -32,7 +32,7 @@ ul,ol{list-style:none;}
 
 
 .inputchange{border:2px solid #D8D5CE !important;width:310px !important;}
-.textareachange{border:2px solid #D8D5CE !important;width:310px !important;height:120px !important;}
+.textareachange{border:2px solid #D8D5CE !important;width:310px !important;height:120px !important;overflow:hidden;}
 .noneborder{border:none !important;}
 .noneleftborder{border-left:none !important;}
 .nonerightborder{border-right:none !important;}
@@ -368,6 +368,7 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .box6 .box6message{width:540px;position:absolute;left:0px;top:0px;text-align:center;padding:10px;z-index:1;font-size:14px;color:#f60;letter-spacing:2px;}
 .box6 .ws1{color: #666;font-size: 14px;height: 30px;line-height: 30px;margin-bottom: 10px;padding: 0 10px;width: 280px;display:block;}
 .box6 .ws2{color: #868686;font-size: 13px;height: 120px;line-height: 22px;padding: 0px 10px;width: 280px;display:block;}
+.box6 .box6date{position:absolute;right:30px;bottom:25px;color:#fff;font-size:14px;}
 
 .box7{width:820px;margin-top:20px;overflow:hidden;font-size:14px;}
 .box7 .box7plane1{width:100%;margin-bottom:30px;overflow:hidden;zoom:1;}
