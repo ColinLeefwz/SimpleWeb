@@ -1,12 +1,13 @@
 .devise-style
   .social-login
     %h2 Sign up
-    = render "devise/shared/links"
-  .sign-up-form
+    = render "devise/shared/social_login"
+  .devise-form
     =simple_form_for :user, url: registration_path(resource_name) do |f|
       = devise_error_messages!
       = render 'sessions/form_fields', f: f
       =f.button :submit, value: 'Sign up'
+    = render "devise/shared/links"
     -# = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
     -#   %div
     -#     = f.label :email

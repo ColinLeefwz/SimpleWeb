@@ -53,8 +53,7 @@
         .social-login
           =link_to image_tag("facebook_signin.png"), user_omniauth_authorize_path(:facebook)
           =link_to image_tag("linkedin_signin.png"), user_omniauth_authorize_path(:linkedin)
-          %HR
-        .quick-register-form
+        .devise-form
           - url_path = (@session.price == 0.00) ? sign_up_confirm_session_path(@session) : sign_up_buy_session_path(@session)
           - button_text = (@session.price == 0.00) ? "Confirm" : ""
           =simple_form_for :user, url: url_path do |f|
@@ -62,6 +61,6 @@
             - if @session.price == 0.00
               =f.button :submit, value: "Sign up & Confirm"
             - else
-              =f.button :submit, value: '', class: 'paypal-register-button'
+              =f.button :submit, value: '', id: 'paypal-register-button'
             %br
             %span#hint Create account and pay with Paypal
