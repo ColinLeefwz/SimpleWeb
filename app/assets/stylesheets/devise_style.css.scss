@@ -3,38 +3,32 @@
   margin: 0 auto;
   margin-bottom: 50px;
   label{
-    display: inline;
+    display: inline-block;
   }
 }
 
 .social-login{
   text-align: center;
-  width: 70%;
   margin: 0 auto;
   margin-top: 1em;
   img{
-          width: 45%;
+    width: 170px;
+    height: 31px;
+    margin-bottom: 3%;
   }
 }
 
 .devise-form{
-    width: 220px;
+    width: 228px;
     margin: 0 auto;
 
     .user_first_name, .user_last_name{
-      display: inline-block;
       width: 50%;
       float: left;
     }  
 
-    #user_first_name{
-      width: 80%;
-    }
-
-    #user_last_name{
-      width: 86%;
-    }
     .user_email{
       clear: both;
     }
 }
+

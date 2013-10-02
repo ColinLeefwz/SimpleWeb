@@ -2,4 +2,3 @@
 - if devise_mapping.omniauthable?
   - resource_class.omniauth_providers.each do |provider|
     = link_to image_tag("#{provider.downcase}_signin.png"), omniauth_authorize_path(resource_name, provider), class: "#{provider.to_s} social_sign_in"
-%HR
