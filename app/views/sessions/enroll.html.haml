@@ -20,7 +20,7 @@
         #time-icon.icon
           = image_tag "time.png"
         #time.item
-          = @session.start_date.to_formatted_s(:time_for_order).html_safe if @session.start_date
+          = (@session.start_date == nil) ? "To be announced" : @session.start_date.to_formatted_s(:time_for_order).html_safe
 
 
       .item-wrapper
@@ -33,7 +33,11 @@
         #price-icon.icon
           = image_tag "price.png"
         #price.item
-          = number_to_currency(@session.price) + "(USD)"
+          - if @session.price == 0
+            = "Free"
+          - else
+            = number_to_currency("#{@session.price}", :unit => "$")
+            USD
           - if user_signed_in?
             - if @session.price != 0.00
               %span.paypal-button
