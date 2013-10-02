@@ -11,9 +11,18 @@ class ApplicationController < ActionController::Base
 
 	def store_location
 		previous_path = request.fullpath
+
 		if (previous_path != "/users/sign_in" && previous_path != "/users/sign_up" && previous_path != "/users/password" && !request.xhr?)
 			cookies[:previous_path] = request.original_url
+		else
+			cookies.delete :previous_path
 		end
+
+		# deal with ActiveAdmin
+		if (previous_path == "/admin/login")
+			cookies[:previous_path] = request.base_url + "/admin"
+		end
+
 	end
 
 	def after_sign_in_path_for(resource)
