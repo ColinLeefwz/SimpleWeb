@@ -1,37 +1,30 @@
 class SessionsController < ApplicationController
 
-	before_action :set_session, only: [:show, :edit, :update, :destroy]
-
+	before_action :set_session, only: [:show, :edit, :update, :destroy, :enroll, :free_confirm, :sign_up_confirm, :buy_now, :sign_up_buy]
 
 	def enroll
-		@session = Session.find params[:id]
 	end
 
 	def free_confirm
-		@session = Session.find params[:id]
-		current_user.enroll_session @session
-		redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
+		enroll_redirect
 	end
 
 	def sign_up_confirm
-		@session = Session.find params[:id]
 		@member = Member.new(member_params)
 		if @member.save
 			sign_in @member
-			current_user.enroll_session @session
-			redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
+
+			enroll_redirect
 		else
 			redirect_to session_path(@session), alert: "Can not sign up you !"
 		end
 	end
 
 	def buy_now
-		@session = Session.find params[:id]
 		paypal_pay
 	end
 
 	def sign_up_buy
-		@session = Session.find params[:id]
 		@member = Member.new(member_params)
 		if @member.save
 			sign_in @member
@@ -43,7 +36,6 @@ class SessionsController < ApplicationController
 	end
 
   def show
-    # @session = Session.find(params[:id])
     if @session.is_a?ArticleSession
       render 'text_page'
     else
@@ -75,7 +67,11 @@ class SessionsController < ApplicationController
 		else
 			render :create, alert: @order.errors.to_a.join(", ")
 		end
+	end
 
+	def enroll_redirect
+		current_user.enroll_session @session
+		redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
 	end
 
 end
