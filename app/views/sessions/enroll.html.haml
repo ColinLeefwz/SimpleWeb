@@ -35,8 +35,12 @@
         #price.item
           = number_to_currency(@session.price) + "(USD)"
           - if user_signed_in?
-            %span.paypal-button
-              = link_to image_tag("paypal_button.png"), buy_now_session_path(@session)
+            - if @session.price != 0.00
+              %span.paypal-button
+                = link_to image_tag("paypal_button.png"), buy_now_session_path(@session)
+            -else
+              %span.confirm-button
+                = link_to "Confirm", free_confirm_session_path(@session), class: 'btn'
 
   - if not user_signed_in?
     #account
@@ -50,8 +54,13 @@
           =link_to image_tag("facebook_signin.png"), user_omniauth_authorize_path(:facebook)
           =link_to image_tag("linkedin_signin.png"), user_omniauth_authorize_path(:linkedin)
         .devise-form
-          =simple_form_for :user, url: sign_up_buy_session_path(@session) do |f|
+          - url_path = (@session.price == 0.00) ? sign_up_confirm_session_path(@session) : sign_up_buy_session_path(@session)
+          - button_text = (@session.price == 0.00) ? "Confirm" : ""
+          =simple_form_for :user, url: url_path do |f|
             = render 'form_fields', f: f
-            =f.button :submit, value: '', id: 'paypal-register-button'
+            - if @session.price == 0.00
+              =f.button :submit, value: "Sign up & Confirm"
+            - else
+              =f.button :submit, value: '', id: 'paypal-register-button'
             %br
             %span#hint Create account and pay with Paypal

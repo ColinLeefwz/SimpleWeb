@@ -26,7 +26,8 @@ class OrdersController < ApplicationController
 		@session = order.session
 		if @payment.execute(payer_id: params[:PayerID])
 			current_user.enroll_session @session
-			redirect_to video_page_path(@session), flash: { success: "Enrolled Successful !" }
+			# redirect_to video_page_path(@session), flash: { success: "Enrolled Successful !" }
+			redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
 		else
 			redirect_to session_path(@session)
 		end
