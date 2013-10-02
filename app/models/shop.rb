@@ -87,6 +87,10 @@ class Shop
     end
   end
   
+  def card_photo #显示为卡片效果的图片
+    top4_photos[0]
+  end
+  
   def photos
     Photo.where({room: self.id.to_i.to_s, hide: nil})
   end
