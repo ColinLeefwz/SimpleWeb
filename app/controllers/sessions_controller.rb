@@ -1,3 +1,5 @@
+require 'paypal'
+
 class SessionsController < ApplicationController
 
 	before_action :set_session, only: [:show, :edit, :update, :destroy, :enroll, :free_confirm, :sign_up_confirm, :buy_now, :sign_up_buy]

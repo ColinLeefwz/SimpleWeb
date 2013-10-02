@@ -10,6 +10,7 @@ module Prodygia
   class Application < Rails::Application
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
     config.autoload_paths += Dir[Rails.root.join('app', 'controllers', '{**}')]
+    # config.autoload_paths += Dir[Rails.root.join('lib', '{**}')]
 
 		config.assets.precompile += Ckeditor.assets
 		config.assets.precompile += %w(ckeditor/*)
@@ -35,7 +36,6 @@ module Prodygia
     end
 
     config.assets.enabled = true
-    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
   end
 end
