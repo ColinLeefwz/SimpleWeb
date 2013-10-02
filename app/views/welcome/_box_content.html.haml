@@ -1,0 +1,34 @@
+- sessions.each do |session|
+  - box_class = "item #{session.category.downcase} #{session.content_type.downcase}"
+  - box_class = box_class + " always_show" if session.always_show
+  %div{class: "#{box_class}"}
+    .box-header
+      .portrait
+        = image_tag(session.expert.avatar.url)
+        .expert-name
+          = session.expert.name
+      .content-type
+        = image_tag(get_image_tag(session))
+        %p= session.category
+    .title
+      = link_to "#{session.title}", session_path(session)
+    -if (session.is_a?VideoSession) || (session.is_a?Announcement) && (!session.video.url.eql?"/videos/original/missing.png")
+      .cover
+        .video-img{data: {source: session.video.url}}
+          = image_tag session.cover.url, class: 'video-play'
+          = image_tag "video_play_icon.png", class: 'play-video-icon'
+
+    -elsif (session.is_a?ArticleSession) || (session.is_a?LiveSession)  && (!session.cover.url.eql?"/covers/original/missing.png")
+      .cover
+        = link_to image_tag(session.cover.url),session_path(session)
+    -else
+
+    .caption
+      - if (session.cover.url) && (!session.cover.url.eql?"/covers/original/missing.png")
+        %div.description= truncate_html(session.description, length: 300, omission: '...')
+      - else
+        %div.description= truncate_html(session.description, length: 600, omission: '...')
+      - text = (session.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
+      %p.learn-more= link_to text, session_path(session)
+      .social-share-icons
+        = render 'social_share'

@@ -76,6 +76,12 @@ Devise.setup do |config|
   # passing :skip => :sessions to `devise_for` in your config/routes.rb
   config.skip_session_storage = [:http_auth]
 
+  # By default, Devise cleans up the CSRF token on authentication to
+  # avoid CSRF token fixation attacks. This means that, when using AJAX
+  # requests for sign in and sign up, you need to get a new CSRF token
+  # from the server. You can disable this option at your own risk.
+  # config.clean_up_csrf_token_on_authentication = true
+
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 10. If
   # using other encryptors, it sets how many times you want the password re-encrypted.
@@ -86,7 +92,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "ec4ddc324a9bfeaf73b27fab99565008e0d6973861af2896fc6cc7d7da7fb90c220bd318d659c1caa797051d28c17ccce2c9956c6e987c6bc51d9fa82078eb64"
+  # config.pepper = "3b25414cdd402b4c3bb65bd2104718247044b82a5e31f96454f3868794daa82469321555a0f790421cf8331a033c966c81041d7c063d84d18b87ff1a4da62d22"
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -220,6 +226,10 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
+	require "omniauth-facebook"
+  # config.omniauth :facebook, '1413664912184592', '01860bd49ef473f1a8c44e14e69c01c0' # Production vertion
+  config.omniauth :facebook, '169058009963289', '0dafe6ee2b60ac5819f56d99b1de771f' # peter's APP_ID
+
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

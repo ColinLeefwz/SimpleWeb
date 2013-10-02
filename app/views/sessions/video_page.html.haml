@@ -1,0 +1,64 @@
+#main-content
+  #flash
+    - if flash[:success]
+      .alert.alert-success
+        %button{ type: "button", class: 'close', data: { dismiss: 'alert' } } &times;
+        = flash[:success]
+
+  %h1.video-page-title #{@session.title}
+  .video-page-info-box
+    .video-page-image.video-page-image-border
+      = image_tag(@session.cover.url)
+    .video-page-info
+      .video-page-expert-category
+        .video-page-expert-info
+          .video-page-expert-portrait
+            .video-page-image-border
+              = image_tag(@session.expert.avatar.url)
+            %p= @session.expert.profile.company
+          .video-page-expert-name-title
+            .video-page-expert-name-value
+              = @session.expert.name
+            %p= @session.expert.profile.title
+        .video-page-category-info
+          .video-page-category-info-title
+            Category
+          %p= @session.category
+      .video-page-location-info
+        %p#location-icon1.location-icon-background
+          %span.location-info
+            - if @session.expert.profile.location.eql?""
+              = "To be announced"
+            - else
+              = @session.expert.profile.location
+        %p#location-icon2.location-icon-background
+          %span.location-info
+            - if @session.start_date == nil
+              = "To be announced"
+            - else
+              = @session.start_date.to_formatted_s(:short)
+        %p#location-icon3.location-icon-background
+          %span.location-info
+            Virtual
+        %p#location-icon4.location-icon-background
+          %span.location-info.outline-font
+            - if @session.price == 0
+              = "Free"
+            - else
+              = number_to_currency("#{@session.price}", :unit => "$")
+              USD
+
+      .video-page-others
+        %p Click below to entroll now!
+        .enroll-button
+          - if (user_signed_in? and (current_user.enrolled_sessions.include? @session))
+            %p.enroll-text
+              = "Enrolled"
+          -else
+            %p= link_to "Enroll Now!", enroll_session_path(@session), class: 'enroll-text'
+        %p.outline-font= link_to 'Tell A Friend'
+  -if !@session.video.url.eql?"/videos/original/missing.png"
+    .video-page-video-frame
+      = video_tag @session.video.url, controls: 'controls'
+  .video-page-summary
+    %p= @session.description.html_safe

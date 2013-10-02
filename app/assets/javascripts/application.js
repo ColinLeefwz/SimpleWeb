@@ -18,4 +18,6 @@
 //= require imagesloaded.pkgd.min
 //= require scrolltopcontrol
 //= require jquery.isotope.min
+//= require ckeditor/init
+//= require paypal-button.min
 //= require_tree .

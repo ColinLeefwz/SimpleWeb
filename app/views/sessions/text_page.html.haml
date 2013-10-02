@@ -1,0 +1,24 @@
+.text-page-header-box
+  .text-page-left-side
+    .text-page-portrait
+      = image_tag("#{@session.expert.avatar.url}")
+    .text-page-expert-name
+      %span by #{@session.expert.name}
+  .text-page-right-side
+    .text-page-social-buttons
+      = render 'social_share'
+    .text-page-category-name
+      = @session.category
+
+.text-page-article-box
+  .text-page-title
+    %h1= @session.title
+    %p
+      = "originally published on #{@session.created_at.to_date.to_formatted_s(:short)}"
+  -if @session.cover.url.eql?""
+    .text-page-image
+      = image_tag(@session.cover.url)
+  .text-page-main-content
+    %p= @session.description.html_safe
+
+

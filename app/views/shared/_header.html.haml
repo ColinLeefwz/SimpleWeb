@@ -1,6 +1,10 @@
 #logo_container
-  #logo
+  #logo.pull-left
     = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
+
+  #user-session.pull-right
+    = render 'shared/user_session'
+  .fixed
 
 %nav
   %ul.visible-desktop
@@ -11,47 +15,47 @@
 
     %li.category
       %a.filters{href: "#macro", data: {filter: '.macro'}}macro
-      %ul.subcategory
-        %li economy
-        %li macro trends
-        %li going global
+      -# %ul.subcategory
+      -#   %li economy
+      -#   %li macro trends
+      -#   %li going global
 
     %li.category
       %a.filters{href: "#business", data: {filter: '.business'}}business
-      %ul.subcategory
-        %li strategy
-        %li market research
-        %li company setup
-        %li recruiment
+      -# %ul.subcategory
+      -#   %li strategy
+      -#   %li market research
+      -#   %li company setup
+      -#   %li recruiment
 
     %li.category
       %a.filters{href: "#entrepreneurship", data: {filter: '.entrepreneurship'}}entrepreneurship
-      %ul.subcategory
-        %li lean startup
-        %li funding
-        %li agile development
+      -# %ul.subcategory
+      -#   %li lean startup
+      -#   %li funding
+      -#   %li agile development
 
     %li.category
       %a.filters{href: "#tech", data: {filter: '.tech'}}tech
-      %ul.subcategory
-        %li mobile
-        %li social media
-        %li apps/software
+      -# %ul.subcategory
+      -#   %li mobile
+      -#   %li social media
+      -#   %li apps/software
 
     %li.category
       %a.filters{href: "#culture", data: {filter: '.culture'}}culture
-      %ul.subcategory
-        %li language
-        %li spirituality
-        %li travel
+      -# %ul.subcategory
+      -#   %li language
+      -#   %li spirituality
+      -#   %li travel
 
-    %li.category
+    %li#format
       %a format
       %ul.subcategory
-        %li video
-        %li live
-        %li article
-        %li announcement
+        %li.filters{href: "#video", data: {filter: '.videosession'}} video
+        %li.filters{href: "#live", data: {filter: '.livesession'}} live
+        %li.filters{href: "#article", data: {filter: '.articlesession'}} article
+        %li.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
 
   %select#collapsed_navbar.span12.hidden-desktop
     %option.filters{data: {filter: '*'}} all

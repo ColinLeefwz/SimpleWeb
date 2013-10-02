@@ -1,70 +1,35 @@
 Prodygia::Application.routes.draw do
 
-  devise_for :users
-  get '/admin', to: redirect('/admin/sign_in')
-  get "admin/index"
+  devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks" }
 
-  get "join_request/index"
-  get "join_request/show"
-  get "join_request/destroy"
-  get "join_request/new"
-  get "join_request/edit"
-  get "join_request/create"
-  get "join_request/update"
-  resources :experts
+  resources :users
 
-  resources :contact_messages
+  mount Ckeditor::Engine => '/ckeditor'
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
 
-  resources :propose_topics
+	resources :sessions do
+		member do
+			get :enroll
+			get :buy_now
+			post :sign_up_buy
+			get :free_confirm
+			post :sign_up_confirm
+		end
+	end
 
-  resources :admin do
-
-    collection do
-      get 'sign_in'
-    end
-
-    collection do
-      post 'authorize'
-    end
-
-    collection do
-      get 'sessions', to: 'admin#session_index'
-      post 'sessions', to: 'admin#session_create'
-      get 'sessions/new', to: 'admin#session_new', as:'session_new'
-
-      get 'sessions/:id/edit', to: 'admin#session_edit', as: 'session_edit'
-      get 'sessions/:id', to: 'admin#session_show', as: 'session'
-      put 'sessions/:id', to: 'admin#session_update'
-      patch 'sessions/:id', to: 'admin#session_update'
-      delete 'sessions/:id', to: 'admin#session_destroy'
-    end
-
-    collection do
-      get 'experts', to: 'admin#expert_index'
-      post 'experts', to: 'admin#expert_create'
-      get 'experts/new', to: 'admin#expert_new', as: 'expert_new'
-
-      get 'experts/:id/edit', to: 'admin#expert_edit', as: 'expert_edit'
-      get 'experts/:id', to: 'admin#expert_show', as: 'expert'
-      put 'experts/:id', to: 'admin#expert_update'
-      patch 'experts/:id', to: 'admin#expert_update'
-      delete 'experts/:id', to: 'admin#expert_destroy'
-    end
-
+  resources :orders do
+    get :execute
+    get :cancel
   end
 
-  get "welcome/index"
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
   root to: "welcome#index"
-  get "/contact", to: "welcome#contact"
-  get "/faq", to: "welcome#faq"
-  get "/for_experts", to: "welcome#for_experts"
-  get "/for_members", to: "welcome#for_members"
-  get "/privacy", to: "welcome#privacy"
-  get "/terms", to: "welcome#terms"
+
+  get "/:page", to: 'static_pages#static'
+
   get "video_page/:id", to: "welcome#video_page", as: 'video_page'
   get "text_page/:id", to: "welcome#text_page", as: 'text_page'
- end
+  get "session/:id", to: "welcome#session_page", as: 'session_page'
+
+  get "/paypal_callback", to: 'session#paypal_callback'
+end

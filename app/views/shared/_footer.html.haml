@@ -1,7 +1,24 @@
 .links
-  = link_to 'About us', contact_path
-  = link_to 'FAQ', faq_path
-  //= link_to 'For experts', for_experts_path
-  //= link_to 'For members', for_members_path
-  //= link_to 'Privacy', privacy_path
-  //= link_to 'Terms and conditions', terms_path
+  .visible-desktop
+    = link_to 'About Us', '/about_us' 
+    = link_to 'FAQ', '/faq'  
+    = link_to 'For Experts', '/for_experts'
+    = link_to 'Terms', '/terms'
+    = link_to 'Privacy', '/privacy'
+
+  %select#footer-select.hidden-desktop
+    %option{value: '/'}info
+    %option{value: '/about_us'}about us
+    %option{value: '/faq'}faq
+    %option{value: '/for_experts'}for experts
+    %option{value: '/terms'}terms
+    %option{value: '/privacy'}privacy
+//  .dropdown
+//    %a{:href => '#', :class => 'btn dropdown-toggle', 'data-toggle' => 'dropdown'}action 
+//    %ul.dropdown-menu{:role => 'menu', 'aria-labelledby' => 'dLabel'}
+//      %li
+//        = link_to 'About Us', '/about_us', tabindex: '-1'
+//      %li
+//        = link_to 'FAQ', '/faq',  tabindex: '-1' 
+
+

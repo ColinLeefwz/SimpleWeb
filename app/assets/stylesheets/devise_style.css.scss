@@ -1,0 +1,34 @@
+.devise-style {
+  width: 40%;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  label{
+    display: inline-block;
+  }
+}
+
+.social-login{
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 1em;
+  img{
+    width: 170px;
+    height: 31px;
+    margin-bottom: 3%;
+  }
+}
+
+.devise-form{
+    width: 228px;
+    margin: 0 auto;
+
+    .user_first_name, .user_last_name{
+      width: 50%;
+      float: left;
+    }  
+
+    .user_email{
+      clear: both;
+    }
+}
+
