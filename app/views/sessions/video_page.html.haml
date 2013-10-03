@@ -25,23 +25,25 @@
             Category
           %p= @session.category
       .video-page-location-info
-        %p#location-icon1.location-icon-background
-          %span.location-info
-            - if @session.expert.profile.location.eql?""
-              = "To be announced"
-            - else
-              = @session.expert.profile.location
-        %p#location-icon2.location-icon-background
-          %span.location-info
-            - if @session.start_date == nil
-              = "To be announced"
-            - else
-              = @session.start_date.to_formatted_s(:short)
-        %p#location-icon3.location-icon-background
-          %span.location-info
-            Virtual
-        %p#location-icon4.location-icon-background
-          %span.location-info.outline-font
+        .item-wrapper
+          #location-icon.icon
+            = image_tag "location.png"
+          #location.item
+            = (@session.location == "") ? "To be announced" : @session.location 
+        .item-wrapper
+          #time-icon.icon
+            = image_tag "time.png"
+          #time.item
+            = (@session.start_date == nil) ? "To be announced" : @session.start_date.to_formatted_s(:time_for_order).html_safe
+        .item-wrapper
+          #content-type-icon.icon
+            = image_tag "content_type.png"
+          #content-type.item
+            = @session.content_type[0..-8]  # ***Session
+        .item-wrapper
+          #price-icon.icon
+            = image_tag "price.png"
+          #price.item
             - if @session.price == 0
               = "Free"
             - else

@@ -88,31 +88,27 @@
 				float: left;
 				text-align: left;
 				margin-top: 30px;
-				width: 250px;
-				.location-info{
-					margin-left: 20px;
-				}
-				.location-icon-background{
-					background-image: image_url("location_icon.png");
-					background-repeat: no-repeat;
-					margin-bottom:15px;
-				}
-
-				#location-icon1{
-					background-position: 0 0;
-				}
-
-				#location-icon2{
-					background-position: 0 -40px;
-				}
-
-				#location-icon3{
-					background-position: 0 -60px;
-				}
-
-				#location-icon4{
-					background-position: 0 -80px;
-				}
+				width: 260px;
+        .item-wrapper{
+          margin-bottom: 1em;
+          .icon{
+            width:10%;
+            display: inline-block;
+            vertical-align: middle;
+            img{
+              width: 20px;
+              height: 20px;
+              display: block;
+              margin: 0 auto;
+            }
+          }
+          .item{
+            width: 70%;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 1%;
+          }
+        }
 			}
 
 			.outline-font{
