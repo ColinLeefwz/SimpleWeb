@@ -39,12 +39,8 @@
             = number_to_currency("#{@session.price}", :unit => "$")
             USD
           - if user_signed_in?
-            - if @session.price != 0.00
-              %span.paypal-button
-                = link_to image_tag("paypal_button.png"), buy_now_session_path(@session)
-            -else
-              %span.confirm-button
-                = link_to "Confirm", free_confirm_session_path(@session), class: 'btn'
+            %span.paypal-button
+              = session_pay_link
 
   - if not user_signed_in?
     #account
