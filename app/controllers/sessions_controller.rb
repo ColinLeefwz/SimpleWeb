@@ -6,6 +6,12 @@ class SessionsController < ApplicationController
 
 	def enroll
 		if user_signed_in?
+			if current_user.enrolled_sessions.include? @session
+				@include = true
+			else
+				@include = false
+			end
+
 			if @session.is_free?
 				@free_session = true
 			else

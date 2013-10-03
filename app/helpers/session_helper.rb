@@ -5,10 +5,14 @@ module SessionHelper
 	end
 
 	def session_pay_link
-		if @free_session
-			link_to "Confirm", free_confirm_session_path(@session), class: 'btn'
+		if @include
+			"Enrolled!"
 		else
-			link_to image_tag("paypal_button.png"), buy_now_session_path(@session)
+			if @free_session
+				link_to "Confirm", free_confirm_session_path(@session), class: 'btn'
+			else
+				link_to image_tag("paypal_button.png"), buy_now_session_path(@session)
+			end
 		end
 	end
 
