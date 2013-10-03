@@ -27,9 +27,9 @@ class PhotoNotice
   def self.old_notice(photo, user, u, str)
     uid = user.id
     if Rails.cache.read("PhotoFan#{uid}")
-      Resque.enqueue(XmppMsg, user.id, u.id, str, "NOPUSH#{pid}#{u.id}", " NOLOG='1'  NOPUSH='1' ")
+      Resque.enqueue(XmppMsg, user.id, u.id, str, "NOPUSH#{photo.id}#{u.id}", " NOLOG='1'  NOPUSH='1' ")
     else
-      Resque.enqueue(XmppMsg, user.id, u.id, str,"#{pid}#{u.id}"," NOLOG='1' ")  
+      Resque.enqueue(XmppMsg, user.id, u.id, str,"#{photo.id}#{u.id}"," NOLOG='1' ")  
       Rails.cache.write("PhotoFan#{uid}", 1, :expires_in => 8.hours)      
     end
   end
