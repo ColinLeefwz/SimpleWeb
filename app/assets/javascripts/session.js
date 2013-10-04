@@ -1,9 +1,9 @@
 $(document).ready(function(){
-  $('#twitter').sharrre({
+  $('.twitter_share').sharrre({
     share: {
       twitter: false
     },
-    text: "prodygia",
+    text: "#prodygia",
     enableHover: false,
     enableTracking: false,
     buttons: { twitter: {via: 'Prodygia'}},
@@ -13,7 +13,7 @@ $(document).ready(function(){
     }
   });
 
-  $('#facebook').sharrre({
+  $('.facebook_share').sharrre({
     share: {
         facebook: false
       },
@@ -26,7 +26,7 @@ $(document).ready(function(){
       }
   });
 
-  $('#google_plus').sharrre({
+  $('.google_plus_share').sharrre({
     share: {
         googlePlus: false
       },
@@ -40,7 +40,7 @@ $(document).ready(function(){
   });
 
 
-  $('#linkedin').sharrre({
+  $('.linkedin_share').sharrre({
     share: {
         linkedin: false
       },
