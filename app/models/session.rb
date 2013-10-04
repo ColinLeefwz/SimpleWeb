@@ -22,6 +22,10 @@ class Session < ActiveRecord::Base
     path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
     url: "/system/sessions/:attachment/:id_partition/:style/:filename"
 
+	def is_free?
+		self.price <= 0.0
+	end
+
 	def set_default
 		self.price ||= 0.00
 	end
