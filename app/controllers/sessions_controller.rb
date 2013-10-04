@@ -86,7 +86,12 @@ class SessionsController < ApplicationController
 
 	def enroll_redirect
 		current_user.enroll_session @session
+		send_mail
 		redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
+	end
+
+	def send_mail
+		SessionMailer.enroll_session(current_user, @session).deliver
 	end
 
 end

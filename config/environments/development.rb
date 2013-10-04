@@ -20,10 +20,21 @@ Prodygia::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   #config default url
 	config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+	# config sending email
+	config.action_mailer.smtp_settings = {
+		address: "smtp.gmail.com",
+		port: 587,
+		domain: "prodygia.com",
+		authentication: "plain",
+		enable_starttls_auto: true,
+		user_name: 'zdsunshine0640@gmail.com',
+		password: 'peterzd880306'
+	}
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
