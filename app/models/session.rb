@@ -1,6 +1,7 @@
 class Session < ActiveRecord::Base
   CATEGORY = %w(macro business entrepreneurship tech culture).freeze
   CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession Announcement).freeze
+  SOCIAL_SHARE_LIST = %w(facebook twitter linkedin google_plus email).freeze
 
 	self.inheritance_column = 'content_type'
 

@@ -20,4 +20,5 @@
 //= require jquery.isotope.min
 //= require ckeditor/init
 //= require paypal-button.min
+//= require jquery.sharrre
 //= require_tree .

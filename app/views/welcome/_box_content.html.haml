@@ -31,4 +31,4 @@
       - text = (session.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
       %p.learn-more= link_to text, session_path(session)
       .social-share-icons
-        = render 'social_share'
+        = render 'shared/social_share'
