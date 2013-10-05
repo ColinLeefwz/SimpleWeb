@@ -461,7 +461,7 @@ class Shop
   
   def find_faq_by_num(msg)
     faq = self.faq(msg)
-    return if faq
+    return faq if faq
     return self.pshop.faq(msg) if self.pshop
     #return Shop.find_by_id($llshop).faq(msg) if self.total_user==0
     return nil
