@@ -6,7 +6,6 @@ $(document).ready(function(){
     text: "#prodygia",
     enableHover: false,
     enableTracking: false,
-    buttons: { twitter: {via: 'Prodygia'}},
     click: function(api, options){
       api.simulateClick();
       api.openPopup('twitter');
