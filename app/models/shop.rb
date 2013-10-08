@@ -87,6 +87,10 @@ class Shop
     end
   end
   
+  def card_photo #显示为卡片效果的图片
+    top4_photos[0]
+  end
+  
   def photos
     Photo.where({room: self.id.to_i.to_s, hide: nil})
   end
@@ -184,12 +188,16 @@ class Shop
     return {"group_id"=>self.group_id, "group_hint"=>group_hint}
   end
   
+  def total_user
+    total = $redis.get("suac#{self.id.to_i}")
+    total = self.utotal.to_i if total.nil?
+    total
+  end
+  
   def safe_output
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
-    total = $redis.get("suac#{self.id.to_i}")
-    total = self.utotal.to_i if total.nil?
-    hash.merge!( {"user"=>total})
+    hash.merge!( {"user"=>total_user})
     hash
   end
   
@@ -463,11 +471,10 @@ class Shop
   
   def find_faqs
     faqs = self.faqs
-    if faqs.nil? || faqs.size==0
-      shop = self.pshop || Shop.find_by_id($llshop)
-      faqs = shop.faqs if shop
-    end
-    faqs
+    return faqs if faqs.size>0
+    return self.pshop.faqs if self.pshop
+    #return Shop.find_by_id($llshop).faqs  if self.total_user==0
+    return nil
   end
 
   def answer_text(msg)
@@ -557,13 +564,10 @@ class Shop
     begin
       response = Xmpp.get("api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}")
     rescue RestClient::ServerBrokeConnection => e
-      Xmpp.error_notify("获取#{self.name}：#{self.id}的聊天历史失败")
+      Xmpp.error_notify("获取#{self.name}：#{self.id}的聊天历史失败") if total_user.to_i>2
       return []
     end
-    chats=  JSON.parse(response)
-    rmd = RoomMsgDel.where({room: self.id.to_i}).distinct(:_id)
-    chats.reject!{|c| rmd.include?(c[3])}
-    return chats
+    JSON.parse(response)
   end
 
   def lines

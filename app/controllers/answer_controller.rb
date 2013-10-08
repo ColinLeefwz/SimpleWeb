@@ -10,6 +10,13 @@ class AnswerController < ApplicationController
     msg = params["msg"]
     mid = params["mid"]    
     #Xmpp.send_gchat2(uid,sid,uid,msg,mid, nil, " NOLOG='1' ")
+    if msg=="@@@"
+      response = Xmpp.get("api/room_users?roomid=#{sid}")
+      names = JSON.parse(response).map{|x| User.find_by_id(x).name}
+      Xmpp.send_gchat2($gfuid,sid,uid, names.join("\n") )
+      render :text => "1"
+      return
+    end
     shop = Shop.find_by_id(sid)
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"

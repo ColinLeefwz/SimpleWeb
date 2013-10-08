@@ -132,8 +132,16 @@ class ShopController < ApplicationController
     pcount = params[:pcount].to_i
     pcount = 5 if pcount==0
     arr = shop.history(skip,pcount)
+    headers[:more_result] = "1" if arr.size>=pcount
+    rmd = RoomMsgDel.where({room: shop.id.to_i}).distinct(:_id)
+    arr.reject!{|c| rmd.include?(c[3])}
+    arr.delete_if{|x| x[1] =~ /^0\d$/ || x[1][0,3]=="@@@"}
+    if skip==0
+      arr.delete_if{|x| x[1][0,5] == "[img:" && x[1][5,24] == shop.card_photo.id.to_s}
+    end
     render :json => arr.to_json
   end
+
   
   def photos
     page = params[:page].to_i
