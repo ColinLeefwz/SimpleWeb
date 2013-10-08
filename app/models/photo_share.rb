@@ -60,7 +60,7 @@ class PhotoShare
     return if (shop = shared.shop).nil?
     coupon = shop.share_coupon(1)
     return coupon if coupon.nil?
-    if coupon.allow_send_share?(uid.to_s)
+    if coupon.faq_id == shared.id && coupon.allow_send_share?(uid.to_s)
       coupon.send_coupon(uid,'',shop.id)
       message = "恭喜#{user.name}！收到一张分享优惠券: #{coupon.name},马上领取吧！"
       return message if ENV["RAILS_ENV"] != "production"

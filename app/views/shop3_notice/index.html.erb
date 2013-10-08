@@ -1,39 +1,26 @@
 <div class="clear1"></div>
 <div class="con2">
-	<div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
-		<div class="submenu">
-			<ul>
-				<li><a href="/shop3_infos">基本设置</a></li>
-				<li><a href="/shop3_pass">修改密码</a></li>
-				<li><a href="/shop3_staffs">员工管理</a></li>
-				<li><a href="/shop3_bindwbs">绑定微博</a></li>
-				<li><a href="/shop3_bans">屏蔽用户</a></li>
-				<li><a href="/shop3_marks">用户评分</a></li>
-				<li  class="hover"><a href="/shop3_notice">公告管理</a></li>
-				<% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
-			</ul>
-		</div>  
-  <% if @shop_notice.try(:photo_id) && params[:title].blank? %>
-	<div class="notice_submenu">
-		<%= link_to "文本模式", "/shop3_notice?title=true",:class=>"linkbtn"%>
-		<a href="/shop3_notice/edit" class="linkbtn2">从商家图片中选择</a>
-		<a href="/shop3_notice/faqs" class="linkbtn">从商家问答中选择</a>
-		<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
-	</div>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab3 mt20 pt10">
-      <tr>
-        <td width="158"><%= image_tag @shop_notice.photo.img.url, :alt=>"0", :class => "imgstyle2" %></td>
-        <td valign="top"><%= @shop_notice.photo_desc %></td>
-      </tr>
-    </table>
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_infos">基本设置</a></li>
+      <li><a href="/shop3_pass">修改密码</a></li>
+      <li><a href="/shop3_staffs">员工管理</a></li>
+      <li><a href="/shop3_bindwbs">绑定微博</a></li>
+      <li><a href="/shop3_bans">屏蔽用户</a></li>
+      <li><a href="/shop3_marks">用户评分</a></li>
+      <li  class="hover"><a href="/shop3_notice">公告管理</a></li>
+      <% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
+    </ul>
+  </div>
+  <div class="notice_submenu">
+    <%= link_to "文本模式", "/shop3_notice?title=true",:class=>"#{session_shop.notice ? 'linkbtn' : 'linkbtn2'}"%>
+    <a href="/shop3_notice/edit" class="linkbtn">从商家图片中选择</a>
+    <a href="/shop3_notice/faqs" class="linkbtn">从商家问答中选择</a>
+    <a href="/shop3_notice/del" class="btn17 l">取消公告</a>
+  </div>
 
-  <%  else %>
-	<div class="notice_submenu">
-		<%= link_to "文本模式", "/shop3_notice?title=true",:class=>"linkbtn2"%>
-		<a href="/shop3_notice/edit" class="linkbtn">从商家图片中选择</a>
-		<a href="/shop3_notice/faqs" class="linkbtn">从商家问答中选择</a>
-		<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
-	</div>
+  <% if params[:title] || @shop_notice.nil? %>
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt20 pt10">
       <tr>
         <td valign="top" align="right" class="pr20">&nbsp;</td>
@@ -51,7 +38,26 @@
         <td align="left">&nbsp;</td>
       </tr>
     </table>
+  <% elsif @shop_notice.photo_id %>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab3 mt20 pt10">
+      <tr>
+        <td width="158"><%= image_tag @shop_notice.photo.img.url, :alt=>"0", :class => "imgstyle2" %></td>
+        <td valign="top"><%= @shop_notice.photo_desc %></td>
+      </tr>
+    </table>
+  <% elsif @shop_notice.faq_id %>
+    <br/>
+    <div class="box4plane2">
+      <div class="box4con1">
+        <% unless @shop_notice.faq.img.blank? %>
+          <%=image_tag( "#{ShopFaq.img_url(@shop_notice.faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgstyle l", :align => "left")%>
+        <% end %>
+        <div class="box4plane3"><%= @shop_notice.faq.text%></div>
+      </div>
+    </div>
+
   <% end %>
+
 
 
 </div>

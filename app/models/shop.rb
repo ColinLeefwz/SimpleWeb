@@ -452,12 +452,13 @@ class Shop
   end
   
   def find_faq_by_num(msg)
-    faq = self.faq(msg)
-    if faq.nil?
+    faqs = self.faqs
+    if faqs.blank?
       shop = self.pshop || Shop.find_by_id($llshop)
-      faq = shop.faq(msg) if shop
+    else
+      shop = self
     end
-    faq
+    shop ? shop.faq(msg) : nil
   end
   
   def find_faqs
