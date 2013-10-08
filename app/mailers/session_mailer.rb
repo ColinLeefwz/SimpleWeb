@@ -1,5 +1,5 @@
 class SessionMailer < ActionMailer::Base
-  default from: "zdsunshine0640@gmail.com"
+  default from: "no-replay@prodygia.com"
 
 	def welcome_email(user)
 		@user = user

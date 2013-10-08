@@ -24,6 +24,7 @@ gem 'ckeditor'
 gem 'simple_form'
 gem 'paypal-sdk-core'
 gem 'paypal-sdk-rest'
+gem 'figaro'
 
 group :doc do
   gem 'sdoc', require: false
