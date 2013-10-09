@@ -25,21 +25,22 @@ Prodygia::Application.configure do
   #config default url
 	config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
-	config.action_mailer.delivery_method = :sendmail
-	config.action_mailer.perform_deliveries = true
-	config.action_mailer.default_options = { from: 'no-replay@prodygia.com' }
+	# config.action_mailer.delivery_method = :sendmail
+	# config.action_mailer.perform_deliveries = true
+	# config.action_mailer.default_options = { from: 'no-replay@prodygia.com' }
+
 	# config sending email
-	# config.action_mailer.smtp_settings = {
-	# 	address: "smtp.gmail.com",
-	# 	port: 587,
-	# 	domain: "prodygia.com",
-	# 	authentication: "plain",
-	# 	enable_starttls_auto: true,
-	# 	# user_name: 'zdsunshine0640@gmail.com',
-	# 	# password: 'peterzd880306'
-	# 	user_name: ENV["GMAIL_USERNAME"],
-	# 	password: ENV["GMAIL_PASSWORD"]
-	# }
+  config.action_mailer.delivery_method = :smtp
+	config.action_mailer.smtp_settings = {
+		address: "smtp.mandrillapp.com",
+		port: 587,
+    enable_starttls_auto: true,
+		domain: "prodygia.com",
+		authentication: "login",
+		enable_starttls_auto: true,
+		user_name: "sameerkarim.signup@gmail.com",
+		password: "rH8ImDIyRE2I4vqA4VXP4g"
+	}
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

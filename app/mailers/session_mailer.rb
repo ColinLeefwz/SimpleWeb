@@ -1,5 +1,5 @@
 class SessionMailer < ActionMailer::Base
-  default from: "no-replay@prodygia.com"
+  default from: "no-reply@prodygia.com"
 
 	def welcome_email(user)
 		@user = user
@@ -9,11 +9,11 @@ class SessionMailer < ActionMailer::Base
 	end
 
 	def enroll_session(user, session_id)
-		email = user.email
-
 		@session = Session.find session_id
-
-		mail(to: email, subject: 'Enrolled Session Confirmation')
+		# mail(to: email, subject: 'Enrolled Session Confirmation')
+		mail(to: user.email, subject: 'Enrolled Session Confirmation')
+    headers['X-MC-Template'] = "sameer_test_1"
+    headers['X-MC-MergeVars'] = { "firstname": user.first_name }.to_json
 
 	end
 end
