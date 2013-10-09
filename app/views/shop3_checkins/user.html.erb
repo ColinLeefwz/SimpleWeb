@@ -25,7 +25,7 @@
 			  <tr>
 				<td height="20" valign="top">职业说明： <%= @user.job %> </td>
 				<% if @user.phone %>
-				<td height="20" valign="top" title="#{@user.phone}">手机：<%= @user.phone[0,3]+"****"+@user.phone[7,10] %></td>
+				<td height="20" valign="top" title="<%= @user.phone %>" >手机：<%= @user.phone[0,3]+"****"+@user.phone[7,10] %></td>
 				<% end %>
 			  </tr>
 			  <tr>
