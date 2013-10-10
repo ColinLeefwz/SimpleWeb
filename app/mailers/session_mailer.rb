@@ -13,7 +13,7 @@ class SessionMailer < ActionMailer::Base
 		# mail(to: email, subject: 'Enrolled Session Confirmation')
 		mail(to: user.email, subject: 'Enrolled Session Confirmation')
     headers['X-MC-Template'] = "sameer_test_1"
-    headers['X-MC-MergeVars'] = { "firstname": user.first_name }.to_json
+    headers['X-MC-MergeVars'] = { "firstname" => user.first_name }.to_json
 
 	end
 end

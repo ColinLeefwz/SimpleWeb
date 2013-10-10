@@ -1,4 +1,5 @@
 require 'paypal'
+require 'mandrill_api'
 
 class SessionsController < ApplicationController
 
@@ -91,7 +92,8 @@ class SessionsController < ApplicationController
 	end
 
 	def send_mail
-		SessionMailer.enroll_session(current_user, @session).deliver
+    mandrill = MandrillApi.new
+    mandrill.template_send(current_user, @session, "enroll_comfirm")
 	end
 
 end

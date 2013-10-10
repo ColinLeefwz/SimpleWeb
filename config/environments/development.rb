@@ -38,8 +38,8 @@ Prodygia::Application.configure do
 		domain: "prodygia.com",
 		authentication: "login",
 		enable_starttls_auto: true,
-		user_name: "sameerkarim.signup@gmail.com",
-		password: "rH8ImDIyRE2I4vqA4VXP4g"
+		user_name: ENV['MANDRILL_USERNAME'],
+		password: ENV["MANDRILL_API"]
 	}
 
   # Print deprecation notices to the Rails logger.
