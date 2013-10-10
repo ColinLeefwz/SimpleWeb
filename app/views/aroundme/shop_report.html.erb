@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes">
     <meta content="no-cache" http-equiv="Pragma"/>
     <meta content="no-cache" http-equiv="Cache-Control"/>
     <meta content="0" http-equiv="Expires"/>
@@ -11,10 +11,10 @@
     <script type="text/javascript">
       function showDig(hid){
         var high=$(window).height()/2;
-        $('#dig').css({"height":$("#Main2").height()+"px","display":"block"});
+        $('#dig').css({"display":"block"});
         $('#sid').val(hid)
         $('#res').css('background-color', '');
-        $("#boxss").css({"top":($(document).scrollTop()+high)+"px","margin-top":"-225px"});
+        $("#boxss").css({"top":($(document).scrollTop()+high-$("#boxss").height()/2)+"px"});
       }
       function ajaxReport(uid){
         type = $('#radio_button').val()
@@ -46,6 +46,9 @@
 			var va=$(this).attr("for");
 			$("a[id="+va+"]").click();
 		});
+		$("#dig").css({"height":$("#Main2").height()+"px","display":"block"});
+		alert($("#dig").css("height"));
+		$("#dig").css("display","none");
       });
 
     </script>
@@ -65,7 +68,7 @@
               <a class="radios" id="N4" name="radio_bad" action-type="switch" rel="无用地点"></a><label for="N4">无用地点</label></li>
           </ul>
           <input type="hidden" name="radio_button" id="radio_button"/>
-
+		  <div class="clear1"></div>
           <input class="tex" type="text" name="des" id="des" value="要不要说明一下呢？" onclick="$(this).val('')"/>
           <input type="hidden" name="sid" id="sid">
 
@@ -75,8 +78,8 @@
           </p>-->
           <div class="line"></div>
           <div class="clear"></div>
-          <input class="btn5" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
-          <input class="btn6" type="button" value=" " onclick="hidReport()">
+          <input class="btn7 ml20 mb20" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
+          <input class="btn8 mr20 mb20" type="button" value=" " onclick="hidReport()">
         </div>
     </div>
 
@@ -84,7 +87,7 @@
       <div class="set">
           <% @shops.each do |shop| %>
 			  <div class="shop" id="shop<%=shop[1]%>">
-				<span class="shopName"> <%= shop[0]  %>  </span>
+				<span class="shopName"> <%= shop[0]  %> </span>
 				<span class="ff" onclick ="showDig('<%=shop[1] %>')" > 报错  </span>
 			  </div>
           <% end %>

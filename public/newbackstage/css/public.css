@@ -6,7 +6,7 @@ img{border:none;}
 ul,ol{list-style:none;}
 .l{float:left;}
 .r{float:right !important;}
-
+#l, #t, #r ,#b{background-color:#000000;display:block;}
 .textleft{text-align:left !important;}
 .textcenter{text-align:center !important;}
 .f12{font-size:12px !important;}
@@ -44,7 +44,7 @@ ul,ol{list-style:none;}
 .opacity_55{filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);
 filter: alpha(opacity=60);opacity:0.6;}
 .relative{position:relative !important;}
-.filebox1, .filebox2, .filebox3, .filebox4, .filebox5, .filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11{display:none;}
+.filebox1, .filebox2, .filebox3, .filebox4, .filebox5, .filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11, .filebox12, .filebox13{display:none;}
 .del2{overflow:hidden;}
 .imgfilter{ filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);}
 .err{font-size:13px;margin-left:20px;color:#f60;display:none;}
@@ -171,8 +171,9 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#00AAEE',endCo
 letter-spacing:2px;text-align:center;width:60px;background-color:#3399FF;}
 .btn16{border:1px solid #ccc;border-radius:3px;color:#818181;cursor:pointer;height:27px;line-height:27px;
 letter-spacing:2px;text-align:center;width:60px;background-color:#f8f8f8;}
-.btn17{border:1px solid #ccc;border-radius:3px;color:#818181;cursor:pointer;padding:0px 5px;*padding-top:2px;padding-top:3px\9;margin-top:4px;line-height:20px;
-text-align:center;background-color:#f8f8f8;}
+.btn17{border:1px solid #ccc;border-radius:3px;color:#818181;cursor:pointer;padding:0px 5px;*padding-top:2px;padding-top:3px\9;margin-top:4px;line-height:20px;text-align:center;background-color:#f8f8f8;}
+.btn18{border:1px solid #ccc;border-radius:3px;color:#818181;cursor:pointer;height:30px;line-height:30px;letter-spacing:2px;background: #f8f8f8 url("../images/sign43.png") 10px 9px no-repeat;padding-left:30px;width:75px;text-align: left;}
+.btn19{border:1px solid #ccc;border-radius:3px;color:#818181;cursor:pointer;height:30px;line-height:30px;letter-spacing:2px;background: url("../images/sign44.png") no-repeat scroll 5px 9px #F8F8F8;padding-left:20px;width:95px;text-align: left;}
 .btn2change{position:absolute;right:140px;bottom:30px;}
 .btn3change{position:absolute;right:30px;bottom:30px;}
 

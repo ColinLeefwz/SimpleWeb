@@ -24,8 +24,10 @@ body {font-size: 12px;font-family:"宋体",Sans-Serif;background:transparent url
 .ml80{margin-left:80px !important;}
 .mr0{margin-right:0px !important;}
 .mr5{margin-right:5px !important;}
+.mr10{margin-right:10px !important;}
 .mr15{margin-right:15px !important;}
 .mt0{margin-top:0px !important;}
+.mt4{margin-top:4px !important;}
 .mt5{margin-top:5px !important;}
 .mt10{margin-top:10px !important;}
 .mt15{margin-top:15px !important;}
@@ -59,6 +61,7 @@ a.yellow:hover{color:#0099ff;}
 
 .w60{width:60px !important;}
 .w440{width:440px !important;}
+.h20{height:20px;}
 
 .sign{width:8px;height:13px;overflow:hidden;position:absolute;background:transparent url("../images/sign.gif")
  left top no-repeat;right:-2px;top:12px;z-index:10;display:block;_right:-3px;}
@@ -100,20 +103,24 @@ display: block;height: 43px;line-height: 43px;text-align: center;width: 122px;te
 .btn_file9{position: absolute;width:25px;height:200px;left:560px;top:23px;filter:alpha(Opacity=0);Opacity:0;cursor:pointer;}
 .btn_file10{position: absolute;width:68px;height:25px;left:0px;top:0px;filter:alpha(Opacity=0);Opacity:0;cursor:pointer;}
 /*登录页样式表 begin*/
-.logo{width:202px;height:80px;display:block;text-indent:-999em;margin:0px auto 50px auto;background:url("http://oss.aliyuncs.com/dface/images_logo2.png");}
-.area{width:275px;height:448px;position:absolute;left:50%;top:50%;margin-left:-135px;margin-top:-224px;}
+.logo{width:202px;height:80px;display:block;text-indent:-999em;margin:0px auto 40px auto;background:url("http://oss.aliyuncs.com/dface/images_logo2.png");}
+.area{width:383px;height:500px;position:absolute;left:50%;top:50%;margin-left:-191px;margin-top:-250px;}
 
-.plane{color:#333333;background-color:#F4F4F4;display:block;padding:10px 8px;margin-bottom:15px;overflow:hidden;zoom:1;}
-.plane label{margin-right:10px;}
-.plane input.txt1{width:70px;background-color:transparent;border:1px solid #f00;overflow:hidden;zoom:1;}
-.plane input.txt{background-color:transparent;border:none;overflow:hidden;zoom:1;}
-.plane span{color: #00B8FF;position: absolute;right:10px}
+.login_plane{font-family:微软雅黑;font-size:18px;color:#434343;margin-bottom:25px;}
+.plane{color:#333333;display:block;margin-bottom:25px;overflow:hidden;zoom:1;width:381px;font-size:14px;
+line-height:45px;border:1px solid #D7D7D7;}
+.plane label{display:block;float:left;font-family:微软雅黑;font-size:14px;color:#333333;padding:0 18px;border-right:1px solid #D7D7D7;text-indent:1px;}
+.plane input.txt1{background-color:#fff;border:none;overflow:hidden;zoom:1;width:277px;height:45px;padding:0px 15px;font-size:14px;}
+.plane input.txt{background-color:#fff;border:none;overflow:hidden;zoom:1;width:210px;height:45px;padding:0px 75px 0px 15px;font-size:14px;}
+.plane span{color: #00B8FF;position: absolute;right:15px;}
 
-.plane2{clear:both;overflow:hidden;zoom:1;}
-.plane2 input.btn{background-color:#00B8FF;color:#ffffff;width:100px;height:35px;line-height:35px;float:right;border:none;cursor:pointer;}
+.plane2{clear:both;overflow:hidden;zoom:1;font-size:14px;}
+.plane2 .plane2leftdiv{font-family:微软雅黑;font-size:14px;color:#333333;float:left;}
+.plane2 input.btn{background-color:#00B8FF;color:#ffffff;width:190px;height:45px;line-height:45px;float:right;border:none;cursor:pointer;
+font-family:微软雅黑;font-size:18px;border-radius:5px;}
 .plane2 a{color:#00B8FF;float:left;}
 .plane2 a:hover{color:#ff7700;}
-.plane2 .plane2inner{color: #666;display:block;padding-top:160px;clear:both;overflow:hidden;text-align:center;}
+.plane2 .plane2inner{color: #666;display:block;padding-top:80px;clear:both;overflow:hidden;text-align:center;position:relative;}
 /*登录页样式表 over*/
 
 .plane3{overflow:hidden;clear:both;color:#5C6C7C;font-size:14px;text-align:center;}

@@ -26,24 +26,28 @@
         $("#name").focus();
       });
     </script>
+	<style>
+	body{background-color:#f2f2f2;background-image:none;}
+	</style>
   </head>
   <body>
     <div class="area">
       <form action="/shop_login/login" method="post">
         <div class="logo">脸脸网</div>
-        <div id="Notice" class="notice"><%= notice %></div>
-
-        <div class="plane"><label>商家id</label>
+        <div id="Notice" class="notice h20"><%= notice %></div>
+		<div class="login_plane">商家管理登录</div>
+        <div class="plane"><label>商家ID</label>
           <%= text_field_tag :id, params[:id],:id => "name", :class => "txt", :onblur => "find_shop($(this).val())" %>
           <span id="shopName"></span>
         </div>
 
         <div class="plane"><label for="pwd">密&nbsp;&nbsp;码</label>
-          <%= password_field_tag :password, params[:password], :maxLength=>"16",:id =>'pwd', :class => 'txt'  %>
+          <%= password_field_tag :password, params[:password], :maxLength=>"16",:id =>'pwd', :class => 'txt1'  %>
         </div>
         <div class="plane2">
+		  <div class="plane2leftdiv"><input type="checkbox" value=1 class="l mr10 mt4"> 记住账号</div>
           <input type="submit" value="登 录" class="btn"/>
-          <span class="plane2inner">&copy; 2012 dface 浙ICP备11027288号<a href="http://www.dface.cn" class="fn ml15">WWW.DFACE.CN</a></span>
+          <div class="plane2inner"><span style="position:absolute;left:20px;top:75px;font-size:24px;">&copy;</span> 2012 dface 浙ICP备11027288号<a href="http://www.dface.cn" class="fn ml15">WWW.DFACE.CN</a></div>
         </div>
       </form>
     </div>

@@ -23,16 +23,20 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:46px;letter-spacing:-0
 float: left;height: 84px;width: 240px;font-size: 30px;text-indent:-9999px;}
 .btn6{background:url('../images/btn/pic2.png') no-repeat scroll left top transparent;border: medium none;cursor: pointer;
 float: right;height: 84px;width: 240px;font-size: 30px;text-indent:-9999px;}
+.btn7{background:url('../images/btn/pic3.png') no-repeat scroll left top transparent;border: medium none;cursor: pointer;
+float: left;height: 42px;width: 96px;font-size: 30px;text-indent:-9999px;}
+.btn8{background:url('../images/btn/pic4.png') no-repeat scroll left top transparent;border: medium none;cursor: pointer;
+float: right;height: 42px;width: 96px;font-size: 30px;text-indent:-9999px;}
 
 .page{height:100px;width:180px;margin:0px auto; padding:10px 0 0;line-height:20px;text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);}
 .page p{display:block;margin:0px;padding:0px;}
 .container{height:296px;background: url("../images/bg9_1.jpg") no-repeat;padding: 260px 0 0 0;}
 
-.radios{background: url("../images/sign19.jpg") left top no-repeat;width:25px;height:25px;display:inline-block;margin-right:10px;cursor:pointer;}
-.radios2{background: url("../images/sign20.jpg") left top no-repeat !important;width:25px;height:25px;display:inline-block;margin-right:10px;cursor:pointer;}
+.radios{background: url("../images/sign19.jpg") left top no-repeat;width:15px;height:15px;display:inline-block;margin-right:10px;cursor:pointer;}
+.radios2{background: url("../images/sign20.jpg") left top no-repeat !important;width:15px;height:15px;display:inline-block;margin-right:10px;cursor:pointer;}
 .coming{width:180px;margin:0px auto;padding: 70px 0 0 0;font-size:25px;color:#6e7171;font-weight:bold;font-family:"arial";text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);}
-.tex{border-radius:5px;border: 2px solid #aaa;float: left;font-size: 30px;margin: 20px 0px;width:100%;color:#ccc;
-height: 70px;line-height: 70px;padding: 0 7px;box-shadow: 2px 2px 2px #333333 inset;}
+.tex{border-radius:5px;border: 2px solid #aaa;font-size: 14px;width:90%;color:#ccc;margin: 0 auto;clear:both;display:block;
+height: 30px;line-height: 30px;padding: 0 7px;box-shadow: 2px 2px 2px #333333 inset;}
 .hidden{overflow:hidden;}
 .lh18{line-height:18px !important;}
 .yellow{color:#EDBD50;}
@@ -51,13 +55,14 @@ height: 70px;line-height: 70px;padding: 0 7px;box-shadow: 2px 2px 2px #333333 in
 .ml20{margin-left:20px;}
 .ml90{margin-left:90px;}
 .ml2p{margin-left:2%;}
+.mr20{margin-right:20px;}
 .mb20{margin-bottom:20px;}
 
-.set {background-color: #fff;border: 1px solid #C7C7C7;border-radius: 20px;margin: 40px auto;overflow: hidden;width:90%;}
+.set {background-color: #fff;border: 1px solid #C7C7C7;border-radius: 15px;margin: 30px auto;overflow: hidden;width:90%;}
 .line{width:100%;border-top: 2px solid #a7a7a7;border-bottom: 1px solid #e4e4e4;margin:20px 0}
 
 .main{width:100%;overflow:hidden;}
-#Main2{min-width:640px;background: url("../images/background.png") repeat scroll 0 0 transparent;color: #5F4536;font-size: 14px;
+#Main2{background: url("../images/background.png") repeat scroll 0 0 transparent;color: #5F4536;font-size: 14px;
 overflow: hidden;margin:0px auto;}
 
 .header{width:100%;margin:20px 0px 10px 0px;overflow:hidden;}
@@ -88,14 +93,14 @@ overflow: hidden;margin:0px auto;}
 .plane2{border-left:2px solid #66CC00;border-right:1px solid #66CC00;overflow:hidden;text-align:center;color:#868686;
 background-color:#F2F2F2;line-height:30px;}
 
-.shop{border-bottom: 1px solid #ABABAB;color: #000;display: block;font-size: 34px;margin: 0 4px;overflow: hidden;
-padding: 20px 60px 20px 20px;}
-.shop .shopName{width:400px;float:left;padding-right:20px;}
-.shop  .ff {float: right;font-size:28px;color:#67a8ff}
+.shop{border-bottom: 1px solid #ABABAB;color: #000;display: block;margin: 0 4px;overflow: hidden;
+padding: 20px;}
+.shop .shopName{float:left;font-size:18px;padding-right:20px;}
+.shop  .ff {float: right;font-size:16px;color:#67a8ff}
 
-#dig{position:absolute;width: 100%; height:100%;font-size: 30px;background: url(../images/btn/dig.png);display: none;}
-#boxss{position:absolute;background-color:#c9c9c9;border: 2px solid #181818;left:20%;margin-left:-15.5%;width:80%;
-border-radius:20px;height:450px;padding:0px 35px;}
+#dig{position:absolute;width: 100%;font-size: 14px;background: url(../images/btn/dig.png);display: none;}
+#boxss{position:absolute;background-color:#c9c9c9;border: 2px solid #181818;width:90%;left:5%;
+border-radius:15px;}
 
-ul.list{display:block;overflow:hidden;zoom:1;padding:20px;line-height:60px;margin-top:10px;}
+ul.list{display:block;overflow:hidden;zoom:1;padding:10px 20px;line-height:40px;}
 ul.list li{float:left;width:50%;}

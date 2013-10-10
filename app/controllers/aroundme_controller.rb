@@ -2,7 +2,7 @@
 
 class AroundmeController < ApplicationController
   before_filter :user_login_filter, :only => [:hot_users, :shops]
-  caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
+
   
   def shops
     if session[:user_id] && User.is_shop_id?(session[:user_id])
@@ -81,12 +81,12 @@ class AroundmeController < ApplicationController
   end
 
   def shop_report
-    lo = [params[:lat].to_f,params[:lng].to_f]
-    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
-    arr = find_shop_cache(lo,params[:accuracy].to_f,params[:uid],params[:bssid])
+	arr = Shop.where({}).limit(20)
     @shops = arr.map do |x|
-      [x['name'],x['_id'].to_i]
+      [x.name,x.id.to_i]
     end
+	@shops =  Shop.where({}).limit(20).map{|x| [x.name, x.id]}
+	
     render :layout => false
   end
 
