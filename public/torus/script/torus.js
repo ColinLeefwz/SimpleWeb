@@ -141,7 +141,7 @@ function () {
         b();
 
         function e(h) {
-            var f = "url(/img/torus/base" + Control.config.skin + ".png)";
+            var f = "url(../img/torus/base" + Control.config.skin + ".png)";
             g("playing").style.backgroundImage = f
         }
         g("set_base").options.selectedIndex = Control.config.skin;
@@ -1616,6 +1616,9 @@ function () {
         Game.paused = true;
         document.removeEventListener("keyup", t, false);
         document.removeEventListener("keydown", z, false);
+        g("playing").removeEventListener("click", touchRotate, false);
+        document.removeEventListener("touchmove", touchMove, false);
+        document.removeEventListener("touchstart", touchBegin, false);
         clearInterval(s);
         s = 0
     };
@@ -1626,6 +1629,9 @@ function () {
         Game.paused = false;
         document.addEventListener("keyup", t, false);
         document.addEventListener("keydown", z, false);
+        g("playing").addEventListener("click", touchRotate, false);
+        document.addEventListener("touchmove", touchMove, false);
+        document.addEventListener("touchstart", touchBegin, false);
         u.left = false;
         u.right = false;
         u.down = false;
@@ -1657,6 +1663,35 @@ function () {
         i.preventDefault();
         return false
     }
+	function touchRotate(i){
+        Game.rotate(+1);
+        i.preventDefault();
+	}
+	function touchBegin(i){
+	    u.startX = event.touches[0].pageX;
+	    u.startY = event.touches[0].pageY;
+        i.preventDefault();
+	}
+	function touchMove(i){
+		try{
+		    curX = event.touches[0].pageX - u.startX;
+		    curY = event.touches[0].pageY - u.startY;
+			if(Math.abs(curX)>15 || Math.abs(curY)>15){
+				if(Math.abs(curX)>5+Math.abs(curY)){
+					if(curX>0) B(null, "right");
+					else B(null, "left");
+				}else if(Math.abs(curY)>5+Math.abs(curX)){
+					if(curY>0) B();
+					else Game.rotate(+1);
+				}else{
+					alert("cur:"+curX+":"+curY);
+				}
+			    u.startX = event.touches[0].pageX;
+			    u.startY = event.touches[0].pageY;
+			}
+	        i.preventDefault();
+		}catch(e){alert(e)}
+	}
     function z(i) {
         switch (i.keyCode) {
         case 65:
@@ -1673,18 +1708,18 @@ function () {
                 B(null, "right")
             }
             break;
-        case 83:
-        case 40:
+        case 83: //S
+        case 40: //Down Arrow	
             if (u.down === false) {
                 u.down = true;
                 B()
             }
             break;
-        case 87:
-        case 38:
+        case 87: //W
+        case 38: //Up Arrow	
             Game.rotate(+1);
             break;
-        case 32:
+        case 32: // space
             Game.rotate(-1);
             break
         }
