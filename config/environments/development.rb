@@ -45,8 +45,8 @@ Prodygia::Application.configure do
     :port => 587,
     :domain => 'gmail.com',
     :authentication => :login,
-    :user_name => 'jevan@originatechina.com',
-    :password => 'nbwslj62153097'
+    :user_name => 'Your_gmail_account',
+    :password => 'Your_password'
   }
 
 end
