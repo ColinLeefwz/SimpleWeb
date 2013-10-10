@@ -1,5 +1,9 @@
 ActiveAdmin.register Expert do
 
+  action_item only:[:index] do
+    link_to 'Invit An Expert', new_user_invitation_path
+  end
+
 	index do
 		column :name do |expert|
 			link_to(expert.name, admin_expert_path(expert))
