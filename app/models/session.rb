@@ -1,16 +1,15 @@
 class Session < ActiveRecord::Base
   CATEGORY = %w(macro business entrepreneurship tech culture).freeze
   CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession Announcement).freeze
-  SOCIAL_SHARE_LIST = %w(facebook twitter linkedin google_plus email).freeze
 
-	self.inheritance_column = 'content_type'
+  self.inheritance_column = 'content_type'
 
-	after_initialize :set_default
+  after_initialize :set_default
 
   belongs_to :expert
-	has_many :orders
+  has_many :orders
 
-	has_and_belongs_to_many :enroll_users, class_name: 'User'
+  has_and_belongs_to_many :enroll_users, class_name: 'User'
 
   default_scope { order("always_show desc, created_at desc") }
 
@@ -22,11 +21,11 @@ class Session < ActiveRecord::Base
     path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
     url: "/system/sessions/:attachment/:id_partition/:style/:filename"
 
-	def is_free?
-		self.price <= 0.0
-	end
+  def is_free?
+    self.price <= 0.0
+  end
 
-	def set_default
-		self.price ||= 0.00
-	end
+  def set_default
+    self.price ||= 0.00
+  end
 end

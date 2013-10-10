@@ -1,8 +1,18 @@
--# .provider#facebook_like
--#   %iframe{ src: "http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.prodygia.com&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=80",
--#     scrolling: "no",
--#     frameborder: "no",
--#     style: "border:none; overflow:hidden; width: 100%; #u_0_0{display: none;} ",
--#     allowTransparency: "true"}
-- Session::SOCIAL_SHARE_LIST.each do |provider|
-  %div{ class: "provider #{provider}_share" }
+.social_share.facebook
+  - url = "http://www.facebook.com/share.php?title=#{session_title}&u=#{session_url}"
+  = link_to image_tag("facebook_50_50.png"), url, 'data-popup' => true
+
+.social_share.twitter
+  - url = "http://twitter.com/home?status=#{session_title}+#{session_url}"
+  = link_to image_tag("twitter_50_50.png"), url, 'data-popup' => true
+
+.social_share.linkedin
+  - url = "https://www.linkedin.com/cws/share?mini=true&source=#{session_title}&url=#{session_url}"
+  = link_to image_tag("linkedin_50_50.png"), url, 'data-popup' => true
+
+
+.social_share.google_plus
+  - url = "http://plus.google.com/share?url=#{session_url}"
+  = link_to image_tag("google_plus_50_50.png"), url, 'data-popup' => true
+
+
