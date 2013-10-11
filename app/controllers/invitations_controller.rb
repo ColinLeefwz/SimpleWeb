@@ -7,7 +7,7 @@ class InvitationsController < Devise::InvitationsController
  end
 
  def edit 
-   user = User.find_by_invitation_token(params[:invitation_token])
+   user = User.where(invitation_token: params[:invitation_token]).first
    user.type = 'Expert'
    user.save
 
