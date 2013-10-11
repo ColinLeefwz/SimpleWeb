@@ -8,7 +8,7 @@
     .text-page-social-buttons
       = render 'shared/social_share', session_title: @session.title, session_url: session_url(@session)
     .text-page-category-name
-      = @session.category
+      = @session.categories.join(",")
 
 .text-page-article-box
   .text-page-title

@@ -23,7 +23,7 @@
         .video-page-category-info
           .video-page-category-info-title
             Category
-          %p= @session.category
+          %p= @session.categories.join(",")
         .clear-fix
       .video-page-below-box
         .video-page-location-info
