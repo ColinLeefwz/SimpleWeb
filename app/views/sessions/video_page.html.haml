@@ -15,11 +15,11 @@
           .video-page-expert-portrait
             .video-page-image-border
               = image_tag(@session.expert.avatar.url)
-            %p= @session.expert.profile.company
+            %p= @session.expert.expert_profile.company
           .video-page-expert-name-title
             .video-page-expert-name-value
               = @session.expert.name
-            %p= @session.expert.profile.title
+            %p= @session.expert.expert_profile.title
         .video-page-category-info
           .video-page-category-info-title
             Category
