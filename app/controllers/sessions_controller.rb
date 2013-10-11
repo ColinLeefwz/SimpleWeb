@@ -1,4 +1,6 @@
 require 'paypal'
+require 'mandrill_api'
+require 'active_support'
 
 class SessionsController < ApplicationController
 
@@ -63,31 +65,44 @@ class SessionsController < ApplicationController
     @session = Session.find(params[:id])
   end
 
-  def member_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
-  end
+	def member_params
+		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+	end
 
-  def paypal_pay
-    @order = @session.orders.build
-    @order.user = current_user
+	def paypal_pay
+		@order = @session.orders.build
+		@order.user = current_user
 
-    if @order.save
-      Paypal.create_payment_with_paypal(@session, @order, order_execute_url(@order.id))
+		if @order.save
+			Paypal.create_payment_with_paypal(@session, @order, order_execute_url(@order.id))
 
-      if @order.approve_url
-        redirect_to @order.approve_url
-      else
-        redirect_to session_path(@session)
-      end
-    else
-      render :create, alert: @order.errors.to_a.join(", ")
+			if @order.approve_url
+				redirect_to @order.approve_url
+			else
+				redirect_to session_path(@session)
+			end
+		else
+			render :create, alert: @order.errors.to_a.join(", ")
+		end
+	end
+
+	def enroll_redirect
+		current_user.enroll_session @session
+		send_mail
+		redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
+	end
+
+	def send_mail
+    domain_url = request.base_url
+    if domain_url == "http://localhost:3000"
+      domain_url = "http://www.prodygia.com"
     end
-  end
 
-  def enroll_redirect
-    current_user.enroll_session @session
-    redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
-  end
+    session_image_url = domain_url + @session.cover.url
+    mandrill = MandrillApi.new
+    mandrill.template_send(current_user, @session, "enroll_comfirm", session_image_url)
+
+	end
 
 end
 
