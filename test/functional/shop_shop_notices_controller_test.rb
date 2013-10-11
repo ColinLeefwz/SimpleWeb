@@ -11,15 +11,5 @@ class ShopShopNoticesControllerTest < ActionController::TestCase
     assert_redirected_to :controller => :shop_login, :action => :login
   end
 
-  test '公告列表默认查看有效' do
-    shop_login(3)
-    get :index
-    assert_response :success
-    assert_equal ShopNotice.where({shop_id: 3}).last, assigns[:shop_notice]
-  end
-
-
-
-
 end
 
