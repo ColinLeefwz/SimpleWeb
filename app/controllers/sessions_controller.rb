@@ -4,53 +4,53 @@ require 'active_support'
 
 class SessionsController < ApplicationController
 
-	before_action :set_session, only: [:show, :edit, :update, :destroy, :enroll, :free_confirm, :sign_up_confirm, :buy_now, :sign_up_buy]
+  before_action :set_session, only: [:show, :edit, :update, :destroy, :enroll, :free_confirm, :sign_up_confirm, :buy_now, :sign_up_buy]
 
-	def enroll
-		if user_signed_in?
-			if current_user.enrolled_sessions.include? @session
-				@include = true
-			else
-				@include = false
-			end
+  def enroll
+    if user_signed_in?
+      if current_user.enrolled_sessions.include? @session
+        @include = true
+      else
+        @include = false
+      end
 
-			if @session.is_free?
-				@free_session = true
-			else
-				@free_session = false
-			end
-		end
-	end
+      if @session.is_free?
+        @free_session = true
+      else
+        @free_session = false
+      end
+    end
+  end
 
-	def free_confirm
-		enroll_redirect
-	end
+  def free_confirm
+    enroll_redirect
+  end
 
-	def sign_up_confirm
-		@member = Member.new(member_params)
-		if @member.save
-			sign_in @member
+  def sign_up_confirm
+    @member = Member.new(member_params)
+    if @member.save
+      sign_in @member
 
-			enroll_redirect
-		else
-			redirect_to session_path(@session), alert: "Can not sign up you !"
-		end
-	end
+      enroll_redirect
+    else
+      redirect_to session_path(@session), alert: "Can not sign up you !"
+    end
+  end
 
-	def buy_now
-		paypal_pay
-	end
+  def buy_now
+    paypal_pay
+  end
 
-	def sign_up_buy
-		@member = Member.new(member_params)
-		if @member.save
-			sign_in @member
-			paypal_pay
-		else
-			redirect_to session_path(@session), alert: "Can not sign up you !"
-		end
+  def sign_up_buy
+    @member = Member.new(member_params)
+    if @member.save
+      sign_in @member
+      paypal_pay
+    else
+      redirect_to session_path(@session), alert: "Can not sign up you !"
+    end
 
-	end
+  end
 
   def show
     if @session.is_a?ArticleSession
@@ -60,7 +60,7 @@ class SessionsController < ApplicationController
     end
   end
 
-	private
+  private
   def set_session
     @session = Session.find(params[:id])
   end

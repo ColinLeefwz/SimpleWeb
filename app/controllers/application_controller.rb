@@ -13,11 +13,17 @@ class ApplicationController < ActionController::Base
 	def store_location
 		previous_path = request.fullpath
 
-		if (previous_path != "/users/sign_in" && previous_path != "/users/sign_up" && previous_path != "/users/password" && !request.xhr?)
-			cookies[:previous_path] = request.original_url
-		elsif(previous_path == "/admin/login")
+		if(previous_path == "/admin/login")
 			cookies[:previous_path] = request.base_url + "/admin"
+		elsif(previous_path != "/users/sign_in" && previous_path != "/users/sign_up" && previous_path != "/users/password" && !request.xhr?)
+			cookies[:previous_path] = request.original_url
 		end
+
+		# if (previous_path != "/users/sign_in" && previous_path != "/users/sign_up" && previous_path != "/users/password" && !request.xhr?)
+		# 	cookies[:previous_path] = request.original_url
+		# elsif(previous_path == "/admin/login")
+		# 	cookies[:previous_path] = request.base_url + "/admin"
+		# end
 
 	end
 

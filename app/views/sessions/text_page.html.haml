@@ -6,9 +6,9 @@
       %span by #{@session.expert.name}
   .text-page-right-side
     .text-page-social-buttons
-      = render 'shared/social_share'
+      = render 'shared/social_share', session_title: @session.title, session_url: session_url(@session)
     .text-page-category-name
-      = @session.category
+      = @session.categories.join(",")
 
 .text-page-article-box
   .text-page-title
