@@ -1,12 +1,20 @@
 // -----------
 var dface_var={}
 var da;
-function dface_init(){
-    return {
-        uid: "1",
-        sid: '2'
+function dface_init(sid, uid){
+    dface_var.sid = sid;
+    dface_var.uid = uid;
+    dface_var.gid = 1
+}
+
+function close(){
+    try{
+        window.location = "dface://close";
+    }catch(e){
+        alert(e)
     }
 }
+
 
 //----------------------
 
@@ -2261,15 +2269,9 @@ function niceTime(a) {
     return ((a / 60) >> 0) + ":" + (a % 60).toLength(2)
 }
 window.addEventListener("load", function () {
-
-
     g("loading").style.display = "none";
     g("container").style.visibility = "visible";
     Game.init();
-    
-    dface_var = dface_init.js(1,2)
-    dface_var.gid = 1
-
     Control = new Control();
     UI.init()
     Control.startGame(2);
@@ -2335,7 +2337,6 @@ function Control() {
     }
     b();
     this.gameOver = function (f) {
-
         var l=  dface_var.score = Math.floor(Game.score);
         
         $.get('/game/new_score', {
