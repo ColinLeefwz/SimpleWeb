@@ -589,6 +589,21 @@ class User
   def sina_fans_not_lianlian_fans
     sina_fans.delete_if {|x| x.follows.index(self.id)!=nil }
   end
+
+  def address_list_friends
+    adds = []
+    ua = UserAddr.find_or_new(self.id)
+    if ua && ua.list.size > 0
+      ua.list.each do |m|
+        if m.select{|k,v| k=="number" && $redis.get("P:#{v}")}
+          uid = $redis.get("P:#{v}")
+          user = User.find_by_id(uid)
+          adds << user unless user.nil?
+        end
+      end
+    end
+    adds
+  end
   
   def del_test_user
     self.del_my_cache
