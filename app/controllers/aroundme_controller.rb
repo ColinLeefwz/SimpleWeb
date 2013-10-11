@@ -2,6 +2,7 @@
 
 class AroundmeController < ApplicationController
   before_filter :user_login_filter, :only => [:hot_users, :shops]
+  caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
 
   
   def shops
@@ -20,20 +21,20 @@ class AroundmeController < ApplicationController
     if params[:baidu].to_i==1
       lo1 = Shop.lob_to_lo(lo) if params[:accuracy].to_i>1
       if params[:gps] && params[:gps].size>0
-         begin
-           gps = ActiveSupport::JSON.decode(params[:gps]) 
-           acc2 = gps["Accuracy"].to_i
-           lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>1
-         rescue Exception => e
-           Xmpp.error_notify("gps:#{e.backtrace[0..3]}\n#{params[:gps]}\n")
-         end
+        begin
+          gps = ActiveSupport::JSON.decode(params[:gps])
+          acc2 = gps["Accuracy"].to_i
+          lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>1
+        rescue Exception => e
+          Xmpp.error_notify("gps:#{e.backtrace[0..3]}\n#{params[:gps]}\n")
+        end
       end
       if params[:wifi] && params[:wifi].size>0
-         begin
-           wifi = ActiveSupport::JSON.decode(params[:wifi]) 
-         rescue Exception => e
-           Xmpp.error_notify("wifi:#{e.backtrace[0..3]}\n#{params[:wifi]}")
-         end
+        begin
+          wifi = ActiveSupport::JSON.decode(params[:wifi])
+        rescue Exception => e
+          Xmpp.error_notify("wifi:#{e.backtrace[0..3]}\n#{params[:wifi]}")
+        end
       end
       if lo2.nil?
         lo = lo1
@@ -81,13 +82,15 @@ class AroundmeController < ApplicationController
   end
 
   def shop_report
-	arr = Shop.where({}).limit(20)
+    
+    lo = [params[:lat].to_f,params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    arr = find_shop_cache(lo,params[:accuracy].to_f,params[:uid],params[:bssid])
     @shops = arr.map do |x|
-      [x.name,x.id.to_i]
+      [x['name'],x['_id'].to_i]
     end
-	@shops =  Shop.where({}).limit(20).map{|x| [x.name, x.id]}
-	
     render :layout => false
+
   end
 
   def report
