@@ -6,11 +6,6 @@ class User < ActiveRecord::Base
 		:recoverable, :rememberable, :trackable, :validatable,
 		:omniauthable, omniauth_providers: [:facebook, :linkedin]
 
-  after_invitation_accepted :set_as_expert
-
-  def set_as_expert 
-    self.type = "Expert" 
-  end
 
   # has_many :owned_sessions, class_name: 'Session', foreign_key: 'owner_id'
   # has_many :followed_sessions, class_name: 'Session'
