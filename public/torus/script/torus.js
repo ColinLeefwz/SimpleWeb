@@ -2248,6 +2248,10 @@ window.addEventListener("load", function () {
     g("loading").style.display = "none";
     g("container").style.visibility = "visible";
     Game.init();
+	if(dface_init){
+		//var hash = dface_init();
+		//hash["uid"]
+	}
     Control = new Control();
     UI.init()
 	Control.startGame(2);
