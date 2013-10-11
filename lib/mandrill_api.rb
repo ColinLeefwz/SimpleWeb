@@ -13,7 +13,6 @@ class MandrillApi
       "merge_vars"=>
       [{"rcpt"=>user.email, "vars"=>[{"name"=>"SESSIONIMAGE", "content"=>session_image_url}]}],
       "bcc_address"=>"message.bcc_address@example.com",
-      "subject"=>"Session enrolled confirmation",
       "text"=>"Example text content",
       "metadata"=>{"website"=>"www.prodygia.com"},
       "view_content_link"=>nil,
@@ -21,8 +20,6 @@ class MandrillApi
       "important"=>false,
       "to"=>[{"name"=>user.first_name, "email"=>user.email}],
       "tracking_domain"=>nil,
-      "from_name"=>"Team Prodygia",
-      "from_email"=>"support@prodygia.com",
       "inline_css"=>nil,
       "headers"=>{"Reply-To"=>"no-reply@prodygia.com"}
     }
