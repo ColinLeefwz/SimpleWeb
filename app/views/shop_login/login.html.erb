@@ -37,12 +37,12 @@
         <div id="Notice" class="notice h20"><%= notice %></div>
 		<div class="login_plane">商家管理登录</div>
         <div class="plane"><label>商家ID</label>
-          <%= text_field_tag :id, params[:id],:id => "name", :class => "txt", :onblur => "find_shop($(this).val())" %>
+          <%= text_field_tag :id, params[:id],:id => "name", :class => "txt", :autocomplete=>'off', :onblur => "find_shop($(this).val())" %>
           <span id="shopName"></span>
         </div>
 
         <div class="plane"><label for="pwd">密&nbsp;&nbsp;码</label>
-          <%= password_field_tag :password, params[:password], :maxLength=>"16",:id =>'pwd', :class => 'txt1'  %>
+          <%= password_field_tag :password, params[:password], :maxLength=>"16",:id =>'pwd', :class => 'txt1', :autocomplete=>'off'%>
         </div>
         <div class="plane2">
 		  <div class="plane2leftdiv"><input type="checkbox" value=1 class="l mr10 mt4"> 记住账号</div>
