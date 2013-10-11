@@ -7,6 +7,11 @@ class Game
   field :sid, type: Integer #商家
   field :uid, type: Moped::BSON::ObjectId #用户
   field :score, type: Integer #游戏分数
+
+  with_options :prefix => true, :allow_nil => true do |option|
+    option.delegate :name, :to => :user
+    option.delegate :name, :to => :shop
+  end
   
   index({sid: 1, gid:1, socre:1})
 
