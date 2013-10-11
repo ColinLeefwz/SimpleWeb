@@ -1,0 +1,23 @@
+<html>
+<head>
+<script>
+function test(){
+try{
+ alert(xx);
+ window.location = "dface://close";
+}catch(e){alert(e)}
+}
+var xx;
+function dface_init(x){
+ xx=x;
+}
+
+</script>
+</head>
+<body>
+<h1>
+<a onclick="test();return;" href="#">asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</a>
+</h1>
+<iframe src="dface://init" style="display:none" />
+</body>
+</html>
