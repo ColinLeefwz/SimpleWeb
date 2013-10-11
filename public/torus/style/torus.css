@@ -12,7 +12,7 @@ body {
 	visibility: hidden;
 	position: absolute;
 	top: 0;
-	left: 170px;
+	left: 1px;
 	right: 170px;
 	font-family: Arial;
 	background-color: red;
@@ -24,11 +24,6 @@ body {
 	text-align: center;
 	font-size: small;
 }
-#footer {
-    display: block;
-	padding-top: 500px;
-}
-
 
 
 
@@ -96,7 +91,7 @@ CANVAS {
 	display: none;
 	position: absolute;
 	top: 200px;
-	left: 250px;
+	left: 220px;
 	width: 94px;
 	height: 233px;
 	background-image: url(../img/torus/panel.png);

@@ -94,7 +94,7 @@ Motion.prototype = {
         return ((((this._path[0] * a + this._path[1]) * a + this._path[2]) * a + this._path[3]) * a + this._path[4]) * a + this._path[5]
     }
 };
-var MENU_QUOTES = ['"If you love someone, put their name in a <B>circle</B>; because hearts can be broken, but <B>circles</B> never end."<BR><SPAN>- Brian Littrell</SPAN>', '"I made a <B>circle</B> with a smile for a mouth on yellow paper, because it was sunshiny and bright."<BR><SPAN>- Harvey Ball</SPAN>', '"A <B>circle</B> may be small, yet it may be as mathematically beautiful and perfect as a large one."<BR><SPAN>- Isaac Disraeli</SPAN>', '"When the tribe first sat down in a <B>circle</B> and agreed to allow only one person to speak at a time - that was the longest step forward in the history of law"<BR><SPAN>- Judge Curtis Bok</SPAN>', '"The nature of God is a <B>circle</B> of which the center is everywhere and the circumference is nowhere"<BR><SPAN>- Empedocles</SPAN>', '"The mind petrifies if a <B>circle</B> be drawn around it, and it can hardly be that dogma draws a <B>circle</B> round the mind."<BR><SPAN>- George Moore</SPAN>', "\"Let mathematicians and geometrician 'talk of <B>circles</B>' and triangles' charms, The figure I prize is a girl with bright eyes, And the <B>circle</B> that's formed by her arms\"<BR><SPAN>- Anonymous</SPAN>", '"Round, like a <B>circle</B> in a spiral<BR>Like a wheel within a wheel."<BR><SPAN>- Sting</SPAN>'];
+var MENU_QUOTES = [''];
 var UI = new
 function () {
     var c = true;
@@ -141,7 +141,7 @@ function () {
         b();
 
         function e(h) {
-            var f = "url(../img/torus/base" + Control.config.skin + ".png)";
+            var f = "url(/torus/img/torus/base" + Control.config.skin + ".png)";
             g("playing").style.backgroundImage = f
         }
         g("set_base").options.selectedIndex = Control.config.skin;
@@ -1677,17 +1677,24 @@ function () {
 		    curX = event.touches[0].pageX - u.startX;
 		    curY = event.touches[0].pageY - u.startY;
 			if(Math.abs(curX)>15 || Math.abs(curY)>15){
-				if(Math.abs(curX)>5+Math.abs(curY)){
+				if(Math.abs(curY)>5+Math.abs(curX)){
+					if(curY>0){
+		                u.down = true;
+						down_flag = true;
+		                B();
+					}
+					else Game.rotate(+1);
+				}else if(Math.abs(curX)>5+Math.abs(curY)){
 					if(curX>0) B(null, "right");
 					else B(null, "left");
-				}else if(Math.abs(curY)>5+Math.abs(curX)){
-					if(curY>0) B();
-					else Game.rotate(+1);
 				}else{
 					alert("cur:"+curX+":"+curY);
 				}
 			    u.startX = event.touches[0].pageX;
 			    u.startY = event.touches[0].pageY;
+				u.down = false;
+			}else{
+				u.down = false;
 			}
 	        i.preventDefault();
 		}catch(e){alert(e)}
@@ -2243,6 +2250,7 @@ window.addEventListener("load", function () {
     Game.init();
     Control = new Control();
     UI.init()
+	Control.startGame(2);
 }, false);
 
 function g(a) {

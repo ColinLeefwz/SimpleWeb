@@ -1,5 +1,4 @@
 html {
-  background-image: url(../img/bg.png);
   background-repeat: repeat-x;
   background-color: #fcfcfc;
   -webkit-text-size-adjust: none;
@@ -13,7 +12,7 @@ body {
   text-align: center;
 }
 #benjoffe {
-  width: 800px;
+  width: 400px;
   margin: 0 auto;
   text-align: left;
 }
@@ -128,21 +127,7 @@ h3 {
   padding: 18px 10px 10px 10px;
   min-height: 200px;
 }
-#foot {
-  clear: both;
-  border-top: 1px solid #999;
-  padding: 10px 0;
-  font-size: 0.9em;
-  text-align: right;
-  margin: 0 10px;
-  color: #666;
-}
-#foot a {
-  color: #666;
-}
-#foot a:hover {
-  color: #000;
-}
+
 p {
   margin: 18px 0;
 }
