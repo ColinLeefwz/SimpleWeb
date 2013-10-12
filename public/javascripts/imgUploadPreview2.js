@@ -188,13 +188,6 @@ function Cut(){
 	var h=$("#UploadPic").height();
 	$("#CutDiv").css("display","block");
 	$("#EM").css({"width":w+"px","height":h+"px"});
-	$("#CARight").mousedown(function(e){
-		$("#CARight").mousemove(function(e){
-			$("#CARight").css("left",e.pageX-$("#CutDiv").offset().left+"px");
-			e.stopPropagation();
-			return false;
-		});
-	});
 
 	if(w<400){
 		$("#CutDiv").css({"width":w+"px","height":h+"px","left":(400-w)/2+"px"});
