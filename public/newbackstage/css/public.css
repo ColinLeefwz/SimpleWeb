@@ -44,7 +44,7 @@ ul,ol{list-style:none;}
 .opacity_55{filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);
 filter: alpha(opacity=60);opacity:0.6;}
 .relative{position:relative !important;}
-.filebox1, .filebox2, .filebox3, .filebox4, .filebox5, .filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11, .filebox12, .filebox13{display:none;}
+.filebox1, .filebox2, .filebox3, .filebox4, .filebox5, .filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11, .filebox12, .filebox13, .filebox14, .filebox15{display:none;}
 .del2{overflow:hidden;}
 .imgfilter{ filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);}
 .err{font-size:13px;margin-left:20px;color:#f60;display:none;}
@@ -567,7 +567,7 @@ text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;heig
 /**上传图片组件 begin**/
 #UpImg{position:absolute;z-index:120;width:680px;background-color:#fff;border:1px solid #E0E0E0;left:0px;top:42px;padding:30px;display:none;}
 #UpImg .upimgtab{width:400px;min-height:252px;border:1px solid #E4E4E4; background-color:#f8f8f8;cursor:pointer;text-align:center;vertical-align:middle;overflow:hidden;z-index:99;float:left;position:relative;}
-#UpImg .upimgtab img{max-width:400px;border-collapse:collapse;}
+#UpImg .upimgtab img{max-width:400px;min-width:252px;min-height:252px;border-collapse:collapse;}
 #UpImg #SmallImgDiv{width:252px;height:252px;float:right;overflow:hidden;position:relative;border:1px solid #E4E4E4; background-color:#f8f8f8;}
 #UpImg #SmallImgDiv div{overflow:hidden;display:block;margin:0px auto;position:relative;}
 #UpImg #SmallImgDiv img{position:relative;}
@@ -577,6 +577,13 @@ text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;heig
 #UpImg #CutArea{width:252px;height:252px;position:absolute;overflow:hidden;z-index:21;cursor: move;}
 #UpImg #CutBG1, #UpImg #CutBG2, #UpImg #CutBG3, #UpImg #CutBG4{position:absolute;overflow:hidden;display:block;z-index:21;filter:alpha(Opacity=50);Opacity:0.5;background-color:#000;}
 #UpImg #CutBG1{left:0px;}
+
+#UpImg #CutArea  div#CABottom{position:absolute;left:0px;top:248px;height:4px;width:100%;cursor:n-resize;}
+#UpImg #CutArea  div#CARight{position:absolute;left:248px;top:0px;height:100%;width:4px;cursor:e-resize;}
+#UpImg #CutArea  div.cutarealine1{position:absolute;left:0px;top:0px;height:100%;background:url(/newbackstage/images/Jcrop.gif) left top repeat;width:1px;}
+#UpImg #CutArea  div.cutarealine2{position:absolute;left:0px;top:0px;height:1px;background:url(/newbackstage/images/Jcrop.gif) left top repeat;width:100%;}
+#UpImg #CutArea  div.cutarealine3{background:url(/newbackstage/images/Jcrop.gif) left top repeat;position:absolute;right:0px;top:0px;height:100%;width:1px;}
+#UpImg #CutArea  div.cutarealine4{background:url(/newbackstage/images/Jcrop.gif) left top repeat;position:absolute;left:0px;bottom:0px;height:1px;width:100%;}
 /**上传图片组件 over**/
 
 /**程序调试用 begin**/
