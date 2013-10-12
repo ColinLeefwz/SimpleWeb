@@ -1,10 +1,11 @@
 // -----------
 var dface_var={}
-var da;
+
 function dface_init(sid, uid){
-    dface_var.sid = sid;
-    dface_var.uid = uid;
-    dface_var.gid = 1
+alert(sid)
+ dface_var.sid = sid;
+ dface_var.uid = uid;
+ dface_var.gid = 1;
 }
 
 function close(){
@@ -2344,9 +2345,9 @@ function Control() {
         $.get('/game/new_score', {
             game: dface_var
         } , function(data){
-            var h = "你的得分: " + l + "</br>";
-            for(var di=0; di < 5; di++ ){
-                h += "第"+(di+1)+'名 ' + data[di].uname + " 得分: "+ data[di].score + "</br>"
+            var h = "你的得分: " + l + "<br/>";
+            for(var di=0; di < data.length; di++ ){
+                h += "第"+(di+1)+'名 ' + data[di].uname + " 得分: "+ data[di].score + "<br/>"
             }
             UI.gameOver();
             g("winner").style.display =  "none";
