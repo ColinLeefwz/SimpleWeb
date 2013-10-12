@@ -2338,18 +2338,16 @@ function Control() {
     b();
     this.gameOver = function (f) {
         var l=  dface_var.score = Math.floor(Game.score);
+        // Game.gameOver(); 必须发在ajax前面， 否则ajax会重复请求。
+        Game.gameOver();
         
         $.get('/game/new_score', {
             game: dface_var
         } , function(data){
-            da = data
-            Game.gameOver();
             var h = "你的得分: " + l + "</br>";
-
             for(var di=0; di < 5; di++ ){
-                h += "第"+(di+1)+'名 ' + da[di].uname + " 得分: "+ da[di].score + "</br>"
+                h += "第"+(di+1)+'名 ' + data[di].uname + " 得分: "+ data[di].score + "</br>"
             }
-
             UI.gameOver();
             g("winner").style.display =  "none";
             g("newgame").style.display = "block";
