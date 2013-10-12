@@ -1,62 +1,41 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-	<style type="text/css">
-	<!--
-		.box{width:800px;margin:0px auto;position:relative;}
-		#UploadButton{width:70px;height:22px;}
-		#UploadPic{width:300px;}
-		.filebox{position:absolute;left:0px;top:0px;width:70px;height:22px;filter: alpha(opacity=0);opacity:0;}
-		.none{display:none;}
-	-->
-	</style>
-  </head>
-  <body>
-  <div class="box">
-	<form enctype="multipart/form-data" method="post">
-		<input type="button" value="上传图片" id="UploadButton" onClick="ImageUpload('UploadFile')"/>
-		<input id="UploadFile" type="file" onClick="ImageUpload('UploadFile')"/><!--在火狐、谷歌浏览器中，只需要在UploadButton元素上写上onClick="ImageUpload('UploadFile')"就行，为了兼容Opera、IE才在这里加上onClick="ImageUpload('UploadFile')"-->
-		<div id="UploadBox">
-				<img id="UploadPic" src="images/sign4.jpg">
-		</div>
-	</form>
-  </div>
-
-<script>
-var ua=navigator.userAgent.toLowerCase();//将浏览器类型字符串转换为小写,以方便下面的if条件判断。
-if(/msie/i.test(ua)||/opera/i.test(ua)){//Opera 浏览器，file上传框架必须显示（可以全透明）才能执行ImageUpload()函数。而IE浏览器，必须鼠标真正点击到file上传框架才能将图片上传到服务器。
-	document.getElementById("UploadFile").className="filebox";
-}else{
-	document.getElementById("UploadFile").className="none";
-}
-
-function ImageUpload(target){
-	var obj=document.getElementById(target);
-	var pic=document.getElementById("UploadPic");
-
-	obj.click();//打开上传对话框
-	obj.onchange=function(){
-		if(/msie/i.test(ua)){//IE浏览器可以直接取值
-			//pic.src=obj.value;//经测试IE用此种写法在服务器可能会有问题。
-			//因此IE在服务器上运行时一般采用如下方法：
-			obj.select();
-			var path=document.selection.createRange().text;
-			pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
-			pic.src="images/clear.gif";
-			//alert(path);
-		}else{//火狐、谷歌、Opera、需要通过生成FileReader()来专门实现图片显示
-			var reader = new FileReader();
-			reader.readAsDataURL(obj.files[0]);
-			reader.onload = function(e){
-				pic.src=this.result; 
-			}
-		}
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.pack.js"></script>
+<script language="javascript"> 
+ $(function(){
+	var gg = document.getElementById("img1");
+	var ei = document.getElementById("large");
+	gg.onmousemove = function(event){
+		event = event || window.event;
+		ei.style.display = "block";
+		ei.innerHTML = '<img style="border:1px solid gray;" src="' + this.src + '" />';
+		ei.style.top  = document.body.scrollTop + event.clientY + 12 + "px";
+		ei.style.left = document.body.scrollLeft + event.clientX + 12 + "px";
 	}
-}
+	gg.onmouseout = function(){
+		ei.innerHTML = "";
+		ei.style.display = "none";
+	}	
+	$("#f1").change(function(){
+		$("#img1").attr("src","file:///"+$("#f1").val());
+	})
+ });
 </script>
-  
-  </body>
+<style type="text/css"> 
+	#large{position:absolute;display:none;z-index:999;}
+</style>
+</head>
+ 
+<body>
+<form name="form1" id="form1">
+<div id="demo">
+<input id="f1" name="f1" type="file" />
+<img id="img1">
+</div>
+<div id="large"></div>
+</form>
+</body>
 </html>
+
+
