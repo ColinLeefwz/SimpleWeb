@@ -22,5 +22,24 @@ class Game
   def user
     User.find_by_id(self.uid)
   end
+  
+  def save_redis
+    self.add_redis
+    self.save
+  end
+  
+  def self.init_redis
+    Game.all.each do |g|
+      g.add_redis
+    end
+  end
+  
+  def redis_key
+    "GAME#{self.gid}-#{self.sid}"
+  end
+  
+  def add_redis
+    $redis.zadd(redis_key,score,self.uid) if $redis.zscore(redis_key,self.uid)< score
+  end
    
 end

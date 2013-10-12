@@ -2,11 +2,9 @@ class GameController < ApplicationController
   
   def new_score
     @game = Game.new(params[:game])
-    if @game.save
-     games =  Game.where({gid: @game.gid, sid: @game.sid}).sort({score: -1}).limit(5)
-     data = games.map{|m|  {uid: m.uid, uname: m.user_name, score: m.score }}
-
-
+    if @game.save_redis
+     games = $redis.zrevrange(@game.redis_key,0,5,withscores:true)
+     data = games.map{|x| {uid: x[0], uname: User.find_by_id(x[0]).name, score: x[1] } }
     else
       data={}
     end
