@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130921053544) do
+ActiveRecord::Schema.define(version: 20131011040538) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -46,6 +46,12 @@ ActiveRecord::Schema.define(version: 20130921053544) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
     t.string   "data_content_type"
@@ -70,6 +76,25 @@ ActiveRecord::Schema.define(version: 20130921053544) do
     t.datetime "updated_at"
   end
 
+  create_table "expert_profiles", force: true do |t|
+    t.string   "title"
+    t.string   "company"
+    t.string   "location"
+    t.text     "expertise"
+    t.text     "favorite_quote"
+    t.text     "career"
+    t.text     "education"
+    t.text     "web_site"
+    t.text     "article_reports"
+    t.text     "additional"
+    t.text     "testimonials"
+    t.integer  "expert_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "expert_profiles", ["expert_id"], name: "index_expert_profiles_on_expert_id", using: :btree
+
   create_table "experts", force: true do |t|
     t.string   "name"
     t.string   "title"
@@ -93,6 +118,20 @@ ActiveRecord::Schema.define(version: 20130921053544) do
     t.datetime "avatar_updated_at"
   end
 
+  create_table "orders", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "session_id"
+    t.string   "payment_id"
+    t.string   "state"
+    t.string   "amount"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["session_id"], name: "index_orders_on_session_id", using: :btree
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
   create_table "propose_topics", force: true do |t|
     t.string   "Name"
     t.string   "Location"
@@ -115,7 +154,6 @@ ActiveRecord::Schema.define(version: 20130921053544) do
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
-    t.string   "category"
     t.string   "video_file_name"
     t.string   "video_content_type"
     t.integer  "video_file_size"
@@ -124,9 +162,17 @@ ActiveRecord::Schema.define(version: 20130921053544) do
     t.decimal  "price"
     t.string   "language"
     t.boolean  "always_show",        default: false
+    t.datetime "start_date"
+    t.string   "categories",         default: [],    array: true
   end
 
+  add_index "sessions", ["categories"], name: "index_sessions_on_categories", using: :gin
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
+
+  create_table "sessions_users", force: true do |t|
+    t.integer "user_id"
+    t.integer "session_id"
+  end
 
   create_table "static_pages", force: true do |t|
     t.string   "title"
@@ -141,7 +187,7 @@ ActiveRecord::Schema.define(version: 20130921053544) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "encrypted_password",     default: ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -150,11 +196,32 @@ ActiveRecord::Schema.define(version: 20130921053544) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
+    t.string   "type"
+    t.string   "name"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer  "invitation_limit"
+    t.integer  "invited_by_id"
+    t.string   "invited_by_type"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
+  add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
