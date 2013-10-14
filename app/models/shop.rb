@@ -311,6 +311,7 @@ class Shop
       return if sex && u.gender!=sex
       return if u.nil?
       return if u.forbidden?
+      return if u.invisible.to_i>=2
       hash = u.safe_output(session_uid)
       ret << hash
     end
