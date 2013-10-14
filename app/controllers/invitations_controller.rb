@@ -21,9 +21,6 @@ class InvitationsController < Devise::InvitationsController
    expert.create_profile
    super
  end
-
- def sent
- end
  
  def is_admin
    if !current_user.is_a?Member
