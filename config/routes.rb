@@ -23,7 +23,8 @@ Prodygia::Application.routes.draw do
     get :cancel
   end
 
-  root to: "welcome#index"
+  # root to: "welcome#index"
+  root to: "experts#dashboard"
 
   get "/:page", to: 'static_pages#static'
 
