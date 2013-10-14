@@ -314,10 +314,10 @@ class Shop
       hash = u.safe_output(session_uid)
       ret << hash
     end
-    # users[0,3].each do |uid,cat|
-    #   output.call(uid,nil)
-    # end
-    # return ret if users.size==3
+    users[0,3].each do |uid,cat|
+      output.call(uid,nil)
+    end
+    return ret if users.size==3
     users[3..-1].each do |uid,cat|
       output.call(uid, 2)
       return ret if ret.size>=6
