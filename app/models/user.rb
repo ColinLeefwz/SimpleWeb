@@ -596,6 +596,7 @@ class User
     if ua && ua.list
       ua.list.each do |m|
         if m.select{|k,v| k=="number" && $redis.get("P:#{v}")}
+          v = m.select{|k,v| k=="number"}.map{|k,v| v}[0]
           uid = $redis.get("P:#{v}")
           user = User.find_by_id(uid)
           adds << user unless user.nil?
