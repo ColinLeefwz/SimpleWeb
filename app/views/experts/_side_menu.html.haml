@@ -1,0 +1,13 @@
+.side-menu.span4
+  .expert-info
+    .expert-avatar
+      = image_tag(@expert.avatar.url)
+    .expert-text-info
+      %h4= @expert.name
+      %p= @expert.expert_profile.title
+      %p= @expert.expert_profile.company
+      %p= link_to 'edit profile'
+    .clear-fix
+  .toolkit
+    %h4 Expert Toolkit
+    .item

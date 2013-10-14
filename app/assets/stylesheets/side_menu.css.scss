@@ -1,0 +1,29 @@
+$shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
+.side-menu{
+  -webkit-box-shadow: $shadow_param;
+  box-shadow: $shadow_param; 
+  background: #ffffff;
+  .expert-info{
+    border-bottom: 2px solid #575757;
+    .expert-avatar{
+      padding: 15px;
+      float: left;
+      img{
+        width: 100px;
+        height: 100px;
+        border-radius: 52px; 
+      }
+    }
+    .expert-text-info{
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+  }
+  .toolkit{
+    padding-left: 15px;
+    background: #ffffff;
+  }
+}
+.clear-fix{
+  clear: both;
+}
