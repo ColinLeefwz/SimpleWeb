@@ -311,13 +311,14 @@ class Shop
       return if sex && u.gender!=sex
       return if u.nil?
       return if u.forbidden?
+      return if u.invisible.to_i>=2
       hash = u.safe_output(session_uid)
       ret << hash
     end
-    # users[0,3].each do |uid,cat|
-    #   output.call(uid,nil)
-    # end
-    # return ret if users.size==3
+    users[0,3].each do |uid,cat|
+      output.call(uid,nil)
+    end
+    return ret if users.size==3
     users[3..-1].each do |uid,cat|
       output.call(uid, 2)
       return ret if ret.size>=6
