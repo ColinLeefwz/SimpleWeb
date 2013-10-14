@@ -1,7 +1,6 @@
 - sessions.each do |session|
-  - box_class = "item #{session.category.downcase} #{session.content_type.downcase}"
-  - box_class = box_class + " always_show" if session.always_show
-  %div{class: "#{box_class}"}
+  %div{class: get_box_class(session)}
+
     .box-header
       .portrait
         = image_tag(session.expert.avatar.url)
@@ -9,7 +8,7 @@
           = session.expert.name
       .content-type
         = image_tag(get_image_tag(session))
-        %p= session.category
+        %p= session.categories.join(",")
     .title
       = link_to "#{session.title}", session_path(session)
     -if (session.is_a?VideoSession) || (session.is_a?Announcement) && (!session.video.url.eql?"/videos/original/missing.png")
@@ -31,4 +30,4 @@
       - text = (session.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
       %p.learn-more= link_to text, session_path(session)
       .social-share-icons
-        = render 'shared/social_share'
+        = render 'shared/social_share', session_title: session.title, session_url: session_url(session)

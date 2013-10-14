@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+
 	before_filter :configure_permitted_parameters, if: :devise_controller?
 
 	after_action :store_location

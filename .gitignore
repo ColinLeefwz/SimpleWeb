@@ -21,3 +21,6 @@
 /config/database.yml
 /public/**/*
 *.swp
+
+# Ignore application configuration
+/config/application.yml
