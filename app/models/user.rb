@@ -593,7 +593,7 @@ class User
   def address_list_friends
     adds = []
     ua = UserAddr.find_or_new(self.id)
-    if ua && ua.list.size > 0
+    if ua && ua.list
       ua.list.each do |m|
         if m.select{|k,v| k=="number" && $redis.get("P:#{v}")}
           uid = $redis.get("P:#{v}")
