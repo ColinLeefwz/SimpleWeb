@@ -2,7 +2,6 @@
 var dface_var={}
 
 function dface_init(sid, uid){
-alert(sid)
  dface_var.sid = sid;
  dface_var.uid = uid;
  dface_var.gid = 1;
@@ -1638,7 +1637,6 @@ function () {
         Game.paused = true;
         document.removeEventListener("keyup", t, false);
         document.removeEventListener("keydown", z, false);
-        g("playing").removeEventListener("click", touchRotate, false);
         document.removeEventListener("touchmove", touchMove, false);
         document.removeEventListener("touchstart", touchBegin, false);
         clearInterval(s);
@@ -1651,7 +1649,6 @@ function () {
         Game.paused = false;
         document.addEventListener("keyup", t, false);
         document.addEventListener("keydown", z, false);
-        g("playing").addEventListener("click", touchRotate, false);
         document.addEventListener("touchmove", touchMove, false);
         document.addEventListener("touchstart", touchBegin, false);
         u.left = false;
@@ -1687,6 +1684,7 @@ function () {
     }
     function touchRotate(i){
         Game.rotate(+1);
+		alert(i);
         i.preventDefault();
     }
     function touchBegin(i){
@@ -1701,16 +1699,22 @@ function () {
             if(Math.abs(curX)>15 || Math.abs(curY)>15){
                 if(Math.abs(curY)>5+Math.abs(curX)){
                     if(curY>0){
+						//alert(curY+":"+event.touches[0].pageY);
                         u.down = true;
                         down_flag = true;
                         B();
-                    }
-                    else Game.rotate(+1);
+						if(event.touches[0].pageY>90) B();
+						if(event.touches[0].pageY>110) B();
+						if(event.touches[0].pageY>120 && curY>40) B();
+						
+                    }else{
+                    	if(curY<-30) Game.rotate(+1);
+                    } 
                 }else if(Math.abs(curX)>5+Math.abs(curY)){
                     if(curX>0) B(null, "right");
                     else B(null, "left");
                 }else{
-                    alert("cur:"+curX+":"+curY);
+                    //alert("cur:"+curX+":"+curY);
                 }
                 u.startX = event.touches[0].pageX;
                 u.startY = event.touches[0].pageY;
