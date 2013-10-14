@@ -47,4 +47,9 @@ class Shop3DataController < ApplicationController
     end
   end
 
+  def gender_ago_returning_customer
+    @ago = Checkin.where({sid:session[:shop_id]}).map{|m| m.user.birthday if m.user.birthday}.group_by{|g| g}.map{|k,v| [k,v.count]}
+    @gender = Checkin.where({sid:session[:shop_id]}).map{|m| m.user.gender}.group_by{|g| g}.map{|k,v| [k,v.count]}
+    render :json => {'gender' => @gender, 'ago' => @ago}
+  end
 end
