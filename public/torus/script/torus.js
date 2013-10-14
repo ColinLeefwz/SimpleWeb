@@ -1639,6 +1639,8 @@ function () {
         document.removeEventListener("keydown", z, false);
         document.removeEventListener("touchmove", touchMove, false);
         document.removeEventListener("touchstart", touchBegin, false);
+        document.removeEventListener("touchend", touchEnd, false);
+		
         clearInterval(s);
         s = 0
     };
@@ -1651,6 +1653,8 @@ function () {
         document.addEventListener("keydown", z, false);
         document.addEventListener("touchmove", touchMove, false);
         document.addEventListener("touchstart", touchBegin, false);
+        document.addEventListener("touchend", touchEnd, false);
+		
         u.left = false;
         u.right = false;
         u.down = false;
@@ -1692,6 +1696,19 @@ function () {
         u.startY = event.touches[0].pageY;
         i.preventDefault();
     }
+    function touchEnd(i){
+		try{
+            curX = event.changedTouches[0].pageX - u.startX;
+            curY = event.changedTouches[0].pageY - u.startY;
+			//alert("cur:"+curX+":"+curY);
+			if(Math.abs(curY)>5+Math.abs(curX)){
+				if(curY<-30) Game.rotate(+1);
+			}
+		}catch(e){
+			//alert(e);
+		}
+        i.preventDefault();
+    }
     function touchMove(i){
         try{
             curX = event.touches[0].pageX - u.startX;
@@ -1706,22 +1723,21 @@ function () {
 						if(event.touches[0].pageY>90) B();
 						if(event.touches[0].pageY>110) B();
 						if(event.touches[0].pageY>120 && curY>40) B();
-						
+		                u.startX = event.touches[0].pageX;
+		                u.startY = event.touches[0].pageY;
                     }else{
-                    	if(curY<-30) Game.rotate(+1);
+                    	//if(curY<-30) Game.rotate(+1);
                     } 
                 }else if(Math.abs(curX)>5+Math.abs(curY)){
                     if(curX>0) B(null, "right");
                     else B(null, "left");
+	                u.startX = event.touches[0].pageX;
+	                u.startY = event.touches[0].pageY;
                 }else{
                     //alert("cur:"+curX+":"+curY);
                 }
-                u.startX = event.touches[0].pageX;
-                u.startY = event.touches[0].pageY;
-                u.down = false;
-            }else{
-                u.down = false;
             }
+            u.down = false;
             i.preventDefault();
         }catch(e){
             alert(e)
