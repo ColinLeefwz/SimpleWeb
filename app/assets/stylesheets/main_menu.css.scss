@@ -5,9 +5,10 @@
   ul{
     margin-bottom: 0em;
   }
-
   width: 52%;
-  .cards{
+
+
+  .cards-header{
     width: 100%;
 
     .card{
@@ -27,28 +28,31 @@
     }
   }
 
-  .items{
-    width: 100%;
-    background-color: white;
-    border-bottom: 1px solid #ddd;
-    .item{
-      padding-top: 1em;
-      .item-title{
-        font-family: Latobold;
-        font-size: 19px;
-        color: #575757;
-        padding-left: 1em;
-      }
-      .item-body{
-        .cover, .statistic, .something{
-          display: inline-block;
-          vertical-align: middle;
+
+  .cards-body{
+    .session-items{
+      width: 100%;
+      background-color: white;
+      border-bottom: 1px solid #ddd;
+      .item{
+        padding-top: 1em;
+        .item-title{
+          font-family: Latobold;
+          font-size: 19px;
+          color: #575757;
           padding-left: 1em;
         }
+        .item-body{
+          .cover, .statistic, .something{
+            display: inline-block;
+            vertical-align: middle;
+            padding-left: 1em;
+          }
 
-        .social-share-icons{
-          width: 130px;
-          margin: 0 auto;
+          .social-share-icons{
+            width: 130px;
+            margin: 0 auto;
+          }
         }
       }
     }
