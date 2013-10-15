@@ -19,17 +19,18 @@ class ApplicationController < ActionController::Base
 			cookies[:previous_path] = request.original_url
 		end
 
-		# if (previous_path != "/users/sign_in" && previous_path != "/users/sign_up" && previous_path != "/users/password" && !request.xhr?)
-		# 	cookies[:previous_path] = request.original_url
-		# elsif(previous_path == "/admin/login")
-		# 	cookies[:previous_path] = request.base_url + "/admin"
-		# end
-
 	end
 
 	def after_sign_in_path_for(resource)
 		cookies[:previous_path] || root_path
 	end
 
+  protected
+  ## Override devise-invitable before_filter
+  def authenticate_inviter!
+    unless current_admin_user.nil?
+      current_admin_user
+    end
+  end
 end
 
