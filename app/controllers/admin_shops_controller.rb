@@ -39,7 +39,7 @@ class AdminShopsController < ApplicationController
     when '1'
       hash.merge!({del:{'$gt' => 0}})
     end
-    hash.merge!({_id: params[:id]}) unless params[:id].blank?
+    hash.merge!({_id: params[:id].to_i}) unless params[:id].blank?
     @shops = shop_paginate(params[:page], hash, horder,20 )
   end
 
