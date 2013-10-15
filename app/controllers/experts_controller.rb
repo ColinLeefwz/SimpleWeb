@@ -1,6 +1,9 @@
 class ExpertsController < ApplicationController
   before_action :set_expert, only: [:show, :edit, :destroy, :update]
 
+  def dashboard
+    @expert = Expert.where(id: 1).first
+  end
 
   private
     def set_expert
