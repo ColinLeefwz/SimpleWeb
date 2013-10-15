@@ -35,7 +35,7 @@
       <tr class="tr_<%= ss.id %> " style="<%= "background-color: #eec;" if  i==0 %>">
         <td><%= "第#{index+1}组" if i == 0 %></td>
         <td><%= ss.city %></td>
-        <td><%=  fd["id"] %></td>
+        <td><%=link_to  fd["id"], "/admin_shops/show?id=#{fd["id"]}" , :target => "_#{fd["id"]}"%></td>
         <td><%=  fd["name"] %></td>
         <td><%=  fd['dis'] %></td>
         <td><%=  fd['type'] %></td>
