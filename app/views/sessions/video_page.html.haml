@@ -15,15 +15,19 @@
           .video-page-expert-portrait
             .video-page-image-border
               = image_tag(@session.expert.avatar.url)
-            %p= @session.expert.profile.company
+            %p= @session.expert.expert_profile.company
           .video-page-expert-name-title
             .video-page-expert-name-value
               = @session.expert.name
-            %p= @session.expert.profile.title
+            %p= @session.expert.expert_profile.title
         .video-page-category-info
           .video-page-category-info-title
             Category
-          %p= @session.category
+          - @session.categories.each do |e|
+            - if e == @session.categories[-1]
+              %p #{e}
+            - else
+              %p #{e},
         .clear-fix
       .video-page-below-box
         .video-page-location-info

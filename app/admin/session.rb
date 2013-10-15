@@ -15,7 +15,7 @@ ActiveAdmin.register Session do
     end
     column :status
     column :content_type
-    column :category
+    column :categories
     column :location
     column :price, sortable: :price do |session|
       number_to_currency(session.price, unit: "USD: ")
@@ -33,11 +33,11 @@ ActiveAdmin.register Session do
       f.input :status
       f.input :content_type, as: :select, collection: Session::CONTENT_TYPE
       f.input :description, :input_html => { :class => 'ckeditor' }
-      f.input :category, as: :select, collection: Session::CATEGORY
+      f.input :categories, as: :check_boxes, collection: Category.select(:name).map(&:name)
       f.input :video
       f.input :location
       f.input :price
-			f.input :start_date
+      f.input :start_date
       f.actions
     end
   end
@@ -60,19 +60,19 @@ ActiveAdmin.register Session do
       row :description do
         session.description.html_safe
       end
-      row :category
+      row :categories
       row :video do
         link_to "source", session.video.url
       end
       row :location
       row :price
-			row :start_date
+      row :start_date
     end
   end
 
   controller do
     def permitted_params
-      params.permit session: [:title, :expert_id, :always_show, :created_date, :description, :cover, :status, :content_type, :category, :location, :price, :video, :start_date]
+      params.permit session: [:title, :expert_id, :always_show, :created_date, :description, :cover, :status, :content_type, {categories:[]}, :location, :price, :video, :start_date]
     end
   end
 
