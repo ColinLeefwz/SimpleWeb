@@ -9,7 +9,7 @@
   .video-page-info-box
     .video-page-image.video-page-image-border
       = image_tag(@session.cover.url)
-    .video-page-info
+    .video-page-info.video-page-info-width
       .video-page-up-box
         .video-page-expert-info
           .video-page-expert-portrait
@@ -62,6 +62,7 @@
               %p= link_to "Enroll Now!", enroll_session_path(@session), class: 'enroll-text'
           %p.outline-font= link_to 'Tell A Friend'
         .clear-fix
+    .clear-fix
   -if !@session.video.url.eql?"/videos/original/missing.png"
     .video-page-video-frame
       = video_tag @session.video.url, controls: 'controls'
