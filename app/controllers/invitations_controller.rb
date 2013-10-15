@@ -1,8 +1,8 @@
 class InvitationsController < Devise::InvitationsController
-  
+
  #before_filter :is_admin
- 
- def create 
+
+ def create
    self.resource = resource_class.invite!(invite_params, current_inviter) do |u|
      u.skip_invitation = true
    end
@@ -17,7 +17,7 @@ class InvitationsController < Devise::InvitationsController
    end
  end
 
- def edit 
+ def edit
    user = User.where(invitation_token: params[:invitation_token]).first
    user.type = 'Expert'
    user.save
@@ -28,7 +28,7 @@ class InvitationsController < Devise::InvitationsController
  end
 
  def generated
- end 
+ end
 
  def is_admin
    if !current_user.is_a?Member
