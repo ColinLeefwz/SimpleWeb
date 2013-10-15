@@ -18,6 +18,11 @@ group :development do
   gem 'osmlib-base'
   gem "wirble"
   gem 'xmpp4r'
+  gem "selenium-webdriver"
+end
+
+group :test do
+  gem "selenium-webdriver"
 end
 
 #gem 'rack', '~> 1.4'
