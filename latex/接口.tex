@@ -565,12 +565,20 @@ GET & \multicolumn{3}{|c|}{/shop/user6s} \\
  \  参数  & 类型 & 必填 &  说明  \\
 \hline
  id  & 整数 & 必须 & 商家的ID\\
+ \hline
+ total  & 整数 & 可选 & 是否返回商家总人数，新客户端都要设置total=1\\
 \hline
 \end{tabular}
    \end{center}
 \end{table}
 只有当商家用户数大于3时，这个接口才返回数据；否则返回空数组。
 客户端自行控制是显示5个还是6个用户头像。
+
+当total=1时，返回值的格式为：
+\begin{verbatim}
+{total:总人数, users:[用户信息,...]}
+\end{verbatim}
+
 
 \subsection{根据商家ID获得商家的聊天室历史}
 商家的图片来自个人在聊天室的发图。\label{photowall}
@@ -593,17 +601,17 @@ GET & \multicolumn{3}{|c|}{/shop/history} \\
    \end{center}
 \end{table}
 
-skip的大小应该是聊天室当前最新显示的消息的总数。这样传递的skip获得的历史消息才不会和聊天室当前的消息重复。
+skip的大小应该是聊天室当前最新显示的消息的总数(但是不包括评论通知消息、问答消息)。这样传递的skip获得的历史消息才不会和聊天室当前的消息重复。
 
 例子：
 
 \begin{figure}[H]
 \begin{verbatim}
-每次进聊天室，总是用下面的Xmpp接口获得最新的10条消息
+以前每次进聊天室，总是用下面的Xmpp接口获得最新的10条消息
   <x xmlns='http://jabber.org/protocol/muc'>
     <history maxstanzas='10'/>
   </x>
-  当要加载超过10条的消息时，才调用本接口。历史消息接口的数据从数据库中加在，而通过xmpp的history stanza加载的最新10条消息是从内存中加载的。
+现在全部用本接口获得历史消息。
   
 [["5160f00fc90d8be23000007c", "茉莉", 1367575501, "q9d8G-8"], 
 ["5160f00fc90d8be23000007c", "哦你家", 1367575499, "q9d8G-7"]]

@@ -113,7 +113,12 @@ class ShopController < ApplicationController
   def user6s
     shop = Shop.find_by_id(params[:id])
     users = shop.view_user6s(session[:user_id])
-    render :json => users.to_json
+    if params[:total].to_i==1
+      hash = {total:shop.total_user, users:users}
+      render :json => hash.to_json
+    else
+      render :json => users.to_json
+    end
   end
   
   def basic
