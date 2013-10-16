@@ -3,8 +3,8 @@
   .item-title
     = session.title
   .item-body
-    .cover
-      = image_tag(session.cover.url)
+    .cover-wrapper
+      = image_tag(session.cover.url, class: "cover")
       .social-share-icons
         = render "shared/social_share", session_url: session_url(session), session_title: session.title
     .statistic

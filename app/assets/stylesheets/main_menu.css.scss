@@ -41,15 +41,20 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
           padding-left: 1em;
         }
         .item-body{
-          .cover, .statistic, .something{
+          .cover-wrapper, .statistic, .something{
             display: inline-block;
             vertical-align: middle;
             padding-left: 1em;
           }
 
+          .cover-wrapper{
+            .cover{
+              width: 160px;
+            }
+          }
+
           .social-share-icons{
             width: 130px;
-            margin: 0 auto;
           }
         }
       }
