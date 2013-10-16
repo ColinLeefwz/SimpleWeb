@@ -18,12 +18,10 @@ module PhoneUtil
   
   def phone_normalize(phone)
     return nil if phone.nil?
-    s = phone.strip
+    s = phone.strip.gsub(/[-+]/,"")
     if s[0,2]=='86'
       s=s[2,s.length-2]
     elsif s[0,3]=='086'
-      s=s[3,s.length-3]
-    elsif s[0,3]=='+86'
       s=s[3,s.length-3]
     end
     s
