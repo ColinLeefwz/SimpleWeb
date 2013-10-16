@@ -22,7 +22,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    cookies[:previous_path] || root_path
+    if current_user.is_a? AdminUser
+      admin_dashboard_path
+    else
+      cookies[:previous_path] || root_path
+    end
   end
 
   ## ActiveAdmin user to User table
