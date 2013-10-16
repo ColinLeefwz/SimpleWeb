@@ -34,28 +34,44 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       border-bottom: 1px solid #ddd;
       .item{
         padding-top: 1em;
+        border-bottom: 1px solid #ddd;
+        
         .item-title{
           font-family: Latobold;
           font-size: 19px;
           color: #575757;
           padding-left: 1em;
+          margin-bottom: 1em;
         }
+
         .item-body{
+          margin-bottom: 1em;
+
           .cover-wrapper, .statistic, .something{
             display: inline-block;
             vertical-align: middle;
-            padding-left: 1em;
           }
 
           .cover-wrapper{
+            margin-left: 1em;
             .cover{
               width: 160px;
             }
+
+            .social-share-icons{
+              margin-top: 0.5em;
+              width: 130px;
+              img{
+                width: 20px;
+                height: 20px;
+              }
+            }
           }
 
-          .social-share-icons{
-            width: 130px;
-          }
+
+         .statistic{
+           margin-left: 3em; 
+         }
         }
       }
     }
