@@ -142,7 +142,7 @@ module SearchScore
     total = arr.inject(0) {|sum, n| sum + n[1] }
     wbscore = wifi_base_score(total)
     score.each_with_index do |xx,i|
-      a2 = arr.find {|b| xx[0].to_i==b[0].to_i}
+      a2 = arr.find {|b| xx[0].id.to_i==b[0].to_i}
       xx[2] -= ((wbscore*a2[1])/total) if a2 && a2[1]
     end
   end
