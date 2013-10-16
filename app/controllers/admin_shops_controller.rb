@@ -6,7 +6,7 @@ class AdminShopsController < ApplicationController
 
   def index
 
-    hash,lo = {},nil
+    hash,lo, pcount = {},nil,20
     lo = [params[:lat].to_f , params[:lng].to_f] if !params[:lat].blank? && !params[:lng].blank?
     hash.merge!({ lo: { "$within" => { "$center" => [lo, 0.1]} }}) if lo
 
@@ -39,8 +39,11 @@ class AdminShopsController < ApplicationController
     when '1'
       hash.merge!({del:{'$gt' => 0}})
     end
+
+    pcount = params[:pcount].to_i unless params[:pcount].blank?
+
     hash.merge!({_id: params[:id].to_i}) unless params[:id].blank?
-    @shops = shop_paginate(params[:page], hash, horder,20 )
+    @shops = shop_paginate(params[:page], hash, horder,pcount )
   end
 
   def new

@@ -16,6 +16,7 @@
     排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"]],params[:order])  %>
     <br/>
     分类： <%= select_tag :type, options_for_select(import_type, params[:type].to_s) %>
+    每页显示 <%= select_tag :pcount, options_for_select([10,20, 50, 100, 200], (params[:pcount] && params[:pcount].to_i) || 20) %>
 
     <%= submit_tag "查 找" %>
 
@@ -38,7 +39,7 @@
     <th>分店</th>
     <th>合作商家</th>
     <th>密码</th>
-    
+
     <th></th>
     <th></th>
     <th></th>
@@ -64,7 +65,7 @@
       <td><%= shop.password.blank? ?  link_to('开通', "/admin_shops/set_password?id=#{shop.id}") : '' %></td>
       <td><%= link_to('加权', "/admin_shops/upgrade_v?id=#{shop.id}") %></td>
       <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
-      
+
       <td>
         <% if shop.lo %>
           <a onclick="ajaxunsetlob($(this),<%= shop._id %>, false, '<%= shop.name %>')" >取消坐标</a>
