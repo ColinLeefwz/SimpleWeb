@@ -199,10 +199,10 @@ class PhoneController < ApplicationController
     ua.list = list
     ua.save!
     session_user_no_cache.set(:pmatch, true)
-    # begin
-    #   Resque.enqueue(PhoneFriend, session_user.id)
-    # rescue
-    # end
+    begin
+      Resque.enqueue(PhoneFriend, session_user.id)
+    rescue
+    end
     render :json => {imported: ua.list.size}.to_json
   end
 
