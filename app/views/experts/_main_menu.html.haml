@@ -12,22 +12,8 @@
 
   .cards-body.tab-content
     .session-items.tab-pane.active#tab1
-      .item
-        .item-title
-          = "Re-balancing body-mind energy"
-        .item-body
-          .cover
-            = image_tag("default.png")
-            .social-share-icons
-              = render "shared/social_share", session_url: "some url", session_title: "session title"
-          .statistic
-            50 people viewed this session <br>
-            4 members signed up <br>
-            5 comments(1 new) <br>
-            <br>
-            $ 62.75 your earnings so far 
-          .something
-            // TODO: placeholder
+      - @sessions.each do |session|
+        = render "sessions/session", session: session
 
     .placeholder2.tab-pane#tab2
       some content
