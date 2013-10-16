@@ -4,7 +4,7 @@ class AdminShopFaqsController < ApplicationController
   layout "admin"
 
   def index
-    hash, sort={},{:_id => -1}
+    hash, sort={sid: {"$ne" => nil}},{:_id => -1}
     unless params[:shop].blank? && params[:city].blank?
       sids = Shop.where({name: /#{params[:shop]}/, city: params[:city]}).map { |m| m._id  }
       hash.merge!(sid: {'$in' => sids})

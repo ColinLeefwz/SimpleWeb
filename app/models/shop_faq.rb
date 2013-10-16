@@ -25,6 +25,10 @@ class ShopFaq
   mount_uploader(:img, FaqImgUploader)
   
   index({sid: 1, od:1})
+
+   with_options :prefix => true, :allow_nil => true do |option|
+     option.delegate :name, :to => :shop
+   end
   
   
   def self.img_url(id,type=nil)
