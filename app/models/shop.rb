@@ -565,7 +565,7 @@ class Shop
     begin
       response = Xmpp.get("api/gchat2?room=#{self.id.to_i}&skip=#{skip}&count=#{count}")
     rescue RestClient::ServerBrokeConnection => e
-      Xmpp.error_notify("获取#{self.name}：#{self.id}的聊天历史失败") if total_user.to_i>2
+      Xmpp.error_notify("获取#{self.name}：#{self.id}-#{skip}-#{count}的聊天历史失败") if total_user.to_i>2
       return []
     end
     JSON.parse(response)

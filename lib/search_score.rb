@@ -140,6 +140,7 @@ module SearchScore
   def bssid_score(score,bssid)
     arr = $redis.zrange("BSSID#{bssid}",0,-1,withscores:true)
     total = arr.inject(0) {|sum, n| sum + n[1] }
+    total = 300 if total>300
     wbscore = wifi_base_score(total)
     score.each_with_index do |xx,i|
       a2 = arr.find {|b| xx[0].id.to_i==b[0].to_i}

@@ -55,3 +55,5 @@ sleep 60
 sleep 60
 /mnt/.rvm/bin/ruby script/rails r  'User.check_phone_redis'
 
+sleep 60
+/mnt/.rvm/bin/ruby script/rails r  'CheckinBssidStat.dec_redis_score'

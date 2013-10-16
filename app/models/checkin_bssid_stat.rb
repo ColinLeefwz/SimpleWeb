@@ -122,6 +122,17 @@ class CheckinBssidStat
     end
     arr
   end
+  
+  #定期减少wifi在给定地点的签到次数
+  def self.dec_redis_score
+    today = Time.now
+    return nil if today.wday!=6
+    $redis.keys("BSSID*").each do |key|
+      #TODO: 使用Lua脚本完成
+      $redis.zrange(key,0,-1).each {|x| $redis.zincrby(key,-1,x)}
+      $redis.zremrangebyscore(key, -2, 0)
+    end
+  end
 
   
 end
