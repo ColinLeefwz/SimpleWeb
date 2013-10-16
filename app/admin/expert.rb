@@ -1,5 +1,8 @@
 ActiveAdmin.register Expert do
 
+  action_item only:[:index] do
+    link_to 'Invit An Expert', new_user_invitation_path
+  end
   index do
     column :name do |expert|
       link_to(expert.name, admin_expert_path(expert))
@@ -46,7 +49,6 @@ ActiveAdmin.register Expert do
     end
   end
 
-
   show do |expert|
     attributes_table do
       row :name
@@ -87,7 +89,7 @@ ActiveAdmin.register Expert do
 
   controller do
     def permitted_params
-      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, expert_profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional] ] 
+      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, expert_profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional] ]
     end
   end
 end
