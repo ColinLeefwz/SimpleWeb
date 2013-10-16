@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131009092445) do
+ActiveRecord::Schema.define(version: 20131011040538) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(version: 20131009092445) do
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -148,7 +154,6 @@ ActiveRecord::Schema.define(version: 20131009092445) do
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
-    t.string   "category"
     t.string   "video_file_name"
     t.string   "video_content_type"
     t.integer  "video_file_size"
@@ -158,8 +163,10 @@ ActiveRecord::Schema.define(version: 20131009092445) do
     t.string   "language"
     t.boolean  "always_show",        default: false
     t.datetime "start_date"
+    t.string   "categories",         default: [],    array: true
   end
 
+  add_index "sessions", ["categories"], name: "index_sessions_on_categories", using: :gin
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
 
   create_table "sessions_users", force: true do |t|

@@ -1,0 +1,35 @@
+.side-menu
+  .expert-info
+    .expert-avatar
+      = image_tag(@expert.avatar.url)
+    .expert-text-info
+      %h4= @expert.name
+      %p= @expert.expert_profile.title
+      %p= @expert.expert_profile.company
+      %p= link_to 'edit profile'
+    .clear-fix
+  .toolkit
+    %h3 Expert Toolkit
+    .resources
+      .item
+        %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Dashboard'}
+      .item
+        %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Post new content'}
+      .item
+        %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Create new session'}
+      .item
+        %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Private consultation'}
+      .item
+        %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Video library'}
+  .operations
+    .item
+      %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Calendar'}
+    .item
+      %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Testimonials'}
+    .item
+      %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Refer new experts'}
+    .item
+      %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Statistics'}
+    .item
+      %p #{image_tag('livestreaming.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Feedback'}
+

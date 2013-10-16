@@ -5,7 +5,8 @@ module SessionHelper
   end
 
   def get_box_class(session)
-    box_class = " item "+session.categories.join(" ")+" "+session.content_type.downcase
+    box_class = " item "+session.categories.join(" ")+" "
+    box_class += session.content_type if session.content_type
     box_class += " always_show" if session.always_show
     
     box_class
