@@ -18,6 +18,7 @@
 	<script src="/newbackstage/js/ImageTrans.js"></script>
 </head>
 <body>
+<div id="x" style="position:absolute;top:0px;left:0px;width:200px;z-index:200;background-color:#fff;"></div>
 	<div class="main">
 		<div class="header">
 			<div class="headercon">
@@ -60,19 +61,22 @@
 			<div class="title1"><h2 class="f18">发布优惠券</h2></div>
 			<div class="box5">签到优惠券， 图文混排格式  <a href="/newbackstage/coupon_manage.html" class="blue1 pl20 f12">选择其他优惠券模式</a></div>
 			<div id="UpImg">
-				<div class="upimgtab">
-					<span id="EM"><img id="UploadPic" src="images/btn9.jpg" onClick="ImageUpload('UpImgFile')"/></span><input type="file" id="UpImgFile" class="filebox6" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox7" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox8" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox9" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox10" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox11" onClick="ImageUpload(this)"/>
-					<div id="CutDiv">
-						<div id="CutArea">
-							<div class="cutarealine1"></div>
-							<div class="cutarealine2"></div>
-							<div id="CARight"><div class="cutarealine3"></div></div>
-							<div id="CABottom"><div class="cutarealine4"></div></div>
+				<div class="upimgplane" style="height:400px;">
+					<div class="upimgtab">
+						<span id="EM"><img id="UploadPic" src="images/btn9.jpg" onClick="ImageUpload('UpImgFile')"/></span><input type="file" id="UpImgFile" class="filebox6" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox7" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox8" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox9" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox10" onClick="ImageUpload(this)"/><input type="file" id="UpImgFile" class="filebox11" onClick="ImageUpload(this)"/>
+						<div id="CutDiv">
+							<div id="CutArea">
+								<div class="cutarealine1"></div>
+								<div class="cutarealine2"></div>
+								<div class="cutarealine3"></div>
+								<div class="cutarealine4"></div>
+								<div id="CAMove"></div>
+							</div>
+							<div id="CutBG1"></div>
+							<div id="CutBG2"></div>
+							<div id="CutBG3"></div>
+							<div id="CutBG4"></div>
 						</div>
-						<div id="CutBG1"></div>
-						<div id="CutBG2"></div>
-						<div id="CutBG3"></div>
-						<div id="CutBG4"></div>
 					</div>
 				</div>
 				<div id="SmallImgDiv">

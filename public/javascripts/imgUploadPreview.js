@@ -121,13 +121,13 @@ function imgUploadPreview3(select, divid){//商家设置
     });
 }
 
-var uploadimgtimer, emObj, sidObj;
+var uploadimgtimer, emObj, sidObj, swidth, sheight, ratio;
 $(document).ready(function(){
 	emObj=$("#EM").html()
 	sidObj=$("#SmallImgDiv").html();
 });
 function ImageUpload(target){//优惠券
-
+	ratio=1;
 	var obj , pic , sid;
 	if(target=="UpImgFile"){
 		obj=document.getElementById(target);
@@ -164,6 +164,8 @@ function ImageUpload(target){//优惠券
 					}
 					document.getElementById("EM").innerHTML="<img style='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="+path+");' id='UploadPic' src='"+path+"' onClick=\'ImageUpload(\"UpImgFile\")\' />";
 					sid.innerHTML="<img style='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="+path+");' width='"+w+"px' height='"+h+"px' src='"+path+"'/>";
+					swidth=w;
+					sheight=h;
 					Cut();
 				},1000);
 			}catch(e){}
@@ -177,6 +179,8 @@ function ImageUpload(target){//优惠券
 					var h=pic.height;
 					//document.getElementById("EM").style.height=pic.height+"px";
 					sid.innerHTML="<div style='width:"+w+"px; height:"+h+"px'><img style='width:"+w+"px; height:"+h+"px' src=\'"+pic.src+"\' /></div>";
+					swidth=w;
+					sheight=h;
 					Cut();
 				}
 			}
@@ -188,13 +192,14 @@ function Cut(){
 	var h=$("#UploadPic").height();
 	$("#CutDiv").css("display","block");
 	$("#EM").css({"width":w+"px","height":h+"px"});
-	$("#CARight").mousedown(function(e){
-		$("#CARight").mousemove(function(e){
-			$("#CARight").css("left",e.pageX-$("#CutDiv").offset().left+"px");
-			e.stopPropagation();
-			return false;
-		});
-	});
+	if(h/w<1&&h<252){ratio=h/w;}
+	$("#UpImg div.upimgtab").removeAttr("style");
+	if(h<252){
+		$("#UpImg div.upimgplane").removeAttr("style");
+		$("#UpImg div.upimgtab").css({"top":"50%","margin-top":-(h/2)+"px"});
+	}else{
+		$("#UpImg div.upimgplane").css("height",h+"px");
+	}
 
 	if(w<400){
 		$("#CutDiv").css({"width":w+"px","height":h+"px","left":(400-w)/2+"px"});
@@ -202,31 +207,22 @@ function Cut(){
 		$("#CutDiv").css({"width":w+"px","height":h+"px","left":"0px"});
 		$("#CutArea").css({"left":"0px","top":"0px"});
 	}
-	if(w<252){
-		$("#CutArea").css({"width":w+"px","left":"0px","top":"0px"});
-	}else{
-		$("#CutArea").css({"width":"252px","left":"0px","top":"0px"});
-	}
-	if(h<252){
-		$("#CutArea").css({"height":h+"px","left":"0px","top":"0px"});
-	}else{
-		$("#CutArea").css({"height":"252px","left":"0px","top":"0px"});
+
+	$("#CutArea").css({"width":252*ratio+"px","height":252*ratio+"px","left":"0px","top":"0px"});
+	$("#CutArea div#CAMove").css({"left":252*ratio-15+"px","top":252*ratio-15+"px"});
+
+	$("#CutBG1,#CutBG2").css({"width":"0px","height":"0px"});
+	$("#CutBG3").css({"width":w-252*ratio+"px","height":h+"px","left":252*ratio+"px"});
+	$("#CutBG4").css({"width":252*ratio+"px","height":(h-252*ratio)+"px","top":252*ratio+"px","left":"0px"});
+
+	if($("#CutArea").width()>252){
+		ratio=252/$("#CutArea").width();
+		$("#SmallImgDiv div, #SmallImgDiv img").css({"width":ratio*swidth+"px","height":ratio*sheight+"px"});
+	}else if($("#CutArea").width()<252){
+		ratio=252/$("#CutArea").width();
+		$("#SmallImgDiv div, #SmallImgDiv img").css({"width":ratio*swidth+"px","height":ratio*sheight+"px"});
 	}
 	
-	$("#CutArea").css({"left":"0px","top":"0px"});
-	
-	$("#CutBG1").css({"width":0,"height":0});
-	$("#CutBG2").css({"width":0,"height":0});
-	if(w<252){
-		$("#CutBG3").css({"width":0,"height":0});
-	}else{
-		$("#CutBG3").css({"width":w-252+"px","height":h+"px","left":"252px"});
-	}
-	if(h<252){
-		$("#CutBG4").css({"width":0,"height":0});
-	}else{
-		$("#CutBG4").css({"width":"252px","height":(h-252)+"px","top":"252px","left":"0px"});
-	}
 	$("#CutBG1, #CutBG2, #CutBG3, #CutBG4").click(function(){
 		$("#CutDiv").css("display","none");
 		if(/msie/i.test(ua)){
@@ -236,7 +232,7 @@ function Cut(){
 			$("body").unbind("touchmove");
 		}
 	});
-	
+
 	if(/ipad/i.test(ua)){
 		$("body").bind("touchmove",function(e){e.stopPropagation();return false;});
 		$("#CutArea").bind("touchmove",function(e){
@@ -244,8 +240,8 @@ function Cut(){
 			var cutdiv_top=$("#CutDiv").offset().top;
 			var mouse_left=e.pageX;
 			var mouse_top=e.pageY;
-			var cutarea_w=parseInt($("#CutArea").css("width"));
-			var cutarea_h=parseInt($("#CutArea").css("height"));
+			var cutarea_w=parseFloat($("#CutArea").css("width"));
+			var cutarea_h=parseFloat($("#CutArea").css("height"));
 			var hraf_w=cutarea_w/2, hraf_h=cutarea_h/2;
 			if(mouse_left-cutdiv_left-hraf_w<0){
 				mouse_left=cutdiv_left+hraf_w;
@@ -273,8 +269,9 @@ function Cut(){
 				var cutdiv_top=$("#CutDiv").offset().top;
 				var mouse_left=e.pageX;
 				var mouse_top=e.pageY;
-				var cutarea_w=parseInt($("#CutArea").css("width"));
-				var cutarea_h=parseInt($("#CutArea").css("height"));
+				var cutarea_w=parseFloat($("#CutArea").css("width"));
+				var cutarea_h=parseFloat($("#CutArea").css("height"));
+				
 				var hraf_w=cutarea_w/2, hraf_h=cutarea_h/2;
 				if(mouse_left-cutdiv_left-hraf_w<0){
 					mouse_left=cutdiv_left+hraf_w;
@@ -293,13 +290,66 @@ function Cut(){
 				$("#CutBG2").css({"width":cutarea_w+"px","height":mouse_top-cutdiv_top-hraf_h+"px","left":mouse_left-cutdiv_left-hraf_w+"px"});
 				$("#CutBG3").css({"left":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","width":w-(cutarea_w+mouse_left-cutdiv_left-hraf_w)+"px","height":h+"px"});
 				$("#CutBG4").css({"width":cutarea_w+mouse_left-cutdiv_left-hraf_w+"px","top":cutarea_h+mouse_top-cutdiv_top-hraf_h+"px","height":h-(cutarea_h+mouse_top-cutdiv_top-hraf_h)+"px"});
-				$("#SmallImgDiv img").css({"margin-left":-(mouse_left-cutdiv_left-hraf_w)+"px","margin-top":-(mouse_top-cutdiv_top-hraf_h)+"px"});
+				
+				$("#SmallImgDiv img").css({"margin-left":-(mouse_left-cutdiv_left-hraf_w)*ratio+"px","margin-top":-(mouse_top-cutdiv_top-hraf_h)*ratio+"px"});
 			});
 			$("#CutArea").mouseup(function(){
 				$(this).unbind("mousemove");
 			});
 		});
 	}
+	
+	$("#CAMove").mousedown(function(e){
+		var cutdiv_left=$("#CutDiv").offset().left;
+		var cutdiv_top=$("#CutDiv").offset().top;
+		var cutarea_w=parseFloat($("#CutArea").css("width"));
+		
+		$("#CAMove").mousemove(function(e){
+			$("#CAMove").css({"left":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))-6+"px",
+			"top":e.pageY-cutdiv_top-parseFloat($("#CutArea").css("top"))-6+"px"});
+			$("#CutArea").css({"width":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))+"px","height":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))+"px"});
+			var cutarea_w=$("#CutArea").width();
+			
+			var w=$("#UploadPic").width();
+			var h=$("#UploadPic").height();
+			if(w>h&&cutarea_w>h){
+				cutarea_w=h;
+			}else if(h>w&&cutarea_w>w){
+				cutarea_w=w;
+			}
+			
+			$("#CutBG1").css("height",parseFloat($("#CutArea").css("top"))+$("#CutArea").height()+"px");
+			$("#CutBG2").css("width",$("#CutArea").width()+"px");
+			$("#CutBG3").css({
+				"left":cutarea_w+parseFloat($("#CutArea").css("left"))+"px",
+				"width":$("#CutDiv").width()-cutarea_w-parseFloat($("#CutArea").css("left"))+"px"
+			});
+			$("#CutBG4").css({
+				"top":$("#CutArea").height()+parseFloat($("#CutArea").css("top"))+"px",
+				"height":$("#CutDiv").height()-($("#CutArea").height()+parseFloat($("#CutArea").css("top")))+"px",
+				"width":parseFloat($("#CutArea").css("left"))+$("#CutArea").width()+"px"
+			});
+			
+			if($("#CutArea").width()>252){
+				ratio=252/$("#CutArea").width();
+				$("#SmallImgDiv div, #SmallImgDiv img").css({"width":ratio*swidth+"px","height":ratio*sheight+"px"});
+			}else if($("#CutArea").width()<252){
+				ratio=252/$("#CutArea").width();
+				$("#SmallImgDiv div, #SmallImgDiv img").css({"width":ratio*swidth+"px","height":ratio*sheight+"px"});
+			}
+
+			e.stopPropagation();
+			return false;
+		});
+		$("#CAMove").mouseup(function(){
+			$("#CAMove").unbind("mousemove").css({"left":parseFloat($("#CutArea").css("width"))-15+"px","top":parseFloat($("#CutArea").css("width"))-15+"px"});
+		});
+		/*$("#CAMove").mouseout(function(){
+			$("#CAMove").unbind("mousemove").css({"left":parseFloat($("#CutArea").css("width"))-15+"px","top":parseFloat($("#CutArea").css("width"))-15+"px"});
+		});*/
+		e.stopPropagation();
+		return false;
+	});
 }
 function NoCut(){
 	$('#UpImg').fadeOut(500);

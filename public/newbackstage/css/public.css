@@ -566,20 +566,25 @@ text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;heig
 
 /**上传图片组件 begin**/
 #UpImg{position:absolute;z-index:120;width:680px;background-color:#fff;border:1px solid #E0E0E0;left:0px;top:42px;padding:30px;display:none;}
-#UpImg .upimgtab{width:400px;min-height:252px;border:1px solid #E4E4E4; background-color:#f8f8f8;cursor:pointer;text-align:center;vertical-align:middle;overflow:hidden;z-index:99;float:left;position:relative;}
-#UpImg .upimgtab img{max-width:400px;min-width:252px;min-height:252px;border-collapse:collapse;}
+#UpImg .upimgplane{background-color: #F8F8F8;border: 1px solid #E4E4E4;cursor: pointer;float: left;min-height: 252px;overflow: hidden;
+position: relative;text-align: center;vertical-align: middle;width: 400px;z-index: 99;}
+
+#UpImg .upimgtab{width:400px;border:1px solid #E4E4E4; background-color:#f8f8f8;cursor:pointer;overflow:hidden;z-index:99;position:absolute;left:0px;top:0px;}
+#UpImg .upimgtab img{width:400px;border-collapse:collapse;}
 #UpImg #SmallImgDiv{width:252px;height:252px;float:right;overflow:hidden;position:relative;border:1px solid #E4E4E4; background-color:#f8f8f8;}
 #UpImg #SmallImgDiv div{overflow:hidden;display:block;margin:0px auto;position:relative;}
 #UpImg #SmallImgDiv img{position:relative;}
 #UpImg .upimgdiv{clear:both;padding-top:20px;overflow:hidden;position:relative;width:100%;}
 #UpImg #EM{overflow:hidden;display:block;margin:0px auto;}
 #UpImg #CutDiv{overflow:hidden;display:block;position:absolute;top:0px;z-index:20;}
-#UpImg #CutArea{width:252px;height:252px;position:absolute;overflow:hidden;z-index:21;cursor: move;}
+#UpImg #CutArea{width:252px;height:252px;position:absolute;z-index:70;cursor: move;background:url(/newbackstage/images/clear.gif) left top repeat;}
 #UpImg #CutBG1, #UpImg #CutBG2, #UpImg #CutBG3, #UpImg #CutBG4{position:absolute;overflow:hidden;display:block;z-index:21;filter:alpha(Opacity=50);Opacity:0.5;background-color:#000;}
 #UpImg #CutBG1{left:0px;}
 
-#UpImg #CutArea  div#CABottom{position:absolute;left:0px;top:248px;height:4px;width:100%;cursor:n-resize;}
-#UpImg #CutArea  div#CARight{position:absolute;left:248px;top:0px;height:100%;width:4px;cursor:e-resize;}
+#UpImg #CutArea  div#CABottom{position:absolute;left:0px;top:250px;height:4px;width:100%;cursor:n-resize;}
+#UpImg #CutArea  div#CARight{position:absolute;left:250px;top:0px;height:100%;width:4px;cursor:e-resize;}
+#UpImg #CutArea  div#CAMove{position:absolute;width:10px;height:10px;cursor:nw-resize;background-color:#fff;border:1px solid #999999;
+overflow:hidden;zoom:1;z-index:20;}
 #UpImg #CutArea  div.cutarealine1{position:absolute;left:0px;top:0px;height:100%;background:url(/newbackstage/images/Jcrop.gif) left top repeat;width:1px;}
 #UpImg #CutArea  div.cutarealine2{position:absolute;left:0px;top:0px;height:1px;background:url(/newbackstage/images/Jcrop.gif) left top repeat;width:100%;}
 #UpImg #CutArea  div.cutarealine3{background:url(/newbackstage/images/Jcrop.gif) left top repeat;position:absolute;right:0px;top:0px;height:100%;width:1px;}
@@ -594,6 +599,3 @@ text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;heig
 .btn_file3{border: medium none;cursor: pointer;display: block;float: left;height: 215px;left: -85px;position: absolute;text-align: center;top: 0;width: 250px;z-index: 20;filter:alpha(Opacity=0);Opacity:0;}
 .btn1_hide{filter:alpha(Opacity=0);Opacity:0;}
 /**程序调试用 over**/
-
-
-
