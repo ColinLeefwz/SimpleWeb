@@ -4,9 +4,8 @@ Prodygia::Application.routes.draw do
 
   resources :users
 
-  mount Ckeditor::Engine => '/ckeditor'
-  devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  mount Ckeditor::Engine => '/ckeditor'
 
 	resources :sessions do
 		member do
@@ -21,6 +20,12 @@ Prodygia::Application.routes.draw do
   resources :orders do
     get :execute
     get :cancel
+  end
+
+  resources :experts do
+    member do
+      get :dashboard
+    end
   end
 
   root to: "welcome#index"

@@ -3,7 +3,8 @@
 	margin-right: auto;
 	margin-bottom: 50px;
 	text-align: left;
-	width: 930px;
+	width: 65.2%;
+
 	.video-page-title{
 		font-size: 38px;
 		color: #880848;
@@ -27,21 +28,50 @@
 		border: 3px solid #ffffff;
 	}
 
-	.video-page-info-box{
-		border: 4px solid #ffffff;
-		height: 275px;
-		padding: 30px 30px 30px 20px;
-		.video-page-image{
-			float: left;
-			img{
-				width: 420px;
-				height: 270px;
-			}
-		}
+  .clear-fix{
+    clear: both;
+  }
 
+	.video-page-info-box{
+    min-width: 445px;
+		border: 4px solid #ffffff;
+		padding: 30px 30px 30px 20px;
+    @media (min-width: 1183px) {
+      .video-page-image{
+        float: left;
+        width: 45%;
+        height: 270px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    @media (max-width: 1182px) {
+      .video-page-image{
+        float: left;
+        width: 100%;
+        height: 270px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    @media (min-width: 1183px) {
+      .video-page-info-width{
+        width: 48%;
+      }
+    }  
+
+    @media (max-width: 1182px) {
+      .video-page-info-width{
+        width: 100%;
+      }
+    }
 		.video-page-info{
 			float: right;
-			width:420px;
 			height: 270px;
 			font-size:15px;
 			.video-page-up-box{
@@ -49,7 +79,7 @@
 				.video-page-expert-info{
 					border-right: thin solid #000000;
 					float: left;
-					width: 280px;
+					width: 67%;
 					.video-page-expert-portrait{
 						float: left;
 						img{
@@ -59,9 +89,8 @@
 					}
 					.video-page-expert-name-title{
 						float: left;
-						margin-left: 15px;
-						margin-right: 15px;
-						width: 174px;
+						margin-left: 3.6%;
+						margin-right: 3.5%;
 						word-wrap: break-word;
 						word-break: break-word;
 						.video-page-expert-name-value{
@@ -74,7 +103,7 @@
 				}
 				.video-page-category-info{
 					float: left;
-					margin-left: 15px;
+					margin-left: 3.5%;
 					.video-page-category-info-title {
 						font-style: normal;
 						font-family: 'Latobold';
@@ -93,7 +122,7 @@
         .video-page-location-info{
           float: left;
           text-align: left;
-          width: 260px;
+          width: 62%;
           .item-wrapper{
             margin-bottom: 1em;
             .icon{
@@ -131,8 +160,8 @@
 
         .video-page-others{
           float: right;
-          width: 140px;
-          margin-left: 20px;
+          width: 33.3%;
+          margin-left: 4.7%;
           text-align: center;
           font-size: 13px;
         }
@@ -158,9 +187,6 @@
 
           }
         }
-        .clear-fix{
-          clear: both;
-        }
       }
     }
   }
@@ -176,6 +202,7 @@
 	}
 
 	.video-page-summary{
+    min-width: 445px;
 		padding: 15px 30px;
 		margin-top: 20px;
 		background: white;

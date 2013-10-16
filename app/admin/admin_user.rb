@@ -1,7 +1,3 @@
-class AdminUser < ActiveRecord::Base
-  include DeviseInvitable::Inviter
-end
-
 ActiveAdmin.register AdminUser do
 
   index do
