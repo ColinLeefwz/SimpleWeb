@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131011040538) do
+ActiveRecord::Schema.define(version: 20131009092445) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -163,7 +163,6 @@ ActiveRecord::Schema.define(version: 20131011040538) do
     t.string   "language"
     t.boolean  "always_show",        default: false
     t.datetime "start_date"
-    t.string   "categories",         default: [],    array: true
   end
 
   add_index "sessions", ["categories"], name: "index_sessions_on_categories", using: :gin

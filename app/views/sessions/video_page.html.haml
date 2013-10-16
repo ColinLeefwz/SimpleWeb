@@ -23,7 +23,11 @@
         .video-page-category-info
           .video-page-category-info-title
             Category
-          %p= @session.categories.join(",")
+          - @session.categories.each do |e|
+            - if e == @session.categories[-1]
+              %p #{e}
+            - else
+              %p #{e},
         .clear-fix
       .video-page-below-box
         .video-page-location-info

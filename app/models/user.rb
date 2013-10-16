@@ -2,9 +2,10 @@ class User < ActiveRecord::Base
 	# Include default devise modules. Others available are:
 	# :token_authenticatable, :confirmable,
 	# :lockable, :timeoutable and :omniauthable
-	devise :database_authenticatable, :registerable,
+	devise :invitable, :database_authenticatable, :registerable,
 		:recoverable, :rememberable, :trackable, :validatable,
 		:omniauthable, omniauth_providers: [:facebook, :linkedin]
+
 
   # has_many :owned_sessions, class_name: 'Session', foreign_key: 'owner_id'
   # has_many :followed_sessions, class_name: 'Session'
@@ -13,7 +14,7 @@ class User < ActiveRecord::Base
   has_many :orders
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 
-  # devise :omniauthable, :omniauth_providers => [:linkedin]
+  # devise :invitable, :omniauthable, :omniauth_providers => [:linkedin]
 
 	def enroll_session(session)
 		self.enrolled_sessions << session
