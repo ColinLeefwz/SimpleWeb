@@ -110,8 +110,8 @@ display: block;height: 43px;line-height: 43px;text-align: center;width: 122px;te
 .plane{color:#333333;display:block;margin-bottom:25px;overflow:hidden;zoom:1;width:381px;font-size:14px;
 line-height:45px;border:1px solid #e0e0e0;}
 .plane label{display:block;float:left;font-family:微软雅黑;font-size:14px;color:#333333;padding:0 18px;border-right:1px solid #e0e0e0;text-indent:1px;width:44px;}
-.plane input.txt1{float:left;background-color:#ffffff;border:none;overflow:hidden;zoom:1;outline: none;width:270px;height:45px;padding:0px 15px;font-size:14px;}
-.plane input.txt{float:left;background-color:#ffffff;border:none;overflow:hidden;zoom:1;outline: none;width:210px;height:45px;padding:0px 75px 0px 15px;font-size:14px;}
+.plane input.txt1{float:left;background-color:#ffffff;border:none;overflow:hidden;zoom:1;outline: none;width:270px;height:45px;line-height:45px;padding:0px 15px;font-size:14px;}
+.plane input.txt{float:left;background-color:#ffffff;border:none;overflow:hidden;zoom:1;outline: none;width:210px;height:45px;line-height:45px;padding:0px 75px 0px 15px;font-size:14px;}
 .plane span{color: #00B8FF;position: absolute;right:15px;}
 .plane input:focus, .plane input.-webkit-autofill{background-color:#ffffff;}
 
