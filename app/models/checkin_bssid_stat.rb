@@ -29,7 +29,7 @@ class CheckinBssidStat
       b.save
     end
     add_bssid_redis(bssid,sid)
-    if b.is_mobile_wifi
+    if b.is_mobile_wifi #这个分支不会被执行了
       Xmpp.error_notify("发现移动wifi：#{ssid},#{bssid}, 签到商家个数#{b.shop_ids.size}")
       b.set(:mobile, true)
       $redis.del("BSSID#{bssid}")
@@ -37,14 +37,15 @@ class CheckinBssidStat
   end
   
   def is_mobile_wifi
-    return true if is_mobile_wifi_0(self._id,self.ssid)
+    return true if is_mobile_wifi_0
+    return false #TODO: 定期检查新的移动wifi的特征，没法用简单的距离判断
     return shop_distance_large_than(3000) #同一wifi签到的点，距离超过3000米
   end
   
   def self.is_mobile_wifi_0(bssid,ssid)
     return true if bssid[0,10]=="78:52:62:7" #贝尔tr958上网伴侣移动3G无线路由器
     return false unless ssid
-    return true if ssid=="AndroidAp" || ssid=="ChinaUnicom"
+    return true if ssid=="AndroidAp" || ssid=="AndroidAP" || ssid=="ChinaUnicom"
     return true if ssid[0,8]=="ChinaNet"
     return true if ssid[0,4]=="CMCC"
     return true if ssid[0,10]=="MobileWiFi"
@@ -52,8 +53,8 @@ class CheckinBssidStat
     return false
   end
   
-  def is_mobile_wifi_0(bssid,ssid)
-    CheckinBssidStat.is_mobile_wifi_0(bssid,ssid)
+  def is_mobile_wifi_0
+    CheckinBssidStat.is_mobile_wifi_0(self._id,self.ssid)
   end
   
   def shop_ids
@@ -90,6 +91,19 @@ class CheckinBssidStat
       next if is_kx_user?(ck.uid)
       next if ck.sid && $redis.smembers("FakeShops").find{|id| ck.sid.to_i == id.to_i}
       add_bssid_redis(ck["bssid"],ck["sid"])
+    end
+  end
+  
+  def self.init_bssid_redis_2
+    Checkin.where({bssid:{"$exists" => true}}).each do |ck|
+      next if ck["bssid"].nil? || ck["bssid"].size<10
+      next if ck.del
+      next if is_kx_user?(ck.uid)
+      next if ck.sid && $redis.smembers("FakeShops").find{|id| ck.sid.to_i == id.to_i}
+      cbs = CheckinBssidStat.find(ck["bssid"])
+      if cbs.mobile
+        add_bssid_redis(ck["bssid"],ck["sid"]) unless cbs.is_mobile_wifi_0
+      end
     end
   end
   

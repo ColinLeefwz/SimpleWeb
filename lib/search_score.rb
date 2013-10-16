@@ -138,8 +138,20 @@ module SearchScore
 
   #对用WIFI定位的加权
   def bssid_score(score,bssid)
-    #TODO: 对用WIFI定位的加权
-  end  
+    arr = $redis.zrange("BSSID#{bssid}",0,-1,withscores:true)
+    total = arr.inject(0) {|sum, n| sum + n[1] }
+    wbscore = wifi_base_score(total)
+    score.each_with_index do |xx,i|
+      a2 = arr.find {|b| xx[0].to_i==b[0].to_i}
+      xx[2] -= (wbscore*a2[1]/total)) if a2 && a2[1]
+    end
+  end
+  
+  def wifi_base_score(c)
+    return 50*c if c<=3
+    return 150+10*(c-3) if c<=30
+    return 420+c
+  end
   
   #对用户在商家的历史访问加权
   def shop_history_score(xx,x,uid_s)
