@@ -305,8 +305,8 @@ function Cut(){
 		var cutarea_w=parseFloat($("#CutArea").css("width"));
 		
 		$("#CAMove").mousemove(function(e){
-			$("#CAMove").css({"left":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))-6+"px",
-			"top":e.pageY-cutdiv_top-parseFloat($("#CutArea").css("top"))-6+"px","width":"15px","height":"15px"});
+			$("#CAMove").css({"left":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))-15+"px",
+			"top":e.pageY-cutdiv_top-parseFloat($("#CutArea").css("top"))-15+"px","width":"30px","height":"30px"});
 			$("#CutArea").css({"width":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))+"px","height":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))+"px"});
 			var cutarea_w=$("#CutArea").width();
 			
