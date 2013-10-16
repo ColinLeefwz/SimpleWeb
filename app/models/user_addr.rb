@@ -5,6 +5,8 @@ class UserAddr
   field :phone
   field :list, type:Array #通讯录
 
+  index({list: 1})
+
 
 
   def self.find_or_new(id)

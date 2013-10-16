@@ -605,6 +605,19 @@ class User
     end
     adds
   end
+
+  def who_de_address_list_has_you
+    adds = []
+    ua = UserAddr.find_by_id(self.id)
+    if ua
+      puser = UserAddr.where({"list.number" => ua.phone}).map {|x| User.where({phone:x.phone}).first}
+      if puser.size>0
+        user = puser.map{|m| User.find_by_id(m.id)}
+        adds << user unless user.nil?
+      end
+    end
+    adds
+  end
   
   def del_test_user
     self.del_my_cache
