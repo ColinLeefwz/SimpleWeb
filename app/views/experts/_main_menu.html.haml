@@ -1,0 +1,35 @@
+
+.main_menu.tabbable
+  .cards-header
+    %ul.nav.nav-tabs
+      %li.card.active
+        %a{href: "#tab1", data: {toggle: "tab"}}Sessions
+      %li.card
+        %a{href: "#tab2", data: {toggle: "tab"}}Content
+      %li.card
+        %a{href: "#tab3", data: {toggle: "tab"}}Community
+
+
+  .cards-body.tab-content
+    .session-items.tab-pane.active#tab1
+      .item
+        .item-title
+          = "Re-balancing body-mind energy"
+        .item-body
+          .cover
+            = image_tag("default.png")
+            .social-share-icons
+              = render "shared/social_share", session_url: "some url", session_title: "session title"
+          .statistic
+            50 people viewed this session <br>
+            4 members signed up <br>
+            5 comments(1 new) <br>
+            <br>
+            $ 62.75 your earnings so far 
+          .something
+            // TODO: placeholder
+
+    .placeholder2.tab-pane#tab2
+      some content
+    .placeholder3.tab-pane#tab3
+      some community

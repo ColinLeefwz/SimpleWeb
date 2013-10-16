@@ -1,6 +1,8 @@
 class ExpertsController < ApplicationController
-  before_action :set_expert, only: [:show, :edit, :destroy, :update]
+  before_action :set_expert, only: [:dashboard, :show, :edit, :destroy, :update]
 
+  def dashboard
+  end
 
   private
     def set_expert
