@@ -4,9 +4,8 @@ Prodygia::Application.routes.draw do
 
   resources :users
 
-  mount Ckeditor::Engine => '/ckeditor'
-  devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  mount Ckeditor::Engine => '/ckeditor'
 
 	resources :sessions do
 		member do
