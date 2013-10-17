@@ -9,7 +9,7 @@ class FollowNotice
     user = User.find_primary(uid) if user.nil?
     loc = User.last_loc_cache(tid)
     loc = User.last_loc_cache(uid) if loc.nil?
-    Xmpp.send_chat(uid,tid,": #{user.name}在#{loc[1]}看到并关注了你噢~", "#{uid}#{tid}") #多次关注消息ID一致，防止消息重发
+    Xmpp.send_chat(uid,tid,": #{user.name}在#{loc[1]}看到并关注了你噢~", "FOLLOW#{uid},#{tid}") #多次关注消息ID一致，防止消息重发
   end
   
 end

@@ -118,6 +118,11 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 好友动态在会话列表中按最新的动态的时间自然排序。
 
+\subsection{对方加我时的单聊提醒消息}
+
+所有消息id以"FOLLOW"开头的单聊消息，都属于加关注的提醒消息。
+该消息的id格式为“FOLLOW#{uid1},#{uid2}”，其中uid1是加我的人的id，uid2是我的id。
+
 
 \input{./photo.tex}
 \input{./sound.tex}
