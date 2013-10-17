@@ -11,7 +11,7 @@ class MandrillApi
 
     message = {
       "merge_vars"=>
-      [{"rcpt"=>user.email, "vars"=>[{"name"=>"SESSIONIMAGE", "content"=>session_image_url}]}],
+      [{"rcpt"=>user.email, "vars"=>[{"name"=>"SESSIONIMAGE", "content"=>session_image_url}, { "name"=>"SHARETWITTER", "content"=>"http://twitter.com/home?status=http://www.prodygia.com/sessions/#{session.id}" }, { "name"=>"SHAREFB", "content"=>"http://www.facebook.com/sharer/sharer.php?u=http://www.prodygia.com/sessions/#{session.id}" } ]}],
       "bcc_address"=>"message.bcc_address@example.com",
       "text"=>"Example text content",
       "metadata"=>{"website"=>"www.prodygia.com"},
