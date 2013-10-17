@@ -4,6 +4,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
 		if @user.persisted?
 			sign_in @user
+      @user.update_attributes type: "Member"
 			redirect_to cookies[:previous_path]
 
 		else
@@ -17,6 +18,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
 			sign_in @user
+      @user.update_attributes type: "Member"
 			redirect_to cookies[:previous_path]
     else
       session["devise.linkedin.data"] = request.env["omniauth.auth"]
