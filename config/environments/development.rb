@@ -31,16 +31,16 @@ Prodygia::Application.configure do
 
 	# config sending email
   config.action_mailer.delivery_method = :smtp
-	config.action_mailer.smtp_settings = {
-		address: "smtp.mandrillapp.com",
-		port: 587,
-    enable_starttls_auto: true,
-		domain: "prodygia.com",
-		authentication: "login",
-		enable_starttls_auto: true,
-		user_name: ENV['MANDRILL_USERNAME'],
-		password: ENV["MANDRILL_API"]
-	}
+	# config.action_mailer.smtp_settings = {
+	# 	address: "smtp.mandrillapp.com",
+	# 	port: 587,
+    # enable_starttls_auto: true,
+	# 	domain: "prodygia.com",
+	# 	authentication: "login",
+	# 	enable_starttls_auto: true,
+	# 	user_name: ENV['MANDRILL_USERNAME'],
+	# 	password: ENV["MANDRILL_API"]
+	# }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

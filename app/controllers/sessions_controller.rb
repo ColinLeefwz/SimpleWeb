@@ -1,6 +1,5 @@
 require 'paypal'
 require 'mandrill_api'
-require 'active_support'
 
 class SessionsController < ApplicationController
 
@@ -100,7 +99,7 @@ class SessionsController < ApplicationController
 
     session_image_url = domain_url + @session.cover.url
     mandrill = MandrillApi.new
-    mandrill.template_send(current_user, @session, "enroll_comfirm", session_image_url)
+    mandrill.enroll_comfirm(current_user, @session, "enroll_comfirm", session_image_url)
 
 	end
 
