@@ -12,24 +12,44 @@
     %h3 Expert Toolkit
     .resources
       .item#menu-option
-        %p #{image_tag('dashboard.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Dashboard'}
+        .item-icon #{image_tag('dashboard.png')}
+        .item-icon-selected #{image_tag('dashboard_selected.png')}
+        .item-text #{link_to 'Dashboard', remote: true}
       .item#menu-option
-        %p #{image_tag('new_content.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Post new content'}
+        .item-icon #{image_tag('new_content.png')}
+        .item-icon-selected #{image_tag('new_content_selected.png')}
+        .item-text #{link_to 'Post new content', remote: true }
       .item#menu-option
-        %p #{image_tag('new_session.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Create new session'}
+        .item-icon #{image_tag('new_session.png')}
+        .item-icon-selected #{image_tag('new_session_selected.png')}
+        .item-text #{link_to 'Create new session', remote: true}
       .item#menu-option
-        %p #{image_tag('private_consultation.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Private consultation'}
+        .item-icon #{image_tag('private_consultation.png')}
+        .item-icon-selected #{image_tag('private_consultation_selected.png')}
+        .item-text #{link_to 'Private consultation', remote: true}
       .item#menu-option
-        %p #{image_tag('video_library.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Video library'}
+        .item-icon #{image_tag('video_library.png')}
+        .item-icon-selected #{image_tag('video_library_selected.png')}
+        .item-text #{link_to 'Video library', remote: true}
   .operations
     .item
-      %p #{image_tag('calendar.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Calendar'}
+      .item-icon #{image_tag('calendar.png')}
+      .item-icon-selected #{image_tag('calendar_selected.png')}
+      .item-text #{link_to 'Calendar', remote: true}
     .item
-      %p #{image_tag('testimonials.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Testimonials'}
+      .item-icon #{image_tag('testimonials.png')}
+      .item-icon-selected #{image_tag('testimonials_selected.png')}
+      .item-text #{link_to 'Testimonials', remote: true}
     .item
-      %p #{image_tag('refer_expert.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Refer new erexperts'}
+      .item-icon #{image_tag('refer_expert.png')}
+      .item-icon-selected #{image_tag('refer_expert_selected.png')}
+      .item-text #{link_to 'Refer new erexperts', remote: true}
     .item
-      %p #{image_tag('statistics.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Statistics'}
+      .item-icon #{image_tag('statistics.png')}
+      .item-icon-selected #{image_tag('statistics_selected.png')}
+      .item-text #{link_to 'Statistics', remote: true}
     .item
-      %p #{image_tag('feedback.png')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{link_to 'Feedback'}
+      .item-icon #{image_tag('feedback.png')}
+      .item-icon-selected #{image_tag('feedback_selected.png')}
+      .item-text #{link_to 'Feedback', remote: true}
 

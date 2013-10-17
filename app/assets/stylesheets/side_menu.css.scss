@@ -19,18 +19,29 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       padding-bottom: 15px;
     }
   }
-  .toolkit,.operations{
+  .toolkit, .operations{
     border-bottom: 2px solid #ddd;
     padding-left: 15px;
     background: #ffffff;
   }
   .item{
+    margin-bottom: 10px;
     font-weight: bold;
     font-size: 20px;
-    display: inline;
-    img{
-      vertical-align: middle;
-      width: 38px;
+    .item-icon{
+      vertical-align: center;
+      display: inline-block;
+    }
+    .item-icon-selected{
+      vertical-align: center;
+      display: inline-block;
+      display: none;
+    }
+
+    .item-text{
+      margin-left: 10px;
+      display: inline-block;
+      vertical-align: center;
     }
   }
 }
