@@ -1,6 +1,8 @@
 - if user_signed_in?
   = link_to current_user.email, edit_user_registration_path
-  = link_to "Log Out", destroy_user_session_path, method: :delete
+  = link_to "log out", destroy_user_session_path, method: :delete
+  - if current_user.is_a? Expert
+    = link_to "dashboard", dashboard_expert_path(current_user)
 - else
   = link_to "Sign Up", new_user_registration_path
   = link_to "Sign In", new_user_session_path

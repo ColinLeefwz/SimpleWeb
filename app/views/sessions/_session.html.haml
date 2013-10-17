@@ -1,0 +1,17 @@
+
+.item
+  .item-title
+    = session.title
+  .item-body
+    .cover-wrapper
+      = image_tag(session.cover.url, class: "cover")
+      .social-share-icons
+        = render "shared/social_share", session_url: session_url(session), session_title: session.title
+    .statistic
+      50 people viewed this session <br>
+      4 members signed up <br>
+      5 comments(1 new) <br>
+      <br>
+      $ 62.75 your earnings so far 
+    .something
+      // TODO: placeholder

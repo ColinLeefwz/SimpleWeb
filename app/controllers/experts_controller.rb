@@ -2,6 +2,7 @@ class ExpertsController < ApplicationController
   before_action :set_expert, only: [:dashboard, :show, :edit, :destroy, :update]
 
   def dashboard
+    @sessions = @expert.sessions
   end
 
   private
