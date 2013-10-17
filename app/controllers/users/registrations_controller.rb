@@ -21,7 +21,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def sign_up(resource_name, resource)
     super
     mandrill = MandrillApi.new
-    mandrill.sameer_test(resource)
+    mandrill.welcome_confirm(resource)
   end
 
 end
