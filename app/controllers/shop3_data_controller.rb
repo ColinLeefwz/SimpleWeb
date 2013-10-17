@@ -66,6 +66,6 @@ class Shop3DataController < ApplicationController
     ago1 = ago.map{|m| m[1] if m[0]>=1970 && m[0]<1975}.compact.inject{|a,b| a+b}
     back = ck.map{|m| m.uid}.uniq.count
     sum = ck.map{|m| m}.count
-    [male,female,ago1,ago2,ago3,ago3,ago4,ago5,ago6,back,sum]
+    render :text => [male,female,ago1,ago2,ago3,ago3,ago4,ago5,ago6,back,sum]
   end
 end
