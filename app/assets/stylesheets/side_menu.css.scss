@@ -19,10 +19,16 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       padding-bottom: 15px;
     }
   }
-  .toolkit, .operations{
+  .toolkit{
     border-bottom: 2px solid #ddd;
     padding-left: 15px;
     background: #ffffff;
+  }
+  .operations{
+    border-bottom: 2px solid #ddd;
+    padding-left: 15px;
+    background: #ffffff;
+    padding-top: 15px;
   }
   .item{
     margin-bottom: 10px;
@@ -31,11 +37,13 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
     .item-icon{
       vertical-align: center;
       display: inline-block;
+      width: 29px;
     }
     .item-icon-selected{
       vertical-align: center;
       display: inline-block;
       display: none;
+      width: 29px;
     }
 
     .item-text{
