@@ -26,6 +26,7 @@ gem 'paypal-sdk-core'
 gem 'paypal-sdk-rest'
 gem 'figaro'
 gem 'mandrill-api'
+gem 'cancan'
 
 group :doc do
   gem 'sdoc', require: false
