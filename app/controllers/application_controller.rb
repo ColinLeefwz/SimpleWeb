@@ -1,14 +1,19 @@
 class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
-
   after_action :store_location
 
   protect_from_forgery with: :exception
 
+
+  def current_ability
+    @current_ability ||= Ability.new(current_user, params)
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :password) }
   end
+
 
   def store_location
     previous_path = request.fullpath
@@ -18,8 +23,8 @@ class ApplicationController < ActionController::Base
     elsif(previous_path != "/users/sign_in" && previous_path != "/users/sign_up" && previous_path != "/users/password" && !request.xhr?)
       cookies[:previous_path] = request.original_url
     end
-
   end
+
 
   def after_sign_in_path_for(resource)
     if current_user.is_a? AdminUser
@@ -28,6 +33,7 @@ class ApplicationController < ActionController::Base
       cookies[:previous_path] || root_path
     end
   end
+
 
   ## ActiveAdmin user to User table
   def authenticate_admin_user! #use predefined method name
@@ -38,6 +44,7 @@ class ApplicationController < ActionController::Base
     return nil if user_signed_in? && !(current_user.is_a? AdminUser)
     current_user
   end
+
 
   protected
   ## Override devise-invitable before_filter

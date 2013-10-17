@@ -1,8 +1,8 @@
 class ExpertsController < ApplicationController
-  load_and_authorize_resource
   before_action :set_expert, only: [:dashboard, :show, :edit, :destroy, :update]
 
   def dashboard
+    authorize! :manage, :dashboard
     @sessions = @expert.sessions
   end
 

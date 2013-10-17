@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(user, params)
     user ||= User.new
 
     if user.is_a? AdminUser
@@ -12,14 +12,11 @@ class Ability
       can :update, Session do |session|
         session.try(:expert) == user
       end
-      can :manage, Expert do |expert|
-        expert == user
+      can :manage, :dashboard do
+        user.id.to_s == params[:id]
       end
-      cannot :delete, Expert
-      cannot :create, Expert
     elsif user.is_a? Member
 
-    end
     end
   end
 end
