@@ -1,14 +1,33 @@
 class ExpertsController < ApplicationController
-  before_action :set_expert, only: [:dashboard, :show, :edit, :destroy, :update]
+  before_action :set_expert, only: [:dashboard, :new_post_content, :show, :edit, :destroy, :update]
 
   def dashboard
     authorize! :manage, :dashboard
     @sessions = @expert.sessions
   end
 
+  def new_post_content
+    @article_session = ArticleSession.new
+  end
+
+  def create_post_content
+    @article_session = ArticleSession.new(article_params)
+    @article_session.expert = current_user
+
+    if @article_session.save
+      redirect_to dashboard_expert_path(current_user), notice: 'successful'
+    else
+      redirect_to dashboard_expert_path(current_user), notice: 'failed'
+    end
+  end
+
   private
     def set_expert
       @expert = Expert.find(params[:id])
+    end
+
+    def article_params
+      params.require(:article_session).permit(:title, :description, :cover, {categories:[]} )
     end
 
     def expert_params
