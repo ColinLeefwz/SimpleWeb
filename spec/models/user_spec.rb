@@ -9,6 +9,5 @@ describe User do
 			allen.enroll_session session_map
 			expect(allen.enrolled_sessions.count).to eq 2
 		end
-
 	end
 end

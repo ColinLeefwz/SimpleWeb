@@ -18,6 +18,12 @@ describe Session do
 			session_intro.price = 5.00
 			expect(session_intro.is_free?).to be_false
 		end
-
 	end
+
+  describe ".set_default" do
+    it "set default price to 0.00 for the session" do
+      session = create(:session, title: "test", expert: sameer)
+      expect(session.price).to eq 0.00
+    end
+  end
 end
