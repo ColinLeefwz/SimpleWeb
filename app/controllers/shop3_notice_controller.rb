@@ -7,18 +7,6 @@ class Shop3NoticeController < ApplicationController
   
   def index
     @shop_notice = session_shop.notice
-
-    ShopNotice.where({}).sort({_id: -1}).each do |sn|
-      begin
-        nsn = ShopNotice.new()
-        nsn._id = sn.shop_id
-        nsn.title = sn.title
-        nsn.save
-      rescue
-        next
-      end
-    end
-
   end
 
   def ajax_release
