@@ -47,9 +47,25 @@ class Shop3DataController < ApplicationController
     end
   end
 
-  def gender_ago_returning_customer
-    @ago = Checkin.where({sid:session[:shop_id]}).map{|m| m.user.birthday if m.user.birthday}.group_by{|g| g}.map{|k,v| [k,v.count]}
-    @gender = Checkin.where({sid:session[:shop_id]}).map{|m| m.user.gender}.group_by{|g| g}.map{|k,v| [k,v.count]}
-    render :json => {'gender' => @gender, 'ago' => @ago}
+  def user_statistics
+    ck = Checkin.where({sid:session[:shop_id]})
+    gender = ck.map{|m| m.user.gender}.group_by{|g| g}.map{|k,v| [k,v.count]}.sort
+    if gender.size < 3
+      female = gender[1][1]
+      male = gender[0][1]
+    elsif gender.size == 3
+      female = gender[2][1]
+      male = gender[1][1]
+    end
+    ago = ck.map{|m| m.user.birthday.to_s[0,4].to_i}.group_by{|g| g}.map{|k,v| [k.to_i,v.count]}
+    ago6 = ago.map{|m| m[1] if m[0]>2000 || m[0]<1970}.compact.inject{|a,b| a+b}
+    ago5 = ago.map{|m| m[1] if m[0]>=1990 && m[0]<=2000}.compact.inject{|a,b| a+b}
+    ago4 = ago.map{|m| m[1] if m[0]>=1985 && m[0]<1990}.compact.inject{|a,b| a+b}
+    ago3 = ago.map{|m| m[1] if m[0]>=1980 && m[0]<1985}.compact.inject{|a,b| a+b}
+    ago2 = ago.map{|m| m[1] if m[0]>=1975 && m[0]<1980}.compact.inject{|a,b| a+b}
+    ago1 = ago.map{|m| m[1] if m[0]>=1970 && m[0]<1975}.compact.inject{|a,b| a+b}
+    back = ck.map{|m| m.uid}.uniq.count
+    sum = ck.map{|m| m}.count
+    render :text => [male,female,ago1,ago2,ago3,ago3,ago4,ago5,ago6,back,sum]
   end
 end

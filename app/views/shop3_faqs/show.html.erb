@@ -43,8 +43,6 @@ h3{
   <h1><%= @shop_faq.head %></h1>
   <h3><%= @shop_faq.cat.strftime("%Y-%m-%d") %></h3>
 
-   <%= image_tag @shop_faq.img.url,:style => "width:100%", :class => "frontimg"%>
-
 <div id="content">
 <%= @shop_faq.content.html_safe %>
 </div>
