@@ -18,6 +18,8 @@ $dduid = "51418139c90d8bc67b0003bf" #脸脸地点审核
 $xpuid = "50bc20fcc90d8ba33600004b" #浦靠谱
 $yuanid = "502e6303421aa918ba000001" #yuan
 
+#21836841 selenium测试专用
+
 $uuid = UUID.new
 #$LOG = Logger.new('log/sina_api.log', 0, 100 * 1024 * 1024)
 
