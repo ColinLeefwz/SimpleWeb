@@ -1,0 +1,21 @@
+
+.simple_form{
+  padding-top: 1em;
+  padding-left: 1em;
+
+  .input{
+    padding: 0.5em 0;
+  }
+
+  label{
+    display: inline-block;
+    margin-right: 1em;
+  }
+
+  .categories{
+
+    input[type="checkbox"]{
+      float: none;
+    }
+  }
+}
