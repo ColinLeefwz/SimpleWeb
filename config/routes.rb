@@ -28,6 +28,11 @@ Prodygia::Application.routes.draw do
       get :new_post_content
       post :create_post_content
     end
+
+    collection do
+      get :refer_new_expert
+      post :refer_new_expert
+    end
   end
 
   root to: "welcome#index"

@@ -21,6 +21,11 @@ class ExpertsController < ApplicationController
     end
   end
 
+  def refer_new_expert
+    @expert = current_user
+    @email_message = EmailMessage.new(subject: "Invite you to be expert at Prodygia", message: "good day", from_name: "#{current_user.first_name} #{current_user.last_name}", from_address: "no-reply@prodygia", reply_to: "#{current_user.email}")
+  end
+
   private
     def set_expert
       @expert = Expert.find(params[:id])
