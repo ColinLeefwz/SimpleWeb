@@ -30,11 +30,11 @@ module SearchScore
     hash = {lo:{"$near" =>loc,"$maxDistance"=>radius}, del:{"$exists" => false}}
     city = Shop.get_city(loc)
     unless city.blank?
-      shopids += coupon_shops(city, loc, 1000)
+      shopids += coupon_shops(city, loc, 500+accuracy)
     end
 
     if bssid && bssid.size>10
-      shopids += bssid_shops(bssid, loc, 1500)
+      shopids += bssid_shops(bssid, loc, 500+accuracy)
     end
 
     if shopids && shopids.size>0
