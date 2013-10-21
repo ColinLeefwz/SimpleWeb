@@ -17,6 +17,11 @@ class AnswerController < ApplicationController
       render :text => "1"
       return
     end
+    if msg=="@@@id"
+      Xmpp.send_gchat2($gfuid,sid,uid, sid.to_s)
+      render :text => "1"
+      return
+    end
     shop = Shop.find_by_id(sid)
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"
