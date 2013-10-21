@@ -4,7 +4,7 @@ describe SessionsController do
 	helper_objects
 
 	describe "GET 'enroll'" do
-		context "logged in as guest"
+		context "not logged in"
 
 		context "logged in as member" do
 			before :each do
@@ -22,6 +22,9 @@ describe SessionsController do
 
 		end
 	end
+
+  describe "GET show"
+
 
 
 end

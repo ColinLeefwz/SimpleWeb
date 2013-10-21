@@ -9,6 +9,11 @@ def helper_objects
   let(:sameer) { create :expert, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim'}
   let(:alex) {create :expert, email: 'alex@test.com', password: '11111111', first_name: 'alex', last_name: 'lalo' }
 
+  # static pages
+  let(:page_about_us) { create :static_page, title: 'about us', content: 'about us page' }
+  let(:page_faq) { create :static_page, title: 'faq', content: 'faq page' }
+  let(:page_terms) { create :static_page, title: 'terms', content: 'terms page' }
+
   #sessions
   let(:session_intro) { create :announcement, title: 'Intro Session to Lean Start-Up', expert: sameer,
 			   description: 'How can lean start-up methods help me build a better business?',
