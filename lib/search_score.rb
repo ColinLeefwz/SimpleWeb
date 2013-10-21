@@ -1,13 +1,23 @@
 # coding: utf-8
 
 module SearchScore
+  
+  def bssid_shops(bssid, loc, distance)
+     shopids = $redis.zrange("BSSID#{bssid}",0,-1).map {|x| x.to_i}
+     ret = []
+     shopids.each do |x| 
+       shop=Shop.find_by_id(x); 
+       ret << x if shop && Shop.min_distance(shop,loc) < distance
+     end
+     ret
+  end
 
   def find_shops(loc,accuracy,uid,bssid=nil,debug=false)
     radius = get_radius(accuracy)
     limit = 80
     hash = {lo:{"$near" =>loc,"$maxDistance"=>radius}, del:{"$exists" => false}}
     if bssid && bssid.size>10
-      shopids = $redis.zrange("BSSID#{_id}",0,-1).map {|x| x.to_i}
+      shopids = bssid_shops(bssid, loc, 1500)
       if shopids && shopids.size>0
         hash["_id"] = {"$nin" => shopids}
         limit = 80 - shopids.size*5
@@ -15,13 +25,10 @@ module SearchScore
       end
     end
     arr = Shop.where2(hash,{limit:limit}).to_a
-    arr.uniq_by! {|x| x["_id"]}
-    if shopids
-      shopids.each do |x| 
-        shop=Shop.find_by_id(x); 
-        arr << shop if shop && min_distance(shop,loc)<1500
-      end
+    if shopids && shopids.size>0
+      arr = arr + shopids.map{|x| Shop.find_by_id(x)}
     end
+    arr.uniq_by! {|x| x["_id"]}
     if arr.length>=4
       return sort_with_score(arr,loc,accuracy,uid,bssid,debug)
     else

@@ -58,7 +58,7 @@ class LocateTest < ActiveSupport::TestCase
 
   def test_locate6
     ss = Shop.new.find_shops([30.2815, 120.120285], 65, "50bc20fcc90d8ba33600004b")
-    assert ss[0,7].find {|x| x["name"] == "弄堂里(万塘店)" }
+    assert ss[0,8].find {|x| x["name"] == "弄堂里(万塘店)" }
   end  
 
   def test_locate7
