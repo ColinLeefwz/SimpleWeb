@@ -12,18 +12,37 @@ module SearchScore
      ret
   end
 
+  def coupon_shops(city, loc, distance)
+    shopids= $redis.smembers("ACS#{city}").map {|x| x.to_i}
+    ret=[]
+    shopids.each do |x|
+       shop=Shop.find_by_id(x);
+       ret << x if shop && Shop.min_distance(shop,loc) < distance
+    end
+    ret
+  end
+
+
   def find_shops(loc,accuracy,uid,bssid=nil,debug=false)
     radius = get_radius(accuracy)
     limit = 80
+    shopids =[]
     hash = {lo:{"$near" =>loc,"$maxDistance"=>radius}, del:{"$exists" => false}}
-    if bssid && bssid.size>10
-      shopids = bssid_shops(bssid, loc, 1500)
-      if shopids && shopids.size>0
-        hash["_id"] = {"$nin" => shopids}
-        limit = 80 - shopids.size*5
-        limit = 40 if limit<40
-      end
+    city = Shop.get_city(loc)
+    unless city.blank?
+      shopids += coupon_shops(city, loc, 1000)
     end
+
+    if bssid && bssid.size>10
+      shopids += bssid_shops(bssid, loc, 1500)
+    end
+
+    if shopids && shopids.size>0
+      hash["_id"] = {"$nin" => shopids}
+      limit = 80 - shopids.size*5
+      limit = 40 if limit<40
+    end
+    
     arr = Shop.where2(hash,{limit:limit}).to_a
     if shopids && shopids.size>0
       arr = arr + shopids.map{|x| Shop.find_by_id(x)}

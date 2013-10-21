@@ -138,7 +138,8 @@ class Group
   end
 
   def zadd_redis_shop_name
-    s= self.shop
+    #    s=self.shop
+    s= Shop.find_primary(self.sid) #经常不能同步到redis中， 改成 find_primary
     $redis.zadd("GSN", s.id.to_i, s.name) if s && !s.city.nil?
   end
 
