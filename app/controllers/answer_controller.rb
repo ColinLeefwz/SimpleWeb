@@ -9,7 +9,7 @@ class AnswerController < ApplicationController
     uid = params["uid"]
     msg = params["msg"]
     mid = params["mid"]    
-    #Xmpp.send_gchat2(uid,sid,uid,msg,mid, nil, " NOLOG='1' ")
+    Xmpp.send_gchat2(uid,sid,uid,msg,mid, nil, " NOLOG='1' ")
     if msg=="@@@"
       response = Xmpp.get("api/room_users?roomid=#{sid}")
       names = JSON.parse(response).map{|x| User.find_by_id(x).name}
