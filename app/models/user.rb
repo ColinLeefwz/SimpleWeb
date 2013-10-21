@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
-	# Include default devise modules. Others available are:
-	# :token_authenticatable, :confirmable,
-	# :lockable, :timeoutable and :omniauthable
-	devise :invitable, :database_authenticatable, :registerable,
-		:recoverable, :rememberable, :trackable, :validatable,
-		:omniauthable, omniauth_providers: [:facebook, :linkedin]
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :invitable, :database_authenticatable, :registerable,
+    :recoverable, :rememberable, :trackable, :validatable,
+    :omniauthable, omniauth_providers: [:facebook, :linkedin]
 
   has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
   has_many :orders
@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 
   def self.find_for_linkedin(access_token, sign_in_resource=nil)
     data = access_token.info
-    user = User.where(email: data["email"]).first
+    user = User.where(email: data["email"], provider: data["provider"]).first
 
     unless user
       user = User.create(email: data["email"],

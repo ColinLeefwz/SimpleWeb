@@ -7,15 +7,15 @@ Prodygia::Application.routes.draw do
   ActiveAdmin.routes(self)
   mount Ckeditor::Engine => '/ckeditor'
 
-	resources :sessions do
-		member do
-			get :enroll
-			get :buy_now
-			post :sign_up_buy
-			get :free_confirm
-			post :sign_up_confirm
-		end
-	end
+  resources :sessions do
+    member do
+      get :enroll
+      get :buy_now
+      post :sign_up_buy
+      get :free_confirm
+      post :sign_up_confirm
+    end
+  end
 
   resources :orders do
     get :execute
@@ -25,6 +25,8 @@ Prodygia::Application.routes.draw do
   resources :experts do
     member do
       get :dashboard
+      get :new_post_content
+      post :create_post_content
     end
   end
 

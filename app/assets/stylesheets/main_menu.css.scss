@@ -1,5 +1,6 @@
 $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
-.main_menu{
+.main-menu{
+  min-height: 609px;
   -webkit-box-shadow: $shadow_param;
   box-shadow: $shadow_param;
   ul{
