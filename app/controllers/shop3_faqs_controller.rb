@@ -29,8 +29,9 @@ class Shop3FaqsController < ApplicationController
   end
 
   def show
-    @shop_faq = ShopFaq.find_primary(params[:id])
-    @shop = session_shop
+    sf = ShopFaq.find_primary(params[:id])
+    @shop_faq = sf
+    @shop = Shop.find_by_id(sf.sid)
     render :layout => false
   end
 
