@@ -27,6 +27,9 @@ Prodygia::Application.routes.draw do
       get :dashboard
       get :new_post_content
       post :create_post_content
+
+      get :new_session
+      post :create_session
     end
   end
 
