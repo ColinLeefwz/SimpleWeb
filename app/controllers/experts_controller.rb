@@ -19,7 +19,11 @@ class ExpertsController < ApplicationController
       redirect_to dashboard_expert_path(current_user), notice: 'failed'
     end
   end
-
+  
+  def new_session
+    @live_session = Session.new
+  end
+  
   private
     def article_params
       params.require(:article_session).permit(:title, :description, :cover, {categories:[]} )
