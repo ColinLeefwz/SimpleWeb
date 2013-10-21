@@ -24,7 +24,9 @@ class PhoneFriend
   end
   
   def self.friend_notice(user,x)
-    Xmpp.send_chat(x.id,user.id,": 我也在使用脸脸，快来关注我吧。")
+    if x.size>0
+      Xmpp.send_chat(x.id,user.id,"我也在使用脸脸，快来关注我吧。")
+    end
   end
 
 end
