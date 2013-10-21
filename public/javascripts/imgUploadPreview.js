@@ -120,8 +120,103 @@ function imgUploadPreview3(select, divid){//商家设置
         }catch (e) {}
     });
 }
+var uploadimgtimer, emObj, sidObj, swidth, sheight;
+$(document).ready(function(){
+	emObj=$("#EM").html()
+	sidObj=$("#SmallImgDiv").html();
+});
+function ImageUpload(target){//优惠券
 
-var uploadimgtimer, emObj, sidObj, swidth, sheight, ratio;
+	var obj , pic , sid;
+	if(target=="UpImgFile"){
+		obj=document.getElementById(target);
+	}else{
+		obj=target;
+	}
+	pic=document.getElementById("UploadPic");
+	sid=document.getElementById("SmallImgDiv");
+	
+	obj.click();//打开上传对话框
+	obj.onchange=function(){
+		if(/msie/i.test(ua)){//IE浏览器可以直接取值
+			//pic.src=obj.value;//经测试IE用此种写法在服务器可能会有问题。
+			//因此IE在服务器上运行时一般采用如下方法：
+			this.select();
+			this.blur();
+			var path=document.selection.createRange().text;
+			path = "file:///" + path.replace(":",'|');
+			path = path.replace(/\\/g,'/');
+			document.selection.empty();
+			$(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css({"display":"none"});
+			try{
+				pic.removeAttribute("style");
+				pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
+				pic.src="http://shop.dface.cn/images/clear.gif";
+				sid.innerHTML="<img style='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\""+path+"\"); width:252px;height:252px;' src='http://shop.dface.cn/images/clear.gif'/>";
+				cut();
+			}catch(e){}
+		}else{//火狐、谷歌、Opera、需要通过生成FileReader()来专门实现图片显示
+			var reader = new FileReader();
+			reader.readAsDataURL(obj.files[0]);
+			reader.onload = function(e){
+				pic.src=this.result;
+				pic.onload=function(){
+					var w=pic.width;
+					var h=pic.height;
+					//document.getElementById("EM").style.height=pic.height+"px";
+					sid.innerHTML="<div style='width:"+w+"px; height:"+h+"px'><img style='width:"+w+"px; height:"+h+"px' src=\'"+pic.src+"\' /></div>";
+					
+					$('#UploadPic').imgAreaSelect({x1:74,y1:74,x2:326,y2:326, aspectRatio: '1:1',autoHide:false,hide:false, handles: true, fadeSpeed: 200, onSelectChange: Cut });
+				}
+			}
+		}
+	}
+}
+function Cut(img, selection){
+	if (!selection.width || !selection.height) return;		
+	var scaleX = 100 / selection.width;
+	var scaleY = 100 / selection.height;
+
+	$('#SmallImgDiv img').css({
+		marginLeft: -selection.x1,
+		marginTop: -selection.y1
+	});
+
+	$('#x1').val(selection.x1);
+	$('#y1').val(selection.y1);
+	$('#x2').val(selection.x2);
+	$('#y2').val(selection.y2);
+	$('#w').val(selection.width);
+	$('#h').val(selection.height);
+}
+function NoCut(){
+	$('#UpImg').fadeOut(500);
+	$("#EM").html(emObj).removeAttr("style");
+	$("#SmallImgDiv").html(sidObj);
+	$("#CutDiv").css("display","none");
+	if(/ipad/i.test(ua)){
+		$("body").unbind("touchmove");
+	}
+	if(/msie/i.test(ua)){
+		$(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css({"display":"block"});
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*var uploadimgtimer, emObj, sidObj, swidth, sheight, ratio;
 $(document).ready(function(){
 	emObj=$("#EM").html()
 	sidObj=$("#SmallImgDiv").html();
@@ -152,22 +247,9 @@ function ImageUpload(target){//优惠券
 			try{
 				pic.removeAttribute("style");
 				pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='"+ path + "')";
-				pic.src=path;
-
-				uploadimgtimer=setTimeout(function(){
-					var w=pic.width;
-					var h=pic.height;
-					//alert(w+"  "+h);
-					document.getElementById("EM").innerHTML="";
-					if(w>=400){
-						w=400;
-					}
-					document.getElementById("EM").innerHTML="<img style='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="+path+");' id='UploadPic' src='"+path+"' onClick=\'ImageUpload(\"UpImgFile\")\' />";
-					sid.innerHTML="<img style='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="+path+");' width='"+w+"px' height='"+h+"px' src='"+path+"'/>";
-					swidth=w;
-					sheight=h;
-					Cut();
-				},1000);
+				pic.src="http://shop.dface.cn/images/clear.gif";
+				sid.innerHTML="<img style='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\""+path+"\"); width:252px;height:252px;' src='http://shop.dface.cn/images/clear.gif'/>";
+				cut();
 			}catch(e){}
 		}else{//火狐、谷歌、Opera、需要通过生成FileReader()来专门实现图片显示
 			var reader = new FileReader();
@@ -185,7 +267,7 @@ function ImageUpload(target){//优惠券
 				}
 			}
 		}
-	}	
+	}
 }
 function Cut(){
 	var w=$("#UploadPic").width();
@@ -344,9 +426,6 @@ function Cut(){
 		$("#CAMove").mouseup(function(){
 			$("#CAMove").unbind("mousemove").css({"left":parseFloat($("#CutArea").css("width"))-15+"px","top":parseFloat($("#CutArea").css("width"))-15+"px","width":"10px","height":"10px"});
 		});
-		/*$("#CAMove").mouseout(function(){
-			$("#CAMove").unbind("mousemove").css({"left":parseFloat($("#CutArea").css("width"))-15+"px","top":parseFloat($("#CutArea").css("width"))-15+"px"});
-		});*/
 		e.stopPropagation();
 		return false;
 	});
@@ -362,4 +441,4 @@ function NoCut(){
 	if(/msie/i.test(ua)){
 		$(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css({"display":"block"});
 	}
-}
+}*/

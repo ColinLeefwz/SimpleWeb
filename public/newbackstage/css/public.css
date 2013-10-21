@@ -397,7 +397,9 @@ background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40
 .box6 .box6message{width:540px;position:absolute;left:0px;top:0px;text-align:center;padding:10px;z-index:1;font-size:14px;color:#f60;letter-spacing:2px;}
 .box6 .ws1{color: #666;font-size: 14px;height: 30px;line-height: 30px;margin-bottom: 10px;padding: 0 10px;width: 280px;display:block;}
 .box6 .ws2{color: #868686;font-size: 13px;height: 120px;line-height: 22px;padding: 0px 10px;width: 280px;display:block;}
-.box6 .box6date{position:absolute;right:30px;bottom:25px;color:#fff;font-size:14px;}
+.box6 .box6number{position:absolute;left:90px;bottom:25px;color:#F15353;font-size:16px;font-family:"微软雅黑";font-weight:bold;}
+.box6 .box6date{position:absolute;right:40px;bottom:25px;color:#F15353;font-size:16px;font-family:"微软雅黑";font-weight:bold;}
+
 
 .box7{width:820px;margin-top:20px;overflow:hidden;font-size:14px;}
 .box7 .box7plane1{width:100%;margin-bottom:30px;overflow:hidden;zoom:1;}
@@ -565,7 +567,16 @@ text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;heig
 /**评论 over**/
 
 /**上传图片组件 begin**/
-#UpImg{position:absolute;z-index:120;width:680px;background-color:#fff;border:1px solid #E0E0E0;left:0px;top:42px;padding:30px;display:none;}
+#UpImg{position:absolute;z-index:120;width:680px;background-color:#fff;border:1px solid #E0E0E0;left:0px;top:42px;padding:30px;display:none;box-shadow: 0 0 5px #FFFFFF;}
+#UpImg .upimgtab{width:400px;border:1px solid #E4E4E4;background-color:#f8f8f8;cursor:pointer;overflow:hidden;z-index:99;position:relative;float:left;text-align: center;min-height:400px;}
+#UpImg .upimgtab img{width:400px;border-collapse:collapse;}
+#UpImg #SmallImgDiv{width:252px;height:252px;float:right;overflow:hidden;position:relative;border:1px solid #E4E4E4; background-color:#f8f8f8;}
+#UpImg #SmallImgDiv div{overflow:hidden;display:block;margin:0px auto;position:relative;}
+#UpImg #SmallImgDiv img{position:relative;min-width:252px;min-height:252px;}
+#UpImg .upimgdiv{clear:both;padding-top:20px;overflow:hidden;position:relative;width:100%;}
+#UpImg #EM{overflow:hidden;display:block;margin:0px auto;}
+
+/*
 #UpImg .upimgplane{background-color: #F8F8F8;border: 1px solid #E4E4E4;cursor: pointer;float: left;min-height: 252px;overflow: hidden;
 position: relative;text-align: center;vertical-align: middle;width: 400px;z-index: 99;}
 
@@ -588,7 +599,7 @@ overflow:hidden;zoom:1;z-index:20;}
 #UpImg #CutArea  div.cutarealine1{position:absolute;left:0px;top:0px;height:100%;background:url(/newbackstage/images/Jcrop.gif) left top repeat;width:1px;}
 #UpImg #CutArea  div.cutarealine2{position:absolute;left:0px;top:0px;height:1px;background:url(/newbackstage/images/Jcrop.gif) left top repeat;width:100%;}
 #UpImg #CutArea  div.cutarealine3{background:url(/newbackstage/images/Jcrop.gif) left top repeat;position:absolute;right:0px;top:0px;height:100%;width:1px;}
-#UpImg #CutArea  div.cutarealine4{background:url(/newbackstage/images/Jcrop.gif) left top repeat;position:absolute;left:0px;bottom:0px;height:1px;width:100%;}
+#UpImg #CutArea  div.cutarealine4{background:url(/newbackstage/images/Jcrop.gif) left top repeat;position:absolute;left:0px;bottom:0px;height:1px;width:100%;}*/
 /**上传图片组件 over**/
 
 /**程序调试用 begin**/

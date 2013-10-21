@@ -24,10 +24,9 @@ float: left;height: 84px;width: 240px;font-size: 30px;text-indent:-9999px;}
 .btn6{background:url('../images/btn/pic2.png') no-repeat scroll left top transparent;border: medium none;cursor: pointer;
 float: right;height: 84px;width: 240px;font-size: 30px;text-indent:-9999px;}
 
-.page{width:180px;margin:0px auto; padding:10px 0 0;line-height:30px;text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
-font-size:14px;color:#209FD7;}
+.page{margin:0px auto; padding:10px 0 0;line-height:25px;text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);font-size:12px;color:#209FD7;text-align:center;}
 .page p{display:block;margin:0px;padding:0px;}
-.container{background: url("../images/bg9_1.jpg") no-repeat;padding: 260px 0 40px 0;overflow:hidden;}
+.container{background: url("../images/bg9_1.jpg") no-repeat;padding: 300px 0 10px 0;overflow:hidden;}
 
 .radios{background: url("../images/sign19.jpg") left top no-repeat;width:25px;height:25px;display:inline-block;margin-right:10px;cursor:pointer;}
 .radios2{background: url("../images/sign20.jpg") left top no-repeat !important;width:25px;height:25px;display:inline-block;margin-right:10px;cursor:pointer;}
@@ -40,7 +39,7 @@ height: 70px;line-height: 70px;padding: 0 7px;box-shadow: 2px 2px 2px #333333 in
 .yellow2{color:#F59D36;}
 .orange{color:#FF894A;}
 .orange2{color:#FE6835;}
-.red{color:#f00;}
+.red{color:#D51F6C;}
 .gay1{color:#949494 !important}
 
 .title1{width:100%;background-color:#66CC00;color:#fff;text-align:center;border-radius:5px 5px 0px 0px;padding:10px 0px;}
