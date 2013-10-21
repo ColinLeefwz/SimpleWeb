@@ -11,7 +11,14 @@
 	<![endif]-->
 	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
 	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
-	<script src="/newbackstage/js/jquery.Jcrop.js"></script>
+	<script>
+		if(/ipad/i.test(ua)){
+			document.write("\<script src=\'\/newbackstage\/js\/imgUploadPreview.js\'\>\<\/script\>");
+		}else{
+			document.write("\<script src=\'\/newbackstage\/js\/jquery.Jcrop.js\'\>\<\/script\>");
+		}
+	</script>
+	
 </head>
 <body>
 	<div class="main">
@@ -161,8 +168,7 @@ function ImageUpload(target){//优惠券
 	}else{
 		obj=target;
 	}
-	
-	
+
 	pic=document.getElementById("UploadPic");
 	sid=document.getElementById("SmallImgDiv");
 	obj.click();//打开上传对话框
