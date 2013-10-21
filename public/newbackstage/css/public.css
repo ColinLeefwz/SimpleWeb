@@ -576,17 +576,23 @@ text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;heig
 #UpImg .upimgdiv{clear:both;padding-top:20px;overflow:hidden;position:relative;width:100%;}
 #UpImg #EM{overflow:hidden;display:block;margin:0px auto;}
 
-/*
-#UpImg .upimgplane{background-color: #F8F8F8;border: 1px solid #E4E4E4;cursor: pointer;float: left;min-height: 252px;overflow: hidden;
-position: relative;text-align: center;vertical-align: middle;width: 400px;z-index: 99;}
 
-#UpImg .upimgtab{width:400px;border:1px solid #E4E4E4; background-color:#f8f8f8;cursor:pointer;overflow:hidden;z-index:99;position:absolute;left:0px;top:0px;}
-#UpImg .upimgtab img{width:400px;border-collapse:collapse;}
-#UpImg #SmallImgDiv{width:252px;height:252px;float:right;overflow:hidden;position:relative;border:1px solid #E4E4E4; background-color:#f8f8f8;}
-#UpImg #SmallImgDiv div{overflow:hidden;display:block;margin:0px auto;position:relative;}
-#UpImg #SmallImgDiv img{position:relative;}
-#UpImg .upimgdiv{clear:both;padding-top:20px;overflow:hidden;position:relative;width:100%;}
-#UpImg #EM{overflow:hidden;display:block;margin:0px auto;}
+
+#UpImg .upimgplane{cursor: pointer;float: left;min-height: 252px;overflow: hidden;position: relative;text-align: center;vertical-align: middle;width: 402px;z-index: 99;}
+
+
+
+
+/*
+
+
+#UpImg .upimgtab{width:400px;border:1px solid #E4E4E4; background-color:#f8f8f8;cursor:pointer;overflow:hidden;z-index:99;position:absolute;left:0px;top:0px;}*/
+
+
+
+
+
+
 #UpImg #CutDiv{overflow:hidden;display:block;position:absolute;top:0px;z-index:20;}
 #UpImg #CutArea{width:252px;height:252px;position:absolute;z-index:70;cursor: move;background:url(/newbackstage/images/clear.gif) left top repeat;}
 #UpImg #CutBG1, #UpImg #CutBG2, #UpImg #CutBG3, #UpImg #CutBG4{position:absolute;overflow:hidden;display:block;z-index:21;filter:alpha(Opacity=50);Opacity:0.5;background-color:#000;}
