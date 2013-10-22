@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
 
   def index
-    @sessions = Session.all
+    @sessions = Session.where("draft=false")
   end
 
 end
