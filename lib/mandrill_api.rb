@@ -53,6 +53,29 @@ class MandrillApi
     ip_pool = "Main Pool"
 
     @mandrill.messages.send_template template_name, template_content, message, async, ip_pool
+  end
+
+  def invite_by_expert(user, email_message, token)
+    template_name = "invite_expert"
+    template_content = [{"name" => "message_content", "content" => email_message.message }, { "name"=>"invite_token", "content"=>token }]
+
+    message = {
+      "bcc_address"=>"message.bcc_address@example.com",
+      "text"=>"Example text content",
+      "metadata"=>{"website"=>"www.prodygia.com"},
+      "view_content_link"=>nil,
+      "auto_text"=>nil,
+      "important"=>false,
+      "to"=>[{"name"=>"", "email"=>email_message.to}],
+      "tracking_domain"=>nil,
+      "inline_css"=>nil,
+      "headers"=>{"Reply-To"=>"no-reply@prodygia.com"}
+    }
+
+    async = false
+    ip_pool = "Main Pool"
+
+    @mandrill.messages.send_template template_name, template_content, message, async, ip_pool
 
   end
 
