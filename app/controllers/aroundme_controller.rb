@@ -6,6 +6,7 @@ class AroundmeController < ApplicationController
 
   
   def shops
+    response.headers['location'] = URI::encode("中国;浙江;杭州")
     if session[:user_id] && User.is_shop_id?(session[:user_id])
       ret = [session_user.shop.safe_output_with_users]
       render :json =>  ret.to_json
