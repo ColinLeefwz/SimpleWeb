@@ -24,7 +24,16 @@ class City
       Xmpp.error_notify("城市代码#{code}不存在")
       return "未知"
     end
-    city
+    city.split(";")[-1]
+  end
+  
+  def self.cascade_name(code)
+    name = city_name(code)
+    if code =~ /^x/
+      return name if '海外'==name
+      return "海外;#{name}"
+    end
+    return "中国;#{name}"
   end
     
   def self.city_name_mongo(code)
@@ -40,9 +49,10 @@ class City
   end
   
   def City.fullname(city)
-    city = City.where({code:city}).limit(1).first
-    return "" if city.nil?
-    city.s.to_s + city.name.to_s
+    return cascade_name(city)
+    #city = City.where({code:city}).limit(1).first
+    #return "" if city.nil?
+    #city.s.to_s + city.name.to_s
   end
   
   def self.init_redis
@@ -50,8 +60,8 @@ class City
       $redis.set("CountryName#{o.country_code}", o.country)
     end
     City.where({}).sort({_id:1}).each do |city|
-      next if $redis.get("CityName#{city.code}")
-      $redis.set("CityName#{city.code}",city.name)
+      #next if $redis.get("CityName#{city.code}")
+      $redis.set("CityName#{city.code}", "#{city.s};#{city.name}")
     end
   end
   

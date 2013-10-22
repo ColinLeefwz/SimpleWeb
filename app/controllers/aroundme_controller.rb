@@ -6,7 +6,6 @@ class AroundmeController < ApplicationController
 
   
   def shops
-    response.headers['location'] = URI::encode("中国;浙江;杭州")
     if session[:user_id] && User.is_shop_id?(session[:user_id])
       ret = [session_user.shop.safe_output_with_users]
       render :json =>  ret.to_json
@@ -65,6 +64,7 @@ class AroundmeController < ApplicationController
     end
     arr.uniq!
     city = get_city(arr[0], lo)
+    response.headers['location'] = City.cascade_name(city) if city
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
       ghash = x.group_hash(session[:user_id])
