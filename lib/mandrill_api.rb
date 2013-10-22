@@ -55,19 +55,33 @@ class MandrillApi
     @mandrill.messages.send_template template_name, template_content, message, async, ip_pool
   end
 
-  def invite_by_expert(user, email_message, token)
+  def invite_by_expert(user, email_message, token_link)
     template_name = "invite_expert"
-    template_content = [{"name" => "message_content", "content" => email_message.message }, { "name"=>"invite_token", "content"=>token }]
+    template_content = [{"name" => "message_content", "content" => email_message.message }, { "name"=>"invite_token", "content"=>token_link }]
+    to_message = []
+    if email_message.copy_me?
+      cc_name = user.first_name
+      cc_email = user.email
+      to_message = [{"type"=>"to", "name" =>"", "email"=> email_message.to}, {"type"=>"cc", "name"=>cc_name, "email"=>cc_email}]
+    else
+      to_message = [{"type"=>"to", "name" =>"", "email"=> email_message.to}]
+    end
 
     message = {
+      "merge_vars"=>
+      [{"rcpt"=>user.email, "vars"=>[{"name"=>"TOKEN_LINK", "content"=>token_link}]}],
+      "from_name" => email_message.from_name,
+      "from_email" => user.email,
+      "subject" => email_message.subject,
       "bcc_address"=>"message.bcc_address@example.com",
       "text"=>"Example text content",
       "metadata"=>{"website"=>"www.prodygia.com"},
       "view_content_link"=>nil,
       "auto_text"=>nil,
       "important"=>false,
-      "to"=>[{"name"=>"", "email"=>email_message.to}],
+      "to"=>to_message,
       "tracking_domain"=>nil,
+      "headers"=>{"Reply-To"=>user.email},
       "inline_css"=>nil,
       "headers"=>{"Reply-To"=>"no-reply@prodygia.com"}
     }

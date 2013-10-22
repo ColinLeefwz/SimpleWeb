@@ -20,14 +20,16 @@ class InvitationsController < Devise::InvitationsController
      end
    elsif current_user.is_a? Expert
      @email_message = EmailMessage.create(set_email_message)
+
      invited_user_email = @email_message.to
-     self.resource = resource_class.invite!({ email: invited_user_email}, current_inviter) do |u|
+     self.resource = resource_class.invite!({ email: invited_user_email}, current_user) do |u|
        u.skip_invitation = true
      end
 
      @invitation_token = resource.invitation_token
+     token_link = "http://pdg.originatechina.com/users/invitation/accept?invitation_token=#{@invitation_token}"
      mandrill = MandrillApi.new
-     send_result = mandrill.invite_by_expert(current_user, @email_message, @invitation_token)
+     send_result = mandrill.invite_by_expert(current_user, @email_message, token_link)
      logger.info "send invitation email result is : #{send_result}"
 
      if resource.errors.empty?
