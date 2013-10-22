@@ -27,4 +27,8 @@ class Session < ActiveRecord::Base
   def set_default
     self.price ||= 0.00
   end
+
+
+  attr_accessor :format, :date, :start_time, :end_time, :time_zone, :strategic_question, :save_draft, :preview
+
 end

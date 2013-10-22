@@ -42,4 +42,36 @@ describe ExpertsController do
 
   end
 
+  describe "GET new session" do
+
+    context "not logged in" do
+
+      it "can not access new session page" do
+        expect{ get :new_session, id: sameer.id }.to raise_error(CanCan::AccessDenied)
+        
+      end
+    end
+
+    context "logged in as expert" do
+      before :each do 
+        sign_in sameer
+      end
+
+      it "access new session page" do
+        get :new_session, id: sameer.id
+        expect(response).to render_template "new_session"
+      end
+
+      it "can not access other expert's new session page" do
+        expect{ get :new_session, id: alex.id }.to raise_error(CanCan::AccessDenied)
+      end
+
+      it "assigns new session" do
+        get :new_session, id: sameer.id
+        expect(assigns[:session]).to be_new_record
+      end
+    end
+    
+  end
+
 end

@@ -1,8 +1,7 @@
 class ExpertsController < ApplicationController
-  before_action :set_expert, only: [:dashboard, :new_post_content, :show, :edit, :destroy, :update]
+  load_and_authorize_resource
 
   def dashboard
-    authorize! :manage, :dashboard
     @sessions = @expert.sessions
   end
 
@@ -20,12 +19,12 @@ class ExpertsController < ApplicationController
       redirect_to dashboard_expert_path(current_user), notice: 'failed'
     end
   end
-
+  
+  def new_session
+    @live_session = Session.new
+  end
+  
   private
-    def set_expert
-      @expert = Expert.find(params[:id])
-    end
-
     def article_params
       params.require(:article_session).permit(:title, :description, :cover, {categories:[]} )
     end
