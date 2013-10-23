@@ -73,7 +73,7 @@ function Cut(){
 		$("body").unbind("touchmove");
 	});
 
-	if(/ipad/i.test(ua)){
+	if(/iphone/i.test(ua)){
 		$("body").bind("touchmove",function(e){e.stopPropagation();return false;});
 		$("#CutArea").bind("touchmove",function(e){
 			var cutdiv_left=$("#CutDiv").offset().left;
@@ -103,7 +103,7 @@ function Cut(){
 			$("#SmallImgDiv img").css({"margin-left":-(mouse_left-cutdiv_left-hraf_w)+"px","margin-top":-(mouse_top-cutdiv_top-hraf_h)+"px"});
 		});	
 	}else{
-		$("#CutArea").mousedown(function(){
+		/*$("#CutArea").mousedown(function(){*/
 			$("#CutArea").mousemove(function(e){
 				var cutdiv_left=$("#CutDiv").offset().left;
 				var cutdiv_top=$("#CutDiv").offset().top;
@@ -139,12 +139,12 @@ function Cut(){
 		});
 	}
 	
-	$("#CAMove").mousedown(function(e){
+	$("#CAMove").touchdown(function(e){
 		var cutdiv_left=$("#CutDiv").offset().left;
 		var cutdiv_top=$("#CutDiv").offset().top;
 		var cutarea_w=parseFloat($("#CutArea").css("width"));
 		
-		$("#CAMove").mousemove(function(e){
+		$("#CAMove").touchmove(function(e){
 			$("#CAMove").css({"left":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))-15+"px",
 			"top":e.pageY-cutdiv_top-parseFloat($("#CutArea").css("top"))-15+"px","width":"30px","height":"30px"});
 			$("#CutArea").css({"width":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))+"px","height":e.pageX-cutdiv_left-parseFloat($("#CutArea").css("left"))+"px"});
@@ -181,7 +181,7 @@ function Cut(){
 			e.stopPropagation();
 			return false;
 		});
-		$("#CAMove").mouseup(function(){
+		$("#CAMove").touchup(function(){
 			$("#CAMove").unbind("mousemove").css({"left":parseFloat($("#CutArea").css("width"))-15+"px","top":parseFloat($("#CutArea").css("width"))-15+"px","width":"10px","height":"10px"});
 		});
 		e.stopPropagation();
@@ -189,11 +189,14 @@ function Cut(){
 	});
 }
 function NoCut(){
-	$('#UpImg').fadeOut(500);
+	$("#UpImg").animate({"top":"-722px"},750,function(){
+		$("#UpImg, #BG").css("display","none");
+	});
+	$("#UpImgFile").val("");
 	$("#EM").html(emObj).removeAttr("style");
 	$("#SmallImgDiv").html(sidObj);
 	$("#CutDiv").css("display","none");
-	if(/ipad/i.test(ua)){
+	if(/iphone/i.test(ua)){
 		$("body").unbind("touchmove");
 	}
 }
