@@ -8,8 +8,7 @@ class Ability
       can :manage, :all
 
     elsif user.is_a? Expert
-      can :create, Session
-      can :update, Session do |session|
+      can :manage, Session do |session|
         session.try(:expert) == user
       end
 
