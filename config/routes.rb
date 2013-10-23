@@ -41,6 +41,11 @@ Prodygia::Application.routes.draw do
         get :post_a_draft
       end
     end
+
+    collection do
+      get :refer_new_expert
+      post :refer_new_expert
+    end
   end
 
   root to: "welcome#index"

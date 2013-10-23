@@ -39,6 +39,24 @@ describe ExpertsController do
         expect{ get :dashboard, id: alex.id }.to raise_error(CanCan::AccessDenied)
       end
     end
+  end
+
+  describe "GET refer_new_expert" do
+    context "logged in as expert" do
+      before :each do
+        sign_in sameer
+      end
+
+      it "access the invite expert page" do
+        get :refer_new_expert
+        expect(response).to render_template "refer_new_expert"
+      end
+
+      it "assigns the email_message" do
+        get :refer_new_expert
+        expect(assigns[:email_message]).to be_new_record
+      end
+    end
 
   end
 
