@@ -8,7 +8,12 @@ class InvitationsController < Devise::InvitationsController
     if current_user.is_a? AdminUser
       admin_invite
     elsif current_user.is_a? Expert
-      expert_invite
+      case params[:commit]
+      when "Send"
+        expert_invite
+      when "Cancel"
+        redirect_to refer_new_expert_experts_path
+      end
     end
   end
 
@@ -52,21 +57,19 @@ class InvitationsController < Devise::InvitationsController
   def expert_invite
     @email_message = current_user.email_messages.create(set_email_message)
 
-    invited_user_email = @email_message.to
-    self.resource = resource_class.invite!({ email: invited_user_email}, current_user) do |u|
+    self.resource = resource_class.invite!({ email: @email_message.to}, current_user) do |u|
       u.skip_invitation = true
     end
 
     @invitation_token = resource.invitation_token
     token_link = "http://pdg.originatechina.com/users/invitation/accept?invitation_token=#{@invitation_token}"
+
     mandrill = MandrillApi.new
-    send_result = mandrill.invite_by_expert(current_user, @email_message, token_link)
-    logger.info "send invitation email result is : #{send_result}"
+    mandrill.invite_by_expert(current_user, @email_message, token_link)
 
     if resource.errors.empty?
       set_flash_message :notice, :send_instructions, :email => self.resource.email if self.resource.invitation_sent_at
       redirect_to dashboard_expert_path(current_user)
-      #redirect_to admin_dashboard_url
     else
       respond_with_navigational(resource) { render :new }
     end

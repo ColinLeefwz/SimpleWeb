@@ -33,7 +33,7 @@ class MandrillApi
   end
 
   def invite_by_expert(user, email_message, token_link)
-    template_content = [{"name" => "message_content", "content" => email_message.message }, { "name"=>"invite_token", "content"=>token_link }]
+    template_content = [{"name" => "message_content", "content" => email_message.message }, { "name"=>"token_link", "content"=>"<a href='#{token_link}'>#{token_link}</a>"}]
 
     to_message = []
     if email_message.copy_me?
@@ -44,8 +44,6 @@ class MandrillApi
     end
 
     addition_message = {
-      "merge_vars"=>
-      [{"rcpt"=>user.email, "vars"=>[{"name"=>"TOKEN_LINK", "content"=>token_link}]}],
       "from_name" => email_message.from_name,
       "from_email" => "no-reply@prodygia.com",
       "subject" => email_message.subject,
