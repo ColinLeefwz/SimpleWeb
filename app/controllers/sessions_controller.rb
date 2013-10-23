@@ -99,7 +99,7 @@ class SessionsController < ApplicationController
 
     session_image_url = domain_url + @session.cover.url
     mandrill = MandrillApi.new
-    mandrill.enroll_comfirm(current_user, @session, "enroll_comfirm", session_image_url)
+    mandrill.enroll_comfirm(current_user, @session, session_image_url)
 
   end
 

@@ -6,6 +6,8 @@
       .span9.main-menu
         = simple_form_for @email_message, url: invitation_path(User) do |f|
           %h3 Refer a new Expert
+          = f.input :from_name, as: 'hidden'
+          = f.input :from_address, as: 'hidden'
           = f.input :subject, label: "Subject:"
           = f.input :to, label: "To:"
           = f.input :message, label: "Message:"

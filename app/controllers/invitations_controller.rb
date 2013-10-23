@@ -32,9 +32,6 @@ class InvitationsController < Devise::InvitationsController
   end
 
   protected
-  def set_email_message
-    params.require(:email_message).permit(:subject, :to, :message, :copy_me)
-  end
 
   private
   def admin_invite
@@ -73,6 +70,9 @@ class InvitationsController < Devise::InvitationsController
     else
       respond_with_navigational(resource) { render :new }
     end
+  end
 
+  def set_email_message
+    params.require(:email_message).permit(:subject, :to, :message, :copy_me, :from_name, :from_address)
   end
 end
