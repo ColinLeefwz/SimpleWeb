@@ -1,26 +1,10 @@
 # coding: utf-8
-require "test/unit"
-require "rubygems"
-require "selenium-webdriver"
-
-
-class LoginTest < Test::Unit::TestCase
-
-  def setup
-    if RUBY_PLATFORM =~ /mswin32/
-      @driver = Selenium::WebDriver.for :ie
-    else
-      @driver = Selenium::WebDriver.for :firefox
-    end
-  end
-
-  def teardown
-    @driver.quit
-  end
+require File.expand_path('../selenium_help', __FILE__)
+class LoginTest < SeleniumTest
 
   def test_login
     
-    @driver.navigate.to "http://shop.dface.cn/shop_login/login"
+    @driver.navigate.to @host +"/shop_login/login"
 
     #错误id
     @driver.find_element(:name, 'id').send_keys "21835801343434"
@@ -50,7 +34,7 @@ class LoginTest < Test::Unit::TestCase
 
     #退出登录
     @driver.find_element(:link, '退出').click
-    assert_equal @driver.current_url, 'http://shop.dface.cn/shop3_login/login'
+    assert_equal @driver.current_url, @host + '/shop3_login/login'
 
 
   end

@@ -1,39 +1,11 @@
 # coding: utf-8
-require "test/unit"
-require "rubygems"
-require "selenium-webdriver"
-
-class Selenium::WebDriver::Element
-  def rsend_keys(*args)
-    clear
-    send_keys(args)
-  end
-end
-
-class CouponTest < Test::Unit::TestCase
-
-
-  def setup
-#    @host = "http://127.0.0.1"
-   @host = "http://shop.dface.cn"
-    if RUBY_PLATFORM =~ /mswin32/
-      @driver = Selenium::WebDriver.for :ie
-    else
-      @driver = Selenium::WebDriver.for :firefox
-    end
-
-    #登录
-
-    @driver.navigate.to @host +"/shop_login/login"
-    @driver.find_element(:name, 'id').rsend_keys "21836841"
-    @driver.find_element(:name, 'password').rsend_keys "123456"
-    @driver.find_element(:class, 'btn').click
-  end
+require File.expand_path('../selenium_help', __FILE__)
+class CouponTest < SeleniumTest
 
   def teardown
     coupons_index
     clear_coupons
-    @driver.quit
+    super
   end
 
   #跳到优惠券首页
@@ -87,9 +59,13 @@ class CouponTest < Test::Unit::TestCase
     end
   end
 
-
-
   def test_login
+    #登录
+    @driver.navigate.to @host +"/shop_login/login"
+    @driver.find_element(:name, 'id').rsend_keys "21836841"
+    @driver.find_element(:name, 'password').rsend_keys "123456"
+    @driver.find_element(:class, 'btn').click
+
     coupons_index #到优惠券首页
     clear_coupons #清空所有优惠券
     release_checkin #到new页发布优惠券
