@@ -23,7 +23,7 @@ class ExpertsController < ApplicationController
 
   def refer_new_expert
     @expert = current_user
-    @email_message = EmailMessage.new(sender: current_user, subject: "Invite you to be expert at Prodygia", message: "good day", from_name: "#{current_user.first_name} #{current_user.last_name}", from_address: "no-reply@prodygia", reply_to: "#{current_user.email}")
+    @email_message = current_user.email_messages.build(subject: "Invite you to be expert at Prodygia", message: "good day", from_name: "#{current_user.first_name} #{current_user.last_name}", from_address: "no-reply@prodygia", reply_to: "#{current_user.email}")
   end
 
   private

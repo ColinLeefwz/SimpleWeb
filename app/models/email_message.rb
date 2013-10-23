@@ -1,3 +1,3 @@
 class EmailMessage < ActiveRecord::Base
-  belongs_to :sender, class_name: Expert
+  belongs_to :expert
 end
