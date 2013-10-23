@@ -14,4 +14,6 @@
       <br>
       $ 62.75 your earnings so far 
     .something
-      // TODO: placeholder
+      - if session.draft
+        = "this is a draft |"
+        = link_to " post it", post_a_draft_session_path(session)
