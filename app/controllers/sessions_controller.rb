@@ -2,7 +2,7 @@ require 'paypal'
 require 'mandrill_api'
 
 class SessionsController < ApplicationController
-  load_and_authorize_resource :session, though: :expert
+  load_and_authorize_resource :session, though: :expert, shallow: true
  
   def post_a_draft
     @session = Session.find(params[:id])
