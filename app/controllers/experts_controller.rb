@@ -52,6 +52,8 @@ class ExpertsController < ApplicationController
     end
   end
 
+  def pending_page
+  end
   
   private
     def session_params
