@@ -10,7 +10,7 @@
           = f.input :from_address, as: 'hidden'
           = f.input :subject, label: "Subject:"
           = f.input :to, label: "To:"
-          = f.input :message, label: "Message:"
+          = f.input :message, label: "Message:", input_html: { class: 'ckeditor' }
           = f.input :copy_me, label: "Copy me on the message"
           = f.submit "Send"
           = f.submit "Cancel"
