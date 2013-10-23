@@ -1,21 +1,4 @@
-
-.tabbable
-  .cards-header
-    %ul.nav.nav-tabs
-      %li.card.active
-        %a{href: "#tab1", data: {toggle: "tab"}}Sessions
-      %li.card
-        %a{href: "#tab2", data: {toggle: "tab"}}Content
-      %li.card
-        %a{href: "#tab3", data: {toggle: "tab"}}Community
-
-
-  .cards-body.tab-content
-    .session-items.tab-pane.active#tab1
-      - @sessions.each do |session|
-        = render "sessions/session", session: session
-
-    .placeholder2.tab-pane#tab2
-      some content
-    .placeholder3.tab-pane#tab3
-      some community
+.cards-body.tab-content
+  .session-items.tab-pane.active#tab1
+    - @sessions.each do |session|
+      = render "sessions/session", session: session
