@@ -12,4 +12,7 @@
           = f.input :description, input_html: { class: 'ckeditor' }, label: "Discription:"
           .categories
             = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes, label: "Categories:"
-          = f.button :submit
+
+          = f.submit "Save draft"
+          = f.submit "Preview"
+          = f.submit "Create post content"
