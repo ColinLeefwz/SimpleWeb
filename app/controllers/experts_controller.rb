@@ -3,10 +3,19 @@ class ExpertsController < ApplicationController
 
   def dashboard
     @sessions = @expert.sessions.order("draft desc")
+    @from = 'main_menu'
+    respond_to do |format|
+      format.js { render 'update'}
+      format.html { render 'dashboard'}
+    end
   end
 
   def new_post_content
     @article_session = Session.new  # use Session.new so that form params are wrapped in :session
+    @from = 'new_post_content'
+    respond_to do |format|
+      format.js { render 'update'}
+    end
   end
 
   def create_post_content
@@ -29,6 +38,10 @@ class ExpertsController < ApplicationController
   
   def new_live_session
     @live_session = Session.new
+    @from = 'new_live_session'
+    respond_to do |format|
+      format.js { render 'update'}
+    end
   end
 
 
@@ -53,6 +66,10 @@ class ExpertsController < ApplicationController
   end
 
   def pending_page
+    @from = 'pending_page'
+    respond_to do |format|
+      format.js { render 'update'}
+    end
   end
   
   private
