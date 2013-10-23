@@ -1,4 +1,5 @@
 class Session < ActiveRecord::Base
+  validates :title, presence: true
   CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession Announcement).freeze
 
   self.inheritance_column = 'content_type'

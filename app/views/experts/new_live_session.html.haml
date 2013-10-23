@@ -5,7 +5,7 @@
       .span3.side-menu
         = render 'side_menu'
       .span9.main-menu
-        = simple_form_for @live_session, url: { action: "create_session" } do |f|
+        = simple_form_for @live_session, url: { action: "create_live_session" } do |f|
           %h3 Create new session
           = f.input :title
           .categories
@@ -23,7 +23,7 @@
           %br
           = f.label :description
           = f.text_area :description
-          -# = f.button :save_draft
-          -# = f.button :preview
           %br
-          = f.button :submit
+          = f.submit "Save Draft"
+          = f.submit "Preview"
+          = f.submit "Submit"

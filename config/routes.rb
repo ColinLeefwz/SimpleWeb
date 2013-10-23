@@ -28,8 +28,8 @@ Prodygia::Application.routes.draw do
       get :new_post_content
       post :create_post_content
 
-      get :new_session
-      post :create_session
+      get :new_live_session
+      post :create_live_session
     end
   end
 
