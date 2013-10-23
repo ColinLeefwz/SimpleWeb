@@ -61,7 +61,7 @@ class City
       $redis.set("CountryName#{o.country_code}", o.country)
     end
     City.where({}).sort({_id:1}).each do |city|
-      #next if $redis.get("CityName#{city.code}")
+      next if $redis.get("CityName#{city.code}")
       $redis.set("CityName#{city.code}", "#{city.s};#{city.name}")
     end
   end
