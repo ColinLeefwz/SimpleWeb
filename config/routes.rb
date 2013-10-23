@@ -22,11 +22,24 @@ Prodygia::Application.routes.draw do
     get :cancel
   end
 
-  resources :experts do
+  resources :experts, shallow: true do
     member do
       get :dashboard
+      get :main_menu
       get :new_post_content
       post :create_post_content
+
+      get :new_live_session
+      post :create_live_session
+
+      get :pending_page
+
+    end
+    
+    resources :sessions do
+      member do
+        get :post_a_draft
+      end
     end
 
     collection do

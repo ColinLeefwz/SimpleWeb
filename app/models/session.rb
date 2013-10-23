@@ -1,4 +1,5 @@
 class Session < ActiveRecord::Base
+  validates :title, presence: true
   CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession Announcement).freeze
 
   self.inheritance_column = 'content_type'
@@ -27,4 +28,8 @@ class Session < ActiveRecord::Base
   def set_default
     self.price ||= 0.00
   end
+
+
+  attr_accessor :format, :date, :start_time, :end_time, :time_zone, :strategic_question, :save_draft, :preview
+
 end

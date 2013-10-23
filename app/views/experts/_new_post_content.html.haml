@@ -1,0 +1,11 @@
+= simple_form_for @article_session, url: { action: "create_post_content" } do |f|
+  %h3 Post a new Content
+  = f.input :title, label: "Title:"
+  = f.input :cover, label: "Cover:"
+  = f.input :description, input_html: { class: 'ckeditor' }, label: "Discription:"
+  .categories
+    = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes, label: "Categories:"
+
+  = f.submit "Save draft"
+  = f.submit "Preview"
+  = f.submit "Create post content"

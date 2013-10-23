@@ -8,13 +8,17 @@ class Ability
       can :manage, :all
 
     elsif user.is_a? Expert
-      can :create, Session
-      can :update, Session do |session|
+      can :manage, Session do |session|
         session.try(:expert) == user
       end
-      can :manage, :dashboard do
-        user.id.to_s == params[:id]
-      end
+
+      can :manage, Expert do |expert|
+        expert == user
+      end 
+
+      cannot :delete, Expert
+      cannot :create, Expert
+
     elsif user.is_a? Member
 
     end

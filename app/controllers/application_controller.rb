@@ -10,6 +10,11 @@ class ApplicationController < ActionController::Base
     @current_ability ||= Ability.new(current_user, params)
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = "Access Denied"
+    redirect_to root_url
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :password) }
   end

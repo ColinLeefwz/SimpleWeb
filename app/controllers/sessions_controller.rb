@@ -2,8 +2,18 @@ require 'paypal'
 require 'mandrill_api'
 
 class SessionsController < ApplicationController
+  load_and_authorize_resource :session, though: :current_user, shallow: true
+ 
+  def post_a_draft
+    @session = Session.find(params[:id])
+    @session.draft = false
 
-  before_action :set_session, only: [:show, :edit, :update, :destroy, :enroll, :free_confirm, :sign_up_confirm, :buy_now, :sign_up_buy]
+    if @session.save
+      redirect_to dashboard_expert_path(current_user), notice: 'draft post'
+    else
+      redirect_to dashboard_expert_path(current_user), notice: 'failed'
+    end
+  end
 
   def enroll
     if user_signed_in?
@@ -59,10 +69,9 @@ class SessionsController < ApplicationController
     end
   end
 
+
+
   private
-  def set_session
-    @session = Session.find(params[:id])
-  end
 
   def member_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)

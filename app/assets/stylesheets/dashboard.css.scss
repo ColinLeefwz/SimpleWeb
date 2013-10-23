@@ -4,4 +4,31 @@
   margin-right:  auto;
   margin-top: 43px;
   margin-bottom: 50px;
+
+  label{
+    width: 7%;
+    text-align: right;
+  }
+
+  span label{
+    width: auto;
+  }
+
+  input, textarea, select, .cke_chrome{
+    margin-left: 1.5em;
+  }
+
+  .checkbox:first-of-type {
+    margin-left: 1.5em;
+  }
+
+  .cke_chrome {
+    width: 76% !important;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  .main-menu{
+    background: white;
+  }
 }
