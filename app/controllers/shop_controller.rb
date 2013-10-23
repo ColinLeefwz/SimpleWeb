@@ -138,7 +138,8 @@ class ShopController < ApplicationController
     pcount = 5 if pcount==0
     arr = shop.history(skip,pcount)
     headers[:more_result] = "1" if arr.size>=pcount
-    rmd = RoomMsgDel.where({room: shop.id.to_i}).distinct(:_id)
+#    rmd = RoomMsgDel.where({room: shop.id.to_i}).distinct(:_id)
+    rmd= $redis.smembers("RoomMsgDel#{shop.id.to_i}")
     arr.reject!{|c| rmd.include?(c[3])}
     arr.delete_if{|x| x[1] =~ /^0\d$/ || x[1][0,3]=="@@@"}
     if skip==0

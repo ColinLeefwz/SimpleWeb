@@ -7,4 +7,11 @@ class RoomMsgDel
   field :text
   field :room, type:Integer
 
+
+  def self.init_root_msg_del_redis
+    self.all.each do |mdr|
+      $redis.sadd("RoomMsgDel#{mdr.room.to_i}", mdr._id )
+    end
+  end
+
 end
