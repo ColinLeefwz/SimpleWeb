@@ -7,34 +7,43 @@
     %p= @expert.expert_profile.company
     %p= link_to 'edit profile'
   .clear-fix
+  .toolkit
+    .item
+      .item-icon #{image_tag('activity_stream.png')}
+      .item-icon-selected #{image_tag('activity_stream_selected.png')}
+      .item-text #{link_to 'My activity stream', remote: true}
+.block-title
+  %span
+    CREATE
 .toolkit
-  %h3 Expert Toolkit
-  .resources
-    .item#menu-option
-      .item-icon #{image_tag('dashboard.png')}
-      .item-icon-selected #{image_tag('dashboard_selected.png')}
-      .item-text #{link_to 'Dashboard', dashboard_expert_path(current_user), remote: true}
-    .item#menu-option
-      .item-icon #{image_tag('new_content.png')}
-      .item-icon-selected #{image_tag('new_content_selected.png')}
-      .item-text #{link_to 'Post new content', new_post_content_expert_path(current_user), remote: true }
-    .item#menu-option
-      .item-icon #{image_tag('new_session.png')}
-      .item-icon-selected #{image_tag('new_session_selected.png')}
-      .item-text #{link_to 'Create new session', new_live_session_expert_path(current_user), remote: true}
-    .item#menu-option
-      .item-icon #{image_tag('private_consultation.png')}
-      .item-icon-selected #{image_tag('private_consultation_selected.png')}
-      .item-text #{link_to 'Private consultation', pending_page_expert_path, remote: true}
-    .item#menu-option
-      .item-icon #{image_tag('video_library.png')}
-      .item-icon-selected #{image_tag('video_library_selected.png')}
-      .item-text #{link_to 'Video library', pending_page_expert_path, remote: true}
-.operations
   .item
-    .item-icon #{image_tag('calendar.png')}
-    .item-icon-selected #{image_tag('calendar_selected.png')}
-    .item-text #{link_to 'Calendar', pending_page_expert_path, remote: true}
+    .item-icon #{image_tag('new_content.png')}
+    .item-icon-selected #{image_tag('new_content_selected.png')}
+    .item-text #{link_to 'Post new content', new_post_content_expert_path(current_user), remote: true }
+  .item
+    .item-icon #{image_tag('new_session.png')}
+    .item-icon-selected #{image_tag('new_session_selected.png')}
+    .item-text #{link_to 'Create new session', new_live_session_expert_path(current_user), remote: true}
+  .item
+    .item-icon #{image_tag('private_session.png')}
+    .item-icon-selected #{image_tag('private_session_selected.png')}
+    .item-text #{link_to 'Schedule private session', pending_page_expert_path, remote: true}
+.block-title
+  %span
+    MANAGE
+.toolkit
+  .item
+    .item-icon #{image_tag('content.png')}
+    .item-icon-selected #{image_tag('content_selected.png')}
+    .item-text #{link_to 'Content', pending_page_expert_path, remote: true}
+  .item
+    .item-icon #{image_tag('new_session.png')}
+    .item-icon-selected #{image_tag('new_session_selected.png')}
+    .item-text #{link_to 'Sessions', sessions_expert_path, remote: true}
+  .item
+    .item-icon #{image_tag('video_library.png')}
+    .item-icon-selected #{image_tag('video_library_selected.png')}
+    .item-text #{link_to 'Video on demand', pending_page_expert_path, remote: true}
   .item
     .item-icon #{image_tag('testimonials.png')}
     .item-icon-selected #{image_tag('testimonials_selected.png')}
@@ -43,11 +52,25 @@
     .item-icon #{image_tag('refer_expert.png')}
     .item-icon-selected #{image_tag('refer_expert_selected.png')}
     .item-text #{link_to 'Refer new experts', refer_new_expert_experts_path }
+.block-title
+  %span 
+    VIEW
+.toolkit
+  .item
+    .item-icon #{image_tag('community.png')}
+    .item-icon-selected #{image_tag('community_selected.png')}
+    .item-text #{link_to 'Feedback', pending_page_expert_path, remote: true}
+  .item
+    .item-icon #{image_tag('calendar.png')}
+    .item-icon-selected #{image_tag('calendar_selected.png')}
+    .item-text #{link_to 'Calendar', pending_page_expert_path, remote: true}
   .item
     .item-icon #{image_tag('statistics.png')}
     .item-icon-selected #{image_tag('statistics_selected.png')}
     .item-text #{link_to 'Statistics', pending_page_expert_path, remote: true}
+%br
+.toolkit
   .item
-    .item-icon #{image_tag('feedback.png')}
-    .item-icon-selected #{image_tag('feedback_selected.png')}
-    .item-text #{link_to 'Feedback', pending_page_expert_path, remote: true}
+    .item-icon #{image_tag('dashboard.png')}
+    .item-icon-selected #{image_tag('dashboard_selected.png')}
+    .item-text #{link_to 'Go to member dashboard', pending_page_expert_path, remote: true}

@@ -4,7 +4,7 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
   box-shadow: $shadow_param; 
   background: #ffffff;
   .expert-info{
-    border-bottom: 2px solid #ddd;
+    // border-bottom: 2px solid #ddd;
     .expert-avatar{
       padding: 15px;
       float: left;
@@ -19,10 +19,26 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       padding-bottom: 15px;
     }
   }
+
+  .block-title{
+    text-align: center;
+    background-color: #dddddd;
+    height: 2px;
+    color: #dddddd;
+    font-size: 20px;
+    span{
+      background-color: white;
+      position: relative;
+      top: -0.5em;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
   .toolkit{
-    border-bottom: 2px solid #ddd;
     padding-left: 15px;
     background: #ffffff;
+    padding-top: 15px;
+    padding-bottom: 10px;
   }
   .operations{
     border-bottom: 2px solid #ddd;
