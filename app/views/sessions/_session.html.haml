@@ -17,3 +17,7 @@
       - if session.draft
         = "this is a draft |"
         = link_to " post it", post_a_draft_session_path(session)
+  .draft-ribbon
+    - if session.draft
+      = image_tag("draft_ribbon.png")
+        
