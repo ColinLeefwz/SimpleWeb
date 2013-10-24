@@ -19,12 +19,13 @@ class AroundmeController < ApplicationController
     gps = nil
     wifi = nil
     if params[:baidu].to_i==1
-      lo1 = Shop.lob_to_lo(lo) if params[:accuracy].to_i>1
+      #############################
+      lo1 = Shop.lob_to_lo(lo) if params[:accuracy].to_i>=1
       if params[:gps] && params[:gps].size>0
         begin
           gps = ActiveSupport::JSON.decode(params[:gps])
           acc2 = gps["Accuracy"].to_i
-          lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>1
+          lo2 = [gps["Latitude"],gps["Longitude"]] if acc2>=1
         rescue Exception => e
           Xmpp.error_notify("gps:#{e.backtrace[0..3]}\n#{params[:gps]}\n")
         end
