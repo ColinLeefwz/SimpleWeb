@@ -1,13 +1,16 @@
 class ExpertsController < ApplicationController
   load_and_authorize_resource
 
-  def dashboard
+  def sessions
     @sessions = @expert.sessions.order("draft desc")
-    @from = 'main_menu'
+    @from = 'sessions'
     respond_to do |format|
       format.js { render 'update'}
-      format.html { render 'dashboard'}
     end
+  end
+
+  def dashboard
+    @sessions = @expert.sessions.order("draft desc")
   end
 
   def new_post_content
