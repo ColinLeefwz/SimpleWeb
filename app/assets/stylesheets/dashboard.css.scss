@@ -6,8 +6,9 @@
   margin-bottom: 50px;
 
   label{
-    width: 7%;
+    width: 8%;
     text-align: right;
+    vertical-align: top;
   }
 
   span label{
@@ -15,11 +16,24 @@
   }
 
   input, textarea, select, .cke_chrome{
+    margin-left: 2%;
+  }
+
+  input[type="submit"]{
+    margin-top: 2em;
+    margin-left: 10%;
+    margin-bottom: 2em;
+  }
+
+  .checkbox{
+    padding-right: 0.8em;
+  }
+  .checkbox:first-of-type {
     margin-left: 1.5em;
   }
 
-  .checkbox:first-of-type {
-    margin-left: 1.5em;
+  input[type="checkbox"]{
+    margin-right: 0.1em;
   }
 
   .cke_chrome {

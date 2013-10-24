@@ -92,13 +92,16 @@ class ExpertsController < ApplicationController
 CONTENT
 
     @email_message = current_user.email_messages.build(subject: "Invite you to be expert at Prodygia", message: message_content, from_name: "#{current_user.first_name} #{current_user.last_name}", from_address: "no-reply@prodygia", reply_to: "#{current_user.email}")
+    @from = "refer_new_expert"
+    respond_to do |format|
+      format.js { render "update" }
+    end
   end
 
   private
   def set_expert
     @expert = Expert.find(params[:id])
   end
-
 
   def session_params
     params.require(:session).permit(:title, :description, :cover, :video, {categories:[]}, :location, :price, :language, :start_date )
