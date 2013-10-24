@@ -4,7 +4,6 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
   box-shadow: $shadow_param; 
   background: #ffffff;
   .expert-info{
-    // border-bottom: 2px solid #ddd;
     .expert-avatar{
       padding: 15px;
       float: left;
@@ -39,12 +38,6 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
     background: #ffffff;
     padding-top: 15px;
     padding-bottom: 10px;
-  }
-  .operations{
-    border-bottom: 2px solid #ddd;
-    padding-left: 15px;
-    background: #ffffff;
-    padding-top: 15px;
   }
   .item{
     margin-bottom: 10px;
