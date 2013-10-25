@@ -3,3 +3,11 @@
 # To ban all spiders from the entire site uncomment the next two lines:
 # User-Agent: *
 # Disallow: /
+
+ User-Agent: *
+ Disallow: /javascripts
+ Disallow: /newbackstage
+ Disallow: /phone*
+ Disallow: /stylesheets
+ Disallow: upload_photo2.html
+ Disallow: upload_photo.html
