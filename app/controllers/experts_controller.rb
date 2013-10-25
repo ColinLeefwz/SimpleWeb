@@ -41,7 +41,8 @@ class ExpertsController < ApplicationController
 
   def new_live_session
     @live_session = Session.new
-    @from = 'new_live_session'
+    @from = 'live_session'
+    @url = 'create_live_session_expert_path'
     respond_to do |format|
       format.js { render 'update'}
     end
