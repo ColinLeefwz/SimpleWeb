@@ -6,7 +6,13 @@ describe ExpertsController do
   describe "GET dashboard" do
     context "not logged in" do
       it "can not access the dashboard page" do
-        expect{ get :dashboard, id: sameer.id }.to raise_error(CanCan::AccessDenied)
+        get :dashboard, id: sameer.id
+        expect(response).to redirect_to root_path
+      end
+
+      it "can not assign sessions" do
+        get :dashboard, id: sameer.id
+        expect(assigns[:sessions]).to be_nil
       end
     end
 
@@ -16,7 +22,13 @@ describe ExpertsController do
       end
 
       it "can not access the dashboard page" do
-        expect{ get :dashboard, id: sameer.id }.to raise_error(CanCan::AccessDenied)
+        get :dashboard, id: sameer.id
+        expect(response).to redirect_to root_path
+      end
+
+      it "can not assign sessions" do
+        get :dashboard, id: sameer.id
+        expect(assigns[:sessions]).to be_nil
       end
     end
 
@@ -32,11 +44,12 @@ describe ExpertsController do
 
       it "assigns sessions" do
         get :dashboard, id: sameer.id
-        expect(assigns[:sessions]).to eq sameer.sessions
+        expect(assigns[:sessions]).to eq sameer.sessions_with_draft
       end
 
       it "can not access other's dashboard page" do
-        expect{ get :dashboard, id: alex.id }.to raise_error(CanCan::AccessDenied)
+        get :dashboard, id: alex.id 
+        expect(response).to redirect_to root_path
       end
     end
   end
@@ -48,25 +61,25 @@ describe ExpertsController do
       end
 
       it "access the invite expert page" do
-        get :refer_new_expert
-        expect(response).to render_template "refer_new_expert"
+        get :refer_new_expert, format: :js
+        expect(response).to be_success 
       end
 
       it "assigns the email_message" do
-        get :refer_new_expert
+        get :refer_new_expert, format: :js
         expect(assigns[:email_message]).to be_new_record
       end
     end
 
   end
 
-  describe "GET new session" do
+  describe "GET new live session" do
 
     context "not logged in" do
 
-      it "can not access new session page" do
-        expect{ get :new_session, id: sameer.id }.to raise_error(CanCan::AccessDenied)
-        
+      it "can not access new live session page" do
+        get :new_live_session, id: sameer.id 
+        expect(response).to redirect_to root_path
       end
     end
 
@@ -75,21 +88,23 @@ describe ExpertsController do
         sign_in sameer
       end
 
-      it "access new session page" do
-        get :new_session, id: sameer.id
-        expect(response).to render_template "new_session"
+      it "access new live session page" do
+        get :new_live_session, id: sameer.id, format: :js
+        expect(response).to be_success 
       end
 
-      it "can not access other expert's new session page" do
-        expect{ get :new_session, id: alex.id }.to raise_error(CanCan::AccessDenied)
+      it "can not access other expert's new live session page" do
+        get :new_live_session, id: alex.id, format: :js
+        expect(response).not_to be_success 
       end
 
-      it "assigns new session" do
-        get :new_session, id: sameer.id
-        expect(assigns[:session]).to be_new_record
+      it "assigns new live session" do
+        get :new_live_session, id: sameer.id, format: :js
+        expect(assigns[:live_session]).to be_a_new(Session)
       end
     end
     
   end
+
 
 end

@@ -2,7 +2,8 @@ require 'paypal'
 require 'mandrill_api'
 
 class SessionsController < ApplicationController
-  load_and_authorize_resource :session, though: :current_user, shallow: true
+  load_and_authorize_resource :session, though: :current_user, shallow: true, only: [:post_a_draft]
+  before_action :set_session
  
   def post_a_draft
     @session = Session.find(params[:id])
@@ -70,8 +71,11 @@ class SessionsController < ApplicationController
   end
 
 
-
   private
+
+  def set_session
+    @session = Session.find params[:id]
+  end
 
   def member_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)

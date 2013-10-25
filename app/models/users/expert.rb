@@ -17,4 +17,7 @@ class Expert < Member
     self.email_messages.build(from_name: "#{self.first_name} #{self.last_name}", from_address: "no-reply@prodygia", reply_to: "#{self.email}")
 	end
 
+  def sessions_with_draft
+    self.sessions.order('draft desc') 
+  end
 end
