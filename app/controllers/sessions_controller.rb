@@ -2,7 +2,7 @@ require 'paypal'
 require 'mandrill_api'
 
 class SessionsController < ApplicationController
-  load_and_authorize_resource :session, though: :current_user, shallow: true, only: [:post_a_draft]
+  load_and_authorize_resource :session, though: :current_user, shallow: true, only: [:post_a_draft, :edit_live_session]
   before_action :set_session
  
   def post_a_draft
@@ -70,6 +70,22 @@ class SessionsController < ApplicationController
     end
   end
 
+  def edit_live_session
+    @live_session = LiveSession.find(params[:id])
+    @from = "experts/live_session"
+    @url = "update_live_session_session_path"
+    respond_to do |format| 
+      format.js {render 'experts/update'}
+    end
+  end
+
+  def update_live_session
+    @session.update  
+    @from = "sessions"
+    respond_to do |format| 
+      format.js {render 'experts/update'}
+    end
+  end
 
   private
 
