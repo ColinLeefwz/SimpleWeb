@@ -2,7 +2,8 @@
   .expert-avatar
     = image_tag(@expert.avatar.url)
   .expert-text-info
-    %h4= @expert.name
+    .expert-name
+      %p= @expert.name
     %p= @expert.expert_profile.title
     %p= @expert.expert_profile.company
     %p= link_to 'edit profile'
@@ -49,6 +50,9 @@
 .toolkit
   .item
     = render 'item_icon', item_name: 'community'
+    .item-text #{link_to 'Community', pending_page_expert_path, remote: true}
+  .item
+    = render 'item_icon', item_name: 'feedback'
     .item-text #{link_to 'Feedback', pending_page_expert_path, remote: true}
   .item
     = render 'item_icon', item_name: 'calendar'
