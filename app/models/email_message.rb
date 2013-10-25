@@ -15,7 +15,7 @@ class EmailMessage < ActiveRecord::Base
     <p>Click below to sign up and enter your profile. It’s a first step. You can actually save time by signing up from your LinkedIn or Facebook accounts. Feel free to email specific questions to the Prodygia team on<a href="mailto:experts@prodygia.com"> experts@prodygia.com. </a>
     <p>Sincerely,</p>
 
-    <p>#{self.from_name}</p>
+    <p>#{self.from_name.titleize}</p>
 CONTENT
 
     self.from_name = "Nicole"
