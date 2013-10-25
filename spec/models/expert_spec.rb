@@ -15,7 +15,6 @@ describe Expert do
     end 
 
     it "returns [] if epxert has no sessions" do
-      expect(alex.sessions_with_draft.count).to eq 0
       expect(alex.sessions_with_draft).to eq []
     end
   end
