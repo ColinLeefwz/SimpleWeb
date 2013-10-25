@@ -4,6 +4,8 @@ img{border:none;}
 a{text-decoration:none;color:#333;}
 li{list-style:none;}
 
+.ff1{font-family:Arial !important;}
+
 .l{float:left;}
 .r{float:right;}
 
@@ -27,6 +29,10 @@ float: right;height: 84px;width: 240px;font-size: 30px;text-indent:-9999px;}
 float: left;height: 42px;width: 96px;font-size: 30px;text-indent:-9999px;}
 .btn8{background:url('../images/btn/pic4.png') no-repeat scroll left top transparent;border: medium none;cursor: pointer;
 float: right;height: 42px;width: 96px;font-size: 30px;text-indent:-9999px;}
+.btn9{width: 208px;height: 76px;display: block;text-align:center;color:#fff;font-family: 微软雅黑;font-size:20px;
+text-shadow:1.5px 1.5px 2px #333;line-height:76px;background: url("../images/btn8.jpg") left top repeat;margin:2px auto 0px auto;}
+.btn10{width: 208px;height: 76px;display: block;text-align:center;color:#fff;font-family: 微软雅黑;font-size:20px;
+text-shadow:1.5px 1.5px 2px #333;line-height:76px;background: url("../images/btn9.jpg") left top repeat;margin:2px auto 0px auto;}
 
 .page{height:100px;width:180px;margin:0px auto; padding:10px 0 0;line-height:20px;text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);}
 .page p{display:block;margin:0px;padding:0px;}
@@ -56,7 +62,8 @@ height: 30px;line-height: 30px;padding: 0 7px;box-shadow: 2px 2px 2px #333333 in
 .ml90{margin-left:90px;}
 .ml2p{margin-left:2%;}
 .mr20{margin-right:20px;}
-.mb20{margin-bottom:20px;}
+.mt10{margin-top:10px;}
+.mb10{margin-bottom:10px;}
 
 .set {background-color: #fff;border: 1px solid #C7C7C7;border-radius: 15px;margin: 30px auto;overflow: hidden;width:90%;}
 .line{width:100%;border-top: 2px solid #a7a7a7;border-bottom: 1px solid #e4e4e4;margin:20px 0}
