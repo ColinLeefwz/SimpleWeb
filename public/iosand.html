@@ -1,0 +1,19 @@
+<script type="text/javascript">
+(function(){
+    var mobile_host = "https://itunes.apple.com/cn/app/lianlian/id577710538";
+    var web_host = "http://www.dface.cn"
+    var userAgent = navigator.userAgent;
+    //判断设备      
+    if(/(mobile|wap|android)/i.test(userAgent)){
+        return;
+    }else if(/(iphone)/i.test(userAgent)) {
+        window.location.replace(mobile_host);
+    } else {
+        window.location.replace(web_host);
+    }
+})();
+
+</script>
+
+<h1>123</h1>
+
