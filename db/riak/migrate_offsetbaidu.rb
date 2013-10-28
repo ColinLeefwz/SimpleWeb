@@ -1,3 +1,6 @@
+#https://github.com/basho/riak-ruby-client
+#ripple
+
 client = Ripple.client
 bucket = client.bucket('boffsets')
 Mongoid.session(:dooo)[:offsetbaidus].where({v:{"$exists" => false}}).each do |x|
