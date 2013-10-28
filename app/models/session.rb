@@ -30,6 +30,6 @@ class Session < ActiveRecord::Base
   end
 
 
-  attr_accessor :format, :date, :start_time, :end_time, :time_zone, :strategic_question, :save_draft, :preview
+  attr_accessor :format, :date, :start_time, :end_time, :strategic_question, :save_draft, :preview
 
 end
