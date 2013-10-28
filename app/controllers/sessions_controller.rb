@@ -2,11 +2,10 @@ require 'paypal'
 require 'mandrill_api'
 
 class SessionsController < ApplicationController
-  load_and_authorize_resource :session, though: :current_user, shallow: true, only: [:post_a_draft]
   before_action :set_session
- 
+  before_action :set_time_zone
+
   def post_a_draft
-    @session = Session.find(params[:id])
     @session.draft = false
 
     if @session.save
@@ -78,7 +77,16 @@ class SessionsController < ApplicationController
   end
 
   def member_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :time_zone)
+  end
+
+  ## Set TimeZone
+  def set_time_zone
+    if user_signed_in?
+      Time.zone = current_user.time_zone || "UTC"
+    else
+      Time.zone = @session.time_zone
+    end
   end
 
   def paypal_pay
