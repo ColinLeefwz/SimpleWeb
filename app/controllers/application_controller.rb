@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :password) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :password, :time_zone) }
   end
 
 
@@ -49,7 +49,6 @@ class ApplicationController < ActionController::Base
     return nil if user_signed_in? && !(current_user.is_a? AdminUser)
     current_user
   end
-
 
   protected
   ## Override devise-invitable before_filter
