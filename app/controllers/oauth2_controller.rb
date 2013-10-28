@@ -147,14 +147,15 @@ class Oauth2Controller < ApplicationController
   end
   
   def unbind_qq
-    if session_user_no_cache.wb_uid.nil?
+    user = session_user_no_cache
+    if user.qq.nil?
+      render :json => {error: "您没有绑定过qq帐号"}.to_json
+      return
+    end
+    if !user.has_wb? && !user.has_phone?
       render :json => {error: "不能解除唯一登录帐号的绑定"}.to_json
       return
     end
-    if session_user_no_cache.qq.nil?
-      render :json => {error: "您没有绑定过qq帐号"}.to_json
-      return
-    end    
     #User.find(session[:user_id]).unset(:qq)
     $redis.del("qqtoken#{session[:user_id]}")
     $redis.del("qqexpire#{session[:user_id]}")
@@ -164,11 +165,12 @@ class Oauth2Controller < ApplicationController
 
   #用户在脸脸客户端解除新浪微博绑定
   def unbind_sina
-    if session_user_no_cache.wb_uid.nil?
+    user = session_user_no_cache
+    if user.wb_uid.nil?
       render :json => {error: "您没有绑定过新浪微博帐号"}.to_json
       return
     end
-    if session_user_no_cache.qq.nil?
+    if !user.has_qq? && !user.has_phone?
       render :json => {error: "不能解除唯一登录帐号的绑定"}.to_json
       return
     end    
