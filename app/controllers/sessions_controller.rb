@@ -85,7 +85,7 @@ class SessionsController < ApplicationController
     if user_signed_in?
       Time.zone = current_user.time_zone || "UTC"
     else
-      Time.zone = @session.time_zone
+      Time.zone = @session.time_zone || "UTC"
     end
   end
 
