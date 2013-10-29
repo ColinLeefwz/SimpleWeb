@@ -6,9 +6,9 @@
   = f.input :format, collection: %w(Lounge Forum Livestreaming), as: :select
   = f.input :cover
   = f.input :video
-  = f.input :date, as: :date
-  = f.input :start_time, as: :time
-  = f.input :end_time, as: :time
+  = f.input :date, as: :date, order: [:month, :day]
+  = f.input :start_time, as: :time, label: :From, input_html: {class: "time-selector"}
+  = f.input :end_time, as: :time, label: :to, input_html: {class: "time-selector"}
   = f.input :time_zone
   = f.input :price
   = f.label :strategic_question

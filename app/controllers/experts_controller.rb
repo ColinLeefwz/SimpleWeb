@@ -91,7 +91,7 @@ class ExpertsController < ApplicationController
   end
 
   def session_params
-    params.require(:session).permit(:title, :description, :cover, :video, {categories:[]}, :location, :price, :language, :start_date )
+    params.require(:session).permit(:title, :description, :cover, :video, {categories:[]}, :location, :price, :language, :start_date, :time_zone )
   end
 
   def expert_params
