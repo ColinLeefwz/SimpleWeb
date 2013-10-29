@@ -68,6 +68,23 @@ class SessionsController < ApplicationController
     end
   end
 
+  def edit_live_session
+    @live_session = LiveSession.find(params[:id])
+    authorize! :edit_live_session, @live_session
+    @from = "experts/live_session"
+    @url = "update_live_session_session_path"
+    respond_to do |format| 
+      format.js {render 'experts/update'}
+    end
+  end
+
+  def update_live_session
+    @session.update  
+    @from = "sessions"
+    respond_to do |format| 
+      format.js {render 'experts/update'}
+    end
+  end
 
   private
 
