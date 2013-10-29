@@ -60,7 +60,7 @@ class NewUser
     else
       os = ""
     end
-    Xmpp.send_chat(uid,to,"#{user.show_gender}:#{od}:#{from}#{os} #{shop.name} #{shop.city_fullname}", "FEED#{$uuid.generate}", " NOLOG='1' NOPUSH='1' ")
+    Xmpp.send_chat(uid,to,"#{user.show_gender}:#{od}:#{from}#{os} #{shop.name} #{shop.city_fullname}", "FEED#{uid}", " NOLOG='1' NOPUSH='1' ")
   end
   
 end
