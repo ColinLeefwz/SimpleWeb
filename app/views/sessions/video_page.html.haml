@@ -40,8 +40,7 @@
             #time-icon.icon
               = image_tag "time.png"
             #time.item
-              -# = (@session.start_date == nil) ? "To be announced" : @session.start_date.to_formatted_s(:time_for_order).html_safe
-              = (@session.start_date == nil) ? "To be announced" : @session.start_date.in_time_zone(Time.zone).to_formatted_s(:short)+Time.zone.name
+              = (@session.start_date == nil) ? "To be announced" : determine_time_with_zone(@session.start_date, @session.time_zone)
           .item-wrapper
             #content-type-icon.icon
               = image_tag "content_type.png"

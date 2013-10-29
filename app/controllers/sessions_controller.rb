@@ -3,7 +3,6 @@ require 'mandrill_api'
 
 class SessionsController < ApplicationController
   before_action :set_session
-  before_action :set_time_zone
 
   def post_a_draft
     @session.draft = false
@@ -78,15 +77,6 @@ class SessionsController < ApplicationController
 
   def member_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :time_zone)
-  end
-
-  ## Set TimeZone
-  def set_time_zone
-    if user_signed_in?
-      Time.zone = current_user.time_zone || "UTC"
-    else
-      Time.zone = @session.time_zone || "UTC"
-    end
   end
 
   def paypal_pay
