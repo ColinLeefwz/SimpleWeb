@@ -28,7 +28,7 @@ def helper_objects
 	           description: 'How can I be happy despite the challenges of life?',
 	           status: 'Scheduled' }
 
-  let(:session_map) { create :video_session, title: 'China RoadMap', expert: alex,
+  let(:session_map) { create :live_session, title: 'China RoadMap', expert: alex,
 	           description: 'Show you China road map',
 	           status: 'Scheduled' }
 
