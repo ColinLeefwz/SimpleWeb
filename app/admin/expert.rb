@@ -3,6 +3,7 @@ ActiveAdmin.register Expert do
   action_item only:[:index] do
     link_to 'Invit An Expert', new_user_invitation_path
   end
+
   index do
     column :name do |expert|
       link_to(expert.name, admin_expert_path(expert))
@@ -22,6 +23,8 @@ ActiveAdmin.register Expert do
       e.expert_profile.location
     end
 
+    column :time_zone
+
     column :email
     default_actions
   end
@@ -34,6 +37,7 @@ ActiveAdmin.register Expert do
       f.input :avatar, as: :file
       f.input :email
       f.input :password, as: :password if f.object.new_record?
+      f.input :time_zone
 
       f.inputs name: "Profile", for: [ f.object.expert_profile || ExpertProfile.new ] do |p|
         p.input :title
@@ -56,6 +60,7 @@ ActiveAdmin.register Expert do
         image_tag expert.avatar.url, width: "70"
       end
       row :email
+      row :time_zone
       row :title do |expert|
         expert.expert_profile.title
       end
@@ -89,7 +94,7 @@ ActiveAdmin.register Expert do
 
   controller do
     def permitted_params
-      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, expert_profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional] ]
+      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, expert_profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional]]
     end
   end
 end
