@@ -29,6 +29,7 @@
             - else
               %p #{e},
         .clear-fix
+
       .video-page-below-box
         .video-page-location-info
           .item-wrapper
@@ -39,14 +40,21 @@
           .item-wrapper
             #time-icon.icon
               = image_tag "time.png"
+
             #time.item
-              = (@session.start_date == nil) ? "To be announced" : determine_time_with_zone(@session.start_date, @session.time_zone)
-          .item-wrapper
+              = render "timezone", time: @session.start_date, fallback: @session.time_zone, zone: nil
+            %p
+            = link_to "( Not in correct timezone? )", "#", class: "timezone-toggle", remote: true
+            .timezone-confirmation
+              = simple_form_for :time_zone, url: update_timezone_session_path(@session), remote: true do |f| 
+                = f.input :time_zone, required: false, label: false, priority: /US/
+
+          .item-wrapper.content-type
             #content-type-icon.icon
               = image_tag "content_type.png"
             #content-type.item
               = @session.content_type[0..-8]  # ***Session
-          .item-wrapper
+          .item-wrapper.price
             #price-icon.icon
               = image_tag "price.png"
             #price.item
