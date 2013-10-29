@@ -40,6 +40,7 @@ Prodygia::Application.routes.draw do
     resources :sessions do
       member do
         get :post_a_draft
+        post :update_timezone
       end
     end
 
