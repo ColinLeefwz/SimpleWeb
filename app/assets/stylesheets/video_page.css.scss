@@ -148,19 +148,6 @@
               vertical-align: middle;
               margin-left: 1%;
             }
-
-            .timezone-toggle{
-              color: #575757;
-              font-size: 13px;
-              margin-left: 2em;
-            }
-            .timezone-confirmation{
-              display: none;
-              .simple_form{
-                padding-top: 0;
-              }
-            }
-
           }
         }
 
@@ -183,11 +170,6 @@
           margin-left: 4.7%;
           text-align: center;
           font-size: 13px;
-        }
-        a{
-          margin-bottom: 15px;
-          color: #880848;
-          font-size: 20px;
         }
         .enroll-button{
           .enroll-text{
