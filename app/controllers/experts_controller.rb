@@ -40,9 +40,9 @@ class ExpertsController < ApplicationController
   end
 
   def new_live_session
-    @live_session = Session.new
+    @session = Session.new
     @from = 'live_session'
-    @url = 'create_live_session_expert_path'
+    @url = create_live_session_expert_path(current_user)
     respond_to do |format|
       format.js { render 'update'}
     end
@@ -50,22 +50,22 @@ class ExpertsController < ApplicationController
 
 
   def create_live_session
-    @live_session = LiveSession.new(session_params)
-    @live_session.expert = current_user
+    @session = LiveSession.new(session_params)
+    @session.expert = current_user
+
+    @from = 'sessions'
+    @sessions = current_user.sessions
 
     case params[:commit]
     when "Save Draft"
-      @live_session.draft = true
-      notice = "Draft Saved"
+      @session.draft = true
     when "Preview"
     when "Submit"
-      notice = "successful"
     end
 
-    if @live_session.save
-      redirect_to dashboard_expert_path(current_user), notice: notice
-    else
-      redirect_to dashboard_expert_path(current_user), notice: 'failed'
+    @session.save
+    respond_to do |format|
+      format.js { render 'update'}
     end
   end
 

@@ -76,18 +76,18 @@ class SessionsController < ApplicationController
   end
 
   def edit_live_session
-    @live_session = LiveSession.find(params[:id])
-    authorize! :edit_live_session, @live_session
+    authorize! :edit_live_session, @session
     @from = "experts/live_session"
-    @url = "update_live_session_session_path"
+    @url = update_live_session_session_path(@session)
     respond_to do |format| 
       format.js {render 'experts/update'}
     end
   end
 
   def update_live_session
-    @session.update  
-    @from = "sessions"
+    @sessions = current_user.sessions
+    @session.update(session_params)
+    @from = "experts/sessions"
     respond_to do |format| 
       format.js {render 'experts/update'}
     end
@@ -101,6 +101,10 @@ class SessionsController < ApplicationController
 
   def member_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :time_zone)
+  end
+
+  def session_params
+    params.require(:session).permit(:title, :description, :cover, :video, {categories:[]}, :location, :price, :language, :start_date, :time_zone )
   end
 
   def paypal_pay
