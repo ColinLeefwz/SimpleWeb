@@ -4,15 +4,20 @@ class WebChannelSearchController < ApplicationController
   def index
 
     hash = {}
-    sort = {_id: -1}
-
     hash.merge!({v: params[:v]}) unless params[:v].blank?
-    @channel_dip = Channel.where(hash).group_by{|g| [g.time.strftime("%Y-%m-%d"),g.ip]}.map{|k,v| [k,v.count]}
-    @channel_ip = Channel.where(hash).group_by{|g| g.ip}.map{|k,v| [k,v.count]}
-    @channel_date = Channel.where(hash).group_by{|g| g.time.strftime("%Y-%m-%d")}.map{|k,v| [k,v.count]}
-    respond_to do |format|
-      format.html
+    if !hash.blank?
+      ch = Channel.where(hash)
+      @channel_day_uniq_ip = ch.group_by{|g| [g.time.strftime("%Y-%m-%d"),g.ip]}.map{|a,b| [a,b.count]}.group_by{|g| g[0][0]}.map{|a,b| [a,b.count]}
+      @channel_dip = ch.group_by{|g| [g.time.strftime("%Y-%m-%d"),g.ip]}.map{|k,v| [k,v.count]}
+      @channel_ip = ch.group_by{|g| g.ip}.map{|k,v| [k,v.count]}
+      @channel_date = ch.group_by{|g| g.time.strftime("%Y-%m-%d")}.map{|k,v| [k,v.count]}
+    else
+      @channel_day_uniq_ip = []
+      @channel_dip = []
+      @channel_ip = []
+      @channel_date = []
     end
+
   end
 
 end

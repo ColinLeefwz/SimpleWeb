@@ -16,24 +16,21 @@ class CheckinNotice
     if new_shop
       shop = Shop.find_primary(checkin.sid) if shop.nil?
       new_shop_welcome(user,shop,checkin)
-    else
-      send_all_notice_msg(user,shop)
-    end
-    if new_shop
       checkin.save!
       send_welcome_msg_if_not_invisible(user,shop)
       user.write_lat_loc(checkin, shop.name)
       CheckinBssidStat.insert_checkin(checkin, ssid) if checkin.bssid && !checkin.del
       return
     end
-    send_coupon_msg = shop.send_coupon(checkin.uid)
-    @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     if user.is_shop?
       send_welcome_msg_if_not_invisible(user,shop)
       return
     end
+    send_coupon_msg = shop.send_coupon(checkin.uid)
+    @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     if checkin.add_to_redis #当天首次签到
       checkin.save!
+      send_all_notice_msg(user,shop)
       send_staff_welcome(user,shop)
       send_welcome_msg_if_not_invisible(user,shop)
       tingshuo_default_answer_text(shop, checkin.uid)
