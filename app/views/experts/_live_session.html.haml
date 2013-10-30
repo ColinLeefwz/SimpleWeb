@@ -1,4 +1,4 @@
-= simple_form_for @live_session, url: { action: "create_live_session" } do |f|
+= simple_form_for(@live_session, url: @url) do |f|
   %h3 Create new session
   = f.input :title
   .categories
