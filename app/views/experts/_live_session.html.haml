@@ -1,4 +1,4 @@
-= simple_form_for(@live_session, url: @url) do |f|
+= simple_form_for(@session, url: @url, as: :session, remote: true) do |f|
   %h3 Create new session
   = f.input :title
   .categories
@@ -10,6 +10,7 @@
   = f.input :start_time, as: :time, label: :From, input_html: {class: "time-selector"}
   = f.input :end_time, as: :time, label: :to, input_html: {class: "time-selector"}
   = f.input :time_zone
+  = f.input :location
   = f.input :price
   = f.label :strategic_question
   = f.text_area :strategic_question
