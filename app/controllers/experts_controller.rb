@@ -27,22 +27,27 @@ class ExpertsController < ApplicationController
 
     @sessions = current_user.sessions
 
-    if params[:commit] == "Create post content"
-      @article_session.draft = false
-      @article_session.save
-      # @from = "sessions"
-      # render 'update'
-      redirect_to dashboard_expert_path(current_user)
-    elsif params[:commit] == "Save draft"
-      @article_session.draft = true
-      @article_session.save
-      # @from = "sessions"
-      # render 'update'
-      redirect_to dashboard_expert_path(current_user)
-    elsif params[:commit] == "Preview"
-      @article_session.draft == true
-      @article_session.save
-      redirect_to session_path(@article_session)
+    respond_to do |format|
+      format.js{
+
+        if params[:commit] == "Create post content"
+          @article_session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == "Save draft"
+          @article_session.draft = true
+          @article_session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == "Preview"
+          @article_session.draft == true
+          @article_session.save
+          # redirect_to session_path(@article_session)
+          render js: "window.location='#{session_path(@article_session)}'"
+        end
+      }
     end
 
   end
