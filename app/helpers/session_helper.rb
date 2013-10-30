@@ -25,11 +25,14 @@ module SessionHelper
   end
   
 
-  def determine_time_with_zone(time, fallback)
-    if user_signed_in?
-      zone = current_user.time_zone || fallback
-    else
-      zone = fallback
+  def determine_time_with_zone(zone=nil, time, fallback)
+
+    if zone.nil?
+      if user_signed_in?
+        zone = current_user.time_zone || fallback
+      else
+        zone = fallback
+      end
     end
 
     time.in_time_zone(zone).to_formatted_s(:short) + "   " + zone

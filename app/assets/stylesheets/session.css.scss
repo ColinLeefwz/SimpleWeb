@@ -1,0 +1,12 @@
+
+.timezone-toggle{
+  color: #575757;
+  font-size: 13px;
+  margin-left: 2em;
+}
+.timezone-confirmation{
+  display: none;
+  .simple_form{
+    padding-top: 0;
+  }
+}

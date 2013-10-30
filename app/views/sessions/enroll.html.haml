@@ -20,7 +20,12 @@
         #time-icon.icon
           = image_tag "time.png"
         #time.item
-          = (@session.start_date == nil) ? "To be announced" : @session.start_date.to_formatted_s(:time_for_order).html_safe
+          = render "timezone", time: @session.start_date, fallback: @session.time_zone, zone: nil
+        %p
+        = link_to "( Not in correct timezone? )", "#", class: "timezone-toggle", remote: true
+        .timezone-confirmation
+          = simple_form_for :time_zone, url: update_timezone_session_path(@session), remote: true do |f| 
+            = f.input :time_zone, required: false, label: false, priority: /US/
 
 
       .item-wrapper

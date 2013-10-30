@@ -61,10 +61,17 @@ class SessionsController < ApplicationController
   end
 
   def show
-    if @session.is_a?ArticleSession
+    if @session.is_a? ArticleSession
       render 'text_page'
     else
       render 'video_page'
+    end
+  end
+
+  def update_timezone
+    @zone = params[:time_zone][:time_zone]
+    respond_to do |format|
+      format.js {}
     end
   end
 
