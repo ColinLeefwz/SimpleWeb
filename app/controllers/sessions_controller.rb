@@ -86,9 +86,27 @@ class SessionsController < ApplicationController
 
   def update_live_session
     @sessions = current_user.sessions
-    @session.update(session_params)
+    @session.update(live_session_params)
     @from = "experts/sessions"
     respond_to do |format| 
+      format.js {render 'experts/update'}
+    end
+  end
+
+  def edit_content
+    authorize! :edit_content, @session
+    @from = "experts/post_content"
+    @url = update_content_session_path(@session)
+    respond_to do |format|
+      format.js {render 'experts/update'}
+    end
+  end
+
+  def update_content
+    @sessions = current_user.sessions
+    @session.update(article_session_params)
+    @from = "experts/sessions"
+    respond_to do |format|
       format.js {render 'experts/update'}
     end
   end
@@ -103,8 +121,12 @@ class SessionsController < ApplicationController
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :time_zone)
   end
 
-  def session_params
-    params.require(:session).permit(:title, :description, :cover, :video, {categories:[]}, :location, :price, :language, :start_date, :time_zone )
+  def live_session_params
+    params.require(:live_session).permit(:title, {categories:[]}, :format, :cover, :video, :start_time, :time_zone, :location, :price, :strategic_question, :description)
+  end
+
+  def article_session_params
+    params.require(:article_session).permit(:title, {categories:[]}, :cover, :description)
   end
 
   def paypal_pay
