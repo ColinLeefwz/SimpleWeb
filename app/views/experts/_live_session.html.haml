@@ -1,4 +1,4 @@
-= simple_form_for(@live_session, url: @url) do |f|
+= simple_form_for(@session, url: @url, as: :session, remote: true) do |f|
   %h3 Create new session
   = f.input :title
   .categories
@@ -12,6 +12,7 @@
     %span.add-on
       %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
   = f.input :time_zone
+  = f.input :location
   = f.input :price
   = f.label :strategic_question
   = f.text_area :strategic_question
