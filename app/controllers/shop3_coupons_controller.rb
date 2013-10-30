@@ -74,27 +74,26 @@ class Shop3CouponsController < ApplicationController
     @coupon.shop_id = session[:shop_id]
     @coupon.t2 = 1
     @coupon.num = Coupon.next_num(@coupon.shop_id)
-    @coupon.process_img_upload = true if @coupon.t.to_i == 2
-    if @coupon.img2.blank?
+
+    pre = params[:coupon][:img2]
+    if pre.blank?
       flash.now[:notice]='请上传图片.'
       return render :action => :new
     end
 
-    #    debugger
     if @coupon.rule && Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => {"$ne" => 1}, :t2 => 1, :rule => @coupon.rule  }).limit(1).any?
       flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
       return render :action => :new
     end
 
+    path =  FileUtils.mkdir_p('public/coupon/' + @coupon.id.to_s).first
+    FileUtils.mv("public#{pre}", path+"/0.jpg")
+    @coupon.img2_filename = "0.jpg"
 
     if @coupon.save
-      if @coupon.t.to_i == 1
-        @coupon.gen_img if @coupon.t.to_i == 1
-        sadd_city_coupon_redis
-        redirect_to :action => :show, :id => @coupon.id
-      else
-        redirect_to :action => :show_img2, :id => @coupon.id
-      end
+      @coupon.gen_img
+      sadd_city_coupon_redis
+      redirect_to :action => :show, :id => @coupon.id
     else
       render render :action => :new
     end
@@ -106,37 +105,24 @@ class Shop3CouponsController < ApplicationController
     @coupon = Coupon.find(params[:id])
     coupon = Coupon.new(params[:coupon])
 
-    #修改签到全图模式,
-    if  @coupon.t.to_i == 2
-      if coupon.img2.blank?
-        return render :action => 'all_img', :id => @coupon.id if coupon.rule.blank?
-        
-        if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => nil, :t2 => 1,  :_id => {"$ne" => @coupon.id},  :rule => coupon.rule  }).limit(1).any?
-          flash.now[:notice] = "该商家已有一张有效的#{coupon.show_rule}类型的优惠券."
-          return render :action => 'all_img', :id => @coupon.id
-        end
-      else
-        @coupon.process_img_upload = true
-        @coupon.update_attributes(params[:coupon])
-        return redirect_to :action => :show_img2, :id => @coupon.id
-      end
-    end
-
     #修改签到图文模式
-    if  @coupon.t.to_i == 1
-      if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => nil, :t2 => 1, :_id => {"$ne" => @coupon.id}, :rule => coupon.rule  }).limit(1).any?
-        flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
-        @coupon.name = coupon.name
-        @coupon.desc = coupon.desc
-        @coupon.rule = coupon.rule
-        @coupon.rulev = coupon.rulev
-        return  render :action => :edit
-      end
+    if Coupon.where({:shop_id => session[:shop_id].to_i, :hidden => nil, :t2 => 1, :_id => {"$ne" => @coupon.id}, :rule => coupon.rule  }).limit(1).any?
+      flash.now[:notice] = "该商家已有一张有效的#{@coupon.show_rule}类型的优惠券."
+      @coupon.name = coupon.name
+      @coupon.desc = coupon.desc
+      @coupon.rule = coupon.rule
+      @coupon.rulev = coupon.rulev
+      return  render :action => :edit
     end
    
     if @coupon.update_attributes(params[:coupon])
       @coupon.unset(:hint) if params[:hintv] == '0' #使用流程选0， hint = nil
-      @coupon.gen_img if @coupon.t.to_i == 1
+      unless  (pre = params[:coupon][:img2]).blank?
+        path = 'public/coupon/' + @coupon.id.to_s
+        FileUtils.rm(path+"/0.jpg")
+        FileUtils.mv("public#{pre}", path+"/0.jpg")
+        @coupon.gen_img
+      end
       sadd_city_coupon_redis
       redirect_to :action => :show, :id => @coupon.id
     else

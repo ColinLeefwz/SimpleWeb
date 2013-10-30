@@ -29,6 +29,12 @@ class Shop3ContentController < ApplicationController
   def delete_photo
     photo = Photo.find(params[:id])
     Rails.cache.delete("Photo#{photo.id}")
+
+    #照片设置为公告时， 删除公告
+    if session_shop.notice && session_shop.notice.photo_id.to_s == photo.id.to_s
+      session_shop.notice.delete
+    end
+    
     photo.delete
     expire_cache_shop(photo.room)
     respond_to do |format|
