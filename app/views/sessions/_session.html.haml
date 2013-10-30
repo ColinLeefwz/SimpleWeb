@@ -12,7 +12,10 @@
       5 comments(1 new) <br>
       <br>
       $ 62.75 your earnings so far 
-      %h4= link_to 'edit', edit_live_session_session_path(session), remote: true
+      - if session.is_a?LiveSession
+        %h4= link_to 'edit', edit_live_session_session_path(session), remote: true
+      - else
+        %h4= link_to 'edit', edit_content_session_path(session), remote: true
     .something
       - if session.draft
         = "this is a draft |"
