@@ -14,35 +14,41 @@ class ExpertsController < ApplicationController
   end
 
   def new_post_content
-    @article_session = Session.new  # use Session.new so that form params are wrapped in :session
-    @from = 'new_post_content'
+    @session = Session.new  # use Session.new so that form params are wrapped in :session
+    @url = create_post_content_expert_path(current_user)
+    @from = 'post_content'
     respond_to do |format|
       format.js { render 'update'}
     end
   end
 
   def create_post_content
-    @article_session = ArticleSession.new(session_params)
-    @article_session.expert = current_user
+    @session = ArticleSession.new(session_params)
+    @session.expert = current_user
 
-    @sessions = current_user.sessions
+    @sessions = current_user.sessions.order("draft desc")
 
-    if params[:commit] == "Create post content"
-      @article_session.draft = false
-      @article_session.save
-      # @from = "sessions"
-      # render 'update'
-      redirect_to dashboard_expert_path(current_user)
-    elsif params[:commit] == "Save draft"
-      @article_session.draft = true
-      @article_session.save
-      # @from = "sessions"
-      # render 'update'
-      redirect_to dashboard_expert_path(current_user)
-    elsif params[:commit] == "Preview"
-      @article_session.draft == true
-      @article_session.save
-      redirect_to session_path(@article_session)
+    respond_to do |format|
+      format.js{
+
+        if params[:commit] == "Create post content"
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == "Save draft"
+          @session.draft = true
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == "Preview"
+          @session.draft = true
+          @session.save
+          # redirect_to session_path(@article_session)
+          render js: "window.location='#{session_path(@session)}'"
+        end
+      }
     end
 
   end
@@ -61,19 +67,29 @@ class ExpertsController < ApplicationController
     @session = LiveSession.new(session_params)
     @session.expert = current_user
 
-    @from = 'sessions'
-    @sessions = current_user.sessions
+    @sessions = current_user.sessions.order("draft desc")
 
-    case params[:commit]
-    when "Save Draft"
-      @session.draft = true
-    when "Preview"
-    when "Submit"
-    end
-
-    @session.save
     respond_to do |format|
-      format.js { render 'update'}
+      format.js{
+
+        if params[:commit] == "Submit"
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == "Save draft"
+          @session.draft = true
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == "Preview"
+          @session.draft = true
+          @session.save
+          # redirect_to session_path(@article_session)
+          render js: "window.location='#{session_path(@session)}'"
+        end
+      }
     end
   end
 
