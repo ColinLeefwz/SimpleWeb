@@ -57,4 +57,4 @@ sleep 60
 
 sleep 60
 /mnt/.rvm/bin/ruby script/rails r  'CheckinBssidStat.dec_redis_score'
-`find /tmp -atime +2 | xargs rm`
+`find /tmp -atime +1 -name "mini_magick*" | xargs rm`
