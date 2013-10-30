@@ -1,9 +1,3 @@
--# .well
--#   #datetimepicker1.input-append.date
--#     %input{ data: {format: "dd/MM/yyyy hh:mm:ss"}, type:"text"}
--#     %span.add-on
--#       %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
-
 = simple_form_for(@live_session, url: @url) do |f|
   %h3 Create new session
   = f.input :title
