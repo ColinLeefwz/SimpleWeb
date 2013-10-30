@@ -6,9 +6,11 @@
   = f.input :format, collection: %w(Lounge Forum Livestreaming), as: :select
   = f.input :cover
   = f.input :video
-  = f.input :date, as: :date, order: [:month, :day]
-  = f.input :start_time, as: :time, label: :From, input_html: {class: "time-selector"}
-  = f.input :end_time, as: :time, label: :to, input_html: {class: "time-selector"}
+  = f.label :start_time
+  #datetimepicker.input-append.date
+    = f.text_field :start_time, data: {format: "dd/MM/yyyy hh:mm:ss"}, type: "text" 
+    %span.add-on
+      %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
   = f.input :time_zone
   = f.input :price
   = f.label :strategic_question

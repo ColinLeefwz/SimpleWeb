@@ -20,4 +20,5 @@
 //= require jquery.isotope.min
 //= require ckeditor/init
 //= require paypal-button.min
+//= require bootstrap-datetimepicker.min
 //= require_tree .

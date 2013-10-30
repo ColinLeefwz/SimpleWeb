@@ -2,5 +2,10 @@
   $(document).ready(function(){
     $(".main-menu").html("#{j(render partial: @from)}");
     CKEDITOR.replaceAll();
+
+    $('#datetimepicker').datetimepicker({
+      language: 'en',
+      pick12HourFormat: true
+    });
   });
 

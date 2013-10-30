@@ -7,6 +7,7 @@ $(document).ready(function(){
     $(".item").find(".item-text > a").css("color", "");
     $(this).parents(".item").find(".item-text > a").css("color", "#880848");
   });
+
 });
 
 
