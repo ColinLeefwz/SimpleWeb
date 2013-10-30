@@ -340,6 +340,7 @@ class Oauth2Controller < ApplicationController
       user.wb_g = user.gender
       user.save
     end
+    Resque.enqueue(WeiboFriend, token,wb_uid,user.id)
   end
     
   def bind_sina2(uid,token,expires_in,data)
