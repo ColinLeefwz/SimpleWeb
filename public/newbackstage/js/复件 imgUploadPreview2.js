@@ -2,6 +2,7 @@ var emObj, sidObj, documentHeight, windowHeight, docwidth;
 $(document).ready(function(){
     emObj=$("#EM").html()
     sidObj=$("#SmallImgDiv").html();
+	
     $("a.btn4").click(function(){
         $("#UpImg").css("top","42px").slideDown(600);
         documentHeight=$(document).height();
