@@ -24,17 +24,25 @@ class ExpertsController < ApplicationController
   def create_post_content
     @article_session = ArticleSession.new(session_params)
     @article_session.expert = current_user
-    case params[:commit]
-    when "Save draft"
+
+    @sessions = current_user.sessions
+
+    if params[:commit] == "Create post content"
+      @article_session.draft = false
+      @article_session.save
+      # @from = "sessions"
+      # render 'update'
+      redirect_to dashboard_expert_path(current_user)
+    elsif params[:commit] == "Save draft"
       @article_session.draft = true
-      save_session(@article_session)
-    when "Preview"
-      @article_session.draft = true
-      if @article_session.save
-        redirect_to session_path(@article_session)
-      end
-    when "Createe post content"
-      save_session(@article_session)
+      @article_session.save
+      # @from = "sessions"
+      # render 'update'
+      redirect_to dashboard_expert_path(current_user)
+    elsif params[:commit] == "Preview"
+      @article_session.draft == true
+      @article_session.save
+      redirect_to session_path(@article_session)
     end
 
   end
@@ -99,11 +107,4 @@ class ExpertsController < ApplicationController
     params.require(:expert).permit(:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials)
   end
 
-  def save_session(session)
-    if session.save
-      redirect_to dashboard_expert_path(current_user), notice: 'successful'
-    else
-      redirect_to dashboard_expert_path(current_user), notice: 'failed'
-    end
-  end
 end
