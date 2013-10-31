@@ -41,7 +41,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-livereload'
   gem 'guard-rspec'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~>2.35.1'
   gem 'launchy'
   gem 'spring'
 # gem 'poltergeist'
