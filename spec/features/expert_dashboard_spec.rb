@@ -11,10 +11,10 @@ def login_expert
 end
 
 def fill_post_new_content
-	within("form#new_session") do
-		fill_in("Title", with: "a new acticle session")
-		# attach_file("session_cover", File.join( Rails.root.join('spec', 'fixtures', 'about_us.jpg') ))
-		check("session_categories_macro")
+	within("form#new_article_session") do
+		fill_in("Title", with: "a new article session")
+		attach_file("article_session_cover", File.join( Rails.root.join('spec', 'fixtures', 'about_us.jpg') ))
+		check("article_session_categories_macro")
 	end
 
 end
@@ -34,9 +34,10 @@ feature "Expert Dashboard" do
 		expect(page).to have_css ".expert-info"
 	end
 
+	## post new content
 	scenario "posts new content", js: true do
 		click_link("Post new content")
-		expect(page).to have_css("form#new_session")
+		expect(page).to have_css("form#new_article_session")
 
 		## fill in the post new content form
 		fill_post_new_content
@@ -53,7 +54,7 @@ feature "Expert Dashboard" do
 
 	scenario "draft a new content", js: true do
 		click_link("Post new content")
-		expect(page).to have_css("form#new_session")
+		expect(page).to have_css("form#new_article_session")
 
 		## fill in the post new content form
 		fill_post_new_content
@@ -65,5 +66,17 @@ feature "Expert Dashboard" do
 		expect(Session).to have(1).instance
 		expect(Session.last).to be_draft
 	end
+
+	## create new session
+	scenario "create new session", js: true do
+		click_link "Create new session"
+		expect(page).to have_css "form#new_live_session"
+
+		## fill in the form
+		within("form#new_live_session") do
+			fill_in "live_session_title", with: "new live session"
+		end
+	end
+	
 
 end
