@@ -8,6 +8,7 @@ class UserInfoController < ApplicationController
   
   #deprecate
   def get
+    Xmpp.error_notify("deprecated: user_info/get")
     render :json => user_info_cache(params[:id],session[:user_id])
   end
 
@@ -56,6 +57,7 @@ class UserInfoController < ApplicationController
   
   #deprecate
   def logo
+    Xmpp.error_notify("deprecated: user_info/logo")
     begin
       if session[:user_id].to_s == params[:id]
         user = User.find_primary(params[:id])

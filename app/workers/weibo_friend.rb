@@ -6,6 +6,7 @@ class WeiboFriend
   def self.perform(token, wb_uid, uid)
     begin
       SinaFriend.new.insert_ids(wb_uid,token,true)
+      #TODO: 抓取最新微博粉丝数据，而不是利用已经抓取的好友数据计算得出，然后进行通知
     rescue
     end
     user = User.find_by_id(uid)

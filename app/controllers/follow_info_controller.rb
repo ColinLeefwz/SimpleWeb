@@ -12,13 +12,13 @@ class FollowInfoController < ApplicationController
   
   #deprecated
   def friends
+    Xmpp.error_notify("deprecated: follow_info/friends")
     who = UserFollow.find_by_id(params[:id])
     if who.nil?
       render :json => [].to_json
       return
     end
     users = who.follows.map {|x| User.find_by_id(x) }
-    #TODO: mongodb端分页
     users.delete(nil)
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
     output_users(users.reverse)
@@ -45,6 +45,7 @@ class FollowInfoController < ApplicationController
     
   #deprecated
   def good_friends
+    Xmpp.error_notify("deprecated: follow_info/good_friends")
     who = User.find_by_id(params[:id])
     if who.nil?
       render :json => [].to_json
