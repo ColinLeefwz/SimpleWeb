@@ -2,7 +2,7 @@ require 'paypal'
 require 'mandrill_api'
 
 class SessionsController < ApplicationController
-  before_action :set_session
+  before_action :set_session, except: [:new_live_session, :new_post_content, :create_post_content, :create_live_session, :sessions]
 
   def post_a_draft
     @session.draft = false
@@ -75,44 +75,105 @@ class SessionsController < ApplicationController
     end
   end
 
+  def sessions
+    @sessions = current_user.sessions.order("draft desc")
+    @from = 'sessions'
+    respond_to do |format|
+      format.js { render 'update'}
+    end
+  end
+
+  def new_live_session
+    @session = LiveSession.new
+    @session.expert = current_user
+    @from = 'live_session'
+    @url = create_live_session_expert_sessions_path(current_user)
+    respond_to do |format|
+      format.js { render 'update'}
+    end
+  end
+
+  def create_live_session
+    @session = LiveSession.new(live_session_params)
+    create_response
+  end
+
   def edit_live_session
     authorize! :edit_live_session, @session
-    @from = "experts/live_session"
+    @from = "live_session"
     @url = update_live_session_session_path(@session)
     respond_to do |format| 
-      format.js {render 'experts/update'}
+      format.js {render 'update'}
     end
   end
 
   def update_live_session
     @sessions = current_user.sessions
     @session.update(live_session_params)
-    @from = "experts/sessions"
+    @from = "sessions"
     respond_to do |format| 
-      format.js {render 'experts/update'}
+      format.js {render 'update'}
     end
+  end
+
+  def new_post_content
+    @session = ArticleSession.new  # use Session.new so that form params are wrapped in :session
+    @url = create_post_content_expert_sessions_path(current_user)
+    @from = 'post_content'
+    respond_to do |format|
+      format.js { render 'update'}
+    end
+  end
+
+  def create_post_content
+    @session = ArticleSession.new(article_session_params)
+    create_response
   end
 
   def edit_content
     authorize! :edit_content, @session
-    @from = "experts/post_content"
+    @from = "post_content"
     @url = update_content_session_path(@session)
     respond_to do |format|
-      format.js {render 'experts/update'}
+      format.js {render 'update'}
     end
   end
 
   def update_content
     @sessions = current_user.sessions
     @session.update(article_session_params)
-    @from = "experts/sessions"
+    @from = "sessions"
     respond_to do |format|
-      format.js {render 'experts/update'}
+      format.js {render 'update'}
     end
   end
 
   private
-
+  def create_response
+    @session.expert = current_user
+    @sessions = current_user.sessions.order("draft desc")
+    respond_to do |format|
+      format.js{
+        if params[:commit] == Session::COMMIT_TYPE[:submit]
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == Session::COMMIT_TYPE[:draft]
+          @session.draft = true
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == Session::COMMIT_TYPE[:preview]
+          @session.draft = true
+          @session.save
+          # redirect_to session_path(@article_session)
+          render js: "window.location='#{session_path(@session)}'"
+        end
+      }
+    end
+  end
   def set_session
     @session = Session.find params[:id]
   end
@@ -161,8 +222,6 @@ class SessionsController < ApplicationController
     session_image_url = domain_url + @session.cover.url
     mandrill = MandrillApi.new
     mandrill.enroll_comfirm(current_user, @session, session_image_url)
-
   end
-
 end
 
