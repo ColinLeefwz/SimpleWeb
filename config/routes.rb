@@ -25,27 +25,24 @@ Prodygia::Application.routes.draw do
   resources :experts, shallow: true do
     member do
       get :dashboard
-      get :sessions
       get :main_menu
-      get :new_post_content
-      post :create_post_content
-
-      get :new_live_session
-      post :create_live_session
-
       get :pending_page
-
     end
     
     resources :sessions do
       member do
-        get :post_a_draft
-        post :update_timezone
-        get :edit_live_session
-        patch :update_live_session
+        get :sessions
+        get :new_post_content
         get :edit_content
         patch :update_content
+        get :new_live_session
+        get :edit_live_session
+        patch :update_live_session
+        get :post_a_draft
+        post :update_timezone
       end
+      post :create_post_content, on: :collection
+      post :create_live_session, on: :collection
     end
 
     collection do
