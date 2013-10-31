@@ -79,7 +79,7 @@ class SessionsController < ApplicationController
     @sessions = current_user.sessions.order("draft desc")
     @from = 'sessions'
     respond_to do |format|
-      format.js { render 'update'}
+      format.js { render 'experts/update'}
     end
   end
 
@@ -89,7 +89,7 @@ class SessionsController < ApplicationController
     @from = 'live_session'
     @url = create_live_session_expert_sessions_path(current_user)
     respond_to do |format|
-      format.js { render 'update'}
+      format.js { render 'experts/update'}
     end
   end
 
@@ -103,7 +103,7 @@ class SessionsController < ApplicationController
     @from = "live_session"
     @url = update_live_session_session_path(@session)
     respond_to do |format| 
-      format.js {render 'update'}
+      format.js {render 'experts/update'}
     end
   end
 
@@ -112,7 +112,7 @@ class SessionsController < ApplicationController
     @session.update(live_session_params)
     @from = "sessions"
     respond_to do |format| 
-      format.js {render 'update'}
+      format.js {render 'experts/update'}
     end
   end
 
@@ -121,7 +121,7 @@ class SessionsController < ApplicationController
     @url = create_post_content_expert_sessions_path(current_user)
     @from = 'post_content'
     respond_to do |format|
-      format.js { render 'update'}
+      format.js { render 'experts/update'}
     end
   end
 
@@ -135,7 +135,7 @@ class SessionsController < ApplicationController
     @from = "post_content"
     @url = update_content_session_path(@session)
     respond_to do |format|
-      format.js {render 'update'}
+      format.js {render 'experts/update'}
     end
   end
 
@@ -144,7 +144,7 @@ class SessionsController < ApplicationController
     @session.update(article_session_params)
     @from = "sessions"
     respond_to do |format|
-      format.js {render 'update'}
+      format.js {render 'experts/update'}
     end
   end
 
