@@ -19,7 +19,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 gem 'paperclip'
 gem 'truncate_html'  # make truncate html_safe
-gem 'activeadmin', github: 'gregbell/active_admin' # , branch: 'rails4'
+gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'ckeditor'
 gem 'simple_form'
 gem 'paypal-sdk-core'

@@ -1,4 +1,4 @@
-= simple_form_for @article_session, url: { action: "create_post_content" } do |f|
+= simple_form_for(@session, url: @url, remote: true)  do |f|
   %h3 Post a new Content
   = f.input :title
   = f.input :cover
@@ -6,6 +6,7 @@
   .categories
     = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
 
-  = f.submit "Save draft"
-  = f.submit "Preview"
-  = f.submit "Create post content"
+
+  = f.submit Session::COMMIT_TYPE[:draft]
+  = f.submit Session::COMMIT_TYPE[:preview]
+  = f.submit Session::COMMIT_TYPE[:submit]

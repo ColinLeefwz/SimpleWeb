@@ -42,7 +42,9 @@ Prodygia::Application.routes.draw do
         get :post_a_draft
         post :update_timezone
         get :edit_live_session
-        post :update_live_session
+        patch :update_live_session
+        get :edit_content
+        patch :update_content
       end
     end
 

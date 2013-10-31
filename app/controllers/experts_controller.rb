@@ -14,35 +14,49 @@ class ExpertsController < ApplicationController
   end
 
   def new_post_content
-    @article_session = Session.new  # use Session.new so that form params are wrapped in :session
-    @from = 'new_post_content'
+    @session = Session.new  # use Session.new so that form params are wrapped in :session
+    @url = create_post_content_expert_path(current_user)
+    @from = 'post_content'
     respond_to do |format|
       format.js { render 'update'}
     end
   end
 
   def create_post_content
-    @article_session = ArticleSession.new(session_params)
-    @article_session.expert = current_user
-    case params[:commit]
-    when "Save draft"
-      @article_session.draft = true
-      save_session(@article_session)
-    when "Preview"
-      @article_session.draft = true
-      if @article_session.save
-        redirect_to session_path(@article_session)
-      end
-    when "Createe post content"
-      save_session(@article_session)
+    @session = ArticleSession.new(session_params)
+    @session.expert = current_user
+
+    @sessions = current_user.sessions.order("draft desc")
+
+    respond_to do |format|
+      format.js{
+
+        if params[:commit] == Session::COMMIT_TYPE[:submit]
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == Session::COMMIT_TYPE[:draft]
+          @session.draft = true
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == Session::COMMIT_TYPE[:preview]
+          @session.draft = true
+          @session.save
+          # redirect_to session_path(@article_session)
+          render js: "window.location='#{session_path(@session)}'"
+        end
+      }
     end
 
   end
 
   def new_live_session
-    @live_session = Session.new
+    @session = Session.new
     @from = 'live_session'
-    @url = 'create_live_session_expert_path'
+    @url = create_live_session_expert_path(current_user)
     respond_to do |format|
       format.js { render 'update'}
     end
@@ -50,22 +64,32 @@ class ExpertsController < ApplicationController
 
 
   def create_live_session
-    @live_session = LiveSession.new(session_params)
-    @live_session.expert = current_user
+    @session = LiveSession.new(session_params)
+    @session.expert = current_user
 
-    case params[:commit]
-    when "Save Draft"
-      @live_session.draft = true
-      notice = "Draft Saved"
-    when "Preview"
-    when "Submit"
-      notice = "successful"
-    end
+    @sessions = current_user.sessions.order("draft desc")
 
-    if @live_session.save
-      redirect_to dashboard_expert_path(current_user), notice: notice
-    else
-      redirect_to dashboard_expert_path(current_user), notice: 'failed'
+    respond_to do |format|
+      format.js{
+
+        if params[:commit] == Session::COMMIT_TYPE[:submit]
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == Session::COMMIT_TYPE[:draft]
+          @session.draft = true
+          @session.save
+          @from = "sessions"
+          render 'update'
+          # redirect_to dashboard_expert_path(current_user)
+        elsif params[:commit] == Session::COMMIT_TYPE[:preview]
+          @session.draft = true
+          @session.save
+          # redirect_to session_path(@article_session)
+          render js: "window.location='#{session_path(@session)}'"
+        end
+      }
     end
   end
 
@@ -99,11 +123,4 @@ class ExpertsController < ApplicationController
     params.require(:expert).permit(:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials)
   end
 
-  def save_session(session)
-    if session.save
-      redirect_to dashboard_expert_path(current_user), notice: 'successful'
-    else
-      redirect_to dashboard_expert_path(current_user), notice: 'failed'
-    end
-  end
 end
