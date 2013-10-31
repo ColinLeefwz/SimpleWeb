@@ -31,18 +31,18 @@ class ExpertsController < ApplicationController
     respond_to do |format|
       format.js{
 
-        if params[:commit] == "Create post content"
+        if params[:commit] == Session::COMMIT_TYPE[:submit]
           @session.save
           @from = "sessions"
           render 'update'
           # redirect_to dashboard_expert_path(current_user)
-        elsif params[:commit] == "Save draft"
+        elsif params[:commit] == Session::COMMIT_TYPE[:draft]
           @session.draft = true
           @session.save
           @from = "sessions"
           render 'update'
           # redirect_to dashboard_expert_path(current_user)
-        elsif params[:commit] == "Preview"
+        elsif params[:commit] == Session::COMMIT_TYPE[:preview]
           @session.draft = true
           @session.save
           # redirect_to session_path(@article_session)
@@ -72,18 +72,18 @@ class ExpertsController < ApplicationController
     respond_to do |format|
       format.js{
 
-        if params[:commit] == "Submit"
+        if params[:commit] == Session::COMMIT_TYPE[:submit]
           @session.save
           @from = "sessions"
           render 'update'
           # redirect_to dashboard_expert_path(current_user)
-        elsif params[:commit] == "Save draft"
+        elsif params[:commit] == Session::COMMIT_TYPE[:draft]
           @session.draft = true
           @session.save
           @from = "sessions"
           render 'update'
           # redirect_to dashboard_expert_path(current_user)
-        elsif params[:commit] == "Preview"
+        elsif params[:commit] == Session::COMMIT_TYPE[:preview]
           @session.draft = true
           @session.save
           # redirect_to session_path(@article_session)

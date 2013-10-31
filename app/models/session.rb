@@ -2,6 +2,8 @@ class Session < ActiveRecord::Base
   validates :title, presence: true
   CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession Announcement).freeze
 
+  COMMIT_TYPE = { draft: "Save Draft", submit:  "Submit", preview: "Preview" }
+
   self.inheritance_column = 'content_type'
 
   after_initialize :set_default
