@@ -27,7 +27,7 @@ describe ExpertsController do
       end
 
       it "can not assign sessions" do
-        get :dashboard, id: sameer.id
+       get :dashboard, id: sameer.id
         expect(assigns[:sessions]).to be_nil
       end
     end
@@ -55,6 +55,34 @@ describe ExpertsController do
   end
 
   describe "GET refer_new_expert" do
+    context "not logged in" do
+      it "can not access to the refer_new_expert page" do
+        get :refer_new_expert, id: sameer.id, format: :js
+        expect(response).not_to be_success
+      end
+
+      it "can not assign email_message" do
+        get :refer_new_expert, id: sameer.id, format: :js
+        expect(assigns[:email_message]).to be_nil
+      end
+    end
+
+    context "logged in as member" do
+      before :each do
+        sign_in peter
+      end
+
+      it "can not access the dashboard page" do
+        get :refer_new_expert, id: sameer.id, format: :js
+        expect(response).not_to be_success
+      end
+
+      it "can not assign email_message" do
+        get :refer_new_expert, id: sameer.id, format: :js
+        expect(assigns[:email_message]).to be_nil
+      end
+    end
+
     context "logged in as expert" do
       before :each do
         sign_in sameer
@@ -70,41 +98,41 @@ describe ExpertsController do
         expect(assigns[:email_message]).to be_new_record
       end
     end
-
   end
 
-  describe "GET new live session" do
 
-    context "not logged in" do
+  # describe "GET new live session" do
 
-      it "can not access new live session page" do
-        get :new_live_session, id: sameer.id 
-        expect(response).to redirect_to root_path
-      end
-    end
+  #   context "not logged in" do
 
-    context "logged in as expert" do
-      before :each do 
-        sign_in sameer
-      end
+  #     it "can not access new live session page" do
+  #       get :new_live_session, id: sameer.id 
+  #       expect(response).to redirect_to root_path
+  #     end
+  #   end
 
-      it "access new live session page" do
-        get :new_live_session, id: sameer.id, format: :js
-        expect(response).to be_success 
-      end
+  #   context "logged in as expert" do
+  #     before :each do 
+  #       sign_in sameer
+  #     end
 
-      it "can not access other expert's new live session page" do
-        get :new_live_session, id: alex.id, format: :js
-        expect(response).not_to be_success 
-      end
+  #     it "access new live session page" do
+  #       get :new_live_session, id: sameer.id, format: :js
+  #       expect(response).to be_success 
+  #     end
 
-      it "assigns new live session" do
-        get :new_live_session, id: sameer.id, format: :js
-        expect(assigns[:live_session]).to be_a_new(Session)
-      end
-    end
-    
-  end
+  #     it "can not access other expert's new live session page" do
+  #       get :new_live_session, id: alex.id, format: :js
+  #       expect(response).not_to be_success 
+  #     end
+
+  #     it "assigns new live session" do
+  #       get :new_live_session, id: sameer.id, format: :js
+  #       expect(assigns[:live_session]).to be_a_new(Session)
+  #     end
+  #   end
+  #   
+  # end
 
 
 end
