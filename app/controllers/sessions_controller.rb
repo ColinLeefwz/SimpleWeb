@@ -157,18 +157,15 @@ class SessionsController < ApplicationController
         if params[:commit] == Session::COMMIT_TYPE[:submit]
           @session.save
           @from = "sessions"
-          render 'update'
-          # redirect_to dashboard_expert_path(current_user)
+          render 'experts/update'
         elsif params[:commit] == Session::COMMIT_TYPE[:draft]
           @session.draft = true
           @session.save
           @from = "sessions"
-          render 'update'
-          # redirect_to dashboard_expert_path(current_user)
+          render 'experts/update'
         elsif params[:commit] == Session::COMMIT_TYPE[:preview]
           @session.draft = true
           @session.save
-          # redirect_to session_path(@article_session)
           render js: "window.location='#{session_path(@session)}'"
         end
       }
