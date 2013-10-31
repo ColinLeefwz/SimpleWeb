@@ -27,6 +27,7 @@ gem 'paypal-sdk-rest'
 gem 'figaro'
 gem 'mandrill-api'
 gem 'cancan'
+gem 'remotipart'
 
 group :doc do
   gem 'sdoc', require: false
