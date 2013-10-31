@@ -8,6 +8,8 @@ class AController < ApplicationController
     c.agent = request.env["HTTP_USER_AGENT"]
     c.save
     case params[:v]
+    when '19'
+      render :file => "~/lianlian/public/mini2.html", :use_full_path => true
     when '24'
       render :file => "~/lianlian/public/zhaopin.html", :use_full_path => true
     else
