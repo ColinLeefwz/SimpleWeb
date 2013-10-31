@@ -1,0 +1,35 @@
+<h1>渠道管理</h1>
+<br/>
+<%= form_tag '/admin_channels_desc',:method =>:get do %>
+  渠道号：<%= text_field_tag :num, params[:num], :size => 10 %>
+  <%= submit_tag "查 找" %>
+<% end %>
+<%= link_to '添加新的渠道', "/admin_channels_desc/new" %>
+<br/>
+
+
+<table border="1">
+  <tr>
+    <th>渠道号：</th>
+    <th>使用者：</th>
+    <th>用途：</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @channels.each do |ch| %>
+    <tr>
+      <td><%= ch.num %></td>
+      <td><%= ch.who %></td>
+      <td><%= ch.where %></td>
+      <td>
+        <%= link_to '编辑', "/admin_channels_desc/edit?id=#{ch.id}" %>
+      </td>
+      <td>
+        <%= link_to '删除', "/admin_channels_desc/destory?id=#{ch.id}" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
