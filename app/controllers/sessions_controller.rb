@@ -154,23 +154,31 @@ class SessionsController < ApplicationController
     @sessions = current_user.sessions.order("draft desc")
     respond_to do |format|
       format.js{
-        if params[:commit] == Session::COMMIT_TYPE[:submit]
-          @session.save
-          @from = "sessions"
-          render 'experts/update'
-        elsif params[:commit] == Session::COMMIT_TYPE[:draft]
-          @session.draft = true
-          @session.save
-          @from = "sessions"
-          render 'experts/update'
-        elsif params[:commit] == Session::COMMIT_TYPE[:preview]
-          @session.draft = true
-          @session.save
-          render js: "window.location='#{session_path(@session)}'"
+        if remotipart_submitted?
+
+          if params[:commit] == Session::COMMIT_TYPE[:submit]
+            @session.save
+            @from = "sessions"
+            render 'experts/update'
+          elsif params[:commit] == Session::COMMIT_TYPE[:draft]
+            @session.draft = true
+            @session.save
+            @from = "sessions"
+            render 'experts/update'
+          elsif params[:commit] == Session::COMMIT_TYPE[:preview]
+            @session.draft = true
+            @session.save
+            render js: "window.location='#{session_path(@session)}'"
+          end
+
+        else
+          render js: "window.location=window.location" 
+
         end
       }
     end
   end
+
   def set_session
     @session = Session.find params[:id]
   end
@@ -180,7 +188,7 @@ class SessionsController < ApplicationController
   end
 
   def live_session_params
-    params.require(:live_session).permit(:title, {categories:[]}, :format, :cover, :video, :start_time, :time_zone, :location, :price, :strategic_question, :description)
+    params.require(:live_session).permit(:title, {categories:[]}, :format, :cover, :video, :start_date, :time_zone, :location, :price, :strategic_question, :description)
   end
 
   def article_session_params
