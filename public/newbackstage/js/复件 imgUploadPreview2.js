@@ -91,7 +91,7 @@ function ImageUpload(target){//优惠券
                         addClass: 'jcrop-light'    //初始化 选区边界凸效果
                     },
 				   
-                    function (cutObj) {
+                    function (cutObj){
                         var w=$("#UploadPic").width();
                         var h=$("#UploadPic").height();
 						

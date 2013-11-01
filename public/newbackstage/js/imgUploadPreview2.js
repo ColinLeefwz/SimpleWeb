@@ -63,7 +63,7 @@ function ImageUpload(target){//优惠券
                             "display":"block"
                         });
                     }
-
+					$(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css("display","none");
                     var cut = new ImgCut({
                         viewClass: 'cnm',  //初始化 大中小图片预览区域及个数，DOM结构决定
                         imgId: 'UploadPic',
@@ -159,6 +159,7 @@ function NoCut(){
 }
 
 function ImgCut(options, callback) {
+alert(callback);
     var
     _class  = ImgCut ,
     _ops    = options

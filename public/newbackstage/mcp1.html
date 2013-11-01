@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/managecelphone.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<script>
+	var navmove="on", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+		
+		var timer;
+		$("#Question1, #Question2").click(function(){
+			var relnum=$(this).attr("rel");
+			$("#Answer"+relnum).slideToggle();
+			timer=setTimeout(function(){
+				$("#Answer"+relnum).slideUp();
+			},10000);
+		});
+		
+		$("#Answer1,#Answer2").mouseover(function(){
+			clearTimeout(timer);
+		}).mouseout(function(){
+			var obj=$(this);
+			if($(this).css("display")=="none"){return false;}
+			timer=setTimeout(function(){
+				obj.slideUp();
+			},2000);
+		});
+	});
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<img src="/newbackstage/images/sign46.jpg" align="left" id="OpenNav" title="打开导航菜单"/>
+			<h1>脸脸茶坊</h1>
+			<a href="#" class="view">预览</a>
+			<div class="clear1"></div>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="mcp1.html">首 页</a>
+				<span class="navline"></span>
+				<a href="mcp2.html">设 置</a>
+				<span class="navline"></span>
+				<a href="#">公司介绍</a>
+				<span class="navline"></span>
+				<a href="mcp6.html">最新动态</a>
+				<span class="navline"></span>
+				<a href="#">推荐菜品</a>
+				<span class="navline"></span>
+				<a href="#">联系我们</a>
+				<span class="navline"></span>
+				<a href="#">访问统计</a>
+				<span class="navline"></span>
+				<a href="#">微信管理</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		</div>
+		<div class="clear1"></div>
+		<div class="con">
+			<div class="box14">
+				<div class="box14left">
+					<div class="title1">
+						<h2 class="f18 l">脸脸茶坊</h2>
+						<span class="tag l ml10">免费版</span>
+						<span class="web">http://lianlianchafang.dface.cn</span>
+					</div>
+					<div class="box14_plane1">
+						<a href="#" class="btn21">预览</a>
+						<a href="#" class="btn21 ml10">分享</a>
+					</div>
+					<div class="box14_plane1">
+						<img src="/newbackstage/images/pic24.png" align="left" width="116" height="116"/>
+						<div class="box14_plane2">
+							<h3>脸脸茶坊手机网站专属二维码</h3>
+							<p>用手机扫一扫二维码就能访问你的手机网站；<br/>"右键另存为"可以保存大图，可将该二维码印刷至名片或宣传资料上。</p>
+						</div>
+					</div>
+					<div class="box14_plane1 noneborder">
+						<div id="Question1" class="pointer" rel="1">如果你已有电脑版网站，如何用手机访问时自动跳转到移动版本？</div>
+						<div id="Answer1" class="box14_plane3">
+							<span class="smallarrow"></span>
+							<div class="box14_plane4">
+在电脑版网站主页文件中添加以下代码，用户使用手机访问时，就会自动跳转到移动版本。<br/>
+&lt;script type="text/javascript"&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;var mobileUrl=&quot;http://lianlianchafang.dface.cn/&quot;,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;mobile = (/mmp|symbian|smartphone|midp|wap|phone|xoom|iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;if (mobile) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window.location = mobileUrl;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&lt;/script&gt;<br/>
+将以上代码添加至电脑版网站主页文件中&lt;head&gt;和&lt;/head&gt;之间即可。
+							</div>
+						</div>
+						<div id="Question2" class="pointer mt10" rel="2">手机网站二维码</div>
+						<div id="Answer2" class="box14_plane3">
+							<span class="smallarrow"></span>
+							<div class="box14_plane4">
+								我们为每个手机网站生成一个专属的二维码，可将该二维码印刷至名片或宣传资料上，或张贴在实体店内，用户用手机扫一扫二维码就能访问你的手机网站。
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box14right">
+					<div class="cpbox">
+						<iframe frameborder="0" src="/cellphone/index.html"></iframe>
+					<div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

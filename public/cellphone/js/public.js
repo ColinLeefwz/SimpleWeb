@@ -1,6 +1,6 @@
 var w1, h1, imgarr, i=0, timer, oldpointX,  newpointX, menuheight;
 w1=$(window).width()-10;
-
+ua=navigator.userAgent.toLowerCase();
 $(document).bind('pageinit',function(){
 	menuheight=$("#Menu").height();
 	$("#Menu").css("top",-menuheight+"px");
@@ -18,6 +18,13 @@ $(document).bind('pageinit',function(){
 	$("#GoBack").click(function(){
 		history.go(-1);
 	});
+	if($(window).width()<=265){
+		$(".btn1, .btn2, .btn3, .btn4").css({"margin":"0px 1px","padding-right":"2px"});
+		$(".footer").css({"margin-left":"0px","margin-right":"0px"});
+		if(/msie 7.0/i.test(ua)){
+			$(".btn1, .btn2, .btn3, .btn4").css({"margin":"0px","padding-right":"2px"});
+		}
+	}
 });
 
 $(window).load(function(){

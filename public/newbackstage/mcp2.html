@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/managecelphone.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<script src="/newbackstage/js/mcp.js" type="text/javascript"></script>
+	<script>
+	var navmove="on", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+	});
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<img src="/newbackstage/images/sign46.jpg" align="left" id="OpenNav" title="打开导航菜单"/>
+			<h1>脸脸茶坊</h1>
+			<a href="#" class="view">预览</a>
+			<div class="clear1"></div>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="mcp1.html">首 页</a>
+				<span class="navline"></span>
+				<a href="mcp2.html">设 置</a>
+				<span class="navline"></span>
+				<a href="#">公司介绍</a>
+				<span class="navline"></span>
+				<a href="mcp6.html">最新动态</a>
+				<span class="navline"></span>
+				<a href="#">推荐菜品</a>
+				<span class="navline"></span>
+				<a href="#">联系我们</a>
+				<span class="navline"></span>
+				<a href="#">访问统计</a>
+				<span class="navline"></span>
+				<a href="#">微信管理</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		</div>
+		<div class="clear1"></div>
+		<div class="con">
+			<div class="box14">
+				<div class="box14left">
+					<div class="title1"><h2 class="f18 l">设置</h2></div>
+					<div class="submenu">
+						<ul>
+							<li class="hover"><a href="mcp2.html">基本信息</a></li>
+							<li><a href="mcp3.html">菜单和功能</a></li>
+							<li><a href="mcp4.html">Banner</a></li>
+							<li><a href="mcp5.html">设计风格</a></li>
+						</ul>
+					</div>
+					<div class="clear1"></div>
+					<form id="cform" method="post" action="">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 pt45">
+						<tr>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">网站名称</td>
+							<td>
+								<input class="inputs6 radius5 relative" size="30" type="text" value="">
+								<span class="mes">4-20个字</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">选择域名</td>
+							<td>
+								<input class="inputs6 radius5 relative" size="30" type="text" value="">
+								<span class="mes">4-20个字符，只限字母、数字或减号-</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">描述</td>
+							<td>
+								<textarea class="textarea4 radius5 relative" cols="40" rows="20" style="word-wrap:normal"></textarea>
+								<span class="mes">最多140字</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">电脑版网址</td>
+							<td>
+								<input class="inputs6 radius5 relative" size="30" type="text" value="">
+								<span class="mes">电脑访问手机网站时时自动跳转到电脑版</span>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td>
+								<input type="submit" name="Submit" value="保 存" class="btn20 w100">
+							</td>
+						</tr>
+					</table>
+					</form>
+				</div>
+				<div class="box14right">
+					<div class="cpbox">
+						<iframe frameborder="0" src="/cellphone/index.html"></iframe>
+					<div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
