@@ -67,4 +67,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+	## Capybara wait time
+	Capybara.default_wait_time = 5
+
 end
