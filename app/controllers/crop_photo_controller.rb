@@ -4,8 +4,6 @@ class CropPhotoController < ApplicationController
   def upload
     path = "/uploads/tmp/#{Time.now.strftime("%y%m%d%H%M%S")}coupon#{rand(99)}.jpg"
     FileUtils.mv(params[:photo].tempfile.path, "public"+ path)
-    #    puts "----------" +path
-
     render :text =>  path
   end
 

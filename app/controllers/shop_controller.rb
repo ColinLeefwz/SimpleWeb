@@ -99,6 +99,16 @@ class ShopController < ApplicationController
     end
   end
 
+
+  def gchat
+    gchat = Gchat.new(sid: params[:sid], uid: params[:uid], mid: params[:mid], txt: params[:txt])
+    if gchat.save
+      render :text => '1'
+    else
+      render :text => '0'
+    end
+  end
+
   
   def users
     shop = Shop.find_by_id(params[:id])
