@@ -11,15 +11,15 @@ class PhotoUploader < CommonPhotoUploader
     process :quality => 100
   end
 
-  def self.temp_resize (hash)
-    old_processors =  self.processors.dup
-    begin
-      self.processors.reject!{|pro|  hash.keys.include?(pro[0]) }
-      process hash
-      yield
-    ensure
-      self.processors = old_processors
-    end
-  end
+  #  def self.temp_resize (hash)
+  #    old_processors =  self.processors.dup
+  #    begin
+  #      self.processors.reject!{|pro|  hash.keys.include?(pro[0]) }
+  #      process hash
+  #      yield
+  #    ensure
+  #      self.processors = old_processors
+  #    end
+  #  end
 
 end
