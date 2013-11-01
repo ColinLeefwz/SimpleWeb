@@ -11,10 +11,14 @@ class SinaFriend
   field :data, type: Hash #{ids, total_number}
 
 
-  def insert_ids(wb_uid, token)
+  def insert_ids(wb_uid, token, force_update=false)
     begin
-      SinaFriend.find(wb_uid.to_s)
-      return
+      sf = SinaFriend.find(wb_uid.to_s)
+      if force_update
+        sf.destroy
+      else
+        return
+      end
     rescue
     end
     hash =  all_page(wb_uid,token)

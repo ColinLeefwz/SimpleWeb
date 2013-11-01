@@ -74,8 +74,9 @@ class UserLogosController < ApplicationController
     end
   end
   
-  #deprecate
+  #deprecate  
   def show
+    Xmpp.error_notify("deprecated: user_logo/show")
     if params[:size].to_i==0
       redirect_to UserLogo.img_url(params[:id])
     elsif params[:size].to_i==2

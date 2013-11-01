@@ -2,6 +2,7 @@ var emObj, sidObj, documentHeight, windowHeight, docwidth;
 $(document).ready(function(){
     emObj=$("#EM").html()
     sidObj=$("#SmallImgDiv").html();
+	
     $("a.btn4").click(function(){
         $("#UpImg").css("top","42px").slideDown(600);
         documentHeight=$(document).height();
@@ -41,13 +42,29 @@ function ImageUpload(target){//优惠券
     obj.click();//打开上传对话框
     obj.onchange=function(){
         $("#Btn19").removeClass("none");
-        $("#UploadForm").ajaxSubmit({
-            url: "/crop_photo/upload",
-            type: 'POST',
-            success: function(data){
-                $("#EM").html("<img id='UploadPic' src='"+ data +"' />");
-                pic.src= data;
+        if(/msie/i.test(ua)){//IE浏览器可以直接取值
+            this.select();
+            this.blur();
+            var path=document.selection.createRange().text;
+            path = "file:///" + path.replace(":",'|');
+            path = path.replace(/\\/g,'/');
+            document.selection.empty();
+            $(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css({
+                "display":"none"
+            });
+            $(".filebox14, .filebox15").removeClass("none");
+        }else{//火狐、谷歌、Opera、需要通过生成FileReader()来专门实现图片显示
+			
+            var reader = new FileReader();
+            reader.readAsDataURL(obj.files[0]);
+            reader.onload = function(e){
+
+
+                $("#EM").html("<img id='UploadPic' src='"+this.result+"' />");
+                pic.src=this.result;
                 sid.innerHTML="<img src=\'"+$("#UploadPic").attr("src")+"\' />";
+
+
 
                 $("#UploadPic").load(function(){
                     documentHeight=$(document).height();
@@ -63,7 +80,7 @@ function ImageUpload(target){//优惠券
                             "display":"block"
                         });
                     }
-
+		
                     var cut = new ImgCut({
                         viewClass: 'cnm',  //初始化 大中小图片预览区域及个数，DOM结构决定
                         imgId: 'UploadPic',
@@ -73,11 +90,11 @@ function ImageUpload(target){//优惠券
                         bgOpacity: 0.3 ,            //初始化 背景透明度
                         addClass: 'jcrop-light'    //初始化 选区边界凸效果
                     },
-
+				   
                     function (cutObj) {
                         var w=$("#UploadPic").width();
                         var h=$("#UploadPic").height();
-
+						
                         var w1=100,h1,w2=252,h2=252;
                         if(h<252){
                             $("#EM").css("margin-top",(400-h)/2+"px");
@@ -105,35 +122,33 @@ function ImageUpload(target){//优惠券
                         cutObj.getApi().ui.selection.addClass('jcrop-selection');
                     }
                     );
-
+					
                     $("#Btn2").click(function () {
                         var result = cut.getResult() ;
 
-                        var pdata = {
-                            path: data
-                        }
-
                         for (obj in result) {
                             if(obj=='x' || obj =="y" || obj=='w' || obj=='h')
-                            {
-                                pdata[obj] = result[obj]
-                            }
-                        //                                $("#UploadForm").append("<input type='hidden' name='"+ obj +"' value='" + result[obj]  +"'/>")
+                                $("#UploadForm").append("<input type='hidden' name='"+ obj +"' value='" + result[obj]  +"'/>")
                         }
-                        // -----------ajax 提交图片 控制器端剪裁------------------------------------------------
-                        $.post("/crop_photo/crop", pdata , function(data){
-                            $("#UpImg,#BG").css("display","none");
-                            $("#CropedImg").attr("src", data["url"])
-                            $("#Forms").append("<input type='hidden' name='coupon[img2]' value='" + data["url"]  +"'/>");
-                        })
+                        // -----------ajaxSubmit 提交图片 控制器端剪裁------------------------------------------------
+                        $("#UploadForm").ajaxSubmit({
+                            url: "/crop_photo/crop",
+                            type: 'POST',
+                            dataType: "json",
+                            success: function(data){
+                                $("#UpImg,#BG").css("display","none");
+                                $("#CropedImg").attr("src", data["url"])
+                                $("#Forms").append("<input type='hidden' name='coupon[img2]' value='" + data["url"]  +"'/>")
+                            }
+                        });
 
                     // --------------------------------------------------
-
+                        
                     });
                 });
-            }
-        });
 
+            }
+        }
     }
 }
 
