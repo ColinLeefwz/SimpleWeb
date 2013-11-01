@@ -154,26 +154,19 @@ class SessionsController < ApplicationController
     @sessions = current_user.sessions.order("draft desc")
     respond_to do |format|
       format.js{
-        if remotipart_submitted?
-
-          if params[:commit] == Session::COMMIT_TYPE[:submit]
-            @session.save
-            @from = "sessions"
-            render 'experts/update'
-          elsif params[:commit] == Session::COMMIT_TYPE[:draft]
-            @session.draft = true
-            @session.save
-            @from = "sessions"
-            render 'experts/update'
-          elsif params[:commit] == Session::COMMIT_TYPE[:preview]
-            @session.draft = true
-            @session.save
-            render js: "window.location='#{session_path(@session)}'"
-          end
-
-        else
-          render js: "window.location=window.location" 
-
+        if params[:commit] == Session::COMMIT_TYPE[:submit]
+          @session.save
+          @from = "sessions"
+          render 'experts/update'
+        elsif params[:commit] == Session::COMMIT_TYPE[:draft]
+          @session.draft = true
+          @session.save
+          @from = "sessions"
+          render 'experts/update'
+        elsif params[:commit] == Session::COMMIT_TYPE[:preview]
+          @session.draft = true
+          @session.save
+          render js: "window.location='#{session_path(@session)}'"
         end
       }
     end
