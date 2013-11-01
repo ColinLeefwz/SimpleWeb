@@ -48,8 +48,8 @@ class Shop3ContentController < ApplicationController
     @shop_photo = Photo.new(params[:photo])
     @shop_photo.room = session[:shop_id].to_i.to_s
     @shop_photo.user_id = "s#{session[:shop_id]}"
-
-    if @shop_photo.save
+    if PhotoUploader.temp_resize(:resize_to_limit => [960, 960]){@shop_photo.save}
+      # if @shop_photo.save
       flash[:success] = "上传到图片墙成功！"
       expire_cache_shop(session[:shop_id])
       redirect_to :action => "shop_photo"
