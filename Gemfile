@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '~> 3.2'
+gem "iconv", "~> 1.0.3" #added this in your Gemfile
 
 # Deploy with Capistrano
 # gem 'capistrano'
