@@ -4,12 +4,13 @@
       = image_tag("#{@session.expert.avatar.url}")
     .text-page-expert-name
       %span by #{@session.expert.name}
+    .clear-fix.visible-phone
   .text-page-right-side
     .text-page-social-buttons
       = render 'shared/social_share', session_title: @session.title, session_url: session_url(@session)
     .text-page-category-name
       = @session.categories.join(", ")
-
+  .clear-fix
 .text-page-article-box
   .text-page-title
     %h1= @session.title

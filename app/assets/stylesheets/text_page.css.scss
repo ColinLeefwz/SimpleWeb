@@ -1,9 +1,13 @@
-
 .text-page-header-box{
   background: #ffffff;
-  width: 930px;
-  height: 140px;
   margin: 0 auto;
+  @media (min-width: 767px){
+    width: 65%;
+    min-width: 415px; 
+  }
+  @media (max-width: 766px){
+    width: 90%;
+  }
 
   .text-page-left-side{
     .text-page-portrait{
@@ -12,7 +16,8 @@
         width: 100px;
         height: 100px;
         margin-top: 20px;
-        margin-left: 40px;
+        margin-left: 20px;
+        margin-bottom: 20px;
         }
     }
 
@@ -26,8 +31,12 @@
      }
   }
   .text-page-right-side{
-    float: right;
-    text-align: right;
+    @media (min-width: 767px){
+      float: right;
+    }
+    @media (max-width: 766px){
+      float: left;
+    }
     .text-page-social-buttons{
       margin: 20px;
       img{
@@ -49,8 +58,14 @@
   margin-bottom: 50px;
   margin-top: 10px;
   background: #ffffff;
-  width: 930px;
   text-align: left;
+  @media (min-width: 767px){
+    width: 65%;
+    min-width: 415px; 
+  }
+  @media (max-width: 766px){
+    width: 90%;
+  }
 
   .text-page-title{
     margin-bottom: 0px;
