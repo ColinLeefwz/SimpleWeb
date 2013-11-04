@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     @session.draft = false
     @session.save
 
-    @sessions = Session.all
+    @sessions = current_user.sessions
     @from = "sessions"
     respond_to do |format| 
       format.js {render 'experts/update'}
