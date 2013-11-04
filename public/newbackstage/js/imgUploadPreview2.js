@@ -123,7 +123,7 @@ function ImageUpload(target){//优惠券
                         // -----------ajax 提交图片 控制器端剪裁------------------------------------------------
                         $.post("/crop_photo/crop", pdata , function(data){
                             $("#UpImg,#BG").css("display","none");
-                            $("#CropedImg").attr("src", data["url"])
+                            $("#CropedImg").attr("src", data["url"]+"?t="+ (new Date()) )
                             $("#Forms").append("<input type='hidden' name='coupon[img2]' value='" + data["url"]  +"'/>");
                         })
 

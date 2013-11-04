@@ -13,7 +13,7 @@ class CropPhotoController < ApplicationController
     sc = img['width'].to_f/400
     img.crop "#{(params[:w].to_i*sc).to_i}x#{(params[:h].to_i*sc).to_i}+#{(params[:x].to_i*sc).to_i}+#{(params[:y].to_i*sc).to_i}"
     img.write("public" + path)
-    render :json => {url: path+"?time=#{Time.now}"}
+    render :json => {url: path}
   end
     
 end
