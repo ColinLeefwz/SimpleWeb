@@ -100,7 +100,7 @@ class ShopController < ApplicationController
   end
 
 
-  def gchat
+  def save_gchat
     gchat = Gchat.new(sid: params[:sid], uid: params[:uid], mid: params[:mid], txt: params[:txt])
     if gchat.save
       render :text => '1'

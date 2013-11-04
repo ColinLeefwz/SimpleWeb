@@ -25,8 +25,7 @@ class Gchat
       return nil if text.match(/(^0[1-9]?$)|(@@@)|(###)/)
       gchat = Gchat.new(uid: chat[0], sid: sid, mid: chat[3], txt: chat[1])
       gchat._id = (chat[2].to_s(16)+ '0'*10 +(0..9).to_a.sample(6).join('')).__mongoize_object_id__
-      gchat.save!
-      return true
+      gchat.save
     rescue
       nil
     end
@@ -35,8 +34,8 @@ class Gchat
   def self.remain_init_to_mongo(sid,skip, count)
     begin
       chats = JSON.parse(Xmpp.get("api/gchat2?room=#{sid}&skip=#{skip}&count=#{count}"))
-      chats.each{|chat|  insert_to_mongo(chat, shop.id)}
-      remain_init_to_mongo(sid,skip+count, count)
+      chats.each{|chat|  insert_to_mongo(chat, sid)}
+      remain_init_to_mongo(sid,skip+count, count) if chats.count == count
     rescue
       return nil
     end
@@ -44,8 +43,8 @@ class Gchat
 
 
   def self.init_to_mongo(initsid=0)
-    #    sids = Checkin.distinct(:sid).select{|m| m > initsid}
-    sids = [21828775, 21835801, 21835409]
+    sids = Checkin.distinct(:sid).select{|m| m > initsid}
+    #    sids = [21828775, 21835801, 21835409]
     Shop.where(_id: {'$in' => sids}).sort({_id: 1}).each do |shop|
       begin
         chats = JSON.parse(Xmpp.get("api/gchat2?room=#{shop.id}&skip=0&count=50"))
