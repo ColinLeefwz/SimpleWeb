@@ -65,7 +65,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .main{width:100%;zoom:1;overflow:visible;}
 
 .header{background:url(/newbackstage/images/bg9.jpg) left top repeat-x;width:100%;overflow:hidden;font-family:"微软雅黑";color:#FFFFFF;}
-.header .view{font-size:14px;float:right;line-height:50px;display:block;width:60px;text-align:right;padding-right:10px;background-color:#363636;border-left:2px solid #000;color:#fff;}
+.header .view{font-size:14px;float:right;line-height:49px;display:block;width:60px;text-align:right;padding-right:10px;background-color:#363636;border-left:2px solid #000;color:#fff;}
 .header h1{font-size:20px;letter-spacing:2px;float:left;line-height:50px;}
 .header h1 a{color:#fff;}
 .header h1 a:hover{text-decoration:underline;}
@@ -125,7 +125,8 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .box14 .box14left{width:480px;float:left;}
 .box14 .box14right{width:380px;height:744px;float:right;background:url("../images/bg10.png") left top no-repeat;}
 .box14 .box14right .cpbox{margin-left: 32px;margin-top: 133px;width: 318px;height:480px;overflow:hidden;}
-.box14 .box14right .cpbox iframe{width: 334px;height:480px;height:385px\9; overflow-x:hidden;}
+.box14 .box14right .cpbox iframe{width: 334px;height:480px;overflow-x:hidden;}
+@media screen and (-webkit-min-device-pixel-ratio:0){ .box14 .box14right .cpbox iframe {width:324px;} }
 .box14 .box14right .cpbox iframe::-webkit-scrollbar{width: 3px;height: 3px;}
 .box14 .box14right .cpbox iframe::-webkit-scrollbar-track-piece{background-color: #ffffff;-webkit-border-radius: 3px;}
 .box14 .box14right .cpbox iframe::-webkit-scrollbar-thumb:vertical{height: 5px;background-color: #666;-webkit-border-radius: 3px;}

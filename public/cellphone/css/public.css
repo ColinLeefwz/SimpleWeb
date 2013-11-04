@@ -7,13 +7,13 @@ ul,li{list-style:none;}
 .l{float:left;}
 .r{float:right;}
 
-.sina{width:26px;height:30px;background:url("../images/pic31.png") left -2px no-repeat;text-indent:-999em;cursor:pointer;display:inline-block;
+.sina{width:26px;height:30px;background:url("../images/pic31.png") left 1px no-repeat;text-indent:-999em;cursor:pointer;display:inline-block;
 overflow:hidden;margin:0px 5px;}
-.qq{width:26px;height:30px;background:url("../images/pic31.png") -75px -2px no-repeat;text-indent:-999em;cursor:pointer;display:inline-block;
+.qq{width:26px;height:30px;background:url("../images/pic31.png") -75px 2px no-repeat;text-indent:-999em;cursor:pointer;display:inline-block;
 overflow:hidden;margin:0px 5px;}
-.qqspace{width:26px;height:30px;background:url("../images/pic31.png") -153px -2px no-repeat;text-indent:-999em;cursor:pointer;display:inline-block;
+.qqspace{width:26px;height:30px;background:url("../images/pic31.png") -153px 2px no-repeat;text-indent:-999em;cursor:pointer;display:inline-block;
 overflow:hidden;margin:0px 5px;}
-.renren{width:26px;height:30px;background:url("../images/pic31.png") -313px -2px no-repeat;text-indent:-999em;cursor:pointer;display:inline-block;
+.renren{width:26px;height:30px;background:url("../images/pic31.png") -313px 2px no-repeat;text-indent:-999em;cursor:pointer;display:inline-block;
 overflow:hidden;margin:0px 5px;}
 .link{font-size:14px;color:#333333;display:block;margin:-1px 5px 0px 5px;padding:10px 0px 20px 0px;cursor:pointer;text-align:center;
 background-color:#fff;}
@@ -23,7 +23,7 @@ background-color:#fff;}
 
 #GoBack{width:47px;height:35px;background:url("../images/pic12.png") center center no-repeat;position:absolute;left:0px;top:0px;
 text-indent:-999em;cursor:pointer;display:block;overflow:hidden;z-index:99;}
-#Shadw{width:100%;background: url("../images/bg1.png") repeat scroll 0 0;text-align:center;height:30px;}
+#Shadow{width:100%;background: url("../images/bg2.png") repeat scroll 0 0;text-align:center;height:33px;display:none;}
 
 .btn1{background:#F2F2F2 url("../images/pic8.png") 5px center no-repeat;border:1px solid #BCBCBC;padding-left:28px;padding-right:8px;color:#333333;
 display:inline-block;border-radius:5px;line-height:25px;margin:0px 5px;}

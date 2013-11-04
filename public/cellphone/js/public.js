@@ -18,6 +18,12 @@ $(document).bind('pageinit',function(){
 	$("#GoBack").click(function(){
 		history.go(-1);
 	});
+	$("#Btn4").click(function(){
+		$("#Shadow").slideToggle(250);
+	});
+	$("#Shadow").click(function(){
+		$(this).slideToggle(250);
+	});
 	if($(window).width()<=265){
 		$(".btn1, .btn2, .btn3, .btn4").css({"margin":"0px 1px","padding-right":"2px"});
 		$(".footer").css({"margin-left":"0px","margin-right":"0px"});
