@@ -3,8 +3,17 @@
     $(".main-menu").html("#{j(render partial: @from)}");
     CKEDITOR.replaceAll();
 
-    $('#datetimepicker').datetimepicker({
-      language: 'en',
+    $('#datepicker').datetimepicker({
+      pickTime: false
+    });
+
+    $('#starttimepicker').datetimepicker({
+      pickDate: false,
+      pick12HourFormat: true
+    });
+
+    $('#endtimepicker').datetimepicker({
+      pickDate: false,
       pick12HourFormat: true
     });
   });

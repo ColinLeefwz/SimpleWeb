@@ -32,7 +32,43 @@ class Session < ActiveRecord::Base
     self.price ||= 0.00
   end
 
+  def date 
+    self.start_date ||= DateTime.new
+    self.start_date.strftime("%Y-%m-%d")  
+  end
 
-  attr_accessor :format, :date, :start_time, :end_time, :strategic_question, :save_draft, :preview
+  def start_time
+    self.start_date ||= DateTime.new
+    self.start_date.strftime("%H:%M:%S") 
+  end
+
+  def end_time
+    self.end_date_time ||= DateTime.new
+    self.end_date_time.strftime("%H:%M:%S")
+  end
+
+  def date=(date)
+    self.start_date ||= DateTime.new
+    original = start_date
+    d = date.to_date
+    self.start_date = DateTime.new(d.year, d.month, d.day, original.hour, original.min, original.sec)
+    self.end_date_time = DateTime.new(d.year, d.month, d.day, original.hour, original.min, original.sec)
+  end
+
+  def start_time=(time)
+    self.start_date ||= DateTime.new
+    original = start_date
+    t = time.to_time
+    self.start_date = DateTime.new(original.year, original.month, original.day, t.hour, t.min, t.sec)
+  end
+
+  def end_time=(time)
+    self.end_date_time ||= DateTime.new
+    original = end_date_time
+    t = time.to_time
+    self.end_date_time = DateTime.new(original.year, original.month, original.day, t.hour, t.min, t.sec)
+  end
+
+  attr_accessor :format, :strategic_question, :save_draft, :preview
 
 end

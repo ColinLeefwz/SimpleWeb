@@ -181,7 +181,7 @@ class SessionsController < ApplicationController
   end
 
   def live_session_params
-    params.require(:live_session).permit(:title, {categories:[]}, :format, :cover, :video, :start_date, :time_zone, :location, :price, :strategic_question, :description)
+    params.require(:live_session).permit(:title, {categories:[]}, :format, :cover, :video, :date, :start_time, :end_time, :time_zone, :location, :price, :strategic_question, :description)
   end
 
   def article_session_params
