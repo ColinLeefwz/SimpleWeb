@@ -6,11 +6,12 @@ class SessionsController < ApplicationController
 
   def post_a_draft
     @session.draft = false
+    @session.save
 
-    if @session.save
-      redirect_to dashboard_expert_path(current_user), notice: 'draft post'
-    else
-      redirect_to dashboard_expert_path(current_user), notice: 'failed'
+    @sessions = Session.all
+    @from = "sessions"
+    respond_to do |format| 
+      format.js {render 'experts/update'}
     end
   end
 
