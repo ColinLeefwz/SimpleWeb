@@ -12,7 +12,7 @@ class FollowInfoController < ApplicationController
   
   #deprecated
   def friends
-    Xmpp.error_notify("deprecated: follow_info/friends") if UserDevice.user_ver_redis(params[:id]).to_f>=2.4
+    #Xmpp.error_notify("deprecated: follow_info/friends") if UserDevice.user_ver_redis(params[:id]).to_f>=2.4
     who = UserFollow.find_by_id(params[:id])
     if who.nil?
       render :json => [].to_json
@@ -45,7 +45,7 @@ class FollowInfoController < ApplicationController
     
   #deprecated
   def good_friends
-    Xmpp.error_notify("deprecated: follow_info/good_friends")  if UserDevice.user_ver_redis(params[:id]).to_f>=2.4
+    #Xmpp.error_notify("deprecated: follow_info/good_friends")  if UserDevice.user_ver_redis(params[:id]).to_f>=2.4
     who = User.find_by_id(params[:id])
     if who.nil?
       render :json => [].to_json
