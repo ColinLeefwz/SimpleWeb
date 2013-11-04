@@ -5,7 +5,7 @@ class EmailMessage < ActiveRecord::Base
 
 	private
 	def set_default
-		self.subject ||=  "Invite you to be expert at Prodygia"
+		self.subject ||=  "Invitation to be an expert on Prodygia"
 		self.message ||= <<CONTENT
     <p>I’m using a new site to read and display quality content on China and thought I’d share with you.</p>
 
@@ -18,7 +18,7 @@ class EmailMessage < ActiveRecord::Base
     <p>#{self.from_name.titleize}</p>
 CONTENT
 
-    self.from_name = "Nicole"
+    self.from_name = "Nicolas"
 		self.from_address = "no-reply@prodygia.com"
 		self.reply_to = "no-reply@prodygia.com"
 	end
