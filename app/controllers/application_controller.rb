@@ -45,6 +45,7 @@ class ApplicationController < ActionController::Base
     redirect_to '/' and return if user_signed_in? && !(current_user.is_a? AdminUser)
     authenticate_user!
   end
+
   def current_admin_user #use predefined method name
     return nil if user_signed_in? && !(current_user.is_a? AdminUser)
     current_user
