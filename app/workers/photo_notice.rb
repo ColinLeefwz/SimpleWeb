@@ -17,7 +17,8 @@ class PhotoNotice
       str = "[img:#{pid}]#{photo.user.name}在#{photo.shop.name}分享了一张图片"
       str += ",#{photo.desc}" unless photo.desc.nil?
       if UserDevice.user_ver_redis(u.id).to_f>=2.3
-        Resque.enqueue(XmppMsg, user.id, u.id, str, "FEED#{pid}#{u.id}", " NOLOG='1' NOPUSH='1' ")
+        shop = photo.shop
+        Resque.enqueue(XmppMsg, user.id, u.id, str, "FEED#{pid}#{u.id}", " NOLOG='1' NOPUSH='1' SID='#{shop.id}' SNAME='#{shop.name}' ")
       else
         old_notice(photo, user, u, str)
       end
