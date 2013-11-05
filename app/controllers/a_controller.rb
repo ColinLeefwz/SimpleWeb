@@ -12,6 +12,8 @@ class AController < ApplicationController
       render :file => "~/lianlian/public/mini2.html", :use_full_path => true
     when '24'
       render :file => "~/lianlian/public/zhaopin.html", :use_full_path => true
+    when '25'
+      render :file => "~/lianlian/public/w/single/index.html", :use_full_path => true
     else
       render :file => "~/lianlian/public/mini.html", :use_full_path => true 
     end
