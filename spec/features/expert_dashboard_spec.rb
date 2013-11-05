@@ -91,7 +91,7 @@ feature "Expert Dashboard" do
 		end
 	end
 
-	### Create enw session
+	### Create new session
 	context "Create new session" do
 		background do
 			click_link "Create new session"
@@ -122,10 +122,12 @@ feature "Expert Dashboard" do
 			preview_session = Session.last
 			expect(current_path).to eq session_path(preview_session)
 			expect(preview_session).to be_draft
-
 		end
-
 	end
 	
+	## cancel a session
+	scenario "cancel a session created by the expert", js: true do
+
+	end
 
 end
