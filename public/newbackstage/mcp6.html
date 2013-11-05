@@ -20,6 +20,58 @@
 		}else if(runing=="checkboxs2"){
 			AllNoDH();
 		}
+		
+		//新增
+		$("#CloseMoblie").click(function(){
+			$("#Moblie").fadeOut(500,function(){
+				$("#BG").css("display","none");
+			});
+		});
+		
+		$("#Moblie ul li a").click(function(){
+			var rel=$(this).attr("rel");
+			$("#Moblie ul li a").removeClass("hover");
+			$(this).addClass("hover");
+			$("#Moblie div.mobliecon").children(":first").removeClass().addClass(rel);
+			$("#Turn").removeClass().addClass("turn1");
+			if(rel=="blackberryframe"){
+				$("#Turn").removeClass().addClass("turn3");
+			}
+		});
+
+		$("#Turn").click(function(){
+			var cla=$(this).attr("class");
+			if(cla=="turn3"){
+				return false;
+			}else if(cla=="turn1"){
+				$("#Moblie div.mobliecon").children(":first").addClass("turn");
+				$(this).removeClass().addClass("turn2");
+			}else if(cla=="turn2"){
+				$("#Moblie div.mobliecon").children(":first").removeClass("turn");
+				$(this).removeClass().addClass("turn1");
+			}
+		});
+		
+		$("#View").click(function(){
+			var top;
+			documentHeight=$(document).height();
+			windowHeight=$(window).height();
+			if(documentHeight<=windowHeight){
+			  $("#BG").css({"height":windowHeight+"px","display":"block"});
+			}else{
+			  $("#BG").css({"height":documentHeight+"px","display":"block"});
+			}
+			$("#Moblie").css("display","block");
+			top=$(document).scrollTop()+(windowHeight-$("#Moblie").height())/2;
+			if(top<0){top=0;}
+			$("#Moblie").css({"top":top+"px","display":"none"});
+			$("#Moblie").fadeIn(600);
+		});
+		$(window).srcoll(function(){
+			var top=$(document).scrollTop()+($(window).height()-$("#Moblie").height())/2;
+			if(top<0){top=0;}
+			$("#Moblie").anmiate({"top":top+"px"},500);
+		});
 	});
 	</script>
 </head>
@@ -28,7 +80,7 @@
 		<div class="header">
 			<img src="/newbackstage/images/sign46.jpg" align="left" id="OpenNav" title="打开导航菜单"/>
 			<h1>脸脸茶坊</h1>
-			<a href="#" class="view">预览</a>
+			<a id="View" class="view">预览</a>
 			<div class="clear1"></div>
 		</div>
 		<div id="Nav">
@@ -59,7 +111,25 @@
 		</div>
 		</div>
 		<div class="clear1"></div>
-
+		<div id="BG" style="height:900px;"></div>
+		<div id="Moblie">
+			<ul>
+				<li><a id="Iphone" class="hover" rel="iphoneframe">iPhone</a></li>
+				<li><a id="Android" rel="androidframe">Android</a></li>
+				<li><a id="WP" rel="wpframe">Windows Phone</a></li>
+				<li><a id="Blackberry" rel="blackberryframe">Blackberry</a></li>
+			</ul>
+			<span class="write"></span>
+			<a id="CloseMoblie"></a>
+			<a id="Turn" class="turn1">翻转</a>
+			<div class="mobliecon">
+				<div class="iphoneframe">
+					<span>
+						<iframe frameborder="0" src="/cellphone/index.html"></iframe>
+					</span>
+				</div>
+			</div>
+		</div>
 		<div class="con">
 			<div class="box14">
 				<div class="box14left">
@@ -70,9 +140,9 @@
 							<li><a href="mcp7.html">管 理</a></li>
 						</ul>
 					</div>
-					<div class="clear1"></div>
+					<div class="clear1 pt45"></div>
 					<form method="post" action="">
-						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 pt45">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
 						<tr>
 							<td width="20%" align="right" valign="top" class="pr20 pt5">标 题</td>
 							<td>

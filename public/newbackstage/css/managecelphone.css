@@ -65,7 +65,8 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .main{width:100%;zoom:1;overflow:visible;}
 
 .header{background:url(/newbackstage/images/bg9.jpg) left top repeat-x;width:100%;overflow:hidden;font-family:"微软雅黑";color:#FFFFFF;}
-.header .view{font-size:14px;float:right;line-height:49px;display:block;width:60px;text-align:right;padding-right:10px;background-color:#363636;border-left:2px solid #000;color:#fff;}
+.header .view{font-size:14px;float:right;line-height:49px;display:block;width:60px;text-align:right;padding-right:10px;cursor:pointer;
+background-color:#363636;border-left:2px solid #000;color:#fff;}
 .header h1{font-size:20px;letter-spacing:2px;float:left;line-height:50px;}
 .header h1 a{color:#fff;}
 .header h1 a:hover{text-decoration:underline;}
@@ -125,7 +126,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .box14 .box14left{width:480px;float:left;}
 .box14 .box14right{width:380px;height:744px;float:right;background:url("../images/bg10.png") left top no-repeat;}
 .box14 .box14right .cpbox{margin-left: 32px;margin-top: 133px;width: 318px;height:480px;overflow:hidden;}
-.box14 .box14right .cpbox iframe{width: 334px;height:480px;overflow-x:hidden;}
+.box14 .box14right .cpbox iframe{width: 334px;height:480px;height:495px\9;overflow-x:hidden;}
 @media screen and (-webkit-min-device-pixel-ratio:0){ .box14 .box14right .cpbox iframe {width:324px;} }
 .box14 .box14right .cpbox iframe::-webkit-scrollbar{width: 3px;height: 3px;}
 .box14 .box14right .cpbox iframe::-webkit-scrollbar-track-piece{background-color: #ffffff;-webkit-border-radius: 3px;}
@@ -157,6 +158,55 @@ min-height:80px;font-size:12px;word-break:break-all;word-wrap:break-word;}
 .tab2 tr a.del{width:14px;height:14px;float:left;padding:10px;margin:0px;background: url(../images/sign48.png) center center no-repeat;display:inline-block;cursor:pointer;}
 .tab2 tr a.del:hover{background-image: url(../images/sign50.png);}
 .tab2 tr th.cz{padding-left:0px !important;text-align:center;}
+
+#Moblie{width:900px;border-radius:10px;background-color:#fff;position:absolute;left:50%;margin-left:-450px;z-index:121;box-shadow:0px 0px 10px #fff;}
+#Moblie ul{float:left;overflow:hidden;font-size:16px;text-align: center;padding:40px 0px;}
+#Moblie ul li{width:100px;display:block;}
+#Moblie #Iphone{width:100px;height:35px;padding-top:65px;color:#666;cursor:pointer;display:block;
+background:url(../images/preview-icons.png) no-repeat 35px -105px;}
+#Moblie #Android{width:100px;height:35px;padding-top:65px;color:#666;cursor:pointer;display:block;
+background: url(../images/preview-icons.png) no-repeat 35px 20px;}
+#Moblie #WP{width:100px;height:50px;padding-top:65px;color:#666;cursor:pointer;display:block;
+background: url(../images/preview-icons.png) no-repeat 35px -220px;}
+#Moblie #Blackberry{width:100px;height:35px;padding-top:65px;color:#666;cursor:pointer;display:block;
+background: url(../images/preview-icons.png) no-repeat 35px -350px;}
+#Moblie #Iphone.hover, #Moblie #Iphone:hover{background-position:-106px -105px;background-color:#00AAEE;color:#fff;border-radius:0px 8px 8px 0px;}
+#Moblie #Android:hover,#Moblie #Android.hover{background-position:-106px 20px;background-color:#00AAEE;color:#fff;border-radius:0px 8px 8px 0px;}
+#Moblie #WP:hover,#Moblie #WP.hover{background-position:-106px -220px;background-color:#00AAEE;color:#fff;border-radius:0px 8px 8px 0px;}
+#Moblie #Blackberry:hover,#Moblie #Blackberry.hover{background-position:-106px -350px;background-color:#00AAEE;color:#fff;border-radius:0px 8px 8px 0px;}
+#Moblie #CloseMoblie{width:21px;height:21px;background: url(../images/sign51.jpg) center center no-repeat;position:absolute;right:20px;top:20px;cursor:pointer;}
+#Moblie #CloseMoblie:hover{background-image: url(../images/sign52.jpg);}
+#Moblie .write{width:140px;height:65px;background: url(../images/pic31.png);position:absolute;right: 95px;top: 50px;}
+#Moblie .turn1{width:100px;height:35px;padding-top:65px;color:#666;cursor:pointer;display:block;font-size:16px;text-align:center;border-left:1px solid #c1c1c1;border-bottom:1px solid #c1c1c1;border-top:1px solid #c1c1c1;
+background: url(../images/preview-icons.png) no-repeat -280px -220px;position:absolute;right:0px;top:150px;font-family:微软雅黑;}
+#Moblie a.turn1:hover{color:#fff;background-position:-448px -220px;background-color:#00AAEE;border-radius:8px 0px 0px 8px;}
+#Moblie .turn2{width:100px;height:35px;padding-top:65px;color:#666;cursor:pointer;display:block;font-size:16px;text-align:center;border-left:1px solid #c1c1c1;border-bottom:1px solid #c1c1c1;border-top:1px solid #c1c1c1;
+background: url(../images/preview-icons.png) no-repeat -280px 20px;position:absolute;right:0px;top:150px;font-family:微软雅黑;}
+#Moblie .turn3{width:100px;height:35px;padding-top:65px;color:#666;display:block;font-size:16px;text-align:center;border-left:1px solid #c1c1c1;border-bottom:1px solid #c1c1c1;border-top:1px solid #c1c1c1;
+background: url(../images/preview-icons.png) no-repeat -280px -220px;position:absolute;right:0px;top:150px;font-family:微软雅黑;opacity:0.5;filter:alpha(Opacity=50);}
+#Moblie a.turn2:hover{color:#fff;background-position:-448px 20px;background-color:#00AAEE;border-radius:8px 0px 0px 8px;}
+#Moblie .mobliecon{margin:30px 0px;float:left;width:700px;}
+#Moblie .iphoneframe{width:298px;height:566px;background: url(../images/iphone4-1.jpg);margin:0px auto;}
+#Moblie .iphoneframe span{display: inline-block;height: 355px;margin-left: 24px;margin-top: 105px;width: 251px;overflow:hidden;}
+#Moblie .iphoneframe iframe {height:370px;width:266px;}
+#Moblie .iphoneframe.turn{width:566px;height:298px;background: url(../images/iphone4-2.jpg);margin:100px auto 0px auto;}
+#Moblie .iphoneframe.turn span{width:355px;height:251px;margin-left:105px;margin-top:24px;overflow:hidden;display:inline-block;}
+#Moblie .iphoneframe.turn iframe {width:370px;height:266px;}
+#Moblie .androidframe{width:298px;height:565px;background: url(../images/nexus-1.jpg);margin:0px auto;}
+#Moblie .androidframe span{display:inline-block;height:384px;margin-left:24px;margin-top:67px;overflow:hidden;width:250px;}
+#Moblie .androidframe iframe {height:402px;width:265px;}
+#Moblie .androidframe.turn{width:594px;height:298px;background: url(../images/nexus-2.jpg);margin:100px auto 0px auto;}
+#Moblie .androidframe.turn span{display:inline-block;height:250px;margin-left:67px;margin-top:25px;overflow:hidden;width:410px;}
+#Moblie .androidframe.turn iframe {height:265px;width:428px;}
+#Moblie .wpframe{width:298px;height:563px;background: url(../images/winphone7-1.jpg);margin:0px auto;}
+#Moblie .wpframe span{display:inline-block;height:395px;margin-left:25px;margin-top:47px;overflow:hidden;width:249px;}
+#Moblie .wpframe iframe {height:410px;width:264px;}
+#Moblie .wpframe.turn{width:574px;height:298px;background: url(../images/winphone7-2.jpg);margin:100px auto 0px auto;}
+#Moblie .wpframe.turn span{display: inline-block;height: 247px;margin-left: 48px;margin-top: 24px;overflow: hidden;width: 407px;}
+#Moblie .wpframe.turn iframe {height:263px;width:422px;}
+#Moblie .blackberryframe{width:298px;height:517px;background: url(../images/blackberry-1.jpg);margin:0px auto;}
+#Moblie .blackberryframe span{display: inline-block;height: 187px;margin-left: 20px;margin-top: 92px;overflow: hidden;width: 259px;}
+#Moblie .blackberryframe iframe {height:193px;width:275px;}
 
 /**页码 begin**/
 .pagination{display:block;margin-top:50px;clear:both;line-height:20px;height:20px;position:relative;font-size:13px;}
