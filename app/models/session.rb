@@ -33,22 +33,22 @@ class Session < ActiveRecord::Base
   end
 
   def date 
-    self.start_date ||= DateTime.new
+    self.start_date ||= DateTime.now
     self.start_date.strftime("%Y-%m-%d")  
   end
 
   def start_time
-    self.start_date ||= DateTime.new
+    self.start_date ||= DateTime.now
     self.start_date.strftime("%H:%M:%S") 
   end
 
   def end_time
-    self.end_date_time ||= DateTime.new
+    self.end_date_time ||= DateTime.now
     self.end_date_time.strftime("%H:%M:%S")
   end
 
   def date=(date)
-    self.start_date ||= DateTime.new
+    self.start_date ||= DateTime.now
     original = start_date
     d = date.to_date
     self.start_date = DateTime.new(d.year, d.month, d.day, original.hour, original.min, original.sec)
@@ -56,14 +56,14 @@ class Session < ActiveRecord::Base
   end
 
   def start_time=(time)
-    self.start_date ||= DateTime.new
+    self.start_date ||= DateTime.now
     original = start_date
     t = time.to_time
     self.start_date = DateTime.new(original.year, original.month, original.day, t.hour, t.min, t.sec)
   end
 
   def end_time=(time)
-    self.end_date_time ||= DateTime.new
+    self.end_date_time ||= DateTime.now
     original = end_date_time
     t = time.to_time
     self.end_date_time = DateTime.new(original.year, original.month, original.day, t.hour, t.min, t.sec)
