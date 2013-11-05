@@ -26,4 +26,13 @@ describe Session do
       expect(session.price).to eq 0.00
     end
   end
+
+	describe "canceled" do
+		it "can be canceled" do
+      session = create(:session, title: "test", expert: sameer)
+			session.update_attributes canceled: true
+			expect(session.reload).to be_canceled
+		end
+	end
+	
 end
