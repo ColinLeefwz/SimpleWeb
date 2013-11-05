@@ -79,6 +79,7 @@
 			$(window).resize(function(){
 				documentHeight=$(document).height();
 				windowHeight=$(window).height();
+				if($("#Moblie").css("display")=="none"){return false;}
 				if(documentHeight<=windowHeight){
 				  $("#BG").css({"height":windowHeight+"px","display":"block"});
 				}else{

@@ -71,7 +71,7 @@ background-color:#363636;border-left:2px solid #000;color:#fff;}
 .header h1 a{color:#fff;}
 .header h1 a:hover{text-decoration:underline;}
 
-.con{width:900px;clear:both;margin:50px auto 40px auto;zoom:1;overflow:hidden;}
+.con{width:900px;clear:both;padding:50px 0px 40px 0px; margin:0px auto;zoom:1;overflow:hidden;}
 
 .submenu{background:url("../images/line3.png") left bottom repeat-x;font-family:"微软雅黑";font-size:14px;line-height:30px;
 padding-top:15px;overflow:hidden;border-radius:0px 0px 10px 0px;}
@@ -81,7 +81,6 @@ border-radius:5px 5px 0px 0px;margin-right:9px;min-width:80px;text-align:center;
 .submenu li a{color:#6B6B6B;display:block;padding:5px 15px;}
 .submenu li.hover{background:#F2F2F2;border:1px solid #ccc;border-bottom:0px;font-weight:bold;}
 .submenu li.hover a{color:#6B6B6B;}
-
 
 #Nav{width:160px;height:100%;position:absolute;left:0px;top:0px;font-size:14px;z-index:99;}
 #Nav #Navcon{width:100%;height:100%;overflow:hidden;background:url(../images/nav.png) left top repeat-y;}
