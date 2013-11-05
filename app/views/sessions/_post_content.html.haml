@@ -1,12 +1,39 @@
 = simple_form_for(@session, url: @url, remote: true)  do |f|
   %h3 Post a new Content
-  = f.input :title
+  = f.input :title, input_html: { id: 'content-title' }
   = f.input :cover
-  = f.input :description, input_html: { class: 'ckeditor' }
+  = f.input :description, input_html: { class: 'ckeditor' }, input_html: {id: 'content-description'}
   .categories
     = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
 
 
-  = f.submit Session::COMMIT_TYPE[:draft]
-  = f.submit Session::COMMIT_TYPE[:preview]
-  = f.submit Session::COMMIT_TYPE[:submit]
+  = f.submit Session::COMMIT_TYPE[:draft], class: 'btn'
+  -# = f.submit Session::COMMIT_TYPE[:preview]
+  %a#content-preview{href: '#modal', role: 'button', class: 'btn', data:{toggle: "modal"}} Preview
+  = f.submit Session::COMMIT_TYPE[:submit], class: 'btn'
+
+  #modal.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'myModalLabel'}, aria:{hidden: 'true'}}
+    .modal-body
+      .text-page-header-box
+        .text-page-left-side
+          .text-page-portrait
+            = image_tag("#{current_user.avatar.url}")
+          .text-page-expert-name
+            %span by #{current_user.name}
+          .clear-fix.visible-phone
+        .text-page-right-side
+          .text-page-social-buttons
+            = render 'shared/social_share', session_title: 'title', session_url: 'url'
+          .text-page-category-name
+            categories here
+            -# = @session.categories.join(", ")
+        .clear-fix
+      .text-page-article-box
+        .text-page-title
+          #article-title
+          -# %h1 Hello 
+          %p originally published on example time
+        .text-page-main-content
+    .modal-footer
+      %button.btn{data:{dismiss:'modal'}, aria:{hidden:'true'}} Close
+      %button.btn.btn-primary Save changes

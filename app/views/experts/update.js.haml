@@ -16,5 +16,12 @@
       pickDate: false,
       pick12HourFormat: true
     });
+
+    $("#content-preview").click(function(){
+       var title = $("#content-title").val();
+       $("#article-title").html("<h1>"+title+"</h1>");
+       var description = CKEDITOR.instances['content-description'].getData();
+       $(".text-page-main-content").html(description);
+    });
   });
 
