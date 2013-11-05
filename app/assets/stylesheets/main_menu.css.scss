@@ -1,0 +1,70 @@
+$shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
+.main-menu{
+  .cards-body{
+    .session-items{
+      width: 100%;
+      border-bottom: 1px solid #ddd;
+      .item{
+        -webkit-box-shadow: $shadow_param;
+        box-shadow: $shadow_param;
+        background-color: white;
+        padding-top: 1em;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+        margin-bottom: 10px;
+        
+        .item-title{
+          font-family: Latobold;
+          font-size: 19px;
+          color: #575757;
+          padding-left: 1em;
+          margin-bottom: 1em;
+        }
+
+          .item-body{
+            margin-bottom: 1em;
+
+            .cover-wrapper, .statistic, .something{
+              display: inline-block;
+              vertical-align: middle;
+            }
+
+            .cover-wrapper{
+              margin-left: 1em;
+              .cover{
+                width: 160px;
+              }
+
+              .social-share-icons{
+                margin-top: 0.5em;
+                width: 130px;
+                img{
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+            }
+
+
+           .statistic{
+             margin-left: 3em; 
+           }
+
+           .something{
+           }
+          }
+
+          
+       .draft-ribbon{
+         position: absolute;
+         top: 0;
+         right: 0;
+         img{
+           width: 156px;
+         }
+       }
+
+      }
+    }
+  }
+}

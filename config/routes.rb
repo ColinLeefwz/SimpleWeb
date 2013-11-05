@@ -1,26 +1,54 @@
 Prodygia::Application.routes.draw do
 
-  devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations' }
 
   resources :users
 
-  mount Ckeditor::Engine => '/ckeditor'
-  devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  mount Ckeditor::Engine => '/ckeditor'
 
-	resources :sessions do
-		member do
-			get :enroll
-			get :buy_now
-			post :sign_up_buy
-			get :free_confirm
-			post :sign_up_confirm
-		end
-	end
+  resources :sessions do
+    member do
+      get :enroll
+      get :buy_now
+      post :sign_up_buy
+      get :free_confirm
+      post :sign_up_confirm
+    end
+  end
 
   resources :orders do
     get :execute
     get :cancel
+  end
+
+  resources :experts, shallow: true do
+    member do
+      get :dashboard
+      get :main_menu
+      get :pending_page
+    end
+    
+    resources :sessions do
+      member do
+        get :sessions
+        get :new_post_content
+        get :edit_content
+        patch :update_content
+        get :new_live_session
+        get :edit_live_session
+        patch :update_live_session
+        get :post_a_draft
+        post :update_timezone
+      end
+      post :create_post_content, on: :collection
+      post :create_live_session, on: :collection
+    end
+
+    collection do
+      get :refer_new_expert
+      post :refer_new_expert
+    end
   end
 
   root to: "welcome#index"

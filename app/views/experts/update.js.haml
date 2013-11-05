@@ -1,0 +1,20 @@
+:plain
+  $(document).ready(function(){
+    $(".main-menu").html("#{j(render partial: @from)}");
+    CKEDITOR.replaceAll();
+
+    $('#datepicker').datetimepicker({
+      pickTime: false
+    });
+
+    $('#starttimepicker').datetimepicker({
+      pickDate: false,
+      pick12HourFormat: true
+    });
+
+    $('#endtimepicker').datetimepicker({
+      pickDate: false,
+      pick12HourFormat: true
+    });
+  });
+

@@ -1,0 +1,26 @@
+.item
+  .item-title
+    = session.title
+  .item-body
+    .cover-wrapper
+      = image_tag(session.cover.url, class: "cover")
+      .social-share-icons
+        = render "shared/social_share", session_url: session_url(session), session_title: session.title
+    .statistic
+      50 people viewed this session <br>
+      4 members signed up <br>
+      5 comments(1 new) <br>
+      <br>
+      $ 62.75 your earnings so far 
+      - if session.is_a?LiveSession
+        %h4= link_to 'edit', edit_live_session_session_path(session), remote: true
+      - else
+        %h4= link_to 'edit', edit_content_session_path(session), remote: true
+    .something
+      - if session.draft
+        = "this is a draft |"
+        = link_to "post it", post_a_draft_session_path(session), remote: true
+  .draft-ribbon
+    - if session.draft
+      = image_tag("draft_ribbon.png")
+        

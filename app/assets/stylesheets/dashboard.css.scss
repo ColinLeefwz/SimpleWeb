@@ -1,0 +1,64 @@
+.dash-wrapper{
+  width: 90%;
+  margin-left: auto;
+  margin-right:  auto;
+  margin-top: 43px;
+  margin-bottom: 50px;
+
+  label{
+    width: 8%;
+    text-align: right;
+    vertical-align: top;
+  }
+
+  span label{
+    width: auto;
+  }
+
+  input, textarea, select, .cke_chrome{
+    margin-left: 2%;
+  }
+
+  #datetimepicker{
+    margin-left: 1.7%;
+    input{
+      margin-left: 0%;
+    }
+  }
+
+  input[type="submit"]{
+    margin-top: 2em;
+    margin-left: 10%;
+    margin-bottom: 2em;
+  }
+
+  .checkbox{
+    padding-right: 0.8em;
+  }
+  .checkbox:first-of-type {
+    margin-left: 1.5em;
+  }
+
+  input[type="checkbox"]{
+    margin-right: 0.1em;
+  }
+
+  .cke_chrome {
+    width: 76% !important;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  .main-menu{
+    background: white;
+  }
+
+  .time-selector{
+    width: 30%;
+    display: inline;
+  }
+  .time{
+    display: inline;
+    width: 30%;
+  }
+}

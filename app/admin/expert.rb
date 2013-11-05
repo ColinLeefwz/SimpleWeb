@@ -1,117 +1,100 @@
 ActiveAdmin.register Expert do
 
-	index do
-		column :name do |expert|
-			link_to(expert.name, admin_expert_path(expert))
-		end
-		column "Avatar", :image_url do |expert|
-		  link_to image_tag(expert.avatar.url, width: "50"), admin_expert_path(expert)
-		end
-		column :title do |e|
-			e.profile.title
-		end
+  action_item only:[:index] do
+    link_to 'Invit An Expert', new_user_invitation_path
+  end
 
-		column :company do |e|
-			e.profile.company
-		end
+  index do
+    column :name do |expert|
+      link_to(expert.name, admin_expert_path(expert))
+    end
+    column "Avatar", :image_url do |expert|
+      link_to image_tag(expert.avatar.url, width: "50"), admin_expert_path(expert)
+    end
+    column :title do |e|
+      e.expert_profile.title
+    end
 
-		column :location do |e|
-			e.profile.location
-		end
+    column :company do |e|
+      e.expert_profile.company
+    end
 
-		column :email
-		default_actions
-	end
+    column :location do |e|
+      e.expert_profile.location
+    end
 
+    column :time_zone
 
-	form do |f|
-		f.inputs do
-			f.input :first_name
-			f.input :last_name
-			f.input :avatar, as: :file
-			f.input :email
-			f.input :password, as: :password if f.object.new_record?
-
-			f.inputs name: "Profiles", for: [:profile, f.object.profile || ExpertProfile.new] do |profile_form|
-				profile_form.input :title
-				profile_form.input :company
-				profile_form.input :location
-				profile_form.input :expertise
-				profile_form.input :web_site
-				profile_form.input :testimonials
-				profile_form.input :additional
-			end
-			f.actions
-		end
-	end
+    column :email
+    default_actions
+  end
 
 
-	show do |expert|
-		attributes_table do
-			row :name
-			row :avatar do
-			  image_tag expert.avatar.url, width: "70"
-			end
-			row :email
-			row :title do |expert|
-				expert.profile.title
-			end
+  form do |f|
+    f.inputs do
+      f.input :first_name
+      f.input :last_name
+      f.input :avatar, as: :file
+      f.input :email
+      f.input :password, as: :password if f.object.new_record?
+      f.input :time_zone
 
-			row :company do |expert|
-				expert.profile.company
-			end
+      f.inputs name: "Profile", for: [ f.object.expert_profile || ExpertProfile.new ] do |p|
+        p.input :title
+        p.input :company
+        p.input :location
+        p.input :expertise
+        p.input :web_site
+        p.input :testimonials
+        p.input :additional
+      end
 
-			row :location do |expert|
-				expert.profile.location
-			end
+      f.actions
+    end
+  end
 
-			row :expertise do |expert|
-				expert.profile.expertise
-			end
+  show do |expert|
+    attributes_table do
+      row :name
+      row :avatar do
+        image_tag expert.avatar.url, width: "70"
+      end
+      row :email
+      row :time_zone
+      row :title do |expert|
+        expert.expert_profile.title
+      end
 
-			row :web_site do |expert|
-				expert.profile.web_site
-			end
+      row :company do |expert|
+        expert.expert_profile.company
+      end
 
-			row :testimonials do |expert|
-				expert.profile.testimonials
-			end
+      row :location do |expert|
+        expert.expert_profile.location
+      end
 
-			row :additional do |expert|
-				expert.profile.additional
-			end
-		end
-	end
+      row :expertise do |expert|
+        expert.expert_profile.expertise
+      end
+
+      row :web_site do |expert|
+        expert.expert_profile.web_site
+      end
+
+      row :testimonials do |expert|
+        expert.expert_profile.testimonials
+      end
+
+      row :additional do |expert|
+        expert.expert_profile.additional
+      end
+    end
+  end
 
 
-	controller do
-		def update
-			@expert = Expert.find params[:id]
-			expert_attributes = params[:expert]
-			@expert.update_attributes! first_name: expert_attributes[:first_name], last_name: expert_attributes[:last_name], email: expert_attributes[:email], avatar: expert_attributes[:avatar]
-
-			@profile = ExpertProfile.find params[:expert][:profile_attributes][:id]
-
-			profile_attributes = params[:expert][:profile_attributes]
-			@profile.update_attributes title: profile_attributes[:title], company: profile_attributes[:company], location: profile_attributes[:location], expertise: profile_attributes[:expertise], web_site: profile_attributes[:web_site], testimonials: profile_attributes[:testimonials], additional: profile_attributes[:additional]
-
-			redirect_to admin_expert_path @expert
-		end
-
-		def create
-			expert_attributes = params[:expert]
-			@expert = Expert.create(first_name: expert_attributes[:first_name], last_name: expert_attributes[:last_name], email: expert_attributes[:email], password: expert_attributes[:password], avatar: expert_attributes[:avatar])
-
-			profile_attributes = params[:expert][:profile_attributes]
-			@profile = @expert.build_profile title: profile_attributes[:title], company: profile_attributes[:company], location: profile_attributes[:location], expertise: profile_attributes[:expertise], web_site: profile_attributes[:web_site], testimonials: profile_attributes[:testimonials], additional: profile_attributes[:additional]
-			@profile.save
-
-			redirect_to admin_expert_path @expert
-		end
-
-		def permitted_params
-			# params.permit expert: [:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials]
-			params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :profile]
-		end
-	end
+  controller do
+    def permitted_params
+      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, expert_profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional]]
+    end
+  end
 end

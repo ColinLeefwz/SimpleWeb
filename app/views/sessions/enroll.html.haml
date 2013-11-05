@@ -20,7 +20,12 @@
         #time-icon.icon
           = image_tag "time.png"
         #time.item
-          = @session.start_date.to_formatted_s(:time_for_order).html_safe if @session.start_date
+          = render "timezone", time: @session.start_date, fallback: @session.time_zone, zone: nil
+        %p
+        = link_to "( Not in correct timezone? )", "#", class: "timezone-toggle", remote: true
+        .timezone-confirmation
+          = simple_form_for :time_zone, url: update_timezone_session_path(@session), remote: true do |f| 
+            = f.input :time_zone, required: false, label: false, priority: /US/
 
 
       .item-wrapper
@@ -33,14 +38,14 @@
         #price-icon.icon
           = image_tag "price.png"
         #price.item
-          = number_to_currency(@session.price) + "(USD)"
+          - if @session.price == 0
+            = "Free"
+          - else
+            = number_to_currency("#{@session.price}", :unit => "$")
+            USD
           - if user_signed_in?
-            - if @session.price != 0.00
-              %span.paypal-button
-                = link_to image_tag("paypal_button.png"), buy_now_session_path(@session)
-            -else
-              %span.confirm-button
-                = link_to "Confirm", free_confirm_session_path(@session), class: 'btn'
+            %span.paypal-button
+              = session_pay_link
 
   - if not user_signed_in?
     #account

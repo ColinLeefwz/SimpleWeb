@@ -1,4 +1,4 @@
-$ ->
+ready = ->
 	`
 	// copy from the source code in http://isotope.metafizzy.co/custom-layout-modes/centered-masonry.html
 	$.Isotope.prototype._getCenteredMasonryColumns = function() {
@@ -73,3 +73,7 @@ $ ->
 			$container.isotope {
 				filter: selector
 			}
+
+
+$(document).ready(ready)
+$(document).on('page:load', ready)

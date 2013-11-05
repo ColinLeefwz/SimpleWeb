@@ -12,6 +12,7 @@
 //
 //= require jquery.min
 //= require jquery_ujs
+//= require jquery.remotipart
 //= require turbolinks
 //= require jquery.throttledresize
 //= require bootstrap
@@ -20,4 +21,5 @@
 //= require jquery.isotope.min
 //= require ckeditor/init
 //= require paypal-button.min
+//= require bootstrap-datetimepicker.min
 //= require_tree .
