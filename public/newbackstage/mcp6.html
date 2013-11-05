@@ -22,6 +22,7 @@
 		}
 		
 		//新增
+		$("#Moblie").css();
 		$("#CloseMoblie").click(function(){
 			$("#Moblie").fadeOut(500,function(){
 				$("#BG").css("display","none");
@@ -54,8 +55,8 @@
 		
 		$("#View").click(function(){
 			var top;
-			documentHeight=$(document).height();
-			windowHeight=$(window).height();
+			var documentHeight=$(document).height();
+			var windowHeight=$(window).height();
 			if(documentHeight<=windowHeight){
 			  $("#BG").css({"height":windowHeight+"px","display":"block"});
 			}else{
@@ -66,11 +67,27 @@
 			if(top<0){top=0;}
 			$("#Moblie").css({"top":top+"px","display":"none"});
 			$("#Moblie").fadeIn(600);
-		});
-		$(window).srcoll(function(){
-			var top=$(document).scrollTop()+($(window).height()-$("#Moblie").height())/2;
-			if(top<0){top=0;}
-			$("#Moblie").anmiate({"top":top+"px"},500);
+			$("#IFrame").attr("src","/cellphone/index.html");
+			$(window).scroll(function(){
+				top=$(document).scrollTop()+($(window).height()-$("#Moblie").height())/2;
+				if(top<0){
+					top=0;
+				}else if(top>($(document).height()-$("#Moblie").height())){
+					top=$(document).height()-$(window).height()+$("#Moblie").height()/2+"px";
+				}
+				$("#Moblie").css({"top":top+"px"});
+			});
+			$(window).resize(function(){
+				documentHeight=$(document).height();
+				windowHeight=$(window).height();
+				if(documentHeight<=windowHeight){
+				  $("#BG").css({"height":windowHeight+"px","display":"block"});
+				}else{
+				  $("#BG").css({"height":documentHeight+"px","display":"block"});
+				}
+				top=$(document).scrollTop()+(windowHeight-$("#Moblie").height())/2;
+				$("#Moblie").css({"top":top+"px"});
+			});
 		});
 	});
 	</script>
@@ -111,7 +128,7 @@
 		</div>
 		</div>
 		<div class="clear1"></div>
-		<div id="BG" style="height:900px;"></div>
+		<div id="BG"></div>
 		<div id="Moblie">
 			<ul>
 				<li><a id="Iphone" class="hover" rel="iphoneframe">iPhone</a></li>
@@ -125,7 +142,7 @@
 			<div class="mobliecon">
 				<div class="iphoneframe">
 					<span>
-						<iframe frameborder="0" src="/cellphone/index.html"></iframe>
+						<iframe frameborder="0" id="IFrame"></iframe>
 					</span>
 				</div>
 			</div>

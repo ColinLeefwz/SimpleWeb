@@ -159,7 +159,7 @@ min-height:80px;font-size:12px;word-break:break-all;word-wrap:break-word;}
 .tab2 tr a.del:hover{background-image: url(../images/sign50.png);}
 .tab2 tr th.cz{padding-left:0px !important;text-align:center;}
 
-#Moblie{width:900px;border-radius:10px;background-color:#fff;position:absolute;left:50%;margin-left:-450px;z-index:121;box-shadow:0px 0px 10px #fff;}
+#Moblie{width:900px;border-radius:10px;background-color:#fff;position:absolute;left:50%;margin-left:-450px;z-index:121;box-shadow:0px 0px 10px #fff;display:none;}
 #Moblie ul{float:left;overflow:hidden;font-size:16px;text-align: center;padding:40px 0px;}
 #Moblie ul li{width:100px;display:block;}
 #Moblie #Iphone{width:100px;height:35px;padding-top:65px;color:#666;cursor:pointer;display:block;

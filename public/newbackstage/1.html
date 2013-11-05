@@ -1,41 +1,21 @@
-<html xmlns="http://www.w3.org/1999/xhtml" >
-<head id="Head1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.pack.js"></script>
-<script language="javascript"> 
- $(function(){
-	var gg = document.getElementById("img1");
-	var ei = document.getElementById("large");
-	gg.onmousemove = function(event){
-		event = event || window.event;
-		ei.style.display = "block";
-		ei.innerHTML = '<img style="border:1px solid gray;" src="' + this.src + '" />';
-		ei.style.top  = document.body.scrollTop + event.clientY + 12 + "px";
-		ei.style.left = document.body.scrollLeft + event.clientX + 12 + "px";
-	}
-	gg.onmouseout = function(){
-		ei.innerHTML = "";
-		ei.style.display = "none";
-	}	
-	$("#f1").change(function(){
-		$("#img1").attr("src","file:///"+$("#f1").val());
-	})
- });
-</script>
-<style type="text/css"> 
-	#large{position:absolute;display:none;z-index:999;}
-</style>
-</head>
- 
-<body>
-<form name="form1" id="form1">
-<div id="demo">
-<input id="f1" name="f1" type="file" />
-<img id="img1">
-</div>
-<div id="large"></div>
-</form>
-</body>
-</html>
+<script type="text/javascript" src="http://demo.jb51.net/jslib/jquery/jquery-1.7.2.min.js"></script> 
+<script type="text/javascript"> 
+$(function() { 
+$(window).scroll(function() { 
+var top = $(window).scrollTop()+200; 
+var left= $(window).scrollLeft()+320; 
+$("#editInfo").css({ left:left + "px", top: top + "px" }); 
+alert($(window).scrollTop());
+}); 
+}); 
+</script> 
 
-
+<div id="editInfo" style="float:left;width:300px;background-color:#ccc;position:absolute;top:200px;"> 
+<div>用户名：<input type="text" /></div> 
+<div>密码：<input type="text" /></div> 
+<div>年龄：<input type="text" /></div> 
+<div>备注：<input type="text" /></div> 
+<div><input type="button" value="保存" /></div> 
+</div> 
+<div style="height:1500px"></div>
+详细出处参考：http://www.jb51.net/article/30853.htm
