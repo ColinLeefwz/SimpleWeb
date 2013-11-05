@@ -48,8 +48,6 @@ function ImageUpload(target){//优惠券
                 $("#EM").html("<img id='UploadPic' src='"+ data +"' />");
                 pic.src= data;
                 sid.innerHTML="<img src=\'"+$("#UploadPic").attr("src")+"\' />";
-
-                $("#UploadPic").load(function(){
                     documentHeight=$(document).height();
                     windowHeight=$(window).height();
                     if(documentHeight<=windowHeight){
@@ -130,7 +128,6 @@ function ImageUpload(target){//优惠券
                     // --------------------------------------------------
 
                     });
-                });
             }
         });
 
@@ -159,7 +156,6 @@ function NoCut(){
 }
 
 function ImgCut(options, callback) {
-alert(callback);
     var
     _class  = ImgCut ,
     _ops    = options
