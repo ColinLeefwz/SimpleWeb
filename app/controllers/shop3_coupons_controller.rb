@@ -121,8 +121,8 @@ class Shop3CouponsController < ApplicationController
         path = 'public/coupon/' + @coupon.id.to_s
         FileUtils.rm(path+"/0.jpg")
         FileUtils.mv("public#{pre}", path+"/0.jpg")
-        @coupon.gen_img
       end
+      @coupon.gen_img
       sadd_city_coupon_redis
       redirect_to :action => :show, :id => @coupon.id
     else
