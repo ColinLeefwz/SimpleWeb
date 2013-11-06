@@ -27,6 +27,7 @@ Prodygia::Application.routes.draw do
       get :dashboard
       get :main_menu
       get :pending_page
+      get :profile
     end
     
     resources :sessions do
