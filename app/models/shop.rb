@@ -435,7 +435,7 @@ class Shop
   def allow_sub_coupons(user_id)
     coupons = []
     sub_shops.each do |shop|
-      coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(user_id) }
+      coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(user_id, :single => true) }
     end
     coupons
   end
