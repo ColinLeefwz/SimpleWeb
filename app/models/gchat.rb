@@ -15,6 +15,33 @@ class Gchat
   def shop
     Shop.find_by_id(self.sid)
   end
+  
+  def self.history_skip(sid,skip,pcount)
+    arr = Gchat.where({sid:sid}).sort({_id:-1}).skip(skip).limit(pcount).to_a
+    rmd= $redis.smembers("RoomMsgDel#{sid}")
+    arr.reject!{|x| rmd.include?(x.txt)}
+    if skip==0
+      cpid = Shop.find_by_id(sid).card_photo.id.to_s
+      arr.delete_if{|x| x.txt[0,5] == "[img:" && x.txt[5,24] == cpid}
+    end
+    arr
+  end
+  
+  def self.history(sid,pcount,mid=nil)
+    hash = {sid:sid}
+    if mid
+      gchat = Gchat.where({mid:mid}).first
+      hash.merge!({_id: {"$lt" => gchat.id} })
+    end
+    arr = Gchat.where(hash).sort({_id:-1}).limit(pcount).to_a
+    rmd= $redis.smembers("RoomMsgDel#{sid}")
+    arr.reject!{|x| rmd.include?(x.txt)}
+    if mid.nil?
+      cpid = Shop.find_by_id(sid).card_photo.id.to_s
+      arr.delete_if{|x| x.txt[0,5] == "[img:" && x.txt[5,24] == cpid}
+    end
+    arr
+  end
 
 
   #db.gchats.ensureIndex({mid:1},{unique:true})

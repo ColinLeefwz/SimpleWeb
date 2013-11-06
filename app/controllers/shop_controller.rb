@@ -147,20 +147,20 @@ class ShopController < ApplicationController
   end
   
   def history
-    shop = Shop.find_by_id(params[:id])
     skip = params[:skip].to_i
     pcount = params[:pcount].to_i
     pcount = 5 if pcount==0
-    arr = shop.history(skip,pcount)
-    headers[:more_result] = "1" if arr.size>=pcount
-#    rmd = RoomMsgDel.where({room: shop.id.to_i}).distinct(:_id)
-    rmd= $redis.smembers("RoomMsgDel#{shop.id.to_i}")
-    arr.reject!{|c| rmd.include?(c[3])}
-    arr.delete_if{|x| x[1] =~ /^0\d$/ || x[1][0,3]=="@@@"}
-    if skip==0
-      arr.delete_if{|x| x[1][0,5] == "[img:" && x[1][5,24] == shop.card_photo.id.to_s}
-    end
+    arr = Gchat.history_skip(sid, skip, pcount)
+    headers[:more_result] = "1" if arr.size>=0
     render :json => arr.to_json
+  end
+  
+  def history2
+    pcount = params[:pcount].to_i
+    pcount = 10 if pcount==0
+    mid = params[:mid]
+    sid = params[:id].to_i
+    render :json => Gchat.history(sid,pcount,mid).to_json
   end
 
   
