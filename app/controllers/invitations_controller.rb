@@ -46,9 +46,9 @@ class InvitationsController < Devise::InvitationsController
 
     if resource.errors.empty?
       set_flash_message :notice, :send_instructions, :email => self.resource.email if self.resource.invitation_sent_at
-      @invitation_token = resource.invitation_token
+      invitation_token = resource.invitation_token
+			@invitation_link = "#{request.base_url}/users/invitation/accept?invitation_token=#{invitation_token}"
       render 'generated'
-      #redirect_to admin_dashboard_url
     else
       respond_with_navigational(resource) { render :new }
     end
@@ -62,7 +62,7 @@ class InvitationsController < Devise::InvitationsController
     end
 
     @invitation_token = resource.invitation_token
-    token_link = "http://pdg.originatechina.com/users/invitation/accept?invitation_token=#{@invitation_token}"
+    token_link = "#{request.base_url}/users/invitation/accept?invitation_token=#{@invitation_token}"
 
     mandrill = MandrillApi.new
     mandrill.invite_by_expert(current_user, @email_message, token_link)

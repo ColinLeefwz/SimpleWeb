@@ -1,6 +1,6 @@
 %h2 The invitation link has been generated
 %label Invitation link
-- if @invitation_token
-  %input#invitation_link{:value => "localhost:3000/users/invitation/accept?invitation_token=#{@invitation_token}"}
+- if @invitation_link
+  %input#invitation_link{:value => "#{@invitation_link}"}
 - else
   No Invitation_token
