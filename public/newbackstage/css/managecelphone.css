@@ -7,6 +7,7 @@ ul,ol{list-style:none;}
 .l{float:left;}
 .r{float:right !important;}
 
+.f12{font-size:12px;}
 .w55{width:55px !important;}
 .w100{width:100px !important;}
 .f18{font-size:18px !important;}
@@ -24,6 +25,10 @@ ul,ol{list-style:none;}
 .radius5{border-radius:5px !important;}
 .noneborder{border:none !important;}
 .pointer{cursor:pointer;}
+.none{display:none !important;}
+.gray{color:#888;}
+.lh20{line-height:20px;}
+
 .btn11{width:95px;height:25px;line-height:25px;border:1px #0099CC solid;text-align:center;display:block;color:#fff !important;cursor:pointer;background-color:#00AAEE;}
 .btn20{border-radius:3px;color:#fff;cursor:pointer;background-color:#00AAEE;padding:8px 10px;display:block;width:110px;
 font-family:微软雅黑;font-size:18px;border:none;}
@@ -145,7 +150,7 @@ min-height:80px;font-size:12px;word-break:break-all;word-wrap:break-word;}
 .tab1 tr.change td{padding:5px 0px;}
 .tab1 tr.change2 td{padding:0px 10px;}
 .tab1 span.mes{display:block;font-size:12px;margin-top:2px;color:#999;}
-.tab1 .uploadbox2 {width:200px;height:110px;cursor:pointer;}
+.tab1 .uploadbox2 {width:150px;height:150px;cursor:pointer;}
 .tab1 .uploadbox2 img{width:200px;height:110px;box-shadow:0px 0px 5px #aaa;}
 
 .tab2{width:100%;overflow:hidden;line-height:25px;margin-top:20px;color:#333333;}
@@ -206,6 +211,14 @@ background: url(../images/preview-icons.png) no-repeat -280px -220px;position:ab
 #Moblie .blackberryframe{width:298px;height:517px;background: url(../images/blackberry-1.jpg);margin:0px auto;}
 #Moblie .blackberryframe span{display: inline-block;height: 187px;margin-left: 20px;margin-top: 92px;overflow: hidden;width: 259px;}
 #Moblie .blackberryframe iframe {height:193px;width:275px;}
+
+.pass4{padding:0px 30px;margin:40px 0px;display:block;overflow:hidden;clear:both;zoom:1;}
+.pass5{width:480px;height:80px;margin:0px auto 20px auto;overflow:hidden;clear:both;position:relative;background-color:#F8F8F8;}
+.pass5 a.del{width:9px;height:9px;display:block;position:absolute;background:url(../images/sign54.gif) left top no-repeat;right:11px;top:11px;cursor:pointer;}
+.pass5 a.up{width:12px;height:12px;display:block;position:absolute;background:url(../images/sign53.gif) left top no-repeat;left:15px;top:25px;cursor:pointer;}
+.pass5 a.down{width:12px;height:13px;display:block;position:absolute;background:url(../images/sign53.gif) left bottom no-repeat;left:15px;cursor:pointer;bottom:30px;}
+.pass5 input.texts{width:245px;height:22px;line-height:22px;color:#999;float:left;margin-top:28px;}
+.pass5 img.imgs{width:150px;height:40px;margin:20px 15px 0px 40px;float:left;}
 
 /**页码 begin**/
 .pagination{display:block;margin-top:50px;clear:both;line-height:20px;height:20px;position:relative;font-size:13px;}
