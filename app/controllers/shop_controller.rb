@@ -102,8 +102,11 @@ class ShopController < ApplicationController
 
 
   def save_gchat
-    txt = CGI.unescape(params[:txt])
-    gchat = Gchat.new(sid: params[:sid], uid: params[:uid], mid: params[:mid], txt: txt)
+    if params[:txt].nil? || params[:txt] =~ /^0\d$/ || params[:txt][0,3]=="@@@"
+      render :text => '0'
+      return
+    end
+    gchat = Gchat.new(sid: params[:sid], uid: params[:uid], mid: params[:mid], txt: params[:txt])
     if gchat.save
       render :text => '1'
     else
