@@ -1,0 +1,69 @@
+
+$shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
+
+.wrapper{
+  width: 79%;
+  min-width: 300px;
+  margin: 0 auto;
+}
+
+.sub-wrapper{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-shadow: $shadow_param;
+
+  margin: 0 auto;
+  margin-bottom: 2em;
+}
+
+
+
+.brief{
+  width: 86%;
+  background-color: white;
+  padding: 15px;
+
+  .brief-item{
+    display: inline-block;
+    margin-right: 2em;
+  }
+  .brief-item:last-of-type{
+    float: right;
+    margin-right: 11em;
+  }
+
+  .avatar{
+    vertical-align: bottom;
+    img{
+      width: 100px;
+      border-radius: 100px;
+    }
+  }
+}
+
+
+
+.detail{
+  width: 86%;
+  .nav{
+    margin-bottom: 0;
+    .tab{
+      width: 33.3333333333%;
+    }
+  }
+
+  .tab-pane{
+    background-color: white;
+    text-indent: 1em;
+  }
+}
+
+
+
+.sessions{
+  box-shadow: none;
+
+  #content .item{
+    width: 280px;
+  }
+}
