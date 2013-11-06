@@ -54,10 +54,10 @@ class MandrillApi
     send_template_mail("invite_expert", template_content, addition_message)
   end
 
-	def reset_password(reset_link)
-		template_content = [{"name"=>"reset_link", "content"=>reset_link}]
+	def reset_password(user, reset_link)
+		template_content = [{"name" => "reset-link", "content" => reset_link}]
 		
-    send_template_mail("reset_password", template_content, addition_message)
+    send_template_mail("reset_password", template_content)
 
 	end
 

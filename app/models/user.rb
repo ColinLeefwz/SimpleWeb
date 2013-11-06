@@ -38,15 +38,12 @@ class User < ActiveRecord::Base
       user = User.create(email: data["email"],
                          password: Devise.friendly_token[0,20])
     end
-
     user
   end
 
 	protected
 	## override devise notification
 	def send_devise_notification(notification, *args)
-		logger.info "reset link is :#{edit_user_password_path(self, reset_password_token: self.reset_password_token)}"
-		mandrill = MandrillApi.new
-		mandrill.reset_password(self)
+		devise_mailer.send(notification, self, *args)
 	end
 end
