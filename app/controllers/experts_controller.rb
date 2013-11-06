@@ -1,5 +1,6 @@
 class ExpertsController < ApplicationController
-  load_and_authorize_resource
+  # load_and_authorize_resource
+  before_filter :set_expert
 
   def dashboard
     @sessions = @expert.sessions.order("draft desc")
@@ -22,7 +23,17 @@ class ExpertsController < ApplicationController
     end
   end
 
+
+  def profile
+    @sessions = @expert.sessions
+  end
+
   private
+  
+  def set_expert
+    @expert = Expert.find params[:id]
+  end
+
   def session_params
     params.require(:session).permit(:title, :description, :cover, :video, {categories:[]}, :location, :price, :language, :start_date, :time_zone )
   end
