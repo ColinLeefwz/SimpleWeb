@@ -1,6 +1,6 @@
 class ExpertsController < ApplicationController
-  # load_and_authorize_resource
-  before_filter :set_expert
+  load_and_authorize_resource except: [:profile]
+  before_filter :set_expert, only: [:profile]
 
   def dashboard
     @sessions = @expert.sessions.order("draft desc")
