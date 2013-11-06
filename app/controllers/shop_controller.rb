@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'cgi'
 
 class ShopController < ApplicationController
 
@@ -101,7 +102,8 @@ class ShopController < ApplicationController
 
 
   def save_gchat
-    gchat = Gchat.new(sid: params[:sid], uid: params[:uid], mid: params[:mid], txt: params[:txt])
+    txt = CGI.unescape(params[:txt])
+    gchat = Gchat.new(sid: params[:sid], uid: params[:uid], mid: params[:mid], txt: txt)
     if gchat.save
       render :text => '1'
     else
