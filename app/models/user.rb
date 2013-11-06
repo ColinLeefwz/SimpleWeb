@@ -1,4 +1,7 @@
+require 'mandrill_api'
+
 class User < ActiveRecord::Base
+	include Rails.application.routes.url_helpers
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -38,4 +41,12 @@ class User < ActiveRecord::Base
 
     user
   end
+
+	protected
+	## override devise notification
+	def send_devise_notification(notification, *args)
+		logger.info "reset link is :#{edit_user_password_path(self, reset_password_token: self.reset_password_token)}"
+		mandrill = MandrillApi.new
+		mandrill.reset_password(self)
+	end
 end

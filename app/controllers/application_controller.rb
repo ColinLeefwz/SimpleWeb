@@ -39,7 +39,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   ## ActiveAdmin user to User table
   def authenticate_admin_user! #use predefined method name
     redirect_to '/' and return if user_signed_in? && !(current_user.is_a? AdminUser)

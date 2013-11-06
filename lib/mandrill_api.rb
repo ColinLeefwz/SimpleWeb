@@ -54,6 +54,13 @@ class MandrillApi
     send_template_mail("invite_expert", template_content, addition_message)
   end
 
+	def reset_password(reset_link)
+		template_content = [{"name"=>"reset_link", "content"=>reset_link}]
+		
+    send_template_mail("reset_password", template_content, addition_message)
+
+	end
+
   protected
 
   def send_template_mail(template_name, template_content, addition_message = {})
@@ -75,4 +82,5 @@ class MandrillApi
 
     @mandrill.messages.send_template template_name, template_content, message, async, ip_pool
   end
+
 end
