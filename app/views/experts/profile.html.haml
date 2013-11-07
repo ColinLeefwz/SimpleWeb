@@ -21,8 +21,17 @@
           %td Twitter
           %td @sameerkarim
     .contact.brief-item
-      %p follow
-      %p contact
+
+      .contact-button
+        %button.btn.left-side
+          %i.fa.fa-star Follow
+        %button.btn.right-side 0
+
+      .contact-button
+        %button.btn.left-side
+          %i.fa.fa-comments Contact
+        %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
+          %span.caret
       
 
 
