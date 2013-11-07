@@ -128,7 +128,7 @@ class Coupon
   def downed_today(user_id)
     cpd = CouponDown.where({cid:self.id, uid: user_id}).sort({_id:-1}).limit(1).to_a
     return false if cpd.nil? || cpd.size==0
-    return cpd[0].dat.to_date == Time.now.to_date
+    return cpd[0].dat.to_time.localtime.to_date == Time.now.to_date
   end
 
   def self.shop_downed_week(room)
