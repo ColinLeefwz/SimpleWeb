@@ -38,7 +38,18 @@
 				$(this).val("输入连接地址").removeAttr("style");
 				return false;
 			}else{
-				
+				var top;
+				documentHeight=$(document).height();
+				windowHeight=$(window).height();
+				if(documentHeight<=windowHeight){
+				  $("#BG").css({"height":windowHeight+"px","display":"block"});
+				}else{
+				  $("#BG").css({"height":documentHeight+"px","display":"block"});
+				}
+				$("#DelDiv").css("display","block");
+				top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+				$("#DelDiv").css({"top":top+"px","display":"none"});
+				$("#DelDiv").fadeIn(600);
 			}
 		});
 	});	
@@ -61,6 +72,11 @@ function OpenBtn(){
 }
 function CloseDeleteBox(){
 	$("#DeleteBox").fadeOut(200);
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
 }
 	</script>
 </head>
@@ -100,6 +116,11 @@ function CloseDeleteBox(){
 		</div>
 		</div>
 		<div class="clear1"></div>
+		<div id="BG"></div>
+		<div id="DelDiv">
+			<center class="pt15">链接已保存成功</center>
+			<center><a onclick="Close2()" class="btn11 w55 mt10">确定</a></center>
+		</div>
 		<div class="con">
 			<div class="box14">
 				<div class="box14left relative">
