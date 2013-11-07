@@ -36,18 +36,31 @@
 			var v1=new RegExp("^(\\s+)$");
 			if(v1.test(str)||str==""){
 				$(this).val("输入连接地址").removeAttr("style");
+				return false;
+			}else{
+				
 			}
 		});
 	});	
 	});
-	
-function Del(ID){
-	$(ID).parent().fadeOut(800,function(){
-		$(this).remove();
-	});
+
+
+function DELETE(e){
+	var ex,ey;
+	var w=$("#DeleteBox").width();
+	var h=$("#DeleteBox").height();
+	if(isNaN(e.pageX)==false){
+		ex=e.pageX; ey=e.pageY;
+	}else{
+		ex=e.clientX; ey=e.clientY;
+	}
+	$("#DeleteBox").css({"right":"-50px","top":(ey-h-127)+"px"}).slideDown(250);
 }
 function OpenBtn(){
 	$("#AddPicture").click();
+}
+function CloseDeleteBox(){
+	$("#DeleteBox").fadeOut(200);
 }
 	</script>
 </head>
@@ -89,7 +102,15 @@ function OpenBtn(){
 		<div class="clear1"></div>
 		<div class="con">
 			<div class="box14">
-				<div class="box14left">
+				<div class="box14left relative">
+					<div class="deletebox" id="DeleteBox">
+						<form action="" method="post" onsubmit="return false;">
+							<center>确认要删除吗？</center>
+							<input type="submit" class="btn19 l mt5" value="确定"/>
+							<input type="button" onclick="CloseDeleteBox()" class="btn4 r mt5" value="取消"/>
+						</form>
+					</div>
+
 					<div class="title1"><h2 class="f18 l">设置</h2></div>
 					<div class="submenu">
 						<ul>
@@ -102,33 +123,33 @@ function OpenBtn(){
 					<div class="clear1"></div>
 					<form id="cform" method="post" action="">
 						<div class="pass4">
-							<input type="button" class="btn20 w100 l" id="Open" onClick="OpenBtn()" value="+ 添加图片"/>
+							<input type="button" class="btn20 w100 l f16" id="Open" onClick="OpenBtn()" value="+ 添加图片"/>
 							<input type="file" class="none" id="AddPicture"/>
-							<p class="l gray ml20 f12 lh20">可以添加 jpg, gif, jpeg, png, 图片格式，<br/>请保持图片大小一致。</p>
+							<p class="l gray ml20 f12 lh20">可以添加 jpg, gif, jpeg, png, 图片格式，<br/>最佳尺寸720*400， 请保持图片大小一致。</p>
 						</div>
 						<div id="Contain">
 						<div class="pass5">
 							<a class="up" title="上"></a>
 							<a class="down" title="下"></a>
-							<a class="del" title="删除"  onClick="Del(this)"></a>
+							<a class="del" title="删除"  onClick="DELETE(event)"></a>
 							<img src="images/pic3.jpg" class="imgs"> <input type="text" value="" class="texts">
 						</div>
 						<div class="pass5">
 							<a class="up" title="上"></a>
 							<a class="down" title="下"></a>
-							<a class="del" title="删除" onClick="Del(this)"></a>
+							<a class="del" title="删除" onClick="DELETE(event)"></a>
 							<img src="images/pic3.jpg" class="imgs"> <input type="text" value="" class="texts">
 						</div>
 						<div class="pass5">
 							<a class="up" title="上"></a>
 							<a class="down" title="下"></a>
-							<a class="del" title="删除"  onClick="Del(this)"></a>
+							<a class="del" title="删除"  onClick="DELETE(event)"></a>
 							<img src="images/pic3.jpg" class="imgs"> <input type="text" value="" class="texts">
 						</div>
 						<div class="pass5">
 							<a class="up" title="上"></a>
 							<a class="down" title="下"></a>
-							<a class="del" title="删除" onClick="Del(this)"></a>
+							<a class="del" title="删除" onClick="DELETE(event)"></a>
 							<img src="images/pic3.jpg" class="imgs"> <input type="text" value="" class="texts">
 						</div>
 						</div>

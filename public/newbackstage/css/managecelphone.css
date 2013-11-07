@@ -8,6 +8,7 @@ ul,ol{list-style:none;}
 .r{float:right !important;}
 
 .f12{font-size:12px;}
+.f16{font-size:16px !important;}
 .w55{width:55px !important;}
 .w100{width:100px !important;}
 .f18{font-size:18px !important;}
@@ -16,8 +17,10 @@ ul,ol{list-style:none;}
 .pt45{padding-top:45px !important;}
 .pr20{padding-right:20px;}
 .p3{padding:3px;}
+.mt5{margin-top:5px !important;}
 .mt10{margin-top:10px !important;}
 .mt15{margin-top:15px !important;}
+.ml5{margin-left:5px !important;}
 .ml10{margin-left:10px !important;}
 .ml20{margin-left:20px !important;}
 .mr20{margin-right:20px !important;}
@@ -25,11 +28,17 @@ ul,ol{list-style:none;}
 .radius5{border-radius:5px !important;}
 .noneborder{border:none !important;}
 .pointer{cursor:pointer;}
+.inline{display:inline !important;}
 .none{display:none !important;}
 .gray{color:#888;}
 .lh20{line-height:20px;}
 
-.btn11{width:95px;height:25px;line-height:25px;border:1px #0099CC solid;text-align:center;display:block;color:#fff !important;cursor:pointer;background-color:#00AAEE;}
+.btn4 {background: url("../images/btn20.gif") no-repeat left top;border:none;color: #747474;cursor: pointer;display: block;
+height: 23px;letter-spacing: 1px;line-height: 23px;text-align: center;width: 45px;}
+.btn11{width:95px;height:25px;line-height:25px;border:1px #0099CC solid;text-align:center;display:block;color:#fff !important;
+cursor:pointer;background-color:#00AAEE;}
+.btn19 {background: url("../images/btn19.gif") no-repeat left top;border:none;color: #FFFFFF;cursor: pointer;display: block;height: 23px;
+letter-spacing: 1px;line-height: 23px;text-align: center;width: 45px;}
 .btn20{border-radius:3px;color:#fff;cursor:pointer;background-color:#00AAEE;padding:8px 10px;display:block;width:110px;
 font-family:微软雅黑;font-size:18px;border:none;}
 .btn20:hover{background-color:#0099EE;}
@@ -212,7 +221,7 @@ background: url(../images/preview-icons.png) no-repeat -280px -220px;position:ab
 #Moblie .blackberryframe span{display: inline-block;height: 187px;margin-left: 20px;margin-top: 92px;overflow: hidden;width: 259px;}
 #Moblie .blackberryframe iframe {height:193px;width:275px;}
 
-.pass4{padding:0px 30px;margin:40px 0px;display:block;overflow:hidden;clear:both;zoom:1;}
+.pass4{margin:40px 0px;display:block;overflow:hidden;clear:both;zoom:1;}
 .pass5{width:480px;height:80px;margin:0px auto 20px auto;overflow:hidden;clear:both;position:relative;background-color:#F8F8F8;}
 .pass5 a.del{width:9px;height:9px;display:block;position:absolute;background:url(../images/sign54.gif) left top no-repeat;right:11px;top:11px;cursor:pointer;}
 .pass5 a.up{width:12px;height:12px;display:block;position:absolute;background:url(../images/sign53.gif) left top no-repeat;left:15px;top:25px;cursor:pointer;}
@@ -235,6 +244,10 @@ width:80px;height:117px;text-align:center;line-height:20px;display:none;}
 .pagination #PageNum a.ths:hover{background-color:transparent;}
 .pagination a.dis{color:#999;}
 /**页码 over**/
+
+/**删除对话框 begin**/
+.deletebox{color:#666; outline:4px solid #fff;border:1px solid #C6C6C6;background-color:#fff; position:absolute;padding:5px 10px;line-height:20px;width:105px;height:48px;display:none;z-index:150;}
+/**删除对话框 over**/
 
 /**程序调试用 begin**/
 .coupon_uploadpreview{background:url(/newbackstage/images/pic6.jpg) left top no-repeat;}
