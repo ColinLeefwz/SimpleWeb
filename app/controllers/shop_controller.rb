@@ -145,8 +145,24 @@ class ShopController < ApplicationController
     shop = Shop.find_by_id(params[:id])
     render :json => shop.safe_output_with_staffs.to_json
   end
+
+   def history
+     shop = Shop.find_by_id(params[:id])
+     skip = params[:skip].to_i
+     pcount = params[:pcount].to_i
+     pcount = 5 if pcount==0
+     arr = shop.history(skip,pcount)
+     headers[:more_result] = "1" if arr.size>=pcount
+     rmd= $redis.smembers("RoomMsgDel#{shop.id.to_i}")
+     arr.reject!{|c| rmd.include?(c[3])}
+     arr.delete_if{|x| x[1] =~ /^0\d$/ || x[1][0,3]=="@@@"}
+     if skip==0
+       arr.delete_if{|x| x[1][0,5] == "[img:" && x[1][5,24] == shop.card_photo.id.to_s}
+     end
+     render :json => arr.to_json
+   end
   
-  def history
+  def history0
     skip = params[:skip].to_i
     pcount = params[:pcount].to_i
     pcount = 5 if pcount==0
