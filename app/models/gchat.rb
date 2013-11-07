@@ -61,7 +61,7 @@ class Gchat
   def self.remain_init_to_mongo(shop,skip, count)
     begin
       chats =shop.history(skip,count) 
-      chats.each{|chat|  insert_to_mongo(chat, sid)}
+      chats.each{|chat|  insert_to_mongo(chat, shop.id)}
       remain_init_to_mongo(shop,skip+count, count) if chats.count == count
     rescue
       return nil
