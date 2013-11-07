@@ -58,11 +58,11 @@ class Gchat
     end
   end
 
-  def self.remain_init_to_mongo(sid,skip, count)
+  def self.remain_init_to_mongo(shop,skip, count)
     begin
-      chats = JSON.parse(Xmpp.get("api/gchat2?room=#{sid}&skip=#{skip}&count=#{count}"))
+      chats =shop.history(skip,count) 
       chats.each{|chat|  insert_to_mongo(chat, sid)}
-      remain_init_to_mongo(sid,skip+count, count) if chats.count == count
+      remain_init_to_mongo(shop,skip+count, count) if chats.count == count
     rescue
       return nil
     end
@@ -70,15 +70,41 @@ class Gchat
 
 
   def self.init_to_mongo(initsid=0)
-    sids = Checkin.distinct(:sid).select{|m| m > initsid}
     #    sids = [21828775, 21835801, 21835409]
-    Shop.where(_id: {'$in' => sids}).sort({_id: 1}).each do |shop|
-      begin
-        chats = JSON.parse(Xmpp.get("api/gchat2?room=#{shop.id}&skip=0&count=50"))
-        chats.each{|chat| insert_to_mongo(chat, shop.id) }
-        remain_init_to_mongo(shop.id,50, 50) if chats.length ==50
-      rescue
-        next
+    File.open("/mnt/lianlian/log/gchat_init_to_mongo.log", 'w+') do |f|
+      Checkin.distinct(:sid).sort.select{|m| m > initsid}.each do |id|
+        begin
+          shop = Shop.find_by_id(id)
+          next if shop.nil?
+          f.puts shop.id
+          chats = shop.history(0,50)
+          next if chats.blank?
+          chats.each{|chat| insert_to_mongo(chat, shop.id) }
+          remain_init_to_mongo(shop,50, 50) if chats.length ==50
+        rescue
+          next
+        end
+      end
+    end
+  end
+
+  def self.init_to_mongo2
+    File.open("/mnt/lianlian/log/gchat_init_to_mongo.log", 'w+') do |f|
+      $redis.keys("UA*").each do |ua|
+        begin
+          cman = $redis.zcard(ua)
+          sid = ua.gsub(/UA/,'' )
+          if Gchat.history_skip(sid, 0, cman).size <  cman
+            shop = Shop.find_by_id(sid)
+            next if shop.nil?
+            chats = shop.history(0,50)
+            next if chats.blank?
+            chats.each{|chat| insert_to_mongo(chat, shop.id) }
+            remain_init_to_mongo(shop,50, 50) if chats.length ==50
+          end
+        rescue
+          next
+        end
       end
     end
   end
