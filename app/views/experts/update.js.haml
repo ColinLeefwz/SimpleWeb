@@ -17,11 +17,39 @@
       pick12HourFormat: true
     });
 
-    $("#content-preview").click(function(){
-       var title = $("#content-title").val();
-       $("#article-title").html("<h1>"+title+"</h1>");
-       var description = CKEDITOR.instances['content-description'].getData();
-       $(".text-page-main-content").html(description);
+    $("#session-preview").click(function(){
+       var title = $("#session-title-input").val();
+       $("#session-title").html("<h1>"+title+"</h1>");
+       var date = $("#datepicker").find("input").val();
+       var time = $("#starttimepicker").find("input").val();
+       var timezone = $("#session-timezone-input").val();
+       $("#session-datetime").html(date+"  "+time+"  "+timezone);
+       var location = $("#session-location-input").val();
+       $("#session-location").html(location);
+       var price = $("#session-price-input").val();
+       $("#session-price").html("$"+price+" USD");
+       $("input:checked").each(function(){
+         $("#article-session-categories").html($("#article-session-categories").html() + $(this).next("label").text() + "  ");
+         $("#live-session-categories").html($("#live-session-categories").html() + "<p>" + $(this).next("label").text() + "</p>");
+       })
+       var live_description = CKEDITOR.instances["live_session_description"].getData();
+       $("#live-session-description").html(live_description);
+       var article_description = CKEDITOR.instances['article_session_description'].getData();
+       $("#article-session-description").html(article_description);
     });
+    $("#session-cover-input").change(function(){
+      readURL(this);
+    });
+
+    function readURL(input) {
+      if (input.files && input.files[0]){
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#session-cover").attr("src", e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
   });
+  
 
