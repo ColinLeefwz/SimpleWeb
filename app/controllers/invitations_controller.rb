@@ -11,8 +11,6 @@ class InvitationsController < Devise::InvitationsController
       case params[:commit]
       when "Send"
         expert_invite 
-      when "Cancel"
-        redirect_to refer_new_expert_experts_path
       end
     end
   end
