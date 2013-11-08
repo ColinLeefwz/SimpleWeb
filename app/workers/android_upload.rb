@@ -3,7 +3,7 @@ class AndroidUpload
   @queue = :normal
 
   def self.perform(path)
-    `scp #{path} web1:/mnt/lianlian/public/`
+    `scp web2:#{path} web1:/mnt/lianlian/public/`
   end
   
 end
