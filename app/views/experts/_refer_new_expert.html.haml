@@ -7,3 +7,23 @@
   = f.input :message, label: "Message", input_html: { class: 'ckeditor' }
   = f.input :copy_me, label: "Copy me on the message"
   = f.submit "Send", class: "btn"
+
+:coffee
+  send = $("input[value='Send']")
+  send.attr('disabled', 'disabled')
+
+  # validate the "to" field
+  to = $("input#email_message_to")
+  enable_send = false
+  to.on 'blur', ->
+    to_value = to.val()
+    get_path = "/experts/validate_invite_email"
+    $.get(get_path, {to_address: to_value}, (data)=>
+      enable_send = data.status
+      if enable_send
+        send.removeAttr("disabled")
+      else
+        alert data.error_message
+        send.attr('disabled', 'disabled')
+    )
+
