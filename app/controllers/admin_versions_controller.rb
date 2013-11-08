@@ -17,8 +17,10 @@ class AdminVersionsController < ApplicationController
     @version = Version.new(params[:version])
     @version._id = params[:version][:id]
     @version.save!
-    FileUtils.mv( params[:file].tempfile.path, "public"+ "/dface#{@version._id}.apk")
-    Resque.enqueue(AndroidUpload, "/mnt/lianlian/public/dface#{@version._id}.apk")
+    path = "/mnt/lianlian/public/dface#{@version._id}.apk"
+    FileUtils.mv( params[:file].tempfile.path, path)
+#    `scp #{path} web1:/mnt/lianlian/public/`
+    Resque.enqueue(AndroidUpload, path)
     $redis.set("android_version", @version._id)
     redirect_to :action => :show, :id => @version.id
   end
