@@ -21,6 +21,14 @@ class Shop3FaqsController < ApplicationController
 
   def update
     @shop_faq = ShopFaq.find(params[:id])
+    if params[:shop_faq][:img]
+      faq = ShopFaq.new(params[:shop_faq])
+      faq.sid = session[:shop_id]
+      faq.save
+      @shop_faq.delete
+      return  redirect_to :action => "index"
+    end
+
     if @shop_faq.update_attributes(params[:shop_faq])
       redirect_to :action => "index"
     else
@@ -44,12 +52,12 @@ class Shop3FaqsController < ApplicationController
     @shop_faq = ShopFaq.new(params[:shop_faq])
     @shop_faq.sid = session[:shop_id]
 
-      if @shop_faq.save
-        $redis.sadd("FaqS#{session_shop.city}", session_shop.id)
-        redirect_to :action => "index"
-      else
-        render :action => :new
-      end
+    if @shop_faq.save
+      $redis.sadd("FaqS#{session_shop.city}", session_shop.id)
+      redirect_to :action => "index"
+    else
+      render :action => :new
+    end
   end
 
   #异步预览，预览一次数据库会生成一次sid：nil的记录，用户看不到，得定期清理 TODO
