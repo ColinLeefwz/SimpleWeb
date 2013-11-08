@@ -5,7 +5,7 @@
       .portrait
         = image_tag(session.expert.avatar.url)
         .expert-name
-          = session.expert.name
+          = link_to session.expert.name, profile_expert_path(session.expert)
       .content-type
         = image_tag(get_image_tag(session))
         %p= session.categories.join(", ")

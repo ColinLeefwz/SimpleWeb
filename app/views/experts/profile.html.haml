@@ -1,0 +1,62 @@
+
+.wrapper
+  .brief.sub-wrapper
+    .avatar.brief-item
+      = image_tag(@expert.avatar.url)
+    .resume.brief-item
+      %p
+        %span= @expert.name
+        %br
+        %span= "some title (fixed now)"  #TODO: add title to expert profile
+        %br
+        %span= "venture capital (attribute name)" # TODO: add *** to expert profile
+      %table
+        %tr
+          %td Company
+          %td originatechina.com
+        %tr
+          %td Personal
+          %td startingupchina.com
+        %tr
+          %td Twitter
+          %td @sameerkarim
+    .contact.brief-item
+
+      .contact-button
+        %button.btn.left-side
+          %i.fa.fa-star Follow
+        %button.btn.right-side 0
+
+      .contact-button
+        %button.btn.left-side
+          %i.fa.fa-comments Contact
+        %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
+          %span.caret
+      
+
+
+  .detail.sub-wrapper
+    %ul.nav.nav-tabs
+      %li.active.tab
+        %a{href: "#tab1", data: {toggle: "tab"}}Overview
+      %li.tab
+        %a{href: "#tab2", data: {toggle: "tab"}}Career
+      %li.tab
+        %a{href: "#tab3", data: {toggle: "tab"}}Education
+
+    .tab-content
+      .tab-pane.active#tab1
+        %div
+          life overview
+      .tab-pane#tab2
+        %div
+          career intro
+      .tab-pane#tab3
+        %div
+          education 
+
+
+
+  .sessions.sub-wrapper
+    #content.container
+      =render 'welcome/box_content', sessions: @sessions

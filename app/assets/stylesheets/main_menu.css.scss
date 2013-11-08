@@ -5,7 +5,6 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
       width: 100%;
       border-bottom: 1px solid #ddd;
       .item{
-        -webkit-box-shadow: $shadow_param;
         box-shadow: $shadow_param;
         background-color: white;
         padding-top: 1em;
