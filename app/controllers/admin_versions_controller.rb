@@ -17,6 +17,7 @@ class AdminVersionsController < ApplicationController
     @version = Version.new(params[:version])
     @version._id = params[:version][:id]
     @version.save!
+    FileUtils.mv( params[:file].tempfile.path, "public"+ "/dface#{@version._id}.apk")
     $redis.set("android_version", @version._id)
     redirect_to :action => :show, :id => @version.id
   end
