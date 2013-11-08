@@ -34,9 +34,9 @@
   = f.label :description
   = f.text_area :description, input_html: { class: "session-description-input"}
 
-  = f.submit Session::COMMIT_TYPE[:draft], class: 'btn'
-  %a#session-preview{href: '#modal', role: 'button', class: 'btn', data:{toggle: "modal"}} Preview
-  = f.submit Session::COMMIT_TYPE[:submit], class: 'btn'
+  = f.submit Session::COMMIT_TYPE[:draft], class: 'btn dashboard-buttons'
+  %a#session-preview{href: '#modal', role: 'button', class: 'btn dashboard-buttons', data:{toggle: "modal"}} Preview
+  = f.submit Session::COMMIT_TYPE[:submit], class: 'btn dashboard-buttons'
 
 
   #modal.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'myModalLabel'}, aria:{hidden: 'true'}}
