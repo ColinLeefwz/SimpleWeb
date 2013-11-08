@@ -49,4 +49,62 @@ describe SessionsController do
       end
     end
   end
+
+	describe "PUT cancel content" do
+		context "not logged in" do
+			it "can not cancel the session" do
+				get :cancel_content, id: session_intro.id, format: :js
+				expect(response).to redirect_to root_path
+			end
+
+			it "can not make the session to be canceled" do
+				get :cancel_content, id: session_intro.id, format: :js
+				expect(session_intro.reload).not_to be_canceled
+			end
+		end
+
+		context "logged in as normal user" do
+			before :each do
+				sign_in peter
+			end
+
+			it "can not cancel the session" do
+				get :cancel_content, id: session_intro.id, format: :js
+				expect(response).to redirect_to root_path
+			end
+
+			it "can not make the session to be canceled" do
+				get :cancel_content, id: session_intro.id, format: :js
+				expect(session_intro.reload).not_to be_canceled
+			end
+		end
+
+		context "logged in as the expert" do
+			before :each do
+				sign_in sameer
+			end
+
+			it "can cancel the session" do
+				get :cancel_content, id: session_intro.id, format: :js
+				expect(response).to be_success
+			end
+
+			it "makes the session to be canceled" do
+				get :cancel_content, id: session_intro.id, format: :js
+				expect(session_intro.reload).to be_canceled
+			end
+
+			it "shows all the un-canceled sessions" do
+				get :cancel_content, id: session_intro.id, format: :js
+
+				result = false
+				assigns[:sessions].each do |session|
+					result = result || session.canceled
+				end
+
+				expect(result).to be_false
+			end
+		end
+	end
+
 end

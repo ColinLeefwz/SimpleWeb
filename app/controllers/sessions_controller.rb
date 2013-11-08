@@ -131,6 +131,7 @@ class SessionsController < ApplicationController
     create_response
   end
 
+	# TODO: can we refactor this one with the "edit_live_session" ?
   def edit_content
     authorize! :edit_content, @session
     @from = "post_content"
@@ -139,6 +140,17 @@ class SessionsController < ApplicationController
       format.js {render 'experts/update'}
     end
   end
+
+	def cancel_content
+    authorize! :edit_content, @session
+		@session.update_attributes canceled: true
+		@from = 'sessions'
+		@sessions = current_user.sessions.where("canceled = false")
+
+		respond_to do |format|
+			format.js { render 'experts/update' }
+		end
+	end
 
   def update_content
     @sessions = current_user.sessions

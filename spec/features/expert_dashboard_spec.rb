@@ -127,7 +127,16 @@ feature "Expert Dashboard" do
 	
 	## cancel a session
 	scenario "cancel a session created by the expert", js: true do
+		session_intro
+		click_link "Sessions"
+		expect(page).to have_css ".session-items .item"
+		session_box = page.find(".session-items .item")
+		expect(session_box).to have_link "cancel"
 
+		click_link "cancel"
+
+		expect(page).not_to have_css ".session-items .item"
+		expect(session_intro.reload).to be_canceled
 	end
 
 end

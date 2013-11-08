@@ -35,6 +35,7 @@ Prodygia::Application.routes.draw do
         get :sessions
         get :new_post_content
         get :edit_content
+        get :cancel_content
         patch :update_content
         get :new_live_session
         get :edit_live_session
