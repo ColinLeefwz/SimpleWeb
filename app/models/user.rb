@@ -1,4 +1,7 @@
+require 'mandrill_api'
+
 class User < ActiveRecord::Base
+	include Rails.application.routes.url_helpers
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -35,7 +38,12 @@ class User < ActiveRecord::Base
       user = User.create(email: data["email"],
                          password: Devise.friendly_token[0,20])
     end
-
     user
   end
+
+	protected
+	## override devise notification
+	def send_devise_notification(notification, *args)
+		devise_mailer.send(notification, self, *args)
+	end
 end
