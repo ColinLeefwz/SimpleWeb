@@ -1,39 +1,110 @@
 = simple_form_for(@session, url: @url, remote: true) do |f|
   %h3 Create new session
-  = f.input :title
+  = f.input :title, input_html: { id: "session-title-input"}
   .categories
-    = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes 
+    = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
   = f.input :format, collection: %w(Lounge Forum Livestreaming), as: :select
-  = f.input :cover
+  = f.input :cover, input_html: {id: "session-cover-input"}
   = f.input :video
   .start_date
     = f.label :date
     #datepicker.input-append.date
-      = f.text_field :date, data: {format: "dd/MM/yyyy"}, type: "text" 
+      = f.text_field :date, data: {format: "dd-MM"}, type: "text"
       %span.add-on
         %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
   .start_end_time
     = f.label :from
     #starttimepicker.input-append.date
-      = f.text_field :start_time, data: {format: "hh:mm:ss"}, type: "text" 
+      = f.text_field :start_time, data: {format: "hh:mm"}, type: "text"
       %span.add-on
         %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
     = f.label :to
     #endtimepicker.input-append.date
-      = f.text_field :end_time, data: {format: "hh:mm:ss"}, type: "text" 
+      = f.text_field :end_time, data: {format: "hh:mm:ss"}, type: "text"
       %span.add-on
         %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
-  = f.input :time_zone
-  = f.input :location
-  = f.input :price
+  = f.input :time_zone, input_html: {id: "session-timezone-input"}
+  = f.input :location, input_html: {id: "session-location-input"}
+  = f.input :price, input_html: {id: "session-price-input"}
   = f.label :strategic_question
   = f.text_area :strategic_question
   %br
   %br
   %br
   = f.label :description
-  = f.text_area :description
+  = f.text_area :description, input_html: { class: "session-description-input"}
 
-  = f.submit Session::COMMIT_TYPE[:draft]
-  = f.submit Session::COMMIT_TYPE[:preview]
-  = f.submit Session::COMMIT_TYPE[:submit]
+  = f.submit Session::COMMIT_TYPE[:draft], class: 'btn'
+  %a#session-preview{href: '#modal', role: 'button', class: 'btn', data:{toggle: "modal"}} Preview
+  = f.submit Session::COMMIT_TYPE[:submit], class: 'btn'
+
+
+  #modal.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'myModalLabel'}, aria:{hidden: 'true'}}
+    .modal-body
+      #main-content
+        %h1.video-page-title#session-title
+        .video-page-info-box
+          .video-page-image
+            %img#session-cover
+          .video-page-info      
+            .video-page-up-box
+              .video-page-expert-info
+                .video-page-expert-portrait
+                  .video-page-image-border
+                    = image_tag(current_user.avatar.url)
+                  %p= current_user.expert_profile.company
+                .video-page-expert-name-title
+                  .video-page-expert-name-value
+                    = current_user.name
+                  %p= current_user.expert_profile.title
+              .video-page-category-info
+                .video-page-category-info-title
+                  Category
+                  #live-session-categories
+              .clear-fix
+
+            .video-page-below-box
+              .video-page-location-info
+                .item-wrapper
+                  #location-icon.icon
+                    = image_tag "location.png"
+                  #location.item
+                    #session-location
+                    -# = (@session.location == "") ? "To be announced" : @session.location 
+                .item-wrapper
+                  #time-icon.icon
+                    = image_tag "time.png"
+                  #time.item
+                    #session-datetime
+                    -# = render "timezone", time: @session.start_date, fallback: @session.time_zone, zone: nil
+                  %p
+                  = link_to "( Not in correct timezone? )"
+                .item-wrapper.content-type
+                  #content-type-icon.icon
+                    = image_tag "content_type.png"
+                  #content-type.item
+                    content_type
+                .item-wrapper.price
+                  #price-icon.icon
+                    = image_tag "price.png"
+                  #price.item
+                    #session-price
+                    -# - if @session.price == 0
+                    -#   = "Free"
+                    -# - else
+                    -#   = number_to_currency("#{@session.price}", :unit => "$")
+                    -#   USD
+
+              .video-page-others
+                %p Click below to entroll now!
+                .enroll-button
+                  %p= link_to "Enroll Now!", "#", remote: true, class: 'enroll-text'
+                %p.outline-font= link_to 'Tell A Friend', "#", remote: true
+              .clear-fix
+          .clear-fix
+        .video-page-video-frame
+          = video_tag @session.video.url, controls: 'controls'
+        .video-page-summary#live-session-description
+    .modal-footer
+      %button.btn{data:{dismiss:'modal'}, aria:{hidden:'true'}} Close
+      %button.btn.btn-primary Save changes
