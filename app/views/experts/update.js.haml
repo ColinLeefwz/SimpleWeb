@@ -43,8 +43,13 @@
          $("#article-session-description").html(article_description);
        }
     });
+
     $("#session-cover-input").change(function(){
       readURL(this);
+    });
+
+    $("#session-video-input").change(function(){
+      $(".video-page-video-frame").css("display", "block");
     });
 
     $(".modal-submit").click(function(){
