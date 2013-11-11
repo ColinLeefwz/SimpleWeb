@@ -187,6 +187,24 @@ class ShopController < ApplicationController
     pcount = 5 if pcount==0
     skip = (page-1)*pcount
     photos = shop_photo_cache(params[:id], skip, pcount)
+    if photos.size<5
+      shop = Shop.find_by_id(params[:id])
+      if shop.t == 10 #写字楼
+        p=Photo.find("5273013320f318640e000009") #嗮前台
+        p.set(:room, params[:id])
+        photos = photos + [p]
+      end
+      if shop.t == 11 #住宅
+        p=Photo.find("5273013320f318640e000009") #嗮前台
+        p.set(:room, params[:id])
+        photos = photos + [p]
+      end
+      if shop.t == 12 #学校
+        p=Photo.find("52721b67c90d8b4764000002") #嗮桌面
+        p.set(:room, params[:id])
+        photos = photos + [p]
+      end
+    end
     render :json => photos.map {|p| p.output_hash_with_username }.to_json
   end
   
