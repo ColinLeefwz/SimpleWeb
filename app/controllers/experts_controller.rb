@@ -30,16 +30,16 @@ class ExpertsController < ApplicationController
 	def validate_invite_email
 		to_address = params[:to_address]
 
-		expert = User.find_by email: to_address
+		expert = Expert.find_by email: to_address
 
 		error_message = ""
 		flag = true
 
 		if to_address.empty?
-			error_message = "can not be nil"
+			error_message = "Email address can not be blank"
 			flag = false
 		elsif expert
-			error_message = "email has already occupied"
+			error_message = "This expert has already been invited to Prodygia"
 			flag = false
 		end
 
