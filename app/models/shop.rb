@@ -230,7 +230,7 @@ class Shop
   end  
   
   def preset_p(photos)
-    if photos.size<50
+    if photos.size<5
       if self.t == 10 #写字楼
         p=Photo.find_by_id("5273013320f318640e000009") #嗮前台
         p.set(:room, self.id)
