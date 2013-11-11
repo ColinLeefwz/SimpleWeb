@@ -4,6 +4,7 @@
   = f.input :from_address, as: 'hidden'
   = f.input :subject, label: "Subject"
   = f.input :to, label: "To"
+  .alert.validation-message.hide
   = f.input :message, label: "Message", input_html: { class: 'ckeditor' }
   = f.input :copy_me, label: "Copy me on the message"
   = f.submit "Send", class: "btn"
@@ -12,7 +13,6 @@
   send = $("input[value='Send']")
   send.attr('disabled', 'disabled')
 
-  # validate the "to" field
   to = $("input#email_message_to")
   enable_send = false
   to.on 'blur', ->
@@ -22,8 +22,9 @@
       enable_send = data.status
       if enable_send
         send.removeAttr("disabled")
+        $(".validation-message").hide()
       else
-        alert data.error_message
         send.attr('disabled', 'disabled')
+        $(".validation-message").show()
+        $(".validation-message").text data.error_message
     )
-
