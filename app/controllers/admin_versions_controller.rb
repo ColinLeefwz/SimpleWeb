@@ -36,6 +36,7 @@ class AdminVersionsController < ApplicationController
   def update
     @version = Version.find(params[:id])
     @version.update_attributes(params[:version])
+    $redis.set("android_version", @version._id)
     redirect_to :action => :show, :id => @version.id
   end
 

@@ -22,7 +22,7 @@ class AController < ApplicationController
   
   def down
     ver = $redis.get("android_version")
-    redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
+    redirect_to "http://s.dface.cn/dface#{ver}.apk"
   end
   
   def xmpp_test
