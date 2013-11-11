@@ -226,8 +226,28 @@ class Shop
   end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => top4_photos.map {|p| p.output_hash} }).merge!({text: default_text_when_photo})
+    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash} }).merge!({text: default_text_when_photo})
   end  
+  
+  def preset_p(photos)
+    if photos.size<50
+      if self.t == 10 #写字楼
+        p=Photo.find_by_id("5273013320f318640e000009") #嗮前台
+        p.set(:room, self.id)
+        return [p] + photos
+      end
+      if shop.t == 11 #住宅
+        p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮前台
+        p.set(:room, self.id)
+        return [p] + photos
+      end
+      if self.t == 12 #学校
+        p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮桌面
+        p.set(:room, self.id)
+        return [p] + photos
+      end
+    end
+  end
 
   
   def show_t
