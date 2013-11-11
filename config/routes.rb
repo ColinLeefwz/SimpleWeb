@@ -50,6 +50,7 @@ Prodygia::Application.routes.draw do
     collection do
       get :refer_new_expert
       post :refer_new_expert
+			get :validate_invite_email
     end
   end
 

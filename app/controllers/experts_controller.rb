@@ -23,10 +23,32 @@ class ExpertsController < ApplicationController
     end
   end
 
-
   def profile
     @sessions = @expert.sessions
   end
+
+	def validate_invite_email
+		to_address = params[:to_address]
+
+		expert = User.find_by email: to_address
+
+		error_message = ""
+		flag = true
+
+		if to_address.empty?
+			error_message = "can not be nil"
+			flag = false
+		elsif expert
+			error_message = "email has already occupied"
+			flag = false
+		end
+
+		if flag
+			render json: {status: true}
+		else
+			render json: { error_message: error_message, status: false }
+		end
+	end
 
   private
   
