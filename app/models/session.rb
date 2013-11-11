@@ -18,7 +18,7 @@ class Session < ActiveRecord::Base
   has_attached_file :cover,
     path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
     url: "/system/sessions/:attachment/:id_partition/:style/:filename",
-    default_url: ActionController::Base.helpers.asset_path('missing.jpg')
+    default_url: 'missing.jpg'
 
   has_attached_file :video,
     path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
