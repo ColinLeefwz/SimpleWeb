@@ -6,15 +6,12 @@
 
     #order-detail
       .item-wrapper
-        #avatar.icon
+        #avatar
           = image_tag @session.expert.avatar.url
         #title.item
           = @session.title
-
-      .item-wrapper
-        #fake.icon
-        #expert.item
-          = "by #{@session.expert.name}"
+          #expert.item
+            = "by #{@session.expert.name}"
 
       .item-wrapper
         #time-icon.icon
