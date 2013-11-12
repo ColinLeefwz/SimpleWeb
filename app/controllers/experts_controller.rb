@@ -30,7 +30,7 @@ class ExpertsController < ApplicationController
 	def validate_invite_email
 		to_address = params[:to_address]
 
-		expert = Expert.find_by email: to_address
+		expert = User.find_by email: to_address
 
 		error_message = ""
 		flag = true

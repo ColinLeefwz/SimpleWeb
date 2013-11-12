@@ -55,8 +55,7 @@ class InvitationsController < Devise::InvitationsController
   def expert_invite
     @email_message = current_user.email_messages.create(set_email_message)
 
-    # self.resource = resource_class.invite!({ email: @email_message.to}, current_user) do |u|
-    self.resource = Expert.invite!({ email: @email_message.to}, current_user) do |u|
+    self.resource = resource_class.invite!({ email: @email_message.to}, current_user) do |u|
       u.skip_invitation = true
     end
 
