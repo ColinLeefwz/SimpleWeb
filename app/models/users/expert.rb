@@ -20,4 +20,5 @@ class Expert < Member
   def sessions_with_draft
     self.sessions.order('draft desc') 
   end
+
 end
