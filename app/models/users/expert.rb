@@ -21,13 +21,4 @@ class Expert < Member
     self.sessions.order('draft desc') 
   end
 
-
-	## override Devise::Invitable invited_to_sign_up?
-	def invited_to_sign_up?
-		logger.info "in model Expert line 27"
-		is_expert = self.type == "Expert"
-		(is_expert || persisted?) && invitation_token.present?
-		debugger
-		# persisted? && invitation_token.present?
-	end
 end

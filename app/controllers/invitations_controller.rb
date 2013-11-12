@@ -58,7 +58,6 @@ class InvitationsController < Devise::InvitationsController
     # self.resource = resource_class.invite!({ email: @email_message.to}, current_user) do |u|
     self.resource = Expert.invite!({ email: @email_message.to}, current_user) do |u|
       u.skip_invitation = true
-			debugger
     end
 
     @invitation_token = resource.invitation_token
