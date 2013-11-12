@@ -22,5 +22,10 @@
   }
   .modal-body{
     background-image: url(/assets/bg.jpg);
+    max-height: 600px;
+  }
+
+  .modal.fade.in{
+    top: 3%;
   }
 }

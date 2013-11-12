@@ -5,7 +5,7 @@
     = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
   = f.input :format, collection: %w(Lounge Forum Livestreaming), as: :select
   = f.input :cover, input_html: {id: "session-cover-input"}
-  = f.input :video
+  = f.input :video, input_html: {id: "session-video-input"}
   .start_date
     = f.label :date
     #datepicker.input-append.date
@@ -70,13 +70,11 @@
                     = image_tag "location.png"
                   #location.item
                     #session-location
-                    -# = (@session.location == "") ? "To be announced" : @session.location 
                 .item-wrapper
                   #time-icon.icon
                     = image_tag "time.png"
                   #time.item
                     #session-datetime
-                    -# = render "timezone", time: @session.start_date, fallback: @session.time_zone, zone: nil
                   %p
                   = link_to "( Not in correct timezone? )"
                 .item-wrapper.content-type
@@ -89,11 +87,6 @@
                     = image_tag "price.png"
                   #price.item
                     #session-price
-                    -# - if @session.price == 0
-                    -#   = "Free"
-                    -# - else
-                    -#   = number_to_currency("#{@session.price}", :unit => "$")
-                    -#   USD
 
               .video-page-others
                 %p Click below to entroll now!
@@ -107,4 +100,4 @@
         .video-page-summary#live-session-description
     .modal-footer
       %button.btn{data:{dismiss:'modal'}, aria:{hidden:'true'}} Close
-      %button.btn.btn-primary Save changes
+      = f.submit Session::COMMIT_TYPE[:submit], class: 'btn btn-primary modal-submit' 

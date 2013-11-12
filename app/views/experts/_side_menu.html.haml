@@ -11,7 +11,7 @@
   .toolkit
     .item
       = render 'item_icon', item_name: 'activity_stream'
-      .item-text #{link_to 'My activity stream', remote: true}
+      .item-text #{link_to 'My activity stream', sessions_session_path, remote: true}
 .block-title
   %span
     CREATE
