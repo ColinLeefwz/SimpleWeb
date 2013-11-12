@@ -26,9 +26,9 @@ class ShopFaq
   
   index({sid: 1, od:1})
 
-   with_options :prefix => true, :allow_nil => true do |option|
-     option.delegate :name, :to => :shop
-   end
+  with_options :prefix => true, :allow_nil => true do |option|
+    option.delegate :name, :to => :shop
+  end
   
   
   def self.img_url(id,type=nil)
@@ -84,5 +84,21 @@ class ShopFaq
   def self.init_city_faq_redis
     ShopFaq.all.each {|x| $redis.sadd("FaqS#{x.shop.city}", x.sid)}
   end
+
+  #调用新浪接口 把长链转成短链
+  def self.short_url(token, long_url,err_num=0)
+    return long_url if err_num >= 3
+    lurl = URI.encode_www_form_component(long_url)
+    url = "https://api.weibo.com/2/short_url/shorten.json?access_token=#{token}&url_long=#{lurl}"
+    begin
+      response = JSON.parse(RestClient.get(url))
+      response['urls'][0]['url_short']
+    rescue RestClient::BadRequest
+      return long_url
+    rescue
+      return short_url(token, long_url,(err_num + 1))
+    end
+  end
+
 
 end

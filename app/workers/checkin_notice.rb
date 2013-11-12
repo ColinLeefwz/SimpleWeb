@@ -43,7 +43,19 @@ class CheckinNotice
       Resque.enqueue(LocationNotice, checkin.uid, checkin.sid )
     end    
     send_test_coupon(checkin.uid, checkin.sid)
+    send_test_mark(checkin.uid, checkin.sid)
   end
+
+  #  #测试分店测试点评商家
+  def self.send_test_mark(uid, sid)
+    return if sid.to_i != $cezyfd
+    url = "http://shop.dface.cn/shop3_marks/new?sid=#{sid}&uid=#{uid}"
+    ShopFaq.short_url('2.00kfdvGCGFlsXC1b5e64ba39QaSfpB', url)
+    Xmpp.send_gchat2($gfuid,sid,uid, '测试点评商家', nil, " NOLOG='1'  url='#{url}' " , "<x xmlns='dface.url'>#{url}</x>")
+  rescue
+    nil
+  end
+
 
   def self.send_welcome_msg_if_not_invisible(user,shop)
     return if user.invisible==2
