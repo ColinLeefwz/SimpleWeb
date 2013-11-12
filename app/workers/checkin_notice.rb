@@ -50,7 +50,7 @@ class CheckinNotice
   def self.send_test_mark(uid, sid)
     return if sid.to_i != $cezyfd
     url = "http://shop.dface.cn/shop3_marks/new?sid=#{sid}&uid=#{uid}"
-    ShopFaq.short_url('2.00kfdvGCGFlsXC1b5e64ba39QaSfpB', url)
+    url = ShopFaq.short_url('2.00kfdvGCGFlsXC1b5e64ba39QaSfpB', url)
     Xmpp.send_gchat2($gfuid,sid,uid, '测试点评商家', nil, " NOLOG='1'  url='#{url}' " , "<x xmlns='dface.url'>#{url}</x>")
   rescue
     nil
