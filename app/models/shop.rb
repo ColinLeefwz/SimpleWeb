@@ -236,7 +236,7 @@ class Shop
         p.set(:room, self.id)
         return [p] + photos
       end
-      if shop.t == 11 #住宅
+      if self.t == 11 #住宅
         p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮前台
         p.set(:room, self.id)
         return [p] + photos
@@ -247,6 +247,7 @@ class Shop
         return [p] + photos
       end
     end
+    return photos
   end
 
   
