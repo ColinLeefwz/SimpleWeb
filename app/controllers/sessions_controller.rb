@@ -150,7 +150,7 @@ class SessionsController < ApplicationController
 	end
 
   def update_content
-    @session.assign_attibutes(article_session_params)
+    @session.assign_attributes(article_session_params)
     create_response
   end
 
