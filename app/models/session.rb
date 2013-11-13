@@ -1,9 +1,9 @@
 class Session < ActiveRecord::Base
   validates :title, presence: true
-  validates :price, numericality: {greater_than_or_equal_to: 0.01}
+
   CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession Announcement).freeze
 
-  COMMIT_TYPE = { draft: "Save Draft", submit:  "Submit", preview: "Preview" }
+  COMMIT_TYPE = { draft: "Save Draft", publish:  "Publish", preview: "Preview" }
 
   self.inheritance_column = 'content_type'
 
