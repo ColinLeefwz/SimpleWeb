@@ -146,7 +146,7 @@ class AroundmeController < ApplicationController
     else
       sex = 2
     end
-    users = hot_users_cache(city,sex,skip,pcount)
+    users = hot_users_no_cache(city,sex,skip,pcount)
     ret = []
     users.each do |u|
       next if u.forbidden?
@@ -210,7 +210,7 @@ class AroundmeController < ApplicationController
     uids = $redis.zrevrange("HOT#{sex}U#{city}",skip,skip+pcount-1)
     page = (skip/pcount +1)
     if city && city.length>1
-      city2 = city[0] + (city.to_i+page).to_s
+      city2 = City.next_city(city,page)
       uids += $redis.zrevrange("HOT#{sex}U#{city2}",0,pcount-1)
     else
       uids += $redis.zrevrange("HOT#{sex}U010",skip,skip+pcount-1) 
