@@ -29,21 +29,14 @@ if (!window.CanvasRenderingContext2D)
 }
 else
 {
-    document.getElementById('loading').innerHTML = '<img src="./img/torus/loading.gif" alt="" style="width:16px;height:16px;vertical-align:top;"> Loading game...';
+    document.getElementById('loading').innerHTML = '<img src="./img/torus/loading.gif" alt="" style="width:16px;height:16px;vertical-align:top;"> 游戏正在加载... <br/><br/><br/><br/>\n\
+<h1>游戏介绍</h1><br/>向←滑动:  底盘相左转动<br/>向→滑动:  底盘相右转动 <br/>向 ↑ 滑动:     变形<br/> 向 ↓ 滑动: 快速降落<br/><br/> 当一个完整的水平环件15块被占用该行将消减，并获得100的积分。如果多行被同时消减，还能获取额外的积分。';
 }
 </script>
 <div id="container">
   <div id="menu">
     <div id="menu_area">
       <div id="screen0">
-        <div id="helpBox">
-        <P><b>How To Play</b><br>
-          Use the arrow keys to guide the falling blocks, spacebar and the up-arrow will rotate the block in opposite directions.
-          Alternatively the keys A,W,S and D can be used as arrow keys for the same purpose.<br><br>
-          When a complete horizontal ring of 15 blocks is occupied by pieces the row will collapse and earn 100 points.
-          If multiple rows are cleared at a time you will earn bonus points.
-        </P>
-        </div>
         <div id="copy"></div>
         <div id="but_main0" class="but"></div>
       </div>
@@ -107,10 +100,6 @@ else
     <div id="promo"></div>
     <div id="gameover">
       <div id="winner">
-        <form id="high_form">
-          You have achieved a high score, please enter your name:<br>
-          <input type="text" id="high_name" maxlength="20"> <input type="submit" value="OK">
-        </form>
       </div>
       <div id="newgame">
         <div id="sorryText"></div>
