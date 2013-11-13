@@ -109,5 +109,21 @@ class Gchat
     end
   end
 
+
+  def self.com_to_floor
+    Gchat.where({txt: /^\[img:.{24}\]评论：/}).each do |gchat|
+      begin
+        txt = gchat.txt
+        txt.match(/(^\[img:.{24}\]评论：)/)
+        gr =  $1.sub(/\[/,'\[').sub(/\]/, '\]')
+        floor = Gchat.where({txt: /#{gr}/}).sort({_id: 1}).to_a.index(gchat)+1
+        txt = txt.sub(/评论：/,"#{floor}:")
+        gchat.set(:txt, txt)
+      rescue
+        next
+      end
+    end
+  end
+
 end
 
