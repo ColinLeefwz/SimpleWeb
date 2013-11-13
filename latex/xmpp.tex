@@ -173,11 +173,13 @@ POST & \multicolumn{3}{|c|}{/follows/recommend} \\
 当用户使用脸脸时，比如签到／摇一摇等，可以收到商家推送过来的优惠券。优惠券也是一个xmpp消息，其中的body内容格式为：
 
 \begin{verbatim}
-[优惠券:$name:$shop:$id:$time:$hint]
+[优惠券:$name:$shop:$id:$time:$hint]$seq
 
  其中，name是优惠券的名称、shop是商家的名称，id是该优惠券的id，time是该张优惠券的下发时间。
  
  hint是可选的，表示使用优惠券时的提示语言，比如“请输入此次的消费金额”。有hint的优惠券使用时要求用户输入内容才能使用优惠券。内容默认是数字。
+ 
+ ［2013-11-13］新增seq是优惠券的编号。
  
 优惠券id不重复。如果有重复的优惠券id时代表消息重发了，此时要忽略这条消息。
  

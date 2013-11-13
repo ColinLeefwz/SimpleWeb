@@ -57,7 +57,7 @@ class CouponDown
   def message
     s = "[优惠券:#{coupon.name}:#{shop.name}:#{id}:#{d_date}"
     s += ":#{coupon.hint}" if coupon.hint
-    s += "]"
+    s += "]#{download_num}"
     s
   end
   
