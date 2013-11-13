@@ -167,7 +167,7 @@ class ShopController < ApplicationController
     pcount = params[:pcount].to_i
     pcount = 5 if pcount==0
     arr = Gchat.history_skip(params[:id], skip, pcount)
-    render :json => arr.map{|x| [x.uid,x.txt,x.cati,x.id]}.to_json
+    render :json => arr.map{|x| [x.uid,x.txt,x.cati,x.mid]}.to_json
   end
   
   def history2
