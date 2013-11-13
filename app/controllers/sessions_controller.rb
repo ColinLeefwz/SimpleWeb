@@ -109,16 +109,13 @@ class SessionsController < ApplicationController
   end
 
   def update_live_session
-    @sessions = current_user.sessions
-    @session.update(live_session_params)
-    @from = "sessions"
-    respond_to do |format| 
-      format.js {render 'experts/update'}
-    end
+    @session.assign_attributes(live_session_params)
+    create_response
   end
 
   def new_post_content
     @session = ArticleSession.new  # use Session.new so that form params are wrapped in :session
+    @session.expert = current_user
     @url = create_post_content_expert_sessions_path(current_user)
     @from = 'post_content'
     respond_to do |format|
@@ -153,12 +150,8 @@ class SessionsController < ApplicationController
 	end
 
   def update_content
-    @sessions = current_user.sessions
-    @session.update(article_session_params)
-    @from = "sessions"
-    respond_to do |format|
-      format.js {render 'experts/update'}
-    end
+    @session.assign_attributes(article_session_params)
+    create_response
   end
 
   private
@@ -167,7 +160,8 @@ class SessionsController < ApplicationController
     @sessions = current_user.sessions.order("draft desc")
     respond_to do |format|
       format.js{
-        if params[:commit] == Session::COMMIT_TYPE[:submit]
+        if params[:commit] == Session::COMMIT_TYPE[:publish]
+          @session.draft = false
           @session.save
           @from = "sessions"
           render 'experts/update'
@@ -176,10 +170,6 @@ class SessionsController < ApplicationController
           @session.save
           @from = "sessions"
           render 'experts/update'
-        elsif params[:commit] == Session::COMMIT_TYPE[:preview]
-          @session.draft = true
-          @session.save
-          render js: "window.location='#{session_path(@session)}'"
         end
       }
     end
