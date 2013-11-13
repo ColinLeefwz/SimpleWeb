@@ -67,7 +67,9 @@ class City
   end
   
   def self.next_city(city, n)
+     #TODO: 对国外城市的支持
     idx = $citys.find_index{|x| x==city}
+    return $citys[n] if idx.nil?
     nidx = (idx+n) % $citys.size
     $citys[nidx]
   end
