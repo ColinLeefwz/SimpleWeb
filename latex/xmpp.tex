@@ -42,7 +42,7 @@
 \begin{enumerate}
 \item 聊天室中，消息id以ckn开头的消息代表是用户首次进入聊天室发送的通知类消息，客户端根据这个ckn头确定是否有新的人进入了聊天室。
 \item 聊天室中，消息id以FAQ开头的是问答消息。
-\item 聊天室中，消息id以COMMENT开头的是图片的评论消息。
+\item 聊天室中，消息id以COMMENT开头的是图片的评论消息。聊天室评论消息带楼数的格式：[img:id]楼数:评论内容。
 \item 在聊天室收到的id以“coupon”开头的消息时，点击该消息要能跳转到优惠券文件夹。
 \end{enumerate}
 
@@ -106,7 +106,12 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 \section{好友动态}
 \subsection{好友动态消息}
-所有消息id以"FEED"开头的，都属于好友动态消息。好友动态消息以红点的方式提醒，不计数。
+所有消息id以"FEED"开头的，都属于好友动态消息。好友动态消息以红点的方式提醒，不计数。好友动态消息增加地点，IOS通过属性实现，Android通过扩展实现，如下：
+\begin{verbatim}
+"<x xmlns='dface.shop' SID='#{shop.id}' SNAME='#{shop.name}' ></x>"
+\end{verbatim}
+
+
 \subsection{好友动态中的评论消息}
 所有消息id以"COMMENT"开头的，都属于好友评论消息。评论消息以数字计数。
 \begin{verbatim}
