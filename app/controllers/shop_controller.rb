@@ -146,7 +146,7 @@ class ShopController < ApplicationController
     render :json => shop.safe_output_with_staffs.to_json
   end
 
-   def history
+   def history_old
      shop = Shop.find_by_id(params[:id])
      skip = params[:skip].to_i
      pcount = params[:pcount].to_i
@@ -162,13 +162,12 @@ class ShopController < ApplicationController
      render :json => arr.to_json
    end
   
-  def history0
+  def history
     skip = params[:skip].to_i
     pcount = params[:pcount].to_i
     pcount = 5 if pcount==0
-    arr = Gchat.history_skip(sid, skip, pcount)
-    headers[:more_result] = "1" if arr.size>=0
-    render :json => arr.to_json
+    arr = Gchat.history_skip(params[:id], skip, pcount)
+    render :json => arr.map{|x| [x.uid,x.txt,x.cati,x.mid]}.to_json
   end
   
   def history2

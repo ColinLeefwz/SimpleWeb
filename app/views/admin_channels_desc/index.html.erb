@@ -1,10 +1,10 @@
-<h1>渠道管理</h1>
+<h1>渠道管理   <h2><a href="http://dface.cn/web_channel_search" target="blank">渠道查询</a></h2> </h1>
 <br/>
 <%= form_tag '/admin_channels_desc',:method =>:get do %>
   渠道号：<%= text_field_tag :num, params[:num], :size => 10 %>
   <%= submit_tag "查 找" %>
 <% end %>
-<%= link_to '添加新的渠道', "/admin_channels_desc/new" %>
+<h2><%= link_to '添加新的渠道', "/admin_channels_desc/new" %></h2>
 <br/>
 
 

@@ -7,7 +7,7 @@ class InitController < ApplicationController
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
-    response.headers['location'] = URI::encode("中国;浙江;杭州") if params[:city]
+    response.headers['Cpcity'] = URI::encode("中国;浙江;杭州") if params[:city]
     session[:os] = UserDevice.os_type(params[:os])
 
     ver = params[:ver]
@@ -46,6 +46,7 @@ class InitController < ApplicationController
          ["2.2.0","增加了地主👑和抢地主功能\n添加地点功能强化",true],
          ["2.3.0","增加了手机号码功能\n好友动态提醒",true],
          ["2.4.0","全面兼容IOS7，建议立即升级\n现场图文效果改进",true],
+         ["2.5.2","新增好友间语音聊天功能\n定位更准确，更易用",true],
         ]
   
   def upgrade

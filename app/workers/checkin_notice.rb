@@ -145,7 +145,7 @@ class CheckinNotice
   #每次如果有员工在加入的商家签到，在最新动态里欢迎提示
   def self.send_staff_welcome(user,shop)
     shop.staffs.each do |uid|
-      Xmpp.send_chat(user.id, uid,"#{user.name}也来到#{shop.name}啦，回现场看看吧~", "FEED#{$uuid.generate}", " NOLOG='1' SID='#{shop.id}' SNAME='#{shop.name}' ")
+      Xmpp.send_chat(user.id, uid,"#{user.name}也来到#{shop.name}啦，回现场看看吧~", "FEED#{$uuid.generate}", " NOLOG='1' SID='#{shop.id}' SNAME='#{shop.name}' ", "<x xmlns='dface.shop' SID='#{shop.id}' SNAME='#{shop.name}' ></x>")
     end
   end
 
