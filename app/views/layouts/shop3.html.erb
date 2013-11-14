@@ -65,6 +65,10 @@
             <a href="/shop3_subshops">内部商家</a>
           <% end %>
           <span class="navline"></span>
+          <% if session_shop.id == 21835409 %>
+          <a href="/shop3_mobile">手机网站</a>
+          <span class="navline"></span>
+          <% end %>
 
           <a href="/shop3_login/logout">
             <%= session[:admin_sid] ? "返回总店" : "退出" %>

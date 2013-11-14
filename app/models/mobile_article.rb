@@ -1,17 +1,17 @@
 class MobileArticle
 
   include Mongoid::Document
-  include Mongoid::Timestamps
 
+  field :sid, type: Integer
   field :title
   field :text #简单摘要
   field :img
 
+  field :category
+
   field :content
 
   mount_uploader(:img, MobileArticleImgUploader)
-
-  belongs_to :mobile_space
 
   def self.img_url(id,type=nil)
     if type
