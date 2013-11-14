@@ -44,7 +44,8 @@
             #time.item
               = render "timezone", time: @session.start_date, fallback: @session.time_zone, zone: nil
             %p
-            = link_to "( Not in correct timezone? )", "#", class: "timezone-toggle", remote: true
+              %span.timezone-toggle (Not in correct timezone?)
+              
             .timezone-confirmation
               = simple_form_for :time_zone, url: update_timezone_session_path(@session), remote: true do |f| 
                 = f.input :time_zone, required: false, label: false, priority: /US/
