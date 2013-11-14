@@ -26,20 +26,36 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
   // brief
   .brief-item{
     display: inline-block;
-    margin-right: 2em;
+    padding-right: 2em;
   }
   .brief-item:last-of-type{
     float: right;
-    margin-right: 11em;
+    padding-right: 11%;
   }
 
   //avatar
   .avatar{
-    vertical-align: bottom;
+    vertical-align: baseline;
     img{
       width: 100px;
       height: 100px;
       border-radius: 50%;
+    }
+  }
+
+  //resume
+  .resume{
+    .name{
+      font-family: 'Latobold';
+      font-size: 18px;
+    }
+    .title{
+      font-size: 16px;
+    }
+
+    .light-font{
+      color: #575757;
+      padding-right: 24px;
     }
   }
 

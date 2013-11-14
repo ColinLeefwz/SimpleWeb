@@ -5,21 +5,31 @@
       = image_tag(@expert.avatar.url)
     .resume.brief-item
       %p
-        %span= @expert.name
+        %span.name
+          = @expert.name
         %br
-        %span= "some title (fixed now)"  #TODO: add title to expert profile
+        %span.title
+          = @expert.expert_profile.title
         %br
-        %span= "venture capital (attribute name)" # TODO: add *** to expert profile
+        %span.job.light-font
+          = @expert.expert_profile.company
+
       %table
         %tr
-          %td Company
-          %td originatechina.com
+          %td.company.light-font
+            = "Company"
+          %td
+            = @expert.email
         %tr
-          %td Personal
-          %td startingupchina.com
+          %td.personal.light-font
+            = "Personal"
+          %td
+            = "personal contact"
         %tr
-          %td Twitter
-          %td @sameerkarim
+          %td.twitter.light-font
+            = "Twitter"
+          %td
+            = "@twitteraccount"
     .contact.brief-item
 
       .contact-button
