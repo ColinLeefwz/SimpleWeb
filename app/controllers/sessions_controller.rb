@@ -76,13 +76,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  def sessions
-    @sessions = current_user.sessions.order("draft desc")
-    @from = 'sessions'
-    respond_to do |format|
-      format.js { render 'experts/update'}
-    end
-  end
 
   def new_live_session
     @session = LiveSession.new

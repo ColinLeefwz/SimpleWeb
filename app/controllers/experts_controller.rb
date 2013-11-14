@@ -15,7 +15,7 @@ class ExpertsController < ApplicationController
 
   def refer_new_expert
     @expert = current_user
-		@email_message = current_user.build_refer_message
+    @email_message = current_user.build_refer_message
 
     @from = "refer_new_expert"
     respond_to do |format|
@@ -27,31 +27,47 @@ class ExpertsController < ApplicationController
     @sessions = @expert.sessions
   end
 
-	def validate_invite_email
-		to_address = params[:to_address]
+  def contents
+    @sessions = current_user.sessions.where("content_type = 'ArticleSession'").order("draft desc")
+    @from = 'sessions/sessions'
+    respond_to do |format|
+      format.js { render 'experts/update'}
+    end
+  end
 
-		expert = User.find_by email: to_address
+  def sessions
+    @sessions = current_user.sessions.where("content_type = 'LiveSession'").order("draft desc")
+    @from = 'sessions/sessions'
+    respond_to do |format|
+      format.js { render 'experts/update'}
+    end
+  end
 
-		error_message = ""
-		flag = true
+  def validate_invite_email
+    to_address = params[:to_address]
 
-		if to_address.empty?
-			error_message = "Email address can not be blank"
-			flag = false
-		elsif expert
-			error_message = "This expert has already been invited to Prodygia"
-			flag = false
-		end
+    expert = User.find_by email: to_address
 
-		if flag
-			render json: {status: true}
-		else
-			render json: { error_message: error_message, status: false }
-		end
-	end
+    error_message = ""
+    flag = true
+
+    if to_address.empty?
+      error_message = "Email address can not be blank"
+      flag = false
+    elsif expert
+      error_message = "This expert has already been invited to Prodygia"
+      flag = false
+    end
+
+    if flag
+      render json: {status: true}
+    else
+      render json: { error_message: error_message, status: false }
+    end
+  end
 
   private
-  
+
   def set_expert
     @expert = Expert.find params[:id]
   end
