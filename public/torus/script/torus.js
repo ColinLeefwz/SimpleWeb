@@ -2,9 +2,9 @@
 var dface_var={}
 
 function dface_init(sid, uid){
- dface_var.sid = sid;
- dface_var.uid = uid;
- dface_var.gid = 1;
+    dface_var.sid = sid;
+    dface_var.uid = uid;
+    dface_var.gid = 1;
 }
 
 function close(){
@@ -165,17 +165,18 @@ function () {
             var f = "url(/torus/img/torus/base" + Control.config.skin + ".png)";
             g("playing").style.backgroundImage = f
         }
-        g("set_base").options.selectedIndex = Control.config.skin;
-        e(Control.config.skin);
-        g("set_base").onchange = function () {
-            var f = Control.config.skin = this.options.selectedIndex;
-            e(f);
-            setCookie("base", f)
-        };
-        g("but_main4").onclick = function () {
-            Control.gameOver(false);
-            b()
-        };
+        //        g("set_base").options.selectedIndex = Control.config.skin;
+        //        e(Control.config.skin);
+        //        g("set_base").onchange = function () {
+        //            var f = Control.config.skin = this.options.selectedIndex;
+        //            e(f);
+        //            setCookie("base", f)
+        //        };
+        //        alert('90')
+        //        g("but_main4").onclick = function () {
+        //            Control.gameOver(false);
+        //            b()
+        //        };
         g("go1").onclick = function () {
             Control.startGame(1)
         };
@@ -186,19 +187,20 @@ function () {
             Control.startGame(3)
         };
         g("close").onclick = Control.close;
-        g("bestType").onchange = function () {
-            var h = this.options.selectedIndex;
-            for (var f = 0; f < 3; f++) {
-                g("best" + (f + 1)).style.display = (f == h) ? "block" : "none"
-            }
-        };
-        g("set_ghost").onclick = function () {
-            Control.config.ghost = this.checked;
-            setCookie("ghost", (this.checked ? 1 : 0))
-        };
-        if (Control.config.ghost) {
-            g("set_ghost").checked = true
-        }
+        //        g("bestType").onchange = function () {
+        //            var h = this.options.selectedIndex;
+        //            for (var f = 0; f < 3; f++) {
+        //                g("best" + (f + 1)).style.display = (f == h) ? "block" : "none"
+        //            }
+        //        };
+        //        g("set_ghost").onclick = function () {
+        //            Control.config.ghost = this.checked;
+        //            setCookie("ghost", (this.checked ? 1 : 0))
+        //        };
+        //        if (Control.config.ghost) {
+        //            g("set_ghost").checked = true
+        //        }
+        //        alert(1)
         window.onblur = function () {
             if (!c) {
                 Control.pauseGame()
@@ -247,17 +249,19 @@ function () {
             Game.displayGold = false;
             Game.drawCylinder()
         };
-        g("but_main3").onclick = function () {
-            if (c) {
-                d(314, 157, "y")
-            }
-        };
+        //        g("but_main3").onclick = function () {
+        //            if (c) {
+        //                d(314, 157, "y")
+        //            }
+        //        };
         g("but_pause").onclick = function () {
             Game.paused ? Control.resumeGame() : Control.pauseGame()
         };
         g("but_resume").onclick = Control.resumeGame;
-        g("but_restart").onclick = g("but_restart2").onclick = Control.restartGame;
-        g("but_quit").onclick = function () {
+        //        g("but_restart").onclick = g("but_restart2").onclick = Control.restartGame(2);
+        g("but_restart2").onclick = Control.restartGame;
+        g("but_quit2").onclick = g("but_quit").onclick = function () {
+            close();
             Game.pause();
             g("canvas").style.opacity = "";
             g("paused").style.display = g("promo").style.display = g("panel").style.display = "none";
@@ -1688,7 +1692,7 @@ function () {
     }
     function touchRotate(i){
         Game.rotate(+1);
-		alert(i);
+        alert(i);
         i.preventDefault();
     }
     function touchBegin(i){
@@ -1697,16 +1701,16 @@ function () {
         i.preventDefault();
     }
     function touchEnd(i){
-		try{
+        try{
             curX = event.changedTouches[0].pageX - u.startX;
             curY = event.changedTouches[0].pageY - u.startY;
-			//alert("cur:"+curX+":"+curY);
-			if(Math.abs(curY)>5+Math.abs(curX)){
-				if(curY<-30) Game.rotate(+1);
-			}
-		}catch(e){
-			//alert(e);
-		}
+            //alert("cur:"+curX+":"+curY);
+            if(Math.abs(curY)>5+Math.abs(curX)){
+                if(curY<-30) Game.rotate(+1);
+            }
+        }catch(e){
+        //alert(e);
+        }
         i.preventDefault();
     }
     function touchMove(i){
@@ -1716,26 +1720,26 @@ function () {
             if(Math.abs(curX)>15 || Math.abs(curY)>15){
                 if(Math.abs(curY)>5+Math.abs(curX)){
                     if(curY>0){
-						//alert(curY+":"+event.touches[0].pageY);
+                        //alert(curY+":"+event.touches[0].pageY);
                         u.down = true;
                         down_flag = true;
                         B();
-						if(event.touches[0].pageY>90) B();
-						if(event.touches[0].pageY>110) B();
-						if(event.touches[0].pageY>120 && curY>40) B();
-		                u.startX = event.touches[0].pageX;
-		                u.startY = event.touches[0].pageY;
+                        if(event.touches[0].pageY>90) B();
+                        if(event.touches[0].pageY>110) B();
+                        if(event.touches[0].pageY>120 && curY>40) B();
+                        u.startX = event.touches[0].pageX;
+                        u.startY = event.touches[0].pageY;
                     }else{
-                    	//if(curY<-30) Game.rotate(+1);
-                    } 
+                //if(curY<-30) Game.rotate(+1);
+                }
                 }else if(Math.abs(curX)>5+Math.abs(curY)){
                     if(curX>0) B(null, "right");
                     else B(null, "left");
-	                u.startX = event.touches[0].pageX;
-	                u.startY = event.touches[0].pageY;
+                    u.startX = event.touches[0].pageX;
+                    u.startY = event.touches[0].pageY;
                 }else{
-                    //alert("cur:"+curX+":"+curY);
-                }
+            //alert("cur:"+curX+":"+curY);
+            }
             }
             u.down = false;
             i.preventDefault();
@@ -2289,13 +2293,20 @@ function niceTime(a) {
     a >>= 0;
     return ((a / 60) >> 0) + ":" + (a % 60).toLength(2)
 }
-window.addEventListener("load", function () {
+
+function startGame2(){
     g("loading").style.display = "none";
     g("container").style.visibility = "visible";
     Game.init();
     Control = new Control();
     UI.init()
     Control.startGame(2);
+}
+
+window.addEventListener("load", function () {
+    document.getElementById('loading').innerHTML = ' <br/><br/><br/><br/><h1>游戏介绍</h1><br/>向←滑动:  底盘顺时针转动<br/>向→滑动:  底盘逆时针转动 <br/>向 ↑ 滑动:     变形<br/> 向 ↓ 滑动: 快速降落<br/>\n\
+<br/> 当一个完整的水平环15块被填满该行将消减，并获得100的积分; 如果多行被同时消减，还能获取额外的积分; 快速降落也能获取额外的积分。\n\
+<br/><br/> <a onclick="startGame2()">开始</a>';
 }, false);
 
 function g(a) {
@@ -2396,31 +2407,32 @@ function Control() {
         Game.resume();
         UI.resumeGame()
     };
-    g("high_form").onsubmit = function () {
-        var k = g("high_name").value;
-        if (!k) {
-            return
-        }
-        g("winner").style.display = "none";
-        g("newgame").style.display = "block";
-        var h = Game.mode < 3 ? Math.floor(Game.score) : Game.time;
-        for (var f = 2; f >= 0; f--) {
-            if (Game.mode < 3 && h > c[Game.mode - 1][f][0] || Game.mode == 3 && h < c[2][f][0]) {
-                if (f < 2) {
-                    c[Game.mode - 1][f + 1][0] = c[Game.mode - 1][f][0];
-                    c[Game.mode - 1][f + 1][1] = c[Game.mode - 1][f][1]
-                }
-            } else {
-                break
-            }
-        }
-        f++;
-        c[Game.mode - 1][f][0] = h;
-        c[Game.mode - 1][f][1] = k;
-        d();
-        b();
-        g("sorryText").innerHTML = '<div style="padding-left:60px;">' + e(Game.mode - 1) + "</div>";
-        return false
-    };
+    
+    //    g("high_form").onsubmit = function () {
+    //        var k = g("high_name").value;
+    //        if (!k) {
+    //            return
+    //        }
+    //        g("winner").style.display = "none";
+    //        g("newgame").style.display = "block";
+    //        var h = Game.mode < 3 ? Math.floor(Game.score) : Game.time;
+    //        for (var f = 2; f >= 0; f--) {
+    //            if (Game.mode < 3 && h > c[Game.mode - 1][f][0] || Game.mode == 3 && h < c[2][f][0]) {
+    //                if (f < 2) {
+    //                    c[Game.mode - 1][f + 1][0] = c[Game.mode - 1][f][0];
+    //                    c[Game.mode - 1][f + 1][1] = c[Game.mode - 1][f][1]
+    //                }
+    //            } else {
+    //                break
+    //            }
+    //        }
+    //        f++;
+    //        c[Game.mode - 1][f][0] = h;
+    //        c[Game.mode - 1][f][1] = k;
+    //        d();
+    //        b();
+    //        g("sorryText").innerHTML = '<div style="padding-left:60px;">' + e(Game.mode - 1) + "</div>";
+    //        return false
+    //    };
     document.getElementsByTagName("body")[0].style.visibility = "visible"
 };

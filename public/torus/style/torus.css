@@ -129,7 +129,7 @@ CANVAS {
 	display: none;
 	position: absolute;
 	top: 175px;
-	left: 200px;
+	left: 20px;
 	width: 253px;
 	height: 221px;
 	background-image: url(../img/torus/game_over.png);
@@ -156,6 +156,12 @@ CANVAS {
 	left: 150px;
 	width: 86px;
 	background-image: url(../img/torus/but_main.png);
+}
+#but_quit2 {
+	top: 167px;
+	left: 150px;
+	width: 86px;
+	background-image: url(../img/torus/but_quit.png);
 }
 #but_restart2 {
 	top: 127px;

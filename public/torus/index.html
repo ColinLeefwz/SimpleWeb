@@ -1,119 +1,99 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no" />
-<meta http-equiv="cleartype" content="on">
-<title>俄罗斯方块_全屏</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no" />
+        <meta http-equiv="cleartype" content="on">
+        <title>俄罗斯方块_全屏</title>
 
-<link rel="stylesheet" type="text/css" href="./style/main.css" />
-<script type="text/javascript" src="./script/main.js"></script>
-<link rel="stylesheet" type="text/css" href="./style/torus.css" />
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
-<script src="./script/torus.js"></script>
-</head>
-<body>
-<div id="benjoffe">
-  <div id="content">
-    
-<div id="loading">
-    You must enable JavaScript to play this game.
-</div>
-<script>
-var PROMOS = [''];
-if (!window.CanvasRenderingContext2D)
-{
-   document.getElementById('loading').innerHTML = '.';
-}
-else
-{
-    document.getElementById('loading').innerHTML = '<img src="./img/torus/loading.gif" alt="" style="width:16px;height:16px;vertical-align:top;"> 游戏正在加载... <br/><br/><br/><br/>\n\
-<h1>游戏介绍</h1><br/>向←滑动:  底盘相左转动<br/>向→滑动:  底盘相右转动 <br/>向 ↑ 滑动:     变形<br/> 向 ↓ 滑动: 快速降落<br/><br/> 当一个完整的水平环件15块被占用该行将消减，并获得100的积分。如果多行被同时消减，还能获取额外的积分。';
-}
-</script>
-<div id="container">
-  <div id="menu">
-    <div id="menu_area">
-      <div id="screen0">
-        <div id="copy"></div>
-        <div id="but_main0" class="but"></div>
-      </div>
-      <div id="screen1">
-        <div id="go1" class="but"></div>
-        <div id="go2" class="nonstick"></div>
-        <div id="go3" class="nonstick"></div>
-        <div id="but_main1" class="but"></div>
-      </div>
-      <div id="screen2">
-        <div id="quote"></div>
-        <div id="but_play" class="but"></div>
-        <div id="but_settings" class="but"></div>
-        <div id="but_high" class="but"></div>
-        <div id="but_help" class="but"></div>
-      </div>
-      <div id="screen3">
-        <select id="bestType">
-          <option>Traditional</option>
-          <option>Time Attack</option>
-          <option>Garbage</option>
-        </select>
-        <div id="best1"></div>
-        <div id="best2"></div>
-        <div id="best3"></div>
-        <div id="but_main2" class="but"></div>
-      </div>
-      <div id="screen4">
-        <div id="div_base">
-          <label>Skin:
-          <select id="set_base">
-            <option>Glass</option>
-            <option>Storybook</option>
-          </select>
-          </label>
+        <link rel="stylesheet" type="text/css" href="./style/main.css" />
+<!--        <script type="text/javascript" src="./script/main.js"></script>-->
+        <link rel="stylesheet" type="text/css" href="./style/torus.css" />
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+        <script src="./script/torus.js"></script>
+    </head>
+    <body>
+        <div id="benjoffe">
+            <div id="content">
+
+                <div id="loading">
+                    You must enable JavaScript to play this game.
+                </div>
+                <script>
+                    var PROMOS = [''];
+                    if (!window.CanvasRenderingContext2D)
+                    {
+                        document.getElementById('loading').innerHTML = '.';
+                    }
+                    else
+                    {
+                        document.getElementById('loading').innerHTML = '<img src="./img/torus/loading.gif" alt="" style="width:16px;height:16px;vertical-align:top;"> 游戏正在加载... ';
+                    }
+                </script>
+                <div id="container">
+                    <div id="menu">
+                        <div id="menu_area">
+                            <div id="screen0">
+                                <div id="copy"></div>
+                                <div id="but_main0" class="but"></div>
+                            </div>
+                            <div id="screen1">
+                                <div id="go1" class="but"></div>
+                                <div id="go2" class="nonstick"></div>
+                                <div id="go3" class="nonstick"></div>
+                                <div id="but_main1" class="but"></div>
+                            </div>
+                            <div id="screen2">
+                                <div id="quote"></div>
+                                <div id="but_play" class="but"></div>
+                                <div id="but_settings" class="but"></div>
+                                <div id="but_high" class="but"></div>
+                                <div id="but_help" class="but"></div>
+                            </div>
+                            <div id="screen3">
+                                <div id="best1"></div>
+                                <div id="best2"></div>
+                                <div id="best3"></div>
+                                <div id="but_main2" class="but"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="out"></div>
+                    <div id="playing" onclick="void(0)">
+                        <canvas id="canvas" width="200" height="400"></canvas>
+                        <div id="paused">
+                            <div id="but_resume" class="but"></div>
+<!--                            <div id="but_restart" class="but"></div>-->
+                            <div id="but_quit" class="but"></div>
+                        </div>
+                        <div id="panel">
+                            <div id="title1"></div>
+                            <div id="title2"></div>
+                            <div id="title3"></div>
+                            <div id="score"></div>
+                            <div id="time"></div>
+                            <div id="next"></div>
+                            <div id="but_pause" class="but"></div>
+                        </div>
+                        <div id="promo"></div>
+                        <div id="gameover">
+                            <div id="winner">
+                            </div>
+                            <div id="newgame">
+                                <div id="sorryText"></div>
+                                <div id="but_restart2" class="but"></div>
+                                <div id="but_quit2" class="but"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="close" class="nonstick"></div>
+                </div>
+
+            </div>
         </div>
-        <div id="div_ghost">
-          <label><input id="set_ghost" type="checkbox"> Show ghost</label>
-        </div>
-        <div id="but_main3" class="but"></div>
-      </div>
-    </div>	
-  </div>
-  <div id="out"></div>
-  <div id="playing" onclick="void(0)">
-    <canvas id="canvas" width="200" height="400"></canvas>
-    <div id="paused">
-      <div id="but_resume" class="but"></div>
-      <div id="but_restart" class="but"></div>
-      <div id="but_quit" class="but"></div>
-    </div>
-    <div id="panel">
-      <div id="title1"></div>
-      <div id="title2"></div>
-      <div id="title3"></div>
-      <div id="score"></div>
-      <div id="time"></div>
-      <div id="next"></div>
-      <div id="but_pause" class="but"></div>
-    </div>
-    <div id="promo"></div>
-    <div id="gameover">
-      <div id="winner">
-      </div>
-      <div id="newgame">
-        <div id="sorryText"></div>
-        <div id="but_restart2" class="but"></div>
-        <div id="but_main4" class="but"></div>
-      </div>
-    </div>
-  </div>
-  <div id="close" class="nonstick"></div>
-</div>
 
-  </div>
-</div>
+        <iframe src="dface://init?mode=0" style="display:none" />
 
-<iframe src="dface://init?mode=0" style="display:none" />
-
-</body></html>
+    </body></html>
