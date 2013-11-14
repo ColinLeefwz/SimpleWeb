@@ -133,11 +133,16 @@ class CouponDown
   #优惠券下发后没有收到时间的， 30秒后至3分钟内自动重发
   def self.auto_resend(tim = Time.now)
     self.where({dat: {"$gte" => tim - 180, "$lte" => tim - 30}, sat: nil, uat: nil }).each do |cpd|
-      if ENV["RAILS_ENV"] == "production"
-        Xmpp.send_chat("scoupon",cpd.uid,cpd.message, cpd.id)  
-      else
-        puts "scoupon,#{cpd.uid},#{cpd.message}, #{cpd.id}"
-      end
+      cpd.xmpp_send
+    end
+  end
+  
+  def xmpp_send
+    if ENV["RAILS_ENV"] == "production"
+      Xmpp.send_chat("scoupon",self.uid,self.message, self.id, " seq='#{self.download_num}' ")  
+      return true
+    else
+      return Xmpp.chat("scoupon",self.uid,self.message, self.id, " seq='#{self.download_num}' ") 
     end
   end
 
