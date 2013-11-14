@@ -28,7 +28,6 @@ gem 'figaro'
 gem 'mandrill-api'
 gem 'cancan'
 gem 'remotipart'
-gem 'debugger'
 
 group :doc do
   gem 'sdoc', require: false
