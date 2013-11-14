@@ -98,7 +98,7 @@ class PhotosController < ApplicationController
     com = {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now}
     ret = photo.push(:com, com)
     photo.set(:updated_at, Time.now)
-    if UserDevice.user_ver_redis(photo.user_id).to_f>=2.3
+    if UserDevice.user_ver_redis(photo.user_id).to_f>=2.3 && session[:user_id] != photo.user_id
       Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
         params[:text],
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
@@ -114,7 +114,7 @@ class PhotosController < ApplicationController
     com = {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now, rid:ru.id, rname:ru.name}
     ret = photo.push(:com, com)
     photo.set(:updated_at, Time.now)
-    if UserDevice.user_ver_redis(ru.id).to_f>=2.3
+    if UserDevice.user_ver_redis(ru.id).to_f>=2.3 && session[:user_id] != ru.id
       Resque.enqueue(XmppMsg,  session[:user_id], ru.id,
         params[:text],
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
