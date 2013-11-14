@@ -101,6 +101,20 @@ describe ExpertsController do
   end
 
 
+  describe "GET contents" do
+    context "not logged in"
+    context "logged in as expert" do
+      before :each do
+        sign_in sameer
+      end
+
+      it "get all contents belongs to the expert" do
+        get :contents, id: sameer.id, format: :js
+
+        expect(assigns[:sessions].count).to eq sameer.sessions.where("content_type = 'ArticleSession'").count
+      end
+    end
+  end
   # describe "GET new live session" do
 
   #   context "not logged in" do
