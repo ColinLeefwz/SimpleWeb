@@ -73,7 +73,8 @@
                 = "Enrolled"
             -else
               %p= link_to "Enroll Now!", enroll_session_path(@session), class: 'enroll-text'
-          %p.outline-font= link_to 'Tell A Friend'
+          %p.outline-font
+            .tell-friend Tell A Friend
         .clear-fix
     .clear-fix
   -if !@session.video.url.eql?"/videos/original/missing.png"
