@@ -135,7 +135,6 @@ function () {
             l++;
             o = (1 - Math.cos(l * Math.PI / 20)) / 2;
             o = l == 20 ? k : (m * (1 - o) + k * o);
-            g("menu_area")[h] = o >> 0;
             if (l == 20) {
                 c = true;
                 clearInterval(n);
@@ -147,9 +146,6 @@ function () {
     }
     function b() {
         window.widget && window.resizeTo(460, 450);
-        g("menu").style.display = "block";
-        g("menu_area").scrollLeft = 321;
-        g("menu_area").scrollTop = 157;
         c = true;
         g("gameover").style.display = "none";
         g("close").style.top = "264px";
@@ -165,95 +161,12 @@ function () {
             var f = "url(/torus/img/torus/base" + Control.config.skin + ".png)";
             g("playing").style.backgroundImage = f
         }
-        //        g("set_base").options.selectedIndex = Control.config.skin;
-        //        e(Control.config.skin);
-        //        g("set_base").onchange = function () {
-        //            var f = Control.config.skin = this.options.selectedIndex;
-        //            e(f);
-        //            setCookie("base", f)
-        //        };
-        //        alert('90')
-        //        g("but_main4").onclick = function () {
-        //            Control.gameOver(false);
-        //            b()
-        //        };
-        g("go1").onclick = function () {
-            Control.startGame(1)
-        };
-        g("go2").onclick = function () {
-            Control.startGame(2)
-        };
-        g("go3").onclick = function () {
-            Control.startGame(3)
-        };
         g("close").onclick = Control.close;
-        //        g("bestType").onchange = function () {
-        //            var h = this.options.selectedIndex;
-        //            for (var f = 0; f < 3; f++) {
-        //                g("best" + (f + 1)).style.display = (f == h) ? "block" : "none"
-        //            }
-        //        };
-        //        g("set_ghost").onclick = function () {
-        //            Control.config.ghost = this.checked;
-        //            setCookie("ghost", (this.checked ? 1 : 0))
-        //        };
-        //        if (Control.config.ghost) {
-        //            g("set_ghost").checked = true
-        //        }
-        //        alert(1)
         window.onblur = function () {
             if (!c) {
                 Control.pauseGame()
             }
         };
-        g("quote").innerHTML = MENU_QUOTES[(Math.random() * MENU_QUOTES.length) >> 0];
-        g("but_play").onclick = function () {
-            if (c) {
-                d(321, 0, "x")
-            }
-        };
-        g("but_settings").onclick = function () {
-            if (c) {
-                d(157, 314, "y")
-            }
-        };
-        g("but_high").onclick = function () {
-            if (c) {
-                d(321, 642, "x")
-            }
-            Game.displayGold = true;
-            Game.drawCylinder()
-        };
-        g("but_help").onclick = function () {
-            if (c) {
-                d(157, 0, "y", function () {
-                    g("helpBox").style.display = "block"
-                })
-            }
-        };
-        g("but_main0").onclick = function () {
-            if (c) {
-                g("helpBox").style.display = "none";
-                d(0, 157, "y")
-            }
-        };
-        g("but_main1").onclick = function () {
-            if (c) {
-                d(0, 321, "x")
-            }
-        };
-        g("but_main2").onclick = function () {
-            if (c) {
-                d(642, 321, "x")
-            }
-            Game.displayGold = false;
-            Game.drawCylinder()
-        };
-        //        g("but_main3").onclick = function () {
-        //            if (c) {
-        //                d(314, 157, "y")
-        //            }
-        //        };
         g("but_pause").onclick = function () {
             Game.paused ? Control.resumeGame() : Control.pauseGame()
         };
@@ -271,7 +184,7 @@ function () {
     };
     this.setGameMode = function (h) {
         c = false;
-        g("menu").style.display = "none";
+//        g("menu").style.display = "none";
         g("gameover").style.display = "none";
         window.widget && window.resizeTo(380, 450);
         for (var f = 1; f <= 3; f++) {
@@ -1704,12 +1617,10 @@ function () {
         try{
             curX = event.changedTouches[0].pageX - u.startX;
             curY = event.changedTouches[0].pageY - u.startY;
-            //alert("cur:"+curX+":"+curY);
             if(Math.abs(curY)>5+Math.abs(curX)){
                 if(curY<-30) Game.rotate(+1);
             }
         }catch(e){
-        //alert(e);
         }
         i.preventDefault();
     }
@@ -1720,7 +1631,6 @@ function () {
             if(Math.abs(curX)>15 || Math.abs(curY)>15){
                 if(Math.abs(curY)>5+Math.abs(curX)){
                     if(curY>0){
-                        //alert(curY+":"+event.touches[0].pageY);
                         u.down = true;
                         down_flag = true;
                         B();
@@ -1730,7 +1640,6 @@ function () {
                         u.startX = event.touches[0].pageX;
                         u.startY = event.touches[0].pageY;
                     }else{
-                //if(curY<-30) Game.rotate(+1);
                 }
                 }else if(Math.abs(curX)>5+Math.abs(curY)){
                     if(curX>0) B(null, "right");
@@ -1738,7 +1647,6 @@ function () {
                     u.startX = event.touches[0].pageX;
                     u.startY = event.touches[0].pageY;
                 }else{
-            //alert("cur:"+curX+":"+curY);
             }
             }
             u.down = false;
@@ -2408,31 +2316,5 @@ function Control() {
         UI.resumeGame()
     };
     
-    //    g("high_form").onsubmit = function () {
-    //        var k = g("high_name").value;
-    //        if (!k) {
-    //            return
-    //        }
-    //        g("winner").style.display = "none";
-    //        g("newgame").style.display = "block";
-    //        var h = Game.mode < 3 ? Math.floor(Game.score) : Game.time;
-    //        for (var f = 2; f >= 0; f--) {
-    //            if (Game.mode < 3 && h > c[Game.mode - 1][f][0] || Game.mode == 3 && h < c[2][f][0]) {
-    //                if (f < 2) {
-    //                    c[Game.mode - 1][f + 1][0] = c[Game.mode - 1][f][0];
-    //                    c[Game.mode - 1][f + 1][1] = c[Game.mode - 1][f][1]
-    //                }
-    //            } else {
-    //                break
-    //            }
-    //        }
-    //        f++;
-    //        c[Game.mode - 1][f][0] = h;
-    //        c[Game.mode - 1][f][1] = k;
-    //        d();
-    //        b();
-    //        g("sorryText").innerHTML = '<div style="padding-left:60px;">' + e(Game.mode - 1) + "</div>";
-    //        return false
-    //    };
     document.getElementsByTagName("body")[0].style.visibility = "visible"
 };

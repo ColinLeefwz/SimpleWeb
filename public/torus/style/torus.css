@@ -54,7 +54,7 @@ CANVAS {
 	background-image: url(../img/torus/but_restart.png);
 }
 #but_quit {
-	top: -70px;
+	top: -110px;
 	left: 7px;
 	width: 86px;
 	background-image: url(../img/torus/but_quit.png);
@@ -164,8 +164,8 @@ CANVAS {
 	background-image: url(../img/torus/but_quit.png);
 }
 #but_restart2 {
-	top: 127px;
-	left: 150px;
+	top: 167px;
+	left: 50px;
 	width: 86px;
 	background-image: url(../img/torus/but_restart.png);
 }

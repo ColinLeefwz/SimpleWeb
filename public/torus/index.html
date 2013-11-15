@@ -9,7 +9,7 @@
         <title>俄罗斯方块_全屏</title>
 
         <link rel="stylesheet" type="text/css" href="./style/main.css" />
-<!--        <script type="text/javascript" src="./script/main.js"></script>-->
+        <!--        <script type="text/javascript" src="./script/main.js"></script>-->
         <link rel="stylesheet" type="text/css" href="./style/torus.css" />
         <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
         <script src="./script/torus.js"></script>
@@ -19,7 +19,7 @@
             <div id="content">
 
                 <div id="loading">
-                    You must enable JavaScript to play this game.
+                  
                 </div>
                 <script>
                     var PROMOS = [''];
@@ -32,40 +32,20 @@
                         document.getElementById('loading').innerHTML = '<img src="./img/torus/loading.gif" alt="" style="width:16px;height:16px;vertical-align:top;"> 游戏正在加载... ';
                     }
                 </script>
+
+                <div style="display: none">
+                    <div id="best1"></div>
+                    <div id="best2"></div>
+                    <div id="best3"></div>
+                </div>
+
                 <div id="container">
-                    <div id="menu">
-                        <div id="menu_area">
-                            <div id="screen0">
-                                <div id="copy"></div>
-                                <div id="but_main0" class="but"></div>
-                            </div>
-                            <div id="screen1">
-                                <div id="go1" class="but"></div>
-                                <div id="go2" class="nonstick"></div>
-                                <div id="go3" class="nonstick"></div>
-                                <div id="but_main1" class="but"></div>
-                            </div>
-                            <div id="screen2">
-                                <div id="quote"></div>
-                                <div id="but_play" class="but"></div>
-                                <div id="but_settings" class="but"></div>
-                                <div id="but_high" class="but"></div>
-                                <div id="but_help" class="but"></div>
-                            </div>
-                            <div id="screen3">
-                                <div id="best1"></div>
-                                <div id="best2"></div>
-                                <div id="best3"></div>
-                                <div id="but_main2" class="but"></div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div id="out"></div>
                     <div id="playing" onclick="void(0)">
                         <canvas id="canvas" width="200" height="400"></canvas>
                         <div id="paused">
                             <div id="but_resume" class="but"></div>
-<!--                            <div id="but_restart" class="but"></div>-->
                             <div id="but_quit" class="but"></div>
                         </div>
                         <div id="panel">
@@ -93,7 +73,5 @@
 
             </div>
         </div>
-
         <iframe src="dface://init?mode=0" style="display:none" />
-
     </body></html>
