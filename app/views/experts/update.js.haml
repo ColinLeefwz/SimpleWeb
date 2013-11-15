@@ -3,6 +3,14 @@
     $(".main-menu").html("#{j(render partial: @from)}");
     CKEDITOR.replaceAll();
 
+    $('#session-cover-input').change(function(){
+      filename = $(this).val();
+    });
+
+    $('#session-video-input').change(function(){
+      filename = $(this).val();
+    });
+
     var currentdate = new Date();
     $('#datepicker').datetimepicker({
       maskInput: true,
