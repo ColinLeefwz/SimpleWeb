@@ -111,7 +111,7 @@ describe ExpertsController do
       it "get all contents belongs to the expert" do
         get :contents, id: sameer.id, format: :js
 
-        expect(assigns[:sessions].count).to eq sameer.sessions.where("content_type = 'ArticleSession'").count
+        expect(assigns[:sessions].count).to eq sameer.contents.count
       end
     end
   end
