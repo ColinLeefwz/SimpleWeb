@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maxmum-scale=1.0, user-scalabe=yes"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalabe=yes"/>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <title>第四关</title>
@@ -44,7 +44,7 @@
 			
 			<aside id="WP" class="visible">
 				<ul class="ds visible" rel="0">
-					<li data-key="基" data-num="0">银</li>
+					<li data-key="银" data-num="0">银</li>
                     <li data-key="月" data-num="1">月</li>
                     <li data-key="得" data-num="2">得</li>
                     <li data-key="斯" data-num="3">斯</li>
@@ -70,7 +70,7 @@
                     <li data-key="夫" data-num="23">夫</li>
 				</ul>
 				<ul class="ds visible" rel="1">
-                    <li data-key="与" data-num="0">泰</li>
+                    <li data-key="泰" data-num="0">泰</li>
                     <li data-key="坦" data-num="1">坦</li>
                     <li data-key="艾" data-num="2">艾</li>
                     <li data-key="夫" data-num="3">夫</li>
@@ -96,7 +96,7 @@
                     <li data-key="纳" data-num="23">纳</li>
 				</ul>
 				<ul class="ds visible" rel="2">
-                    <li data-key="艾" data-num="0">百</li>
+                    <li data-key="百" data-num="0">百</li>
                     <li data-key="夫" data-num="1">夫</li>
                     <li data-key="英" data-num="2">英</li>
                     <li data-key="摩" data-num="3">摩</li>
@@ -122,7 +122,7 @@
                     <li data-key="坦" data-num="23">坦</li>
 				</ul>
 				<ul class="ds visible" rel="3">
-                    <li data-key="摩" data-num="0">货</li>
+                    <li data-key="货" data-num="0">货</li>
                     <li data-key="里" data-num="1">里</li>
                     <li data-key="居" data-num="2">居</li>
                     <li data-key="测" data-num="3">测</li>
@@ -169,10 +169,10 @@
 				for(var i=0;i<len;i++){
 					if($("#ZF li").eq(i).html()==""){
 						$("#ZF li").eq(i).addClass("bg1");
-						$(".ds").eq(rel).animate({"top":"200px"},500);
-						$(".ds").eq(rel).fadeOut(400,function(){
-							$(".ds").eq(i).fadeIn(350);
-							$(".ds").eq(i).animate({"top":"0px"},420);
+						$(".ds").eq(rel).stop(true).animate({"top":"150px"},250);
+						$(".ds").eq(rel).fadeOut(220,function(){
+							$(".ds").eq(i).fadeIn(250);
+							$(".ds").eq(i).animate({"top":"0px"},300);
 						});
 						return false;
 					}
@@ -186,13 +186,13 @@
 					for(i=0;i<3;i++){
 						if(i==0&&$("#Blood li").eq(i).attr("class")!="on"){
 							$("#Blood li").eq(i).addClass("on");
-							$("#Mes").fadeIn(350);
-							$("#Mes").animate({"top":"0px"},420,function(){
+							$("#Mes").fadeIn(250);
+							$("#Mes").animate({"top":"0px"},300,function(){
 								$("#ZF li").html("");
-								$(".ds").animate({"top":"200px"},500);
-								$(".ds").fadeOut(400,function(){
-									$(".ds").eq(0).fadeIn(350);
-									$(".ds").eq(0).animate({"top":"0px"},420);
+								$(".ds").animate({"top":"150px"},250);
+								$(".ds").fadeOut(220,function(){
+									$(".ds").eq(0).fadeIn(250);
+									$(".ds").eq(0).animate({"top":"0px"},300);
 								});
 								$("#ZF li").eq(0).addClass("bg1");
 								$("#ZF li").attr("data-num","");
@@ -201,8 +201,8 @@
 								timer=setInterval(function(){
 									$("#Mes span").html("0&nbsp:&nbsp;"+--sec);
 									if(sec==0){
-										$("#Mes").animate({"top":"200px"},500);
-										$("#Mes").fadeOut(400);
+										$("#Mes").animate({"top":"150px"},250);
+										$("#Mes").fadeOut(220);
 										clearInterval(timer);
 									}
 								},1000);
@@ -211,13 +211,13 @@
 						}
 						if(i==1&&$("#Blood li").eq(i).attr("class")!="on"){
 							$("#Blood li").eq(i).addClass("on");
-							$("#Mes2").fadeIn(350);
-							$("#Mes2").animate({"top":"0px"},420,function(){
+							$("#Mes2").fadeIn(250);
+							$("#Mes2").animate({"top":"0px"},300,function(){
 								$("#ZF li").html("");
-								$(".ds").animate({"top":"200px"},500);
-								$(".ds").fadeOut(400,function(){
-									$(".ds").eq(0).fadeIn(350);
-									$(".ds").eq(0).animate({"top":"0px"},420);
+								$(".ds").animate({"top":"150px"},250);
+								$(".ds").fadeOut(220,function(){
+									$(".ds").eq(0).fadeIn(250);
+									$(".ds").eq(0).animate({"top":"0px"},300);
 								});
 								$("#ZF li").eq(0).addClass("bg1");
 								$("#ZF li").attr("data-num","");
@@ -229,8 +229,8 @@
 									}else if(sec>0){
 										$("#Mes2 span").html("0&nbsp;:&nbsp;"+--sec);
 									}else if(sec==0){
-										$("#Mes2").animate({"top":"200px"},500);
-										$("#Mes2").fadeOut(400);
+										$("#Mes2").animate({"top":"150px"},250);
+										$("#Mes2").fadeOut(220);
 										clearInterval(timer);
 									}
 								},1000);
@@ -239,8 +239,11 @@
 						}
 						if(i==2&&$("#Blood li").eq(i).attr("class")!="on"){
 							$("#Blood li").eq(i).addClass("on");
-							$("#Mes3").fadeIn(350);
-							$("#Mes3").animate({"top":"0px"},420);
+							$("#Mes3").fadeIn(250);
+							$("#Mes3").animate({"top":"0px"},300,function(){
+								$("#ZF li").html("");
+								$(".ds li").unbind("click");
+							});
 						}
 					}
 					return false;
@@ -248,8 +251,6 @@
 					window.location.href="http://shop.dface.cn/guesspic/lastover.html";
 				}
 			});
-			$(".ds").eq(0).css("display","table").animate({"top":"0px"},800);
-			$("#ZF li").eq(0).addClass("bg1");
 
 			$("#ZF li").click(function(){
 				$("#ZF li").removeClass("shake red2");
@@ -259,12 +260,15 @@
 				var rel=$(this).attr("rel");
 				var num=$(this).attr("data-num");
 				$(".ds").eq(rel).find("li").eq(num).removeAttr("style");
-				$(".ds").animate({"top":"200px"},650);
-				$(".ds").fadeOut(650,function(){
-					$(".ds").eq(rel).css("display","table").animate({"top":"0px"},650);
+				$(".ds").animate({"top":"150px"},250);
+				$(".ds").fadeOut(220,function(){
+					$(".ds").eq(rel).css("display","table").animate({"top":"0px"},300);
 				});
 			});
-
+			
+			$(".ds").eq(0).css("display","table").animate({"top":"0px"},800);
+			$("#ZF li").eq(0).addClass("bg1");
+			
 			$("#Help, #Btn3").click(function(){
 				var top;
 				var documentHeight=$(document).height();
