@@ -14,7 +14,7 @@
     <body >
         <div class="header">
 			<a id="GoBack" alt="返回">返回</a>
-			<h1><%= session_shop.name %></h1>
+			<h1><%= @shop.name %></h1>
 			<a id="OpenMenu" alt="打开导航">打开导航</a>
 			<div id="Menu">
 				<a id="CloseMenu" alt="关闭导航"><span>关闭导航</span></a>
@@ -28,6 +28,7 @@
 			</div>
 		</div>
 		<div class="box2">
+		    <%  if @mobile_article %>
 			<h2><%= @mobile_article.title %></h2>
 			<span class="time"><%= @mobile_article.cat.strftime("%Y-%m-%d") %></span>
 			<div class="box2inner">
@@ -35,6 +36,7 @@
 				<br/><br/>
 				<%= @mobile_article.content.html_safe %>
 			</div>
+			<% end %>
 		</div>
 		<a href="#" class="link">展开更多</a>
 		<div id="Shadow">
