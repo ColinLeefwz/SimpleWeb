@@ -4,16 +4,19 @@
     CKEDITOR.replaceAll();
 
     $('#datepicker').datetimepicker({
+      maskInput: true,
       pickTime: false
     });
 
     $('#starttimepicker').datetimepicker({
+      maskInput: true,
       pickDate: false,
       pickSeconds: false,
       pick12HourFormat: true
     });
 
     $('#endtimepicker').datetimepicker({
+      maskInput: true,
       pickDate: false,
       pickSeconds: false,
       pick12HourFormat: true
