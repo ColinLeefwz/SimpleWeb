@@ -35,7 +35,7 @@ class Session < ActiveRecord::Base
 
   def date 
     self.start_date ||= DateTime.now
-    self.start_date.strftime("%m-%d")  
+    self.start_date.strftime("%Y-%m-%d")  
   end
 
   def start_time

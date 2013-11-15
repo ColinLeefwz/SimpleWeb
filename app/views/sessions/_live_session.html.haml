@@ -9,7 +9,7 @@
   .start_date
     = f.label :date
     #datepicker.input-append.date
-      = f.text_field :date, data: {format: "MM-dd"}, type: "text"
+      = f.text_field :date, data: {format: "yyyy-MM-dd"}, type: "text"
       %span.add-on
         %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
   .start_end_time

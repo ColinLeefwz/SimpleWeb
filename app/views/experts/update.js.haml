@@ -3,8 +3,10 @@
     $(".main-menu").html("#{j(render partial: @from)}");
     CKEDITOR.replaceAll();
 
+    var currentdate = new Date();
     $('#datepicker').datetimepicker({
       maskInput: true,
+      startDate: currentdate,
       pickTime: false
     });
 
