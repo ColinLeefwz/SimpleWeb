@@ -5,6 +5,10 @@
     = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
   = f.input :format, collection: %w(Lounge Forum Livestreaming), as: :select
   = f.input :cover, input_html: {id: "session-cover-input"}
+  = f.label :current_image
+  - if f.object.cover.url
+    #cover-image
+      = image_tag(f.object.cover.url)
   = f.input :video, input_html: {id: "session-video-input"}
   .start_date
     = f.label :date
