@@ -1,0 +1,121 @@
+<html>
+<head>
+<meta name="viewport" content="width = 320,initial-scale=1,user-scalable=no" />
+<link rel="apple-touch-icon-precomposed" href="i/icon.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link rel="apple-touch-icon-precomposed" href="i/icon.png"/>
+<link rel="apple-touch-startup-image" href="i/loader.png">
+<meta name="description" content="XWUZ Stack the log! is a simple but beautiful game for the iPhone. Stack the logs as precisely as you can! Push the button when you feel the log is exactly above the stack. Also works on Safari and Firefox." />
+
+<title>堆木头!</title>
+
+<style type="text/css">
+ body { font-family: helvetica, arial; background-color: #000000; color: #a3b3c3; border:0; padding:0;margin:0; font-size:90%; overflow:hidden;}
+ h1 {margin:.4em;}
+ h3 { font-size:120%; margin:12px; padding-left:0;margin-bottom:.5em; color: #ffffff;}
+ p {margin:0; margin:12px; margin-top:.5em; margin-bottom:.5em; font-size:84%;}
+ a { color: #ffffff; }
+
+ td{text-align:center; font-size: 70%;}
+ 
+ .ibox {width:320px; height:315px; overflow:hidden; background-color: #000000; margin:auto;}
+ .iboxcontent {width:320px; height:315px; float:left; overflow:hidden;}
+ .ibc1 {background-color: #3b4859; background-image:url(i/bg1.png);}
+ .ibc2 {background-color: #404d5e; background-image:url(i/bg2.png);}
+ 
+ #alertbox {display:none;position:absolute; z-index:200;}
+ #alertbox_flekk {position:absolute; width:320px; height: 356px; background-color:#000000; opacity: .8;}
+ #alertbox_content {position:absolute; width:320px; height:286px; margin-top:70px; text-align:center; color:#ffffff;}
+ #alertbox_content .fontostext {color:#a3b3c3;}
+ #alertbox a {margin:10px; width:114px; height:54px; }
+ img {border:0;}
+ 
+ #imenu {width:320px;height:41px; margin:auto; text-align:center; background-image:url(i/menu.png); background-position:0 0px;}
+ #imenu a:hover {opacity:.5;}
+ #button_game {background-image:url(i/menu.png); display:block; float:left; width:72px; height:41px; background-position:0 0;}
+ #button_highscore {background-image:url(i/menu.png); display:block; float:left; width:110px; height:41px;background-position: -72px -41px;}
+ #button_about {background-image:url(i/menu.png); display:block; float:left; width:70px; height:41px; background-position: -182px -41px;}
+
+ #score,#combo,#level {color:#ffffff;} 
+
+ #button_xwuz {position:absolute; display:block; width:48px; height:57px; margin: 5px 0 0 267px; background-image:url(i/xwuz.png);z-index:1; cursor:pointer;}
+
+ #yourbest { text-align:center; font-weight:bold; color:#ffffff;font-size: 300%; margin: .5em auto .5em auto; background-image:url(i/flekk.png); width:296px; height:65px; padding-top:15px;}
+ .fontostext {color: #ffffff;}
+
+ #preload {width:320px;position:absolute; visibility:hidden; overflow:hidden;}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">window.google_analytics_uacct = "UA-154412-9";</script>
+<script type="text/javascript" src="standard.js"></script>
+<script type="text/javascript" src="stack.js"></script>
+</head>
+<body><div style="width:320px; height: 500px;">
+<div style="position: absolute; margin-top: 356px;width: 320px; height: 48px;">
+<script type="text/javascript">
+var admob_vars = {
+ pubid: 'a14aa4185781b27', // publisher id
+ bgcolor: '000000', // background color (hex)
+ text: 'FFFFFF', // font-color (hex)
+ test: false // test mode, set to false if non-test mode
+};
+</script>
+<script type="text/javascript" src="http://mm.admob.com/static/iphone/iadmob.js"></script>
+</div>
+
+<div style="position: absolute;margin-top: 400px; width: 320px; heigth: 48px; background: #ffffff"></div>
+
+<div id="alertbox"><div id="alertbox_flekk"></div><div id="alertbox_content"></div></div>
+ <a id="button_xwuz" onclick="return menuswitch(document.getElementById('button_about'));" ontouchstart="return menuswitch(document.getElementById('button_about'));"></a>
+
+<div id="imenu">
+ <a id="button_game" href="#game" class="active" onclick="return menuswitch(this);" ontouchstart="return menuswitch(this);"><span style="display:none">Game</span></a>
+ <a id="button_highscore" href="#highscore" onclick="return menuswitch(this);" ontouchstart="return menuswitch(this);"><span style="display:none">Highscores</span></a>
+ <a id="button_about" href="#about" onclick="return menuswitch(this);" ontouchstart="return menuswitch(this);"><span style="display:none">About</span></a>
+</div>
+
+<div class="ibox" id="container"><div style="width:10000px;" id="container_scroller">
+ <div id="ibox_game" class="iboxcontent ibc1" style="position: relative;">
+  <div style="width: 237px; height:15px; overflow:hidden;margin-left: 13px;padding-top:10px; font-size:90%; position:absolute; z-index:20;">
+  <div style="float:left"><div style="float:left" id="score_title">Score:&nbsp;</div><div id="score" style="float:left;  width:2em;">0</div></div>
+  <div style="float:right"><div style="float:left">StMa:&nbsp;</div><div id="combo" style="float:left; width:1.5em;">0</div></div>
+  <div style="text-align:center">Level: <span id="level">1</span></div>
+  </div>
+  <div style="width:320px;height:316px; overflow:hidden; position: relative;" id="st_outerarea">
+  </div>
+ </div>
+ <div id="ibox_highscore" class="iboxcontent ibc2">
+  <h3>Your current highscore is...</h3>
+  <div id="yourbest"></div>
+  <p>A score of <span class="fontostext">2500</span> is a really good one, <span class="fontostext">3500</span> is exceptional. Check back later for community highscores!</p>
+  <p>You have played so far <span id="gamesplayed" class="fontostext">0</span> matches of <span class="fontostext">XWUZ Stack the log!</span>.</p>
+ </div>
+ <div id="ibox_about" class="iboxcontent ibc1">
+  <!-- google_ad_section_start -->
+  <h3>XWUZ Stack the log!</h3>
+  <p>This is a simple but beautiful game for the iPhone. Stack the logs as precisely as you can! Push the button and <span class="fontostext">release it when</span> you feel the log is exactly above the stack.</p>
+  <!-- google_ad_section_end -->
+  
+  <div style="text-align:center; margin:10px;">
+  </div>
+
+  <p>This is an XWUZ game. Check out <a href="http://xwuz.com/" target="_top">our homepage</a> for more games.</p><p>Take a picture of yourself playing the game and send it to <a href="mailto:xwuz@tjp.hu" target="_top">xwuz@tjp.hu</a> :)</p>
+  <table width="100%" style="margin-top:10px;">
+   <tr><td valign="bottom"><a href="http://tjp.hu/" target="_top"><img src="/i/l_tjp.png" alt="tjp" style="vertical-align:middle;"></a></td><td valign="bottom"><a href="http://trn.hu/" target="_top"><img src="/i/l_trn.png" alt="trn" style="vertical-align:middle;"/></a></td><td valign="bottom"><a href="http://www.xms.hu/" target="_top"><img src="/i/l_xms.png" alt="xms" style="vertical-align:middle;"/></a></td><td valign="bottom"><a href="http://volll.com/" target="_top"><img src="/i/l_volll.png" alt="volll" style="vertical-align:middle;"/></a></td></tr>
+   <tr><td>Code</td><td>Design</td><td>iPhone</td><td>Big hugs</td></tr>
+  <table>
+ </div>
+</div></div>
+<script type="text/javascript">
+firstinit();
+ialert('<h1>堆木头!</h1><p style="margin: 0 20px 0 20px; text-align:left;"><img src="i/icon.png" alt="Stack the log!" style="width:64px; height:64px;float:left; margin-right:5px;"/>堆木头是个很不错的游戏！当你发现上方移动的木头对准下方的木头时，点击堆叠按钮，go！</p>'+
+'<div style="width:110px; margin:30px auto -30px auto;"></div>','restartgame()');
+</script>
+<script type="text/javascript">
+_uacct = "UA-154412-9";
+urchinTracker();
+</script>
+</div>
+<iframe src="dface://init?mode=0" style="display:none" />
+</body>
+</html>
