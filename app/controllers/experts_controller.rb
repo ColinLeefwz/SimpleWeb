@@ -28,7 +28,7 @@ class ExpertsController < ApplicationController
   end
 
   def contents
-    @sessions = current_user.sessions.where("content_type = 'ArticleSession'").order("draft desc")
+    @sessions = current_user.contents
     @from = 'sessions/sessions'
     respond_to do |format|
       format.js { render 'experts/update'}
@@ -36,7 +36,7 @@ class ExpertsController < ApplicationController
   end
 
   def sessions
-    @sessions = current_user.sessions.where("content_type = 'LiveSession'").order("draft desc")
+    @sessions = current_user.live_sessions
     @from = 'sessions/sessions'
     respond_to do |format|
       format.js { render 'experts/update'}

@@ -13,12 +13,20 @@ class Expert < Member
     new_record? ? false : super
   end
 
-	def build_refer_message
+  def build_refer_message
     self.email_messages.build(from_name: "#{self.first_name} #{self.last_name}", from_address: "no-reply@prodygia", reply_to: "#{self.email}")
-	end
+  end
 
   def sessions_with_draft
     self.sessions.order('draft desc') 
+  end
+
+  def contents
+    self.sessions.where("content_type = 'ArticleSession'").order("draft desc")
+  end
+
+  def live_sessions
+    self.sessions.where("content_type = 'LiveSession'").order("draft desc")
   end
 
 end
