@@ -57,13 +57,14 @@
     .tab-content
       .tab-pane.active#tab1
         %div
-          life overview
+          %h4 Expertise
+          = @expert.expert_profile.expertise.html_safe
       .tab-pane#tab2
         %div
-          career intro
+          = @expert.expert_profile.career.html_safe
       .tab-pane#tab3
         %div
-          education 
+          = @expert.expert_profile.education.html_safe
 
 
 
