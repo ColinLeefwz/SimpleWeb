@@ -29,6 +29,7 @@ ul,li{list-style:none;}
 
 .visible{overflow:visible !important;}
 
+.block{display:block !important;}
 .none{display:none !important;}
 
 .clear1{width:100%;overflow:hidden;height:0px;clear:both;zoom:1;}

@@ -183,7 +183,7 @@ margin-right:5px;text-align:center;}
 #Blood  li.on{background-color:#3c0;}
 
 .mes{width:100%;position:absolute;height: 120px;text-align:center;color:#fff;font-size:14px;left:0px;top:130px;display:none;
-background-color: rgba(111, 111, 111, 0.9);z-index:20;}
+background-color: rgba(111, 111, 111, 0.9);}
 .mes span{color:#ff0;font-size:28px;}
 .shake {
 	-webkit-animation:shakeanimate 1.0s ease-out, shakeanimate 1.0s ease-out;

@@ -148,8 +148,9 @@
                     <li data-key="英" data-num="23">英</li>
 				</ul>
 				<div id="Mes" class="mes"><br/>状态不佳啊，答错了，休息一会再答<br/><br/><span>0：59</span></div>
-				<div id="Mes2" class="mes"><br/>又答错了，加油啊，还有最后一次机会<br/><span class="mt5">2:00</span><br/><a class="btn3 mt5">赶快求助小伙伴们</a></div>
-				<div id="Mes3" class="mes"><br/>状态不佳啊，答错3次了，休息一会再答<br/><br/><span>3:00</span></div>
+				<div id="Mes2" class="mes"><br/>又答错了，加油啊，还有最后一次机会<br/><span class="mt10 block">2:00</span><br/><a id="Btn3" class="btn3 mt5">赶快求助小伙伴们</a></div>
+				<div id="Mes3" class="mes"><br><br>哎呀！答错3次了，休息一会吧。<br>这道题被人抢答后，你才能进入下一题。</div>
+				<div id="Mes4" class="mes"><br/>动作不够快啊，已被别人抢答了<br/>休息一会挑战下一题<br/><br/><span>3：00</span></div>
 			</aside>
 		</div>
     </body>
@@ -183,10 +184,10 @@
 				if(str!="银泰百货"){
 					$("#ZF li").addClass("shake red2");
 					for(i=0;i<3;i++){
-						if(i==0){
+						if(i==0&&$("#Blood li").eq(i).attr("class")!="on"){
 							$("#Blood li").eq(i).addClass("on");
 							$("#Mes").fadeIn(350);
-							$("#Mes").eq(i).animate({"top":"0px"},420,function(){
+							$("#Mes").animate({"top":"0px"},420,function(){
 								$("#ZF li").html("");
 								$(".ds").animate({"top":"200px"},500);
 								$(".ds").fadeOut(400,function(){
@@ -208,10 +209,10 @@
 							});
 							break;
 						}
-						if(i==1){
+						if(i==1&&$("#Blood li").eq(i).attr("class")!="on"){
 							$("#Blood li").eq(i).addClass("on");
 							$("#Mes2").fadeIn(350);
-							$("#Mes2").eq(i).animate({"top":"0px"},420,function(){
+							$("#Mes2").animate({"top":"0px"},420,function(){
 								$("#ZF li").html("");
 								$(".ds").animate({"top":"200px"},500);
 								$(".ds").fadeOut(400,function(){
@@ -223,8 +224,11 @@
 								$(".ds li").removeAttr("style");
 								sec=120;
 								timer=setInterval(function(){
-									$("#Mes2 span").html(sec/60+"&nbsp:&nbsp;"+--sec);
-									if(sec==0){
+									if(sec>60){
+										$("#Mes2 span").html("1&nbsp;:&nbsp;"+(--sec-60));
+									}else if(sec>0){
+										$("#Mes2 span").html("0&nbsp;:&nbsp;"+--sec);
+									}else if(sec==0){
 										$("#Mes2").animate({"top":"200px"},500);
 										$("#Mes2").fadeOut(400);
 										clearInterval(timer);
@@ -233,14 +237,15 @@
 							});
 							break;
 						}
-						if(i==2){
+						if(i==2&&$("#Blood li").eq(i).attr("class")!="on"){
 							$("#Blood li").eq(i).addClass("on");
 							$("#Mes3").fadeIn(350);
-							$("#Mes3").eq(i).animate({"top":"0px"},420);
-							break;
+							$("#Mes3").animate({"top":"0px"},420);
 						}
 					}
 					return false;
+				}else{
+					window.location.href="http://shop.dface.cn/guesspic/lastover.html";
 				}
 			});
 			$(".ds").eq(0).css("display","table").animate({"top":"0px"},800);
@@ -260,7 +265,7 @@
 				});
 			});
 
-			$("#Help").click(function(){
+			$("#Help, #Btn3").click(function(){
 				var top;
 				var documentHeight=$(document).height();
 				var windowHeight=$(window).height();
