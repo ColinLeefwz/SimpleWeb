@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalabe=yes"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>下一关</title>
+        <link rel="stylesheet" href="/guesspic/css/public.css" />
+		<link rel="stylesheet" href="/guesspic/css/main.css" />
+		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
+    </head>
+    <body>
+		<div id="BG"></div>
+		<div id="Share">
+			<span>分享给小伙伴们，赢iPad、iPhone。</span>
+			<ul>
+				<li><a href="#"><img src="images/pic6.jpg"/><br/>发给微信好友</a></li>
+				<li><a href="#"><img src="images/pic7.jpg"/><br/>发给QQ好友</a></li>
+				<li><a href="#"><img src="images/pic8.jpg"/><br/>分享到QQ空间</a></li>
+				<li><a href="#"><img src="images/pic9.jpg"/><br/>分享到朋友圈</a></li>
+				<li><a href="#"><img src="images/pic10.jpg"/><br/>分享到微博</a></li>
+				<li><a href="#"><img src="images/pic11.jpg"/><br/>短信</a></li>
+			</ul>
+		</div>
+        <div class="main">
+			<div class="tit red1 f16">答对了</div>
+			<div id="Img">
+				<img src="images/pic12.jpg" id="Img"/>
+				<span>银泰百货</span>
+			</div>
+			
+			<span class="names">
+				<span class="gray2">你的聪明才智为你赢得</span><br/>
+				<span class="red1 f16">银泰购物全场8折购物券一张</span>
+			</span>
+			
+			<a href="last.html" class="btn1 mt8 box1animation">下一关</a>
+			<a class="btn2 mt12 mb10 box1animation" id="Btn2">分享赢大奖</a>
+		</div>
+    </body>
+	<script>
+	$(document).ready(function(){
+		var h=$("#Img span").height();
+		$("#Img span").css({"top":(180-h)/2+"px"});
+		$("#Btn2").click(function(){
+			var top;
+			var documentHeight=$(document).height();
+			var windowHeight=$(window).height();
+			if(documentHeight<=windowHeight){
+			  $("#BG").css({"height":windowHeight+"px","display":"block"});
+			}else{
+			  $("#BG").css({"height":documentHeight+"px","display":"block"});
+			}
+			$("#Share").css("display","block");
+			top=$(document).scrollTop()+(windowHeight-$("#Share").height())/2;
+			
+			if(top<0){top=0;}
+			$("#Share").animate({"top":top-16+"px"},450);
+		});
+		$("#BG").click(function(){
+			$("#Share").fadeOut(500,function(){
+				$("#Share").css("top","-240px");
+				$("#Share,#BG").css("display","none");
+			});
+		});
+	});
+	</script>
+</html>
