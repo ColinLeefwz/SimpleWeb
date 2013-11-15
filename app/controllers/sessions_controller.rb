@@ -2,7 +2,7 @@ require 'paypal'
 require 'mandrill_api'
 
 class SessionsController < ApplicationController
-  before_action :set_session, except: [:new_live_session, :new_post_content, :create_post_content, :create_live_session, :sessions]
+  before_action :set_session, except: [:new_live_session, :new_post_content, :create_post_content, :create_live_session]
 
   def post_a_draft
     @session.draft = false
@@ -76,13 +76,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  def sessions
-    @sessions = current_user.sessions.order("draft desc")
-    @from = 'sessions'
-    respond_to do |format|
-      format.js { render 'experts/update'}
-    end
-  end
 
   def new_live_session
     @session = LiveSession.new

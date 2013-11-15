@@ -28,11 +28,12 @@ Prodygia::Application.routes.draw do
       get :main_menu
       get :pending_page
       get :profile
+      get :sessions
+      get :contents
     end
     
     resources :sessions do
       member do
-        get :sessions
         get :new_post_content
         get :edit_content
         get :cancel_content
