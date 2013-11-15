@@ -158,14 +158,14 @@ CANVAS {
 	background-image: url(../img/torus/but_main.png);
 }
 #but_quit2 {
-	top: 167px;
-	left: 150px;
+	top: 172px;
+	left: 140px;
 	width: 86px;
 	background-image: url(../img/torus/but_quit.png);
 }
 #but_restart2 {
-	top: 167px;
-	left: 50px;
+	top: 172px;
+	left: 40px;
 	width: 86px;
 	background-image: url(../img/torus/but_restart.png);
 }
