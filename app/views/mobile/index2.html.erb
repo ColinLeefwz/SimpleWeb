@@ -48,15 +48,16 @@
 
         <% @mobile_articles.each do |ma| %>
 		<div class="box1">
-		    <a href=<%= "/mobile_articles/show?id=#{ma.id}&sid=#{@shop.id}" %> >
+		    
 			<div class="box1left">
+			<a href=<%= "/mobile_articles/show?id=#{ma.id}&sid=#{@shop.id}" %> target="blank" >
 			<!-- <img src="images/pic4.jpg" width="100%"> -->
 			<%= image_tag( "#{MobileArticle.img_url(ma.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %></div>
 			<!-- <a href="#" data-ajax="false"> -->
 				<h2><%= ma.title %> </h2>
 				<%= ma.content.slice(0,100).html_safe %>
-			<!-- </a> -->
 			</a>
+			
 		</div>
 		<% end %>
 		<div class="box1">
@@ -87,8 +88,8 @@
 		<div class="footer">
 			<a href="tel:13606543127" class="btn1">电话</a>
 			<a href="#" class="btn2">短信</a>
-			<a href="map.html" class="btn3" data-ajax="false">地图</a>
-			<a class="btn4" id="Btn4">分享</a>
+			<a href="http://map.baidu.com/" class="btn3" data-ajax="false">地图</a>
+			<a class="btn4" href="http://weibo.com/?c=spr_web_sq_baidub_weibo_t001" id="Btn4">分享</a>
 		</div>
     </body>
 </html>
