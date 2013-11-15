@@ -3,7 +3,7 @@
     %h2 Sign up
     = render "devise/shared/social_login"
   .devise-form
-    =simple_form_for :user, url: registration_path(resource_name) do |f|
+    =simple_form_for :user, url: user_registration_path do |f|
       = devise_error_messages!
       = render 'sessions/form_fields', f: f
       =f.button :submit, value: 'Sign up'
