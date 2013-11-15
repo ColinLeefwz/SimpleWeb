@@ -1,5 +1,5 @@
 class MobileArticlesController < ApplicationController
-  before_filter :shop_authorize, :except => [:mobile_show]
+  before_filter :shop_authorize, :except => [:show, :mobile_show]
   include Paginate
   layout "mobile"
 
@@ -23,7 +23,17 @@ class MobileArticlesController < ApplicationController
   end
 
   def show
-    @mobile_article = MobileArticle.find_by_id(params[:id])
+    if params[:sid]
+      @shop = Shop.find_by_id(params[:sid])
+      @mobile_article = MobileArticle.where({id:params[:id],sid:params[:sid]}).first
+      if @mobile_article
+        @mobile_article
+      else
+        nil
+      end
+    else
+      nil
+    end
     render :layout => false
   end
 
