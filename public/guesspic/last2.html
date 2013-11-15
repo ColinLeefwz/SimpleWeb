@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="/guesspic/css/main.css" />
 		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
     </head>
-    <body class="h465">
+    <body>
 		<div id="BG"></div>
 		<div id="Share">
 			<span>分享给小伙伴们，赢iPad、iPhone。</span>
@@ -25,8 +25,8 @@
 		</div>
 		<a href="#" id="Help">求<br/>助</a>
         <div class="main visible">
-			<div class="tit">店名</div>
-			<img src="images/pic12.jpg" id="Img"/>
+			<div class="tit">品牌名</div>
+			<img src="images/pic13.jpg" id="Img"/>
 			<span class="names mb10">猜中免单</span>
 			<article class="plane2">
 				<ul id="ZF">
@@ -44,7 +44,7 @@
 			
 			<aside id="WP" class="visible">
 				<ul class="ds visible" rel="0">
-					<li data-key="银" data-num="0">银</li>
+					<li data-key="斐" data-num="0">斐</li>
                     <li data-key="月" data-num="1">月</li>
                     <li data-key="得" data-num="2">得</li>
                     <li data-key="斯" data-num="3">斯</li>
@@ -70,7 +70,7 @@
                     <li data-key="夫" data-num="23">夫</li>
 				</ul>
 				<ul class="ds visible" rel="1">
-                    <li data-key="泰" data-num="0">泰</li>
+                    <li data-key="克" data-num="0">克</li>
                     <li data-key="坦" data-num="1">坦</li>
                     <li data-key="艾" data-num="2">艾</li>
                     <li data-key="夫" data-num="3">夫</li>
@@ -96,7 +96,7 @@
                     <li data-key="纳" data-num="23">纳</li>
 				</ul>
 				<ul class="ds visible" rel="2">
-                    <li data-key="百" data-num="0">百</li>
+                    <li data-key="迪" data-num="0">迪</li>
                     <li data-key="夫" data-num="1">夫</li>
                     <li data-key="英" data-num="2">英</li>
                     <li data-key="摩" data-num="3">摩</li>
@@ -122,10 +122,10 @@
                     <li data-key="坦" data-num="23">坦</li>
 				</ul>
 				<ul class="ds visible" rel="3">
-                    <li data-key="货" data-num="0">货</li>
                     <li data-key="里" data-num="1">里</li>
                     <li data-key="居" data-num="2">居</li>
                     <li data-key="测" data-num="3">测</li>
+					<li data-key="思" data-num="0">思</li>
                     <li data-key="是" data-num="4">是</li>
                     <li data-key="奇" data-num="5">奇</li>
                     <li data-key="因" data-num="6">因</li>
@@ -147,9 +147,9 @@
                     <li data-key="夫" data-num="22">夫</li>
                     <li data-key="英" data-num="23">英</li>
 				</ul>
-				<div id="Mes" class="mes"><br/>状态不佳啊，答错了，休息一会再答<br/><br/><span>0：59</span></div>
-				<div id="Mes2" class="mes"><br/>又答错了，加油啊，还有最后一次机会<br/><span class="mt10 block">2:00</span><br/><a id="Btn3" class="btn3 mt5">赶快求助小伙伴们</a></div>
-				<div id="Mes3" class="mes"><br><br>哎呀！答错3次了，休息一会吧。<br>这道题被人抢答后，你才能进入下一题。</div>
+				<div id="Mes" class="mes"><br/>状态不佳啊，答错了，休息一会再答<br/><br/><span>0 : 10</span></div>
+				<div id="Mes2" class="mes"><br/>又答错了，加油啊，还有最后一次机会<br/><span class="mt10 block">0 : 20</span><br/><a id="Btn3" class="btn3 mt5">赶快求助小伙伴们</a></div>
+				<div id="Mes3" class="mes"><br><br><a href="lastover.html">哎呀！答错3次了，休息一会吧。<br>这道题被人抢答后，你才能进入下一题。</a></div>
 				<div id="Mes4" class="mes"><br/>动作不够快啊，已被别人抢答了<br/>休息一会挑战下一题<br/><br/><span>3：00</span></div>
 			</aside>
 		</div>
@@ -181,7 +181,7 @@
 				for(i=0;i<len;i++){
 					var str=str+$("#ZF li").eq(i).html();
 				}
-				if(str!="银泰百货"){
+				if(str!="斐克迪思"){
 					$("#ZF li").addClass("shake red2");
 					for(i=0;i<3;i++){
 						if(i==0&&$("#Blood li").eq(i).attr("class")!="on"){
@@ -197,7 +197,7 @@
 								$("#ZF li").eq(0).addClass("bg1");
 								$("#ZF li").attr("data-num","");
 								$(".ds li").removeAttr("style");
-								sec=60;
+								sec=10;//60
 								timer=setInterval(function(){
 									$("#Mes span").html("0&nbsp:&nbsp;"+--sec);
 									if(sec==0){
@@ -222,7 +222,7 @@
 								$("#ZF li").eq(0).addClass("bg1");
 								$("#ZF li").attr("data-num","");
 								$(".ds li").removeAttr("style");
-								sec=120;
+								sec=20;//120
 								timer=setInterval(function(){
 									if(sec>60){
 										$("#Mes2 span").html("1&nbsp;:&nbsp;"+(--sec-60));

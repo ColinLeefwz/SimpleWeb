@@ -75,7 +75,7 @@ margin:5px auto 0px auto;text-align:center;background-color:#C4261D;cursor:point
 .btn2{font-family:微软雅黑;font-size:16px;color:#6B6B6B;display:block;border-radius:5px;line-height:28px;width:150px;padding:5px 8px;
 margin:5px auto 0px auto;text-align:center;background-color:#E4E4E4;cursor:pointer;}
 
-.btn3{padding:4px 8px;margin:0px auto;line-height:18px;border:none;text-align:center;color:#333;cursor:pointer;
+.btn3{padding:4px 8px;margin:0px auto;line-height:18px;border:none;text-align:center;color:#333 !important;cursor:pointer;
 font-family:微软雅黑;font-size:12px;background-color: #F2F2F2;border-radius:5px;width: 100px;}
 
 .box1animation{
@@ -185,6 +185,7 @@ margin-right:5px;text-align:center;}
 .mes{width:100%;position:absolute;height: 120px;text-align:center;color:#fff;font-size:14px;left:0px;top:130px;display:none;
 background-color: rgba(111, 111, 111, 0.9);}
 .mes span{color:#ff0;font-size:28px;}
+.mes a{color:#fff;}
 .shake {
 	-webkit-animation:shakeanimate 1.0s ease-out, shakeanimate 1.0s ease-out;
 	-moz-animation:shakeanimate 1.0s ease-out, shakeanimate 1.0s ease-out
