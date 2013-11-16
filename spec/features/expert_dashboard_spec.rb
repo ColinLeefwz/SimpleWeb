@@ -58,9 +58,9 @@ feature "Expert Dashboard" do
 			fill_post_new_content
 		end
 
-		## post
+		## publish
 		scenario "posts new content", js: true do
-			click_button("Submit")
+			click_button("Publish")
 
 			expect(current_path).to eq dashboard_expert_path(sameer.id)
 			expect(page).to have_css(".session-items .item", count: 1)
@@ -126,17 +126,18 @@ feature "Expert Dashboard" do
 	end
 	
 	## cancel a session
-	scenario "cancel a session created by the expert", js: true do
-		session_intro
-		click_link "Sessions"
-		expect(page).to have_css ".session-items .item"
-		session_box = page.find(".session-items .item")
-		expect(session_box).to have_link "cancel"
+	## 2013.11.16: No need for now
+	# scenario "cancel a session created by the expert", js: true do
+	# 	session_intro
+	# 	click_link "Sessions"
+	# 	expect(page).to have_css ".session-items .item"
+	# 	session_box = page.find(".session-items .item")
+	# 	expect(session_box).to have_link "cancel"
 
-		click_link "cancel"
+	# 	click_link "cancel"
 
-		expect(page).not_to have_css ".session-items .item"
-		expect(session_intro.reload).to be_canceled
-	end
+	# 	expect(page).not_to have_css ".session-items .item"
+	# 	expect(session_intro.reload).to be_canceled
+	# end
 
 end
