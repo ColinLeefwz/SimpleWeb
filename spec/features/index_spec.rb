@@ -4,7 +4,8 @@ feature "Index" do
   #helper_objects
   
   background do
-  	visit welcome_index_path
+  	# visit welcome_index_path
+  	visit root_path
   end	
 
   scenario "has links of 'about us', 'sessions' and 'experts'" do 
