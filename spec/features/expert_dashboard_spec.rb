@@ -80,14 +80,10 @@ feature "Expert Dashboard" do
 		end
 
 		## preview
-		#TODO: need to use Modal instead opening a new page
 		scenario "preview a new content", js: true do
-			click_button "Preview"
-			expect(page).to have_css("div.text-page-article-box")
-			expect(Session).to have(1).instance
-			preview_session = Session.last
-			expect(current_path).to eq session_path(preview_session)
-			expect(preview_session).to be_draft
+			click_link "Preview"
+			expect(page).to have_css("div.modal")
+			expect(Session).to have(0).instance
 		end
 	end
 
@@ -117,11 +113,9 @@ feature "Expert Dashboard" do
 		end
 
 		scenario "preview", js: true do
-			click_button "Preview"
-			expect(page).to have_css "div.video-page-info-box"
-			preview_session = Session.last
-			expect(current_path).to eq session_path(preview_session)
-			expect(preview_session).to be_draft
+			click_link "Preview"
+			expect(page).to have_css "div.modal"
+			expect(Session).to have(0).instance
 		end
 	end
 	
