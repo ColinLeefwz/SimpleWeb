@@ -16,15 +16,15 @@ end
 def fill_new_session_form
 	## fill in the form
 	within("form#new_live_session") do
-		fill_in "live_session_title", with: "new live session"
+		fill_in "live_session[title]", with: "new live session"
 		check "live_session_categories_macro"
 		check "live_session_categories_business"
 		select "Lounge", from: "live_session_format"
-		attach_file("live_session_cover", File.join(Rails.root.join("spec", "fixtures", "Expert_profile.png")))
+		attach_file("live_session[cover]", File.join(Rails.root.join("spec", "fixtures", "Expert_profile.png")))
 		## choose a date
-		select "Tijuana", from: "live_session_time_zone"
-		fill_in "live_session_location", with: "Shanghai"
-		fill_in "live_session_price", with: "50"
+		select "Tijuana", from: "live_session[time_zone]"
+		fill_in "live_session[location]", with: "Shanghai"
+		fill_in "live_session[price]", with: "50"
 	end
 
 	## choose date from the datapicker
@@ -97,7 +97,7 @@ feature "Expert Dashboard" do
 
 		## create
 		scenario "create", js: true do
-			click_button "Submit"
+			click_button "Publish"
 
 			expect(page).to have_css(".session-items .item", count: 1)
 			expect(Session).to have(1).instance
