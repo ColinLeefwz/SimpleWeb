@@ -27,6 +27,28 @@ class ExpertsController < ApplicationController
     @sessions = @expert.sessions
   end
 
+  def edit_profile
+    @profile = @expert.expert_profile
+    @from = 'edit_profile'
+
+    respond_to do |format|
+      format.js {render 'experts/update'}
+    end
+  end
+
+  def update_profile
+    respond_to do |format|
+      format.js{
+        @expert.update_attributes(user_params)
+        @expert.expert_profile.update_attributes(profile_params)
+        @from = 'profile'
+
+        render js: "window.location='#{profile_expert_path(current_user)}'"
+      }
+    end
+
+  end
+
   def contents
     @sessions = current_user.contents
     @from = 'sessions/sessions'
@@ -79,5 +101,13 @@ class ExpertsController < ApplicationController
   def expert_params
     params.require(:expert).permit(:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials)
   end
+
+  def profile_params
+    params.require(:expert_profile).permit(:tilte, :company, :career, :education, :expertise)
+  end
+  def user_params
+    params.require(:expert_profile).permit(:first_name, :last_name, :avatar)
+  end
+
 
 end

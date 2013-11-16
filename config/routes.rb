@@ -30,6 +30,8 @@ Prodygia::Application.routes.draw do
       get :profile
       get :sessions
       get :contents
+      get :edit_profile
+      patch :update_profile
     end
     
     resources :sessions do
