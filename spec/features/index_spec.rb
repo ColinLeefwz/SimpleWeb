@@ -1,17 +1,20 @@
 require 'spec_helper'
 
-feature "Index" do 
-  #helper_objects
+feature "Index", js: true do
+  helper_objects
   
   background do
-  	# visit welcome_index_path
+		[page_about_us, page_faq, page_terms]
   	visit root_path
+		## TODO: because of the responsive page, the page of the default driver
+		# can only show the select, but not the words in the page.
+		# so, need to find way to make the browser to full screen
   end	
 
-  scenario "has links of 'about us', 'sessions' and 'experts'" do 
+  scenario "has links of 'about us', 'Faq' and 'Terms'" do 
   	page.should have_link 'About us'
-  	page.should have_link 'Sessions'
-  	page.should have_link 'Experts'
+  	page.should have_link 'Faq'
+  	page.should have_link 'Terms'
   end 
 
   scenario "goes to 'About us' page when 'About us' link is clicked" do
@@ -19,20 +22,14 @@ feature "Index" do
     page.should have_content 'About us'
   end
 
-  scenario "goes to 'Sessions' page when 'Sessions' link is clicked" do
-    page.find_link('Sessions').click
-    page.should have_content 'Sessions'
+  scenario "goes to 'Faq' page when 'Faq' link is clicked" do
+    page.find_link('Faq').click
+    page.should have_content 'Faq'
   end
 
-  scenario "goes to 'Experts' page when 'Experts' link is clicked" do
-    page.find_link('Experts').click
-    page.should have_content 'Experts'
+  scenario "goes to 'Terms' page when 'Terms' link is clicked" do
+    page.find_link('Terms').click
+    page.should have_content 'Terms'
   end
 
-  scenario "has 3 tables and eache table has 2 'tr'" do
-  	expect(all('table').count).to eq 3
-    expect(all('tr').count).to eq 6
-  end	
-
-  scenario "goes to responding session's page when the relative image is clicked" 
 end 
