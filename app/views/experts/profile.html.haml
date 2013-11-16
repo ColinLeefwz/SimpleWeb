@@ -57,16 +57,19 @@
     .tab-content
       .tab-pane.active#tab1
         %div
-          %h4 Expertise
-          = @expert.expert_profile.expertise.html_safe
+          %h4 Overview
+          - expertise = @expert.expert_profile.expertise || "Expertise to be filled"
+          = expertise.html_safe
       .tab-pane#tab2
         %div
-          = @expert.expert_profile.career.html_safe
+          %h4 Career
+          - career = @expert.expert_profile.career || "Career to be filled"
+          = career.html_safe
       .tab-pane#tab3
         %div
-          = @expert.expert_profile.education.html_safe
-
-
+          %h4 Education
+          - education = @expert.expert_profile.education || "Education to be filled"
+          = education.html_safe
 
   .sessions.sub-wrapper
     #content.container
