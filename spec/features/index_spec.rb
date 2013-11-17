@@ -2,21 +2,21 @@ require 'spec_helper'
 
 feature "Index", js: true do
   helper_objects
-  
+
   background do
 		[page_about_us, page_faq, page_terms]
   	visit root_path
-		
 		## maximize the test FF browser
 		window = Capybara.current_session.driver.browser.manage.window
-		window.maximize
-  end	
+		# window.maximize
+		window.resize_to 1280, 800
+	end
 
-  scenario "has links of 'about us', 'Faq' and 'Terms'" do 
+  scenario "has links of 'about us', 'Faq' and 'Terms'" do
   	page.should have_link 'About Us'
   	page.should have_link 'FAQ'
   	page.should have_link 'Terms'
-  end 
+  end
 
   scenario "goes to 'About us' page when 'About us' link is clicked" do
     page.find_link('About Us').click
