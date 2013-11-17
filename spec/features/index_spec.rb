@@ -6,25 +6,26 @@ feature "Index", js: true do
   background do
 		[page_about_us, page_faq, page_terms]
   	visit root_path
-		## TODO: because of the responsive page, the page of the default driver
-		# can only show the select, but not the words in the page.
-		# so, need to find way to make the browser to full screen
+		
+		## maximize the test FF browser
+		window = Capybara.current_session.driver.browser.manage.window
+		window.maximize
   end	
 
   scenario "has links of 'about us', 'Faq' and 'Terms'" do 
-  	page.should have_link 'About us'
-  	page.should have_link 'Faq'
+  	page.should have_link 'About Us'
+  	page.should have_link 'FAQ'
   	page.should have_link 'Terms'
   end 
 
   scenario "goes to 'About us' page when 'About us' link is clicked" do
-    page.find_link('About us').click
-    page.should have_content 'About us'
+    page.find_link('About Us').click
+    page.should have_content 'About Us'
   end
 
   scenario "goes to 'Faq' page when 'Faq' link is clicked" do
-    page.find_link('Faq').click
-    page.should have_content 'Faq'
+    page.find_link('FAQ').click
+    page.should have_content 'FAQ'
   end
 
   scenario "goes to 'Terms' page when 'Terms' link is clicked" do
