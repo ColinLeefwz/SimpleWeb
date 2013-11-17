@@ -230,22 +230,20 @@ class Shop
   end  
   
   def preset_p(photos)
-    if photos.size<5
-      if self.t == 10 #写字楼
-        p=Photo.find_by_id("5273013320f318640e000009") #嗮前台
-        p.set(:room, self.id)
-        return [p] + photos
-      end
-      if self.t == 11 #住宅
-        p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮前台
-        p.set(:room, self.id)
-        return [p] + photos
-      end
-      if self.t == 12 #学校
-        p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮桌面
-        p.set(:room, self.id)
-        return [p] + photos
-      end
+    if self.t == 10 #写字楼
+      p=Photo.find_by_id("5273013320f318640e000009") #嗮前台
+      p.set(:room, self.id)
+      return [p] + photos
+    end
+    if self.t == 11 #住宅
+      p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮前台
+      p.set(:room, self.id)
+      return [p] + photos
+    end
+    if self.t == 12 #学校
+      p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮桌面
+      p.set(:room, self.id)
+      return [p] + photos
     end
     return photos
   end
