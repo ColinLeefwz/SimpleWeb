@@ -1,37 +1,36 @@
 require 'spec_helper'
 
-feature "Index" do 
-  #helper_objects
-  
-  background do
-  	visit welcome_index_path
-  end	
+feature "Index", js: true do
+  helper_objects
 
-  scenario "has links of 'about us', 'sessions' and 'experts'" do 
-  	page.should have_link 'About us'
-  	page.should have_link 'Sessions'
-  	page.should have_link 'Experts'
-  end 
+  background do
+		[page_about_us, page_faq, page_terms]
+  	visit root_path
+		## maximize the test FF browser
+		window = Capybara.current_session.driver.browser.manage.window
+		# window.maximize
+		window.resize_to 1280, 800
+	end
+
+  scenario "has links of 'about us', 'Faq' and 'Terms'" do
+  	page.should have_link 'About Us'
+  	page.should have_link 'FAQ'
+  	page.should have_link 'Terms'
+  end
 
   scenario "goes to 'About us' page when 'About us' link is clicked" do
-    page.find_link('About us').click
-    page.should have_content 'About us'
+    page.find_link('About Us').click
+    page.should have_content 'About Us'
   end
 
-  scenario "goes to 'Sessions' page when 'Sessions' link is clicked" do
-    page.find_link('Sessions').click
-    page.should have_content 'Sessions'
+  scenario "goes to 'Faq' page when 'Faq' link is clicked" do
+    page.find_link('FAQ').click
+    page.should have_content 'FAQ'
   end
 
-  scenario "goes to 'Experts' page when 'Experts' link is clicked" do
-    page.find_link('Experts').click
-    page.should have_content 'Experts'
+  scenario "goes to 'Terms' page when 'Terms' link is clicked" do
+    page.find_link('Terms').click
+    page.should have_content 'Terms'
   end
 
-  scenario "has 3 tables and eache table has 2 'tr'" do
-  	expect(all('table').count).to eq 3
-    expect(all('tr').count).to eq 6
-  end	
-
-  scenario "goes to responding session's page when the relative image is clicked" 
 end 
