@@ -147,6 +147,13 @@ class SessionsController < ApplicationController
     create_response
   end
 
+	def email_friend
+		@email = params[:email_friend]
+		mandrill = MandrillApi.new
+		mandrill.email_friend_session(@email, session_url(@session))
+		redirect_to session_path(@session), flash: {success: "mail send successfully!"}
+	end
+
   private
   def create_response
     @session.expert = current_user
