@@ -45,19 +45,19 @@ CANVAS {
 	top: -150px;
 	left: 7px;
 	width: 86px;
-	background-image: url(../img/torus/but_resume.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_resume.png);
 }
 #but_restart {
 	top: -110px;
 	left: 7px;
 	width: 86px;
-	background-image: url(../img/torus/but_restart.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_restart.png);
 }
 #but_quit {
 	top: -110px;
 	left: 7px;
 	width: 86px;
-	background-image: url(../img/torus/but_quit.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_quit.png);
 }
 #score {
 	position: absolute;
@@ -83,7 +83,7 @@ CANVAS {
 	left: 0;
 	width: 200px;
 	height: 450px;
-	background-image: url(../img/torus/base0.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/base0.png);
 	background-repeat: no-repeat;
 	background-position: 8px 320px;
 }
@@ -94,7 +94,7 @@ CANVAS {
 	left: 220px;
 	width: 94px;
 	height: 233px;
-	background-image: url(../img/torus/panel.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/panel.png);
 }
 #promo {
         position: absolute;
@@ -107,7 +107,7 @@ CANVAS {
 	left: -17px;
 	width: 125px;
 	height: 126px;
-	background-image: url(../img/torus/title_traditional.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/title_traditional.png);
 }
 #title2 {
 	position: absolute;
@@ -115,7 +115,7 @@ CANVAS {
 	left: -29px;
 	width: 150px;
 	height: 108px;
-	background-image: url(../img/torus/title_time.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/title_time.png);
 }
 #title3 {
 	position: absolute;
@@ -123,7 +123,7 @@ CANVAS {
 	left: -8px;
 	width: 112px;
 	height: 97px;
-	background-image: url(../img/torus/title_garbage.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/title_garbage.png);
 }
 #gameover {
 	display: none;
@@ -132,7 +132,7 @@ CANVAS {
 	left: 20px;
 	width: 253px;
 	height: 221px;
-	background-image: url(../img/torus/game_over.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/game_over.png);
 	font-size: 10pt;
 	color: #333;
 }
@@ -143,7 +143,7 @@ CANVAS {
 	padding-left: 11px;
 	width: 205px;
 	height: 200px;
-	background-image: url(../img/torus/coins.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/coins.png);
 	background-repeat: no-repeat;
 	background-position: 0 64px;
 }
@@ -155,19 +155,19 @@ CANVAS {
 	top: 167px;
 	left: 150px;
 	width: 86px;
-	background-image: url(../img/torus/but_main.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_main.png);
 }
 #but_quit2 {
 	top: 172px;
 	left: 140px;
 	width: 86px;
-	background-image: url(../img/torus/but_quit.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_quit.png);
 }
 #but_restart2 {
 	top: 172px;
 	left: 40px;
 	width: 86px;
-	background-image: url(../img/torus/but_restart.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_restart.png);
 }
 #sorryText {
 	position: absolute;
@@ -181,13 +181,13 @@ CANVAS {
 	left: -35px;
 	width: 120px;
 	height: 150px;
-	background-image: url(../img/torus/skull.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/skull.png);
 }
 #but_pause {
 	top: 180px;
 	left: 15px;
 	width: 64px;
-	background-image: url(../img/torus/but_pause.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_pause.png);
 }
 #next {
 	position: absolute;
@@ -195,7 +195,7 @@ CANVAS {
 	left: 7px;
 	width: 80px;
 	height: 50px;
-	background-image: url(../img/torus/blocks.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/blocks.png);
 }
 #menu {
 	position: absolute;
@@ -203,7 +203,7 @@ CANVAS {
 	left: 0px;
 	width: 450px;
 	height: 220px;
-	background-image: url(../img/torus/menu.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/menu.png);
 	background-repeat: no-repeat;
 	background-position: 92px 0px;
 }
@@ -236,7 +236,7 @@ CANVAS {
 	top: 0;
 	width: 321px;
 	height: 157px;
-	background-image: url(../img/torus/title_help.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/title_help.png);
 	background-repeat: no-repeat;
 	background-position: 30px 4px;
 }
@@ -261,7 +261,7 @@ CANVAS {
 	top: 117px;
 	left: 229px;
 	width: 86px;
-	background-image: url(../img/torus/but_main.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_main.png);
 }
 #screen1 {
 	position: absolute;
@@ -269,7 +269,7 @@ CANVAS {
 	top: 157px;
 	width: 321px;
 	height: 157px;
-	background-image: url(../img/torus/modes.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/modes.png);
 	background-position: 45px 7px;
 	background-repeat: no-repeat;
 }
@@ -277,7 +277,7 @@ CANVAS {
 	position: absolute;
 	width: 40px;
 	height: 36px;
-	background-image: url(../img/torus/but_go.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_go.png);
 	cursor: pointer;
 }
 #go1 {
@@ -300,7 +300,7 @@ CANVAS {
 	top: 117px;
 	left: 229px;
 	width: 86px;
-	background-image: url(../img/torus/but_main.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_main.png);
 }
 #screen2 {
 	position: absolute;
@@ -329,26 +329,26 @@ CANVAS {
 	top: 115px;
 	left: 71px;
 	width: 62px;
-	background-image: url(../img/torus/but_play.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_play.png);
 }
 #but_settings {
 	top: 115px;
 	left: 137px;
 	width: 75px;
-	background-image: url(../img/torus/but_settings.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_settings.png);
 }
 #but_help {
 	top: 76px;
 	left: 256px;
 	width: 60px;
-	background-image: url(../img/torus/but_help.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_help.png);
 }
 #but_high {
 	position: absolute;
 	top: 115px;
 	left: 216px;
 	width: 98px;
-	background-image: url(../img/torus/but_high.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_high.png);
 }
 #screen3 {
 	position: absolute;
@@ -356,7 +356,7 @@ CANVAS {
 	top: 157px;
 	width: 321px;
 	height: 157px;
-	background-image: url(../img/torus/title_high.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/title_high.png);
 	background-repeat: no-repeat;
 	background-position: 32px 5px;
 	font-size: 9pt;
@@ -379,7 +379,7 @@ CANVAS {
 	top: 115px;
 	left: 228px;
 	width: 86px;
-	background-image: url(../img/torus/but_main.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_main.png);
 }
 #screen4 {
 	position: absolute;
@@ -387,7 +387,7 @@ CANVAS {
 	top:314px;
 	height: 157px;
 	width: 321px;
-	background-image: url(../img/torus/title_settings.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/title_settings.png);
 	background-repeat: no-repeat;
 	background-position: 32px 5px;
 	font-family: Arial;
@@ -420,7 +420,7 @@ CANVAS {
 	top: 115px;
 	left: 228px;
 	width: 86px;
-	background-image: url(../img/torus/but_main.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/but_main.png);
 }
 
 
@@ -428,7 +428,7 @@ CANVAS {
 	position: absolute;
 	width: 20px;
 	height: 20px;
-	background-image: url(../img/torus/close.png);
+	background-image: url(http://s.dface.cn/torus/img/torus/close.png);
 	display: none;
 }
 #close:hover {background-position: 0 20px;}

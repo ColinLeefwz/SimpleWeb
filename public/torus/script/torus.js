@@ -158,7 +158,7 @@ function () {
         b();
 
         function e(h) {
-            var f = "url(/torus/img/torus/base" + Control.config.skin + ".png)";
+            var f = "url(http://s.dface.cn/torus/img/torus/base" + Control.config.skin + ".png)";
             g("playing").style.backgroundImage = f
         }
         g("close").onclick = Control.close;
