@@ -82,7 +82,7 @@ tmp.style.backgroundRepeat='no-repeat';
 tmp.style.padding='17px 11px 0 11px';
   tmp.style.zIndex='30';
   tmp.style.margin='243px 0 0 0';
-  $('st_outerarea').appendChild(tmp);
+  $st('st_outerarea').appendChild(tmp);
 
   tmp=document.createElement('div')
   tmp.id='st_scrollarea';
@@ -91,7 +91,7 @@ tmp.style.padding='17px 11px 0 11px';
   tmp.style.width='320px';
   tmp.style.height='315px';
   tmp.style.position='absolute';
-  $('st_outerarea').appendChild(tmp);
+  $st('st_outerarea').appendChild(tmp);
   
   tmp=document.createElement('div');
   tmp.style.backgroundImage='url(/stack/i/fuhatul.png)';
@@ -100,7 +100,7 @@ tmp.style.padding='17px 11px 0 11px';
   tmp.style.height='87px';
   tmp.style.marginTop='228px';
   tmp.style.zIndex='10';
-  $('st_scrollarea').appendChild(tmp);
+  $st('st_scrollarea').appendChild(tmp);
 
   tmp=document.createElement('div');
   tmp.style.backgroundImage='url(/stack/i/fuelol.png)';
@@ -109,7 +109,7 @@ tmp.style.padding='17px 11px 0 11px';
   tmp.style.height='39px';
   tmp.style.marginTop='217px';
   tmp.style.zIndex='20';
-  $('st_scrollarea').appendChild(tmp);
+  $st('st_scrollarea').appendChild(tmp);
 
   tmp2=Math.floor(Math.random()*4)+1;
 
@@ -119,7 +119,7 @@ tmp.style.padding='17px 11px 0 11px';
   tmp.style.height=logh+'px';
   tmp.style.marginTop=sah-logh+'px';
   tmp.style.marginLeft=stmargin[0]-extraleft[sttype[0]]+7+'px';
-  $('st_scrollarea').appendChild(tmp);
+  $st('st_scrollarea').appendChild(tmp);
   showaronk('stp_0',sttype[0],ststart[0],stwidth[0]);
   //addshadow();
   stack_init();
@@ -129,8 +129,8 @@ function stack_init() {
  if(sts>10) {
   paddingtarget=(sts-10)*(logh-4);
   if(sts > 15) {
-   $('st_scrollarea').removeChild($('stp_'+(sts-16)));
-   if(sts % 2 == 0 && sts>16) {   $('st_scrollarea').removeChild($('shd_'+(sts-16)));}
+   $st('st_scrollarea').removeChild($st('stp_'+(sts-16)));
+   if(sts % 2 == 0 && sts>16) {   $st('st_scrollarea').removeChild($st('shd_'+(sts-16)));}
   }
  }
 
@@ -138,7 +138,7 @@ function stack_init() {
 
  stwidth[sts]=stwidth[sts-1];
  ststart[sts]=(stwidth[sts]-270)*Math.random();
- stmargin[sts]=0; stdir=Math.log(sts+1)*2; $('level').innerHTML=Math.floor(sts/10)+1;
+ stmargin[sts]=0; stdir=Math.log(sts+1)*2; $st('level').innerHTML=Math.floor(sts/10)+1;
  sttype[sts]=Math.floor(Math.random()*4)+1;
  if(Math.random()>.5) {stdir*=-1; stmargin[sts]=saw-stwidth[sts];}
  tmp=document.createElement('div');
@@ -150,18 +150,18 @@ function stack_init() {
  tmp.style.width=extraleft[sttype[sts]]+stwidth[sts]+extraright/2+'px';
  tmp.style.marginTop=sah-(sts+2)*(logh-4);
  tmp.style.marginLeft=stmargin[sts]-extraleft[sttype[sts]]+7+'px';
- $('st_scrollarea').appendChild(tmp);
+ $st('st_scrollarea').appendChild(tmp);
  showaronk('stp_'+sts,sttype[sts],ststart[sts],stwidth[sts]);
  stinterval=setInterval('stack_dothemove()',50);
 }
 
 function stack_dothemove() {
-  //if($('score').innerHTML < stscore) {
-  // $('score').innerHTML=Math.floor((parseInt($('score').innerHTML)+stscore*3)/4);
+  //if($st('score').innerHTML < stscore) {
+  // $st('score').innerHTML=Math.floor((parseInt($st('score').innerHTML)+stscore*3)/4);
   //}
   if(paddingtarget > paddingnow+1) {
    paddingnow=(paddingtarget+paddingnow)/2;
-   $('st_scrollarea').style.paddingTop=paddingnow+'px';
+   $st('st_scrollarea').style.paddingTop=paddingnow+'px';
   }
   stmargin[sts]+=stdir;
   if(stmargin[sts] < 0) {stmargin[sts]=-stmargin[sts]; stdir*=-1;}
@@ -186,7 +186,7 @@ function handleclick() {
  bon=Math.floor(stwidth[sts]/10*Math.log(sts+1));
  if(Math.abs(stwidth[sts] - stwidth[sts-1])<3 && stwidth[sts]>0) {
   bon*=2;
-  $('combo').innerHTML=parseInt($('combo').innerHTML)+1;
+  $st('combo').innerHTML=parseInt($st('combo').innerHTML)+1;
   tmp=document.createElement('div');
   tmp.innerHTML='<div style="padding:5px"><b>STACKMASTER!</b></div>';
   tmp.id='box_perfect';
@@ -198,20 +198,20 @@ function handleclick() {
   tmp.style.marginLeft='85px';
   tmp3=(sah-(sts+2)*(logh-4)-16);
   tmp.style.marginTop=tmp3+'px';
-  $('st_scrollarea').appendChild(tmp);
+  $st('st_scrollarea').appendChild(tmp);
   tmp2=new Array();
   tmp2[0]="";
-  tmp2[1]="$('score_title').style.color='#ffffff'; $('box_perfect').style.marginTop='"+(tmp3-5)+"px';";
-  tmp2[2]="$('box_perfect').style.marginTop='"+(tmp3-10)+"px';";
-  tmp2[3]="$('box_perfect').style.marginTop='"+(tmp3-15)+"px';";
-  tmp2[4]="$('st_scrollarea').removeChild($('box_perfect')); $('score_title').style.color=''";
+  tmp2[1]="$st('score_title').style.color='#ffffff'; /stack/i/('box_perfect').style.marginTop='"+(tmp3-5)+"px';";
+  tmp2[2]="$st('box_perfect').style.marginTop='"+(tmp3-10)+"px';";
+  tmp2[3]="$st('box_perfect').style.marginTop='"+(tmp3-15)+"px';";
+  tmp2[4]="$st('st_scrollarea').removeChild($st('box_perfect')); $st('score_title').style.color=''";
   ttt=Math.random();
   stispace[ttt]=tmp2;
   setTI(ttt,50);
  }
  stscore+=bon;
- $('score').innerHTML=stscore;
- if(stscore>theirbest) {$('score').style.color='#ff0000';}
+ $st('score').innerHTML=stscore;
+ if(stscore>theirbest) {$st('score').style.color='#ff0000';}
 }
 
 function addshadow() {
@@ -224,7 +224,7 @@ function addshadow() {
   tmp.style.height='30px';
   tmp.style.marginLeft=(stmargin[sts]-extraleft[sttype[sts]]+7)+'px';
   tmp.style.marginTop=(sah-(sts+1)*(logh-4)-1)+'px';
-  $('st_scrollarea').appendChild(tmp);
+  $st('st_scrollarea').appendChild(tmp);
 }
 
 function cutaronk(crid,crtype,crstart,crstays,crfrom) {
@@ -248,17 +248,17 @@ function cutaronk(crid,crtype,crstart,crstays,crfrom) {
  if(crfrom !='') {
   tmp=new Array();
   if(crfrom == 'left' || crfrom == 'right') {
-   tmp[0]="$('"+crid+"').style.marginTop='"+(sah-(sts+1)*(logh-4))+"px';document.getElementById('"+crid+"').childNodes[1].style.marginTop='2px';  document.getElementById('"+crid+"').childNodes[0].style.zIndex="+((sts % 2)?(13):(16))+";";
-   tmp[1]="$('"+crid+"').childNodes[1].style.opacity='.75'; $('"+crid+"').childNodes[1].style.marginTop='7px';";
-   tmp[2]="$('"+crid+"').childNodes[1].style.opacity='.5';$('"+crid+"').childNodes[1].style.marginTop='12px';";
-   tmp[3]="$('"+crid+"').childNodes[1].style.opacity='.25';$('"+crid+"').childNodes[1].style.marginTop='17px';";
-   tmp[4]="$('"+crid+"').removeChild(document.getElementById('"+crid+"').childNodes[1]);"
+   tmp[0]="$st('"+crid+"').style.marginTop='"+(sah-(sts+1)*(logh-4))+"px';document.getElementById('"+crid+"').childNodes[1].style.marginTop='2px';  document.getElementById('"+crid+"').childNodes[0].style.zIndex="+((sts % 2)?(13):(16))+";";
+   tmp[1]="$st('"+crid+"').childNodes[1].style.opacity='.75'; $st('"+crid+"').childNodes[1].style.marginTop='7px';";
+   tmp[2]="$st('"+crid+"').childNodes[1].style.opacity='.5';$st('"+crid+"').childNodes[1].style.marginTop='12px';";
+   tmp[3]="$st('"+crid+"').childNodes[1].style.opacity='.25';$st('"+crid+"').childNodes[1].style.marginTop='17px';";
+   tmp[4]="$st('"+crid+"').removeChild(document.getElementById('"+crid+"').childNodes[1]);"
   } else if(crfrom =='all') {
-   tmp[0]="$('"+crid+"').childNodes[0].style.marginTop='2px';";
-   tmp[1]="$('"+crid+"').childNodes[0].style.opacity='.75'; $('"+crid+"').childNodes[0].style.marginTop='7px';";
-   tmp[2]="$('"+crid+"').childNodes[0].style.opacity='.5'; $('"+crid+"').childNodes[0].style.marginTop='12px';";
-   tmp[3]="$('"+crid+"').childNodes[0].style.opacity='.25'; $('"+crid+"').childNodes[0].style.marginTop='17px';";
-   tmp[4]="$('"+crid+"').removeChild(document.getElementById('"+crid+"').childNodes[0]);"
+   tmp[0]="$st('"+crid+"').childNodes[0].style.marginTop='2px';";
+   tmp[1]="$st('"+crid+"').childNodes[0].style.opacity='.75'; $st('"+crid+"').childNodes[0].style.marginTop='7px';";
+   tmp[2]="$st('"+crid+"').childNodes[0].style.opacity='.5'; $st('"+crid+"').childNodes[0].style.marginTop='12px';";
+   tmp[3]="$st('"+crid+"').childNodes[0].style.opacity='.25'; $st('"+crid+"').childNodes[0].style.marginTop='17px';";
+   tmp[4]="$st('"+crid+"').removeChild(document.getElementById('"+crid+"').childNodes[0]);"
   }
   if(stwidth[sts] >0) { tmp[4]+="stack_init(); dnd=0;"; } else { tmp[4]+='gameover();' }
   ttt=Math.random();
@@ -298,7 +298,7 @@ function showaronk(srid,srtype,srstart,srsize) {
  tmp2.style.position='absolute';
  tmp.appendChild(tmp2);
 
- $(srid).appendChild(tmp);
+ $st(srid).appendChild(tmp);
 }
 
 function gameover() {
@@ -324,11 +324,27 @@ function gamerank() {
     game: dface_var
   } , function(data){
     for(var di=0; di < data.length; di++ ){
+    var h = "";
     h += "第"+(di+1)+'名 ' + data[di].uname + " 得分: "+ data[di].score + "<br/>"
-    ialert('<h1>堆木头排名</h1>','restartgame()')
+    ialert('<h1>堆木头排名</h1>'+h,'restartgame()')
     }
   })
 }
+
+// (function($st) {
+//     function gamerank() {
+//       dface_var.score = stscore;
+//       $st.get('/game/new_score', {
+//         game: dface_var
+//       } , function(data){
+//         for(var di=0; di < data.length; di++ ){
+//         var h = "";
+//         h += "第"+(di+1)+'名 ' + data[di].uname + " 得分: "+ data[di].score + "<br/>"
+//         ialert('<h1>堆木头排名</h1>'+h,'restartgame()')
+//         }
+//       })
+//     }
+// })(jQuery)
 
 function restartgame() {
  clearInterval(stinterval);
@@ -345,11 +361,11 @@ function restartgame() {
  sttype[0]=Math.floor(Math.random()*4)+1;
  paddingtarget=0,paddingnow=0;
  dnd=0;
- $('combo').innerHTML=0;
- $('level').innerHTML=1;
- $('score').innerHTML=stscore;
- $('score').style.color='#ffffff';
- $('st_outerarea').innerHTML='';
+ $st('combo').innerHTML=0;
+ $st('level').innerHTML=1;
+ $st('score').innerHTML=stscore;
+ $st('score').style.color='#ffffff';
+ $st('st_outerarea').innerHTML='';
  init();
 }
 

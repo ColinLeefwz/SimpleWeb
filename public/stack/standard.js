@@ -107,6 +107,6 @@ function setTI(todos,interval) {
  setTimeout('setTI('+todos+','+interval+')',interval);
 }
 
-function $(id) {
+function $st(id) {
  return document.getElementById(id);
 }
