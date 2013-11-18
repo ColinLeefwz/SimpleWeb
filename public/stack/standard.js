@@ -1,4 +1,4 @@
-//
+﻿//
 // XWUZ standard code
 // Having thoughts? Ask here: xwuz@tjp.hu
 //

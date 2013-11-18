@@ -1,4 +1,4 @@
-// -----------
+﻿// -----------
 var dface_var={}
 
 function dface_init(sid, uid){
