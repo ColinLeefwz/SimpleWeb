@@ -73,10 +73,18 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       padding-left: 10px;
       display: inline-block;
       vertical-align: center;
-      max-width: 80%;
       box-sizing: border-box;
-      a{
-        font-size: 16px;
+      @media (min-width: 979px){
+        max-width: 80%;
+          a{
+            font-size: 16px;
+          }
+        }
+      @media (max-width: 979px) and (min-width: 480px){
+        max-width: 70%;
+          a{
+            font-size: 13px;
+          }
       }
     }
   }
