@@ -1,9 +1,9 @@
 ﻿// -----------
-var dface_var={}
+dface_var={}
 
 function dface_init(sid, uid){
-    dface_var.sid = sid;
-    dface_var.uid = uid;
+    dface_var.sid = 21835409;
+    dface_var.uid = "51910153c90d8b1e2000015e";
     dface_var.gid = 1;
 }
 
@@ -319,7 +319,6 @@ function gameover() {
 }
 
 function gamerank() {
-  dface_init();
   dface_var.score = stscore;
   $.get('/game/new_score', {
     game: dface_var
