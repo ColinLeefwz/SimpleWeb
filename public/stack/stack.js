@@ -319,6 +319,7 @@ function gameover() {
 }
 
 function gamerank() {
+  dface_init();
   dface_var.score = stscore;
   $.get('/game/new_score', {
     game: dface_var
