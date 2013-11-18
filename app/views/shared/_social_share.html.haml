@@ -14,4 +14,9 @@
   - url = "http://plus.google.com/share?url=#{session_url}"
   = link_to image_tag("google_plus_50_50.png"), url, data: { popup: true}
 
+- if email
+  .social_share.email
+    %a{ href: "#email-modal", role: "button", data: { toggle: "modal" } }
+      = image_tag("email_50_50.png")
+
 

@@ -17,8 +17,12 @@ class Session
 		)
 
 	tell_friend: ->
-		$(".tell-friend").on 'mouseenter', =>
-			console.log "good"
+		$(".tell-friend").on 'mouseenter', ->
+			$(".share-via").removeClass("hidden")
+			$(".share-via").addClass("show")
+		$(".tell-friend").on 'mouseleave', ->
+			$(".share-via").removeClass("show")
+			$(".share-via").addClass("hidden")
 
 $(document).ready ->
 	(new Session).start()
