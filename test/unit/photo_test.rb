@@ -68,6 +68,7 @@ class PhotoTest < ActiveSupport::TestCase
     message = photo.send_pshop_coupon
     assert_equal ["测试分享优惠券"], message
     assert CouponDown.last.dat.to_date == Time.now.to_date && CouponDown.last.d_sid.to_i == 111
+    #TODO：上面的代码在凌晨执行会失败
     assert_equal photo.send_coupon, nil
     CouponDown.last.update_attribute(:dat, 1.days.ago )
     message = photo.send_pshop_coupon
