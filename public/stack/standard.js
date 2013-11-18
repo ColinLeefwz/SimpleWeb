@@ -23,9 +23,9 @@
 
  function imgpreload(ims) {
   myims=new Array();
-  ims.push('i/b_yes.png');
-  ims.push('i/b_no.png');
-  ims.push('i/b_okay.png');
+  ims.push('/stack/i/b_yes.png');
+  ims.push('/stack/i/b_no.png');
+  ims.push('/stack/i/b_okay.png');
   for(i in ims) {
    myims[i]=new Image();
    myims[i].src=ims[i];
@@ -73,12 +73,12 @@
   }
 
   function ialert(iquestion,idoit) {
-   document.getElementById('alertbox_content').innerHTML=iquestion+'<br style="clear:both" /><br /><a href="#" onclick="idismiss();eval(\''+idoit+'\'); return false;" ontouchstart="idismiss();eval(\''+idoit+'\'); return false;"><img src="i/b_okay.png" alt="Okay" /></a>';
+   document.getElementById('alertbox_content').innerHTML=iquestion+'<br style="clear:both" /><br /><a href="#" onclick="idismiss();eval(\''+idoit+'\'); return false;" ontouchstart="idismiss();eval(\''+idoit+'\'); return false;"><img src="/stack/i/b_okay.png" alt="Okay" /></a>';
    document.getElementById('alertbox').style.display='block';
   }
     
   function iconfirm(iquestion,idoit) {
-   document.getElementById('alertbox_content').innerHTML=iquestion+'<br style="clear:both" /><br /><a href="#" ontouchstart="idismiss();eval(\''+idoit+'\'); return false;" onclick="idismiss();eval(\''+idoit+'\'); return false;"><img src="i/b_yes.png" alt="Yes" /></a><a href="#" ontouchstart="idismiss(); return false;" onclick="idismiss(); return false;"><img src="i/b_no.png" alt="No" /></a>';
+   document.getElementById('alertbox_content').innerHTML=iquestion+'<br style="clear:both" /><br /><a href="#" ontouchstart="idismiss();eval(\''+idoit+'\'); return false;" onclick="idismiss();eval(\''+idoit+'\'); return false;"><img src="/stack/i/b_yes.png" alt="Yes" /></a><a href="#" ontouchstart="idismiss(); return false;" onclick="idismiss(); return false;"><img src="/stack/i/b_no.png" alt="No" /></a>';
    document.getElementById('alertbox').style.display='block';
   }
   
