@@ -1,6 +1,6 @@
 Prodygia::Application.routes.draw do
 
-  devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations' }
+  devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
   resources :users
 
@@ -27,13 +27,18 @@ Prodygia::Application.routes.draw do
       get :dashboard
       get :main_menu
       get :pending_page
+      get :profile
+      get :sessions
+      get :contents
+      get :edit_profile
+      patch :update_profile
     end
     
     resources :sessions do
       member do
-        get :sessions
         get :new_post_content
         get :edit_content
+        get :cancel_content
         patch :update_content
         get :new_live_session
         get :edit_live_session
@@ -48,6 +53,7 @@ Prodygia::Application.routes.draw do
     collection do
       get :refer_new_expert
       post :refer_new_expert
+			get :validate_invite_email
     end
   end
 

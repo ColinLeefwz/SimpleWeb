@@ -10,9 +10,7 @@ class InvitationsController < Devise::InvitationsController
     elsif current_user.is_a? Expert
       case params[:commit]
       when "Send"
-        expert_invite
-      when "Cancel"
-        redirect_to refer_new_expert_experts_path
+        expert_invite 
       end
     end
   end
@@ -65,7 +63,10 @@ class InvitationsController < Devise::InvitationsController
     token_link = "#{request.base_url}/users/invitation/accept?invitation_token=#{@invitation_token}"
 
     mandrill = MandrillApi.new
-    mandrill.invite_by_expert(current_user, @email_message, token_link)
+    @candidate = Expert.where(email: params[:email_message][:to]).first 
+    if @candidate.nil?
+      mandrill.invite_by_expert(current_user, @email_message, token_link)
+    end
 
     if resource.errors.empty?
       set_flash_message :notice, :send_instructions, :email => self.resource.email if self.resource.invitation_sent_at
@@ -76,6 +77,6 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def set_email_message
-    params.require(:email_message).permit(:subject, :to, :message, :copy_me, :from_name, :from_address)
+    params.require(:email_message).permit(:subject, :to, :message, :copy_me, :from_name, :from_address, :to)
   end
 end

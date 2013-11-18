@@ -1,4 +1,3 @@
-
 .simple_form{
   padding-top: 1em;
   padding-left: 1em;
@@ -12,9 +11,21 @@
   }
 
   .categories{
-
     input[type="checkbox"]{
       float: none;
     }
+  }
+
+  .modal{
+    width: 1100px;
+    margin-left: -555px;
+  }
+  .modal-body{
+    background-image: url(/assets/bg.jpg);
+    max-height: 600px;
+  }
+
+  .modal.fade.in{
+    top: 3%;
   }
 }

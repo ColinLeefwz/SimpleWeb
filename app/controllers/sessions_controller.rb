@@ -2,7 +2,7 @@ require 'paypal'
 require 'mandrill_api'
 
 class SessionsController < ApplicationController
-  before_action :set_session, except: [:new_live_session, :new_post_content, :create_post_content, :create_live_session, :sessions]
+  before_action :set_session, except: [:new_live_session, :new_post_content, :create_post_content, :create_live_session]
 
   def post_a_draft
     @session.draft = false
@@ -76,13 +76,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  def sessions
-    @sessions = current_user.sessions.order("draft desc")
-    @from = 'sessions'
-    respond_to do |format|
-      format.js { render 'experts/update'}
-    end
-  end
 
   def new_live_session
     @session = LiveSession.new
@@ -109,16 +102,13 @@ class SessionsController < ApplicationController
   end
 
   def update_live_session
-    @sessions = current_user.sessions
-    @session.update(live_session_params)
-    @from = "sessions"
-    respond_to do |format| 
-      format.js {render 'experts/update'}
-    end
+    @session.assign_attributes(live_session_params)
+    create_response
   end
 
   def new_post_content
     @session = ArticleSession.new  # use Session.new so that form params are wrapped in :session
+    @session.expert = current_user
     @url = create_post_content_expert_sessions_path(current_user)
     @from = 'post_content'
     respond_to do |format|
@@ -131,6 +121,7 @@ class SessionsController < ApplicationController
     create_response
   end
 
+	# TODO: can we refactor this one with the "edit_live_session" ?
   def edit_content
     authorize! :edit_content, @session
     @from = "post_content"
@@ -140,13 +131,20 @@ class SessionsController < ApplicationController
     end
   end
 
+	def cancel_content
+    authorize! :edit_content, @session
+		@session.update_attributes canceled: true
+		@from = 'sessions'
+		@sessions = current_user.sessions.where("canceled = false")
+
+		respond_to do |format|
+			format.js { render 'experts/update' }
+		end
+	end
+
   def update_content
-    @sessions = current_user.sessions
-    @session.update(article_session_params)
-    @from = "sessions"
-    respond_to do |format|
-      format.js {render 'experts/update'}
-    end
+    @session.assign_attributes(article_session_params)
+    create_response
   end
 
   private
@@ -155,7 +153,8 @@ class SessionsController < ApplicationController
     @sessions = current_user.sessions.order("draft desc")
     respond_to do |format|
       format.js{
-        if params[:commit] == Session::COMMIT_TYPE[:submit]
+        if params[:commit] == Session::COMMIT_TYPE[:publish]
+          @session.draft = false
           @session.save
           @from = "sessions"
           render 'experts/update'
@@ -164,10 +163,6 @@ class SessionsController < ApplicationController
           @session.save
           @from = "sessions"
           render 'experts/update'
-        elsif params[:commit] == Session::COMMIT_TYPE[:preview]
-          @session.draft = true
-          @session.save
-          render js: "window.location='#{session_path(@session)}'"
         end
       }
     end

@@ -14,8 +14,12 @@
       $ 62.75 your earnings so far 
       - if session.is_a?LiveSession
         %h4= link_to 'edit', edit_live_session_session_path(session), remote: true
+        -# %h4= link_to 'cancel', cancel_content_session_path(session), remote: true
+
       - else
         %h4= link_to 'edit', edit_content_session_path(session), remote: true
+        -# %h4= link_to 'cancel', cancel_content_session_path(session), remote: true
+
     .something
       - if session.draft
         = "this is a draft |"

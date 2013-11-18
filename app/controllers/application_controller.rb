@@ -25,11 +25,10 @@ class ApplicationController < ActionController::Base
 
     if(previous_path == "/admin/login")
       cookies[:previous_path] = request.base_url + "/admin"
-    elsif(previous_path != "/users/sign_in" && previous_path != "/users/sign_up" && previous_path != "/users/password" && !request.xhr?)
+    elsif(previous_path != "/users/sign_in" && previous_path != "/users/sign_up" && !previous_path.start_with?("/users/password") && !request.xhr? && previous_path != "/users")
       cookies[:previous_path] = request.original_url
     end
   end
-
 
   def after_sign_in_path_for(resource)
     if current_user.is_a? AdminUser
@@ -38,7 +37,6 @@ class ApplicationController < ActionController::Base
       cookies[:previous_path] || root_path
     end
   end
-
 
   ## ActiveAdmin user to User table
   def authenticate_admin_user! #use predefined method name

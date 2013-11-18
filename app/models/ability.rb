@@ -21,6 +21,8 @@ class Ability
 
     elsif user.is_a? Member
 
+    else
+
     end
   end
 end

@@ -14,13 +14,21 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       }
     }
     .expert-text-info{
-      .expert-name{
-        font-family: Latobold;
-        font-size: 20px;
-        font-style: italic;
-      }
-      padding-top: 8px;
+      padding-top: 35px;
       padding-bottom: 15px;
+      line-height: 0.8;
+      @media(max-width: 940px){
+        text-align: center;
+      }
+      p{
+        font-family: Latoreg;
+      }
+      .expert-name{
+        p{
+          font-family: Latobold;
+        }
+        font-size: 20px;
+      }
     }
   }
 
@@ -47,7 +55,6 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
   .item{
     margin-bottom: 10px;
     font-weight: bold;
-    font-size: 20px;
     .item-icon{
       vertical-align: center;
       display: inline-block;
@@ -59,13 +66,15 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       display: inline-block;
       display: none;
       width: 25px;
+      vertical-align: top;
     }
 
     .item-text{
-      margin-left: 10px;
+      padding-left: 10px;
       display: inline-block;
       vertical-align: center;
       max-width: 80%;
+      box-sizing: border-box;
       a{
         font-size: 16px;
       }

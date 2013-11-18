@@ -16,15 +16,15 @@ end
 def fill_new_session_form
 	## fill in the form
 	within("form#new_live_session") do
-		fill_in "live_session_title", with: "new live session"
+		fill_in "live_session[title]", with: "new live session"
 		check "live_session_categories_macro"
 		check "live_session_categories_business"
 		select "Lounge", from: "live_session_format"
-		attach_file("live_session_cover", File.join(Rails.root.join("spec", "fixtures", "Expert_profile.png")))
+		attach_file("live_session[cover]", File.join(Rails.root.join("spec", "fixtures", "Expert_profile.png")))
 		## choose a date
-		select "Tijuana", from: "live_session_time_zone"
-		fill_in "live_session_location", with: "Shanghai"
-		fill_in "live_session_price", with: "50"
+		select "Tijuana", from: "live_session[time_zone]"
+		fill_in "live_session[location]", with: "Shanghai"
+		fill_in "live_session[price]", with: "50"
 	end
 
 	## choose date from the datapicker
@@ -58,9 +58,9 @@ feature "Expert Dashboard" do
 			fill_post_new_content
 		end
 
-		## post
+		## publish
 		scenario "posts new content", js: true do
-			click_button("Submit")
+			click_button("Publish")
 
 			expect(current_path).to eq dashboard_expert_path(sameer.id)
 			expect(page).to have_css(".session-items .item", count: 1)
@@ -80,14 +80,10 @@ feature "Expert Dashboard" do
 		end
 
 		## preview
-		#TODO: need to use Modal instead opening a new page
 		scenario "preview a new content", js: true do
-			click_button "Preview"
-			expect(page).to have_css("div.text-page-article-box")
-			expect(Session).to have(1).instance
-			preview_session = Session.last
-			expect(current_path).to eq session_path(preview_session)
-			expect(preview_session).to be_draft
+			click_link "Preview"
+			expect(page).to have_css("div.modal")
+			expect(Session).to have(0).instance
 		end
 	end
 
@@ -101,7 +97,7 @@ feature "Expert Dashboard" do
 
 		## create
 		scenario "create", js: true do
-			click_button "Submit"
+			click_button "Publish"
 
 			expect(page).to have_css(".session-items .item", count: 1)
 			expect(Session).to have(1).instance
@@ -117,17 +113,25 @@ feature "Expert Dashboard" do
 		end
 
 		scenario "preview", js: true do
-			click_button "Preview"
-			expect(page).to have_css "div.video-page-info-box"
-			preview_session = Session.last
-			expect(current_path).to eq session_path(preview_session)
-			expect(preview_session).to be_draft
+			click_link "Preview"
+			expect(page).to have_css "div.modal"
+			expect(Session).to have(0).instance
 		end
 	end
 	
 	## cancel a session
-	scenario "cancel a session created by the expert", js: true do
+	## 2013.11.16: No need for now
+	# scenario "cancel a session created by the expert", js: true do
+	# 	session_intro
+	# 	click_link "Sessions"
+	# 	expect(page).to have_css ".session-items .item"
+	# 	session_box = page.find(".session-items .item")
+	# 	expect(session_box).to have_link "cancel"
 
-	end
+	# 	click_link "cancel"
+
+	# 	expect(page).not_to have_css ".session-items .item"
+	# 	expect(session_intro.reload).to be_canceled
+	# end
 
 end

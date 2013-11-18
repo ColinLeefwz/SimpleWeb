@@ -2,6 +2,8 @@ class EmailMessage < ActiveRecord::Base
   belongs_to :expert
 
 	after_initialize :set_default
+  
+  validates :to, presence: true
 
 	private
 	def set_default

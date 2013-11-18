@@ -1,0 +1,76 @@
+
+.wrapper
+  .brief.sub-wrapper
+    .avatar.brief-item
+      = image_tag(@expert.avatar.url)
+    .resume.brief-item
+      %p
+        %span.name
+          = @expert.name
+        %br
+        %span.title
+          = @expert.expert_profile.title
+        %br
+        %span.job.light-font
+          = @expert.expert_profile.company
+
+      %table
+        %tr
+          %td.company.light-font
+            = "Company"
+          %td
+            = @expert.email
+        %tr
+          %td.personal.light-font
+            = "Personal"
+          %td
+            = "personal contact"
+        %tr
+          %td.twitter.light-font
+            = "Twitter"
+          %td
+            = "@twitteraccount"
+    .contact.brief-item
+
+      .contact-button
+        %button.btn.left-side
+          %i.fa.fa-star Follow
+        %button.btn.right-side 0
+
+      .contact-button
+        %button.btn.left-side
+          %i.fa.fa-comments Contact
+        %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
+          %span.caret
+      
+
+
+  .detail.sub-wrapper
+    %ul.nav.nav-tabs
+      %li.active.tab
+        %a{href: "#tab1", data: {toggle: "tab"}}Overview
+      %li.tab
+        %a{href: "#tab2", data: {toggle: "tab"}}Career
+      %li.tab
+        %a{href: "#tab3", data: {toggle: "tab"}}Education
+
+    .tab-content
+      .tab-pane.active#tab1
+        %div
+          %h4 Overview
+          - expertise = @expert.expert_profile.expertise || "Expertise to be filled"
+          = expertise.html_safe
+      .tab-pane#tab2
+        %div
+          %h4 Career
+          - career = @expert.expert_profile.career || "Career to be filled"
+          = career.html_safe
+      .tab-pane#tab3
+        %div
+          %h4 Education
+          - education = @expert.expert_profile.education || "Education to be filled"
+          = education.html_safe
+
+  .sessions.sub-wrapper
+    #content.container
+      =render 'welcome/box_content', sessions: @sessions
