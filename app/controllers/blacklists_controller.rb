@@ -4,7 +4,8 @@ class BlacklistsController < ApplicationController
 
   def index
     id = Moped::BSON::ObjectId(params[:id])
-    users = UserBlack.where({uid:id}).map {|x| User.find_by_id(x["bid"]) }
+    #users = UserBlack.where({uid:id}).map {|x| User.find_by_id(x["bid"]) }
+    users = User.find_by_id(params[:id]).black_ids.map {|x| User.find_by_id(x["bid"]) }
     users.delete_if {|x| x.nil? } 
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
     output_users(users)
@@ -16,8 +17,7 @@ class BlacklistsController < ApplicationController
     ub.uid = session[:user_id]
     ub.bid = Moped::BSON::ObjectId(params[:block_id])
     ub.report = report
-    ub.save!
-    ub.add_black_redis
+    ub.save! if ub.add_black_redis
     Resque.enqueue(XmppBlack, session[:user_id], params[:block_id], 'block')
     Resque.enqueue(XmppBlackNotice, session[:user_id], params[:block_id]) if report==1
     render:json => hash.to_json

@@ -1,4 +1,4 @@
-// -----------
+﻿// -----------
 var dface_var={}
 
 function dface_init(sid, uid){
@@ -310,21 +310,22 @@ function gameover() {
   setCookie('stack_bestscore',stscore);
   document.getElementById('yourbest').innerHTML=stscore;
   theirbest=stscore;
-  ialert('<h1>Game over</h1>恭喜您，获得新高分!<br><br>'+'<h1>分数：'+stscore+'</h1>','restartgame();');
+  ialert('<h1>Game over</h1>恭喜您，获得新高分!<br><br>'+'<h1>分数：'+stscore+'</h1>','gamerank();');
  } else {
-  ialert('<h1>Game over</h1>堆木头得分:<br><br>'+'<h1>分数：'+stscore+'</h1>','restartgame();');
+  ialert('<h1>Game over</h1>堆木头得分:<br><br>'+'<h1>分数：'+stscore+'</h1>','gamerank();');
  }
  //urchinTracker('/stack/gamesplayed/');
  return false;
 }
 
 function gamerank() {
+  dface_var.score = stscore;
   $.get('/game/new_score', {
     game: dface_var
   } , function(data){
-    var h = "你的得分: " + l + "<br/>";
     for(var di=0; di < data.length; di++ ){
     h += "第"+(di+1)+'名 ' + data[di].uname + " 得分: "+ data[di].score + "<br/>"
+    ialert('<h1>堆木头排名</h1>','restartgame()')
     }
   })
 }
