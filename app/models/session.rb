@@ -3,7 +3,7 @@ class Session < ActiveRecord::Base
 
   CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession Announcement).freeze
 
-  COMMIT_TYPE = { draft: "Save Draft", publish:  "Publish", preview: "Preview" }
+  COMMIT_TYPE = { draft: "Save Draft", publish:  "Publish", preview: "Preview", cancel: "Cancel" }
 
   self.inheritance_column = 'content_type'
 
