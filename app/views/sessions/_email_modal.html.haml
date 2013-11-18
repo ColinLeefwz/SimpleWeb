@@ -1,0 +1,14 @@
+#email-modal.hide.modal.fade{ tabindex: '-1', role: "dialog", aria: {labelledby: "emailModal", hidden: "true"} }
+  .modal-header
+    %button.close{ type: "button", data: { dismiss: 'modal' }, aria: { hidden: "true "} }x
+    %h3#email-modal-label
+      Mail to Your Friend
+  .email-modal-body
+    = simple_form_for :email_friend, {url: "#"} do |f|
+      = f.input :your_name
+      = f.input :your_address
+      = f.input :to_name
+      = f.input :to_address
+      = f.input :content, as: :text
+      = f.submit "cancel", class: "btn"
+      = f.submit "post", class: "btn btn-primary"

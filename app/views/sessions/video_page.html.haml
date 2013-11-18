@@ -87,6 +87,4 @@
   .video-page-summary
     %p= @session.description.html_safe
 
-  #email-modal.hide.modal.fade{ tabindex: '-1', role: "dialog", aria: {labelledby: "emailModal", hidden: "true"} }
-    .modal-header
-      %button.close{ type: "button", data: { dismiss: 'modal' }, aria: { hidden: "true "} }
+  = render "email_modal"

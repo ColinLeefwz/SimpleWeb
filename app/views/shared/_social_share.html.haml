@@ -16,7 +16,4 @@
 
 - if defined? email
   .social_share.email
-    %a{ href: "#email-modal", role: "button", data: { toggle: "modal" } }
-      = image_tag("email_50_50.png")
-
-
+    = link_to image_tag("email_50_50.png"), "#email-modal", href: "#email-modal", role: "button", data: { toggle: "modal" }
