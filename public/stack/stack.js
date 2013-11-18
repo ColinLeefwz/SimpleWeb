@@ -58,7 +58,7 @@ function close(){
   if(theirbest == '') {theirbest=0;}
   document.getElementById('yourbest').innerHTML=theirbest;
 
-  imgpreload(new Array('/stack/i/dropshadow.png','/stack/i/log/11.png','/stack/i/log/12.png','/stack/i/log/13.png','/stack/i/log/21.png','/stack/i/log/22.png','/stack/i/log/23.png','/stack/i/log/31.png','/stack/i/log/32.png','/stack/i/log/33.png','/stack/i/log/41.png','/stack/i/log/42.png','/stack/i/log/43.png'));
+  imgpreload(new Array('/stack/i/dropshadow.png','/stack/i/wood/11.png','/stack/i/wood/12.png','/stack/i/wood/13.png','/stack/i/wood/21.png','/stack/i/wood/22.png','/stack/i/wood/23.png','/stack/i/wood/31.png','/stack/i/wood/32.png','/stack/i/wood/33.png','/stack/i/wood/41.png','/stack/i/wood/42.png','/stack/i/wood/43.png'));
   document.body.addEventListener("touchmove", function(e) {
           e.preventDefault();
   }, false);
@@ -271,7 +271,7 @@ function cutaronk(crid,crtype,crstart,crstays,crfrom) {
 }
 
 function showaronk(srid,srtype,srstart,srsize) {
- srt='/stack/i/log/'+srtype
+ srt='/stack/i/wood/'+srtype
  tmp=document.createElement('div');
  tmp.style.position='absolute';
  tmp.style.width=extraleft[srtype]+srsize+extraright/2+'px';
