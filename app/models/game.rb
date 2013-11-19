@@ -39,7 +39,8 @@ class Game
   end
   
   def add_redis
-    $redis.zadd(redis_key,score,self.uid) if $redis.zscore(redis_key,self.uid)< score
+    $redis.zadd(redis_key,score,self.uid) 
+    # if $redis.zscore(redis_key,self.uid)< score
   end
    
 end
