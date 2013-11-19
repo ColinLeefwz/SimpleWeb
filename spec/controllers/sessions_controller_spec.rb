@@ -115,8 +115,7 @@ describe SessionsController do
 	# 			expect(assigns[:email]).not_to be_nil
 	# 		end
 	# 	end
-
-	end
+	# end
 
 
 end
