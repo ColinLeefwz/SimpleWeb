@@ -24,6 +24,12 @@ Prodygia::Application.routes.draw do
     get :cancel
   end
 
+  resources :members do
+    member do
+      get :dashboard
+    end
+  end
+
   resources :experts, shallow: true do
     member do
       get :dashboard
@@ -32,6 +38,8 @@ Prodygia::Application.routes.draw do
       get :profile
       get :sessions
       get :contents
+      get :edit_profile
+      patch :update_profile
     end
     
     resources :sessions do

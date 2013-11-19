@@ -3,7 +3,7 @@ class Session < ActiveRecord::Base
 
   CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession Announcement).freeze
 
-  COMMIT_TYPE = { draft: "Save Draft", publish:  "Publish", preview: "Preview" }
+  COMMIT_TYPE = { draft: "Save Draft", publish:  "Publish", preview: "Preview", cancel: "Cancel" }
 
   self.inheritance_column = 'content_type'
 
@@ -23,7 +23,8 @@ class Session < ActiveRecord::Base
 
   has_attached_file :video,
     path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
-    url: "/system/sessions/:attachment/:id_partition/:style/:filename"
+    url: "/system/sessions/:attachment/:id_partition/:style/:filename",
+    default_url: 'missing.png'
 
   def is_free?
     self.price <= 0.0
@@ -40,12 +41,12 @@ class Session < ActiveRecord::Base
 
   def start_time
     self.start_date ||= DateTime.now
-    self.start_date.strftime("%H:%M:%S") 
+    self.start_date.strftime("%H:%M") 
   end
 
   def end_time
     self.end_date_time ||= DateTime.now
-    self.end_date_time.strftime("%H:%M:%S")
+    self.end_date_time.strftime("%H:%M")
   end
 
   def date=(date)

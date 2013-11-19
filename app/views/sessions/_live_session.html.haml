@@ -5,11 +5,15 @@
     = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
   = f.input :format, collection: %w(Lounge Forum Livestreaming), as: :select
   = f.input :cover, input_html: {id: "session-cover-input"}
+  = f.label :current_image
+  - if f.object.cover.url
+    #cover-image
+      = image_tag(f.object.cover.url)
   = f.input :video, input_html: {id: "session-video-input"}
   .start_date
     = f.label :date
     #datepicker.input-append.date
-      = f.text_field :date, data: {format: "dd-MM"}, type: "text"
+      = f.text_field :date, data: {format: "yyyy-MM-dd"}, type: "text"
       %span.add-on
         %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
   .start_end_time
@@ -37,6 +41,8 @@
   = f.submit Session::COMMIT_TYPE[:draft], class: 'btn dashboard-buttons'
   %a#session-preview{href: '#modal', role: 'button', class: 'btn dashboard-buttons', data:{toggle: "modal"}} Preview
   = f.submit Session::COMMIT_TYPE[:publish], class: 'btn dashboard-buttons'
+  %span.btn.dashboard-buttons.cancel
+    = Session::COMMIT_TYPE[:cancel]
 
 
   #modal.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'myModalLabel'}, aria:{hidden: 'true'}}
@@ -76,7 +82,7 @@
                   #time.item
                     #session-datetime
                   %p
-                  = link_to "( Not in correct timezone? )"
+                    %span.timezone-toggle ( Not in correct timezone? )
                 .item-wrapper.content-type
                   #content-type-icon.icon
                     = image_tag "content_type.png"
