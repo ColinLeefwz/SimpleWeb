@@ -65,6 +65,25 @@ class MandrillApi
 
 	end
 
+	def email_friend_session(email_content, session_link)
+		from_name = email_content[:your_name]
+		from_address = email_content[:your_address]
+		to_name = email_content[:to_name]
+		to_address = email_content[:to_address]
+		content = email_content[:content]
+
+		template_content = [{"name"=> "to-name", "content" => to_name}, {"name" => "from-name", "content" => from_name}, {"name"=> "session-link", "content" => "<a href='#{session_link}'>#{session_link}</a>"}, {"name"=>"want-to-say", "content"=> content}]
+
+		addition_message = {
+			"from_name" => from_name,
+			"from_email" => from_address,
+			"to"=>[{"name"=> to_name, "email" => to_address}],
+			"headers" => { "Reply-To"=> from_address}
+		}
+
+    send_template_mail("tell_friend", template_content, addition_message)
+	end
+
   protected
 
   def send_template_mail(template_name, template_content, addition_message = {})

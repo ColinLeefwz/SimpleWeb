@@ -14,7 +14,9 @@ Prodygia::Application.routes.draw do
       post :sign_up_buy
       get :free_confirm
       post :sign_up_confirm
+			post :email_friend
     end
+
   end
 
   resources :orders do
