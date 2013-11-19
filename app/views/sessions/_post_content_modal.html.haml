@@ -1,22 +1,22 @@
 #modal.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
   .modal-body
-    .text-page-header-box
-      .text-page-left-side
-        .text-page-portrait
+    .content-modal-header-box
+      .content-modal-left-side
+        .content-modal-portrait
           = image_tag("#{current_user.avatar.url}")
-        .text-page-expert-name
+        .content-modal-expert-name
           %span by #{current_user.name}
         .clear-fix.visible-phone
-      .text-page-right-side
-        .text-page-social-buttons
+      .content-modal-right-side
+        .content-modal-social-buttons
           = render 'shared/social_share', session_title: 'title', session_url: 'url'
-        .text-page-category-name
+        .content-modal-category-name
           #article-session-categories
       .clear-fix
-    .text-page-article-box
-      .text-page-title#session-title
+    .content-modal-article-box
+      .content-modal-title#session-title
         %p originally published on example time
-      .text-page-main-content#article-session-description
+      .content-modal-main-content#article-session-description
   .modal-footer
     %button.btn{data:{dismiss:'modal'}, aria:{hidden:'true'}} Close
     = f.submit Session::COMMIT_TYPE[:publish], class: 'btn btn-primary modal-submit'
