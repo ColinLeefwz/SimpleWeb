@@ -26,6 +26,8 @@ class Game
   def save_redis
     self.add_redis
     self.save
+  rescue
+    nil
   end
   
   def self.init_redis

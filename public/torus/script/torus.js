@@ -7,12 +7,17 @@ function dface_init(sid, uid){
     dface_var.gid = 1;
 }
 
-function close(){
+function dface_close(){
     try{
         window.location = "dface://close";
     }catch(e){
         alert(e)
     }
+}
+
+function dface_restart(){
+    $('#gameRank').remove();
+    Control.restartGame();
 }
 
 
@@ -184,7 +189,7 @@ function () {
     };
     this.setGameMode = function (h) {
         c = false;
-//        g("menu").style.display = "none";
+        //        g("menu").style.display = "none";
         g("gameover").style.display = "none";
         window.widget && window.resizeTo(380, 450);
         for (var f = 1; f <= 3; f++) {
@@ -2203,14 +2208,19 @@ function niceTime(a) {
 }
 
 function startGame2(){
-    g("loading").style.display = "none";
-    g("container").style.visibility = "visible";
-    Game.init();
-    Control = new Control();
-    UI.init()
-    Control.startGame(2);
-}
+    if (dface_var.sid && dface_var.uid){
+        g("loading").style.display = "none";
+        g("container").style.visibility = "visible";
+        Game.init();
+        Control = new Control();
+        UI.init()
+        Control.startGame(2);
 
+    }else
+    {
+        document.getElementById('loading').innerHTML = '很遗憾,游戏不能开始.';
+    }
+}
 window.addEventListener("load", function () {
     document.getElementById('loading').innerHTML = ' <br/><br/><br/><br/><h1>游戏介绍</h1><br/>向←滑动:  底盘顺时针转动<br/>向→滑动:  底盘逆时针转动 <br/>向 ↑ 滑动:     变形<br/> 向 ↓ 滑动: 快速降落<br/>\n\
 <br/> 当一个完整的水平环15块被填满该行将消减，并获得100的积分; 如果多行被同时消减，还能获取额外的积分; 快速降落也能获取额外的积分。\n\
@@ -2283,16 +2293,8 @@ function Control() {
         
         $.get('/game/new_score', {
             game: dface_var
-        } , function(data){
-            var h = "你的得分: " + l + "<br/>";
-            for(var di=0; di < data.length; di++ ){
-                h += "第"+(di+1)+'名 ' + data[di].uname + " 得分: "+ data[di].score + "<br/>"
-            }
+        } , function(){
             UI.gameOver();
-            g("winner").style.display =  "none";
-            g("newgame").style.display = "block";
-            g("sorryText").innerHTML =  h;
-            g("gameover").style.display = "block"
         })
     };
     this.close = function () {
