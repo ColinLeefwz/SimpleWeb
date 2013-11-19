@@ -22,6 +22,12 @@ Prodygia::Application.routes.draw do
     get :cancel
   end
 
+  resources :members do
+    member do
+      get :dashboard
+    end
+  end
+
   resources :experts, shallow: true do
     member do
       get :dashboard
