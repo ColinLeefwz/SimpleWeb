@@ -191,7 +191,7 @@ function handleclick() {
   bon*=2;
   $st('combo').innerHTML=parseInt($st('combo').innerHTML)+1;
   tmp=document.createElement('div');
-  tmp.innerHTML='<div style="padding:5px"><b>STACKMASTER!</b></div>';
+  // tmp.innerHTML='<div style="padding:5px"><b>STACKMASTER!</b></div>';
   tmp.id='box_perfect';
   tmp.style.zIndex='10';
   tmp.style.position='absolute';
@@ -326,15 +326,15 @@ function gamerank() {
 // dface_var.sid = 21835409;
 // dface_var.uid = "51910153c90d8b1e2000015e";
 // dface_var.gid = 1;
+  var h = "";
   dface_var.score = stscore;
   $.get('/game/new_score', {
     game: dface_var
   } , function(data){
     for(var di=0; di < data.length; di++ ){
-    var h = "";
     h += "第"+(di+1)+'名 ' + data[di].uname + " 得分: "+ data[di].score + "<br/>"
-    ialert('<h1>堆木头排名</h1>'+h,'restartgame()')
     }
+    ialert('<h1>堆木头排名</h1>'+h,'restartgame()')
   })
 }
 
