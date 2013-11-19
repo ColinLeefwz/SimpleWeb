@@ -3,6 +3,13 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
   -webkit-box-shadow: $shadow_param;
   box-shadow: $shadow_param;
   background: #ffffff;
+  a{
+    color: #888;
+  }
+  a:hover{
+    text-decoration: none;
+    color: #575757;
+  }
   .expert-info{
     .expert-avatar{
       padding: 15px;
@@ -22,10 +29,12 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       }
       p{
         font-family: Latoreg;
+        bottom-margin: 0.6em;
       }
       .expert-name{
         p{
-          font-family: Latobold;
+          font-family: Latoitalic;
+          font-size: 17px;
         }
         font-size: 20px;
       }
