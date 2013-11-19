@@ -3,11 +3,11 @@ dface_var={}
 
 // dface_var.sid = 21835409;
 // dface_var.uid = "51910153c90d8b1e2000015e";
-// dface_var.gid = 1;
+// dface_var.gid = 2;
 function dface_init(sid, uid){
     dface_var.sid = sid;
     dface_var.uid = uid;
-    dface_var.gid = 1;
+    dface_var.gid = 2;
 }
 
 function close(){
