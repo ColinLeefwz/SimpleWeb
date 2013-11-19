@@ -1,10 +1,10 @@
 
-#gameRank {position: absolute; width: 60%; height: 400px; left: 20%; top: 5%; background-color: #666666; z-index: 999; text-align: left; text-shadow: 0 1px 1px #FFFFFF;}
+#gameRank {position: absolute; width: 80%; height: 400px; left: 10%; top: 5%; background-color: #666666; z-index: 999; text-align: left; text-shadow: 0 1px 1px #FFFFFF;font-size: 16px;}
 #gameRank .tc {text-align: center;}
 
-#gameRank p{height: 4%;font-size: 22px;}
+#gameRank p{height: 4%;}
 #gameRank .fr{float: right}
 #gameRank ul {list-style:  none; height: 52%; width: 95%; padding-bottom: 5px; }
-#gameRank ul  li {height: 15%; padding-top: 10px;  font-size: 22px; line-height: 80%; border-bottom: 2px solid #000}
+#gameRank ul  li {height: 15%; padding-top: 10px;   line-height: 80%; border-bottom: 2px solid #000}
 
 #gameRank span  {font-size: 26px; margin: 0 13px;}

@@ -6,7 +6,7 @@ class GameController < ApplicationController
     @game = Game.new(params[:game])
     if @game.save_redis
       games = $redis.zrevrange(@game.redis_key,0,5,withscores:true)
-      @data = games.map{|x| {uid: x[0], uname: User.find_by_id(x[0]).name, score: x[1] } }
+      @data = games.map{|x| {uid: x[0], uname: User.find_by_id(x[0]).name, score: x[1].to_i } }
       rank =  $redis.zrevrank(@game.redis_key,@game.uid)
       @rank = rank && rank+1
     else

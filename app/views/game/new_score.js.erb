@@ -1,4 +1,4 @@
-html = "<div id='gameRank'><h1 class='tc'>现场排行榜</h1><p>你当前的游戏得分: <%= @game.score %></p> <p> 现场排名: <%= @rank %></p><ul>"
+html = "<div id='gameRank'><h1 class='tc'>现场排行榜</h1><p>游戏得分: <%= @game.score %></p> <p> 现场排名: <%= @rank %></p><ul>"
     <% @data.each_with_index do  |data, index| %>
       html += "<li><%= index+1 %> <%= data[:uname] %> <span class='fr'><%= data[:score] %></span>  </li>"
     <% end %>
