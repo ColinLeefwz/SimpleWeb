@@ -66,8 +66,7 @@ Prodygia::Application.routes.draw do
   end
 
   controller :users do
-    get 'follow/:the_followed_id' => :follow, as: :follow
-    get 'unfollow'
+    get 'relationship/:the_followed' => :relationship, as: :relationship
     get 'following'
     get 'followers'
   end
@@ -76,8 +75,6 @@ Prodygia::Application.routes.draw do
 
   get "/:page", to: 'static_pages#static'
 
-  get "video_page/:id", to: "welcome#video_page", as: 'video_page'
-  get "text_page/:id", to: "welcome#text_page", as: 'text_page'
   get "session/:id", to: "welcome#session_page", as: 'session_page'
 
   get "/paypal_callback", to: 'session#paypal_callback'
