@@ -2,7 +2,13 @@ $box_header_font_size: 18px;
 $white: #ffffff;
 $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
 
+html {
+  height:100%;
+}
+
 body {
+  position: relative;
+  min-height:100%;
 	margin: 0;
 	padding: 0;
 	font-family: 'Latoreg';
@@ -16,7 +22,7 @@ body {
 
 #content{
 	margin: 0 auto;
-  margin-bottom: 50px;
+  padding-bottom: 50px;
 
 	.item {
 		background: $white;
