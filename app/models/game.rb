@@ -24,10 +24,10 @@ class Game
   end
   
   def save_redis
+    return false if ENV["RAILS_ENV"] != "production"
     self.add_redis
     self.save
-  rescue
-    nil
+
   end
   
   def self.init_redis

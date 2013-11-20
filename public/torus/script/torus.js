@@ -172,20 +172,20 @@ function () {
                 Control.pauseGame()
             }
         };
-        g("but_pause").onclick = function () {
-            Game.paused ? Control.resumeGame() : Control.pauseGame()
-        };
+//        g("but_pause").onclick = function () {
+//            Game.paused ? Control.resumeGame() : Control.pauseGame()
+//        };
         g("but_resume").onclick = Control.resumeGame;
         //        g("but_restart").onclick = g("but_restart2").onclick = Control.restartGame(2);
-        g("but_restart2").onclick = Control.restartGame;
-        g("but_quit2").onclick = g("but_quit").onclick = function () {
-            dface_close();
-            Game.pause();
-            g("canvas").style.opacity = "";
-            g("paused").style.display = g("promo").style.display = g("panel").style.display = "none";
-            Control.gameOver(false);
-            b()
-        }
+//        g("but_restart2").onclick = Control.restartGame;
+//        g("but_quit2").onclick = g("but_quit").onclick = function () {
+//            dface_close();
+//            Game.pause();
+//            g("canvas").style.opacity = "";
+//            g("paused").style.display = g("promo").style.display = g("panel").style.display = "none";
+//            Control.gameOver(false);
+//            b()
+//        }
     };
     this.setGameMode = function (h) {
         c = false;
