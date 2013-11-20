@@ -36,6 +36,8 @@
         %button.btn.left-side
           %i.fa.fa-star Follow
         %button.btn.right-side 0
+        
+      = link_to "follow", follow_path(@expert.id), class: "hidden follow-link", remote: true
 
       .contact-button#contact
         %button.btn.left-side
