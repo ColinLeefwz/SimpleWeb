@@ -1,4 +1,4 @@
-class ExpertsController < ApplicationController
+class ExpertsController < UsersController
   load_and_authorize_resource except: [:profile]
   before_filter :set_expert, only: [:profile]
 
