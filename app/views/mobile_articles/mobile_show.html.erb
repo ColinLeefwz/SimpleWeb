@@ -53,7 +53,7 @@
 			<%= image_tag( "#{MobileArticle.img_url(ma.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %></div>
 			<a href="#" data-ajax="false">
 				<h2><%= ma.title %> </h2>
-				<%= ma.content.slice(0,100).html_safe %>
+				<p><%= ma.text %></p>
 			</a>
 		</div>
 		<% end %>

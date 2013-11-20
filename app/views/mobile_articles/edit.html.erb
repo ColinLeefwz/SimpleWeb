@@ -94,7 +94,7 @@
 					</div>
 					<div class="clear1 pt45"></div>
 					<!-- <form method="post" action=""> -->
-					<%= form_for @mobile_article, :url => "/mobile_articles/create", :html => {:multipart => true, :id => 'mobile_article_form'} do |f| %>
+					<%= form_for @mobile_article, :url => "/mobile_articles/update?id=#{@mobile_article.id}", :html => {:multipart => true, :id => 'mobile_article_form'} do |f| %>
 
 						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
 						<tr>
@@ -154,7 +154,7 @@
 <script type="text/javascript" src="/ueditor/editor_all.js"></script>
 <script type="text/javascript" src="/ueditor/editor_config.js"></script>
 <script>
-function ajaxDel(){
+function ajaxDel(article_id){
 	var top;
 	documentHeight=$(document).height();
 	windowHeight=$(window).height();
@@ -169,7 +169,7 @@ function ajaxDel(){
 	$("#DelDiv").fadeIn(600);
 
 	$("#DelBtn").click(function(){
-	  $.get("/shop3_coupons/ajax_del",{id: coupon_id}, function(data) {
+	  $.get("/mobile_articles/ajax_del",{id: article_id}, function(data) {
 		if(data['text']){
 		  $("#BG, #DelDiv").css("display","none");
 		  $("#Tr"+index).fadeOut(300,function(){
@@ -205,7 +205,7 @@ ianlian = window.Lianlian = {};
         autoHeightEnabled:false,
         initialFrameWidth:320,
         initialFrameHeight:200,
-        imageUrl:"/mobile_articles/article_image_upload/<%= @mobile_article.id%>",
+        imageUrl:"",
         imagePath:"",
         initialContent: ""
       });

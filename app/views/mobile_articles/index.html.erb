@@ -44,8 +44,8 @@
 							<tr>
                               <td><%= ma.title %></td>
 							  <td valign="middle" class="textcenter">
-								   <a href="<%=  %>" class="edit" title="编辑"></a>
-								   <a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+								   <a href=<%= "/mobile_articles/edit?id=#{ma.id}" %> class="edit" title="编辑"></a>
+								   <a href="javascript:void(0)" class="del" onclick="ajaxDel('<%= ma.id%>')" title="删除"></a>
 							   </td>
                             </tr>
 							<% end %>
@@ -97,7 +97,7 @@
 
 
 <script>
-function ajaxDel(){
+function ajaxDel(article_id){
 	var top;
 	documentHeight=$(document).height();
 	windowHeight=$(window).height();
@@ -112,12 +112,13 @@ function ajaxDel(){
 	$("#DelDiv").fadeIn(600);
 
 	$("#DelBtn").click(function(){
-	  $.get("/shop3_coupons/ajax_del",{id: coupon_id}, function(data) {
-		if(data['text']){
+	  $.get("/mobile_articles/ajax_del",{id: article_id}, function(data) {
+		if(data){
 		  $("#BG, #DelDiv").css("display","none");
-		  $("#Tr"+index).fadeOut(300,function(){
-			$(this).remove();
-		  });
+		 //  $("#Tr"+index).fadeOut(300,function(){
+			// $(this).remove();
+		 //  });
+	      window.location.href='/mobile_articles/index';
 		}
 		else{
 		  alert('删除失败.')
