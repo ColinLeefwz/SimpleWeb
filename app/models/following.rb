@@ -9,8 +9,8 @@ class Following < ActiveRecord::Base
 
     ## users can not follow the same person twice
     duplicate_flag = false 
-    followed_list = Following.where(follower: follower).map(&:the_followed)
-    duplicate_flag = true if followed_list.include? (the_followed)
+    user = User.find follower
+    duplicate_flag = true if user.follow? the_followed
 
     if self_flag || duplicate_flag
       errors.add(:can_follow, "you can't follow yourself or someone you already followed")

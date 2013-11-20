@@ -1,34 +1,38 @@
 require 'mandrill_api'
 
 class User < ActiveRecord::Base
-	include Rails.application.routes.url_helpers
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :invitable, :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable,
-    :omniauthable, omniauth_providers: [:facebook, :linkedin]
+  include Rails.application.routes.url_helpers
 
   has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
   has_many :orders
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 
-	def enroll_session(session)
-		self.enrolled_sessions << session
-	end
+  # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :invitable, :database_authenticatable, :registerable, :recoverable, 
+         :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :linkedin]
 
-	def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
-		user = User.where(:provider => auth.provider, :uid => auth.uid).first
-		unless user
-			user = User.create(name: auth.extra.raw_info.name,
-												 provider: auth.provider,
-												 uid: auth.uid,
-												 email: auth.info.email,
-												 password: Devise.friendly_token[0,20]
-												)
-		end
-		user
-	end
+  def follow? (id)
+    id = id.to_i
+    followed_list = Following.where(follower: self.id).map(&:the_followed)
+    followed_list.include? (id)
+  end
+
+  def enroll_session(session)
+    self.enrolled_sessions << session
+  end
+
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    unless user
+      user = User.create(name: auth.extra.raw_info.name,
+                         provider: auth.provider,
+                         uid: auth.uid,
+                         email: auth.info.email,
+                         password: Devise.friendly_token[0,20]
+                        )
+    end
+    user
+  end
 
   def self.find_for_linkedin(access_token, sign_in_resource=nil)
     data = access_token.info
@@ -41,9 +45,9 @@ class User < ActiveRecord::Base
     user
   end
 
-	protected
-	## override devise notification
-	def send_devise_notification(notification, *args)
-		devise_mailer.send(notification, self, *args)
-	end
+  protected
+  ## override devise notification
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args)
+  end
 end
