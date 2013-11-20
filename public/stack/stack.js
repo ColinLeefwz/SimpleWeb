@@ -10,12 +10,17 @@ function dface_init(sid, uid){
     dface_var.gid = 2;
 }
 
-function close(){
+function dface_close(){
     try{
         window.location = "dface://close";
     }catch(e){
         alert(e)
     }
+}
+
+function dface_restart(){
+    $('#gameRank').remove();
+    restartgame();
 }
 
 
@@ -330,11 +335,6 @@ function gamerank() {
   dface_var.score = stscore;
   $.get('/game/new_score', {
     game: dface_var
-  } , function(data){
-    for(var di=0; di < data.length; di++ ){
-    h += "第"+(di+1)+'名 ' + data[di].uname + " 得分: "+ data[di].score + "<br/>"
-    }
-    ialert('<h1>堆木头排名</h1>'+h,'restartgame()')
   })
 }
 
