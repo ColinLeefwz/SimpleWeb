@@ -4,8 +4,10 @@
       %h1.live-modal-title#session-title
       .live-modal-info-box
         .live-modal-image
+          #default-session-cover
+            = image_tag(@session.cover.url)
           %img#session-cover
-        .live-modal-info      
+        .live-modal-info
           .live-modal-up-box
             .live-modal-expert-info
               .live-modal-expert-portrait
