@@ -14,7 +14,7 @@ Prodygia::Application.routes.draw do
       post :sign_up_buy
       get :free_confirm
       post :sign_up_confirm
-			post :email_friend
+      post :email_friend
     end
 
   end
@@ -41,7 +41,7 @@ Prodygia::Application.routes.draw do
       get :edit_profile
       patch :update_profile
     end
-    
+
     resources :sessions do
       member do
         get :new_post_content
@@ -61,8 +61,15 @@ Prodygia::Application.routes.draw do
     collection do
       get :refer_new_expert
       post :refer_new_expert
-			get :validate_invite_email
+      get :validate_invite_email
     end
+  end
+
+  controller :users do
+    get 'follow/:the_followed_id' => :follow, as: :follow
+    get 'unfollow'
+    get 'following'
+    get 'followers'
   end
 
   root to: "welcome#index"
