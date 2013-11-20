@@ -38,10 +38,4 @@
   = f.label :description
   = f.text_area :description, input_html: { class: "session-description-input"}
 
-  = f.submit Session::COMMIT_TYPE[:draft], class: 'btn dashboard-buttons'
-  %a#session-preview{href: '#modal', role: 'button', class: 'btn dashboard-buttons', data:{toggle: "modal"}} Preview
-  = f.submit Session::COMMIT_TYPE[:publish], class: 'btn dashboard-buttons'
-  %span.btn.dashboard-buttons.cancel
-    = Session::COMMIT_TYPE[:cancel]
-
-  = render "live_session_modal", f: f, session: @session
+  = render "session_submit", { modal: 'live_session_modal', f: f }
