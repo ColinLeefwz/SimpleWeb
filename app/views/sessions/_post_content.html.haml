@@ -13,7 +13,6 @@
   = f.submit Session::COMMIT_TYPE[:draft], class: 'btn dashboard-buttons'
   %a#session-preview{href: '#modal', role: 'button', class: 'btn dashboard-buttons', data:{toggle: "modal"}} Preview
   = f.submit Session::COMMIT_TYPE[:publish], class: 'btn dashboard-buttons'
-  %span.btn.dashboard-buttons.cancel
-    = Session::COMMIT_TYPE[:cancel]
+  = link_to Session::COMMIT_TYPE[:cancel], dashboard_expert_path(current_user), class: "btn dashboard-buttons"
   
   = render "post_content_modal", f: f
