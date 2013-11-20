@@ -9,7 +9,7 @@ module SessionHelper
     box_class += session.content_type if session.content_type
     box_class += " always_show" if session.always_show
     
-    box_class
+    box_class.downcase()
   end
 
   def session_pay_link
