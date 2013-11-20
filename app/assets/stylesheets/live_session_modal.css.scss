@@ -56,9 +56,11 @@
 			@media (max-width: 767px) {
 				width: 100%;
 			}
+      #session-cover{
+        display: none;
+      }
 			img{
 				height: 201.6px;
-				display: block;
 				margin-left: auto;
 				margin-right: auto;
 				border: 3px solid #ffffff;
