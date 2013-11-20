@@ -16,7 +16,7 @@
 
     - @categories.each do |category|
       %li.category
-        %a.filters{href: "##{category.name}", data: {filter: ".#{category.name}"}}
+        %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
           = category.name
 
 
