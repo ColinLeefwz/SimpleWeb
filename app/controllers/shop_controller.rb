@@ -186,8 +186,11 @@ class ShopController < ApplicationController
     pcount = 5 if pcount==0
     skip = (page-1)*pcount
     photos = shop_photo_cache(params[:id], skip, pcount)
-    shop = Shop.find_by_id(params[:id])
-    render :json => shop.preset_p(photos).map {|p| p.output_hash_with_username }.to_json
+    if page <=1
+      shop = Shop.find_by_id(params[:id])
+      shop.preset_p(photos)
+    end
+    render :json => photos.map {|p| p.output_hash_with_username }.to_json
   end
   
   def shop_photo_cache_key(sid,skip,pcount)

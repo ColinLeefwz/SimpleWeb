@@ -253,17 +253,19 @@ riak-erlang-client
 
 ####聊天记录
 
-Xmpp聊天时的消息保存在Riak数据库中。其中，聊天室消息格式：
-
- * bucket：“gchat”
- * key: 	[日期'yymmdd',聊天室id]
- * value: [发送者,内容,时间,消息ID]
-
-单聊的消息的格式：
+Xmpp聊天时的消息保存在Riak数据库中。其中，单聊的消息的格式：
 
  * bucket：“chat”
  * key: 	[日期'yymmdd',发送者]
  * value: [接收者,内容,时间,消息ID]
+ 
+聊天室消息格式：
+
+ * bucket：“gchat”
+ * key: 	[日期'yymmdd',聊天室id]
+ * value: [发送者,内容,时间,消息ID]
+ 
+由于管理困难，2013-11以后，聊天室消息保存在mongodb中，单聊消息仍然保存在riak中。
  
 关于聊天消息的Log方式：
 
