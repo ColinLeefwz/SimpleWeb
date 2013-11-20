@@ -8,14 +8,25 @@ get_cookie = (name) ->
 detect_login = ->
   signed_in = get_cookie("signed_in")
   if signed_in == "1"
-    alert "logged in"
+    return true
   else
     alert "not logged in"
+    return false
 
 
 profile_event = ->
   $("#follow").on 'click', ->
-    detect_login()
+    if detect_login()
+      $(".follow-link").click()
+
+  $(".follow-link").on "ajax:error", (e) ->
+    alert "follow failed"
+    e.preventDefault
+
+  $(".follow-link").on "ajax:success", (e) ->
+    alert "success"
+    e.preventDefault
+
 
 
 
