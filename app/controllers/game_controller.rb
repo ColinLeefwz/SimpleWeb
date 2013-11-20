@@ -14,7 +14,7 @@ class GameController < ApplicationController
       @rank=nil
     end
 
-    @data=[{uid: "test1", uname: 'test1234234', score: "3"},{uid: "test1", uname: 'testdsf1', score: "3"},{uid: "tedst1", uname: 'test1', score: "1"}] if ENV["RAILS_ENV"] != "production"
+    @data=[{uid: "test1", uname: 'test1234234', score: "63"},{uid: "test1", uname: 'testdsf1', score: "3"},{uid: "test1", uname: 'testdsf1', score: "33"},{uid: "test1", uname: 'testdsf1', score: "3"},{uid: "tedst1", uname: 'test1', score: "1"}] if ENV["RAILS_ENV"] != "production"
 
   end
   

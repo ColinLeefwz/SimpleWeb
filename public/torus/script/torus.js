@@ -179,7 +179,7 @@ function () {
         //        g("but_restart").onclick = g("but_restart2").onclick = Control.restartGame(2);
         g("but_restart2").onclick = Control.restartGame;
         g("but_quit2").onclick = g("but_quit").onclick = function () {
-            close();
+            dface_close();
             Game.pause();
             g("canvas").style.opacity = "";
             g("paused").style.display = g("promo").style.display = g("panel").style.display = "none";
@@ -2208,7 +2208,7 @@ function niceTime(a) {
 }
 
 function startGame2(){
-    if (dface_var.sid && dface_var.uid){
+    if (true || dface_var.sid && dface_var.uid){
         g("loading").style.display = "none";
         g("container").style.visibility = "visible";
         Game.init();
@@ -2287,18 +2287,19 @@ function Control() {
     }
     b();
     this.gameOver = function (f) {
+        if(Game.paused)
+            return
         var l=  dface_var.score = Math.floor(Game.score);
         // Game.gameOver(); 必须发在ajax前面， 否则ajax会重复请求。
         Game.gameOver();
+        UI.gameOver();
         
         $.get('/game/new_score', {
             game: dface_var
-        } , function(){
-            UI.gameOver();
-        })
+        } )
     };
     this.close = function () {
-        window.close()
+        window.dface_close()
     };
     this.restartGame = function () {
         Game.gameOver(false);
