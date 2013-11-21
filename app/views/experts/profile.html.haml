@@ -32,12 +32,18 @@
             = "@twitteraccount"
     .contact.brief-item
 
-      .contact-button
+      .contact-button#follow
         %button.btn.left-side
-          %i.fa.fa-star Follow
-        %button.btn.right-side 0
+          - if current_user.try(follow?, @expert.id)
+            %i.fa.fa-star Unfollow
+          - else
+            %i.fa.fa-star Follow
 
-      .contact-button
+        %button.btn.right-side 0
+        
+      = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
+
+      .contact-button#contact
         %button.btn.left-side
           %i.fa.fa-comments Contact
         %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
