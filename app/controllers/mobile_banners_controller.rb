@@ -9,7 +9,7 @@ class MobileBannersController < ApplicationController
 
   def new
     @mobile_banner = MobileBanner.new(params[:mobile_banner])
-    @mobile_banners = MobileBanner.where({sid:session[:shop_id]})
+    @mobile_banners = MobileBanner.where({sid:session[:shop_id]}).sort({_id: -1})
   end
 
   def create

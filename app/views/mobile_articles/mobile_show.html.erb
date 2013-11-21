@@ -28,13 +28,20 @@
 			</div>
 		</div>
 		<div id="DH">
+<!-- 			<div class="imgdiv">
+				<a href="#" data-ajax="false"><img src="images/pic1.jpg" width="100%"></a>
+				<a href="#" data-ajax="false"><img src="images/pic2.jpg" width="100%"></a>
+				<a href="#" data-ajax="false"><img src="images/pic3.jpg" width="100%"></a>
+				<a href="#" data-ajax="false"><img src="images/pic1.jpg" width="100%"></a>
+				<a href="#" data-ajax="false"><img src="images/pic2.jpg" width="100%"></a>
+				<a href="#" data-ajax="false"><img src="images/pic3.jpg" width="100%"></a>
+			</div> -->
 			<div class="imgdiv">
-				<a href="#" data-ajax="false"><img src="images/pic1.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic2.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic3.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic1.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic2.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic3.jpg" width="100%"></a>
+				<% @mobile_banners.each do |mb| %>
+                <a href=<%= "#{mb.url}" %> data-ajax="false">
+                <%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
+                </a>
+				<% end %>
 			</div>
 			<div class="dhnum" id="DHNum">
 				<a href="javascript:void(0)" class="def selected">1</a>

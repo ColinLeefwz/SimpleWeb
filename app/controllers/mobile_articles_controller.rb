@@ -39,6 +39,7 @@ class MobileArticlesController < ApplicationController
 
   def mobile_show
     @mobile_articles = session_shop.mobile_articles
+    @mobile_banners = session_shop.mobile_banners
     render :layout => false
   end
 
