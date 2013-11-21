@@ -27,7 +27,7 @@ class ShopFaq
   index({sid: 1, od:1})
 
   with_options :prefix => true, :allow_nil => true do |option|
-    option.delegate :name, :to => :shop
+    option.delegate :name, :notice, :to => :shop
   end
   
   
@@ -97,6 +97,15 @@ class ShopFaq
       return long_url
     rescue
       return short_url(token, long_url,(err_num + 1))
+    end
+  end
+
+
+  #faq设为公告时， 对公告的block操作
+  def crud_notice(&block)
+    notice = self.shop_notice
+    if notice && self.id == notice.faq_id
+      block.call(notice)
     end
   end
 

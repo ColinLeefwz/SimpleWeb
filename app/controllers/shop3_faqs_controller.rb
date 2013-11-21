@@ -25,6 +25,7 @@ class Shop3FaqsController < ApplicationController
       faq = ShopFaq.new(params[:shop_faq])
       faq.sid = session[:shop_id]
       faq.save
+      @shop_faq.crud_notice{|notice| notice.faq_id = faq.id; notice.save}
       @shop_faq.delete
       return  redirect_to :action => "index"
     end
@@ -75,7 +76,9 @@ class Shop3FaqsController < ApplicationController
 
   def ajax_del
     @shop_faq = ShopFaq.find(params[:id])
+    @shop_faq.crud_notice{|notice| notice.delete}
     text = (@shop_faq.destroy ? '删除成功.' : nil)
+    
     $redis.srem("FaqS#{session_shop.city}", session_shop.id) if session_shop.no_faq?
     render :json => {text: text}
   end

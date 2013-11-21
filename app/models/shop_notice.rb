@@ -36,5 +36,10 @@ class ShopNotice
   def faq
     ShopFaq.find_by_id(faq_id)
   end
+
+  def delete
+    Rails.cache.delete("ShopNotice#{self.id.to_s}")
+    super
+  end
   
 end
