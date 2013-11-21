@@ -2,7 +2,7 @@ class MobileBanner
 
   include Mongoid::Document
 
-  field :sid
+  field :sid, type: Integer
   field :img
   field :url
 
