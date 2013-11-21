@@ -39,7 +39,7 @@
 			<div class="imgdiv">
 				<% @mobile_banners.each do |mb| %>
                 <a href=<%= "#{mb.url}" %> data-ajax="false">
-                <%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:720px;height:270px" ) %>
+                <%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:640px;height:270px" ) %>
                 </a>
 				<% end %>
 			</div>
