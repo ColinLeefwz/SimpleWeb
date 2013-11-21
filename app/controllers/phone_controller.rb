@@ -194,6 +194,7 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"至少有一种以上的绑定关系才能解绑"}.to_json
     else
       user.set(:phone_hidden, true)
+      user.set(:pmatch, false)
       render :json => {unbind: true}.to_json
     end
   end
