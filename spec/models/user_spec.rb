@@ -10,4 +10,10 @@ describe User do
 			expect(allen.enrolled_sessions.count).to eq 2
 		end
 	end
+
+	describe ".followers" do
+		it "lists all the users who followed me" do
+			pending "should we add the method"
+		end
+	end
 end
