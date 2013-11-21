@@ -40,6 +40,8 @@ class MobileArticlesController < ApplicationController
   def mobile_show
     @mobile_articles = session_shop.mobile_articles
     @mobile_banners = session_shop.mobile_banners
+    @shop = Shop.find_by_id(params[:sid])
+    @sid = session_shop.id 
     render :layout => false
   end
 

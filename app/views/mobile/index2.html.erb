@@ -29,9 +29,10 @@
 		</div>
 		<div id="DH">
 			<div class="imgdiv">
+			123
 			    <% @mobile_banners.each do |mb| %>
 				<a href=<%= "#{mb.url}" %> data-ajax="false">
-				<%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:720px;height:270px" ) %>
+				<%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:640px;height:270px" ) %>
 				</a>
 				<% end %>
 			</div>
@@ -87,7 +88,7 @@
 		<div class="footer">
 			<a href="tel:13606543127" class="btn1">电话</a>
 			<a href="#" class="btn2">短信</a>
-			<a href="http://api.map.baidu.com/staticimage?center=120.128376,30.286706&width=600&height=600&zoom=18" class="btn3" data-ajax="false">地图</a>
+			<a href=<%= "/mobile/map?sid=#{@shop.id}" %> class="btn3" data-ajax="false">地图</a>
 			<a class="btn4" href="http://weibo.com/?c=spr_web_sq_baidub_weibo_t001" id="Btn4">分享</a>
 		</div>
     </body>
