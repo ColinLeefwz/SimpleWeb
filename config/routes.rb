@@ -27,6 +27,7 @@ Prodygia::Application.routes.draw do
   resources :members do
     member do
       get :dashboard
+      get :refer_a_friend
     end
   end
 
