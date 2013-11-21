@@ -35,4 +35,4 @@
     .item-text #{link_to 'Account', remote: true}
   .item
     = render 'item_icon', item_name: 'refer_friend'
-    .item-text #{link_to 'Refer a Friend', remote: true}
+    .item-text #{link_to 'Refer a Friend', refer_a_friend_member_path(current_user), remote: true}
