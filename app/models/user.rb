@@ -9,6 +9,12 @@ class User < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable,
     :omniauthable, omniauth_providers: [:facebook, :linkedin]
 
+	has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
+	has_many :followers, through: :be_followed, class_name: "User"
+
+	has_many :following, class_name: "Relationship", foreign_key: "follower_id"
+	has_many :followed_users, through: :following, class_name: "User"
+
   has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
   has_many :orders
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
