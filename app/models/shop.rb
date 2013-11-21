@@ -501,6 +501,10 @@ class Shop
     MobileArticle.where({sid: self.id}).sort({_id: -1})
   end
 
+  def mobile_banners
+    MobileBanner.where({sid:self.id}).sort({_id: -1})
+  end
+
   def answer_text(msg)
     return nil unless msg=='0' || msg =~ /^0[1-9]$/
     return answer_text_default if msg=='0'

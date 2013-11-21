@@ -39,7 +39,40 @@ class MobileArticlesController < ApplicationController
 
   def mobile_show
     @mobile_articles = session_shop.mobile_articles
+    @mobile_banners = session_shop.mobile_banners
+    @shop = Shop.find_by_id(params[:sid])
+    @sid = session_shop.id 
     render :layout => false
+  end
+
+  def edit
+    @mobile_article = MobileArticle.find_by_id(params[:id])
+  end
+
+  def update
+    @mobile_article = MobileArticle.find_by_id(params[:id])
+    if @mobile_article.update_attributes(params[:mobile_article])
+      redirect_to :action => "index"
+    else
+      render :action => :edit
+    end
+  end
+
+  def ajax_del
+    @mobile_article = MobileArticle.find_by_id(params[:id])
+    if @mobile_article.destroy
+      redirect_to "/mobile_articles/index"
+    else
+      redirect_to "/mobile_articles/index"
+    end
+  end
+
+  def article_image_upload
+    image = Image.new
+    image.article_id = params[:id]
+    image.img = params[:upfile]
+    image.save!
+    render :json=>{:url => image.img.url, 'state'=>'SUCCESS', :title=>params[:pictitle]}  
   end
 
 end
