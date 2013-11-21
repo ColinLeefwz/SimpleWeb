@@ -19,16 +19,10 @@ profile_event = ->
     if detect_login()
       $(".follow-link").click()
 
-  $(".follow-link").on "ajax:success", (e) ->
-    text = $("#follow i")
-    text.html( if text.html() is "Follow" then "Unfollow" else "Follow")
+  $(".follow-link").on "ajax:success", (e, data, status, xhr) ->
+    button_text = $("#follow i")
+    button_text.html( if button_text.html() is "Follow" then "Unfollow" else "Follow")
     e.preventDefault
-
-  $(".follow-link").on "ajax:error", (e) ->
-    alert "failed"
-    e.preventDefault
-
-
 
 
 

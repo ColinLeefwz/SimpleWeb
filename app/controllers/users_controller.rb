@@ -4,12 +4,12 @@ class UsersController < ApplicationController
       format.js{
         the_followed = params[:the_followed]
 
-        if current_user.try(:follow?, the_followed) 
+        if current_user.try(:follow?, the_followed)
           unfollow(the_followed)
         else
           follow(the_followed)
         end
-        
+
         render nothing: true
       }
     end
@@ -28,6 +28,6 @@ class UsersController < ApplicationController
   end
 
   def follow(the_followed)
-    Following.create!(the_followed: the_followed, follower: current_user.id)
+    relation = Following.create(the_followed: the_followed, follower: current_user.id)
   end
 end
