@@ -1,5 +1,5 @@
 class EmailMessage < ActiveRecord::Base
-  belongs_to :expert
+  belongs_to :user
 
 	after_initialize :set_default
   
