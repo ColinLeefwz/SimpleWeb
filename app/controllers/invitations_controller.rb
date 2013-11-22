@@ -8,20 +8,24 @@ class InvitationsController < Devise::InvitationsController
     if current_user.is_a? AdminUser
       admin_invite
     elsif current_user.is_a? Expert
-      case params[:commit]
-      when "Send"
-        expert_invite 
-      end
+      expert_invite 
+    elsif current_user.is_a? Member
+      member_invite
     end
   end
 
   def edit
     user = User.where(invitation_token: params[:invitation_token]).first
-    user.type = 'Expert'
-    user.save
-
-    expert = Expert.where(invitation_token: params[:invitation_token]).first
-    expert.create_expert_profile
+    inviter = User.where(id: user.invited_by_id).first
+    if inviter.is_a? Expert
+      user.type = 'Expert'
+      user.save
+      expert = Expert.where(invitation_token: params[:invitation_token]).first
+      expert.create_expert_profile
+    elsif inviter.is_a? Member
+      user.type = 'Member'
+      user.save
+    end
     super
   end
 
@@ -47,6 +51,30 @@ class InvitationsController < Devise::InvitationsController
       invitation_token = resource.invitation_token
 			@invitation_link = "#{request.base_url}/users/invitation/accept?invitation_token=#{invitation_token}"
       render 'generated'
+    else
+      respond_with_navigational(resource) { render :new }
+    end
+  end
+
+  def member_invite
+    @email_message = current_user.email_messages.create(set_email_message)
+
+    self.resource = resource_class.invite!({ email: @email_message.to}, current_user) do |u|
+      u.skip_invitation = true
+    end
+
+    @invitation_token = resource.invitation_token
+    token_link = "#{request.base_url}/users/invitation/accept?invitation_token=#{@invitation_token}"
+
+    mandrill = MandrillApi.new
+    @candidate = Member.where(email: params[:email_message][:to]).first 
+    if @candidate.nil?
+      mandrill.invite_by_member(current_user, @email_message, token_link)
+    end
+
+    if resource.errors.empty?
+      set_flash_message :notice, :send_instructions, :email => self.resource.email if self.resource.invitation_sent_at
+      redirect_to dashboard_member_path(current_user)
     else
       respond_with_navigational(resource) { render :new }
     end
