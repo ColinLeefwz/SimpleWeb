@@ -18,9 +18,6 @@ class User < ActiveRecord::Base
          :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :linkedin]
 
   def follow? (other_user)
-    # id = id.to_i
-    # followed_list = Following.where(follower: self.id).map(&:the_followed)
-    # followed_list.include? (id)
 		self.followed_users.include? (other_user)
   end
 

@@ -22,15 +22,4 @@ class UsersController < ApplicationController
   def followers
   end
 
-  # private
-  # def unfollow(the_followed)
-  #   # relation = Following.find_by(the_followed: the_followed, follower: current_user.id)
-  #   # relation.destroy
-		# User.find(the_followed).followers.delete current_user
-  # end
-
-  # def follow(the_followed)
-  #   # relation = Following.create(the_followed: the_followed, follower: current_user.id)
-		# User.find(the_followed).followers << current_user
-  # end
 end

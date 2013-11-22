@@ -34,7 +34,7 @@
 
       .contact-button#follow
         %button.btn.left-side
-          - if current_user.try(:follow?, @expert.id)
+          - if current_user.try(:follow?, @expert)
             %i.fa.fa-star Unfollow
           - else
             %i.fa.fa-star Follow
