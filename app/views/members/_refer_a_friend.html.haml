@@ -17,7 +17,7 @@
   enable_send = false
   to.on 'blur', ->
     to_value = to.val()
-    get_path = "/experts/validate_invite_email"
+    get_path = "/users/validate_invite_email"
     $.get(get_path, {to_address: to_value}, (data)=>
       enable_send = data.status
       if enable_send
