@@ -75,7 +75,7 @@ class PhoneController < ApplicationController
       render :json => {"error" => "#{params[:phone]}不是有效的手机号码。"}.to_json
       return
     end
-    sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
+    sms = "您的脸脸验证码是：#{code}。请不要把验证码泄露给其他人。"
     #TODO: 短信发送限流
     # 移动号码段 134(0-8) 135 136 137 138 139 147 150 151 157 158 159 187 188
     # 联通号码段 130 131 132 155 156 185 186
