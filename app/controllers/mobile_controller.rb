@@ -10,9 +10,9 @@ class MobileController < ApplicationController
 
   def index2
     if params[:sid]
+      @mobile_banners = MobileBanner.where({sid: params[:sid]}).sort({_id:-1})
       @mobile_articles = MobileArticle.where({sid: params[:sid]}).sort({_id:-1})
       @shop = Shop.find_by_id(params[:sid])
-      @mobile_banners = MobileBanner.where({sid: params[:sid]}).sort({_id:-1})
     end
     render :layout => false
   end
@@ -27,6 +27,24 @@ class MobileController < ApplicationController
     # else
     #   render :json => { poi: "#{lo[0][0]},#{lo[0][1]}" }
     # end
+    render :layout => false
+  end
+
+  def contact
+    @shopinfo = ShopInfo.find_by_id(params[:sid])
+    @shop = Shop.find_by_id(params[:sid])
+    render :layout => false
+  end
+
+  def company
+    @shop = Shop.find_by_id(params[:sid])
+    @shopinfo = ShopInfo.find_by_id(params[:sid])
+    render :layout => false
+  end
+
+  def news
+    @mobile_articles = MobileArticle.where({sid: params[:sid]}).sort({_id:-1})
+    @shop = Shop.find_by_id(params[:sid])
     render :layout => false
   end
 

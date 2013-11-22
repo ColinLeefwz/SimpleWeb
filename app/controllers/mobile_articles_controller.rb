@@ -5,6 +5,7 @@ class MobileArticlesController < ApplicationController
 
   def index
     @mobile_articles = session_shop.mobile_articles
+    @welcome = session_shop.welcome_article
   end
 
   def new
@@ -40,7 +41,7 @@ class MobileArticlesController < ApplicationController
   def mobile_show
     @mobile_articles = session_shop.mobile_articles
     @mobile_banners = session_shop.mobile_banners
-    @shop = Shop.find_by_id(params[:sid])
+    @shop = session_shop
     @sid = session_shop.id 
     render :layout => false
   end
@@ -73,6 +74,27 @@ class MobileArticlesController < ApplicationController
     image.img = params[:upfile]
     image.save!
     render :json=>{:url => image.img.url, 'state'=>'SUCCESS', :title=>params[:pictitle]}  
+  end
+
+  def news
+    @mobile_articles = session_shop.mobile_articles
+    @shop = session_shop
+    @sid = session_shop.id 
+    render :layout => false
+  end
+
+  def contact
+    @shop = session_shop
+    @shopinfo = session_shop.info
+    @sid = session_shop.id 
+    render :layout => false
+  end
+
+  def company
+    @shop = session_shop
+    @shopinfo = session_shop.info
+    @sid = session_shop.id 
+    render :layout => false
   end
 
 end

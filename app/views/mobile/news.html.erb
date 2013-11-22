@@ -19,35 +19,14 @@
 			<div id="Menu">
 			<a id="CloseMenu" alt="关闭导航"><span>关闭导航</span></a>
 				<ul class="men">
-					<li><a href=<%= "/mobile_articles/mobile_show" %> data-ajax="false">主页</a></li>
-					<li><a href=<%= "/mobile_articles/company" %> data-ajax="false">公司介绍</a></li>
-					<li><a href=<%= "/mobile_articles/news" %> data-ajax="false">最新动态</a></li>
-					<li><a href=<%= "/mobile_articles/contact" %> data-ajax="false">联系我们</a></li>
+					<li><a href=<%= "/mobile/index2?sid=#{@shop.id}" %> data-ajax="false">主页</a></li>
+					<li><a href=<%= "/mobile/company?sid=#{@shop.id}" %> data-ajax="false">公司介绍</a></li>
+					<li><a href=<%= "/mobile/news?sid=#{@shop.id}" %> data-ajax="false">最新动态</a></li>
+					<li><a href=<%= "/mobile/contact?sid=#{@shop.id}" %> data-ajax="false">联系我们</a></li>
 				</ul>
 			</div>
 		</div>
-		<div id="DH">
-<!-- 			<div class="imgdiv">
-				<a href="#" data-ajax="false"><img src="images/pic1.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic2.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic3.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic1.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic2.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic3.jpg" width="100%"></a>
-			</div> -->
-			<div class="imgdiv">
-				<% @mobile_banners.each do |mb| %>
-                <a href=<%= "#{mb.url}" %> data-ajax="false">
-                <%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:480px;height:202.5px" ) %>
-                </a>
-				<% end %>
-			</div>
-			<div class="dhnum" id="DHNum">
-			    <% @mobile_banners.each_with_index do |mb,index| %>
-				<a href="javascript:void(0)" class="def selected"><%= index+1%></a>
-				<% end %>
-			</div>
-		</div>
+
 
         <% @mobile_articles.each do |ma| %>
 		<div class="box1">

@@ -3,18 +3,18 @@
 				<div class="box14left">
 					<div class="title1">
 						<h2 class="f18 l"><%= session_shop.name%></h2>
-						<span class="tag l ml10">免费版</span>
-						<span class="web">http://lianlianchafang.dface.cn</span>
+						<!-- <span class="tag l ml10">免费版</span> -->
+						<!-- <span class="web">http://lianlianchafang.dface.cn</span> -->
 					</div>
-					<div class="box14_plane1">
+					<!-- <div class="box14_plane1">
 						<a href="#" class="btn21">预览</a>
 						<a href="#" class="btn21 ml10">分享</a>
-					</div>
+					</div> -->
 					<div class="box14_plane1">
 						<!-- <img src="/newbackstage/images/pic24.png" align="left" width="116" height="116"/> -->
 						<%=  image_tag("http://qr.liantu.com/api.php?text=http://dface.cn/mobile/index2?sid=#{session_shop.id}",:style => "width:116px;height:116px",:align => "left") %>
 						<div class="box14_plane2">
-							<h3>脸脸茶坊手机网站专属二维码</h3>
+							<h3><%= session_shop.name%>手机网站专属二维码</h3>
 							<p>用手机扫一扫二维码就能访问你的手机网站；<br/>"右键另存为"可以保存大图，可将该二维码印刷至名片或宣传资料上。</p>
 						</div>
 					</div>

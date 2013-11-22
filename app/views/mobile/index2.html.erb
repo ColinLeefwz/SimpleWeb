@@ -19,11 +19,10 @@
 			<div id="Menu">
 			<a id="CloseMenu" alt="关闭导航"><span>关闭导航</span></a>
 				<ul class="men">
-					<li><a href="/cellphone/index.html" data-ajax="false">主页</a></li>
-					<li><a href="/cellphone/company.html" data-ajax="false">公司介绍</a></li>
-					<li><a href="/cellphone/news.html" data-ajax="false">最新动态</a></li>
-					<li><a href="#" data-ajax="false">推荐菜品</a></li>
-					<li><a href="/cellphone/contactus.html" data-ajax="false" data-ajax="false">联系我们</a></li>
+					<li><a href=<%= "/mobile/index2?sid=#{@shop.id}" %> data-ajax="false">主页</a></li>
+					<li><a href=<%= "/mobile/company?sid=#{@shop.id}" %> data-ajax="false">公司介绍</a></li>
+					<li><a href=<%= "/mobile/news?sid=#{@shop.id}" %> data-ajax="false">最新动态</a></li>
+					<li><a href=<%= "/mobile/contact?sid=#{@shop.id}" %> data-ajax="false">联系我们</a></li>
 				</ul>
 			</div>
 		</div>
