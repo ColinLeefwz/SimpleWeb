@@ -6,7 +6,9 @@
   - if f.object.cover.url
     #cover-image
       = image_tag(f.object.cover.url)
-  = f.input :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}
+  = f.label :description
+  .ckeditor
+    = f.text_area :description, input_html: {class: 'session-description-input'}
   .categories
     = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
 
