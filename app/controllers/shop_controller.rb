@@ -102,7 +102,7 @@ class ShopController < ApplicationController
 
 
   def save_gchat
-    if params[:txt].nil? || params[:txt] =~ /^0\d$/ || params[:txt][0,3]=="@@@"
+    if params[:txt].nil? || params[:txt]=="0" || params[:txt][0,3]=="@@@" || params[:txt] =~ /^0\d$/
       render :text => '0'
       return
     end
