@@ -30,17 +30,14 @@
 			<div class="imgdiv">
 			    <% @mobile_banners.each do |mb| %>
 				<a href=<%= "#{mb.url}" %> data-ajax="false">
-				<%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:640px;height:270px" ) %>
+				<%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:480px;height:202.5px" ) %>
 				</a>
 				<% end %>
 			</div>
 			<div class="dhnum" id="DHNum">
-				<a href="javascript:void(0)" class="def selected">1</a>
-				<a href="javascript:void(0)" class="def">2</a>
-				<a href="javascript:void(0)" class="def">3</a>
-				<a href="javascript:void(0)" class="def">4</a>
-				<a href="javascript:void(0)" class="def">5</a>
-				<a href="javascript:void(0)" class="def">6</a>
+			    <% @mobile_banners.each_with_index do |mb,index| %>
+				<a href="javascript:void(0)" class="def selected"><%= index+1%></a>
+				<% end %>
 			</div>
 		</div>
 
@@ -53,7 +50,7 @@
 			<%= image_tag( "#{MobileArticle.img_url(ma.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %></div>
 			<!-- <a href="#" data-ajax="false"> -->
 				<h2><%= ma.title %> </h2>
-				<%= ma.content.slice(0,100).html_safe %>
+				<%= ma.text %>
 			</a>
 			
 		</div>
