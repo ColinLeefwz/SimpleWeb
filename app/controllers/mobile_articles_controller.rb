@@ -5,7 +5,6 @@ class MobileArticlesController < ApplicationController
 
   def index
     @mobile_articles = session_shop.mobile_articles
-    @welcome = session_shop.welcome_article
   end
 
   def new
@@ -95,6 +94,10 @@ class MobileArticlesController < ApplicationController
     @shopinfo = session_shop.info
     @sid = session_shop.id 
     render :layout => false
+  end
+
+  def intro
+    
   end
 
 end

@@ -36,6 +36,7 @@
 				<a href="#" data-ajax="false"><img src="images/pic3.jpg" width="100%"></a>
 			</div> -->
 			<div class="imgdiv">
+			    <a href="http://www.dface.cn" data-ajax="false"><img src="/cellphone/images/pic5.jpg" width="480px;" height="202.5px;"></a>
 				<% @mobile_banners.each do |mb| %>
                 <a href=<%= "#{mb.url}" %> data-ajax="false">
                 <%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:480px;height:202.5px" ) %>
@@ -43,6 +44,7 @@
 				<% end %>
 			</div>
 			<div class="dhnum" id="DHNum">
+			    <a href="javascript:void(0)" class="def selected">1</a>
 			    <% @mobile_banners.each_with_index do |mb,index| %>
 				<a href="javascript:void(0)" class="def selected"><%= index+1%></a>
 				<% end %>
