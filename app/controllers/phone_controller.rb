@@ -80,11 +80,11 @@ class PhoneController < ApplicationController
     # 移动号码段 134(0-8) 135 136 137 138 139 147 150 151 157 158 159 187 188
     # 联通号码段 130 131 132 155 156 185 186
     # 电信号码段 133 153 180 189
-    top3 = params[:phone][0,3]
-    if top3=="133" || top3=="153" || top3=="180" || top3=="189"
-      render :json => {"error" => "接到运管局的整顿通知，暂时无法发送验证码。"}.to_json
-      return
-    end
+    #top3 = params[:phone][0,3]
+    #if top3=="133" || top3=="153" || top3=="180" || top3=="189"
+    #  render :json => {"error" => "接到运管局的整顿通知，暂时无法发送验证码。"}.to_json
+    #  return
+    #end
     Resque.enqueue(SmsSender, params[:phone], sms )  unless fake
     session[:phone_code] = code
     session[:phone_try] = 5
