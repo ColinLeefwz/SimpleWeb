@@ -3,11 +3,11 @@ require 'mandrill_api'
 class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
-	# has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
-	# has_many :followers, through: :be_followed, class_name: "User"
+	has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
+	has_many :followers, through: :be_followed, class_name: "User"
 
-	# has_many :following, class_name: "Relationship", foreign_key: "follower_id"
-	# has_many :followed_users, through: :following, class_name: "User"
+	has_many :following, class_name: "Relationship", foreign_key: "follower_id"
+	has_many :followed_users, through: :following, class_name: "User"
 
   has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
   has_many :orders
@@ -17,11 +17,20 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable, :recoverable, 
          :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :linkedin]
 
-  def follow? (id)
-    id = id.to_i
-    followed_list = Following.where(follower: self.id).map(&:the_followed)
-    followed_list.include? (id)
+  def follow? (other_user)
+    # id = id.to_i
+    # followed_list = Following.where(follower: self.id).map(&:the_followed)
+    # followed_list.include? (id)
+		self.followed_users.include? (other_user)
   end
+
+	def	follow(followed_user)
+		self.followed_users << followed_user
+	end
+
+	def unfollow(followed_user)
+		self.followed_users.delete followed_users
+	end
 
   def enroll_session(session)
     self.enrolled_sessions << session

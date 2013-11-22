@@ -11,9 +11,29 @@ describe User do
 		end
 	end
 
-	describe ".followers" do
-		it "lists all the users who followed me" do
-			pending "should we add the method"
+	describe ".follow?" do
+		it "returns true if already followed me" do
+			peter.followers << allen
+			expect(allen.follow? peter).to be_true
+		end
+
+		it "returns false if not followed me" do
+			expect(allen.follow? peter).to be_false
+		end
+	end
+
+	describe ".follow" do
+		it "follows the followed one" do
+			peter.follow allen
+			expect(peter.reload.followed_users).to include allen
+		end
+	end
+
+	describe ".unfollow" do
+		it "un-follows the followed one" do
+			peter.followers << allen
+			allen.unfollow peter
+			expect(peter.reload.followers).not_to include allen
 		end
 	end
 end
