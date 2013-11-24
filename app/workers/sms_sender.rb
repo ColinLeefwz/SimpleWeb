@@ -36,7 +36,6 @@ class SmsSender
       return if info=="0"
       Xmpp.send_chat($gfuid, $yuanid, "短信错误：#{info}")
       return nil
-      end
     rescue Exception => e
       Xmpp.send_chat($gfuid, $yuanid, "短信错误：#{info}")
       return nil
