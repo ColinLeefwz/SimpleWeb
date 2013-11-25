@@ -78,6 +78,8 @@ class InvitationsController < Devise::InvitationsController
     @invitation_token = resource.invitation_token
     token_link = "#{request.base_url}/users/invitation/accept?invitation_token=#{@invitation_token}"
 
+		@email_message.update_attributes invite_token: @invitation_token
+
     mandrill = MandrillApi.new
     @candidate = Object.const_get(type.titleize).where(email: params[:email_message][:to]).first 
     if @candidate.nil?
