@@ -2,6 +2,9 @@ require 'mandrill_api'
 
 class User < ActiveRecord::Base
 	include Rails.application.routes.url_helpers
+
+	USER_TYPE = { member: "Member", expert: "Expert" }
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable

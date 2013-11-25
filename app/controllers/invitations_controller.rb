@@ -2,27 +2,33 @@ require "mandrill_api"
 
 class InvitationsController < Devise::InvitationsController
 
-  #before_filter :is_admin
-
   def create
+    @email_message = current_user.email_messages.create(set_email_message)
+
+		type = @email_message.invited_type
+
     if current_user.is_a? AdminUser
       admin_invite
-    elsif current_user.is_a? Expert
-      expert_invite 
-    elsif current_user.is_a? Member
-      member_invite
-    end
+		elsif type == User::USER_TYPE[:expert]
+			invite_expert
+		elsif type == User::USER_TYPE[:member]
+			invite_member
+		end
   end
 
   def edit
     user = User.where(invitation_token: params[:invitation_token]).first
     inviter = User.where(id: user.invited_by_id).first
-    if inviter.is_a? Expert
+
+		user_email = EmailMessage.find_by invite_token: params[:invitation_token]
+		invited_type = user_email.invited_type
+
+    if invited_type == User::USER_TYPE[:expert]
       user.type = 'Expert'
       user.save
       expert = Expert.where(invitation_token: params[:invitation_token]).first
       expert.create_expert_profile
-    elsif inviter.is_a? Member
+    elsif invited_type == User::USER_TYPE[:member]
       user.type = 'Member'
       user.save
     end
@@ -56,15 +62,15 @@ class InvitationsController < Devise::InvitationsController
     end
   end
 
-  def member_invite
-    @email_message = current_user.email_messages.create(set_email_message)
-
+  def invite_member
     self.resource = resource_class.invite!({ email: @email_message.to}, current_user) do |u|
       u.skip_invitation = true
     end
 
     @invitation_token = resource.invitation_token
     token_link = "#{request.base_url}/users/invitation/accept?invitation_token=#{@invitation_token}"
+
+		@email_message.update_attributes invite_token: @invitation_token
 
     mandrill = MandrillApi.new
     @candidate = Member.where(email: params[:email_message][:to]).first 
@@ -80,9 +86,7 @@ class InvitationsController < Devise::InvitationsController
     end
   end
 
-  def expert_invite
-    @email_message = current_user.email_messages.create(set_email_message)
-
+  def invite_expert
     self.resource = resource_class.invite!({ email: @email_message.to}, current_user) do |u|
       u.skip_invitation = true
     end
@@ -105,6 +109,6 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def set_email_message
-    params.require(:email_message).permit(:subject, :to, :message, :copy_me, :from_name, :from_address, :to)
+    params.require(:email_message).permit(:subject, :to, :message, :copy_me, :from_name, :from_address, :to, :invited_type)
   end
 end

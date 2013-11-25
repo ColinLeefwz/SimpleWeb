@@ -1,9 +1,7 @@
 class EmailMessage < ActiveRecord::Base
   belongs_to :user
 
-	# after_initialize :set_default
   after_initialize :set_default
-  
   validates :to, presence: true
 
 	private
