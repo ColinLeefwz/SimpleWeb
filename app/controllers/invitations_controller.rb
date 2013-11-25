@@ -63,30 +63,14 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def invite_member
-    self.resource = resource_class.invite!({ email: @email_message.to}, current_user) do |u|
-      u.skip_invitation = true
-    end
-
-    @invitation_token = resource.invitation_token
-    token_link = "#{request.base_url}/users/invitation/accept?invitation_token=#{@invitation_token}"
-
-		@email_message.update_attributes invite_token: @invitation_token
-
-    mandrill = MandrillApi.new
-    @candidate = Member.where(email: params[:email_message][:to]).first 
-    if @candidate.nil?
-      mandrill.invite_by_member(current_user, @email_message, token_link)
-    end
-
-    if resource.errors.empty?
-      set_flash_message :notice, :send_instructions, :email => self.resource.email if self.resource.invitation_sent_at
-      redirect_to dashboard_member_path(current_user)
-    else
-      respond_with_navigational(resource) { render :new }
-    end
+		invite_user "member"
   end
 
   def invite_expert
+		invite_user "expert"
+  end
+
+	def invite_user(type)
     self.resource = resource_class.invite!({ email: @email_message.to}, current_user) do |u|
       u.skip_invitation = true
     end
@@ -95,18 +79,18 @@ class InvitationsController < Devise::InvitationsController
     token_link = "#{request.base_url}/users/invitation/accept?invitation_token=#{@invitation_token}"
 
     mandrill = MandrillApi.new
-    @candidate = Expert.where(email: params[:email_message][:to]).first 
+    @candidate = Object.const_get(type.titleize).where(email: params[:email_message][:to]).first 
     if @candidate.nil?
-      mandrill.invite_by_expert(current_user, @email_message, token_link)
+			mandrill.send("invite_by_#{type}", current_user, @email_message, token_link)
     end
 
     if resource.errors.empty?
       set_flash_message :notice, :send_instructions, :email => self.resource.email if self.resource.invitation_sent_at
-      redirect_to dashboard_expert_path(current_user)
+      redirect_to (Rails.application.routes.url_helpers.send "dashboard_#{type}_path", current_user)
     else
       respond_with_navigational(resource) { render :new }
     end
-  end
+	end
 
   def set_email_message
     params.require(:email_message).permit(:subject, :to, :message, :copy_me, :from_name, :from_address, :to, :invited_type)
