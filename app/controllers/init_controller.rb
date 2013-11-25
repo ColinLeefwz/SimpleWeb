@@ -7,7 +7,9 @@ class InitController < ApplicationController
       render :json => {error: "hash error: #{hash}."}.to_json
       return
     end
-    response.headers['Cpcity'] = URI::encode("中国;浙江;杭州") if params[:city]
+    if params[:city]
+      #response.headers['Cpcity'] = URI::encode("中国;浙江;杭州") 
+    end
     session[:os] = UserDevice.os_type(params[:os])
 
     ver = params[:ver]
