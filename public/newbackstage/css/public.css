@@ -14,6 +14,7 @@ ul,ol{list-style:none;}
 .f14{font-size:14px !important;}
 .f15{font-size:15px !important;}
 .f18{font-size:18px !important;}
+.f36{font-size:36px !important;}
 .clear1{width:100%;height:0px;clear:both;overflow:hidden;zoom:1;display:block;}
 .red1{color:#f00 !important;}
 .red2{color:#FB5C5C !important;}
@@ -26,9 +27,11 @@ ul,ol{list-style:none;}
 .gay3{color:#595959 !important;}
 .gay4{color:#666 !important;}
 .gay5{color:#999 !important;}
+.gay6{color:#888 !important;}
 .blue1{color:#0078B6 !important;}
 .blue2{color:#00BFF3 !important;}
 .blue3{color:#369bff !important;}
+.normal{font-weight:normal !important;}
 
 .inputchange{border:2px solid #D8D5CE !important;width:310px !important;}
 .textareachange{border:2px solid #D8D5CE !important;width:310px !important;height:120px !important;overflow:hidden;}
