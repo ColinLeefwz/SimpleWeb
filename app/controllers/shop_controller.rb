@@ -188,7 +188,7 @@ class ShopController < ApplicationController
     photos = shop_photo_cache(params[:id], skip, pcount)
     if page <=1
       shop = Shop.find_by_id(params[:id])
-      shop.preset_p(photos)
+      photos = shop.preset_p(photos)
     end
     render :json => photos.map {|p| p.output_hash_with_username }.to_json
   end
