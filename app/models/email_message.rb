@@ -6,9 +6,9 @@ class EmailMessage < ActiveRecord::Base
 
 	private
 	def set_default
-    if self.user.is_a? Expert
+		if self.invited_type == User::USER_TYPE[:expert]
       expert_email_content
-    elsif self.user.is_a? Member
+    elsif self.invited_type  == User::USER_TYPE[:member]
       member_email_content
     end
 	end
