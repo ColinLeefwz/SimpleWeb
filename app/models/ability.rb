@@ -20,9 +20,15 @@ class Ability
       cannot :create, Expert
 
     elsif user.is_a? Member
+      can :read, Session
 
-    else
+      can :read, Expert
 
+      can :manage, Member do |member|
+        member == user
+      end
+
+      cannot :delete, Member
     end
   end
 end
