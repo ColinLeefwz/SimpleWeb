@@ -1,0 +1,37 @@
+$shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
+.side-menu{
+  -webkit-box-shadow: $shadow_param;
+  box-shadow: $shadow_param;
+  background: #ffffff;
+  .member-info{
+    .member-avatar{
+      padding: 15px;
+      float: left;
+      img{
+        width: 100px;
+        height: 100px;
+        border-radius: 52px;
+      }
+    }
+    .member-text-info{
+      padding-top: 35px;
+      padding-bottom: 15px;
+      line-height: 0.8;
+      @media(max-width: 940px){
+        text-align: center;
+      }
+      p{
+        font-family: Latoreg;
+      }
+      .member-name{
+        p{
+          font-family: Latobold;
+        }
+        font-size: 20px;
+      }
+    }
+  }
+}
+.clear-fix{
+  clear: both;
+}

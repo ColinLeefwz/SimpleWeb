@@ -6,7 +6,6 @@ class MandrillApi
     @mandrill = Mandrill::API.new ENV['MANDRILL_API']
   end
 
-
   def enroll_comfirm(user, session, session_image_url)
 
     template_content = [{"name" => "first-name", "content" => user.first_name}, {"name" => "session-title", "content" => session.title }, {"name" => "expert-name", "content" => session.expert.name}, {"name" => "start-date", "content" => session.start_date }]
@@ -54,6 +53,28 @@ class MandrillApi
     send_template_mail("invite_expert", template_content, addition_message)
   end
 
+  def invite_by_member(user, email_message, token_link)
+    template_content = [{"name" => "message_content", "content" => email_message.message }, { "name"=>"token_link", "content"=>"<a href='#{token_link}'>#{token_link}</a>"}]
+
+    to_message = []
+    if email_message.copy_me?
+      cc_name, cc_email = user.first_name, user.email
+      to_message = [{"type"=>"to", "name" =>"", "email"=> email_message.to}, {"type"=>"cc", "name"=>cc_name, "email"=>cc_email}]
+    else
+      to_message = [{"type"=>"to", "name" =>"", "email"=> email_message.to}]
+    end
+
+    addition_message = {
+      "from_name" => email_message.from_name,
+      "from_email" => "no-reply@prodygia.com",
+      "subject" => email_message.subject,
+      "to"=>to_message,
+      "headers"=>{"Reply-To"=>user.email}
+    }
+
+    send_template_mail("refer_a_friend", template_content, addition_message)
+  end
+
 	def reset_password(user, reset_link)
 		template_content = [{"name" => "reset-link", "content" => "<a href='#{reset_link}'>#{reset_link}</a>"}, {"name"=>"first-name", "content"=>user.first_name}, {"name"=>"email-address", "content"=>user.email}]
 
@@ -63,6 +84,25 @@ class MandrillApi
 		
     send_template_mail("reset_password", template_content, addition_message)
 
+	end
+
+	def email_friend_session(email_content, session_link)
+		from_name = email_content[:your_name]
+		from_address = email_content[:your_address]
+		to_name = email_content[:to_name]
+		to_address = email_content[:to_address]
+		content = email_content[:content]
+
+		template_content = [{"name"=> "to-name", "content" => to_name}, {"name" => "from-name", "content" => from_name}, {"name"=> "session-link", "content" => "<a href='#{session_link}'>#{session_link}</a>"}, {"name"=>"want-to-say", "content"=> content}]
+
+		addition_message = {
+			"from_name" => from_name,
+			"from_email" => from_address,
+			"to"=>[{"name"=> to_name, "email" => to_address}],
+			"headers" => { "Reply-To"=> from_address}
+		}
+
+    send_template_mail("tell_friend", template_content, addition_message)
 	end
 
   protected

@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/gregbell/active_admin.git
-  revision: 5e50522fb60562bc81eb216c014182a153c1f185
+  revision: 71b0cadbe2d0ae040681df80fa5a4cb8746f9f9a
   specs:
     activeadmin (1.0.0.pre)
       arbre (~> 1.0)
@@ -117,7 +117,7 @@ GEM
       rspec (~> 2.0)
       rspec-instafail (~> 0.2.0)
       ruby-progressbar (~> 1.0)
-    guard (2.2.3)
+    guard (2.2.4)
       formatador (>= 0.2.4)
       listen (~> 2.1)
       lumberjack (~> 1.0)

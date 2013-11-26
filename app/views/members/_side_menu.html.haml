@@ -1,0 +1,38 @@
+.member-info
+  .member-avatar
+    = image_tag(@member.avatar.url)
+  .member-text-info
+    .member-name
+      %p= @member.name
+    %p= link_to 'edit profile'
+  .clear-fix
+  .toolkit
+    .item
+      = render 'item_icon', item_name: 'activity_stream'
+      .item-text #{link_to 'My activity stream'}
+.block-title
+  %span
+    FAVORITES
+.toolkit
+  .item
+    = render 'item_icon', item_name: 'follow_expert'
+    .item-text #{link_to 'Expert', remote: true }
+  .item
+    = render 'item_icon', item_name: 'follow_content'
+    .item-text #{link_to 'Content', remote: true}
+  .item
+    = render 'item_icon', item_name: 'follow_video'
+    .item-text #{link_to 'Video on demand', remote: true}
+.block-title
+  %span
+    MANAGE
+.toolkit
+  .item
+    = render 'item_icon', item_name: 'video_library'
+    .item-text #{link_to 'Video on Demand Library', remote: true}
+  .item
+    = render 'item_icon', item_name: 'account'
+    .item-text #{link_to 'Setting', remote: true}
+  .item
+    = render 'item_icon', item_name: 'refer_friend'
+    .item-text #{link_to 'Refer a Friend', refer_a_friend_member_path(current_user), remote: true}

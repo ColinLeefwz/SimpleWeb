@@ -73,7 +73,12 @@
                 = "Enrolled"
             -else
               %p= link_to "Enroll Now!", enroll_session_path(@session), class: 'enroll-text'
-          %p.outline-font= link_to 'Tell A Friend'
+          %p.outline-font
+            .tell-friend
+              .text Tell A Friend
+              .share-via.hidden
+                = render 'shared/social_share', session_title: @session.title, session_url: session_url(@session), email: true
+            
         .clear-fix
     .clear-fix
   -if !@session.video.url.eql?"/videos/original/missing.png"
@@ -81,3 +86,5 @@
       = video_tag @session.video.url, controls: 'controls'
   .video-page-summary
     %p= @session.description.html_safe
+
+  = render "email_modal"

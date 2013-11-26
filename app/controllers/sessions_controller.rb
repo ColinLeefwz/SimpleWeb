@@ -147,6 +147,13 @@ class SessionsController < ApplicationController
     create_response
   end
 
+	def email_friend
+		@email = params[:email_friend]
+		mandrill = MandrillApi.new
+		mandrill.email_friend_session(@email, session_url(@session))
+		redirect_to session_path(@session), flash: {success: "mail send successfully!"}
+	end
+
   private
   def create_response
     @session.expert = current_user
@@ -177,11 +184,11 @@ class SessionsController < ApplicationController
   end
 
   def live_session_params
-    params.require(:live_session).permit(:title, {categories:[]}, :format, :cover, :video, :date, :start_time, :end_time, :time_zone, :location, :price, :strategic_question, :description)
+    params.require(:live_session).permit(:title, {categories:[]}, :format, :cover, :video, :date, :start_time, :end_time, :time_zone, :location, :price, :strategic_question, :description, :language)
   end
 
   def article_session_params
-    params.require(:article_session).permit(:title, {categories:[]}, :cover, :description)
+    params.require(:article_session).permit(:title, {categories:[]}, :cover, :description, :language)
   end
 
   def paypal_pay

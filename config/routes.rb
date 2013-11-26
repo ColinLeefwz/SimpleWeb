@@ -2,6 +2,8 @@ Prodygia::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
+	get "/users/validate_invite_email", to: 'users#validate_invite_email'
+
   resources :users
 
   ActiveAdmin.routes(self)
@@ -14,12 +16,21 @@ Prodygia::Application.routes.draw do
       post :sign_up_buy
       get :free_confirm
       post :sign_up_confirm
+      post :email_friend
     end
+
   end
 
   resources :orders do
     get :execute
     get :cancel
+  end
+
+  resources :members do
+    member do
+      get :dashboard
+      get :refer_a_friend
+    end
   end
 
   resources :experts, shallow: true do
@@ -33,7 +44,7 @@ Prodygia::Application.routes.draw do
       get :edit_profile
       patch :update_profile
     end
-    
+
     resources :sessions do
       member do
         get :new_post_content
@@ -53,16 +64,19 @@ Prodygia::Application.routes.draw do
     collection do
       get :refer_new_expert
       post :refer_new_expert
-			get :validate_invite_email
     end
+  end
+
+  controller :users do
+    get 'relationship/:the_followed' => :relationship, as: :relationship
+    get 'following'
+    get 'followers'
   end
 
   root to: "welcome#index"
 
   get "/:page", to: 'static_pages#static'
 
-  get "video_page/:id", to: "welcome#video_page", as: 'video_page'
-  get "text_page/:id", to: "welcome#text_page", as: 'text_page'
   get "session/:id", to: "welcome#session_page", as: 'session_page'
 
   get "/paypal_callback", to: 'session#paypal_callback'
