@@ -1,0 +1,16 @@
+
+
+%h1 member profile here
+
+.name
+  = @member.first_name
+  = @member.last_name
+
+.avatar
+  = image_tag @member.avatar.url
+
+.title
+  = @profile.title
+
+.company
+  = @profile.company
