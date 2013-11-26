@@ -17,7 +17,7 @@ class ExpertsController < ApplicationController
     @expert = current_user
     @email_message = current_user.build_refer_message(User::USER_TYPE[:expert])
 
-    @from = "refer_new_expert"
+    @from = "refer_a_user"
     respond_to do |format|
       format.js { render "update" }
     end
