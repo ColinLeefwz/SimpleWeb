@@ -36,3 +36,9 @@
   .item
     = render 'item_icon', item_name: 'refer_friend'
     .item-text #{link_to 'Refer a Friend', refer_a_friend_member_path(current_user), remote: true}
+
+- if current_user.is_a? Expert
+  .toolkit
+    .item
+      = render 'item_icon', item_name: 'dashboard'
+      .item-text #{link_to 'Go to expert dashboard', dashboard_expert_path(current_user)}
