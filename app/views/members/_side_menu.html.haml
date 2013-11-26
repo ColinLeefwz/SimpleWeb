@@ -4,7 +4,7 @@
   .member-text-info
     .member-name
       %p= @member.name
-    %p= link_to 'edit profile'
+    %p= link_to 'edit profile', edit_profile_member_path(current_user), remote: true
   .clear-fix
   .toolkit
     .item
