@@ -11,10 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20131125062046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+=======
+ActiveRecord::Schema.define(version: 20131126033807) do
+>>>>>>> c4d3eff96205022b8cbd40b4ec7b775b66a10ae8
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -210,6 +214,16 @@ ActiveRecord::Schema.define(version: 20131125062046) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
   end
+
+  create_table "subscriptions", force: true do |t|
+    t.integer  "subscriber_id"
+    t.integer  "subscribed_session_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions", ["subscribed_session_id"], name: "index_subscriptions_on_subscribed_session_id", using: :btree
+  add_index "subscriptions", ["subscriber_id"], name: "index_subscriptions_on_subscriber_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false
