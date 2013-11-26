@@ -6,7 +6,7 @@
   margin-bottom: 50px;
 
   label{
-    width: 8%;
+    width: 12%;
     text-align: right;
     vertical-align: top;
   }
@@ -15,7 +15,7 @@
     width: auto;
   }
 
-  input, textarea, select, .cke_chrome{
+  input, textarea, select,{
     margin-left: 2%;
   }
 
@@ -51,6 +51,7 @@
 
   .main-menu{
     background: white;
+    margin-bottom: 50px;
   }
 
   .time-selector{
@@ -65,5 +66,9 @@
 
 #cover-image{
   width: 300px;
-  margin-left: 10%;
+  margin-left: 14%;
+}
+
+.ckeditor{
+  margin-left: 14%;
 }

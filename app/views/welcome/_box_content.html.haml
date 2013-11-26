@@ -9,6 +9,7 @@
       .content-type
         = image_tag(get_image_tag(session))
         %p= session.categories.join(", ")
+        %p= session.language.split(",")[0] if session.language
     .title
       = link_to "#{session.title}", session_path(session)
     -if (session.is_a?VideoSession) || (session.is_a?Announcement) && (!session.video.url.eql?"/videos/original/missing.png")

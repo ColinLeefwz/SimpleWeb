@@ -1,4 +1,4 @@
-$ ->
+header = ->
   nav = $('nav')
   subcategory = $('.subcategory')
   nav.find('.category').each ->
@@ -14,3 +14,5 @@ $ ->
     $(this).on 'mouseleave', =>
       $(this).find('ul').stop(true, true).slideUp()
 
+$(document).ready(header)
+$(document).on 'page:load', header

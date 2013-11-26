@@ -16,7 +16,7 @@ Prodygia::Application.routes.draw do
       post :sign_up_buy
       get :free_confirm
       post :sign_up_confirm
-			post :email_friend
+      post :email_friend
     end
 
   end
@@ -44,7 +44,7 @@ Prodygia::Application.routes.draw do
       get :edit_profile
       patch :update_profile
     end
-    
+
     resources :sessions do
       member do
         get :new_post_content
@@ -67,12 +67,16 @@ Prodygia::Application.routes.draw do
     end
   end
 
+  controller :users do
+    get 'relationship/:the_followed' => :relationship, as: :relationship
+    get 'following'
+    get 'followers'
+  end
+
   root to: "welcome#index"
 
   get "/:page", to: 'static_pages#static'
 
-  get "video_page/:id", to: "welcome#video_page", as: 'video_page'
-  get "text_page/:id", to: "welcome#text_page", as: 'text_page'
   get "session/:id", to: "welcome#session_page", as: 'session_page'
 
   get "/paypal_callback", to: 'session#paypal_callback'
