@@ -3,6 +3,9 @@ require 'mandrill_api'
 class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
+  has_many :subscriptions, foreign_key: "subscriber_id"
+  has_many :subscribed_sessions, through: :subscriptions
+
 	has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
 	has_many :followers, through: :be_followed, class_name: "User"
 
@@ -16,6 +19,17 @@ class User < ActiveRecord::Base
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable, :recoverable, 
          :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :linkedin]
+  def has_subscribed? (this_session)
+    self.subscribed_sessions.include? (this_session)
+  end
+
+  def subscribe (this_session)
+    self.subscribed_sessions << this_session
+  end
+
+  def unsubscribe (this_session)
+    self.subscribed_sessions.delete this_session
+  end
 
   def follow? (other_user)
 		self.followed_users.include? (other_user)
