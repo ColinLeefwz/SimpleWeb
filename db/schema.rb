@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131122090417) do
+ActiveRecord::Schema.define(version: 20131125062046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,12 +87,14 @@ ActiveRecord::Schema.define(version: 20131122090417) do
     t.string   "from_name"
     t.string   "from_address"
     t.string   "reply_to"
-    t.integer  "expert_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.string   "invited_type"
+    t.string   "invite_token"
   end
 
-  add_index "email_messages", ["expert_id"], name: "index_email_messages_on_expert_id", using: :btree
+  add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id", using: :btree
 
   create_table "expert_profiles", force: true do |t|
     t.string   "title"
