@@ -98,12 +98,9 @@ class ExpertsController < ApplicationController
     params.require(:session).permit(:title, :description, :cover, :video, {categories:[]}, :location, :price, :language, :start_date, :time_zone )
   end
 
-  def expert_params
-    params.require(:expert).permit(:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials)
-  end
 
   def profile_params
-    params.require(:profile).permit(:tilte, :company, :career, :education, :expertise)
+    params.require(:profile).permit(:tilte, :company, :career, :education, :expertise, :location, :web_site)
   end
   def user_params
     params.require(:profile).permit(:first_name, :last_name, :avatar)
