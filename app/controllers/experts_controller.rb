@@ -40,8 +40,7 @@ class ExpertsController < ApplicationController
     respond_to do |format|
       format.js{
         @expert.update_attributes(user_params)
-        @expert.profile.update_attributes(profile_params)
-        @from = 'profile'
+        @expert.profile.update_attributes(expert_profile_params)
 
         render js: "window.location='#{profile_expert_path(current_user)}'"
       }
@@ -99,9 +98,10 @@ class ExpertsController < ApplicationController
   end
 
 
-  def profile_params
-    params.require(:profile).permit(:tilte, :company, :career, :education, :expertise, :location, :web_site)
+  def expert_profile_params
+    params.require(:profile).permit(:title, :company, :career, :education, :expertise, :location, :web_site)
   end
+
   def user_params
     params.require(:profile).permit(:first_name, :last_name, :avatar)
   end
