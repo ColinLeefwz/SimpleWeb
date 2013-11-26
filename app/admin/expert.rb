@@ -39,7 +39,7 @@ ActiveAdmin.register Expert do
       f.input :password, as: :password if f.object.new_record?
       f.input :time_zone
 
-      f.inputs name: "Profile", for: [ f.object.profile || ExpertProfile.new ] do |p|
+      f.inputs name: "Profile", for: [ f.object.profile || Profile.new ] do |p|
         p.input :title
         p.input :company
         p.input :location
