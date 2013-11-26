@@ -28,7 +28,7 @@ class ExpertsController < ApplicationController
   end
 
   def edit_profile
-    @profile = @expert.profile
+    @profile = @expert.profile || @expert.create_profile
     @from = 'edit_profile'
 
     respond_to do |format|
