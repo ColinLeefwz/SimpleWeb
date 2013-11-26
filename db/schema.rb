@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131121112542) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20131126033807) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -87,12 +84,12 @@ ActiveRecord::Schema.define(version: 20131121112542) do
     t.string   "from_name"
     t.string   "from_address"
     t.string   "reply_to"
-    t.integer  "expert_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
-  add_index "email_messages", ["expert_id"], name: "index_email_messages_on_expert_id", using: :btree
+  add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id", using: :btree
 
   create_table "expert_profiles", force: true do |t|
     t.string   "title"
@@ -224,6 +221,16 @@ ActiveRecord::Schema.define(version: 20131121112542) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
   end
+
+  create_table "subscriptions", force: true do |t|
+    t.integer  "subscriber_id"
+    t.integer  "subscribed_session_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions", ["subscribed_session_id"], name: "index_subscriptions_on_subscribed_session_id", using: :btree
+  add_index "subscriptions", ["subscriber_id"], name: "index_subscriptions_on_subscriber_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false
