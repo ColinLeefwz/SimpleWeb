@@ -5,10 +5,14 @@ class WeixinController < ApplicationController
     case params[:xml][:MsgType]
     when "text"
       @text = params[:xml][:Content]
+      @picurls = []
+      photo = Photo.last
+      @picurls << {"title" => "#{photo.user.name}发布" , "description" => photo.desc, "picurl" => photo.img.url(:t2), "url" => photo.img.url }
       if @text =~ /音乐/
         return render "music", :formats => :xml
       else
-        return render "text", :formats => :xml
+        # return render "text", :formats => :xml
+        return render "picurl", :formats => :xml
       end
     when "location"
       lo = [params[:xml][:Location_X].to_f,params[:xml][:Location_Y].to_f]
