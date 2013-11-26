@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :expert_profile do
+  factory :profile do
     title "MyString"
     company "MyString"
     expertise "MyText"

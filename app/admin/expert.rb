@@ -12,15 +12,15 @@ ActiveAdmin.register Expert do
       link_to image_tag(expert.avatar.url, width: "50"), admin_expert_path(expert)
     end
     column :title do |e|
-      e.expert_profile.title
+      e.profile.title
     end
 
     column :company do |e|
-      e.expert_profile.company
+      e.profile.company
     end
 
     column :location do |e|
-      e.expert_profile.location
+      e.profile.location
     end
 
     column :time_zone
@@ -39,7 +39,7 @@ ActiveAdmin.register Expert do
       f.input :password, as: :password if f.object.new_record?
       f.input :time_zone
 
-      f.inputs name: "Profile", for: [ f.object.expert_profile || ExpertProfile.new ] do |p|
+      f.inputs name: "Profile", for: [ f.object.profile || ExpertProfile.new ] do |p|
         p.input :title
         p.input :company
         p.input :location
@@ -62,31 +62,31 @@ ActiveAdmin.register Expert do
       row :email
       row :time_zone
       row :title do |expert|
-        expert.expert_profile.title
+        expert.profile.title
       end
 
       row :company do |expert|
-        expert.expert_profile.company
+        expert.profile.company
       end
 
       row :location do |expert|
-        expert.expert_profile.location
+        expert.profile.location
       end
 
       row :expertise do |expert|
-        expert.expert_profile.expertise
+        expert.profile.expertise
       end
 
       row :web_site do |expert|
-        expert.expert_profile.web_site
+        expert.profile.web_site
       end
 
       row :testimonials do |expert|
-        expert.expert_profile.testimonials
+        expert.profile.testimonials
       end
 
       row :additional do |expert|
-        expert.expert_profile.additional
+        expert.profile.additional
       end
     end
   end
@@ -94,7 +94,7 @@ ActiveAdmin.register Expert do
 
   controller do
     def permitted_params
-      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, expert_profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional]]
+      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional]]
     end
   end
 end

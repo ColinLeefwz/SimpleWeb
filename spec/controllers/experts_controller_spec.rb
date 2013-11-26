@@ -140,7 +140,7 @@ describe ExpertsController do
 
   #     it "get the right profile object" do
   #       get :edit_profile, id: sameer.id, format: :js
-  #       expect(assigns[:profile]).to eq sameer.expert_profile
+  #       expect(assigns[:profile]).to eq sameer.profile
   #     end
 
   #     it "render profile partial" do
@@ -159,13 +159,13 @@ describe ExpertsController do
 
   #    it "update corresponding profile" do
   #      attributes = {first_name: "first name", last_name: "last name",  title: "new title", education: "new education", career: "new career"}
-  #      patch :update_profile, id: sameer.id, expert_profile: attributes, format: :js
-  #      sameer.expert_profile.reload
+  #      patch :update_profile, id: sameer.id, profile: attributes, format: :js
+  #      sameer.profile.reload
   #      expect(sameer.first_name).to eq attributes[:first_name]
   #      expect(sameer.last_name).to eq attributes[:last_name]
-  #      expect(sameer.expert_profile.title).to eq attributes[:title]
-  #      expect(sameer.expert_profile.education).to eq attributes[:education]
-  #      expect(sameer.expert_profile.career).to eq attributes[:career]
+  #      expect(sameer.profile.title).to eq attributes[:title]
+  #      expect(sameer.profile.education).to eq attributes[:education]
+  #      expect(sameer.profile.career).to eq attributes[:career]
   #    end
   #  end
   # end

@@ -21,7 +21,7 @@ class InvitationsController < Devise::InvitationsController
     user.save
 
     expert = Expert.where(invitation_token: params[:invitation_token]).first
-    expert.create_expert_profile
+    expert.create_profile
     super
   end
 
