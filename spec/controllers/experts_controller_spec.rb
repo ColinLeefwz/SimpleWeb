@@ -121,54 +121,43 @@ describe ExpertsController do
 
 
 
-  # NOTE: unpassed test for edit profile page, temporarily commented out
-  #
-  #
-  # describe "GET edit profile" do
+  describe "GET edit profile" do
+    context "not logged in" do
+      it "can't access edit profile page" do
+        get :edit_profile, id: sameer.id, format: :js
+        expect(response).to redirect_to root_path
+      end
+    end
 
-  #   context "not logged in" do
-  #     it "can't access edit profile page" do
-  #       get :edit_profile, id: sameer.id, format: :js
-  #       expect(response).to redirect_to root_path
-  #     end
-  #   end
-
-  #   context "logged in as expert" do 
-  #     before :each do
-  #       sign_in sameer
-  #     end
-
-  #     it "get the right profile object" do
-  #       get :edit_profile, id: sameer.id, format: :js
-  #       expect(assigns[:profile]).to eq sameer.profile
-  #     end
-
-  #     it "render profile partial" do
-  #       get :edit_profile, id: sameer.id, format: :js
-  #       expect(response).to render_template(partial: '_expert_profile')
-  #     end
-  #   end
-  # end
+    context "logged in as expert" do 
+      before :each do
+        sign_in sameer
+      end
+      it "get the right profile object" do
+        get :edit_profile, id: sameer.id, format: :js
+        expect(assigns[:profile]).to eq sameer.profile
+      end
+    end
+  end
 
 
-  # describe "PATCH update profile" do
-  #  context "logged in as expert" do
-  #    before :each do
-  #      sign_in sameer
-  #    end
-
-  #    it "update corresponding profile" do
-  #      attributes = {first_name: "first name", last_name: "last name",  title: "new title", education: "new education", career: "new career"}
-  #      patch :update_profile, id: sameer.id, profile: attributes, format: :js
-  #      sameer.profile.reload
-  #      expect(sameer.first_name).to eq attributes[:first_name]
-  #      expect(sameer.last_name).to eq attributes[:last_name]
-  #      expect(sameer.profile.title).to eq attributes[:title]
-  #      expect(sameer.profile.education).to eq attributes[:education]
-  #      expect(sameer.profile.career).to eq attributes[:career]
-  #    end
-  #  end
-  # end
+  describe "PATCH update profile" do
+   context "logged in as expert" do
+     before :each do
+       sameer_profile
+       sign_in sameer
+     end
+     it "update corresponding user profile" do
+       patch :update_profile, id: sameer.id, profile: attributes_for(:profile, title: "new title"), format: :js
+       expect(sameer.profile.title).to eq "new title"
+     end
+     it "update corresponding user attributes" do
+       patch :update_profile, id: sameer.id, profile: {first_name: "gecko"}, format: :js
+       sameer.reload
+       expect(sameer.first_name).to eq "gecko"
+     end
+   end
+  end
 
 
 
