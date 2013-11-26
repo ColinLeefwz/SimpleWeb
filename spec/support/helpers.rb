@@ -9,9 +9,12 @@ def helper_objects
   let(:sameer) { create :expert, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim', avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
   let(:alex) {create :expert, email: 'alex@test.com', password: '11111111', first_name: 'alex', last_name: 'lalo', avatar: fixture_file_upload(('AD pic.jpg'), 'image/png') }
 
-  #profile
+  #expert_profile
   let(:sameer_profile) {create :profile, title: "VP of stuff", company: "OC", location: "Shanghai", education: "UCLA", career: "Originate", user: sameer}
   let(:alex_profile) {create :profile, title: "Founder of Prodygia", company: "Prodygia", location: "Beijing", education: "UCLA", career: "Prodygia", user: alex}
+
+  #member_profile
+  let(:gecko_profile) {create :profile, title: "engineer", company: "OC", location: "Hangzhou", user: gecko}
 
 
   # static pages
