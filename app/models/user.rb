@@ -1,7 +1,16 @@
 require 'mandrill_api'
 
 class User < ActiveRecord::Base
-  include Rails.application.routes.url_helpers
+	include Rails.application.routes.url_helpers
+
+	USER_TYPE = { member: "Member", expert: "Expert" }
+
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :invitable, :database_authenticatable, :registerable,
+    :recoverable, :rememberable, :trackable, :validatable,
+    :omniauthable, omniauth_providers: [:facebook, :linkedin]
 
   has_many :subscriptions, foreign_key: "subscriber_id"
   has_many :subscribed_sessions, through: :subscriptions
@@ -14,6 +23,7 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
   has_many :orders
+  has_many :email_messages
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable

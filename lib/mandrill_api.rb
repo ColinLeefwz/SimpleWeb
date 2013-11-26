@@ -6,7 +6,6 @@ class MandrillApi
     @mandrill = Mandrill::API.new ENV['MANDRILL_API']
   end
 
-
   def enroll_comfirm(user, session, session_image_url)
 
     template_content = [{"name" => "first-name", "content" => user.first_name}, {"name" => "session-title", "content" => session.title }, {"name" => "expert-name", "content" => session.expert.name}, {"name" => "start-date", "content" => session.start_date }]
@@ -52,6 +51,28 @@ class MandrillApi
     }
 
     send_template_mail("invite_expert", template_content, addition_message)
+  end
+
+  def invite_by_member(user, email_message, token_link)
+    template_content = [{"name" => "message_content", "content" => email_message.message }, { "name"=>"token_link", "content"=>"<a href='#{token_link}'>#{token_link}</a>"}]
+
+    to_message = []
+    if email_message.copy_me?
+      cc_name, cc_email = user.first_name, user.email
+      to_message = [{"type"=>"to", "name" =>"", "email"=> email_message.to}, {"type"=>"cc", "name"=>cc_name, "email"=>cc_email}]
+    else
+      to_message = [{"type"=>"to", "name" =>"", "email"=> email_message.to}]
+    end
+
+    addition_message = {
+      "from_name" => email_message.from_name,
+      "from_email" => "no-reply@prodygia.com",
+      "subject" => email_message.subject,
+      "to"=>to_message,
+      "headers"=>{"Reply-To"=>user.email}
+    }
+
+    send_template_mail("refer_a_friend", template_content, addition_message)
   end
 
 	def reset_password(user, reset_link)
