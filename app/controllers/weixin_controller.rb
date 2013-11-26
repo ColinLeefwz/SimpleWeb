@@ -6,8 +6,8 @@ class WeixinController < ApplicationController
     when "text"
       @text = params[:xml][:Content]
       @picurls = []
-      photo = Photo.last
-      @picurls << {"title" => "#{photo.user.name}发布" , "description" => photo.desc, "picurl" => photo.img.url(:t2), "url" => photo.img.url }
+      article = MobileArticle.last
+      @picurls << {"title" => "#{article.title}发布" , "description" => article.text, "picurl" => article.img.url(:t2), "url" => "http://shop.dface.cn/mobile_articles/show?id=#{article.id}&sid=#{article.sid}" }
       if @text =~ /音乐/
         return render "music", :formats => :xml
       else
