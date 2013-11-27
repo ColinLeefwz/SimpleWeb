@@ -30,6 +30,7 @@ Prodygia::Application.routes.draw do
     member do
       get :dashboard
       get :refer_a_friend
+      get :expert
     end
   end
 

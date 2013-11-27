@@ -12,4 +12,12 @@ class MembersController < ApplicationController
       format.js {render "update"}
     end
   end
+
+  def expert
+    @followed_expert = current_user.followed_users
+    @from = "expert"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
 end
