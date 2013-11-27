@@ -488,6 +488,10 @@ class Shop
     end
     shop ? shop.faq(msg) : nil
   end
+
+  def find_article_by_keywords(msg)
+    MobileArticle.where({sid:self.id, kw:msg}).first
+  end
   
   def find_faqs
     faqs = self.faqs
@@ -519,6 +523,12 @@ class Shop
       return "本地点未启用数字问答系统"
     end
     "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n") 
+  end
+
+  def weixin_answer_text(msg)
+    article = find_article_by_keywords(msg)
+    return nil if article.nil?
+    article
   end
 
   def branchs
