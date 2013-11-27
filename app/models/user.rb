@@ -171,6 +171,10 @@ class User
     $redis.zrange("BLACK#{self.id}",0,-1)
   end
   
+  def black_users
+    black_ids.map {|x| User.find_by_id(x) }
+  end
+  
   def black_xmpp_list
     Xmpp.post("api/blocklist",:uid => self.id)
   end
