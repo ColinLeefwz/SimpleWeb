@@ -1,10 +1,15 @@
 .devise-style
+  #flash
+    - if flash[:alert]
+      .alert.alert-error
+        %button{ type: "button", class: 'close', data: { dismiss: 'alert' } } &times;
+        = flash[:alert]
   .social-login
     %h2 Sign up
     = render "devise/shared/social_login"
   .devise-form
     =simple_form_for :user, url: user_registration_path do |f|
-      = devise_error_messages!
+      -# = devise_error_messages!
       = render 'sessions/form_fields', f: f
       =f.button :submit, value: 'Sign up'
     = render "devise/shared/links"
