@@ -1,5 +1,8 @@
 .main-menu{
   .expert-action-box{
+    box-shadow: 0 3px 8px #aab4be;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
     width: 100%;
     .expert-info{
       display: inline-block;
@@ -30,8 +33,7 @@
     float: right;
     font-size: 20px;
     color: purple;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 5px;
     cursor: pointer;
   }
 
