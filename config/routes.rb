@@ -2,6 +2,8 @@ Prodygia::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
+	get "/users/validate_invite_email", to: 'users#validate_invite_email'
+
   resources :users
 
   ActiveAdmin.routes(self)
@@ -30,6 +32,7 @@ Prodygia::Application.routes.draw do
       get :profile
       get :edit_profile
       patch :update_profile
+      get :refer_a_friend
     end
   end
 
@@ -64,7 +67,6 @@ Prodygia::Application.routes.draw do
     collection do
       get :refer_new_expert
       post :refer_new_expert
-      get :validate_invite_email
     end
   end
 

@@ -84,12 +84,14 @@ ActiveRecord::Schema.define(version: 20131126053755) do
     t.string   "from_name"
     t.string   "from_address"
     t.string   "reply_to"
-    t.integer  "expert_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.string   "invited_type"
+    t.string   "invite_token"
   end
 
-  add_index "email_messages", ["expert_id"], name: "index_email_messages_on_expert_id", using: :btree
+  add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id", using: :btree
 
   create_table "followings", force: true do |t|
     t.integer  "the_followed"
@@ -206,6 +208,16 @@ ActiveRecord::Schema.define(version: 20131126053755) do
     t.datetime "image_updated_at"
   end
 
+  create_table "subscriptions", force: true do |t|
+    t.integer  "subscriber_id"
+    t.integer  "subscribed_session_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions", ["subscribed_session_id"], name: "index_subscriptions_on_subscribed_session_id", using: :btree
+  add_index "subscriptions", ["subscriber_id"], name: "index_subscriptions_on_subscriber_id", using: :btree
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: ""
@@ -217,6 +229,8 @@ ActiveRecord::Schema.define(version: 20131126053755) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
     t.string   "type"
