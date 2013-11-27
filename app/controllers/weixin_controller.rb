@@ -9,7 +9,7 @@ class WeixinController < ApplicationController
 
       sid = params["sid"]
       shop = Shop.find_by_id(sid)
-      text_weixin = shop.weixin_answer_text(msg)
+      text_weixin = shop.weixin_answer_text(@text)
 
       if text_weixin
         if text_weixin.class == MobileArticle
