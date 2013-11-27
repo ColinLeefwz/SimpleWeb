@@ -11,10 +11,10 @@
     #header
       = render "shared/header"
     #flash
-      - if flash[:alert]
-        .alert.alert-error
+      - unless flash.empty?
+        .alert{ class: "#{flash_class}" }
           %button{ type: "button", class: 'close', data: { dismiss: 'alert' } } &times;
-          = flash[:alert]
+          = flash_message
     = yield
 
     #footer
