@@ -1,5 +1,7 @@
 Prodygia::Application.routes.draw do
 
+  get 'course/show'
+
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
 	get "/users/validate_invite_email", to: 'users#validate_invite_email'
@@ -45,6 +47,11 @@ Prodygia::Application.routes.draw do
       patch :update_profile
     end
 
+    collection do
+      get :refer_new_expert
+      post :refer_new_expert
+    end
+    
     resources :sessions do
       member do
         get :new_post_content
@@ -61,10 +68,6 @@ Prodygia::Application.routes.draw do
       post :create_live_session, on: :collection
     end
 
-    collection do
-      get :refer_new_expert
-      post :refer_new_expert
-    end
   end
 
   controller :users do
