@@ -1,0 +1,53 @@
+- @followed_expert.each do |e|
+  .expert-action-box
+    .expert-info
+      .expert-avatar
+        =image_tag(e.avatar.url)
+      .expert-text-info
+        .expert-name
+          = e.name
+        .expert-title
+          #{e.expert_profile.title}, #{e.expert_profile.company}
+    .expert-actions
+      .fa.fa-star.follow-star
+      .clear-fix
+      .expert-action-info
+        .block-title
+          %span RECENT ACTIVITY
+        .recent-activity
+          .cource-icon
+            =image_tag("missing.png")
+          .cource-info
+            .action
+              Posted 
+            .title
+              Consulting service in China
+          .published-time
+            5 days ago
+            
+        .recent-activity
+          .cource-icon
+            =image_tag("missing.png")
+          .cource-info
+            .action
+              Posted 
+            .title
+              Consulting service in China
+          .published-time
+            5 days ago
+
+                                    
+        .recent-activity
+          .cource-icon
+            =image_tag("missing.png")
+          .cource-info
+            .action
+              Posted 
+            .title
+              Consulting service in China
+          .published-time
+            5 days ago
+      
+      .see-more
+        =link_to "see more", remote: true
+
