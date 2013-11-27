@@ -15,6 +15,8 @@ feature "Member Dashboard" do
   scenario "show the list of followed experts", js: true do  
     jevan.follow sameer
     jevan.follow alex
+    sameer_profile
+    alex_profile
     click_link("Expert")
     expect(page).to have_css(".expert-action-box", count: 2)
   end
