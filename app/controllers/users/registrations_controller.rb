@@ -15,6 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
 	def build_resource(hash=nil)
 		self.resource = Member.new_with_session(hash || {}, session)
+		self.resource.provider = "prodygia"
 	end
 
   protected
