@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe ExpertProfile do
+describe Profile do
 end

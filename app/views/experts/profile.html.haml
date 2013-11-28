@@ -9,10 +9,10 @@
           = @expert.name
         %br
         %span.title
-          = @expert.expert_profile.title
+          = @expert.profile.title
         %br
         %span.job.light-font
-          = @expert.expert_profile.company
+          = @expert.profile.company
 
       %table
         %tr
@@ -64,17 +64,17 @@
       .tab-pane.active#tab1
         %div
           %h4 Overview
-          - expertise = @expert.expert_profile.expertise || "Expertise to be filled"
+          - expertise = @expert.profile.expertise || "Expertise to be filled"
           = expertise.html_safe
       .tab-pane#tab2
         %div
           %h4 Career
-          - career = @expert.expert_profile.career || "Career to be filled"
+          - career = @expert.profile.career || "Career to be filled"
           = career.html_safe
       .tab-pane#tab3
         %div
           %h4 Education
-          - education = @expert.expert_profile.education || "Education to be filled"
+          - education = @expert.profile.education || "Education to be filled"
           = education.html_safe
 
   .sessions.sub-wrapper

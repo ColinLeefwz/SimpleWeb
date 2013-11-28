@@ -14,7 +14,6 @@ class ExpertsController < ApplicationController
   end
 
   def refer_new_expert
-    @expert = current_user
     @email_message = current_user.build_refer_message(User::USER_TYPE[:expert])
 
     @from = "refer_a_user"
@@ -28,7 +27,7 @@ class ExpertsController < ApplicationController
   end
 
   def edit_profile
-    @profile = @expert.expert_profile
+    @profile = @expert.profile || @expert.create_profile
     @from = 'edit_profile'
 
     respond_to do |format|
@@ -40,8 +39,7 @@ class ExpertsController < ApplicationController
     respond_to do |format|
       format.js{
         @expert.update_attributes(user_params)
-        @expert.expert_profile.update_attributes(profile_params)
-        @from = 'profile'
+        @expert.profile.update_attributes(expert_profile_params)
 
         render js: "window.location='#{profile_expert_path(current_user)}'"
       }
@@ -75,15 +73,13 @@ class ExpertsController < ApplicationController
     params.require(:session).permit(:title, :description, :cover, :video, {categories:[]}, :location, :price, :language, :start_date, :time_zone )
   end
 
-  def expert_params
-    params.require(:expert).permit(:name, :avatar, :title, :company, :location, :expertise, :favorite_quote, :career, :education, :web_site, :article_reports, :speeches, :additional, :testimonials)
+
+  def expert_profile_params
+    params.require(:profile).permit(:title, :company, :career, :education, :expertise, :location, :web_site)
   end
 
-  def profile_params
-    params.require(:expert_profile).permit(:tilte, :company, :career, :education, :expertise)
-  end
   def user_params
-    params.require(:expert_profile).permit(:first_name, :last_name, :avatar)
+    params.require(:profile).permit(:first_name, :last_name, :avatar)
   end
 
 

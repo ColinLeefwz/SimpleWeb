@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 def login_expert
-	sameer.create_expert_profile
+	sameer.create_profile
 	login_as(sameer, scope: :user)
 end
 

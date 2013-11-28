@@ -29,6 +29,9 @@ Prodygia::Application.routes.draw do
   resources :members do
     member do
       get :dashboard
+      get :profile
+      get :edit_profile
+      patch :update_profile
       get :refer_a_friend
       get :expert
     end
@@ -70,6 +73,7 @@ Prodygia::Application.routes.draw do
 
   controller :users do
     get 'relationship/:the_followed' => :relationship, as: :relationship
+    get 'subscirbe_session/:session_id' => :subscribe_session, as: :subscribe_session
     get 'following'
     get 'followers'
   end
