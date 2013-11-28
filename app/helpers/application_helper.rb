@@ -4,6 +4,8 @@ module ApplicationHelper
 			"alert-error"
 		elsif flash[:error]
 			"alert-something"
+		elsif flash[:notice]
+			"alert-success"
 		end
 	end
 
@@ -12,6 +14,8 @@ module ApplicationHelper
 			flash[:alert]
 		elsif flash[:error]
 			flash[:error]
+		elsif flash[:notice]
+			flash[:notice]
 		end
 		
 	end
