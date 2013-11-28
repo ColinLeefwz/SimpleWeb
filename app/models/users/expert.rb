@@ -1,6 +1,5 @@
 class Expert < Member
   has_many :sessions
-  has_many :email_messages
   accepts_nested_attributes_for :profile
   alias_method :profile=, :profile_attributes=   # NOTE add this line for active admin working properly
 

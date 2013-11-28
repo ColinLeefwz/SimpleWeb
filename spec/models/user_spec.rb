@@ -36,4 +36,22 @@ describe User do
 			expect(peter.reload.followers).not_to include allen
 		end
 	end
+
+  describe ".build_refer_message" do 
+    context "member can build an email message" do
+      it "creates a new email message" do
+        message = peter.build_refer_message("member")
+        expect(message.user_id).to eq peter.id
+      end
+    end
+
+    context "expert can build an email message" do
+      it "creates a new email message" do
+        message = sameer.build_refer_message("member")
+        expect(message).to be_new_record
+      end
+    end
+
+
+  end
 end

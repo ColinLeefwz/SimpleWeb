@@ -57,12 +57,12 @@ describe ExpertsController do
   describe "GET refer_new_expert" do
     context "not logged in" do
       it "can not access to the refer_new_expert page" do
-        get :refer_new_expert, id: sameer.id, format: :js
+        get :refer_new_expert, format: :js
         expect(response).not_to be_success
       end
 
       it "can not assign email_message" do
-        get :refer_new_expert, id: sameer.id, format: :js
+        get :refer_new_expert, format: :js
         expect(assigns[:email_message]).to be_nil
       end
     end
@@ -73,12 +73,12 @@ describe ExpertsController do
       end
 
       it "can not access the dashboard page" do
-        get :refer_new_expert, id: sameer.id, format: :js
+        get :refer_new_expert, format: :js
         expect(response).not_to be_success
       end
 
       it "can not assign email_message" do
-        get :refer_new_expert, id: sameer.id, format: :js
+        get :refer_new_expert, format: :js
         expect(assigns[:email_message]).to be_nil
       end
     end

@@ -38,6 +38,10 @@ class User < ActiveRecord::Base
     self.enrolled_sessions << session
   end
 
+  def build_refer_message(invited_type)
+    self.email_messages.build(from_name: "#{self.first_name} #{self.last_name}", from_address: "no-reply@prodygia", reply_to: "#{self.email}", invited_type: invited_type)
+  end
+
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
