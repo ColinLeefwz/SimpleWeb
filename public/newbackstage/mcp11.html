@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/managecelphone.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<script src="/newbackstage/js/mcp.js" type="text/javascript"></script>
+	<script>
+	var navmove="on", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+		
+		//新增
+		$("#Box14Right2").animate({"left":"378px"},1000);
+		$("#Article").click(function(){
+			$("#Box14Con").addClass("opacityanimation");
+			setTimeout(function(){
+				$("div.box14").css("height",$("#Box14Con").height()+$("#Box14Con").height()/2+"px");
+			},1000);
+		});
+		$("input[name='close']").click(function(){
+			$("#Box14Con").fadeOut(500,function(){
+				$(this).removeClass("opacityanimation");
+				$("div.box14").removeAttr("style");
+				$("a[name='links']").eq(1).addClass("hover");
+				$("div.box14conright").addClass("none");
+				$("div.box14conright").eq(1).removeClass("none");
+			});
+		});
+		$("a[name='links']").click(function(){
+			$("div.box14conright").addClass("none");
+			var rel=$(this).attr("rel");
+			$("div.box14conright").eq(rel).removeClass("none");
+			$("a[name='links']").removeClass("hover");
+			$(this).addClass("hover");
+		});
+		$("#Box14Con div.box14_plane6").click(function(){
+			$("#Box14Con div.box14_plane6 div.rightsign").css({"display":"none"});
+			$("#Box14Con div.box14_plane6 div.bg").css("height","0px");
+			var h=$(this).height();
+			$(this).find(".bg").css("height",h+30+"px");
+			$(this).find(".rightsign").css({"display":"block"});
+		});
+		$("div.rightsign").click(function(e){
+			$(this).css({"display":"none"});
+			$(this).siblings(".bg").css("height","0px");
+			e.stopPropagation();
+		});
+	});
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<img src="/newbackstage/images/sign46.jpg" align="left" id="OpenNav" title="打开导航菜单"/>
+			<h1>脸脸茶坊</h1>
+			<a href="#" class="view">预览</a>
+			<div class="clear1"></div>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="mcp1.html">首 页</a>
+				<span class="navline"></span>
+				<a href="mcp2.html">设 置</a>
+				<span class="navline"></span>
+				<a href="#">公司介绍</a>
+				<span class="navline"></span>
+				<a href="mcp6.html">最新动态</a>
+				<span class="navline"></span>
+				<a href="#">推荐菜品</a>
+				<span class="navline"></span>
+				<a href="#">联系我们</a>
+				<span class="navline"></span>
+				<a href="#">访问统计</a>
+				<span class="navline"></span>
+				<a href="mcp8.html">微信管理</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		</div>
+		<div class="clear1"></div>
+
+		<div class="con visible">
+			<div class="box14 w760 relative visible">
+				<div class="title1"><h2 class="f18 l">微信管理</h2></div>
+				<div class="submenu">
+					<ul>
+						<li><a href="mcp9.html">微信接口设置</a></li>
+						<li class="hover"><a>微信自动回复管理</a></li>
+					</ul>
+				</div>
+				
+				<div class="box14left2">
+					<img src="images/pic33.jpg" align="right" class="imgs45"/>
+					<div class="box14_plane5">
+						help！
+						<div class="arrow"></div>
+					</div>
+					<div class="clear1"></div>
+					<div class="box14_plane6">
+						<h2>标题</h2>
+						<span>2013年12月23日</span>
+						<img src="images/pic34.jpg" align="middle" width="100%"/>
+						<p>
+							描述<br/><br/><br/>
+						</p>
+					</div>
+				</div>
+				<div id="Box14Right2">
+					<div class="ml20 mt40">
+					<form method="post" action="">
+						<b class="f14">关键字</b>&nbsp;&nbsp;如多个规则对应一条互动用逗号分隔，如：help，帮助<br/><br/><br/>
+						<input type="text" class="inputs8" />
+						<br/><br/>
+						<button class="btn24" type="button" id="Article"><b>+</b>从手机网站导入图文</button>
+						<br/><br/>
+						<input type="submit" class="btn20 w80" value="保 存" />
+						<div class="arrow"></div>
+					</form>
+					</div>
+				</div>
+				<div id="Box14Con">
+					<div class="box14conleft">
+						<a rel="0" name="links">公司介绍</a>
+						<a rel="1" name="links" class="hover">图文</a>
+						<a rel="2" name="links">联系我们</a>
+					</div>
+					<div class="box14conright none">
+						<button class="btn24 mt20 r" type="button"><b>+</b>创建内容</button>
+						<div class="clear1"></div>
+						<div class="box14_plane7">
+							<div class="box14_plane6 w260 l pointer">
+								<div class="bg"></div>
+								<div class="rightsign"></div>
+								<h2>电子邮件现在一样也是流</h2>
+								<span>2013年12月23日</span>
+								<img src="images/pic35.jpg" align="middle" width="100%"/>
+								<p>
+									个人信息存储应用Mustbin获得450万美元A轮投资，提供RSA和AES两种加密结合以及第三方认证的方式保证数据安全，现已推出iPhone应用。
+								</p>
+							</div>
+							<div class="box14_plane6 w260 r pointer">
+								<div class="bg"></div>
+								<div class="rightsign"></div>
+								<h2>电子邮件现在一样也是流</h2>
+								<span>2013年12月23日</span>
+								<img src="images/pic35.jpg" align="middle" width="100%"/>
+								<p>
+									个人信息存储应用Mustbin获得450万美元A轮投资，提供RSA和AES两种加密结合以及第三方认证的方式保证数据安全，现已推出iPhone应用。
+								</p>
+							</div>
+						</div>
+						<input type="submit" class="btn20 l" value="保 存" />
+						<input type="button" class="btn21 l ml20" name="close" value="取 消" />
+						<input type="button" class="btn25 r ml20" value="下一批" />
+						<input type="button" class="btn25 r" value="上一批" />
+					</div>
+					<div class="box14conright">
+						<button class="btn24 mt20 r" type="button"><b>+</b>创建内容</button>
+						<div class="clear1"></div>
+						<div class="box14_plane7">
+							<div class="box14_plane6 w260 l pointer">
+								<div class="bg"></div>
+								<div class="rightsign"></div>
+								<h2>电子邮件现在一样也是流</h2>
+								<span>2013年12月23日</span>
+								<img src="images/pic35.jpg" align="middle" width="100%"/>
+								<p>
+									个人信息存储应用Mustbin获得450万美元A轮投资，提供RSA和AES两种加密结合以及第三方认证的方式保证数据安全，现已推出iPhone应用。
+									个人信息存储应用Mustbin获得450万美元A轮投资，提供RSA和AES两种加密结合以及第三方认证的方式保证数据安全，现已推出iPhone应用。
+								</p>
+							</div>
+							<div class="box14_plane6 w260 r pointer">
+								<div class="bg"></div>
+								<div class="rightsign"></div>
+								<h2>电子邮件现在一样也是流</h2>
+								<span>2013年12月23日</span>
+								<img src="images/pic35.jpg" align="middle" width="100%"/>
+								<p>
+									个人信息存。
+								</p>
+							</div>
+						</div>
+						<input type="submit" class="btn20 l" value="保 存" />
+						<input type="button" class="btn21 l ml20" name="close" value="取 消" />
+						<input type="button" class="btn25 r ml20" value="下一批" />
+						<input type="button" class="btn25 r" value="上一批" />
+					</div>
+					<div class="box14conright none">
+						<button class="btn24 mt20 r" type="button"><b>+</b>创建内容</button>
+						<div class="clear1"></div>
+						<div class="box14_plane7">
+							<div class="box14_plane6 w260 l pointer">
+								<div class="bg"></div>
+								<div class="rightsign"></div>
+								<h2>电子邮件现在一样也是流</h2>
+								<span>2013年12月23日</span>
+								<img src="images/pic35.jpg" align="middle" width="100%"/>
+								<p>
+									个人信息存储。
+								</p>
+							</div>
+							<div class="box14_plane6 w260 r pointer">
+								<div class="bg"></div>
+								<div class="rightsign"></div>
+								<h2>电子邮件现在一样也是流</h2>
+								<span>2013年12月23日</span>
+								<img src="images/pic35.jpg" align="middle" width="100%"/>
+								<p>
+									个人信息存储应用Mustbin获得450万美元A轮投资，提供RSA和AES两种加密结合以及第三方认证的方式保证数据安全，现已推出iPhone应用。
+								</p>
+							</div>
+						</div>
+						<input type="submit" class="btn20 l" value="保 存" />
+						<input type="button" class="btn21 l ml20" name="close" value="取 消" />
+						<input type="button" class="btn25 r ml20" value="下一批" />
+						<input type="button" class="btn25 r" value="上一批" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

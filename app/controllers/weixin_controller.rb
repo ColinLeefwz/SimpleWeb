@@ -5,10 +5,25 @@ class WeixinController < ApplicationController
     case params[:xml][:MsgType]
     when "text"
       @text = params[:xml][:Content]
+      @picurls = []
+
+      sid = params["sid"]
+      shop = Shop.find_by_id(sid)
+      text_weixin = shop.weixin_answer_text(@text)
+
+      if text_weixin
+        if text_weixin.class == MobileArticle
+          @picurls << {"title" => "#{text_weixin.title}发布" , "description" => text_weixin.text, "picurl" => text_weixin.img.url(:t2), "url" => "http://shop.dface.cn/mobile_articles/show?id=#{text_weixin.id}&sid=#{text_weixin.sid}" }
+        end
+      end
+
+      # article = MobileArticle.last
+      # @picurls << {"title" => "#{article.title}发布" , "description" => article.text, "picurl" => article.img.url(:t2), "url" => "http://shop.dface.cn/mobile_articles/show?id=#{article.id}&sid=#{article.sid}" }
       if @text =~ /音乐/
         return render "music", :formats => :xml
       else
-        return render "text", :formats => :xml
+        # return render "text", :formats => :xml
+        return render "picurl", :formats => :xml
       end
     when "location"
       lo = [params[:xml][:Location_X].to_f,params[:xml][:Location_Y].to_f]

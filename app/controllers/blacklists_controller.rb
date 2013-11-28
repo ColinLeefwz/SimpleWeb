@@ -3,9 +3,9 @@ class BlacklistsController < ApplicationController
   before_filter :user_is_session_user, :except => [:index]
 
   def index
-    id = Moped::BSON::ObjectId(params[:id])
+    #id = Moped::BSON::ObjectId(params[:id])
     #users = UserBlack.where({uid:id}).map {|x| User.find_by_id(x["bid"]) }
-    users = User.find_by_id(params[:id]).black_ids.map {|x| User.find_by_id(x["bid"]) }
+    users = User.find_by_id(params[:id]).black_users
     users.delete_if {|x| x.nil? } 
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
     output_users(users)
@@ -20,7 +20,7 @@ class BlacklistsController < ApplicationController
     ub.save! if ub.add_black_redis
     Resque.enqueue(XmppBlack, session[:user_id], params[:block_id], 'block')
     Resque.enqueue(XmppBlackNotice, session[:user_id], params[:block_id]) if report==1
-    render:json => hash.to_json
+    render :json => hash.to_json
   end
 
   def delete

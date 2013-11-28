@@ -11,6 +11,8 @@ class MobileArticle
 
   field :content
 
+  field :kw #关键字
+
   mount_uploader(:img, MobileArticleImgUploader)
 
   def self.img_url(id,type=nil)
@@ -51,5 +53,6 @@ class MobileArticle
       find_old(aid)
     end
   end
+
 
 end

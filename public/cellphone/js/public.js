@@ -1,7 +1,9 @@
 var w1, h1, imgarr, i=0, timer, oldpointX,  newpointX, menuheight;
 w1=$(window).width()-10;
+
 ua=navigator.userAgent.toLowerCase();
 $(document).bind('pageinit',function(){
+	$("#DH").css("height",(w1*270/640+25)+"px");
 	menuheight=$("#Menu").height();
 	$("#Menu").css("top",-menuheight+"px");
 	$("#OpenMenu").click(function(){
@@ -95,6 +97,7 @@ $(window).load(function(){
 		e.stopPropagation();
 		return false;
 	});
+	$("#DH  .imgdiv img").css("position","relative");
 });
 function DH_animate(n){
 	clearTimeout(timer);
@@ -128,7 +131,7 @@ $(window).orientationchange(function(e){
 			$("#DH img").eq(i).css("width",w1+"px");
 			if($("#DH img").eq(i).height()>h1){h1=$("#DH img").eq(i).height();}
 		}
-		$("#DH").css("width",w1+"px");
+		$("#DH").css({"width":w1+"px","height":(w1*270/640+25)+"px"});
 		$("#DH .imgdiv").css({"width":w1*imgarr+"px","height":h1+"px"});
 		i=0;
 	},250);

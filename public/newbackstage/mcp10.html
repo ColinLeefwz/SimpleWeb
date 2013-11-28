@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/managecelphone.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<script src="/newbackstage/js/mcp.js" type="text/javascript"></script>
+	<script>
+	var navmove="on", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+		
+		//新增
+		var num=$("table.tab2 td").length;
+		for(var tdn=0;tdn<num;tdn+=2){
+			$("table.tab2 td").eq(tdn).css("z-index",num-tdn);
+		}
+		var timers;
+		$("a[name='links']").click(function(){
+			clearTimeout(timers);
+			var rel=$(this).attr("rel");
+			$("div.tab2box").removeClass("scaleTopanimation");
+			$("div.tab2box").removeClass("scaleLeftanimation");
+			$("div.tab2box").eq(rel).addClass("scaleTopanimation");
+			timers=setTimeout(function(){
+				$("div.tab2box").eq(rel).fadeOut(function(){
+					$("div.tab2box").eq(rel).removeClass("scaleTopanimation");
+				});
+			},5000);
+		});
+		$("div.tab2box").mouseover(function(){
+			clearTimeout(timers);
+		}).mouseout(function(){
+			var obj=$(this);
+			timers=setTimeout(function(){
+				obj.fadeOut(function(){
+					obj.removeClass("scaleTopanimation");
+				});
+			},1000);
+		});
+		
+	});
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<img src="/newbackstage/images/sign46.jpg" align="left" id="OpenNav" title="打开导航菜单"/>
+			<h1>脸脸茶坊</h1>
+			<a href="#" class="view">预览</a>
+			<div class="clear1"></div>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="mcp1.html">首 页</a>
+				<span class="navline"></span>
+				<a href="mcp2.html">设 置</a>
+				<span class="navline"></span>
+				<a href="#">公司介绍</a>
+				<span class="navline"></span>
+				<a href="mcp6.html">最新动态</a>
+				<span class="navline"></span>
+				<a href="#">推荐菜品</a>
+				<span class="navline"></span>
+				<a href="#">联系我们</a>
+				<span class="navline"></span>
+				<a href="#">访问统计</a>
+				<span class="navline"></span>
+				<a href="mcp8.html">微信管理</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		</div>
+		<div class="clear1"></div>
+		<div id="BG"></div>
+		<div id="DelDiv">
+			<center class="pt15">确定删除此项？</center>
+			<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+			<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+		</div>
+		<div class="con visible">
+			<div class="box14 w730 visible">
+				<div class="title1"><h2 class="f18 l">微信管理</h2></div>
+				<div class="submenu">
+					<ul>
+						<li><a href="mcp9.html">微信接口设置</a></li>
+						<li class="hover"><a>微信自动回复管理</a></li>
+					</ul>
+				</div>
+				<div class="clear1"></div>
+				<a href="mcp11.html" class="btn23 r mt15">添加规则</a>
+				<div class="clear1"></div>
+				<form method="post" action="">
+					<table width="100%" cellpadding="0" cellspacing="0" class="tab2 visible">
+						<tr>         
+							<th>关键字</th>
+							<th>回复内容</th>
+							<th class="cz" width="95">操 作</th>
+						</tr>
+						<tr>
+							<td>
+								<div class="block relative">打折
+									<div class="tab2box">
+										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="0">衣服九折，裤子九点五折，包装另算。</a></td>
+							<td valign="middle" class="textcenter">
+								<a href="mcp11.html" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="block relative">便宜点吧
+									<div class="tab2box">
+										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="1">减免50元</a></td>
+							<td valign="middle" class="textcenter">
+								<a href="mcp11.html" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="block relative">精品推荐
+									<div class="tab2box">
+										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="2">伊丽莎白系列晚礼服九五折4万元起</a></td>
+							<td valign="middle" class="textcenter">
+								<a href="mcp11.html" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="block relative">特卖
+									<div class="tab2box">
+										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="3">本商场将于2013年11月31日全场一折起，限一小时。</a></td>
+							<td valign="middle" class="textcenter">
+								<a href="mcp11.html" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="block relative">打折
+									<div class="tab2box">
+										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="4">衣服九折，裤子九点五折，包装另算。</a></td>
+							<td valign="middle" class="textcenter">
+								<a href="mcp11.html" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="block relative">便宜点吧
+									<div class="tab2box">
+										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="5">减免50元</a></td>
+							<td valign="middle" class="textcenter">
+								<a href="mcp11.html" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="block relative">精品推荐
+									<div class="tab2box">
+										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="6">伊丽莎白系列晚礼服九五折4万元起</a></td>
+							<td valign="middle" class="textcenter">
+								<a href="mcp11.html" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="block relative">特卖
+									<div class="tab2box">
+										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="7">本商场将于2013年11月31日全场一折起，限一小时。</a></td>
+							<td valign="middle" class="textcenter">
+								<a href="mcp11.html" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+<script>
+function ajaxDel(){
+	var top;
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if(documentHeight<=windowHeight){
+	  $("#BG").css({"height":windowHeight+"px","display":"block"});
+	}else{
+	  $("#BG").css({"height":documentHeight+"px","display":"block"});
+	}
+	$("#DelDiv").css("display","block");
+	top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+	$("#DelDiv").css({"top":top+"px","display":"none"});
+	$("#DelDiv").fadeIn(600);
+
+	$("#DelBtn").click(function(){
+	  $.get("/shop3_coupons/ajax_del",{id: coupon_id}, function(data) {
+		if(data['text']){
+		  $("#BG, #DelDiv").css("display","none");
+		  $("#Tr"+index).fadeOut(300,function(){
+			$(this).remove();
+		  });
+		}
+		else{
+		  alert('删除失败.')
+		}
+	  });
+	});
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
+</script>
+</body>
+</html>
