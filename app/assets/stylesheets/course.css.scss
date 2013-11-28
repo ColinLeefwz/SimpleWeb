@@ -16,12 +16,6 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
     box-shadow: $shadow_param;
   }
 
-  .inline-wrapper{
-    .inline{
-      display: inline-block;
-    }
-  }
-
   .overview{
     padding-top: 2em;
     .inline{
@@ -63,13 +57,8 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
       .expert{
         font-family: Latoitalic;
       }
-      .video-length{
-
-      }
       .separator:after{
         content: "|"
-      }
-      .category{
       }
       .description{
         color: #000000;
@@ -106,12 +95,9 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         width: 2em;
         height: 2em;
         background-color: #4E2971;
+        text-align: center;
         span{
-          width: 2em;
-          height: 2em;
-          display: table-cell;
           vertical-align: middle;
-          text-align: center;
           color: white;
           font-family: Latobold;
         }
@@ -119,8 +105,9 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
       .title{
         span{
           height: 2em;
-          display: table-cell;
-          vertical-align: bottom;
+          font-size: 1.2em;
+          font-family: Latobold;
+          vertical-align: middle;
         }
       }
     }

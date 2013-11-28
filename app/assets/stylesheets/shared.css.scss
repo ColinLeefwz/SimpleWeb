@@ -1,0 +1,15 @@
+
+// add "center-container" to an element, then you can use "vertical-align: middle" to any of its child element
+// "vertical-align" only works with table element or inline element by default
+.center-container:before{
+  content: '';
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: -0.25em;
+}
+
+// add "inline" class to an element, then it will be displayed as "inline-block"
+.inline{
+  display: inline-block;
+}
