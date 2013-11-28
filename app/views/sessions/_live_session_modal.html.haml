@@ -13,11 +13,11 @@
               .live-modal-expert-portrait
                 .live-modal-image-border
                   = image_tag(current_user.avatar.url)
-                %p= current_user.expert_profile.company
+                %p= current_user.profile.company
               .live-modal-expert-name-title
                 .live-modal-expert-name-value
                   = current_user.name
-                %p= current_user.expert_profile.title
+                %p= current_user.profile.title
             .live-modal-category-info
               .live-modal-category-info-title
                 Category

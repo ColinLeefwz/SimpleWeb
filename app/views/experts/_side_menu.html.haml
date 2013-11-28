@@ -4,8 +4,8 @@
   .expert-text-info
     .expert-name
       %p= @expert.name
-    %p= @expert.expert_profile.title
-    %p= @expert.expert_profile.company
+    %p= @expert.profile.title
+    %p= @expert.profile.company
     %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
   .clear-fix
   .toolkit

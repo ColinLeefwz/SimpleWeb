@@ -29,6 +29,9 @@ Prodygia::Application.routes.draw do
   resources :members do
     member do
       get :dashboard
+      get :profile
+      get :edit_profile
+      patch :update_profile
       get :refer_a_friend
     end
   end

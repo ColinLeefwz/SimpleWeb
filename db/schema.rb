@@ -96,25 +96,6 @@ ActiveRecord::Schema.define(version: 20131127080747) do
 
   add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id", using: :btree
 
-  create_table "expert_profiles", force: true do |t|
-    t.string   "title"
-    t.string   "company"
-    t.string   "location"
-    t.text     "expertise"
-    t.text     "favorite_quote"
-    t.text     "career"
-    t.text     "education"
-    t.text     "web_site"
-    t.text     "article_reports"
-    t.text     "additional"
-    t.text     "testimonials"
-    t.integer  "expert_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "expert_profiles", ["expert_id"], name: "index_expert_profiles_on_expert_id", using: :btree
-
   create_table "followings", force: true do |t|
     t.integer  "the_followed"
     t.integer  "follower"
@@ -142,6 +123,25 @@ ActiveRecord::Schema.define(version: 20131127080747) do
 
   add_index "orders", ["session_id"], name: "index_orders_on_session_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "profiles", force: true do |t|
+    t.string   "title"
+    t.string   "company"
+    t.string   "location"
+    t.text     "expertise"
+    t.text     "favorite_quote"
+    t.text     "career"
+    t.text     "education"
+    t.text     "web_site"
+    t.text     "article_reports"
+    t.text     "additional"
+    t.text     "testimonials"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
   create_table "propose_topics", force: true do |t|
     t.string   "Name"

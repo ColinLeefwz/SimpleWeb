@@ -29,6 +29,7 @@ class Ability
       end
 
       cannot :delete, Member
+      cannot :refer_new_expert, Expert
     end
   end
 end
