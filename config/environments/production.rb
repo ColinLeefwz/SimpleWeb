@@ -71,7 +71,9 @@ Prodygia::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   #config default url
-	config.action_mailer.default_url_options = { :host => 'pdg.originatechina.com' }
+	# config.action_mailer.default_url_options = { :host => 'pdg.originatechina.com' } # for pdg
+	config.action_mailer.default_url_options = { :host => 'www.prodygia.com' } # for DO product
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).
   config.i18n.fallbacks = true
