@@ -1,4 +1,4 @@
-- @followed_expert.each do |e|
+- @followed_experts.each do |e|
   .expert-action-box
     .expert-info
       .expert-avatar
@@ -7,7 +7,7 @@
         .expert-name
           = e.name
         .expert-title
-          #{e.expert_profile.title}, #{e.expert_profile.company}
+          #{e.profile.title}, #{e.profile.company}
     .expert-actions
       .fa.fa-star.follow-star
       .clear-fix

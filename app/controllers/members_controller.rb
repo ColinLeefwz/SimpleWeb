@@ -29,6 +29,22 @@ class MembersController < ApplicationController
     end
   end
   
+  def refer_a_friend
+    @member = current_user
+    @email_message = current_user.build_refer_message(User::USER_TYPE[:member])
+    @from = "experts/refer_a_user"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
+
+  def experts
+    @followed_experts = current_user.followed_users
+    @from = "expert"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
 
   private
 
@@ -44,20 +60,4 @@ class MembersController < ApplicationController
     params.require(:profile).permit(:title, :company, :location)
   end
 
-  def refer_a_friend
-    @member = current_user
-    @email_message = current_user.build_refer_message(User::USER_TYPE[:member])
-    @from = "experts/refer_a_user"
-    respond_to do |format|
-      format.js {render "update"}
-    end
-  end
-
-  def expert
-    @followed_expert = current_user.followed_users
-    @from = "expert"
-    respond_to do |format|
-      format.js {render "update"}
-    end
-  end
 end

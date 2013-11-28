@@ -33,7 +33,7 @@ Prodygia::Application.routes.draw do
       get :edit_profile
       patch :update_profile
       get :refer_a_friend
-      get :expert
+      get :experts
     end
   end
 

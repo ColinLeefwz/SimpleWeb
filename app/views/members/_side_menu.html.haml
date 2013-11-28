@@ -16,7 +16,7 @@
 .toolkit
   .item
     = render 'item_icon', item_name: 'follow_expert'
-    .item-text #{link_to 'Expert', expert_member_path(current_user), remote: true }
+    .item-text #{link_to 'Expert', experts_member_path(current_user), remote: true }
   .item
     = render 'item_icon', item_name: 'follow_content'
     .item-text #{link_to 'Content', remote: true}
