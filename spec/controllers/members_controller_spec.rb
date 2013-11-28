@@ -46,4 +46,17 @@ describe MembersController do
       end
     end
   end
+
+	describe "PUT experts" do
+		context "logged in member" do
+			before :each do
+				sign_in peter
+			end
+
+			it "lists all the experts I followed" do
+				get :experts, id: peter.id, format: :js
+				expect(assigns[:followed_experts]).to eq peter.followed_users
+			end
+		end
+	end
 end
