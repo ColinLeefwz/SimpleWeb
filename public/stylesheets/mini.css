@@ -126,35 +126,31 @@ animation:oa 3s ease-out;
 	0%{opacity:0;}
 	18%{opacity:1;}
 	36%{opacity:0;}
-	54%{opacity:0;}
-	70%{opacity:1;}
-	86%{opacity:0;}
+	54%{opacity:1;}
+	70%{opacity:0;}
 	100%{opacity:1;}
 }
 @-moz-keyframes oa{
 	0%{opacity:0;}
 	18%{opacity:1;}
 	36%{opacity:0;}
-	54%{opacity:0;}
-	70%{opacity:1;}
-	86%{opacity:0;}
+	54%{opacity:1;}
+	70%{opacity:0;}
 	100%{opacity:1;}
 }
 @-o-keyframes oa{
 	0%{opacity:0;}
 	18%{opacity:1;}
 	36%{opacity:0;}
-	54%{opacity:0;}
-	70%{opacity:1;}
-	86%{opacity:0;}
+	54%{opacity:1;}
+	70%{opacity:0;}
 	100%{opacity:1;}
 }
 @-ms-keyframes oa{
 	0%{opacity:0;}
 	18%{opacity:1;}
 	36%{opacity:0;}
-	54%{opacity:0;}
-	70%{opacity:1;}
-	86%{opacity:0;}
+	54%{opacity:1;}
+	70%{opacity:0;}
 	100%{opacity:1;}
 }
