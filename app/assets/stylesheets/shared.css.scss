@@ -1,0 +1,16 @@
+
+// add "center-container" to an element, then you can use "vertical-align: middle" to any of its inline child element
+// "vertical-align" only works with table element or inline text/image element by default
+.center-container:before{
+  content: '';
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: -0.25em;
+}
+
+// add "inline" class to a div, then it will be displayed as "inline-block"
+// bootstrap deals with other elements with "inline", like ul.inline, .checkbox.inline
+.inline{
+  display: inline-block;
+}
