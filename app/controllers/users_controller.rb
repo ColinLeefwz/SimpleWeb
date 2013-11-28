@@ -34,7 +34,6 @@ class UsersController < ApplicationController
         else
           current_user.follow(followed_user)
         end
-
         render nothing: true
       }
     end
@@ -44,6 +43,21 @@ class UsersController < ApplicationController
   end
 
   def followers
+  end
+
+  def subscribe_session
+    respond_to do |format|
+     format.js{
+       current_session = Session.where(id: params[:session_id]).first
+       if current_user.has_subscribed?(current_session)
+         current_user.unsubscribe(current_session)
+       else
+         current_user.subscribe(current_session)
+       end
+
+       render nothing: true
+     } 
+    end
   end
 
 end

@@ -23,4 +23,24 @@ describe UsersController do
 		end
 	end
 
+  describe "GET subscribe_session" do
+    context "logged in member" do
+      before :each do
+        sign_in jevan
+      end
+      
+      it "can subscribe session" do 
+        get :subscribe_session, session_id: session_intro.id, format: :js
+        expect(jevan.subscribed_sessions).to include session_intro
+      end
+
+      it "can unsubscribe session if already subscribe the session" do
+        session_intro.subscribers << jevan
+        get :subscribe_session, session_id: session_intro.id, format: :js
+        expect(session_intro.reload.subscribers).not_to include jevan
+      end
+    end
+
+  end
+
 end

@@ -10,6 +10,9 @@
       = render 'shared/social_share', session_title: @session.title, session_url: session_url(@session)
     .text-page-category-name
       = @session.categories.join(", ")
+    .text-page-favorite
+      %i.fa.fa-star-o 
+    = link_to " ", subscribe_session_path(@session), class: "hidden", id: "mark-link", remote: true
   .clear-fix
 .text-page-article-box
   .text-page-title
