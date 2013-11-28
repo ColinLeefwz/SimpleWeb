@@ -9,7 +9,8 @@
   margin-right: -0.25em;
 }
 
-// add "inline" class to an element, then it will be displayed as "inline-block"
+// add "inline" class to a div, then it will be displayed as "inline-block"
+// bootstrap deals with other elements with "inline", like ul.inline, .checkbox.inline
 .inline{
   display: inline-block;
 }
