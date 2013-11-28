@@ -1,0 +1,139 @@
+
+$shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
+
+.course_show{
+  width: 79%;
+  min-width: 300px;
+  margin: 0 auto;
+}
+
+
+
+.course_show{
+
+  .box{
+    background-color: white;
+    box-shadow: $shadow_param;
+  }
+
+  .inline-wrapper{
+    .inline{
+      display: inline-block;
+    }
+  }
+
+  .overview{
+    padding-top: 2em;
+    .inline{
+      display: inline-block;
+    }
+
+    .cover-box{
+      width: 30%;
+      .cover{
+        width: 20em;
+        height: 13em;
+        overflow: hidden;
+        margin: 0 auto;
+        img{
+          display: block;
+          margin: 0 auto;
+        }
+      }
+      .enroll-button{
+        background-color: #8a2649;
+        font-family: Latobold;
+        width: 10em;
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 1em;
+        padding: 0.3em 0.3em;
+        a{  color: white;  }
+      }
+    }
+
+
+    .description-box{
+      vertical-align: top;
+      width: 60%;
+      .title{
+        font-family: Latobold;
+        font-size: 1.5em;
+      }
+      .expert{
+        font-family: Latoitalic;
+      }
+      .video-length{
+
+      }
+      .separator:after{
+        content: "|"
+      }
+      .category{
+      }
+      .description{
+        color: #000000;
+      }
+    }
+
+    .social-box{
+      width: 10%;
+    }
+
+    .percentage{
+        float: right;
+        padding-right: 10px;
+    }
+    .progress{
+      height: 4px;
+      border-radius: 0;
+      -webkit-border-radius: 0;
+      .bar{
+        width: 1000px;
+        height: 4px;
+        background-image: none;
+        background-color: #9AA2FC;
+      }
+    }
+  }
+
+
+  .chapter{
+    .chapter-title{
+      height: 2em;
+      border-bottom: 1px solid #4E2971;
+      .anchor{
+        width: 2em;
+        height: 2em;
+        background-color: #4E2971;
+        span{
+          width: 2em;
+          height: 2em;
+          display: table-cell;
+          vertical-align: middle;
+          text-align: center;
+          color: white;
+          font-family: Latobold;
+        }
+      }
+      .title{
+        span{
+          height: 2em;
+          display: table-cell;
+          vertical-align: bottom;
+        }
+      }
+    }
+
+    .chapter-item{
+      border-bottom: 1px solid #C9C9C9;
+      .content-icon{
+        width: 2em;
+        height: 2em;
+        padding: 0.3em 0.3em;
+      }
+      .item-title{
+      }
+    }
+  }
+}
