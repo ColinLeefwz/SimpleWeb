@@ -112,7 +112,7 @@
 								<div class="rightsign"></div>
 								<h2><%= ma.title %></h2>
 								<span><%= ma.cat.strftime("%Y年%m月%d日") %></span>
-								<img src="/newbackstage/images/pic35.jpg" align="middle" width="100%"/>
+								<%= image_tag( "#{MobileArticle.img_url(ma.id)}?time=#{Time.now.to_i}", :style => "width:100%", :align => "middle" ) %>
 								<p>
 									<%= ma.text %>
 								</p>
