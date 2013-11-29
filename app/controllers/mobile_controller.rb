@@ -10,6 +10,7 @@ class MobileController < ApplicationController
 
   def index2
     if params[:sid]
+      @mobile_space = MobileSpace.where({sid:params[:sid]}).first
       @mobile_banners = MobileBanner.where({sid: params[:sid]}).sort({_id:-1})
       @mobile_articles = MobileArticle.where({sid: params[:sid]}).sort({_id:-1})
       @shop = Shop.find_by_id(params[:sid])
