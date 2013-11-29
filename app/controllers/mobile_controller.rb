@@ -13,6 +13,8 @@ class MobileController < ApplicationController
       @mobile_banners = MobileBanner.where({sid: params[:sid]}).sort({_id:-1})
       @mobile_articles = MobileArticle.where({sid: params[:sid]}).sort({_id:-1})
       @shop = Shop.find_by_id(params[:sid])
+      @contact_lianlian_page = MobileArticle.find_by_id("[#{params[:sid]}]0") 
+      @welcome_page = MobileArticle.find("[#{params[:sid]}]1")
     end
     render :layout => false
   end
@@ -45,6 +47,14 @@ class MobileController < ApplicationController
   def news
     @mobile_articles = MobileArticle.where({sid: params[:sid]}).sort({_id:-1})
     @shop = Shop.find_by_id(params[:sid])
+    render :layout => false
+  end
+
+  def content
+    @mobile_space = MobileSpace.where({sid:params[:sid]}).first
+    @mobile_articles = MobileArticle.where({sid:params[:sid],category:params[:c]}).sort({_id:-1})
+    @contact_lianlian_page = MobileArticle.find_by_id("[#{params[:sid]}]0") 
+    @welcome_page = MobileArticle.find("[#{params[:sid]}]1")
     render :layout => false
   end
 
