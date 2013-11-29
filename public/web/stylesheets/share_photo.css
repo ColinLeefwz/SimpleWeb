@@ -74,7 +74,7 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 
 #Plane3{overflow:hidden;text-align:center;color:#fff;position:absolute;left:0px;top:0px;width:100%;background-color:rgba(82,88,94,0.6);
 font-size:22px;padding:5px 0px;line-height:30px;}
-#Plane3 .imgs{position:absolute;right:20px;top:10px;width:60px;}
+#Plane3 .imgs{position:absolute;right:20px;top:10px;width:50px;}
 .opacityanimation{
 -webkit-animation:oa 3s ease-out;
 -moz-animation:oa 3s ease-out;
