@@ -33,6 +33,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
     display: inline-block;
     padding-right: 2em;
     .name{
+      font-family: "Latoblack";
       font-size: 14pt;
       color: #454545;
     }
@@ -74,10 +75,6 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 
   //resume
   .resume{
-    .name{
-      font-family: 'Latobold';
-      font-size: 18px;
-    }
     .title{
       font-size: 16px;
     }
