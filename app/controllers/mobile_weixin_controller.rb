@@ -4,6 +4,7 @@ class MobileWeixinController < ApplicationController
 
   def index
     @token = Digest::SHA256.hexdigest(session_shop.id.to_s + "12191008").slice(7,8)
+    redirect_to "/mobile_weixin/check" if ENV["RAILS_ENV"] == "production"
   end
 
   def check
