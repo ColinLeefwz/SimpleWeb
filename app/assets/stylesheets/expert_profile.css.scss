@@ -13,10 +13,15 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
   box-shadow: $shadow_param;
 
   margin: 0 auto;
-  margin-bottom: 2em;
 }
 
+.first-sub{
+  margin-bottom: 30px;
+}
 
+.second-sub{
+  margin-bottom: 10px;
+}
 
 .brief{
   width: 86%;
@@ -27,10 +32,35 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
   .brief-item{
     display: inline-block;
     padding-right: 2em;
+    .name{
+      font-family: "Latoblack";
+      font-size: 14pt;
+      color: #454545;
+    }
+    .title_company{
+      font-family: "Latoreg";
+      font-size: 11pt;
+      color: #454545;
+    }
+    .job{
+      font-family: "Latoreg";
+      font-size: 9pt;
+      color: #777;
+    }
+    .company, .personal, .twitter{
+      font-family: "Latoreg";
+      font-size: 9pt;
+      color: #777777;
+    }
+    .company-value, .personal-value, .twitter-value{
+      font-family: "Latoreg";
+      font-size: 10pt;
+      color: #454545;
+    }
   }
-  .brief-item:last-of-type{
+  .brief-item-last{
     float: right;
-    padding-right: 11%;
+    padding-right: 10px;
   }
 
   //avatar
@@ -45,16 +75,11 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 
   //resume
   .resume{
-    .name{
-      font-family: 'Latobold';
-      font-size: 18px;
-    }
     .title{
       font-size: 16px;
     }
 
     .light-font{
-      color: #575757;
       padding-right: 24px;
     }
   }
@@ -66,6 +91,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
       .left-side{
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+        width: 90px;
         .fa-star:before, .fa-comments:before{
           margin-right: 0.5em;
         }
@@ -76,6 +102,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         background-color: white;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
+        width: 25px;
       }
 
       button{
@@ -96,10 +123,30 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 
 .detail{
   width: 86%;
+  .nav-tabs{
+    a{
+      margin-right: 0px;
+    }
+  }
   .nav{
     margin-bottom: 0;
     .tab{
+      text-align: center;
+      width: 33.3333333334%;
+      a{
+        font-family: "Latobold";
+        font-size: 12pt;
+        color: #989898;
+      }
+    }
+    .tab:first-child, .tab:last-child{
       width: 33.3333333333%;
+    }
+    .active{
+      border-bottom: 2px solid #8a2649;
+      a{
+        color: #454545;
+      }
     }
   }
 
