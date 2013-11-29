@@ -44,6 +44,7 @@ class MobileArticlesController < ApplicationController
   def mobile_show
     @mobile_space = MobileSpace.where({sid:session_shop.id}).first
     @mobile_articles = session_shop.mobile_articles
+    @mobile_welcome_banner = MobileBanner.find_by_id("[#{session_shop.id}]2")
     @mobile_banners = session_shop.mobile_banners
     @contact_lianlian_page = MobileArticle.find_by_id("[#{session_shop.id}]0") 
     @welcome_page = MobileArticle.find("[#{session_shop.id}]1")

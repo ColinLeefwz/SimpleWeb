@@ -20,10 +20,6 @@
 			<a id="CloseMenu" alt="关闭导航"><span>关闭导航</span></a>
 				<ul class="men">
 					<li><a href=<%= "/mobile_articles/mobile_show" %> data-ajax="false">主页</a></li>
-<!-- 					<li><a href=<%= "/mobile_articles/company" %> data-ajax="false">公司介绍</a></li>
-					<li><a href=<%= "/mobile_articles/news" %> data-ajax="false">最新动态</a></li>
-					<li><a href=<%= "/mobile_articles/contact" %> data-ajax="false">联系我们</a></li> -->
-
 					<% if @mobile_space.menu.size>0 %>
 					<% @mobile_space.menu.each do |m| %>
 					<li><a href=<%= "/mobile_articles/content?c=#{m}" %> data-ajax="false"><%= m %></a></li>
@@ -33,16 +29,12 @@
 			</div>
 		</div>
 		<div id="DH">
-<!-- 			<div class="imgdiv">
-				<a href="#" data-ajax="false"><img src="images/pic1.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic2.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic3.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic1.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic2.jpg" width="100%"></a>
-				<a href="#" data-ajax="false"><img src="images/pic3.jpg" width="100%"></a>
-			</div> -->
 			<div class="imgdiv">
-			    <a href="http://www.dface.cn" data-ajax="false"><img src="/cellphone/images/pic5.jpg" width="480px;" height="202.5px;"></a>
+			    <% if @mobile_welcome_banner %>
+                <a href=<%= "#{@mobile_welcome_banner.url}" %> data-ajax="false">
+                <%= image_tag( "#{MobileBanner.img_url(@mobile_welcome_banner.id)}?time=#{Time.now.to_i}", :style => "width:480px;height:202.5px" ) %>
+                </a>
+			    <% end %>
 				<% @mobile_banners.each do |mb| %>
                 <a href=<%= "#{mb.url}" %> data-ajax="false">
                 <%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:480px;height:202.5px" ) %>
