@@ -41,22 +41,30 @@
 			</a>
 		</div>
 		<% end %>
-		<div class="box1">
-			<div class="box1left"><img src="http://shop.dface.cn/cellphone/images/pic6.jpg" width="100%"></div>
-			<a href="#" data-ajax="false">
-				<h2>脸脸帮助</h2>
-				<p>脸脸是什么？“脸脸”是一款基于现场的移动社交产品。通过脸脸，您可以进入您所在场所的虚拟现场，认识与您同在这里的人，与熟悉的或陌生的朋友打	招呼、聊天。上线即被APP推荐为社交类新品排行第一位！......</p>
-			</a>
-		</div>
 
-		
+		<% if @contact_lianlian_page %>
 		<div class="box1">
-			<div class="box1left"><img src="http://shop.dface.cn/cellphone/images/pic7.jpg" width="100%"></div>
+			<div class="box1left">
+			<%= image_tag( "#{MobileArticle.img_url(@contact_lianlian_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
+			</div>
 			<a href="#" data-ajax="false">
-				<h2>欢迎您使用脸脸移动版网站</h2>
-				<p>脸脸是什么？“脸脸”是一款基于现场的移动社交产品。通过脸脸，您可以进入您所在场所的虚拟现场，认识与您同在这里的人，与熟悉的或陌生的朋友打	招呼、聊天。上线即被APP推荐为社交类新品排行第一位！......</p>
+				<h2><%= @contact_lianlian_page.title %></h2>
+                <p><%= @contact_lianlian_page.text %></p>
 			</a>
 		</div>
+		<% end %>
+
+		<% if @welcome_page %>
+		<div class="box1">
+			<div class="box1left">
+			<%= image_tag( "#{MobileArticle.img_url(@welcome_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
+			</div>
+			<a href="#" data-ajax="false">
+				<h2><%= @welcome_page.title %></h2>
+				<p><%= @welcome_page.text %></p>
+			</a>
+		</div>
+		<% end %>
 		
 		<a href="#" class="link">展开更多</a>
 		<div id="Shadow">
