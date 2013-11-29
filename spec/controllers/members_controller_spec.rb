@@ -3,6 +3,12 @@ require 'spec_helper'
 describe MembersController do
   helper_objects
 
+  describe "GET dashboard" do
+  end
+   
+  describe "GET profile" do 
+  end
+
   describe "GET edit profile" do
     context "not logged in" do
       it "can't access edit profile page" do
@@ -47,7 +53,25 @@ describe MembersController do
     end
   end
 
-	describe "PUT experts" do
+  describe "GET refer_a_friend" do 
+    context "logged in member" do
+      before :each do
+        sign_in jevan
+      end
+
+      it "creates a invitation email message" do 
+        get :refer_a_friend, id: jevan.id, format: :js 
+        expect(assigns[:email_message]).to be_new_record
+      end 
+
+      it "can access to firiend invitation page" do 
+        get :refer_a_friend, id: jevan.id, format: :js 
+        expect(response).to be_success
+      end 
+    end
+  end
+
+	describe "GET experts" do
 		context "logged in member" do
 			before :each do
 				sign_in peter
@@ -57,6 +81,11 @@ describe MembersController do
 				get :experts, id: peter.id, format: :js
 				expect(assigns[:followed_experts]).to eq peter.followed_users
 			end
+
+      it "can access to followed experts page" do
+        get :experts, id: peter.id, format: :js
+        expect(response).to be_success
+      end
 		end
 	end
 end
