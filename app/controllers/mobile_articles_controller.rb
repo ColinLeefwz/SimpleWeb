@@ -67,7 +67,7 @@ class MobileArticlesController < ApplicationController
   end
 
   def ajax_del
-    @mobile_article = MobileArticle.find_by_id(params[:id])
+    @mobile_article = MobileArticle.where({id: params[:id]}).first
     if @mobile_article.destroy
       redirect_to "/mobile_articles/index"
     else

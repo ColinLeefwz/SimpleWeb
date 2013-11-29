@@ -23,7 +23,7 @@ class MobileBanner
   end
   
   $fake_banner = ["528f09fc1d41c897cf000005"] if ENV["RAILS_ENV"] != "production"
-  $fake_banner = ["5297fb6520f318818c00000b"] if ENV["RAILS_ENV"] == "production"
+  $fake_banner = ["5298617020f3185f7a000010"] if ENV["RAILS_ENV"] == "production"
   
   class << self
     alias_method :find_by_id_old, :find_by_id unless method_defined?(:find_by_id_old)

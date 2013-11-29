@@ -26,7 +26,7 @@ class MobileBannersController < ApplicationController
   end
 
   def ajax_del
-    @mobile_banner = MobileBanner.find_by_id(params[:id])
+    @mobile_banner = MobileBanner.where({id: params[:id]}).first
     @mobile_banner.destroy
   end
 
