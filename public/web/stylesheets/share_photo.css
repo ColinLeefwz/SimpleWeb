@@ -32,6 +32,7 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:46px;letter-spacing:-0
 a.btn4{width: 252px;height: 92px;display: inline-block;text-align:center;background: url("/admin/image/share_weibo/images/btn5_1.png") left top no-repeat;
 color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 
+.none{display:none !important;}
 .relative{position:relative !important;}
 
 .clear1{width:100%;height:0px;clear:both;overflow:hidden;zoom:1;}
