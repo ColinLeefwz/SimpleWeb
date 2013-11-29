@@ -1,4 +1,19 @@
 @font-face{
+	font-family: 'Latoblack';
+	src: url(font-path('lato-black-webfont.ttf')) format('turetype'),
+	url(font-path('lato-black-webfont.eot')) format('embedded-opentype'),
+	url(font-path('lato-black-webfont.woff')) format('woff'),
+	url(font-path('lato-black-webfont.svg') + "#Latobold") format('svg');
+}
+
+@font-face{
+	font-family: 'Latoblackitalic';
+	src: url(font-path('lato-blackitalic-webfont.ttf')) format('turetype'),
+	url(font-path('lato-blackitalic-webfont.eot')) format('embedded-opentype'),
+	url(font-path('lato-blackitalic-webfont.woff')) format('woff'),
+	url(font-path('lato-blackitalic-webfont.svg') + "#Latobold") format('svg');
+}
+@font-face{
 	font-family: 'Latobold';
 	src: url(font-path('Lato-Bold.ttf')) format('turetype'),
 	url(font-path('lato-bold-webfont.eot')) format('embedded-opentype'),
