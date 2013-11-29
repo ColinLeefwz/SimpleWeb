@@ -50,7 +50,7 @@ Prodygia::Application.routes.draw do
     end
   end
 
-  resources :experts, shallow: true do
+  resources :experts do
     member do
       get :dashboard
       get :main_menu
@@ -79,7 +79,4 @@ Prodygia::Application.routes.draw do
 
   get "/:page", to: 'static_pages#static'
 
-  get "session/:id", to: "welcome#session_page", as: 'session_page'
-
-  get "/paypal_callback", to: 'session#paypal_callback'
 end
