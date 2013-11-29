@@ -4,7 +4,10 @@ class MobileArticlesController < ApplicationController
   layout "mobile"
 
   def index
-    @mobile_articles = session_shop.mobile_articles
+    @shop = session_shop
+    @mobile_articles = MobileArticle.where({sid:session_shop.id, category:params[:c]})
+    @contact_lianlian_page = MobileArticle.find_by_id("[#{session_shop.id}]0")
+    @welcome_page = MobileArticle.find("[#{session_shop.id}]1")
   end
 
   def new
@@ -14,11 +17,12 @@ class MobileArticlesController < ApplicationController
   def create
     @mobile_article = MobileArticle.new(params[:mobile_article])
     @mobile_article.sid = session[:shop_id]
+    @mobile_article.category = params[:c]
 
     if @mobile_article.save
-      redirect_to "/mobile_articles/index"
+      redirect_to URI::escape("/mobile_articles/index?c=#{params[:c]}")
     else
-      render :action => "new"
+      render :action => URI::escape("new?c=#{params[:c]}")
     end
   end
 
@@ -38,8 +42,11 @@ class MobileArticlesController < ApplicationController
   end
 
   def mobile_show
+    @mobile_space = MobileSpace.where({sid:session_shop.id}).first
     @mobile_articles = session_shop.mobile_articles
     @mobile_banners = session_shop.mobile_banners
+    @contact_lianlian_page = MobileArticle.find_by_id("[#{session_shop.id}]0") 
+    @welcome_page = MobileArticle.find("[#{session_shop.id}]1")
     @shop = session_shop
     @sid = session_shop.id 
     render :layout => false
@@ -98,6 +105,12 @@ class MobileArticlesController < ApplicationController
 
   def intro
     
+  end
+
+  def content
+    @mobile_space = MobileSpace.where({sid:session_shop.id}).first
+    @mobile_articles = MobileArticle.where({sid:session_shop.id,category:params[:c]})
+    render :layout => false
   end
 
 end

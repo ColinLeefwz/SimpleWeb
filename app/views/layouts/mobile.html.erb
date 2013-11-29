@@ -8,7 +8,7 @@
 	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
 	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
 	<script>
-	var navmove="on", runing;
+	var navmove="off", runing;
 	$(document).ready(function(){
 		runing=$("#CB1").attr("class");
 		if(runing=="checkboxs1"){
@@ -54,22 +54,31 @@
 			<div id="Nav">
 			<a class="sign" id="CloseNav"></a>
 			<div id="Navcon">
-				<a href="/mobile/index">首 页</a>
+				<a href="/mobile">首 页</a>
 				<span class="navline"></span>
-				<a href="/mobile_banners/new">设 置</a>
+				<a href="/mobile_menus">设 置</a>
 				<span class="navline"></span>
-				<a href="/mobile_articles/intro">公司介绍</a>
-				<span class="navline"></span>
-				<a href="/mobile_articles/index">图文</a>
-				<span class="navline"></span>
-				<!-- <a href="#">推荐菜品</a>
+<!-- 				<a href="/mobile_articles/intro">公司介绍</a>
+				<span class="navline"></span> -->
+<!-- 				<a href="/mobile_articles/index">图文</a>
+				<span class="navline"></span> -->
+
+<!-- 				<a href="#">推荐菜品</a>
 				<span class="navline"></span>
 				<a href="#">联系我们</a>
-				<span class="navline"></span>
-				<a href="#">访问统计</a>
 				<span class="navline"></span> -->
-				<a href="#">微信管理</a>
+				<a href="#">访问统计</a>
 				<span class="navline"></span>
+				<a href="/mobile_weixin">微信管理</a>
+				<span class="navline"></span>
+
+				<% if MobileSpace.where({sid:session_shop.id}).first.menu.size>0 %>
+				<% MobileSpace.where({sid:session_shop.id}).first.menu.each do |m| %>
+				<a href=<%= "/mobile_articles/index?c=#{m}" %> ><%= m %></a>
+				<span class="navline"></span> 
+				<% end %>              
+				<% end %>
+				
 				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
 				<span class="navline"></span>
 				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>

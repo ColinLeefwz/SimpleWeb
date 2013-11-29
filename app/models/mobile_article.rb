@@ -29,8 +29,9 @@ class MobileArticle
     ma.save
   end
   
-  $fake_articles = ["",""]
-  
+  $fake_articles = ["5291a3ff1d41c8291900002c","52918c771d41c820df000021"] if ENV["RAILS_ENV"] != "production"
+  $fake_articles = ["5297f3df20f318818c000002","5297f6eb20f318aff500000f"] if ENV["RAILS_ENV"] == "production"
+
   class << self
     alias_method :find_by_id_old, :find_by_id unless method_defined?(:find_by_id_old)
     alias_method :find_old, :find unless method_defined?(:find_old)
@@ -48,7 +49,7 @@ class MobileArticle
   def self.find(aid)
     return nil if aid.nil?
     if aid.class==String && aid[0]=="["
-      find_old($fake_articles[0])
+      find_old($fake_articles[1])
     else
       find_old(aid)
     end

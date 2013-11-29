@@ -1,0 +1,139 @@
+
+
+
+
+
+		<div id="BG"></div>
+		<div id="DelDiv">
+			<center class="pt15">确定删除此项？</center>
+			<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+			<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+		</div>
+		<div class="con">
+			<div class="box14">
+				<div class="box14left">
+					<div class="title1"><h2 class="f18 l">设置</h2></div>
+					<div class="submenu">
+						<ul>
+							<li class="hover"><a href="/mobile_menus">菜单和功能</a></li>
+							<li><a href="/mobile_banners/new">Banner</a></li>
+						</ul>
+					</div>
+					<div class="clear1"></div>
+					<form method="post" action="">
+						<table width="100%" cellpadding="0" cellspacing="0" class="tab2">
+							<tr>
+								<th >菜单名称</th>
+								<th >对应的功能</th>
+								<th width="95" class="cz">操 作</th>
+							</tr>
+<!-- 							<tr>
+								<td>主页</td>
+								<td>网站首页</td>
+								<td valign="middle" class="textcenter">
+									<a href="javascript:void(0)" class="edit" title="编辑"></a>
+									<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+								</td>
+							</tr> -->
+							<% if @mobile_space.menu %>
+							<% @mobile_space.menu.each_with_index do |ms,index| %>
+							<tr>
+								<td><%= ms %></td>
+								<td></td>
+								<td valign="middle" class="textcenter">
+									<a href=<%= "/mobile_menus/edit?id=#{index}" %> class="edit" title="编辑"></a>
+									<a href="javascript:void(0)" class="del" onclick=
+									"ajaxDel(<%= index %>)" title="删除"></a>
+								</td>
+							</tr>
+							<% end %>
+							<% end %>
+
+<!-- 							<tr>
+								<td>公司简介</td>
+								<td>公司介绍</td>
+								<td valign="middle" class="textcenter">
+									<a href="javascript:void(0)" class="edit" title="编辑"></a>
+									<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+								</td>
+							</tr>
+							<tr>
+								<td>最新动态</td>
+								<td>文章系统</td>
+								<td valign="middle" class="textcenter">
+									<a href="javascript:void(0)" class="edit" title="编辑"></a>
+									<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+								</td>
+							</tr>
+							<tr>
+								<td>推荐菜品</td>
+								<td>产品系统</td>
+								<td valign="middle" class="textcenter">
+									<a href="javascript:void(0)" class="edit" title="编辑"></a>
+									<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+								</td>
+							</tr>
+							<tr>
+								<td>地图导航</td>
+								<td>地图系统</td>
+								<td valign="middle" class="textcenter">
+									<a href="javascript:void(0)" class="edit" title="编辑"></a>
+									<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+								</td>
+							</tr> -->
+						</table>
+						<a href="/mobile_menus/new" class="btn22 mt15">添加菜单</a>
+						<br/><br/><br/>
+						<div class="title1"><h2>功能组件</h2></div>
+						<table width="100%" cellpadding="0" cellspacing="0" class="tab3 mt15">
+							<tr>
+								<td><img src="/newbackstage/images/pic26.jpg"/></td>
+								<td><img src="/newbackstage/images/pic27.jpg"/></td>
+								<td><img src="/newbackstage/images/pic28.jpg"/></td>
+								<td><img src="/newbackstage/images/pic29.jpg"/></td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<div class="box14right">
+					<div class="cpbox">
+						<iframe frameborder="0" src="/mobile_articles/mobile_show"></iframe>
+					<div>
+				</div>
+			</div>
+		</div>
+
+
+<script>
+function ajaxDel(menu_id){
+	var top;
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if(documentHeight<=windowHeight){
+	  $("#BG").css({"height":windowHeight+"px","display":"block"});
+	}else{
+	  $("#BG").css({"height":documentHeight+"px","display":"block"});
+	}
+	$("#DelDiv").css("display","block");
+	top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+	$("#DelDiv").css({"top":top+"px","display":"none"});
+	$("#DelDiv").fadeIn(600);
+
+	$("#DelBtn").click(function(){
+	  $.get("/mobile_menus/ajax_del",{id: menu_id}, function(data) {
+		if(data){
+		  $("#BG, #DelDiv").css("display","none");
+          window.location.href='/mobile_menus';
+		}
+		else{
+		  alert('删除失败.')
+		}
+	  });
+	});
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
+</script>

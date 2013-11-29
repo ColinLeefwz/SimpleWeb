@@ -1,0 +1,157 @@
+	<script>
+	var navmove="off", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+		
+		//新增
+		$("#Box14Right2").animate({"left":"378px"},1000);
+		$("#Article").click(function(){
+			$("#Box14Con").addClass("opacityanimation");
+			setTimeout(function(){
+				$("div.box14").css("height",$("#Box14Con").height()+$("#Box14Con").height()/2+"px");
+			},1000);
+		});
+		$("input[name='close']").click(function(){
+			$("#Box14Con").fadeOut(500,function(){
+				$(this).removeClass("opacityanimation");
+				$("div.box14").removeAttr("style");
+				$("a[name='links']").eq(1).addClass("hover");
+				$("div.box14conright").addClass("none");
+				$("div.box14conright").eq(1).removeClass("none");
+			});
+		});
+		$("a[name='links']").click(function(){
+			$("div.box14conright").addClass("none");
+			var rel=$(this).attr("rel");
+			$("div.box14conright").eq(rel).removeClass("none");
+			$("a[name='links']").removeClass("hover");
+			$(this).addClass("hover");
+		});
+		$("#Box14Con div.box14_plane6").click(function(){
+			$("#Box14Con div.box14_plane6 div.rightsign").css({"display":"none"});
+			$("#Box14Con div.box14_plane6 div.bg").css("height","0px");
+			var h=$(this).height();
+			$(this).find(".bg").css("height",h+30+"px");
+			$(this).find(".rightsign").css({"display":"block"});
+			// alert($(this).find(".hidden_id").html());
+		});
+		$("div.rightsign").click(function(e){
+			$(this).css({"display":"none"});
+			$(this).siblings(".bg").css("height","0px");
+			e.stopPropagation();
+		});
+	});
+    
+    if($(".rightsign").css("display")=="block"){
+      dks = $(this).find(".hidden_id").html();
+      $("#aid").val(dfs)
+    }
+    
+    end
+
+	$(".btn20").click(function(){
+		$(this).find(".rightsign").css({"display":"block"});
+		window.location.href='/mobile_weixin/new';
+	})
+	</script>
+
+
+		<div class="con visible">
+			<div class="box14 w760 relative visible">
+				<div class="title1"><h2 class="f18 l">微信管理</h2></div>
+				<div class="submenu">
+					<ul>
+						<li><a href="/mobile_weixin/check">微信接口设置</a></li>
+						<li class="hover"><a>微信自动回复管理</a></li>
+					</ul>
+				</div>
+				
+                <%= render(:partial => "left", :object => @left) %>
+
+				<div id="Box14Right2">
+					<div class="ml20 mt40">
+					<%= form_for @mobile_article, :url => "/mobile_weixin/create" do |f| %>
+						<b class="f14">关键字</b>&nbsp;&nbsp;如多个规则对应一条互动用逗号分隔，如：help，帮助<br/><br/><br/>
+						<!-- <input type="text" class="inputs8" /> -->
+						<%= text_field_tag :keywords,'', :class => "inputs8" %>
+						<%= hidden_field_tag :aid, "5292fcfa1d41c8430c0000b5" %>
+						<br/><br/>
+						<button class="btn24" type="button" id="Article"><b>+</b>从手机网站导入图文</button>
+						<br/><br/>
+						<input type="submit" class="btn20 w80" value="保 存" />
+						<div class="arrow"></div>
+					<% end %>
+					</div>
+				</div>
+
+
+				<div id="Box14Con">
+					<div class="box14conleft">
+					    <% @mobile_space.menu.each_with_index do |ms,index| %>
+						<a rel=<%= "#{index}" %> name="links"><%= ms %></a>
+						<% end %>
+					</div>
+                    
+                     <% @mobile_space.menu.each do |ms| %>
+					<div class="box14conright none">
+						<button class="btn24 mt20 r" type="button"><b>+</b>创建内容</button>
+						<div class="clear1"></div>
+						<div class="box14_plane7">
+						    <% MobileArticle.where({sid:session_shop.id,category:ms}).each do |ma| %>
+							<div class="box14_plane6 w260 l pointer" id="<%= ma.id %>" >
+							    <div style="display:none" class="hidden_id"><%= ma.id %></div>
+								<div class="bg"></div>
+								<div class="rightsign"></div>
+								<h2><%= ma.title %></h2>
+								<span><%= ma.cat.strftime("%Y年%m月%d日") %></span>
+								<img src="/newbackstage/images/pic35.jpg" align="middle" width="100%"/>
+								<p>
+									<%= ma.text %>
+								</p>
+							</div>
+
+							<% end %>
+							<% if !MobileArticle.where({sid:session_shop.id,category:ms}).first %>
+							<div class="box14_plane6 w260 l pointer">
+								<div class="bg"></div>
+								<div class="rightsign"></div>
+								<h2>未添加</h2>
+								<span>未添加</span>
+								<img src="/newbackstage/images/pic35.jpg" align="middle" width="100%"/>
+								<p>
+									未添加
+								</p>
+							</div>
+							<% end %>
+							
+						</div>
+						<!-- <input type="button" class="btn20 l" name="close" value="保 存" /> -->
+						<input type="button" class="btn21 l ml20" name="close" value="保 存" />
+						<input type="button" class="btn21 l ml20" name="close" value="取 消" />
+						<input type="button" class="btn25 r ml20" value="下一批" />
+						<input type="button" class="btn25 r" value="上一批" />
+					</div>
+
+                    <% end %>
+
+				</div>
+
+
+
+			</div>
+		</div>
+
+    <script>
+	$(".btn20").click(function(){
+		aid = 
+		window.location.href='/mobile_weixin/new';
+	})
+	</script>
