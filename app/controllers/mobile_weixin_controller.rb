@@ -23,7 +23,7 @@ class MobileWeixinController < ApplicationController
   end
 
   def list
-    
+    @mobile_articles = MobileArticle.where({:sid => session_shop.id, :kw.ne => nil})
   end
 
   def create

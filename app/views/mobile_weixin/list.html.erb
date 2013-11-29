@@ -68,25 +68,32 @@
 							<th>回复内容</th>
 							<th class="cz" width="95">操 作</th>
 						</tr>
+                        
+                        <% if @mobile_articles %>
+                        <% @mobile_articles.each do |ma|%>
 						<tr>
 							<td>
-								<div class="block relative">打折
+								<div class="block relative"><%= ma.kw %>
 									<div class="tab2box">
-										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+										<h2><%= ma.title %></h2>								
 											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
 										
-										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<a target="_blank" href="#" class="gray2"><%= ma.text %></a>
 										<div class="arrow"></div>
 									</div>
 								</div>
 							</td>
-							<td><a class="blue2 pointer" name="links" rel="0">衣服九折，裤子九点五折，包装另算。</a></td>
+							<td><a class="blue2 pointer" name="links" rel="0"><%= ma.title %></a></td>
 							<td valign="middle" class="textcenter">
 								<a href="mcp11.html" class="edit" title="编辑"></a>
 								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
 							</td>
 						</tr>
-						<tr>
+						<% end %>
+						<% end %>
+
+
+<!-- 						<tr>
 							<td>
 								<div class="block relative">便宜点吧
 									<div class="tab2box">
@@ -103,7 +110,7 @@
 								<a href="mcp11.html" class="edit" title="编辑"></a>
 								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
 							</td>
-						</tr>
+						</tr> -->
 					</table>
 				</form>
 			</div>
