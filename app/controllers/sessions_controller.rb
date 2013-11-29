@@ -81,7 +81,7 @@ class SessionsController < ApplicationController
     @session = LiveSession.new
     @session.expert = current_user
     @from = 'live_session'
-    @url = create_live_session_expert_sessions_path(current_user)
+    @url = create_live_session_sessions_path
     respond_to do |format|
       format.js { render 'experts/update'}
     end
@@ -109,7 +109,7 @@ class SessionsController < ApplicationController
   def new_post_content
     @session = ArticleSession.new  # use Session.new so that form params are wrapped in :session
     @session.expert = current_user
-    @url = create_post_content_expert_sessions_path(current_user)
+    @url = create_post_content_sessions_path
     @from = 'post_content'
     respond_to do |format|
       format.js { render 'experts/update'}
