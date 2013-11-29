@@ -32,6 +32,8 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:46px;letter-spacing:-0
 a.btn4{width: 252px;height: 92px;display: inline-block;text-align:center;background: url("/admin/image/share_weibo/images/btn5_1.png") left top no-repeat;
 color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 
+.relative{position:relative !important;}
+
 .clear1{width:100%;height:0px;clear:both;overflow:hidden;zoom:1;}
 
 #BG1{position:absolute;left:0px;top:0px;width:100%;background-image:url(/admin/image/share_weibo/bg1.png);overflow:hidden;}
@@ -69,4 +71,45 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 .plane8 .plane8left{width:96px;float:left;}
 .plane8 .plane8left2{width:465px;float:left;padding-left:15px;}
 
+#Plane3{overflow:hidden;text-align:center;color:#fff;position:absolute;left:0px;top:0px;width:100%;background-color:rgba(82,88,94,0.6);line-height:18px;padding:5px 0px;}
+#Plane3 .imgs{position:absolute;right:20px;top:10px;width:30px;}
+.opacityanimation{
+-webkit-animation:oa 3s ease-out;
+-moz-animation:oa 3s ease-out;
+-o-animation:oa 3s ease-out;
+-ms-animation:oa 3s ease-out;
+animation:oa 3s ease-out;
+}
+@-webkit-keyframes oa{
+	0%{opacity:0;}
+	18%{opacity:1;}
+	36%{opacity:0;}
+	54%{opacity:1;}
+	70%{opacity:0;}
+	100%{opacity:1;}
+}
+@-moz-keyframes oa{
+	0%{opacity:0;}
+	18%{opacity:1;}
+	36%{opacity:0;}
+	54%{opacity:1;}
+	70%{opacity:0;}
+	100%{opacity:1;}
+}
+@-o-keyframes oa{
+	0%{opacity:0;}
+	18%{opacity:1;}
+	36%{opacity:0;}
+	54%{opacity:1;}
+	70%{opacity:0;}
+	100%{opacity:1;}
+}
+@-ms-keyframes oa{
+	0%{opacity:0;}
+	18%{opacity:1;}
+	36%{opacity:0;}
+	54%{opacity:1;}
+	70%{opacity:0;}
+	100%{opacity:1;}
+}
 /*.center_image{width:100%;height:468px;}*/
