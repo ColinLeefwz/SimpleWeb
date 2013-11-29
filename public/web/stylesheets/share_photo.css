@@ -71,8 +71,9 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 .plane8 .plane8left{width:96px;float:left;}
 .plane8 .plane8left2{width:465px;float:left;padding-left:15px;}
 
-#Plane3{overflow:hidden;text-align:center;color:#fff;position:absolute;left:0px;top:0px;width:100%;background-color:rgba(82,88,94,0.6);line-height:18px;padding:5px 0px;}
-#Plane3 .imgs{position:absolute;right:20px;top:10px;width:30px;}
+#Plane3{overflow:hidden;text-align:center;color:#fff;position:absolute;left:0px;top:0px;width:100%;background-color:rgba(82,88,94,0.6);
+font-size:22px;padding:5px 0px;line-height:30px;}
+#Plane3 .imgs{position:absolute;right:20px;top:10px;width:60px;}
 .opacityanimation{
 -webkit-animation:oa 3s ease-out;
 -moz-animation:oa 3s ease-out;
