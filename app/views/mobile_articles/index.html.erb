@@ -50,7 +50,8 @@
                             </tr>
 							<% end %>
                             
-                            <% if @contact_lianlian_page %>
+
+                            <% if @contact_lianlian_page && params[:c] == "公司介绍" %>
 							<tr>
                               <td><%= @contact_lianlian_page.title%></td>
 							  <td valign="middle" class="textcenter">
@@ -61,7 +62,7 @@
                             </tr>
                             <% end %>
 
-                            <% if @welcome_page %>
+                            <% if @welcome_page && params[:c] == "产品介绍" %>
 							<tr>
                               <td><%= @welcome_page.title%></td>
 							  <td valign="middle" class="textcenter">
