@@ -116,6 +116,7 @@ class MobileArticlesController < ApplicationController
     @mobile_articles = MobileArticle.where({sid:session_shop.id,category:params[:c]})
     @contact_lianlian_page = MobileArticle.find_by_id("[#{session_shop.id}]0") 
     @welcome_page = MobileArticle.find("[#{session_shop.id}]1")
+    @sid = session_shop.id 
     render :layout => false
   end
 

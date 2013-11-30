@@ -24,14 +24,7 @@ class MobileController < ApplicationController
 
   def map
     @shop = Shop.find_by_id(params[:sid])
-    # lo = @shop.lo
-    # if lo.nil?
-    #   render :json => { poi: "120.128376,30.286706" }
-    # elsif lo.size == 1
-    #   render :json => { poi: "#{lo[0]},#{lo[1]}" }
-    # else
-    #   render :json => { poi: "#{lo[0][0]},#{lo[0][1]}" }
-    # end
+    @mobile_space = MobileSpace.where({sid:params[:sid]}).first
     render :layout => false
   end
 
