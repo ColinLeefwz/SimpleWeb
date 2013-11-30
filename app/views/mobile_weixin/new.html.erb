@@ -105,7 +105,7 @@
                     
                      <% @mobile_space.menu.each do |ms| %>
 					<div class="box14conright none">
-						<button class="btn24 mt20 r" type="button"><b>+</b>创建内容</button>
+						<button class="btn24 mt20 r" type="button"><a href=<%= "/mobile_articles/new?c=#{ms}"%> ><b>+</b>创建内容</a></button>
 						<div class="clear1"></div>
 						<div class="box14_plane7">
 						    <% MobileArticle.where({sid:session_shop.id,category:ms}).each do |ma| %>
