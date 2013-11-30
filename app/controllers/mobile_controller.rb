@@ -56,4 +56,8 @@ class MobileController < ApplicationController
     render :layout => false
   end
 
+  def s
+    render :layout => false
+  end
+
 end
