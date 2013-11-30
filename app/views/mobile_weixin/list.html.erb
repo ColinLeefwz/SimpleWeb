@@ -86,7 +86,7 @@
 							<td><a class="blue2 pointer" name="links" rel="0"><%= ma.title %></a></td>
 							<td valign="middle" class="textcenter">
 								<a href="mcp11.html" class="edit" title="编辑"></a>
-								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel('<%= ma.id %>')" title="删除"></a>
 							</td>
 						</tr>
 						<% end %>
@@ -117,7 +117,7 @@
 		</div>
 
 <script>
-function ajaxDel(){
+function ajaxDel(aid){
 	var top;
 	documentHeight=$(document).height();
 	windowHeight=$(window).height();
@@ -132,12 +132,10 @@ function ajaxDel(){
 	$("#DelDiv").fadeIn(600);
 
 	$("#DelBtn").click(function(){
-	  $.get("/shop3_coupons/ajax_del",{id: coupon_id}, function(data) {
-		if(data['text']){
+	  $.get("/mobile_weixin/ajax_del",{id: aid}, function(data) {
+		if(data){
 		  $("#BG, #DelDiv").css("display","none");
-		  $("#Tr"+index).fadeOut(300,function(){
-			$(this).remove();
-		  });
+		  window.location.href='/mobile_weixin/list';
 		}
 		else{
 		  alert('删除失败.')

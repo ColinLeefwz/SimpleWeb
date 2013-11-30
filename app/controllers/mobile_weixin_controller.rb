@@ -18,8 +18,14 @@ class MobileWeixinController < ApplicationController
 
   end
 
-  def ajax_add
-    
+  def ajax_del
+    @mobile_article = MobileArticle.where({id:params[:id]}).first
+    @mobile_article.kw = nil
+    if @mobile_article.save
+      redirect_to "/mobile_weixin/list"
+    else
+      redirect_to "/mobile_weixin/list"
+    end
   end
 
   def list

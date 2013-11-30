@@ -41,7 +41,10 @@
 			var h=$(this).height();
 			$(this).find(".bg").css("height",h+30+"px");
 			$(this).find(".rightsign").css({"display":"block"});
-			// alert($(this).find(".hidden_id").html());
+			if($(this).find("div.rightsign").css("display")=="block"){
+               dks = $(this).find(".rightsign").siblings("div.hidden_id").html();
+               $('input[name=aid]').attr('value',dks)
+			}
 		});
 		$("div.rightsign").click(function(e){
 			$(this).css({"display":"none"});
@@ -82,7 +85,7 @@
 						<b class="f14">关键字</b>&nbsp;&nbsp;如多个规则对应一条互动用逗号分隔，如：help，帮助<br/><br/><br/>
 						<!-- <input type="text" class="inputs8" /> -->
 						<%= text_field_tag :keywords,'', :class => "inputs8" %>
-						<%= hidden_field_tag :aid, "5292fcfa1d41c8430c0000b5" %>
+						<input id="aid" name="aid" type="hidden" value='' />
 						<br/><br/>
 						<button class="btn24" type="button" id="Article"><b>+</b>从手机网站导入图文</button>
 						<br/><br/>
