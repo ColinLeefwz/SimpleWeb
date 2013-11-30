@@ -33,9 +33,9 @@
         <% @mobile_articles.each do |ma| %>
 		<div class="box1">
 			<div class="box1left">
-			<!-- <img src="images/pic4.jpg" width="100%"> -->
+			<a href=<%= "/mobile_articles/show?id=#{ma.id}&sid=#{@shop.id}" %>
+			target="blank" >
 			<%= image_tag( "#{MobileArticle.img_url(ma.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %></div>
-			<a href="#" data-ajax="false">
 				<h2><%= ma.title %> </h2>
 				<p><%= ma.text %></p>
 			</a>
