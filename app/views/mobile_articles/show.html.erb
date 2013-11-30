@@ -29,15 +29,6 @@
 			</div>
 		</div>
 		<div class="box2">
-		    <%  if @mobile_article %>
-			<h2><%= @mobile_article.title %></h2>
-			<span class="time"><%= @mobile_article.cat.strftime("%Y-%m-%d") %></span>
-			<div class="box2inner">
-				<%= image_tag( "#{MobileArticle.img_url(@mobile_article.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
-				<br/><br/>
-				<%= @mobile_article.content.html_safe %>
-			</div>
-			<% end %>
 
 			<h2><%= @init_mobile_article.title %></h2>
 			<span class="time"><%= @init_mobile_article.cat.strftime("%Y-%m-%d") %></span>
@@ -45,6 +36,9 @@
 				<%= image_tag( "#{MobileArticle.img_url(@init_mobile_article.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
 				<br/><br/>
 				<%= @init_mobile_article.content.html_safe %>
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_qzone"></a><a class="bds_tsina"></a><a class="bds_tqq"></a><a class="bds_renren"></a><a class="bds_t163"></a></div><script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1&amp;uid=0" _ue_org_tagname="script"></script><script type="text/javascript" id="bdshell_js" _ue_org_tagname="script"></script><script type="text/javascript" _ue_org_tagname="script">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
 			</div>
 		</div>
 		<!-- <a href="#" class="link">展开更多</a> -->
