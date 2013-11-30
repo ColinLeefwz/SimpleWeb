@@ -68,9 +68,9 @@
 		<% if @contact_lianlian_page %>
 		<div class="box1">
 			<div class="box1left">
+			<a href=<%= "/mobile_articles/show?id=#{@contact_lianlian_page.id}&sid=#{@shop.id}" %> target="blank" >
 			<%= image_tag( "#{MobileArticle.img_url(@contact_lianlian_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
 			</div>
-			<a href=<%= "#{@contact_lianlian_page.url}" %> data-ajax="false">
 				<h2><%= @contact_lianlian_page.title %></h2>
                 <p><%= @contact_lianlian_page.text %></p>
 			</a>
@@ -80,9 +80,9 @@
 		<% if @welcome_page %>
 		<div class="box1">
 			<div class="box1left">
+			<a href=<%= "/mobile_articles/show?id=#{@welcome_page.id}&sid=#{@shop.id}" %>
 			<%= image_tag( "#{MobileArticle.img_url(@welcome_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
 			</div>
-			<a href=<%= "#{@welcome_page.url}" %> data-ajax="false">
 				<h2><%= @welcome_page.title %></h2>
 				<p><%= @welcome_page.text %></p>
 			</a>
