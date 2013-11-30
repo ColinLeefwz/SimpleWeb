@@ -22,7 +22,7 @@
 					<li><a href=<%= "/mobile/index2?sid=#{@shop.id}" %> data-ajax="false">主页</a></li>
 					<% if @mobile_space.menu.size>0 %>
 					<% @mobile_space.menu.each do |m| %>
-					<li><a href=<%= "/mobile/content?c=#{m}" %> data-ajax="false"><%= m %></a></li>
+					<li><a href=<%= "/mobile/content?c=#{m}&sid=#{@shop.id}" %> data-ajax="false"><%= m %></a></li>
 					<% end %>
 					<% end %>
 				</ul>

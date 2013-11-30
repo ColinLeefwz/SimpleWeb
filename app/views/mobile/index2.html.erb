@@ -22,15 +22,20 @@
 					<li><a href=<%= "/mobile/index2?sid=#{@shop.id}" %> data-ajax="false">主页</a></li>
 					<% if @mobile_space.menu.size>0 %>
 					<% @mobile_space.menu.each do |m| %>
-					<li><a href=<%= "/mobile/content?c=#{m}" %> data-ajax="false"><%= m %></a></li>
+					<li><a href=<%= "/mobile/content?c=#{m}&sid=#{@shop.id}" %> data-ajax="false"><%= m %></a></li>
 					<% end %>
 					<% end %>
 				</ul>
 			</div>
 		</div>
-		
+
 		<div id="DH">
 			<div class="imgdiv">
+			    <% if @mobile_welcome_banner %>
+                <a href=<%= "#{@mobile_welcome_banner.url}" %> data-ajax="false">
+                <%= image_tag( "#{MobileBanner.img_url(@mobile_welcome_banner.id)}?time=#{Time.now.to_i}", :style => "width:480px;height:202.5px" ) %>
+                </a>
+			    <% end %>
 			    <% @mobile_banners.each do |mb| %>
 				<a href=<%= "#{mb.url}" %> data-ajax="false">
 				<%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:480px;height:202.5px" ) %>
@@ -58,6 +63,33 @@
 			
 		</div>
 		<% end %>
+
+
+		<% if @contact_lianlian_page %>
+		<div class="box1">
+			<div class="box1left">
+			<%= image_tag( "#{MobileArticle.img_url(@contact_lianlian_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
+			</div>
+			<a href="#" data-ajax="false">
+				<h2><%= @contact_lianlian_page.title %></h2>
+                <p><%= @contact_lianlian_page.text %></p>
+			</a>
+		</div>
+		<% end %>
+
+		<% if @welcome_page %>
+		<div class="box1">
+			<div class="box1left">
+			<%= image_tag( "#{MobileArticle.img_url(@welcome_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
+			</div>
+			<a href="#" data-ajax="false">
+				<h2><%= @welcome_page.title %></h2>
+				<p><%= @welcome_page.text %></p>
+			</a>
+		</div>
+		<% end %>
+
+
 <!-- 		<div class="box1">
 			<div class="box1left"><img src="http://shop.dface.cn/cellphone/images/pic6.jpg" width="100%"></div>
 			<a href="#" data-ajax="false">
