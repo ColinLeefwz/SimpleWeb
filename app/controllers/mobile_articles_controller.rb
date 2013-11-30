@@ -29,7 +29,9 @@ class MobileArticlesController < ApplicationController
   def show
     if params[:sid]
       @shop = Shop.find_by_id(params[:sid])
+      @mobile_space = MobileSpace.where({sid:params[:sid]}).first
       @mobile_article = MobileArticle.where({id:params[:id],sid:params[:sid]}).first
+      @init_mobile_article = MobileArticle.where({id:params[:id]}).first
       if @mobile_article
         @mobile_article
       else

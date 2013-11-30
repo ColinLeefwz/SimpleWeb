@@ -19,11 +19,12 @@
 			<div id="Menu">
 				<a id="CloseMenu" alt="关闭导航"><span>关闭导航</span></a>
 				<ul class="men">
-					<li><a href="/cellphone/index.html" data-ajax="false">主页</a></li>
-					<li><a href="/cellphone/company.html" data-ajax="false">公司介绍</a></li>
-					<li><a href="/cellphone/news.html" data-ajax="false">最新动态</a></li>
-					<li><a href="#" data-ajax="false">推荐菜品</a></li>
-					<li><a href="/cellphone/contactus.html" data-ajax="false">联系我们</a></li>
+					<li><a href=<%= "/mobile/index2?sid=#{@shop.id}" %> data-ajax="false">主页</a></li>
+					<% if @mobile_space.menu.size>0 %>
+					<% @mobile_space.menu.each do |m| %>
+					<li><a href=<%= "/mobile/content?c=#{m}&sid=#{@shop.id}" %> data-ajax="false"><%= m %></a></li>
+					<% end %>
+					<% end %>
 				</ul>
 			</div>
 		</div>
@@ -37,6 +38,14 @@
 				<%= @mobile_article.content.html_safe %>
 			</div>
 			<% end %>
+
+			<h2><%= @init_mobile_article.title %></h2>
+			<span class="time"><%= @init_mobile_article.cat.strftime("%Y-%m-%d") %></span>
+			<div class="box2inner">
+				<%= image_tag( "#{MobileArticle.img_url(@init_mobile_article.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
+				<br/><br/>
+				<%= @init_mobile_article.content.html_safe %>
+			</div>
 		</div>
 		<!-- <a href="#" class="link">展开更多</a> -->
 		<div id="Shadow">
