@@ -67,10 +67,6 @@
 				<span class="navline"></span>
 				<a href="#">联系我们</a>
 				<span class="navline"></span> -->
-				<a href="#">访问统计</a>
-				<span class="navline"></span>
-				<a href="/mobile_weixin">微信管理</a>
-				<span class="navline"></span>
 
 				<% if MobileSpace.where({sid:session_shop.id}).first.menu.size>0 %>
 				<% MobileSpace.where({sid:session_shop.id}).first.menu.each do |m| %>
@@ -78,6 +74,9 @@
 				<span class="navline"></span> 
 				<% end %>              
 				<% end %>
+
+				<a href="/mobile_weixin">微信管理</a>
+				<span class="navline"></span>
 				
 				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
 				<span class="navline"></span>
