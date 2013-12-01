@@ -16,16 +16,17 @@
     <body >
         <div class="header">
 			<a id="GoBack" alt="返回">返回</a>
-			<h1>脸脸茶坊</h1>
+			<h1><%= session_shop.name %></h1>
 			<a id="OpenMenu" alt="打开导航">打开导航</a>
 			<div id="Menu">
 				<a id="CloseMenu" alt="关闭导航"><span>关闭导航</span></a>
 				<ul class="men">
-					<li><a href="/cellphone/index.html" data-ajax="false">主页</a></li>
-					<li><a href="/cellphone/company.html" data-ajax="false">公司介绍</a></li>
-					<li><a href="/cellphone/news.html" data-ajax="false">最新动态</a></li>
-					<li><a href="#" data-ajax="false">推荐菜品</a></li>
-					<li><a href="/cellphone/contactus.html" data-ajax="false">联系我们</a></li>
+                    <li><a href=<%= "/mobile_articles/mobile_show" %> data-ajax="false">主页</a></li>
+					<% if @mobile_space.menu.size>0 %>
+					<% @mobile_space.menu.each do |m| %>
+					<li><a href=<%= "/mobile_articles/content?c=#{m}" %> data-ajax="false"><%= m %></a></li>
+					<% end %>
+					<% end %>
 				</ul>
 			</div>
 		</div>

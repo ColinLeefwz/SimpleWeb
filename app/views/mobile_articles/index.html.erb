@@ -1,5 +1,5 @@
 	<script>
-	var navmove="on", runing;
+	var navmove="off", runing;
 	$(document).ready(function(){
 		runing=$("#CB1").attr("class");
 		if(runing=="checkboxs1"){
@@ -23,11 +23,11 @@
 		<div class="con">
 			<div class="box14">
 				<div class="box14left">
-					<div class="title1"><h2 class="f18 l">图文</h2></div>
+					<div class="title1"><h2 class="f18 l"><%= params[:c] %></h2></div>
 					<div class="submenu">
 						<ul>
-							<li><a href="/mobile_articles/new">发 布</a></li>
-							<li class="hover"><a href="/mobile_articles/index">管 理</a></li>
+							<li><a href=<%= "/mobile_articles/new?c=#{params[:c]}" %> >发 布</a></li>
+							<li class="hover"><a href=<%= "/mobile_articles/index?c=#{params[:c]}" %> >管 理</a></li>
 						</ul>
 					</div>
 					<div class="clear1"></div>
@@ -44,16 +44,39 @@
 							<tr>
                               <td><%= ma.title %></td>
 							  <td valign="middle" class="textcenter">
-								   <a href=<%= "/mobile_articles/edit?id=#{ma.id}" %> class="edit" title="编辑"></a>
+								   <a href=<%= "/mobile_articles/edit?id=#{ma.id}&c=#{params[:c]}" %> class="edit" title="编辑"></a>
 								   <a href="javascript:void(0)" class="del" onclick="ajaxDel('<%= ma.id%>')" title="删除"></a>
 							   </td>
                             </tr>
 							<% end %>
                             
 
-							
-							
+                            <% if @contact_lianlian_page && params[:c] == "公司介绍" %>
 							<tr>
+                              <td><%= @contact_lianlian_page.title%></td>
+							  <td valign="middle" class="textcenter">
+
+								   <a href="javascript:void(0)" class="del" onclick=
+								   "ajaxDel('[<%= @shop.id %>]0')" title="删除"></a>
+							   </td>
+                            </tr>
+                            <% end %>
+
+                            <% if @welcome_page && params[:c] == "产品介绍" %>
+							<tr>
+                              <td><%= @welcome_page.title%></td>
+							  <td valign="middle" class="textcenter">
+							
+								   <a href="javascript:void(0)" class="del" onclick=
+								   "ajaxDel('[<%= @shop.id %>]1')" title="删除"></a>
+							   </td>
+                            </tr>
+                            <% end %>
+                            
+
+							
+							
+<!-- 							<tr>
 								<td>脸脸帮助</td>
 								<td valign="middle" class="textcenter">
 									<a href="javascript:void(0)" class="edit" title="编辑"></a>
@@ -66,7 +89,7 @@
 									<a href="javascript:void(0)" class="edit" title="编辑"></a>
 									<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
 								</td>
-							</tr>
+							</tr> -->
 							
 						</table>
 						<div class="pagination">

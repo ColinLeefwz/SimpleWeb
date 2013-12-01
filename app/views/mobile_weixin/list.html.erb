@@ -1,0 +1,151 @@
+	<script>
+	var navmove="off", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+		
+		//新增
+		var num=$("table.tab2 td").length;
+		for(var tdn=0;tdn<num;tdn+=2){
+			$("table.tab2 td").eq(tdn).css("z-index",num-tdn);
+		}
+		var timers;
+		$("a[name='links']").click(function(){
+			clearTimeout(timers);
+			var rel=$(this).attr("rel");
+			$("div.tab2box").removeClass("scaleTopanimation");
+			$("div.tab2box").removeClass("scaleLeftanimation");
+			$("div.tab2box").eq(rel).addClass("scaleTopanimation");
+			timers=setTimeout(function(){
+				$("div.tab2box").eq(rel).fadeOut(function(){
+					$("div.tab2box").eq(rel).removeClass("scaleTopanimation");
+				});
+			},5000);
+		});
+		$("div.tab2box").mouseover(function(){
+			clearTimeout(timers);
+		}).mouseout(function(){
+			var obj=$(this);
+			timers=setTimeout(function(){
+				obj.fadeOut(function(){
+					obj.removeClass("scaleTopanimation");
+				});
+			},1000);
+		});
+		
+	});
+	</script>
+
+		<div id="BG"></div>
+		<div id="DelDiv">
+			<center class="pt15">确定删除此项？</center>
+			<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+			<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+		</div>
+		<div class="con visible">
+			<div class="box14 w730 visible">
+				<div class="title1"><h2 class="f18 l">微信管理</h2></div>
+				<div class="submenu">
+					<ul>
+						<li><a href="/mobile_weixin/check">微信接口设置</a></li>
+						<li class="hover"><a>微信自动回复管理</a></li>
+					</ul>
+				</div>
+				<div class="clear1"></div>
+				<a href="/mobile_weixin/new" class="btn23 r mt15">添加规则</a>
+				<div class="clear1"></div>
+				<form method="post" action="">
+					<table width="100%" cellpadding="0" cellspacing="0" class="tab2 visible">
+						<tr>         
+							<th>关键字</th>
+							<th>回复内容</th>
+							<th class="cz" width="95">操 作</th>
+						</tr>
+                        
+                        <% if @mobile_articles %>
+                        <% @mobile_articles.each do |ma|%>
+						<tr>
+							<td>
+								<div class="block relative"><%= ma.kw %>
+									<div class="tab2box">
+										<h2><%= ma.title %></h2>								
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2"><%= ma.text %></a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="0"><%= ma.title %></a></td>
+							<td valign="middle" class="textcenter">
+								<a href="#" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel('<%= ma.id %>')" title="删除"></a>
+							</td>
+						</tr>
+						<% end %>
+						<% end %>
+
+
+<!-- 						<tr>
+							<td>
+								<div class="block relative">便宜点吧
+									<div class="tab2box">
+										<h2>衣服九折，裤子九点五折，包装另算。</h2>									
+											<div class="weixinphoto"><a target="_blank" href="#"><img src="images/pic32.jpg"></a></div>
+										
+										<a target="_blank" href="#" class="gray2">本店提供精品服饰，凭此券打九折，并参与奥迪A8抽奖活动</a>
+										<div class="arrow"></div>
+									</div>
+								</div>
+							</td>
+							<td><a class="blue2 pointer" name="links" rel="1">减免50元</a></td>
+							<td valign="middle" class="textcenter">
+								<a href="mcp11.html" class="edit" title="编辑"></a>
+								<a href="javascript:void(0)" class="del" onclick="ajaxDel()" title="删除"></a>
+							</td>
+						</tr> -->
+					</table>
+				</form>
+			</div>
+		</div>
+
+<script>
+function ajaxDel(aid){
+	var top;
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if(documentHeight<=windowHeight){
+	  $("#BG").css({"height":windowHeight+"px","display":"block"});
+	}else{
+	  $("#BG").css({"height":documentHeight+"px","display":"block"});
+	}
+	$("#DelDiv").css("display","block");
+	top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+	$("#DelDiv").css({"top":top+"px","display":"none"});
+	$("#DelDiv").fadeIn(600);
+
+	$("#DelBtn").click(function(){
+	  $.get("/mobile_weixin/ajax_del",{id: aid}, function(data) {
+		if(data){
+		  $("#BG, #DelDiv").css("display","none");
+		  window.location.href='/mobile_weixin/list';
+		}
+		else{
+		  alert('删除失败.')
+		}
+	  });
+	});
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
+</script>

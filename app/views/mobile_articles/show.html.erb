@@ -19,35 +19,38 @@
 			<div id="Menu">
 				<a id="CloseMenu" alt="关闭导航"><span>关闭导航</span></a>
 				<ul class="men">
-					<li><a href="/cellphone/index.html" data-ajax="false">主页</a></li>
-					<li><a href="/cellphone/company.html" data-ajax="false">公司介绍</a></li>
-					<li><a href="/cellphone/news.html" data-ajax="false">最新动态</a></li>
-					<li><a href="#" data-ajax="false">推荐菜品</a></li>
-					<li><a href="/cellphone/contactus.html" data-ajax="false">联系我们</a></li>
+					<li><a href=<%= "/mobile/index2?sid=#{@shop.id}" %> data-ajax="false">主页</a></li>
+					<% if @mobile_space.menu.size>0 %>
+					<% @mobile_space.menu.each do |m| %>
+					<li><a href=<%= "/mobile/content?c=#{m}&sid=#{@shop.id}" %> data-ajax="false"><%= m %></a></li>
+					<% end %>
+					<% end %>
 				</ul>
 			</div>
 		</div>
 		<div class="box2">
-		    <%  if @mobile_article %>
-			<h2><%= @mobile_article.title %></h2>
-			<span class="time"><%= @mobile_article.cat.strftime("%Y-%m-%d") %></span>
+
+			<h2><%= @init_mobile_article.title %></h2>
+			<span class="time"><%= @init_mobile_article.cat.strftime("%Y-%m-%d") %></span>
 			<div class="box2inner">
-				<%= image_tag( "#{MobileArticle.img_url(@mobile_article.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
+				<%= image_tag( "#{MobileArticle.img_url(@init_mobile_article.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
 				<br/><br/>
-				<%= @mobile_article.content.html_safe %>
+				<%= @init_mobile_article.content.html_safe %>
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_qzone"></a><a class="bds_tsina"></a><a class="bds_tqq"></a><a class="bds_renren"></a><a class="bds_t163"></a></div><script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1&amp;uid=0" _ue_org_tagname="script"></script><script type="text/javascript" id="bdshell_js" _ue_org_tagname="script"></script><script type="text/javascript" _ue_org_tagname="script">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
 			</div>
-			<% end %>
 		</div>
 		<!-- <a href="#" class="link">展开更多</a> -->
 		<div id="Shadow">
-			<a href="#" class="sina">新浪</a>
-			<a href="#" class="qq">腾讯微博</a>
+			<a href="https://m.weibo.cn" class="sina">新浪微博</a>
+			<a href="http://t.qq.com/" class="qq">腾讯微博</a>
 			<a href="#" class="qqspace">QQ空间</a>
 			<a href="#" class="renren">人人</a>
 		</div>
 		<div class="border1"></div>
 		<div class="footer">
-			<a href="tel:13606543127" class="btn1">电话</a>
+			<a href=<%= "tel:#{@shop_info.phone if @shop_info}" %> class="btn1">电话</a>
 			<a href="#" class="btn2">短信</a>
 			<a href=<%= "/mobile/map?sid=#{@shop.id}" %> class="btn3" data-ajax="false">地图</a>
 			<a class="btn4" id="Btn4">分享</a>

@@ -28,26 +28,7 @@
 				</ul>
 			</div>
 		</div>
-		<div id="DH">
-			<div class="imgdiv">
-			    <% if @mobile_welcome_banner %>
-                <a href=<%= "#{@mobile_welcome_banner.url}" %> data-ajax="false">
-                <%= image_tag( "#{MobileBanner.img_url(@mobile_welcome_banner.id)}?time=#{Time.now.to_i}", :style => "width:480px;height:202.5px" ) %>
-                </a>
-			    <% end %>
-				<% @mobile_banners.each do |mb| %>
-                <a href=<%= "#{mb.url}" %> data-ajax="false">
-                <%= image_tag( "#{MobileBanner.img_url(mb.id)}?time=#{Time.now.to_i}", :style => "width:480px;height:202.5px" ) %>
-                </a>
-				<% end %>
-			</div>
-			<div class="dhnum" id="DHNum">
-			    <a href="javascript:void(0)" class="def selected">1</a>
-			    <% @mobile_banners.each_with_index do |mb,index| %>
-				<a href="javascript:void(0)" class="def selected"><%= index+1%></a>
-				<% end %>
-			</div>
-		</div>
+
 
         <% @mobile_articles.each do |ma| %>
 		<div class="box1">

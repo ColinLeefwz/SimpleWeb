@@ -1,5 +1,5 @@
 	<script>
-	var navmove="on", runing;
+	var navmove="off", runing;
 	$(document).ready(function(){
 		runing=$("#CB1").attr("class");
 		if(runing=="checkboxs1"){
@@ -64,8 +64,8 @@ function OpenBtn(){
 					<div class="title1"><h2 class="f18 l">设置</h2></div>
 					<div class="submenu">
 						<ul>
-							<!-- <li><a href="mcp2.html">基本信息</a></li>
-							<li><a href="mcp3.html">菜单和功能</a></li> -->
+							<!-- <li><a href="mcp2.html">基本信息</a></li> -->
+							<li><a href="/mobile_menus">菜单和功能</a></li> 
 							<li class="hover"><a href="mcp4.html">Banner</a></li>
 							<!-- <li><a href="mcp5.html">设计风格</a></li> -->
 						</ul>
@@ -93,12 +93,23 @@ function OpenBtn(){
 							<input type="text" value=<%=  mb.url %> class="texts">
 						</div>
 						<% end %>
-						<div class="pass5" id="One">
+<!-- 						<div class="pass5" id="One">
 							<a class="up" title="上"></a>
 							<a class="down" title="下"></a>
 							<a class="del" title="删除" onClick="DelOne(this)"></a>
 							<img src="/cellphone/images/pic5.jpg" class="imgs"> <input type="text" value="http://www.dface.cn" class="texts">
+						</div> -->
+                        
+                        <% if @welcome_banner %>
+						<div class="pass5" id="One">
+							<a class="up" title="上"></a>
+							<a class="down" title="下"></a>
+							<a class="del" title="删除" onClick="Del(this,'[<%= @shop.id %>]2')"></a>
+                            <%=image_tag( "#{MobileBanner.img_url(@welcome_banner.id)}?time=#{Time.now.to_i}", :class=>"imgs")%>
+							<input type="text" value=<%= @welcome_banner.url %> class="texts">
 						</div>
+						<% end %>
+
 						</div>
 					<% end %>
 				</div>

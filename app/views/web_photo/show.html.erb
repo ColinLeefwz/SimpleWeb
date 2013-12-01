@@ -7,10 +7,13 @@
 	<title><%= @user.name %>在<%= @photo.shop.name %>的分享</title>
 	<link href="/web/stylesheets/share_photo.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body onload="Ftn()">
 	<div class="main2">
 		<div class="con">
-			<center><%=image_tag Photo.img_url(@photo.id),:class=>"width100p" %></center>
+			<center class="relative">
+				<div id="Plane3" class="none"><img src="/images/sign21.png" class="imgs opacityanimation"/>如遇无法下载情况，请点击右上角，<br/>选择在浏览器中打开后下载。</div>
+				<%=image_tag Photo.img_url(@photo.id),:class=>"width100p" %>
+			</center>
 			<% if !@photo.desc.blank? %>
 				<div class="plane7">
 					<%= @photo.desc%>
@@ -44,22 +47,14 @@
 			<a href="https://itunes.apple.com/cn/app/lianlian/id577710538"><img src="/admin/image/share_weibo/btn7.jpg" class="r"/></a>
 		</div>
 	</div>
-	<!--script>
-		document.getElementById("BigPic1").onload=Pic;
-		function Pic(){
-			var w=document.getElementById("BigPic1").offsetWidth;
-			var per=(100-w/614*100)/2;
-			if(w<=614){
-				if(per>3){
-					document.getElementById("BigPic1").style.marginTop="3%";
-				}else{
-					document.getElementById("BigPic1").style.marginTop=per+"%";
-				}
-
+	<script>
+		function Ftn(){
+			var ua = navigator.userAgent.toLowerCase();
+			if(/micromessenger/i.test(ua)){
+				document.getElementById("Plane3").className="opacityanimation";
 			}
-			
 		}
-	</script-->
+	</script>
 	
 </body>
 </html>
