@@ -49,6 +49,7 @@ Prodygia::Application.routes.draw do
       get :contents
       get :edit_profile
       patch :update_profile
+      get :video_on_demand
     end
 
     collection do
@@ -80,6 +81,8 @@ Prodygia::Application.routes.draw do
     get 'following'
     get 'followers'
   end
+
+  resources :resources 
 
   root to: "welcome#index"
 
