@@ -45,9 +45,11 @@ class UserActive
   def do_count(uaid)
     self._id = uaid
     data = {'register' =>  register_user_num}
-    UserActive.where(_id: {"$lt" => self._id}).each do |ua|
+
+    UserActive.where({}).sort("$natural" => 1).each do |ua|
       data.merge!(ua.id => checkin_user_num(ua.id))
     end
+
     self.data = data
     self.save
   end

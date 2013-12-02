@@ -7,7 +7,7 @@ class AdminUserActivesController < ApplicationController
     if params[:id]
       @user_active = UserActive.find_by_id(params[:id])
     else
-      @user_active = UserActive.last
+     @user_active = UserActive.where({}).sort("$natural" => 1).last
     end
    
   end
