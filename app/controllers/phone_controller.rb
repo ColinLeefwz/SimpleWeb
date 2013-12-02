@@ -66,7 +66,9 @@ class PhoneController < ApplicationController
     end 
     fake = fake_phone(params[:phone]) 
     if Rails.env == "production"
-      code = rand(999999).to_s
+      # code = rand(999999).to_s
+      str = Digest::SHA1.hexdigest("#{params[:phone]}@dface#{Time.now.day}")[0,6]
+      code = str.to_i(16).to_s[0,6]
       code = "13579" if fake
     else
       code = "123456"
