@@ -9,7 +9,7 @@ class AdminUserActivesController < ApplicationController
     else
      @user_active = UserActive.where({}).sort("$natural" => 1).last
     end
-   
+   @ids = UserActive.where({}).sort("$natural" => 1).map{|m| m._id}
   end
 
 

@@ -1,6 +1,6 @@
 <h1><%= show_aut(@user_active._id) %>的活跃度分析</h1>
 <form action="" >
-  <%= select_tag :id, options_for_select(UserActive.distinct("id"), params[:id])  %>
+  <%= select_tag :id, options_for_select(@ids, params[:id])  %>
   <%= submit_tag '查询' %>
 </form>
 <br/>
