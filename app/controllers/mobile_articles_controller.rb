@@ -72,9 +72,9 @@ class MobileArticlesController < ApplicationController
   def ajax_del
     @mobile_article = MobileArticle.where({id: params[:id]}).first
     if @mobile_article.destroy
-      redirect_to "/mobile_articles/index"
+      redirect_to URI::escape("/mobile_articles/index?c=#{params[:c]}")
     else
-      redirect_to "/mobile_articles/index"
+      redirect_to URI::escape("/mobile_articles/index?c=#{params[:c]}")
     end
   end
 
