@@ -1,0 +1,10 @@
+development: &development
+  access_key_id: 'AKIAJF43C5FRB7IT3ISQ'
+  secret_access_key: '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'
+  bucket: 'prodygia-dev'
+
+test:
+  <<: *development
+
+production:
+  <<: *development
