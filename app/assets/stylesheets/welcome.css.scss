@@ -5,19 +5,16 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
 html {
   height:100%;
 }
-
 body {
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	font-size: 17px;
+	background: #edefec;
+	margin: 0;
   position: relative;
   min-height:100%;
-  margin: 0;
   padding: 0;
-  font-family: 'Latoreg';
-  font-size: 13px;
   background-image: image-url("bg.jpg");
-
-  a{
-    color: #575757;
-  }
 }
 
 #content{
