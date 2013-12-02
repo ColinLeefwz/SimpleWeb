@@ -65,8 +65,13 @@
             <a href="/shop3_subshops">内部商家</a>
           <% end %>
           <span class="navline"></span>
-          <% if session_shop.id == 21835409 || session_shop.id == 21835801 || session_shop.id == 20325453 || session_shop.id == 21828775 || session_shop.id == 21837823 || session_shop.id == 21837827 || session_shop.id == 21837830 || session_shop.id == 21830285 || session_shop.id == 21837850%>
-          <a href="/shop3_mobile">手机网站</a>
+          <% if [21835409,21835801,20325453,21828775,21837823,21837827,21837830,21830285,21837850,21837867].include?session_shop.id %>
+          <a href="/shop3_mobile/index3">手机网站</a>
+          <span class="navline"></span>
+          <% end %>
+          
+          <% if [21835409,21835801,21830285].include?session_shop.id %>
+          <a href=<%= "http://w.dface.cn/login/index?sid=#{session_shop.id}&hash=#{Digest::SHA256.hexdigest(session_shop.id.to_s + "12191008")[0,32]}" %> >独立空间</a>
           <span class="navline"></span>
           <% end %>
 
