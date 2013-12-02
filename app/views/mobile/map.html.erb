@@ -49,7 +49,7 @@
 window.onload=function(){
 document.getElementById("Maps2").style.height=$(window).height()-$(".header").height()-$(".footer").height()-60+"px";
 var map =new BMap.Map("Maps2");            // 创建Map实例
-var pp =new BMap.Point(120.128376,30.286706);    // 创建点坐标
+var pp =new BMap.Point(<%= @shop.lo.nil? ? "120.128376,30.286706" : "#{@shop.lo[1]},#{@shop.lo[0]}" %>);    // 创建点坐标
 map.addControl(new BMap.NavigationControl());  
 map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
 map.addControl(new BMap.OverviewMapControl());              //添加缩略地图控件
