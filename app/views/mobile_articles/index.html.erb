@@ -144,7 +144,7 @@ function ajaxDel(article_id){
 		 //  $("#Tr"+index).fadeOut(300,function(){
 			// $(this).remove();
 		 //  });
-	      window.location.href='/mobile_articles/index';
+	      window.location.href= '<%= "/mobile_articles/index?c=#{params[:c]}" %>';
 		}
 		else{
 		  alert('删除失败.')
