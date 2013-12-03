@@ -1,3 +1,4 @@
+Prodygia::Application.config.middleware.delete "JQuery::FileUpload::Rails::Middleware"
 
 S3DirectUpload.config do |c|
   Rails.configuration.aws = YAML.load_file("#{Rails.root}/config/aws.yml")[Rails.env].symbolize_keys!
