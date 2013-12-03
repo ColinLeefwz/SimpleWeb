@@ -77,6 +77,7 @@ Prodygia::Application.routes.draw do
 
   root to: "welcome#index"
 
+  get "/about_us", to: 'static_pages#about_us'
   get "/:page", to: 'static_pages#static'
 
 end
