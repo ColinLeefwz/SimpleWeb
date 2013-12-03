@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131127080747) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20131202080030) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -163,6 +160,18 @@ ActiveRecord::Schema.define(version: 20131127080747) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
+  create_table "resources", force: true do |t|
+    t.integer  "expert_id"
+    t.string   "attached_file_file_path"
+    t.string   "direct_upload_url"
+    t.string   "attached_file_file_name"
+    t.string   "attached_file_content_type"
+    t.integer  "attached_file_file_size"
+    t.datetime "attached_file_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sessions", force: true do |t|
     t.string   "title"
     t.integer  "expert_id"
@@ -232,8 +241,6 @@ ActiveRecord::Schema.define(version: 20131127080747) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
     t.string   "type"

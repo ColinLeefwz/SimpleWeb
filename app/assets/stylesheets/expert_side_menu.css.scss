@@ -29,7 +29,7 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       }
       p{
         font-family: Latoreg;
-        bottom-margin: 0.6em;
+        margin-bottom: 0.6em;
       }
       .expert-name{
         p{
@@ -65,13 +65,13 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
     margin-bottom: 10px;
     font-weight: bold;
     .item-icon{
-      vertical-align: center;
+      vertical-align: middle;
       display: inline-block;
       width: 25px;
       vertical-align: top;
     }
     .item-icon-selected{
-      vertical-align: center;
+      vertical-align: middle;
       display: inline-block;
       display: none;
       width: 25px;
@@ -81,7 +81,7 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
     .item-text{
       padding-left: 10px;
       display: inline-block;
-      vertical-align: center;
+      vertical-align: middle;
       box-sizing: border-box;
       @media (min-width: 979px){
         max-width: 80%;

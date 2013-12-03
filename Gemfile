@@ -18,6 +18,8 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 gem 'paperclip'
+gem 'aws-sdk'
+gem 's3_direct_upload'
 gem 'truncate_html'  # make truncate html_safe
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'ckeditor'
