@@ -29,7 +29,7 @@
 
       <tr>
         <td valign="middle" align="right" class="pr20">
-          <a  href="javascript:void(0)" id="aAddShop">增加商家</a>
+          <a  class="blue3 pointer" id="aAddShop">增加商家</a>
         </td>
       </tr>
 
@@ -44,7 +44,17 @@
 
 
 <script>
-
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+  });
   function find_shop(obj)
   {
     $.get('/shop_partners/find_shop', {id:  obj.val()}, function(data){
