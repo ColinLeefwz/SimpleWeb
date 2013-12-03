@@ -6,8 +6,8 @@ class MobileArticlesController < ApplicationController
   def index
     @shop = session_shop
     @mobile_articles = MobileArticle.where({sid:session_shop.id, category:params[:c]})
-    @contact_lianlian_page = MobileArticle.find_by_id("[#{session_shop.id}]0")
-    @welcome_page = MobileArticle.find("[#{session_shop.id}]1")
+    @contact_lianlian_page = MobileArticle.where({id:"[#{session_shop.id}]0"}).first
+    @welcome_page = MobileArticle.where({id:"[#{session_shop.id}]1"}).first
   end
 
   def new
@@ -49,7 +49,9 @@ class MobileArticlesController < ApplicationController
     @mobile_articles = session_shop.mobile_articles
     @mobile_welcome_banner = MobileBanner.find_by_id("[#{session_shop.id}]2")
     @mobile_banners = session_shop.mobile_banners
-    @contact_lianlian_page = MobileArticle.find_by_id("[#{session_shop.id}]0") 
+    @page1 = MobileArticle.where({id:"[#{session_shop.id}]0"}).first 
+    @page2 = MobileArticle.where({id:"[#{session_shop.id}]1"}).first
+    @contact_lianlian_page = MobileArticle.find_by_id("[#{session_shop.id}]0")
     @welcome_page = MobileArticle.find("[#{session_shop.id}]1")
     @shop = session_shop
     @sid = session_shop.id 
@@ -86,34 +88,11 @@ class MobileArticlesController < ApplicationController
     render :json=>{:url => image.img.url, 'state'=>'SUCCESS', :title=>params[:pictitle]}  
   end
 
-  def news
-    @mobile_articles = session_shop.mobile_articles
-    @shop = session_shop
-    @sid = session_shop.id 
-    render :layout => false
-  end
-
-  def contact
-    @shop = session_shop
-    @shopinfo = session_shop.info
-    @sid = session_shop.id 
-    render :layout => false
-  end
-
-  def company
-    @shop = session_shop
-    @shopinfo = session_shop.info
-    @sid = session_shop.id 
-    render :layout => false
-  end
-
-  def intro
-    
-  end
-
   def content
     @mobile_space = MobileSpace.where({sid:session_shop.id}).first
     @mobile_articles = MobileArticle.where({sid:session_shop.id,category:params[:c]})
+    @page1 = MobileArticle.where({id:"[#{session_shop.id}]0"}).first 
+    @page2 = MobileArticle.where({id:"[#{session_shop.id}]1"}).first
     @contact_lianlian_page = MobileArticle.find_by_id("[#{session_shop.id}]0") 
     @welcome_page = MobileArticle.find("[#{session_shop.id}]1")
     @sid = session_shop.id 

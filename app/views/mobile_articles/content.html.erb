@@ -42,7 +42,7 @@
 		</div>
 		<% end %>
 
-		<% if @contact_lianlian_page %>
+		<% if @page1 %>
 		<div class="box1">
 			<div class="box1left">
 			<%= image_tag( "#{MobileArticle.img_url(@contact_lianlian_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
@@ -54,7 +54,7 @@
 		</div>
 		<% end %>
 
-		<% if @welcome_page %>
+		<% if @page2 %>
 		<div class="box1">
 			<div class="box1left">
 			<%= image_tag( "#{MobileArticle.img_url(@welcome_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
