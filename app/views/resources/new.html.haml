@@ -5,7 +5,7 @@
 .status
 
 = simple_form_for @resource do |f|
-  = f.input :expert, as: :select, collection: Expert.all
+  = f.input :expert_id, as: :select, collection: Expert.all, label_method: :name, value_method: :id
   = f.hidden_field :direct_upload_url
   = f.hidden_field :attached_file_file_name
   = f.hidden_field :attached_file_file_size
