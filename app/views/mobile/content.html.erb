@@ -42,7 +42,7 @@
 		</div>
 		<% end %>
 
-		<% if @contact_lianlian_page && params[:c] == "公司介绍" %>
+		<% if @page1 && params[:c] == "公司介绍" %>
 		<div class="box1">
 			<div class="box1left">
 			<a href=<%= "/mobile_articles/show?id=#{@contact_lianlian_page.id}&sid=#{@shop.id}" %>
@@ -55,7 +55,7 @@
 		</div>
 		<% end %>
 
-		<% if @welcome_page && params[:c] == "产品介绍" %>
+		<% if @page2 && params[:c] == "产品介绍" %>
 		<div class="box1">
 			<div class="box1left">
 			<a href=<%= "/mobile_articles/show?id=#{@welcome_page.id}&sid=#{@shop.id}" %>

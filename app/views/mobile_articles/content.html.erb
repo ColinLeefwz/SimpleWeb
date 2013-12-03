@@ -42,7 +42,7 @@
 		</div>
 		<% end %>
 
-		<% if @page1 %>
+		<% if @page1 && params[:c] == "公司介绍" %>
 		<div class="box1">
 			<div class="box1left">
 			<%= image_tag( "#{MobileArticle.img_url(@contact_lianlian_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
@@ -54,7 +54,7 @@
 		</div>
 		<% end %>
 
-		<% if @page2 %>
+		<% if @page2 && params[:c] == "产品介绍" %>
 		<div class="box1">
 			<div class="box1left">
 			<%= image_tag( "#{MobileArticle.img_url(@welcome_page.id, :t2)}?time=#{Time.now.to_i}", :style => "width:100%" ) %>
