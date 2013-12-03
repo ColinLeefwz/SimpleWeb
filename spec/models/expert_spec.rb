@@ -12,6 +12,7 @@ describe Expert do
     it "shows draft sessions before non-draft ones" do
       [session_find, session_draft_map, session_map]
       expect(alex.sessions_with_draft).to eq [session_draft_map, session_map, session_find]
+
     end 
 
     it "returns [] if epxert has no sessions" do
