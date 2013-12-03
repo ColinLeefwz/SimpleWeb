@@ -1,4 +1,9 @@
 
+- if @resource.errors.any?
+  = pluralize(@resource.errors.count, "error") + "prohibited this resource from being saved:"
+  %ul
+    - @resource.errors.full_messages.each do |msg|
+      %li= msg
 
 = @resource.attached_file_file_name
 %br

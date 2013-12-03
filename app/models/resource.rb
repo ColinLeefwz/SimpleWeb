@@ -1,4 +1,5 @@
 class Resource < ActiveRecord::Base
+  validates :attached_file_file_path, :attached_file_file_name, :direct_upload_url, presence: true, allow_blank: false
   belongs_to :expert
   has_attached_file :attached_file,
     storage: :s3,
