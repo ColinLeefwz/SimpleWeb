@@ -12,12 +12,16 @@ class Resource < ActiveRecord::Base
 
   def self.copy_and_delete(paperclip_file_path, raw_source)
     s3 = AWS::S3.new
-    destination = s3.buckets["prodygia-dev"].objects[paperclip_file_path]  #todo use Rails.configuration
+    bucket_name = Rails.configuration.aws[:bucket]
+
+    destination = s3.buckets[bucket_name].objects[paperclip_file_path]
+    
     sub_source = CGI.unescape(raw_source)
     sub_source = sub_source.split("/")
     2.times{ sub_source.shift() }
     sub_source = sub_source.join("/")
-    source = s3.buckets["prodygia-dev"].objects["#{sub_source}"]
+
+    source = s3.buckets[bucket_name].objects["#{sub_source}"]
     source.copy_to(destination)
     source.delete
   end
