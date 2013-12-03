@@ -19,8 +19,19 @@ Prodygia::Application.routes.draw do
       get :free_confirm
       post :sign_up_confirm
       post :email_friend
-    end
 
+      get :new_post_content
+      get :edit_content
+      get :cancel_content
+      patch :update_content
+      get :new_live_session
+      get :edit_live_session
+      patch :update_live_session
+      get :post_a_draft
+      post :update_timezone
+    end
+    post :create_post_content, on: :collection
+    post :create_live_session, on: :collection
   end
 
   resources :orders do
@@ -39,7 +50,7 @@ Prodygia::Application.routes.draw do
     end
   end
 
-  resources :experts, shallow: true do
+  resources :experts do
     member do
       get :dashboard
       get :main_menu
@@ -56,23 +67,6 @@ Prodygia::Application.routes.draw do
       get :refer_new_expert
       post :refer_new_expert
     end
-    
-    resources :sessions do
-      member do
-        get :new_post_content
-        get :edit_content
-        get :cancel_content
-        patch :update_content
-        get :new_live_session
-        get :edit_live_session
-        patch :update_live_session
-        get :post_a_draft
-        post :update_timezone
-      end
-      post :create_post_content, on: :collection
-      post :create_live_session, on: :collection
-    end
-
   end
 
   controller :users do
@@ -86,9 +80,7 @@ Prodygia::Application.routes.draw do
 
   root to: "welcome#index"
 
+  get "/about_us", to: 'static_pages#about_us'
   get "/:page", to: 'static_pages#static'
 
-  get "session/:id", to: "welcome#session_page", as: 'session_page'
-
-  get "/paypal_callback", to: 'session#paypal_callback'
 end
