@@ -10,7 +10,6 @@ class Resource < ActiveRecord::Base
   private
 
   def self.copy_and_delete(paperclip_file_path, raw_source)
-    logger.debug(raw_source)
     s3 = AWS::S3.new
     destination = s3.buckets["prodygia-dev"].objects[paperclip_file_path]  #todo use Rails.configuration
     sub_source = CGI.unescape(raw_source)
