@@ -1,0 +1,23 @@
+-# TODO
+.star 
+  = link_to image_tag("favorite.png"), remote: true
+
+.facebook
+  - url = "http://www.facebook.com/sharer/sharer.php?u=#{session_url}"
+  = link_to image_tag("facebook.png"), url, data: { popup: true}
+
+.social-share.twitter
+  - url = "http://twitter.com/home?status=#{session_title}+#{session_url}"
+  = link_to image_tag("twitter.png"), url, data: { popup: true}
+
+.social-share.linkedin
+  - url = "https://www.linkedin.com/cws/share?mini=true&source=#{session_title}&url=#{session_url}"
+  = link_to image_tag("linkedin.png"), url, data: { popup: true}
+
+.social-share.google_plus
+  - url = "http://plus.google.com/share?url=#{session_url}"
+  = link_to image_tag("googleplus.png"), url, data: { popup: true}
+
+-# TODO
+.email
+  = link_to image_tag("email.png"), remote: true
