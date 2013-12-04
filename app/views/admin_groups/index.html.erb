@@ -30,7 +30,7 @@
       <td><%= link_to "详情", "/admin_groups/show?id=#{group.id}"%></td>
       <td><%= link_to "编辑", "/admin_groups/edit?id=#{group.id}"%></td>
       <td>
-        <%= link_to('过期', "javascript:void(0)", :gid => group.id)  unless group.invaildt %>
+        <%= link_to('过期', "javascript:void(0)", :gid => group.id, :class => "aValid")  unless group.invaildt %>
       </td>
     </tr>
 
@@ -45,7 +45,7 @@
 
 <script>
   $(document).ready(function(){
-    $("td a").click(function(){
+    $("td .aValid").click(function(){
       var obj = $(this)
       $.get("/admin_groups/invaild", {id: obj.attr('gid')}, function(){
         obj.replaceWith("已过期")

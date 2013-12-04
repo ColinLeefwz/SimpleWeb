@@ -1,88 +1,152 @@
-	<script>
+<script>
+$(document).ready(function(){
 	var navmove="off", runing;
-	$(document).ready(function(){
-		runing=$("#CB1").attr("class");
-		if(runing=="checkboxs1"){
-			NavDiv();
-			$(window).load(function(){
-				MessageDiv();
-			});	
-		}else if(runing=="checkboxs2"){
-			AllNoDH();
-		}
-		
-		//新增
-		$("#CloseMoblie").click(function(){
-			$("#Moblie").fadeOut(500,function(){
-				$("#BG").css("display","none");
-			});
-		});
-		
-		$("#Moblie ul li a").click(function(){
-			var rel=$(this).attr("rel");
-			$("#Moblie ul li a").removeClass("hover");
-			$(this).addClass("hover");
-			$("#Moblie div.mobliecon").children(":first").removeClass().addClass(rel);
-			$("#Turn").removeClass().addClass("turn1");
-			if(rel=="blackberryframe"){
-				$("#Turn").removeClass().addClass("turn3");
-			}
-		});
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});	
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	$("#image_view").click(function(){
+        documentHeight=$(document).height();
+        windowHeight=$(window).height();
+        if($(window).width()>1024){
+            docwidth=$(window).width();
+        }else{
+            docwidth=1024;
+        }
+        if(documentHeight<=windowHeight){
+            $("#BG").css({
+                "width":docwidth+"px",
+                "height":windowHeight+"px",
+                "display":"block"
+            });
+        }else{
+            $("#BG").css({
+                "width":docwidth+"px",
+                "height":documentHeight+"px",
+                "display":"block"
+            });
+        }
+		$("#UpImg").css("display","block");
+		top1=$(document).scrollTop()+(windowHeight-$("#UpImg").height())/2;
+		if(top1<0){top1=0;}
+		$("#UpImg").css({"top":top1+"px","display":"none"});
+		$("#UpImg").slideDown(600);
+    });
 
-		$("#Turn").click(function(){
-			var cla=$(this).attr("class");
-			if(cla=="turn3"){
-				return false;
-			}else if(cla=="turn1"){
-				$("#Moblie div.mobliecon").children(":first").addClass("turn");
-				$(this).removeClass().addClass("turn2");
-			}else if(cla=="turn2"){
-				$("#Moblie div.mobliecon").children(":first").removeClass("turn");
-				$(this).removeClass().addClass("turn1");
-			}
+	$("#CloseMoblie").click(function(){
+		$("#Moblie").fadeOut(500,function(){
+			$("#BG").css("display","none");
 		});
-		
-		$("#View").click(function(){
-			var top;
-			var documentHeight=$(document).height();
-			var windowHeight=$(window).height();
+	});
+	
+	$("#Moblie ul li a").click(function(){
+		var rel=$(this).attr("rel");
+		$("#Moblie ul li a").removeClass("hover");
+		$(this).addClass("hover");
+		$("#Moblie div.mobliecon").children(":first").removeClass().addClass(rel);
+		$("#Turn").removeClass().addClass("turn1");
+		if(rel=="blackberryframe"){
+			$("#Turn").removeClass().addClass("turn3");
+		}
+	});
+
+	$("#Turn").click(function(){
+		var cla=$(this).attr("class");
+		if(cla=="turn3"){
+			return false;
+		}else if(cla=="turn1"){
+			$("#Moblie div.mobliecon").children(":first").addClass("turn");
+			$(this).removeClass().addClass("turn2");
+		}else if(cla=="turn2"){
+			$("#Moblie div.mobliecon").children(":first").removeClass("turn");
+			$(this).removeClass().addClass("turn1");
+		}
+	});
+	
+	$("#View").click(function(){
+		var top;
+		var documentHeight=$(document).height();
+		var windowHeight=$(window).height();
+		if(documentHeight<=windowHeight){
+		  $("#BG").css({"height":windowHeight+"px","display":"block"});
+		}else{
+		  $("#BG").css({"height":documentHeight+"px","display":"block"});
+		}
+		$("#Moblie").css("display","block");
+		top=$(document).scrollTop()+(windowHeight-$("#Moblie").height())/2;
+		if(top<0){top=0;}
+		$("#Moblie").css({"top":top+"px","display":"none"});
+		$("#Moblie").fadeIn(600);
+		$("#IFrame").attr("src","/cellphone/index.html");
+		$(window).scroll(function(){
+			top=$(document).scrollTop()+($(window).height()-$("#Moblie").height())/2;
+			if(top<0){
+				top=0;
+			}else if(top>($(document).height()-$("#Moblie").height())){
+				top=$(document).height()-$(window).height()+$("#Moblie").height()/2+"px";
+			}
+			$("#Moblie").css({"top":top+"px"});
+		});
+		$(window).resize(function(){
+			documentHeight=$(document).height();
+			windowHeight=$(window).height();
+			if($("#Moblie").css("display")=="none"){return false;}
 			if(documentHeight<=windowHeight){
 			  $("#BG").css({"height":windowHeight+"px","display":"block"});
 			}else{
 			  $("#BG").css({"height":documentHeight+"px","display":"block"});
 			}
-			$("#Moblie").css("display","block");
 			top=$(document).scrollTop()+(windowHeight-$("#Moblie").height())/2;
-			if(top<0){top=0;}
-			$("#Moblie").css({"top":top+"px","display":"none"});
-			$("#Moblie").fadeIn(600);
-			$("#IFrame").attr("src","/cellphone/index.html");
-			$(window).scroll(function(){
-				top=$(document).scrollTop()+($(window).height()-$("#Moblie").height())/2;
-				if(top<0){
-					top=0;
-				}else if(top>($(document).height()-$("#Moblie").height())){
-					top=$(document).height()-$(window).height()+$("#Moblie").height()/2+"px";
-				}
-				$("#Moblie").css({"top":top+"px"});
-			});
-			$(window).resize(function(){
-				documentHeight=$(document).height();
-				windowHeight=$(window).height();
-				if($("#Moblie").css("display")=="none"){return false;}
-				if(documentHeight<=windowHeight){
-				  $("#BG").css({"height":windowHeight+"px","display":"block"});
-				}else{
-				  $("#BG").css({"height":documentHeight+"px","display":"block"});
-				}
-				top=$(document).scrollTop()+(windowHeight-$("#Moblie").height())/2;
-				$("#Moblie").css({"top":top+"px"});
-			});
+			$("#Moblie").css({"top":top+"px"});
 		});
 	});
-	</script>
-
-		<div class="con">
+});
+</script>
+<div id="BG" class="bg"></div>
+		<div class="con2">
+<div id="UpImg">
+    <div class="upimgplane">
+      <div class="upimgtab">
+        <span id="EM"><img id="UploadPic" src="/newbackstage/images/btn9.jpg" onClick="ImageUpload('UpImgFile')"/></span>
+        <form id="UploadForm">
+          <input type="file" id="UpImgFile" class="filebox6" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox7" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox8" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox9" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox10" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox11" onClick="ImageUpload(this)" name="photo"/>
+        </form>
+        <div id="CutDiv">
+          <div id="CutArea">
+            <div class="cutarealine1"></div>
+            <div class="cutarealine2"></div>
+            <div class="cutarealine3"></div>
+            <div class="cutarealine4"></div>
+            <div id="CAMove"></div>
+          </div>
+          <div id="CutBG1"></div>
+          <div id="CutBG2"></div>
+          <div id="CutBG3"></div>
+          <div id="CutBG4"></div>
+        </div>
+      </div>
+    </div>
+    <div id="SmallImgDiv"  class="cnm">
+      <img src="/newbackstage/images/pic23.jpg" class="jcrop-preview"/>
+    </div>
+    <div class="upimgdiv">
+      <input type="file" onclick="ImageUpload(this)" class="filebox14 none" id="UpImgFile"/>
+      <input type="file" onclick="ImageUpload(this)" class="filebox15 none" id="UpImgFile"/>
+      <input type="button" onclick="ImageUpload('UpImgFile')" value="重新上传" class="btn19_2 l none" id="Btn19"/>
+      <a onclick="NoCut()" class="btn3 r" href="#a1">取消</a>
+      <input type="button" id="Btn2" class="btn2 r mr10" value="提 交"/>
+    </div>
+</div>
 			<div class="box14">
 				<div class="box14left">
 					<div class="title1"><h2 class="f18 l"><%= params[:c] %></h2></div>
@@ -93,56 +157,50 @@
 						</ul>
 					</div>
 					<div class="clear1 pt45"></div>
-					<!-- <form method="post" action=""> -->
 					<%= form_for @mobile_article, :url => "/mobile_articles/create", :html => {:multipart => true, :id => 'mobile_article_form'} do |f| %>
 
 						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
 						<tr>
-						<td></td>
-						<td>
-						<%= hidden_field_tag :c, params[:c] %>
-						</td>
+							<td></td>
+							<td>
+								<%= hidden_field_tag :c, params[:c] %>
+							</td>
 						</tr>
 						<tr>
 							<td width="20%" align="right" valign="top" class="pr20 pt5">标 题</td>
                             <td>
-							<%= f.text_field :title, :class =>"inputs6 radius5 relative", :size => "30" %>
-							<span class="mes">4-50个字</span>
+								<%= f.text_field :title, :class =>"inputs6 radius5 relative", :size => "30" %>
+								<span class="mes">0-50个字</span>
 							</td>
 						</tr>
 						<tr>
-							<td width="20%" align="right" valign="top" class="pr20 pt5">图片</td>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">配图</td>
 							<td>
 								<div class="uploadbox2" id="uploadPreview">
-<!-- 									<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic6.jpg"> -->
-									<input class="filebox1" id="mobile_article_img" name="mobile_article[img]" type="file"/>
+									<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic6.jpg"> 
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td width="20%" align="right" valign="top" class="pr20 pt5">描 述</td>
 							<td>
-								<!-- <textarea class="textarea4 radius5 relative" cols="40" rows="20" style="word-wrap:normal"></textarea> -->
-								<%= f.text_area :text, :class => "textarea4 radius5 relative", :style=>"word-wrap : normal"%>
+								<%= f.text_area :text, :class => "textarea4 radius5 relative", :style=>"word-wrap : normal;"%>
 								<span class="mes">选填 最多140字</span>
 							</td>
 						</tr>
 						<tr>
 							<td width="20%" align="right" valign="top" class="pr20 pt5">正文</td>
 							<td>
-								<!-- <img src="/newbackstage/images/pic30.jpg" width="390"/> -->
-								<%= f.text_area :content, :id=>"myEditor" %>
+								<%= f.text_area :content, :id=>"myEditor", :style=>"width:370px;" %>
 							</td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
 							<td>
 							    <%= f.submit :class => "btn20 w100", :value => "保 存" %>
-								<!-- <input type="submit" name="Submit" value="保 存" class="btn20 w100"> -->
 							</td>
 						</tr>
 					</table>
-					<!-- </form> -->
 					<% end %>
 				</div>
 				<div class="box14right">

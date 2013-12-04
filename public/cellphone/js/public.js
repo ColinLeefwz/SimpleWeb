@@ -1,8 +1,12 @@
 var w1, h1, imgarr, i=0, timer, oldpointX,  newpointX, menuheight;
-w1=$(window).width()-10;
-
 ua=navigator.userAgent.toLowerCase();
+
 $(document).bind('pageinit',function(){
+	if($(".main").width()>768){
+		$(".box1 h2").css("font-size","15px");
+		$(".box1 p, .box2 span.time").css("font-size","14px");
+	}
+	w1=$(".main").width()-10;
 	$("#DH").css("height",(w1*270/640+25)+"px");
 	menuheight=$("#Menu").height();
 	$("#Menu").css("top",-menuheight+"px");

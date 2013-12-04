@@ -21,6 +21,8 @@ background-color:#fff;}
 .border1{border-bottom:1px solid #E4E4E4;width:100%;height:0px;clear:both;}
 .ui-loader{display:none;}
 
+#Home{width:47px;height:35px;background:url("../images/pic15.png") center center no-repeat;position:absolute;left:0px;top:0px;
+text-indent:-999em;cursor:pointer;display:block;overflow:hidden;z-index:99;}
 #GoBack{width:47px;height:35px;background:url("../images/pic12.png") center center no-repeat;position:absolute;left:0px;top:0px;
 text-indent:-999em;cursor:pointer;display:block;overflow:hidden;z-index:99;}
 #Shadow{width:100%;background: url("../images/bg2.png") repeat scroll 0 0;text-align:center;height:33px;display:none;}
@@ -56,6 +58,10 @@ cursor:pointer;display:block;overflow:hidden;}
 #DH .dhnum .def{margin:0 5px;width:10px;height:10px;border-radius:20px;background-color:#E4E4E4;text-indent:999em;color:#000;
 display:inline-block;}
 #DH .dhnum .selected{background-color:#66CC99 !important;}
+
+.tit2{clear:both;overflow:hidden;line-height:30px;height:30px;padding:8px 0px 0px 30px;color:#333;}
+
+.main{max-width:1024px;margin:0px auto;overflow:hidden;}
 
 .box1{margin:10px 5px 0px 5px;padding-bottom:10px;overflow:hidden;border-bottom:1px solid #E4E4E4;}
 .box1 .box1left{float:left;width:30%;margin-right:10px;}

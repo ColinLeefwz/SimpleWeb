@@ -53,14 +53,14 @@ class ApplicationController < ActionController::Base
 
 
   def memo_original_url
-    session[:o_uri] = request.request_uri unless request.request_uri =~ /\/login/
+    if request.respond_to?(:request_uri)
+      session[:o_uri] = request.request_uri unless request.request_uri =~ /\/login/
+    end
   end
 
   def admin_authorize
     unless Admin.find_by_id(session[:admin_id])
-      flash[:notice] = "请登录"
-      memo_original_url()
-      redirect_to( :controller => "admin_login" , :action => "login")
+      return  redirect_to(:controller => 'admin_login', :action => 'login', :reload => true )
     end
     unless Right.check(self.controller_name, action_name, session[:admin_id] )
       render :text => "无权限:#{self.controller_name},#{action_name}"

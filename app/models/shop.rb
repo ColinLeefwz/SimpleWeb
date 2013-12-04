@@ -137,7 +137,7 @@ class Shop
     #合并签到
     Checkin.where(sid: self.id).each{|checkin|  checkin.set(:sid, to_shop.id)}
     #合并聊天室发图
-    Photo.where({room: self.id}).each{|photo| photo.set(:room, to_shop.id)}
+    Photo.where({room: self.id.to_s}).each{|photo| photo.set(:room, to_shop.id)}
 
     #３合并坐标
     to_lo = to_shop.lo.to_a

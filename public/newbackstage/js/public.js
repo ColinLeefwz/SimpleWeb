@@ -9,6 +9,9 @@ $(window).load(function(){
 	//ua="ipad";
 	if(windowWidth<=1024){
 		$("div.main").css("width","1024px");
+		if(parseInt($("#Nav").css("left"))==0){
+			$("div.main").stop(true).animate({"width":"830px","padding-left":"160px"});	
+		}
 	}
 	if(/MSIE/i.test(ua)&&documentHeight<=window.screen.height){//针对IE
 		$("#Nav").css("height",documentHeight+"px");
