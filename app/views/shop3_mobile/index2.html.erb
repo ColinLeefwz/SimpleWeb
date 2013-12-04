@@ -10,3 +10,16 @@
 	<a href="/mobile/index" class="btn20">管理手机网站</a>
 </div>
 </div>
+<script>
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+  });
+</script>

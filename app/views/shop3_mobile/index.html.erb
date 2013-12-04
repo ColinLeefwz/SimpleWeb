@@ -10,3 +10,16 @@
 	<a href="/shop3_mobile/new" class="btn20">创建手机网站</a>
 </div>
 </div>
+<script>
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+  });
+</script>
