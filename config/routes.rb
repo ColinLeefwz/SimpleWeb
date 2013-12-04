@@ -48,6 +48,7 @@ Prodygia::Application.routes.draw do
       get :refer_a_friend
       get :experts
       get :contents
+      get :video_on_demand
     end
   end
 

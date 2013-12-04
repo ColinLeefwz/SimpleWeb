@@ -53,6 +53,14 @@ class MembersController < ApplicationController
     end
   end
 
+  def video_on_demand
+    @favorite_session = current_user.subscribed_sessions.where(content_type: "VideoSession")
+    @from = "video_on_demand"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
+
   private
 
   def set_member
