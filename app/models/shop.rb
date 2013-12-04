@@ -96,7 +96,7 @@ class Shop
   end
   
   def photo_count
-    Photo.where({room: self.id.to_i.to_s, hide: nil}).count
+    photos.count
   end
 
   def shop_photo
@@ -247,6 +247,53 @@ class Shop
     end
     return photos
   end
+
+
+  def preset_p2(photos)
+    #餐厅
+
+    rsp, t = Rails.cache.fetch('preset_value'){"0;#{Time.now.to_i}"}.split(/;/)
+     if (Time.now.to_i-t.to_i) > (7*24*60*60) #大于7天， 换预置图；
+      rsp += 1
+      Rails.cache.write('preset_value', "#{rsp};#{Time.now.to_i}")
+     end
+
+    case self.t.to_i
+    when 10 #写字楼 => 写字楼预置区
+      sid = 21837807
+    when 11 #住宅 => 小区预置区
+      sid = 21837797  
+    when 12 #学校 => 学校预置区
+      sid = 21837805
+    when 2 #咖啡 => 咖啡馆预置区
+      sid = 21837800
+    when 1 #酒吧 => 酒吧预置区
+      sid = 21837801
+    when 5 #酒店 => 酒店预置区
+      sid = 21837802
+    when 8 #购物 => 商场预置区
+      sid = 21837803
+    when 13 #交通 => 车站机场预置区
+      sid = 21837806
+    else
+      types = self.type.to_s.split(/;/)
+      if types.include?('ktv') #KTV预置区
+        sid = 21837799
+      elsif types.include?('电影院')  # 电影院预置区
+        sid = 21837804
+      elsif (types&['西餐厅', '中餐厅', '外国餐厅', '快餐厅']).any?
+        sid = 21837798  #餐厅预置区 
+      else
+        return photos
+      end
+    end
+    shop = Shop.find_by_id(sid)
+    return photos if shop.nil?
+    photo = shop.photos.skip(rsp%photo_count).first
+    return photos if photo.nil?
+    return [photo] + photos[0..-2]
+  end
+
 
   
   def show_t

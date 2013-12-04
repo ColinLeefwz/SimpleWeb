@@ -18,7 +18,11 @@ class SimilarShop
   #继续初始化城市相似的商家， 继续上次中断时最后一个id开始
   def self.reinit(city, simv=55)
     lss = SimilarShop.where({city: city}).sort({"data.0.id"=> -1}).first
-    stid = lss.data.first['id'].to_i
+    if lss
+      stid = lss.data.first['id'].to_i
+    else
+      stid= 0
+    end
     Shop.where({city: city, t:{"$exists" => true}, _id:{"$gt" => stid}}).sort({_id: 1}).each  do |shop|
       produce(shop,simv)
     end
