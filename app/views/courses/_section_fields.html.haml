@@ -3,4 +3,6 @@
 .fields.section-fields
   = f.input :title, label: "Section Title"
   = f.input :description, wrapper_html: {class: "inline"}
+  = s3_uploader_form class: "s3_uploader", acl: "private", callback_param: "direct_upload_url" do
+    = file_field_tag :file, multiple: false
   = link_to_remove_fields "remove section", f
