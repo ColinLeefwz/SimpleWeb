@@ -77,7 +77,7 @@ describe MembersController do
 				sign_in peter
 			end
 
-			it "lists all the experts I followed" do
+			it "assigns all the experts the member followed" do
 				get :experts, id: peter.id, format: :js
 				expect(assigns[:followed_experts]).to eq peter.followed_users
 			end
@@ -88,4 +88,20 @@ describe MembersController do
       end
 		end
 	end
+
+  describe "GET contents" do
+    before :each do 
+      sign_in jevan
+    end
+
+    it "assigns the article sessions the member subscribed" do
+      get :contents, id: jevan.id, format: :js
+      expect(assigns[:favorite_content]).to eq jevan.subscribed_sessions.where(content_type: "ArticleSession")
+    end
+
+    it "can access to contents page" do
+      get :contents, id: jevan.id, format: :js
+      expect(response).to be_success
+    end
+  end
 end
