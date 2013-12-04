@@ -3,6 +3,6 @@
 = simple_form_for @course do |f|
   = f.input :title
   = f.input :description
-  -# = f.simple_fields_for :chapters do |builder|
-  -#   = render 'chapter_fields', f: builder
+  = f.association :experts
   = link_to_add_fields("add chapter", f, :chapters)
+  = f.submit
