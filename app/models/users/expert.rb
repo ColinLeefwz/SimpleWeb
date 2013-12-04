@@ -1,5 +1,6 @@
 class Expert < Member
-  has_many :sessions
+  has_many :sessions, dependent: :destroy
+  has_and_belongs_to_many :courses
   accepts_nested_attributes_for :profile
   alias_method :profile=, :profile_attributes=   # NOTE add this line for active admin working properly
 
