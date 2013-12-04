@@ -1,23 +1,8 @@
-- @favorite_content.each do |content|
+- @favorite_content.each do |session|
   .favorite-session-box.shadow
     .favorite-session-cover
-      = image_tag(content.cover.url)
-    .favorite-session-info
-      .favorite-session-title
-        = content.title
-      .favorite-session-expert-name
-        by #{content.expert.name}
-      .favorite-session-categories
-        = content.categories.join(", ")
-      .clear-fix
-
-      .favorite-session-description
-        = truncate_html(content.description, length: 300, omission: '...')
-      .see-more
-        = link_to "see mroe", remote: true
-
-    .favorite-social-share
-      = render "favorite_social_share", session_title: content.title, session_url: session_url(content) 
+      = image_tag(session.cover.url)
+    = render "session_info", session: session
 
 
     
