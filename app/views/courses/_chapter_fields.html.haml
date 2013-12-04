@@ -1,9 +1,7 @@
 
 
-.fields
-  = f.input :title
-  = f.input :description
-  = link_to_remove_fields "remove", f
-  -# = f.simple_fields_for :sections do |builder|
-  -#   = render "section_fields", f: builder
+.fields.chapter-fields
+  = f.input :title, label: "Chapter Title"
+  = f.input :description, wrapper_html: {class: "inline"}
+  = link_to_remove_fields "remove chapter", f
   = link_to_add_fields("add section", f, :sections)

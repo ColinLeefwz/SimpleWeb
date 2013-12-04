@@ -7,14 +7,14 @@ remove_fields = (link) ->
 add_fields = (link, associaton, content) ->
   new_id = new Date().getTime()
   regexp = new RegExp("new_" + associaton, "g")
-  $(link).parent().append(content.replace(regexp, new_id))
+  $(".expand_field").append(content.replace(regexp, new_id))
 
 
-$(document).on "click", ".remove_fields", (e)->
+$(document).on "click", ".remove-fields", (e)->
   e.preventDefault()
   remove_fields(this)
 
-$(document).on "click", ".add_fields", (e)->
+$(document).on "click", ".add-fields", (e)->
   e.preventDefault()
   associaton = $(this).data("associaton")
   content = $(this).data("fields")

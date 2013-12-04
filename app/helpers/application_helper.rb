@@ -21,7 +21,7 @@ module ApplicationHelper
 
 
   def link_to_remove_fields(name, f)
-    f.hidden_field(:_destroy) + link_to(name, "#", class: "remove_fields")
+    f.hidden_field(:_destroy) + link_to(name, "#", class: "btn remove-fields inline")
   end
 
   def link_to_add_fields(name, f, associaton)
@@ -30,6 +30,6 @@ module ApplicationHelper
       render(associaton.to_s.singularize + "_fields", f: builder)
     end
 
-    link_to(name, "#", class: "add_fields", data: {associaton: associaton.to_s, fields: fields.gsub("\n", "") } )
+    link_to(name, "#", class: "btn add-fields inline", data: {associaton: associaton.to_s, fields: fields.gsub("\n", "") } )
   end
 end
