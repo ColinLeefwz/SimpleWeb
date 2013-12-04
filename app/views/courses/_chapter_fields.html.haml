@@ -1,0 +1,9 @@
+
+
+.fields
+  = f.input :title
+  = f.input :description
+  = link_to_remove_fields "remove", f
+  -# = f.simple_fields_for :sections do |builder|
+  -#   = render "section_fields", f: builder
+  = link_to_add_fields("add section", f, :sections)
