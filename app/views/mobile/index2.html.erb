@@ -13,6 +13,7 @@
 		<script src="/cellphone/js/public.js"></script>
     </head>
     <body >
+        <div class="main">
         <div class="header">
 			<h1><%= @shop.name %></h1>
 			<a id="OpenMenu" alt="打开导航">打开导航</a>
@@ -125,5 +126,6 @@
 			<a href=<%= "/mobile/map?sid=#{@shop.id}" %> class="btn3" data-ajax="false">地图</a>
 			<a class="btn4" id="Btn4">分享</a>
 		</div>
+	</div>
     </body>
 </html>
