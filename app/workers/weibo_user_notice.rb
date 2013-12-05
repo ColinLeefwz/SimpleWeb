@@ -12,18 +12,24 @@ class WeiboUserNotice
     return if (user = User.find_by_id(uid)).nil?
     return if user.wb_uid.blank?
     token = $redis.get("wbtoken#{uid}")
-    name = user.wb_name
-    name = user.name if name.blank?
-    send_follow_notice(user, token, name)
-    send_friend_notice(user, token, name)
+    
+    send_follow_notice(user, token)
+    send_friend_notice(user, token)
   end
 
 
 
-  def self.send_follow_notice(user, token, name)
+  def self.send_follow_notice(user, token)
     api = "https://api.weibo.com/2/friendships/followers/ids.json"
-    get_friendships(api, user, token).each do |u|
-      Xmpp.send_chat(user.id, u.id, ": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。")
+    name = user.wb_name
+    name = user.name if name.blank?
+    attrs = " NOLOG='1' "
+    ext = nil
+    url = "dface://scheme/user/info?id=#{user.id}"
+    attrs += " url='#{url}' "
+    ext = "<x xmlns='dface.url'>#{url}</x>"
+    get_friendships(api, user, token).to_a.each do |u|
+      Xmpp.send_chat(user.id, u.id, ": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。", '', attrs, ext )
       # puts "我是你微博关注的人‘#{user.wb_name}’,也在使用脸脸，要来关注我哦！"
     end
 
@@ -31,11 +37,18 @@ class WeiboUserNotice
   end
 
 
-  def self.send_friend_notice(user, token, name)
+  def self.send_friend_notice(user, token)
     api = "https://api.weibo.com/2/friendships/friends/ids.json"
-    get_friendships(api, user, token).each do |u|
+    get_friendships(api, user, token).to_a.each do |u|
       # puts "我是你微博关注的人‘#{u.id}’,也在使用脸脸，要来关注我哦！"
-      Xmpp.send_chat(u.id, user.id, ": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。")
+      name = u.wb_name
+      name = u.name if name.blank?
+      attrs = " NOLOG='1' "
+      ext = nil
+      url = "dface://scheme/user/info?id=#{u.id}"
+      attrs += " url='#{url}' "
+      ext = "<x xmlns='dface.url'>#{url}</x>"
+      Xmpp.send_chat(u.id, user.id, ": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。", '', attrs, ext)
     end
   end
 
