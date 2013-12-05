@@ -138,6 +138,114 @@ function ImageUpload(target){//优惠券
     }
 }
 
+
+function ImageUpload2(target){//手机网站文章
+        
+    var obj , pic , sid;
+    if(target=="UpImgFile"){
+        obj=document.getElementById(target);
+    }else{
+        obj=target;
+    }
+
+    pic=document.getElementById("UploadPic");
+    sid=document.getElementById("SmallImgDiv");
+    obj.click();//打开上传对话框
+    obj.onchange=function(){
+        $("#Btn19").removeClass("none");
+        $("#UploadForm").ajaxSubmit({
+            url: "/crop_photo/upload",
+            type: 'POST',
+            success: function(data){
+                $("#EM").html("<img id='UploadPic' src='"+ data +"' />");
+                pic.src= data;
+                sid.innerHTML="<img src=\'"+$("#UploadPic").attr("src")+"\' />";
+                    documentHeight=$(document).height();
+                    windowHeight=$(window).height();
+                    if(documentHeight<=windowHeight){
+                        $("#BG").css({
+                            "height":windowHeight+"px",
+                            "display":"block"
+                        });
+                    }else{
+                        $("#BG").css({
+                            "height":documentHeight+"px",
+                            "display":"block"
+                        });
+                    }
+                    $(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css("display","none");
+                    var cut = new ImgCut({
+                        viewClass: 'cnm',  //初始化 大中小图片预览区域及个数，DOM结构决定
+                        imgId: 'UploadPic',
+                        bgColor: 'black',           //初始化 背景颜色
+                        bgFade: true,              //初始化 背景渐变效果
+                        shade: false,              //初始化 选区是否显示黑白效果
+                        bgOpacity: 0.3 ,            //初始化 背景透明度
+                        addClass: 'jcrop-light'    //初始化 选区边界凸效果
+                    },
+
+                    function (cutObj) {
+                        var w=$("#UploadPic").width();
+                        var h=$("#UploadPic").height();
+
+                        var w1=100,h1,w2=252,h2=252;
+                        if(h<252){
+                            $("#EM").css("margin-top",(400-h)/2+"px");
+                            h1=(400-h)/2;
+                            w1=0;
+                        }else if(h<400&h>252){
+                            $("#EM").css("margin-top",(400-h)/2+"px");
+                            h1=(400-252)/2;
+                            w1=(h-252)/2;
+                            w2=252+w1;
+                            h2=252+h1;
+                        }else if(h>400){
+                            $("#EM").css("margin-top","0px");
+                            h1=(400-252)/2;
+                            w2=252+w1;
+                            h2=252+h1;
+                        }else if(h==400){
+                            $("#EM").css("margin-top","0px");
+                            h1=(400-252)/2;
+                            w1=h1
+                            w2=252+w1;
+                            h2=252+h1;
+                        }
+                        cutObj.getApi().animateTo([h1, w1, h2, w2]);
+                        cutObj.getApi().ui.selection.addClass('jcrop-selection');
+                    }
+                    );
+
+                    $("#Btn2").click(function () {
+                        var result = cut.getResult() ;
+
+                        var pdata = {
+                            path: data
+                        }
+
+                        for (obj in result) {
+                            if(obj=='x' || obj =="y" || obj=='w' || obj=='h')
+                            {
+                                pdata[obj] = result[obj]
+                            }
+                        //                                $("#UploadForm").append("<input type='hidden' name='"+ obj +"' value='" + result[obj]  +"'/>")
+                        }
+                        // -----------ajax 提交图片 控制器端剪裁------------------------------------------------
+                        $.post("/crop_photo/crop", pdata , function(data){
+                            $("#UpImg,#BG").css("display","none");
+                            $("#CropedImg2").attr("src", data["url"]+"?t="+ (new Date()) )
+                            $("#Forms").append("<input type='hidden' name='mobile_article[img2]' value='" + data["url"]  +"'/>");
+                        })
+
+                    // --------------------------------------------------
+
+                    });
+            }
+        });
+
+    }
+}
+
 function NoCut(){
     $("#UpImg").animate({
         "top":"-722px"

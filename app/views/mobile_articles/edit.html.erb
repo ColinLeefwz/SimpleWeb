@@ -10,6 +10,35 @@
 		}else if(runing=="checkboxs2"){
 			AllNoDH();
 		}
+
+	// $("#uploadPreview").click(function(){
+	$("#uploadPreview").click(function(){
+        documentHeight=$(document).height();
+        windowHeight=$(window).height();
+        if($(window).width()>1024){
+            docwidth=$(window).width();
+        }else{
+            docwidth=1024;
+        }
+        if(documentHeight<=windowHeight){
+            $("#BG").css({
+                "width":docwidth+"px",
+                "height":windowHeight+"px",
+                "display":"block"
+            });
+        }else{
+            $("#BG").css({
+                "width":docwidth+"px",
+                "height":documentHeight+"px",
+                "display":"block"
+            });
+        }
+		$("#UpImg").css("display","block");
+		top1=$(document).scrollTop()+(windowHeight-$("#UpImg").height())/2;
+		if(top1<0){top1=0;}
+		$("#UpImg").css({"top":top1+"px","display":"none"});
+		$("#UpImg").slideDown(600);
+    });
 		
 		//新增
 		$("#CloseMoblie").click(function(){
@@ -81,6 +110,49 @@
 		});
 	});
 	</script>
+<script type="text/javascript">
+    document.write("\<script src=\'\/newbackstage\/js\/jquery.Jcrop.js\'\>\<\/script\>\<script src=\'\/newbackstage\/js\/imgUploadPreview2.js\'\>\<\/script\>");
+</script>
+<div id="BG" class="bg"></div>
+		<div class="con2">
+<div id="UpImg">
+    <div class="upimgplane">
+      <div class="upimgtab">
+        <span id="EM"><img id="UploadPic" src="/newbackstage/images/btn9.jpg" onClick="ImageUpload2('UpImgFile')"/></span>
+        <form id="UploadForm">
+          <input type="file" id="UpImgFile" class="filebox6" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox7" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox8" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox9" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox10" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox11" onClick="ImageUpload2(this)" name="photo"/>
+        </form>
+        <div id="CutDiv">
+          <div id="CutArea">
+            <div class="cutarealine1"></div>
+            <div class="cutarealine2"></div>
+            <div class="cutarealine3"></div>
+            <div class="cutarealine4"></div>
+            <div id="CAMove"></div>
+          </div>
+          <div id="CutBG1"></div>
+          <div id="CutBG2"></div>
+          <div id="CutBG3"></div>
+          <div id="CutBG4"></div>
+        </div>
+      </div>
+    </div>
+    <div id="SmallImgDiv"  class="cnm">
+      <img src="/newbackstage/images/pic23.jpg" class="jcrop-preview"/>
+    </div>
+    <div class="upimgdiv">
+      <input type="file" onclick="ImageUpload2(this)" class="filebox14 none" id="UpImgFile"/>
+      <input type="file" onclick="ImageUpload2(this)" class="filebox15 none" id="UpImgFile"/>
+      <input type="button" onclick="ImageUpload2('UpImgFile')" value="重新上传" class="btn19_2 l none" id="Btn19"/>
+      <a onclick="NoCut()" class="btn3 r" href="#a1">取消</a>
+      <input type="button" id="Btn2" class="btn2 r mr10" value="提 交"/>
+    </div>
+</div>
 
 		<div class="con">
 			<div class="box14">
@@ -116,11 +188,17 @@
 							</td> -->
 						</tr>
 						<tr>
-							<td width="20%" align="right" valign="top" class="pr20 pt5">图片</td>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">配图</td>
 							<td>
-								<div class="uploadbox2" id="uploadPreview">
+								<div class="uploadbox3" id="uploadPreview">
 <!-- 									<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic6.jpg"> -->
-									<input class="filebox1" id="mobile_article_img" name="mobile_article[img]" type="file"/>
+									<!-- <input class="filebox1" id="mobile_article_img" name="mobile_article[img]" type="file"/> -->
+      <% if params[:mobile_article] && params[:mobile_article][:img2]  %>
+        <%= image_tag params[:mobile_article][:img2], :width=>"182", :width=>"182", :id=>"CropedImg" %>
+        <%= f.hidden_field(:img2, :value => params[:mobile_article][:img2])%>
+      <% else %>
+        <%= image_tag @mobile_article.img2.blank? ?  '/newbackstage/images/pic6.jpg' : @mobile_article.img2 , :width=>"182", :width=>"182", :id=>"CropedImg" %>
+      <% end %>
 								</div>
 							</td>
 						</tr>
