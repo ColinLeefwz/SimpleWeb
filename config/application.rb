@@ -9,7 +9,7 @@ require "sprockets/railtie"
 require "rails/test_unit/railtie"
 require 'uuid'
 
-$xmpp_ips = ["42.120.60.200","42.121.98.157","42.121.0.193","42.121.0.192"]
+$xmpp_ips = ["42.121.98.157","42.121.0.193","42.121.0.192"]
 $web_ips = ["42.121.252.94","42.121.79.210","42.121.79.211"]
 $xmpp_ip = $xmpp_ips[0]
 $web_ip = $web_ips[1]

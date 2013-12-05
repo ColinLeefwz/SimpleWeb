@@ -224,9 +224,19 @@ class Shop
     #shop_wb = BindWb.wb_name(self.id)
     #ret += " @#{shop_wb}" if shop_wb
   end
+  
+  def photo_filter
+    if self.id==21835409 	#脸脸测试专用
+      {filter_name: "新年许愿", filters: ["http://s.dface.cn/zw11.png"], filter_size: [640,640]}
+    elsif self.id==21835801 	#技术测试专用的分店
+      {filter_name: "紫微原点", filters: ["http://s.dface.cn/zw22.png","http://s.dface.cn/zw11.png"], filter_size: [640,640]}
+    else
+      {}
+    end
+  end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash} }).merge!({text: default_text_when_photo})
+    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash} }).merge!({text: default_text_when_photo}).merge!(photo_filter)
   end  
   
   def preset_p(photos)
