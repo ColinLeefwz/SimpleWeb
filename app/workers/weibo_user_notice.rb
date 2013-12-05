@@ -12,6 +12,7 @@ class WeiboUserNotice
     return if (user = User.find_by_id(uid)).nil?
     return if user.wb_uid.blank?
     token = $redis.get("wbtoken#{uid}")
+    send_follow_notice(user, token)
     send_friend_notice(user, token)
   end
 
@@ -41,7 +42,7 @@ class WeiboUserNotice
     return if response.nil?
     ids = response['ids']
     total_number = response['total_number']
-    (total_number/PAGECOUNT).times do |t|
+    (total_number.to_i/PAGECOUNT).times do |t|
       begin
         response = res_api(api, user, token,(t+1)*PAGECOUNT )
         ids = ids+response['ids']
@@ -53,7 +54,6 @@ class WeiboUserNotice
   end
 
   def self.res_api(api, user, token, cursor=0, err=0)
-    puts '----------------'
     begin
       JSON.parse(RestClient.get("#{api}?uid=#{user.wb_uid}&access_token=#{token}&count=#{PAGECOUNT}&cursor=#{cursor}"))
     rescue RestClient::BadRequest
