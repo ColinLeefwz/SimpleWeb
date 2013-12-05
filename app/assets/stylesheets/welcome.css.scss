@@ -5,6 +5,12 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
 html {
   height:100%;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 body {
 	font-family: 'Lato', sans-serif;
 	font-weight: 400;
@@ -45,7 +51,9 @@ body {
           font-size: 14px;
           font-family: 'Latoitalic';
           display: inline-block;
-          color: #B3B3B3;
+          a{
+            color: #B3B3B3;
+          }
         }
       }
       .content-type{
@@ -70,12 +78,14 @@ body {
     .title {
       font-family: Latoreg;
       font-size: 22px;
-      color: #6D6D6D;
       text-align: left;
       margin: 0px 10px 5px 10px;
       font-weight: bold;
       letter-spacing: 0.5px;
       line-height: 25px;
+      a{
+      color: #6D6D6D;
+      }
 
       a:hover{
         text-decoration: none;
