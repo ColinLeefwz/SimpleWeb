@@ -17,7 +17,7 @@ class WeixinController < ApplicationController
         end
         return render "picurl", :formats => :xml
       else
-        return render "text", :formats => :xml
+        # return render "text", :formats => :xml
       end
 
       # if @text =~ /音乐/
