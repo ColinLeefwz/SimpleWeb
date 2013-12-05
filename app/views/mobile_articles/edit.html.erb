@@ -190,14 +190,14 @@
 						<tr>
 							<td width="20%" align="right" valign="top" class="pr20 pt5">配图</td>
 							<td>
-								<div class="uploadbox2" id="uploadPreview">
+								<div class="uploadbox3" id="uploadPreview">
 <!-- 									<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic6.jpg"> -->
 									<!-- <input class="filebox1" id="mobile_article_img" name="mobile_article[img]" type="file"/> -->
       <% if params[:mobile_article] && params[:mobile_article][:img2]  %>
-        <%= image_tag params[:mobile_article][:img2], :width=>"195", :id=>"CropedImg" %>
+        <%= image_tag params[:mobile_article][:img2], :width=>"182", :width=>"182", :id=>"CropedImg" %>
         <%= f.hidden_field(:img2, :value => params[:mobile_article][:img2])%>
       <% else %>
-        <%= image_tag @mobile_article.img2.blank? ?  '/newbackstage/images/pic6.jpg' : @mobile_article.img2 , :width=>"195", :id=>"CropedImg" %>
+        <%= image_tag @mobile_article.img2.blank? ?  '/newbackstage/images/pic6.jpg' : @mobile_article.img2 , :width=>"182", :width=>"182", :id=>"CropedImg" %>
       <% end %>
 								</div>
 							</td>
