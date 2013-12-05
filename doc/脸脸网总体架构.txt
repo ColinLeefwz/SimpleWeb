@@ -52,7 +52,7 @@ Nginx使用默认安装，启动在80端口。
 
 ###Redis
 
-缓存系统采用Redis，需要2.6以上版本，因为使用了Redis Lua scripting特性。使用源代码编译安装。运行版本的Redis目前只在web2服务器的eth0接口上启动，以后要配置为一个集群。此外，web1/web2都有一个测试用的redis跑在localhost上。
+缓存系统采用Redis，需要2.6以上版本，因为使用了Redis Lua scripting特性。使用源代码编译安装。运行版本的Redis目前在web2服务器的eth0接口上启动，。此外，web1/web2都有一个测试用的redis跑在localhost上。
 
  this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
 
