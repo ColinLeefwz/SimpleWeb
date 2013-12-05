@@ -10,7 +10,8 @@ $(document).ready(function(){
 	}else if(runing=="checkboxs2"){
 		AllNoDH();
 	}
-	$("#image_view").click(function(){
+	// $("#image_view").click(function(){
+	$("#uploadPreview").click(function(){
         documentHeight=$(document).height();
         windowHeight=$(window).height();
         if($(window).width()>1024){
@@ -107,19 +108,22 @@ $(document).ready(function(){
 	});
 });
 </script>
+<script type="text/javascript">
+    document.write("\<script src=\'\/newbackstage\/js\/jquery.Jcrop.js\'\>\<\/script\>\<script src=\'\/newbackstage\/js\/imgUploadPreview2.js\'\>\<\/script\>");
+</script>
 <div id="BG" class="bg"></div>
 		<div class="con2">
 <div id="UpImg">
     <div class="upimgplane">
       <div class="upimgtab">
-        <span id="EM"><img id="UploadPic" src="/newbackstage/images/btn9.jpg" onClick="ImageUpload('UpImgFile')"/></span>
+        <span id="EM"><img id="UploadPic" src="/newbackstage/images/btn9.jpg" onClick="ImageUpload2('UpImgFile')"/></span>
         <form id="UploadForm">
-          <input type="file" id="UpImgFile" class="filebox6" onClick="ImageUpload(this)" name="photo"/>
-          <input type="file" id="UpImgFile" class="filebox7" onClick="ImageUpload(this)" name="photo"/>
-          <input type="file" id="UpImgFile" class="filebox8" onClick="ImageUpload(this)" name="photo"/>
-          <input type="file" id="UpImgFile" class="filebox9" onClick="ImageUpload(this)" name="photo"/>
-          <input type="file" id="UpImgFile" class="filebox10" onClick="ImageUpload(this)" name="photo"/>
-          <input type="file" id="UpImgFile" class="filebox11" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox6" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox7" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox8" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox9" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox10" onClick="ImageUpload2(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox11" onClick="ImageUpload2(this)" name="photo"/>
         </form>
         <div id="CutDiv">
           <div id="CutArea">
@@ -140,9 +144,9 @@ $(document).ready(function(){
       <img src="/newbackstage/images/pic23.jpg" class="jcrop-preview"/>
     </div>
     <div class="upimgdiv">
-      <input type="file" onclick="ImageUpload(this)" class="filebox14 none" id="UpImgFile"/>
-      <input type="file" onclick="ImageUpload(this)" class="filebox15 none" id="UpImgFile"/>
-      <input type="button" onclick="ImageUpload('UpImgFile')" value="重新上传" class="btn19_2 l none" id="Btn19"/>
+      <input type="file" onclick="ImageUpload2(this)" class="filebox14 none" id="UpImgFile"/>
+      <input type="file" onclick="ImageUpload2(this)" class="filebox15 none" id="UpImgFile"/>
+      <input type="button" onclick="ImageUpload2('UpImgFile')" value="重新上传" class="btn19_2 l none" id="Btn19"/>
       <a onclick="NoCut()" class="btn3 r" href="#a1">取消</a>
       <input type="button" id="Btn2" class="btn2 r mr10" value="提 交"/>
     </div>
@@ -176,8 +180,14 @@ $(document).ready(function(){
 						<tr>
 							<td width="20%" align="right" valign="top" class="pr20 pt5">配图</td>
 							<td>
-								<div class="uploadbox2" id="uploadPreview">
-									<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic6.jpg"> 
+								<div class="uploadbox3" id="uploadPreview">
+									<!-- <img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic6.jpg">  -->
+      <% if params[:mobile_article] && params[:mobile_article][:img2]  %>
+        <%= image_tag params[:mobile_article][:img2], :width=>"182",:height=>"182",:id=>"CropedImg2" %>
+        <%= f.hidden_field(:img2, :value => params[:mobile_article][:img2])%>
+      <% else %>
+        <%= image_tag @mobile_article.img2.blank? ?  '/newbackstage/images/pic6.jpg' : @mobile_article.img2 , :width=>"182",:height=>"182", :id=>"CropedImg2" %>
+      <% end %>
 								</div>
 							</td>
 						</tr>

@@ -19,6 +19,10 @@ class MobileArticlesController < ApplicationController
     @mobile_article.sid = session[:shop_id]
     @mobile_article.category = params[:c]
 
+    # path =  FileUtils.mkdir_p('public/mobile_article/' + @mobile_article.id.to_s).first
+    # FileUtils.mv("public#{pre}", path+"/0.jpg")
+    # @mobile_article.img2_filename = "0.jpg"
+
     if @mobile_article.save
       redirect_to URI::escape("/mobile_articles/index?c=#{params[:c]}")
     else
@@ -65,7 +69,7 @@ class MobileArticlesController < ApplicationController
   def update
     @mobile_article = MobileArticle.find_by_id(params[:id])
     if @mobile_article.update_attributes(params[:mobile_article])
-      redirect_to :action => "index"
+      redirect_to URI::escape("/mobile_articles/index?c=#{params[:c]}")
     else
       render :action => :edit
     end

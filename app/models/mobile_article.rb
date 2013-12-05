@@ -7,6 +7,8 @@ class MobileArticle
   field :text #简单摘要
   field :img
 
+  field :img2
+
   field :category
 
   field :content
@@ -29,8 +31,8 @@ class MobileArticle
     ma.save
   end
   
-  $fake_articles = ["529d7c3d47bce5d851000001","529d7d1147bce5d851000003"] if ENV["RAILS_ENV"] != "production"
-  # $fake_articles = ["52985c8c1d41c8bb5c000017","52918c771d41c820df000021"] if ENV["RAILS_ENV"] != "production"
+  # $fake_articles = ["529d7c3d47bce5d851000001","529d7d1147bce5d851000003"] if ENV["RAILS_ENV"] != "production"
+  $fake_articles = ["52985c8c1d41c8bb5c000017","52918c771d41c820df000021"] if ENV["RAILS_ENV"] != "production"
   $fake_articles = ["5298604020f318da3f000001","5297f6eb20f318aff500000f"] if ENV["RAILS_ENV"] == "production"
 
   class << self
