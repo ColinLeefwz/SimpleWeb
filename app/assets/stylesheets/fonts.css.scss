@@ -52,3 +52,19 @@
 			 url(font-path('lato-italic-webfont.woff')) format('woff'),
 			 url(font-path('lato-italic-webfont.svg') + "#Latoitalic") format('svg');
 }
+
+@font-face{
+	font-family: 'Oswaldbold';
+	src: url(font-path('oswald-bold-webfont.ttf')) format('turetype'),
+			 url(font-path('oswald-bold-webfont.eot')) format('embedded-opentype'),
+			 url(font-path('oswald-bold-webfont.woff')) format('woff'),
+			 url(font-path('oswald-bold-webfont.svg') + "#Oswaldbold") format('svg');
+}
+
+@font-face{
+	font-family: 'Oswaldreg';
+	src: url(font-path('oswald-regular-webfont.ttf')) format('turetype'),
+			 url(font-path('oswald-regular-webfont.eot')) format('embedded-opentype'),
+			 url(font-path('oswald-regular-webfont.woff')) format('woff'),
+			 url(font-path('oswald-regular-webfont.svg') + "#Oswaldreg") format('svg');
+}
