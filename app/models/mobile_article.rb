@@ -17,6 +17,8 @@ class MobileArticle
 
   mount_uploader(:img, MobileArticleImgUploader)
 
+  mount_uploader(:img2, MobileArticleImgUploader)
+
   def self.img_url(id,type=nil)
     if type
       "http://oss.aliyuncs.com/dface/#{id}/#{type}_0.jpg"
