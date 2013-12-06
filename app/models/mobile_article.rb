@@ -7,7 +7,7 @@ class MobileArticle
   field :text #简单摘要
   field :img
 
-  field :img2
+  # field :img2
 
   field :category
 
@@ -15,9 +15,11 @@ class MobileArticle
 
   field :kw #关键字
 
+  # store_in_background :img
+
   mount_uploader(:img, MobileArticleImgUploader)
 
-  mount_uploader(:img2, MobileArticleImgUploader)
+  # mount_uploader(:img2, MobileArticleImg2Uploader)
 
   def self.img_url(id,type=nil)
     if type

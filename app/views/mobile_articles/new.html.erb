@@ -11,33 +11,33 @@ $(document).ready(function(){
 		AllNoDH();
 	}
 	// $("#image_view").click(function(){
-	$("#uploadPreview").click(function(){
-        documentHeight=$(document).height();
-        windowHeight=$(window).height();
-        if($(window).width()>1024){
-            docwidth=$(window).width();
-        }else{
-            docwidth=1024;
-        }
-        if(documentHeight<=windowHeight){
-            $("#BG").css({
-                "width":docwidth+"px",
-                "height":windowHeight+"px",
-                "display":"block"
-            });
-        }else{
-            $("#BG").css({
-                "width":docwidth+"px",
-                "height":documentHeight+"px",
-                "display":"block"
-            });
-        }
-		$("#UpImg").css("display","block");
-		top1=$(document).scrollTop()+(windowHeight-$("#UpImg").height())/2;
-		if(top1<0){top1=0;}
-		$("#UpImg").css({"top":top1+"px","display":"none"});
-		$("#UpImg").slideDown(600);
-    });
+	// $("#uploadPreview").click(function(){
+ //        documentHeight=$(document).height();
+ //        windowHeight=$(window).height();
+ //        if($(window).width()>1024){
+ //            docwidth=$(window).width();
+ //        }else{
+ //            docwidth=1024;
+ //        }
+ //        if(documentHeight<=windowHeight){
+ //            $("#BG").css({
+ //                "width":docwidth+"px",
+ //                "height":windowHeight+"px",
+ //                "display":"block"
+ //            });
+ //        }else{
+ //            $("#BG").css({
+ //                "width":docwidth+"px",
+ //                "height":documentHeight+"px",
+ //                "display":"block"
+ //            });
+ //        }
+	// 	$("#UpImg").css("display","block");
+	// 	top1=$(document).scrollTop()+(windowHeight-$("#UpImg").height())/2;
+	// 	if(top1<0){top1=0;}
+	// 	$("#UpImg").css({"top":top1+"px","display":"none"});
+	// 	$("#UpImg").slideDown(600);
+ //    });
 
 	$("#CloseMoblie").click(function(){
 		$("#Moblie").fadeOut(500,function(){
@@ -182,12 +182,7 @@ $(document).ready(function(){
 							<td>
 								<div class="uploadbox3" id="uploadPreview">
 									<!-- <img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic6.jpg">  -->
-      <% if params[:mobile_article] && params[:mobile_article][:img2]  %>
-        <%= image_tag params[:mobile_article][:img2], :width=>"182",:height=>"182",:id=>"CropedImg2" %>
-        <%= f.hidden_field(:img2, :value => params[:mobile_article][:img2])%>
-      <% else %>
-        <%= image_tag @mobile_article.img2.blank? ?  '/newbackstage/images/pic6.jpg' : @mobile_article.img2 , :width=>"182",:height=>"182", :id=>"CropedImg2" %>
-      <% end %>
+									<%= f.file_field :img%>
 								</div>
 							</td>
 						</tr>
