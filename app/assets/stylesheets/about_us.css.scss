@@ -14,7 +14,7 @@
 
 
   /*---- navbar ----*/
-  #about_us_sidebar {
+  #about-us-sidebar {
     margin-left: 4%;
     padding-bottom: 100px;
     width: 18%;
@@ -214,4 +214,10 @@
   .team_member_info .social_media_icons img:hover {
     opacity: 1;
   }
+}
+
+.top-fixed{
+  position: fixed;
+  top: 0px;
+  margin-top: 25px;
 }
