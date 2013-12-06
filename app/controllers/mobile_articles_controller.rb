@@ -18,8 +18,8 @@ class MobileArticlesController < ApplicationController
     @mobile_article = MobileArticle.new(params[:mobile_article])
     @mobile_article.sid = session[:shop_id]
     @mobile_article.category = params[:c]
-    @mobile_article.img2_filename = "0.jpg"
-
+    # @mobile_article.img2 = params[:img2]
+    
     # pre = params[:mobile_article][:img2]
     # path =  FileUtils.mkdir_p('public/mobile_article/' + @mobile_article.id.to_s).first
     # FileUtils.mv("public#{pre}", path+"/0.jpg")
