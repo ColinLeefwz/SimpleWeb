@@ -1,10 +1,9 @@
 
 = s3_uploader_form class: "s3_uploader", acl: "private", callback_param: "direct_upload_url" do
   = file_field_tag :file, multiple: false
+  %span.status
 
-.status
-
-= simple_form_for @resource do |f|
+= simple_form_for @resource, remote: true do |f|
   = f.input :expert_id, as: :select, collection: Expert.all, label_method: :name, value_method: :id
   = f.hidden_field :direct_upload_url
   = f.hidden_field :attached_file_file_name

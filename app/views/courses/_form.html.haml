@@ -1,9 +1,8 @@
 
 
-= simple_form_for @course do |f|
+= simple_form_for @course, html: {class: "fields"} do |f|
   = f.input :title, label: "Course Title"
   = f.input :description
   = f.association :experts
   = link_to_add_fields("add chapter", f, :chapters)
-  .expand_field
   = f.submit

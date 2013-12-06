@@ -2,6 +2,7 @@
 
 .fields.chapter-fields
   = f.input :title, label: "Chapter Title"
-  = f.input :description, wrapper_html: {class: "inline"}
+  = f.input :description
+  = f.input :order, label: "Chapter Order", wrapper_html: {class: "inline"}
   = link_to_remove_fields "remove chapter", f
   = link_to_add_fields("add section", f, :sections)
