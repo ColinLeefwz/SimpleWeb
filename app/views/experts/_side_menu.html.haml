@@ -4,8 +4,8 @@
   .expert-text-info
     .expert-name
       %p= @expert.name
-    %p= @expert.expert_profile.title
-    %p= @expert.expert_profile.company
+    %p= @expert.profile.title
+    %p= @expert.profile.company
     %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
   .clear-fix
   .toolkit
@@ -37,7 +37,7 @@
     .item-text #{link_to 'Sessions', sessions_expert_path, remote: true}
   .item
     = render 'item_icon', item_name: 'video_library'
-    .item-text #{link_to 'Video on demand', pending_page_expert_path, remote: true}
+    .item-text #{link_to 'Video on demand', video_on_demand_expert_path(current_user), remote: true}
   .item
     = render 'item_icon', item_name: 'testimonials'
     .item-text #{link_to 'Testimonials', pending_page_expert_path, remote: true}

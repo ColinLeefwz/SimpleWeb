@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131127080747) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20131202080030) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -96,25 +93,6 @@ ActiveRecord::Schema.define(version: 20131127080747) do
 
   add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id", using: :btree
 
-  create_table "expert_profiles", force: true do |t|
-    t.string   "title"
-    t.string   "company"
-    t.string   "location"
-    t.text     "expertise"
-    t.text     "favorite_quote"
-    t.text     "career"
-    t.text     "education"
-    t.text     "web_site"
-    t.text     "article_reports"
-    t.text     "additional"
-    t.text     "testimonials"
-    t.integer  "expert_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "expert_profiles", ["expert_id"], name: "index_expert_profiles_on_expert_id", using: :btree
-
   create_table "followings", force: true do |t|
     t.integer  "the_followed"
     t.integer  "follower"
@@ -143,6 +121,25 @@ ActiveRecord::Schema.define(version: 20131127080747) do
   add_index "orders", ["session_id"], name: "index_orders_on_session_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
+  create_table "profiles", force: true do |t|
+    t.string   "title"
+    t.string   "company"
+    t.string   "location"
+    t.text     "expertise"
+    t.text     "favorite_quote"
+    t.text     "career"
+    t.text     "education"
+    t.text     "web_site"
+    t.text     "article_reports"
+    t.text     "additional"
+    t.text     "testimonials"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
+
   create_table "propose_topics", force: true do |t|
     t.string   "Name"
     t.string   "Location"
@@ -162,6 +159,18 @@ ActiveRecord::Schema.define(version: 20131127080747) do
 
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
+  create_table "resources", force: true do |t|
+    t.integer  "expert_id"
+    t.string   "attached_file_file_path"
+    t.string   "direct_upload_url"
+    t.string   "attached_file_file_name"
+    t.string   "attached_file_content_type"
+    t.integer  "attached_file_file_size"
+    t.datetime "attached_file_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "sessions", force: true do |t|
     t.string   "title"
@@ -232,8 +241,6 @@ ActiveRecord::Schema.define(version: 20131127080747) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
     t.string   "type"

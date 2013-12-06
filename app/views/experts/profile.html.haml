@@ -1,6 +1,6 @@
 
 .wrapper
-  .brief.sub-wrapper
+  .brief.sub-wrapper.first-sub
     .avatar.brief-item
       = image_tag(@expert.avatar.url)
     .resume.brief-item
@@ -8,29 +8,29 @@
         %span.name
           = @expert.name
         %br
-        %span.title
-          = @expert.expert_profile.title
+        %span.title_company
+          #{@expert.profile.title}, #{@expert.profile.company}
         %br
         %span.job.light-font
-          = @expert.expert_profile.company
+          = @expert.profile.company
 
       %table
         %tr
           %td.company.light-font
             = "Company"
-          %td
+          %td.company-value
             = @expert.email
         %tr
           %td.personal.light-font
             = "Personal"
-          %td
+          %td.personal-value
             = "personal contact"
         %tr
           %td.twitter.light-font
             = "Twitter"
-          %td
+          %td.twitter-value
             = "@twitteraccount"
-    .contact.brief-item
+    .contact.brief-item-last
 
       .contact-button#follow
         %button.btn.left-side
@@ -48,10 +48,10 @@
           %i.fa.fa-comments Contact
         %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
           %span.caret
-      
+    .clear-fix 
 
 
-  .detail.sub-wrapper
+  .detail.sub-wrapper.second-sub
     %ul.nav.nav-tabs
       %li.active.tab
         %a{href: "#tab1", data: {toggle: "tab"}}Overview
@@ -63,18 +63,15 @@
     .tab-content
       .tab-pane.active#tab1
         %div
-          %h4 Overview
-          - expertise = @expert.expert_profile.expertise || "Expertise to be filled"
+          - expertise = @expert.profile.expertise || "Expertise to be filled"
           = expertise.html_safe
       .tab-pane#tab2
         %div
-          %h4 Career
-          - career = @expert.expert_profile.career || "Career to be filled"
+          - career = @expert.profile.career || "Career to be filled"
           = career.html_safe
       .tab-pane#tab3
         %div
-          %h4 Education
-          - education = @expert.expert_profile.education || "Education to be filled"
+          - education = @expert.profile.education || "Education to be filled"
           = education.html_safe
 
   .sessions.sub-wrapper

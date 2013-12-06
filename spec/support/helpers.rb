@@ -1,7 +1,7 @@
 def helper_objects
   # Members
-  let(:peter) { create :member, email: 'peter@test.com', password: '11111111', first_name: 'peter', last_name: 'zhao' }
-  let(:jevan) { create :member, email: 'jevan@test.com', password: '11111111', first_name: 'jevan', last_name: 'wu' }
+  let(:peter) { create :member, email: 'peter@test.com', password: '11111111', first_name: 'peter', last_name: 'zhao', avatar: fixture_file_upload(('AD pic.jpg'), 'image/png')}
+  let(:jevan) { create :member, email: 'jevan@test.com', password: '11111111', first_name: 'jevan', last_name: 'wu' , avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
   let(:gecko) { create :member, email: 'gecko@test.com', password: '11111111', first_name: 'gecko', last_name: 'fu' }
   let(:allen) { create :user, email: 'allen@test.com', password: '11111111', first_name: 'allen', last_name: 'wang' }
 
@@ -9,9 +9,12 @@ def helper_objects
   let(:sameer) { create :expert, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim', avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
   let(:alex) {create :expert, email: 'alex@test.com', password: '11111111', first_name: 'alex', last_name: 'lalo', avatar: fixture_file_upload(('AD pic.jpg'), 'image/png') }
 
-  #profile
-  let(:sameer_profile) {create :expert_profile, title: "VP of stuff", company: "OC", location: "Shanghai", education: "UCLA", career: "Originate", expert: sameer}
-  let(:alex_profile) {create :expert_profile, title: "Founder of Prodygia", company: "Prodygia", location: "Beijing", education: "UCLA", career: "Prodygia", expert: alex}
+  #expert_profile
+  let(:sameer_profile) {create :profile, title: "VP of stuff", company: "OC", location: "Shanghai", education: "UCLA", career: "Originate", user: sameer}
+  let(:alex_profile) {create :profile, title: "Founder of Prodygia", company: "Prodygia", location: "Beijing", education: "UCLA", career: "Prodygia", user: alex}
+
+  #member_profile
+  let(:gecko_profile) {create :profile, title: "engineer", company: "OC", location: "Hangzhou", user: gecko}
 
 
   # static pages

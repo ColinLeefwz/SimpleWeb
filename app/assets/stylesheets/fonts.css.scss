@@ -1,4 +1,19 @@
 @font-face{
+	font-family: 'Latoblack';
+	src: url(font-path('lato-black-webfont.ttf')) format('turetype'),
+	url(font-path('lato-black-webfont.eot')) format('embedded-opentype'),
+	url(font-path('lato-black-webfont.woff')) format('woff'),
+	url(font-path('lato-black-webfont.svg') + "#Latobold") format('svg');
+}
+
+@font-face{
+	font-family: 'Latoblackitalic';
+	src: url(font-path('lato-blackitalic-webfont.ttf')) format('turetype'),
+	url(font-path('lato-blackitalic-webfont.eot')) format('embedded-opentype'),
+	url(font-path('lato-blackitalic-webfont.woff')) format('woff'),
+	url(font-path('lato-blackitalic-webfont.svg') + "#Latobold") format('svg');
+}
+@font-face{
 	font-family: 'Latobold';
 	src: url(font-path('Lato-Bold.ttf')) format('turetype'),
 	url(font-path('lato-bold-webfont.eot')) format('embedded-opentype'),
@@ -36,4 +51,20 @@
 			 url(font-path('lato-italic-webfont.eot')) format('embedded-opentype'),
 			 url(font-path('lato-italic-webfont.woff')) format('woff'),
 			 url(font-path('lato-italic-webfont.svg') + "#Latoitalic") format('svg');
+}
+
+@font-face{
+	font-family: 'Oswaldbold';
+	src: url(font-path('oswald-bold-webfont.ttf')) format('turetype'),
+			 url(font-path('oswald-bold-webfont.eot')) format('embedded-opentype'),
+			 url(font-path('oswald-bold-webfont.woff')) format('woff'),
+			 url(font-path('oswald-bold-webfont.svg') + "#Oswaldbold") format('svg');
+}
+
+@font-face{
+	font-family: 'Oswaldreg';
+	src: url(font-path('oswald-regular-webfont.ttf')) format('turetype'),
+			 url(font-path('oswald-regular-webfont.eot')) format('embedded-opentype'),
+			 url(font-path('oswald-regular-webfont.woff')) format('woff'),
+			 url(font-path('oswald-regular-webfont.svg') + "#Oswaldreg") format('svg');
 }
