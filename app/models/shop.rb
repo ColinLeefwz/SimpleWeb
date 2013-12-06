@@ -227,7 +227,7 @@ class Shop
   
   def photo_filter
     if self.id==21835409 	#脸脸测试专用
-      {filter_name: "新年许愿", filters: ["http://s.dface.cn/zw11.png"], filter_size: [640,640]}
+      {filter_name: "新年许愿", filters: ["http://s.dface.cn/zw.png"], filter_size: [640,640]}
     elsif self.id==21835801 	#技术测试专用的分店
       {filter_name: "紫微原点", filters: ["http://s.dface.cn/zw22.png","http://s.dface.cn/zw11.png"], filter_size: [640,640]}
     else

@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class AController < ApplicationController
   
   def index
@@ -7,6 +9,11 @@ class AController < ApplicationController
     c.time = Time.now
     c.agent = request.env["HTTP_USER_AGENT"]
     c.save
+    #Rails.logger.error c.agent
+    if params[:sukey] && c.agent.index("TencentTraveler")
+      render :text => "请点击 '查看原网页 >' "
+      return
+    end 
     case params[:v]
     when '19'
       render :file => "~/lianlian/public/mini2.html", :use_full_path => true

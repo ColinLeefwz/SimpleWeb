@@ -19,6 +19,7 @@
 			if(/(android)/i.test(userAgent)){
 				return;
 			}else if(/(iphone|ipad)/i.test(userAgent)) {
+				window.location = mobile_host;
 				return;
 			} else {
 				window.location.replace(web_host);
@@ -27,7 +28,7 @@
 		function Ftn(){
 			var ua = navigator.userAgent.toLowerCase();
 			if(/micromessenger/i.test(ua)){
-				document.getElementById("Plane3").className="opacityanimation";
+				//document.getElementById("Plane3").className="opacityanimation";
 			}
 		}
 		</script>
