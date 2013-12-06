@@ -70,11 +70,16 @@ class AdminShopsController < ApplicationController
   def update
     @shop = Shop.find(params[:id])
     os = Shop.new(params[:shop])
-    @shop.lo = (os.lo.count == 1 ?os.lo.first.split(/[,，]/).map{|l| l.to_f} : os.lo.map { |m| m.split(/[,，]/).map{|l| l.to_f} })
+
+    unless os.lo.blank?
+      @shop.lo = (os.lo.count == 1 ?os.lo.first.split(/[,，]/).map{|l| l.to_f} : os.lo.map { |m| m.split(/[,，]/).map{|l| l.to_f} })
+      @shop.city = @shop.get_city
+    end
+    
     @shop.name = os.name
     @shop.t = os.t.to_i
     #商家编辑不能编辑城市
-    @shop.city = os.get_city
+    
     @shop.save
 
     info = @shop.info
