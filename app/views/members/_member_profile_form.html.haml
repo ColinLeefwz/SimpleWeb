@@ -1,5 +1,5 @@
-
 = simple_form_for @member, as: :profile, url: update_profile_member_path(current_user), remote: true do |f|
+  %h3 Edit your profile
   %fieldset
     %legend Overview
     = f.input :first_name
@@ -9,4 +9,5 @@
       = p.input :title
       = p.input :company
 
-    = f.submit
+    = f.submit "update", class: 'btn'
+    = link_to "Cancel", sessions_expert_path, remote: true, class: 'btn'
