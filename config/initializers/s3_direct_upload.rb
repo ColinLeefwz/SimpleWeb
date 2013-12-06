@@ -1,9 +1,7 @@
 Prodygia::Application.config.middleware.delete "JQuery::FileUpload::Rails::Middleware"
 
 S3DirectUpload.config do |c|
-  Rails.configuration.aws = YAML.load_file("#{Rails.root}/config/aws.yml")[Rails.env].symbolize_keys!
-
-  c.access_key_id = Rails.configuration.aws[:access_key_id]
-  c.secret_access_key = Rails.configuration.aws[:secret_access_key]
-  c.bucket = Rails.configuration.aws[:bucket]
+  c.access_key_id = ENV["AWS_ACCESS_KEY_ID"]
+  c.secret_access_key = ENV["AWS_SECRET_ACCESS_KEY"]
+  c.bucket = ENV["AWS_BUCKET"]
 end
