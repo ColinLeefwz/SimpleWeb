@@ -29,11 +29,9 @@ class WeiboUserNotice
     attrs += " url='#{url}' "
     ext = "<x xmlns='dface.url'>#{url}</x>"
     get_friendships(api, user, token).to_a.each do |u|
-      Xmpp.send_chat(user.id, u.id, ": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。", '', attrs, ext )
+      Xmpp.send_chat(user.id, u.id, ": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。", nil, attrs, ext )
       # puts "我是你微博关注的人‘#{user.wb_name}’,也在使用脸脸，要来关注我哦！"
     end
-
-    #TODO 
   end
 
 
@@ -48,7 +46,7 @@ class WeiboUserNotice
       url = "dface://scheme/user/info?id=#{u.id}"
       attrs += " url='#{url}' "
       ext = "<x xmlns='dface.url'>#{url}</x>"
-      Xmpp.send_chat(u.id, user.id, ": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。", '', attrs, ext)
+      Xmpp.send_chat(u.id, user.id, ": 您的微博好友#{name}也在使用脸脸，在脸脸中也加TA为好友吧。", nil, attrs, ext)
     end
   end
 

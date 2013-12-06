@@ -74,7 +74,7 @@ class AdminShopsController < ApplicationController
     @shop.name = os.name
     @shop.t = os.t.to_i
     #商家编辑不能编辑城市
-    #    @shop.city = os.get_city
+    @shop.city = os.get_city
     @shop.save
 
     info = @shop.info
