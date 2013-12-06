@@ -65,7 +65,7 @@ $(document).ready(function(){
 		if(t2.length==""||t2=="必填"||t2=="例如：本店wifi密码：321123"){
 			$("textarea.textarea4").addClass("onfocs").val("必填").focus();
 			return false;
-		}else if(t2>1000){
+		}else if(t2.length>1000){
 			$("textarea.textarea4").addClass("onfocs2").focus();
 			$("#Mes2").html("超过1000个字").slideDown(500);
 			return false;
