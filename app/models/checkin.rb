@@ -177,4 +177,16 @@ LUA
     $redis.zadd("HOT#{x}U#{self.city}",self.cati, self.uid)
   end
   
+  def staff_checkin?
+    self.shop.staffs.find {|x| x.to_s==uid.to_s} !=nil
+  end
+  
+  def distance_to_shop
+    shop = self.shop
+    return 0 if shop.nil? || shop.loc_first.nil? || shop.loc_first.size==0
+    lo = self.loc
+    lo = Shop.lob_to_lo(lo) if self.bd == "1"
+    shop.get_distance(lo, shop.loc_first)
+  end
+  
 end
