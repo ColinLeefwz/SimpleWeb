@@ -35,19 +35,6 @@ class ProductionTest < ActionDispatch::IntegrationTest
       user = User.find(x)
       user.delete
     end
-    (1..10).each do |x|
-      user = SinaUser.new
-      user.id = x
-      user.save!     
-    end
-    (1..10).each do |x|
-      user = SinaUser.find(x)
-      assert_equal x, user.id
-    end
-    (1..10).each do |x|
-      user = SinaUser.find(x)
-      user.delete
-    end
     Mongoid.default_session.command(eval:"db.shops.count()")["retval"]
     Mongoid.session(:dooo).command(eval:"db.shops.count()")["retval"]  
   end
