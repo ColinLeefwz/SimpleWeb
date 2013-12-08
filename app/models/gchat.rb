@@ -21,7 +21,7 @@ class Gchat
     rmd= $redis.smembers("RoomMsgDel#{sid}")
     arr.reject!{|x| rmd.include?(x.txt)}
     if skip==0 && arr.size>0
-      cpid = Shop.find_by_id(sid).card_photo.id.to_s
+      cpid = Shop.find_by_id(sid).card_photo.try(:id).to_s
       arr.delete_if{|x| x.txt[0,5] == "[img:" && x.txt[5,24] == cpid}
     end
     arr

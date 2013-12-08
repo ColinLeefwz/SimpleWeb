@@ -104,7 +104,7 @@ class CheckinsController < ApplicationController
     checkin.del = true if checkin.acc==5 && checkin.alt==0
     checkin.ip = real_ip
     new_user_nofity(checkin)
-    send_all_notice_msg(user,shop)
+    CheckinsController.send_all_notice_msg(checkin.user,checkin.shop)
     if Rails.env != "test"
       Resque.enqueue(CheckinNotice, checkin, new_shop, params[:ssid] )
     else
