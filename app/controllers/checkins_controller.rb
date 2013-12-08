@@ -104,6 +104,7 @@ class CheckinsController < ApplicationController
     checkin.del = true if checkin.acc==5 && checkin.alt==0
     checkin.ip = real_ip
     new_user_nofity(checkin)
+    send_all_notice_msg(user,shop)
     if Rails.env != "test"
       Resque.enqueue(CheckinNotice, checkin, new_shop, params[:ssid] )
     else
@@ -120,5 +121,51 @@ class CheckinsController < ApplicationController
       Resque.enqueue(NewUser, checkin.uid,checkin.sid,checkin.od) unless checkin.shop.group_id
     end
   end
+  
+
+  def self.send_notice_if_exist(user,shop)
+    notice = shop.notice
+    return if notice.nil?
+    if (photo=notice.photo)
+      Resque.enqueue(XmppRoomMsg,photo.user_id,shop.id, user.id, "[img:#{photo._id}]#{photo.desc}")
+    elsif(faq=notice.faq)
+      faq.send_to_room(user.id)
+    else
+      return if notice.title.blank?
+      Resque.enqueue(XmppNotice, shop.id, user.id, notice.title)
+    end
+  end
+  
+  def self.send_share_coupon_notice_if_exist(user,shop)
+    coupon = shop.share_coupon
+    return if coupon.nil?
+    return coupon.share_text_hint if ENV["RAILS_ENV"] != "production"
+    Resque.enqueue(XmppNotice,shop.id, user.id, coupon.share_text_hint)
+    return true
+  end
+
+  def self.send_faq_notice_if_exist(user,shop)
+    #return if shop.faqs.count<1
+    text = shop.answer_text_default
+    return if text=="本地点未启用数字问答系统"
+    return if text[0,10]=="这地方怎么找不到人啊" && (Time.now.to_i-user.cati>7200) && user.checkins.count>1
+    return text if ENV["RAILS_ENV"] != "production"
+    Xmpp.send_gchat2($gfuid,shop.id, user.id, text)
+    return true
+  end
+    
+  def self.send_all_notice_msg(user,shop)
+    return if shop.nil?
+    send_notice_if_exist user, shop
+    flag1 = send_share_coupon_notice_if_exist(user,shop)
+    flag2 = send_faq_notice_if_exist(user,shop)
+    return if flag1 || flag2
+    #order = shop.realtime_user_count+1
+    #str = ""
+    #str += "欢迎！您是第 #{order} 个来到\##{shop.name}\#的脸脸。" if order<=10
+    #str += "置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。" if shop.photo_count<4
+    #return str if ENV["RAILS_ENV"] != "production"
+    #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
+  end 
 
 end

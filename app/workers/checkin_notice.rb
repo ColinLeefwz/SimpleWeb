@@ -30,7 +30,6 @@ class CheckinNotice
     @send_coupon_msg = send_coupon_msg if ENV["RAILS_ENV"] == "test"
     if checkin.add_to_redis #当天首次签到
       checkin.save!
-      send_all_notice_msg(user,shop)
       send_staff_welcome(user,shop)
       send_welcome_msg_if_not_invisible(user,shop)
       tingshuo_default_answer_text(shop, checkin.uid)
@@ -96,51 +95,6 @@ class CheckinNotice
     Resque.enqueue(XmppNotice, shop.id, user.id, str)
     Resque.enqueue(XmppRoomMsg, $dduid, shop.id, user.id, "等#{shop.name}审核通过后，你就是这里的地主啦！👍")
   end
-  
-  def self.send_notice_if_exist(user,shop)
-    notice = shop.notice
-    return if notice.nil?
-    if (photo=notice.photo)
-      Resque.enqueue(XmppRoomMsg,photo.user_id,shop.id, user.id, "[img:#{photo._id}]#{photo.desc}")
-    elsif(faq=notice.faq)
-      faq.send_to_room(user.id)
-    else
-      return if notice.title.blank?
-      Resque.enqueue(XmppNotice, shop.id, user.id, notice.title)
-    end
-  end
-  
-  def self.send_share_coupon_notice_if_exist(user,shop)
-    coupon = shop.share_coupon
-    return if coupon.nil?
-    return coupon.share_text_hint if ENV["RAILS_ENV"] != "production"
-    Resque.enqueue(XmppNotice,shop.id, user.id, coupon.share_text_hint)
-    return true
-  end
-
-  def self.send_faq_notice_if_exist(user,shop)
-    #return if shop.faqs.count<1
-    text = shop.answer_text_default
-    return if text=="本地点未启用数字问答系统"
-    return if text[0,10]=="这地方怎么找不到人啊" && (Time.now.to_i-user.cati>7200) && user.checkins.count>1
-    return text if ENV["RAILS_ENV"] != "production"
-    Xmpp.send_gchat2($gfuid,shop.id, user.id, text)
-    return true
-  end
-    
-  def self.send_all_notice_msg(user,shop)
-    return if shop.nil?
-    send_notice_if_exist user, shop
-    flag1 = send_share_coupon_notice_if_exist(user,shop)
-    flag2 = send_faq_notice_if_exist(user,shop)
-    return if flag1 || flag2
-    #order = shop.realtime_user_count+1
-    #str = ""
-    #str += "欢迎！您是第 #{order} 个来到\##{shop.name}\#的脸脸。" if order<=10
-    #str += "置顶的照片栏还没被占领，赶快抢占并分享到微博/QQ空间吧。" if shop.photo_count<4
-    #return str if ENV["RAILS_ENV"] != "production"
-    #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
-  end 
 
   #每次如果有员工在加入的商家签到，在最新动态里欢迎提示
   def self.send_staff_welcome(user,shop)
