@@ -7,6 +7,10 @@ class PhotosController < ApplicationController
   def create
     p = Photo.new(params[:photo])
     p.user_id = session[:user_id]
+    ft1 = params[:filter1].to_i
+    p.ft1 = ft1 if ft1 != 0
+    ft2 = params[:filter2].to_i
+    p.ft2 = ft2 if ft2 != 0
     p.save!
     p.add_to_checkin
     if p.weibo && params[:wbtoken] && $redis.get("wbtoken#{session[:user_id]}").nil?

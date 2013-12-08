@@ -16,6 +16,8 @@ class Photo
   #field :like, type:Array #赞 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间' }]
   field :com, type:Array #评论 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间', 'txt' => "评论", 'hide' => '隐藏'  }]
   field :img
+  field :ft1, type:Integer #使用的滤镜
+  field :ft2, type:Integer #使用的图片合成
   field :hide, type:Boolean  #隐藏照片
   field :od, type:Integer   #置顶值
 
