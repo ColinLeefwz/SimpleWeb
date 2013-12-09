@@ -47,7 +47,6 @@ class MembersController < ApplicationController
 
   def contents
     @favorite_content = current_user.get_subscribed_sessions("ArticleSession")
-    # @favorite_content = current_user.subscribed_sessions.where(content_type: "ArticleSession")
     @from = "content"
     respond_to do |format|
       format.js {render "update"}
@@ -56,7 +55,6 @@ class MembersController < ApplicationController
 
   def video_on_demand
     @favorite_session = current_user.get_subscribed_sessions( "VideoSession")
-    # @favorite_session = current_user.subscribed_sessions.where(content_type: "VideoSession")
     @from = "video_on_demand"
     respond_to do |format|
       format.js {render "update"}
