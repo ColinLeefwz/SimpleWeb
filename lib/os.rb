@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Os
 
 =begin
@@ -95,6 +97,25 @@ Inter-|   Receive                                                |  Transmit
 		states << line.split[5]
 	end
 	return states.group_by {|x| x}.map {|arr| [arr[0],arr[1].length]}
+  end
+  
+  def self.test_xmpp_5222
+    require 'socket'
+    server = TCPServer.open 5222
+    puts "Listening on port 5222"
+    loop {
+      client = server.accept()
+      Xmpp.error_notify("有人连接到dface.cn的5222端口")
+      resp = "Hello?"
+      headers = ["HTTP/1.1 200 OK",
+                 "Date: Tue, 14 Dec 2010 10:48:45 GMT",
+                 "Server: Ruby",
+                 "Content-Type: text/html; charset=iso-8859-1",
+                 "Content-Length: #{resp.length}\r\n\r\n"].join("\r\n")
+      client.puts headers
+      client.puts resp
+      client.close
+    }
   end
 
 
