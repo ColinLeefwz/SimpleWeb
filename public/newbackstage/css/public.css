@@ -599,8 +599,10 @@ text-align:center;color:#666;font-size:13px;padding:1px 3px;background:none;heig
 #UpImg .upimgtab{width:400px;border:1px solid #E4E4E4;background-color:#f8f8f8;cursor:pointer;overflow:hidden;z-index:99;position:relative;float:left;text-align: center;min-height:400px;}
 #UpImg .upimgtab img{width:400px;border-collapse:collapse;}
 #UpImg #SmallImgDiv{width:252px;height:252px;float:right;overflow:hidden;position:relative;border:1px solid #E4E4E4; background-color:#f8f8f8;}
+#UpImg #SmallImgDiv2{width:252px;height:168px;float:right;overflow:hidden;position:relative;border:1px solid #E4E4E4; background-color:#f8f8f8;}
 #UpImg #SmallImgDiv div{overflow:hidden;display:block;margin:0px auto;position:relative;}
 #UpImg #SmallImgDiv img{position:relative;min-width:252px;min-height:252px;}
+#UpImg #SmallImgDiv2 img{position:relative;min-width:252px;min-height:168px;}
 #UpImg .upimgdiv{clear:both;padding-top:20px;overflow:hidden;position:relative;width:100%;}
 #UpImg #EM{overflow:hidden;display:block;margin:0px auto;}
 #UpImg .upimgplane{cursor: pointer;float: left;min-height: 252px;overflow: hidden;position: relative;text-align: center;vertical-align: middle;width: 402px;z-index: 99;}
@@ -619,7 +621,7 @@ overflow:hidden;zoom:1;z-index:20;}
 #UpImg #CutArea  div.cutarealine1{position:absolute;left:0px;top:0px;height:100%;background:url(/newbackstage/images/Jcrop.gif) left top repeat;width:1px;}
 #UpImg #CutArea  div.cutarealine2{position:absolute;left:0px;top:0px;height:1px;background:url(/newbackstage/images/Jcrop.gif) left top repeat;width:100%;}
 #UpImg #CutArea  div.cutarealine3{background:url(/newbackstage/images/Jcrop.gif) left top repeat;position:absolute;right:0px;top:0px;height:100%;width:1px;}
-#UpImg #CutArea  div.cutarealine4{background:url(/newbackstage/images/Jcrop.gif) left top repeat;position:absolute;left:0px;bottom:0px;height:1px;width:100%;}*/
+#UpImg #CutArea  div.cutarealine4{background:url(/newbackstage/images/Jcrop.gif) left top repeat;position:absolute;left:0px;bottom:0px;height:1px;width:100%;}
 /**上传图片组件 over**/
 
 /**程序调试用 begin**/
