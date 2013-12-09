@@ -96,7 +96,7 @@ describe MembersController do
 
     it "assigns the article sessions the member subscribed" do
       get :contents, id: jevan.id, format: :js
-      expect(assigns[:favorite_content]).to eq jevan.subscribed_sessions.where(content_type: "ArticleSession")
+      expect(assigns[:favorite_content]).to eq jevan.get_subscribed_sessions("ArticleSession")
     end
 
     it "can access to contents page" do
@@ -112,7 +112,7 @@ describe MembersController do
 
     it "assigns the video sessions the member subscribed" do
       get :video_on_demand, id: jevan.id, format: :js
-      expect(assigns[:favorite_session]).to eq jevan.subscribed_sessions.where(content_type: "VideoSession")
+      expect(assigns[:favorite_session]).to eq jevan.get_subscribed_sessions("VideoSession")
     end
 
     it "can access to contents page" do
