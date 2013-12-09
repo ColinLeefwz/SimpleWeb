@@ -978,7 +978,7 @@
       function update(select) //{{{
       {
         var c = Coords.getFixed();
-
+		//alert(c.w);
         resize(c.w, c.h);
         moveto(c.x, c.y);
         if (options.shade) Shade.updateRaw(c);
