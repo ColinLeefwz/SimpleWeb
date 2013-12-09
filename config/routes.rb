@@ -51,6 +51,8 @@ Prodygia::Application.routes.draw do
       patch :update_profile
       get :refer_a_friend
       get :experts
+      get :contents
+      get :video_on_demand
     end
   end
 

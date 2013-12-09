@@ -1,0 +1,9 @@
+- @favorite_content.each do |session|
+  .favorite-session-box.shadow
+    .favorite-session-cover
+      = image_tag(session.cover.url)
+    = render "session_info", session: session
+
+
+    
+    

@@ -1,4 +1,8 @@
-.social-share.facebook
+-# TODO
+.star 
+  = link_to image_tag("favorite.png"), remote: true
+
+.facebook
   - url = "http://www.facebook.com/sharer/sharer.php?u=#{session_url}"
   = link_to image_tag("facebook.png"), url, data: { popup: true}
 
@@ -14,6 +18,6 @@
   - url = "http://plus.google.com/share?url=#{session_url}"
   = link_to image_tag("googleplus.png"), url, data: { popup: true}
 
-- if defined? email
-  .social-share.email
-    = link_to image_tag("email.png"), "#email-modal", href: "#email-modal", role: "button", data: { toggle: "modal" }
+-# TODO
+.email
+  = link_to image_tag("email.png"), remote: true
