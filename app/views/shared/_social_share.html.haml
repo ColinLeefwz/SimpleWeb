@@ -1,24 +1,29 @@
 -# TODO
-.star 
-  = link_to image_tag("favorite.png"), remote: true
+.social-share.favorite.solid-star.hidden 
+  = image_tag("favorite.png")
 
-.facebook
+.social-share.favorite.hollow-star
+  = image_tag("favorite_unselected.png")
+
+= link_to " ", subscribe_session_path(@session), class: "hidden", id: "mark-link", remote: true
+
+.social-share.facebook
   - url = "http://www.facebook.com/sharer/sharer.php?u=#{session_url}"
   = link_to image_tag("facebook.png"), url, data: { popup: true}
 
-.twitter
+.social-share.twitter
   - url = "http://twitter.com/home?status=#{session_title}+#{session_url}"
   = link_to image_tag("twitter.png"), url, data: { popup: true}
 
-.linkedin
+.social-share.linkedin
   - url = "https://www.linkedin.com/cws/share?mini=true&source=#{session_title}&url=#{session_url}"
   = link_to image_tag("linkedin.png"), url, data: { popup: true}
 
-.google_plus
+.social-share.google_plus
   - url = "http://plus.google.com/share?url=#{session_url}"
   = link_to image_tag("googleplus.png"), url, data: { popup: true}
 
 -# TODO
-.email
+.social-share.email
   = link_to image_tag("email.png"), remote: true
   -# = link_to image_tag("email.png"), "#email-modal", href: "#email-modal", role: "button", data: { toggle: "modal" }
