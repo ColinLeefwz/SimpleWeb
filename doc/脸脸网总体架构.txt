@@ -102,7 +102,6 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 30. 员工与加入的商家: "STAFF#{uid},#{sid}", 类型为set。
 30. 用户进入，但不在热点中显示的地点："UnBroadcast",类型为set
 31. 游戏地点排名,“Game#{gid}#{sid}”, 类型为zset, 排序值为用户的分数。
-32. 聊天室历史记录删除 "#{RoomMsgDel#{session[:shop_id].to_i}}"
 
 
 

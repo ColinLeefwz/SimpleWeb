@@ -6,11 +6,13 @@
     <th>内容</th>
   </tr>
 
-  <% @gchats.each do |gchat| %>
+
+  <% @chats.each do |chat| %>
+
     <tr>
-      <td><%=Time.at(gchat[2]).strftime("%Y-%m-%d %H:%M:%S") %></td>
-      <td><%=link_to gchat[0], "/admin_users/show?id=#{gchat[0]}" %><%= User.find(gchat[0]).name %></td>
-      <td><%=to_emoji gchat_img(gchat[1]) %></td>
+      <td><%= chat.cat.to_time.localtime.strftime("%Y-%m-%d %H:%M:%S")%></td>
+      <td><%=link_to chat.uid, "/admin_users/show?id=#{chat.uid}" %><%= chat.user_name %></td>
+      <td><%=to_emoji gchat_img(chat.txt) %></td>
     </tr>
 
   <% end %>

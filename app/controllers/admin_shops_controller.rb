@@ -292,8 +292,9 @@ class AdminShopsController < ApplicationController
   end
 
   def gchat
-    @shop = Shop.find(params[:sid])
-    @gchats = paginate_arr(@shop.gchat, params[:page], 50)
+    hash = {sid: params[:sid]}
+    sort = { _id: -1}
+    @chats = paginate("gchat", params[:page], hash, sort)
   end
 
   def upgrade_v
