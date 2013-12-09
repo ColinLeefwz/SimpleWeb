@@ -3,6 +3,12 @@ require 'spec_helper'
 describe User do
 	helper_objects
 
+  describe ".get_subscribed_sessions" do 
+    it "gets the user's subscribed sessions with specific type" do
+      expect(jevan.get_subscribed_sessions("ArticleSession")).to eq jevan.subscribed_sessions.where(content_type: "ArticleSession")
+    end
+  end
+
   describe ".has_subscribed?" do
     it "returns false if not subscribe the session" do
       expect(jevan.has_subscribed? session_intro).to be_false
