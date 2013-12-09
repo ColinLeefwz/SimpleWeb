@@ -1,4 +1,6 @@
 class VideoInterview < ActiveRecord::Base
+	belongs_to :expert
+
 	has_attached_file :attached_video,
     storage: :s3,
 		s3_credentials: {

@@ -10,5 +10,7 @@ class CreateVideoInterviews < ActiveRecord::Migration
 
       t.timestamps
     end
+
+		add_index :video_interviews, :categories, using: 'gin'
   end
 end

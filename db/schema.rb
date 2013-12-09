@@ -330,6 +330,7 @@ ActiveRecord::Schema.define(version: 20131209082739) do
     t.datetime "updated_at"
   end
 
+  add_index "video_interviews", ["categories"], name: "index_video_interviews_on_categories", using: :gin
   add_index "video_interviews", ["expert_id"], name: "index_video_interviews_on_expert_id", using: :btree
 
 end

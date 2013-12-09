@@ -5,6 +5,8 @@ class Expert < Member
   accepts_nested_attributes_for :profile
   alias_method :profile=, :profile_attributes=   # NOTE add this line for active admin working properly
 
+	has_many :video_interviews
+
   def name
     "#{first_name} #{last_name}"
   end
