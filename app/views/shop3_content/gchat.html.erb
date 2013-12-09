@@ -12,23 +12,21 @@
     </tr>
 
     <% @chats.each_with_index do |chat, index| %>
-
-      <% user = User.find_by_id(chat[0]) %>
       <tr id="Tr<%= index+1%>">
         <td valign="middle" width="292">
-		<%= link_to image_tag(UserLogo.img_url(user.try(:head_logo_id),:t2), :class=> "imgstyle2", :align=>"left"), "/shop3_checkins/user?uid=#{chat[0]}"  %>
-          <%=link_to user.try(:name)||'', "/shop3_checkins/user?uid=#{chat[0]}" %>
-		<img src=<%= user.show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>  class="ml10" align="absmiddle"/>
+		<%= link_to image_tag(UserLogo.img_url(chat.user.try(:head_logo_id),:t2), :class=> "imgstyle2", :align=>"left"), "/shop3_checkins/user?uid=#{chat.uid}"  %>
+          <%=link_to chat.user_name ||'', "/shop3_checkins/user?uid=#{chat.uid}" %>
+		<img src=<%= chat.user_show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>  class="ml10" align="absmiddle"/>
 		  <br/>
-          <%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M") %></td>
-        <td class="img_con" width="555"><%=gchat_img2(chat[1]).html_safe %></td>
-		<% if @mids.include?(chat[3])%>
+          <%= chat.cat.to_time.localtime.strftime("%Y-%m-%d %H:%M") %></td>
+        <td class="img_con" width="555"><%= chat.txt.html_safe %></td>
+		<% if chat.del %>
 		    <td class="gay4" width="64">已屏蔽</td>
 		<%else%>
 			 <td class="red3" width="64">已显示</td>
 		<%end%>
 		<td align="center" valign="middle" width="64">
-          <%= link_to "", "javascript:void(0)", :class => @mids.include?(chat[3])? "nopb" : "pb", :title => @mids.include?(chat[3])? "显示" : "屏蔽", :onclick => "ajaxNOH($(this), '#{chat[0]}', '#{chat[1]}', '#{chat[2]}', '#{chat[3]}','#{index+1}')"  %>
+          <%= link_to "", "javascript:void(0)", :class => chat.del ? "nopb" : "pb", :title => chat.del ? "显示" : "屏蔽", :onclick => "ajaxNOH($(this), '#{chat.id}','#{index+1}')"  %>
         </td>
       </tr>
     <% end %>
@@ -49,10 +47,10 @@ $(document).ready(function(){
 	$(".tab2 tr:odd").addClass("trbg");
 });
 
-function ajaxNOH (obj, uid, text, time, id,index){
+function ajaxNOH (obj, id,index){
 	var title = obj.attr("title")
 	if(title=="屏蔽"){
-		$.get("/shop3_content/ajax_pb",{uid: uid, text: text, time: time, id: id}, function(){
+		$.get("/shop3_content/ajax_pb",{ id: id}, function(){
 			obj.removeClass().addClass("nopb").attr("title", "显示");
 			$("#Tr"+index+" td").eq(2).html("已屏蔽").removeClass().addClass("gay4");
 		});

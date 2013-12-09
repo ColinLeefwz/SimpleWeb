@@ -76,22 +76,26 @@ class Shop3ContentController < ApplicationController
 
 
   def gchat
-    @mids = RoomMsgDel.where({room: session[:shop_id].to_i}).distinct(:id)
-    @chats = paginate_arr(session_shop.gchat, params[:page], 15).to_a
+    hash = {sid: session[:shop_id].to_i}
+    sort = { _id: -1}
+    @chats = paginate("gchat", params[:page], hash, sort)
+    
+
+    # @mids = RoomMsgDel.where({room: session[:shop_id].to_i}).distinct(:id)
+    # @chats = paginate_arr(session_shop.gchat, params[:page], 15).to_a
   end
 
   def ajax_pb
-    rmd = RoomMsgDel.new(:time => params[:time], :uid  => params[:uid], :text => params[:text], :room => session[:shop_id].to_i)
-    rmd._id = params[:id]
-    rmd.save
-    $redis.sadd("RoomMsgDel#{session[:shop_id].to_i}", params[:id])
+    gchat = Gchat.find_by_id(params[:id])
+    gchat.set(:del, true)
     render :json => {}
   end
 
   def ajax_unpb
-    rmd = RoomMsgDel.find_by_id(params[:id])
-    rmd.delete if rmd
-    $redis.srem("RoomMsgDel#{session[:shop_id].to_i}", params[:id])
+    gchat = Gchat.find_by_id(params[:id])
+    gchat.unset(:del)
+    # rmd.delete if rmd
+    # $redis.srem("RoomMsgDel#{session[:shop_id].to_i}", params[:id])
     render :json => {}
   end
 

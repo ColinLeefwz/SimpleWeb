@@ -6,6 +6,11 @@ class Gchat
   field :uid,  type: Moped::BSON::ObjectId
   field :mid
   field :txt
+  field :del, type: Boolean
+
+  with_options :prefix => true, :allow_nil => true do |option|
+    option.delegate :name, :gender, :birthday, :weibo_home,:show_gender, :to => :user
+  end
 
   
   def user
@@ -17,25 +22,25 @@ class Gchat
   end
   
   def self.history_skip(sid,skip,pcount)
-    arr = Gchat.where({sid:sid}).sort({_id:-1}).skip(skip).limit(pcount).to_a
-    rmd= $redis.smembers("RoomMsgDel#{sid}")
-    arr.reject!{|x| rmd.include?(x.txt)}
+    arr = Gchat.where({sid:sid, del: nil }).sort({_id:-1}).skip(skip).limit(pcount).to_a
+    # rmd= $redis.smembers("RoomMsgDel#{sid}")
+    # arr.reject!{|x| rmd.include?(x.txt)}
     if skip==0 && arr.size>0
-      cpid = Shop.find_by_id(sid).card_photo.try(:id).to_s
+      cpid = Shop.find_by_id(sid).card_photo.id.to_s
       arr.delete_if{|x| x.txt[0,5] == "[img:" && x.txt[5,24] == cpid}
     end
     arr
   end
   
   def self.history(sid,pcount,mid=nil)
-    hash = {sid:sid}
+    hash = {sid:sid, del: nil}
     if mid
       gchat = Gchat.where({mid:mid}).first
       hash.merge!({_id: {"$lt" => gchat.id} })
     end
     arr = Gchat.where(hash).sort({_id:-1}).limit(pcount).to_a
-    rmd= $redis.smembers("RoomMsgDel#{sid}")
-    arr.reject!{|x| rmd.include?(x.txt)}
+    # rmd= $redis.smembers("RoomMsgDel#{sid}")
+    # arr.reject!{|x| rmd.include?(x.txt)}
     if mid.nil?
       cpid = Shop.find_by_id(sid).card_photo.id.to_s
       arr.delete_if{|x| x.txt[0,5] == "[img:" && x.txt[5,24] == cpid}
@@ -122,6 +127,16 @@ class Gchat
       rescue
         next
       end
+    end
+  end
+
+  def self.redis_to_del
+    $redis.keys("RoomMsgDel*").each do |r|
+      gchat = Gchat.where({mid: r}).first
+      unless gchat.nil?
+        gchat.set(:del, true)
+      end
+      $redis.del(r)
     end
   end
 
