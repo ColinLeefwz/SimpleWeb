@@ -1,5 +1,6 @@
-%section#main
-  %nav#about_us_sidebar.shadow
+%section#static-main
+  #nav-anchor
+  %nav#about-us-sidebar.shadow
     .line-title
       %span ABOUT US
     %ul
@@ -29,11 +30,11 @@
             %img.hidden{src: "/assets/contact_hover.png"}
               Contact Us
 
-  %article.shadow
+  %article.shadow.margin-bottom
     %h1
       %a{name: "why_prodygia"}Why Prodygia
 
-    =image_tag("AD_intro_video.png")
+    =image_tag("Shanghai_skyline.jpg")
     %p 
       China's opening up is one of the biggest stories of the early 21st Century. Estimates suggest its economy will reach US$ 19 trillion in 2016 and surpass the United States to become the largest economy in the world
       %a{href: "#footnote1", name: "footnote1_source"}*
@@ -80,16 +81,15 @@
      
       .team_member
         %img.headshot{src: "/assets/alessandroduina.png"} 
-        -# = image_tag("alessandroduina.png"), class: "headshot"
-        .team_member_info
-          %h2 Alessandro Duina
-          %p.job_titleCo-Founder & CEO
-          %p.job_responsibilities Responsible for overall business management, strategy and planning
-          .social_media_icons
-            %a{href: "#alessandro_twitter", target: "_blank"}
-              =image_tag("twitter.png")
-            %a{href: "#alessandro_linkedin", target: "_blank"}
-              =image_tag("linkedin.png")
+          .team_member_info
+            %h2 Alessandro Duina
+            %p.job_title Co-Founder & CEO
+            %p.job_responsibilities Responsible for overall business management, strategy and planning
+            .social_media_icons
+              %a{href: "https://twitter.com/prodygia1", target: "_blank"}
+                =image_tag("twitter.png")
+              %a{href: "http://www.linkedin.com/pub/alessandro-duina/0/193/b00", target: "_blank"}
+                =image_tag("linkedin.png")
 
       %p I built a consulting business from the ground up during my time in China. Its mission was to help international companies enter and grow their operations in the Chinese market. Earlier in my career, I was a management consultant at the Boston Consulting Group (BCG), Vice President of Strategy at Auripay, project leader at Barilla, and contributed to startups in the U.S. and Europe. 
 
@@ -106,7 +106,7 @@
             .social_media_icons
               %a{href: "http://twitter.com/nicolasruble", target: "_blank"}
                 =image_tag("twitter.png")
-              %a{href: "#nick_linkedin", target: "_blank"}
+              %a{href: "http://www.linkedin.com/in/nicolasruble", target: "_blank"}
                 =image_tag("linkedin.png")
       %p Since coming to China, I've played different roles at the intersection of business, policy and academia. Previously, I headed Asia programming for the World Economic Forum and worked for Standard Chartered Bank as a Business Planning Manager.
       %p I graduated from Stanford (BA), Tsinghua and INSEAD (Executive MBA), and the London School of Economics (General Course).
@@ -120,8 +120,11 @@
             .social_media_icons
               %a{href: "http://twitter.com/sameerkarim", target: "_blank"}
                 =image_tag("twitter.png")
-              %a{href: "#sameer_linkedin", target: "_blank"}
+              %a{href: "http://lnkd.in/DK8dam", target: "_blank"}
                 =image_tag("linkedin.png")
+      %p I've spent most of my career bouncing back and forth between business and technology and I'm passionate about working with amazing people to bring disruptive solutions to market. I've also spent the last 12 years bouncing back and forth between the US and China. 
+      %p I have worked at Accenture, Toyota, and Originate. I earned my BS from Carnegie Mellon University and my MBA from UCLA's Anderson School of Management. 
+
       %h1
         %a{name: "recruiting"} Recruiting
       %p Prodygia's team is growing and on the lookout for talented, entrepreneurial candidates who are 'doers' and share the vision.
