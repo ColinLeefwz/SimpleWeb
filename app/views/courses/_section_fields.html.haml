@@ -1,0 +1,10 @@
+
+
+.fields.section-fields
+  = f.input :title, label: "Section Title"
+  = f.input :description
+  = f.input :order, label: "Section Order:", wrapper_html: {class: "inline"}
+  = link_to_remove_fields "remove section", f
+
+
+

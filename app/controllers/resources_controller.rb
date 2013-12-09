@@ -5,12 +5,7 @@ class ResourcesController < ApplicationController
 
   def create
     @resource = Resource.new(resource_params)
-    if @resource.save
-      paperclip_file_path = "resources/attached_files/#{@resource.id}/original/#{params[:resource][:attached_file_file_name]}"
-      raw_source = params[:resource][:attached_file_file_path]
-
-      Resource.copy_and_delete paperclip_file_path, raw_source
-    end
+    @resource.save
   end
 
 

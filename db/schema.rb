@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131202080030) do
+ActiveRecord::Schema.define(version: 20131205094609) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -52,6 +52,17 @@ ActiveRecord::Schema.define(version: 20131202080030) do
     t.datetime "updated_at"
   end
 
+  create_table "chapters", force: true do |t|
+    t.text     "description"
+    t.integer  "course_id"
+    t.integer  "order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "title"
+  end
+
+  add_index "chapters", ["course_id"], name: "index_chapters_on_course_id", using: :btree
+
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
     t.string   "data_content_type"
@@ -75,6 +86,24 @@ ActiveRecord::Schema.define(version: 20131202080030) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "courses", force: true do |t|
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "categories",  default: [], array: true
+    t.string   "title"
+  end
+
+  add_index "courses", ["categories"], name: "index_courses_on_categories", using: :gin
+
+  create_table "courses_users", force: true do |t|
+    t.integer "course_id"
+    t.integer "expert_id"
+  end
+
+  add_index "courses_users", ["course_id"], name: "index_courses_users_on_course_id", using: :btree
+  add_index "courses_users", ["expert_id"], name: "index_courses_users_on_expert_id", using: :btree
 
   create_table "email_messages", force: true do |t|
     t.string   "subject"
@@ -170,7 +199,22 @@ ActiveRecord::Schema.define(version: 20131202080030) do
     t.datetime "attached_file_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "section_id"
+    t.string   "video_definition"
   end
+
+  add_index "resources", ["section_id"], name: "index_resources_on_section_id", using: :btree
+
+  create_table "sections", force: true do |t|
+    t.text     "description"
+    t.integer  "chapter_id"
+    t.integer  "order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "title"
+  end
+
+  add_index "sections", ["chapter_id"], name: "index_sections_on_chapter_id", using: :btree
 
   create_table "sessions", force: true do |t|
     t.string   "title"
