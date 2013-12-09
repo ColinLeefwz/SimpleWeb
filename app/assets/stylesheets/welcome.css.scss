@@ -145,6 +145,11 @@ body {
 
         .social-share {
           width: 8%;
+          display: inline;
+          img{
+            width: 30px;
+            height: 30px;
+          }
         }
       }
     }
