@@ -10,26 +10,46 @@
   }
 
   .text-page-left-side{
+    float: left;
+    text-align: center;
     .text-page-portrait{
-      float: left;
       img{
-        width: 100px;
-        height: 100px;
-        margin-top: 20px;
-        margin-left: 20px;
-        margin-bottom: 20px;
+        width: 88px;
+        height: 88px;
+        margin: 20px 40px;
+        border-radius: 50%;
         }
     }
 
     .text-page-expert-name{
       float: left;
       margin-left: 10px;
-      margin-top: 100px;
       span{
         font-size: 16px;
         }
      }
   }
+
+  .text-page-middle{
+    float: left;
+    padding: 20px 20px 20px;
+    max-width: 70%;
+    .title{
+      font-family: "Oswaldreg";
+      font-weight: 400;
+      font-size: 40px;
+      min-height: 105px;
+    }
+    .datetime, .category-name{
+      margin-bottom: 5px;
+      padding-bottom: 0px;
+      font-family: "Latoreg";
+      color: #777;
+      display: inline;
+      font-size: 13px;
+    }
+  }
+
   .text-page-right-side{
     @media (min-width: 767px){
       float: right;
@@ -38,18 +58,16 @@
       float: left;
     }
     .text-page-social-buttons{
-      margin: 20px;
-      img{
-        width: 30px;
-        height: 30px;
+      margin: 5px;
+      .social-share{
+        margin-bottom: 5px;
+        img{
+          width: 20px;
+          height: 20px;
+        }
       }
     }
 
-    .text-page-category-name {
-      margin-top: 20px;
-      margin-right: 20px;
-      text-align: right;
-    }
 
     .text-page-favorite {
       margin-top: 20px;
@@ -79,30 +97,16 @@
     width: 90%;
   }
 
-  .text-page-title{
-    margin-bottom: 0px;
-    padding-top: 15px;
-    padding-bottom: 0px;
-    padding-left: 40px;
-    padding-right: 40px;
-
-    p{
-      margin-bottom: 5px;
-      padding-bottom: 0px;
-      font-family: Latoitalic;
-      color: #777;
-    }
-  }
-
-  .text-page-image{
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-
   .text-page-main-content{
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-bottom: 10px;
+    padding: 0px 40px 10px;
+    .text-page-image{
+      float: right;
+      width: 50%;
+      padding-top: 20px;
+      img{
+        width: 100%;
+      }
+    }
     p{
       text-indent: 0em;
       font-size: 16px;

@@ -1,28 +1,32 @@
-.text-page-header-box
+.text-page-header-box.shadow
   .text-page-left-side
     .text-page-portrait
       = image_tag("#{@session.expert.avatar.url}")
     .text-page-expert-name
-      %span by #{@session.expert.name}
+      %span #{@session.expert.name}
     .clear-fix.visible-phone
+  .text-page-middle
+    .title
+      = @session.title
+    .datetime
+      = "originally published on #{@session.created_at.to_date.to_formatted_s(:short)}"
+      &nbsp
+      = "|"
+      &nbsp
+    .category-name
+      = @session.categories.join(", ")
   .text-page-right-side
     .text-page-social-buttons
       = render 'shared/social_share', session_title: @session.title, session_url: session_url(@session)
-    .text-page-category-name
-      = @session.categories.join(", ")
-    .text-page-favorite
-      %i.fa.fa-star-o 
-    = link_to " ", subscribe_session_path(@session), class: "hidden", id: "mark-link", remote: true
+    -# .text-page-favorite
+    -#   %i.fa.fa-star-o 
+    -# = link_to " ", subscribe_session_path(@session), class: "hidden", id: "mark-link", remote: true
   .clear-fix
-.text-page-article-box
-  .text-page-title
-    %h1= @session.title
-    %p
-      = "originally published on #{@session.created_at.to_date.to_formatted_s(:short)}"
-  -if @session.cover.url.eql?""
-    .text-page-image
-      = image_tag(@session.cover.url)
+.text-page-article-box.shadow
   .text-page-main-content
+    -unless @session.cover.url.eql?""
+      .text-page-image
+        = image_tag(@session.cover.url)
     %p= @session.description.html_safe
 
 
