@@ -13,10 +13,10 @@ class Section < ActiveRecord::Base
   end
 
   def sd_url
-    self.resources.where(video_definition: "SD").first || " "
+    self.resources.where(video_definition: "SD").first.attached_file.url || " "
   end
 
   def hd_url
-    self.resources.where(video_definition: "HD").first  || " "
+    self.resources.where(video_definition: "HD").first.attached_file.url  || " "
   end
 end
