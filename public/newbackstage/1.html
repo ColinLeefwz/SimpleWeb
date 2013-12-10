@@ -1,231 +1,352 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>脸脸茶坊欢迎您</title>
-	<link href="/newbackstage/css/public.css" rel="stylesheet" type="text/css">
-	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
-	<script src="/newbackstage/js/jquery.easing.1.3.js" type="text/javascript"></script>
-	<script src="/newbackstage/js/jquery.easing.compatibility.js" type="text/javascript"></script>
-	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
-	<style type="text/css">
-		.tab2 tr a.del{text-indent:-999em;}
-	</style>
-</head>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=480">
+	<meta name="HandheldFriendly" content="true">
+	<meta http-equiv="Refresh" content="10; url=http://shop.dface.cn/mini.html" /> 
+	<title>微友|新浪微博官方LBS聊天客户端</title>
+	<link media="all" rel="stylesheet" href="http://liao.sina.cn/android/css/all.css">
+<style type="text/css" charset="utf-8">/* See license.txt for terms of usage */
+
+/** reset styling **/
+
+.firebugResetStyles {
+
+    z-index: 2147483646 !important;
+
+    top: 0 !important;
+
+    left: 0 !important;
+
+    display: block !important;
+
+    border: 0 none !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    outline: 0 !important;
+
+    min-width: 0 !important;
+
+    max-width: none !important;
+
+    min-height: 0 !important;
+
+    max-height: none !important;
+
+    position: fixed !important;
+
+    transform: rotate(0deg) !important;
+
+    transform-origin: 50% 50% !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    background: transparent none !important;
+
+    pointer-events: none !important;
+
+    white-space: normal !important;
+
+}
+
+
+
+.firebugBlockBackgroundColor {
+
+    background-color: transparent !important;
+
+}
+
+
+
+.firebugResetStyles:before, .firebugResetStyles:after {
+
+    content: "" !important;
+
+}
+
+/**actual styling to be modified by firebug theme**/
+
+.firebugCanvas {
+
+    display: none !important;
+
+}
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.firebugLayoutBox {
+
+    width: auto !important;
+
+    position: static !important;
+
+}
+
+
+
+.firebugLayoutBoxOffset {
+
+    opacity: 0.8 !important;
+
+    position: fixed !important;
+
+}
+
+
+
+.firebugLayoutLine {
+
+    opacity: 0.4 !important;
+
+    background-color: #000000 !important;
+
+}
+
+
+
+.firebugLayoutLineLeft, .firebugLayoutLineRight {
+
+    width: 1px !important;
+
+    height: 100% !important;
+
+}
+
+
+
+.firebugLayoutLineTop, .firebugLayoutLineBottom {
+
+    width: 100% !important;
+
+    height: 1px !important;
+
+}
+
+
+
+.firebugLayoutLineTop {
+
+    margin-top: -1px !important;
+
+    border-top: 1px solid #999999 !important;
+
+}
+
+
+
+.firebugLayoutLineRight {
+
+    border-right: 1px solid #999999 !important;
+
+}
+
+
+
+.firebugLayoutLineBottom {
+
+    border-bottom: 1px solid #999999 !important;
+
+}
+
+
+
+.firebugLayoutLineLeft {
+
+    margin-left: -1px !important;
+
+    border-left: 1px solid #999999 !important;
+
+}
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.firebugLayoutBoxParent {
+
+    border-top: 0 none !important;
+
+    border-right: 1px dashed #E00 !important;
+
+    border-bottom: 1px dashed #E00 !important;
+
+    border-left: 0 none !important;
+
+    position: fixed !important;
+
+    width: auto !important;
+
+}
+
+
+
+.firebugRuler{
+
+    position: absolute !important;
+
+}
+
+
+
+.firebugRulerH {
+
+    top: -15px !important;
+
+    left: 0 !important;
+
+    width: 100% !important;
+
+    height: 14px !important;
+
+    background: url("data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%13%88%00%00%00%0E%08%02%00%00%00L%25a%0A%00%00%00%04gAMA%00%00%D6%D8%D4OX2%00%00%00%19tEXtSoftware%00Adobe%20ImageReadyq%C9e%3C%00%00%04%F8IDATx%DA%EC%DD%D1n%E2%3A%00E%D1%80%F8%FF%EF%E2%AF2%95%D0D4%0E%C1%14%B0%8Fa-%E9%3E%CC%9C%87n%B9%81%A6W0%1C%A6i%9A%E7y%0As8%1CT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AATE9%FE%FCw%3E%9F%AF%2B%2F%BA%97%FDT%1D~K(%5C%9D%D5%EA%1B%5C%86%B5%A9%BDU%B5y%80%ED%AB*%03%FAV9%AB%E1%CEj%E7%82%EF%FB%18%BC%AEJ8%AB%FA'%D2%BEU9%D7U%ECc0%E1%A2r%5DynwVi%CFW%7F%BB%17%7Dy%EACU%CD%0E%F0%FA%3BX%FEbV%FEM%9B%2B%AD%BE%AA%E5%95v%AB%AA%E3E5%DCu%15rV9%07%B5%7F%B5w%FCm%BA%BE%AA%FBY%3D%14%F0%EE%C7%60%0EU%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5JU%88%D3%F5%1F%AE%DF%3B%1B%F2%3E%DAUCNa%F92%D02%AC%7Dm%F9%3A%D4%F2%8B6%AE*%BF%5C%C2Ym~9g5%D0Y%95%17%7C%C8c%B0%7C%18%26%9CU%CD%13i%F7%AA%90%B3Z%7D%95%B4%C7%60%E6E%B5%BC%05%B4%FBY%95U%9E%DB%FD%1C%FC%E0%9F%83%7F%BE%17%7DkjMU%E3%03%AC%7CWj%DF%83%9An%BCG%AE%F1%95%96yQ%0Dq%5Dy%00%3Et%B5'%FC6%5DS%95pV%95%01%81%FF'%07%00%00%00%00%00%00%00%00%00%F8x%C7%F0%BE%9COp%5D%C9%7C%AD%E7%E6%EBV%FB%1E%E0(%07%E5%AC%C6%3A%ABi%9C%8F%C6%0E9%AB%C0'%D2%8E%9F%F99%D0E%B5%99%14%F5%0D%CD%7F%24%C6%DEH%B8%E9rV%DFs%DB%D0%F7%00k%FE%1D%84%84%83J%B8%E3%BA%FB%EF%20%84%1C%D7%AD%B0%8E%D7U%C8Y%05%1E%D4t%EF%AD%95Q%BF8w%BF%E9%0A%BF%EB%03%00%00%00%00%00%00%00%00%00%B8vJ%8E%BB%F5%B1u%8Cx%80%E1o%5E%CA9%AB%CB%CB%8E%03%DF%1D%B7T%25%9C%D5(%EFJM8%AB%CC'%D2%B2*%A4s%E7c6%FB%3E%FA%A2%1E%80~%0E%3E%DA%10x%5D%95Uig%15u%15%ED%7C%14%B6%87%A1%3B%FCo8%A8%D8o%D3%ADO%01%EDx%83%1A~%1B%9FpP%A3%DC%C6'%9C%95gK%00%00%00%00%00%00%00%00%00%20%D9%C9%11%D0%C0%40%AF%3F%EE%EE%92%94%D6%16X%B5%BCMH%15%2F%BF%D4%A7%C87%F1%8E%F2%81%AE%AAvzr%DA2%ABV%17%7C%E63%83%E7I%DC%C6%0Bs%1B%EF6%1E%00%00%00%00%00%00%00%00%00%80cr%9CW%FF%7F%C6%01%0E%F1%CE%A5%84%B3%CA%BC%E0%CB%AA%84%CE%F9%BF)%EC%13%08WU%AE%AB%B1%AE%2BO%EC%8E%CBYe%FE%8CN%ABr%5Dy%60~%CFA%0D%F4%AE%D4%BE%C75%CA%EDVB%EA(%B7%F1%09g%E5%D9%12%00%00%00%00%00%00%00%00%00H%F6%EB%13S%E7y%5E%5E%FB%98%F0%22%D1%B2'%A7%F0%92%B1%BC%24z3%AC%7Dm%60%D5%92%B4%7CEUO%5E%F0%AA*%3BU%B9%AE%3E%A0j%94%07%A0%C7%A0%AB%FD%B5%3F%A0%F7%03T%3Dy%D7%F7%D6%D4%C0%AAU%D2%E6%DFt%3F%A8%CC%AA%F2%86%B9%D7%F5%1F%18%E6%01%F8%CC%D5%9E%F0%F3z%88%AA%90%EF%20%00%00%00%00%00%00%00%00%00%C0%A6%D3%EA%CFi%AFb%2C%7BB%0A%2B%C3%1A%D7%06V%D5%07%A8r%5D%3D%D9%A6%CAu%F5%25%CF%A2%99%97zNX%60%95%AB%5DUZ%D5%FBR%03%AB%1C%D4k%9F%3F%BB%5C%FF%81a%AE%AB'%7F%F3%EA%FE%F3z%94%AA%D8%DF%5B%01%00%00%00%00%00%00%00%00%00%8E%FB%F3%F2%B1%1B%8DWU%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*UiU%C7%BBe%E7%F3%B9%CB%AAJ%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5J%95*U%AAT%A9R%A5*%AAj%FD%C6%D4%5Eo%90%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5%86%AF%1B%9F%98%DA%EBm%BBV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%ADV%AB%D5j%B5Z%AD%D6%E4%F58%01%00%00%00%00%00%00%00%00%00%00%00%00%00%40%85%7F%02%0C%008%C2%D0H%16j%8FX%00%00%00%00IEND%AEB%60%82") repeat-x !important;
+
+    border-top: 1px solid #BBBBBB !important;
+
+    border-right: 1px dashed #BBBBBB !important;
+
+    border-bottom: 1px solid #000000 !important;
+
+}
+
+
+
+.firebugRulerV {
+
+    top: 0 !important;
+
+    left: -15px !important;
+
+    width: 14px !important;
+
+    height: 100% !important;
+
+    background: url("images/phone.png") repeat-y !important;
+
+    border-left: 1px solid #BBBBBB !important;
+
+    border-right: 1px solid #000000 !important;
+
+    border-bottom: 1px dashed #BBBBBB !important;
+
+}
+
+
+
+.overflowRulerX > .firebugRulerV {
+
+    left: 0 !important;
+
+}
+
+
+
+.overflowRulerY > .firebugRulerH {
+
+    top: 0 !important;
+
+}
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.fbProxyElement {
+
+    position: fixed !important;
+
+    pointer-events: auto !important;
+
+}
+
+</style></head>
 <body>
-	<div class="main">
-		<div class="header">
-			<div class="headercon">
-				<div id="Message">赵海斌刚刚使用了一张分享优惠券惠券</div>
-				<div class="toptitle"><h1>脸脸茶坊</h1></div>
+
+    
+	<div id="wrapper">
+		<div id="header">
+			
+			<div class="hero">
+			<div id="download">
+			      <a href="http://down.apps.sina.cn/sinasrc/9d/46/501256570c6a40b37ff165fd242b469d.apk"><img src="images/phone.png" height="80" width="80"></a>
+			      
 			</div>
-			<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
-			<img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
-			<div id="LinkBox">
-				<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
-				<a  class="links2">退出</a>
-				<span class="linkarrow"></span>
+			<div id="download_other">
+			    <div class="download_other"><img src="images/help05.jpg" height="80" width="80"><a href="http://apk.91.com/Soft/Android/com.weibo.messenger-22.html" target="_blank">91市场</a>
+			    </div>
+			    <div class="download_other"><img src="images/help03.jpg" height="80" width="80"><a href="http://apk.hiapk.com/html/2013/08/1746780.html?module=256&amp;info=rl%2FLUw%3D%3D" target="_blank">安卓市场</a>
+			    </div>
+			    <div class="download_other"><img src="%E5%BE%AE%E5%8F%8B_%E6%96%B0%E6%B5%AA%E5%BE%AE%E5%8D%9A%E5%AE%98%E6%96%B9LBS%E8%81%8A%E5%A4%A9%E5%AE%A2%E6%88%B7%E7%AB%AF_files/appchina.png" height="36" width="36"><a href="http://www.appchina.com/app/com.weibo.messenger/" target="_blank">应用汇</a>
+			    </div>
 			</div>
+			</div>
+			
 		</div>
-		<div id="Nav">
-			<a class="sign" id="CloseNav"></a>
-			<div id="Navcon">
-				<a href="/newbackstage/index.html">首页</a>
-				<span class="navline"></span>
-				<a href="coupon_data_stistics4.html">优惠券管理</a>
-				<span class="navline"></span>
-				<a href="/newbackstage/data_statistics1.html">数据统计</a>
-				<span class="navline"></span>
-				<a href="content_manage1.html">内容管理</a>
-				<span class="navline"></span>
-				<a href="sign_manage1.html">签到管理</a>
-				<span class="navline"></span>
-				<a href="seller_set1.html">商家设置</a>
-				<span class="navline"></span>
-				<a href="/newbackstage/questions_answers1.html">问答系统</a>
-				<span class="navline"></span>
-				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
-				<span class="navline"></span>
-				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+		<div id="content">
+			<div class="bar">
+				
+				
+				<center>
+                   
+                   
+                   <img src="%E5%BE%AE%E5%8F%8B_%E6%96%B0%E6%B5%AA%E5%BE%AE%E5%8D%9A%E5%AE%98%E6%96%B9LBS%E8%81%8A%E5%A4%A9%E5%AE%A2%E6%88%B7%E7%AB%AF_files/feature_1.png">
+                    <h2 class="feature">地理位置聊天群</h2>
+                    <p>发现身边不一样的朋友</p> 
+                    
+                   
+               
+                    <br><br>
+                    <img src="%E5%BE%AE%E5%8F%8B_%E6%96%B0%E6%B5%AA%E5%BE%AE%E5%8D%9A%E5%AE%98%E6%96%B9LBS%E8%81%8A%E5%A4%A9%E5%AE%A2%E6%88%B7%E7%AB%AF_files/feature_2.png">
+                    <h2 class="feature">关键词搜索群组</h2>
+                    <p>寻找志趣相投的同伴们</p> 
+                    
+                 
+                 
+                   
+                    <br><br>
+                    <img src="%E5%BE%AE%E5%8F%8B_%E6%96%B0%E6%B5%AA%E5%BE%AE%E5%8D%9A%E5%AE%98%E6%96%B9LBS%E8%81%8A%E5%A4%A9%E5%AE%A2%E6%88%B7%E7%AB%AF_files/feature_4.png">
+                    <h2 class="feature">超凡的私信体验</h2>
+                    <p>语音视频连接微博好友</p> 
+                    
+                    
+                    <br><br>
+                     <img src="%E5%BE%AE%E5%8F%8B_%E6%96%B0%E6%B5%AA%E5%BE%AE%E5%8D%9A%E5%AE%98%E6%96%B9LBS%E8%81%8A%E5%A4%A9%E5%AE%A2%E6%88%B7%E7%AB%AF_files/feature_3.png">
+                    <h2 class="feature">浪小花动态表情</h2>
+                    <p>陪着你喜怒哀乐每一刻</p>
+                   
+                    
+             
+                 </center>   			              
 			</div>
-		</div>
-		<div class="clear1"></div>
-		<div class="con">
-			<div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
-			<div class="submenu">
-				<ul>
-					<li><a href="seller_set1.html">基本设置</a></li>
-					<li><a href="seller_set7.html">修改密码</a></li>
-					<li class="hover"><a href="seller_set3.html">员工管理</a></li>
-					<li><a href="seller_set4.html">绑定微博</a></li>
-					<li><a href="seller_set5.html">屏蔽用户</a></li>
-					<li><a href="seller_set6.html">用户评分</a></li>
-					<li><a href="seller_set8.html">公告管理</a></li>
-				</ul>
-				<div class="r wordstyle">
-					<form method="post" action="">
-						显示&nbsp;
-						<select class="p3" name="select">
-							<option value="10">10</option>
-							<option value="10">20</option>
-							<option value="10">30</option>
-						</select>
-						&nbsp;条/记录
-					</form>
-				</div>
-			</div>
-			<form method="post" action=""/>
-				  <div class="search">
-					搜索
-					<select class="p3 mlr10" name="select">
-						<option value="全部">全部</option>
-						<option value="用户名">用户名</option>
-						<option value="时间">时间</option>
-					</select>
-					<input type="text" class="inputs5">
-					<input type="submit" class="btn6 ml10" value="提 交">
-				</div>
-				<table width="100%" cellspacing="0" cellpadding="0" class="tab2">
-					<tr id="Tr0">
-						<th width="842">用户名</th>
-						<th width="303">最近签到</th>
-						<th width="227">&nbsp;</th>
-					</tr> 
-				<tr id="Tr1">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="1" title="删除">删除</a></td>
-				</tr>
-				<tr id="Tr2">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="2" title="删除">删除</a></td>
-				</tr>
-				<tr id="Tr3">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="3" title="删除">删除</a></td>
-				</tr>
-				<tr id="Tr4">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="4" title="删除">删除</a></td>
-				</tr>
-				<tr id="Tr5">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="5" title="删除">删除</a></td>
-				</tr>
-				<tr id="Tr6">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="6" title="删除">删除</a></td>
-				</tr>
-				<tr id="Tr7">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="7" title="删除">删除</a></td>
-				</tr>
-				<tr id="Tr8">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="8" title="删除">删除</a></td>
-				</tr>
-				<tr id="Tr9">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="9" title="删除">删除</a></td>
-				</tr>
-				<tr id="Tr10">
-				  <td valign="middle"><a title="查看详情" href="user.html"><img align="left" class="imgstyle" src="images/pic11.jpg"></a><a href="user.html" class="f14">安卓的安卓的安坐</a><img align="absmiddle" class="ml10" src="images/man.png"><br/>
-				  年龄：23岁<br/>
-				  签到次数：34次
-				  </td>
-				  <td>2012-12-22 18:33 </td>
-				  <td width="227" align="center"><a href="sign_manage5.html" class="mr10">历史签到</a>
-			      <a onclick="Del(this,$(this).attr('rel'))" class="del" rel="10" title="删除">删除</a></td>
-				</tr>
-		  	</table>
-			<div class="pagination">
-				<ul>
-					<li class="disabled"><a href="#" class="pre">&lt;&lt;</a></li>
-					<li class="hover"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#" class="next">&gt;&gt;</a></li>
-				</ul>
-		   </div>
-		</form>
-	  </div>
+			
+            <br> 
+        
+		</div><!--/content-->
 	</div>
-<script defer="defer">
-var navmove="off", runing;
-$(document).ready(function(){
-	runing=$("#CB1").attr("class");
-	if(runing=="checkboxs1"){
-		NavDiv();
-		$(window).load(function(){
-			MessageDiv();
-		});
-	}else if(runing=="checkboxs2"){
-		AllNoDH();
-	}
+	<div id="download_bg">               
+		<div id="download2">
+			      <a href="http://down.apps.sina.cn/sinasrc/9d/46/501256570c6a40b37ff165fd242b469d.apk"><img src="%E5%BE%AE%E5%8F%8B_%E6%96%B0%E6%B5%AA%E5%BE%AE%E5%8D%9A%E5%AE%98%E6%96%B9LBS%E8%81%8A%E5%A4%A9%E5%AE%A2%E6%88%B7%E7%AB%AF_files/btn_a_download.png"></a>
+		</div>	
+	</div>
+	<!--/wrapper-->
 	
-	$(".tab2 tr:odd").addClass("trbg");
-});
-function Del(obj,n){
-	var delTimer,i=3;
-	$(obj).removeAttr("onclick").removeClass().attr("title","").addClass("cancel").html("取消&nbsp;"+i);
-	delTimer=setInterval(function(){
-		if(i>0){
-			i--;
-			$(obj).css("display","none");
-			$(obj).html("取消&nbsp;"+i);
-			$(obj).fadeIn(500);
-		}else if(i<=0){
-			clearInterval(delTimer);
-			$("#Tr"+n).hide(200,function(){
-				$(this).remove();
-			});
-		}
-	},700);
-	
-	$(obj).attr("onclick","Cancel(this,"+delTimer+")");
-}
-function Cancel(obj,dt){
-	clearInterval(dt);
-	$(obj).removeClass().html("删除").attr("title","删除").addClass("del").attr("onclick","Del(this,$(this).attr('rel'))");
-}
-</script>
-</body>
-</html>
+	<div id="footer">
+		<p>新浪公司 版权所有<br>
+Copyright © 2011 SINA Corp. All Rights Reserved</p>
+	</div>
+    
+
+    
+<!-- Footer Tracking Objects -->
+
+
+
+
+</body></html>

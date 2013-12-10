@@ -9,11 +9,18 @@ class AController < ApplicationController
     c.time = Time.now
     c.agent = request.env["HTTP_USER_AGENT"]
     c.save
+
+    if params[:v] == "1-apk"
+      ver = $redis.get("android_version")
+      return redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
+    end
+
     #Rails.logger.error c.agent
     if params[:sukey] && c.agent.index("TencentTraveler")
       render :text => "请点击 '查看原网页 >' "
       return
     end 
+    
     case params[:v]
     when '19'
       render :file => "~/lianlian/public/mini2.html", :use_full_path => true
