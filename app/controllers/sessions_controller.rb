@@ -63,7 +63,7 @@ class SessionsController < ApplicationController
 
   def show
     if @session.is_a? ArticleSession
-      render 'text_page'
+      render 'content'
     else
       render 'video_page'
     end
