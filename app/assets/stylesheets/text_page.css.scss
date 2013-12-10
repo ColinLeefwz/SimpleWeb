@@ -21,13 +21,17 @@
         }
     }
 
-    .text-page-expert-name{
+    .text-page-expert-info{
       float: left;
       margin-left: 10px;
-      span{
+      .name{
         font-size: 16px;
-        }
-     }
+      }
+      .title, .company{
+        font-size: 10px;
+        color: #777;
+      }
+    }
   }
 
   .text-page-middle{

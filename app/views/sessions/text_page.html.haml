@@ -2,8 +2,13 @@
   .text-page-left-side
     .text-page-portrait
       = image_tag("#{@session.expert.avatar.url}")
-    .text-page-expert-name
-      %span #{@session.expert.name}
+    .text-page-expert-info
+      .name
+        = @session.expert.name
+      .title
+        = @session.expert.profile.title
+      .company
+        = @session.expert.profile.company
     .clear-fix.visible-phone
   .text-page-middle
     .title
@@ -28,5 +33,6 @@
       .text-page-image
         = image_tag(@session.cover.url)
     %p= @session.description.html_safe
+  .clear-fix
 
 
