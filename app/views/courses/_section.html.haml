@@ -1,0 +1,11 @@
+.accordion-group
+  .section.accordion-heading
+    %a.accordion-toggle{data: {toggle: "collapse", parent: "##{section.chapter.order}"}, href: "#collapse#{section.order}"}
+      .content-icon.inline
+        = image_tag "content.png"
+      .section-title.inline
+        %span= section.title
+
+  %div{id: "collapse#{section.order}", class: "accordion-body collapse"}
+    .accordion-inner
+      = section.description

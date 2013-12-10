@@ -1,0 +1,8 @@
+.chapter.box{id: "chapter#{chapter.order}"}
+  .chapter-title
+    .anchor.inline.center-container
+      %span= chapter.order
+    .title.inline.center-container
+      %span= chapter.title
+  - chapter.sections.each do |s|
+    = render partial: "section", locals: {section: s}
