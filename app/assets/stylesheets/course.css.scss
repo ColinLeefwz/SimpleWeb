@@ -88,6 +88,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 
 
   .chapter{
+    margin-bottom: 1em;
     .chapter-title{
       height: 2em;
       border-bottom: 1px solid #4E2971;
@@ -112,14 +113,14 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
       }
     }
 
-    .chapter-item{
+    .section{
       border-bottom: 1px solid #C9C9C9;
       .content-icon{
         width: 2em;
         height: 2em;
         padding: 0.3em 0.3em;
       }
-      .item-title{
+      .section-title{
       }
     }
   }

@@ -5,26 +5,27 @@
     .overview
       .cover-box.inline
         .cover
-          = image_tag "draft_ribbon.png"
+          = image_tag @course.cover.url
         .enroll-button
           = link_to "Enroll for only $99"
 
       .description-box.inline
         -# title & expert
-        .title.inline
-          Social media in China with long title
+        .title
+          = @course.title
         .expert.inline
-          with Alessandro Duina and Nicolas Ruble
+          = "with " + @course.experts.map(&:name).join(" and ")
+
+          
         -# video-length & category
         .video-length.inline
           1h 33m
         .separator.inline
         .category.inline
-          business,culture,tech
+          = @course.categories.join(", ")
         -# description
         .description
-          In this course you will learn ipsum dolor sit amet, consectru adipiscing elit. 
-          Tum Lucius: Mihi vero ista calde prodata sunt, quod item fratri puyto. Sed quid attinet de rebus tam apertis
+          = @course.description
 
       .social-box.inline
 
@@ -35,26 +36,16 @@
         .bar{style: "width: 0%"}
 
 
-  .chapter.box
-    .chapter-title
-      .anchor.inline.center-container
-        %span 1
-      .title.inline.center-container
-        %span The landscape
-    .chapter-item
-      .content-icon.inline
-        = image_tag "content.png"
-      .item-title.inline
-        %span What the @$# is a weibo?
-    .chapter-item
-      .content-icon.inline
-        = image_tag "content.png"
-      .item-title.inline
-        %span What the @$# is a weibo?
-    .chapter-item
-      .content-icon.inline
-        = image_tag "content.png"
-      .item-title.inline
-        %span What the @$# is a weibo?
-
-  .chapter.box
+  - @course.chapters.each do |c|
+    .chapter.box
+      .chapter-title
+        .anchor.inline.center-container
+          %span= c.order
+        .title.inline.center-container
+          %span= c.title
+      - c.sections.each do |s|
+        .section
+          .content-icon.inline
+            = image_tag "content.png"
+          .section-title.inline
+            %span= s.title

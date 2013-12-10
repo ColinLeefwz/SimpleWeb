@@ -2,10 +2,12 @@
 .general-wrapper
 
   .course
-    %span Course Title: 
-    = @course.title
+    %h1= @course.title
+
     %span Description:
     = @course.description
+
+    = image_tag @course.cover.url
 
     - @course.chapters.each do |c|
       .chapter.chapter-fields
