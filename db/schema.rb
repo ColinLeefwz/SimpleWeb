@@ -320,12 +320,16 @@ ActiveRecord::Schema.define(version: 20131209082739) do
   create_table "video_interviews", force: true do |t|
     t.string   "title"
     t.integer  "expert_id"
-    t.string   "categories",                  default: [], array: true
+    t.string   "categories",                     default: [], array: true
     t.text     "description"
-    t.string   "attached_video_file_name"
-    t.string   "attached_video_content_type"
-    t.integer  "attached_video_file_size"
-    t.datetime "attached_video_updated_at"
+    t.string   "attached_video_hd_file_name"
+    t.string   "attached_video_hd_content_type"
+    t.integer  "attached_video_hd_file_size"
+    t.datetime "attached_video_hd_updated_at"
+    t.string   "attached_video_sd_file_name"
+    t.string   "attached_video_sd_content_type"
+    t.integer  "attached_video_sd_file_size"
+    t.datetime "attached_video_sd_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

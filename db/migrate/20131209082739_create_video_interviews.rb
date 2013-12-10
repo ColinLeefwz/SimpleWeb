@@ -6,7 +6,8 @@ class CreateVideoInterviews < ActiveRecord::Migration
 			t.string :categories, array: true, default: '{}'
 			t.text :description
 
-			t.attachment :attached_video
+			t.attachment :attached_video_hd
+			t.attachment :attached_video_sd
 
       t.timestamps
     end

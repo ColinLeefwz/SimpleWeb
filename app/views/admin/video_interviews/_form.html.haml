@@ -1,8 +1,15 @@
-= s3_uploader_form id: "s3_video_interview", callback_url: admin_video_interviews_path do
+%span HD
+= s3_uploader_form id: "s3_video_interview_hd", callback_param: 'interview_hd', key: "video_interviews/hd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "video_interviews/hd", acl: 'public-read' do
   = file_field_tag :file, multiple: false
+
+%span SD
+= s3_uploader_form id: "s3_video_interview_sd", callback_param: 'interview_sd' do
+  = file_field_tag :file, multiple: false
+
+.js-progress-bars
 
 = simple_form_for :video_interview, class: "formtastic" do |f|
   = f.input :title
   = f.input :description
-  = f.input :expert
+  = f.input :expert, as: :select, collection: Expert.all
   = f.input :categories, as: :check_boxes, collection: Category.all
