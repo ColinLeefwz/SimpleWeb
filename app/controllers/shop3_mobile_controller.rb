@@ -34,4 +34,13 @@ class Shop3MobileController < ApplicationController
 
   end
 
+  def index3
+    @mobile_space = MobileSpace.where({sid: session_shop.id}).first
+    if @mobile_space
+      redirect_to "/shop3_mobile/index4"
+    else
+      redirect_to "/shop3_mobile/index5"    
+    end
+  end
+
 end
