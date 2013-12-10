@@ -1,11 +1,15 @@
 .accordion-group
   .section.accordion-heading
-    %a.accordion-toggle{data: {toggle: "collapse", parent: "##{section.chapter.order}"}, href: "#collapse#{section.order}"}
+    %a.accordion-toggle{data: {toggle: "collapse", parent: "#chapter#{section.chapter.order}"}, href: "#collapse#{section.id}"}
       .content-icon.inline
         = image_tag "content.png"
       .section-title.inline
         %span= section.title
 
-  %div{id: "collapse#{section.order}", class: "accordion-body collapse"}
+  %div{id: "collapse#{section.id}", class: "accordion-body collapse"}
     .accordion-inner
+      - if section.has_video?
+        %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
+          %source{src: section.sd_url}
+          %source{src: section.hd_url, data: {quality: "hd"}}
       = section.description
