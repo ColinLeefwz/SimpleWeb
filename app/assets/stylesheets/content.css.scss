@@ -92,7 +92,6 @@
 .text-page-article-box{
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 50px;
   margin-top: 10px;
   background: #ffffff;
   text-align: left;
@@ -157,5 +156,9 @@
       line-height: 1.4em;
     }
   }
+}
+
+.range{
+  height: 50px;
 }
 

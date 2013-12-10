@@ -6,10 +6,7 @@
         .video-img{data: {source: @session.video.url}}
           = image_tag @session.cover.url, class: 'video-play'
           = image_tag "video_play_icon.png", class: 'play-video-icon'
-    -# -unless @session.cover.url.eql?"missing.png"
-    -#   .text-page-image
-    -#     = image_tag(@session.cover.url)
     %p= @session.description.html_safe
   .clear-fix
-
+.range
 
