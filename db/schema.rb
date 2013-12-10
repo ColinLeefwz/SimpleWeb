@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20131209090417) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
     t.text     "body"
@@ -289,6 +292,8 @@ ActiveRecord::Schema.define(version: 20131209090417) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
     t.string   "type"
