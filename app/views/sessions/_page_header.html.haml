@@ -14,12 +14,13 @@
     .title
       = session.title
     .datetime
-      = "originally published on #{session.created_at.to_date.to_formatted_s(:short)}"
+      = "originally published on #{session.created_at.to_date.to_formatted_s(:course_date)}"
       &nbsp
-      = "|"
-      &nbsp
-    .category-name
-      = session.categories.join(", ")
+    -unless session.categories.empty?
+      .category-name
+        = "|"
+        &nbsp
+        = session.categories.join(", ")
   .text-page-right-side
     .text-page-social-buttons
       = render 'shared/social_share', session_title: session.title, session_url: session_url(session)
