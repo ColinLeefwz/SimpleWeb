@@ -23,13 +23,10 @@
   .text-page-right-side
     .text-page-social-buttons
       = render 'shared/social_share', session_title: @session.title, session_url: session_url(@session)
-    -# .text-page-favorite
-    -#   %i.fa.fa-star-o 
-    -# = link_to " ", subscribe_session_path(@session), class: "hidden", id: "mark-link", remote: true
   .clear-fix
 .text-page-article-box.shadow
   .text-page-main-content
-    -unless @session.cover.url.eql?""
+    -unless @session.cover.url.eql?"missing.png"
       .text-page-image
         = image_tag(@session.cover.url)
     %p= @session.description.html_safe
