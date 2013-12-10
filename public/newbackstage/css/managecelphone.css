@@ -181,7 +181,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#dedede',endCo
 .box14 .box14right{width:298px;height:584px;float:left;margin-left:45px;background:url("../images/bg7.png") left top no-repeat;}
 .box14 .box14right .cpbox{margin-left:26px;margin-top:106px;width:248px;height:372px;overflow:hidden;}
 .box14 .box14right .cpbox iframe{width: 263px;height:372px;height:387px\9;overflow-x:hidden;}
-@media screen and (-webkit-min-device-pixel-ratio:0){ .box14 .box14right .cpbox iframe {width:324px;} }
+@media screen and (-webkit-min-device-pixel-ratio:0){ .box14 .box14right .cpbox iframe {width:251px;} }
 .box14 .box14right .cpbox iframe::-webkit-scrollbar{width: 3px;height: 3px;}
 .box14 .box14right .cpbox iframe::-webkit-scrollbar-track-piece{background-color: #ffffff;-webkit-border-radius: 3px;}
 .box14 .box14right .cpbox iframe::-webkit-scrollbar-thumb:vertical{height: 5px;background-color: #666;-webkit-border-radius: 3px;}
