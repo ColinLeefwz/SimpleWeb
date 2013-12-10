@@ -15,6 +15,9 @@ class AController < ApplicationController
       return
     end 
     case params[:v]
+    when "1-apk"
+      ver = $redis.get("android_version")
+      redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
     when '19'
       render :file => "~/lianlian/public/mini2.html", :use_full_path => true
     when '24'
