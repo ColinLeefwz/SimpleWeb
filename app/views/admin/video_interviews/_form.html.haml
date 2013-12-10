@@ -1,3 +1,8 @@
-= simple_form_for :video_interview do |f|
+= s3_uploader_form id: "s3_video_interview", callback_url: admin_video_interviews_path do
+  = file_field_tag :file, multiple: false
+
+= simple_form_for :video_interview, class: "formtastic" do |f|
   = f.input :title
   = f.input :description
+  = f.input :expert
+  = f.input :categories, as: :check_boxes, collection: Category.all

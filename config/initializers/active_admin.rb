@@ -117,7 +117,7 @@ ActiveAdmin.setup do |config|
   config.batch_actions = true
 
 
-  # == Controller Filters
+  # == Controller Filter
   #
   # You can add before, after and around filters to all of your
   # Active Admin resources and pages from here.
@@ -144,6 +144,8 @@ ActiveAdmin.setup do |config|
   #
   # To load a javascript file:
   config.register_javascript 'ckeditor/init.js'
+	config.register_javascript 's3_direct_upload.js'
+	config.register_javascript 'video_interview'
 
 
   # == CSV options
