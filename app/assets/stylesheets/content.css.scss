@@ -23,14 +23,15 @@
 
     .text-page-expert-info{
       float: left;
-      margin-left: 10px;
       margin-bottom: 5px;
+      width: 100%;
       .name{
         font-size: 16px;
       }
       .title, .company{
-        font-size: 10px;
+        font-size: 12px;
         color: #777;
+        line-height: 1.2em;
       }
     }
   }
@@ -44,6 +45,8 @@
       font-weight: 400;
       font-size: 40px;
       min-height: 105px;
+      color: #454545;
+      line-height: 1.2em;
     }
     .datetime, .category-name{
       margin-bottom: 5px;
@@ -102,7 +105,10 @@
   }
 
   .text-page-main-content{
-    padding: 0px 40px 10px;
+    padding: 0px 40px 10px 50px;
+    ol,ul{
+      padding-left: 20px;
+    }
     .text-page-image{
       float: right;
       width: 50%;
