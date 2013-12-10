@@ -73,7 +73,6 @@
       }
     }
 
-
     .text-page-favorite {
       margin-top: 20px;
       margin-right: 20px;
@@ -109,6 +108,38 @@
       width: 50%;
       padding-top: 20px;
       img{
+        width: 100%;
+      }
+    }
+    .video-cover{
+      padding: 20px 40px;
+      position: relative;
+      cursor: pointer;
+      .play-video-icon{
+        position: absolute;
+        left: 47%;
+        top: 43%;
+        width: 10%;
+        height: 15%;
+      }
+      video{
+        width: 100%;
+      }
+    }
+    .announcement-cover{
+      float: right;
+      width: 50%;
+      padding-top: 20px;
+      position: relative;
+      cursor: pointer;
+      .play-video-icon{
+        position: absolute;
+        left: 47%;
+        top: 43%;
+        width: 10%;
+        height: 15%;
+      }
+      video{
         width: 100%;
       }
     }
