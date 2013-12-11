@@ -19,6 +19,7 @@ class GuestController < ApplicationController
 
   def welcome
     # render :layout => false
+    @guest = session_guest
   end
 
   def channel_stat
