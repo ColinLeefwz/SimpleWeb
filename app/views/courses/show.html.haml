@@ -37,15 +37,4 @@
 
 
   - @course.chapters.each do |c|
-    .chapter.box
-      .chapter-title
-        .anchor.inline.center-container
-          %span= c.order
-        .title.inline.center-container
-          %span= c.title
-      - c.sections.each do |s|
-        .section
-          .content-icon.inline
-            = image_tag "content.png"
-          .section-title.inline
-            %span= s.title
+    = render partial: "chapter", locals: {chapter: c}

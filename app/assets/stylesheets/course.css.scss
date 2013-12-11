@@ -120,8 +120,29 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         height: 2em;
         padding: 0.3em 0.3em;
       }
-      .section-title{
+    }
+
+     // override bootstrap accordion style 
+    .accordion-group{
+      margin-bottom: 0px;
+      border: 0px;
+      border-radius: 0px;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      .accordion-inner{
+        border-top: 0;
+        border-bottom: 1px solid #C9C9C9;
       }
     }
+    .accordion-heading .accordion-toggle{
+      padding: 0px;
+    }
+    .accordion-toggle:hover {
+      text-decoration: none;
+      color: #333333;
+    }
+    // end
+
+
   }
 }
