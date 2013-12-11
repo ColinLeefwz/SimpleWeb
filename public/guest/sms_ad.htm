@@ -1,0 +1,44 @@
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv=Content-Type>
+<title>脸脸后台管理-短信广告推送</title>
+</head>
+<body>
+<form method="post" action="/sms_pushes/tuangou_push" onsubmit="return sms();">
+关键词语：<input type="text" name="keyword" id="keyword" size="68"> 
+
+<input type="button" value="查询关键词匹配的目标客户" onclick="searchkey()">
+
+<input type="submit" value="短信群发">
+
+<br>
+短信内容：<TEXTAREA NAME="content" ROWS="3" COLS="60" id="content"></TEXTAREA>
+</form>
+
+<br><hr>
+<IFRAME id="iframe1" src="javascript:void(0);" width="100%" height="80%" scrolling="none" frameborder="0" marginheight="0" marginwidth="0">
+目标客户
+</IFRAME>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var keyw = "";
+function searchkey(){
+	keyw=document.getElementById('keyword').value;
+	document.getElementById('iframe1').src='/mysql/stat?id=54&keyword='+keyw;
+}
+function sms(){
+	if(keyw=="" || document.getElementById('keyword').value!=keyw){
+		alert("请先查询关键词匹配的目标客户，防止误操作");
+		return false;
+	}
+	if(document.getElementById('content').value.length<20 || document.getElementById('content').value.length>120){
+		alert("短信内容长度必须大于20，小于120");
+		return false;
+	}
+	return true;
+	}
+//-->
+</SCRIPT>
+</body>
+</html>
