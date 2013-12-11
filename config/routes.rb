@@ -121,5 +121,5 @@ Lianlian::Application.routes.draw do
   match 'shop3_faqs/article_image_upload/:id' => 'shop3_faqs#article_image_upload'
   match 'mobile_articles/article_image_upload/:id' => 'mobile_articles#article_image_upload'
 
-  
+  root :to => 'Index#index'
 end
