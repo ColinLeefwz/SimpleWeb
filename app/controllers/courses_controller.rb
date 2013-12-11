@@ -1,6 +1,10 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :preview]
 
+	def index
+		@courses = Course.all
+	end
+
   def show
   end
 

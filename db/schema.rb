@@ -321,4 +321,24 @@ ActiveRecord::Schema.define(version: 20131209090417) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "video_interviews", force: true do |t|
+    t.string   "title"
+    t.integer  "expert_id"
+    t.string   "categories",                     default: [], array: true
+    t.text     "description"
+    t.string   "attached_video_hd_file_name"
+    t.string   "attached_video_hd_content_type"
+    t.integer  "attached_video_hd_file_size"
+    t.datetime "attached_video_hd_updated_at"
+    t.string   "attached_video_sd_file_name"
+    t.string   "attached_video_sd_content_type"
+    t.integer  "attached_video_sd_file_size"
+    t.datetime "attached_video_sd_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "video_interviews", ["categories"], name: "index_video_interviews_on_categories", using: :gin
+  add_index "video_interviews", ["expert_id"], name: "index_video_interviews_on_expert_id", using: :btree
+
 end
