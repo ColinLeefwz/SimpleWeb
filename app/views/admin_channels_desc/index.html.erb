@@ -1,5 +1,7 @@
 <h1>渠道管理   <h2><a href="http://dface.cn/web_channel_search" target="blank">渠道查询</a></h2> </h1>
 <br/>
+<p>注：之后使用渠道，不同行业的请分类填写渠道号，渠道号使用5位数字，例如，100001，为餐饮类的第1个渠道；80023，为楼宇/小区/学校的第23个渠道。</p><br>
+<p>分类如下：1.餐饮  2.咖啡/酒吧/茶馆 3.景点/设施 4.购物  5.休闲/娱乐/运动  6.活动/会议  7.酒店  8.楼宇/小区/学校  9.其他</p>
 <%= form_tag '/admin_channels_desc',:method =>:get do %>
   渠道号：<%= text_field_tag :num, params[:num], :size => 10 %>
   <%= submit_tag "查 找" %>
