@@ -17,7 +17,7 @@ class AController < ApplicationController
 
     #Rails.logger.error c.agent
     if params[:sukey] && c.agent.index("TencentTraveler")
-      render :text => "请点击 '查看原网页 >' "
+      render :text => "请点击右上地址栏中的 '查看原网页 >'  ↗️"
       return
     end 
     
