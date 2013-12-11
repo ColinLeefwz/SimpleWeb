@@ -36,7 +36,6 @@ class ProductionTest < ActionDispatch::IntegrationTest
       user.delete
     end
     Mongoid.default_session.command(eval:"db.shops.count()")["retval"]
-    Mongoid.session(:dooo).command(eval:"db.shops.count()")["retval"]  
   end
   
   test "实际部署的生产系统上测试" do

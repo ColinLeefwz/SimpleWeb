@@ -7,9 +7,3 @@ test:
       options:
         safe: true
         consistency: :eventual
-    dooo:
-      database: dface_test2
-      hosts:
-        - 127.0.0.1:27017
-      options:
-        consistency: :eventual
