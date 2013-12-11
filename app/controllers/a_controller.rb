@@ -18,15 +18,17 @@ class AController < ApplicationController
     end
 
     #Rails.logger.error c.agent
+    #Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; TencentTraveler)
     if params[:sukey] && c.agent.index("TencentTraveler")
       render :text => "请点击右上地址栏中的 '查看原网页 >' "
       return
     end
-    if c.agent.index("android")
+    #Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206 MicroMessenger/5.0.3
+    if agent.index("android")
       ver = $redis.get("android_version")
       return redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
     end
-    if c.agent.index("iphone") || c.agent.index("ipad")
+    if agent.index("iphone") || agent.index("ipad")
       return redirect_to "https://itunes.apple.com/cn/app/lianlian/id577710538"
     end        
     
