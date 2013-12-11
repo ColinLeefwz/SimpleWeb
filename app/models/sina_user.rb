@@ -106,4 +106,8 @@ class SinaUser
     JSON.parse response
   end
 
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> 05435edf252f04d5e690a02b07d659b2ffcea32e
