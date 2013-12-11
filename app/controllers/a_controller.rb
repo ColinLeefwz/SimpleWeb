@@ -2,6 +2,9 @@
 
 class AController < ApplicationController
   
+  before_filter :weixin_filter, :only => [:index]
+  
+  
   def index
     c = Channel.new
     c.ip = real_ip
@@ -9,6 +12,8 @@ class AController < ApplicationController
     c.time = Time.now
     c.agent = request.env["HTTP_USER_AGENT"]
     c.save
+    
+    agent = c.agent.downcase
 
     if params[:v] == "1-apk"
       ver = $redis.get("android_version")
@@ -16,10 +21,19 @@ class AController < ApplicationController
     end
 
     #Rails.logger.error c.agent
+    #Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; TencentTraveler)
     if params[:sukey] && c.agent.index("TencentTraveler")
-      render :text => "请点击右上地址栏中的 '查看原网页 >'  ↗️"
+      render :text => "请点击右上地址栏中的 '查看原网页 >' "
       return
-    end 
+    end
+    #Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206 MicroMessenger/5.0.3
+    if agent.index("android")
+      ver = $redis.get("android_version")
+      return redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
+    end
+    if agent.index("iphone") || agent.index("ipad")
+      return redirect_to "https://itunes.apple.com/cn/app/lianlian/id577710538"
+    end        
     
     case params[:v]
     when '19'

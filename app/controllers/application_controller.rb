@@ -90,6 +90,12 @@ class ApplicationController < ActionController::Base
   #    log.allow=flag
   #    log.save
   #  end
+  
+  def weixin_filter
+    if params[:sukey] && request.env["HTTP_USER_AGENT"].index("TencentTraveler")
+      render :text => "请点击右上地址栏中的 '查看原网页 >' "
+    end
+  end
 
 
   def user_login_filter
