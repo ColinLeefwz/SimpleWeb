@@ -2,6 +2,9 @@
 
 class AController < ApplicationController
   
+  before_filter :weixin_filter, :only => [:index]
+  
+  
   def index
     c = Channel.new
     c.ip = real_ip

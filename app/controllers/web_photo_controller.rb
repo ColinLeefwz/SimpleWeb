@@ -1,4 +1,7 @@
 class WebPhotoController < ApplicationController
+  
+  before_filter :weixin_filter, :only => [:show]
+  
 
   def show
   	
