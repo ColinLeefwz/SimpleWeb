@@ -12,7 +12,7 @@
 		<div class="con">
 			<center class="relative">
 				<div id="Plane3" class="none"><img src="/images/sign21.png" class="imgs opacityanimation"/>如遇无法下载情况，请点击右上角，<br/>选择在浏览器中打开后下载。</div>
-				<%=image_tag Photo.img_url(@photo.id),:class=>"width100p" %>
+				<%=image_tag Photo.img_url(@photo.id),:class=>"width100p block" %>
 			</center>
 			<% if !@photo.desc.blank? %>
 				<div class="plane7">
@@ -22,7 +22,6 @@
 			<div class="plane8">
 				<div class="plane8left">
 				    <%= image_tag UserLogo.img_url(@user.head_logo_id, :t1), size: "96x96" %>
-					<!-- <img src="/admin/image/share_weibo/pic7.jpg" alt="" align="left" width="96" height="96"/> -->
 				</div>
 				<div class="plane8left2">
 					<span class="wordstyle2"><%= @user.name %></span>
@@ -30,7 +29,6 @@
 					<span class="r"><img src="/admin/image/share_weibo/pic8.png" class="mr5"/><%= @photo.shop.name %></span>
 				</div>
 			</div>
-
 		</div>
 		<div class="footer">
 			<div class="fl">
@@ -43,8 +41,7 @@
 			<div class="clear1"></div>
 		</div>
 		<div class="plane6">
-			<a href="http://dface.cn/a/down"><img src="/admin/image/share_weibo/btn6.jpg" class="l"/></a>
-			<a href="https://itunes.apple.com/cn/app/lianlian/id577710538"><img src="/admin/image/share_weibo/btn7.jpg" class="r"/></a>
+			<a href="#"><img src="/admin/image/share_weibo/btn8.jpg" align="center"/></a>
 		</div>
 	</div>
 	<script>
@@ -55,6 +52,5 @@
 			}
 		}
 	</script>
-	
 </body>
 </html>
