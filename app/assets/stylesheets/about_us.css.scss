@@ -81,6 +81,8 @@
   /*---- article ----*/
 
   article {
+    font-family: "Latoreg";
+    line-height: 1.5em;
     margin-left: 24%;
     margin-right: 10%;
     margin-top: 0px;
@@ -174,20 +176,20 @@
   }
 
 
-
-  .team_member+p {
+  .team_member+p{
     clear: both;
   }
 
-  .team_member h2 {
-    font-family: 'Lato';
-    font-weight: 700;
-    font-size: 125%;
-  }
-  .team_member {
+  .team_member{
     margin-top: 35px;
     margin-bottom: 5px;
     height: 100px;
+
+    h2 {
+      font-family: 'Lato';
+      font-weight: 700;
+      font-size: 125%;
+    }
   }
 
   .team_member:first-of-type {
@@ -215,10 +217,29 @@
   .team_member_info .social_media_icons img:hover {
     opacity: 1;
   }
+  .top-fixed{
+    position: fixed;
+    top: 0px;
+    margin-top: 25px;
+  }
+  .originate{
+    float: left;
+    img{
+      padding: 0;
+      display: block;
+      float: left;
+      width: 18em;
+    }
+  }
+
+  .prod-grey{
+    color: #575757;
+  }
+
+  .red{
+    color: red;
+  }
 }
 
-.top-fixed{
-  position: fixed;
-  top: 0px;
-  margin-top: 25px;
-}
+
+
