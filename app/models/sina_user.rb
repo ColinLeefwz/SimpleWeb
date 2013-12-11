@@ -105,5 +105,4 @@ class SinaUser
     end
     JSON.parse response
   end
-
 end
