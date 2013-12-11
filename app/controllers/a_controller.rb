@@ -9,6 +9,8 @@ class AController < ApplicationController
     c.time = Time.now
     c.agent = request.env["HTTP_USER_AGENT"]
     c.save
+    
+    agent = c.agent.downcase
 
     if params[:v] == "1-apk"
       ver = $redis.get("android_version")
@@ -17,9 +19,16 @@ class AController < ApplicationController
 
     #Rails.logger.error c.agent
     if params[:sukey] && c.agent.index("TencentTraveler")
-      render :text => "请点击右上地址栏中的 '查看原网页 >'  ↗️"
+      render :text => "请点击右上地址栏中的 '查看原网页 >' "
       return
-    end 
+    end
+    if c.agent.index("android")
+      ver = $redis.get("android_version")
+      return redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
+    end
+    if c.agent.index("iphone") || c.agent.index("ipad")
+      return redirect_to "https://itunes.apple.com/cn/app/lianlian/id577710538"
+    end        
     
     case params[:v]
     when '19'
