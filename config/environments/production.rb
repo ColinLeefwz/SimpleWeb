@@ -1,7 +1,7 @@
 Lianlian::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  config.cache_classes = false
+  config.cache_classes = true
 
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
