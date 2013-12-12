@@ -9,7 +9,8 @@
         .expert-title
           #{e.profile.title}, #{e.profile.company}
     .expert-actions
-      .fa.fa-star.follow-star
+      .follow-star
+        = render "shared/favorite_expert_star", expert: e 
       .clear-fix
       .expert-action-info
         .block-title

@@ -1,4 +1,3 @@
-
 get_cookie = (name) ->
   parts = document.cookie.split(name + "=")
   if parts.length == 2
