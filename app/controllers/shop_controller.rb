@@ -39,11 +39,11 @@ class ShopController < ApplicationController
       return
     end
     if params[:sname]=="素非餐厅" || params[:sname]=="素非"
-      render :json => [Shop.find_by_id(21837941)].map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
+      render :json => [Shop.find_by_id(21837941)].map {|s| {id:s.id,name:s.name, visit:0, distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
       return
     end
     if params[:sname]=="微+" || params[:sname]=="微＋" || params[:sname]=="微加"
-      render :json => [Shop.find_by_id(21837950)].map {|s| {id:s.id,name:s.name, visit:0}.merge!(s.group_hash(session[:user_id])) }.to_json
+      render :json => [Shop.find_by_id(21837950)].map {|s| {id:s.id,name:s.name, visit:0,distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
       return
     end
     lo = [params[:lat].to_f, params[:lng].to_f]
