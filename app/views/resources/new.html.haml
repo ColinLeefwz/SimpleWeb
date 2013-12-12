@@ -1,8 +1,7 @@
 
-= s3_uploader_form id: "s3_uploader", acl: "private", callback_param: "direct_upload_url" do
+= s3_uploader_form class: "s3_uploader", acl: "private", callback_param: "direct_upload_url" do
   = file_field_tag :file, multiple: false
-
-.status
+  %span.status
 
 = simple_form_for @resource do |f|
   = f.input :expert_id, as: :select, collection: Expert.all, label_method: :name, value_method: :id

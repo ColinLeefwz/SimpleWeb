@@ -1,3 +1,8 @@
+.general-wrapper{
+  width: 79%;
+  min-width: 300px;
+  margin: 0 auto;
+}
 
 // add "center-container" to an element, then you can use "vertical-align: middle" to any of its inline child element
 // "vertical-align" only works with table element or inline text/image element by default
@@ -19,6 +24,23 @@
   display: none;
 }
 
+// simple way for file input not displaying "no file chosen"
+input[type="file"]{
+  width: 92px;
+}
+
 .margin-bottom{
   margin-bottom: 50px;
+}
+
+.latoitalic{
+  font-family: "Latoitalic";
+}
+
+.latobold{
+  font-family: "Latobold";
+}
+
+.prod-grey{
+  color: #575757;
 }

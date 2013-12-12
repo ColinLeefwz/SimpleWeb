@@ -1,0 +1,40 @@
+.course_show
+
+  .overview-wrapper.box
+
+    .overview
+      .cover-box.inline
+        .cover
+          = image_tag @course.cover.url
+        .enroll-button
+          = link_to "Enroll for only $99"
+
+      .description-box.inline
+        -# title & expert
+        .title
+          = @course.title
+        .expert.inline
+          = "with " + @course.experts.map(&:name).join(" and ")
+
+          
+        -# video-length & category
+        .video-length.inline
+          1h 33m
+        .separator.inline
+        .category.inline
+          = @course.categories.join(", ")
+        -# description
+        .description
+          = @course.description
+
+      .social-box.inline
+
+      .percentage
+        %span 20
+        %span % complete
+      .progress
+        .bar{style: "width: 0%"}
+
+
+  - @course.chapters.each do |c|
+    = render partial: "chapter", locals: {chapter: c}

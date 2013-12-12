@@ -1,6 +1,10 @@
 Prodygia::Application.routes.draw do
 
-  get 'course/show'
+  resources :courses
+  get 'courses/:id/preview' => 'courses#preview', as: :course_preview
+
+  resources :sections
+
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
@@ -47,6 +51,8 @@ Prodygia::Application.routes.draw do
       patch :update_profile
       get :refer_a_friend
       get :experts
+      get :contents
+      get :video_on_demand
     end
   end
 
@@ -81,6 +87,7 @@ Prodygia::Application.routes.draw do
   root to: "welcome#index"
 
   get "/about_us", to: 'static_pages#about_us'
+  get "/for_experts", to: 'static_pages#for_experts'
   get "/:page", to: 'static_pages#static'
 
 end

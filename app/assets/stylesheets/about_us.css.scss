@@ -30,7 +30,7 @@
       margin-bottom: 18px;
 
       li {
-        padding-left: 20%;
+        padding-left: 15%;
         padding-bottom: 10px;
         padding-top: 5px;
         vertical-align: middle;
@@ -46,6 +46,7 @@
 
     a{
       text-decoration: none;
+      font-family: "Latoreg";
     }
 
     a:hover{
@@ -71,7 +72,7 @@
       top: -0.7em;
       padding-left: 5px;
       padding-right: 5px;
-      font-family: 'Oswald';
+      font-family: 'Latoreg';
       font-weight: 300;
     }
   }
@@ -80,6 +81,8 @@
   /*---- article ----*/
 
   article {
+    font-family: "Latoreg";
+    line-height: 1.5em;
     margin-left: 24%;
     margin-right: 10%;
     margin-top: 0px;
@@ -139,7 +142,13 @@
       list-style-type: lower-alpha;
     }
 
-    .job_title, .job_responsibilities {
+    .benefit-line-height{
+      li{
+        line-height: 1.5em;
+      }
+    }
+
+    .job_title{
       margin-top: 0;
       padding-top: 0;
       padding-bottom: 0;
@@ -151,17 +160,7 @@
       font-size: 15px;
     }
 
-    .job_responsibilities {
-      color: #6C2C85;
-      font-size: 15px;
-      font-style: italic;
-    }
-
-    .job_responsibilities:before {
-      content: "> ";
-    }
-
-    img.headshot {
+    .headshot {
       float: left;
       padding-left: 0;
       padding-bottom: 0;
@@ -173,20 +172,21 @@
   }
 
 
-
-  .team_member+p {
+  .team_member+p{
     clear: both;
   }
 
-  .team_member h2 {
-    font-family: 'Lato';
-    font-weight: 700;
-    font-size: 125%;
-  }
-  .team_member {
+  .team_member{
     margin-top: 35px;
     margin-bottom: 5px;
     height: 100px;
+
+    h2 {
+      font-family: 'Latoreg';
+      font-weight: 700;
+      font-size: 125%;
+      line-height: 30px;
+    }
   }
 
   .team_member:first-of-type {
@@ -214,10 +214,22 @@
   .team_member_info .social_media_icons img:hover {
     opacity: 1;
   }
+  .top-fixed{
+    position: fixed;
+    top: 0px;
+    margin-top: 25px;
+  }
+  .originate{
+    float: left;
+    margin-bottom: 0;
+    img{
+      padding: 0;
+      display: block;
+      float: left;
+      width: 22em;
+    }
+  }
 }
 
-.top-fixed{
-  position: fixed;
-  top: 0px;
-  margin-top: 25px;
-}
+
+

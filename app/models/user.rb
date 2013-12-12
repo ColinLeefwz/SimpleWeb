@@ -38,6 +38,10 @@ class User < ActiveRecord::Base
 	validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
 	## methods for subscribe sessions
+  def get_subscribed_sessions(session_type)
+    self.subscribed_sessions.where(content_type: session_type)
+  end
+
   def has_subscribed? (this_session)
     self.subscribed_sessions.include? (this_session)
   end

@@ -5,18 +5,9 @@
   margin-top: 43px;
   margin-bottom: 50px;
 
-  label{
-    width: 12%;
-    text-align: right;
-    vertical-align: top;
-  }
-
   span label{
+    // label next to category checkboxes
     width: auto;
-  }
-
-  input, textarea, select,{
-    margin-left: 2%;
   }
 
   #datetimepicker{
@@ -34,9 +25,6 @@
 
   .checkbox{
     padding-right: 0.8em;
-  }
-  .checkbox:first-of-type {
-    margin-left: 1.5em;
   }
 
   input[type="checkbox"]{

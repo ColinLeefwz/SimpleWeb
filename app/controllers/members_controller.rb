@@ -45,6 +45,22 @@ class MembersController < ApplicationController
     end
   end
 
+  def contents
+    @favorite_content = current_user.get_subscribed_sessions("ArticleSession")
+    @from = "content"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
+
+  def video_on_demand
+    @favorite_session = current_user.get_subscribed_sessions( "VideoSession")
+    @from = "video_on_demand"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
+
   private
 
   def set_member

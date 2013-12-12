@@ -1,14 +1,15 @@
-%h1 member profile here
+.general-wrapper
+  %h1 member profile here
 
-.name
-  = @member.first_name
-  = @member.last_name
+  .name
+    = @member.first_name
+    = @member.last_name
 
-.avatar
-  = image_tag @member.avatar.url
+  .avatar
+    = image_tag @member.avatar.url
 
-.title
-  = @profile.title
+  .title
+    = @profile.title
 
-.company
-  = @profile.company
+  .company
+    = @profile.company

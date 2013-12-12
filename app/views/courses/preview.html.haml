@@ -1,0 +1,27 @@
+
+.general-wrapper
+
+  .course
+    %h1= @course.title
+
+    %span Description:
+    = @course.description
+
+    = image_tag @course.cover.url
+
+    - @course.chapters.each do |c|
+      .chapter.chapter-fields
+        %span Chapter Title:
+        = c.title
+
+        %span Description:
+        = c.description
+
+      - c.sections.each do |s|
+        .section.section-fields
+          %span Section Title:
+          = s.title
+          %span Description:
+          = s.description
+          = link_to "upload resource/ (edit section)", edit_section_path(s.id), class: "btn"
+
