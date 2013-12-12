@@ -3,6 +3,7 @@
     <th>名称</th>
     <th>密码</th>
     <th>备注</th>
+    <th></th>
   </tr>
 
   <% @guests.each do |guest| %>
@@ -10,6 +11,7 @@
       <td><%= guest.name %></td>
       <td><%= guest.password %></td>
       <td><%= guest.desc %></td>
+      <td><%= link_to "删除", "/admin_guest/delete?id=#{guest.id}" %></td>
     </tr>
   <% end %>
 </table>
