@@ -1,0 +1,17 @@
+<%= form_for(@guest, :url => "/admin_guest/create") do |f| %>
+  <p>
+    名称:<br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    密码:<br />
+   <%= f.text_field :password %>
+  </p>
+  <p>
+  备注:<br />
+   <%= f.text_field :desc %>
+  </p>
+   <p>
+    <%= f.submit "保存" %>
+  </p>
+<% end %>

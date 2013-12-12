@@ -1,13 +1,12 @@
 # coding: utf-8
 class Guest
   include Mongoid::Document
-  field :_id, type: Integer
   field :name 
   field :password
   field :desc
 
-  def self.auth(id, pass)
-  	guest = Guest.find_by_id(id)
+  def self.auth(name, pass)
+  	guest = Guest.where({name: name}).first
     return guest if guest && guest.password == pass
   end
 

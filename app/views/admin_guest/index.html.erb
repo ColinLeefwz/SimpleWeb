@@ -1,0 +1,24 @@
+<table border="1">
+  <tr>
+    <th>名称</th>
+    <th>密码</th>
+    <th>备注</th>
+  </tr>
+
+  <% @guests.each do |guest| %>
+    <tr>
+      <td><%= guest.name %></td>
+      <td><%= guest.password %></td>
+      <td><%= guest.desc %></td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+ <%= link_to "新建", :action => :new %>
+<br/>
+<%= generate_paginate3.html_safe %>
+
+<br/>
+<br/>
+<br/>
+

@@ -12,7 +12,7 @@ module ControllerName
     3=>{"admin_parties"=>"活动管理"},
     4=>{"admin_checkins"=>"签到管理", "admin_gps_logs" => "gps日志"},
     5=>{"admin_login"=>"登录", "admins"=>"管理员管理", "admin_rights"=>"权限管理"},
-    6=>{"admin_crash_logs"=>"安卓崩溃管理","admin_versions" => '版本管理'},
+    6=>{"admin_crash_logs"=>"安卓崩溃管理","admin_versions" => '版本管理', "admin_guest" => "下载渠道"},
     7=>{"admin_user_days"=>"每日新增", "admin_user_hours"=>"每小时新增","user_device_stats"=>"每日注册机型统计",
       "admin_user_city_days"=>"每日城市分布","admin_user_actives" => "用户活跃度", "admin_user_day_actives" => "用户每日活跃度", "admin_new_user_talk_stats" => "每日陪聊统计"},
     8=>{},
