@@ -1,8 +1,15 @@
-.favorite.solid-star.hidden 
-  = image_tag("favorite.png")
+- if current_user.try(:has_subscribed?, session)
+  .favorite.solid-star 
+    = image_tag("favorite.png")
 
-.favorite.hollow-star
-  = image_tag("favorite_unselected.png")
+  .favorite.hollow-star.hidden
+    = image_tag("favorite_unselected.png")
+- else 
+  .favorite.solid-star.hidden 
+    = image_tag("favorite.png")
+
+  .favorite.hollow-star
+    = image_tag("favorite_unselected.png")
 
 = link_to " ", subscribe_session_path(session), class: "hidden", id: "mark-link", remote: true
 
