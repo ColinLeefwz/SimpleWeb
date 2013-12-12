@@ -109,8 +109,10 @@ padding: 20px;}
 .shop  .ff {float: right;font-size:16px;color:#67a8ff}
 
 #dig{position:absolute;width: 100%;font-size: 14px;background: url(../images/btn/dig.png);display: none;}
-#boxss{position:absolute;background-color:#c9c9c9;border: 2px solid #181818;width:90%;left:5%;
+#boxss{position:absolute;background-color:#c9c9c9;border: 2px solid #181818;width:90%;left:5%;padding-bottom:20px;
 border-radius:15px;}
+#boxss2{background-color: #C9C9C9;border: 1px solid #181818;border-radius: 10px;color: #333333;left: 50%;margin-left: -50px;padding: 15px 0;
+position: absolute;text-align: center;width: 100px;letter-spacing:1px;}
 
 ul.list{display:block;overflow:hidden;zoom:1;padding:10px 20px;line-height:40px;}
 ul.list li{float:left;width:50%;}
