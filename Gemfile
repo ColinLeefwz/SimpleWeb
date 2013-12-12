@@ -30,6 +30,7 @@ gem 'figaro'
 gem 'mandrill-api'
 gem 'cancan'
 gem 'remotipart'
+gem 'newrelic_rpm'
 
 group :doc do
   gem 'sdoc', require: false
