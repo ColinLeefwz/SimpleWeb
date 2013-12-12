@@ -13,5 +13,5 @@
     = link_to "see more", remote: true
 
 .favorite-social-share
-  = render 'shared/favorite_star', session: session
+  = render 'shared/favorite_session_star', session: session
   = render 'shared/social_share', session_title: session.title, session_url: session_url(session)
