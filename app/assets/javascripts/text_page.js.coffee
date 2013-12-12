@@ -1,3 +1,4 @@
+
 get_cookie = (name) ->
   parts = document.cookie.split(name + "=")
   if parts.length == 2
@@ -30,3 +31,7 @@ $(document).ready ->
 
 $(document).on 'page:load', ->
   favorite_event()
+
+$(document).on 'ajax:success', ->
+  favorite_event()
+

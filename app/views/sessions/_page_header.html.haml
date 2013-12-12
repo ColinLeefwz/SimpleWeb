@@ -23,5 +23,6 @@
         = session.categories.join(", ")
   .text-page-right-side
     .text-page-social-buttons
+      = render 'shared/favorite_star', session: session
       = render 'shared/social_share', session_title: session.title, session_url: session_url(session)
   .clear-fix
