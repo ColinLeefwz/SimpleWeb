@@ -1,0 +1,12 @@
+<h1>测试版上传</h1>
+<%= form_tag "/admin_versions/upload_test", :multipart => true do  %>
+
+  <p>
+    上传文件:
+    <%= file_field_tag :file %>
+  </p>
+
+  <p>
+    <%= submit_tag "提交"%>
+  </p>
+<%  end %>
