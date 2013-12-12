@@ -8,8 +8,10 @@ class UserDevice
 
   def self.init(mac,os,model,ver,w=nil,h=nil,id=nil,imei=nil,imsi=nil,channel=nil)
     ud = UserDevice.new
-    if w
+    if w && channel
       ud.ds = [ [mac,os,model,ver,w,h,id,imei,imsi,channel] ]
+    elsif channel
+      ud.ds = [ [mac,os,model,ver,channel] ]
     else
       ud.ds = [ [mac,os,model,ver] ]
     end
