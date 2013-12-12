@@ -28,6 +28,10 @@ class UserDevice
       UserDevice.update_redis(uid, self.os_type, self.ds[0][3])
     end
   end
+
+  def user
+    User.find_by_id(self._id)
+  end
   
   def save_new(uid)
     self._id = uid

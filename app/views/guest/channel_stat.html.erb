@@ -3,17 +3,14 @@
 <table border="1">
   <tr>
     <th>日期</th>
-    <th>本日下载用户</th>
+    <th>本日激活用户</th>
 
   </tr>
 
   <% @user_ds_stat.each do |user_ds_stat| %>
     <tr>
     	<td><%= user_ds_stat.id.to_date %></td>
-
     	<td><%= user_ds_stat.data[@guest.name]%></td>	
-
-
     </tr>
   <% end %>
 </table>

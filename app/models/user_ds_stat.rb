@@ -15,14 +15,10 @@ class UserDsStat
 	  	data ={}
 	  	UserDevice.where({_id: {"$gte" => begin_id, "$lte" => end_id}}).sort(_id: -1).each do |ud|
 	  		ds = ud.ds.first
+	  		next if ud.user.head_logo_id.blank?
 	  		next if ds.nil?
-	  		if ds[1].match(/android/i)
-	  			if data[ds.last]
-	  				data[ds.last] += 1
-	  			else
-	  				data[ds.last] =1
-	  			end
-	  		end
+	  		next if ds.length <= 4
+	  		data[ds.last] = (data[ds.last]||0) +1
 	  	end
 	  	user_ds_stat = UserDsStat.new(data: data)
 	  	user_ds_stat._id = time.to_date
