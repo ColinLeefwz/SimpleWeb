@@ -6,7 +6,7 @@ class AdminGuestController < ApplicationController
 
   def index
     hash = {}
-    sort = {id: -1}
+    sort = {_id: -1}
     @guests =  paginate3("Guest", params[:page], hash, sort)
   end
 
@@ -28,6 +28,12 @@ class AdminGuestController < ApplicationController
     guest = Guest.find_by_id(params[:id])
     guest.delete
     redirect_to :action => :index
+  end
+
+  def ds_stat
+    hash ={}
+    sort= {_id: -1}
+    @ds_stats = paginate3("UserDsStat", params[:page], hash, sort)
   end
 
 
