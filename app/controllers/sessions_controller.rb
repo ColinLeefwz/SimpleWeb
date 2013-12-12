@@ -63,9 +63,11 @@ class SessionsController < ApplicationController
 
   def show
     if @session.is_a? ArticleSession
-      render 'text_page'
-    else
-      render 'video_page'
+      render 'content'
+    elsif @session.is_a? VideoSession
+      render 'video'
+    elsif @session.is_a? Announcement
+      render 'announcement'
     end
   end
 
