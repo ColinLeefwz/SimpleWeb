@@ -84,13 +84,16 @@ class AroundmeController < ApplicationController
   end
 
   def shop_report
-    
-    lo = [params[:lat].to_f,params[:lng].to_f]
-    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
-    arr = find_shop_cache(lo,params[:accuracy].to_f,params[:uid],params[:bssid])
-    @shops = arr.map do |x|
-      [x['name'],x['_id'].to_i]
-    end
+    if Rails.env == 'production'		
+		lo = [params[:lat].to_f,params[:lng].to_f]
+		lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+		arr = find_shop_cache(lo,params[:accuracy].to_f,params[:uid],params[:bssid])
+		@shops = arr.map do |x|
+		  [x['name'],x['_id'].to_i]
+		end
+	else
+		@shops = Shop.where({}).limit(30).map{|m| [m.name, m.id]}
+	end
     render :layout => false
 
   end
