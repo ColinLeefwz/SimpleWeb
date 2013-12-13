@@ -56,7 +56,7 @@ class City
     city = City.where({name:/#{name}/}).first
     return city.code if city
     city = Oversea.where({country:/#{name}/}).first
-    return city.city_code if city
+    return city.country_code if city
     return nil
   end
   
