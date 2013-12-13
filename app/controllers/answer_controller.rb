@@ -266,6 +266,9 @@ class AnswerController < ApplicationController
     attrs = " NOLOG='1' "
     ext = nil
     case msg
+    when '0'
+      text = shop.pre_faqs(user)
+      return Xmpp.send_gchat2($gfuid,shop.id,user.id, text, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
     when '01'
       return Xmpp.send_gchat2($gfuid,shop.id,user.id, "脸脸能优惠", "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
     when '02'
