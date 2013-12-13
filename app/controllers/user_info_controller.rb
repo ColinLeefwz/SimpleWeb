@@ -129,7 +129,7 @@ class UserInfoController < ApplicationController
       hash[:no_push] = (params[:no_push]=="1")  unless params[:no_push].nil?
       if user.update_attributes! hash
         Rails.cache.delete "UI#{user.id}"    
-        render :json => user.attributes.to_json
+        render :json => user.output_self.to_json
       else
         render :json => {:error => "update user info failed"}.to_json
       end

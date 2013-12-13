@@ -52,6 +52,14 @@ class City
     city.name
   end
   
+  def self.city_code(name)
+    city = City.where({name:/#{name}/}).first
+    return city.code if city
+    city = Oversea.where({country:/#{name}/}).first
+    return city.country_code if city
+    return nil
+  end
+  
   def City.fullname(city)
     return pro_city_name(city)
   end

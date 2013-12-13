@@ -41,6 +41,31 @@ class AnswerController < ApplicationController
   
   def at3
     if is_kx_user?(params[:from]) || User.is_fake_user?(params[:from]) || params[:from]==$gfuid
+      txt = params["msg"]
+      attrs = " NOLOG='1' NOPUSH='1' "
+      ext = nil
+      url = "dface://scheme/seek/relocate"
+      if txt[0,6]=="@@@我要去"
+        city = City.city_code(txt[6..-1])
+        if city
+          $redis.set("FCITY#{params[:from]}",city)
+          attrs += " url='#{url}' " 
+          ext = "<x xmlns='dface.url'>#{url}</x>"
+          Xmpp.send_chat(params[:to],params[:from],"已到#{txt[6..-1]}，点击重新定位", nil, attrs, ext)
+        else
+          Xmpp.send_chat(params[:to],params[:from],"抱歉，找不到#{txt[6..-1]}", $uuid.generate, " NOLOG='1' NOPUSH='1' ")
+        end
+        render :text => "1"
+        return
+      end
+      if txt=="@@@我要回来"
+        $redis.del("FCITY#{params[:from]}")
+        attrs += " url='#{url}' " 
+        ext = "<x xmlns='dface.url'>#{url}</x>"
+        Xmpp.send_chat(params[:to],params[:from],"回来了，点击重新定位", nil, attrs, ext)
+        render :text => "1"
+        return
+      end
       user = User.find(params[:to])
       unless user
         render :text => "user not exists"

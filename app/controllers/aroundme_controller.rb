@@ -11,6 +11,11 @@ class AroundmeController < ApplicationController
       render :json =>  ret.to_json
       return
     end
+    fake_city = $redis.get("FCITY#{session[:user_id]}")
+    if fake_city
+      roam(fake_city)
+      return
+    end
     lo = [params[:lat].to_f,params[:lng].to_f]
     if lo[0]<0.00001 && lo[1]<0.00001 && params[:accuracy].to_i<1
       render :json =>  {error:"无法获得位置信息"}.to_json
@@ -19,7 +24,6 @@ class AroundmeController < ApplicationController
     gps = nil
     wifi = nil
     if params[:baidu].to_i==1
-      #############################
       lo1 = Shop.lob_to_lo(lo) if params[:accuracy].to_i>=1
       if params[:gps] && params[:gps].size>0
         begin
@@ -124,7 +128,7 @@ class AroundmeController < ApplicationController
   
   def users
     ret = []
-    users = User.where({pcount: {"$gt" => 2}}).limit(4)
+    users = User.where({pcount: {"$gt" => 2}}).sort({_id:-1}).limit(4)
     users.each {|u| ret << u.safe_output(session[:user_id]) }
     if ret
       render :json => ret.to_json
@@ -140,7 +144,8 @@ class AroundmeController < ApplicationController
     pcount = 20 if pcount==0
     skip = (page-1)*pcount
     lo = [params[:lat].to_f , params[:lng].to_f]
-    city = Shop.get_city(lo)
+    city = $redis.get("FCITY#{session[:user_id]}")
+    city = Shop.get_city(lo) if city.nil?
     if params[:gender].to_i==0
       sex = session_user.gender
       sex = (sex==2? 1:2)
@@ -238,6 +243,32 @@ class AroundmeController < ApplicationController
     city = shop["city"]
     city = Shop.get_city(lo)  if city.nil? || city==""
     city
+  end
+  
+  def roam(city)
+    uids = $redis.zrevrange("HOT1U#{city}",0,20) + $redis.zrevrange("HOT2U#{city}",0,20)
+    arr = uids.map do |uid|
+      user = User.find_by_id(uid)
+      loc = user.last_loc
+      loc[-1].class == Array ? nil : Shop.find_by_id(loc[-1])
+    end
+    arr.delete_if{|x| x==nil}
+    Rails.logger.error(arr)
+    response.headers['Cpcity'] = URI::encode(City.cascade_name(city))
+    ret = arr.map do |x| 
+      hash = x.safe_output_with_users
+      ghash = x.group_hash(session[:user_id])
+      hash.merge!(ghash)
+      hash
+    end
+    coupons = $redis.smembers("ACS#{city}") 
+    if coupons
+      ret.each_with_index do |xx,i|
+        ret[i]["coupon"] = 1 if coupons.index(xx["id"].to_i.to_s)
+        ret[i]["city"] = City.city_name(city) if i==0
+      end
+    end
+    render :json =>  ret.to_json
   end
 
 end
