@@ -88,6 +88,7 @@ Prodygia::Application.routes.draw do
 
   get "/about_us", to: 'static_pages#about_us'
   get "/for_experts", to: 'static_pages#for_experts'
+  get "/faq", to: 'static_pages#faq'
   get "/:page", to: 'static_pages#static'
 
 end
