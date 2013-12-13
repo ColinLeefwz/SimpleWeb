@@ -250,8 +250,10 @@ class AroundmeController < ApplicationController
     arr = uids.map do |uid|
       user = User.find_by_id(uid)
       loc = user.last_loc
-      Shop.find_by_id(loc[-1])
+      loc[-1].class == Array ? nil : Shop.find_by_id(loc[-1])
     end
+    arr.delete_if{|x| x==nil}
+    Rails.logger.error(arr)
     response.headers['Cpcity'] = URI::encode(City.cascade_name(city))
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
