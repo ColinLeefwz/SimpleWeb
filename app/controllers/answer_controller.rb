@@ -280,14 +280,14 @@ class AnswerController < ApplicationController
       text = "回复：@@@脸脸赐我#{xb}神"
       return Xmpp.send_gchat2($gfuid,shop.id,user.id, text, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
     when "@@@脸脸赐我男神"
-      return false if user.gender != 2
+      
       sbu = us.select{|m| m.gender == 1}.sample(1).first
       return false if sbu.nil?
       attrs += " url='dface://scheme/user/info?id=#{sbu.id}' " 
       ext = "<x xmlns='dface.url'>dface://scheme/user/info?id=#{sbu.id}</x>"
       return Xmpp.send_gchat2($gfuid,shop.id,user.id, "男神信息", "FAQ#{shop.id}#{user.id}#{Time.now.to_i}", attrs, ext)
     when "@@@脸脸赐我女神"
-     return false if user.gender != 1
+     
      sbu = us.select{|m| m.gender == 2}.sample(1).first
      return false if sbu.nil?
      attrs += " url='dface://scheme/user/info?id=#{sbu.id}' " 
