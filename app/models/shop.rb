@@ -592,9 +592,10 @@ class Shop
   #预置问答
   def pre_faqs(user)
     us = checkin_users 
-    pre = "试试回复：\n01=>脸脸能干什么.\n"
-    pre += "02=>热点.\n" 
-    pre += "03=>速配.\n" if us.select{|m| m.gender != user.gender }.any?
+    pre = "hi，#{user.name}，脸脸在#{self.name}发现了你，是个#{user.gender == 1 ? "男" : "女"}神呀！初次见面如果有什么问题可以问我噢~"
+    pre += "试试回复：\n01=>来到这儿可以做什么？\n"
+    pre += "02=>如何找到更多的小伙伴？\n" 
+    pre += "03=>#{self.name}のかみ速配.\n" if us.select{|m| m.gender != user.gender }.any?
     pre
   end
   
