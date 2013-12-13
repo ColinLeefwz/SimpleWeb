@@ -296,7 +296,7 @@ class AnswerController < ApplicationController
      text="她，叫#{sbu.name}\n她在这个城市驻足或行走，两天前她也同在#{shop.name}。你和她擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，她来了..." 
      attrs += " url='dface://scheme/user/info?id=#{sbu.id}' " 
      ext = "<x xmlns='dface.url'>dface://scheme/user/info?id=#{sbu.id}</x>"
-     return Xmpp.send_gchat2($gfuid,shop.id,user.id, "女神信息", "FAQ#{shop.id}#{user.id}#{Time.now.to_i}", attrs, ext)
+     return Xmpp.send_gchat2($gfuid,shop.id,user.id, text, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}", attrs, ext)
     end
     return false
   end
