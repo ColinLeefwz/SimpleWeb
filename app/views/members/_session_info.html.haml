@@ -10,7 +10,7 @@
   .favorite-session-description
     = truncate_html(session.description, length: 300, omission: '...')
   .see-more
-    = link_to "see mroe", remote: true
+    = link_to "see more", remote: true
 
 .favorite-social-share
-  = render "favorite_social_share", session_title: session.title, session_url: session_url(session) 
+  = render "shared/social_share", session_title: session.title, session_url: session_url(session) 

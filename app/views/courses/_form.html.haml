@@ -4,5 +4,7 @@
   = f.input :title, label: "Course Title"
   = f.input :description
   = f.association :experts
+  = f.input :categories, as: :check_boxes, collection: Category.all, label_method: :name, value_method: :name
+  = f.input :cover
   = link_to_add_fields("add chapter", f, :chapters)
   = f.submit

@@ -1,0 +1,12 @@
+= render "page_header", session: @session
+.text-page-article-box.shadow
+  .text-page-main-content
+    -unless @session.video.url.eql?"/videos/original/missing.png"
+      .video-cover
+        .video-img{data: {source: @session.video.url}}
+          = image_tag @session.cover.url, class: 'video-play'
+          = image_tag "video_play_icon.png", class: 'play-video-icon'
+    %p= @session.description.html_safe
+  .clear-fix
+.range
+

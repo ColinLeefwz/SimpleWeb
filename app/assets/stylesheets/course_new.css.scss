@@ -24,4 +24,12 @@
     padding-bottom: 1em;
   }
 
+  // override bootstrap style
+  .checkbox input[type='checkbox']{
+    float: none;
+  }
+
 }
+
+
+

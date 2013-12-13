@@ -1,0 +1,27 @@
+.text-page-header-box.shadow
+  .text-page-left-side
+    .text-page-portrait
+      = image_tag("#{session.expert.avatar.url}")
+    .text-page-expert-info
+      .name
+        = session.expert.name
+      .title
+        = session.expert.profile.title
+      .company
+        = session.expert.profile.company
+    .clear-fix.visible-phone
+  .text-page-middle
+    .title
+      = session.title
+    .datetime
+      = "originally published on #{session.created_at.to_date.to_formatted_s(:course_date)}"
+      &nbsp
+    -unless session.categories.empty?
+      .category-name
+        = "|"
+        &nbsp
+        = session.categories.join(", ")
+  .text-page-right-side
+    .text-page-social-buttons
+      = render 'shared/social_share', session_title: session.title, session_url: session_url(session)
+  .clear-fix
