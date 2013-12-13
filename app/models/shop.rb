@@ -193,6 +193,10 @@ class Shop
     total = self.utotal.to_i if total.nil?
     total
   end
+
+  def checkin_users
+    $redis.zrange("UA#{self.id}", 0, -1).map{|m| User.find_by_id(m)}.compact
+  end
   
   def safe_output
     hash = self.attributes.slice("name", "lo", "t")
@@ -573,13 +577,32 @@ class Shop
     return answer_text_default if faq.nil?
     faq
   end
+
+  # 是否对用户启用预置问答
+  def preset?(user)
+    user && (user.cat+3.days) > Time.now && self.no_faq?
+  end
+
+  #问答
+  def faqs_text(user)
+    shop.id == 21835801 ? pre_faqs(user) : answer_text_default
+    # preset?(user) ? pre_faqs(user) : answer_text_default
+  end
+
+  #预置问答
+  def pre_faqs(user)
+    us = checkin_users 
+    pre = "试试回复：\n01=>脸脸能干什么.\n"
+    pre += "02=>热点.\n" 
+    pre += "03=>速配.\n" if us.select{|m| m.gender != user.gender }
+    pre
+  end
   
+  #正常情况下问答
   def answer_text_default
     faqs = self.find_faqs.to_a
-    if faqs.size==0
-      return "本地点未启用数字问答系统"
-    end
-    "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n") 
+    return "本地点未启用数字问答系统" if faqs.blank?
+    "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n")
   end
 
   def weixin_answer_text(msg)

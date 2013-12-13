@@ -23,6 +23,8 @@ class AnswerController < ApplicationController
       return
     end
     shop = Shop.find_by_id(sid)
+    user = User.find_by_id(uid)
+    return if shop.preset?(user) && pre_answer(msg, user)
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"
     if text_faq
@@ -229,6 +231,42 @@ class AnswerController < ApplicationController
       want_msg(uid,to)
       Resque.enqueue(XmppMsg, to.id, uid, ": (此为系统消息，不是#{to.name}所发)")
     end
+  end
+
+    #预置问答的响应
+  def pre_answer(msg, user, shop)
+    ta = user.gender ==2 ? '他' : "她"
+    xb = user.gender ==2 ? '男' : "女"
+    us = shop.checkin_users
+    attrs = " NOLOG='1' "
+    ext = nil
+    case msg
+    when '01'
+      return Xmpp.send_gchat2($gfuid,shop.id,user.id, "脸脸能优惠", "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
+    when '02'
+      attrs += " url='dface://scheme/near/user' " 
+      ext = "<x xmlns='dface.url'>dface://scheme/near/user</x>"
+      return Xmpp.send_gchat2($gfuid,shop.id,user.id, "热点用户", "FAQ#{shop.id}#{user.id}#{Time.now.to_i}", attrs, ext)
+    when '03'
+      return false if us.select{|m| m.gender != user.gender}.blank?
+      text = "脸脸赐我#{xb}神"
+      return Xmpp.send_gchat2($gfuid,shop.id,user.id, "text", "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
+    when "脸脸赐我男神"
+      return false if user.gender != 2
+      sbu = us.select{|m| m.gender == 1}.sample(1).first
+      return false if sbu.nil?
+      attrs += " url='dface://scheme/user/info?id=#{sbu.id}' " 
+      ext = "<x xmlns='dface.url'>dface://scheme/user/info?id=#{sbu.id}</x>"
+      return Xmpp.send_gchat2($gfuid,shop.id,user.id, "男神信息", "FAQ#{shop.id}#{user.id}#{Time.now.to_i}", attrs, ext)
+    when "脸脸赐我女神"
+     return false if user.gender != 1
+     sbu = us.select{|m| m.gender == 2}.sample(1).first
+     return false if sbu.nil?
+     attrs += " url='dface://scheme/user/info?id=#{sbu.id}' " 
+     ext = "<x xmlns='dface.url'>dface://scheme/user/info?id=#{sbu.id}</x>"
+     return Xmpp.send_gchat2($gfuid,shop.id,user.id, "女神信息", "FAQ#{shop.id}#{user.id}#{Time.now.to_i}", attrs, ext)
+    end
+    return false
   end
 
 
