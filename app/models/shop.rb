@@ -594,7 +594,7 @@ class Shop
     us = checkin_users 
     pre = "试试回复：\n01=>脸脸能干什么.\n"
     pre += "02=>热点.\n" 
-    pre += "03=>速配.\n" if us.select{|m| m.gender != user.gender }
+    pre += "03=>速配.\n" if us.select{|m| m.gender != user.gender }.any?
     pre
   end
   
