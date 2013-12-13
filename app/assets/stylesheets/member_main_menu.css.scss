@@ -83,8 +83,7 @@
     }
     .follow-star{
       float: right;
-      font-size: 20px;
-      color: purple;
+      width: 20px;
       margin: 5px;
       cursor: pointer;
     }
@@ -134,34 +133,36 @@
       height: 80%;
       float: left;
       padding-top: 1%;
-      .favorite-session-title{
-        font-family: "Oswald";
-        font-weight: 400;
-        font-size: 23px;
-      }
-      .favorite-session-expert-name, .favorite-session-categories{
-        float: left;
-      }
-      .favorite-session-expert-name{
-        padding-right: 2%;
-        border-right: 1px solid black;
-        font-family: "Latoitalic";
-      }
-      .favorite-session-categories{
-        padding-left: 2%;
-        font-family: "Latoreg";
-        font-size: 15px;
-      }
-
-      .favorite-session-description{
-        padding-top: 2%;
-        p{
-          margin: 0;
+      .favorite-session-main{
+        height: 110%;
+        .favorite-session-title{
+          font-family: "Oswald";
+          font-weight: 400;
+          font-size: 23px;
+        }
+        .favorite-session-expert-name, .favorite-session-categories{
+          float: left;
+        }
+        .favorite-session-expert-name{
+          padding-right: 2%;
+          border-right: 1px solid black;
+          font-family: "Latoitalic";
+        }
+        .favorite-session-categories{
+          padding-left: 2%;
           font-family: "Latoreg";
-          line-height: 1.5em;
+          font-size: 15px;
+        }
+
+        .favorite-session-description{
+          padding-top: 2%;
+          p{
+            margin: 0;
+            font-family: "Latoreg";
+            line-height: 1.5em;
+          }
         }
       }
-
     }
     .favorite-social-share{
       float: right;
