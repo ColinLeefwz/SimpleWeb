@@ -1,14 +1,15 @@
 .favorite-session-info
-  .favorite-session-title
-    = session.title
-  .favorite-session-expert-name
-    by #{session.expert.name}
-  .favorite-session-categories
-    = session.categories.join(", ")
-  .clear-fix
+  .favorite-session-main
+    .favorite-session-title
+      = session.title
+    .favorite-session-expert-name
+      by #{session.expert.name}
+    .favorite-session-categories
+      = session.categories.join(", ")
+    .clear-fix
 
-  .favorite-session-description
-    = truncate_html(session.description, length: 300, omission: '...')
+    .favorite-session-description
+      = truncate_html(session.description, length: 300, omission: '...')
   .see-more
     = link_to "see more", remote: true
 
