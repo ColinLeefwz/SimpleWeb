@@ -1,1 +1,1 @@
-Time::DATE_FORMATS[:time_for_order]= "%a, %b, %e, %Y<br>%l:%M %P (China ST)"
+Date::DATE_FORMATS[:course_date]= "%B %e"
