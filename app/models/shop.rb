@@ -580,7 +580,7 @@ class Shop
 
   # 是否对用户启用预置问答
   def preset?(user)
-    return true if user.id.to_s == "502e6303421aa918ba000007"
+    is_kx_user?(user.id) && self.no_faq?
     # user && (user.cat+3.days) > Time.now && self.no_faq?
   end
 
