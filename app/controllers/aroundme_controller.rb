@@ -249,8 +249,11 @@ class AroundmeController < ApplicationController
     uids = $redis.zrevrange("HOT1U#{city}",0,20) + $redis.zrevrange("HOT2U#{city}",0,20)
     arr = uids.map do |uid|
       user = User.find_by_id(uid)
-      loc = user.last_loc
-      loc[-1].class == Array ? nil : Shop.find_by_id(loc[-1])
+      if user && (loc = user.last_loc)
+        loc[-1].class == Array ? nil : Shop.find_by_id(loc[-1])
+      else
+        nil
+      end
     end
     arr.delete_if{|x| x==nil}
     Rails.logger.error(arr)
