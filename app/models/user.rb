@@ -362,7 +362,8 @@ class User
   end
     
   def last_loc_no_cache
-    ck = Checkin.where({uid:self._id}).sort({_id:1}).last
+    arr = $redis.smembers("UnBroadcast")
+    ck = Checkin.where({uid:self._id, sid:{"$nin" => arr}}).sort({_id:1}).last
     return nil if ck.nil?
     return nil if ck.shop.nil? || ck.shop.name.nil?
     write_lat_loc(ck)

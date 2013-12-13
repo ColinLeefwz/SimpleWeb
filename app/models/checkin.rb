@@ -174,6 +174,7 @@ LUA
     x = self.sex
     x = 1 if x!=2
     return if $redis.smembers("UnBroadcast").include?(self.sid.to_s)
+    return if $redis.get("FCITY#{self.uid}")
     $redis.zadd("HOT#{x}U#{self.city}",self.cati, self.uid)
   end
   
