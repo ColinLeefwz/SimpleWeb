@@ -1,5 +1,5 @@
 - @followed_experts.each do |e|
-  .expert-action-box.shadow
+  .expert-action-box.shadow.white-background
     .expert-info
       .expert-avatar
         =image_tag(e.avatar.url)
@@ -7,9 +7,10 @@
         .expert-name
           = e.name
         .expert-title
-          #{e.profile.title}, #{e.profile.company}
+          #{empty_expert_info_filter(e.profile.title, e.profile.company)}
     .expert-actions
-      .fa.fa-star.follow-star
+      .follow-star
+        = render "shared/favorite_expert_star", expert: e 
       .clear-fix
       .expert-action-info
         .block-title

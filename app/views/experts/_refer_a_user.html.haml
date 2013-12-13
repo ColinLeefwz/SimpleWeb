@@ -1,31 +1,32 @@
-= simple_form_for @email_message, url: invitation_path(User) do |f|
-  %h3 Refer a new Expert
-  = f.input :from_name, as: 'hidden'
-  = f.input :from_address, as: 'hidden'
-  = f.input :invited_type, as: 'hidden'
-  = f.input :subject, label: "Subject"
-  = f.input :to, label: "To"
-  .alert.validation-message.hide
-  = f.input :message, label: "Message", input_html: { class: 'ckeditor' }
-  = f.input :copy_me, label: "Copy me on the message"
-  = f.submit "Send", class: "btn"
+.white-background.shadow
+  = simple_form_for @email_message, url: invitation_path(User) do |f| 
+    %h3 Refer a Friend
+    = f.input :from_name, as: 'hidden'
+    = f.input :from_address, as: 'hidden'
+    = f.input :invited_type, as: 'hidden'
+    = f.input :subject, label: "Subject"
+    = f.input :to, label: "To"
+    .alert.validation-message.hide
+    = f.input :message, label: "Message", input_html: { class: 'ckeditor' }
+    = f.input :copy_me, label: "Copy me on the message"
+    = f.submit "Send", class: "btn"
 
-:coffee
-  send = $("input[value='Send']")
-  send.attr('disabled', 'disabled')
+  :coffee
+    send = $("input[value='Send']")
+    send.attr('disabled', 'disabled')
 
-  to = $("input#email_message_to")
-  enable_send = false
-  to.on 'blur', ->
-    to_value = to.val()
-    get_path = "/users/validate_invite_email"
-    $.get(get_path, {to_address: to_value}, (data)=>
-      enable_send = data.status
-      if enable_send
-        send.removeAttr("disabled")
-        $(".validation-message").hide()
-      else
-        send.attr('disabled', 'disabled')
-        $(".validation-message").show()
-        $(".validation-message").text data.error_message
-    )
+    to = $("input#email_message_to")
+    enable_send = false
+    to.on 'blur', ->
+      to_value = to.val()
+      get_path = "/users/validate_invite_email"
+      $.get(get_path, {to_address: to_value}, (data)=>
+        enable_send = data.status
+        if enable_send
+          send.removeAttr("disabled")
+          $(".validation-message").hide()
+        else
+          send.attr('disabled', 'disabled')
+          $(".validation-message").show()
+          $(".validation-message").text data.error_message
+      )

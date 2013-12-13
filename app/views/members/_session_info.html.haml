@@ -1,16 +1,18 @@
 .favorite-session-info
-  .favorite-session-title
-    = session.title
-  .favorite-session-expert-name
-    by #{session.expert.name}
-  .favorite-session-categories
-    = session.categories.join(", ")
-  .clear-fix
+  .favorite-session-main
+    .favorite-session-title
+      = session.title
+    .favorite-session-expert-name
+      by #{session.expert.name}
+    .favorite-session-categories
+      = session.categories.join(", ")
+    .clear-fix
 
-  .favorite-session-description
-    = truncate_html(session.description, length: 300, omission: '...')
+    .favorite-session-description
+      = truncate_html(session.description, length: 300, omission: '...')
   .see-more
     = link_to "see more", remote: true
 
 .favorite-social-share
-  = render "shared/social_share", session_title: session.title, session_url: session_url(session) 
+  = render 'shared/favorite_session_star', session: session
+  = render 'shared/social_share', session_title: session.title, session_url: session_url(session)
