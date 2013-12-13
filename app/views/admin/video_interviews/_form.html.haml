@@ -1,12 +1,18 @@
 %span HD
 = s3_uploader_form id: "s3_video_interview_hd", callback_param: 'interview_hd', key: "video_interviews/hd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "video_interviews/hd", acl: 'public-read' do
   = file_field_tag :file, multiple: false
+  = link_to "upload", "javascript:void(0)", id: "hd_upload_submit"
+  .upload.js-progress-bars
+    .progress
+      .bars
 
 %span SD
 = s3_uploader_form id: "s3_video_interview_sd", callback_param: 'interview_sd', key: "video_interviews/sd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "video_interviews/sd", acl: 'public-read' do
   = file_field_tag :file, multiple: false
-
-.js-progress-bars
+  = link_to "upload", "javascript:void(0)", id: "sd_upload_submit"
+  .upload.js-progress-bars
+    .progress
+      .bars
 
 = simple_form_for [:admin, @video_interview] do |f|
   = f.input :title
