@@ -19,7 +19,6 @@ class AroundmeController < ApplicationController
     gps = nil
     wifi = nil
     if params[:baidu].to_i==1
-      #############################
       lo1 = Shop.lob_to_lo(lo) if params[:accuracy].to_i>=1
       if params[:gps] && params[:gps].size>0
         begin
@@ -64,7 +63,13 @@ class AroundmeController < ApplicationController
       end
     end
     arr.uniq!
-    city = get_city(arr[0], lo)
+    city = $redis.get("FCITY#{session[:user_id]}")
+    if city
+      fcitys = Shop.where({city:city, t:{"$exists"=>true}}).limit(3).to_a
+      arr = fcitys + arr
+    else
+      city = get_city(arr[0], lo)
+    end
     response.headers['Cpcity'] = URI::encode(City.cascade_name(city)) if city
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
@@ -124,7 +129,7 @@ class AroundmeController < ApplicationController
   
   def users
     ret = []
-    users = User.where({pcount: {"$gt" => 2}}).limit(4)
+    users = User.where({pcount: {"$gt" => 2}}).sort({_id:-1}).limit(4)
     users.each {|u| ret << u.safe_output(session[:user_id]) }
     if ret
       render :json => ret.to_json
@@ -140,7 +145,8 @@ class AroundmeController < ApplicationController
     pcount = 20 if pcount==0
     skip = (page-1)*pcount
     lo = [params[:lat].to_f , params[:lng].to_f]
-    city = Shop.get_city(lo)
+    city = $redis.get("FCITY#{session[:user_id]}")
+    city = Shop.get_city(lo) if city.nil?
     if params[:gender].to_i==0
       sex = session_user.gender
       sex = (sex==2? 1:2)

@@ -25,8 +25,7 @@ class Gchat
     arr = Gchat.where({sid:sid, del: nil }).sort({_id:-1}).skip(skip).limit(pcount).to_a
     if skip==0 && arr.size>0
       cp = Shop.find_by_id(sid).card_photo
-      next if cp.nil?
-      arr.delete_if{|x| x.txt[0,5] == "[img:" && x.txt[5,24] == cp.id.to_s}
+      arr.delete_if{|x| x.txt[0,5] == "[img:" && x.txt[5,24] == cp.id.to_s} if cp
     end
     arr
   end
