@@ -51,7 +51,7 @@ class AnswerController < ApplicationController
         render :text => "1"
         return
       end
-      if txt[0,6]=="@@@我要回来"
+      if txt=="@@@我要回来"
         $redis.del("FCITY#{params[:from]}")
         Xmpp.send_chat(params[:to],params[:from],"回来了，点击重新定位", $uuid.generate, " NOLOG='1' NOPUSH='1' ")
         render :text => "1"

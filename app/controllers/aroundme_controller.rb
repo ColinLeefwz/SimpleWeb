@@ -11,6 +11,11 @@ class AroundmeController < ApplicationController
       render :json =>  ret.to_json
       return
     end
+    fake_city = $redis.get("FCITY#{session[:user_id]}")
+    if fake_city
+      roam(fake_city)
+      return
+    end
     lo = [params[:lat].to_f,params[:lng].to_f]
     if lo[0]<0.00001 && lo[1]<0.00001 && params[:accuracy].to_i<1
       render :json =>  {error:"无法获得位置信息"}.to_json
@@ -63,13 +68,7 @@ class AroundmeController < ApplicationController
       end
     end
     arr.uniq!
-    city = $redis.get("FCITY#{session[:user_id]}")
-    if city
-      fcitys = Shop.where({city:city, t:{"$exists"=>true}}).limit(3).to_a
-      arr = fcitys + arr
-    else
-      city = get_city(arr[0], lo)
-    end
+    city = get_city(arr[0], lo)
     response.headers['Cpcity'] = URI::encode(City.cascade_name(city)) if city
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
@@ -244,6 +243,30 @@ class AroundmeController < ApplicationController
     city = shop["city"]
     city = Shop.get_city(lo)  if city.nil? || city==""
     city
+  end
+  
+  def roam(city)
+    uids = $redis.zrevrange("HOT1U#{city}",0,20) + $redis.zrevrange("HOT2U#{city}",0,20)
+    arr = uids.map do |uid|
+      user = User.find_by_id(uid)
+      loc = user.last_loc
+      Shop.find_by_id(loc[-1])
+    end
+    response.headers['Cpcity'] = URI::encode(City.cascade_name(city))
+    ret = arr.map do |x| 
+      hash = x.safe_output_with_users
+      ghash = x.group_hash(session[:user_id])
+      hash.merge!(ghash)
+      hash
+    end
+    coupons = $redis.smembers("ACS#{city}") 
+    if coupons
+      ret.each_with_index do |xx,i|
+        ret[i]["coupon"] = 1 if coupons.index(xx["id"].to_i.to_s)
+        ret[i]["city"] = City.city_name(city) if i==0
+      end
+    end
+    render :json =>  ret.to_json
   end
 
 end
