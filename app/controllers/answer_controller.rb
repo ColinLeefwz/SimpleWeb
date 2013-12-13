@@ -24,7 +24,7 @@ class AnswerController < ApplicationController
     end
     shop = Shop.find_by_id(sid)
     user = User.find_by_id(uid)
-    return if shop.preset?(user) && pre_answer(msg, user)
+    return if shop.preset?(user) && pre_answer(msg, user, shop)
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"
     if text_faq

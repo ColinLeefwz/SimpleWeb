@@ -580,13 +580,13 @@ class Shop
 
   # 是否对用户启用预置问答
   def preset?(user)
-    user && (user.cat+3.days) > Time.now && self.no_faq?
+    return true if user.id.to_s == "502e6303421aa918ba000007"
+    # user && (user.cat+3.days) > Time.now && self.no_faq?
   end
 
   #问答
   def faqs_text(user)
-    shop.id == 21835801 ? pre_faqs(user) : answer_text_default
-    # preset?(user) ? pre_faqs(user) : answer_text_default
+    preset?(user) ? pre_faqs(user) : answer_text_default
   end
 
   #预置问答

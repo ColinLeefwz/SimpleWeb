@@ -125,20 +125,5 @@ class CheckinNotice
   rescue
     nil
   end
-  
- #首次签到预置问道
-  def self.pre_answer(user, shop)
-    if user.first_checkin && shop.no_faq?
-      pre = "试试回复：\n 01=>脸脸茶坊介绍"
-
-      <<FAQ
-      试试回复：
-      
-      01=>脸脸茶坊介绍
-      01=>脸脸茶坊介绍
-      FAQ
-    end
-
-  end
 
 end
