@@ -1,13 +1,11 @@
 s3_upload = ->
 	$("#s3_video_interview_hd").S3Uploader
-		# path: 'video_interviews/hd/'
 		progress_bar_target: $('.js-progress-bars')
 		allow_multiple_files: false
 		click_submit_target: $('#hd_upload_submit')
 		remove_completed_progress_bar: false
 	
 	$("#s3_video_interview_sd").S3Uploader
-		# path: 'video_interviews/sd/'
 		progress_bar_target: $('.js-progress-bars')
 		allow_multiple_files: false
 		click_submit_target: $('#sd_upload_submit')
