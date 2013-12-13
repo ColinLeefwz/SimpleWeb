@@ -23,9 +23,6 @@ $(document).on "s3_upload_complete", (e, content) ->
   resource_field.find("[id$=attached_file_file_path]").first().val(content.filepath)
   $(e.target).find(".status").first().text("success!")
 
-  # enable the submit button on resources/new page
-  $("#resource-submit").attr("disabled", false)
-
 $(document).on "s3_upload_failed", (e, content) ->
   alert("#{content.filename} failed to upload: #{content.error_thrown}")
 
