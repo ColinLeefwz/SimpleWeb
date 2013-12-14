@@ -52,6 +52,12 @@ class AController < ApplicationController
   end
   
   def down
+    c = Channel.new
+    c.ip = real_ip
+    c.v = 0
+    c.time = Time.now
+    c.agent = request.env["HTTP_USER_AGENT"]
+    c.save
     if c.agent.index("Android")
       if c.agent.index("MicroMessenger")
         render :file => "~/lianlian/public/mini.html", :use_full_path => true
