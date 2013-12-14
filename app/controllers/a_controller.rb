@@ -12,22 +12,22 @@ class AController < ApplicationController
     c.time = Time.now
     c.agent = request.env["HTTP_USER_AGENT"]
     c.save
+    Rails.logger.error c.agent
+    
     
     agent = c.agent.downcase
 
-    if params[:v] == "1-apk"
-      ver = $redis.get("android_version")
-      return redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
-    end
-
-    #Rails.logger.error c.agent
     #Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; TencentTraveler)
     if params[:sukey] && c.agent.index("TencentTraveler")
       render :text => "请点击右上地址栏中的 '查看原网页 >' "
       return
     end
     #Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206 MicroMessenger/5.0.3
+    #Mozilla/5.0 (Linux; U; Android 2.3.4; zh-cn; WT19i Build/4.0.2.A.0.62) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1 MicroMessenger/4.5.255
+
     if agent.index("android")
+      render :file => "~/lianlian/public/mini.html", :use_full_path => true
+      return
       ver = $redis.get("android_version")
       return redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
     end
