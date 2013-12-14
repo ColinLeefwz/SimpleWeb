@@ -12,10 +12,10 @@ feature "Index", js: true do
 		window.resize_to 1280, 800
 	end
 
-  scenario "has links of 'about us', 'Faq' and 'Terms'" do
+  scenario "has links of 'about us', 'Faq' and 'For Experts'" do
   	page.should have_link 'About Us'
   	page.should have_link 'FAQ'
-  	page.should have_link 'Terms'
+  	page.should have_link 'For Experts'
   end
 
   scenario "goes to 'About us' page when 'About us' link is clicked" do
@@ -28,9 +28,9 @@ feature "Index", js: true do
     page.should have_content 'FAQ'
   end
 
-  scenario "goes to 'Terms' page when 'Terms' link is clicked" do
-    page.find_link('Terms').click
-    page.should have_content 'Terms'
+  scenario "goes to 'For Experts' page when 'For Experts' link is clicked" do
+    page.find_link('For Experts').click
+    page.should have_content 'For Experts'
   end
 
 end 
