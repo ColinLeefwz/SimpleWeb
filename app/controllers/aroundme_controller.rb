@@ -69,7 +69,7 @@ class AroundmeController < ApplicationController
     end
     arr.uniq!
     city = get_city(arr[0], lo)
-    response.headers['Cpcity'] = URI::encode(City.cascade_name(city)) if city
+    #response.headers['Cpcity'] = URI::encode(City.cascade_name(city)) if city
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
       ghash = x.group_hash(session[:user_id])
@@ -263,7 +263,7 @@ class AroundmeController < ApplicationController
     arr.delete_if{|x| x==nil}
     arr.uniq!
     Rails.logger.error(arr)
-    response.headers['Cpcity'] = URI::encode(City.cascade_name(city))
+    #response.headers['Cpcity'] = URI::encode(City.cascade_name(city))
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
       ghash = x.group_hash(session[:user_id])
