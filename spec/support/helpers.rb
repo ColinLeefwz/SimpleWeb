@@ -9,6 +9,9 @@ def helper_objects
   let(:sameer) { create :expert, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim', avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
   let(:alex) {create :expert, email: 'alex@test.com', password: '11111111', first_name: 'alex', last_name: 'lalo', avatar: fixture_file_upload(('AD pic.jpg'), 'image/png') }
 
+  #admins
+  let(:admin) { create :admin_user, email: 'admin@example.com', password: 'password', first_name: 'admin', last_name: 'example'}
+
   #expert_profile
   let(:sameer_profile) {create :profile, title: "VP of stuff", company: "OC", location: "Shanghai", education: "UCLA", career: "Originate", user: sameer}
   let(:alex_profile) {create :profile, title: "Founder of Prodygia", company: "Prodygia", location: "Beijing", education: "UCLA", career: "Prodygia", user: alex}
@@ -21,6 +24,11 @@ def helper_objects
   let(:page_about_us) { create :static_page, title: 'About us', content: 'about us page' }
   let(:page_faq) { create :static_page, title: 'Faq', content: 'faq page' }
   let(:page_terms) { create :static_page, title: 'Terms', content: 'terms page' }
+
+
+  #categories
+  let(:business) { create :category, name: "business" }
+  let(:tech) { create :category, name: "tech" }
 
   #sessions
   let(:session_intro) { create :live_session, title: 'Intro Session to Lean Start-Up', expert: sameer,
