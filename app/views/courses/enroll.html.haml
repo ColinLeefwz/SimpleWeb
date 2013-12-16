@@ -1,0 +1,30 @@
+.card.review-card
+  .card-header
+    Review your order
+  .card-body
+    .cover
+      = image_tag item.cover.url
+    .detail
+      .title
+        = item.title
+      .producers
+        = item.producers
+      .duration-category
+        %span.duration
+          = item.duration
+        %span.category
+          = item.categories.join(", ")
+      .time
+        = image_tag "time.png", class: "icon"
+        = "Available immediately"
+      .price
+        = image_tag "price.png", class: "icon"
+        = price_tag(item.price)
+
+.card.account-card
+  .card-header
+    Create an account
+    .login
+      = link_to "Login", new_user_session_path, class: "login-link underlined"
+      = "to an existing account"
+  .card-body

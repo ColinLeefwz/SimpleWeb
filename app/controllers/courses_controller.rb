@@ -23,6 +23,7 @@ class CoursesController < ApplicationController
   end
 
   def enroll
+    render "courses/enroll", locals: {item: @course}
   end
 
   private
