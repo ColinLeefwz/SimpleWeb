@@ -8,28 +8,29 @@
     = render 'shared/user_session'
   .fixed
 
-%nav
-  %ul.visible-desktop
+- if @show_category == true
+  %nav
+    %ul.visible-desktop
 
-    %li.category
-      %a.filters{href: "#all", data: {filter: '*'}}all
-
-    - @categories.each do |category|
       %li.category
-        %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
+        %a.filters{href: "#all", data: {filter: '*'}}all
+
+      - @categories.each do |category|
+        %li.category
+          %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
+            = category.name
+      %li#format
+        %a format
+        %ul.subcategory
+          %li.filters{href: "#video", data: {filter: '.videosession'}} video
+          %li.filters{href: "#live", data: {filter: '.livesession'}} live
+          %li.filters{href: "#article", data: {filter: '.articlesession'}} article
+          %li.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
+
+    %select#collapsed_navbar.span12.hidden-desktop
+      %option.filters{data: {filter: '*'}} all
+      - @categories.each do |category|
+        %option.filters{data: {filter: ".#{category.name}"}}
           = category.name
-
-
-    %li#format
-      %a format
-      %ul.subcategory
-        %li.filters{href: "#video", data: {filter: '.videosession'}} video
-        %li.filters{href: "#live", data: {filter: '.livesession'}} live
-        %li.filters{href: "#article", data: {filter: '.articlesession'}} article
-        %li.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
-
-  %select#collapsed_navbar.span12.hidden-desktop
-    %option.filters{data: {filter: '*'}} all
-    - @categories.each do |category|
-      %option.filters{data: {filter: ".#{category.name}"}}
-        = category.name
+- else
+  %nav
