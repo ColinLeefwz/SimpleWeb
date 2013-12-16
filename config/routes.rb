@@ -4,7 +4,7 @@ Prodygia::Application.routes.draw do
   get 'courses/:id/preview' => 'courses#preview', as: :course_preview
 
   resources :sections
-
+  resources :video_interviews
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 

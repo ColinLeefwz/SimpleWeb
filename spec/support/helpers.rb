@@ -41,6 +41,10 @@ def helper_objects
                       status: 'Scheduled' }
 
   let(:session_draft_map) { create :live_session, title: 'live_session_draft', expert: alex, description: 'dddd', draft: true }
+
+	# video_interview
+	let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer" }
+	
 end
 
 
