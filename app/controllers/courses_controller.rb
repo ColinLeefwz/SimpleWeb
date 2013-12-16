@@ -16,10 +16,13 @@ class CoursesController < ApplicationController
 
   def create
     @course.save
-    redirect_to course_preview_path(@course)
+    redirect_to preview_course_path(@course)
   end
 
   def preview
+  end
+
+  def enroll
   end
 
   private
