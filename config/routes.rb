@@ -53,6 +53,7 @@ Prodygia::Application.routes.draw do
       get :experts
       get :contents
       get :video_on_demand
+      get :settings
     end
   end
 

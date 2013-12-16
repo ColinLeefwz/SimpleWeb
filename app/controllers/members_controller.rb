@@ -61,6 +61,14 @@ class MembersController < ApplicationController
     end
   end
 
+  def settings
+    @user = current_user
+    @from = "settings"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
+
   private
 
   def set_member
