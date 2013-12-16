@@ -275,7 +275,7 @@ class AnswerController < ApplicationController
     #预置问答的响应
   def pre_answer(msg, user, shop)
      text = {"0" => shop.pre_faqs(user), 
-      "01" => "Hi~每到一个地方，你都可以通过脸脸认识和你同在这个场所的小伙伴们~ 也可以拍张这儿的照片，留给以后来到这里的人噢~ \n 戳这里马上拍张照"
+      "01" => "Hi~每到一个地方，你都可以通过脸脸认识和你同在这个场所的小伙伴们~ 也可以拍张这儿的照片，留给以后来到这里的人噢~ \n 戳这里马上拍张照",
       "02" => "如果这个场所人还不多，你可以戳这里查看同城脸脸好友噢~" }[msg]
      if text.nil? && msg=='03'
       us = shop.checkin_users
