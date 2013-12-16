@@ -311,8 +311,12 @@ class Oauth2Controller < ApplicationController
     else
       u = User.find_by_wb(wb_uid)
       if u && u.id != session[:user_id]
-        render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
-        return
+        if u.wb_hidden.to_i==2
+          $redis.del("W:#{u.id}")
+        else
+          render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
+          return
+        end
       end
       do_bind_sina(user,wb_uid,token)
       do_login_wb_done(session_user_no_cache,token,expires_in,data)
@@ -396,8 +400,12 @@ class Oauth2Controller < ApplicationController
     else
       u = User.find_by_qq(openid)
       if u && u.id != session[:user_id]
-        render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
-        return
+        if u.qq_hidden
+          $redis.del("Q:#{u.id}")
+        else
+          render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
+          return
+        end
       end
       do_bind_qq(user,openid,token)
       do_login_qq_done(session_user_no_cache,token,expires_in,data)
