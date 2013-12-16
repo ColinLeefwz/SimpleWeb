@@ -15,14 +15,17 @@ class Ability
       can :manage, Expert do |expert|
         expert == user
       end 
-
       cannot :delete, Expert
       cannot :create, Expert
+
+      can :manage, Course  #note: template solution
 
     elsif user.is_a? Member
       can :read, Session
 
       can :read, Expert
+
+      can :manage, Course  #note: template solution
 
       can :manage, Member do |member|
         member == user
@@ -30,6 +33,9 @@ class Ability
 
       cannot :delete, Member
       cannot :refer_new_expert, Expert
+
+    else
+      can :read, Course
     end
   end
 end
