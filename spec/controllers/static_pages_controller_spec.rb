@@ -9,6 +9,7 @@ describe StaticPagesController do
     end
 
     it "shows the corresponding static page" do
+			pending("we use static route for About_us page")
       get :static, page: "about_us"
       expect(assigns[:static_page]).to eq page_about_us
     end
