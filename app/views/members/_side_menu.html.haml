@@ -9,7 +9,7 @@
   .toolkit
     .item
       = render 'item_icon', item_name: 'activity_stream'
-      .item-text #{link_to 'My activity stream'}
+      .item-text #{link_to 'My activity stream', pending_page_expert_path, remote: true}
 .block-title
   %span
     FAVORITES
@@ -29,10 +29,10 @@
 .toolkit
   .item
     = render 'item_icon', item_name: 'video_library'
-    .item-text #{link_to 'Video on Demand Library', remote: true}
+    .item-text #{link_to 'Video on Demand Library', pending_page_expert_path, remote: true}
   .item
     = render 'item_icon', item_name: 'account'
-    .item-text #{link_to 'Settings', remote: true}
+    .item-text #{link_to 'Settings', pending_page_expert_path, remote: true}
   .item
     = render 'item_icon', item_name: 'refer_friend'
     .item-text #{link_to 'Refer a Friend', refer_a_friend_member_path(current_user), remote: true}
