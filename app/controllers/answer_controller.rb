@@ -24,6 +24,7 @@ class AnswerController < ApplicationController
     end
     shop = Shop.find_by_id(sid)
     user = User.find_by_id(uid)
+    return render :text => "1" if tryst(msg, user, shop)
     return render :text => "1" if shop.preset?(user) && pre_answer(msg, user, shop)
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"
@@ -258,49 +259,34 @@ class AnswerController < ApplicationController
     end
   end
 
+  # 速配
+  def tryst(msg, user, shop)
+     gender = {"@@@脸脸赐我女神" => 2, "@@@脸脸赐我男神" => 1 }[msg]
+     return false if gender.nil?
+     ta = [nil,"他", "她"][gender]
+     us = shop.checkin_users
+     sbu = us.reject{|r| r.gender != gender }.sample(1).first
+     return false if sbu.nil?
+     link = "dface://scheme/user/info?id=#{sbu.id}"
+     text = "#{ta}，叫#{sbu.name}\n#{ta}在这个城市驻足或行走，两天前#{ta}也同在#{shop.name}。你和#{ta}擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，#{ta}来了..."
+     Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
+  end
+
     #预置问答的响应
   def pre_answer(msg, user, shop)
-    ta = user.gender ==2 ? '他' : "她"
-    xb = user.gender ==2 ? '男' : "女"
-    us = shop.checkin_users
-    attrs = " NOLOG='1' "
-    ext = nil
-    case msg
-    when '0'
-      text = shop.pre_faqs(user)
-      return Xmpp.send_gchat2($gfuid,shop.id,user.id, text, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
-    when '01'
-      attrs += " url='dface://scheme/getphoto/camera' " 
-      ext = "<x xmlns='dface.url'>dface://scheme/getphoto/camera</x>"
-      text = "Hi~每到一个地方，你都可以通过脸脸认识和你同在这个场所的小伙伴们~ 也可以拍张这儿的照片，留给以后来到这里的人噢~ \n 戳这里马上拍张照"
-      return Xmpp.send_gchat2($gfuid,shop.id,user.id, text, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}",attrs, ext)
-    when '02'
-      attrs += " url='dface://scheme/near/user' " 
-      ext = "<x xmlns='dface.url'>dface://scheme/near/user</x>"
-      text = '如果这个场所人还不多，你可以戳这里查看同城脸脸好友噢~'
-      return Xmpp.send_gchat2($gfuid,shop.id,user.id, text, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}", attrs, ext)
-    when '03'
+     text = {"0" => shop.pre_faqs(user), 
+      "01" => "Hi~每到一个地方，你都可以通过脸脸认识和你同在这个场所的小伙伴们~ 也可以拍张这儿的照片，留给以后来到这里的人噢~ \n 戳这里马上拍张照"
+      "02" => "如果这个场所人还不多，你可以戳这里查看同城脸脸好友噢~" }[msg]
+     if text.nil? && msg=='03'
+      us = shop.checkin_users
       return false if us.select{|m| m.gender != user.gender}.blank?
-      text = "世上会不会有另一个自己,在相同的时间相同的地方做着一样的事情？不试怎么知道？\n试试回复口诀：\n“@@@脸脸赐我女神”\n“@@@脸脸赐我男神”"
-      return Xmpp.send_gchat2($gfuid,shop.id,user.id, text, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
-    when "@@@脸脸赐我男神"
-      sbus = us.select{|m| m.gender == 1 || m.id != user.id}
-      sbu = sbus.sample(1).first
-      return false if sbu.nil?
-      text="他，叫#{sbu.name}\n他在这个城市驻足或行走，两天前他也同在#{shop.name}。你和他擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，他来了..."    
-      attrs += " url='dface://scheme/user/info?id=#{sbu.id}' " 
-      ext = "<x xmlns='dface.url'>dface://scheme/user/info?id=#{sbu.id}</x>"
-      return Xmpp.send_gchat2($gfuid,shop.id,user.id, text, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}", attrs, ext)
-    when "@@@脸脸赐我女神"
-     sbus = us.select{|m| m.gender == 2 || m.id != user.id}
-     sbu = sbus.sample(1).first
-     return false if sbu.nil?
-     text="她，叫#{sbu.name}\n她在这个城市驻足或行走，两天前她也同在#{shop.name}。你和她擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，她来了..." 
-     attrs += " url='dface://scheme/user/info?id=#{sbu.id}' " 
-     ext = "<x xmlns='dface.url'>dface://scheme/user/info?id=#{sbu.id}</x>"
-     return Xmpp.send_gchat2($gfuid,shop.id,user.id, text, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}", attrs, ext)
-    end
-    return false
+      text = "“@@@脸脸赐我女神”" if user.gender.to_i == 1 
+      text = "“@@@脸脸赐我男神”" if user.gender.to_i == 2
+      return if text.nil?
+      text = "世上会不会有另一个自己,在相同的时间相同的地方做着一样的事情？不试怎么知道？\n试试回复口诀：\n #{text}"
+     end
+     link = {"01" => "dface://scheme/getphoto/camera", "02" => 'dface://scheme/near/user'}[msg]
+     return Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
   end
 
 
