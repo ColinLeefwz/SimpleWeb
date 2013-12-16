@@ -20,6 +20,15 @@ module ApplicationHelper
   end
 
 
+  def price_tag(price)
+    if price == 0
+      return "Free"
+    else
+      return number_to_currency(price, :unit => "$") + "USD"
+    end
+  end
+
+
   def link_to_remove_fields(name, f)
     f.hidden_field(:_destroy) + link_to(name, "#", class: "btn remove-fields inline")
   end

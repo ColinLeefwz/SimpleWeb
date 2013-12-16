@@ -35,11 +35,7 @@
         #price-icon.icon
           = image_tag "price.png"
         #price.item
-          - if @session.price == 0
-            = "Free"
-          - else
-            = number_to_currency("#{@session.price}", :unit => "$")
-            USD
+          = price_tag(@session.price)
           - if user_signed_in?
             %span.paypal-button
               = session_pay_link
