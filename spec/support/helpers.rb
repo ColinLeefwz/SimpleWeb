@@ -39,6 +39,9 @@ def helper_objects
   let(:session_map) { create :live_session, title: 'China RoadMap', expert: alex,
                       description: 'Show you China road map',
                       status: 'Scheduled' }
+  let(:announcement) { create :announcement, title: 'Just an Announcement', expert: alex,
+                      description: 'Show you China road map',
+                      status: 'Scheduled' }
 
   let(:session_draft_map) { create :live_session, title: 'live_session_draft', expert: alex, description: 'dddd', draft: true }
 
