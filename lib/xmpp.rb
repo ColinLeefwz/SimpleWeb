@@ -64,6 +64,13 @@ class Xmpp
     return "消息：#{msg}" if ENV["RAILS_ENV"] != "production"
     post("rest", Xmpp.gchat2(from,room,to,msg,id,attrs,ext))   
   end
+
+  def self.send_link_gchat(from,room,to,msg,link=nil, id=nil)
+    return Xmpp.send_gchat2(from,room,to,msg,id) if link.nil?
+    attrs = " NOLOG='1'  url='#{link}' " 
+    ext = "<x xmlns='dface.url'>#{link}</x>"
+    Xmpp.send_gchat2(from,room,to,msg,id ,attrs, ext)
+  end
   
   def self.error_notify(str, uid=$yuanid)
     Resque.enqueue(XmppMsg, $gfuid,uid,str)  if Rails.env=="production"
