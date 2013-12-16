@@ -14,7 +14,7 @@
         .title
           = @course.title
         .expert.inline
-          = "with " + @course.experts.map(&:name).join(" and ")
+          = @course.producers
 
           
         -# video-length & category

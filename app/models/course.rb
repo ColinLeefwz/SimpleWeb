@@ -16,4 +16,9 @@ class Course < ActiveRecord::Base
     styles: {
 
     }
+
+
+  def producers
+    "by " + self.experts.map(&:name).join(" and ")
+  end
 end
