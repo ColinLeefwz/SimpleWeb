@@ -3,7 +3,7 @@
   .text-page-main-content
     -unless @video_interview.sd_url.eql?"/videos/original/missing.png"
       .video-cover
-        .video-img{data: {source: @video_interview.sd_url}}
+        .video-img{data: {"source-sd" => @video_interview.sd_url, "source_hd" => @video_interview.hd_url}}
           = image_tag @video_interview.cover.url, class: 'video-play'
           = image_tag "video_play_icon.png", class: 'play-video-icon'
     %p= @video_interview.description.html_safe
