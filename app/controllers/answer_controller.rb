@@ -268,10 +268,7 @@ class AnswerController < ApplicationController
      sbu = us.reject{|r| r.gender != gender }.sample(1).first
      return false if sbu.nil?
      link = "dface://scheme/user/info?id=#{sbu.id}"
-     text = <<TEXT
-       #{ta}，叫#{sbu.name}
-       #{ta}在这个城市驻足或行走，两天前#{ta}也同在#{shop.name}。你和#{ta}擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，#{ta}来了...
-     TEXT      
+     text = "#{ta}，叫#{sbu.name}\n#{ta}在这个城市驻足或行走，两天前#{ta}也同在#{shop.name}。你和#{ta}擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，#{ta}来了..."
      Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
   end
 
@@ -286,11 +283,7 @@ class AnswerController < ApplicationController
       text = "“@@@脸脸赐我女神”" if user.gender.to_i == 1 
       text = "“@@@脸脸赐我男神”" if user.gender.to_i == 2
       return if text.nil?
-      text = <<TEXT
-        世上会不会有另一个自己,在相同的时间相同的地方做着一样的事情？不试怎么知道？
-        试试回复口诀：
-        #{text}
-      TEXT
+      text = "世上会不会有另一个自己,在相同的时间相同的地方做着一样的事情？不试怎么知道？\n试试回复口诀：\n #{text}"
      end
      link = {"01" => "dface://scheme/getphoto/camera", "02" => 'dface://scheme/near/user'}[msg]
      return Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
