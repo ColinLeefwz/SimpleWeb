@@ -47,15 +47,15 @@ class UsersController < ApplicationController
 
   def subscribe_session
     respond_to do |format|
-     format.js{
-       current_session = Session.where(id: params[:session_id]).first
-       if current_user.has_subscribed?(current_session)
-         current_user.unsubscribe(current_session)
-       else
-         current_user.subscribe(current_session)
-       end
+      format.js{
+        current_session = Session.where(id: params[:session_id]).first
+        if current_user.has_subscribed?(current_session)
+          current_user.unsubscribe(current_session)
+        else
+          current_user.subscribe(current_session)
+        end
 
-       render nothing: true
+        render nothing: true
      } 
     end
   end
