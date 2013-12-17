@@ -3,7 +3,6 @@ get_cookie = (name) ->
   if parts.length == 2
     return parts.pop().split(";").shift()
 
-
 detect_login = ->
   signed_in = get_cookie("signed_in")
   if signed_in == "1"
@@ -13,15 +12,17 @@ detect_login = ->
     return false
 
 favorite_event = ->
-  $(".text-page-favorite").on 'click', ->
+  $(".favorite").on 'click', ->
     if detect_login()
       $("#mark-link").click()
     
   $("#mark-link").on "ajax:success", (e, data, status, xhr) ->
-    if $(".text-page-favorite > i").hasClass("fa-star-o")
-      $(".text-page-favorite > i").removeClass("fa-star-o").addClass("fa-star")
+    if $(".solid-star").hasClass("hidden")
+      $(".solid-star").removeClass("hidden")
+      $(".hollow-star").addClass("hidden")
     else
-      $(".text-page-favorite > i").removeClass("fa-star").addClass("fa-star-o")
+      $(".solid-star").addClass("hidden")
+      $(".hollow-star").removeClass("hidden")
     e.preventDefault
 
 $(document).ready ->
@@ -29,3 +30,7 @@ $(document).ready ->
 
 $(document).on 'page:load', ->
   favorite_event()
+
+$(document).on 'ajax:success', ->
+  favorite_event()
+

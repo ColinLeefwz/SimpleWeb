@@ -1,0 +1,165 @@
+.text-page-header-box{
+  background: #ffffff;
+  margin: 0 auto;
+  @media (min-width: 767px){
+    width: 65%;
+    min-width: 415px; 
+  }
+  @media (max-width: 766px){
+    width: 90%;
+  }
+
+  .text-page-left-side{
+    float: left;
+    text-align: center;
+    .text-page-portrait{
+      img{
+        width: 88px;
+        height: 88px;
+        margin: 20px 40px;
+        border-radius: 50%;
+        }
+    }
+
+    .text-page-expert-info{
+      float: left;
+      margin-bottom: 5px;
+      width: 100%;
+      .name{
+        font-size: 16px;
+      }
+      .title, .company{
+        font-size: 12px;
+        color: #777;
+        line-height: 1.2em;
+      }
+    }
+  }
+
+  .text-page-middle{
+    float: left;
+    padding: 20px 20px 20px;
+    max-width: 70%;
+    .title{
+      font-family: "Oswaldreg";
+      font-weight: 400;
+      font-size: 40px;
+      min-height: 105px;
+      color: #454545;
+      line-height: 1.2em;
+    }
+    .datetime, .category-name{
+      margin-bottom: 5px;
+      padding-bottom: 0px;
+      font-family: "Latoreg";
+      color: #777;
+      display: inline;
+      font-size: 13px;
+    }
+  }
+
+  .text-page-right-side{
+    @media (min-width: 767px){
+      float: right;
+    }
+    @media (max-width: 766px){
+      float: left;
+    }
+    .text-page-social-buttons{
+      margin: 5px;
+      .social-share, .favorite{
+        margin-bottom: 5px;
+        img{
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .text-page-favorite {
+      margin-top: 20px;
+      margin-right: 20px;
+      text-align: right;
+      font-size: 20px;
+      color: #8a2649;
+      .fa{
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.text-page-article-box{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  background: #ffffff;
+  text-align: left;
+  @media (min-width: 767px){
+    width: 65%;
+    min-width: 415px; 
+  }
+  @media (max-width: 766px){
+    width: 90%;
+  }
+
+  .text-page-main-content{
+    padding: 0px 40px 10px 50px;
+    ol,ul{
+      padding-left: 20px;
+    }
+    .text-page-image{
+      float: right;
+      width: 50%;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      img{
+        width: 100%;
+      }
+    }
+    .video-cover{
+      padding: 20px 40px;
+      position: relative;
+      cursor: pointer;
+      .play-video-icon{
+        position: absolute;
+        left: 47%;
+        top: 43%;
+        width: 10%;
+        height: 15%;
+      }
+      video{
+        width: 100%;
+      }
+    }
+    .announcement-cover{
+      float: right;
+      width: 50%;
+      padding-top: 20px;
+      position: relative;
+      cursor: pointer;
+      .play-video-icon{
+        position: absolute;
+        left: 47%;
+        top: 43%;
+        width: 10%;
+        height: 15%;
+      }
+      video{
+        width: 100%;
+      }
+    }
+    p{
+      text-indent: 0em;
+      font-size: 16px;
+      margin-top: 0px;
+      padding-top: 5px;
+      line-height: 1.4em;
+    }
+  }
+}
+
+.range{
+  height: 50px;
+}
+

@@ -1,5 +1,5 @@
 - @favorite_session.each do |session|
-  .favorite-session-box.shadow
+  .favorite-session-box.shadow.white-background
     .favorite-session-cover
       .video-img{data: {source: session.video.url}}
         = image_tag session.cover.url, class: 'video-play'

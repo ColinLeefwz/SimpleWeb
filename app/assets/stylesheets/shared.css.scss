@@ -28,6 +28,18 @@
 input[type="file"]{
   width: 92px;
 }
+
 .margin-bottom{
   margin-bottom: 50px;
+}
+
+.shadow {
+  box-shadow: 0 3px 8px #aab4be;
+}
+
+.hollow-star{
+  cursor: pointer;
+}
+.solid-star{
+  cursor: pointer;
 }

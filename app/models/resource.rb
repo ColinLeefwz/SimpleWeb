@@ -23,10 +23,9 @@ class Resource < ActiveRecord::Base
     raw_source = self.attached_file_file_path
 
     s3 = AWS::S3.new
-    bucket_name = Rails.configuration.aws[:bucket]
+    bucket_name = ENV["AWS_BUCKET"]
 
     destination = s3.buckets[bucket_name].objects[paperclip_file_path]
-    
     sub_source = CGI.unescape(raw_source)
     sub_source = sub_source.split("/")
     2.times{ sub_source.shift() }
