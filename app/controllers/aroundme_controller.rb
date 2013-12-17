@@ -67,9 +67,12 @@ class AroundmeController < ApplicationController
         arr = arr + staffs if staffs.size>0
       end
     end
-    arr.uniq!
     city = get_city(arr[0], lo)
     #response.headers['Cpcity'] = URI::encode(City.cascade_name(city)) if city
+    if city=="0571"
+      arr = arr[0,2]+[ Shop.find(21828958) ]+arr[2..-1]
+    end
+    arr.uniq!
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
       ghash = x.group_hash(session[:user_id])
