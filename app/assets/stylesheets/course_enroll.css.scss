@@ -1,11 +1,12 @@
 
 $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 
+/* preview card */
 .card{
     box-shadow: $shadow_param;
     background-color: white;
 
-    width: 60%;
+    width: 50%;
     min-width: 300px;
     margin: 0 auto;
     margin-bottom: 50px;  //todo: extract the above code out
@@ -63,6 +64,35 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         }
       }
     }
+
   } 
 
-} /* end of .card */
+} 
+
+/* account card */
+.card{
+  .card-body{
+
+    .confirm{
+      padding-left: 318px;
+      margin-top: 2em;
+      .confirm-button{
+        cursor: pointer;
+        padding: 0.4em 2em;
+
+        color: white;
+        background-color: #6A243C;
+      }
+      .confirm-button:hover{
+        color: white;
+      }
+      .hint{
+        font-family: 'Latoitalic';
+        font-size: 0.9em;
+        display: block;
+        margin: 0 auto;
+        margin-top: 0.4em;
+      }
+    }
+  }
+}
