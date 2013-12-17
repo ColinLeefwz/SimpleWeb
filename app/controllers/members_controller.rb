@@ -39,6 +39,10 @@ class MembersController < ApplicationController
 
   def experts
     @followed_experts = current_user.followed_users
+    if @followed_experts.empty?
+      @followed_experts = Expert.all(order: "RANDOM()", limit: 3)
+      @recommendation = true
+    end
     @from = "expert"
     respond_to do |format|
       format.js {render "update"}
@@ -47,6 +51,10 @@ class MembersController < ApplicationController
 
   def contents
     @favorite_content = current_user.get_subscribed_sessions("ArticleSession")
+    if @favorite_content.empty?
+      @favorite_content = ArticleSession.all(order: "RANDOM()", limit: 3)
+      @recommendation = true
+    end
     @from = "content"
     respond_to do |format|
       format.js {render "update"}
