@@ -1,11 +1,11 @@
 # encoding: utf-8
 
 class SmsSender
-  include PhoneUtil 
+  extend PhoneUtil 
   @queue = :sms
 
   def self.perform(phone,text)
-    send_sms_ihuiyi(phone, text)
+    send_sms_xuanwu(phone, text)
   end
   
   def self.send_sms_ihuiyi(phone, text)
