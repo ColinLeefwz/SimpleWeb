@@ -33,14 +33,13 @@ input[type="file"]{
   margin-bottom: 50px;
 }
 
-.latoitalic{
-  font-family: "Latoitalic";
+.shadow {
+  box-shadow: 0 3px 8px #aab4be;
 }
 
-.latobold{
-  font-family: "Latobold";
+.hollow-star{
+  cursor: pointer;
 }
-
-.prod-grey{
-  color: #575757;
+.solid-star{
+  cursor: pointer;
 }
