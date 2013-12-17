@@ -1,6 +1,26 @@
 
 module PhoneUtil
   
+  def is_dianxin(phone)
+    is_dianxin_cdma(phone) ## || is_dianxin_xlt(phone)
+  end
+  
+  def is_dianxin_cdma(phone)
+    ["133","153","180","181","189"].find{|x| x==phone[0,3]} != nil
+  end
+  
+  def is_dianxin_xlt(phone)
+    phone[0]=="0"
+  end
+  
+  def is_liantong(phone)
+    ["130","131","132","145","155","156","185","186"].find{|x| x==phone[0,3]} != nil
+  end
+  
+  def is_yidong(phone)
+    ["134","135","136","137","138","139","147","150","151","152","157","158","159","182","183"].find{|x| x==phone[0,3]} != nil
+  end
+  
   def is_phone?(str)
     str.size==11 && str.to_i>10000000000
   end

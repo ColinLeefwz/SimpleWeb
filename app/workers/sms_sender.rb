@@ -1,10 +1,11 @@
 # encoding: utf-8
 
 class SmsSender
+  extend PhoneUtil 
   @queue = :sms
 
   def self.perform(phone,text)
-    send_sms_ihuiyi(phone, text)
+    send_sms_xuanwu(phone, text)
   end
   
   def self.send_sms_ihuiyi(phone, text)
@@ -28,9 +29,10 @@ class SmsSender
   
   def self.send_sms_xuanwu(phone, text)
       return true if ENV["RAILS_ENV"] != "production"
+      text += "“回复TD退订”" if is_dianxin(phone)
       str = URI.encode(text.encode('gbk','utf-8'))
       info = RestClient.get "http://211.147.239.62:9050/cgi-bin/sendsms?username=cadmin@zjll&password=Dface.cn1234&to=#{phone}&text=#{str}&msgtype=1"
-      return if info=="0"
+      return true if info=="0"
       Xmpp.send_chat($gfuid, $yuanid, "短信错误：#{Time.now},#{info}")
       return nil
   end
