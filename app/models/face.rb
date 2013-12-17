@@ -16,13 +16,37 @@ class Face
     gen(user.id, user.head_logo.img.url)
   end
   
-  def self.gen(uid,url)
+  def self.detect(url)
     begin
 
       info = RestClient.get  "https://apicn.faceplusplus.com/v2/detection/detect?url=#{url}&api_secret=#{YOUR_API_SECRET}&api_key=#{KEY}"
+      ActiveSupport::JSON.decode(info)
+    rescue Exception => e
+      Xmpp.error_notify(e.to_s)
+    end
+  end
+  
+  def self.detect_area(url)
+    info = Face.detect(url)
+    return nil if info.nil? || info["face"].blank?
+    puts info
+    if info["face"].size>1
+      w = info["img_width"]
+      h = info["img_height"]
+      return [w/2, h/2, w/2, h/2]
+    end
+    x = info["face"][0]["position"]["center"]["x"]
+    y = info["face"][0]["position"]["center"]["y"]
+    w = info["face"][0]["position"]["width"]
+    h = info["face"][0]["position"]["height"]
+    [x,y,w,h]
+  end
+  
+  def self.gen(uid,url)
+    begin
 
+      ret = detect(url)
       #      info = RestClient.get "http://rekognition.com/func/api/?api_key=D5cT1o17dos5Qo9n&api_secret=H2V77hSyHhelJNzz&jobs=face_gender_emotion_age_glass_aggressive&urls=#{url}"
-      ret = ActiveSupport::JSON.decode(info)
       if ret && !ret["face"].blank?
         arr = ret["face"]
         rek = Face.new
