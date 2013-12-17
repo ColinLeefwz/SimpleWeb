@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $# -ne 4 ]
+if [ $# -ne 5 ]
 then
    echo "$0 url x, y, r, output_filename"
    echo "参数错误:请按[图片url，剪裁中心x, 剪裁中心y, 剪裁半径r, 输出文件名 ]顺序传参"

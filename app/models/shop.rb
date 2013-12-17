@@ -230,6 +230,7 @@ class Shop
   end
   
   def photo_filter
+    return {} if true
     if self.id==21835409 	#脸脸测试专用
       {filter_name: "新年许愿", filters: ["http://s.dface.cn/zw.png"], filter_size: [640,640]}
     elsif self.id==21835801 	#技术测试专用的分店
