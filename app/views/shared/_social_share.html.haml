@@ -1,12 +1,3 @@
--# TODO
-.social-share.favorite.solid-star.hidden 
-  = image_tag("favorite.png")
-
-.social-share.favorite.hollow-star
-  = image_tag("favorite_unselected.png")
-
-= link_to " ", subscribe_session_path(@session), class: "hidden", id: "mark-link", remote: true
-
 .social-share.facebook
   - url = "http://www.facebook.com/sharer/sharer.php?u=#{session_url}"
   = link_to image_tag("facebook.png"), url, data: { popup: true}

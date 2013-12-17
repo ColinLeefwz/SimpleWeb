@@ -30,3 +30,7 @@ $(document).ready ->
 
 $(document).on 'page:load', ->
   favorite_event()
+
+$(document).on 'ajax:success', ->
+  favorite_event()
+
