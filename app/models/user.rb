@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
 	end
 
   def unfollow(followed_user)
-    self.followed_users.delete followed_users
+    self.followed_users.delete followed_user
   end
 
 	def enroll_session(session)
