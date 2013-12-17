@@ -267,16 +267,16 @@ class AnswerController < ApplicationController
      us = shop.checkin_users
      sbu = us.reject{|r| r.gender != gender }.sample(1).first
      return false if sbu.nil?
-     Xmpp.send_chat(sbu.id, user.id, ": hi", "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
+     Xmpp.send_chat(sbu.id, user.id, ": 两天前，我也在#{shop.name}噢，快跟我打个招呼吧～", "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
      link = "dface://scheme/user/info?id=#{sbu.id}"
-     text = "#{ta}，叫#{sbu.name}\n#{ta}在这个城市驻足或行走，两天前#{ta}也同在#{shop.name}。你和#{ta}擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，#{ta}来了..."
+     text = "#{ta}，叫#{sbu.name}😊\n#{ta}在这个城市驻足或行走，两天前#{ta}也同在#{shop.name}。你和#{ta}擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，#{ta}来了..."
      Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
   end
 
     #预置问答的响应
   def pre_answer(msg, user, shop)
      text = {"0" => shop.pre_faqs(user), 
-      "01" => "Hi~每到一个地方，你都可以通过脸脸认识和你同在这个场所的小伙伴们~ 也可以拍张这儿的照片，留给以后来到这里的人噢~ \n 戳这里马上拍张照",
+      "01" => "Hi~每到一个地方，你都可以通过脸脸认识和你同在这个场所的小伙伴们~ 也可以拍张这儿的照片，留给以后来到这里的人噢~ 戳这里马上拍张照📷⚡",
       "02" => "如果这个场所人还不多，你可以戳这里查看同城脸脸好友噢~" }[msg]
      if msg=='03'
       us = shop.checkin_users
@@ -284,7 +284,7 @@ class AnswerController < ApplicationController
       text = "“@@@脸脸赐我女神”" if user.gender.to_i == 1 
       text = "“@@@脸脸赐我男神”" if user.gender.to_i == 2
       return if text.nil?
-      text = "世上会不会有另一个自己,在相同的时间相同的地方做着一样的事情？不试怎么知道？\n试试回复口诀：\n #{text}"
+      text = "世上会不会有另一个自己,在相同的时间相同的地方做着一样的事情？不试怎么知道？✨\n试试回复口诀：\n #{text}"
      end
      link = {"01" => "dface://scheme/getphoto/camera", "02" => 'dface://scheme/near/user'}[msg]
      return Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
