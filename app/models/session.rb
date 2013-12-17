@@ -1,7 +1,7 @@
 class Session < ActiveRecord::Base
   validates :title, presence: true
 
-  CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession Announcement).freeze
+  CONTENT_TYPE = %w(ArticleSession VideoSession LiveSession).freeze
 
   COMMIT_TYPE = { draft: "Save Draft", publish:  "Publish", preview: "Preview", cancel: "Cancel" }
 

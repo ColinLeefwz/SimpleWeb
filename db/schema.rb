@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131213112838) do
+ActiveRecord::Schema.define(version: 20131217100033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,35 @@ ActiveRecord::Schema.define(version: 20131213112838) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "announcements", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "sd_url"
+    t.string   "hd_url"
+    t.string   "language"
+    t.boolean  "draft"
+    t.boolean  "canceled"
+    t.string   "categories",                     default: [], array: true
+    t.integer  "expert_id"
+    t.string   "attached_video_hd_file_name"
+    t.string   "attached_video_hd_content_type"
+    t.integer  "attached_video_hd_file_size"
+    t.datetime "attached_video_hd_updated_at"
+    t.string   "attached_video_sd_file_name"
+    t.string   "attached_video_sd_content_type"
+    t.integer  "attached_video_sd_file_size"
+    t.datetime "attached_video_sd_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
+  end
+
+  add_index "announcements", ["categories"], name: "index_announcements_on_categories", using: :gin
+  add_index "announcements", ["expert_id"], name: "index_announcements_on_expert_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
