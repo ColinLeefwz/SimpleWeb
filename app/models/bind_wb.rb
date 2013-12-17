@@ -13,7 +13,7 @@ class BindWb
     return "微博uid必填" if wb_uid.blank?
     return "微博昵称必填" if name.blank?
 
-    url = "https://api.weibo.com/2/users/show.json?access_token=#{$sina_token}&uid=#{self.wb_uid}"
+    url = "https://api.weibo.com/2/users/show.json?access_token=2.00kfdvGCGFlsXC1b5e64ba39QaSfpB&uid=#{self.wb_uid}"
     begin
       response = JSON.parse(RestClient.get(url))
       return '微博uid和微博昵称不匹配'  if response["screen_name"] != self.name
