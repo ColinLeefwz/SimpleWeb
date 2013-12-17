@@ -73,7 +73,8 @@ describe User do
 			# sameer.followers << allen
 			allen.followed_users << [peter, sameer, alex]
 			allen.unfollow peter
-			expect(allen.reload.followed_users).to eq [alex, sameer]
+			expect(allen.reload.followed_users).to include alex
+			expect(allen.reload.followed_users).to include sameer
 			expect(peter.reload.followers).not_to include allen
 		end
 	end
