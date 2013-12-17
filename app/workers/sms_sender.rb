@@ -29,7 +29,7 @@ class SmsSender
   def self.send_sms_xuanwu(phone, text)
       return true if ENV["RAILS_ENV"] != "production"
       str = URI.encode(text.encode('gbk','utf-8'))
-      info = RestClient.get "http://211.147.239.62:9050/cgi-bin/sendsms?username=admin@zjll&password=123456&to=#{phone}&text=#{str}&msgtype=1"
+      info = RestClient.get "http://211.147.239.62:9050/cgi-bin/sendsms?username=cadmin@zjll&password=Dface.cn1234&to=#{phone}&text=#{str}&msgtype=1"
       return if info=="0"
       Xmpp.send_chat($gfuid, $yuanid, "短信错误：#{Time.now},#{info}")
       return nil
