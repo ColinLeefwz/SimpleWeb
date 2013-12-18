@@ -1,7 +1,12 @@
 module SessionHelper
   def get_image_tag(session)
     images = { "LiveSession" => "livestreaming.png", "ArticleSession" => "text.png", "VideoSession" => "video.png", "Announcement" => "announcement.png" }
-    images[session.class.to_s]
+		if session.is_a? VideoInterview
+			"video.png"
+		else
+			images[session.class.to_s]
+		end
+
   end
 
   def get_box_class(session)

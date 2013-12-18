@@ -8,7 +8,7 @@ Prodygia::Application.routes.draw do
   end
 
   resources :sections
-
+  resources :video_interviews
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 

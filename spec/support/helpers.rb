@@ -47,6 +47,9 @@ def helper_objects
   let(:session_map) { create :live_session, title: 'China RoadMap', expert: alex,
                       description: 'Show you China road map',
                       status: 'Scheduled' }
+  let(:announcement) { create :announcement, title: 'Just an Announcement', expert: alex,
+                      description: 'Show you China road map',
+                      status: 'Scheduled' }
 
   let(:session_draft_map) { create :live_session, title: 'live_session_draft', expert: alex, description: 'dddd', draft: true }
 
@@ -58,6 +61,10 @@ def helper_objects
 
   #sections
   let(:first_section) { create :section, title: "first section", description: "section description", chapter: first_chapter }
+
+	# video_interview
+	let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer" }
+	
 end
 
 

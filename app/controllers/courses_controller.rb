@@ -1,11 +1,10 @@
 class CoursesController < ApplicationController
-	before_action :load_course, only: :create
   load_and_authorize_resource
   before_action :set_course, only: [:show, :preview]
 
-	def index
-		@courses = Course.all
-	end
+  def index
+    @courses = Course.all
+  end
 
   def show
   end
@@ -15,6 +14,7 @@ class CoursesController < ApplicationController
   end
 
   def create
+    @course = Course.new(course_params)
     @course.save
     redirect_to preview_course_path(@course)
   end
@@ -27,10 +27,6 @@ class CoursesController < ApplicationController
   end
 
   private
-	def	load_course
-    @course = Course.new(course_params)
-	end
-
   def set_course
     @course = Course.find params[:id]
   end

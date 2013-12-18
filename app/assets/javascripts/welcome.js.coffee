@@ -56,8 +56,14 @@ ready = ->
 		}
 
 	$('.video-img').on 'click', ->
-		video_source = $(this).data('source')
-		$(this).replaceWith("<video src='#{video_source}' controls='controls'>")
+		video_source_sd = $(this).data('source-sd')
+		video_source_hd = $(this).data('source-hd')
+		from = $(this).data('from')
+		if from is "detail_page"
+			$(this).replaceWith("<video class='sublime' width='640' height='360'><source src=#{video_source_sd}/><source src=#{video_source_hd} data-quality='hd'></video>")
+		else
+			$(this).replaceWith("<video class='sublime'><source src=#{video_source_sd}/><source src=#{video_source_hd} data-quality='hd'></video>")
+		sublime.load()
 
 	$container = $('#content')
 	$('nav li .filters').on 'click', ->
