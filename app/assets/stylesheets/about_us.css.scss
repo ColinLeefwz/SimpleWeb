@@ -77,6 +77,18 @@
 
   /*---- article ----*/
 
+  .oswaldreg-header{
+    h1, h2{
+      font-family: 'Oswaldreg';
+    }
+  }
+
+  .latobold-header{
+    h1, h2, h3{
+      font-family: 'Latoreg';
+    }
+  }
+
   article {
     font-family: "Latoreg";
     line-height: 1.5em;
@@ -87,7 +99,6 @@
     background: #fff;
     color: #333;
     h1, h2, h3, h4, h5, h6 {
-      font-family: 'Oswaldreg';
       font-weight: 400;
       color: #575757;
       margin-bottom: 10px;
@@ -116,7 +127,6 @@
       padding-bottom: 0;
       margin-top: 0;
       margin-bottom: 0;
-
     }
 
     img {
