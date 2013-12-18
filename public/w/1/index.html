@@ -1,0 +1,128 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>紫薇原点祈福活动</title>
+<link rel="stylesheet" href="css/public.css" type="text/css" media="screen"/>
+<script src="js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
+<script src="js/jquery.blocksit.min.js" language="javascript" type="text/javascript"></script>
+<script>
+// JavaScript Document
+$(document).ready(function(){
+	var windowWidth=$(window).width();
+	if(windowWidth<=1280){
+		$("#Waterfall").css({"width":"928px"});
+		num=3;
+		
+	}else{
+		$("#Waterfall").css({"width":"1236px"});
+		num=4;
+	}
+
+	var high=window.screen.height,
+		scrollheight=0;
+	/** high 存放屏幕高度， scrollTop 存放页面滚动高度。**/
+	
+	$(parent.window).scroll(function(){//页面滚动时执行此函数
+		if(scrollheight<$(parent.window).scrollTop()){
+			scrollheight=$(parent.window).scrollTop();
+			ADDItems();
+		}		
+		// 另一种情况 若 scrollheight > $(parent.window).scrollTop() 表示页面向上滚动。那么页面的整体高度就不会再增加。
+	});
+
+	ADDItems();
+	
+	function ADDItems(){//增加框架函数
+		var row=1;  //表示行数，例如此例表示的显示3行
+		while($(".box").height()<(high+scrollheight)&&row<4){
+			row++;
+			for(var i=0;i<3;i++){
+				var itemplane='<div class="plane">'
+								+'<div class="imgsbox">'
+									+'<img class="imgs" src="images/pic1.jpg">'
+									+'<img class="imgs2" src="images/pic3.png">'
+								+'</div>'
+								+'<div class="content">'
+									+'<div class="tit">'
+										+'<img src="images/pic2.png" align="absbottom"/>'
+										+'<h2><a href="#">袁乐天</a>的心愿：</h2>'
+									+'</div>'
+									+'<p>你要按你所想的去生活，否则，你迟早会按你所生活的去想。</p>'
+									+'<div class="op">'
+										+'<b class="l">收到200个祝福</b>'
+										+'<a class="r" href="#">祝福他</a>'
+									+'</div>'
+								+'</div>'
+							+'</div>';
+				$("#Waterfall").append(itemplane);
+			}
+		}
+		
+		$("#Waterfall img:last").load(function(){//添加$("#Waterfall img:last").load()在这里是为了防止火狐浏览器第一次加载页面时显示不正常。
+			$('#Waterfall').BlocksIt({
+				numOfCol: num,
+				offsetX: 10,
+				offsetY: 8,
+				blockElement:"div"
+			});
+		});
+	}
+	$("#Word").css("display","none");
+	
+	$(window).resize(function(){
+		var windowWidth=$(window).width();
+		if(windowWidth<=1280){
+			$("#Waterfall").css({"width":"928px"});
+			num=3;
+			
+		}else{
+			$("#Waterfall").css({"width":"1236px"});
+			num=4;
+		}
+		$("#Waterfall img:last").ready(function(){//添加$("#Waterfall img:last").load()在这里是为了防止火狐浏览器第一次加载页面时显示不正常。
+			$('#Waterfall').BlocksIt({
+				numOfCol: num,
+				offsetX: 10,
+				offsetY: 8,
+				blockElement:"div"
+			});
+		});
+	});
+});
+</script>
+</head>
+
+<body>
+
+<div class="header"><img src="images/header.jpg"/></div>
+<div class="title">
+	<a class="ml20 mr50" title="最新评论" href="#"><img src="images/btn.png" alt="最新评论"/></a>
+	<a class="mr50" title="最热评论" href="#"><img src="images/btn2.png" alt="最热评论"/></a>
+	<a class="mr50" title="总评论" href="#"><img src="images/btn3.png" alt="总评论"/></a>
+</div>
+
+<div class="box" id="Waterfall">
+	<center class="word pt20" id="Word"><img src="images/sign4.gif" align="absmiddle" class="mr5 ">数据加载中请稍后...</center>
+	<!--<div class="plane">
+		<div class="imgsbox">
+			<img class="imgs" src="images/pic1.jpg">
+			<img class="imgs2" src="images/pic3.png">
+		</div>
+		<div class="content">
+			<div class="tit">
+				<img src="images/pic2.png" align="absbottom"/>
+				<h2><a href="#">袁乐天</a>的心愿：</h2>
+			</div>
+			<p>你要按你所想的去生活，否则，你迟早会按你所生活的去想。</p>
+			<div class="op">
+				<b class="l">收到200个祝福</b>
+				<a class="r" href="#">祝福他</a>
+			</div>
+		</div>
+	</div>-->
+</div>
+
+</body>
+</html>
