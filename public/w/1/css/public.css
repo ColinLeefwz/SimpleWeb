@@ -10,6 +10,8 @@ a:hover{color:#f60;}
 .l{float:left !important;}
 .r{float:right !important;}
 
+.links{position:absolute;right:40px;top:10px;font-size:20px;}
+
 .clear1{width:100%;height:0px;clear:both;overflow:hidden;zoom:1;}
 
 .mt10{margin-top:10px !important;}
@@ -101,7 +103,7 @@ transition:transform 0.5s ease-in-out, opacity 0.5s;
 .plane2 .content p{text-indent:1em;padding:0px 5px;}
 .plane2 .op{padding:20px 5px;clear:both;display:block;overflow:hidden;zoom:1;}
 
-.plane3{font-family:"黑体";font-size:25px;padding:20px 0px 20px 60px;display:block;line-height:40px;}
+.plane3{font-family:"黑体";font-size:25px;padding:20px 0px 20px 60px;display:block;line-height:40px;overflow:hidden;position:relative;}
 .plane4{font-family:"微软雅黑";font-size:20px;display:block;line-height:35px;padding:20px 0px 20px 20px;}
 .plane4 ul{display:block;overflow:hidden;zoom:1;}
 .plane4 ul li{background:url(../images/sign.jpg) left 5px no-repeat;padding-left:50px;display:block;margin-bottom:10px;}
