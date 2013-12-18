@@ -64,7 +64,17 @@ class Photo
     if room=="21828958" || room=="21837985"
       #info = Face.detect_area(self.img.url)
       gen_zwyd
+      zwyd_send_link
     end
+  end
+
+  def zwyd_send_link
+      return if  room=="21828958"
+      text = "亲，我是紫薇原点哦。寄上你的紫薇原点专属电子贺卡."
+      url = "http://www.dface.cn/zw#{self.id}.jpg"
+      attrs = " NOLOG='1'  url='#{url}' "
+      ext = "<x xmlns='dface.url'>#{url}</x>"
+      Xmpp.send_chat("s#{self.id.to_i}", self.user_id, text, "zw#{self.id}#{self.user_id}#{Time.now.to_i}", attrs, ext)
   end
   
   def gen_zwyd
