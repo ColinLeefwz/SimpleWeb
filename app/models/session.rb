@@ -9,11 +9,13 @@ class Session < ActiveRecord::Base
 
   after_initialize :set_default
 
+  # relationship with expert
   belongs_to :expert
-  has_many :orders
+  validates :expert, presence: true
 
   # enrollments and orders
   has_many :enrollments, as: :enrollable
+  has_many :orders
 
   has_many :subscriptions, foreign_key: "subscribed_session_id"
   has_many :subscribers, through: :subscriptions
