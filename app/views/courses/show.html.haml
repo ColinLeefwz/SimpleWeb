@@ -7,14 +7,14 @@
         .cover
           = image_tag @course.cover.url
         .enroll-button
-          = link_to "Enroll for only $99"
+          = link_to "Enroll for only $99", enroll_course_path(@course)
 
       .description-box.inline
         -# title & expert
         .title
           = @course.title
-        .expert.inline
-          = "with " + @course.experts.map(&:name).join(" and ")
+        .producers.inline
+          = @course.producers
 
           
         -# video-length & category

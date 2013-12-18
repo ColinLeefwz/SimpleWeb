@@ -16,10 +16,14 @@ class CoursesController < ApplicationController
   def create
     @course = Course.new(course_params)
     @course.save
-    redirect_to course_preview_path(@course)
+    redirect_to preview_course_path(@course)
   end
 
   def preview
+  end
+
+  def enroll
+    render "courses/enroll", locals: {item: @course}
   end
 
   private

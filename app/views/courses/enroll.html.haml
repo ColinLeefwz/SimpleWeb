@@ -1,0 +1,45 @@
+.card.review-card
+  .card-header
+    Review your order
+  .card-body
+    .cover
+      = image_tag item.cover.url
+    .detail
+      .title
+        = item.title
+      .producers
+        = item.producers
+      .duration-category
+        %span.duration
+          = item.duration
+        %span.category
+          = item.categories.join(", ")
+      .time
+        = image_tag "time.png", class: "icon"
+        = "Available immediately"
+      .price
+        = image_tag "price.png", class: "icon"
+        = price_tag(item.price)
+
+.card.account-card
+  .card-header
+    Create an account
+    .login
+      = link_to "Login", new_user_session_path, class: "login-link underlined"
+      = "to an existing account"
+  .card-body
+
+    .social-login
+      = render "devise/shared/social_login"
+    .devise-form
+      -# todo: deal with order in course_controller
+      -# - url_path = (item.price == 0.00) ? sign_up_confirm_session_path(@session) : sign_up_buy_session_path(@session)
+      - url_path = "/courses/fake_path"
+      = form_for :user, url: url_path, html: {class: "form-horizontal", id: "sign_up_confirm_form"} do |f|
+        = render 'sessions/form_fields', f: f
+    .confirm
+      %span.confirm-button Sign up and confirm
+      %span.hint Create account and pay with Paypal!
+
+-# todo: space above footer
+.footer-spacer{style: "height: 50px;"}

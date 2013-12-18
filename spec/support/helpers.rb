@@ -53,6 +53,15 @@ def helper_objects
 
   let(:session_draft_map) { create :live_session, title: 'live_session_draft', expert: alex, description: 'dddd', draft: true }
 
+  #courses
+  let(:first_course) { create :course, title: "first course", description: "course description" }
+
+  #chapters
+  let(:first_chapter) { create :chapter, title: "first chapter", description: "chapter description", course: first_course }
+
+  #sections
+  let(:first_section) { create :section, title: "first section", description: "section description", chapter: first_chapter }
+
 	# video_interview
 	let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer" }
 	

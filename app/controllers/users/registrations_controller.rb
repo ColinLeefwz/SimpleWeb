@@ -18,6 +18,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
 		self.resource.provider = "prodygia"
 	end
 
+  def edit
+    @from = "users/registrations/settings"
+    respond_to do |format|
+      format.js {render "members/update"}
+      format.html {render "edit"}
+    end
+  end
+
   protected
   def sign_up(resource_name, resource)
     super

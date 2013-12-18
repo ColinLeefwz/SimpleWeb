@@ -105,12 +105,13 @@ ActiveRecord::Schema.define(version: 20131217100033) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "categories",         default: [], array: true
+    t.string   "categories",         default: [],  array: true
     t.string   "title"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
+    t.decimal  "price",              default: 0.0
   end
 
   add_index "courses", ["categories"], name: "index_courses_on_categories", using: :gin
