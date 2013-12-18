@@ -10,8 +10,13 @@ a:hover{color:#f60;}
 .l{float:left !important;}
 .r{float:right !important;}
 
+.clear1{width:100%;height:0px;clear:both;overflow:hidden;zoom:1;}
+
+.mt10{margin-top:10px !important;}
+.mb30{margin-bottom:30px !important;}
 .ml5{margin-left:8px !important;}
 .ml20{margin-left:20px !important;}
+.mr30{margin-right:30px !important;}
 .mr50{margin-right:50px !important;}
 .pt20{padding-top:20px !important;}
 .mlr5{margin-left:5px !important;margin-right:5px !important;}
@@ -19,13 +24,16 @@ a:hover{color:#f60;}
 .red{color:#FC0505;}
 .word{color:#666;font-size:14px;letter-spacing:1px;}
 
-.main{width:640px;margin:0px auto;overflow:hidden;zoom:1;background:url(../images/bg2.jpg) left bottom no-repeat;}
+.btn{width:146px;height:95px;background:url(../images/btn.jpg) left top no-repeat;cursor:pointer;border:none;}
+
+.main{width:640px;margin:0px auto;overflow:hidden;zoom:1;background:url(../images/bg2.jpg) left top no-repeat;}
 .con{width:100%;overflow:hidden;zoom:1;}
 
 .header{width:100%;overflow:hidden;overflow:hidden;height:280px;border-bottom:1px solid #999;text-align:center;}
 .header2{width:100%;overflow:hidden;overflow:hidden;}
 
 .title{width:100%;overflow:hidden;display:block;margin:20px 0px;}
+.title1{width:100%;overflow:hidden;font-size:29.5px;font-family:黑体;color:#4B4B4B;background:url(../images/dashed.jpg) left bottom repeat-x;padding-bottom:20px;margin-bottom:20px;line-height:30px;}
 
 /**图片框架 begin**/
 .box{width:100%;overflow:hidden;zoom:1;position: relative;margin:0px auto;}
@@ -94,5 +102,15 @@ transition:transform 0.5s ease-in-out, opacity 0.5s;
 .plane2 .op{padding:20px 5px;clear:both;display:block;overflow:hidden;zoom:1;}
 
 .plane3{font-family:"黑体";font-size:25px;padding:20px 0px 20px 60px;display:block;line-height:35px;}
-.plane4{font-family:"微软雅黑";font-size:20px;display:block;line-height:35px;}
-.plane4 ul{display:block;overflow:hidden;}
+.plane4{font-family:"微软雅黑";font-size:20px;display:block;line-height:35px;padding:20px 0px 20px 60px;}
+.plane4 ul{display:block;overflow:hidden;zoom:1;}
+.plane4 ul li{background:url(../images/sign.jpg) left top no-repeat;padding-left:50px;display:block;margin-bottom:10px;}
+.plane4 a{color:#666;}
+.plane4 a:hover{color:#f60;}
+
+.plane5{margin:20px auto;sline-height:35px;width:533px;}
+
+.inputbox1{width:532px;height:71px;background:url(../images/bg4.jpg) left top no-repeat;margin:30px auto 0px auto;}
+.inputbox1 input{background-color:transparent;margin-left:65px;height:50px;margin-top:7px;border:none;padding-left:10px;width:450px;color:#B5B0AA;font-family:黑体;font-size:20px;}
+.inputbox2{width:532px;height:119px;background:url(../images/bg5.jpg) left top no-repeat;margin:30px auto 30px auto;}
+.inputbox2 textarea{background-color:transparent;margin-left:65px;height:80px;margin-top:7px;border:none;padding-left:10px;width:460px;color:#B5B0AA;font-family:黑体;font-size:20px;line-height:30px;margin-top:20px;}
