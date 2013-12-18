@@ -89,27 +89,6 @@ Lianlian::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   #match ':controller(/:action(/:id(.:format)))'
-  resources :mobile_spaces, :only => [:new, :create]
-
-    scope '/~:space_id', :module => 'dashboard', :as => 'dashboard' do
-      root :to => 'mobile_articles#index'
-      
-      
-      resources :mobile, :only => [:index]
-      resource :billing, :only => [:show]
-
-      # resources :orders, :only => [:index, :new, :create, :show, :destroy] do
-      #   collection do
-      #     post :alipay_notify
-      #   end
-      # end
-      resources :mobile_orders, :only => [:index]
-      resources :mobile_banners, :only => [:index, :show, :edit, :create, :update, :destroy]
-
-      resource :mobile_settings, :only => [:show, :update]
-      resources :members, :only => [:index, :destroy]
-      resources :mobile_articles, :only => [:new, :create, :edit, :update, :show, :destroy]
-    end
 
 
   match "esprit" => redirect("/w/esprit")
@@ -119,7 +98,6 @@ Lianlian::Application.routes.draw do
   match ':controller' => ":controller#index"
 
   match 'shop3_faqs/article_image_upload/:id' => 'shop3_faqs#article_image_upload'
-  match 'mobile_articles/article_image_upload/:id' => 'mobile_articles#article_image_upload'
 
   root :to => 'Index#index'
 end
