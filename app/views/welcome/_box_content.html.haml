@@ -1,3 +1,4 @@
+- sublime_id = ""
 - sessions.each do |session|
   %div{class: get_box_class(session)}
 
@@ -15,11 +16,13 @@
         = link_to "#{session.title}", session_path(session)
       - elsif session.is_a? VideoInterview
         = link_to "#{session.title}", video_interview_path(session)
+        - sublime_id = "sublime_video_interview_#{session.id}"
       - elsif session.is_a? Announcement
         = link_to "#{session.title}", announcement_path(session)
+        - sublime_id = "sublime_announcement_#{session.id}"
     -if (session.is_a? VideoInterview) || (session.is_a? Announcement)
       .cover
-        .video-img{data: {"source-sd" => session.sd_url, "source-hd" => session.hd_url, from: "landing_page"}}
+        .video-img{data: {"source-sd" => session.sd_url, "source-hd" => session.hd_url, from: "landing_page", "sublime-id" => sublime_id}}
           = image_tag session.cover.url, class: 'video-play'
           = image_tag "video_play_icon.png", class: 'play-video-icon'
 
