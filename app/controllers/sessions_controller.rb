@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
         @include = false
       end
 
-      if @session.is_free?
+      if @session.free?
         @free_session = true
       else
         @free_session = false

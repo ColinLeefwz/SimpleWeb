@@ -32,8 +32,12 @@ class Session < ActiveRecord::Base
     url: "/system/sessions/:attachment/:id_partition/:style/:filename",
     default_url: 'missing.png'
 
-  def is_free?
+  def free?
     self.price <= 0.0
+  end
+
+  def producers
+    "by " + self.expert.name
   end
 
   def set_default

@@ -30,5 +30,7 @@ class Course < ActiveRecord::Base
     "1h 55m"
   end
 
-
+  def free?
+    self.price == 0
+  end
 end
