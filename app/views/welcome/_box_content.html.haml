@@ -15,7 +15,9 @@
         = link_to "#{session.title}", session_path(session)
       - elsif session.is_a? VideoInterview
         = link_to "#{session.title}", video_interview_path(session)
-    -if (session.is_a? VideoInterview) || (session.is_a?Announcement) && (!session.video.url.eql?"/videos/original/missing.png")
+      - elsif session.is_a? Announcement
+        = link_to "#{session.title}", announcement_path(session)
+    -if (session.is_a? VideoInterview) || (session.is_a? Announcement)
       .cover
         .video-img{data: {"source-sd" => session.sd_url, "source-hd" => session.hd_url, from: "landing_page"}}
           = image_tag session.cover.url, class: 'video-play'
