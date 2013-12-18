@@ -10,7 +10,7 @@
 .social-login{
   text-align: center;
   margin: 0 auto;
-  margin-top: 1em;
+  margin-top: 2em;
   img{
     width: 170px;
     height: 31px;
@@ -19,16 +19,16 @@
 }
 
 .devise-form{
-    width: 228px;
+    width: 295px;
     margin: 0 auto;
+    margin-top: 2em;
 
-    .user_first_name, .user_last_name{
-      width: 50%;
-      float: left;
-    }  
-
-    .user_email{
-      clear: both;
+    /* override bootstrap horizontal form */
+    .form-horizontal .controls{
+      margin-left: 74px;
+    }
+    .form-horizontal, .control-label{
+      width: 67px;
     }
 }
 

@@ -67,6 +67,16 @@ describe User do
 			allen.unfollow peter
 			expect(peter.reload.followers).not_to include allen
 		end
+
+		it "just unfollows the one" do
+			# peter.followers << allen
+			# sameer.followers << allen
+			allen.followed_users << [peter, sameer, alex]
+			allen.unfollow peter
+			expect(allen.reload.followed_users).to include alex
+			expect(allen.reload.followed_users).to include sameer
+			expect(peter.reload.followers).not_to include allen
+		end
 	end
 
   describe ".build_refer_message" do 
