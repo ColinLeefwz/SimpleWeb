@@ -12,6 +12,9 @@ class Session < ActiveRecord::Base
   belongs_to :expert
   has_many :orders
 
+  # enrollments and orders
+  has_many :enrollments, as: :enrollable
+
   has_many :subscriptions, foreign_key: "subscribed_session_id"
   has_many :subscribers, through: :subscriptions
 
