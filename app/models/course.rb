@@ -16,4 +16,15 @@ class Course < ActiveRecord::Base
     styles: {
 
     }
+
+
+  def producers
+    "by " + self.experts.map(&:name).join(" and ")
+  end
+
+  # todo: add real data for courses duration
+  def duration
+    "1h 55m"
+  end
+
 end
