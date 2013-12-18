@@ -11,10 +11,14 @@ class ZwydWishController < ApplicationController
     return render :text => "祝福成功"
   end
 
+  
+
   def photo_authorize
     @zwyd_wish = ZwydWish.find_by_id(params[:id])
     return render :text => "无效图片" if @zwyd_wish.nil?
   end
+
+
 
 end
 

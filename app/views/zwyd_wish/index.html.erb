@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -19,12 +19,12 @@
     <br/>
     <br/>
     <br/><br/><br/>
-    <%= image_tag "http://s.dface.cn/zw#{params[:id]}.jpg"%>
+    <%= image_tag ""%>
 
     <br/>
     <br/>
     <%= form_tag "zwyd_wish/create" do %>
-      <%= hidden_field_tag :id, params[:id] %>
+      
       <br/>
       大名：<%= text_field_tag :name %>
       <br/>
@@ -36,4 +36,82 @@
 
 
   </body>
+</html> -->
+
+
+
+
+
+
+<!DOCTYPE>
+<html>
+<head>
+<meta name="viewport" content="width=640, initial-scale=0.5, user-scalable=0.5, minimum-scale=0.5, maximum-scale=1" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
+<meta http-equiv="mobile-agent" content="format=xhtml; url=http://dface.cn/mini.html" />
+<title>紫薇原点祈福活动</title>
+<link rel="stylesheet" href="w/1/css/public.css" type="text/css" media="screen"/>
+<script src="w/1/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
+<script>
+
+</script>
+</head>
+
+<body>
+<div class="main">
+  <div class="header2"><img src="w/1/images/header2.png"/></div>
+  <div class="con">
+    <div class="plane2">
+      <div class="imgsbox">
+        <!-- <img class="imgs" src="w/1/images/pic1.jpg"> -->
+        <%= image_tag "http://dface.cn/zw#{params[:id]}.jpg" , :class => "imgs" %>
+        <img class="imgs2" src="w/1/images/pic3.png">
+      </div>
+      <div class="content">
+        <div class="tit">
+          <%= image_tag @zwyd_wish.user_logo, :align => "absbottom" %>
+          <h2><a href="#"><%= @zwyd_wish.photo_user.try(:name) %></a>的心愿：</h2>
+        </div>
+        <p><%= @zwyd_wish.photo_desc %></p>
+        <div class="op">
+          <b class="l">收到<%= @zwyd_wish.total %>个祝福</b>
+          <a class="r" href="#">祝福他</a>
+        </div>
+      </div>
+    </div>
+    <div class="plane3">
+      <pre>我已经收到 <span class="red"><%= @zwyd_wish.total %></span>个祝福啦<br/><span class="red">还差<%= (99- @zwyd_wish.total) < 0 ? 0: (99- @zwyd_wish.total)   %>个祝福就能拿到新年红包啦，赶紧祝福我噢~</span></pre>
+    </div>
+    <div class="plane4">
+      <ul>
+        <% @zwyd_wish.data.reverse[0,3].each do |da| %>
+         <li>
+          <a href="#"><%= da.join(': ') %></a>
+         </li>
+        <% end %> 
+      </ul>
+      <div class="clear1"></div>
+      <a class="r mr30" id="More" href="#">查看更多</a>
+    </div>
+    <div class="plane5">
+      <div class="title1">祝福TA：</div>
+      <form method="post" action="zwyd_wish/create">
+        <%= hidden_field_tag :id, params[:id] %>
+        <div class="inputbox1">
+          <%= text_field_tag :name, params[:name]||'祝福人', :class => "texts" %>
+        </div>
+        <div class="inputbox2">
+            <%= text_area_tag :wish, params[:wish]|| '祝福语'%>
+        </div>
+        <div class="clear1"></div>
+        <input type="submit" class="btn r" value=" "/>
+      </form>
+    </div>
+  </div>
+  <a href="http://www.dface.cn/mini.html" target="_blank"><img src="w/1/images/ad1.jpg" width="100%" class="mt10 mb30"/></a>
+</div>
+</body>
 </html>
