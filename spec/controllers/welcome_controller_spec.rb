@@ -8,7 +8,7 @@ describe WelcomeController do
 			session_communication.update_attributes created_at: Date.today
 			announcement.update_attributes created_at: 1.days.ago
 			video_interview.update_attributes created_at: 3.days.ago
-			landing_items = [session_communication, announcement, video_interview]
+			landing_items = [video_interview, announcement, session_communication]
       get :index
       expect(assigns[:sessions]).to eq landing_items
     end
