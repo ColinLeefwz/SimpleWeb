@@ -1,9 +1,10 @@
 class WelcomeController < ApplicationController
 
   def index
-    # @sessions = Session.where.not(content_type: 'LiveSession').where.not(content_type: "VideoSession").where("draft=false").order("always_show desc, created_at desc").to_a
-    # @sessions.concat VideoInterview.order("updated_at desc").to_a
-		@sessions = VideoInterview.all.concat Announcement.all
+		video_interviews = VideoInterview.all.order("updated_at desc").to_a
+		announcements = Announcement.all.order("updated_at desc").to_a
+		articles = Session.where(content_type: "ArticleSession").where(draft: false).order("always_show desc, updated_at desc").to_a
+		@sessions = video_interviews.concat(announcements).concat(articles)
   end
 
 end
