@@ -61,8 +61,13 @@ ready = ->
 		sublime_id = $(this).data("sublime-id")
 		from = $(this).data('from')
 		if from is "detail_page"
-			$(this).replaceWith("<video class='sublime' width='640' height='360'><source src=#{video_source_sd}/><source src=#{video_source_hd} data-quality='hd'></video>")
 			sublime.load()
+			$(this).replaceWith("<video class='sublime' id=#{sublime_id} width='640' height='360'><source src=#{video_source_sd}/><source src=#{video_source_hd} data-quality='hd'></video>")
+			sublime.ready( ->
+				sublime.prepare(sublime_id, (player)->
+					player.play()
+				)
+			)
 		else
 			sublime.load()
 			$(this).replaceWith("<video class='sublime' id=#{sublime_id}><source src=#{video_source_sd}/><source src=#{video_source_hd} data-quality='hd'></video>")

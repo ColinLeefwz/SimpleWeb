@@ -3,7 +3,7 @@
   .text-page-main-content
     -unless @announcement.sd_url.eql? "/videos/original/missing.png"
       .announcement-cover
-        .video-img{data: {"source-sd" => @announcement.sd_url, "source_hd" => @announcement.hd_url, from: "detail_page"}}
+        .video-img{data: {"source-sd" => @announcement.sd_url, "source_hd" => @announcement.hd_url, from: "detail_page", "sublime-id" => "sublime_announcement_detail_#{@announcement.id}"}}
           = image_tag @announcement.cover.url, class: 'video-play'
           = image_tag "video_play_icon.png", class: 'play-video-icon'
     %p= @announcement.description.html_safe
