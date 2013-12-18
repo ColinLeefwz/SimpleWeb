@@ -66,7 +66,11 @@ ready = ->
 		else
 			sublime.load()
 			$(this).replaceWith("<video class='sublime' id=#{sublime_id}><source src=#{video_source_sd}/><source src=#{video_source_hd} data-quality='hd'></video>")
-			sublime.prepare(sublime_id)
+			sublime.ready( ->
+				sublime.prepare(sublime_id, (player)->
+					player.play()
+				)
+			)
 
 	$container = $('#content')
 	$('nav li .filters').on 'click', ->
