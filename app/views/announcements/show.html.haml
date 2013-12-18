@@ -1,2 +1,11 @@
-%h1 Announcements#show
-%p Find me in app/views/announcements/show.html.haml
+= render "sessions/page_header", session: @announcement
+.text-page-article-box.shadow
+  .text-page-main-content
+    -unless @announcement.sd_url.eql? "/videos/original/missing.png"
+      .announcement-cover
+        .video-img{data: {"source-sd" => @announcement.sd_url, "source_hd" => @announcement.hd_url, from: "detail_page"}}
+          = image_tag @announcement.cover.url, class: 'video-play'
+          = image_tag "video_play_icon.png", class: 'play-video-icon'
+    %p= @announcement.description.html_safe
+  .clear-fix
+.range
