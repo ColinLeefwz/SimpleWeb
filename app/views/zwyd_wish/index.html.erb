@@ -12,7 +12,49 @@
 <link rel="stylesheet" href="w/1/css/public.css" type="text/css" media="screen"/>
 <script src="w/1/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
 <script>
-
+	$(document).ready(function(){
+    var zwyd_total = $("#zwyd_wish_total").html()
+    var zwyd_skip = 20
+		$("#name").click(function(){
+			if($(this).val()=="祝福人"){
+				$(this).val("");
+			}
+		});
+		$("#wish").click(function(){
+			if($(this).val()=="祝福语"){
+				$(this).val("");
+			}
+		});
+		
+		$("#More").click(function(){
+      if(zwyd_skip >= zwyd_total){
+        return
+      }
+	  var libox="";
+      var id = $("#zwyd_wish_id").val()
+        $.get('/zwyd_wish/ajax_wish',{id: id, total: zwyd_total, skip: zwyd_skip }, function(data){
+            for(var i=0;i<data.length;i++){
+              libox +='<li><a>'
+              libox += data[i]
+              libox +='</a></li>';
+            }
+            $("#Mes").append(libox);
+            zwyd_skip += data.length
+            if(zwyd_skip >= zwyd_total){
+              $("#More").remove();
+            }
+        });	
+		});
+		
+		$("#Forms").submit(function(){
+			var n=$("#name").val(),
+				w=$("#wish").val();
+			if(n==""||n=="祝福人"||w==""||w=="祝福语"){
+				return false;
+			}
+			
+		});
+	});
 </script>
 </head>
 
@@ -22,7 +64,6 @@
   <div class="con">
     <div class="plane2">
       <div class="imgsbox">
-        <!-- <img class="imgs" src="w/1/images/pic1.jpg"> -->
         <%= image_tag "http://dface.cn/zw#{params[:id]}.jpg" , :class => "imgs" %>
         <img class="imgs2" src="w/1/images/pic3.png">
       </div>
@@ -34,28 +75,31 @@
         <p><%= @zwyd_wish.photo_desc %></p>
         <div class="op">
           <b class="l">收到<%= @zwyd_wish.total %>个祝福</b>
-          <a class="r" href="#">祝福他</a>
+          <!--<a class="r" href="#">祝福他</a>-->
         </div>
       </div>
     </div>
     <div class="plane3">
-      <pre>我已经收到 <span class="red"><%= @zwyd_wish.total %></span>个祝福啦<br/><span class="red">还差<%= (99- @zwyd_wish.total.to_i) < 0 ? 0: (99- @zwyd_wish.total.to_i)   %>个祝福就能拿到新年红包啦，赶紧祝福我噢~</span></pre>
+      <a class="links" target="_blank" href="/w/zwyd/explain2.html">活动详情</a>
+      <div class="l">我已经收到 <span class="red" id='zwyd_wish_total'><%= @zwyd_wish.total %></span>个祝福啦<br/><span class="red">还差<%= (30- @zwyd_wish.total.to_i) < 0 ? 0: (30- @zwyd_wish.total.to_i)   %>个祝福就有机会拿到1000元新年红包啦，<br/>赶紧祝福我噢~</span></div>
     </div>
     <div class="plane4">
-      <ul>
-        <% @zwyd_wish.data.reverse[0,3].each do |da| %>
+      <ul id="Mes">
+        <% @zwyd_wish.data.reverse[0,20].each do |da| %>
          <li>
-          <a href="#"><%= da.join(': ') %></a>
+          <a><%= da.join(': ') %></a>
          </li>
         <% end %> 
       </ul>
       <div class="clear1"></div>
-      <a class="r mr30" id="More" href="#">查看更多</a>
+      <% if @zwyd_wish.data.length > 20%>
+      <a class="r mr30 pointer" id="More">查看更多</a>
+      <% end %>
     </div>
     <div class="plane5">
       <div class="title1">祝福TA：</div>
-      <form method="post" action="zwyd_wish/create">
-        <%= hidden_field_tag :id, params[:id] %>
+      <form method="post" action="zwyd_wish/create" id="Forms">
+        <%= hidden_field_tag :id, params[:id], :id => "zwyd_wish_id" %>
         <div class="inputbox1">
           <%= text_field_tag :name, params[:name]||'祝福人', :class => "texts" %>
         </div>
@@ -63,7 +107,7 @@
             <%= text_area_tag :wish, params[:wish]|| '祝福语'%>
         </div>
         <div class="clear1"></div>
-        <input type="submit" class="btn r" value=" "/>
+        <input type="submit" class="btn r mb30" value=" "/>
       </form>
     </div>
   </div>

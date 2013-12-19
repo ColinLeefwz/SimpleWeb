@@ -68,8 +68,7 @@ class Photo
   end
 
   def zwyd_send_link
-      return if  room=="21828958"
-      text = "亲，我是紫薇原点哦。寄上你的紫薇原点专属电子贺卡."
+      text = "😜他们都在制作专属的紫薇原点电子贺卡，还能集祝福抽红包哦～快来试试吧！"
       url = "http://www.dface.cn/zwyd_wish?id=#{self.id}"
       Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, text,url, "zw#{self.id}#{self.user_id}#{Time.now.to_i}")
       zwyd = ZwydWish.new(data: [], total: 0)

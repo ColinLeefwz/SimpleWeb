@@ -54,18 +54,18 @@ $(document).ready(function(){
 					var d = data[i][0]
 					var itemplane='<div class="plane">'
 								+'<div class="imgsbox">'
-									+'<img class="imgs" src="'+ d['photo_url'] +'">'
+									+'<a href="'+ d['wish'] +'" target="_blank"><img class="imgs" src="'+ d['photo_url'] +'"></a>'
 									+'<img class="imgs2" src="/w/1/images/pic3.png">'
 								+'</div>'
 								+'<div class="content">'
 									+'<div class="tit">'
 										+'<img src="'+d['user_logo']+'" align="absbottom"/>'
-										+'<h2><a href="#">'+ d['user_name'] +'</a>的心愿：</h2>'
+										+'<h2><a>'+ d['user_name'] +'</a>的心愿：</h2>'
 									+'</div>'
 									+'<p>'+ d['photo_desc'] +'</p>'
 									+'<div class="op">'
 										+'<b class="l">收到'+ d['total'] +'个祝福</b>'
-										+'<a class="r" href="#">祝福他</a>'
+										+'<a class="r" href="'+ d['wish'] +'" target="_blank">祝福他</a>'
 									+'</div>'
 								+'</div>'
 							+'</div>';
@@ -118,9 +118,8 @@ $(document).ready(function(){
 
 <div class="header"><img src="/w/1/images/header.jpg"/></div>
 <div class="title">
-	<a class="ml20 mr50" title="最新评论" href="#"><img src="/w/1/images/btn.png" alt="最新评论"/></a>
-	<a class="mr50" title="最热评论" href="#"><img src="/w/1/images/btn2.png" alt="最热评论"/></a>
-	<a class="mr50" title="总评论" href="#"><img src="/w/1/images/btn3.png" alt="总评论"/></a>
+	<a class="ml20 mr50" title="最新" href="#"><img src="/w/1/images/btn2.png" alt="最新"/></a>
+	<a class="mr50" title="最多祝福" href="#"><img src="/w/1/images/btn.png" alt="最多祝福"/></a>
 </div>
 
 <div class="box" id="Waterfall">
