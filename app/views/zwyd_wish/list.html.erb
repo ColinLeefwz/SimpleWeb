@@ -11,6 +11,7 @@
 // JavaScript Document
 $(document).ready(function(){
 	var zwydSkip=0
+	var zwydajax=true
 	
 	var windowWidth=$(window).width();
 	if(windowWidth<=1280){
@@ -39,46 +40,50 @@ $(document).ready(function(){
 	
 	function ADDItems(){//增加框架函数
 		var row=1;
+		if(!zwydajax){
+			return
+		}
 		$.get("/zwyd_wish/list.json", {skip: zwydSkip}, function(data){
-
-		while($(".box").height()<(high+scrollheight)&& row <= 1){
-				for(var i=0; i < 3; i++){
-					alert(data[i])
+			while($(".box").height()<(high+scrollheight)&& row <= 1){
+				for(var i=0; i < data.length; i++){
+					var d = data[i][0]
 					var itemplane='<div class="plane">'
 								+'<div class="imgsbox">'
-									+'<img class="imgs" src="'+ data[i]['photo_url'] +'">'
+									+'<img class="imgs" src="'+ d['photo_url'] +'">'
 									+'<img class="imgs2" src="/w/1/images/pic3.png">'
 								+'</div>'
 								+'<div class="content">'
 									+'<div class="tit">'
-										+'<img src="'+data[i]['user_logo']+'" align="absbottom"/>'
-										+'<h2><a href="#">'+ data[i]['user_name'] +'</a>的心愿：</h2>'
+										+'<img src="'+d['user_logo']+'" align="absbottom"/>'
+										+'<h2><a href="#">'+ d['user_name'] +'</a>的心愿：</h2>'
 									+'</div>'
-									+'<p>'+ data[i]['photo_desc'] +'</p>'
+									+'<p>'+ d['photo_desc'] +'</p>'
 									+'<div class="op">'
-										+'<b class="l">收到'+ data[i]['total'] +'个祝福</b>'
+										+'<b class="l">收到'+ d['total'] +'个祝福</b>'
 										+'<a class="r" href="#">祝福他</a>'
 									+'</div>'
 								+'</div>'
 							+'</div>';
-							alert(2)
 							$("#Waterfall").append(itemplane);
 				}
-				zwydSkip += data.length
+				row++;
+			}
+			$("#Waterfall img").load(function(){//添加$("#Waterfall img:last").load()在这里是为了防止火狐浏览器第一次加载页面时显示不正常。
+				$('#Waterfall').BlocksIt({
+					numOfCol: num,
+					offsetX: 10,
+					offsetY: 8,
+					blockElement:"div"
+				});
+			});
+
+			zwydSkip += data.length
+			if(data.length != 3){
+				zwydajax=false
 			}
 		})
-		row++;
-
-	
 		
-		$("#Waterfall img:last").load(function(){//添加$("#Waterfall img:last").load()在这里是为了防止火狐浏览器第一次加载页面时显示不正常。
-			$('#Waterfall').BlocksIt({
-				numOfCol: num,
-				offsetX: 10,
-				offsetY: 8,
-				blockElement:"div"
-			});
-		});
+
 	}
 
 		ADDItems();
