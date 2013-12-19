@@ -30,7 +30,7 @@
       if(zwyd_skip >= zwyd_total){
         return
       }
-			var libox="";
+	  var libox="";
       var id = $("#zwyd_wish_id").val()
         $.get('/zwyd_wish/ajax_wish',{id: id, total: zwyd_total, skip: zwyd_skip }, function(data){
             for(var i=0;i<data.length;i++){
@@ -45,6 +45,15 @@
             }
         });	
 		});
+		
+		$("#Forms").submit(function(){
+			var n=$("#name").val(),
+				w=$("#wish").val();
+			if(n==""||n=="祝福人"||w==""||w=="祝福语"){
+				return false;
+			}
+			
+		});
 	});
 </script>
 </head>
@@ -55,7 +64,6 @@
   <div class="con">
     <div class="plane2">
       <div class="imgsbox">
-        <!-- <img class="imgs" src="w/1/images/pic1.jpg"> -->
         <%= image_tag "http://dface.cn/zw#{params[:id]}.jpg" , :class => "imgs" %>
         <img class="imgs2" src="w/1/images/pic3.png">
       </div>
@@ -90,7 +98,7 @@
     </div>
     <div class="plane5">
       <div class="title1">祝福TA：</div>
-      <form method="post" action="zwyd_wish/create">
+      <form method="post" action="zwyd_wish/create" id="Forms">
         <%= hidden_field_tag :id, params[:id], :id => "zwyd_wish_id" %>
         <div class="inputbox1">
           <%= text_field_tag :name, params[:name]||'祝福人', :class => "texts" %>
@@ -99,7 +107,7 @@
             <%= text_area_tag :wish, params[:wish]|| '祝福语'%>
         </div>
         <div class="clear1"></div>
-        <input type="submit" class="btn r" value=" "/>
+        <input type="submit" class="btn r mb30" value=" "/>
       </form>
     </div>
   </div>
