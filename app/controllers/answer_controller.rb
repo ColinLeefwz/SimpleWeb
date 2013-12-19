@@ -267,7 +267,7 @@ class AnswerController < ApplicationController
      us = shop.checkin_users
      sbu = us.reject{|r| r.gender != gender }.sample(1).first
      return false if sbu.nil?
-     Xmpp.send_chat(sbu.id, user.id, ": 两天前，我也在#{shop.name}噢，快跟我打个招呼吧～", "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
+     Xmpp.send_chat(sbu.id, user.id, ": #{sbu.time_desc(shop)}，我也在#{shop.name}噢，快跟我打个招呼吧～", "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
      link = "dface://scheme/user/info?id=#{sbu.id}"
      text = "#{ta}，叫#{sbu.name}😊\n#{ta}在这个城市驻足或行走，两天前#{ta}也同在#{shop.name}。你和#{ta}擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，#{ta}来了..."
      Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")

@@ -4,7 +4,7 @@ class ZwydWishController < ApplicationController
 
   before_filter :photo_authorize, :except => [:list]
   def create
-    return render :index if params[:name].blank? || params[:wish].blank?
+    return render :text => "祝福人或祝福语不能是空哦！" if params[:name].blank? || params[:wish].blank?
     @zwyd_wish.total += 1
     @zwyd_wish.data << [params[:name], params[:wish]]
     @zwyd_wish.save
