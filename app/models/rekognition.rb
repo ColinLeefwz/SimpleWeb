@@ -12,11 +12,40 @@ class Rekognition
   def self.gen_by_user(user)
     gen(user.id, user.head_logo.img.url)
   end
+
+
+  def self.detect(url)
+    begin
+
+      info = RestClient.get "http://rekognition.com/func/api/?api_key=D5cT1o17dos5Qo9n&api_secret=H2V77hSyHhelJNzz&jobs=face_part_aggressive&urls=#{url}"
+      ActiveSupport::JSON.decode(info)
+    rescue Exception => e
+      Xmpp.error_notify(e.to_s)
+    end
+  end
   
+  def self.detect_area(url)
+    info = detect(url)
+    puts info
+    decode_info(info)
+  end
+  
+  def self.decode_info(info)
+    return nil if info.nil? || info["face_detection"].blank?
+    return nil if info["face_detection"].size>1
+    x = info["face_detection"][0]["nose"]["x"]
+    y = info["face_detection"][0]["nose"]["y"]
+    w = info["face_detection"][0]["boundingbox"]["size"]["width"]
+    h = info["face_detection"][0]["boundingbox"]["size"]["height"]
+    ow = info["ori_img_size"]["width"]
+    oh = info["ori_img_size"]["height"]
+    [x,y,w,h,ow,oh]
+  end
+  
+    
   def self.gen(uid,url)
     begin
-      info = RestClient.get "http://rekognition.com/func/api/?api_key=D5cT1o17dos5Qo9n&api_secret=H2V77hSyHhelJNzz&jobs=face_gender_emotion_age_glass_aggressive&urls=#{url}"
-      ret = ActiveSupport::JSON.decode(info)
+      ret = detect(url)
       if ret && ret["face_detection"]
         arr = ret["face_detection"]
         rek = Rekognition.new

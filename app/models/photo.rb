@@ -62,7 +62,6 @@ class Photo
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}", "ckn#{$uuid.generate}" ,1)
     rand_like
     if room=="21828958" || room=="21837985"
-      #info = Face.detect_area(self.img.url)
       gen_zwyd
       zwyd_send_link
     end
@@ -81,7 +80,31 @@ class Photo
   end
   
   def gen_zwyd
-    `cd coupon && ./gen_zwyd.sh '#{Photo.img_url(self.id)}' 0 0 0 #{self.id}.png zw#{self.id}.jpg`
+    url = Photo.img_url(self.id)
+    json = Rekognition.detect(Photo.img_url(self.id, :t2))
+    puts json
+    if json
+      arr = Rekognition.decode_info(json)
+      arr = arr.map {|x| x*640/200}
+    else
+      json = Rekognition.detect(url)
+      if json
+        arr = Rekognition.decode_info(json)
+        max = arr[4,2].max
+        arr = arr.map {|x| x*640/max}
+      end
+    end
+    puts arr
+    arr = [0, 0, 0, 0] if arr.nil?
+    info = arr
+    info[2] = info[3] if info[2] < info[3]
+    infostr = info[0,3].join(" ")
+    puts infostr
+    `cd coupon && ./gen_zwyd.sh '#{url}' #{infostr} #{self.id}.png zw#{self.id}.jpg`
+  end
+  
+  def self.test_zwyd
+    User.first.photos.last.gen_zwyd
   end
 
 

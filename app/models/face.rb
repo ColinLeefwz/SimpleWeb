@@ -33,7 +33,7 @@ class Face
     if info["face"].size>1
       w = info["img_width"]
       h = info["img_height"]
-      return [w/2, h/2, w/2, h/2]
+      return nil
     end
     x = info["face"][0]["position"]["center"]["x"]
     y = info["face"][0]["position"]["center"]["y"]
