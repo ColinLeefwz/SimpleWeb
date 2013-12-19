@@ -49,7 +49,7 @@ class Photo
       Xmpp.error_notify("图片async处理时img:#{img}的url为空")      
       return
     end
-    Xmpp.send_gchat($gfuid, self.room.to_i, self.user_id, "心愿卡片生成中..., 请稍候")
+    Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id, "心愿卡片生成中..., 请稍候")
     send_wb if weibo
     send_qq if qq
     if weibo || qq || (wx && wx>0)
@@ -76,7 +76,7 @@ class Photo
       attrs = " NOLOG='1'  url='#{url}' "
       ext = "<x xmlns='dface.url'>#{url}</x>"
       surl = ShopFaq.short_url('2.00kfdvGCGFlsXC1b5e64ba39QaSfpB', url)
-      Xmpp.send_chat($gfuid, self.user_id, ": 😜恭喜~您的专属心愿卡片已经制作完成啦 #{surl}", "zwd#{self.id}#{self.user_id}#{Time.now.to_i}" , " NOLOG='1' " )
+      Xmpp.send_chat($gfuid, self.user_id, ": 😜恭喜~您的专属心愿卡片已经制作完成啦 #{surl}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
       zwyd = ZwydWish.new(data: [], total: 0)
       zwyd._id = self._id
       zwyd.save
