@@ -1,4 +1,3 @@
-
 .general-wrapper
   .brief.sub-wrapper.first-sub
     .avatar.brief-item
@@ -9,7 +8,7 @@
           = @expert.name
         %br
         %span.title_company
-          #{@expert.profile.title}, #{@expert.profile.company}
+          #{empty_expert_info_filter(@expert.profile.title, @expert.profile.company)}
         %br
         %span.job.light-font
           = @expert.profile.company
