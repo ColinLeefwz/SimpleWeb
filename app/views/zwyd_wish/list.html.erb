@@ -26,8 +26,6 @@ $(document).ready(function(){
 		scrollheight=0;
 	/** high 存放屏幕高度， scrollTop 存放页面滚动高度。**/
 
-	alert(0)
-	
 	$(parent.window).scroll(function(){//页面滚动时执行此函数
 		if(scrollheight<$(parent.window).scrollTop()){
 			scrollheight=$(parent.window).scrollTop();
@@ -40,30 +38,30 @@ $(document).ready(function(){
 
 	
 	function ADDItems(){//增加框架函数
-		alert(8)
 		var row=1;
 		$.get("/zwyd_wish/list.json", {skip: zwydSkip}, function(data){
 
-		while($(".box").height()<(high+scrollheight)&&row <= 1){
+		while($(".box").height()<(high+scrollheight)&& row <= 1){
 				for(var i=0; i < 3; i++){
+					alert(data[i])
 					var itemplane='<div class="plane">'
-					                ssss
 								+'<div class="imgsbox">'
-									+'<img class="imgs" src="'+ data['photo_url'] +'">'
+									+'<img class="imgs" src="'+ data[i]['photo_url'] +'">'
 									+'<img class="imgs2" src="/w/1/images/pic3.png">'
 								+'</div>'
 								+'<div class="content">'
 									+'<div class="tit">'
-										+'<img src="'+data['user_logo']+'" align="absbottom"/>'
-										+'<h2><a href="#">'+ data['user_name'] +'</a>的心愿：</h2>'
+										+'<img src="'+data[i]['user_logo']+'" align="absbottom"/>'
+										+'<h2><a href="#">'+ data[i]['user_name'] +'</a>的心愿：</h2>'
 									+'</div>'
-									+'<p>'+ data['photo_desc'] +'</p>'
+									+'<p>'+ data[i]['photo_desc'] +'</p>'
 									+'<div class="op">'
-										+'<b class="l">收到'+ data['total'] +'个祝福</b>'
+										+'<b class="l">收到'+ data[i]['total'] +'个祝福</b>'
 										+'<a class="r" href="#">祝福他</a>'
 									+'</div>'
 								+'</div>'
 							+'</div>';
+							alert(2)
 							$("#Waterfall").append(itemplane);
 				}
 				zwydSkip += data.length
