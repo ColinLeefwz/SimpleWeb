@@ -850,16 +850,28 @@ class User
       next if wb_uid.size==0
       count = User.where({wb_uid:wb_uid}).count
       if count==0
-        if User.find_by_wb(wb_uid).wb_uid.class != Fixnum
+        user = User.find_by_wb(wb_uid)
+        if user.wb_uid.class != Fixnum
+          puts "#{key} : #{$redis.get(key)}, #{user.wb_uid}"
           user = User.find(user.id)
           puts user.to_json
           Xmpp.error_notify("微博#{wb_uid}对应用户count=0")
+        else
+          puts "#{key} : #{$redis.get(key)}, #{user.wb_uid}"
+        end
+        $redis.del(key)
+      end
+      if count==1
+        uid1 = User.where({wb_uid:wb_uid}).first.id.to_s
+        uid2 = $redis.get(key)
+        if uid1 != uid2
+          puts "#{uid1} != #{uid2}"
         end
       end
       if count>1
         puts "#{wb_uid}:#{count}"
         Xmpp.error_notify("微博#{wb_uid}不唯一")
-        $redis.del("W:#{wb_uid}")
+        $redis.del(key)
         user = User.find_by_wb(wb_uid)
         User.where({wb_uid:wb_uid}).each do |u|
           next if user.id == u.id
