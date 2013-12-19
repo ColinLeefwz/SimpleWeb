@@ -38,7 +38,8 @@
           - else
             %i.fa.fa-star Follow
 
-        %button.btn.right-side 0
+        %button.btn.right-side#follower-count
+          = @expert.followers.count
         
       = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
 
