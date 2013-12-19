@@ -12,6 +12,7 @@
 $(document).ready(function(){
 	var zwydSkip=0
 	var zwydajax=true
+	var additemsscroll= true
 	
 	var windowWidth=$(window).width();
 	if(windowWidth<=1280){
@@ -39,6 +40,10 @@ $(document).ready(function(){
 
 	
 	function ADDItems(){//增加框架函数
+		if(!additemsscroll){
+			return 
+		}	
+		additemsscroll = false
 		var row=1;
 		if(!zwydajax){
 			return
@@ -76,17 +81,15 @@ $(document).ready(function(){
 					blockElement:"div"
 				});
 			});
-
 			zwydSkip += data.length
+			additemsscroll = true
 			if(data.length != num){
 				zwydajax=false
 			}
-		})
-		
-
+		});
 	}
 
-		ADDItems();
+	ADDItems();
 	$("#Word").css("display","none");
 	
 	$(window).resize(function(){
