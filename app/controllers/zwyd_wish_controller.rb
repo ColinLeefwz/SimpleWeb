@@ -11,11 +11,10 @@ class ZwydWishController < ApplicationController
     return render :text => "祝福成功"
   end
 
-
-
-  def photo_authorize
-    @zwyd_wish = ZwydWish.find_by_id(params[:id])
-    return render :text => "无效图片" if @zwyd_wish.nil?
+  def ajax_wish
+    data = @zwyd_wish.data
+    data = data[0, params[:total].to_i].reverse
+    render :json => data[params[:skip].to_i, 10].map{|m| m.join(': ')}.to_json
   end
 
 
@@ -28,6 +27,12 @@ class ZwydWishController < ApplicationController
       format.html # show.html.erb
       format.json { render json: data.to_json }
     end
+  end
+
+  private
+  def photo_authorize
+    @zwyd_wish = ZwydWish.find_by_id(params[:id])
+    return render :text => "无效图片" if @zwyd_wish.nil?
   end
 
 

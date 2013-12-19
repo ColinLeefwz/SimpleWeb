@@ -454,6 +454,21 @@ class User
     return 1800 if diff<3600*720 
     return 1200  
   end
+
+  def time_desc(shop)
+    time = Time.now.to_i - $redis.zscore("UA#{shop.id}", self.id)
+    if time < 60
+      "#{time}秒前"
+    elsif  time < 3600
+      "#{time/60}分钟前"
+    elsif time < 24*3600
+      "#{time/3600}小时前"
+    elsif time < 30*24*3600
+      "#{time/(24*3600)}天前"
+    else
+      "一个月前"
+    end
+  end
     
   def do_notify_good_friend(shop)
     notify_dis = notify_distance

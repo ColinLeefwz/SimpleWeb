@@ -13,6 +13,8 @@
 <script src="w/1/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
 <script>
 	$(document).ready(function(){
+    var zwyd_total = $("#zwyd_wish_total").html()
+    var zwyd_skip = 20
 		$("#name").click(function(){
 			if($(this).val()=="祝福人"){
 				$(this).val("");
@@ -25,11 +27,23 @@
 		});
 		
 		$("#More").click(function(){
+      if(zwyd_skip >= zwyd_total){
+        return
+      }
 			var libox="";
-				for(var i=0;i<10;i++){
-					libox+='<li><a>李沁李沁李沁李沁</a></li>';
-				}
-			$("#Mes").append(libox);
+      var id = $("#zwyd_wish_id").val()
+        $.get('/zwyd_wish/ajax_wish',{id: id, total: zwyd_total, skip: zwyd_skip }, function(data){
+            for(var i=0;i<data.length;i++){
+              libox +='<li><a>'
+              libox += data[i]
+              libox +='</a></li>';
+            }
+            $("#Mes").append(libox);
+            zwyd_skip += data.length
+            if(zwyd_skip >= zwyd_total){
+              $("#More").remove();
+            }
+        });	
 		});
 	});
 </script>
@@ -59,7 +73,7 @@
     </div>
     <div class="plane3">
       <a class="links" target="_blank" href="/w/zwyd/explain2.html">活动详情</a>
-      <div class="l">我已经收到 <span class="red"><%= @zwyd_wish.total %></span>个祝福啦<br/><span class="red">还差<%= (30- @zwyd_wish.total.to_i) < 0 ? 0: (30- @zwyd_wish.total.to_i)   %>个祝福就有机会拿到1000元新年红包啦，<br/>赶紧祝福我噢~</span></div>
+      <div class="l">我已经收到 <span class="red" id='zwyd_wish_total'><%= @zwyd_wish.total %></span>个祝福啦<br/><span class="red">还差<%= (30- @zwyd_wish.total.to_i) < 0 ? 0: (30- @zwyd_wish.total.to_i)   %>个祝福就有机会拿到1000元新年红包啦，<br/>赶紧祝福我噢~</span></div>
     </div>
     <div class="plane4">
       <ul id="Mes">
@@ -70,12 +84,14 @@
         <% end %> 
       </ul>
       <div class="clear1"></div>
+      <% if @zwyd_wish.data.length > 20%>
       <a class="r mr30 pointer" id="More">查看更多</a>
+      <% end %>
     </div>
     <div class="plane5">
       <div class="title1">祝福TA：</div>
       <form method="post" action="zwyd_wish/create">
-        <%= hidden_field_tag :id, params[:id] %>
+        <%= hidden_field_tag :id, params[:id], :id => "zwyd_wish_id" %>
         <div class="inputbox1">
           <%= text_field_tag :name, params[:name]||'祝福人', :class => "texts" %>
         </div>

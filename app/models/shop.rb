@@ -594,7 +594,7 @@ class Shop
   #预置问答
   def pre_faqs(user)
     us = checkin_users 
-    pre = "hi，#{user.name}，欢迎来到测试预置问答😊试试回复："
+    pre = "hi，#{user.name}，欢迎来到#{self.name}😊试试回复："
     pre += "\n01=>来到这儿可以做什么？\n"
     pre += "02=>如何找到更多的小伙伴？\n" 
     pre += "03=>#{self.name}のかみ速配.\n" if us.select{|m| m.gender != user.gender }.any?
