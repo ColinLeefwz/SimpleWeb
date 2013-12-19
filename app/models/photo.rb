@@ -49,7 +49,7 @@ class Photo
       Xmpp.error_notify("图片async处理时img:#{img}的url为空")      
       return
     end
-    Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id, "心愿卡片生成中..., 请稍候")
+    Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id, "您的专属心愿卡片正在生成中..., 请稍候")
     send_wb if weibo
     send_qq if qq
     if weibo || qq || (wx && wx>0)
@@ -69,14 +69,14 @@ class Photo
   end
 
   def zwyd_send_link
-      text = "😜恭喜~您的专属心愿卡片已经制作完成啦，还能集祝福抽红包噢~戳我看看吧！"
+      text = "😜恭喜~心愿卡片制作完成，集祝福抽红包~ 戳我看看吧！"
       url = "http://www.dface.cn/zwyd_wish?id=#{self.id}"
       faq = ShopFaq.find('52b2e20c20f3180fbc000021')
       Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "zw#{self.id}#{self.user_id}#{Time.now.to_i}")
       attrs = " NOLOG='1'  url='#{url}' "
       ext = "<x xmlns='dface.url'>#{url}</x>"
       surl = ShopFaq.short_url('2.00kfdvGCGFlsXC1b5e64ba39QaSfpB', url)
-      Xmpp.send_chat($gfuid, self.user_id, ": 😜恭喜~您的专属心愿卡片已经制作完成啦 #{surl}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
+      Xmpp.send_chat($gfuid, self.user_id, ": 😜恭喜~ 您的专属心愿卡片已经制作完成，赶快集祝福抽红包吧 #{surl}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
       zwyd = ZwydWish.new(data: [], total: 0)
       zwyd._id = self._id
       zwyd.save
