@@ -49,7 +49,7 @@ class Photo
       Xmpp.error_notify("图片async处理时img:#{img}的url为空")      
       return
     end
-    Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id, "您的专属心愿卡片正在生成中..., 请稍候")
+    zwyd_pre_notice
     send_wb if weibo
     send_qq if qq
     if weibo || qq || (wx && wx>0)
@@ -65,6 +65,12 @@ class Photo
     if room=="21828958" || room=="21837985"
       gen_zwyd
       zwyd_send_link
+    end
+  end
+  
+  def zwyd_pre_notice
+    if room=="21828958" || room=="21837985"
+      Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id, "您的专属心愿卡片正在生成中..., 请稍候")
     end
   end
 
