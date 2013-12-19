@@ -79,7 +79,7 @@ class Photo
   end
   
   def gen_zwyd
-    `cd coupon && ./gen_zwyd.sh '#{self.img.url}' 0 0 0 ../public/zw#{self.id}.jpg`
+    `cd coupon && ./gen_zwyd.sh '#{Photo.img_url(self.id)}' 0 0 0 #{self.id}.png zw#{self.id}.jpg`
   end
 
 
