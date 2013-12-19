@@ -54,6 +54,37 @@ class ApplicationController < ActionController::Base
     current_user
   end
 
+  ## payments and enrollments
+  # paypal
+  def paypal_pay(item)
+    @order = Order.new(user: current_user, enrollable: item)
+
+    if @order.save
+      Paypal.create_payment_with_paypal(item, @order, order_execute_url(@order.id))
+      if @order.approve_url
+        redirect_to @order.approve_url
+      else
+        redirect_to send("#{item.class.name.downcase}_path", item.id), flash: {error: "Opps, something went wrong"}
+      end
+    else
+      redirect_to send("#{item.class.name.downcase}_path", item.id), flash: {error: "Opps, something went wrong"}
+    end
+  end
+
+  # send mail after user successfully enrolled 
+  def send_enrolled_mail(item)
+    domain_url = request.base_url
+    if domain_url == "http://localhost:3000"
+      domain_url = "http://www.prodygia.com"
+    end
+
+    item_image_url = domain_url + item.cover.url
+    mandrill = MandrillApi.new
+    mandrill.enroll_comfirm(current_user, item, item_image_url)
+  end
+  
+
+
   protected
   ## Override devise-invitable before_filter
   def authenticate_inviter!
