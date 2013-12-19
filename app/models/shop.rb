@@ -222,7 +222,7 @@ class Shop
   end
   
   def default_text_when_photo
-    return '#新年许愿#' if self.id.to_s == "21828958" 
+    # return '#说出我的心愿#' if self.id.to_s == "21828958" 
     ret = ""
     coupon = share_coupon
     ret += coupon.text if coupon
