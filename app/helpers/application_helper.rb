@@ -20,6 +20,38 @@ module ApplicationHelper
   end
 
 
+
+  # helper for displaying price
+  def price_tag(price)
+    if price == 0
+      return "Free"
+    else
+      return number_to_currency(price, :unit => "$") + "USD"
+    end
+  end
+
+
+
+  # use devise helper outside of Users::RegistrationsController
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
+  end
+
+  def resource
+    @resource ||= User.new
+  end
+
+  def resource_name
+    :user
+  end
+
+  def resource_class
+    devise_mapping.to
+  end
+
+
+
+  # dynamic form
   def link_to_remove_fields(name, f)
     f.hidden_field(:_destroy) + link_to(name, "#", class: "btn remove-fields inline")
   end

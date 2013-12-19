@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131209090417) do
+ActiveRecord::Schema.define(version: 20131217100033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,23 +31,34 @@ ActiveRecord::Schema.define(version: 20131209090417) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "admin_users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+  create_table "announcements", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "sd_url"
+    t.string   "hd_url"
+    t.string   "language"
+    t.boolean  "draft"
+    t.boolean  "canceled"
+    t.string   "categories",                     default: [], array: true
+    t.integer  "expert_id"
+    t.string   "attached_video_hd_file_name"
+    t.string   "attached_video_hd_content_type"
+    t.integer  "attached_video_hd_file_size"
+    t.datetime "attached_video_hd_updated_at"
+    t.string   "attached_video_sd_file_name"
+    t.string   "attached_video_sd_content_type"
+    t.integer  "attached_video_sd_file_size"
+    t.datetime "attached_video_sd_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
   end
 
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+  add_index "announcements", ["categories"], name: "index_announcements_on_categories", using: :gin
+  add_index "announcements", ["expert_id"], name: "index_announcements_on_expert_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -94,12 +105,13 @@ ActiveRecord::Schema.define(version: 20131209090417) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "categories",         default: [], array: true
+    t.string   "categories",         default: [],  array: true
     t.string   "title"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
+    t.decimal  "price",              default: 0.0
   end
 
   add_index "courses", ["categories"], name: "index_courses_on_categories", using: :gin
@@ -336,6 +348,14 @@ ActiveRecord::Schema.define(version: 20131209090417) do
     t.datetime "attached_video_sd_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "hd_url"
+    t.string   "sd_url"
+    t.string   "language"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
+    t.string   "cover_url"
   end
 
   add_index "video_interviews", ["categories"], name: "index_video_interviews_on_categories", using: :gin
