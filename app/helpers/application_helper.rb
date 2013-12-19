@@ -31,6 +31,21 @@ module ApplicationHelper
   end
 
 
+  ## payment
+  # display the enroll button(free) or paypal button
+  def paypal_or_enroll_button(params, item)
+
+    if current_user.enrolled? item
+      "Enrolled"
+    else
+      if item.free?
+        link_to "Confirm", "/#{params[:controller]}/#{item.id}/enroll_confirm"
+      else
+        link_to image_tag("paypal_button.png"), send("purchase_#{item.class.name.downcase}_path", item.id)
+      end
+    end
+  end
+
 
   # use devise helper outside of Users::RegistrationsController
   def devise_mapping
