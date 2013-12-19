@@ -535,7 +535,7 @@ class Shop
   end
 
   def faqs
-    ShopFaq.where({sid: self.id}).sort({od: 1})
+    ShopFaq.where({sid: self.id, od: {"$ne" => nil }}).sort({od: 1})
   end
 
   def faq(od)
