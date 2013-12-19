@@ -21,7 +21,7 @@ class ZwydWishController < ApplicationController
 
   def list
     if params[:skip]
-     zwyd_wishs = ZwydWish.where({}).limit(3).skip(params[:skip]).sort({_id: -1})
+     zwyd_wishs = ZwydWish.where({}).limit(params[:limit]).skip(params[:skip]).sort({_id: -1})
      data = zwyd_wishs.map{|m| ["photo_url" => "http://www.dface.cn/zw#{m.id}.jpg", 'user_logo' => m.user_logo, 'user_name' => m.photo_user.try(:name), 'photo_desc' => m.photo_desc, 'total' => m.total.to_i ]}
     end
     respond_to do |format|

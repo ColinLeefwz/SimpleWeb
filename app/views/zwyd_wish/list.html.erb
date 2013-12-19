@@ -43,7 +43,7 @@ $(document).ready(function(){
 		if(!zwydajax){
 			return
 		}
-		$.get("/zwyd_wish/list.json", {skip: zwydSkip}, function(data){
+		$.get("/zwyd_wish/list.json", {skip: zwydSkip, limit: num}, function(data){
 			while($(".box").height()<(high+scrollheight)&& row <= 1){
 				for(var i=0; i < data.length; i++){
 					var d = data[i][0]
@@ -78,7 +78,7 @@ $(document).ready(function(){
 			});
 
 			zwydSkip += data.length
-			if(data.length != 3){
+			if(data.length != num){
 				zwydajax=false
 			}
 		})
