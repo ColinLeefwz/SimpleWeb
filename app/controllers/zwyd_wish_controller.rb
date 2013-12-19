@@ -19,9 +19,14 @@ class ZwydWishController < ApplicationController
 
 
   def list
+    if params[:order] == 'amount'
+      sort = {total: -1}
+    else
+      sort = {_id: -1}
+    end
     if params[:skip]
-     zwyd_wishs = ZwydWish.where({}).limit(params[:limit]).skip(params[:skip]).sort({_id: -1})
-     data = zwyd_wishs.map{|m| ["photo_url" => "http://www.dface.cn/zw#{m.id}.jpg", 'user_logo' => m.user_logo, 'user_name' => m.photo_user.try(:name), 'photo_desc' => m.photo_desc, 'total' => m.total.to_i, 'wish' => "/zwyd_wish?id=#{m.id}" ]}
+     zwyd_wishs = ZwydWish.where({}).limit(params[:limit]).skip(params[:skip]).sort(sort)
+     data = zwyd_wishs.map{|m| ["photo_url" => "http://www.dface.cn/tzw#{m.id}.jpg", 'user_logo' => m.user_logo, 'user_name' => m.photo_user.try(:name), 'photo_desc' => m.photo_desc, 'total' => m.total.to_i, 'wish' => "/zwyd_wish?id=#{m.id}" ]}
     end
     respond_to do |format|
       format.html # show.html.erb

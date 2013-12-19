@@ -72,6 +72,15 @@ class ShopFaq
     attrs, ext = self.attr_ext
     text = self.output
     Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
+    zwyd_delay_send(uid, sid) if sid.to_s =='21828958' && self.od.to_s == '02'
+  end
+
+  #紫薇原点延迟发送
+  def zwyd_delay_send(uid,sid)
+    url = "dface://scheme/getphoto"
+    attrs = " NOLOG='1'  url='#{url}' "
+    ext = "<x xmlns='dface.url'>#{url}</x>"
+    Resque.enqueue_in(5.seconds,XmppRoomMsg, $gfuid,sid,uid,'',nil, attrs="", ext="") 
   end
   
   def send_to_user(uid)
