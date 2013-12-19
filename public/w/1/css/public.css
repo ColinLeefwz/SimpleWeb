@@ -16,6 +16,7 @@ a:hover{color:#f60;}
 
 .mt10{margin-top:10px !important;}
 .mb30{margin-bottom:30px !important;}
+.mb60{margin-bottom:60px !important;}
 .ml5{margin-left:8px !important;}
 .ml20{margin-left:20px !important;}
 .mr30{margin-right:30px !important;}
@@ -27,7 +28,7 @@ a:hover{color:#f60;}
 .word{color:#666;font-size:14px;letter-spacing:1px;}
 .pointer{cursor:pointer;}
 
-.btn{width:146px;height:95px;background:url(/w/1/images/btn.jpg) left top no-repeat;cursor:pointer;border:none;}
+.btn{width:146px;height:59px;background:url(/w/1/images/btn.jpg) left top no-repeat;cursor:pointer;border:none;}
 
 .main{width:640px;margin:0px auto;overflow:hidden;zoom:1;background:url(/w/1/images/bg2.jpg) left top no-repeat;}
 .con{width:100%;overflow:hidden;zoom:1;}
