@@ -88,36 +88,37 @@ feature "Expert Dashboard" do
 	end
 
 	### Create new session
-	context "Create new session" do
-		background do
-			click_link "Create new session"
-			expect(page).to have_css "form#new_live_session"
-			fill_new_session_form
-		end
+	# 2013.12.19: For now, expert can not create session
+	# context "Create new session" do
+	# 	background do
+	# 		click_link "Create new session"
+	# 		expect(page).to have_css "form#new_live_session"
+	# 		fill_new_session_form
+	# 	end
 
-		## create
-		scenario "create", js: true do
-			click_button "Publish"
+	# 	## create
+	# 	scenario "create", js: true do
+	# 		click_button "Publish"
 
-			expect(page).to have_css(".session-items .item", count: 1)
-			expect(Session).to have(1).instance
-		end
+	# 		expect(page).to have_css(".session-items .item", count: 1)
+	# 		expect(Session).to have(1).instance
+	# 	end
 
-		## draft
-		scenario "draft", js: true do
-			click_button "Save Draft"
+	# 	## draft
+	# 	scenario "draft", js: true do
+	# 		click_button "Save Draft"
 			
-			expect(page).to have_css(".session-items .item", count: 1)
-			expect(Session).to have(1).instance
-			expect(Session.last).to be_draft
-		end
+	# 		expect(page).to have_css(".session-items .item", count: 1)
+	# 		expect(Session).to have(1).instance
+	# 		expect(Session.last).to be_draft
+	# 	end
 
-		scenario "preview", js: true do
-			click_link "Preview"
-			expect(page).to have_css "div.modal"
-			expect(Session).to have(0).instance
-		end
-	end
+	# 	scenario "preview", js: true do
+	# 		click_link "Preview"
+	# 		expect(page).to have_css "div.modal"
+	# 		expect(Session).to have(0).instance
+	# 	end
+	# end
 	
 	## cancel a session
 	## 2013.11.16: No need for now
