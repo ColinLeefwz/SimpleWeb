@@ -78,18 +78,22 @@ class Photo
   
   def gen_zwyd
     url = Photo.img_url(self.id)
-    json = Rekognition.detect(Photo.img_url(self.id, :t2))
-    puts json
-    if json
-      arr = Rekognition.decode_info(json)
-      arr = arr.map {|x| x*640/200}
-    else
-      json = Rekognition.detect(url)
+    begin
+      json = Rekognition.detect(Photo.img_url(self.id, :t2))
+      puts json
       if json
         arr = Rekognition.decode_info(json)
-        max = arr[4,2].max
-        arr = arr.map {|x| x*640/max}
+        arr = arr.map {|x| x*640/200}
+      else
+        json = Rekognition.detect(url)
+        if json
+          arr = Rekognition.decode_info(json)
+          max = arr[4,2].max
+          arr = arr.map {|x| x*640/max}
+        end
       end
+    rescue Exception => e
+      Xmpp.error_notify(e.to_s)
     end
     puts arr
     arr = [0, 0, 0, 0] if arr.nil?
