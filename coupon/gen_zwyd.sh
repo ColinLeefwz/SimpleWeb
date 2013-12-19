@@ -10,7 +10,7 @@ convert -resize 640x640 $1 $5
 ruby ./crop2.rb $5 $2 $3 $4
 mogrify -resize 320x320 $5
 mogrify  -matte -draw 'image Dst_In 10,10 0,0 "circle.gif"'  $5
-convert -quality 85 -draw "image Over 573,231 0,0 \"$5\"" zwyd.jpg $6
+convert -quality 90 -draw "image Over 573,231 0,0 \"$5\"" zwyd.jpg $6
 rm $5
 convert -resize 275x275 $6 $5
 jpegoptim --strip-all  $5
