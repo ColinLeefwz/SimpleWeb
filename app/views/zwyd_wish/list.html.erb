@@ -13,6 +13,7 @@ $(document).ready(function(){
 	var zwydSkip=0
 	var zwydajax=true
 	var additemsscroll= true
+	var zwydorder= $("#zwyd_order").html()
 	
 	var windowWidth=$(window).width();
 	if(windowWidth<=1280){
@@ -48,7 +49,7 @@ $(document).ready(function(){
 		if(!zwydajax){
 			return
 		}
-		$.get("/zwyd_wish/list.json", {skip: zwydSkip, limit: num}, function(data){
+		$.get("/zwyd_wish/list.json", {skip: zwydSkip, limit: num, order: zwydorder}, function(data){
 			while($(".box").height()<(high+scrollheight)&& row <= 1){
 				for(var i=0; i < data.length; i++){
 					var d = data[i][0]
@@ -118,8 +119,9 @@ $(document).ready(function(){
 
 <div class="header"><img src="/w/1/images/header.jpg"/></div>
 <div class="title">
-	<a class="ml20 mr50" title="最新" href="#"><img src="/w/1/images/btn2.png" alt="最新"/></a>
-	<a class="mr50" title="最多祝福" href="#"><img src="/w/1/images/btn.png" alt="最多祝福"/></a>
+	<a class="ml20 mr50" title="最新" href="/zwyd_wish/list?order=default"><img src="/w/1/images/btn2.png" alt="最新"/></a>
+	<a class="mr50" title="最多祝福" href="/zwyd_wish/list?order=amount"><img src="/w/1/images/btn.png" alt="最多祝福"/></a>
+	<span style='display: none' id='zwyd_order'><%= params[:order] %></span>
 </div>
 
 <div class="box" id="Waterfall">

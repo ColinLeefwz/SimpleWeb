@@ -69,9 +69,12 @@ class Photo
   end
 
   def zwyd_send_link
-      text = "😜他们都在制作专属的紫薇原点电子贺卡，还能集祝福抽红包哦～快来试试吧！"
+      text = "😜恭喜~您的专属心愿卡片已经制作完成啦，还能集祝福抽红包噢~戳我看看吧！"
       url = "http://www.dface.cn/zwyd_wish?id=#{self.id}"
       Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, text,url, "zw#{self.id}#{self.user_id}#{Time.now.to_i}")
+      attrs = " NOLOG='1'  url='#{url}' "
+      ext = "<x xmlns='dface.url'>#{url}</x>"
+      Xmpp.send_chat("s#{self.room.to_i}", self.user_id, ": #{text}", "zwd#{self.id}#{self.user_id}#{Time.now.to_i}" , attrs, ext )
       zwyd = ZwydWish.new(data: [], total: 0)
       zwyd._id = self._id
       zwyd.save
