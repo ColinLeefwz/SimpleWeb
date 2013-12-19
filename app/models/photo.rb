@@ -71,9 +71,7 @@ class Photo
       text = "😜恭喜~您的专属心愿卡片已经制作完成啦，还能集祝福抽红包噢~戳我看看吧！"
       url = "http://www.dface.cn/zwyd_wish?id=#{self.id}"
       faq = ShopFaq.find('52b2e20c20f3180fbc000021')
-      faq.url = url
-      faq.link_rule = '0'
-      faq.send_to_room(self.user_id)
+      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "zw#{self.id}#{self.user_id}#{Time.now.to_i}")
       attrs = " NOLOG='1'  url='#{url}' "
       ext = "<x xmlns='dface.url'>#{url}</x>"
       Xmpp.send_chat("s#{self.room.to_i}", self.user_id, ": #{text}", "zwd#{self.id}#{self.user_id}#{Time.now.to_i}" , attrs, ext )
