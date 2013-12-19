@@ -10,6 +10,8 @@
 <script>
 // JavaScript Document
 $(document).ready(function(){
+	var zwydSkip=0
+	
 	var windowWidth=$(window).width();
 	if(windowWidth<=1280){
 		$("#Waterfall").css({"width":"928px"});
@@ -23,6 +25,8 @@ $(document).ready(function(){
 	var high=window.screen.height,
 		scrollheight=0;
 	/** high 存放屏幕高度， scrollTop 存放页面滚动高度。**/
+
+	alert(0)
 	
 	$(parent.window).scroll(function(){//页面滚动时执行此函数
 		if(scrollheight<$(parent.window).scrollTop()){
@@ -32,33 +36,42 @@ $(document).ready(function(){
 		// 另一种情况 若 scrollheight > $(parent.window).scrollTop() 表示页面向上滚动。那么页面的整体高度就不会再增加。
 	});
 
-	ADDItems();
+	
+
 	
 	function ADDItems(){//增加框架函数
-		var row=1;  //表示行数，例如此例表示的显示3行
-		while($(".box").height()<(high+scrollheight)&&row<4){
-			row++;
-			for(var i=0;i<3;i++){
-				var itemplane='<div class="plane">'
+		alert(8)
+		var row=1;
+		$.get("/zwyd_wish/list.json", {skip: zwydSkip}, function(data){
+
+		while($(".box").height()<(high+scrollheight)&&row <= 1){
+				for(var i=0; i < 3; i++){
+					var itemplane='<div class="plane">'
+					                ssss
 								+'<div class="imgsbox">'
-									+'<img class="imgs" src="/w/1/images/pic1.jpg">'
+									+'<img class="imgs" src="'+ data['photo_url'] +'">'
 									+'<img class="imgs2" src="/w/1/images/pic3.png">'
 								+'</div>'
 								+'<div class="content">'
 									+'<div class="tit">'
-										+'<img src="/w/1/images/pic2.png" align="absbottom"/>'
-										+'<h2><a href="#">袁乐天</a>的心愿：</h2>'
+										+'<img src="'+data['user_logo']+'" align="absbottom"/>'
+										+'<h2><a href="#">'+ data['user_name'] +'</a>的心愿：</h2>'
 									+'</div>'
-									+'<p>你要按你所想的去生活，否则，你迟早会按你所生活的去想。</p>'
+									+'<p>'+ data['photo_desc'] +'</p>'
 									+'<div class="op">'
-										+'<b class="l">收到200个祝福</b>'
+										+'<b class="l">收到'+ data['total'] +'个祝福</b>'
 										+'<a class="r" href="#">祝福他</a>'
 									+'</div>'
 								+'</div>'
 							+'</div>';
-				$("#Waterfall").append(itemplane);
+							$("#Waterfall").append(itemplane);
+				}
+				zwydSkip += data.length
 			}
-		}
+		})
+		row++;
+
+	
 		
 		$("#Waterfall img:last").load(function(){//添加$("#Waterfall img:last").load()在这里是为了防止火狐浏览器第一次加载页面时显示不正常。
 			$('#Waterfall').BlocksIt({
@@ -69,6 +82,8 @@ $(document).ready(function(){
 			});
 		});
 	}
+
+		ADDItems();
 	$("#Word").css("display","none");
 	
 	$(window).resize(function(){
@@ -93,35 +108,20 @@ $(document).ready(function(){
 });
 </script>
 </head>
-
 <body>
 
-<div class="header"><img src="images/header.jpg"/></div>
+<div class="header"><img src="/w/1/images/header.jpg"/></div>
 <div class="title">
-	<a class="ml20 mr50" title="最新评论" href="#"><img src="images/btn.png" alt="最新评论"/></a>
-	<a class="mr50" title="最热评论" href="#"><img src="images/btn2.png" alt="最热评论"/></a>
-	<a class="mr50" title="总评论" href="#"><img src="images/btn3.png" alt="总评论"/></a>
+	<a class="ml20 mr50" title="最新评论" href="#"><img src="/w/1/images/btn.png" alt="最新评论"/></a>
+	<a class="mr50" title="最热评论" href="#"><img src="/w/1/images/btn2.png" alt="最热评论"/></a>
+	<a class="mr50" title="总评论" href="#"><img src="/w/1/images/btn3.png" alt="总评论"/></a>
 </div>
 
 <div class="box" id="Waterfall">
-	<center class="word pt20" id="Word"><img src="images/sign4.gif" align="absmiddle" class="mr5 ">数据加载中请稍后...</center>
-	<!--<div class="plane">
-		<div class="imgsbox">
-			<img class="imgs" src="images/pic1.jpg">
-			<img class="imgs2" src="images/pic3.png">
-		</div>
-		<div class="content">
-			<div class="tit">
-				<img src="images/pic2.png" align="absbottom"/>
-				<h2><a href="#">袁乐天</a>的心愿：</h2>
-			</div>
-			<p>你要按你所想的去生活，否则，你迟早会按你所生活的去想。</p>
-			<div class="op">
-				<b class="l">收到200个祝福</b>
-				<a class="r" href="#">祝福他</a>
-			</div>
-		</div>
-	</div>-->
+	<center class="word pt20" id="Word"><img src="/w/1/images/sign4.gif" align="absmiddle" class="mr5 ">数据加载中请稍后...</center>
+
+
+
 </div>
 
 </body>

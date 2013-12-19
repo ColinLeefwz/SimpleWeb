@@ -22,4 +22,5 @@ class ZwydWish
   	logo.img.url(:t2)
   end
 
+
 end
