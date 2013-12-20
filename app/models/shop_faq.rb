@@ -80,7 +80,7 @@ class ShopFaq
     url = "dface://scheme/getphoto"
     attrs = " NOLOG='1'  url='#{url}' "
     ext = "<x xmlns='dface.url'>#{url}</x>"
-    Resque.enqueue_in(5.seconds,XmppRoomMsg, $gfuid,sid,uid,'点击此处马上参与活动',nil, attrs, ext) 
+    Resque.enqueue_in(5.seconds,XmppRoomMsg, $gfuid,sid,uid,'点击此处拍照制作你的专属心愿贺卡，还能抽千元红包哦😍',nil, attrs, ext) 
   end
   
   def send_to_user(uid)
