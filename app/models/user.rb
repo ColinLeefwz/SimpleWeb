@@ -71,13 +71,17 @@ class User < ActiveRecord::Base
 
   # session/course enrollment
   def enrolled?(item)
-    # record 
+    record = Enrollment.find_by user_id: self.id, 
+                                enrollable_id: item.id,
+                                enrollable_type: item.class.name
   end
 
+  def enroll(item)
+    record = Enrollment.create user_id: self.id,
+                               enrollable_id: item.id,
+                               enrollable_type: item.class.name
+  end
 
-  # def enroll_session(session)
-  #   self.enrolled_sessions << session
-  # end
 
   def build_refer_message(invited_type)
     self.email_messages.build(from_name: "#{self.first_name} #{self.last_name}", from_address: "no-reply@prodygia", reply_to: "#{self.email}", invited_type: invited_type)
