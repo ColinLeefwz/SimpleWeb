@@ -3,7 +3,10 @@ Prodygia::Application.routes.draw do
   resources :courses do
     member do
       get :preview
+      get :purchase
       get :enroll
+      get :enroll_confirm
+      post :sign_up_confirm
     end
   end
 
@@ -22,9 +25,8 @@ Prodygia::Application.routes.draw do
   resources :sessions do
     member do
       get :enroll
-      get :buy_now
-      post :sign_up_buy
-      get :free_confirm
+      get :enroll_confirm
+      get :purchase
       post :sign_up_confirm
       post :email_friend
 
