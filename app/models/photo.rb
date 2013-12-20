@@ -70,7 +70,7 @@ class Photo
   
   def zwyd_pre_notice
     if room=="21828958" || room=="21837985"
-      Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id, "您的专属心愿卡片正在生成中..., 请稍候")
+      Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id, "你的专属心愿卡片正在生成中..., 请稍候")
     end
   end
 
@@ -81,7 +81,7 @@ class Photo
       Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "zw#{self.id}#{self.user_id}#{Time.now.to_i}")
       attrs = " NOLOG='1'  url='#{url}' "
       ext = "<x xmlns='dface.url'>#{url}</x>"
-      Xmpp.send_chat($gfuid, self.user_id, ": 😜恭喜~ 您的专属心愿卡片已经制作完成，赶快集祝福抽红包吧 #{url}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
+      Xmpp.send_chat($gfuid, self.user_id, ": 😜恭喜~ 你的专属心愿卡片已经制作完成，赶快集祝福抽红包吧 #{url}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
       zwyd = ZwydWish.new(data: [], total: 0)
       zwyd._id = self._id
       zwyd.save
