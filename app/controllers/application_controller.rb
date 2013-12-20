@@ -1,3 +1,6 @@
+require 'paypal'
+require 'mandrill_api'
+
 class ApplicationController < ActionController::Base
   before_filter do
     resource = controller_name.singularize.to_sym
@@ -57,17 +60,18 @@ class ApplicationController < ActionController::Base
   ## payments and enrollments
   # paypal
   def paypal_pay(item)
-    @order = Order.new(user: current_user, enrollable: item)
+    order = Order.new(user: current_user, enrollable: item)
 
-    if @order.save
-      Paypal.create_payment_with_paypal(item, @order, order_execute_url(@order.id))
-      if @order.approve_url
-        redirect_to @order.approve_url
+    if order.save
+      Paypal.create_payment_with_paypal(item, order, order_execute_url(order.id))
+
+      if order.approve_url
+        redirect_to order.approve_url
       else
         redirect_to send("#{item.class.name.downcase}_path", item.id), flash: {error: "Opps, something went wrong"}
       end
     else
-      redirect_to send("#{item.class.name.downcase}_path", item.id), flash: {error: "Opps, something went wrong"}
+      redirect_to send("#{item.class.name.downcase}_path", item.id), flash: {error: order.errors.messages}
     end
   end
 
