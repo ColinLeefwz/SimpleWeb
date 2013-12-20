@@ -122,7 +122,7 @@ class CheckinNotice
   def self.zwyd_temp_notice(user, shop)
    return if shop.city != '0571' 
    return if $redis.sismember("ZWYDNOTICE", user.id)
-   if $redis.zscore("UA#{shop.id.to_i}", user.id)
+   if $redis.zscore("UA21828958", user.id)
     $redis.sadd("ZWYDNOTICE", user.id)
     return 
    end
