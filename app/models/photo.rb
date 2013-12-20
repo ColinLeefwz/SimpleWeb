@@ -65,7 +65,13 @@ class Photo
     if room==$zwyd.to_s || room=="21837985"
       gen_zwyd
       zwyd_send_link
+      zwyd_ali_syn
     end
+  end
+  
+  def zwyd_ali_syn
+    `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/zw#{self.id}.jpg  oss://dface/#{self.id}/0.jpg`
+    `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/tzw#{self.id}.jpg  oss://dface/#{self.id}/t2_0.jpg`
   end
   
   def zwyd_pre_notice
