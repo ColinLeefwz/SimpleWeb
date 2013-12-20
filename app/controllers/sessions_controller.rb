@@ -1,6 +1,3 @@
-require 'paypal'
-require 'mandrill_api'
-
 class SessionsController < ApplicationController
   before_action :set_session, except: [:new_live_session, :new_post_content, :create_post_content, :create_live_session]
 
@@ -16,47 +13,30 @@ class SessionsController < ApplicationController
   end
 
   def enroll
-    if user_signed_in?
-      if current_user.enrolled_sessions.include? @session
-        @include = true
-      else
-        @include = false
-      end
-
-      if @session.free?
-        @free_session = true
-      else
-        @free_session = false
-      end
-    end
+    #todo: move this template into shared folder
+    render "courses/enroll", locals: {item: @session}
   end
 
-  def free_confirm
-    enroll_redirect
+  def enroll_confirm
+    current_user.enroll(@session)
+    send_enrolled_mail(@session)
+
+    redirect_to @session, flash: {success: "Enrolled Success!"}
   end
 
+  def purchase
+    paypal_pay(@session)
+  end
+
+  # todo: use Exception and Catch mechanism to deal with all accidents(maybe in the application_controller)
   def sign_up_confirm
-    @member = Member.new(member_params)
-    if @member.save
-      sign_in @member
+    member = Member.create(member_params)
+    sign_in member
 
-      enroll_redirect
+    if @session.free?
+      redirect_to enroll_confirm_session_path(@session)
     else
-      redirect_to session_path(@session), alert: "Can not sign up you !"
-    end
-  end
-
-  def buy_now
-    paypal_pay
-  end
-
-  def sign_up_buy
-    @member = Member.new(member_params)
-    if @member.save
-      sign_in @member
-      paypal_pay
-    else
-      redirect_to session_path(@session), alert: "Can not sign up you !"
+      redirect_to purchase_session_path(@session)
     end
 
   end
@@ -194,10 +174,5 @@ class SessionsController < ApplicationController
     params.require(:article_session).permit(:title, {categories:[]}, :cover, :description, :language)
   end
 
-  def enroll_redirect
-    current_user.enroll_session @session
-    send_mail
-    redirect_to session_path(@session), flash: { success: "Enrolled Successful !" }
-  end
 end
 
