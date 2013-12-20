@@ -12,6 +12,7 @@ class PhotoNotice
       same_location_realtime(user.id, shop.id, user, shop)
     end
     return if Os.overload?(0.9)
+    return if $redis.sismember("UnBroadcast", shop.id.to_s)
     user.fans.each do |u|
       next if u.id.to_s == $gfuid
       str = "[img:#{pid}]#{photo.user.name}在#{photo.shop.name}分享了一张图片"
