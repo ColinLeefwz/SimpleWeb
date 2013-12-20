@@ -62,7 +62,7 @@ class Photo
     return if ENV["RAILS_ENV"] == "test"
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}", "ckn#{$uuid.generate}" ,1)
     rand_like
-    if room=="21828958" || room=="21837985"
+    if room==$zwyd.to_s || room=="21837985"
       gen_zwyd
       zwyd_send_link
     end
