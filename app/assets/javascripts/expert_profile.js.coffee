@@ -1,4 +1,3 @@
-
 get_cookie = (name) ->
   parts = document.cookie.split(name + "=")
   if parts.length == 2
@@ -21,6 +20,8 @@ profile_event = ->
 
   $(".follow-link").on "ajax:success", (e, data, status, xhr) ->
     button_text = $("#follow i")
+    follower_num = +$("#follower-count").html()
+    $("#follower-count").html(if button_text.html() is "Follow" then follower_num + 1 else follower_num - 1 )
     button_text.html( if button_text.html() is "Follow" then "Unfollow" else "Follow")
     e.preventDefault
 
