@@ -98,7 +98,13 @@ transform: scale(1, 1);/*等比缩放为1*/
 transition:transform 0.5s ease-in-out, opacity 0.5s;
 }
 .plane2 .imgsbox img.imgs:hover{}
-.plane2 .imgsbox img.imgs2{position:absolute;right:20px;bottom:-70px;width:30%;z-index:2;}
+.plane2 .imgsbox img.imgs2{position:absolute;right:20px;bottom:-75px;width:30%;z-index:2;
+-moz-transform:rotate(30deg);
+-wekit-transform:rotate(30deg);
+-ms-transform:rotate(30deg);
+-o-transform:rotate(30deg);
+transform:rotate(30deg);
+}
 .plane2 .content{font-size:20px;padding:0px 5px 10px 5px;background:url(/w/1/images/lingbg2.jpg) center bottom no-repeat;position:relative;line-height:30px;}
 .plane2 .content .tit{width:100%;height:75px;position:relative;top:0px;left:0px;z-index:20;}
 .plane2 .content .tit img{width:80px;border-radius:8px;position:absolute;top:-40px;left:20px;border:1px solid #fff;box-shadow:0px 0px 10px rgba(255,255,255,0.5);}
