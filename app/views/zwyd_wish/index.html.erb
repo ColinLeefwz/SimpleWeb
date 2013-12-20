@@ -1,8 +1,7 @@
-
 <!DOCTYPE>
 <html>
 <head>
-<meta name="viewport" content="width=640, initial-scale=0.5, user-scalable=0.5, minimum-scale=0.5, maximum-scale=1" />
+<meta name="viewport" content="width=100%, initial-scale=0.55, user-scalable=0.55, minimum-scale=0.55, maximum-scale=0.55" />
 
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -45,32 +44,78 @@
             }
         });	
 		});
-		
-		$("#Forms").submit(function(){
+		var timer,timer2,timer3;
+		$("#Btn").click(function(){
+		   
 			var n=$("#name").val(),
 				w=$("#wish").val();
 			if(n==""||n=="祝福人"||w==""||w=="祝福语"){
 				return false;
 			}
-			
+			var id = $("#zwyd_wish_id").val()
+			$.get("/zwyd_wish/create",{name: n, wish: w, id:id }, function(){
+					var i=0;
+					$("#Mes li").removeClass("new");
+					$("#Mes li a").removeAttr("style");
+					var mes="<li class='new'><a>"+n+"："+w+"</a></li>";
+					$("#Mes").prepend(mes);
+					$("#name").val("祝福人"); $("#wish").val("祝福语");
+					clearInterval(timer);
+					clearTimeout(timer2);
+					clearTimeout(timer3);
+					timer=setInterval(function(){
+						switch(i){
+							case 0: $("#Mes li.new a").css({"color":"#FF1E1E","font-size":"30px"});break;
+							case 1: $("#Mes li.new a").css({"color":"#3232FF","font-size":"30px"});break;
+							case 2: $("#Mes li.new a").css({"color":"#bbb","font-size":"30px"});i=-1;break;
+						}
+						i++;
+					},1000);
+					timer2=setTimeout(function(){
+						var bghigh=$(document).scrollTop()+($(window).height()-160)/2;
+						var bgleft=$(document).scrollLeft()+($(window).width()-450)/2;
+
+						$("#BG").css({"top":bghigh+"px","left":bgleft+"px"});
+						$("#BG").fadeIn(500);
+					},250);
+					timer3=setTimeout(function(){
+						$("#BG").fadeOut(500);
+					},3000);
+				})
+		});
+		$("#BG").click(function(){
+			$("#BG").fadeOut(500);
+		});
+		$("#SmallPic").click(function(){
+			$("#BigPic").fadeIn(500,function(){
+				$("#Main").css("width",$(this).width()+"px");
+			});
+		});
+		$("#BigPic").click(function(){
+			$("#BigPic").fadeOut(500,function(){
+				$("#Main").css("width","640px");
+			});
 		});
 	});
 </script>
 </head>
 
 <body>
-<div class="main">
-  <div class="header2"><img src="w/1/images/header2.png"/></div>
+
+<div id="Main"><%= image_tag "http://s.dface.cn/zw#{params[:id]}.jpg" , :id=>"BigPic" %>
+<div class="con2">
+<a id="BG">谢谢<img src="/w/1/images/sign2.png"/>收到你的祝福啦<img src="/w/1/images/sign3.png"/></a>
+  <div class="header2"><img src="/w/1/images/header2.png"/></div>
   <div class="con">
     <div class="plane2">
       <div class="imgsbox">
-        <%= image_tag "http://s.dface.cn/zw#{params[:id]}.jpg" , :class => "imgs" %>
+        <%= image_tag "http://s.dface.cn/zw#{params[:id]}.jpg" , :class => "imgs pointer", :id=>"SmallPic" %>
         <img class="imgs2" src="w/1/images/pic3.png">
       </div>
       <div class="content">
         <div class="tit">
           <%= image_tag @zwyd_wish.user_logo, :align => "absbottom" %>
-          <h2><a href="#"><%= @zwyd_wish.photo_user.try(:name) %></a>的心愿：</h2>
+          <h2><a><%= @zwyd_wish.photo_user.try(:name) %></a>的心愿：</h2>
         </div>
         <p><%= @zwyd_wish.photo_desc %></p>
         <div class="op">
@@ -79,6 +124,7 @@
         </div>
       </div>
     </div>
+	<a name="a1"></a>
     <div class="plane3">
       <a class="links" target="_blank" href="/w/zwyd/explain2.html">活动详情</a>
       <div class="l">我已经收到 <span class="red" id='zwyd_wish_total'><%= @zwyd_wish.total %></span>个祝福啦<br/><span class="red">还差<%= (30- @zwyd_wish.total.to_i) < 0 ? 0: (30- @zwyd_wish.total.to_i)   %>个祝福就有机会拿到1000元新年红包啦，<br/>赶紧祝福我噢~</span></div>
@@ -98,7 +144,6 @@
     </div>
     <div class="plane5">
       <div class="title1">祝福TA：</div>
-      <form method="post" action="zwyd_wish/create" id="Forms">
         <%= hidden_field_tag :id, params[:id], :id => "zwyd_wish_id" %>
         <div class="inputbox1">
           <%= text_field_tag :name, params[:name]||'祝福人', :class => "texts" %>
@@ -107,11 +152,11 @@
             <%= text_area_tag :wish, params[:wish]|| '祝福语'%>
         </div>
         <div class="clear1"></div>
-        <input type="submit" class="btn r mb30" value=" "/>
-      </form>
+        <a href="#a1" class="btn r mb30" id="Btn"></a>
     </div>
   </div>
   <a href="http://www.dface.cn/mini.html" target="_blank"><img src="w/1/images/ad1.jpg" width="100%" class="mt10 mb30"/></a>
+</div>
 </div>
 </body>
 </html>
