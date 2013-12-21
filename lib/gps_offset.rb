@@ -1,7 +1,7 @@
 
 module GpsOffset
 
-  def get_lo_offset(lo)
+  def get_baidu_offset(lo)
     hash = "OF%.2f%.1f" %  lo
     field = ("%.2f" %  lo[1])[-1..-1]
     str = $redis.hget(hash,field)
@@ -9,7 +9,7 @@ module GpsOffset
     str.split(",").map{|x| x.to_f}
   end
   
-  def get_lo_offset_riak(lo)
+  def get_baidu_offset_riak(lo)
     #return [0,0] if ENV["RAILS_ENV"] != "production"
     begin
       client = Ripple.client
@@ -26,7 +26,7 @@ module GpsOffset
   end
 
   def lob_to_lo(lob)
-    data = get_lo_offset(lob)
+    data = get_baidu_offset(lob)
     [lob[0]-data[0],lob[1]-data[1]]
   end
 
@@ -36,9 +36,28 @@ module GpsOffset
   end
   
   def lo_to_lob(lo)
-    data = get_lo_offset(lo)
+    data = get_baidu_offset(lo)
     [lo[0]+data[0],lo[1]+data[1]]
   end
+  
+  def get_gcj_offset(lo)
+    hash = "GCJ%.2f%.1f" %  lo
+    field = ("%.2f" %  lo[1])[-1..-1]
+    str = $redis.hget(hash,field)
+    return [0,0] if str.nil?
+    str.split(",").map{|x| x.to_f}
+  end
+  
+  def log_to_lo(log)
+    data = get_gcj_offset(log)
+    [lob[0]-data[0],lob[1]-data[1]]
+  end
+  
+  def lo_to_log(lo)
+    data = get_gcj_offset(lo)
+    [lo[0]+data[0],lo[1]+data[1]]
+  end
+  
 
   
 end
