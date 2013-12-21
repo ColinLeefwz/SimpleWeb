@@ -48,6 +48,7 @@ class Checkin
       CheckinShopStat.add_one_redis(sid, user.gender)
     end
     if( $redis.zadd("ckin#{self.sid.to_i}",Time.now.to_i, self.uid) )
+      Rails.cache.delete "LASTL:#{self.uid}"
       return true
     end
     return false

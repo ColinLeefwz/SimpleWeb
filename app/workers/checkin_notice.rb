@@ -18,7 +18,6 @@ class CheckinNotice
       new_shop_welcome(user,shop,checkin)
       checkin.save!
       send_welcome_msg_if_not_invisible(user,shop)
-      user.write_lat_loc(checkin, shop.name)
       CheckinBssidStat.insert_checkin(checkin, ssid) if checkin.bssid && !checkin.del
       return
     end
@@ -40,7 +39,7 @@ class CheckinNotice
           # 商家员工（加V的用户）是随时可以摇入他管理的地点的。这里保证实际签到才保存，可用于考勤。
           Xmpp.error_notify("商家#{shop.name}的员工#{user.name}远距离签到")
         else
-          Xmpp.error_notify("#{user.name}超过#{dis}米，却在#{shop.name}签到")
+          #Xmpp.error_notify("#{user.name}超过#{dis}米，却在#{shop.name}签到")
           checkin.save!
         end
       end
@@ -48,7 +47,6 @@ class CheckinNotice
       send_welcome_msg_if_not_invisible(user,shop)
       tingshuo_default_answer_text(shop, checkin.uid)
       zwyd_temp_notice(user, shop)
-      user.write_lat_loc(checkin, shop.name) if at_here
       unless Os.overload?(0.8)
         fake_user(user,shop)
         CheckinBssidStat.insert_checkin(checkin, ssid) if checkin.bssid && !checkin.del

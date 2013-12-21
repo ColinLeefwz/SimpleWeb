@@ -332,14 +332,13 @@ class User
     User.last_loc_to_hash(last_loc)
   end
   
-  def write_lat_loc(checkin, shop_name=nil)
+  def lat_loc_arr(checkin, shop_name=nil)
     shop_name = checkin.shop.name if shop_name.nil?
     if checkin.nil?
       ret = []
     else
       ret = [checkin.cati, shop_name, checkin.loc, checkin.sid]
     end
-    Rails.cache.write("LASTL:#{self.id}", ret)
     ret
   end
 
@@ -366,7 +365,7 @@ class User
     ck = Checkin.where({uid:self._id, sid:{"$nin" => arr}}).sort({_id:1}).last
     return nil if ck.nil?
     return nil if ck.shop.nil? || ck.shop.name.nil?
-    write_lat_loc(ck)
+    lat_loc_arr(ck)
   end
   
   def latest_checkin_time_shop(sid)
