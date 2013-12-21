@@ -193,6 +193,8 @@ class PhotosController < ApplicationController
   
   def user_photo_no_cache(uid,skip,pcount)
     arr = $redis.smembers("UnBroadcast")
+    arr.push(nil)
+    arr.push("")
     Photo.where({user_id: uid, "$or" => [ { weibo: true } , { qq: true } ], room:{"$nin" => arr} }).
       sort({updated_at: -1}).skip(skip).limit(pcount).to_a
   end
