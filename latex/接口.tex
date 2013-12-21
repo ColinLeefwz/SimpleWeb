@@ -764,6 +764,8 @@ GET & \multicolumn{3}{|c|}{/shop/add\_search} \\
 
 [2013-09-27] 新增参数distance，表示该地点的距离。
 
+[2013-12-21] 在响应的头部增加属性“GCJOFFSET”，内容格式“纬度偏移,经度偏移”。用于在国内的谷歌地图、soso地图上显示地点时，进行坐标偏移。这些地图都使用GCJ坐标系；而脸脸中所有的坐标都是真实坐标。要获得GCJ坐标，将真实坐标的经纬度加上GCJOFFSET的经纬度即可。如果没有GCJOFFSET，则忽略。
+
 例子：
 
 \begin{figure}[H]
