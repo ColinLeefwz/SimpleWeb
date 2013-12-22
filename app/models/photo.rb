@@ -245,14 +245,15 @@ class Photo
   end
   
   def top10_comment(u=nil)
-    self.com[-10..-1].select{|m| !m['hide']}, time:cati}
+    return [] if self.com.nil? || self.com.size==0
+    self.com[-10..-1].to_a.select{|m| !m['hide']}
   end
   
 
   
   def output_hash_to_user(u=nil)
     hash = basic_output
-    hash.merge!( {like:self.top10_like(u), comment: top10_comment(u) )
+    hash.merge!( {like:self.top10_like(u), comment: top10_comment(u), time:cati})
   end
   
   def basic_output
@@ -266,12 +267,12 @@ class Photo
   end
   
   def output_hash_with_username
-    output_hash.merge!( {user_name: user.name} )
+    output_hash_to_user.merge!( {user_name: user.name} )
   end
 
   def output_hash_with_shopname
     shopname = shop.nil?? "" : shop.name
-    output_hash.merge!( {shop_name: shopname} )
+    output_hash_to_user.merge!( {shop_name: shopname} )
   end
   
   def find_checkin
