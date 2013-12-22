@@ -32,14 +32,14 @@ class Gchat
   
   def self.history(sid,pcount,mid=nil)
     hash = {sid:sid, del: nil}
-    if mid
+    if mid #mid参数待取消
       gchat = Gchat.where({mid:mid}).first
       hash.merge!({_id: {"$lt" => gchat.id} })
     end
     arr = Gchat.where(hash).sort({_id:-1}).limit(pcount).to_a
     if mid.nil?
-      cpid = Shop.find_by_id(sid).card_photo.id.to_s
-      arr.delete_if{|x| x.txt[0,5] == "[img:" && x.txt[5,24] == cpid}
+      cp = Shop.find_by_id(sid).card_photo
+      arr.delete_if{|x| x.txt[0,5] == "[img:" && x.txt[5,24] == cp.id.to_s} if cp
     end
     arr
   end

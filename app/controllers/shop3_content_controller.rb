@@ -34,7 +34,7 @@ class Shop3ContentController < ApplicationController
     if session_shop.notice && session_shop.notice.photo_id.to_s == photo.id.to_s
       session_shop.notice.delete
     end
-    
+    Gchat.delete_all(mid: photo.mid)
     photo.delete
     expire_cache_shop(photo.room)
     respond_to do |format|
@@ -98,6 +98,7 @@ class Shop3ContentController < ApplicationController
   def ajax_del
     photo = Photo.find(params[:id])
     photo.set(:hide, true)
+    Gchat.delete_all(mid: photo.mid)
     expire_cache_shop(photo.room)
     render :json => {}
   end

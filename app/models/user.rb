@@ -208,6 +208,7 @@ class User
     self.clear_all_cache
     Xmpp.post("api/kill", :user => _id) 
     kill_photos
+    Gchat.delete_all(uid: self.id)
   end
   
   def kill_photos

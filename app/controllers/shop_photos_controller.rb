@@ -54,6 +54,7 @@ class ShopPhotosController < ApplicationController
   def ajax_del
     photo = Photo.find(params[:id])
     photo.set(:hide, true)
+    Gchat.delete_all(mid: photo.mid)
     expire_cache_shop(photo.room)
     render :json => {:text => '已隐藏'}
   end

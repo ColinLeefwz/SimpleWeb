@@ -68,6 +68,7 @@ class PhotosController < ApplicationController
       return
     end
     sid = photo.room
+    Gchat.delete_all(mid: photo.mid)
     if photo.destroy
       expire_cache_shop(sid, photo.user_id)
       render :json => {ok:photo.id}.to_json

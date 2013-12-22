@@ -43,6 +43,10 @@ class Photo
     "http://www.dface.cn/web_photo/show?id=#{self.id}"
   end
   
+  def mid
+    "ckn#{self.id}"
+  end
+  
   
   def after_async_store
     if img.url.nil?
@@ -60,7 +64,7 @@ class Photo
       #Rails.cache.delete("UP#{self.user_id}-5")
     end
     return if ENV["RAILS_ENV"] == "test"
-    Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}", "ckn#{$uuid.generate}" ,1)
+    Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}", mid ,1)
     rand_like
     if room==$zwyd.to_s || room=="21837985"
       gen_zwyd
