@@ -242,7 +242,7 @@ class Shop
   end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash} }).merge!({text: default_text_when_photo}).merge!(photo_filter)
+    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash_to_user} }).merge!({text: default_text_when_photo}).merge!(photo_filter)
   end  
   
   def preset_p(photos)

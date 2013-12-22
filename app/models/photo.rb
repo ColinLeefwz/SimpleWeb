@@ -13,7 +13,7 @@ class Photo
   field :weibo, type:Boolean #是否分享到新浪微博
   field :qq, type:Boolean  #是否分享到QQ空间
   field :wx, type:Integer   #分享到微信: 1个人,2朋友圈, 3都分享了
-  #field :like, type:Array #赞 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间' }]
+  #field :like, type:Array # 从redis中取
   field :com, type:Array #评论 [{"id" => 用户id, ‘name’ => '赞时候的用户昵称', ‘t’ => '时间', 'txt' => "评论", 'hide' => '隐藏'  }]
   field :img
   field :ft1, type:Integer #使用的滤镜
@@ -240,9 +240,28 @@ class Photo
     {:logo => self.img.url, :logo_thumb2 => self.img.url(:t2)  }
   end
   
-  def output_hash
+  def top10_like(u=nil)
+    arr = like(10)
+  end
+  
+  def top10_comment(u=nil)
+    self.com[-10..-1].select{|m| !m['hide']}, time:cati}
+  end
+  
+
+  
+  def output_hash_to_user(u=nil)
+    hash = basic_output
+    hash.merge!( {like:self.top10_like(u), comment: top10_comment(u) )
+  end
+  
+  def basic_output
     hash = {id: self._id, user_name: self.user.name , user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo, qq:self.qq}
     hash.merge!( logo_thumb_hash)
+  end
+  
+  def output_hash
+    hash = basic_output
     hash.merge!( {like:self.like, comment: self.com.to_a.select{|m| !m['hide']}, time:cati} )
   end
   
@@ -329,8 +348,8 @@ class Photo
   end
 
   #like重写， 现在的like是从redis中取
-  def like
-    $redis.zrevrange("Like#{self.id}", 0, -1, withscores:true).to_a.map{|m| {"t" => Time.at(m[1]), "name" => User.find_by_id(m[0]).try(:name), 'id' => m[0] }}
+  def like(num=-1)
+    $redis.zrevrange("Like#{self.id}", 0, num, withscores:true).to_a.map{|m| {"t" => Time.at(m[1]), "name" => User.find_by_id(m[0]).try(:name), 'id' => m[0] }}
   end
 
   def self.init_like_redis
