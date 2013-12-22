@@ -329,9 +329,9 @@ class Photo
 
 
   #隐藏评论
-  def hidecom(uid, txt)
+  def hidecom(uid, txt=nil)
     ncom = com
-    comment = ncom.find{|x| x['id'].to_s == uid && x['txt'] == txt }
+    comment = ncom.find{|x| x['id'].to_s == uid.to_s && (txt==nil || x['txt'] == txt) }
     return "comment #{txt} not found." if comment.nil?
     comment["hide"] = true
     self.set(:com, ncom)
@@ -350,7 +350,7 @@ class Photo
 
   #like重写， 现在的like是从redis中取
   def like(num=-1)
-    $redis.zrevrange("Like#{self.id}", 0, num, withscores:true).to_a.map{|m| {"t" => Time.at(m[1]), "name" => User.find_by_id(m[0]).try(:name), 'id' => m[0] }}
+    $redis.zrevrange("Like#{self.id}", 0, num, withscores:true).to_a.map{|m| {"t" => Time.at(m[1]), "name" => User.find_by_id(m[0]).try(:name), 'id' => m[0] }}.select{|x| x["name"]!=nil && x["name"][0,6]!="FORBID"}
   end
 
   def self.init_like_redis

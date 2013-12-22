@@ -207,6 +207,14 @@ class User
     self.save!
     self.clear_all_cache
     Xmpp.post("api/kill", :user => _id) 
+    kill_photos
+  end
+  
+  def kill_photos
+    photos.each {|x| x.set(:hide, true)}      
+    Photo.where({"com.id" => self.id}).each do |x|
+      x.hidecom(self.id)
+    end
   end
   
   def unkill
