@@ -54,12 +54,15 @@
 
   .detail.sub-wrapper.second-sub
     %ul.nav.nav-tabs
-      %li.active.tab
-        %a{href: "#tab1", data: {toggle: "tab"}}Overview
-      %li.tab
-        %a{href: "#tab2", data: {toggle: "tab"}}Career
-      %li.tab
-        %a{href: "#tab3", data: {toggle: "tab"}}Education
+      - unless @expert.profile.expertise.empty?
+        %li.active.tab
+          %a{href: "#tab1", data: {toggle: "tab"}}Overview
+      - unless @expert.profile.career.empty?
+        %li.tab
+          %a{href: "#tab2", data: {toggle: "tab"}}Career
+      - unless @expert.profile.education.empty?
+        %li.tab
+          %a{href: "#tab3", data: {toggle: "tab"}}Education
 
     .tab-content
       .tab-pane.active#tab1
