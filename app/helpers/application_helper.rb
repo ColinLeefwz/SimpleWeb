@@ -4,19 +4,13 @@ module ApplicationHelper
       "alert-error"
     elsif flash[:error]
       "alert-something"
-    elsif flash[:notice]
+    elsif (flash[:notice] or flash[:success])
       "alert-success"
     end
   end
 
   def flash_message
-    if flash[:alert]
-      flash[:alert]
-    elsif flash[:error]
-      flash[:error]
-    elsif flash[:notice]
-      flash[:notice]
-    end
+    flash[:alert] || flash[:error] || flash[:notice] || flash[:success]
   end
 
 
