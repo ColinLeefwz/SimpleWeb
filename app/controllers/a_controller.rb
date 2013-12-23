@@ -46,7 +46,11 @@ class AController < ApplicationController
     when '25'
       render :file => "~/lianlian/public/w/single/index.html", :use_full_path => true
     when "50"
-      render :file => "~/lianlian/public/w/zwyd/index.html", :use_full_path => true 
+      render :file => "~/lianlian/public/w/zwyd/index.html", :use_full_path => true
+    when "60001"
+      render :file => "~/lianlian/public/w/zf1314/zf.html", :use_full_path => true
+    when "60002"
+      render :file => "~/lianlian/public/w/zf1314/index.html", :use_full_path => true
     else
       render :file => "~/lianlian/public/mini.html", :use_full_path => true 
 
