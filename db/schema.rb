@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131217100033) do
+ActiveRecord::Schema.define(version: 20131223132606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,24 @@ ActiveRecord::Schema.define(version: 20131217100033) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "intro_videos", force: true do |t|
+    t.string   "hd_url"
+    t.string   "sd_url"
+    t.integer  "course_id"
+    t.string   "attached_video_hd_file_name"
+    t.string   "attached_video_hd_content_type"
+    t.integer  "attached_video_hd_file_size"
+    t.datetime "attached_video_hd_updated_at"
+    t.string   "attached_video_sd_file_name"
+    t.string   "attached_video_sd_content_type"
+    t.integer  "attached_video_sd_file_size"
+    t.datetime "attached_video_sd_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "intro_videos", ["course_id"], name: "index_intro_videos_on_course_id", using: :btree
 
   create_table "languages", force: true do |t|
     t.string   "long_version"
