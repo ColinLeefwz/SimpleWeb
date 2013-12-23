@@ -1,4 +1,3 @@
-require 'paypal'
 require 'mandrill_api'
 
 class ApplicationController < ActionController::Base
@@ -57,23 +56,6 @@ class ApplicationController < ActionController::Base
     current_user
   end
 
-  ## payments and enrollments
-  # paypal
-  def paypal_pay(item)
-    order = Order.new(user: current_user, enrollable: item)
-
-    if order.save
-      Paypal.create_payment_with_paypal(item, order, order_execute_url(order.id))
-
-      if order.approve_url
-        redirect_to order.approve_url
-      else
-        redirect_to send("#{item.class.name.downcase}_path", item.id), flash: {error: "Opps, something went wrong"}
-      end
-    else
-      redirect_to send("#{item.class.name.downcase}_path", item.id), flash: {error: order.errors.messages}
-    end
-  end
 
   # todo: move it to concern
   # send mail after user successfully enrolled 

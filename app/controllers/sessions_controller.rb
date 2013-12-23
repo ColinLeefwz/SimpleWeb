@@ -20,12 +20,13 @@ class SessionsController < ApplicationController
   def enroll_confirm
     current_user.enroll(@session)
     send_enrolled_mail(@session)
-
     redirect_to @session, flash: {success: "Enrolled Success!"}
   end
 
   def purchase
-    paypal_pay(@session)
+    order = Order.create(user: current_user, enrollable: @session)
+    order.create_payment(@session, execute_order_url(order))
+    redirect_to order.approve_url
   end
 
   # todo: use Exception and Catch mechanism to deal with all accidents(maybe in the application_controller)
