@@ -41,7 +41,7 @@ module ApplicationHelper
       if item.free?
         link_to "Confirm", "/#{params[:controller]}/#{item.id}/enroll_confirm"
       else
-        link_to image_tag("paypal_button.png"), send("purchase_#{item.class.name.downcase}_path", item.id)
+        link_to image_tag("paypal_button.png"), send("purchase_#{item.class.name.downcase}_path", item.id), data: {no_turbolink: true}
       end
     end
   end
