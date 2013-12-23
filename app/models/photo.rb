@@ -33,7 +33,8 @@ class Photo
   def self.img_url(id,type=nil)
     # return self.find_by_id(id).img.url(type) if Rails.env !="production"
     if type
-      "http://dface.oss.aliyuncs.com/#{id}/#{type}_0.jpg"
+      "http://dface.img.aliyuncs.com/#{id}/0.jpg@200w_200h_1e_1c_80Q.jpg"
+      #"http://dface.oss.aliyuncs.com/#{id}/#{type}_0.jpg"
     else
       "http://dface.oss.aliyuncs.com/#{id}/0.jpg"
     end
@@ -88,13 +89,14 @@ class Photo
       text = "😜恭喜~心愿卡片制作完成，集祝福抽红包~ 戳我看看吧！"
       url = "http://dface.cn/zwyd_wish?id=#{self.id}"
       faq = ShopFaq.find('52b2e20c20f3180fbc000021')
-      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "zw#{self.id}#{self.user_id}#{Time.now.to_i}")
+      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "zw#{self.id}")
       attrs = " NOLOG='1'  url='#{url}' "
       ext = "<x xmlns='dface.url'>#{url}</x>"
       Xmpp.send_chat($gfuid, self.user_id, ": 😜恭喜~ 你的专属心愿卡片已经制作完成，赶快集祝福抽红包吧 #{url}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
       zwyd = ZwydWish.new(data: [], total: 0)
       zwyd._id = self._id
       zwyd.save
+      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "zw#{self.id}") #重发,防止消息丢失
   end
   
   def gen_zwyd

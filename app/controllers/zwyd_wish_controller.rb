@@ -7,6 +7,9 @@ class ZwydWishController < ApplicationController
     @zwyd_wish.total += 1
     @zwyd_wish.data << [params[:name], params[:wish]]
     @zwyd_wish.save
+    url = "http://dface.cn/zwyd_wish?id=#{params[:id]}"
+    Resque.enqueue(XmppMsg, $gfuid, @zwyd_wish.photo.user_id,
+      ": 你收到一条来自#{[params[:name]}的祝福，赶快点我看看吧 #{url}")
     return render :json => 1
   end
 
