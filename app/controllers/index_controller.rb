@@ -7,4 +7,8 @@ class IndexController < ApplicationController
     render :layout => false
   end
   
+  def ip
+    render :text => real_ip
+  end
+  
 end

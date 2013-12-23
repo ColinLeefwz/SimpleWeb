@@ -1,8 +1,9 @@
 idx = 0
 begin
-Shop.where({}).limit(100).each do |shop|
+Shop.where({}).each do |shop|
   idx +=1
   lo = shop.loc_first
+  next if lo.nil? || lo.size==0
   hash = "GCJ%.2f%.1f" %  lo
   field = ("%.2f" %  lo[1])[-1..-1]
   next if $redis.hget(hash,field)
@@ -12,7 +13,7 @@ Shop.where({}).limit(100).each do |shop|
 end
 rescue Exception => e
   puts idx
-  puts e
+  puts e.backtrace
 end
 
 #批量删除

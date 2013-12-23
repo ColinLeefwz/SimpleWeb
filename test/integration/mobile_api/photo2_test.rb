@@ -34,7 +34,7 @@ class Photo2Test < ActionDispatch::IntegrationTest
     
     #测试发送私人xmpp的图片消息, 看mod_rest的ip限制是否配置正确。
     ips = [ "60.191.119", "122.235.240", "42.121.79" ]
-    ip = `curl -s ifconfig.me`
+    ip = `curl -s http://shop.dface.cn/index/ip`
     ipc = ip[0,ip.rindex(".")]
     allow_ip = !ips.find_index(ipc).nil?
     fail = false
