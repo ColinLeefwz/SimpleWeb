@@ -14,6 +14,7 @@
           = @expert.profile.company
 
       %table
+        
         %tr
           %td.company.light-font
             = "Company"
@@ -43,11 +44,11 @@
         
       = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
 
-      .contact-button#contact
-        %button.btn.left-side
-          %i.fa.fa-comments Contact
-        %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
-          %span.caret
+      -# .contact-button#contact
+      -#   %button.btn.left-side
+      -#     %i.fa.fa-comments Contact
+      -#   %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
+      -#     %span.caret
     .clear-fix 
 
 
@@ -76,4 +77,4 @@
 
   .sessions.sub-wrapper
     #content.container
-      =render 'welcome/box_content', sessions: @sessions
+      =render 'shared/course_content', courses: @courses

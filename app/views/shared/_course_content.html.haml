@@ -1,0 +1,24 @@
+- sublime_id = ""
+-courses.each do |course|
+  .item
+    .box-header
+      .portrait
+        = image_tag(course.experts.first.avatar.url)
+        .expert-name
+          = link_to course.experts.first.name, profile_expert_path(course.experts.first)
+      .content-type
+        = image_tag(get_image_tag(course))
+        %p= course.categories.join(", ")
+        -# %p= course.language.split(",")[0] if course.language
+    .title
+      = link_to "#{course.title}", course_path(course)
+      - sublime_id = "sublime_#{course.class.to_s.underscore}_#{course.id}"
+    -if course.cover.url
+      .cover
+        = link_to image_tag(course.cover.url),course_path(course)
+    -else
+
+    .caption
+      %p.learn-more= link_to "Learn more", course_path(course)
+      .social-share-icons
+        = render 'shared/social_share', session_title: course.title, session_url: course_path(course)

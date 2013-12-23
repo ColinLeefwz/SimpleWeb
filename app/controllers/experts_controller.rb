@@ -23,10 +23,7 @@ class ExpertsController < ApplicationController
   end
 
   def profile
-		video_interviews = VideoInterview.where(expert: @expert).order("updated_at desc").to_a
-		announcements = Announcement.where(expert: @expert).order("updated_at desc").to_a
-		articles = Session.where(expert: @expert).where(content_type: "ArticleSession").where(draft: false).order("always_show desc, updated_at desc").to_a
-		@sessions = video_interviews.concat(announcements).concat(articles)
+    @courses = @expert.courses
   end
 
   def edit_profile
