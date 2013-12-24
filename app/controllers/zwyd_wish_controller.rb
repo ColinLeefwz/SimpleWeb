@@ -11,7 +11,7 @@ class ZwydWishController < ApplicationController
     c = @zwyd_wish.data.size
     if c<=3
      Resque.enqueue(XmppMsg, $gfuid, @zwyd_wish.photo.user_id,"#{params[:name]}给你发来一条新年祝福，赶快点我看看吧😉 #{url}")
-    elsif c%5==0
+    elsif c%5==0 && c!=30
      Resque.enqueue(XmppMsg, $gfuid, @zwyd_wish.photo.user_id,"你有新的祝福，祝福数达到#{c}条，赶快点我看看吧😉 #{url}")      
     end
     if c==30
