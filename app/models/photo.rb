@@ -108,14 +108,6 @@ class Photo
         arr = Rekognition.decode_info(json)
         return nil if arr==nil
         arr = arr.map {|x| x*640/200}
-      else
-        json = Rekognition.detect(url)
-        if json
-          arr = Rekognition.decode_info(json)
-          return nil if arr==nil
-          max = arr[4,2].max
-          arr = arr.map {|x| x*640/max}
-        end
       end
       arr
     rescue Exception => e
