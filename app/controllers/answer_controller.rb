@@ -14,17 +14,18 @@ class AnswerController < ApplicationController
       response = Xmpp.get("api/room_users?roomid=#{sid}")
       names = JSON.parse(response).map{|x| User.find_by_id(x).name}
       Xmpp.send_gchat2($gfuid,sid,uid, names.join("\n") )
-      render :text => "1"
-      return
+      return render :text => "1"
     end
     if msg=="@@@id"
       Xmpp.send_gchat2($gfuid,sid,uid, sid.to_s)
-      render :text => "1"
-      return
+      return render :text => "1"
     end
     shop = Shop.find_by_id(sid)
     user = User.find_by_id(uid)
-    return render :text => "1" if tryst(msg, user, shop)
+    if msg[0,3]=="脸脸赐"
+      tryst(msg, user, shop)
+      return render :text => "1"
+    end
     return render :text => "1" if shop.preset?(user) && pre_answer(msg, user, shop)
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"
@@ -59,7 +60,7 @@ class AnswerController < ApplicationController
         render :text => "1"
         return
       end
-      if txt=="@@@我要回来"
+      if txt[0,6]=="@@@我要回"
         $redis.del("FCITY#{params[:from]}")
         attrs += " url='#{url}' " 
         ext = "<x xmlns='dface.url'>#{url}</x>"
@@ -261,11 +262,11 @@ class AnswerController < ApplicationController
 
   # 速配
   def tryst(msg, user, shop)
-     gender = {"@@@脸脸赐我女神" => 2, "@@@脸脸赐我男神" => 1 }[msg]
+     gender = {"脸脸赐我女神" => 2, "脸脸赐我男神" => 1 }[msg]
      return false if gender.nil?
      ta = [nil,"他", "她"][gender]
      us = shop.checkin_users
-     sbu = us.reject{|r| r.gender != gender }.sample(1).first
+     sbu = us.reject{|r| r.gender != gender || r.id==user.id }.sample(1).first
      return false if sbu.nil?
      Xmpp.send_chat(sbu.id, user.id, ": #{sbu.time_desc(shop)}，我也在#{shop.name}噢，快跟我打个招呼吧～", "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
      link = "dface://scheme/user/info?id=#{sbu.id}"
@@ -281,8 +282,8 @@ class AnswerController < ApplicationController
      if msg=='03'
       us = shop.checkin_users
       return false if us.select{|m| m.gender != user.gender}.blank?
-      text = "“@@@脸脸赐我女神”" if user.gender.to_i == 1 
-      text = "“@@@脸脸赐我男神”" if user.gender.to_i == 2
+      text = "“脸脸赐我女神”" if user.gender.to_i == 1 
+      text = "“脸脸赐我男神”" if user.gender.to_i == 2
       return if text.nil?
       text = "世上会不会有另一个自己,在相同的时间相同的地方做着一样的事情？不试怎么知道？✨\n试试回复口诀：\n #{text}"
      end
