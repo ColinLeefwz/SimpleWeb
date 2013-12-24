@@ -1,3 +1,4 @@
+- sublime_id = ""
 - sessions.each do |session|
   %div{class: get_box_class(session)}
 
@@ -11,13 +12,11 @@
         %p= session.categories.join(", ")
         %p= session.language.split(",")[0] if session.language
     .title
-      - if session.is_a? Session
-        = link_to "#{session.title}", session_path(session)
-      - elsif session.is_a? VideoInterview
-        = link_to "#{session.title}", video_interview_path(session)
-    -if (session.is_a? VideoInterview) || (session.is_a?Announcement) && (!session.video.url.eql?"/videos/original/missing.png")
+      = link_to "#{session.title}", currect_path(session)
+      - sublime_id = "sublime_#{session.class.to_s.underscore}_#{session.id}"
+    -if (session.is_a? VideoInterview) || (session.is_a? Announcement)
       .cover
-        .video-img{data: {"source-sd" => session.sd_url, "source-hd" => session.hd_url, from: "landing_page"}}
+        .video-img{data: {"source-sd" => session.sd_url, "source-hd" => session.hd_url, from: "landing_page", "sublime-id" => sublime_id}}
           = image_tag session.cover.url, class: 'video-play'
           = image_tag "video_play_icon.png", class: 'play-video-icon'
 
@@ -32,6 +31,6 @@
       - else
         %div.description= truncate_html(session.description, length: 600, omission: '...')
       - text = (session.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
-      %p.learn-more= link_to text, session_path(session)
+      %p.learn-more= link_to text, currect_path(session)
       .social-share-icons
         = render 'shared/social_share', session_title: session.title, session_url: session_url(session)

@@ -39,6 +39,9 @@
 
   .main-menu{
     margin-bottom: 50px;
+    h2{
+      margin: 0;
+    }
   }
 
   .time-selector{
@@ -62,4 +65,9 @@
 
 .white-background{
   background: white;
+}
+
+.form-horizontal{
+  margin-top: 20px;
+  padding-bottom: 10px;
 }

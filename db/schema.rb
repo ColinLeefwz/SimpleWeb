@@ -31,6 +31,35 @@ ActiveRecord::Schema.define(version: 20131219080341) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
+  create_table "announcements", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "sd_url"
+    t.string   "hd_url"
+    t.string   "language"
+    t.boolean  "draft"
+    t.boolean  "canceled"
+    t.string   "categories",                     default: [], array: true
+    t.integer  "expert_id"
+    t.string   "attached_video_hd_file_name"
+    t.string   "attached_video_hd_content_type"
+    t.integer  "attached_video_hd_file_size"
+    t.datetime "attached_video_hd_updated_at"
+    t.string   "attached_video_sd_file_name"
+    t.string   "attached_video_sd_content_type"
+    t.integer  "attached_video_sd_file_size"
+    t.datetime "attached_video_sd_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
+  end
+
+  add_index "announcements", ["categories"], name: "index_announcements_on_categories", using: :gin
+  add_index "announcements", ["expert_id"], name: "index_announcements_on_expert_id", using: :btree
+
   create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"

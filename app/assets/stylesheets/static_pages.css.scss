@@ -1,20 +1,258 @@
-.static-pages-container{
-  max-width:1110px;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50px;
-
-  .static-pages-content{
-    border: 5px solid #fff;
-    padding: 15px 15px 5px;
-    background: rgba(231, 231, 231, 0.42);
-    text-align: left;
+#static-main {
+	display: inline-block;
+  ul, ol{
+    padding-left: 40px;
+    margin: 0;
+  }
+  ul{
+    li{
+      margin-bottom: 1em;
+    }
+  }
+  p strong {
+    color: #6C2C85;
   }
 
-//  .static-pages-image{
-//   width: 220px;
-//    float: right;
-//    margin-top: 60px;
-//  }
+
+
+  /*---- navbar ----*/
+  #about-us-sidebar {
+    margin-left: 4%;
+    padding-bottom: 100px;
+    width: 18%;
+    float: left;
+    background: #fff;
+    font-size: 18px;
+
+    ul {
+      list-style-type: none;
+      padding-left: 0px;
+      margin-left: 0px;
+      margin-top: 18px;
+      margin-bottom: 18px;
+
+      li {
+        padding-left: 15%;
+        padding-bottom: 10px;
+        padding-top: 5px;
+        vertical-align: middle;
+        font-family: 'Lato';
+        font-weight: 700;
+        color: #888;
+      }
+
+      li:hover {
+        color: #8A2649;
+      }
+    }
+
+    a{
+      text-decoration: none;
+      font-family: "Latoreg";
+    }
+
+    a:hover{
+        color: #8A2649;
+    }
+
+    a img {
+      width: 25px;
+      padding-right: 9px;
+      vertical-align: middle;
+    }
+    /*---- navbar title ----*/
+    .line-title {
+      background-color: #ddd;
+      height: 2px;		
+      color: #bbb;
+      text-align: center;
+      margin-top: 30px;
+    }
+    .line-title span {
+      background: #fff;
+      position: relative;
+      top: -0.7em;
+      padding-left: 5px;
+      padding-right: 5px;
+      font-family: 'Latoreg';
+      font-weight: 300;
+    }
+  }
+
+
+  /*---- article ----*/
+
+  .oswaldreg-header{
+    h1, h2{
+      font-family: 'Oswaldreg';
+    }
+  }
+
+  .latobold-header{
+    h1, h2, h3{
+      font-family: 'Latoreg';
+    }
+  }
+
+  article {
+    font-family: "Latoreg";
+    line-height: 1.5em;
+    margin-left: 24%;
+    margin-right: 10%;
+    margin-top: 0px;
+    padding: 5px 3% 1% 4%;
+    background: #fff;
+    color: #333;
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 400;
+      color: #575757;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    h1 {
+      font-size: 200%;
+      color: #6C2C85;
+      border-bottom: solid 2px #AEAEFF;
+      padding-left: 5px;
+      margin-top: 2%;
+      line-height: 45px;
+      a{
+        color: #6C2C85;
+        text-decoration: none;
+      }
+    }
+    h1 :first-of-type {
+      margin-top: 15px;
+    }
+
+    h2 {
+      color: #575757;
+      font-size: 1.5em;
+      padding-top: 5px;
+      padding-bottom: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    img {
+      max-width: 50%;
+      float: right;
+      padding-left: 15px;
+      padding-bottom: 15px;
+    }
+
+    p{
+      margin: 1em 0 1em; 
+      a {
+        color: #6C2C85;
+      }
+
+      a:hover {
+        color: #AEAEFF;
+      }
+    }
+
+    ol {
+      list-style-type: lower-alpha;
+    }
+
+    .benefit-line-height{
+      li{
+        line-height: 1.5em;
+      }
+    }
+
+    .job_title{
+      margin-top: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    } 
+
+    .job_title {
+      font-style: italic;
+      font-size: 15px;
+    }
+
+    .headshot {
+      float: left;
+      padding-left: 0;
+      padding-bottom: 0;
+      margin-right: 20px;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+
+  .team_member+p{
+    clear: both;
+  }
+
+  .team_member{
+    margin-top: 35px;
+    margin-bottom: 5px;
+    height: 100px;
+
+    h2 {
+      font-family: 'Latoreg';
+      font-weight: 700;
+      font-size: 125%;
+      line-height: 30px;
+    }
+  }
+
+  .team_member:first-of-type {
+    margin-top: 15px;
+  }
+
+  .team_member_info {
+    height: 100px;
+    vertical-align: bottom;
+
+  }
+  .team_member_info .social_media_icons {
+    float: left;
+
+  }
+  .team_member_info .social_media_icons img {
+    max-width: 25px;
+    max-height: 25px;
+    padding-left: 0;
+    padding-bottom: 0;
+    padding-right: 7px;
+    padding-top: 5px;
+    opacity: 0.7;
+  }
+  .team_member_info .social_media_icons img:hover {
+    opacity: 1;
+  }
+  .top-fixed{
+    position: fixed;
+    top: 0px;
+    margin-top: 25px;
+  }
+  .originate{
+    float: left;
+    margin-bottom: 10px;
+    img{
+      padding: 0;
+      display: block;
+      float: left;
+      width: 22em;
+    }
+  }
+  .latoitalic{
+    font-family: "Latoitalic";
+  }
+  .latobold{
+    font-family: "Latobold";
+  }
+  .effective-date{
+    font-size: 0.75em;
+  }
 }
+
+
+
