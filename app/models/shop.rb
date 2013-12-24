@@ -88,7 +88,12 @@ class Shop
   end
   
   def card_photo #显示为卡片效果的图片
-    top4_photos[0]
+    p = top4_photos[0]
+    if p.od != nil
+      p
+    else
+      nil
+    end
   end
   
   def photos
@@ -249,16 +254,19 @@ class Shop
     if self.t == 10 #写字楼
       p=Photo.find_by_id("5273013320f318640e000009") #嗮前台
       p.set(:room, self.id)
+      p.set(:od, 1)
       return [p] + photos[0..-2]
     end
     if self.t == 11 #住宅
       p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮前台
       p.set(:room, self.id)
+      p.set(:od, 1)
       return [p] + photos[0..-2]
     end
     if self.t == 12 #学校
       p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮桌面
       p.set(:room, self.id)
+      p.set(:od, 1)
       return [p] + photos[0..-2]
     end
     return photos
@@ -267,13 +275,11 @@ class Shop
 
   def preset_p2(photos)
     #餐厅
-
     rsp, t = Rails.cache.fetch('preset_value'){"0;#{Time.now.to_i}"}.split(/;/)
      if (Time.now.to_i-t.to_i) > (7*24*60*60) #大于7天， 换预置图；
       rsp += 1
       Rails.cache.write('preset_value', "#{rsp};#{Time.now.to_i}")
      end
-
     case self.t.to_i
     when 10 #写字楼 => 写字楼预置区
       sid = 21837807
@@ -305,8 +311,10 @@ class Shop
     end
     shop = Shop.find_by_id(sid)
     return photos if shop.nil?
-    photo = shop.photos.skip(rsp%photo_count).first
-    return photos if photo.nil?
+    p = shop.photos.skip(rsp%photo_count).limit(1).to_a[0]
+    return photos if p.nil?
+    p.set(:room, self.id)
+    p.set(:od, 1)
     return [photo] + photos[0..-2]
   end
 

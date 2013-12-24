@@ -12,7 +12,7 @@ class ZwydWishController < ApplicationController
      Resque.enqueue(XmppMsg, $gfuid, @zwyd_wish.photo.user_id,"#{params[:name]}给你发来一条新年祝福，赶快点我看看吧😜 #{url}")
     end
     if @zwyd_wish.data.size==30
-     Resque.enqueue(XmppMsg, $gfuid, @zwyd_wish.photo.user_id,"你的人气爆棚！30个祝福已经集满！正式加入千元红包抢夺大军啦！（祝福越多，中奖几率越大噢~ ） #{url}")
+     Resque.enqueue(XmppMsg, $gfuid, @zwyd_wish.photo.user_id,"你的人气爆棚！30个祝福已经集满！正式加入千元红包抢夺大军啦！祝福越多，中奖几率越高噢😜 #{url}")
     end
     return render :json => 1
   end
