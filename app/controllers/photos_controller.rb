@@ -88,11 +88,13 @@ class PhotosController < ApplicationController
   def like
     photo = Photo.find(params[:id])
     flag = $redis.zadd("Like#{photo.id}", Time.now.to_i, session[:user_id])
-    if flag && UserDevice.user_ver_redis(photo.user_id).to_f>=2.3
+    if flag
       Rails.cache.fetch("Like#{photo.id}#{session[:user_id]}") do
         Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
           "'赞'了你的照片",
           "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
+        Resque.enqueue(PushMsg, photo.user.tk, "",
+             "#{session_user.name}赞了你的一张照片，快去看看吧",photo.user_id)
       end
     end
     #expire_cache_shop(photo.room, photo.user_id)
@@ -111,10 +113,12 @@ class PhotosController < ApplicationController
     com = {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now}
     ret = photo.push(:com, com)
     photo.set(:updated_at, Time.now)
-    if UserDevice.user_ver_redis(photo.user_id).to_f>=2.3 && session[:user_id] != photo.user_id
+    if session[:user_id] != photo.user_id
       Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
         params[:text],
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
+      Resque.enqueue(PushMsg, photo.user.tk, "",
+         "#{session_user.name}评论了你的一张照片，快去看看吧",photo.user_id)
     end
     comment_send_to_room(photo,com)
     expire_cache_shop(photo.room, photo.user_id)
@@ -127,15 +131,20 @@ class PhotosController < ApplicationController
     com = {id:session[:user_id], name: session_user.name, txt:params[:text] , t:Time.now, rid:ru.id, rname:ru.name}
     ret = photo.push(:com, com)
     photo.set(:updated_at, Time.now)
-    if UserDevice.user_ver_redis(ru.id).to_f>=2.3 && session[:user_id] != ru.id
+    if session[:user_id] != ru.id
       Resque.enqueue(XmppMsg,  session[:user_id], ru.id,
         params[:text],
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
+      Resque.enqueue(PushMsg, ru.tk, "",
+           "#{session_user.name}回复了你的照片评论，快去看看吧",ru.id)
     end
     comment_send_to_room(photo,com)
     expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
   end
+  
+  #mnesia:transaction(fun() -> Rs = mnesia:wread({offline_msg, {"502e6303421aa918ba000001", "dface.cn"} }) end).
+
     
   def delcomment
     photo = Photo.find(params[:id])

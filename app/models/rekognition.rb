@@ -33,6 +33,7 @@ class Rekognition
   def self.decode_info(info)
     return nil if info.nil? || info["face_detection"].blank?
     return nil if info["face_detection"].size>1
+    return nil if info["face_detection"][0]["confidence"].to_i<0.98
     x = info["face_detection"][0]["nose"]["x"]
     y = info["face_detection"][0]["nose"]["y"]
     w = info["face_detection"][0]["boundingbox"]["size"]["width"]

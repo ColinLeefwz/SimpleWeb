@@ -100,26 +100,32 @@ class Photo
       Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")#重发,防止消息丢失
   end
   
-  def gen_zwyd
-    url = Photo.img_url(self.id)
+  def zwyd_face_detect
     begin
       json = Rekognition.detect(Photo.img_url(self.id, :t2))
       puts json
       if json
         arr = Rekognition.decode_info(json)
+        return nil if arr==nil
         arr = arr.map {|x| x*640/200}
       else
         json = Rekognition.detect(url)
         if json
           arr = Rekognition.decode_info(json)
+          return nil if arr==nil
           max = arr[4,2].max
           arr = arr.map {|x| x*640/max}
         end
       end
+      arr
     rescue Exception => e
       Xmpp.error_notify(e.to_s)
     end
-    puts arr
+  end
+  
+  def gen_zwyd
+    url = Photo.img_url(self.id)
+    arr = zwyd_face_detect
     arr = [0, 0, 0, 0] if arr.nil?
     info = arr
     info[2] = info[3] if info[2] < info[3]
