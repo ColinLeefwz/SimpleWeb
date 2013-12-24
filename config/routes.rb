@@ -3,7 +3,10 @@ Prodygia::Application.routes.draw do
   resources :courses do
     member do
       get :preview
+      get :purchase
       get :enroll
+      get :enroll_confirm
+      post :sign_up_confirm
     end
   end
 
@@ -13,7 +16,7 @@ Prodygia::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
-	get "/users/validate_invite_email", to: 'users#validate_invite_email'
+  get "/users/validate_invite_email", to: 'users#validate_invite_email'
 
   resources :users
 
@@ -23,9 +26,8 @@ Prodygia::Application.routes.draw do
   resources :sessions do
     member do
       get :enroll
-      get :buy_now
-      post :sign_up_buy
-      get :free_confirm
+      get :enroll_confirm
+      get :purchase
       post :sign_up_confirm
       post :email_friend
 
@@ -43,9 +45,12 @@ Prodygia::Application.routes.draw do
     post :create_live_session, on: :collection
   end
 
+
   resources :orders do
-    get :execute
-    get :cancel
+    member do
+      get :execute
+      get :cancel
+    end
   end
 
   resources :members do

@@ -1,15 +1,21 @@
 class Session < ActiveRecord::Base
   validates :title, presence: true
+  validates :price, numericality: {greater_than_or_equal_to: 0}
 
   CONTENT_TYPE = %w(ArticleSession LiveSession).freeze
 
   COMMIT_TYPE = { draft: "Save Draft", publish:  "Publish", preview: "Preview", cancel: "Cancel" }
+  attr_accessor :format, :strategic_question, :save_draft, :preview
 
   self.inheritance_column = 'content_type'
 
-  after_initialize :set_default
 
+  # relationship with expert
   belongs_to :expert
+  validates :expert, presence: true
+
+  # enrollments and orders
+  has_many :enrollments, as: :enrollable
   has_many :orders
 
   has_many :subscriptions, foreign_key: "subscribed_session_id"
@@ -27,12 +33,12 @@ class Session < ActiveRecord::Base
     url: "/system/sessions/:attachment/:id_partition/:style/:filename",
     default_url: 'missing.png'
 
-  def is_free?
+  def free?
     self.price <= 0.0
   end
 
-  def set_default
-    self.price ||= 0.00
+  def producers
+    "by " + self.expert.name
   end
 
   def date 
@@ -72,6 +78,5 @@ class Session < ActiveRecord::Base
     self.end_date_time = DateTime.new(original.year, original.month, original.day, t.hour, t.min, t.sec)
   end
 
-  attr_accessor :format, :strategic_question, :save_draft, :preview
 
 end

@@ -38,7 +38,8 @@
           = price_tag(@session.price)
           - if user_signed_in?
             %span.paypal-button
-              = session_pay_link
+              = paypal_or_enroll_button(item)
+              -# = session_pay_link
 
   - if not user_signed_in?
     #account
@@ -52,7 +53,7 @@
           =link_to image_tag("facebook_signin.png"), user_omniauth_authorize_path(:facebook)
           =link_to image_tag("linkedin_signin.png"), user_omniauth_authorize_path(:linkedin)
         .devise-form
-          - url_path = (@session.price == 0.00) ? sign_up_confirm_session_path(@session) : sign_up_buy_session_path(@session)
+          - url_path = (@session.free?) ? sign_up_confirm_session_path(@session) : sign_up_buy_session_path(@session)
           =simple_form_for :user, url: url_path do |f|
             = render 'form_fields', f: f
             - if @session.price == 0.00

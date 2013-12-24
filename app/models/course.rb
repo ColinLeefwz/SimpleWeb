@@ -1,5 +1,9 @@
 class Course < ActiveRecord::Base
   validates :title, presence: true
+  validates :price, numericality: {greater_than_or_equal_to: 0}
+
+  # enrollments and orders
+  has_many :enrollments, as: :enrollable
 
   has_and_belongs_to_many :experts
   has_many :chapters, dependent: :destroy
@@ -30,4 +34,7 @@ class Course < ActiveRecord::Base
     "1h 55m"
   end
 
+  def free?
+    self.price == 0
+  end
 end

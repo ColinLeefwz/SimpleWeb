@@ -6,13 +6,15 @@ class MandrillApi
     @mandrill = Mandrill::API.new ENV['MANDRILL_API']
   end
 
-  def enroll_comfirm(user, session, session_image_url)
+  def enroll_comfirm(user, item, item_cover)
 
-    template_content = [{"name" => "first-name", "content" => user.first_name}, {"name" => "session-title", "content" => session.title }, {"name" => "expert-name", "content" => session.expert.name}, {"name" => "start-date", "content" => session.start_date }]
+    #todo: change "session-title" to "item-title" (confirm with peter)
+    #todo: course.start_date
+    template_content = [{"name" => "first-name", "content" => user.first_name}, {"name" => "session-title", "content" => item.title }, {"name" => "expert-name", "content" => item.producers}, {"name" => "start-date", "content" => item.try(:start_date) }]
 
     addition_message = {
       "merge_vars"=>
-      [{"rcpt"=>user.email, "vars"=>[{"name"=>"SESSIONIMAGE", "content"=>session_image_url}, { "name"=>"SHARETWITTER", "content"=>"http://twitter.com/home?status=http://www.prodygia.com/sessions/#{session.id}" }, { "name"=>"SHAREFB", "content"=>"http://www.facebook.com/sharer/sharer.php?u=http://www.prodygia.com/sessions/#{session.id}" } ]}],
+      [{"rcpt"=>user.email, "vars"=>[{"name"=>"SESSIONIMAGE", "content"=> item_cover}, { "name"=>"SHARETWITTER", "content"=>"http://twitter.com/home?status=http://www.prodygia.com/sessions/#{item.id}" }, { "name"=>"SHAREFB", "content"=>"http://www.facebook.com/sharer/sharer.php?u=http://www.prodygia.com/sessions/#{item.id}" } ]}],
       "to"=>[{"name"=>user.first_name, "email"=>user.email}],
     }
 
