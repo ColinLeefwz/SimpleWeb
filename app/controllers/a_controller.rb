@@ -25,18 +25,20 @@ class AController < ApplicationController
     #Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206 MicroMessenger/5.0.3
     #Mozilla/5.0 (Linux; U; Android 2.3.4; zh-cn; WT19i Build/4.0.2.A.0.62) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1 MicroMessenger/4.5.255
 
-    if c.agent.index("Android")
-      if c.agent.index("MicroMessenger")
-        render :file => "~/lianlian/public/mini.html", :use_full_path => true
-        return
-      else
-        ver = $redis.get("android_version")
-        return redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
+    if params[:x].nil?
+      if c.agent.index("Android")
+        if c.agent.index("MicroMessenger")
+          render :file => "~/lianlian/public/mini.html", :use_full_path => true
+          return
+        else
+          ver = $redis.get("android_version")
+          return redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
+        end
+      end
+      if agent.index("iphone") || agent.index("ipad")
+        return redirect_to "https://itunes.apple.com/cn/app/lianlian/id577710538"
       end
     end
-    if agent.index("iphone") || agent.index("ipad")
-      return redirect_to "https://itunes.apple.com/cn/app/lianlian/id577710538"
-    end        
     
     case params[:v]
     when '19'
