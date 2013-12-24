@@ -12,8 +12,8 @@ mogrify -resize 320x320 $5
 mogrify  -matte -draw 'image Dst_In 10,10 0,0 "circle.gif"'  $5
 convert -quality 90 -draw "image Over 573,231 0,0 \"$5\"" zwyd.jpg $6
 rm $5
-convert -resize 275x275 $6 $5
-jpegoptim --strip-all  $5
+convert -resize 275x275 $6 t$6
+jpegoptim --strip-all  t$6
 jpegoptim --strip-all  $6
-mv $5 ../public/t$6
+mv t$6 ../public/t$6
 mv $6 ../public/
