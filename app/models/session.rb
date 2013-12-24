@@ -9,7 +9,12 @@ class Session < ActiveRecord::Base
 
   after_initialize :set_default
 
+  # relationship with expert
   belongs_to :expert
+  validates :expert, presence: true
+
+  # enrollments and orders
+  has_many :enrollments, as: :enrollable
   has_many :orders
 
   has_many :subscriptions, foreign_key: "subscribed_session_id"
@@ -27,8 +32,12 @@ class Session < ActiveRecord::Base
     url: "/system/sessions/:attachment/:id_partition/:style/:filename",
     default_url: 'missing.png'
 
-  def is_free?
+  def free?
     self.price <= 0.0
+  end
+
+  def producers
+    "by " + self.expert.name
   end
 
   def set_default
