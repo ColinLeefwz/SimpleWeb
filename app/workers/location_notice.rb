@@ -65,7 +65,7 @@ class LocationNotice
     token = User.find_by_id(id).tk
     return unless token
     Resque.enqueue(PushMsg, token, "",
-     "#{user.name}也进入#{shop.name}了！", "push_scene")
+     "#{user.name}也进入#{shop.name}了！", id, "push_scene")
   end
   
 end

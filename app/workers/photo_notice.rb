@@ -50,10 +50,11 @@ class PhotoNotice
   
 
   def self.push(id,user,shop)
-    token = User.find_by_id(id).tk
+    user = User.find_by_id(id)
+    token = user.tk
     return unless token
     Resque.enqueue(PushMsg, token, "",
-     "#{user.name}在#{shop.name}分享了一张照片，快去看看吧")
+     "#{user.name}在#{shop.name}分享了一张照片，快去看看吧",id)
   end
     
 end
