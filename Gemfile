@@ -24,7 +24,6 @@ gem 'truncate_html'  # make truncate html_safe
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'ckeditor'
 gem 'simple_form'
-gem 'paypal-sdk-core'
 gem 'paypal-sdk-rest'
 gem 'figaro'
 gem 'mandrill-api'

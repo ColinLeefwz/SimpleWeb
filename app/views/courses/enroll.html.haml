@@ -21,25 +21,30 @@
         = image_tag "price.png", class: "icon"
         = price_tag(item.price)
 
-.card.account-card
-  .card-header
-    Create an account
-    .login
-      = link_to "Login", new_user_session_path, class: "login-link underlined"
-      = "to an existing account"
-  .card-body
+    - if user_signed_in?
+      .payment
+        = paypal_or_enroll_button(params, item)
 
-    .social-login
-      = render "devise/shared/social_login"
-    .devise-form
-      -# todo: deal with order in course_controller
-      -# - url_path = (item.price == 0.00) ? sign_up_confirm_session_path(@session) : sign_up_buy_session_path(@session)
-      - url_path = "/courses/fake_path"
-      = form_for :user, url: url_path, html: {class: "form-horizontal", id: "sign_up_confirm_form"} do |f|
-        = render 'sessions/form_fields', f: f
-    .confirm
-      %span.confirm-button Sign up and confirm
-      %span.hint Create account and pay with Paypal!
 
--# todo: space above footer
-.footer-spacer{style: "height: 50px;"}
+
+- if not user_signed_in?
+  .card.account-card
+    .card-header
+      Create an account
+      .login
+        = link_to "Login", new_user_session_path, class: "login-link underlined"
+        = "to an existing account"
+    .card-body
+
+      .social-login
+        = render "devise/shared/social_login"
+      .devise-form
+        - url_path = send("sign_up_confirm_#{item.class.name.downcase}_path", item.id)
+        = form_for :user, url: url_path, html: {class: "form-horizontal", id: "sign_up_confirm_form"} do |f|
+          = render 'sessions/form_fields', f: f
+      .confirm
+        %span.confirm-button Sign up and confirm
+        %span.hint Create account and pay with Paypal!
+
+  -# todo: space above footer
+  .footer-spacer{style: "height: 50px;"}

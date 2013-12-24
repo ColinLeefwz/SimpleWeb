@@ -1,6 +1,5 @@
 class CoursesController < ApplicationController
-  load_and_authorize_resource
-  before_action :set_course, only: [:show, :preview]
+  before_action :set_course, except: [:index, :new, :create]
 
   def index
     @courses = Course.all
@@ -36,9 +35,40 @@ class CoursesController < ApplicationController
 
   def enroll
     render "courses/enroll", locals: {item: @course}
+    # todo: detect user_signed_in? after click the payment button
   end
 
+  def enroll_confirm
+    current_user.enroll(@course)
+    send_enrolled_mail(@course)
+    redirect_to @course, flash: {success: "Enrolled Success!"}
+  end
+
+  def purchase
+    order = Order.create(user: current_user, enrollable: @course)
+    order.create_payment(@course, execute_order_url(order))
+    redirect_to order.approve_url
+  end
+
+  # todo: use Exception and Catch mechanism to deal with all accidents(maybe in the application_controller)
+  def sign_up_confirm
+    member = Member.create(member_params)
+    sign_in member
+
+    if @course.free?
+      redirect_to enroll_confirm_course_path(@course)
+    else
+      redirect_to purchase_course_path(@course)
+    end
+
+  end
+
+
   private
+  def member_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :time_zone)
+  end
+
   def set_course
     @course = Course.find params[:id]
   end
