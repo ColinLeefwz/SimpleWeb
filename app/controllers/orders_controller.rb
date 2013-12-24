@@ -4,14 +4,15 @@ class OrdersController < ApplicationController
   end
 
   def execute
-    order = Order.find(params[:order_id])
-    payment = Payment.find(order.payment_id)
+    order = Order.find(params[:id])
+    payer_id = params[:PayerID]
     item = order.enrollable
-    if payment.execute(payer_id: params[:PayerID])
+
+    if order.execute(payer_id)
       current_user.enroll(item)
-      redirect_to send("#{item.class.name.downcase}_path", item.id), flash: { success: "Enrolled Successful"}
+      redirect_to item, flash: { success: "Enrolled Successful"}
     else
-      redirect_to send("#{item.class.name.downcase}_path", item.id), flash: {error: "Opps, something went wrong"}
+      redirect_to item, flash: {error: "Opps, something went wrong"}
     end
   end
 

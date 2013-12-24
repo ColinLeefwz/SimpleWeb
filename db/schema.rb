@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131219080341) do
+ActiveRecord::Schema.define(version: 20131223154256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -274,11 +274,6 @@ ActiveRecord::Schema.define(version: 20131219080341) do
 
   add_index "sessions", ["categories"], name: "index_sessions_on_categories", using: :gin
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
-
-  create_table "sessions_users", force: true do |t|
-    t.integer "user_id"
-    t.integer "session_id"
-  end
 
   create_table "static_pages", force: true do |t|
     t.string   "title"

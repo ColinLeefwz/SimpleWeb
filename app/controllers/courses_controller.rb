@@ -29,14 +29,13 @@ class CoursesController < ApplicationController
   def enroll_confirm
     current_user.enroll(@course)
     send_enrolled_mail(@course)
-
     redirect_to @course, flash: {success: "Enrolled Success!"}
   end
 
   def purchase
-    logger.debug("in courses#purchase")
-
-    paypal_pay(@course)
+    order = Order.create(user: current_user, enrollable: @course)
+    order.create_payment(@course, execute_order_url(order))
+    redirect_to order.approve_url
   end
 
   # todo: use Exception and Catch mechanism to deal with all accidents(maybe in the application_controller)

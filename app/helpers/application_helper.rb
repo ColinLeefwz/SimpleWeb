@@ -4,19 +4,13 @@ module ApplicationHelper
       "alert-error"
     elsif flash[:error]
       "alert-something"
-    elsif flash[:notice]
+    elsif (flash[:notice] or flash[:success])
       "alert-success"
     end
   end
 
   def flash_message
-    if flash[:alert]
-      flash[:alert]
-    elsif flash[:error]
-      flash[:error]
-    elsif flash[:notice]
-      flash[:notice]
-    end
+    flash[:alert] || flash[:error] || flash[:notice] || flash[:success]
   end
 
 
@@ -41,7 +35,7 @@ module ApplicationHelper
       if item.free?
         link_to "Confirm", "/#{params[:controller]}/#{item.id}/enroll_confirm"
       else
-        link_to image_tag("paypal_button.png"), send("purchase_#{item.class.name.downcase}_path", item.id)
+        link_to image_tag("paypal_button.png"), send("purchase_#{item.class.name.downcase}_path", item.id), data: {no_turbolink: true}
       end
     end
   end

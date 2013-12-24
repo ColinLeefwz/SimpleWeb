@@ -16,7 +16,7 @@ Prodygia::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
-	get "/users/validate_invite_email", to: 'users#validate_invite_email'
+  get "/users/validate_invite_email", to: 'users#validate_invite_email'
 
   resources :users
 
@@ -45,9 +45,12 @@ Prodygia::Application.routes.draw do
     post :create_live_session, on: :collection
   end
 
+
   resources :orders do
-    get :execute
-    get :cancel
+    member do
+      get :execute
+      get :cancel
+    end
   end
 
   resources :members do
