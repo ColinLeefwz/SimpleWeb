@@ -1,3 +1,3 @@
 #= require active_admin/base
 #= require s3_direct_upload
-#= require video_interview
+#= require s3_file_direct_upload

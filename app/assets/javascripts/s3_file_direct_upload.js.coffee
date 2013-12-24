@@ -66,17 +66,17 @@ s3_complete = ->
 		$(e.target).find(".bars").text("completed uploading")
 	
 	$("#s3_intro_video_hd").bind "s3_upload_complete", (e, content) ->
-		$("#course_intro_videos_hd_url").val(content.url)
-		$("#course_intro_videos_attached_video_hd_file_name").val(content.filename)
-		$("#course_intro_videos_attached_video_hd_content_type").val(content.filetype)
-		$("#course_intro_videos_attached_video_hd_file_size").val(content.filesize)
+		$("#course_intro_video_attributes_hd_url").val(content.url)
+		$("#course_intro_video_attributes_attached_video_hd_file_name").val(content.filename)
+		$("#course_intro_video_attributes_attached_video_hd_content_type").val(content.filetype)
+		$("#course_intro_video_attributes_attached_video_hd_file_size").val(content.filesize)
 		$(e.target).find(".bars").text("completed uploading")
 	
 	$("#s3_intro_video_sd").bind "s3_upload_complete", (e, content) ->
-		$("#course_intro_videos_sd_url").val(content.url)
-		$("#course_intro_videos_attached_video_sd_file_name").val(content.filename)
-		$("#course_intro_videos_attached_video_sd_content_type").val(content.filetype)
-		$("#course_intro_videos_attached_video_sd_file_size").val(content.filesize)
+		$("#course_intro_video_attributes_sd_url").val(content.url)
+		$("#course_intro_video_attributes_attached_video_sd_file_name").val(content.filename)
+		$("#course_intro_video_attributes_attached_video_sd_content_type").val(content.filetype)
+		$("#course_intro_video_attributes_attached_video_sd_file_size").val(content.filesize)
 		$(e.target).find(".bars").text("completed uploading")
 
 
