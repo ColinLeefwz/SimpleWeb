@@ -89,13 +89,13 @@ class Photo
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[6..-1] if desc[0,6]=='#我的心愿#'
-      text = "#{self.user.name}的2014心愿：\##{self.desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😜"
+      text = "#{self.user.name}的2014心愿：\##{self.desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😍"
       url = "http://dface.cn/zwyd_wish?id=#{self.id}"
       faq = ShopFaq.find('52b2e20c20f3180fbc000021')
       Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "zw#{self.id}")
       attrs = " NOLOG='1'  url='#{url}' "
       ext = "<x xmlns='dface.url'>#{url}</x>"
-      Xmpp.send_chat($gfuid, self.user_id, "#{self.user.name}的2014心愿：\##{self.desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😜 #{url}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
+      Xmpp.send_chat($gfuid, self.user_id, "#{self.user.name}的2014心愿：\##{self.desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😍 #{url}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
       zwyd = ZwydWish.new(data: [], total: 0)
       zwyd._id = self._id
       zwyd.save
