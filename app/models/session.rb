@@ -1,5 +1,6 @@
 class Session < ActiveRecord::Base
   validates :title, presence: true
+  validates :price, numericality: {greater_than_or_equal_to: 0}
 
   CONTENT_TYPE = %w(ArticleSession LiveSession).freeze
 
