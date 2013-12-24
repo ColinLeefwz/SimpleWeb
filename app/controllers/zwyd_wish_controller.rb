@@ -38,7 +38,10 @@ class ZwydWishController < ApplicationController
      zwyd_wishs = ZwydWish.where({}).limit(params[:limit]).skip(params[:skip]).sort(sort)
      data = zwyd_wishs.map{|m| ["photo_url" => "http://www.dface.cn/tzw#{m.id}.jpg", 'user_logo' => m.user_logo, 'user_name' => m.photo_user.try(:name), 'photo_desc' => m.photo_desc, 'total' => m.total.to_i, 'wish' => "/zwyd_wish?id=#{m.id}" ]}
     end
-    render :layout => false
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: data.to_json }
+    end
   end
 
   private
