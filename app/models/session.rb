@@ -8,8 +8,6 @@ class Session < ActiveRecord::Base
 
   self.inheritance_column = 'content_type'
 
-  after_initialize :set_default
-
   belongs_to :expert
   has_many :orders
 
@@ -30,10 +28,6 @@ class Session < ActiveRecord::Base
 
   def is_free?
     self.price <= 0.0
-  end
-
-  def set_default
-    self.price ||= 0.00
   end
 
   def date 
