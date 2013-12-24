@@ -54,7 +54,6 @@ class Photo
       Xmpp.error_notify("图片async处理时img:#{img}的url为空")      
       return
     end
-    zwyd_pre_notice
     send_wb if weibo
     send_qq if qq
     if weibo || qq || (wx && wx>0)

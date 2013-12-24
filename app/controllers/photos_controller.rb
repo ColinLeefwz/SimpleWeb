@@ -12,6 +12,7 @@ class PhotosController < ApplicationController
     ft2 = params[:filter2].to_i
     p.ft2 = ft2 if ft2 != 0
     p.save!
+    p.zwyd_pre_notice
     p.add_to_checkin
     if p.weibo && params[:wbtoken] && $redis.get("wbtoken#{session[:user_id]}").nil?
       $redis.set("wbtoken#{session[:user_id]}", params[:wbtoken])
