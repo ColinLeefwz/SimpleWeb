@@ -1,0 +1,36 @@
+
+
+= form_for @course, html: {class: "form-horizontal"} do |f|
+  .control-group
+    = f.label :title, "Course Title", class: "control-label"
+    .controls
+      = f.text_field :title
+    
+  .control-group
+    = f.label :description, "Course Description", class: "control-label"
+    .controls
+      = f.text_area :description
+  
+  = f.fields_for :chapters do |g|
+    .control-group
+      = g.label :title, "Course Title", class: "control-label"
+      .controls
+        = g.text_field :title
+
+    .control-group
+      = g.label :description, "Course Description", class: "control-label"
+      .controls
+        = g.text_area :description
+
+    - if g.object.sections
+      - g.object.sections.each do |section|
+        .control-group
+          = label_tag "sections", "Sections" , class: "control-label"
+          .controls
+            = section.title
+            = link_to "edit", edit_section_path(section), class: "btn btn-primary"
+
+  .controls
+    = f.submit
+
+

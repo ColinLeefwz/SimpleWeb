@@ -19,6 +19,18 @@ class CoursesController < ApplicationController
     redirect_to preview_course_path(@course)
   end
 
+  def edit
+  end
+
+  def update
+    if @course.update_attributes course_params
+      redirect_to course_path(@course), flash: {success: "Update Successfully"}
+    else
+      redirect_to course_path(@course), flash: {error: "Failed to Update"}
+    end
+
+  end
+
   def preview
   end
 
@@ -32,6 +44,6 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:title, :description, :cover, {categories:[]}, {expert_ids: []}, chapters_attributes: [:title, :description, :order, :_destroy, sections_attributes: [:title, :description, :order, :_destroy] ])
+    params.require(:course).permit(:title, :description, :cover, {categories:[]}, {expert_ids: []}, chapters_attributes: [:id, :title, :description, :order, :_destroy, sections_attributes: [:id, :title, :description, :order, :_destroy] ])
   end
 end
