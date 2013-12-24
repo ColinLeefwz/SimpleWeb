@@ -89,7 +89,7 @@ class Photo
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[6..-1] if desc[0,6]=='#我的心愿#'
-      txt = "[img:#{self.id}]\##{desc}\#。赶快戳我分享到朋友圈集祝福赢千元红包吧😍"
+      txt = "[img:zwyd#{self.id}]\##{desc}\#。赶快戳我分享到朋友圈集祝福赢千元红包吧😍"
       url = "http://dface.cn/zwyd_wish?id=#{self.id}"
       Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")
       attrs = " NOLOG='1'  url='#{url}' "

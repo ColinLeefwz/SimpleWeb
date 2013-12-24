@@ -30,7 +30,14 @@ class PhotosController < ApplicationController
         redirect_to ShopFaq.img_url(id)
       else
         redirect_to ShopFaq.img_url(id,:t2)
-      end      
+      end  
+    elsif params[:id] =~ /^zwyd/
+      id = params[:id].sub('zwyd','')
+      if params[:size].to_i==0
+        redirect_to Photo.img_url(id)
+      else
+        redirect_to Photo.img_url(id,:t2)
+      end    
     else
       if params[:size].to_i==0
         redirect_to Photo.img_url(params[:id])
