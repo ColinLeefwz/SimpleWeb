@@ -6,6 +6,7 @@ module Storagable
 
 	module ClassMethods
 		def attached_file(file_name, styles={}) 
+			styles_value = styles[:styles] || {}
 			has_attached_file file_name,
 				storage: :s3,
 				s3_credentials: {
@@ -15,7 +16,7 @@ module Storagable
 				},
 				s3_host_name: "s3-us-west-1.amazonaws.com",
 				path: ":class/:attachment/:id/:style/:filename",
-				styles: styles[:styles]
+				styles: styles_value
 		end
 
 	end

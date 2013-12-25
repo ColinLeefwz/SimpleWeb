@@ -10,6 +10,6 @@ class WelcomeController < ApplicationController
     collection << articles
     @sessions = collection.flatten.sort{|x, y| y.updated_at <=> x.updated_at}
     @show_category = true
-  end
+	end
 
 end
