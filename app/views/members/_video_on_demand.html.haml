@@ -1,7 +1,8 @@
-- @favorite_session.each do |session|
+-if @recommendation
+  .recommendation.white-background.shadow
+    Recommended Contents
+- @favorite_course.each do |course|
   .favorite-session-box.shadow.white-background
     .favorite-session-cover
-      .video-img{data: {source: session.video.url}}
-        = image_tag session.cover.url, class: 'video-play'
-        = image_tag "video_play_icon.png", class: 'play-video-icon'
-    = render "session_info", session: session
+      = image_tag(course.cover.url)
+    = render "course_info", course: course
