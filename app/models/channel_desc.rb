@@ -5,6 +5,7 @@ class ChannelDesc
   field :num
   field :who
   field :where
+  field :type, type: Boolean, default: false
 
 end
 
