@@ -44,23 +44,18 @@
         
       = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
 
-      -# .contact-button#contact
-      -#   %button.btn.left-side
-      -#     %i.fa.fa-comments Contact
-      -#   %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
-      -#     %span.caret
     .clear-fix 
 
 
   .detail.sub-wrapper.second-sub
     %ul.nav.nav-tabs
-      - unless @expert.profile.expertise.empty?
+      - if @expert.profile.expertise.present?
         %li.active.tab
           %a{href: "#tab1", data: {toggle: "tab"}}Overview
-      - unless @expert.profile.career.empty?
+      - if @expert.profile.career.present?
         %li.tab
           %a{href: "#tab2", data: {toggle: "tab"}}Career
-      - unless @expert.profile.education.empty?
+      - if @expert.profile.education.present?
         %li.tab
           %a{href: "#tab3", data: {toggle: "tab"}}Education
 
