@@ -18,7 +18,7 @@
       - sublime_id = "sublime_#{course.class.to_s.underscore}_#{course.id}"
     -if course.cover.url
       .cover
-        = link_to image_tag(course.cover.url),course_path(course)
+        = link_to image_tag(course.cover.url), course_path(course)
     -else
 
     .caption
