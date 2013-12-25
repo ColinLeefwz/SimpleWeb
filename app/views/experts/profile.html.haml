@@ -14,6 +14,7 @@
           = @expert.profile.company
 
       %table
+        
         %tr
           %td.company.light-font
             = "Company"
@@ -43,22 +44,25 @@
         
       = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
 
-      .contact-button#contact
-        %button.btn.left-side
-          %i.fa.fa-comments Contact
-        %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
-          %span.caret
+      -# .contact-button#contact
+      -#   %button.btn.left-side
+      -#     %i.fa.fa-comments Contact
+      -#   %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
+      -#     %span.caret
     .clear-fix 
 
 
   .detail.sub-wrapper.second-sub
     %ul.nav.nav-tabs
-      %li.active.tab
-        %a{href: "#tab1", data: {toggle: "tab"}}Overview
-      %li.tab
-        %a{href: "#tab2", data: {toggle: "tab"}}Career
-      %li.tab
-        %a{href: "#tab3", data: {toggle: "tab"}}Education
+      - unless @expert.profile.expertise.empty?
+        %li.active.tab
+          %a{href: "#tab1", data: {toggle: "tab"}}Overview
+      - unless @expert.profile.career.empty?
+        %li.tab
+          %a{href: "#tab2", data: {toggle: "tab"}}Career
+      - unless @expert.profile.education.empty?
+        %li.tab
+          %a{href: "#tab3", data: {toggle: "tab"}}Education
 
     .tab-content
       .tab-pane.active#tab1
@@ -76,4 +80,4 @@
 
   .sessions.sub-wrapper
     #content.container
-      =render 'welcome/box_content', sessions: @sessions
+      =render 'shared/course_content', courses: @courses

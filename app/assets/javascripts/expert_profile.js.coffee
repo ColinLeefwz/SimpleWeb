@@ -26,7 +26,12 @@ profile_event = ->
     e.preventDefault
 
 
+resize_tab = ->
+  num_tabs = $(".tab").size()
+  proper_width = 100 / num_tabs
+  $(".tab").css("width", proper_width + "%")
 
+$(document).ready(resize_tab)
 $(document).ready(profile_event)
 $(document).on 'page:load', profile_event
 

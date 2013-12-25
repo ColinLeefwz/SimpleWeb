@@ -126,15 +126,11 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
     margin-bottom: 0;
     .tab{
       text-align: center;
-      width: 33.3333333334%;
       a{
         font-family: "Latobold";
         font-size: 12pt;
         color: #989898;
       }
-    }
-    .tab:first-child, .tab:last-child{
-      width: 33.3333333333%;
     }
     .active{
       border-bottom: 2px solid #8a2649;
@@ -147,6 +143,9 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
   .tab-pane{
     background-color: white;
     text-indent: 1em;
+    p{
+      margin: 0;
+    }
   }
 }
 
