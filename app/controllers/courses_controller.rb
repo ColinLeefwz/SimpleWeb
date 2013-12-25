@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+	load_and_authorize_resource
+
   before_action :set_course, except: [:index, :new, :create]
 
   def index
@@ -10,6 +12,7 @@ class CoursesController < ApplicationController
 
   def new
     @course = Course.new
+		@course.build_intro_video
   end
 
   def create
@@ -74,6 +77,6 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:title, :description, :cover, {categories:[]}, {expert_ids: []}, chapters_attributes: [:id, :title, :description, :order, :_destroy, sections_attributes: [:id, :title, :description, :order, :_destroy] ])
+		params.require(:course).permit(:title, :description, :cover, {categories:[]}, {expert_ids: []}, chapters_attributes: [:id, :title, :description, :order, :_destroy, sections_attributes: [:id, :title, :description, :order, :_destroy] ], intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
   end
 end
