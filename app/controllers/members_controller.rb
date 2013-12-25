@@ -71,6 +71,15 @@ class MembersController < ApplicationController
     end
   end
 
+  def vod_library
+    @enrolled_course = Course.all(order: "RANDOM()", limit: 3)
+    @recommendation = true
+    @from = "vod_library"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
+
   private
 
   def set_member
