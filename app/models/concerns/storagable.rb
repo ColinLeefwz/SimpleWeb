@@ -16,7 +16,8 @@ module Storagable
 				},
 				s3_host_name: "s3-us-west-1.amazonaws.com",
 				path: ":class/:attachment/:id/:style/:filename",
-				styles: styles_value
+				styles: styles_value,
+				default_url: "https://s3-us-west-1.amazonaws.com/#{ENV["AWS_BUCKET"]}/images/missing.png" ## here we can add method, if we want different pic for default http://rubydoc.info/gems/paperclip/Paperclip/ClassMethods#has_attached_file-instance_method
 		end
 
 	end

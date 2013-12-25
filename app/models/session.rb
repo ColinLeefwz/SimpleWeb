@@ -1,4 +1,5 @@
 class Session < ActiveRecord::Base
+	include Storagable
   validates :title, presence: true
   validates :price, numericality: {greater_than_or_equal_to: 0}
 
@@ -9,6 +10,8 @@ class Session < ActiveRecord::Base
 
   self.inheritance_column = 'content_type'
 
+	attached_file :cover, styles: {}
+	attached_file :video
 
   # relationship with expert
   belongs_to :expert
@@ -23,15 +26,6 @@ class Session < ActiveRecord::Base
 
   has_and_belongs_to_many :enroll_users, class_name: 'User'
 
-  has_attached_file :cover,
-    path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
-    url: "/system/sessions/:attachment/:id_partition/:style/:filename",
-    default_url: 'missing.png'
-
-  has_attached_file :video,
-    path: ":rails_root/public/system/sessions/:attachment/:id_partition/:style/:filename",
-    url: "/system/sessions/:attachment/:id_partition/:style/:filename",
-    default_url: 'missing.png'
 
   def free?
     self.price <= 0.0
