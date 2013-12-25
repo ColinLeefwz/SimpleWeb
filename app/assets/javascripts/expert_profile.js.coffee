@@ -32,6 +32,7 @@ resize_tab = ->
   $(".tab").css("width", proper_width + "%")
 
 $(document).ready(resize_tab)
+$(document).on 'page:load', resize_tab
 $(document).ready(profile_event)
 $(document).on 'page:load', profile_event
 
