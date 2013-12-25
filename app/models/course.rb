@@ -24,6 +24,17 @@ class Course < ActiveRecord::Base
 
     }
 
+  def num_of_experts 
+    self.experts.length
+  end
+
+  def first_expert
+    self.experts.first
+  end
+
+  def second_expert
+    self.experts.second
+  end
 
   def producers
     "by " + self.experts.map(&:name).join(" and ")

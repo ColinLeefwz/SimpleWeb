@@ -5,11 +5,14 @@
       .portrait
         = image_tag(course.experts.first.avatar.url)
         .expert-name
-          = link_to course.experts.first.name, profile_expert_path(course.experts.first)
+          - if course.num_of_experts == 1
+            = link_to course.first_expert.name, profile_expert_path(course.experts.first)
+          - elsif course.num_of_experts == 2
+            = link_to "#{course.first_expert.first_name.first}. #{course.first_expert.last_name}, ", profile_expert_path(course.first_expert)
+            = link_to "#{course.second_expert.first_name.first}. #{course.second_expert.last_name}", profile_expert_path(course.second_expert)
       .content-type
         = image_tag(get_image_tag(course))
         %p= course.categories.join(", ")
-        -# %p= course.language.split(",")[0] if course.language
     .title
       = link_to "#{course.title}", course_path(course)
       - sublime_id = "sublime_#{course.class.to_s.underscore}_#{course.id}"
