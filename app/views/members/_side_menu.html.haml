@@ -29,7 +29,7 @@
 .toolkit
   .item
     = render 'item_icon', item_name: 'video_library'
-    .item-text #{link_to 'Video on Demand Library', pending_page_expert_path, remote: true}
+    .item-text #{link_to 'Video on Demand Library', vod_library_member_path(current_user), remote: true}
   .item
     = render 'item_icon', item_name: 'account'
     .item-text #{link_to 'Settings', edit_user_registration_path, remote: true}
