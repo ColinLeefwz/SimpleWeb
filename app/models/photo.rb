@@ -108,8 +108,8 @@ class Photo
         arr = Rekognition.decode_info(json)
         return nil if arr==nil
         arr = arr.map {|x| x*640/200}
+        return arr
       end
-      arr
     rescue Exception => e
       Xmpp.error_notify(e.to_s)
     end

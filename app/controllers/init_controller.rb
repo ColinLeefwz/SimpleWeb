@@ -36,8 +36,8 @@ class InitController < ApplicationController
       version = $redis.get("android_version")
       ver = version.to_f
     else
-      version = "2.5.3"
-      ver = 2.5
+      version = "2.6.2"
+      ver = 2.6
     end
     render :json => {ip: ip, xmpp: xmpp , ver:ver, version:version }.to_json
   end
@@ -50,6 +50,7 @@ class InitController < ApplicationController
          ["2.4.0","全面兼容IOS7，建议立即升级\n现场图文效果改进",true],
          ["2.5.2","新增好友间语音聊天功能\n定位更准确，更易用",true],
          ["2.5.3","新增好友间语音聊天功能\n增加了右滑手势来查看菜单\n定位更准确，更易用",true],
+         ["2.6.2","性能优化，使用过程更顺畅\n修复了一些软件中存在的Bug",true],
         ]
   
   def upgrade
