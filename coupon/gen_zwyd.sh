@@ -7,8 +7,9 @@ then
 fi
 #convert  -size 300x300 xc:none -draw 'circle 150,150 150,1'  circle.gif
 convert -auto-orient -resize 640x640 $1 $5
+#cp $5 copy_$2_$3_$4_$5
 ruby ./crop2.rb $5 $2 $3 $4
-mogrify -resize 320x320 $5
+mogrify -resize 300x300 $5
 mogrify  -matte -draw 'image Dst_In 10,10 0,0 "circle.gif"'  $5
 convert -quality 90 -draw "image Over 573,231 0,0 \"$5\"" zwyd.jpg $6
 rm $5
