@@ -278,14 +278,6 @@ class Oauth2Controller < ApplicationController
   
   private
   
-  def clear_session_info
-    $redis.del("wbtoken#{session[:user_id]}")
-    $redis.del("qqtoken#{session[:user_id]}")
-    $redis.del("wbexpire#{session[:user_id]}")
-    $redis.del("qqexpire#{session[:user_id]}")
-    reset_session
-  end
-  
   def do_login_wb_done(user,token,expires_in,data)
     user.set(:wb_hidden, 0) if user.wb_hidden.to_i==2
     $redis.set("wbtoken#{user.id}",token)

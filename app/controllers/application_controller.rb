@@ -212,6 +212,14 @@ class ApplicationController < ActionController::Base
     session[:user_dev] = nil
   end
   
+  
+  def clear_session_info
+    $redis.del("wbtoken#{session[:user_id]}")
+    $redis.del("qqtoken#{session[:user_id]}")
+    $redis.del("wbexpire#{session[:user_id]}")
+    $redis.del("qqexpire#{session[:user_id]}")
+    reset_session
+  end
 
 end
 

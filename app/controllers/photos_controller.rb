@@ -3,6 +3,14 @@ require 'rest_client'
 
 class PhotosController < ApplicationController
   before_filter :user_login_filter, :except => [:show, :detail ]
+  before_filter :forbid_user_filter, :except => [:show, :detail ]
+  
+  def forbid_user_filter
+    if session_user.forbidden?
+      clear_session_info
+      render :json => {:error => "not login"}.to_json
+    end
+  end
 
   def create
     p = Photo.new(params[:photo])
