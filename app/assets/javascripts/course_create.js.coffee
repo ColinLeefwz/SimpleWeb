@@ -2,7 +2,7 @@
 
 remove_fields = (link) ->
   $(link).prev("input[type=hidden]").val("1")
-  $(link).closest(".fields").remove()
+  $(link).closest(".fields").hide()
 
 add_fields = (link, associaton, content) ->
   new_id = new Date().getTime()
