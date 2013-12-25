@@ -49,5 +49,9 @@ class AdminChannelsDescController < ApplicationController
     redirect_to :action => "index"
   end
 
+  def s
+    @channel = ChannelDesc.find(params[:id])
+  end
+
 end
 

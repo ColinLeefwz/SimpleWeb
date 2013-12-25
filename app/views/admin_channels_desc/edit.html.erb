@@ -16,6 +16,10 @@
     用途：<br />
     <%= f.text_field :where %>
   </div>
+  <div class="field">
+    <%= f.check_box :type %>是否有中间页
+  </div>
   <br/>
   <%= f.submit '提交' %>
+  <button href="/admin_channels_desc">取消</button>
 <% end %>
