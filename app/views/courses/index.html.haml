@@ -1,3 +1,16 @@
-%h3 Courses index page
+.courses
+  %h3 Courses index page
+  %table.table.table-stripped
+    %tr
+      %th Title
+      %th Price
+      %th Experts
+      %th
+    - @courses.each do |c|
+      %tr
+        %td= c.title
+        %td= c.price
+        %td= c.producers
+        %td= link_to "edit", edit_course_path(c)
 
-= link_to "create new course", new_course_path
+  = link_to "create new course", new_course_path, class: "btn"

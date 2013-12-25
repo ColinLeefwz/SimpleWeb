@@ -369,7 +369,6 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-linkedin
   paperclip
-  paypal-sdk-core
   paypal-sdk-rest
   pg
   rails (= 4.0.0)

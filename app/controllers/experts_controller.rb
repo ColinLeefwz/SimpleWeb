@@ -23,7 +23,7 @@ class ExpertsController < ApplicationController
   end
 
   def profile
-    @sessions = @expert.sessions
+    @courses = @expert.courses
   end
 
   def edit_profile

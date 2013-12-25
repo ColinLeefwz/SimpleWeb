@@ -3,12 +3,13 @@ class SectionsController < ApplicationController
   before_filter :set_section, only: [:edit, :update]
 
   def edit
-    @section.resources.destroy_all
+    @hd_resource = @section.resources.where(video_definition: "HD").first_or_create
+    @sd_resource = @section.resources.where(video_definition: "SD").first_or_create
   end
 
   def update
     @section.update(section_params)
-    redirect_to course_preview_path(@section.chapter.course)
+    redirect_to preview_course_path(@section.chapter.course)
   end
 
 

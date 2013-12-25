@@ -1,0 +1,27 @@
+- sublime_id = ""
+-courses.each do |course|
+  .item
+    .box-header
+      .portrait
+        = image_tag(course.experts.first.avatar.url)
+        .expert-name
+          - if course.num_of_experts == 1
+            = link_to course.first_expert.name, profile_expert_path(course.experts.first)
+          - elsif course.num_of_experts == 2
+            = link_to "#{course.first_expert.first_name.first}. #{course.first_expert.last_name}, ", profile_expert_path(course.first_expert)
+            = link_to "#{course.second_expert.first_name.first}. #{course.second_expert.last_name}", profile_expert_path(course.second_expert)
+      .content-type
+        = image_tag(get_image_tag(course))
+        %p= course.categories.join(", ")
+    .title
+      = link_to "#{course.title}", course_path(course)
+      - sublime_id = "sublime_#{course.class.to_s.underscore}_#{course.id}"
+    -if course.cover.url
+      .cover
+        = link_to image_tag(course.cover.url), course_path(course)
+    -else
+
+    .caption
+      %p.learn-more= link_to "Learn more", course_path(course)
+      .social-share-icons
+        = render 'shared/social_share', session_title: course.title, session_url: course_path(course)

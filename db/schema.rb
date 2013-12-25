@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131217100033) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20131224065601) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -141,12 +138,38 @@ ActiveRecord::Schema.define(version: 20131217100033) do
 
   add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id", using: :btree
 
+  create_table "enrollments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "enrollable_id"
+    t.string   "enrollable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "followings", force: true do |t|
     t.integer  "the_followed"
     t.integer  "follower"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "intro_videos", force: true do |t|
+    t.string   "hd_url"
+    t.string   "sd_url"
+    t.integer  "course_id"
+    t.string   "attached_video_hd_file_name"
+    t.string   "attached_video_hd_content_type"
+    t.integer  "attached_video_hd_file_size"
+    t.datetime "attached_video_hd_updated_at"
+    t.string   "attached_video_sd_file_name"
+    t.string   "attached_video_sd_content_type"
+    t.integer  "attached_video_sd_file_size"
+    t.datetime "attached_video_sd_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "intro_videos", ["course_id"], name: "index_intro_videos_on_course_id", using: :btree
 
   create_table "languages", force: true do |t|
     t.string   "long_version"
@@ -157,16 +180,16 @@ ActiveRecord::Schema.define(version: 20131217100033) do
 
   create_table "orders", force: true do |t|
     t.integer  "user_id"
-    t.integer  "session_id"
     t.string   "payment_id"
     t.string   "state"
     t.string   "amount"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "enrollable_id"
+    t.string   "enrollable_type"
   end
 
-  add_index "orders", ["session_id"], name: "index_orders_on_session_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "profiles", force: true do |t|
@@ -253,7 +276,7 @@ ActiveRecord::Schema.define(version: 20131217100033) do
     t.integer  "video_file_size"
     t.datetime "video_updated_at"
     t.string   "location"
-    t.decimal  "price"
+    t.decimal  "price",              default: 0.0
     t.string   "language"
     t.boolean  "always_show",        default: false
     t.datetime "start_date"
@@ -266,11 +289,6 @@ ActiveRecord::Schema.define(version: 20131217100033) do
 
   add_index "sessions", ["categories"], name: "index_sessions_on_categories", using: :gin
   add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
-
-  create_table "sessions_users", force: true do |t|
-    t.integer "user_id"
-    t.integer "session_id"
-  end
 
   create_table "static_pages", force: true do |t|
     t.string   "title"

@@ -1,4 +1,3 @@
-
 .general-wrapper
   .brief.sub-wrapper.first-sub
     .avatar.brief-item
@@ -9,12 +8,13 @@
           = @expert.name
         %br
         %span.title_company
-          #{@expert.profile.title}, #{@expert.profile.company}
+          #{empty_expert_info_filter(@expert.profile.title, @expert.profile.company)}
         %br
         %span.job.light-font
           = @expert.profile.company
 
       %table
+        
         %tr
           %td.company.light-font
             = "Company"
@@ -39,26 +39,25 @@
           - else
             %i.fa.fa-star Follow
 
-        %button.btn.right-side 0
+        %button.btn.right-side#follower-count
+          = @expert.followers.count
         
       = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
 
-      .contact-button#contact
-        %button.btn.left-side
-          %i.fa.fa-comments Contact
-        %button.btn.dropdown-toggle.right-side{data: {toggle: "dropdown"}}
-          %span.caret
     .clear-fix 
 
 
   .detail.sub-wrapper.second-sub
     %ul.nav.nav-tabs
-      %li.active.tab
-        %a{href: "#tab1", data: {toggle: "tab"}}Overview
-      %li.tab
-        %a{href: "#tab2", data: {toggle: "tab"}}Career
-      %li.tab
-        %a{href: "#tab3", data: {toggle: "tab"}}Education
+      - if @expert.profile.expertise.present?
+        %li.active.tab
+          %a{href: "#tab1", data: {toggle: "tab"}}Overview
+      - if @expert.profile.career.present?
+        %li.tab
+          %a{href: "#tab2", data: {toggle: "tab"}}Career
+      - if @expert.profile.education.present?
+        %li.tab
+          %a{href: "#tab3", data: {toggle: "tab"}}Education
 
     .tab-content
       .tab-pane.active#tab1
@@ -76,4 +75,4 @@
 
   .sessions.sub-wrapper
     #content.container
-      =render 'welcome/box_content', sessions: @sessions
+      =render 'shared/course_content', courses: @courses

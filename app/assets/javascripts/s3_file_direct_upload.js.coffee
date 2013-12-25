@@ -22,6 +22,19 @@ s3_upload = ->
 		allow_multiple_files: false
 		click_submit_target: $('#sd_upload_submit')
 		remove_completed_progress_bar: false
+	
+	$("#s3_intro_video_hd").S3Uploader
+	  progress_bar_target: $('.js-progress-bars')
+		allow_multiple_files: false
+		click_submit_target: $('#hd_upload_submit')
+		remove_completed_progress_bar: false
+	
+	$("#s3_intro_video_sd").S3Uploader
+	  progress_bar_target: $('.js-progress-bars')
+		allow_multiple_files: false
+		click_submit_target: $('#hd_upload_submit')
+		remove_completed_progress_bar: false
+
 
 s3_complete = ->
 	$("#s3_video_interview_hd").bind "s3_upload_complete", (e, content) ->
@@ -51,11 +64,31 @@ s3_complete = ->
 		$("#announcement_attached_video_sd_content_type").val(content.filetype)
 		$("#announcement_attached_video_sd_file_size").val(content.filesize)
 		$(e.target).find(".bars").text("completed uploading")
+	
+	$("#s3_intro_video_hd").bind "s3_upload_complete", (e, content) ->
+		$("#course_intro_video_attributes_hd_url").val(content.url)
+		$("#course_intro_video_attributes_attached_video_hd_file_name").val(content.filename)
+		$("#course_intro_video_attributes_attached_video_hd_content_type").val(content.filetype)
+		$("#course_intro_video_attributes_attached_video_hd_file_size").val(content.filesize)
+		$(e.target).find(".bars").text("completed uploading")
+	
+	$("#s3_intro_video_sd").bind "s3_upload_complete", (e, content) ->
+		$("#course_intro_video_attributes_sd_url").val(content.url)
+		$("#course_intro_video_attributes_attached_video_sd_file_name").val(content.filename)
+		$("#course_intro_video_attributes_attached_video_sd_content_type").val(content.filetype)
+		$("#course_intro_video_attributes_attached_video_sd_file_size").val(content.filesize)
+		$(e.target).find(".bars").text("completed uploading")
+
+
 
 upload_failed = ->
 	$("#s3_video_interview_hd").bind "s3_upload_failed", (e, content) ->
 		$(e.target).find(".bars").text "upload failed"
 	$("#s3_video_interview_sd").bind "s3_upload_failed", (e, content) ->
+		$(e.target).find(".bars").text "upload failed"
+	$("#s3_announcement_hd").bind "s3_upload_failed", (e, content) ->
+		$(e.target).find(".bars").text "upload failed"
+	$("#s3_announcement_sd").bind "s3_upload_failed", (e, content) ->
 		$(e.target).find(".bars").text "upload failed"
 
 $(document).ready s3_upload
