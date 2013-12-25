@@ -33,8 +33,8 @@ class Photo
   def self.img_url(id,type=nil)
     # return self.find_by_id(id).img.url(type) if Rails.env !="production"
     if type
-      "http://dface.img.aliyuncs.com/#{id}/0.jpg@200w_200h_1e_1c_80Q.jpg"
-      #"http://dface.oss.aliyuncs.com/#{id}/#{type}_0.jpg"
+      #"http://dface.img.aliyuncs.com/#{id}/0.jpg@200w_200h_1e_1c_80Q.jpg"
+      "http://dface.oss.aliyuncs.com/#{id}/#{type}_0.jpg"
     else
       "http://dface.oss.aliyuncs.com/#{id}/0.jpg"
     end
