@@ -18,7 +18,7 @@ w, h = str.split(":")[1].split("+")[0].split("x").map {|x| x.to_i}
 if x==0 || y==0 || x>w-50 || y>h-50 || x<50 || y<50
   if w>h
     d = (w-h)/2
-    `mogrify -shave #{d} #{file}`
+    `mogrify -shave #{d}x #{file}`
   elsif w<h
     d = (h-w)/2
     `mogrify -shave x#{d} #{file}`  
