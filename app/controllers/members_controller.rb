@@ -62,8 +62,19 @@ class MembersController < ApplicationController
   end
 
   def video_on_demand
-    @favorite_session = current_user.get_subscribed_sessions( "VideoSession")
+    # @favorite_session = current_user.get_subscribed_sessions( "VideoSession")
+    @favorite_course = Course.all(order: "RANDOM()", limit: 3)
+    @recommendation = true
     @from = "video_on_demand"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
+
+  def vod_library
+    @enrolled_course = Course.all(order: "RANDOM()", limit: 3)
+    @recommendation = true
+    @from = "vod_library"
     respond_to do |format|
       format.js {render "update"}
     end

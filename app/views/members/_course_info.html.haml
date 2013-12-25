@@ -1,0 +1,19 @@
+.favorite-session-info
+  .favorite-session-main
+    .favorite-session-title
+      = course.title
+    .favorite-session-expert-name
+      by 
+      = link_to "#{course.first_expert.name}", profile_expert_path(course.first_expert) 
+    .favorite-session-categories
+      = course.categories.join(", ")
+    .clear-fix
+
+    .favorite-session-description
+      = truncate_html(course.description, length: 300, omission: '...')
+  .see-more
+    = link_to "see more", course_path(course)
+
+.favorite-social-share
+  = render 'shared/favorite_session_star', session: course
+  = render 'shared/social_share', session_title: course.title, session_url: course_url(course)
