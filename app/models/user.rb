@@ -2,8 +2,11 @@ require 'mandrill_api'
 
 class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
+	include Storagable
 
   USER_TYPE = { member: "Member", expert: "Expert" }
+
+	attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 
   has_one :profile
 
@@ -23,7 +26,6 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
   has_many :orders
   has_many :email_messages
-  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}, default_url: 'missing.png'
 
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
   # Peter: we remove the :validatable to allow us to create multiple email with different provider
