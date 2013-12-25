@@ -8,7 +8,7 @@ end
 
 file = ARGV[0]
 x = ARGV[1].to_i
-y = ARGV[2].to_i
+y = ARGV[2].to_i-10 #鼻子为中心点上移动5px
 str = `identify -verbose #{file} | grep 'Geometry' `
 puts str # Geometry: 600x234+0+0
 w, h = str.split(":")[1].split("+")[0].split("x").map {|x| x.to_i}
