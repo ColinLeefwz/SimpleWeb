@@ -72,7 +72,7 @@ class AroundmeController < ApplicationController
     if city=="0571"
       shop = Shop.find_by_id(21828958)
       if shop
-        shop.name = "紫薇原点新年祈福"
+        shop.name = "紫薇原点新年祈愿"
         arr = arr[0,2]+[ shop ]+arr[2..-1]
       end
     end
