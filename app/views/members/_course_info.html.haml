@@ -1,19 +1,29 @@
-.favorite-session-info
-  .favorite-session-main
-    .favorite-session-title
-      = course.title
-    .favorite-session-expert-name
-      by 
-      = link_to "#{course.first_expert.name}", profile_expert_path(course.first_expert) 
-    .favorite-session-categories
-      = course.categories.join(", ")
-    .clear-fix
+.favorite-session-box.shadow.white-background
+  .favorite-session-left
+    .cover
+      = image_tag(course.cover.url)
+    .enroll-button
+      -if current_user.has_enrolled? course 
+        Enrolled
+      -elsif
+        = link_to "Enroll", enroll_course_path(course)
 
-    .favorite-session-description
-      = truncate_html(course.description, length: 300, omission: '...')
-  .see-more
-    = link_to "see more", course_path(course)
+  .favorite-session-info
+    .favorite-session-main
+      .favorite-session-title
+        = course.title
+      .favorite-session-expert-name
+        by 
+        = link_to "#{course.first_expert.name}", profile_expert_path(course.first_expert) 
+      .favorite-session-categories
+        = course.categories.join(", ")
+      .clear-fix
 
-.favorite-social-share
-  = render 'shared/favorite_star', method: :has_subscribed?, object: course, link_path: subscribe_course_path(course)
-  = render 'shared/social_share', session_title: course.title, session_url: course_url(course)
+      .favorite-session-description
+        = truncate_html(course.description, length: 300, omission: '...')
+    .see-more
+      = link_to "see more", course_path(course)
+
+  .favorite-social-share
+    = render 'shared/favorite_star', method: :has_subscribed?, object: course, link_path: subscribe_course_path(course)
+    = render 'shared/social_share', session_title: course.title, session_url: course_url(course)
