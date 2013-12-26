@@ -10,25 +10,26 @@
   .remove-fields{
     display: inline-block;
   }
-  
-  .chapter-fields{
-    background-color: #ADB2BD;
-    margin-top: 0.3em;
-    padding: 0 1em;
-    padding-bottom: 1em;
-  }
-  .section-fields{
-    background-color: #DEDFE7;
-    margin-top: 0.3em;
-    padding: 0 1em;
-    padding-bottom: 1em;
-  }
 
   // override bootstrap style
   .checkbox input[type='checkbox']{
     float: none;
   }
 
+}
+
+// shared by courses#new, courses#edit
+.chapter-fields{
+  background-color: #ADB2BD;
+  margin-top: 0.3em;
+  padding: 0 1em;
+  padding-bottom: 1em;
+}
+.section-fields{
+  background-color: #DEDFE7;
+  margin-top: 0.3em;
+  padding: 0 1em;
+  padding-bottom: 1em;
 }
 
 
