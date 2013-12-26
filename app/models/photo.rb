@@ -251,7 +251,9 @@ class Photo
   
   def top10_comment(u=nil)
     return [] if self.com.nil? || self.com.size==0
-    self.com[-10..-1].to_a.select{|m| !m['hide']}
+    coms = self.com.to_a.select{|m| !m['hide']}
+    return coms if coms.size<=10
+    coms[-10..-1]
   end
   
 
