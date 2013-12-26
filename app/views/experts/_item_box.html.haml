@@ -1,0 +1,4 @@
+- if item.is_a? Course
+  = render "course_content", course: item
+- else
+  = render "welcome/box_content", item: item
