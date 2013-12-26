@@ -17,7 +17,9 @@
     - sublime_id = "sublime_#{course.class.to_s.underscore}_#{course.id}"
   -if course.cover.url
     .cover
-      = link_to image_tag(course.cover.url), course_path(course)
+      .video-img{data: {"source-sd" => course.intro_video.sd_url, "source-hd" => course.intro_video.hd_url, from: "landing_page", "sublime-id" => sublime_id}}
+        = image_tag course.cover.url, class: 'video-play'
+        = image_tag "video_play_icon.png", class: 'play-video-icon'
   -else
 
   .caption
