@@ -15,5 +15,5 @@
     = link_to "see more", course_path(course)
 
 .favorite-social-share
-  = render 'shared/favorite_session_star', session: course
+  = render 'shared/favorite_star', method: :subscribe?, object: course, link_path: subscribe_course_path(course)
   = render 'shared/social_share', session_title: course.title, session_url: course_url(course)
