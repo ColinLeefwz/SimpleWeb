@@ -1,0 +1,42 @@
+﻿@charset "utf-8";
+/* CSS Document */
+*{margin:0px;padding:0px;outline:none;}
+body{background-color:#FFFFFF;font:12px/1.5em "宋体";}
+ul{list-style:none;}
+img{border:none;}
+a{text-decoration:none;color:#00A0E9;}
+a:hover{color:#f60;}
+
+.l{float:left !important;}
+.r{float:right !important;}
+
+.none{display:none !important;}
+
+.ml5{margin-left:8px !important;}
+.ml20{margin-left:20px !important;}
+.mr50{margin-right:50px !important;}
+.pt20{padding-top:20px !important;}
+.mlr5{margin-left:5px !important;margin-right:5px !important;}
+.mr5{margin-right:5px !important;}
+
+.main{width:640px;margin:0px auto;overflow:hidden;position:relative;zoom:1;}
+
+.imgsbox{width:100%;position:absolute;height:809px;z-index:1;left:0px;top:0px;}
+.imgsbox img.imgs{display:block;position:absolute;z-index:2;top:190px;left:40px;}
+.imgsbox img.imgs2{width:640px;display:block;position:absolute;z-index:3;}
+.imgsbox img.imgs3{display:block;position:absolute;z-index:4;right:0px;top:5px;}
+
+.plane{width:640px;float:left;padding-top:809px;color:#686868;background:url(../images/bg.png) 0px top no-repeat;position:relative;z-index:5;}
+.plane  .content{padding:0px 40px 20px 40px;background:url(../images/linebg.png) 0px bottom no-repeat;position:relative;}
+.plane  .content .tit{width:100%;height:55px;position:relative;top:0px;left:0px;z-index:20;}
+.plane  .content .tit img{width:80px;position:absolute;top:-40px;left:10px;border:1px solid #fff;box-shadow:0px 0px 10px rgba(255,255,255,0.5);}
+.plane  .content .tit h2{font-size:25px;font-family:黑体;margin-left:100px;color:#666;text-shadow 0px 0px 1px #fff;line-height:50px;}
+.plane .content p{font-family:"微软雅黑";text-indent:1em;padding:0px 5px;font-size:23px;color:#666;line-height:35px;}
+.plane .op{padding:20px 5px 10px 5px;;clear:both;display:block;overflow:hidden;zoom:1;}
+#LinkBG1, #LinkBG2, #LinkBG3{float:right;margin-right:20px;background-color:#4C99CA;width:50px;height:20px;display:block;cursor:pointer;opacity:0.5;filter: Alpha(Opacity=50);}
+#LinkBG2{background-color:#FC6E51;}
+#LinkBG3{background-color:#F25475;}
+#LinkBG1.hover, #LinkBG2.hover, #LinkBG3.hover{opacity:1;filter: Alpha(Opacity=100);}
+#LinkBG1.hover{box-shadow:0px 0px 15px #4C99CA;}
+#LinkBG2.hover{box-shadow:0px 0px 15px #FC6E51;}
+#LinkBG3.hover{box-shadow:0px 0px 15px #F25475;}

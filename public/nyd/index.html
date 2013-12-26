@@ -1,0 +1,54 @@
+﻿<!DOCTYPE>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
+<meta http-equiv="mobile-agent" content="format=xhtml; url=http://dface.cn/mini.html" />
+<title>元旦活动</title>
+<link rel="stylesheet" href="/nyd/css/public.css" type="text/css" media="screen"/>
+<script src="/nyd/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
+<script>
+
+</script>
+</head>
+
+<body onload="Open()">
+<div class="main">
+	<div class="con">
+		<div class="imgsbox">
+			<img class="imgs" src="/nyd/images/pic7.jpg" style="display:none;">
+			<img class="imgs2" src="/nyd/images/pic1.png">
+			<img class="imgs2 none" src="/nyd/images/pic3.png">
+			<img class="imgs2 none" src="/nyd/images/pic2.png">
+			<img class="imgs3" src="/nyd/images/pic6.png">
+		</div>
+		<div class="plane">
+			<div class="content">
+				<div class="tit">
+					<img src="/nyd/images/pic4.png" align="absbottom"/>
+					<h2><a href="#">袁乐天</a>的心愿：</h2>
+				</div>
+				<p>工作顺利，身体健康，吃嘛嘛香~工作顺利，身体健康，吃嘛嘛香~工作顺利，身体健康，吃嘛嘛香~</p>
+				<div class="op">
+					<a id="LinkBG1" onclick="OpenImg(this,0)" class="hover"></a>
+					<a id="LinkBG2" onclick="OpenImg(this,1)"></a>
+					<a id="LinkBG3" onclick="OpenImg(this,2)"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+function OpenImg(obj,n){
+	$("img.imgs2").addClass("none");
+	$("img.imgs2").eq(n).removeClass("none");
+	$(obj).siblings().removeClass("hover").end().addClass("hover");
+}
+function Open(){
+	$("img.imgs").fadeIn(2000);
+}
+</script>
+</body>
+</html>
