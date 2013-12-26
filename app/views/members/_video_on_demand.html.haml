@@ -2,7 +2,4 @@
   .recommendation.white-background.shadow
     Recommended Contents
 - @subscribed_courses.each do |course|
-  .favorite-session-box.shadow.white-background
-    .favorite-session-cover
-      = image_tag(course.cover.url)
-    = render "course_info", course: course
+  = render "course_info", course: course
