@@ -74,7 +74,7 @@ class MembersController < ApplicationController
   end
 
   def vod_library
-    @enrolled_courses = current_user.enrollments.where(enrollable_type: "Course")
+    @enrolled_courses = current_user.enrolled_courses
     if @enrolled_courses.empty?
       @enrolled_courses = Course.all(order: "RANDOM()", limit: 3)
       @recommendation = true

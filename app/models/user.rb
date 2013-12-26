@@ -26,9 +26,11 @@ class User < ActiveRecord::Base
 
   # enrollments and orders
   has_many :enrollments
-  has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
-  has_many :orders
-  has_many :email_messages
+  has_many :enrolled_courses, through: :enrollments, source: :enrollable, source_type: "Course"
+  # has_many :enrollments
+  # has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
+  # has_many :orders
+  # has_many :email_messages
 
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
   # Peter: we remove the :validatable to allow us to create multiple email with different provider
@@ -44,28 +46,33 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
+  ##methods for enroll sessions
+  def has_enrolled? (item)
+    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item)
+  end
+
   ## methods for subscribe sessions
   def get_subscribed_sessions(session_type)
     self.subscribed_sessions.where(content_type: session_type)
   end
 
-  def has_subscribed? (lesson)
-    self.subscribed_sessions.include?(lesson) || self.subscribed_courses.include?(lesson)
+  def has_subscribed? (item)
+    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item)
   end
 
-  def subscribe (lesson)
-    if lesson.is_a? Session
-      self.subscribed_sessions << lesson
-    elsif lesson.is_a? Course
-      self.subscribed_courses << lesson
+  def subscribe (item)
+    if item.is_a? Session
+      self.subscribed_sessions << item
+    elsif item.is_a? Course
+      self.subscribed_courses << item
     end
   end
 
-  def unsubscribe (lesson)
-    if lesson.is_a? Session
-      self.subscribed_sessions.delete lesson
-    elsif lesson.is_a? Course
-      self.subscribed_courses.delete lesson
+  def unsubscribe (item)
+    if item.is_a? Session
+      self.subscribed_sessions.delete item
+    elsif item.is_a? Course
+      self.subscribed_courses.delete item
     end
   end
 
