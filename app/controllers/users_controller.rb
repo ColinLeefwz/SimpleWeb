@@ -54,10 +54,24 @@ class UsersController < ApplicationController
         else
           current_user.subscribe(current_session)
         end
-
         render nothing: true
      } 
     end
+  end
+
+  def subscribe_course
+    respond_to do |format|
+      format.js{
+        current_course = Course.where(id: params[:course_id]).first
+        if current_user.has_subscribed?(current_course)
+          current_user.unsubscribe(current_course)
+        else
+          current_user.subscribe(current_course)
+        end
+        render nothing: true
+     } 
+    end
+    
   end
 
 end
