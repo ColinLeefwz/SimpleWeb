@@ -10,11 +10,14 @@ class User < ActiveRecord::Base
 
   has_one :profile
 
-  ## User follow sessions
+  # User follow sessions
   has_many :subscriptions, foreign_key: "subscriber_id"
-  has_many :subscribed_sessions, through: :subscriptions
+  # has_many :subscribed_sessions, through: :subscriptions
 
-  ## User follows User
+  has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Session"
+  has_many :subscribed_courses, through: :subscriptions, source: :subscribable, source_type: "Course"
+
+  # User follows User
   has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
   has_many :followers, through: :be_followed, class_name: "User"
 
@@ -46,16 +49,24 @@ class User < ActiveRecord::Base
     self.subscribed_sessions.where(content_type: session_type)
   end
 
-  def has_subscribed? (this_session)
-    self.subscribed_sessions.include? (this_session)
+  def has_subscribed? (lesson)
+    self.subscribed_sessions.include?(lesson) || self.subscribed_courses.include?(lesson)
   end
 
-  def subscribe (this_session)
-    self.subscribed_sessions << this_session
+  def subscribe (lesson)
+    if lesson.is_a? Session
+      self.subscribed_sessions << lesson
+    elsif lesson.is_a? Course
+      self.subscribed_courses << lesson
+    end
   end
 
-  def unsubscribe (this_session)
-    self.subscribed_sessions.delete this_session
+  def unsubscribe (lesson)
+    if lesson.is_a? Session
+      self.subscribed_sessions.delete lesson
+    elsif lesson.is_a? Course
+      self.subscribed_courses.delete lesson
+    end
   end
 
   ## methods for follow users
@@ -128,5 +139,4 @@ class User < ActiveRecord::Base
   def email_required?
     true
   end
-
 end
