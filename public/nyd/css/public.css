@@ -9,9 +9,10 @@ a:hover{color:#f60;}
 
 .l{float:left !important;}
 .r{float:right !important;}
-
 .none{display:none !important;}
+.pink{color:#FF00A7;}
 
+.mt15{margin-top:15px !important;}
 .ml5{margin-left:8px !important;}
 .ml20{margin-left:20px !important;}
 .mr50{margin-right:50px !important;}
@@ -40,3 +41,6 @@ a:hover{color:#f60;}
 #LinkBG1.hover{box-shadow:0px 0px 15px #4C99CA;}
 #LinkBG2.hover{box-shadow:0px 0px 15px #FC6E51;}
 #LinkBG3.hover{box-shadow:0px 0px 15px #F25475;}
+
+.plane2{font-size:24px;font-family:黑体;padding-top:20px;line-height:35px;color:#666;}
+.plane2 p{margin:15px 0px;}
