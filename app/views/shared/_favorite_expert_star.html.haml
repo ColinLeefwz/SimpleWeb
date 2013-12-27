@@ -1,2 +1,2 @@
-%div{class: favorite_class(expert)}
-  = link_to image_tag("favorite.png", class: favorite_class(expert, "icon")), relationship_path(expert), remote: true
+%div{class: favorite_expert_class(expert)}
+  = link_to image_tag("favorite.png", class: favorite_expert_class(expert, "-icon")), relationship_path(expert), remote: true
