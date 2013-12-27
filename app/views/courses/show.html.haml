@@ -16,11 +16,12 @@
         .producers.inline
           = @course.producers
 
-          
         -# video-length & category
-        .video-length.inline
-          1h 33m
-        .separator.inline
+
+        -# todo: add real video-length data
+        -# .video-length.inline
+        -#   1h 33m
+        -# .separator.inline
         .category.inline
           = @course.categories.join(", ")
         -# description
@@ -28,8 +29,11 @@
           = @course.description
 
       .social-box.inline
+        = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_course_path(@course)
+        = render 'shared/social_share', session_title: @course.title, session_url: course_url(@course)
 
-      .percentage
+      -# todo: add real progress bar
+      .percentage{style: "visibility: hidden"}
         %span 20
         %span % complete
       .progress
