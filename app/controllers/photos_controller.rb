@@ -29,6 +29,10 @@ class PhotosController < ApplicationController
     p.ft1 = ft1 if ft1 != 0
     ft2 = params[:filter2].to_i
     p.ft2 = ft2 if ft2 != 0
+    total = params[:total].to_i
+    p.total = total if total != 0
+    time = params[:time].to_i
+    p.time = time if time != 0
     p.save!
     p.zwyd_pre_notice
     p.add_to_checkin
