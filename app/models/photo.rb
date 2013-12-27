@@ -268,7 +268,8 @@ class Photo
     thumbs = []
     (2..total).each do |x|
       photos.push "http://dphoto.qiniudn.com/#{self.user_id}/#{self.time}-#{x}"
-      thumbs.push "http://dphoto.qiniudn.com/#{self.user_id}/#{self.time}-#{x}"
+      thumbs.push "http://dphoto.qiniudn.com/#{self.user_id}/#{self.time}-#{x}-thumb"
+      #thumbs.push "http://dphoto.qiniudn.com/#{self.user_id}/#{self.time}-#{x}?imageView/1/w/200/h/200/q/85"
     end
     {photos: photos, thumb2s: thumbs}
   end
