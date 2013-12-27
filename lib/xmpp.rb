@@ -34,7 +34,7 @@ class Xmpp
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
     attrs += " NOLOG='1' " if (from.to_s == $gfuid || from.to_s == 'scoupon' || from.to_s == 'sphoto' || msg[0]==':') && attrs.index("NOLOG").nil?
-    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat' #{attrs}><body>#{msg2}</body>#{ext}</message>"
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat' #{escape(attrs)}><body>#{msg2}</body>#{escape(ext)}</message>"
   end
   
   #发送个人聊天消息
@@ -45,7 +45,7 @@ class Xmpp
   def self.gchat(from,to,msg, id=nil, attrs="", ext="")
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
-    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from.to_i}@c.dface.cn' type='groupchat' #{attrs}><body>#{msg2}</body>#{ext}</message>"
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from.to_i}@c.dface.cn' type='groupchat' #{escape(attrs)}><body>#{msg2}</body>#{escape(ext)}</message>"
   end 
   
   #在聊天室发送系统消息
@@ -56,7 +56,7 @@ class Xmpp
   def self.gchat2(from,room,to,msg, id=nil, attrs="", ext="")
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
-    "<message id='#{mid}' to='#{to}@dface.cn' from='#{room.to_i}@c.dface.cn/#{from}' type='groupchat' #{attrs}><body>#{msg2}</body>#{ext}</message>"
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{room.to_i}@c.dface.cn/#{from}' type='groupchat' #{escape(attrs)}><body>#{msg2}</body>#{escape(ext)}</message>"
   end 
   
   #在聊天室以特定用户身份发消息
@@ -76,6 +76,13 @@ class Xmpp
     Resque.enqueue(XmppMsg, $gfuid,uid,str)  if Rails.env=="production"
   end
   
+  def self.escape(str)
+    s = str.gsub("&", "&amp;")
+    s.gsub!("<", "&lt;")
+    s.gsub!(">", "&gt;")
+    s
+  end
+  
   def self.test
     cur_ip = nil
     begin
@@ -92,6 +99,14 @@ class Xmpp
   
   def self.test_server_msg(uid)
     100.times {|x| Xmpp.send_chat($gfuid,uid,x.to_s);sleep 1}
+  end
+  
+  def self.test_and_msg
+    txt = "[img:52aa8c9320f31890f7000026]浦靠谱在NOW PUB&SALOON分享了一张图片,温暖午餐"
+    id = "FEED#{Time.now.to_i}"
+    attr = " NOLOG='1' NOPUSH='1' SID='6411140' SNAME='NOW PUB&SALOON' "
+    ext = "<x xmlns='dface.shop' SID='6411140' SNAME='NOW PUB&SALOON' ></x>"
+    Xmpp.send_chat($gfuid,User.first.id,txt,id,attr,ext)
   end
 
 end
