@@ -2,8 +2,8 @@
 require 'rest_client'
 
 class PhotosController < ApplicationController
-  before_filter :user_login_filter, :except => [:show, :detail ]
-  before_filter :forbid_user_filter, :except => [:show, :detail ]
+  before_filter :user_login_filter, :except => [:show, :detail, :callback ]
+  before_filter :forbid_user_filter, :except => [:show, :detail, :callback ]
   
   def forbid_user_filter
     if session_user.forbidden?
