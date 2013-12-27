@@ -130,7 +130,7 @@ $(document).ready(function(){
 	});
 });
 
-var timer,timer2,timer3;
+var timer=timer2=timer3=1;
 $("#Btn").click(function(){
 	var n=$("#name").val(),
 		w=$("#wish").val();
@@ -146,14 +146,7 @@ $("#Btn").click(function(){
 	clearInterval(timer);
 	clearTimeout(timer2);
 	clearTimeout(timer3);
-	timer=setInterval(function(){
-		switch(i){
-			case 0: $("#Mes li.new a").css({"color":"#FF1E1E","font-size":"30px"});break;
-			case 1: $("#Mes li.new a").css({"color":"#3232FF","font-size":"30px"});break;
-			case 2: $("#Mes li.new a").css({"color":"#bbb","font-size":"30px"});i=-1;break;
-		}
-		i++;
-	},1000);
+
 	timer2=setTimeout(function(){
 		var bghigh=$(document).scrollTop()+($(window).height()-160)/2;
 		var bgleft=$(document).scrollLeft()+($(window).width()-450)/2;
@@ -164,6 +157,14 @@ $("#Btn").click(function(){
 	timer3=setTimeout(function(){
 		$("#BG").fadeOut(500);
 	},3000);
+	timer=setInterval(function(){
+		switch(i){
+			case 0: $("#Mes li.new a").css({"color":"#FF1E1E","font-size":"30px"});break;
+			case 1: $("#Mes li.new a").css({"color":"#3232FF","font-size":"30px"});break;
+			case 2: $("#Mes li.new a").css({"color":"#bbb","font-size":"30px"});i=-1;break;
+		}
+		i++;
+	},1000);
 });
 $("#BG").click(function(){
 	$("#BG").fadeOut(500);
