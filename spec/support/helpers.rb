@@ -6,7 +6,7 @@ def helper_objects
   let(:allen) { create :user, email: 'allen@test.com', password: '11111111', first_name: 'allen', last_name: 'wang' }
 
   #experts
-  let(:sameer) { create :expert, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim', avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
+  let(:sameer) { create :expert, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim' } # , avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
   let(:alex) {create :expert, email: 'alex@test.com', password: '11111111', first_name: 'alex', last_name: 'lalo', avatar: fixture_file_upload(('AD pic.jpg'), 'image/png') }
 
   #admins
@@ -53,7 +53,7 @@ def helper_objects
   let(:session_draft_map) { create :live_session, title: 'live_session_draft', expert: alex, description: 'dddd', draft: true }
 
   #courses
-  let(:first_course) { create :course, title: "first course", description: "course description" }
+  let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer] }
 
   #chapters
   let(:first_chapter) { create :chapter, title: "first chapter", description: "chapter description", course: first_course }

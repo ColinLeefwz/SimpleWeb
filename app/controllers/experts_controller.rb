@@ -23,7 +23,7 @@ class ExpertsController < ApplicationController
   end
 
   def profile
-    @courses = @expert.courses
+		@items = @expert.sessions.to_a.concat(@expert.video_interviews.to_a).concat(@expert.courses.to_a)
   end
 
   def edit_profile

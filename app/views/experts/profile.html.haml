@@ -75,4 +75,4 @@
 
   .sessions.sub-wrapper
     #content.container
-      =render 'shared/course_content', courses: @courses
+      =render partial: 'item_box', collection: @items, as: :item
