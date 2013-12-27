@@ -64,6 +64,8 @@ font-size:30px;font-family:黑体;text-align:center;display:none;cursor:pointer;
 #LinkBG2.hover{box-shadow:0px 0px 15px #FC6E51;}
 #LinkBG3.hover{box-shadow:0px 0px 15px #F25475;}*/
 
+.plane2{font-family:"黑体";font-size:25px;padding:20px 0px 0px 20px;display:block;line-height:40px;overflow:hidden;position:relative;color:#666;}
+
 .plane3{font-family:"黑体";font-size:25px;padding:20px 0px 0px 20px;display:block;line-height:40px;overflow:hidden;position:relative;color:#666;}
 .plane4{font-family:"微软雅黑";font-size:24px;display:block;line-height:35px;padding:20px 0px 20px 20px;}
 .plane4 ul{display:block;overflow:hidden;zoom:1;}
