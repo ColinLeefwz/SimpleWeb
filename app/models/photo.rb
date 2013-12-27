@@ -20,6 +20,9 @@ class Photo
   field :ft2, type:Integer #使用的图片合成
   field :hide, type:Boolean  #隐藏照片
   field :od, type:Integer   #置顶值
+  field :total, type:Integer   #多图上传时的总数
+  field :time, type:Integer   #上传时客户端时间，unix时间1970到秒
+  
 
   mount_uploader(:img, PhotoUploader)
   
@@ -40,12 +43,31 @@ class Photo
     end
   end
   
+  def desc_multi
+    if total && total>1
+      "#{total}:#{desc}"
+    else
+      desc
+    end
+  end
+  
   def share_url
     "http://www.dface.cn/web_photo/show?id=#{self.id}"
   end
   
   def mid
     "ckn#{self.id}"
+  end
+  
+  def self.uptoken(uid)
+    upopts = {
+      :scope => "dphoto", 
+      :expires_in => 720000, 
+      :callback_url => "http://42.121.79.211/photos/callback",
+      :callback_body => "from=$(x:from)&room=$(x:room)&id=$(x:id)&key=$(etag)&size=$(fsize)",
+      :callback_body_type => "application/x-www-form-urlencoded"
+    }
+    Qiniu::RS.generate_upload_token(upopts)
   end
   
   
@@ -64,7 +86,7 @@ class Photo
       #Rails.cache.delete("UP#{self.user_id}-5")
     end
     return if ENV["RAILS_ENV"] == "test"
-    Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc}", mid ,1)
+    Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc_multi}", mid ,1)
     rand_like
     if room==$zwyd.to_s || room=="21837985"
       gen_zwyd
@@ -239,6 +261,17 @@ class Photo
       desc
     end
   end
+  
+  def multi_photos
+    return {} if total.nil? || total<2
+    photos = []
+    thumbs = []
+    (2..total).each do |x|
+      photos.push "http://dphoto.qiniudn.com/#{self.user_id}/#{self.time}-#{x}"
+      thumbs.push "http://dphoto.qiniudn.com/#{self.user_id}/#{self.time}-#{x}"
+    end
+    {photos: photos, thumb2s: thumbs}
+  end
 
   
   def logo_thumb_hash
@@ -266,6 +299,7 @@ class Photo
   def basic_output
     hash = {id: self._id, user_name: self.user.name , user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo, qq:self.qq}
     hash.merge!( logo_thumb_hash)
+    hash.merge!( multi_photos)
   end
   
   def output_hash

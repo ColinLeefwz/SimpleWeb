@@ -11,6 +11,16 @@ class PhotosController < ApplicationController
       render :json => {:error => "not login"}.to_json
     end
   end
+  
+  def uptoken
+    token = Photo.uptoken(params[:user_id])
+    render :json => {token:token }.to_json
+  end
+  
+  def callback
+    #TODO: 判断调用来自七牛
+    render :json => request.params.to_json
+  end
 
   def create
     p = Photo.new(params[:photo])
@@ -234,7 +244,7 @@ class PhotosController < ApplicationController
   end
   
   def comment_send_to_room(photo,com)
-    if params[:sid] && params[:sid]==photo.room
+    if params[:sid] && params[:sid]==photo.room && photo.total.nil?
       Resque.enqueue(XmppRoomMsg2, params[:sid], session[:user_id], "[img:#{photo.id}]#{photo.com.size}:#{com[:txt]}", "COMMENT#{com[:id]}#{Time.now.to_i}", 1)
     end
   end

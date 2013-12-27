@@ -34,6 +34,10 @@ POST & \multicolumn{3}{|c|}{/photos/create} \\
   \hline
  qqtoken  & 字符串 & 可选  &  如果分享到QQ空间，该用户的QQtoken\\
  \hline
+  total  & 整数 & 可选  &  如果多张图分享，图片的总数\\
+ \hline
+  time  & 整数 & 可选  &  多张图上传时客户端时间，unix时间1970到秒\\  
+ \hline
 \end{tabular}
    \end{center}
 \end{table}
@@ -68,6 +72,64 @@ POST & \multicolumn{3}{|c|}{/photos/create} \\
 \end{figure}
 
 
+
+\subsection{多图上传时，非第一张图的上传}
+
+\subsubsection{获取七牛云存储的图片上传token}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/uptoken} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必须 &  当前登录用户的id\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsubsection{上传图片}
+
+调用七牛的API上传文件，其中包含的参数有：
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{七牛的上传模式2：高级上传（带回调）} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ uptoken  & 字符串 & 必须 &  上一步获得的token\\
+ \hline
+ file  & 文件 & 必须 &  要上传的文件\\
+ \hline
+ bucket  & 字符串 & 必须 & 必须是"dphoto"\\
+ \hline
+ key  & 字符串 & 必须 &  上传时的主健，格式见下面的说明\\
+  \hline
+ callback\_params  & 字符串 & 必须 &  回调参数\\
+ \hline    
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+key的格式为：“uid/time-seq”，其中hid就是发图者的id，time就是第一张图里带的time参数，seq表示第几张图。
+
+回调参数的格式："from=&room=&id=&key=$(etag)&size=$(fsize)"
+其中from是发送者的uid，
+room是聊天室编号,
+id是上面的主键key,
+"key=$(etag)&size=$(fsize)"这一段则不做改变。
+
+
+\end{verbatim}
+
+
 \subsection{发送消息}
 当图片发送完成后，服务器端发送一个xmpp消息，其中的body内容格式为：
 
@@ -75,6 +137,10 @@ POST & \multicolumn{3}{|c|}{/photos/create} \\
 [img:$id]$desc
 
 比如上面的图片发送成功后，发送消息"[img:502fd10abe4b19ed48000002]"。其中$desc是可选的图片说明文字。
+
+如果一次上传了多张图片,那么xmpp消息格式为：
+[img:$id]$total:$desc
+其中total是上传图片的总数。
 \end{verbatim}
 
 \subsection{在聊天室收到消息后获取图片}
@@ -99,6 +165,8 @@ GET & \multicolumn{3}{|c|}{/photos/show} \\
 
 聊天室里发图不需要发送已读回执消息。
 在现场收到图片时，如果图片id以“faq”开头，不添加到照片墙上。18:02:24
+
+如果是多图上传，其它的图直接通过url拿，不需要调用本接口。
 
 
 \subsection{在聊天室收点击图片获取图片详细信息}
