@@ -71,7 +71,20 @@ class UsersController < ApplicationController
         render nothing: true
      } 
     end
-    
+  end
+
+  def subscribe_video_interview
+    respond_to do |format|
+      format.js{
+        video_interview = VideoInterview.where(id: params[:video_interview_id]).first
+        if current_user.has_subscribed?(video_interview)
+          current_user.unsubscribe(video_interview)
+        else
+          current_user.subscribe(video_interview)
+        end
+        render nothing: true
+     } 
+    end
   end
 
 end
