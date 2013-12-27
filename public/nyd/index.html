@@ -14,41 +14,161 @@
 </script>
 </head>
 
-<body onload="Open()">
+<body>
 <div class="main">
+	<a id="BG">谢谢<img src="/w/1/images/sign2.png"/>收到你的祝福啦<img src="/w/1/images/sign3.png"/></a>
 	<div class="con">
 		<div class="imgsbox">
-			<img class="imgs" src="/nyd/images/pic7.jpg" style="display:none;">
-			<img class="imgs2" src="/nyd/images/pic1.png">
-			<img class="imgs2 none" src="/nyd/images/pic3.png">
-			<img class="imgs2 none" src="/nyd/images/pic2.png">
+			<img class="imgs" src="/nyd/images/pic7.jpg">
+			<div class="imgs2">
+				<img src="/nyd/images/pic1_01.jpg" class="block">
+				<img src="/nyd/images/pic1_02.png" class="l">
+				<img src="/nyd/images/pic1_03.jpg" class="r">
+				<img src="/nyd/images/pic1_04.jpg" class="block">
+			</div>
+			<div class="imgs2 none">
+				<img src="/nyd/images/pic2_01.jpg" class="block">
+				<img src="/nyd/images/pic2_02.png" class="l">
+				<img src="/nyd/images/pic2_03.jpg" class="r">
+				<img src="/nyd/images/pic2_04.jpg" class="block">
+			</div>
+			<div class="imgs2 none">
+				<img src="/nyd/images/pic3_01.jpg" class="block">
+				<img src="/nyd/images/pic3_02.png" class="l">
+				<img src="/nyd/images/pic3_03.jpg" class="r">
+				<img src="/nyd/images/pic3_04.jpg" class="block">
+			</div>
+			<div class="imgs2 none">
+				<img src="/nyd/images/pic4_01.jpg" class="block">
+				<img src="/nyd/images/pic4_02.png" class="l">
+				<img src="/nyd/images/pic4_03.jpg" class="r">
+				<img src="/nyd/images/pic4_04.jpg" class="block">
+			</div>
+			<div class="imgs2 none">
+				<img src="/nyd/images/pic5_01.jpg" class="block">
+				<img src="/nyd/images/pic5_02.png" class="l">
+				<img src="/nyd/images/pic5_03.jpg" class="r">
+				<img src="/nyd/images/pic5_04.jpg" class="block">
+			</div>
 			<img class="imgs3" src="/nyd/images/pic6.png">
 		</div>
 		<div class="plane">
 			<div class="content">
 				<div class="tit">
 					<img src="/nyd/images/pic4.png" align="absbottom"/>
-					<h2><a href="#">袁乐天</a>的心愿：</h2>
+					<h2><a>袁乐天</a>的心愿：</h2>
 				</div>
 				<p>工作顺利，身体健康，吃嘛嘛香~工作顺利，身体健康，吃嘛嘛香~工作顺利，身体健康，吃嘛嘛香~</p>
-				<div class="op">
-					<a id="LinkBG1" onclick="OpenImg(this,0)" class="hover"></a>
-					<a id="LinkBG2" onclick="OpenImg(this,1)"></a>
-					<a id="LinkBG3" onclick="OpenImg(this,2)"></a>
-				</div>
 			</div>
 		</div>
+		<div class="clear1"></div>
+		<div class="plane7" id="PicBox">
+			<img rel="0" src="/nyd/images/p1.png">
+			<img rel="1" src="/nyd/images/p2.png">
+			<img rel="2" src="/nyd/images/p3.png">
+			<img rel="3" src="/nyd/images/p4.png">
+			<img rel="4" src="/nyd/images/p5.png">
+		</div>
+		<div class="plane3">
+			<a name="a1"></a>
+			<div class="l">我已经收到 <span class="pink">20</span>个祝福啦<a href="/nyd/rule.html" target="_blank" class="f20">（活动详情）</a><br>
+				<span class="pink">还差10个祝福就能拿到新年红包啦，赶紧祝福我噢~</span>
+			</div>
+		</div>
+		<div class="plane4">
+			<ul id="Mes">
+				<li><a>沧海一笑：祝菲儿天天开心</a></li>
+				<li><a>飞飞：祝小天鹅越来越好，合家欢乐。</a></li>
+				<li><a>沧海一笑：祝菲儿天天开心</a></li>
+				<li><a>飞飞：祝小天鹅越来越好，合家欢乐。</a></li>
+				<li><a>沧海一笑：祝菲儿天天开心</a></li>
+				<li><a>飞飞：祝小天鹅越来越好，合家欢乐。</a></li>
+				<li><a>沧海一笑：祝菲儿天天开心</a></li>
+				<li><a>飞飞：祝小天鹅越来越好，合家欢乐。祝小天鹅越来越好，合家欢乐。</a></li>
+			</ul>
+			<div class="clear1"></div>
+			<a class="r mr30 pointer" id="More">查看更多</a>
+		</div>
+		<div class="plane5">
+		<div class="title1">祝福TA：</div>
+			<div class="inputbox1">
+				<input type="text" value="祝福人" id="name" class="texts">
+			</div>
+			<div class="inputbox2">
+				<textarea id="wish">祝福语</textarea>
+			</div>
+			<div class="clear1"></div>
+			<a id="Btn" class="btn r mb30" href="#a1"></a>
+		</div>
+		<a target="_blank" href="http://www.dface.cn/mini.html" class="btn2">我也要奥巴马的祝福~</a>
+		<div class="plane6"><a href="http://www.dface.cn/mini.html" target="_blank"><img src="/nyd/images/logo.png"></a></div>
 	</div>
 </div>
 <script>
-function OpenImg(obj,n){
-	$("img.imgs2").addClass("none");
-	$("img.imgs2").eq(n).removeClass("none");
-	$(obj).siblings().removeClass("hover").end().addClass("hover");
-}
-function Open(){
-	$("img.imgs").fadeIn(2000);
-}
+$(document).ready(function(){
+	$("#name").click(function(){
+		if($(this).val()=="祝福人"){
+			$(this).val("");
+		}
+	});
+	$("#wish").click(function(){
+		if($(this).val()=="祝福语"){
+			$(this).val("");
+		}
+	});
+	$("#More").click(function(){
+		var libox="";
+		for(var i=0;i<10;i++){
+		  libox+="<li><a>红苹果：祝微+旗开得胜。</a></li>"
+		}
+		$("#Mes").append(libox);
+	});
+	$("#PicBox img").click(function(){
+		var n=$(this).attr("rel");
+		$(".imgs2").addClass("none");
+		$(".imgs2").eq(n).removeClass("none");
+	});
+});
+
+var timer,timer2,timer3;
+$("#Btn").click(function(){
+	var n=$("#name").val(),
+		w=$("#wish").val();
+	if(n==""||n=="祝福人"||w==""||w=="祝福语"){
+		return false;
+	}
+	var i=0;
+	$("#Mes li").removeClass("new");
+	$("#Mes li a").removeAttr("style");
+	var mes="<li class='new'><a>"+n+"："+w+"</a></li>";
+	alert(mes);
+	$("#Mes").prepend(mes);
+	$("#name").val("祝福人"); $("#wish").val("祝福语");
+	clearInterval(timer);
+	clearTimeout(timer2);
+	clearTimeout(timer3);
+	timer=setInterval(function(){
+		switch(i){
+			case 0: $("#Mes li.new a").css({"color":"#FF1E1E","font-size":"30px"});break;
+			case 1: $("#Mes li.new a").css({"color":"#3232FF","font-size":"30px"});break;
+			case 2: $("#Mes li.new a").css({"color":"#bbb","font-size":"30px"});i=-1;break;
+		}
+		i++;
+	},1000);
+	timer2=setTimeout(function(){
+		var bghigh=$(document).scrollTop()+($(window).height()-160)/2;
+		var bgleft=$(document).scrollLeft()+($(window).width()-450)/2;
+
+		$("#BG").css({"top":bghigh+"px","left":bgleft+"px"});
+		$("#BG").fadeIn(500);
+	},250);
+	timer3=setTimeout(function(){
+		$("#BG").fadeOut(500);
+	},3000);
+});
+$("#BG").click(function(){
+	$("#BG").fadeOut(500);
+});
 </script>
 </body>
 </html>
