@@ -77,10 +77,8 @@ class Xmpp
   end
   
   def self.escape(str)
-    s = str.gsub("&", "&amp;")
-    s.gsub!("<", "&lt;")
-    s.gsub!(">", "&gt;")
-    s
+    return "" if str.nil?
+    return CGI.escapeHTML(str)
   end
   
   def self.test
