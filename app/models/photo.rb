@@ -100,6 +100,10 @@ class Photo
     end    
   end
   
+  def nyd_img_url
+    "http://dface.img.aliyuncs.com/#{id}/0.jpg@268w_360h_1e_1c_80Q.jpg"
+  end
+  
   def zwyd_ali_syn
     `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/zw#{self.id}.jpg  oss://dface/#{self.id}/0.jpg`
     `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/tzw#{self.id}.jpg  oss://dface/#{self.id}/t2_0.jpg`
@@ -199,7 +203,7 @@ class Photo
   
   def gen_nyd
     url = Photo.img_url(self.id)
-    arr = nyd_face_detect
+    arr = nil #nyd_face_detect
     arr = [0, 0, 0, 0] if arr.nil?
     info = arr
     info[2] = info[3] if info[2] < info[3]
