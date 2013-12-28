@@ -227,6 +227,7 @@ class Shop
   end
   
   def default_text_when_photo
+    return '#我的2014心愿#' if self.id.to_s == "21838292"
     # return '#说出我的心愿#' if self.id.to_s == "21828958" 
     ret = ""
     coupon = share_coupon
