@@ -122,6 +122,10 @@
   function dface_init(sid,uid) {
     sid = sid;
     uid = uid;
+    var user = "<%= @wish.photo_user.id %>";
+    if (uid == user ) {
+      $("#PicBox").show();
+    };
   }
 
   function check_login_user(){
@@ -150,8 +154,6 @@
         $("#More").hide();
       };
     });
-
-    check_login_user();
 
     $("#name").click(function(){
       if($(this).val()=="祝福人"){
@@ -234,7 +236,7 @@ $("#BG").click(function(){
   $("#BG").fadeOut(500);
 });
 </script>
-<iframe src="dface://init?mode=0" style="display:none" />
+<iframe src="dface://init?mode=1" style="display:none" />
 </body>
 </html>
 
