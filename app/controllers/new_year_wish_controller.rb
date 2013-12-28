@@ -65,7 +65,7 @@ class NewYearWishController < ApplicationController
     # 多次祝福限制
     def wish_limit
       @limit = true
-      @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
+      @remote_ip = real_ip
       @user_agent = request.env['HTTP_USER_AGENT']
       Rails.cache.fetch("NYD-#{@remote_ip}-#{Digest::MD5.hexdigest(@user_agent)}", expires_in: 10.minutes) do
         @limit = false
