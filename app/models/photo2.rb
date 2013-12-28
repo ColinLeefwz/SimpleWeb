@@ -47,7 +47,7 @@ class Photo2
   end
   
   def output_hash
-    self.attributes.merge!( logo_thumb_hash).merge!({id: self._id})
+    self.attributes.merge!( logo_thumb_hash).merge!({id: self._id, mid:self._id})
   end
 
 end

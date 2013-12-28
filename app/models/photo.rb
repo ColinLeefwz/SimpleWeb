@@ -72,6 +72,7 @@ class Photo
   
   
   def after_async_store
+    self.add_to_checkin
     if img.url.nil?
       Xmpp.error_notify("图片async处理时img:#{img}的url为空")      
       return
@@ -80,7 +81,6 @@ class Photo
     send_qq if qq
     if weibo || qq || (wx && wx>0)
       send_coupon
-
       Lord.assign(room,user_id) if t==1 && desc && desc.index("我是地主")
       Resque.enqueue(PhotoNotice, self.id) unless Os.overload?
       #Rails.cache.delete("UP#{self.user_id}-5")
@@ -362,7 +362,7 @@ class Photo
   end
   
   def basic_output
-    hash = {id: self._id, user_name: self.user.name , user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo, qq:self.qq}
+    hash = {id: self._id, user_name: self.user.name , user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo, qq:self.qq, mid:mid}
     hash.merge!( logo_thumb_hash)
     hash.merge!( multi_photos)
   end
