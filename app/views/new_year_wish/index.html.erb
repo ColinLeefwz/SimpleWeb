@@ -16,40 +16,40 @@
 </head>
 <body>
   <div class="main">
-    <a id="BG">谢谢<img src="/w/1/images/sign2.png"/>收到你的祝福啦<img src="/w/1/images/sign3.png"/></a>
+    <a id="BG">谢谢<img src="http://s.dface.cn/w/1/images/sign2.png"/>收到你的祝福啦<img src="http://s.dface.cn/w/1/images/sign3.png"/></a>
     <div class="con">
       <div class="imgsbox">
         <!--<img class="imgs" src="/nyd/images/pic7.jpg">-->
         <%= image_tag "http://s.dface.cn/nyd#{@wish.photo.nyd_img_url}.jpg" , :class => "imgs" %>
         <div class="imgs2">
-          <img src="/nyd/images/pic1_01.jpg" class="block">
-          <img src="/nyd/images/pic1_02.png" class="l">
-          <img src="/nyd/images/pic1_03.jpg" class="r">
-          <img src="/nyd/images/pic1_04.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic1_01.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic1_02.png" class="l">
+          <img src="http://s.dface.cn/nyd/images/pic1_03.jpg" class="r">
+          <img src="http://s.dface.cn/nyd/images/pic1_04.jpg" class="block">
         </div>
         <div class="imgs2 none">
-          <img src="/nyd/images/pic2_01.jpg" class="block">
-          <img src="/nyd/images/pic2_02.png" class="l">
-          <img src="/nyd/images/pic2_03.jpg" class="r">
-          <img src="/nyd/images/pic2_04.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic2_01.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic2_02.png" class="l">
+          <img src="http://s.dface.cn/nyd/images/pic2_03.jpg" class="r">
+          <img src="http://s.dface.cn/nyd/images/pic2_04.jpg" class="block">
         </div>
         <div class="imgs2 none">
-          <img src="/nyd/images/pic3_01.jpg" class="block">
-          <img src="/nyd/images/pic3_02.png" class="l">
-          <img src="/nyd/images/pic3_03.jpg" class="r">
-          <img src="/nyd/images/pic3_04.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic3_01.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic3_02.png" class="l">
+          <img src="http://s.dface.cn/nyd/images/pic3_03.jpg" class="r">
+          <img src="http://s.dface.cn/nyd/images/pic3_04.jpg" class="block">
         </div>
         <div class="imgs2 none">
-          <img src="/nyd/images/pic4_01.jpg" class="block">
-          <img src="/nyd/images/pic4_02.png" class="l">
-          <img src="/nyd/images/pic4_03.jpg" class="r">
-          <img src="/nyd/images/pic4_04.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic4_01.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic4_02.png" class="l">
+          <img src="http://s.dface.cn/nyd/images/pic4_03.jpg" class="r">
+          <img src="http://s.dface.cn/nyd/images/pic4_04.jpg" class="block">
         </div>
         <div class="imgs2 none">
-          <img src="/nyd/images/pic5_01.jpg" class="block">
-          <img src="/nyd/images/pic5_02.png" class="l">
-          <img src="/nyd/images/pic5_03.jpg" class="r">
-          <img src="/nyd/images/pic5_04.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic5_01.jpg" class="block">
+          <img src="http://s.dface.cn/nyd/images/pic5_02.png" class="l">
+          <img src="http://s.dface.cn/nyd/images/pic5_03.jpg" class="r">
+          <img src="http://s.dface.cn/nyd/images/pic5_04.jpg" class="block">
         </div>
         <img class="imgs3" src="/nyd/images/pic6.png">
       </div>
@@ -116,28 +116,15 @@
   </div>
   <script>
   var name_list = ['梦露', '金正恩', '习近平', '赫本', '奥巴马'];
-  var uid = null;
-  var sid = null;
-
+  var dface_var={}
+  
   function dface_init(sid,uid) {
-    sid = sid;
-    uid = uid;
+    dface_var.sid = sid;
+    dface_var.uid = uid;
     var user = "<%= @wish.photo_user.id %>";
-    if (uid == user ) {
+    if (dface_var.uid == user ) {
       $("#PicBox").show();
     };
-  }
-
-  function check_login_user(){
-    $.get('/new_year_wish/check_login_user', {
-      id: $("#wish_id").val(), 
-      sid: sid, 
-      uid: uid
-    }, function(data){
-      if (data == true) {
-        $("#PicBox").show();
-      };
-    });
   }
 
   $(document).ready(function(){
@@ -175,7 +162,7 @@
       $.post("/new_year_wish/update", {
         template: n, 
         id: $("#wish_id").val(), 
-        uid: uid
+        uid: dface_var.uid
       }, function(){
       });
     });
