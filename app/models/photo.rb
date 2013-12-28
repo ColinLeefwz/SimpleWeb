@@ -148,7 +148,7 @@ class Photo
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[10..-1] if desc[0,10]=='#我的2014心愿#'
-    url = "http://dface.cn/new_year_wish?id=#{self.id}"
+    url = "http://shop.dface.cn/new_year_wish?id=#{self.id}"
     faq = ShopFaq.find_by_id("52be6bb220f318fdfe00001c")
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "nyd#{self.id}")
     attrs = " NOLOG='1'  url='#{url}' "
