@@ -88,23 +88,41 @@ class Photo
     return if ENV["RAILS_ENV"] == "test"
     Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc_multi}", mid ,1)
     rand_like
-    if room==$zwyd.to_s || room=="21837985"
+    if room==$zwyd.to_s
       gen_zwyd
       zwyd_send_link
       zwyd_ali_syn
     end
+    if room=="21838292" || room=="21837985"
+      gen_nyd
+      nyd_send_link
+      nyd_ali_syn
+    end    
   end
   
   def zwyd_ali_syn
     `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/zw#{self.id}.jpg  oss://dface/#{self.id}/0.jpg`
     `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/tzw#{self.id}.jpg  oss://dface/#{self.id}/t2_0.jpg`
   end
-  
+
+  def nyd_ali_syn
+    `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/nyd#{self.id}.jpg  oss://dface/#{self.id}/0.jpg`
+    `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/nyd#{self.id}.jpg  oss://dface/#{self.id}/t2_0.jpg`
+  end
+    
   def zwyd_pre_notice
-    if room=="21828958" || room=="21837985"
+    if room==$zwyd.to_s
       Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id, "你的专属心愿卡片正在制作中..., 请稍候")
     end
   end
+  
+  def nyd_pre_notice
+    if room=="21838292" || room=="21837985"
+      Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id, "你的心愿卡正在制作中…请默数15秒")
+    end
+  end
+  
+  
 
   def zwyd_send_link
     desc = self.desc
@@ -122,7 +140,38 @@ class Photo
       Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")#重发,防止消息丢失
   end
   
+  def nyd_send_link
+    desc = self.desc
+    desc = "" if desc.nil?
+    desc = desc[6..-1] if desc[0,6]=='#我的心愿#'
+      txt = "[img:nyd#{self.id}]\##{desc}\#。赶快戳我分享到朋友圈集祝福赢千元红包吧😍"
+      url = "http://dface.cn/new_year_wish?id=#{self.id}"
+      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")
+      attrs = " NOLOG='1'  url='#{url}' "
+      ext = "<x xmlns='dface.url'>#{url}</x>"
+      Xmpp.send_chat($gfuid, self.user_id, "#{self.user.name}的2014心愿：\##{desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😍 #{url}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
+      zwyd = NewYearWish.new(data: [], total: 0, template:0)
+      zwyd._id = self._id
+      zwyd.save
+      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")#重发,防止消息丢失
+  end
+  
   def zwyd_face_detect
+    begin
+      json = Rekognition.detect(Photo.img_url(self.id, :t2))
+      puts json
+      if json
+        arr = Rekognition.decode_info(json)
+        return nil if arr==nil
+        arr = arr.map {|x| x*640/200}
+        return arr
+      end
+    rescue Exception => e
+      Xmpp.error_notify(e.to_s)
+    end
+  end
+  
+  def nyd_face_detect
     begin
       json = Rekognition.detect(Photo.img_url(self.id, :t2))
       puts json
@@ -146,6 +195,17 @@ class Photo
     infostr = info[0,3].join(" ")
     puts infostr
     `cd coupon && ./gen_zwyd.sh '#{url}' #{infostr} #{self.id}.png zw#{self.id}.jpg`
+  end
+  
+  def gen_nyd
+    url = Photo.img_url(self.id)
+    arr = nyd_face_detect
+    arr = [0, 0, 0, 0] if arr.nil?
+    info = arr
+    info[2] = info[3] if info[2] < info[3]
+    infostr = info[0,3].join(" ")
+    puts infostr
+    `cd coupon && ./gen_nyd.sh '#{url}' #{infostr} #{self.id}.png zw#{self.id}.jpg`
   end
   
   def self.test_zwyd

@@ -35,6 +35,7 @@ class PhotosController < ApplicationController
     p.time = time if time != 0
     p.save!
     p.zwyd_pre_notice
+    p.nyd_pre_notice
     p.add_to_checkin
     if p.weibo && params[:wbtoken] && $redis.get("wbtoken#{session[:user_id]}").nil?
       $redis.set("wbtoken#{session[:user_id]}", params[:wbtoken])
