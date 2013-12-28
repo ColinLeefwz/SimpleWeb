@@ -67,6 +67,8 @@ class PhotoTest < ActionDispatch::IntegrationTest
     assert_equal data["desc"],  '一张图片'
     assert_nil data["logo_thumb2"]
     
+    Photo.last.after_async_store
+    
     assert_equal Photo.last.id, Checkin.last.photos[0]
 
 
