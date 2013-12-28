@@ -62,7 +62,7 @@ class NewYearWishController < ApplicationController
 
     # 判断是否是本人
     def is_owner?
-      !params[:uid].nil? && (params[:uid] == @wish.photo_user.id)
+      !params[:uid].nil? && (params[:uid] == @wish.photo_user.id.to_s)
     end
 
     # 多次祝福限制
