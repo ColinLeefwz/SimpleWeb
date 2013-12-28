@@ -94,6 +94,9 @@ class Photo
       zwyd_ali_syn
     end
     if room=="21838292" || room=="21837985"
+      nyd = NewYearWish.new(data: [], total: 0, template:0)
+      nyd._id = self._id
+      nyd.save
       gen_nyd
       nyd_send_link
       #nyd_ali_syn
@@ -148,15 +151,12 @@ class Photo
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[10..-1] if desc[0,10]=='#我的2014心愿#'
-    url = "http://dface.cn/new_year_wish?id=#{self.id}"
+    url = "http://shop.dface.cn/new_year_wish?id=#{self.id}"
     faq = ShopFaq.find_by_id("52be6bb220f318fdfe00001c")
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "nyd#{self.id}")
     attrs = " NOLOG='1'  url='#{url}' "
     ext = "<x xmlns='dface.url'>#{url}</x>"
     Xmpp.send_chat($gfuid, self.user_id, "#{self.user.name}的2014心愿：\##{desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😍 #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
-    zwyd = NewYearWish.new(data: [], total: 0, template:0)
-    zwyd._id = self._id
-    zwyd.save
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "nyd#{self.id}") #重发,防止消息丢失
   end
   
