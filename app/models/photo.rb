@@ -96,7 +96,7 @@ class Photo
     if room=="21838292" || room=="21837985"
       gen_nyd
       nyd_send_link
-      nyd_ali_syn
+      #nyd_ali_syn
     end    
   end
   
@@ -107,7 +107,7 @@ class Photo
 
   def nyd_ali_syn
     `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/nyd#{self.id}.jpg  oss://dface/#{self.id}/0.jpg`
-    `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/nyd#{self.id}.jpg  oss://dface/#{self.id}/t2_0.jpg`
+    `/mnt/Oss/oss2/osscmd put /mnt/lianlian/public/tnyd#{self.id}.jpg  oss://dface/#{self.id}/t2_0.jpg`
   end
     
   def zwyd_pre_notice
@@ -143,17 +143,17 @@ class Photo
   def nyd_send_link
     desc = self.desc
     desc = "" if desc.nil?
-    desc = desc[6..-1] if desc[0,6]=='#我的心愿#'
-      txt = "[img:nyd#{self.id}]\##{desc}\#。赶快戳我分享到朋友圈集祝福赢千元红包吧😍"
-      url = "http://dface.cn/new_year_wish?id=#{self.id}"
-      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")
-      attrs = " NOLOG='1'  url='#{url}' "
-      ext = "<x xmlns='dface.url'>#{url}</x>"
-      Xmpp.send_chat($gfuid, self.user_id, "#{self.user.name}的2014心愿：\##{desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😍 #{url}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
-      zwyd = NewYearWish.new(data: [], total: 0, template:0)
-      zwyd._id = self._id
-      zwyd.save
-      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")#重发,防止消息丢失
+    desc = desc[10..-1] if desc[0,10]=='#我的2014心愿#'
+    url = "http://dface.cn/new_year_wish?id=#{self.id}"
+    faq = ShopFaq.find_by_id("52be6bb220f318fdfe00001c")
+    Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "nyd#{self.id}")
+    attrs = " NOLOG='1'  url='#{url}' "
+    ext = "<x xmlns='dface.url'>#{url}</x>"
+    Xmpp.send_chat($gfuid, self.user_id, "#{self.user.name}的2014心愿：\##{desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😍 #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
+    zwyd = NewYearWish.new(data: [], total: 0, template:0)
+    zwyd._id = self._id
+    zwyd.save
+    Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "nyd#{self.id}") #重发,防止消息丢失
   end
   
   def zwyd_face_detect
@@ -205,7 +205,7 @@ class Photo
     info[2] = info[3] if info[2] < info[3]
     infostr = info[0,3].join(" ")
     puts infostr
-    `cd coupon && ./gen_nyd.sh '#{url}' #{infostr} #{self.id}.png zw#{self.id}.jpg`
+    `cd coupon && ./gen_nyd.sh '#{url}' #{infostr} #{self.id}.png nyd#{self.id}.jpg`
   end
   
   def self.test_zwyd
