@@ -104,7 +104,8 @@ class Photo
   end
   
   def nyd_img_url
-    "http://dface.img.aliyuncs.com/#{id}/0.jpg@268w_360h_1e_1c_80Q.jpg"
+    #"http://dface.img.aliyuncs.com/#{id}/0.jpg@268w_360h_1e_1c_80Q.jpg"
+    "http://www.dface.cn/nyd#{id}.jpg"
   end
   
   def zwyd_ali_syn
