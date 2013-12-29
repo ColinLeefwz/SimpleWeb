@@ -1,11 +1,7 @@
-<!DOCTYPE>
+﻿<!DOCTYPE>
 <html>
 <head>
-  <meta name="viewport" content="width=100%, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=1.0" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
-  <meta http-equiv="mobile-agent" content="format=xhtml; url=http://dface.cn/mini.html" />
+  <meta name="viewport" content="width=320, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=1.0" />
   <title>元旦活动<%= @remote_ip %></title>
   <link rel="stylesheet" href="http://s.dface.cn/nyd/css/public.css" type="text/css" media="screen"/>
   <script src="http://s.dface.cn/nyd/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
@@ -118,6 +114,7 @@
       </div>
     </div>
   </div>
+  <div id="X"></div>
   <script>
   var name_list = ['梦露', '金正恩', '习近平', '赫本', '奥巴马'];
   var dface_var = {}
@@ -169,6 +166,8 @@
       }, function(){
       });
     });
+	
+	$("#X").html("<span style='color:#f00;font-size:18px;'>"+$(window).width()+"</span>");
   });
 
   var timer=timer2=timer3=1;
@@ -217,6 +216,8 @@
         i++;
       },1000);
     });
+	
+	
   });
 $("#BG").click(function(){
   $("#BG").fadeOut(500);
