@@ -152,7 +152,7 @@ class Photo
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[10..-1] if desc[0,10]=='#我的2014心愿#'
-    txt = "[img:faqnew_year#{self.id}]#{self.user.name}的2014心愿: #{desc}, 赶快戳我看看！" 
+    txt = "[img:faqnew_year#{self.id}]神秘心愿卡已新鲜出炉, 赶快戳我看看！" 
     url = "http://shop.dface.cn/new_year_wish?id=#{self.id}"
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQnyd#{self.id}")
     attrs = " NOLOG='1'  url='#{url}' "
