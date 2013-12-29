@@ -136,7 +136,7 @@ class Photo
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[6..-1] if desc[0,6]=='#我的心愿#'
-      txt = "[img:zwyd#{self.id}]\##{desc}\#。赶快戳我分享到朋友圈集祝福赢千元红包吧😍"
+      txt = "[img:faqzwyd#{self.id}]\##{desc}\#。赶快戳我分享到朋友圈集祝福赢千元红包吧😍"
       url = "http://dface.cn/zwyd_wish?id=#{self.id}"
       Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")
       attrs = " NOLOG='1'  url='#{url}' "
@@ -152,7 +152,7 @@ class Photo
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[10..-1] if desc[0,10]=='#我的2014心愿#'
-    txt = "[img:new_year#{self.id}]你的神秘心愿卡已新鲜出炉，赶快戳我看看！" 
+    txt = "[img:faqnew_year#{self.id}]你的神秘心愿卡已新鲜出炉，赶快戳我看看！" 
     url = "http://shop.dface.cn/new_year_wish?id=#{self.id}"
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "nyd#{self.id}")
     attrs = " NOLOG='1'  url='#{url}' "

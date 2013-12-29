@@ -49,6 +49,18 @@ class PhotosController < ApplicationController
   def show
     if params[:id] =~ /^faq/
       id = params[:id].sub('faq','')
+      
+      if id =~ /^zwyd/
+        id = id.sub('zwyd','')
+        if params[:size].to_i==0
+          return redirect_to Photo.img_url(id)
+        else
+          return redirect_to Photo.img_url(id,:t2)
+        end
+      elsif id =~ /^new_year/
+        return redirect_to "http://oss.aliyuncs.com/dface/52be6bb220f318fdfe00001c/0.jpg"
+      end
+      
       if params[:size].to_i==0
         redirect_to ShopFaq.img_url(id)
       else
