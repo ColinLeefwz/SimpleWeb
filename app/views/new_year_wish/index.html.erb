@@ -23,31 +23,31 @@
       <div class="imgsbox">
         <!--<img class="imgs" src="/nyd/images/pic7.jpg">-->
         <%= image_tag "#{@wish.photo.nyd_img_url}" , :class => "imgs" %>
-        <div class="imgs2">
+        <div class="imgs2 <%= 'none' if [1,2,3,4].index(@wish.template) %>">
           <img src="http://s.dface.cn/nyd/images/pic1_01.jpg" class="block">
           <img src="http://s.dface.cn/nyd/images/pic1_02.png" class="l">
           <img src="http://s.dface.cn/nyd/images/pic1_03.jpg" class="r">
           <img src="http://s.dface.cn/nyd/images/pic1_04.jpg" class="block">
         </div>
-        <div class="imgs2 none">
+        <div class="imgs2 <%= 'none' if @wish.template != 1 %>">
           <img src="http://s.dface.cn/nyd/images/pic2_01.jpg" class="block">
           <img src="http://s.dface.cn/nyd/images/pic2_02.png" class="l">
           <img src="http://s.dface.cn/nyd/images/pic2_03.jpg" class="r">
           <img src="http://s.dface.cn/nyd/images/pic2_04.jpg" class="block">
         </div>
-        <div class="imgs2 none">
+        <div class="imgs2 <%= 'none' if @wish.template != 2 %>">
           <img src="http://s.dface.cn/nyd/images/pic3_01.jpg" class="block">
           <img src="http://s.dface.cn/nyd/images/pic3_02.png" class="l">
           <img src="http://s.dface.cn/nyd/images/pic3_03.jpg" class="r">
           <img src="http://s.dface.cn/nyd/images/pic3_04.jpg" class="block">
         </div>
-        <div class="imgs2 none">
+        <div class="imgs2 <%= 'none' if @wish.template != 3 %>">
           <img src="http://s.dface.cn/nyd/images/pic4_01.jpg" class="block">
           <img src="http://s.dface.cn/nyd/images/pic4_02.png" class="l">
           <img src="http://s.dface.cn/nyd/images/pic4_03.jpg" class="r">
           <img src="http://s.dface.cn/nyd/images/pic4_04.jpg" class="block">
         </div>
-        <div class="imgs2 none">
+        <div class="imgs2 <%= 'none' if @wish.template != 4 %>">
           <img src="http://s.dface.cn/nyd/images/pic5_01.jpg" class="block">
           <img src="http://s.dface.cn/nyd/images/pic5_02.png" class="l">
           <img src="http://s.dface.cn/nyd/images/pic5_03.jpg" class="r">
@@ -108,7 +108,9 @@
         <div class="clear1"></div>
         <a id="Btn" class="btn r mb30" href="#a1"></a>
       </div>
-      <a target="_blank" href="http://www.dface.cn/mini.html" class="btn2"></a>
+      <a target="_blank" href="http://www.dface.cn/mini.html" class="btn2">
+        我也要<%= ['梦露', '金正恩', '习近平', '赫本', '奥巴马'].at(@wish.template) || '梦露' %>的祝福~
+      </a>
       <div class="plane6">
         <a href="http://www.dface.cn/mini.html" target="_blank">
           <img src="http://s.dface.cn/nyd/images/logo.png">
@@ -118,7 +120,7 @@
   </div>
   <script>
   var name_list = ['梦露', '金正恩', '习近平', '赫本', '奥巴马'];
-  var dface_var={}
+  var dface_var = {}
 
   function dface_init(sid,uid) {
     dface_var.sid = sid;
@@ -130,7 +132,6 @@
   }
 
   $(document).ready(function(){
-
     var wish_size = $("#Mes li").size();
     if (wish_size > 20) {
       $("#More").show();
@@ -168,10 +169,6 @@
       }, function(){
       });
     });
-    var select = <%= @wish.template || 0 %>;
-    $(".imgs2").addClass("none");
-    $(".imgs2").eq(select).removeClass("none");
-    $(".btn2").text("我也要" + name_list[select] + "的祝福~");
   });
 
   var timer=timer2=timer3=1;
