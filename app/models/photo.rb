@@ -204,13 +204,7 @@ class Photo
   
   def gen_nyd
     url = Photo.img_url(self.id)
-    arr = nil #nyd_face_detect
-    arr = [0, 0, 0, 0] if arr.nil?
-    info = arr
-    info[2] = info[3] if info[2] < info[3]
-    infostr = info[0,3].join(" ")
-    puts infostr
-    `cd coupon && ./gen_nyd.sh '#{url}' #{infostr} #{self.id}.png nyd#{self.id}.jpg`
+    `cd coupon && ./gen_nyd.sh '#{url}' #{self.id}.png nyd#{self.id}.jpg`
   end
   
   def self.test_zwyd
