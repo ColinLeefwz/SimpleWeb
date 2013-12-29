@@ -363,6 +363,7 @@ class Photo
   
   def basic_output
     hash = {id: self._id, user_name: self.user.name , user_id: self.user_id, room: self.room, desc: self.desc, weibo:self.weibo, qq:self.qq, mid:mid}
+    hash.merge!( {od:self.od} ) if self.od
     hash.merge!( logo_thumb_hash)
     hash.merge!( multi_photos)
   end
