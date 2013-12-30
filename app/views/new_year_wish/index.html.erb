@@ -66,17 +66,32 @@
       </div>
       <div class="clear1"></div>
       <div class="plane7" id="PicBox">
-        <img rel="0" src="http://shop.dface.cn/nyd/images/p1.png">
-        <img rel="1" src="http://shop.dface.cn/nyd/images/p2.png">
-        <img rel="2" src="http://shop.dface.cn/nyd/images/p3.png">
-        <img rel="3" src="http://shop.dface.cn/nyd/images/p4.png">
-        <img rel="4" src="http://shop.dface.cn/nyd/images/p5.png">
+		<div class="blue">
+			<img rel="0" src="http://shop.dface.cn/nyd/images/p1.png">
+			选我吧
+		</div>
+		<div class="orange">
+			<img rel="1" src="http://shop.dface.cn/nyd/images/p2.png">
+			选我吧
+		</div>
+		<div class="red">
+			<img rel="2" src="http://shop.dface.cn/nyd/images/p3.png">
+			选我吧
+		</div>
+		<div class="blue2">
+			<img rel="3" src="http://shop.dface.cn/nyd/images/p4.png">
+			选我吧
+		</div>
+		<div class="black">
+			<img rel="4" src="http://shop.dface.cn/nyd/images/p5.png">
+			选我吧
+		</div>        
       </div>
       <div class="plane3">
         <a name="a1"></a>
         <div class="l">我已经收到
           <span class="pink"><%= @wish.total %></span>个祝福啦
-          <a href="/nyd/rule.html" target="_blank" class="f20">（活动详情）</a><br>
+          <a href="/nyd/rule.html" target="_blank" class="f13">（活动详情）</a><br>
           <%if @wish.total.to_i < 30 %>
           <span class="pink">
             还差<%= (30 - @wish.total.to_i) < 0 ? 0: (30- @wish.total.to_i)%>个祝福就有机会拿到1000元新年红包啦，
