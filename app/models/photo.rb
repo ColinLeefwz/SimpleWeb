@@ -136,29 +136,38 @@ class Photo
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[6..-1] if desc[0,6]=='#我的心愿#'
-      txt = "[img:zwyd#{self.id}]\##{desc}\#。赶快戳我分享到朋友圈集祝福赢千元红包吧😍"
+      txt = "[img:faqzwyd#{self.id}]\##{desc}\#。赶快戳我分享到朋友圈集祝福赢千元红包吧😍"
       url = "http://dface.cn/zwyd_wish?id=#{self.id}"
-      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")
+      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQzw#{self.id}")
       attrs = " NOLOG='1'  url='#{url}' "
       ext = "<x xmlns='dface.url'>#{url}</x>"
       Xmpp.send_chat($gfuid, self.user_id, "#{self.user.name}的2014心愿：\##{desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😍 #{url}", "zwd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
       zwyd = ZwydWish.new(data: [], total: 0)
       zwyd._id = self._id
       zwyd.save
-      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "zw#{self.id}")#重发,防止消息丢失
+      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQzw#{self.id}")#重发,防止消息丢失
   end
   
   def nyd_send_link
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[10..-1] if desc[0,10]=='#我的2014心愿#'
-    txt = "[img:new_year#{self.id}]你的神秘心愿卡已新鲜出炉，赶快戳我看看！" 
+    txt = "[img:faqnew_year#{self.id}]神秘心愿卡已新鲜出炉, 赶快戳我看看！" 
     url = "http://shop.dface.cn/new_year_wish?id=#{self.id}"
-    Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "nyd#{self.id}")
+    if UserDevice.user_os_redis(self.user_id)=="1"
+      Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id,"你的心愿卡已新鲜出炉, 返回到会话查看吧！")
+    else
+      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQnyd#{self.id}")
+    end
     attrs = " NOLOG='1'  url='#{url}' "
     ext = "<x xmlns='dface.url'>#{url}</x>"
-    Xmpp.send_chat($gfuid, self.user_id, "#{self.user.name}的2014心愿：\##{desc}\# 赶快戳我分享到朋友圈集祝福赢千元红包吧😍 #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
-    Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, faq.output,url, "nyd#{self.id}") #重发,防止消息丢失
+    Xmpp.send_chat($gfuid, self.user_id, "快来看！梦露为#{self.user.name}发来了2014新年祝福！ #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
+    if UserDevice.user_os_redis(self.user_id)=="1"
+      #Xmpp.send_gchat2($gfuid, self.room.to_i, self.user_id,"你的心愿卡已新鲜出炉, 返回到会话查看吧！")
+    else
+      Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQnyd#{self.id}")
+      #重发,防止消息丢失
+    end
   end
   
   def zwyd_face_detect
