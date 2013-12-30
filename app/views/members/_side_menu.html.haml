@@ -1,6 +1,6 @@
 .member-info
   .member-avatar
-    = image_tag(@member.avatar.url)
+    = link_to image_tag(@member.avatar.url), edit_profile_member_path(current_user), remote: true
   .member-text-info
     .member-name
       %p= @member.name

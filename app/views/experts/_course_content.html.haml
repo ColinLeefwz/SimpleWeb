@@ -2,7 +2,7 @@
 .item
   .box-header
     .portrait
-      = image_tag(course.experts.first.avatar.url)
+      = link_to image_tag(course.experts.first.avatar.url), profile_expert_path(course.experts.first)
       .expert-name
         - if course.num_of_experts == 1
           = link_to course.first_expert.name, profile_expert_path(course.experts.first)
