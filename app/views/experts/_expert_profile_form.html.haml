@@ -13,12 +13,8 @@
         = p.label :orgnization
         = p.input_field :company
       = p.input :expertise
-      %fieldset
-        %legend Career
-        = p.input :career, input_html: {class: 'ckeditor'}
-      %fieldset
-        %legend Education
-        = p.input :education
+      = p.input :career, input_html: {class: 'ckeditor'}
+      = p.input :education
 
     = f.submit "Update", class: "btn"
     = link_to "Cancel", sessions_expert_path, remote: true, class: "btn" 
