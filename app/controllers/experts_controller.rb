@@ -4,6 +4,7 @@ class ExpertsController < ApplicationController
 
   def dashboard
     @sessions = @expert.sessions.order("draft desc")
+    @profile = @expert.profile || @expert.create_profile
   end
 
   def pending_page
@@ -23,7 +24,8 @@ class ExpertsController < ApplicationController
   end
 
   def profile
-		@items = @expert.sessions.to_a.concat(@expert.video_interviews.to_a).concat(@expert.courses.to_a)
+    @items = @expert.sessions.to_a.concat(@expert.video_interviews.to_a).concat(@expert.courses.to_a)
+    @profile = @expert.profile || @expert.create_profile
   end
 
   def edit_profile
