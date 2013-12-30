@@ -34,25 +34,8 @@
 
           %button.btn.right-side#follower-count
             = @expert.followers.count
-          
         = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
-
-    -# .contact.brief-item-last
-    -#   .contact-button#follow
-    -#     %button.btn.left-side
-    -#       - if current_user.try(:follow?, @expert)
-    -#         %i.fa.fa-star Unfollow
-    -#       - else
-    -#         %i.fa.fa-star Follow
-
-    -#     %button.btn.right-side#follower-count
-    -#       = @expert.followers.count
-    -#     
-    -#   = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
-
     .clear-fix 
-
-
   .detail.sub-wrapper.second-sub
     %ul.nav.nav-tabs
       - if @profile.expertise.present?
