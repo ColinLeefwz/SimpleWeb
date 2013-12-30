@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=0.5" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1, maximum-scale=1" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
@@ -9,14 +9,11 @@
 <title>元旦活动</title>
 <link rel="stylesheet" href="/nyd/css/public.css" type="text/css" media="screen"/>
 <script src="/nyd/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
-<script>
-
-</script>
 </head>
 
 <body>
 <div class="main">
-	<a id="BG">谢谢<img src="/w/1/images/sign2.png"/>收到你的祝福啦<img src="/w/1/images/sign3.png"/></a>
+	<a id="BG">谢谢<img src="/nyd/images/sign2.png"/>收到你的祝福啦<img src="/nyd/images/sign3.png"/></a>
 	<div class="con">
 		<div class="imgsbox">
 			<img class="imgs" src="/nyd/images/pic7.jpg">
@@ -71,7 +68,7 @@
 		</div>
 		<div class="plane3">
 			<a name="a1"></a>
-			<div class="l">我已经收到 <span class="pink">20</span>个祝福啦<a href="/nyd/rule.html" target="_blank" class="f20">（活动详情）</a><br>
+			<div class="l">我已经收到 <span class="pink">20</span>个祝福啦<a href="/nyd/rule.html" target="_blank" class="f14">（活动详情）</a><br>
 				<span class="pink">还差10个祝福就能拿到新年红包啦，赶紧祝福我噢~</span>
 			</div>
 		</div>
@@ -148,8 +145,8 @@ $("#Btn").click(function(){
 	clearTimeout(timer3);
 
 	timer2=setTimeout(function(){
-		var bghigh=$(document).scrollTop()+($(window).height()-160)/2;
-		var bgleft=$(document).scrollLeft()+($(window).width()-450)/2;
+		var bghigh=$(document).scrollTop()+($(window).height()-80)/2;
+		var bgleft=$(document).scrollLeft()+($(window).width()-225)/2;
 
 		$("#BG").css({"top":bghigh+"px","left":bgleft+"px"});
 		$("#BG").fadeIn(500);
@@ -159,9 +156,9 @@ $("#Btn").click(function(){
 	},3000);
 	timer=setInterval(function(){
 		switch(i){
-			case 0: $("#Mes li.new a").css({"color":"#FF1E1E","font-size":"30px"});break;
-			case 1: $("#Mes li.new a").css({"color":"#3232FF","font-size":"30px"});break;
-			case 2: $("#Mes li.new a").css({"color":"#bbb","font-size":"30px"});i=-1;break;
+			case 0: $("#Mes li.new a").css({"color":"#FF1E1E","font-size":"13px"});break;
+			case 1: $("#Mes li.new a").css({"color":"#3232FF","font-size":"13px"});break;
+			case 2: $("#Mes li.new a").css({"color":"#bbb","font-size":"13px"});i=-1;break;
 		}
 		i++;
 	},1000);

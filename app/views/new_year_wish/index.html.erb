@@ -1,7 +1,7 @@
-﻿<!DOCTYPE>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=0, minimum-scale=0.5, maximum-scale=0.5" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1, maximum-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
@@ -16,8 +16,8 @@
 </head>
 <body>
   <div class="main">
-    <a id="BG">谢谢<img src="http://s.dface.cn/w/1/images/sign2.png"/>收到你的祝福啦
-      <img src="http://s.dface.cn/w/1/images/sign3.png"/>
+    <a id="BG">谢谢<img src="http://s.dface.cn/nyd/images/sign2.png"/>收到你的祝福啦
+      <img src="http://s.dface.cn/nyd/images/sign3.png"/>
     </a>
     <div class="con">
       <div class="imgsbox">
@@ -79,7 +79,7 @@
           <a href="/nyd/rule.html" target="_blank" class="f20">（活动详情）</a><br>
           <%if @wish.total.to_i < 30 %>
           <span class="pink">
-            还差<%= (30 - @wish.total.to_i) < 0 ? 0: (30- @wish.total.to_i)%>个祝福就有机会拿到1000元新年红包啦，<br/>
+            还差<%= (30 - @wish.total.to_i) < 0 ? 0: (30- @wish.total.to_i)%>个祝福就有机会拿到1000元新年红包啦，
             赶紧祝福我噢~
           </span>
           <%else%>
@@ -198,8 +198,8 @@
       clearTimeout(timer3);
 
       timer2=setTimeout(function(){
-        var bghigh=$(document).scrollTop()+($(window).height()-160)/2;
-        var bgleft=$(document).scrollLeft()+($(window).width()-450)/2;
+        var bghigh=$(document).scrollTop()+($(window).height()-80)/2;
+        var bgleft=$(document).scrollLeft()+($(window).width()-225)/2;
         $("#BG").css({"top":bghigh+"px","left":bgleft+"px"});
         $("#BG").fadeIn(500);
       },250);
@@ -210,9 +210,9 @@
       
       timer=setInterval(function(){
         switch(i){
-          case 0: $("#Mes li.new a").css({"color":"#FF1E1E","font-size":"30px"});break;
-          case 1: $("#Mes li.new a").css({"color":"#3232FF","font-size":"30px"});break;
-          case 2: $("#Mes li.new a").css({"color":"#bbb","font-size":"30px"});i=-1;break;
+          case 0: $("#Mes li.new a").css({"color":"#FF1E1E","font-size":"13px"});break;
+          case 1: $("#Mes li.new a").css({"color":"#3232FF","font-size":"13px"});break;
+          case 2: $("#Mes li.new a").css({"color":"#bbb","font-size":"13px"});i=-1;break;
         }
         i++;
       },1000);
