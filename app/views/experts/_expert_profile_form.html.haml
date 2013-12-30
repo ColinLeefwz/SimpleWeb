@@ -5,9 +5,13 @@
     = f.input :first_name
     = f.input :last_name
     = f.input :avatar
+      = f.label :profile_picture
+      = f.input_field :avatar
     = simple_fields_for @profile do |p|
       = p.input :title
       = p.input :company
+        = p.label :orgnization
+        = p.input_field :company
       = p.input :expertise
       %fieldset
         %legend Career
