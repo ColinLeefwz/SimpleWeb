@@ -28,6 +28,28 @@
     }
 }
 
+
+.terms-of-service{
+  width: 310px;
+  height: 3em;
+  overflow: scroll;
+  padding: 1em 0.5em;
+  margin: 0 auto;
+  background-color: white;
+  border: 1px solid #cccccc;
+  p,ol{
+    font-size: 0.7em;
+    word-wrap: break-word;
+  }
+  p{
+    text-indent: 1em;
+  }
+}
+
+.check-box-wrapper{
+  width: 200px;
+}
+
 .form-horizontal{
   .password-setting-label{
     width: 653px;
