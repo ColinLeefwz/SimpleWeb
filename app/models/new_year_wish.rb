@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class NewYearWish
   include Mongoid::Document
   field :_id,  type: Moped::BSON::ObjectId
