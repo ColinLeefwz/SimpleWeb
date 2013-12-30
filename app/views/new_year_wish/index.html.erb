@@ -162,6 +162,7 @@
       $(".imgs2").addClass("none");
       $(".imgs2").eq(n).removeClass("none");
       $(".btn2").text("我也要" + name_list[n] + "的祝福~");
+      $("title").text("快来看！" + name_list[n] + "为<%= @wish.photo_user.try(:name) %>发来了2014新年祝福！")
       $.post("/new_year_wish/update", {
         template: n, 
         id: $("#wish_id").val(), 
