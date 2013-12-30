@@ -1,28 +1,29 @@
 .text-page-header-box.shadow
   .text-page-left-side
     .text-page-portrait
-      = image_tag("#{session.expert.avatar.url}")
+      = image_tag("#{content.expert.avatar.url}")
     .text-page-expert-info
       .name
-        = session.expert.name
+        = content.expert.name
       .title
-        = session.expert.profile.title
+        = content.expert.profile.title
       .company
-        = session.expert.profile.company
+        = content.expert.profile.company
     .clear-fix.visible-phone
   .text-page-middle
     .title
-      = session.title
+      = content.title
     .datetime
-      = "originally published on #{session.created_at.to_date.to_formatted_s(:course_date)}"
+      = "originally published on #{content.created_at.to_date.to_formatted_s(:course_date)}"
       &nbsp
-    -unless session.categories.empty?
+    -unless content.categories.empty?
       .category-name
         = "|"
         &nbsp
-        = session.categories.join(", ")
+        = content.categories.join(", ")
   .text-page-right-side
     .text-page-social-buttons
-      = render 'shared/favorite_session_star', session: session
-      = render 'shared/social_share', session_title: session.title, session_url: session_url(session)
+      - if defined?(link_path)
+        = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: link_path
+      = render 'shared/social_share', session_title: content.title, session_url: session_url(content)
   .clear-fix

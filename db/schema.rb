@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131224065601) do
+ActiveRecord::Schema.define(version: 20131226031951) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -303,12 +306,12 @@ ActiveRecord::Schema.define(version: 20131224065601) do
 
   create_table "subscriptions", force: true do |t|
     t.integer  "subscriber_id"
-    t.integer  "subscribed_session_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "subscribable_id"
+    t.string   "subscribable_type"
   end
 
-  add_index "subscriptions", ["subscribed_session_id"], name: "index_subscriptions_on_subscribed_session_id", using: :btree
   add_index "subscriptions", ["subscriber_id"], name: "index_subscriptions_on_subscriber_id", using: :btree
 
   create_table "users", force: true do |t|

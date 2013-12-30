@@ -63,6 +63,7 @@ Prodygia::Application.routes.draw do
       get :experts
       get :contents
       get :video_on_demand
+      get :vod_library
     end
   end
 
@@ -88,6 +89,8 @@ Prodygia::Application.routes.draw do
   controller :users do
     get 'relationship/:the_followed' => :relationship, as: :relationship
     get 'subscirbe_session/:session_id' => :subscribe_session, as: :subscribe_session
+    get 'subscirbe_course/:course_id' => :subscribe_course, as: :subscribe_course
+    get 'subscirbe_video_interview/:video_interview_id' => :subscribe_video_interview, as: :subscribe_video_interview
     get 'following'
     get 'followers'
   end

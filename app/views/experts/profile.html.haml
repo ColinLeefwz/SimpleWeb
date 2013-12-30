@@ -8,21 +8,15 @@
           = @expert.name
         %br
         %span.title_company
-          #{empty_expert_info_filter(@expert.profile.title, @expert.profile.company)}
+          #{empty_expert_info_filter(@profile.title, @profile.company)}
         %br
         %span.job.light-font
-          = @expert.profile.company
+          = @profile.company
 
       %table
-        
-        %tr
-          %td.company.light-font
-            = "Company"
-          %td.company-value
-            = @expert.email
         %tr
           %td.personal.light-font
-            = "Personal"
+            = "Blog/Website"
           %td.personal-value
             = "personal contact"
         %tr
@@ -30,49 +24,61 @@
             = "Twitter"
           %td.twitter-value
             = "@twitteraccount"
-    .contact.brief-item-last
+      .contact.brief-item-last
+        .contact-button#follow
+          %button.btn.left-side
+            - if current_user.try(:follow?, @expert)
+              %i.fa.fa-star Unfollow
+            - else
+              %i.fa.fa-star Follow
 
-      .contact-button#follow
-        %button.btn.left-side
-          - if current_user.try(:follow?, @expert)
-            %i.fa.fa-star Unfollow
-          - else
-            %i.fa.fa-star Follow
+          %button.btn.right-side#follower-count
+            = @expert.followers.count
+          
+        = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
 
-        %button.btn.right-side#follower-count
-          = @expert.followers.count
-        
-      = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
+    -# .contact.brief-item-last
+    -#   .contact-button#follow
+    -#     %button.btn.left-side
+    -#       - if current_user.try(:follow?, @expert)
+    -#         %i.fa.fa-star Unfollow
+    -#       - else
+    -#         %i.fa.fa-star Follow
+
+    -#     %button.btn.right-side#follower-count
+    -#       = @expert.followers.count
+    -#     
+    -#   = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
 
     .clear-fix 
 
 
   .detail.sub-wrapper.second-sub
     %ul.nav.nav-tabs
-      - if @expert.profile.expertise.present?
+      - if @profile.expertise.present?
         %li.active.tab
           %a{href: "#tab1", data: {toggle: "tab"}}Overview
-      - if @expert.profile.career.present?
+      - if @profile.career.present?
         %li.tab
           %a{href: "#tab2", data: {toggle: "tab"}}Career
-      - if @expert.profile.education.present?
+      - if @profile.education.present?
         %li.tab
           %a{href: "#tab3", data: {toggle: "tab"}}Education
 
     .tab-content
       .tab-pane.active#tab1
         %div
-          - expertise = @expert.profile.expertise || "Expertise to be filled"
+          - expertise = @profile.expertise || "Expertise to be filled"
           = expertise.html_safe
       .tab-pane#tab2
         %div
-          - career = @expert.profile.career || "Career to be filled"
+          - career = @profile.career || "Career to be filled"
           = career.html_safe
       .tab-pane#tab3
         %div
-          - education = @expert.profile.education || "Education to be filled"
+          - education = @profile.education || "Education to be filled"
           = education.html_safe
 
   .sessions.sub-wrapper
     #content.container
-      =render 'shared/course_content', courses: @courses
+      =render partial: 'item_box', collection: @items, as: :item

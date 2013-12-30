@@ -10,11 +10,15 @@ class User < ActiveRecord::Base
 
   has_one :profile
 
-  ## User follow sessions
+  # User follow sessions
   has_many :subscriptions, foreign_key: "subscriber_id"
-  has_many :subscribed_sessions, through: :subscriptions
+  # has_many :subscribed_sessions, through: :subscriptions
 
-  ## User follows User
+  has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Session"
+  has_many :subscribed_courses, through: :subscriptions, source: :subscribable, source_type: "Course"
+  has_many :subscribed_video_interviews, through: :subscriptions, source: :subscribable, source_type: "VideoInterview"
+
+  # User follows User
   has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
   has_many :followers, through: :be_followed, class_name: "User"
 
@@ -23,9 +27,11 @@ class User < ActiveRecord::Base
 
   # enrollments and orders
   has_many :enrollments
-  has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
-  has_many :orders
-  has_many :email_messages
+  has_many :enrolled_courses, through: :enrollments, source: :enrollable, source_type: "Course"
+  # has_many :enrollments
+  # has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
+  # has_many :orders
+  # has_many :email_messages
 
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
   # Peter: we remove the :validatable to allow us to create multiple email with different provider
@@ -41,21 +47,38 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
+  ##methods for enroll sessions
+  def has_enrolled? (item)
+    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item)
+  end
+
   ## methods for subscribe sessions
   def get_subscribed_sessions(session_type)
     self.subscribed_sessions.where(content_type: session_type)
   end
 
-  def has_subscribed? (this_session)
-    self.subscribed_sessions.include? (this_session)
+  def has_subscribed? (item)
+    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item) || self.subscribed_video_interviews.include?(item)
   end
 
-  def subscribe (this_session)
-    self.subscribed_sessions << this_session
+  def subscribe (item)
+    if item.is_a? Session
+      self.subscribed_sessions << item
+    elsif item.is_a? Course
+      self.subscribed_courses << item
+    elsif item.is_a? VideoInterview
+      self.subscribed_video_interviews << item
+    end
   end
 
-  def unsubscribe (this_session)
-    self.subscribed_sessions.delete this_session
+  def unsubscribe (item)
+    if item.is_a? Session
+      self.subscribed_sessions.delete item
+    elsif item.is_a? Course
+      self.subscribed_courses.delete item
+    elsif item.is_a? VideoInterview
+      self.subscribed_video_interviews.delete item
+    end
   end
 
   ## methods for follow users
@@ -128,5 +151,4 @@ class User < ActiveRecord::Base
   def email_required?
     true
   end
-
 end

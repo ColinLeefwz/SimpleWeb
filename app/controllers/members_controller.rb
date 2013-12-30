@@ -50,9 +50,9 @@ class MembersController < ApplicationController
   end
 
   def contents
-    @favorite_content = current_user.get_subscribed_sessions("ArticleSession")
-    if @favorite_content.empty?
-      @favorite_content = ArticleSession.all(order: "RANDOM()", limit: 3)
+    @favorite_contents = current_user.get_subscribed_sessions("ArticleSession")
+    if @favorite_contents.empty?
+      @favorite_contents = ArticleSession.all(order: "RANDOM()", limit: 3)
       @recommendation = true
     end
     @from = "content"
@@ -62,8 +62,24 @@ class MembersController < ApplicationController
   end
 
   def video_on_demand
-    @favorite_session = current_user.get_subscribed_sessions( "VideoSession")
+    @subscribed_courses = current_user.subscribed_courses
+    if @subscribed_courses.empty?
+      @subscribed_courses = Course.all(order: "RANDOM()", limit: 3)
+      @recommendation = true
+    end
     @from = "video_on_demand"
+    respond_to do |format|
+      format.js {render "update"}
+    end
+  end
+
+  def vod_library
+    @enrolled_courses = current_user.enrolled_courses
+    if @enrolled_courses.empty?
+      @enrolled_courses = Course.all(order: "RANDOM()", limit: 3)
+      @recommendation = true
+    end
+    @from = "vod_library"
     respond_to do |format|
       format.js {render "update"}
     end

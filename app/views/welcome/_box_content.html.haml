@@ -1,36 +1,35 @@
 - sublime_id = ""
-- sessions.each do |session|
-  %div{class: get_box_class(session)}
+%div{class: get_box_class(item)}
 
-    .box-header
-      .portrait
-        = image_tag(session.expert.avatar.url)
-        .expert-name
-          = link_to session.expert.name, profile_expert_path(session.expert)
-      .content-type
-        = image_tag(get_image_tag(session))
-        %p= session.categories.join(", ")
-        %p= session.language.split(",")[0] if session.language
-    .title
-      = link_to "#{session.title}", currect_path(session)
-      - sublime_id = "sublime_#{session.class.to_s.underscore}_#{session.id}"
-    -if (session.is_a? VideoInterview) || (session.is_a? Announcement)
-      .cover
-        .video-img{data: {"source-sd" => session.sd_url, "source-hd" => session.hd_url, from: "landing_page", "sublime-id" => sublime_id}}
-          = image_tag session.cover.url, class: 'video-play'
-          = image_tag "video_play_icon.png", class: 'play-video-icon'
+  .box-header
+    .portrait
+      = image_tag(item.expert.avatar.url)
+      .expert-name
+        = link_to item.expert.name, profile_expert_path(item.expert)
+    .content-type
+      = image_tag(get_image_tag(item))
+      %p= item.categories.join(", ")
+      %p= item.language.split(",")[0] if item.language
+  .title
+    = link_to "#{item.title}", currect_path(item)
+    - sublime_id = "sublime_#{item.class.to_s.underscore}_#{item.id}"
+  -if (item.is_a? VideoInterview) || (item.is_a? Announcement)
+    .cover
+      .video-img{data: {"source-sd" => item.sd_url, "source-hd" => item.hd_url, from: "landing_page", "sublime-id" => sublime_id}}
+        = image_tag item.cover.url, class: 'video-play'
+        = image_tag "video_play_icon.png", class: 'play-video-icon'
 
-    -elsif (session.is_a?ArticleSession) || (session.is_a?LiveSession)  && (!session.cover.url.eql?"/covers/original/missing.png")
-      .cover
-        = link_to image_tag(session.cover.url),session_path(session)
-    -else
+  -elsif (item.is_a? ArticleSession) || (item.is_a?LiveSession)  && (!item.cover.url.eql?"/covers/original/missing.png")
+    .cover
+      = link_to image_tag(item.cover.url),session_path(item)
+  -else
 
-    .caption
-      - if (session.cover.url) && (!session.cover.url.eql?"/covers/original/missing.png")
-        %div.description= truncate_html(session.description, length: 300, omission: '...')
-      - else
-        %div.description= truncate_html(session.description, length: 600, omission: '...')
-      - text = (session.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
-      %p.learn-more= link_to text, currect_path(session)
-      .social-share-icons
-        = render 'shared/social_share', session_title: session.title, session_url: session_url(session)
+  .caption
+    - if (item.cover.url) && (!item.cover.url.eql?"/covers/original/missing.png")
+      %div.description= truncate_html(item.description, length: 300, omission: '...')
+    - else
+      %div.description= truncate_html(item.description, length: 600, omission: '...')
+    - text = (item.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
+    %p.learn-more= link_to text, currect_path(item)
+    .social-share-icons
+      = render 'shared/social_share', session_title: item.title, session_url: session_url(item)

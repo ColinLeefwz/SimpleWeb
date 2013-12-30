@@ -12,6 +12,9 @@ class Course < ActiveRecord::Base
 	has_one :intro_video
 	accepts_nested_attributes_for :intro_video
 
+  has_many :subscriptions, as: :subscribable
+  has_many :subscribers, through: :subscriptions
+
   has_attached_file :cover,
     storage: :s3,
     s3_credentials: {

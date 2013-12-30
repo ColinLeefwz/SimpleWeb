@@ -1,19 +1,19 @@
 .favorite-session-info
   .favorite-session-main
     .favorite-session-title
-      = session.title
+      = content.title
     .favorite-session-expert-name
       by 
-      = link_to "#{session.expert.name}", profile_expert_path(session.expert) 
+      = link_to "#{content.expert.name}", profile_expert_path(content.expert) 
     .favorite-session-categories
-      = session.categories.join(", ")
+      = content.categories.join(", ")
     .clear-fix
 
     .favorite-session-description
-      = truncate_html(session.description, length: 300, omission: '...')
+      = truncate_html(content.description, length: 300, omission: '...')
   .see-more
-    = link_to "see more", session_path(session)
+    = link_to "see more", session_path(content)
 
 .favorite-social-share
-  = render 'shared/favorite_session_star', session: session
-  = render 'shared/social_share', session_title: session.title, session_url: session_url(session)
+  = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: subscribe_session_path(content)
+  = render 'shared/social_share', session_title: content.title, session_url: session_url(content)
