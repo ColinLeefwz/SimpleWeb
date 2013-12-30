@@ -1,4 +1,4 @@
-= render "sessions/page_header", session: @announcement
+= render "sessions/page_header", content: @announcement
 .text-page-article-box.shadow
   .text-page-main-content
     -unless @announcement.sd_url.eql? "/videos/original/missing.png"

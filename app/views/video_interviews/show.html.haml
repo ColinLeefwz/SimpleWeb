@@ -1,4 +1,4 @@
-= render "sessions/page_header", session: @video_interview, link_path: subscribe_video_interview_path(@video_interview)
+= render "sessions/page_header", content: @video_interview, link_path: subscribe_video_interview_path(@video_interview)
 .text-page-article-box.shadow
   .text-page-main-content
     -unless @video_interview.sd_url.eql?"/videos/original/missing.png"
