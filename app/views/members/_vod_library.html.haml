@@ -1,8 +1,5 @@
 -if @recommendation
   .recommendation.white-background.shadow
     Recommended Contents
-- @enrolled_course.each do |course|
-  .favorite-session-box.shadow.white-background
-    .favorite-session-cover
-      = image_tag(course.cover.url)
-    = render "course_info", course: course
+- @enrolled_courses.each do |course|
+  = render "course_info", course: course

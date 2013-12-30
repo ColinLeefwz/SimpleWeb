@@ -13,7 +13,7 @@
           #{empty_expert_info_filter(e.profile.title, e.profile.company)}
     .expert-actions
       .follow-star
-        = render "shared/favorite_expert_star", expert: e 
+        = render 'shared/favorite_star', method: :follow?, object: e, link_path: relationship_path(e)
       .clear-fix
       .expert-action-info
         .block-title

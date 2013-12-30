@@ -100,6 +100,20 @@ describe ExpertsController do
     end
   end
 
+	describe "GET profile" do
+		it "shows the expert's profile page" do
+			get :profile, id: sameer.id
+			expect(response).to be_success
+		end
+
+		it "assigns the expert's sessions, video_interviews and courses" do
+			[video_interview, session_communication, first_course]
+			get :profile, id: sameer.id
+			expect(assigns[:items]).to eq [session_communication, video_interview, first_course]
+		end
+
+	end
+
 
   describe "GET contents" do
     context "not logged in"
@@ -115,11 +129,6 @@ describe ExpertsController do
       end
     end
   end
-
-
-
-
-
 
   describe "GET edit profile" do
     context "not logged in" do

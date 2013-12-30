@@ -1,2 +1,2 @@
 #content.container
-  =render 'box_content', sessions: @sessions
+  =render partial: 'box_content', collection: @sessions, as: :item
