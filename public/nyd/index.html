@@ -1,4 +1,4 @@
-﻿<!DOCTYPE>
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1, maximum-scale=1" />
@@ -9,6 +9,17 @@
 <title>元旦活动</title>
 <link rel="stylesheet" href="/nyd/css/public.css" type="text/css" media="screen"/>
 <script src="/nyd/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
+<!--<script src="/nyd/js/snow.js" language="javascript" type="text/javascript"></script>-->
+<script src="/nyd/js/jq.snow.js"></script>
+<script>
+	$(function(){
+		$.fn.snow({ 
+			minSize: 10,		//雪花的最小尺寸
+			maxSize: 20, 	//雪花的最大尺寸
+			newOn: 400		//雪花出现的频率 这个数值越小雪花越多
+		});
+	});
+	</script>
 </head>
 
 <body>
@@ -140,6 +151,7 @@ $(document).ready(function(){
 		$(".imgs2").addClass("none");
 		$(".imgs2").eq(n).removeClass("none");
 	});
+	//createSnow('', 10);
 });
 
 var timer=timer2=timer3=1;
