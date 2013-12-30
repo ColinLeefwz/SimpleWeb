@@ -1,4 +1,4 @@
-= render "page_header", session: @session
+= render "page_header", session: @session, link_path: subscribe_session_path(@session)
 .text-page-article-box.shadow
   .text-page-main-content
     -unless @session.cover.url.eql?"missing.png"

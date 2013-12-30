@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Session"
   has_many :subscribed_courses, through: :subscriptions, source: :subscribable, source_type: "Course"
+  has_many :subscribed_video_interviews, through: :subscriptions, source: :subscribable, source_type: "VideoInterview"
 
   # User follows User
   has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
@@ -57,7 +58,7 @@ class User < ActiveRecord::Base
   end
 
   def has_subscribed? (item)
-    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item)
+    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item) || self.subscribed_video_interviews.include?(item)
   end
 
   def subscribe (item)
@@ -65,6 +66,8 @@ class User < ActiveRecord::Base
       self.subscribed_sessions << item
     elsif item.is_a? Course
       self.subscribed_courses << item
+    elsif item.is_a? VideoInterview
+      self.subscribed_video_interviews << item
     end
   end
 
@@ -73,6 +76,8 @@ class User < ActiveRecord::Base
       self.subscribed_sessions.delete item
     elsif item.is_a? Course
       self.subscribed_courses.delete item
+    elsif item.is_a? VideoInterview
+      self.subscribed_video_interviews.delete item
     end
   end
 
