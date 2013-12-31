@@ -94,7 +94,7 @@ class Photo
       zwyd_ali_syn
     end
     if room=="21838292" || room=="21837985"
-      nyd = NewYearWish.new(data: [], total: 0, template:2)
+      nyd = NewYearWish.new(data: [], total: 0, template: 2)
       nyd._id = self._id
       nyd.save
       gen_nyd
@@ -152,12 +152,12 @@ class Photo
     desc = self.desc
     desc = "" if desc.nil?
     desc = desc[10..-1] if desc[0,10]=='#我的2014心愿#'
-    txt = "[img:faqnew_year#{self.id}]快来看！梦露为#{self.user.name}发来了2014新年祝福！" 
+    txt = "[img:faqnew_year#{self.id}]快来看！习主席为#{self.user.name}发来了2014新年祝福！" 
     url = "http://shop.dface.cn/new_year_wish?id=#{self.id}"
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQnyd#{self.id}")
     attrs = " NOLOG='1'  url='#{url}' "
     ext = "<x xmlns='dface.url'>#{url}</x>"
-    Xmpp.send_chat($gfuid, self.user_id, "快来看！梦露为#{self.user.name}发来了2014新年祝福！ #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
+    Xmpp.send_chat($gfuid, self.user_id, "快来看！习主席为#{self.user.name}发来了2014新年祝福！ #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQnyd#{self.id}")
   end
   
