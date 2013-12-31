@@ -141,14 +141,14 @@
   function dface_init(sid,uid) {
     dface_var.sid = sid;
     dface_var.uid = uid;
-    var user = "<%= @wish.photo_user.id %>";
-    if (dface_var.uid == user ) {
+
+    var user = "<%= @wish.try(:photo_user).try(:id) %>";
+    if (dface_var.uid == user && user != "") {
       $("#PicBox").show();
     };
   }
 
   $(document).ready(function(){
-    $("#PicBox").show();
     var wish_size = $("#Mes li").size();
     if (wish_size > 20) {
       $("#More").show();
