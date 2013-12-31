@@ -94,7 +94,7 @@ class Photo
       zwyd_ali_syn
     end
     if room=="21838292" || room=="21837985"
-      nyd = NewYearWish.new(data: [], total: 0, template:0)
+      nyd = NewYearWish.new(data: [], total: 0, template:2)
       nyd._id = self._id
       nyd.save
       gen_nyd
