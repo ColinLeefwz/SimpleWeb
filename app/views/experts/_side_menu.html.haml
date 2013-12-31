@@ -11,7 +11,7 @@
   .toolkit
     .item
       = render 'item_icon', item_name: 'activity_stream'
-      .item-text #{link_to 'My activity stream', sessions_expert_path, remote: true}
+      .item-text #{link_to 'My activity stream', pending_page_expert_path, remote: true}
 .block-title
   %span
     CREATE
@@ -34,7 +34,7 @@
     .item-text #{link_to 'Content', contents_expert_path, remote: true}
   .item
     = render 'item_icon', item_name: 'new_session'
-    .item-text #{link_to 'Sessions', sessions_expert_path, remote: true}
+    .item-text #{link_to 'Sessions', pending_page_expert_path, remote: true}
   .item
     = render 'item_icon', item_name: 'video_library'
     .item-text #{link_to 'Video on demand', pending_page_expert_path, remote: true}
