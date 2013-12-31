@@ -2,9 +2,9 @@
 check_terms_approved = -> 
   $("#terms").on "change", ->
     if $("#terms").is(':checked')
-      $("button").attr("disabled", false)
+      $("input[type='submit']").attr("disabled", false)
     else
-      $("button").attr("disabled", true)
+      $("input[type='submit']").attr("disabled", true)
 
 $(document).ready(check_terms_approved)
 $(document).on "page:load", check_terms_approved
