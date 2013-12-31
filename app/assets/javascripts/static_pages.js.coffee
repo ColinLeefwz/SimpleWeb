@@ -10,13 +10,14 @@ hover_effect = ->
   $("#about-us-sidebar li").mouseover(mouse_hover).mouseout(mouse_leave)
 
 move = ->
-  window_top = $(window).scrollTop()
-  nav_top = $("#nav-anchor").offset().top
-  if(window_top > nav_top - 25)
-    $("#about-us-sidebar").addClass("top-fixed")
-  else
-    if(window_top < nav_top)
-      $("#about-us-sidebar").removeClass("top-fixed")
+  if $("#nav-anchor").length
+    window_top = $(window).scrollTop()
+    nav_top = $("#nav-anchor").offset().top
+    if(window_top > nav_top - 25)
+      $("#about-us-sidebar").addClass("top-fixed")
+    else
+      if(window_top < nav_top)
+        $("#about-us-sidebar").removeClass("top-fixed")
 
 $(window).scroll(move)
 $(document).ready(hover_effect)

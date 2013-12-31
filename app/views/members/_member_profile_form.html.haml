@@ -10,4 +10,4 @@
       = p.input :company
 
     = f.submit "update", class: 'btn'
-    = link_to "Cancel", sessions_expert_path, remote: true, class: 'btn'
+    = link_to "Cancel", edit_profile_member_path(current_user), remote: true, class: 'btn'

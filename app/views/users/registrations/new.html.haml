@@ -171,8 +171,8 @@
       -# add a wrapper to wrap the checkbox and label into one line
       .check-box-wrapper 
         = check_box_tag "terms", checked: false
-        = label_tag :terms, "I agree the above terms"
+        = label_tag :terms, "I agree to the terms above"
 
-      = f.button :submit, value: 'Sign up', disabled: true
+      = f.submit "Sign up", disabled: true
 
     = render "devise/shared/links"
