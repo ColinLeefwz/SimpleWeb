@@ -25,7 +25,7 @@ class NewYearWish
   
   def people
     return '梦露' unless self.template
-    ['梦露', '金正恩', '习主席', '赫本', '奥巴马'].at(self.template)
+    ['梦露', '金正恩', '习主席', '财神爷', '奥巴马'].at(self.template)
   end
   
 end
