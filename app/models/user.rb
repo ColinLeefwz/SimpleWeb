@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   # has_many :enrollments
   # has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
   # has_many :orders
-  # has_many :email_messages
+  has_many :email_messages
 
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
   # Peter: we remove the :validatable to allow us to create multiple email with different provider
