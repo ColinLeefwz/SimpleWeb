@@ -45,6 +45,11 @@ class AjaxEffect
 
 	session_preview: ->
 		$("#session-preview").on "click", ->
+      mon_arr = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+      date = new Date()
+      mm = date.getMonth()
+      dd = date.getDate()
+      $("#session-datetime").html('originally published on ' + mon_arr[mm] + " " + dd)
 			title = $("#session-title-input").val()
 			$("#session-title").html("<h1>"+title+"</h1>")
 			# date = $("#datepicker").find("input").val()
