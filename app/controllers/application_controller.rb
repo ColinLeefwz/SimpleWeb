@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
 
     if(previous_path == "/admin/login")
       cookies[:previous_path] = request.base_url + "/admin"
-    elsif(previous_path != "/users/sign_in" && previous_path != "/users/sign_up" && !previous_path.start_with?("/users/password") && !request.xhr? && previous_path != "/users")
+    elsif((previous_path != "/users/sign_in") && (previous_path != "/users/sign_up") && (!previous_path.start_with?("/users/password")) && (!previous_path.start_with?("/users/invitation/accept")) && (!request.xhr?) && (previous_path != "/users"))
       cookies[:previous_path] = request.original_url
     end
   end
