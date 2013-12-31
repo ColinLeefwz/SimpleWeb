@@ -18,37 +18,42 @@
     width: 295px;
     margin: 0 auto;
     margin-top: 2em;
+    input[type='submit']{
+      display: block;
+      margin: 0 auto;
+    }
 
     /* override bootstrap horizontal form */
     .form-horizontal .controls{
-      margin-left: 74px;
+      margin-left: 77px;
     }
     .form-horizontal, .control-label{
-      width: 67px;
+      width: 70px;
+    }
+
+    .terms-of-service{
+      width: 310px;
+      height: 3em;
+      overflow: auto;
+      padding: 1em 0.5em;
+      margin: 0 auto;
+      background-color: white;
+      border: 1px solid #cccccc;
+      p,ol{
+        font-size: 0.7em;
+        word-wrap: break-word;
+      }
+      p{
+        text-indent: 1em;
+      }
+    }
+
+    .check-box-wrapper{
+      width: 200px;
     }
 }
 
 
-.terms-of-service{
-  width: 310px;
-  height: 3em;
-  overflow: scroll;
-  padding: 1em 0.5em;
-  margin: 0 auto;
-  background-color: white;
-  border: 1px solid #cccccc;
-  p,ol{
-    font-size: 0.7em;
-    word-wrap: break-word;
-  }
-  p{
-    text-indent: 1em;
-  }
-}
-
-.check-box-wrapper{
-  width: 200px;
-}
 
 .form-horizontal{
   .password-setting-label{
