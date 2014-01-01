@@ -9,6 +9,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
   margin: 0 auto;
 }
 
+
 .first-sub{
   margin-bottom: 30px;
 }
@@ -141,6 +142,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 
   .tab-pane{
     background-color: white;
+    padding: 10px 30px;
     text-indent: 1em;
     p{
       margin: 0;
