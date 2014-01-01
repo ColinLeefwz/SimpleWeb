@@ -1,7 +1,7 @@
 = simple_form_for @expert, as: :profile, url: update_profile_expert_path(current_user), remote: true do |f|
   %h3 Edit Your Profile
   %fieldset
-    %legend Overview
+    -# %legend Overview
     = f.input :first_name
     = f.input :last_name
     .string.optional

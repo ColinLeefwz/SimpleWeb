@@ -1,7 +1,7 @@
 = simple_form_for @member, as: :profile, url: update_profile_member_path(current_user), remote: true do |f|
   %h3 Edit your profile
   %fieldset
-    %legend Overview
+    -# %legend Overview
     = f.input :first_name
     = f.input :last_name
     = f.input :avatar
