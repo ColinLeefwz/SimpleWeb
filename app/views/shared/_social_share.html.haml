@@ -1,5 +1,8 @@
+- session_url = CGI.escape session_url
+- session_title = CGI.escape session_title
+
 .social-share.facebook
-  - url = "http://www.facebook.com/sharer/sharer.php?u=#{session_url}"
+  - url = "http://www.facebook.com/sharer/sharer.php?u=#{session_url}&title=#{session_title}"
   = link_to image_tag("facebook.png"), url, data: { popup: true}
 
 .social-share.twitter
@@ -7,11 +10,12 @@
   = link_to image_tag("twitter.png"), url, data: { popup: true}
 
 .social-share.linkedin
-  - url = "https://www.linkedin.com/cws/share?mini=true&source=#{session_title}&url=#{session_url}"
+  -# - url = "https://www.linkedin.com/cws/share?mini=true&source=#{session_title}&url=#{session_url}"
+  - url = "http://www.linkedin.com/shareArticle?mini=true&url=#{session_url}&title=#{session_title}"
   = link_to image_tag("linkedin.png"), url, data: { popup: true}
 
 .social-share.google_plus
-  - url = "http://plus.google.com/share?url=#{session_url}"
+  - url = "http://plus.google.com/share?url=#{session_url}&title=#{session_title}"
   = link_to image_tag("googleplus.png"), url, data: { popup: true}
 
 -# TODO: add email functionality
