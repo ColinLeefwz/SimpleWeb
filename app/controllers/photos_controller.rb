@@ -73,6 +73,13 @@ class PhotosController < ApplicationController
       else
         redirect_to Photo.img_url(id,:t2)
       end
+    elsif params[:id] =~ /^nyd/
+      id = params[:id].sub('nyd','')
+      if params[:size].to_i==0
+        redirect_to Photo.img_url(id)
+      else
+        redirect_to Photo.img_url(id,:t2)
+      end
     elsif params[:id] =~ /^new_year/
       redirect_to "http://oss.aliyuncs.com/dface/52be6bb220f318fdfe00001c/0.jpg"
     else
