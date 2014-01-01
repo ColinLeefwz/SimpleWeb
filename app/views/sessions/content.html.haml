@@ -1,9 +1,7 @@
 = render "page_header", content: @session, link_path: subscribe_session_path(@session)
-.text-page-article-box.shadow
+.text-page-article-box.shadow.margin-bottom
   .text-page-main-content
     -unless @session.cover.url.eql?"missing.png"
       .text-page-image
         = image_tag(@session.cover.url)
     %p= @session.description.html_safe
-  .clear-fix
-.range

@@ -1,5 +1,5 @@
 = render "sessions/page_header", content: @announcement
-.text-page-article-box.shadow
+.text-page-article-box.shadow.margin-bottom
   .text-page-main-content
     -unless @announcement.sd_url.eql? "/videos/original/missing.png"
       .announcement-cover
@@ -7,5 +7,3 @@
           = image_tag @announcement.cover.url, class: 'video-play'
           = image_tag "video_play_icon.png", class: 'play-video-icon'
     %p= @announcement.description.html_safe
-  .clear-fix
-.range
