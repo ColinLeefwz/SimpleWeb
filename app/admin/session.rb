@@ -58,7 +58,8 @@ ActiveAdmin.register Session do
       row :status
       row :content_type
       row :description do
-        session.description.html_safe
+        description = session.description || "  "
+        description.html_safe
       end
       row :categories
       row :video do

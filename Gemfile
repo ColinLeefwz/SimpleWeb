@@ -47,8 +47,10 @@ group :development, :test do
   gem 'selenium-webdriver', '~>2.35.1'
   gem 'launchy'
   gem 'spring'
-	gem 'spring-commands-rspec'
-# gem 'poltergeist'
+  gem 'spring-commands-rspec'
+  # gem 'poltergeist'
   gem 'fuubar'
-	gem 'simplecov', require: false # code coverage
+  gem 'simplecov', require: false # code coverage
+  gem 'shoulda'
+  gem 'shoulda-matchers'
 end
