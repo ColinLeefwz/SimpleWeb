@@ -28,9 +28,8 @@ class User < ActiveRecord::Base
   # enrollments and orders
   has_many :enrollments
   has_many :enrolled_courses, through: :enrollments, source: :enrollable, source_type: "Course"
-  # has_many :enrollments
   # has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
-  # has_many :orders
+  has_many :orders
   has_many :email_messages
 
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
