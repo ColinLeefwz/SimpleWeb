@@ -1,6 +1,8 @@
 class VideoInterview < ActiveRecord::Base
 	include Storagable
-	belongs_to :expert
+  # video interviews always belongs to an expert
+  belongs_to :expert
+  validates :expert, presence: true
 
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions
