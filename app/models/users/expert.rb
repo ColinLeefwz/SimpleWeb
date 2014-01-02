@@ -6,6 +6,7 @@ class Expert < Member
   alias_method :profile=, :profile_attributes=   # NOTE add this line for active admin working properly
 
 	has_many :video_interviews
+	has_one :intro_video, as: :introable, dependent: :destroy
 
   def name
     "#{first_name} #{last_name}"
