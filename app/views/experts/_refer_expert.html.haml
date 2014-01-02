@@ -1,0 +1,4 @@
+.white-background.shadow
+  = simple_form_for @email_message, url: invitation_path(User) do |f| 
+    %h3 Refer New Experts
+    =render "refer_user", f: f 
