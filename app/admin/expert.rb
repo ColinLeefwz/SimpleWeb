@@ -35,19 +35,17 @@ ActiveAdmin.register Expert do
       f.input :first_name
       f.input :last_name
       f.input :avatar, as: :file
-      f.input :email
       f.input :password, as: :password if f.object.new_record?
       f.input :time_zone
 
       f.inputs name: "Profile", for: [ f.object.profile || Profile.new ] do |p|
         p.input :title
         p.input :company
-        p.input :location
         p.input :twitter
-        p.input :expertise
         p.input :web_site
-        p.input :testimonials
-        p.input :additional
+        p.input :expertise
+        p.input :career
+        p.input :education
       end
 
       f.actions
