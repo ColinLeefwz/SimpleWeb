@@ -74,6 +74,10 @@ ActiveAdmin.register Expert do
         expert.profile.twitter
       end
 
+      row :web_site do |expert|
+        expert.profile.web_site
+      end
+
       row :location do |expert|
         expert.profile.location
       end

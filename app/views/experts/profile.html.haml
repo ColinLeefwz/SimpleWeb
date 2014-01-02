@@ -14,11 +14,12 @@
           = @profile.company
 
       %table
-        %tr
-          %td.personal.light-font
-            = "Blog/Website"
-          %td.personal-value
-            = "personal contact"
+        - if @profile.web_site
+          %tr
+            %td.personal.light-font
+              = "Blog/Website"
+            %td.personal-value
+              = link_to @profile.web_site, @profile.web_site
 
           - if @profile.twitter
             %tr
