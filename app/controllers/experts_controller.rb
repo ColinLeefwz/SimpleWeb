@@ -30,6 +30,7 @@ class ExpertsController < ApplicationController
 
   def edit_profile
     @profile = @expert.profile || @expert.create_profile
+		@intro_video = @expert.intro_video || @expert.create_intro_video
     @from = 'edit_profile'
 
     respond_to do |format|
@@ -42,6 +43,7 @@ class ExpertsController < ApplicationController
       format.js{
         @expert.update_attributes(user_params)
         @expert.profile.update_attributes(expert_profile_params)
+				# @expert.intro_video.update_attributes(intro_video_params)
 
         render js: "window.location='#{profile_expert_path(current_user)}'"
       }
@@ -89,8 +91,6 @@ class ExpertsController < ApplicationController
   end
 
   def user_params
-    params.require(:profile).permit(:first_name, :last_name, :avatar)
+		params.require(:expert).permit(:first_name, :last_name, :avatar, intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
   end
-
-
 end

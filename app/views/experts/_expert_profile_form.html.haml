@@ -1,5 +1,33 @@
-= simple_form_for @expert, as: :profile, url: update_profile_expert_path(current_user), remote: true do |f|
-  %h3 Edit Your Profile
+%h3 Edit Your Profile
+.intro-video
+  %h4 Intro Video
+  %span HD
+  = s3_uploader_form id: "s3_intro_video_hd", callback_param: 'intro_video_hd', key: "intro_videos/hd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/hd", acl: 'public-read' do
+    = file_field_tag :file, multiple: false
+    = link_to "upload", "javascript:void(0)", id: "hd_upload_submit"
+    .upload.js-progress-bars
+      .progress
+        .bars
+
+  %span SD
+  = s3_uploader_form id: "s3_intro_video_sd", callback_param: 'intro_video_sd', key: "intro_videos/sd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/sd", acl: 'public-read' do
+    = file_field_tag :file, multiple: false
+    = link_to "upload", "javascript:void(0)", id: "sd_upload_submit"
+    .upload.js-progress-bars
+      .progress
+        .bars
+
+= simple_form_for @expert, url: update_profile_expert_path(current_user), remote: true do |f|
+  %fieldset
+    = f.simple_fields_for :intro_video do |intro|
+      = intro.input :attached_video_hd_file_name, as: :hidden
+      = intro.input :attached_video_hd_content_type, as: :hidden
+      = intro.input :attached_video_hd_file_size, as: :hidden
+      = intro.input :hd_url, as: :hidden
+      = intro.input :attached_video_sd_file_name, as: :hidden
+      = intro.input :attached_video_sd_content_type, as: :hidden
+      = intro.input :attached_video_sd_file_size, as: :hidden
+      = intro.input :sd_url, as: :hidden
   %fieldset
     -# %legend Overview
     = f.input :first_name
@@ -16,5 +44,6 @@
       = p.input :career, input_html: {class: 'ckeditor'}
       = p.input :education
 
+
     = f.submit "Update", class: "btn"
-    = link_to "Cancel", sessions_expert_path, remote: true, class: "btn" 
+    = link_to "Cancel", edit_profile_expert_path(current_user), remote: true, class: "btn" 

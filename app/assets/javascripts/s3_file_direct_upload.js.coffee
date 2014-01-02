@@ -78,8 +78,20 @@ s3_complete = ->
 		$("#course_intro_video_attributes_attached_video_sd_content_type").val(content.filetype)
 		$("#course_intro_video_attributes_attached_video_sd_file_size").val(content.filesize)
 		$(e.target).find(".bars").text("completed uploading")
+	
+	$("#s3_intro_video_hd").bind "s3_upload_complete", (e, content) ->
+		$("#expert_intro_video_attributes_attached_video_hd_file_name").val(content.filename)
+		$("#expert_intro_video_attributes_attached_video_hd_content_type").val(content.filetype)
+		$("#expert_intro_video_attributes_attached_video_hd_file_size").val(content.filesize)
+		$("#expert_intro_video_attributes_hd_url").val(content.url)
+		$(e.target).find(".bars").text("completed uploading")
 
-
+	$("s3_intro_video_sd").bind "s3_upload_complete", (e, content) ->
+		$("#expert_intro_video_attributes_attached_video_sd_file_name").val(content.filename)
+		$("#expert_intro_video_attributes_attached_video_sd_content_type").val(content.filetype)
+		$("#expert_intro_video_attributes_attached_video_sd_file_size").val(content.filesize)
+		$("#expert_intro_video_attributes_sd_url").val(content.url)
+		$(e.target).find(".bars").text("completed uploading")
 
 upload_failed = ->
 	$("#s3_video_interview_hd").bind "s3_upload_failed", (e, content) ->
@@ -90,6 +102,7 @@ upload_failed = ->
 		$(e.target).find(".bars").text "upload failed"
 	$("#s3_announcement_sd").bind "s3_upload_failed", (e, content) ->
 		$(e.target).find(".bars").text "upload failed"
+
 
 $(document).ready s3_upload
 $(document).on 'page:load', s3_upload
@@ -102,3 +115,8 @@ $(document).on 'page:load', upload_failed
 
 $(document).on "s3_uploads_start", (e) ->
 	$(e.target).find(".bars").text("uploading")
+
+$(document).on "ajax:success", ->
+	s3_upload()
+	s3_complete()
+	upload_failed()
