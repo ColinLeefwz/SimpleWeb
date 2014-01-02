@@ -6,7 +6,7 @@ class Profile < ActiveRecord::Base
   private
   # make sure the URL starts with `http` protocol, so that link_to works properly
   def check_web_site
-    if /^http/.match(self.web_site) == nil
+    if self.web_site and (/^http/.match(self.web_site) == nil)
       self.web_site = "http://" + self.web_site
     end
   end
