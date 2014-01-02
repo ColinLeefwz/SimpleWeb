@@ -24,43 +24,44 @@
             = "Twitter"
           %td.twitter-value
             = "@twitteraccount"
-      .contact.brief-item-last
-        .contact-button#follow
-          %button.btn.left-side
-            - if current_user.try(:follow?, @expert)
-              %i.fa.fa-star Unfollow
-            - else
-              %i.fa.fa-star Follow
+    .contact.brief-item-last
+      .contact-button#follow
+        %button.btn.left-side
+          - if current_user.try(:follow?, @expert)
+            %i.fa.fa-star Unfollow
+          - else
+            %i.fa.fa-star Follow
 
-          %button.btn.right-side#follower-count
-            = @expert.followers.count
-        = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
+        %button.btn.right-side#follower-count
+          = @expert.followers.count
+      = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
     .clear-fix 
-  .detail.sub-wrapper.second-sub
-    %ul.nav.nav-tabs
-      - if @profile.expertise.present?
-        %li.active.tab
-          %a{href: "#tab1", data: {toggle: "tab"}}Overview
-      - if @profile.career.present?
-        %li.tab
-          %a{href: "#tab2", data: {toggle: "tab"}}Career
-      - if @profile.education.present?
-        %li.tab
-          %a{href: "#tab3", data: {toggle: "tab"}}Education
+  - unless @profile.expertise.blank? && @profile.expertise.blank? && @profile.expertise.blank?
+    .detail.sub-wrapper.second-sub
+      %ul.nav.nav-tabs
+        - if @profile.expertise.present?
+          %li.active.tab
+            %a{href: "#tab1", data: {toggle: "tab"}}Overview
+        - if @profile.career.present?
+          %li.tab
+            %a{href: "#tab2", data: {toggle: "tab"}}Career
+        - if @profile.education.present?
+          %li.tab
+            %a{href: "#tab3", data: {toggle: "tab"}}Education
 
-    .tab-content
-      .tab-pane.active#tab1
-        %div
-          - expertise = @profile.expertise || "Expertise to be filled"
-          = expertise.html_safe
-      .tab-pane#tab2
-        %div
-          - career = @profile.career || "Career to be filled"
-          = career.html_safe
-      .tab-pane#tab3
-        %div
-          - education = @profile.education || "Education to be filled"
-          = education.html_safe
+      .tab-content
+        .tab-pane.active#tab1
+          %div
+            - expertise = @profile.expertise || "Expertise to be filled"
+            = expertise.html_safe
+        .tab-pane#tab2
+          %div
+            - career = @profile.career || "Career to be filled"
+            = career.html_safe
+        .tab-pane#tab3
+          %div
+            - education = @profile.education || "Education to be filled"
+            = education.html_safe
 
   .sessions.sub-wrapper
     #content.container
