@@ -51,8 +51,7 @@ font-size:15px;font-family:黑体;text-align:center;display:none;cursor:pointer;
 .main{width:320px;margin:0px auto;overflow:hidden;zoom:1;}
 .con{position:relative;display:block;overflow:hidden;}
 .imgsbox{width:100%;position:absolute;height:402px;z-index:1;left:0px;top:0px;}
-.imgsbox img.imgs{display:block;position:absolute;z-index:2;top:89px;left:10px;width:140px;}
-.imgsbox img.imgs{display:block;position:absolute;z-index:2;top:89px;left:10px;width:134px;}
+.imgsbox img.imgs{display:block;position:absolute;z-index:2;top:89px;left:10px;width:143px;}
 .imgsbox div.imgs2{width:320px;display:block;position:absolute;z-index:3;left:0px;top:0px;margin-left:5px;}
 .imgsbox img.imgs3{display:block;position:absolute;z-index:4;right:3px;top:3px;}
 
