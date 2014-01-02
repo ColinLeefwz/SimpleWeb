@@ -1,7 +1,7 @@
 = f.input :from_name, as: 'hidden'
 = f.input :from_address, as: 'hidden'
 = f.input :invited_type, as: 'hidden'
-= f.input :to, label: "To"
+= f.input :to, label: "To", placeholder: hint
 = f.input :subject, label: "Subject", input_html: {class: "wider-input"}
 .alert.validation-message.hide
 = f.input :message, label: "Message", input_html: { class: 'ckeditor' }
