@@ -35,18 +35,17 @@ ActiveAdmin.register Expert do
       f.input :first_name
       f.input :last_name
       f.input :avatar, as: :file
-      f.input :email
       f.input :password, as: :password if f.object.new_record?
       f.input :time_zone
 
       f.inputs name: "Profile", for: [ f.object.profile || Profile.new ] do |p|
         p.input :title
         p.input :company
-        p.input :location
-        p.input :expertise
+        p.input :twitter
         p.input :web_site
-        p.input :testimonials
-        p.input :additional
+        p.input :expertise
+        p.input :career
+        p.input :education
       end
 
       f.actions
@@ -67,6 +66,14 @@ ActiveAdmin.register Expert do
 
       row :company do |expert|
         expert.profile.company
+      end
+
+      row :twitter do |expert|
+        expert.profile.twitter
+      end
+
+      row :web_site do |expert|
+        expert.profile.web_site
       end
 
       row :location do |expert|
@@ -94,7 +101,7 @@ ActiveAdmin.register Expert do
 
   controller do
     def permitted_params
-      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional]]
+      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, profile: [:title, :company, :twitter, :location, :expertise, :web_site, :testimonials, :additional]]
     end
   end
 end

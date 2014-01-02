@@ -1,11 +1,13 @@
 class Expert < Member
   has_many :sessions, dependent: :destroy
   has_and_belongs_to_many :courses
+  has_many :video_interviews
   has_many :resources
   accepts_nested_attributes_for :profile
   alias_method :profile=, :profile_attributes=   # NOTE add this line for active admin working properly
 
-	has_many :video_interviews
+  after_create :build_profile
+
 
   def name
     "#{first_name} #{last_name}"
@@ -25,6 +27,11 @@ class Expert < Member
 
   def live_sessions
     self.sessions.where("content_type = 'LiveSession'").order("draft desc")
+  end
+
+  private
+  def build_profile
+    self.profile || self.create_profile
   end
 
 end

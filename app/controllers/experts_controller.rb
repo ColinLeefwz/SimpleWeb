@@ -17,7 +17,7 @@ class ExpertsController < ApplicationController
   def refer_new_expert
     @email_message = current_user.build_refer_message(User::USER_TYPE[:expert])
 
-    @from = "refer_a_user"
+    @from = "refer_expert"
     respond_to do |format|
       format.js { render "update" }
     end
@@ -85,7 +85,7 @@ class ExpertsController < ApplicationController
 
 
   def expert_profile_params
-    params.require(:profile).permit(:title, :company, :career, :education, :expertise, :location, :web_site)
+    params.require(:profile).permit(:title, :company, :twitter, :career, :education, :expertise, :location, :web_site)
   end
 
   def user_params

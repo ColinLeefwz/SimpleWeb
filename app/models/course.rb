@@ -44,11 +44,6 @@ class Course < ActiveRecord::Base
     "by " + self.experts.map(&:name).join(" and ")
   end
 
-  # todo: add real data for courses duration
-  def duration
-    "1h 55m"
-  end
-
   def free?
     self.price == 0
   end
