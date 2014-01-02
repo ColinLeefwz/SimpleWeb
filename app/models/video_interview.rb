@@ -10,13 +10,5 @@ class VideoInterview < ActiveRecord::Base
 	attached_file :attached_video_hd
 	attached_file :attached_video_sd
 	attached_file :cover
-	
-	def	content_type
-		"VideoInterview"
-	end
-
-	def	always_show
-		false
-	end
 
 end
