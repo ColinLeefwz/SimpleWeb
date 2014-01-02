@@ -21,9 +21,9 @@
         = image_tag "price.png", class: "icon"
         = price_tag(item.price)
 
-    - if user_signed_in?
-      .payment
-        = paypal_or_enroll_button(params, item)
+      - if user_signed_in?
+        .payment
+          = paypal_or_enroll_button(params, item)
 
 
 
