@@ -26,6 +26,3 @@
 /config/application.yml
 coverage
 
-
-# Ignore Gemfile.lock
-Gemfile.lock
