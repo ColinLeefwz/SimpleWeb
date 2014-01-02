@@ -152,12 +152,12 @@ class Photo
     desc = self.desc
     desc = "新年快乐" if desc.nil? || desc==""
     desc = desc[10..-1] if desc[0,10]=='#我的2014心愿#'
-    txt = "[img:faqnyd#{self.id}]快来看！习主席发来了2014新年祝福： #{desc}。" 
+    txt = "[img:faqnyd#{self.id}]快来看！有神秘大人物发来了2014新年祝福： #{desc}。" 
     url = "http://shop.dface.cn/new_year_wish?id=#{self.id}"
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQnyd#{self.id}")
     attrs = " NOLOG='1'  url='#{url}' "
     ext = "<x xmlns='dface.url'>#{url}</x>"
-    Xmpp.send_chat($gfuid, self.user_id, "快来看！习主席为#{self.user.name}发来了2014新年祝福！ #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
+    Xmpp.send_chat($gfuid, self.user_id, "快来看！神秘大人物为#{self.user.name}发来了2014新年祝福！ #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQnyd#{self.id}")
   end
   
