@@ -85,7 +85,7 @@ class ExpertsController < ApplicationController
 
 
   def expert_profile_params
-    params.require(:profile).permit(:title, :company, :career, :education, :expertise, :location, :web_site)
+    params.require(:profile).permit(:title, :company, :twitter, :career, :education, :expertise, :location, :web_site)
   end
 
   def user_params

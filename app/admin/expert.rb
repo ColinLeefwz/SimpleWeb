@@ -43,6 +43,7 @@ ActiveAdmin.register Expert do
         p.input :title
         p.input :company
         p.input :location
+        p.input :twitter
         p.input :expertise
         p.input :web_site
         p.input :testimonials
@@ -67,6 +68,10 @@ ActiveAdmin.register Expert do
 
       row :company do |expert|
         expert.profile.company
+      end
+
+      row :twitter do |expert|
+        expert.profile.twitter
       end
 
       row :location do |expert|
@@ -94,7 +99,7 @@ ActiveAdmin.register Expert do
 
   controller do
     def permitted_params
-      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional]]
+      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, profile: [:title, :company, :twitter, :location, :expertise, :web_site, :testimonials, :additional]]
     end
   end
 end
