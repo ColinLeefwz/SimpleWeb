@@ -4,10 +4,15 @@
     -# %legend Overview
     = f.input :first_name
     = f.input :last_name
-    = f.input :avatar
+    .string.optional.customize-label.input
+      = f.label :profile_picture
+      = f.input_field :avatar
     = simple_fields_for @profile do |p|
       = p.input :title
-      = p.input :company
+      .string.optional.customize-label.input
+        = p.label :orgnization
+        = p.input_field :company
 
-    = f.submit "update", class: 'btn'
-    = link_to "Cancel", edit_profile_member_path(current_user), remote: true, class: 'btn'
+    .display-block
+      = f.submit "update", class: 'btn'
+      = link_to "Cancel", edit_profile_member_path(current_user), remote: true, class: 'btn'

@@ -6,8 +6,25 @@
     vertical-align: top;
   }
 
-  .input{
+  .customize-label{
     display: inline-flex;
   }
 
+  .wider-input{
+    width: 602px
+  }
+
+  .checkbox-align{
+    padding-left: 112px;
+  }
+
+  .checkbox-label{
+    width: 20em;
+    text-align: left;
+    margin: 2px 0 0 0;
+  }
+  
+  .checkbox-input{
+    margin: 0
+  }
 }
