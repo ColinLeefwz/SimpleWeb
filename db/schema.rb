@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 20140102024439) do
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
     t.decimal  "price",              default: 0.0
+    t.string   "duration"
   end
 
   add_index "courses", ["categories"], name: "index_courses_on_categories", using: :gin
@@ -205,13 +206,14 @@ ActiveRecord::Schema.define(version: 20140102024439) do
     t.text     "favorite_quote"
     t.text     "career"
     t.text     "education"
-    t.text     "web_site"
+    t.string   "web_site"
     t.text     "article_reports"
     t.text     "additional"
     t.text     "testimonials"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "twitter"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree

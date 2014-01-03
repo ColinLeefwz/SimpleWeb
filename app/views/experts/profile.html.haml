@@ -14,39 +14,44 @@
           = @profile.company
 
       %table
-        %tr
-          %td.personal.light-font
-            = "Blog/Website"
-          %td.personal-value
-            = "personal contact"
-        %tr
-          %td.twitter.light-font
-            = "Twitter"
-          %td.twitter-value
-            = "@twitteraccount"
-      .contact.brief-item-last
-        .contact-button#follow
-          %button.btn.left-side
-            - if current_user.try(:follow?, @expert)
-              %i.fa.fa-star Unfollow
-            - else
-              %i.fa.fa-star Follow
+        - if @profile.web_site
+          %tr
+            %td.personal.light-font
+              = "Blog/Website"
+            %td.personal-value
+              = link_to @profile.web_site, @profile.web_site, target: "_blank"
 
-          %button.btn.right-side#follower-count
-            = @expert.followers.count
-        = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
+          - if @profile.twitter
+            %tr
+              %td.twitter.light-font
+                = "Twitter"
+              %td.twitter-value
+                = link_to "@#{@profile.twitter}", "https://twitter.com/#{@profile.twitter}"
+
+    .contact.brief-item-last
+      .contact-button#follow
+        %button.btn.left-side
+          - if current_user.try(:follow?, @expert)
+            %i.fa.fa-star Unfollow
+          - else
+            %i.fa.fa-star Follow
+
+        %button.btn.right-side#follower-count
+          = @expert.followers.count
+      = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
     .clear-fix 
-  .detail.sub-wrapper.second-sub
-    %ul.nav.nav-tabs
-      - if @profile.expertise.present?
-        %li.active.tab
-          %a{href: "#tab1", data: {toggle: "tab"}}Overview
-      - if @profile.career.present?
-        %li.tab
-          %a{href: "#tab2", data: {toggle: "tab"}}Career
-      - if @profile.education.present?
-        %li.tab
-          %a{href: "#tab3", data: {toggle: "tab"}}Education
+  - unless @profile.expertise.blank? && @profile.expertise.blank? && @profile.expertise.blank?
+    .detail.sub-wrapper.second-sub
+      %ul.nav.nav-tabs
+        - if @profile.expertise.present?
+          %li.active.tab
+            %a{href: "#tab1", data: {toggle: "tab"}}Overview
+        - if @profile.career.present?
+          %li.tab
+            %a{href: "#tab2", data: {toggle: "tab"}}Career
+        - if @profile.education.present?
+          %li.tab
+            %a{href: "#tab3", data: {toggle: "tab"}}Education
 
     .tab-content
       .tab-pane.active#tab1

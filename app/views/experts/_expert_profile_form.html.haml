@@ -32,14 +32,16 @@
     -# %legend Overview
     = f.input :first_name
     = f.input :last_name
-    .string.optional
+    .string.optional.customize-label
       = f.label :profile_picture
       = f.input_field :avatar
     = simple_fields_for @profile do |p|
       = p.input :title
-      .string.optional.input
+      .string.optional.customize-label
         = p.label :orgnization
         = p.input_field :company
+      = p.input :twitter
+      = p.input :web_site
       = p.input :expertise
       = p.input :career, input_html: {class: 'ckeditor'}
       = p.input :education
