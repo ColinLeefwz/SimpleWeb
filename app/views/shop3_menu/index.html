@@ -1,0 +1,145 @@
+<%= content_for :ahead do %>
+    <link href="/newbackstage/css/menu.css" rel="stylesheet" type="text/css">
+    <script src="/newbackstage/js/menuset.js" type="application/javascript"></script>
+<% end %>
+<div class="con">
+    <div class="inner_container_box side_l menu_setting_area_bd">            
+        <div class="inner_side">                
+            <div class="bd">                    
+                <div class="menu_manage">                        
+                    <div class="sub_title_bar light">                            
+                        <h4>菜单管理</h4>
+                        <div class="btn_wrp">                                
+                            <a class="btn btn_primary" id="addBt" href="javascript:void(0);" style="display: inline-block;">添加</a>
+                            <a class="btn btn_default" id="orderBt" href="javascript:void(0);" style="display: inline-block;">排序</a>
+                            <a style="display: none;" class="btn btn_primary btn_sorting" id="finishBt" href="javascript:void(0);">完成</a>
+                            <a style="display: none;" class="btn btn_default btn_sorting" id="cancelBt" href="javascript:void(0);">取消</a>&nbsp;
+                        </div>
+                    </div>
+                    <div id="menuList" class="inner_menu_box with_switch blue ui-sortable ui-sortable-disabled">
+                        <% @menu && @menu.button.each_with_index do |m, index|%>
+                            <dl class="inner_menu jsMenu ui-sortable ui-sortable-disabled">
+                                <dt id="menu_<%= index %>" class="inner_menu_item jslevel1">
+                                    <i class="icon_inner_menu_switch"></i>
+                                <!-- <dt id="menu_0" class="inner_menu_item jslevel1 selected"> -->
+                                    <a class="inner_menu_link" href="javascript:void(0);">
+                                        <strong><%= m['name']%></strong>
+                                    </a>
+                                    <span class="menu_opr">
+                                        <a class="icon14_common add_gray jsAddBt" href="javascript:void(0);" rel='<%= index %>'>添加</a>
+                                        <a class="icon14_common  edit_gray jsEditBt" href="javascript:void(0);" rel='<%= index %>'>编辑</a>
+                                        <a class="icon14_common del_gray jsDelBt" href="javascript:void(0);" rel='<%= index %>'>删除</a>
+                                        <a style="display:none" class="icon14_common sort_gray jsOrderBt" href="javascript:void(0);">排序</a>
+                                    </span>
+                                </dt>
+                            <% m['sub_button'] && m['sub_button'].each_with_index do |sb, sbi| %>
+                                <dd id="subMenu_menu_<%= index %>_<%= sbi %>" class="inner_menu_item jslevel2">
+                                    <i class="icon_dot">●</i>
+                                    <a class="inner_menu_link" href="javascript:void(0);"><strong><%= sb['name'] %></strong></a>
+                                    <span class="menu_opr">
+                                        <a class="icon14_common edit_gray jsSubEditBt" href="javascript:void(0);" rel='<%= "#{index},#{sbi}" %>'>编辑</a>
+                                        <a class="icon14_common del_gray jsSubDelBt" href="javascript:void(0);" rel='<%= "#{index},#{sbi}" %>'>删除</a>
+                                        <a style="display:none" class="icon14_common sort_gray jsOrderBt" href="javascript:void(0);">排序</a>
+                                    </span>
+                                </dd>
+                            <% end%>
+                            </dl>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="inner_main">
+            <div class="bd">
+                <div class="action_setting">
+                    <div class="sub_title_bar light">
+                        <h4>设置动作</h4>
+                        <div class="btn_wrp">
+                            <a id="changeBt" class="btn btn_default btn_editing" href="javascript:void(0);" style="display: none;">修改</a>
+                        </div>
+                    </div>
+                    <div id="none" class="action_content default jsMain" style="display: block;">
+                        <p class="action_tips">你可以先添加一个菜单，然后开始为其设置响应动作</p>
+                    </div>
+                    <div id="index" style="display: none;" class="action_content init jsMain">
+                        <p class="action_tips">请选择订阅者点击菜单后，公众号做出的相应动作</p>
+                        <a id="sendMsg" href="javascript:void(0);">
+                            <i class="icon_menu_action send"></i>
+                            <strong>发送信息</strong>
+                        </a>
+                        <a id="goPage" href="javascript:void(0);">
+                            <i class="icon_menu_action url"></i>
+                            <strong>跳转到网页</strong>
+                        </a>
+                    </div>
+                    <div id="url" class="action_content url jsMain" style="display: none;">
+                        <form onsubmit="return false;" id="urlForm" action="">
+                            <p class="action_tips">订阅者点击该子菜单会跳到以下链接</p>
+                            <div class="frm_control_group">
+                                <span class="frm_input_box">
+                                    <input type="text" name="urlText" id="urlText" class="frm_input">
+                                </span>
+                                <p id="urlFail" style="display: none;" class="frm_msg fail">
+                                    <i>●</i>
+                                    <span style="display: inline;" class="frm_msg_content" for="urlText">请输入正确的URL</span>
+                                </p>
+                            </div>
+                        </form>
+                        <div class="tool_bar">
+                            <a id="urlBack" class="btn btn_default" href="javascript:void(0);">返回</a>
+                            <a id="urlSave" type="submit" class="submit btn btn_primary">保存</a>
+                        </div>
+                    </div>
+                    <div id="view" class="action_content sended jsMain" style="display: none;">
+                        <p class="action_tips">订阅者点击该子菜单会跳到以下链接</p>
+                        <div id="viewDiv" class="msg_wrp">http://www.dface.cn/torus/index.html</div>
+                    </div>
+                    <div id="edit" class="action_content send jsMain" style="display: none;">
+                        <p class="action_tips">订阅者点击该子菜单会收到以下消息</p>
+                        <div id="editDiv" class="msg_sender small"></div>
+                        <div class="tool_bar">
+                            <a id="editBack" class="btn btn_default" href="javascript:void(0);">返回</a>
+                            <a id="editSave" class="btn btn_primary" href="javascript:void(0);">保存</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='dialog_display' style='display: none'>
+        <div style="width: 726px; margin-left: -363px; margin-top: -226px;" class="dialog_wrp simple">
+            <div class="dialog">
+                <div class="dialog_hd">
+                    <h3>输入提示框</h3>
+                    <a class="icon16_opr closed pop_closed" onclick="return false" href="javascript:;">关闭</a>
+                </div>
+                <div class="dialog_bd">
+                    <div class="simple_dialog_content">
+                        <form onsubmit="return false;" class="form" method="post" id="popupForm_" novalidate="novalidate">
+                            <div class="frm_control_group">
+                                <label class="frm_label">菜单名称名字不多于4个汉字或8个字母:</label>
+                                <span class="frm_input_box">
+                                    <input type="text" value="" name="popInput" class="frm_input" id='menu_val'>
+                                    <input style="display:none" id='menu_index' >
+                                </span>
+                            </div>       
+                            <div class="js_verifycode"></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="dialog_ft">
+                    <span class="btn btn_primary btn_input js_btn_p">
+                        <button data-index="0" class="js_btn" id='jsbtn0'>确认</button>
+                    </span>
+                    <span class="btn btn_default btn_input js_btn_p">
+                        <button data-index="1" class="js_btn" id='jsbtn1'>取消</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
