@@ -53,11 +53,12 @@
         %div
           - expertise = @profile.expertise || "Expertise to be filled"
           = expertise.html_safe
-          .intro-video.pull-right
-            %video{class: 'sublime', data: {autoresize: 'fill'}}
-              %source{src: @expert.intro_video.sd_url}
-                %source{src: @expert.intro_video.hd_url, data: {quality: 'hd'}}
-          .clear-fix
+          - if @expert.intro_video.present?
+            .intro-video.pull-right
+              %video{class: 'sublime', data: {autoresize: 'fill'}}
+                %source{src: @expert.intro_video.sd_url}
+                  %source{src: @expert.intro_video.hd_url, data: {quality: 'hd'}}
+            .clear-fix
       .tab-pane#tab2
         %div
           - career = @profile.career || "Career to be filled"
