@@ -5,6 +5,13 @@ class MembersController < ApplicationController
   def dashboard
   end
 
+  def activity_stream
+    @from = "activity_stream"
+    respond_to do |format|
+      format.js {render 'experts/update'}
+    end
+  end
+
   def profile
     @profile = @member.profile
   end
