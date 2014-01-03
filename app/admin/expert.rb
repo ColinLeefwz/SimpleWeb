@@ -85,6 +85,12 @@ ActiveAdmin.register Expert do
 			@expert.build_profile
 		end
 
+		def edit
+			@expert = Expert.find params[:id]
+			@expert.intro_video || @expert.create_intro_video
+			@expert.profile || @expert.create_profile
+		end
+
     def permitted_params
       params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, profile_attributes: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional, :career, :education], intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url]]
     end
