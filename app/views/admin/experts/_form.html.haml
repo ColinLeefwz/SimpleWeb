@@ -1,7 +1,7 @@
 .intro-video
   %h4 Intro Video
   %span HD
-  = s3_uploader_form id: "s3_intro_video_hd", callback_param: 'intro_video_hd', key: "intro_videos/hd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/hd", acl: 'public-read' do
+  = s3_uploader_form id: "s3_expert_intro_video_hd", callback_param: 'intro_video_hd', key: "intro_videos/hd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/hd", acl: 'public-read' do
     = file_field_tag :file, multiple: false
     = link_to "upload", "javascript:void(0)", id: "hd_upload_submit"
     .upload.js-progress-bars
@@ -9,7 +9,7 @@
         .bars
 
   %span SD
-  = s3_uploader_form id: "s3_intro_video_sd", callback_param: 'intro_video_sd', key: "intro_videos/sd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/sd", acl: 'public-read' do
+  = s3_uploader_form id: "s3_expert_intro_video_sd", callback_param: 'intro_video_sd', key: "intro_videos/sd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/sd", acl: 'public-read' do
     = file_field_tag :file, multiple: false
     = link_to "upload", "javascript:void(0)", id: "sd_upload_submit"
     .upload.js-progress-bars
