@@ -2,6 +2,12 @@ class ExpertsController < ApplicationController
   load_and_authorize_resource except: [:profile]
   before_filter :set_expert, only: [:profile]
 
+  def activity_stream
+    @from = 'activity_stream'
+    respond_to do |format|
+      format.js {render 'update'}
+    end
+  end
   def dashboard
     @sessions = @expert.sessions.order("draft desc")
     @profile = @expert.profile || @expert.create_profile

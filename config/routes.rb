@@ -55,6 +55,7 @@ Prodygia::Application.routes.draw do
 
   resources :members do
     member do
+      get :activity_stream
       get :dashboard
       get :profile
       get :edit_profile
@@ -69,6 +70,7 @@ Prodygia::Application.routes.draw do
 
   resources :experts do
     member do
+      get :activity_stream
       get :dashboard
       get :main_menu
       get :pending_page
