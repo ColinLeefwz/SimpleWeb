@@ -43,7 +43,6 @@ class ExpertsController < ApplicationController
       format.js{
         @expert.update_attributes(user_params)
         @expert.profile.update_attributes(expert_profile_params)
-				# @expert.intro_video.update_attributes(intro_video_params)
 
         render js: "window.location='#{profile_expert_path(current_user)}'"
       }
