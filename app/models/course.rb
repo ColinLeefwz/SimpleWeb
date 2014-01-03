@@ -9,7 +9,8 @@ class Course < ActiveRecord::Base
   has_many :chapters, dependent: :destroy
   accepts_nested_attributes_for :chapters, reject_if: lambda{|c| c[:title].blank?}, allow_destroy: true
 
-	has_one :intro_video
+	has_one :intro_video, as: :introable, dependent: :destroy
+
 	accepts_nested_attributes_for :intro_video
 
   has_many :subscriptions, as: :subscribable
@@ -42,11 +43,6 @@ class Course < ActiveRecord::Base
 
   def producers
     "by " + self.experts.map(&:name).join(" and ")
-  end
-
-  # todo: add real data for courses duration
-  def duration
-    "1h 55m"
   end
 
   def free?

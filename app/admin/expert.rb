@@ -29,29 +29,7 @@ ActiveAdmin.register Expert do
     default_actions
   end
 
-
-  form do |f|
-    f.inputs do
-      f.input :first_name
-      f.input :last_name
-      f.input :avatar, as: :file
-      f.input :email
-      f.input :password, as: :password if f.object.new_record?
-      f.input :time_zone
-
-      f.inputs name: "Profile", for: [ f.object.profile || Profile.new ] do |p|
-        p.input :title
-        p.input :company
-        p.input :location
-        p.input :expertise
-        p.input :web_site
-        p.input :testimonials
-        p.input :additional
-      end
-
-      f.actions
-    end
-  end
+	form partial: "form"
 
   show do |expert|
     attributes_table do
@@ -67,6 +45,14 @@ ActiveAdmin.register Expert do
 
       row :company do |expert|
         expert.profile.company
+      end
+
+      row :twitter do |expert|
+        expert.profile.twitter
+      end
+
+      row :web_site do |expert|
+        expert.profile.web_site
       end
 
       row :location do |expert|
@@ -93,8 +79,14 @@ ActiveAdmin.register Expert do
 
 
   controller do
+		def new
+			@expert = Expert.new
+			@expert.build_intro_video
+			@expert.build_profile
+		end
+
     def permitted_params
-      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, profile: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional]]
+      params.permit expert: [:name, :avatar, :first_name, :last_name, :password, :email, :time_zone, profile_attributes: [:title, :company, :location, :expertise, :web_site, :testimonials, :additional, :career, :education], intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url]]
     end
   end
 end

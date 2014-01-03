@@ -38,7 +38,7 @@ class MembersController < ApplicationController
   
   def refer_a_friend
     @email_message = current_user.build_refer_message(User::USER_TYPE[:member])
-    @from = "experts/refer_a_user"
+    @from = "refer_member"
     respond_to do |format|
       format.js {render "update"}
     end

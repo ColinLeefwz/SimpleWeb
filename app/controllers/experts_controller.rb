@@ -23,7 +23,7 @@ class ExpertsController < ApplicationController
   def refer_new_expert
     @email_message = current_user.build_refer_message(User::USER_TYPE[:expert])
 
-    @from = "refer_a_user"
+    @from = "refer_expert"
     respond_to do |format|
       format.js { render "update" }
     end
@@ -36,6 +36,7 @@ class ExpertsController < ApplicationController
 
   def edit_profile
     @profile = @expert.profile || @expert.create_profile
+		@intro_video = @expert.intro_video || @expert.create_intro_video
     @from = 'edit_profile'
 
     respond_to do |format|
@@ -91,12 +92,10 @@ class ExpertsController < ApplicationController
 
 
   def expert_profile_params
-    params.require(:profile).permit(:title, :company, :career, :education, :expertise, :location, :web_site)
+    params.require(:profile).permit(:title, :company, :twitter, :career, :education, :expertise, :location, :web_site)
   end
 
   def user_params
-    params.require(:profile).permit(:first_name, :last_name, :avatar)
+		params.require(:expert).permit(:first_name, :last_name, :avatar, intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
   end
-
-
 end
