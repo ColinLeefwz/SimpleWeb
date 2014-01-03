@@ -2,9 +2,10 @@
 .text-page-article-box.shadow.margin-bottom
   .text-page-main-content
     -unless @video_interview.sd_url.eql?"/videos/original/missing.png"
-      .video-cover
+      .announcement-cover
         .video-img{data: {"source-sd" => @video_interview.sd_url, "source_hd" => @video_interview.hd_url, from: "detail_page", "sublime-id" => "sublime_video_detail_#{@video_interview.id}"}}
           = image_tag @video_interview.cover.url, class: 'video-play'
           = image_tag "video_play_icon.png", class: 'play-video-icon'
     %p= @video_interview.description.html_safe
+    .clear-fix
 
