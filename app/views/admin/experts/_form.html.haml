@@ -1,4 +1,3 @@
-%h3 Edit Your Profile
 .intro-video
   %h4 Intro Video
   %span HD
@@ -17,7 +16,7 @@
       .progress
         .bars
 
-= simple_form_for @expert, url: update_profile_expert_path(current_user), remote: true do |f|
+= simple_form_for [:admin, @expert] do |f|
   %fieldset
     = f.simple_fields_for :intro_video do |intro|
       = intro.input :attached_video_hd_file_name, as: :hidden
@@ -29,23 +28,19 @@
       = intro.input :attached_video_sd_file_size, as: :hidden
       = intro.input :sd_url, as: :hidden
   %fieldset
-    -# %legend Overview
+    = f.input :email, required: true
     = f.input :first_name
     = f.input :last_name
-    .string.optional.customize-label
+    .string.optional
       = f.label :profile_picture
       = f.input_field :avatar
-    = simple_fields_for @profile do |p|
+    = f.simple_fields_for :profile do |p|
       = p.input :title
-      .string.optional.customize-label
+      .string.optional.input
         = p.label :orgnization
         = p.input_field :company
-      = p.input :twitter
-      = p.input :web_site
-      = p.input :expertise
+      = p.input :expertise, input_html: {class: 'ckeditor'}
       = p.input :career, input_html: {class: 'ckeditor'}
-      = p.input :education
-
-
-    = f.submit "Update", class: "btn"
-    = link_to "Cancel", edit_profile_expert_path(current_user), remote: true, class: "btn" 
+      = p.input :education, input_html: {class: 'ckeditor'}
+    = f.submit
+    = link_to "Cancel", admin_experts_path, class: 'btn'

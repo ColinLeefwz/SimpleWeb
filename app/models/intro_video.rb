@@ -1,5 +1,6 @@
 class IntroVideo < ActiveRecord::Base
-	belongs_to :course
+	# belongs_to :course
+	belongs_to :introable, polymorphic: true
 
 	has_attached_file :attached_video_sd,
     storage: :s3,
