@@ -60,13 +60,13 @@ POST & \multicolumn{3}{|c|}{/photos/create} \\
 /photos
 
 {"_id":"509a1ffcbe4b1982a4000002",
+"mid":"ckn509a1ffcbe4b1982a4000002",
 "weibo":false,"room":"1",
 "user_id":"502e61bfbe4b1921da000005",
-"img_tmp":"20121107-1646-42114-4251/111.jpg",
 "logo":"/uploads/tmp/20121107-1646-42114-4251/111.jpg",
 "logo_thumb2":null,"id":"509a1ffcbe4b1982a4000002"}
 
-当返回的响应中包含img_tmp字段，且logo_thumb2为null时，说明此时图片上传到了服务器，但是还未启动后台处理。后台异步处理图片，包括生成缩略图以及上传到阿里云。
+[2014-01-03] 图片上传成功返回值中增加mid字段，表示该图片发送到聊天室的消息id。
 
 \end{verbatim}
 \end{figure}
@@ -476,6 +476,10 @@ POST & \multicolumn{3}{|c|}{/photo2s/create} \\
 \end{tabular}
    \end{center}
 \end{table}
+
+
+[2014-01-03] 图片上传成功返回值中增加mid字段，表示该图片发送到会话的消息id。
+
 
 
 \subsection{发送消息}

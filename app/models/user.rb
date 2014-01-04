@@ -14,7 +14,7 @@ class User
   field :birthday #生日
   #field :password #不再保存该密码，TODO：等稳定后删除数据库的中password
   field :psd #手机登录用户设置的密码
-  field :invisible, type: Integer #隐身模式，1对陌生人隐身，2对所有人隐身
+  field :invisible, type: Integer #隐身模式，1对黑名单隐身，2对陌生人隐身，3对所有人隐身
   field :signature #签名
   field :job #职业说明
   field :jobtype, type: Integer #职业类别
@@ -393,6 +393,10 @@ class User
   
   def relation_hash( user_id )
     {:friend => follower?(user_id), :follower => friend?(user_id)}
+  end
+  
+  def stranger?(user_id)
+    !friend?(user_id) && !fan?(user_id)
   end
   
   def friend?(user_id)
