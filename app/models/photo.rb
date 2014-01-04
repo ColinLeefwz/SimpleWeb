@@ -460,6 +460,12 @@ class Photo
       photo.like.each{|x| $redis.zadd("Like#{photo.id}", x['t'].to_i, x['id']) }
     end
   end
+  
+  def self.delete(photo)
+    Del.insert(photo)
+    Gchat.delete_all(mid: photo.mid)
+    photo.destroy
+  end
 
 
 end
