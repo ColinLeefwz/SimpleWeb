@@ -12,4 +12,13 @@ class VideoInterview < ActiveRecord::Base
   attached_file :attached_video_hd
   attached_file :attached_video_sd
   attached_file :cover
+
+	def to_param
+		permalink
+	end
+
+	protected
+	def permalink
+		"#{id}-#{title.parameterize}"
+	end
 end

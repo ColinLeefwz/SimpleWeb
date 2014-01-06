@@ -73,5 +73,13 @@ class Session < ActiveRecord::Base
     self.end_date_time = DateTime.new(original.year, original.month, original.day, t.hour, t.min, t.sec)
   end
 
+	def to_param
+		permalink
+	end
+
+	protected
+	def permalink
+		"#{id}-#{title.parameterize}"
+	end
 
 end
