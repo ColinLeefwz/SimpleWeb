@@ -147,7 +147,9 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
     padding: 10px 30px;
     .intro-video{
       padding-left: 20px;
-      width: 320px;
+      video{
+        width: 320px;
+      }
     }
 
     p{
