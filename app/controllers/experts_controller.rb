@@ -8,8 +8,8 @@ class ExpertsController < ApplicationController
       format.js {render 'update'}
     end
   end
+
   def dashboard
-    @sessions = @expert.sessions.order("draft desc")
     @profile = @expert.profile || @expert.create_profile
   end
 
