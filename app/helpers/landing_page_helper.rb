@@ -8,4 +8,22 @@ module LandingPageHelper
       announcement_path(session)
     end
   end
+
+	def expert_link(item)
+		expert_email = item.expert.email
+		if expert_email == "prodygia@prodygia.com"
+			item.expert.name
+		else
+			link_to item.expert.name, profile_expert_path(item.expert)
+		end
+	end
+
+	def expert_image_link(item)
+		expert_email = item.expert.email
+		if expert_email == "prodygia@prodygia.com"
+			image_tag(item.expert.avatar.url)
+		else
+			link_to image_tag(item.expert.avatar.url), profile_expert_path(item.expert)
+		end
+	end
 end
