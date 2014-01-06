@@ -14,22 +14,6 @@ class Shop3MobileController < ApplicationController
     end
   end
 
-  def new
-  	@mobile_space = MobileSpace.new
-  	@mobile_space.sid = session_shop.id
-  	@mobile_space.name = session_shop.name
-  	@mobile_space.flag = true
-  	@mobile_space.menu = ["公司介绍","产品介绍","最新动态"]
-    if @mobile_space.save
-      MobileArticle.create_stub(session_shop.id, 0)
-      MobileArticle.create_stub(session_shop.id, 1)
-      MobileBanner.create_stub(session_shop.id, 2)
-      redirect_to "/mobile/index"
-    else
-      render :action => "new"
-    end
-  end
-
   def index2
 
   end
