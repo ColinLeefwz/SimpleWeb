@@ -3,6 +3,7 @@ class MembersController < ApplicationController
   before_filter :set_member, only: [:profile]
 
   def dashboard
+    @profile = @member.profile || @member.create_profile
   end
 
   def activity_stream

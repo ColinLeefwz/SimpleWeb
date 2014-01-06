@@ -3,9 +3,9 @@
 
   .box-header
     .portrait
-      = link_to image_tag(item.expert.avatar.url), profile_expert_path(item.expert)
+      = expert_image_link(item)
       .expert-name
-        = link_to item.expert.name, profile_expert_path(item.expert)
+        = expert_link(item)
     .content-type
       = image_tag(get_image_tag(item))
       %p= item.categories.join(", ")
