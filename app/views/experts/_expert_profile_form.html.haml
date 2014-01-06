@@ -1,5 +1,6 @@
-%h3 Edit Your Profile
-.intro-video
+.edit-profile-title
+  %h3 Edit Your Profile
+.edit-intro-video
   %h4 Intro Video
   %span HD
   = s3_uploader_form id: "s3_intro_video_hd", callback_param: 'intro_video_hd', key: "intro_videos/hd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/hd", acl: 'public-read' do
@@ -18,6 +19,7 @@
         .bars
 
 = simple_form_for @expert, url: update_profile_expert_path(current_user), remote: true do |f|
+
   %fieldset
     = f.simple_fields_for :intro_video do |intro|
       = intro.input :attached_video_hd_file_name, as: :hidden
