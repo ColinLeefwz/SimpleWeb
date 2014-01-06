@@ -244,10 +244,10 @@ class PhotosController < ApplicationController
     u = User.find_by_id(params[:uid])
     stranger = u.stranger?(session[:user_id])
     if u.invisible==2 && stranger
-      return :json => [].to_json
+      return render :json => [].to_json
     end
     if skip>6 && stranger
-      return :json => {:error => "非对方的朋友只显示最多5张照片"}.to_json
+      return render :json => {:error => "非对方的朋友只显示最多5张照片"}.to_json
     end
     photos = user_photo_cache(params[:uid], skip, pcount)
     render :json => photos.map {|p| p.output_hash_with_shopname }.to_json
