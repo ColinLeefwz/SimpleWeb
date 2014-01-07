@@ -7,7 +7,7 @@
         .cover
           = image_tag @course.cover.url
         .enroll-button
-          = link_to "Enroll for only $99", enroll_course_path(@course)
+          = link_to "Enroll for only $#{@course.price}", enroll_course_path(@course)
 
       .description-box.inline
         -# title & expert
