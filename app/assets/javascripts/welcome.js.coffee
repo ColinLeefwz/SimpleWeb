@@ -55,17 +55,11 @@ ready = ->
 			layoutMode: 'masonry'
 		}
 
-	$('.video-img').on 'click', ->
-		video_source_sd = $(this).data('source-sd')
-		video_source_hd = $(this).data('source-hd')
-		sublime_id = $(this).data("sublime-id")
-		sublime.load()
-		$(this).replaceWith("<video class='sublime' id=#{sublime_id} data-autoresize='fill'><source src=#{video_source_sd}/><source src=#{video_source_hd} data-quality='hd'></video>")
-		sublime.ready( ->
-			sublime.prepare(sublime_id, (player)->
-				player.play()
-			)
-		)
+  sublime.ready( ->
+    sublime.prepare('sublime-video', (player)->
+      player.pause()
+    )
+  )
 
 	$container = $('#content')
 	$('nav li .filters').on 'click', ->
