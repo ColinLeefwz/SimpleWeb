@@ -16,8 +16,7 @@
         .title
           = @course.title
         .producers.inline
-          = @course.producers
-
+          = producer_links(@course)
         -# video-length & category
 
         -# todo: add real video-length data
