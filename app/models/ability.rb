@@ -39,7 +39,7 @@ class Ability
       cannot :refer_new_expert, Expert
 
     else
-      can :read, Course #note: guest should also be able to visit course enroll page
+      can [:read, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
     end
   end
 end
