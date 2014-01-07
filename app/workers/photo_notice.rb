@@ -15,7 +15,7 @@ class PhotoNotice
     return if $redis.sismember("UnBroadcast", shop.id.to_s)
     user.fans.each do |u|
       next if u.id.to_s == $gfuid
-      str = "[img:#{pid}]#{photo.user.name}在#{photo.shop.name}分享了一张图片"
+      str = "[img:#{pid}]#{total_str}#{photo.user.name}在#{photo.shop.name}分享了一张图片"
       str += ",#{photo.desc}" unless photo.desc.nil?
       if UserDevice.user_ver_redis(u.id).to_f>=2.3
         shop = photo.shop

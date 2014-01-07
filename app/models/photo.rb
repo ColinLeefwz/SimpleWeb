@@ -44,10 +44,14 @@ class Photo
   end
   
   def desc_multi
+    "#{total_str}#{desc}"
+  end
+  
+  def total_str
     if total && total>1
-      "#{total}:#{desc}"
+      "#{total}:"
     else
-      desc
+      ""
     end
   end
   
