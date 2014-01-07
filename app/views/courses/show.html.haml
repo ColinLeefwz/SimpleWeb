@@ -5,7 +5,9 @@
     .overview
       .cover-box.inline
         .cover
-          = image_tag @course.cover.url
+          %video.sublime{data: {autoresize: 'fit'}, poster: "#{@course.cover.url}", id: 'intro-video'}
+            %source{src: @course.intro_video.sd_url}
+            %source{src: @course.intro_video.hd_url, data: { quality: 'hd' }}
         .enroll-button
           = link_to "Enroll for only $#{@course.price}", enroll_course_path(@course)
 
