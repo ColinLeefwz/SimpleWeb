@@ -3,7 +3,8 @@ test:
     default:
       database: dface_test2
       hosts:
-        - 10.241.42.47:27017
+        - 10.132.36.138:27017
+        - 10.161.241.16:27017		
       options:
         safe: true
         consistency: :eventual
