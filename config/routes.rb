@@ -107,4 +107,5 @@ Prodygia::Application.routes.draw do
   get "/terms", to: 'static_pages#terms'
   get "/privacy", to: 'static_pages#privacy'
 
+  get "/article/:id", to: "sessions#show", as: :article
 end
