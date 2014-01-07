@@ -1,6 +1,6 @@
 class Announcement < ActiveRecord::Base
   include Storagable
-
+  include ParamsConfig
   # announcement always belongs to an expert
   belongs_to :expert
   validates :expert, presence: true

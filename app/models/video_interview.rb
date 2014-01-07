@@ -1,5 +1,6 @@
 class VideoInterview < ActiveRecord::Base
   include Storagable
+  include ParamsConfig
 
   # video interviews always belongs to an expert
   belongs_to :expert
