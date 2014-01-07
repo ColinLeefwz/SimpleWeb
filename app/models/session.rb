@@ -1,5 +1,6 @@
 class Session < ActiveRecord::Base
 	include Storagable
+  include ParamsConfig
   validates :title, presence: true
   validates :price, numericality: {greater_than_or_equal_to: 0}
 
@@ -72,14 +73,4 @@ class Session < ActiveRecord::Base
     t = time.to_time
     self.end_date_time = DateTime.new(original.year, original.month, original.day, t.hour, t.min, t.sec)
   end
-
-	def to_param
-		permalink
-	end
-
-	protected
-	def permalink
-		"#{id}-#{title.parameterize}"
-	end
-
 end
