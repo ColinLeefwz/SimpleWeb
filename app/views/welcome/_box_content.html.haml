@@ -21,7 +21,7 @@
 
   -elsif (item.is_a? ArticleSession) || (item.is_a?LiveSession)  && (!item.cover.url.eql?"/covers/original/missing.png")
     .cover
-      = link_to image_tag(item.cover.url),session_path(item)
+      = link_to image_tag(item.cover.url), article_path(item)
   -else
 
   .caption
