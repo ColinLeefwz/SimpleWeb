@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:enroll]
 
   before_action :set_course, except: [:index, :new, :create]
 

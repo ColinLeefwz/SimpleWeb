@@ -18,14 +18,18 @@ class Ability
       cannot :delete, Expert
       cannot :create, Expert
 
-      can :manage, Course  #note: template solution
+      can [:read, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
+      can :manage, Course do |course|  #note: template solution
+				course.experts.include?(user)
+			end
 
     elsif user.is_a? Member
       can :read, Session
 
       can :read, Expert
 
-      can :manage, Course  #note: template solution
+      # can :read, Course  #note: template solution
+      can [:read, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
 
       can :manage, Member do |member|
         member == user
