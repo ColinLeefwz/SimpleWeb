@@ -5,7 +5,7 @@
     .overview
       .cover-box.inline
         .cover
-          %video.sublime{data: {autoresize: 'fit'}, poster: "#{@course.cover.url}", id: 'intro-video'}
+          %video.sublime{data: {autoresize: 'fit'}, poster: "#{@course.cover.url}", id: 'intro-video', width: "320"}
             %source{src: @course.intro_video.sd_url}
             %source{src: @course.intro_video.hd_url, data: { quality: 'hd' }}
         .enroll-button
