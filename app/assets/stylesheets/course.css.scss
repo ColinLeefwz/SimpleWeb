@@ -52,8 +52,9 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
     .description-box{
       vertical-align: top;
       width: 50%;
+			padding-left: 10px;
       .title{
-        font-family: Latobold;
+        font-family: Oswaldreg;
         font-size: 1.5em;
       }
       .separator:after{
@@ -62,6 +63,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
       .description{
         color: #000000;
 				padding-top: 10px;
+				padding-bottom: 10px;
       }
     }
 
