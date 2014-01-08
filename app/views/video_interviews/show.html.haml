@@ -3,9 +3,9 @@
   .text-page-main-content
     -unless @video_interview.sd_url.eql?"/videos/original/missing.png"
       .announcement-cover
-        %video.sublime#sublime-video{data:{autoresize: 'fit'}, poster: @video_interview.cover.url, preload: 'none'}
+        %video.sublime{data:{autoresize: 'fit'}, poster: @video_interview.cover.url, preload: 'none'}
           %source{src: @video_interview.sd_url}
-            %source{src: @video_interview.hd_url, data:{quality: 'hd'}}
+          %source{src: @video_interview.hd_url, data:{quality: 'hd'}}
     %p= @video_interview.description.html_safe
     .clear-fix
 

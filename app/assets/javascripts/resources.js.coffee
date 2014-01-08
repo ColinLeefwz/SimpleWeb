@@ -1,13 +1,9 @@
-
 do_on_load = ->
   $(".s3_uploader").S3Uploader
     allow_multiple_files: false
 
 $(document).ready(do_on_load)
 $(document).on 'page:load', do_on_load
-
-
-
 
 $(document).on "s3_uploads_start", (e) ->
   $(e.target).find(".status").first().text("uploading...")

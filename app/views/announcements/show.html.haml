@@ -3,8 +3,8 @@
   .text-page-main-content
     -unless @announcement.sd_url.eql? "/videos/original/missing.png"
       .announcement-cover
-        %video.sublime#sublime-video{data:{autoresize: 'fit'}, poster: @announcement.cover.url, preload: 'none'}
+        %video.sublime{data:{autoresize: 'fit'}, poster: @announcement.cover.url, preload: 'none'}
           %source{src: @announcement.sd_url}
-            %source{src: @announcement.hd_url, data:{quality: 'hd'}}
+          %source{src: @announcement.hd_url, data:{quality: 'hd'}}
     %p= @announcement.description.html_safe
     .clear-fix
