@@ -31,18 +31,7 @@ resize_tab = ->
   proper_width = 100 / num_tabs
   $(".tab").css("width", proper_width + "%")
 
-sublime_video = ->
-	sublime.load()
-	sublime.ready( ->
-		sublime.prepare("intro-video", (player)->
-			player.pause()
-		)
-	)
-
 $(document).ready(resize_tab)
 $(document).on 'page:load', resize_tab
 $(document).ready(profile_event)
 $(document).on 'page:load', profile_event
-$(document).ready(sublime_video)
-$(document).on 'page:load', sublime_video
-

@@ -54,12 +54,14 @@ ready = ->
 		container.isotope {
 			layoutMode: 'masonry'
 		}
+  sublime.load()
 
-  sublime.ready( ->
-    sublime.prepare('sublime-video', (player)->
-      player.pause()
-    )
-  )
+	for video in $("video")
+		sublime.ready( ->
+			sublime.prepare(video, (player) ->
+				player.pause()
+			)
+		 )
 
 	$container = $('#content')
 	$('nav li .filters').on 'click', ->
