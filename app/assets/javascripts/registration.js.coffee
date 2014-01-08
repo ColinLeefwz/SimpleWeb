@@ -1,5 +1,4 @@
-
-check_terms_approved = -> 
+check_terms_approved = ->
   $("#terms").on "change", ->
     if $("#terms").is(':checked')
       $("input[type='submit']").attr("disabled", false)

@@ -3,9 +3,9 @@
   .text-page-main-content
     -unless @video_interview.sd_url.eql?"/videos/original/missing.png"
       .announcement-cover
-        .video-img{data: {"source-sd" => @video_interview.sd_url, "source_hd" => @video_interview.hd_url, from: "detail_page", "sublime-id" => "sublime_video_detail_#{@video_interview.id}"}}
-          = image_tag @video_interview.cover.url, class: 'video-play'
-          = image_tag "video_play_icon.png", class: 'play-video-icon'
+        %video.sublime{data:{autoresize: 'fit'}, poster: @video_interview.cover.url, preload: 'none'}
+          %source{src: @video_interview.sd_url}
+          %source{src: @video_interview.hd_url, data:{quality: 'hd'}}
     %p= @video_interview.description.html_safe
     .clear-fix
 

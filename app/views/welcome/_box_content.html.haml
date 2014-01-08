@@ -1,4 +1,3 @@
-- sublime_id = ""
 %div{class: get_box_class(item)}
 
   .box-header
@@ -12,12 +11,11 @@
       %p= item.language.split(",")[0] if item.language
   .title
     = link_to "#{item.title}", currect_path(item)
-    - sublime_id = "sublime_#{item.class.to_s.underscore}_#{item.id}"
   -if (item.is_a? VideoInterview) || (item.is_a? Announcement)
     .cover
-      .video-img{data: {"source-sd" => item.sd_url, "source-hd" => item.hd_url, from: "landing_page", "sublime-id" => sublime_id}}
-        = image_tag item.cover.url, class: 'video-play'
-        = image_tag "video_play_icon.png", class: 'play-video-icon'
+      %video.sublime{data:{autoresize: 'fit'}, poster: item.cover.url, preload: 'none'}
+        %source{src: item.sd_url}
+        %source{src: item.hd_url, data:{quality: 'hd'}}
 
   -elsif (item.is_a? ArticleSession) || (item.is_a?LiveSession)  && (!item.cover.url.eql?"/covers/original/missing.png")
     .cover
