@@ -339,7 +339,7 @@ class Photo
   
   def thumb2_urls
     return "" if total.nil? || total<2
-    str = multi_photos["thumb2s"].join(",")
+    str = multi_photos[:thumb2s].join(",")
     "<x xmlns='dface.thumb2s'>#{str}</x>"
   end
   
