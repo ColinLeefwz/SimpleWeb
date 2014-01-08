@@ -1,4 +1,3 @@
-- sublime_id = ""
 .item
   .box-header
     .portrait
@@ -14,12 +13,11 @@
       %p= course.categories.join(", ")
   .title
     = link_to "#{course.title}", course_path(course)
-    - sublime_id = "sublime_#{course.class.to_s.underscore}_#{course.id}"
   -if course.cover.url
     .cover
-      .video-img{data: {"source-sd" => course.intro_video.try(:sd_url), "source-hd" => course.intro_video.try(:hd_url), from: "landing_page", "sublime-id" => sublime_id}}
-        = image_tag course.cover.url, class: 'video-play'
-        = image_tag "video_play_icon.png", class: 'play-video-icon'
+      %video.sublime{data:{autoresize: 'fit'}, poster: course.cover.url, preload: 'none'}
+        %source{src: course.intro_video.sd_url}
+        %source{src: course.intro_video.hd_url, data:{quality: 'hd'}}
   -else
 
   .caption

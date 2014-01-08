@@ -58,7 +58,7 @@
           %div
             - if @expert.intro_video.present?
               .intro-video.pull-right
-                %video{class: 'sublime', data: {autoresize: 'fit'}, id: 'intro-video'}
+                %video{class: 'sublime', data: {autoresize: 'fit'}, poster: @expert.avatar.url, preload: 'none'}
                   %source{src: @expert.intro_video.sd_url}
                   %source{src: @expert.intro_video.hd_url, data: {quality: 'hd'}}
             - expertise = @profile.expertise || "Expertise to be filled"
