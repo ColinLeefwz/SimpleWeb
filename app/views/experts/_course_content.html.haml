@@ -15,9 +15,7 @@
     = link_to "#{course.title}", course_path(course)
   -if course.cover.url
     .cover
-      %video.sublime{data:{autoresize: 'fit'}, poster: course.cover.url, preload: 'none'}
-        %source{src: course.intro_video.sd_url}
-        %source{src: course.intro_video.hd_url, data:{quality: 'hd'}}
+      = render "shared/sublime_video", item_resource: course.intro_video, poster_url: course.cover.url
   -else
 
   .caption

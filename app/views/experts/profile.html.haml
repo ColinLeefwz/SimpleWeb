@@ -58,9 +58,7 @@
           %div
             - if @expert.intro_video.present?
               .intro-video.pull-right
-                %video{class: 'sublime', data: {autoresize: 'fit'}, poster: @expert.avatar.url, preload: 'none'}
-                  %source{src: @expert.intro_video.sd_url}
-                  %source{src: @expert.intro_video.hd_url, data: {quality: 'hd'}}
+                = render "shared/sublime_video", item_resource: @expert.intro_video, poster_url: @expert.avatar.url
             - expertise = @profile.expertise || "Expertise to be filled"
             = expertise.html_safe
             .clear-fix

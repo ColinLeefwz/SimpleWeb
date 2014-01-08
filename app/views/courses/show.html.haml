@@ -5,9 +5,7 @@
     .overview
       .cover-box.inline
         .cover
-          %video.sublime{data: {autoresize: 'fit'}, poster: "#{@course.cover.url}", width: "320", preload: 'none'}
-            %source{src: @course.intro_video.sd_url}
-            %source{src: @course.intro_video.hd_url, data: { quality: 'hd' }}
+          = render "shared/sublime_video", item_resource: @course.intro_video, poster_url: @course.cover.url
         .enroll-button
           = link_to "Enroll for only $#{@course.price}", enroll_course_path(@course)
 
