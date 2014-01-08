@@ -26,15 +26,11 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 
     .cover-box{
       margin-left: 5%;
-      width: 30%;
+      // width: 30%;
 
       .cover{
-        overflow: hidden;
-        margin: 0 auto;
-        img{
-          display: block;
-          margin: 0 auto;
-        }
+				width: 160px * 1.8;
+				height: 90px * 1.8;
       }
       .enroll-button{
         background-color: #8a2649;

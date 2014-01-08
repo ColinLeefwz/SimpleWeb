@@ -2,9 +2,7 @@
 .text-page-article-box.shadow.margin-bottom
   .text-page-main-content
     -unless @announcement.sd_url.eql? "/videos/original/missing.png"
-      .announcement-cover
-        %video.sublime{data:{autoresize: 'fit'}, poster: @announcement.cover.url, preload: 'none'}
-          %source{src: @announcement.sd_url}
-          %source{src: @announcement.hd_url, data:{quality: 'hd'}}
+      .announcement-cover.pull-right
+        = render "shared/sublime_video", item_resource: @announcement, poster_url: @announcement.cover.url
     %p= @announcement.description.html_safe
     .clear-fix
