@@ -1,4 +1,5 @@
 class MenuController < ApplicationController
+  before_filter :user_login_filter, :only => [:click]
   
   def get
     if params[:id]=="21835409"
