@@ -3,8 +3,8 @@
   .text-page-main-content
     -unless @announcement.sd_url.eql? "/videos/original/missing.png"
       .announcement-cover
-        .video-img{data: {"source-sd" => @announcement.sd_url, "source_hd" => @announcement.hd_url, from: "detail_page", "sublime-id" => "sublime_announcement_detail_#{@announcement.id}"}}
-          = image_tag @announcement.cover.url, class: 'video-play'
-          = image_tag "video_play_icon.png", class: 'play-video-icon'
+        %video.sublime#sublime-video{data:{autoresize: 'fit'}, poster: @announcement.cover.url, preload: 'none'}
+          %source{src: @announcement.sd_url}
+            %source{src: @announcement.hd_url, data:{quality: 'hd'}}
     %p= @announcement.description.html_safe
     .clear-fix

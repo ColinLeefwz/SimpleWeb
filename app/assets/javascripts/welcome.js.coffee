@@ -54,18 +54,14 @@ ready = ->
 		container.isotope {
 			layoutMode: 'masonry'
 		}
+  sublime.load()
 
-	$('.video-img').on 'click', ->
-		video_source_sd = $(this).data('source-sd')
-		video_source_hd = $(this).data('source-hd')
-		sublime_id = $(this).data("sublime-id")
-		sublime.load()
-		$(this).replaceWith("<video class='sublime' id=#{sublime_id} data-autoresize='fill'><source src=#{video_source_sd}/><source src=#{video_source_hd} data-quality='hd'></video>")
+	for video in $("video")
 		sublime.ready( ->
-			sublime.prepare(sublime_id, (player)->
-				player.play()
+			sublime.prepare(video, (player) ->
+				player.pause()
 			)
-		)
+		 )
 
 	$container = $('#content')
 	$('nav li .filters').on 'click', ->
