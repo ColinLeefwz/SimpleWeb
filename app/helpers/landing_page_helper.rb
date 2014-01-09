@@ -14,7 +14,7 @@ module LandingPageHelper
 		if expert_email == "prodygia@prodygia.com"
 			item.expert.name
 		else
-			link_to item.expert.name, profile_url(subdomain: item.expert.subdomain)
+			link_to item.expert.name, profile_expert_path(item.expert)
 		end
 	end
 
@@ -23,7 +23,7 @@ module LandingPageHelper
 		if expert_email == "prodygia@prodygia.com"
 			image_tag(item.expert.avatar.url)
 		else
-			link_to image_tag(item.expert.avatar.url), profile_url(subdomain: item.expert.subdomain)
+			link_to image_tag(item.expert.avatar.url), profile_expert_path(item.expert)
 		end
 	end
 end

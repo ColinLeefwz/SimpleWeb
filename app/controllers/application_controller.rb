@@ -1,7 +1,6 @@
 require 'mandrill_api'
 
 class ApplicationController < ActionController::Base
-	include UrlHelper
   before_filter do
     resource = controller_name.singularize.to_sym
     method = "#{resource}_params"
