@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
   end
 
   def show
-		@course.intro_video || @course.create_intro_video
+    @course.intro_video || @course.create_intro_video
   end
 
   def new
@@ -23,14 +23,14 @@ class CoursesController < ApplicationController
   end
 
   def edit
-		@course.intro_video || @course.create_intro_video
+    @course.intro_video || @course.create_intro_video
   end
 
   def update
     if @course.update_attributes course_params
-      redirect_to course_path(@course), flash: {success: "Update Successfully"}
+      redirect_to preview_course_path(@course), flash: {success: "Update Successfully"}
     else
-      redirect_to course_path(@course), flash: {error: "Failed to Update"}
+      redirect_to preview_course_path(@course), flash: {error: "Failed to Update"}
     end
 
   end
