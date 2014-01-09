@@ -51,7 +51,7 @@ class MenuController < ApplicationController
   end
   
   def click
-    Xmpp.send_gchat2($gfuid,params[:sid],session[:user_id],"收到key：#{params[:key]}")
+    Xmpp.send_gchat2("s#{params[:sid]}",params[:sid],session[:user_id],"收到key：#{params[:key]}")
   end
   
   def create
