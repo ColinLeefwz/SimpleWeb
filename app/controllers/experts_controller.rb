@@ -1,6 +1,6 @@
 class ExpertsController < ApplicationController
   load_and_authorize_resource except: [:profile]
-  # before_filter :set_expert, only: [:profile]
+  before_filter :set_expert, only: [:profile]
 
   def activity_stream
     @from = 'activity_stream'
@@ -30,7 +30,6 @@ class ExpertsController < ApplicationController
   end
 
   def profile
-		@expert = Expert.find_by(subdomain: request.subdomain)
     @items = @expert.sessions.to_a.concat(@expert.video_interviews.to_a).concat(@expert.courses.to_a)
     @profile = @expert.profile || @expert.create_profile
   end

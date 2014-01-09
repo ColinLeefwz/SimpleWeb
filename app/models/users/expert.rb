@@ -8,8 +8,9 @@ class Expert < Member
 
   accepts_nested_attributes_for :profile
   accepts_nested_attributes_for :intro_video
+  # alias_method :profile=, :profile_attributes=   # NOTE add this line for active admin working properly
 
-	before_create :set_subdomain
+  # after_create :build_profile
 
   def name
     "#{first_name} #{last_name}"
@@ -31,9 +32,10 @@ class Expert < Member
     self.sessions.where("content_type = 'LiveSession'").order("draft desc")
   end
 
-	private
-	def set_subdomain
-		self.subdomain = self.name.downcase.delete(" ").delete("'")
-	end
+  # private
+  # def build_profile
+		# logger.info "after create expert"
+  #   self.profile || self.create_profile
+  # end
 
 end
