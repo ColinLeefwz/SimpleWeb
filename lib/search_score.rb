@@ -205,7 +205,7 @@ module SearchScore
       xx[2]-=10 if t<4
       xx[2]-=20 if t==0
       xx[2]-=5 if t>=4 && t<50
-      xx[2]+=60 if t==14 # 14:大型医院
+      #xx[2]+=60 if t==14 # 14:大型医院
       if t==12
         xx[2] +=60 if(x["name"][-2..-1]=="小学" || x["name"][-3..-1]=="幼儿园")
       end

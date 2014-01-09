@@ -35,7 +35,8 @@ class Xmpp
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
     attrs += " NOLOG='1' " if (from.to_s == $gfuid || from.to_s == 'scoupon' || from.to_s == 'sphoto' || msg[0]==':') && attrs.index("NOLOG").nil?
-    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat' #{escape(attrs)}><body>#{msg2}</body>#{escape_amp(ext)}</message>"
+    #TODO: 服务器端发送消息的回执不需要会给模拟发起的用户
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat' #{escape(attrs)}><body>#{msg2}</body><x xmlns='jabber:x:event'><displayed/></x>#{escape_amp(ext)}</message>"
   end
   
   #发送个人聊天消息

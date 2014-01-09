@@ -44,10 +44,14 @@ class Photo
   end
   
   def desc_multi
+    "#{total_str}#{desc}"
+  end
+  
+  def total_str
     if total && total>1
-      "#{total}:#{desc}"
+      "#{total}:"
     else
-      desc
+      ""
     end
   end
   
@@ -332,6 +336,13 @@ class Photo
     end
     {photos: photos, thumb2s: thumbs}
   end
+  
+  def thumb2_urls
+    return "" if total.nil? || total<2
+    str = multi_photos[:thumb2s].join(",")
+    "<x xmlns='dface.thumb2s'>#{str}</x>"
+  end
+  
 
   
   def logo_thumb_hash

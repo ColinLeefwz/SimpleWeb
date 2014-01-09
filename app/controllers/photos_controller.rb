@@ -140,10 +140,10 @@ class PhotosController < ApplicationController
     if flag
       Rails.cache.fetch("Like#{photo.id}#{session[:user_id]}") do
         Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
-          "'赞'了你的照片",
+          "#{photo.total_str}'赞'了你的照片",
           "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
         Resque.enqueue(PushMsg, photo.user.tk, "",
-             "#{session_user.name}赞了你的一张照片，快去看看吧",photo.user_id) if photo.user.tk
+             "#{session_user.name}赞了你的照片，快去看看吧",photo.user_id) if photo.user.tk
       end
     end
     #expire_cache_shop(photo.room, photo.user_id)
@@ -164,12 +164,12 @@ class PhotosController < ApplicationController
     photo.set(:updated_at, Time.now)
     if session[:user_id] != photo.user_id
       Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
-        params[:text],
+        "#{photo.total_str}#{params[:text]}",
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
       Resque.enqueue(PushMsg, photo.user.tk, "",
-         "#{session_user.name}评论了你的一张照片，快去看看吧",photo.user_id) if photo.user.tk
+         "#{session_user.name}评论了你的照片，快去看看吧",photo.user_id) if photo.user.tk
     end
-    comment_send_to_room(photo,com)
+    #comment_send_to_room(photo,com)
     expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
   end
@@ -182,12 +182,12 @@ class PhotosController < ApplicationController
     photo.set(:updated_at, Time.now)
     if session[:user_id] != ru.id
       Resque.enqueue(XmppMsg,  session[:user_id], ru.id,
-        params[:text],
+        "#{photo.total_str}#{params[:text]}",
         "COMMENT#{photo.id},#{Time.now.to_i}", " NOLOG='1' NOPUSH='1' ")
       Resque.enqueue(PushMsg, ru.tk, "",
            "#{session_user.name}回复了你的照片评论，快去看看吧",ru.id) if ru.tk
     end
-    comment_send_to_room(photo,com)
+    #comment_send_to_room(photo,com)
     expire_cache_shop(photo.room, photo.user_id)
     render :json => com.to_json
   end
