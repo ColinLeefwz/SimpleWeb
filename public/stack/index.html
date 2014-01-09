@@ -86,8 +86,7 @@ var admob_vars = {
  </div>
  <div id="ibox_highscore" class="iboxcontent ibc2">
  <br><br><br>
-  <h3>您的当前得分...</h3>
-  <div id="yourbest"></div>
+  <h3>您的当前得分:<div id="yourbest"></div></h3>
   <p><span id="gamesplayed" class="fontostext"></span></p>
  </div>
  <div id="ibox_about" class="iboxcontent ibc1">
@@ -101,7 +100,7 @@ var admob_vars = {
 </div></div>
 <script type="text/javascript">
 firstinit();
-ialert('<h1>堆木头!</h1><p style="margin: 0 20px 0 20px; text-align:left;"><img src="/stack/i/icon.png" alt="Stack the log!" style="width:64px; height:64px;float:left; margin-right:5px;"/>堆木头是个很不错的游戏！当你发现上方移动的木头对准下方的木头时，点击堆叠按钮，go！</p>'+
+ialert('<a onclick="dface_close()" style="margin-left:280px;text-align:right;font-size:30px;">X</a><h1>堆木头!</h1><p style="margin: 0 20px 0 120px; text-align:left;"><img src="/stack/i/icon.png" alt="Stack the log!" style="width:64px; height:64px;float:left; margin-right:5px;"/></p>'+
 '<div style="width:110px; margin:30px auto -30px auto;"></div>','restartgame()');
 </script>
 </div>

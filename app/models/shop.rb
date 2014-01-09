@@ -619,7 +619,7 @@ class Shop
   def answer_text_default
     faqs = self.find_faqs.to_a
     return "本地点未启用数字问答系统" if faqs.blank?
-    "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n")
+    "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}"}.join("\n")
   end
 
   def weixin_answer_text(msg)
