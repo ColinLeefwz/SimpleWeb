@@ -1,3 +1,8 @@
+class Subdomain
+	def self.matches?(request)
+		request.subdomain.present? && request.subdomain != 'www'
+	end
+end
 Prodygia::Application.routes.draw do
 
   resources :courses do
@@ -99,6 +104,10 @@ Prodygia::Application.routes.draw do
 
   resources :resources 
 
+	constraints(Subdomain) do
+		get '/', to: redirect('/profile')
+		get '/profile' => "experts#profile"
+	end
   root to: "welcome#index"
 
   get "/about_us", to: 'static_pages#about_us'
@@ -109,3 +118,4 @@ Prodygia::Application.routes.draw do
 
   get "/article/:id", to: "sessions#show", as: :article
 end
+
