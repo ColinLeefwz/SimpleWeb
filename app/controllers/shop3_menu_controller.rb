@@ -6,7 +6,7 @@ class Shop3MenuController < ApplicationController
   	@menu = Menu.find_by_id(session[:shop_id])
   	respond_to do |format|
   		format.html
-  		format.json {render :json => @menu.view_json}
+  		format.json {render :json => @menu ? @menu.view_json : {}}
   	end
   end
 
