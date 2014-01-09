@@ -1,5 +1,6 @@
 class MenuController < ApplicationController
   before_filter :user_login_filter, :only => [:click]
+  before_filter :user_is_session_user, :only => [:click]
   
   def get
     if params[:id]=="21835409"
@@ -24,13 +25,13 @@ class MenuController < ApplicationController
                     {
                         "type"=> "view",
                         "name"=> "搜索",
-                        "url"=> "http=>//www.soso.com/",
+                        "url"=> "http=>//www.baidu.com/",
                         "sub_button"=> []
                     },
                     {
                         "type"=> "view",
-                        "name"=> "视频",
-                        "url"=> "http=>//v.qq.com/",
+                        "name"=> "定位",
+                        "url"=> "dface://scheme/seek",
                         "sub_button"=> []
                     },
                     {
@@ -52,6 +53,7 @@ class MenuController < ApplicationController
   
   def click
     Xmpp.send_gchat2("s#{params[:sid]}",params[:sid],session[:user_id],"收到key：#{params[:key]}")
+    render :json => {ok:1}.to_json
   end
   
   def create

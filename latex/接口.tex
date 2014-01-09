@@ -918,6 +918,101 @@ GET & \multicolumn{3}{|c|}{/help/index} \\
 本接口需要通过浏览器以URL的方式直接调用。
 
 
+\section{自定义菜单}
+脸脸的自定义菜单兼容微信的自定义菜单。
+如果获得商家信息时有"has\_menu"字段，并且值为1，代表该商家有自定义菜单。
+
+\subsection{获取菜单}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/menu/get} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+   \hline
+ id  & 整数 & 必须 & 商家id\\ 
+  \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值：
+\begin{figure}[H]
+\begin{verbatim}
+{
+    "menu": {
+        "button": [
+            {
+                "type": "click",
+                "name": "今日歌曲",
+                "key": "V1001_TODAY_MUSIC",
+                "sub_button": []
+            },
+            {
+                "type": "click",
+                "name": "歌手简介",
+                "key": "V1001_TODAY_SINGER",
+                "sub_button": []
+            },
+            {
+                "name": "菜单",
+                "sub_button": [
+                    {
+                        "type": "view",
+                        "name": "搜索",
+                        "url": "http://www.soso.com/",
+                        "sub_button": []
+                    },
+                    {
+                        "type": "view",
+                        "name": "视频",
+                        "url": "http://v.qq.com/",
+                        "sub_button": []
+                    },
+                    {
+                        "type": "click",
+                        "name": "赞一下我们",
+                        "key": "V1001_GOOD",
+                        "sub_button": []
+                    }
+                ]
+            }
+        ]
+    }
+}
+\end{verbatim}
+\end{figure}
+
+
+\subsection{点击菜单}
+自定义菜单有两种类型：view和click。
+
+当点击view类型时，判断url的类型进行处理。如果url是http链接，那么打开一个新的webview显示这个url。如果url是dface链接，那么按照脸脸应用内跳转规范处理。
+
+当点击click类型时，访问下面的接口并显示提示“消息收取中...”。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/menu/click} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+   \hline
+ sid  & 整数 & 必须 & 商家id\\ 
+  \hline
+ user\_id  & 字符串 & 必须 & 用户id\\ 
+  \hline
+ key  & 字符串 & 必须 & 点击菜单的KEY\\ 
+  \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+执行成功后，脸脸会发送回一条消息。
+
 \section{脸脸WEB应用嵌入接口}
 \begin{verbatim}
 
