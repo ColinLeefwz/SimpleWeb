@@ -54,5 +54,26 @@ class Menu
     {menu:{button: self.button}}.to_json
   end
   
+
+  def view_json
+    data = self.button
+    data.each do |d|
+        if d['type']=='click'
+            mk = MenuKey.find_by_id(d['key'])
+            d['dt'] = mk.type
+            d['data'] = mk.content
+        end
+        d['sub_button'].each do |subd|
+            if subd['type']=='click'
+                smk = MenuKey.find_by_id(subd['key'])
+                subd['dt'] = smk.type
+                subd['data'] = smk.content
+            end
+        end
+    end
+    {menu:{button: data}}.to_json
+  end
+
+
   
 end

@@ -6,15 +6,16 @@ class Shop3MenuController < ApplicationController
   	@menu = Menu.find_by_id(session[:shop_id])
   	respond_to do |format|
   		format.html
-  		format.json {render :json => @menu.to_json}
+  		format.json {render :json => @menu.view_json}
   	end
   end
 
-  def set
+  def add_menu
   	menu = Menu.find_by_id(session[:shop_id])
+    return render :json => 0 if menu.nil?
   	if menu
   		button = menu.button
-  		if params[:index]
+  		if params[:index]!='null'
   			button[params[:index].to_i]['sub_button'].push({name: params[:name]})
   		else
   			button.push({name: params[:name], sub_button: [] })
@@ -25,23 +26,53 @@ class Shop3MenuController < ApplicationController
   		menu.button = [{name: params[:name], sub_button: [] }]
   	end
   	menu.save
-  	render :json => 1
+  	render :json => menu.to_json
   end
 
-  def set_action
+  def edit_menu
+    menu = Menu.find_by_id(session[:shop_id])
+    indexs = params[:index]
+    butn = menu.button[indexs.shift.to_i]
+    butn = butn['sub_button'][indexs.first.to_i] if indexs.any?
+    butn['name'] = params[:name]
+    menu.save
+    render :json => menu.to_json
+  end
 
+  def set_view_action
+    menu = Menu.find_by_id(session[:shop_id])
+    indexs = params[:index]
+    butn = menu.button[indexs.shift.to_i]
+    butn = butn['sub_button'][indexs.first.to_i] if indexs.any?
+    butn.merge!(params[:button])
+    menu.save
+    render :json => menu.to_json
+  end
+
+  def set_click_action
+    menu = Menu.find_by_id(session[:shop_id])
+    indexs = params[:index].dup
+    butn = menu.button[indexs.shift.to_i]
+    butn = butn['sub_button'][indexs.first.to_i] if indexs.any?
+    butn['type'] = 'click'
+    butn['key'] = "V#{session[:shop_id].to_i}_#{params[:index].join('_')}_#{Time.now.to_i}"
+    menu.save! 
+    mk = MenuKey.new(params[:menu_key])
+    mk._id = butn['key']
+    mk.save
+    render :json => menu.to_json
   end
 
   def del
   	menu = Menu.find_by_id(session[:shop_id])
-  	index = params[:index].split(",").map{|m| m.to_i}
+  	index = params[:index].map{|m| m.to_i}
   	if index.length ==2
   		menu.button[index.first]['sub_button'].delete_at(index.last)
   	else
   		menu.button.delete_at(index.first)
   	end
   	menu.save
-  	render :json =>1 
+  	render :json => menu.to_json
   end
 
 
