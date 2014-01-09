@@ -34,7 +34,7 @@
 
   function menuswitch(obj) {
    var whereto=obj.href.split('#')[1];
-   if(whereto=='game' && ibox_active == 'game') {pausegame();iconfirm('<h1>New game</h1>Do you really want to<br />restart your game?','restartgame();'); return false;}
+   if(whereto=='game' && ibox_active == 'game') {pausegame();iconfirm('<h1>新游戏</h1>确认开始新的游戏？','restartgame();'); return false;}
    if(ibox_active == 'game' && whereto!='game') {pausegame();}
    mse='';
    if(ibox_active != 'game' && whereto=='game') {mse='resumegame();';}
