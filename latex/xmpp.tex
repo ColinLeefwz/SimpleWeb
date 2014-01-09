@@ -106,10 +106,13 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 \section{好友动态}
 \subsection{好友动态消息}
-所有消息id以"FEED"开头的，都属于好友动态消息。好友动态消息以红点的方式提醒，不计数。好友动态消息增加地点，IOS通过属性实现，Android通过扩展实现，如下：
+所有消息id以"FEED"开头的，都属于好友动态消息。好友动态消息以红点的方式提醒，不计数。
+好友动态消息增加地点，IOS通过属性实现，Android通过扩展实现，如下：
 \begin{verbatim}
 "<x xmlns='dface.shop' SID='#{shop.id}' SNAME='#{shop.name}' ></x>"
 \end{verbatim}
+
+如果是多图的动态，那么在图片的描述信息开始是数字加":"开始，在扩展属性中有"dface.thumb2s"字段，内容是第二张图到最后一张图的缩略图的url，以“,”号分割。
 
 
 \subsection{好友动态中的评论消息}
