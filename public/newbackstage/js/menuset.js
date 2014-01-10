@@ -97,7 +97,34 @@ $(document).ready(function(){
 		$(this).addClass('selected')
 		set_action_content(this.id)
 		var index = get_menu_map(this.id)
-		$('#changeBt').click(function(){
+		$('#changeBt').unbind().click(function(){
+			var menu = get_menu_button(index)
+			if(menu.type=='view'){
+				$("#goPage").click()
+			}else if(menu.type == 'click'){
+				if(menu.dt=='text'){
+					var html =  menu.data
+					$('.tab_text').click()
+					$('.tab_img').click()
+					$('#menu_image_dialog').css('display','none')
+					var html = '<img class="wxmImg Zoomin" src="'+ menu.data +'">'
+				}else if(menu.dt=='photo'){
+					var html =  '<img class="wxmImg Zoomin" src="'+ menu.data +'">'
+					$('.tab_img').click()
+					$('#menu_img_cancel').click()
+					$('li.tab_nav').removeClass("selected")
+					$('.tab_img').addClass("selected")
+				}else if(menu.dt=='faq'){
+					var html =  menu.data
+					$('.tab_appmsg').click()
+					$('#menu_faq_cancel').click()
+					$('li.tab_nav').removeClass("selected")
+					$('.tab_appmsg').addClass("selected")
+				}
+				$('.js_editorArea').html(html)
+			}else{
+				$(this).css('display', 'none')
+			}
 
 		})
 	})
@@ -201,7 +228,10 @@ $(document).ready(function(){
 		$('.jsMain').css('display', 'none')
 		$('#url').css('display', 'block')
 		$('#urlFail').css('display', 'none')
-		$('#urlText').val('')
+		var m = $('.selected')[0]
+		var indexs = get_menu_map(m.id)
+		var menu = get_menu_button(indexs)
+		$('#urlText').val(menu.url)
 	})
 
 	//取消增加view动作
