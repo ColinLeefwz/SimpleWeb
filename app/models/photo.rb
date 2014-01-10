@@ -343,7 +343,12 @@ class Photo
     "<x xmlns='dface.thumb2s'>#{str}</x>"
   end
   
-
+  def photos_urls
+    return "" if total.nil? || total<2
+    str = multi_photos[:photos].join(",")
+    "<x xmlns='dface.photos'>#{str}</x>"
+  end
+  
   
   def logo_thumb_hash
     {:logo => self.img.url, :logo_thumb2 => self.img.url(:t2)  }
