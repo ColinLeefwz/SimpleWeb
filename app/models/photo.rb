@@ -74,6 +74,19 @@ class Photo
     Qiniu::RS.generate_upload_token(upopts)
   end
   
+  def enqueue_in(number_of_seconds_from_now, klass, *args)
+    if number_of_seconds_from_now<1
+      Resque.enqueue(klass, *args) 
+    else
+      Resque.enqueue_in(number_of_seconds_from_now, klass, *args)
+    end
+  end
+  
+  def enqueue_job(klass, *args)
+    sec = total.to_i*5 #等待多图上传完成，暂不处理多图上传失败
+    #TODO: 多图实际判断全部传成功
+    enqueue_in(sec.seconds,klass, *args)
+  end
   
   def after_async_store
     self.add_to_checkin
@@ -86,11 +99,11 @@ class Photo
     if weibo || qq || (wx && wx>0)
       send_coupon
       Lord.assign(room,user_id) if t==1 && desc && desc.index("我是地主")
-      Resque.enqueue(PhotoNotice, self.id) unless Os.overload?
+      enqueue_job(PhotoNotice, self.id) unless Os.overload?
       #Rails.cache.delete("UP#{self.user_id}-5")
     end
     return if ENV["RAILS_ENV"] == "test"
-    Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc_multi}", mid ,1)
+    enqueue_job(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc_multi}", mid ,1)
     rand_like
     if room==$zwyd.to_s
       gen_zwyd
