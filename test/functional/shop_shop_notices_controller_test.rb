@@ -3,7 +3,7 @@ require 'test_helper'
 
 class ShopShopNoticesControllerTest < ActionController::TestCase
   def setup
-    db_connection.eval(File.read("#{Rails.root}/test/fixtures/shop_notices.js"))
+    reload("shop_notices.js")
   end
   
   test '没登录看公告列表' do
