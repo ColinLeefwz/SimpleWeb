@@ -22,7 +22,7 @@ class Gchat
      shop = self.shop
      reverse_render = [nil, 2, 1][user.gender.to_i]
      return false if reverse_render.nil?
-     city = msg.sub('@@@我要回','')
+     city = msg.sub('我要回','')
      muid = Termini.where({city: city, gender: reverse_render }).map{|m| m.uid}.sample(1).first
      termini = Termini.new({uid: user.id, city: city, gender: user.gender })
      pmj = termini.save
