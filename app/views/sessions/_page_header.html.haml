@@ -1,10 +1,10 @@
 .text-page-header-box.shadow
   .text-page-left-side
     .text-page-portrait
-      = image_tag("#{content.expert.avatar.url}")
+      = link_to image_tag("#{content.expert.avatar.url}"), profile_expert_path(content.expert)
     .text-page-expert-info
       .name
-        = content.expert.name
+        = link_to content.expert.name, profile_expert_path(content.expert)
       .title
         = content.expert.profile.title
       .company
