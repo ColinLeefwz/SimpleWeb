@@ -1,70 +1,46 @@
+common: &common
+  title: |
+    <p><b>Thanks for checking this functionality.</b></p>
+  content: |
+  footer: |
+    <p>Stay tuned!</p>
+
 create_new_session:
-  text: >
-    Thanks for checking this functionality.
-
-    It’ll be released in early 2014 and enable you to run your own sessions online. Choose the topic, the date & time, format (small or large group) and the price. Then market it to your community and make money when users enroll.
-
-    Stay tuned!
+  <<: *common
+  content: |
+    <p>It’ll be released in early 2014 and enable you to run your own sessions online. Choose the topic, the date & time, format (small or large group) and the price. Then market it to your community and make money when users enroll.</p>
 
 schedule_private_session:
-  text: >
-    Thanks for checking this functionality.  
-
-    It’ll be released in early 2014 and allow you to schedule one-on-one private consultations with existing clients as well as users who come to the site and want to connect with you for specific purposes. You'll set your rate and get paid for your time, if you choose to accept requests. You’ll be in control, time and price-wise. 
-
-    Stay tuned!
+  <<: *common
+  content: |
+    <p>It’ll be released in early 2014 and allow you to schedule one-on-one private consultations with existing clients as well as users who come to the site and want to connect with you for specific purposes. You'll set your rate and get paid for your time, if you choose to accept requests. You’ll be in control, time and price-wise.</p>
 
 manage_sessions:
-  text: >
-    Thanks for checking this functionality.  
-
-    It’ll be released in early 2014 and enable you to run your own sessions online. Choose the topic, the date & time, format (small or large group) and the price. Then market it to your community and earn revenue when users enroll. 
-
-    Stay tuned! 
-
-    Testimonials
-    Thanks for checking this functionality.  
-
-    It’ll be released in early 2014 and enable you to see and manage testimonials from your community. 
-
-    Stay tuned!
+  <<: *common
+  content: |
+    <p>It’ll be released in early 2014 and enable you to run your own sessions online. Choose the topic, the date & time, format (small or large group) and the price. Then market it to your community and earn revenue when users enroll.</p>
 
 testimonials:
-  text: >
-    Thanks for checking this functionality.  
-
-    It’ll be released in early 2014 and enable you to see and manage testimonials from your community. 
-
-    Stay tuned!
+  <<: *common
+  content: |
+    <p>It’ll be released in early 2014 and enable you to see and manage testimonials from your community.</p>
 
 community:
-  text: >
-    Thanks for checking this functionality.  
-
-    It’ll be released in early 2014 and enable you interact and manage your community of followers and friends. 
-
-    Stay tuned!
+  <<: *common
+  content: |
+    <p>It’ll be released in early 2014 and enable you interact and manage your community of followers and friends.</p>
  
 feedback:
-  text: >
-    Thanks for checking this functionality.  
-
-    It’ll be released in early 2014 and enable you to see and manage feedback from your community. 
-
-    Stay tuned!
+  <<: *common
+  content: |
+    <p>It’ll be released in early 2014 and enable you to see and manage feedback from your community.</p>
 
 statistics:
-  text: >
-    Thanks for checking this functionality.  
-
-    It’ll be released in early 2014 and enable you to see relevant statistics about your activity on the platform.
-
-    Stay tuned!
+  <<: *common
+  content: |
+    <p>It’ll be released in early 2014 and enable you to see relevant statistics about your activity on the platform.</p>
 
 calendar:
-  text: >
-    Thanks for checking this functionality.  
-
-    It’ll be released in early 2014 and let you track dates for upcoming online engagements on Prodygia. The more active you are, the more this feature will come in handy and help you organize your time. 
-
-    Stay tuned!
+  <<: *common
+  content: |
+    <p>It’ll be released in early 2014 and let you track dates for upcoming online engagements on Prodygia. The more active you are, the more this feature will come in handy and help you organize your time.</p>
