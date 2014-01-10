@@ -58,6 +58,7 @@ class ExpertsController < ApplicationController
 
   def contents
     @sessions = current_user.contents
+    @show_shares = true
     @from = 'sessions/sessions'
     respond_to do |format|
       format.js { render 'experts/update'}
