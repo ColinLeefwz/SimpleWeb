@@ -14,20 +14,29 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
       }
     }
     .member-text-info{
+      text-align: center;
       padding-top: 35px;
       padding-bottom: 15px;
-      line-height: 0.8;
+      line-height: 1em;
       @media(max-width: 940px){
         text-align: center;
       }
       p{
+        margin: 0;
         font-family: Latoreg;
       }
       .member-name{
         p{
           font-family: Latobold;
+          font-size: 16px;
+          color: #777;
         }
-        font-size: 20px;
+      }
+      .edit-profile{
+        p{
+          font-size: 15px;
+          line-height: 1.2em;
+        }
       }
     }
   }
