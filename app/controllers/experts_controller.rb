@@ -30,7 +30,10 @@ class ExpertsController < ApplicationController
   end
 
   def profile
-    @items = @expert.sessions.to_a.concat(@expert.video_interviews.to_a).concat(@expert.courses.to_a)
+		video_interviews = @expert.video_interviews.to_a
+		courses = @expert.courses.to_a
+		sessions = @expert.sessions.where(draft: false).to_a
+    @items = video_interviews.concat(courses).concat(sessions)
     @profile = @expert.profile || @expert.create_profile
   end
 

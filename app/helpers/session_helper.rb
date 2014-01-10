@@ -1,7 +1,12 @@
 module SessionHelper
+  def get_tooltip(item)
+    tooltips = {"ArticleSession" => "article", "VideoInterview" => "interview", "Course" => "course", "Announcement" => "announcement"}
+
+    tooltips[item.class.name]
+  end
   def get_image_tag(item)
     images = { "LiveSession" => "livestreaming.png", "ArticleSession" => "text.png", "VideoInterview" => "video.png", "Announcement" => "announcement.png", "Course" => "video.png" }
-    images[item.class.to_s]
+    images[item.class.name]
 
   end
 
