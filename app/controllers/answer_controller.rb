@@ -308,8 +308,7 @@ class AnswerController < ApplicationController
      if muid
       muser = User.find_by_id(muid)
       Xmpp.send_chat(muser.id, user.id, ": 今年春节，我也要回#{city}过年噢，快跟我打个招呼吧～", "GNHJSL#{shop.id}#{user.id}#{Time.now.to_i}")
-      link = "dface://scheme/user/info?id=#{muser.id}"
-      link = "dface://scheme/user/info?id=#{sbu.id}"
+      link = nil
       text = "#{ta}，叫#{muser.name}😊 今年春节#{ta}也要回#{city}噢！老乡见老乡，两眼泪汪汪😂 赶快返回对话页，和#{ta}打个招呼拉着小手一起回家过年吧！"
       Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "GNHJXC#{shop.id}#{user.id}#{Time.now.to_i}")
      else
@@ -322,8 +321,7 @@ class AnswerController < ApplicationController
         muid = [nil, nanmj, nvmj][reverse_render].sample(1).first
         muser = User.find_by_id(muid)
         Xmpp.send_chat(muser.id, user.id, ": 今年春节，我也要回#{city}过年噢，快跟我打个招呼吧～", "GNHJSL#{shop.id}#{user.id}#{Time.now.to_i}")
-        link = "dface://scheme/user/info?id=#{muser.id}"
-        link = "dface://scheme/user/info?id=#{sbu.id}"
+        link = nil
         text = "#{ta}，叫#{muser.name}😊 今年春节#{ta}也要回#{city}噢！老乡见老乡，两眼泪汪汪😂 赶快返回对话页，和#{ta}打个招呼拉着小手一起回家过年吧！"
         Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "GNHJXC#{shop.id}#{user.id}#{Time.now.to_i}")
       else
