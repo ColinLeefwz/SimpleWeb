@@ -9,7 +9,7 @@
           = link_to "#{course.first_expert.first_name.first}. #{course.first_expert.last_name}, ", profile_expert_path(course.first_expert)
           = link_to "#{course.second_expert.first_name.first}. #{course.second_expert.last_name}", profile_expert_path(course.second_expert)
     .content-type
-      = image_tag(get_image_tag(course))
+      = image_tag(get_image_tag(course), class: "tooltips", title: get_tooltip(course), data: {placement: "bottom"})
       %p= course.categories.join(", ")
   .title
     = link_to "#{course.title}", course_path(course)
