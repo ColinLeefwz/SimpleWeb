@@ -6,7 +6,8 @@
       %p= @expert.name
     %p= @profile.title
     %p= @profile.company
-    %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
+    .edit-profile
+      %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
   .clear-fix
   .toolkit
     .item
