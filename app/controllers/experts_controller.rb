@@ -14,6 +14,9 @@ class ExpertsController < ApplicationController
   end
 
   def pending_page
+		all_text = YAML.load_file(File.join(Rails.root, 'config', 'pending_text.yml'))
+		text_params = params[:text]
+		@pending_text = all_text[text_params.to_s]['text']
     @from = 'pending_page'
     respond_to do |format|
       format.js { render 'update'}
