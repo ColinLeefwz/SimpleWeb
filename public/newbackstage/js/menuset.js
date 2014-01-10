@@ -28,8 +28,9 @@ $(document).ready(function(){
 			}
 		}
 		$("#dialog_display").css("display", "block")
-		$("#jsbtn0").click(function(){
+		$("#jsbtn0").unbind().click(function(){
 			name = $('#menu_val').val();
+			name = name.replace(/^[ ]*|[ ]*$/g,'')
 			if(!checkMenuNameInput(name)){
 				return 
 			}
@@ -52,12 +53,13 @@ $(document).ready(function(){
 		var index = get_menu_map($(this).parent().parent().attr('id'))
 		$('#menu_val').val(get_menu_button(index).name)
 		$("#dialog_display").css("display", "block")
-		$("#jsbtn0").click(function(){
-			$(this).unbind()
+		$("#jsbtn0").unbind().click(function(){
+			
 			name = $('#menu_val').val()
 			if(!checkMenuNameInput(name)){
 				return 
 			}
+			$(this).unbind()
 			$.post("/shop3_menu/edit_menu", {index: index, name: name }, function(data){
 				menujson = data;
 				relist_menu();
@@ -107,17 +109,21 @@ $(document).ready(function(){
 
 	// 选择‘文字’
 	$('#sendMsg, .tab_text').click(function(){
-		$('#editSave').unbind()
 		$('.jsMain').css('display', 'none')
 		$('#edit').css('display', 'block') 
 		$('.js_editorArea').html('')
-		$('#editSave').click(function(){
+		$('li.tab_nav').removeClass("selected")
+		$('.tab_text').addClass("selected")
+		$('#editSave').unbind().click(function(){
+			$(this).unbind()
 			var m = $('.selected')[0]
 			var indexs = get_menu_map(m.id)
 			text = $('.js_editorArea').html()
 			$.post('/shop3_menu/set_click_action',{index: indexs, menu_key: {type: 'text', tv: text}}, function(data){
 				menujson = data
 				set_action_content(m.id)
+				relist_menu()
+				$("#"+m.id).addClass('selected')
 			})
 		})
 	})
@@ -125,6 +131,8 @@ $(document).ready(function(){
 	// 选择‘图片’
 	$('.tab_img').click(function(){
 		$('#menu_image_dialog').css('display','block')
+		$('li.tab_nav').removeClass("selected")
+		$(this).addClass("selected")
 		$("#menu_image_dialog input").attr("checked",false)
 		$('#menu_img_add').click(function(){
 			var m = $('.selected')[0]
@@ -137,17 +145,19 @@ $(document).ready(function(){
 			var src = $(objor).parent().parent().children('a').children('img')[0].src
 			$('#menu_image_dialog').css('display','none')
 			$('.js_editorArea').html('<img class="wxmImg Zoomin" src="'+ src +'">')
-			$('#editSave').unbind()
-			$('#editSave').click(function(){
+			$('#editSave').unbind().click(function(){
 				$(this).unbind()
 				$.post("/shop3_menu/set_click_action", {index: indexs, menu_key: {type: 'photo', tv: menu_photo_id} }, function(data){
 					menujson = data
 					set_action_content(m.id)
+					relist_menu()
+					$("#"+m.id).addClass('selected')
 				})
 			})
 		});
-		$('#menu_img_cancel,#menu_image_dialog pop_closed').click(function(){
+		$('#menu_img_cancel,#menu_image_dialog .pop_closed').click(function(){
 			$('#menu_image_dialog').css('display','none')
+			$('.tab_text').click()
 		})
 	})
 
@@ -155,8 +165,9 @@ $(document).ready(function(){
 	$('.tab_appmsg').click(function(){
 		$('#menu_faq_dialog').css('display','block')
 		$("#menu_faq_dialog input").attr("checked",false)
+		$('li.tab_nav').removeClass("selected")
+		$(this).addClass("selected")
 		$('#menu_faq_add').click(function(){
-			$('#editSave').unbind()
 			var m = $('.selected')[0]
 			var indexs = get_menu_map(m.id)
 			var objor = $("#menu_faq_dialog input:checked")[0]
@@ -168,18 +179,20 @@ $(document).ready(function(){
 			var title = $(objp).html()
 			$('#menu_faq_dialog').css('display','none')
 			$('.js_editorArea').html('问答:' + title)
-			$('#editSave').unbind()
-				$('#editSave').click(function(){
+				$('#editSave').unbind().click(function(){
 					$(this).unbind()
-					$.post('/shop3_menu/set_click_action', {index: indexs, menu_key: {type: 'faq', tv: menu_faq_id } }, function(){
+					$.post('/shop3_menu/set_click_action', {index: indexs, menu_key: {type: 'faq', tv: menu_faq_id } }, function(data){
 						menujson = data
 						set_action_content(m.id)
+						relist_menu()
+						$("#"+m.id).addClass('selected')
 					})
 				})
 		});
 
-		$('#menu_faq_cancel,#menu_faq_dialog pop_closed').click(function(){
+		$('#menu_faq_cancel,#menu_faq_dialog .pop_closed').click(function(){
 			$('#menu_faq_dialog').css('display','none')
+			$('.tab_text').click()
 		})
 	})
 
@@ -209,6 +222,8 @@ $(document).ready(function(){
 		$.post('/shop3_menu/set_view_action',{index: indexs, button: {url: url, type:'view'}}, function(data){
 			menujson = data
 			set_action_content(m.id)
+			relist_menu()
+			$("#"+m.id).addClass('selected')
 		})
 	})
 
@@ -251,6 +266,7 @@ $(document).ready(function(){
 			}else{
 				$('#none').css('display', 'block')
 				$("#none p").html('已有子菜单，无法设置动作')
+				$('#changeBt').css('display', 'none')
 			}
 		}else{
 			var menu = menujson.menu.button[indexs[0]].sub_button[indexs[1]]
@@ -265,7 +281,7 @@ $(document).ready(function(){
             html += '<i class="icon_inner_menu_switch"></i>'
             html += '<a class="inner_menu_link" href="javascript:void(0);">'
             html += '<strong>' + val.name + '</strong></a><span class="menu_opr">'  
-            if(!val.sub_button.type){
+            if(!val.type){
             	html += '<a class="icon14_common add_gray jsAddBt" href="javascript:void(0);" rel="' + index + '">添加</a>'
             }  
             html += '<a class="icon14_common  edit_gray jsEditBt" href="javascript:void(0);" rel="' + index + '">编辑</a>'

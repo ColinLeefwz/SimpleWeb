@@ -35,7 +35,9 @@
                                             <strong><%= m['name']%></strong>
                                         </a>
                                         <span class="menu_opr">
-                                            <a class="icon14_common add_gray jsAddBt" href="javascript:void(0);" rel='<%= index %>'>添加</a>
+                                            <% if m['type'].blank? %>
+                                                <a class="icon14_common add_gray jsAddBt" href="javascript:void(0);" rel='<%= index %>'>添加</a>
+                                            <% end %>
                                             <a class="icon14_common  edit_gray jsEditBt" href="javascript:void(0);" rel='<%= index %>'>编辑</a>
                                             <a class="icon14_common del_gray jsDelBt" href="javascript:void(0);" rel='<%= index %>'>删除</a>
                                             <a style="display:none" class="icon14_common sort_gray jsOrderBt" href="javascript:void(0);">排序</a>
