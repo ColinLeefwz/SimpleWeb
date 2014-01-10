@@ -14,8 +14,6 @@ class ActiveSupport::TestCase
 
 
   def reload(file_name)
-    puts User.collection.database.session.cluster.nodes
-    debugger
     User.collection.database.session.cluster.with_primary do |node|
       dbname = User.collection.database.name
       node.command(dbname, eval: File.read("#{Rails.root}/test/fixtures/#{file_name}"))
