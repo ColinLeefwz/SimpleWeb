@@ -26,6 +26,11 @@ class AnswerController < ApplicationController
       tryst(msg, user, shop)
       return render :text => "1"
     end
+    if txt[0,6]=="@@@我要去"
+      tryst2(msg, user, shop)
+      return render :text => "1"
+    end
+
     return render :text => "1" if shop.preset?(user) && pre_answer(msg, user, shop)
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"
@@ -291,5 +296,25 @@ class AnswerController < ApplicationController
      return Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
   end
 
+  # @@@我要回＋‘目的地’
+  def tryst2(msg, user, shop)
+     reverse_render = [nil, 2, 1][user.gender.to_i]
+     return false if gender.nil?
+     city = msg.sub('@@@我要回','')
+     muid = Termini.where({city: city, gender: reverse_render }).map{|m| m.id}.select{|m| m != user.id }.sample(1).first
+     Termini.create({uid: user.id, city: city, gender: user.gender })
+     ta = [nil,"他", "她"][reverse_render]
+     if muid
+      muser = User.find_by_id(muid)
+      Xmpp.send_chat(muser.id, user.id, ": 今年春节，我也要回XX过年噢，快跟我打个招呼吧～", "GNHJSL#{shop.id}#{user.id}#{Time.now.to_i}")
+      link = "dface://scheme/user/info?id=#{muser.id}"
+      text = "#{ta}，叫#{muser.name}😊 今年春节#{ta}和你的目的地都是#{city}噢！老乡见老乡，两眼泪汪汪😂 赶快返回对话页，和#{ta}打个招呼相约一起回家过年吧！"
+      Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "GNHJXC#{shop.id}#{user.id}#{Time.now.to_i}")
+     else
+      text = '😢暂时没有找到和你同路的TA，过会再试试吧！也可戳我找寻同城的小伙伴噢～😉'
+      link = 'dface://scheme/near/user' 
+      Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "GNHJXC#{shop.id}#{user.id}#{Time.now.to_i}")
+     end
+  end
 
 end

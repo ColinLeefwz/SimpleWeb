@@ -12,7 +12,6 @@ class Shop3MenuController < ApplicationController
 
   def add_menu
   	menu = Menu.find_by_id(session[:shop_id])
-    return render :json => 0 if menu.nil?
   	if menu
   		button = menu.button
   		if params[:index]!='null'
@@ -26,7 +25,7 @@ class Shop3MenuController < ApplicationController
   		menu.button = [{name: params[:name], sub_button: [] }]
   	end
   	menu.save
-  	render :json => menu.to_json
+  	render :json => menu.view_json
   end
 
   def edit_menu
@@ -36,7 +35,7 @@ class Shop3MenuController < ApplicationController
     butn = butn['sub_button'][indexs.first.to_i] if indexs.any?
     butn['name'] = params[:name]
     menu.save
-    render :json => menu.to_json
+    render :json => menu.view_json
   end
 
   def set_view_action
@@ -46,7 +45,7 @@ class Shop3MenuController < ApplicationController
     butn = butn['sub_button'][indexs.first.to_i] if indexs.any?
     butn.merge!(params[:button])
     menu.save
-    render :json => menu.to_json
+    render :json => menu.view_json
   end
 
   def set_click_action
@@ -60,7 +59,7 @@ class Shop3MenuController < ApplicationController
     mk = MenuKey.new(params[:menu_key])
     mk._id = butn['key']
     mk.save
-    render :json => menu.to_json
+    render :json => menu.view_json
   end
 
   def del
@@ -72,7 +71,7 @@ class Shop3MenuController < ApplicationController
   		menu.button.delete_at(index.first)
   	end
   	menu.save
-  	render :json => menu.to_json
+  	render :json => menu.view_json
   end
 
 

@@ -56,7 +56,7 @@ class Menu
   
 
   def view_json
-    data = self.button
+    data = self.reload.button
     data.each do |d|
         if d['type']=='click'
             mk = MenuKey.find_by_id(d['key'])
