@@ -69,17 +69,24 @@ class AroundmeController < ApplicationController
     end
     city = get_city(arr[0], lo)
     #response.headers['Cpcity'] = URI::encode(City.cascade_name(city)) if city
+    if city
+      shop = Shop.find_by_id(21838499)
+      if shop
+	shop.city = city
+        arr = arr[0,2]+[ shop ]+arr[2..-1]
+      end
+    end
     if city=="0571"
       shop = Shop.find_by_id(21828958)
       if shop
         shop.name = "紫薇原点新年祈愿"
-        arr = arr[0,2]+[ shop ]+arr[2..-1]
+        arr = arr+[ shop ]
       end
     else
       shop = Shop.find_by_id(21838292)
       if shop
         shop.city = city
-        arr = arr[0,3]+[ shop ]+arr[3..-1]
+        arr = arr+[ shop ]
       end
     end
     arr.uniq!
