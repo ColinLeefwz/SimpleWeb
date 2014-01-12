@@ -18,7 +18,7 @@ class CheckinsController < ApplicationController
       render :json => {error: "没权限创建：#{params[:sname]}"}.to_json
       return
     end
-    if !is_kx_user?(session[:user_id])
+    if !is_kx_user?(session[:user_id]) && !is_co_user?(session[:user_id])
       if Rails.cache.read("ADDSHOP#{session[:user_id]}")
         render :json => {error: "一个用户一天只能创建一个地点"}.to_json
         return
@@ -167,5 +167,10 @@ class CheckinsController < ApplicationController
     #return str if ENV["RAILS_ENV"] != "production"
     #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
   end 
+  
+  def is_co_user?(uid) #城市代理
+    return true if uid.to_s == "528af5e1c90d8b8160000001"
+    return false
+  end
 
 end
