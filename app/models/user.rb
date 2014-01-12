@@ -338,7 +338,7 @@ class User
   #当前用户的最后位置。 user_id 是查看当前用户的user
   def last_location( user_id=nil )
     return {:last => "隐身", :time => ""} if user_id && block?(user_id)
-    User.last_loc_to_hash(last_loc)
+    last_loc_to_hash(last_loc)
   end
   
   def lat_loc_arr(checkin, shop_name=nil)
@@ -346,8 +346,7 @@ class User
     if checkin.nil?
       ret = []
     else
-      cati = $redis.zscore("UA#{checkin.sid.to_i}",self.id)
-      ret = [cati, shop_name, checkin.loc, checkin.sid]
+      ret = [checkin.cati, shop_name, checkin.loc, checkin.sid]
     end
     ret
   end
@@ -358,9 +357,11 @@ class User
     end
   end
   
-  def self.last_loc_to_hash(loc)
+  def last_loc_to_hash(loc)
     return {:last => "", :time => ""} if loc.nil? || loc.size==0
-    diff = Time.now.to_i - loc[0]
+    cati = $redis.zscore("UA#{loc[3]}",self.id)  # 最后一次签到的时间 to 最后一次摇入的时间
+    cati = loc[0] unless cati
+    diff = Time.now.to_i - cati
     tstr = User.time_desc(diff)
     dstr = loc[1]
     {:last => "#{tstr} #{dstr}", :time => tstr}
