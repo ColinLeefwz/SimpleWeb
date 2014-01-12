@@ -46,7 +46,6 @@ class CheckinNotice
       send_staff_welcome(user,shop)
       send_welcome_msg_if_not_invisible(user,shop)
       tingshuo_default_answer_text(shop, checkin.uid)
-      zwyd_temp_notice(user, shop)
       unless Os.overload?(0.8)
         fake_user(user,shop)
         CheckinBssidStat.insert_checkin(checkin, ssid) if checkin.bssid && !checkin.del
@@ -114,19 +113,6 @@ class CheckinNotice
     shop.staffs.each do |uid|
       Xmpp.send_chat(user.id, uid,"#{user.name}也来到#{shop.name}啦，回现场看看吧~", "FEED#{$uuid.generate}", " NOLOG='1' SID='#{shop.id}' SNAME='#{shop.name}' ", "<x xmlns='dface.shop' SID='#{shop.id}' SNAME='#{shop.name}' ></x>")
     end
-  end
-
-  #紫薇原点通知
-  def self.zwyd_temp_notice(user, shop)
-   return if shop.city != '0571' 
-   return if $redis.sismember("ZWYDNOTICE", user.id)
-   if $redis.zscore("UA21828958", user.id)
-    $redis.sadd("ZWYDNOTICE", user.id)
-    return 
-   end
-   Xmpp.send_chat($gfuid, user.id, '2014就要到啦！在杭州的小伙伴们！你们许下新年愿望了吗？赶快到“紫薇原点”放飞心愿吧💌 没准儿谁就帮你实现了呢！RP爆发还能抽个千元红包哦😍（返回“定位”界面--拨动滚轮找到“紫薇原点”进入即可）')
-   $redis.sadd("ZWYDNOTICE", user.id)
-   return 
   end
 
   def self.tingshuo_default_answer_text(shop, uid)
