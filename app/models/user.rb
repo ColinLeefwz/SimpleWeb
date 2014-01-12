@@ -346,7 +346,8 @@ class User
     if checkin.nil?
       ret = []
     else
-      ret = [checkin.cati, shop_name, checkin.loc, checkin.sid]
+      cati = $redis.zscore("UA#{checkin.sid.to_i}",self.id)
+      ret = [cati, shop_name, checkin.loc, checkin.sid]
     end
     ret
   end
