@@ -4,27 +4,29 @@
 .social-share.facebook
   - url = "http://www.facebook.com/sharer/sharer.php?u=#{session_url}&title=#{session_title}"
   = link_to image_tag("facebook.png"), url, data: { popup: true}
-  -if @show_shares
-    #fb-shares.social-share 
+  - if @show_shares
+    #fb-shares.social-share.count
+      = get_fb_shares("#{session_url}")
 
 .social-share.twitter
   - url = "http://twitter.com/home?status=#{session_title}+#{session_url}"
   = link_to image_tag("twitter.png"), url, data: { popup: true}
-  -if @show_shares
-    #tw-shares.social-share
+  - if @show_shares
+    #tw-shares.count
+      = get_tw_shares("#{session_url}")
 
 .social-share.linkedin
-  -# - url = "https://www.linkedin.com/cws/share?mini=true&source=#{session_title}&url=#{session_url}"
   - url = "http://www.linkedin.com/shareArticle?mini=true&url=#{session_url}&title=#{session_title}"
   = link_to image_tag("linkedin.png"), url, data: { popup: true}
   - if @show_shares
-    #li-shares.social-share
+    #li-shares.count
+      = get_li_shares("#{session_url}")
 
 .social-share.google_plus
   - url = "http://plus.google.com/share?url=#{session_url}&title=#{session_title}"
   = link_to image_tag("googleplus.png"), url, data: { popup: true}
   - if @show_shares
-    #li-shares.social-share
+    #li-shares
 
 -# TODO: add email functionality
 -# .social-share.email
