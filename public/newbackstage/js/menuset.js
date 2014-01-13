@@ -1,11 +1,9 @@
-$(document).ready(function(){
-	var menujson = null 
-	var inter1 = null;
-
-	$.get('/shop3_menu.json', function(data){
+var menujson = {};
+$.get('/shop3_menu.json', function(data){
 		menujson = data
-	})
-
+})
+$(document).ready(function(){ 
+	var inter1 = null;
 	// 增加菜单
 	$(document).delegate('#addBt, .jsAddBt','click', function(event){
 		$('#menu_val').val('')
@@ -14,7 +12,7 @@ $(document).ready(function(){
 			var index = null
 			if(menujson.menu.button.length >=3 ){
 				$('#wxTipserr').css('display',"inline-block").css('opacity',"1")
-				$('#wxTipserr .inner').html('一级菜单最多只能三个')
+				$('#wxTipserr .inner').css('background-color', '#EAA000' ).html('一级菜单最多只能三个')
 				set_interval()
 				return 
 			}
@@ -22,7 +20,7 @@ $(document).ready(function(){
 			var index = get_menu_map($(this).parent().parent().attr('id'))[0]
 			if(menujson.menu.button[index].sub_button.length >=5 ){
 				$('#wxTipserr').css('display',"inline-block").css('opacity',"1")
-				$('#wxTipserr .inner').html('二级菜单最多只能五个')
+				$('#wxTipserr .inner').css('background-color', '#EAA000' ).html('二级菜单最多只能五个')
 				set_interval()
 				return 
 			}
@@ -91,6 +89,53 @@ $(document).ready(function(){
 		event.stopPropagation();
 	})
 
+	//预览
+	$(document).delegate("#viewBt", 'click',function(){
+		$('#mobile_review').css('display', 'block')
+		mobile_review_list()
+
+		$('.jsViewLi').unbind().click(function(){
+			$('.jsSubViewDiv').css('display', 'none')
+			var subdiv = $(this).children('.jsSubViewDiv')[0]
+			var index = get_menu_map(this.id)
+			var menu = get_menu_button(index)
+			if(menu.sub_button.length == 0 ){
+				review_action(menu)
+			}else{
+				$(subdiv).css('display', 'block')
+				$(subdiv).children('ul').children('li').unbind().click(function(event){
+					var index = get_menu_map(this.id)
+					var menu = get_menu_button(index)
+					review_action(menu)
+					$(subdiv).css('display', 'none')
+					event.stopPropagation();
+				})
+			}
+		})
+
+		$('#viewClose').unbind().click(function(){
+			$('#mobile_review').css('display', 'none')
+			$('#viewShow li.show_item').remove();
+		})
+	})
+
+	// 发布
+	$('#pubBt').click(function(){
+		$('#menu_pub').css('display', 'block');
+		$('#pub_add').unbind().click(function(){
+			$('#menu_pub').css('display', 'none');
+			$.post("/shop3_menu/pub", function(data){
+				$('#wxTipserr').css('display',"inline-block").css('opacity',"1")
+				$('#wxTipserr .inner').css('background-color', '#56A447' ).html('发布成功')
+				set_interval()
+			})
+		})
+		$('#pub_closed, #pub_cancel').unbind().click(function(){
+			$('#menu_pub').css('display', 'none');
+		})
+	})
+
+
 	//选中菜单
 	$(document).delegate(".inner_menu_item", 'click',function(){
 		$(".inner_menu_item").removeClass('selected')
@@ -105,9 +150,10 @@ $(document).ready(function(){
 				if(menu.dt=='text'){
 					var html =  menu.data
 					$('.tab_text').click()
-					$('.tab_img').click()
-					$('#menu_image_dialog').css('display','none')
-					var html = '<img class="wxmImg Zoomin" src="'+ menu.data +'">'
+					// $('.tab_img').click()
+					// $('#menu_image_dialog').css('display','none')
+					// var html = '<img class="wxmImg Zoomin" src="'+  +'">'
+					$('.js_editorArea').html(menu.data)
 				}else if(menu.dt=='photo'){
 					var html =  '<img class="wxmImg Zoomin" src="'+ menu.data +'">'
 					$('.tab_img').click()
@@ -138,13 +184,18 @@ $(document).ready(function(){
 	$('#sendMsg, .tab_text').click(function(){
 		$('.jsMain').css('display', 'none')
 		$('#edit').css('display', 'block') 
-		$('.js_editorArea').html('')
+		var html = ''
+		var m = $('.selected')[0]
+		var indexs = get_menu_map(m.id)
+		var menu = get_menu_button(indexs)
+		if(menu.dt == 'text'){
+			var html = menu.data
+		}
+		$('.js_editorArea').html(html)
 		$('li.tab_nav').removeClass("selected")
 		$('.tab_text').addClass("selected")
 		$('#editSave').unbind().click(function(){
 			$(this).unbind()
-			var m = $('.selected')[0]
-			var indexs = get_menu_map(m.id)
 			text = $('.js_editorArea').html()
 			$.post('/shop3_menu/set_click_action',{index: indexs, menu_key: {type: 'text', tv: text}}, function(data){
 				menujson = data
@@ -161,9 +212,10 @@ $(document).ready(function(){
 		$('li.tab_nav').removeClass("selected")
 		$(this).addClass("selected")
 		$("#menu_image_dialog input").attr("checked",false)
-		$('#menu_img_add').click(function(){
-			var m = $('.selected')[0]
-			var indexs = get_menu_map(m.id)
+		var m = $('.selected')[0]
+		var indexs = get_menu_map(m.id)
+		var menu = get_menu_button(indexs)
+		$('#menu_img_add').unbind().click(function(){
 			var objor = $("#menu_image_dialog input:checked")[0]
 			if(!objor){
 				return false;
@@ -182,7 +234,7 @@ $(document).ready(function(){
 				})
 			})
 		});
-		$('#menu_img_cancel,#menu_image_dialog .pop_closed').click(function(){
+		$('#menu_img_cancel,#menu_image_dialog .pop_closed').unbind().click(function(){
 			$('#menu_image_dialog').css('display','none')
 			$('.tab_text').click()
 		})
@@ -194,9 +246,10 @@ $(document).ready(function(){
 		$("#menu_faq_dialog input").attr("checked",false)
 		$('li.tab_nav').removeClass("selected")
 		$(this).addClass("selected")
-		$('#menu_faq_add').click(function(){
-			var m = $('.selected')[0]
-			var indexs = get_menu_map(m.id)
+		var m = $('.selected')[0]
+		var indexs = get_menu_map(m.id)
+		var menu = get_menu_button(indexs)
+		$('#menu_faq_add').unbind().click(function(){
 			var objor = $("#menu_faq_dialog input:checked")[0]
 			if(!objor){
 				return false;
@@ -217,7 +270,7 @@ $(document).ready(function(){
 				})
 		});
 
-		$('#menu_faq_cancel,#menu_faq_dialog .pop_closed').click(function(){
+		$('#menu_faq_cancel,#menu_faq_dialog .pop_closed').unbind().click(function(){
 			$('#menu_faq_dialog').css('display','none')
 			$('.tab_text').click()
 		})
@@ -333,6 +386,24 @@ $(document).ready(function(){
    		$('#menuList').append(html)
 	}
 
+	function mobile_review_list(){
+		var html = '<ul id="viewList" class="pre_menu_list">'
+		$(menujson.menu.button).each(function(index, val){
+			html += '<li id="menu_'+ index +'_review" class="pre_menu_item with3 jsViewLi">'
+			html += '<a class="jsView" href="javascript:void(0);">' + val.name + '</a>'
+			html += '<div style="display:none" class="sub_pre_menu_box jsSubViewDiv"><ul class="sub_pre_menu_list">'
+			$(val.sub_button).each(function(sub_index, sub_val){
+				html += '<li id="subMenu_menu_'+ index + '_'+ sub_index +'_review">'
+				html += '<a class="jsSubView" href="javascript:void(0);">'+ sub_val.name +'</a></li>'
+			})
+			html += ' </ul><i class="arrow arrow_out"></i><i class="arrow arrow_in"></i></div></li>'
+		})
+		html += '</ul>'
+		$("#viewList").replaceWith(html)
+	}
+
+
+
 	function checkMenuNameInput(name){
 		var length = 0 
 		for(var i=0; i< name.length; i++){
@@ -351,6 +422,26 @@ $(document).ready(function(){
 		return true
 	}
 
+	// 预览 内容
+	function review_action(men){
+		logo = $('#mobile_logo').val()
+		if(men.type == 'view'){
+			window.open (men.url, men.name)
+		}else if(men.type == 'click'){
+			var html = '<li class="show_item">'
+			html += '<img class="avatar" src="'+ logo +'">'
+			if(men.dt == 'text'){
+				html += '<div class="show_content">'+ men.data +'</div>'
+			}else if(men.dt == 'photo'){
+				html += '<img class="wxmImg Zoomin" src="' + men.data + '">'
+			}else if(men.dt == 'faq'){
+				html += '<div class="show_content">'+ men.data +'</div>'
+			}
+			html += '</li>'
+			$('#viewShow').append(html)
+		}
+	}
+
 	function show_action_content(type, menu){
 		if(type=='view'){
 			$('#view').css('display', 'block')
@@ -359,7 +450,7 @@ $(document).ready(function(){
 			$('#changeBt').css('display', 'inline-block')
 		}else if(type=='click'){
 			$('#view').css('display', 'block')
-			$("#view p").html('订阅者点击该子菜单会执行以下操作')
+			$("#view p").html('订阅者点击该子菜单会发送以下消息')
 			if(menu.dt=='photo'){
 				var html = '<img class="wxmImg Zoomin" src="'+ menu.data +'">'
 			}else{

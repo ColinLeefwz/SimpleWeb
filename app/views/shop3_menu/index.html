@@ -20,7 +20,7 @@
                             <h4>菜单管理</h4>
                             <div class="btn_wrp">                                
                                 <a class="btn btn_primary" id="addBt" href="javascript:void(0);" style="display: inline-block;">添加</a>
-                                <a class="btn btn_default" id="orderBt" href="javascript:void(0);" style="display: inline-block;">排序</a>
+                                <!-- <a class="btn btn_default" id="orderBt" href="javascript:void(0);" style="display: inline-block;">排序</a> -->
                                 <a style="display: none;" class="btn btn_primary btn_sorting" id="finishBt" href="javascript:void(0);">完成</a>
                                 <a style="display: none;" class="btn btn_default btn_sorting" id="cancelBt" href="javascript:void(0);">取消</a>&nbsp;
                             </div>
@@ -284,3 +284,55 @@
     </div>
 
 </div>
+
+<div id='mobile_review' style='display: none'>
+    <%= hidden_field_tag :logo_url, @logo, :id => 'mobile_logo' %>
+    <div id="mobileDiv" class="mobile_preview" style="display: block;z-index:999 ">    
+        <div class="mobile_preview_hd">        
+            <strong class="nickname"><%= session_shop.name %></strong>    
+        </div>    
+        <div class="mobile_preview_bd">        
+            <ul class="show_list" id="viewShow">                    
+            </ul>    
+        </div>    
+        <div class="mobile_preview_ft">        
+            <ul id="viewList" class="pre_menu_list">
+            </ul>    
+        </div>    
+        <a id="viewClose" class="mobile_preview_closed" href="javascript:void(0);">关闭</a>
+    </div>
+    <div class="mask" style="z-index:998">
+        <iframe frameborder="0" src="about:blank" style="filter:progid:DXImageTransform.Microsoft.Alpha(opacity:0);position:absolute;top:0px;left:0px;width:100%;height:100%;"></iframe>
+    </div>
+</div>
+
+
+<!-- ++++++++++++++++++发布+++++++++++++++++++ -->
+<div id='menu_pub' style='display: none;'>
+    <div id="wxDialog_3" class="dialog dialog_wrp media" style='z-index: 999; width: 720px; height: 350;  left: 300px; top: 248px;'>
+        <div class="dialog_hd">
+          <h3>温馨提示</h3>
+          <a class="pop_closed" href="javascript:;" id='pub_closed'>关闭</a>
+        </div>
+        <div class="dialog_bd">
+          <div class="page_msg simple default ">
+            <div class="inner group">
+              <span class="msg_icon_wrapper"><i class="icon_msg warn "></i></span>
+              <div class="msg_content ">
+              <h4>发布确认</h4>
+              <p>本次发布将在24小时内对所有用户生效。确认发布？</p>
+              </div>
+            </div>
+          </div>
+        </div> 
+        <div class="dialog_ft">
+          <a class="btn btn_primary js_btn" href="javascript:;" id='pub_add'>确定</a>
+          <a class="btn btn_default js_btn" href="javascript:" id='pub_cancel'>取消</a>
+        </div>
+    </div>
+    <div class="mask" style="z-index:998">
+        <iframe frameborder="0" src="about:blank" style="filter:progid:DXImageTransform.Microsoft.Alpha(opacity:0);position:absolute;top:0px;left:0px;width:100%;height:100%;"></iframe>
+    </div>
+</div>
+<!-- ++++++++++++++++++发布+++++++++++++++++++ -->
+

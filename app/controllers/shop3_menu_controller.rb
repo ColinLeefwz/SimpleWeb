@@ -4,6 +4,8 @@ class Shop3MenuController < ApplicationController
 
   def index
   	@menu = Menu.find_by_id(session[:shop_id])
+    logo = session_shop.logo
+    @logo = (logo ? logo.img.url(:t1) : '/newbackstage/images/pic1.png')
   	respond_to do |format|
   		format.html
   		format.json {render :json => @menu ? @menu.view_json : {menu: {button: []}}}
@@ -54,13 +56,20 @@ class Shop3MenuController < ApplicationController
     butn = menu.button[indexs.shift.to_i]
     butn = butn['sub_button'][indexs.first.to_i] if indexs.any?
     butn['type'] = 'click'
-    butn['key'] = "V#{session[:shop_id].to_i}_#{params[:index].join('_')}_#{Time.now.to_i}"
+    butn['key'] ||= "V#{session[:shop_id].to_i}_#{params[:index].join('_')}_#{Time.now.to_i}"
     menu.save! 
-    mk = MenuKey.new(params[:menu_key])
-    mk._id = butn['key']
-    mk.save
+    mk = MenuKey.find_by_id(butn['key'])
+    if mk
+      mk.update_attributes(params[:menu_key])
+    else
+      mk = MenuKey.new(params[:menu_key])
+      mk._id = butn['key']
+      mk.save
+    end
     render :json => menu.view_json
   end
+
+  
 
   def del
   	menu = Menu.find_by_id(session[:shop_id])
