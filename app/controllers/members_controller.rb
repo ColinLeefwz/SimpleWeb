@@ -60,7 +60,7 @@ class MembersController < ApplicationController
   def contents
     @favorite_contents = current_user.get_subscribed_sessions("ArticleSession")
     if @favorite_contents.empty?
-      @favorite_contents = ArticleSession.all(order: "RANDOM()", limit: 3)
+      @favorite_contents = ArticleSession.where.not(draft: true).order("RANDOM()").limit(3)
       @recommendation = true
     end
     @from = "content"
