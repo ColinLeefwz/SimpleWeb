@@ -61,7 +61,7 @@ class ShopTest < ActiveSupport::TestCase
 
   test "#answer_text(msg) 回复0" do
     shop = Shop.find(1)
-    assert_equal shop.answer_text('0'), "试试回复：\n01=>问题1.\n02=>问题2.\n03=>问题3.\n04=>问题4.\n05=>问题5."
+    assert_equal shop.answer_text('0'), "试试回复：\n01=>问题1\n02=>问题2\n03=>问题3\n04=>问题4\n05=>问题5"
   end
   
   test "#answer_text(msg) 回复01" do
@@ -71,7 +71,7 @@ class ShopTest < ActiveSupport::TestCase
 
   test "#answer_text(msg) 回复06" do
     shop = Shop.find(1)
-    assert_equal shop.answer_text('06'), "试试回复：\n01=>问题1.\n02=>问题2.\n03=>问题3.\n04=>问题4.\n05=>问题5."
+    assert_equal shop.answer_text('06'), "试试回复：\n01=>问题1\n02=>问题2\n03=>问题3\n04=>问题4\n05=>问题5"
   end
 
   test "#answer_text(msg) 回复s" do
