@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140102052043) do
+ActiveRecord::Schema.define(version: 20140113064157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -385,5 +385,13 @@ ActiveRecord::Schema.define(version: 20140102052043) do
 
   add_index "video_interviews", ["categories"], name: "index_video_interviews_on_categories", using: :gin
   add_index "video_interviews", ["expert_id"], name: "index_video_interviews_on_expert_id", using: :btree
+
+  create_table "visits", force: true do |t|
+    t.integer "visitable_id"
+    t.string  "visitable_type"
+    t.integer "page_views"
+  end
+
+  add_index "visits", ["visitable_id", "visitable_type"], name: "index_visits_on_visitable_id_and_visitable_type", using: :btree
 
 end
