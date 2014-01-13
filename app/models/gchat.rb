@@ -35,11 +35,8 @@ class Gchat
       Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "GNHJXC#{shop.id}#{user.id}#{Time.now.to_i}")
      else
       if pmj
-        nanmj = ["52ae690720f31813e5000031", "51f73f9fc90d8bb76a000007", "528b3a3fc90d8b2871000001", "51418836c90d8bc37b000567", 
-          "52ae669320f31813e5000027", "52ae587b20f318118300000c", "52ae575420f31813e5000007"]
-        nvmj= ["51f9e3b9c90d8ba99d000002", "51dd2c7cc90d8b670a000032", "513ed1e7c90d8b590100016f", 
-          "520c8391c90d8be3fb000003", "52ac6bd8c90d8bb3ea00001f", "52ac6e45c90d8b8f4e00002c", 
-          "52ae563fc90d8ba59e000034", "528323dec90d8b9dd6000006", "525e6079c90d8b6de8000002"] 
+        nanmj = ['527c9c2820f318e323000002']
+        nvmj= ['52ae5093c90d8b2d95000012', '525e6079c90d8b6de8000002'] 
         muid = [nil, nanmj, nvmj][reverse_render].sample(1).first
         muser = User.find_by_id(muid)
         Xmpp.send_chat(muser.id, user.id, ": 今年春节，我也要回#{city}过年噢，快跟我打个招呼吧～", "GNHJSL#{shop.id}#{user.id}#{Time.now.to_i}")
