@@ -23,7 +23,3 @@
 every 15.minutes do
   rake "google_analytics:update_pageviews"
 end
-
-every 1.minute do
-  command "echo 'hero' >> ~/Desktop/log.txt"
-end
