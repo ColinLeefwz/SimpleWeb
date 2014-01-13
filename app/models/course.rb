@@ -18,6 +18,9 @@ class Course < ActiveRecord::Base
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions
 
+  # page view statistics
+  has_one :visit, as: :visitable
+
   has_attached_file :cover,
     storage: :s3,
     s3_credentials: {

@@ -26,8 +26,8 @@ class Session < ActiveRecord::Base
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions
 
-  # has_and_belongs_to_many :enroll_users, class_name: 'User'
-
+  # page view statistics
+  has_one :visit, as: :visitable
 
   def free?
     self.price <= 0.0
