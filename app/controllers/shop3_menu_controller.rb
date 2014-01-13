@@ -56,7 +56,7 @@ class Shop3MenuController < ApplicationController
     butn = menu.button[indexs.shift.to_i]
     butn = butn['sub_button'][indexs.first.to_i] if indexs.any?
     butn['type'] = 'click'
-    butn['key'] ||= "V#{session[:shop_id].to_i}_#{params[:index].join('_')}_#{Time.now.to_i}"
+    butn['key'] ||= "V#{session[:shop_id].to_i}_#{Time.now.to_i}"
     menu.save! 
     mk = MenuKey.find_by_id(butn['key'])
     if mk
