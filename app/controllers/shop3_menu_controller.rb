@@ -69,7 +69,10 @@ class Shop3MenuController < ApplicationController
     render :json => menu.view_json
   end
 
-  
+  def pub
+    session_shop.set(:has_menu, true)
+    render :json => 1
+  end
 
   def del
   	menu = Menu.find_by_id(session[:shop_id])
@@ -82,9 +85,5 @@ class Shop3MenuController < ApplicationController
   	menu.save
   	render :json => menu.view_json
   end
-
-
-
-  
 
 end
