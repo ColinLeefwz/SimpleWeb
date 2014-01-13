@@ -24,12 +24,13 @@ class PageViewFetcher
   end
 
   def self.process_data(queries)
-    expression = /\/(?<type>\b(sessions|courses|video_interviews)\b)\/(?<id>\d+)[\w-]*$/
+    expression = /\/(?<type>\b(sessions|article|courses|video_interviews)\b)\/(?<id>\d+)[\w-]*$/
 
     queries.each do |query|
       result = expression.match(query.pagePath)  # test the path
       if result
         visitable_type = result[:type].singularize.camelize
+        visitable_type = "Session" if visitable_type == "Article"
         visitable_id = result[:id].to_i
         page_views = query.pageviews.to_i
 
