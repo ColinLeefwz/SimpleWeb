@@ -30,6 +30,8 @@ gem 'mandrill-api'
 gem 'cancan'
 gem 'remotipart'
 gem 'newrelic_rpm'
+gem 'legato'  # google analytics reporting api client
+gem 'google-api-client'  # official google analytics gem
 
 group :doc do
   gem 'sdoc', require: false
