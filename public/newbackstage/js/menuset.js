@@ -10,6 +10,7 @@ $(document).ready(function(){
 		$('#popupForm_ .fail').css('display', 'none')
 		if($(this).attr('id')=='addBt'){
 			var index = null
+			var leg = 8
 			if(menujson.menu.button.length >=3 ){
 				$('#wxTipserr').css('display',"inline-block").css('opacity',"1")
 				$('#wxTipserr .inner').css('background-color', '#EAA000' ).html('一级菜单最多只能三个')
@@ -18,6 +19,7 @@ $(document).ready(function(){
 			}
 		}else{
 			var index = get_menu_map($(this).parent().parent().attr('id'))[0]
+			var leg = 16
 			if(menujson.menu.button[index].sub_button.length >=5 ){
 				$('#wxTipserr').css('display',"inline-block").css('opacity',"1")
 				$('#wxTipserr .inner').css('background-color', '#EAA000' ).html('二级菜单最多只能五个')
@@ -26,10 +28,11 @@ $(document).ready(function(){
 			}
 		}
 		$("#dialog_display").css("display", "block")
+		$('#dialog_display .frm_label').html('菜单名称名字不多于'+ leg/2 +'个汉字或'+ leg +'个字母')
 		$("#jsbtn0").unbind().click(function(){
 			name = $('#menu_val').val();
 			name = name.replace(/^[ ]*|[ ]*$/g,'')
-			if(!checkMenuNameInput(name)){
+			if(!checkMenuNameInput(name, index)){
 				return 
 			}
 			$(this).unbind()
@@ -54,7 +57,7 @@ $(document).ready(function(){
 		$("#jsbtn0").unbind().click(function(){
 			
 			name = $('#menu_val').val()
-			if(!checkMenuNameInput(name)){
+			if(!checkMenuNameInput(name, index)){
 				return 
 			}
 			$(this).unbind()
@@ -404,14 +407,15 @@ $(document).ready(function(){
 
 
 
-	function checkMenuNameInput(name){
+	function checkMenuNameInput(name, index){
 		var length = 0 
 		for(var i=0; i< name.length; i++){
 			length += (name[i].charCodeAt() <= 127 ? 1 : 2)
 		}
-		if(length > 8){
+		var leg = index ? 16 : 8
+		if(length > leg){
 			$('#popupForm_ .fail').css('display', 'block')
-			$('#popupForm_ .fail span').html('菜单名称名字不多于4个汉字或8个字母')
+			$('#popupForm_ .fail span').html('菜单名称名字不多于'+ leg/2 +'个汉字或'+ leg +'个字母')
 			return false
 		}
 		if(length==0){
@@ -419,6 +423,7 @@ $(document).ready(function(){
 			$('#popupForm_ .fail span').html('输入框内容不能为空')
 			return false
 		}
+
 		return true
 	}
 
