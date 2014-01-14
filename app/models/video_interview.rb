@@ -9,17 +9,19 @@ class VideoInterview < ActiveRecord::Base
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions
 
+  # page view statistics
+  has_one :visit, as: :visitable
 
   attached_file :attached_video_hd
   attached_file :attached_video_sd
   attached_file :cover
 
-	def to_param
-		permalink
-	end
+  def to_param
+    permalink
+  end
 
-	protected
-	def permalink
-		"#{id}-#{title.parameterize}"
-	end
+  protected
+  def permalink
+    "#{id}-#{title.parameterize}"
+  end
 end

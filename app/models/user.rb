@@ -126,11 +126,15 @@ class User < ActiveRecord::Base
 
   def self.find_for_linkedin(access_token, sign_in_resource=nil)
     data = access_token.info
-    user = User.where(email: data["email"], provider: data["provider"]).first
+    user = User.where(email: data["email"], provider: 'linkedin').first
 
     unless user
-      user = User.create(email: data["email"],
-                         password: Devise.friendly_token[0,20])
+      user = User.create(first_name: data['first_name'],
+                         last_name: data['last_name'],
+                         email: data["email"],
+                         password: Devise.friendly_token[0,20],
+                         provider: 'linkedin'
+                        )
     end
     user
   end

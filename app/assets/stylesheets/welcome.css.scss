@@ -3,12 +3,12 @@ $white: #ffffff;
 $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
 
 html {
-  height:100%;
+	height:100%;
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+	text-decoration: none;
+	color: inherit;
 }
 
 body {
@@ -17,141 +17,145 @@ body {
 	font-size: 17px;
 	background: #edefec;
 	margin: 0;
-  position: relative;
-  min-height:100%;
-  padding: 1px;
-  background-image: image-url("bg.jpg");
+	position: relative;
+	min-height:100%;
+	padding: 1px;
+	background-image: image-url("bg.jpg");
 }
 
 #content{
-  margin: 0 auto;
-  padding-bottom: 50px;
+	margin: 0 auto;
+	padding-bottom: 50px;
 
-  .item {
-    background: $white;
-    -webkit-box-shadow: $shadow_param;
-    box-shadow: $shadow_param;
-    width: 330px;
-    margin: 20px;
-    line-height: 30px;
+	.item {
+		background: $white;
+		-webkit-box-shadow: $shadow_param;
+		box-shadow: $shadow_param;
+		width: 330px;
+		margin: 20px;
+		line-height: 30px;
 
-    .box-header{
-      border-bottom: thin solid #cccccc;
-      display: inline-block;
-      width: 100%;
-      .portrait{
-        float: left;
-        img{
-          border-radius: 52px;
-          width: 50px;
-          height: 50px;
-          margin: 10px;
-        }
-        .expert-name {
-          font-size: 14px;
-          font-family: 'Latoitalic';
-          display: inline-block;
-          a{
-            color: #B3B3B3;
-          }
-        }
-      }
-      .content-type{
-        float: right;
-        margin-top: 10px;
-        margin-right: 5px;
-        text-align: right;
-        img{
-          width: 30px;
-          height: 30px;
-          padding-bottom: 7px;
-        }
-        p{
-          font-size: 14px;
-          font-family: Latobold;
-          color: #B3B3B3;
-          line-height: 0.7;
-        }
-      }
-    }
+		.box-header{
+			border-bottom: thin solid #cccccc;
+			display: inline-block;
+			width: 100%;
+			.portrait{
+				float: left;
+				img{
+					border-radius: 52px;
+					width: 50px;
+					height: 50px;
+					margin: 10px;
+				}
+				.expert-name {
+					font-size: 14px;
+					font-family: 'Latoitalic';
+					display: inline-block;
+					a{
+						color: #B3B3B3;
+					}
+				}
+			}
+			.content-type{
+				float: right;
+				margin-top: 10px;
+				margin-right: 5px;
+				text-align: right;
+				img{
+					width: 30px;
+					height: 30px;
+					padding-bottom: 7px;
+				}
+				p{
+					font-size: 14px;
+					font-family: Latobold;
+					color: #B3B3B3;
+					line-height: 0.7;
+				}
+			}
+		}
 
-    .title {
-      font-family: Latoreg;
-      font-size: 22px;
-      text-align: left;
-      margin: 0px 10px 5px 10px;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-      line-height: 25px;
-      a{
-      color: #6D6D6D;
-      }
+		.title {
+			// font-family: Latoreg;
+			font-family: Oswaldreg;
+			font-size: 22px;
+			text-align: left;
+			margin: 0px 10px 5px 10px;
+			// font-weight: bold;
+			letter-spacing: 0.5px;
+			line-height: 25px;
+			a{
+				color: #6D6D6D;
+			}
 
-      a:hover{
-        text-decoration: none;
-        color: #777777;
-      }
-    }
+			a:hover{
+				text-decoration: none;
+				color: #777777;
+			}
+		}
 
-    .cover{
-      text-align: center;
-      padding: 20px;
-      .video-img {
-        cursor: pointer;
-        position: relative;
-        min-height: 158px; 
+		.cover{
+			text-align: center;
+			padding: 20px;
+			.video-img {
+				cursor: pointer;
+				position: relative;
+				min-height: 158px; 
 
-        .play-video-icon{
-          position: absolute;
-          width: 20%;
-          top: 40%;
-          left: 40%;
-          z-index: 10;
-        }
-      }
-    }
+				.play-video-icon{
+					position: absolute;
+					width: 20%;
+					top: 40%;
+					left: 40%;
+					z-index: 10;
+				}
+			}
+		}
 
-    .caption{
-      padding: 10px;
+		.caption{
+			padding: 10px;
 
-      .description{
-        text-align: left;
-        font-family: Latoreg;
-        font-size: 14px;
-        color: #575757;
-        line-height: 18px;
-      }
-      p.learn-more {
-        text-align: left;
-        padding-left: 5px;
+			.description{
+				text-align: left;
+				font-family: Latoreg;
+				font-size: 14px;
+				color: #575757;
+				line-height: 18px;
+			}
+			p.learn-more {
+				text-align: left;
+				padding-left: 5px;
 
-        a{
-          font-family: Latoitalic;
-          font-size: 14px;
-          color: #AF6A82;
-        }
+				a{
+					font-family: Latoitalic;
+					font-size: 14px;
+					color: #AF6A82;
+				}
 
-        a:hover{
-          text-decoration: none;
-          color: #575757;
-        }
-      }
-      .social-share-icons {
-        text-align: right;
+				a:hover{
+					text-decoration: none;
+					color: #575757;
+				}
+			}
+			.social-share-icons {
+				text-align: right;
+			}
+		}
+	}
+}
 
-      }
-    }
-  }
+.padding-10{
+	padding: 10px;
 }
 
 // Isotope Filtering
 .isotope-item{
-  z-index: 0;
+	z-index: 0;
 }
 
 .isotope-hidden.isotope-item {
-  pointer-events: none;
-  z-index: 1;
+	pointer-events: none;
+	z-index: 1;
 }
 
 .social-share {

@@ -54,6 +54,7 @@
             %a{href: "#tab3", data: {toggle: "tab"}}Education
 
       .tab-content
+        -# `Overview` tab
         .tab-pane.active#tab1
           %div
             - if @expert.intro_video.present?
@@ -62,11 +63,14 @@
             - expertise = @profile.expertise || "Expertise to be filled"
             = expertise.html_safe
             .clear-fix
+
+        -# `Career` tab
         .tab-pane#tab2
           %div
             - career = @profile.career || "Career to be filled"
             = career.html_safe
 
+        -# `Education` tab
         .tab-pane#tab3
           %div
             - education = @profile.education || "Education to be filled"
