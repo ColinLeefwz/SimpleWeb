@@ -9,6 +9,7 @@ class MobileSpace
   field :full_name
   field :description
   field :menu, type: Array
+  field :menu2, type: Array
   field :storage_used, :default => 0
 
   field :flag, :type => Boolean, :default => false

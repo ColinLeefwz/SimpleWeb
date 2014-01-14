@@ -5,7 +5,7 @@ class SmsSender
   @queue = :sms
 
   def self.perform(phone,text)
-    send_sms_xuanwu(phone, text)
+    send_sms_ihuiyi(phone, text)
   end
   
   def self.send_sms_ihuiyi(phone, text)

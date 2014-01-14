@@ -68,7 +68,7 @@ class FollowInfoController < ApplicationController
   def friend_locs
     arr = params[:ids].split(",").map do |id|
       loc = User.last_loc_cache(id)
-      {id:id}.merge(User.last_loc_to_hash(loc))
+      {id:id}.merge(User.find_by_id(id).last_loc_to_hash(loc))
     end
     render :json => arr.to_json
   end

@@ -34,6 +34,7 @@ class Shop
   field :creator, type: Moped::BSON::ObjectId #该地点的创建者
   field :seller_id, type: Moped::BSON::ObjectId #负责该地点销售的人员
   field :group_id, type: Moped::BSON::ObjectId #旅行团id
+  field :has_menu, type: Boolean #该地点有自定义菜单
   
   field :i, type: Boolean #用户添加的地点 已处理标记
   field :utype #用户添加的类型
@@ -207,6 +208,7 @@ class Shop
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
     hash.merge!( {"user"=>total_user})
+    hash.merge!( {"has_menu"=>1}) if self.has_menu
     hash
   end
   
@@ -254,18 +256,21 @@ class Shop
   def preset_p(photos)
     if self.t == 10 #写字楼
       p=Photo.find_by_id("5273013320f318640e000009") #嗮前台
+      return photos if p.nil?
       p.set(:room, self.id)
       p.set(:od, 1)
       return [p] + photos[0..-2]
     end
     if self.t == 11 #住宅
       p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮前台
+      return photos if p.nil?
       p.set(:room, self.id)
       p.set(:od, 1)
       return [p] + photos[0..-2]
     end
     if self.t == 12 #学校
       p=Photo.find_by_id("52721b67c90d8b4764000002") #嗮桌面
+      return photos if p.nil?
       p.set(:room, self.id)
       p.set(:od, 1)
       return [p] + photos[0..-2]
@@ -614,7 +619,7 @@ class Shop
   def answer_text_default
     faqs = self.find_faqs.to_a
     return "本地点未启用数字问答系统" if faqs.blank?
-    "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}."}.join("\n")
+    "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}"}.join("\n")
   end
 
   def weixin_answer_text(msg)

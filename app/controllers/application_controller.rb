@@ -115,6 +115,10 @@ class ApplicationController < ActionController::Base
     is_kx_user?(session[:user_id].to_s)
   end
 
+  def is_co_user?(uid)
+    $redis.sismember('CoUsers', uid)
+  end
+
   def session_user
     return nil if session[:user_id].nil?
     u=User.find_by_id(session[:user_id])

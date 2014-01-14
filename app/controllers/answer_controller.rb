@@ -26,6 +26,7 @@ class AnswerController < ApplicationController
       tryst(msg, user, shop)
       return render :text => "1"
     end
+
     return render :text => "1" if shop.preset?(user) && pre_answer(msg, user, shop)
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"
@@ -290,6 +291,5 @@ class AnswerController < ApplicationController
      link = {"01" => "dface://scheme/getphoto/camera", "02" => 'dface://scheme/near/user'}[msg]
      return Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "FAQ#{shop.id}#{user.id}#{Time.now.to_i}")
   end
-
 
 end

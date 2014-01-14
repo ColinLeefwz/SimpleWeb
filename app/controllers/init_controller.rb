@@ -50,7 +50,7 @@ class InitController < ApplicationController
          ["2.4.0","全面兼容IOS7，建议立即升级\n现场图文效果改进",true],
          ["2.5.2","新增好友间语音聊天功能\n定位更准确，更易用",true],
          ["2.5.3","新增好友间语音聊天功能\n增加了右滑手势来查看菜单\n定位更准确，更易用",true],
-         ["2.6.2","性能优化，使用过程更顺畅\n修复了一些软件中存在的Bug",true],
+         ["2.6.3","性能优化，使用过程更顺畅\n语音聊天增加听筒支持",true],
         ]
   
   def upgrade
@@ -64,7 +64,10 @@ class InitController < ApplicationController
   end
   
   def debug
-    Resque.enqueue(XmppMsg, params[:uid1], params[:uid2], params[:str])
+    Rails.cache.fetch("XMPPDEBUG#{params[:uid2]}", :expires_in => 5.minutes) do
+      Resque.enqueue(XmppMsg, params[:uid1], params[:uid2], params[:str])
+      "1"
+    end
     render :json => {ok:1}.to_json
   end
 

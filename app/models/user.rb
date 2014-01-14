@@ -14,7 +14,7 @@ class User
   field :birthday #生日
   #field :password #不再保存该密码，TODO：等稳定后删除数据库的中password
   field :psd #手机登录用户设置的密码
-  field :invisible, type: Integer #隐身模式，1对陌生人隐身，2对所有人隐身
+  field :invisible, type: Integer #隐身模式，1对黑名单隐身，2对陌生人隐身，3对所有人隐身
   field :signature #签名
   field :job #职业说明
   field :jobtype, type: Integer #职业类别
@@ -338,7 +338,7 @@ class User
   #当前用户的最后位置。 user_id 是查看当前用户的user
   def last_location( user_id=nil )
     return {:last => "隐身", :time => ""} if user_id && block?(user_id)
-    User.last_loc_to_hash(last_loc)
+    last_loc_to_hash(last_loc)
   end
   
   def lat_loc_arr(checkin, shop_name=nil)
@@ -357,9 +357,11 @@ class User
     end
   end
   
-  def self.last_loc_to_hash(loc)
+  def last_loc_to_hash(loc)
     return {:last => "", :time => ""} if loc.nil? || loc.size==0
-    diff = Time.now.to_i - loc[0]
+    cati = $redis.zscore("UA#{loc[3]}",self.id)  # 最后一次签到的时间 to 最后一次摇入的时间
+    cati = loc[0] unless cati
+    diff = Time.now.to_i - cati
     tstr = User.time_desc(diff)
     dstr = loc[1]
     {:last => "#{tstr} #{dstr}", :time => tstr}
@@ -393,6 +395,10 @@ class User
   
   def relation_hash( user_id )
     {:friend => follower?(user_id), :follower => friend?(user_id)}
+  end
+  
+  def stranger?(user_id)
+    !friend?(user_id) && !fan?(user_id)
   end
   
   def friend?(user_id)

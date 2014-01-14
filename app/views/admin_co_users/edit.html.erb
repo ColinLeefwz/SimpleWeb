@@ -1,0 +1,18 @@
+<h2>
+  <%= @co_user.user_name %>
+</h2>
+<%= form_for(@co_user, {:url => "/admin_co_users/update"} ) do |f| %>
+<%= hidden_field_tag :id, @co_user.id %>
+  <div class="field">
+    姓名:<br />
+    <%= f.text_field :name %>
+  </div>
+
+  <br/>
+  <div class="field">
+    来源:<br />
+    <%= f.select :type, ['脸脸', '企博', '马甲'] %>
+  </div>
+  <br/>
+  <%= f.submit '提交' %>
+<% end %>

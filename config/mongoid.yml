@@ -21,9 +21,7 @@ production:
       database: dface
       hosts:
         - 10.135.44.107:27017
-        - 10.135.44.204:27017
-        - 10.241.42.47:27017
-        - 10.132.36.138:27017
+        - 10.161.241.16:27017		
       options:
         safe: true
         consistency: :eventual
@@ -37,14 +35,4 @@ test:
       options:
         safe: true
         consistency: :strong
-
-test2:
-  sessions:
-    default:
-      database: dface
-      hosts:
-        - 10.132.36.138:27017
-      options:
-        safe: true
-        consistency: :eventual
 

@@ -44,10 +44,14 @@ class Photo
   end
   
   def desc_multi
+    "#{total_str}#{desc}"
+  end
+  
+  def total_str
     if total && total>1
-      "#{total}:#{desc}"
+      "#{total}:"
     else
-      desc
+      ""
     end
   end
   
@@ -70,6 +74,19 @@ class Photo
     Qiniu::RS.generate_upload_token(upopts)
   end
   
+  def enqueue_in(number_of_seconds_from_now, klass, *args)
+    if number_of_seconds_from_now<1
+      Resque.enqueue(klass, *args) 
+    else
+      Resque.enqueue_in(number_of_seconds_from_now, klass, *args)
+    end
+  end
+  
+  def enqueue_job(klass, *args)
+    sec = total.to_i*5 #等待多图上传完成，暂不处理多图上传失败
+    #TODO: 多图实际判断全部传成功
+    enqueue_in(sec.seconds,klass, *args)
+  end
   
   def after_async_store
     self.add_to_checkin
@@ -82,11 +99,11 @@ class Photo
     if weibo || qq || (wx && wx>0)
       send_coupon
       Lord.assign(room,user_id) if t==1 && desc && desc.index("我是地主")
-      Resque.enqueue(PhotoNotice, self.id) unless Os.overload?
+      enqueue_job(PhotoNotice, self.id) unless Os.overload?
       #Rails.cache.delete("UP#{self.user_id}-5")
     end
     return if ENV["RAILS_ENV"] == "test"
-    Resque.enqueue(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc_multi}", mid ,1)
+    enqueue_job(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc_multi}", mid ,1)
     rand_like
     if room==$zwyd.to_s
       gen_zwyd
@@ -150,14 +167,14 @@ class Photo
   
   def nyd_send_link
     desc = self.desc
-    desc = "" if desc.nil?
+    desc = "新年快乐" if desc.nil? || desc==""
     desc = desc[10..-1] if desc[0,10]=='#我的2014心愿#'
-    txt = "[img:faqnew_year#{self.id}]快来看！习主席为#{self.user.name}发来了2014新年祝福！" 
+    txt = "[img:faqnyd#{self.id}]快来看！有神秘大人物发来了2014新年祝福： #{desc}。" 
     url = "http://shop.dface.cn/new_year_wish?id=#{self.id}"
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQnyd#{self.id}")
     attrs = " NOLOG='1'  url='#{url}' "
     ext = "<x xmlns='dface.url'>#{url}</x>"
-    Xmpp.send_chat($gfuid, self.user_id, "快来看！习主席为#{self.user.name}发来了2014新年祝福！ #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
+    Xmpp.send_chat($gfuid, self.user_id, "快来看！神秘大人物为#{self.user.name}发来了2014新年祝福！ #{url}", "nyd#{self.id}#{Time.now.to_i}" , " NOLOG='1' " )
     Xmpp.send_link_gchat($gfuid, self.room.to_i, self.user_id, txt,url, "FAQnyd#{self.id}")
   end
   
@@ -332,7 +349,19 @@ class Photo
     end
     {photos: photos, thumb2s: thumbs}
   end
-
+  
+  def thumb2_urls
+    return "" if total.nil? || total<2
+    str = multi_photos[:thumb2s].join(",")
+    "<x xmlns='dface.thumb2s'>#{str}</x>"
+  end
+  
+  def photos_urls
+    return "" if total.nil? || total<2
+    str = multi_photos[:photos].join(",")
+    "<x xmlns='dface.photos'>#{str}</x>"
+  end
+  
   
   def logo_thumb_hash
     {:logo => self.img.url, :logo_thumb2 => self.img.url(:t2)  }
@@ -459,6 +488,12 @@ class Photo
     Photo.where({like: {"$exists" => true}}).each do |photo|
       photo.like.each{|x| $redis.zadd("Like#{photo.id}", x['t'].to_i, x['id']) }
     end
+  end
+  
+  def self.delete(photo)
+    Del.insert(photo)
+    Gchat.delete_all(mid: photo.mid)
+    photo.destroy
   end
 
 

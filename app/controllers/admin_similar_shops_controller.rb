@@ -26,9 +26,9 @@ class AdminSimilarShopsController < ApplicationController
   end
 
   def ajax_del
-    similar_shop = SimilarShop.find(params[:ssid])
+    similar_shop = SimilarShop.find_by_id(params[:ssid])
     if ENV["RAILS_ENV"] == "production"
-      shop = Shop.find(params[:sid])
+      shop = Shop.find_by_id(params[:sid])
       shop.shop_del
     end
 
@@ -42,9 +42,9 @@ class AdminSimilarShopsController < ApplicationController
   end
 
   def ajax_internal
-    similar_shop = SimilarShop.find(params[:ssid])
+    similar_shop = SimilarShop.find_by_id(params[:ssid])
     if ENV["RAILS_ENV"] == "production"
-      shop = Shop.find(params[:sid])
+      shop = Shop.find_by_id(params[:sid])
       pshop = Shop.find_by_id(params[:msid])
       if pshop
         pshop.shops = pshop.shops.to_a << shop.id.to_i unless pshop.shops.to_a.include?(shop.id.to_i)
@@ -62,9 +62,9 @@ class AdminSimilarShopsController < ApplicationController
   end
 
   def ajax_merge_del
-    similar_shop = SimilarShop.find(params[:ssid])
+    similar_shop = SimilarShop.find_by_id(params[:ssid])
     if ENV["RAILS_ENV"] == "production"
-      shop = Shop.find(params[:sid])
+      shop = Shop.find_by_id(params[:sid])
       shop.merge_to(params[:msid])
     end
 
@@ -78,13 +78,13 @@ class AdminSimilarShopsController < ApplicationController
   end
 
   def ajax_cancel
-    similar_shop = SimilarShop.find(params[:ssid])
+    similar_shop = SimilarShop.find_by_id(params[:ssid])
     similar_shop.set(:flag, true)
     render :json => {}
   end
 
   def ajax_pause
-    similar_shop = SimilarShop.find(params[:ssid])
+    similar_shop = SimilarShop.find_by_id(params[:ssid])
     similar_shop.set(:flag, false)
     render :json => {}
   end

@@ -2222,7 +2222,7 @@ function startGame2(){
     }
 }
 window.addEventListener("load", function () {
-    document.getElementById('loading').innerHTML = ' <br/><br/><br/><br/><h1>游戏介绍</h1><br/>向←滑动:  底盘顺时针转动<br/>向→滑动:  底盘逆时针转动 <br/>向 ↑ 滑动:     变形<br/> 向 ↓ 滑动: 快速降落<br/>\n\
+    document.getElementById('loading').innerHTML = '<br/><br/><br/><br/><h1>游戏介绍</h1><br/>向←滑动:  底盘顺时针转动<br/>向→滑动:  底盘逆时针转动 <br/>向 ↑ 滑动:     变形<br/> 向 ↓ 滑动: 快速降落<br/>\n\
 <br/> 当一个完整的水平环15块被填满该行将消减，并获得100的积分; 如果多行被同时消减，还能获取额外的积分; 快速降落也能获取额外的积分。\n\
 <br/><br/> <a onclick="startGame2()">开始</a>';
 }, false);

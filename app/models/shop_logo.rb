@@ -17,7 +17,7 @@ class ShopLogo
   end
 
   def self.shop_logo(shop_id)
-    (self.where({shop_id: shop_id}).sort({_id: -1}).entries).first
+    self.where({shop_id: shop_id}).sort({_id: -1}).first
   end
 
   def logo_thumb_hash

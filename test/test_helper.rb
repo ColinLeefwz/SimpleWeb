@@ -12,15 +12,12 @@ class ActiveSupport::TestCase
    
   end
 
-  def db_connection
-    db_config = YAML.load(File.open(Rails.root.to_s+"/config/mongoid.yml"))['test']['sessions']['default']
-    host, port = db_config['hosts'].first.split(':')
-    connection = Mongo::Connection.new(host, port)
-    connection.db(db_config['database'])
-  end
 
   def reload(file_name)
-    db_connection.eval(File.read("#{Rails.root}/test/fixtures/#{file_name}"))
+    User.collection.database.session.cluster.with_primary do |node|
+      dbname = User.collection.database.name
+      node.command(dbname, eval: File.read("#{Rails.root}/test/fixtures/#{file_name}"))
+    end
   end
 
   def session_user

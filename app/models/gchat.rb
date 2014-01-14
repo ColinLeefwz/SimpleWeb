@@ -12,6 +12,44 @@ class Gchat
     option.delegate :name, :gender, :birthday, :weibo_home,:show_gender, :to => :user
   end
 
+  before_create :tryst2 
+
+  # @@@我要回＋‘目的地’
+  def tryst2
+     return if self.txt[0,3] != '我要回' || sid.to_i !=  21838499 
+     msg = self.txt
+     user = self.user
+     shop = self.shop
+     reverse_render = [nil, 2, 1][user.gender.to_i]
+     return false if reverse_render.nil?
+     city = msg.sub('我要回','')
+     muid = Termini.where({city: city, gender: reverse_render }).map{|m| m.uid}.sample(1).first
+     termini = Termini.new({uid: user.id, city: city, gender: user.gender })
+     pmj = termini.save
+     ta = [nil,"他", "她"][reverse_render]
+     if muid
+      muser = User.find_by_id(muid)
+      Xmpp.send_chat(muser.id, user.id, ": 今年春节，我也要回#{city}过年噢，快跟我打个招呼吧～", "GNHJSL#{shop.id}#{user.id}#{Time.now.to_i}")
+      link = nil
+      text = "#{ta}，叫#{muser.name}😊 今年春节#{ta}也要回#{city}噢！老乡见老乡，两眼泪汪汪😂 赶快返回对话页，和#{ta}打个招呼拉着小手一起回家过年吧！"
+      Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "GNHJXC#{shop.id}#{user.id}#{Time.now.to_i}")
+     else
+      if pmj
+        nanmj = ['527c9c2820f318e323000002']
+        nvmj= ['52ae5093c90d8b2d95000012', '525e6079c90d8b6de8000002'] 
+        muid = [nil, nanmj, nvmj][reverse_render].sample(1).first
+        muser = User.find_by_id(muid)
+        Xmpp.send_chat(muser.id, user.id, ": 今年春节，我也要回#{city}过年噢，快跟我打个招呼吧～", "GNHJSL#{shop.id}#{user.id}#{Time.now.to_i}")
+        link = nil
+        text = "#{ta}，叫#{muser.name}😊 今年春节#{ta}也要回#{city}噢！老乡见老乡，两眼泪汪汪😂 赶快返回对话页，和#{ta}打个招呼拉着小手一起回家过年吧！"
+        Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "GNHJXC#{shop.id}#{user.id}#{Time.now.to_i}")
+      else
+        text = '😢暂时没有和你同路的TA啦，过会再试试吧！也可戳我找寻同城的小伙伴噢～😉'
+        link = 'dface://scheme/near/user' 
+        Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "GNHJXC#{shop.id}#{user.id}#{Time.now.to_i}")
+      end
+     end
+  end
   
   def user
     User.find_by_id(self.uid)

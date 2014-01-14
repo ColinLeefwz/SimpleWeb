@@ -43,6 +43,9 @@
         <%= link_to '可信', "javascript:void(0)", :onclick => "ajaxKx($(this), '#{user.id}')" if !$redis.sismember('KxUsers', user.id) %>
       </td>
       <td>
+        <%= link_to '授权', "javascript:void(0)", :onclick => "ajaxCo($(this), '#{user.id}')" if !$redis.sismember('CoUsers', user.id) %>
+      </td>
+      <td>
         <%= link_to '详情', "/admin_users/show?id=#{user.id}" %>
       </td>
     </tr>
@@ -61,6 +64,10 @@
 
   function ajaxKx(obj, id){
     $.get("/admin_users/ajax_kx", {id: id}, function(){ obj.replaceWith("已添加")})
+  }
+
+  function ajaxCo(obj, id){
+    $.get("/admin_users/ajax_co", {id: id}, function(){ obj.replaceWith("已添加")})
   }
 
 

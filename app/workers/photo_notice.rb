@@ -15,24 +15,10 @@ class PhotoNotice
     return if $redis.sismember("UnBroadcast", shop.id.to_s)
     user.fans.each do |u|
       next if u.id.to_s == $gfuid
-      str = "[img:#{pid}]#{photo.user.name}在#{photo.shop.name}分享了一张图片"
+      str = "[img:#{pid}]#{photo.total_str}#{photo.user.name}在#{photo.shop.name}分享了图片"
       str += ",#{photo.desc}" unless photo.desc.nil?
-      if UserDevice.user_ver_redis(u.id).to_f>=2.3
-        shop = photo.shop
-        Resque.enqueue(XmppMsg, user.id, u.id, str, "FEED#{pid}#{u.id}", " NOLOG='1' NOPUSH='1' SID='#{shop.id}' SNAME='#{shop.name}' ", "<x xmlns='dface.shop' SID='#{shop.id}' SNAME='#{shop.name}' ></x>")
-      else
-        old_notice(photo, user, u, str)
-      end
-    end
-  end
-  
-  def self.old_notice(photo, user, u, str)
-    uid = user.id
-    if Rails.cache.read("PhotoFan#{uid}")
-      Resque.enqueue(XmppMsg, user.id, u.id, str, "NOPUSH#{photo.id}#{u.id}", " NOLOG='1'  NOPUSH='1' ")
-    else
-      Resque.enqueue(XmppMsg, user.id, u.id, str,"#{photo.id}#{u.id}"," NOLOG='1' ")  
-      Rails.cache.write("PhotoFan#{uid}", 1, :expires_in => 8.hours)      
+      shop = photo.shop
+      Resque.enqueue(XmppMsg, user.id, u.id, str, "FEED#{pid}#{u.id}", " NOLOG='1' NOPUSH='1' SID='#{shop.id}' SNAME='#{shop.name}' ", "<x xmlns='dface.shop' SID='#{shop.id}' SNAME='#{shop.name}' ></x>#{photo.thumb2_urls}#{photo.photos_urls}")
     end
   end
 
@@ -54,7 +40,7 @@ class PhotoNotice
     token = user.tk
     return unless token
     Resque.enqueue(PushMsg, token, "",
-     "#{user.name}在#{shop.name}分享了一张照片，快去看看吧",id)
+     "#{user.name}在#{shop.name}分享了照片，快去看看吧",id)
   end
     
 end
