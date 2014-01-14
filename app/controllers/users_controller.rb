@@ -28,13 +28,18 @@ class UsersController < ApplicationController
       format.js{
         the_followed_id = params[:the_followed]
 				followed_user = User.find the_followed_id
-
-        if current_user.try(:follow?, followed_user)
-          current_user.unfollow(followed_user)
-        else
-          current_user.follow(followed_user)
+        
+        if current_user.blank?
+          render js: "window.location='#{new_user_session_path}'"
+          flash[:alert] = "Sorry! You have to sign in to follow an expert"
+        elsif
+          if current_user.try(:follow?, followed_user)
+            current_user.unfollow(followed_user)
+          else
+            current_user.follow(followed_user)
+          end
+          render nothing: true
         end
-        render nothing: true
       }
     end
   end
