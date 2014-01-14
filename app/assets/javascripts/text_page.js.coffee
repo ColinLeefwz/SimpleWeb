@@ -29,11 +29,11 @@ favorite_click = ->
 	favorite_icon_img()
 
 $(document).ready ->
-	favorite_click()
+	# favorite_click()
 	favorite_icon_img()
 
 $(document).on 'page:load', ->
-	favorite_click()
+	# favorite_click()
 	favorite_icon_img()
 
 $(document).on 'ajax:success', ->
