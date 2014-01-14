@@ -12,12 +12,12 @@
 
       -# note: there is no place to edit a video interview now
       - if item.is_a? ArticleSession
-        %h4= link_to 'edit', edit_content_session_path(item), remote: true
+        %h4
+          = link_to "edit", edit_content_session_path(item), remote: true
+          - if item.try(:draft)
+            = "|"
+            = link_to "post it", post_a_draft_session_path(item), remote: true
 
-    .something
-      - if item.try(:draft)
-        = "this is a draft |"
-        = link_to "post it", post_a_draft_session_path(item), remote: true
   .draft-ribbon
     - if item.try(:draft)
       = image_tag("draft_ribbon.png")
