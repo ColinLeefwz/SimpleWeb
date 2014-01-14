@@ -150,7 +150,7 @@ class SessionsController < ApplicationController
   private
   def create_response
     @session.expert = current_user
-    @sessions = current_user.sessions.order("draft desc")
+    @items = current_user.sessions.order("draft desc")
     respond_to do |format|
       format.js{
         if params[:commit] == Session::COMMIT_TYPE[:publish]
