@@ -5,7 +5,7 @@
     .cover-wrapper
       = image_tag(session.cover.url, class: "cover")
       .social-share-icons
-        = render "shared/social_share", session_url: session_url(session), session_title: session.title
+        = render "shared/social_share", item: session
     .statistic
       = truncate_html(session.description, length: 300, omission: '...')
       = "#{session.visit.page_views} people viewed" if session.visit
