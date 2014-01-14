@@ -24,6 +24,9 @@
   .text-page-right-side
     .text-page-social-buttons
       - if defined?(link_path)
-        = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: link_path
-      = render 'shared/social_share', session_title: content.title, session_url: session_url(content)
+        = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: link_path
+      - if item.is_a?ArticleSession
+        = render 'shared/social_share', session_title: item.title, session_url: session_url(item).sub("sessions", "article")
+      - else
+        = render 'shared/social_share', session_title: item.title, session_url: polymorphic_url(item)
   .clear-fix
