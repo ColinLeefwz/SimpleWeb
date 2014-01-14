@@ -70,7 +70,7 @@ class Shop3MenuController < ApplicationController
   end
 
   def pub
-    session_shop.set(:has_menu, true)
+    session_shop.set(:has_menu, 2)
     render :json => 1
   end
 
