@@ -3,8 +3,7 @@ class Expert < Member
   has_and_belongs_to_many :courses
   has_many :video_interviews
   has_many :resources
-	has_many :video_interviews
-	has_one :intro_video, as: :introable, dependent: :destroy
+  has_one :intro_video, as: :introable, dependent: :destroy
 
   accepts_nested_attributes_for :profile
   accepts_nested_attributes_for :intro_video
