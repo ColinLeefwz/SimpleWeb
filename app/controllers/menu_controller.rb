@@ -10,7 +10,7 @@ class MenuController < ApplicationController
   
   def click
     mk = MenuKey.find_by_id(params[:key])
-    Xmpp.send_gchat2("s#{params[:sid]}",params[:sid],session[:user_id],"收到key：#{mk.content}") if mk
+    Xmpp.send_gchat2("s#{params[:sid]}",params[:sid],session[:user_id], mk.content ) if mk
     render :json => {ok:1}.to_json
   end
   

@@ -168,9 +168,5 @@ class CheckinsController < ApplicationController
     #Resque.enqueue(XmppNotice, params[:shop_id], params[:user_id], str) if str.length>0 
   end 
   
-  def is_co_user?(uid) #城市代理
-    return true if uid.to_s == "528af5e1c90d8b8160000001"
-    return false
-  end
 
 end

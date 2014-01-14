@@ -57,6 +57,17 @@ class AdminUsersController < ApplicationController
     render :nothing => true
   end
 
+  def ajax_co
+    begin
+      couser = CoUser.new(type: '脸脸')
+      couser._id = params[:id].__mongoize_object_id__
+      couser.save
+    rescue
+    end
+    $redis.sadd("CoUsers", couser._id)
+    render :nothing => true
+  end
+
   def get_info
     user = User.find_by_id(params[:id])
     render :json => {'info' => user ? "#{user.name} #{user.show_gender}" : "找不到该用户."}
