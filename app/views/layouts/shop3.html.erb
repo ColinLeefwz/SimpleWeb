@@ -68,6 +68,7 @@
           <span class="navline"></span>
           <% if $redis.smembers("MobileShops").include?session_shop.id.to_s %>
           <a href="/shop3_mobile/index3">手机网站</a>
+          <%= link_to "点菜管理", "http://food.dface.cn/admin/sessions?hash=#{Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32]}&sid=#{session[:shop_id]}", method: :post %>
           <span class="navline"></span>
           <% end %>
 
