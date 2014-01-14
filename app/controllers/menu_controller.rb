@@ -4,7 +4,7 @@ class MenuController < ApplicationController
   
   def get
     menu = Menu.find_by_id(params[:id])
-    return render [].to_json if menu.nil?
+    return render :json => [].to_json if menu.nil?
     render :json => menu.to_json
   end
   
