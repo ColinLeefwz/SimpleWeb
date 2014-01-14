@@ -1,4 +1,4 @@
 .cards-body.tab-content
   .session-items.tab-pane.active#tab1
-    - @sessions.each do |session|
-      = render "sessions/session", session: session
+    - @items.each do |item|
+      = render "sessions/session", item: item

@@ -1,31 +1,24 @@
 .item
   .item-title
-    = session.title
+    = item.title
   .item-body
     .cover-wrapper
-      = image_tag(session.cover.url, class: "cover")
+      = image_tag(item.cover.url, class: "cover")
       .social-share-icons
         = render "shared/social_share", item: session
     .statistic
-      = truncate_html(session.description, length: 300, omission: '...')
-      = "#{session.visit.page_views} people viewed" if session.visit
-      -# 4 members signed up <br>
-      -# 5 comments(1 new) <br>
-      -# <br>
-      -# $ 62.75 your earnings so far 
-      - if session.is_a?LiveSession
-        %h4= link_to 'edit', edit_live_session_session_path(session), remote: true
-        -# %h4= link_to 'cancel', cancel_content_session_path(session), remote: true
+      = truncate_html(item.description, length: 300, omission: '...')
+      = "#{item.visit.page_views} people viewed" if item.visit
 
-      - else
-        %h4= link_to 'edit', edit_content_session_path(session), remote: true
-        -# %h4= link_to 'cancel', cancel_content_session_path(session), remote: true
+      -# note: there is no place to edit a video interview now
+      - if item.is_a? ArticleSession
+        %h4= link_to 'edit', edit_content_session_path(item), remote: true
 
     .something
-      - if session.draft
+      - if item.try(:draft)
         = "this is a draft |"
-        = link_to "post it", post_a_draft_session_path(session), remote: true
+        = link_to "post it", post_a_draft_session_path(item), remote: true
   .draft-ribbon
-    - if session.draft
+    - if item.try(:draft)
       = image_tag("draft_ribbon.png")
         
