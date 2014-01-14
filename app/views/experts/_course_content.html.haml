@@ -21,4 +21,4 @@
   .caption
     %p.learn-more= link_to "Learn more", course_path(course)
     .social-share-icons
-      = render 'shared/social_share', session_title: course.title, session_url: course_path(course)
+      = render 'shared/social_share', item: course
