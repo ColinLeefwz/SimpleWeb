@@ -12,6 +12,15 @@ class CommonPhotoUploader < CarrierWave::Uploader::Base
     return "_test"
   end
   
+  process :rotate
+
+  def rotate
+    manipulate! do |image|
+      image.auto_orient
+      image
+    end
+  end
+  
   def store_dir
     "#{model.id}"
   end
