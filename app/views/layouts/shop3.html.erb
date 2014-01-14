@@ -19,6 +19,11 @@
     <%= yield :ahead %>
     <script type="text/javascript">
       var navmove = ($.cookie('navmove')==null?$.cookie( 'navmove', 'off', { path: '/' } ):$.cookie('navmove')), runing;
+      $(function(){
+        $(document).on("click", ".food", function(){
+          $("#food").submit();
+        });
+      });
     </script>
   </head>
 
@@ -70,7 +75,7 @@
           <span class="navline"></span>
           <% if $redis.smembers("MobileShops").include?session_shop.id.to_s %>
           <a href="/shop3_mobile/index3">手机网站</a>
-          <%= link_to "点菜管理", "http://food.dface.cn/admin/sessions?hash=#{Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32]}&sid=#{session[:shop_id]}", method: :post %>
+          <a href="#" class="food">点菜管理</a>
           <span class="navline"></span>
           <% end %>
 
@@ -88,5 +93,14 @@
       <%= yield %>
 
     </div>
+
+    <div style="display:none;">
+      <form action="http://food.dface.cn/admin/sessions" id="food" name="food">
+        <input type="hidden" name="sid" value="<%= session[:shop_id] %>">
+        <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32] %>">
+        <input type="submit" name="submit">
+      </form>
+    </div>
+
   </body>
 </html>
