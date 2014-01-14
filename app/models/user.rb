@@ -56,6 +56,12 @@ class User < ActiveRecord::Base
     self.subscribed_sessions.where(content_type: session_type)
   end
 
+  def get_subscribed_contents
+    articles = self.get_subscribed_sessions("ArticleSession")
+    video_interviews = self.subscribed_video_interviews
+    (articles + video_interviews).sort { |x, y| x.updated_at <=> y.updated_at}
+  end
+
   def has_subscribed? (item)
     self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item) || self.subscribed_video_interviews.include?(item)
   end

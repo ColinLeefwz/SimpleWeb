@@ -3,9 +3,18 @@ require 'spec_helper'
 describe User do
 	helper_objects
 
-  describe ".get_subscribed_sessions" do 
-    it "gets the user's subscribed sessions with specific type" do
-      expect(jevan.get_subscribed_sessions("ArticleSession")).to eq jevan.subscribed_sessions.where(content_type: "ArticleSession")
+  # describe ".get_subscribed_sessions" do 
+  #   it "gets the user's subscribed sessions with specific type" do
+  #     expect(jevan.get_subscribed_sessions("ArticleSession")).to eq jevan.subscribed_sessions.where(content_type: "ArticleSession")
+  #   end
+  # end
+
+  describe ".get_subscribed_contents" do
+    it "gets the user's subscribed articles and video_interviews" do
+      jevan.subscribe(video_interview)
+      jevan.subscribe(session_communication)
+      expect(jevan.get_subscribed_contents).to include video_interview
+      expect(jevan.get_subscribed_contents).to include session_communication
     end
   end
 
