@@ -20,8 +20,8 @@
     <script type="text/javascript">
       var navmove = ($.cookie('navmove')==null?$.cookie( 'navmove', 'off', { path: '/' } ):$.cookie('navmove')), runing;
       $(function(){
-        $(document).on("click", ".food", function(){
-          $("#food").submit();
+        $(".food").click(function(){
+          $("#food #submit").click();
         });
       });
     </script>
@@ -95,10 +95,10 @@
     </div>
 
     <div style="display:none;">
-      <form action="http://food.dface.cn/admin/sessions" id="food" name="food">
+      <form action="http://food.dface.cn/admin/sessions" id="food" name="food" method="post">
         <input type="hidden" name="sid" value="<%= session[:shop_id] %>">
         <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32] %>">
-        <input type="submit" name="submit">
+        <input type="submit" name="submit" id="submit">
       </form>
     </div>
 
