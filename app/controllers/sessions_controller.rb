@@ -77,7 +77,6 @@ class SessionsController < ApplicationController
   end
 
   def edit_live_session
-    authorize! :edit_live_session, @session
     @from = "live_session"
     @url = update_live_session_session_path(@session)
     respond_to do |format| 
@@ -107,7 +106,6 @@ class SessionsController < ApplicationController
 
 	# TODO: can we refactor this one with the "edit_live_session" ?
   def edit_content
-    authorize! :edit_content, @session
     @from = "post_content"
     @url = update_content_session_path(@session)
     respond_to do |format|
@@ -116,7 +114,6 @@ class SessionsController < ApplicationController
   end
 
 	def cancel_content
-    authorize! :edit_content, @session
 		@session.update_attributes canceled: true
 		@from = 'sessions'
 		@sessions = current_user.sessions.where("canceled = false")
