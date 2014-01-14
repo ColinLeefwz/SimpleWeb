@@ -45,7 +45,7 @@ class SessionsController < ApplicationController
   def show
     if @session.is_a? ArticleSession
       render 'content'
-    # elsif @session.is_a? VideoSession
+      # elsif @session.is_a? VideoSession
     elsif @session.is_a? VideoInterview
       render 'video'
     elsif @session.is_a? Announcement
@@ -104,7 +104,7 @@ class SessionsController < ApplicationController
     create_response
   end
 
-	# TODO: can we refactor this one with the "edit_live_session" ?
+  # TODO: can we refactor this one with the "edit_live_session" ?
   def edit_content
     @from = "post_content"
     @url = update_content_session_path(@session)
@@ -113,27 +113,27 @@ class SessionsController < ApplicationController
     end
   end
 
-	def cancel_content
-		@session.update_attributes canceled: true
-		@from = 'sessions'
-		@sessions = current_user.sessions.where("canceled = false")
+  def cancel_content
+    @session.update_attributes canceled: true
+    @from = 'sessions'
+    @sessions = current_user.sessions.where("canceled = false")
 
-		respond_to do |format|
-			format.js { render 'experts/update' }
-		end
-	end
+    respond_to do |format|
+      format.js { render 'experts/update' }
+    end
+  end
 
   def update_content
     @session.assign_attributes(article_session_params)
     create_response
   end
 
-	def email_friend
-		@email = params[:email_friend]
-		mandrill = MandrillApi.new
-		mandrill.email_friend_session(@email, session_url(@session))
-		redirect_to session_path(@session), flash: {success: "mail send successfully!"}
-	end
+  def email_friend
+    @email = params[:email_friend]
+    mandrill = MandrillApi.new
+    mandrill.email_friend_session(@email, session_url(@session))
+    redirect_to session_path(@session), flash: {success: "mail send successfully!"}
+  end
 
   private
   def create_response
