@@ -123,6 +123,16 @@ class SessionsController < ApplicationController
     end
   end
 
+  def cancel_draft_content
+    @session.update_attributes canceled: true
+    @items = current_user.contents
+    @show_shares = true
+    @from = 'sessions/sessions'
+    respond_to do |format|
+      format.js { render 'experts/update'}
+    end
+  end
+
   def update_content
     @session.assign_attributes(article_session_params)
     create_response

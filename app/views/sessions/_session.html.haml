@@ -16,8 +16,9 @@
 
     .something
       - if item.try(:draft)
-        = "this is a draft |"
-        = link_to "post it", post_a_draft_session_path(item), remote: true
+        -# = "this is a draft |"
+        = link_to "post it |", post_a_draft_session_path(item), remote: true
+        = link_to "delete", cancel_draft_content_session_path(item), remote: true
   .draft-ribbon
     - if item.try(:draft)
       = image_tag("draft_ribbon.png")
