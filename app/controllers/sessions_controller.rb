@@ -125,7 +125,9 @@ class SessionsController < ApplicationController
 
   def update_content
     @session.assign_attributes(article_session_params)
-    create_response
+    @items = current_user.contents
+    @from = "sessions"
+    render 'experts/update'
   end
 
   def email_friend

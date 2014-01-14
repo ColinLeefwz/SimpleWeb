@@ -9,6 +9,7 @@
     .statistic
       = truncate_html(item.description, length: 300, omission: '...')
       = "#{item.visit.page_views} people viewed" if item.visit
+      = "(published at #{item.created_at.to_date.to_formatted_s(:course_date)})"
 
       -# note: there is no place to edit a video interview now
       - if item.is_a? ArticleSession
