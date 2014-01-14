@@ -1,26 +1,26 @@
 .text-page-header-box.shadow
   .text-page-left-side
     .text-page-portrait
-      = link_to image_tag("#{content.expert.avatar.url}"), profile_expert_path(content.expert)
+      = link_to image_tag("#{item.expert.avatar.url}"), profile_expert_path(item.expert)
     .text-page-expert-info
       .name
-        = link_to content.expert.name, profile_expert_path(content.expert)
+        = link_to item.expert.name, profile_expert_path(item.expert)
       .title
-        = content.expert.profile.title
+        = item.expert.profile.title
       .company
-        = content.expert.profile.company
+        = item.expert.profile.company
     .clear-fix.visible-phone
   .text-page-middle
     .title
-      = content.title
+      = item.title
     .datetime
-      = "published on #{content.created_at.to_date.to_formatted_s(:course_date)}"
+      = "published on #{item.created_at.to_date.to_formatted_s(:course_date)}"
       &nbsp
-    -unless content.categories.empty?
+    -unless item.categories.empty?
       .category-name
         = "|"
         &nbsp
-        = content.categories.join(", ")
+        = item.categories.join(", ")
   .text-page-right-side
     .text-page-social-buttons
       - if defined?(link_path)
