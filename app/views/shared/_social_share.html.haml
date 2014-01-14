@@ -1,29 +1,34 @@
-- session_url = CGI.escape session_url
-- session_title = CGI.escape session_title
+- if item.is_a?ArticleSession
+  item_url = session_url(item).sub("sessions", "article")
+- else
+  item_url = polymorphic_url(item)
+  
+- item_url = CGI.escape item_url
+- item_title = CGI.escape item.title
 
 .social-share.facebook
-  - url = "http://www.facebook.com/sharer/sharer.php?u=#{session_url}&title=#{session_title}"
+  - url = "http://www.facebook.com/sharer/sharer.php?u=#{item_url}&title=#{item_title}"
   = link_to image_tag("facebook.png"), url, data: { popup: true}
   - if @show_shares
     #fb-shares.social-share.count
-      = get_fb_shares("#{session_url}")
+      = get_fb_shares("#{item_url}")
 
 .social-share.twitter
-  - url = "http://twitter.com/home?status=#{session_title}+#{session_url}"
+  - url = "http://twitter.com/home?status=#{item_title}+#{item_url}"
   = link_to image_tag("twitter.png"), url, data: { popup: true}
   - if @show_shares
     #tw-shares.count
-      = get_tw_shares("#{session_url}")
+      = get_tw_shares("#{item_url}")
 
 .social-share.linkedin
-  - url = "http://www.linkedin.com/shareArticle?mini=true&url=#{session_url}&title=#{session_title}"
+  - url = "http://www.linkedin.com/shareArticle?mini=true&url=#{item_url}&title=#{item_title}"
   = link_to image_tag("linkedin.png"), url, data: { popup: true}
   - if @show_shares
     #li-shares.count
-      = get_li_shares("#{session_url}")
+      = get_li_shares("#{item_url}")
 
 .social-share.google_plus
-  - url = "http://plus.google.com/share?url=#{session_url}&title=#{session_title}"
+  - url = "http://plus.google.com/share?url=#{item_url}&title=#{item_title}"
   = link_to image_tag("googleplus.png"), url, data: { popup: true}
   - if @show_shares
     #li-shares
