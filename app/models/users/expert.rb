@@ -1,7 +1,7 @@
 class Expert < Member
   has_many :sessions, dependent: :destroy
   has_and_belongs_to_many :courses
-  has_many :video_interviews
+  has_many :video_interviews, -> {order "updated_at DESC"}
   has_many :resources
   has_one :intro_video, as: :introable, dependent: :destroy
 
