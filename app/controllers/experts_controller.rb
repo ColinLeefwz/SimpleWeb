@@ -64,7 +64,7 @@ class ExpertsController < ApplicationController
   end
 
   def contents
-    @sessions = current_user.contents
+    @iterms = current_user.contents
     @from = 'sessions/sessions'
     respond_to do |format|
       format.js { render 'experts/update'}

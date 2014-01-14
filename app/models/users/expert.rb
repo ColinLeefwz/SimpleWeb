@@ -24,7 +24,10 @@ class Expert < Member
   end
 
   def contents
-    self.sessions.where("content_type = 'ArticleSession'").order("draft desc")
+    articles = self.sessions.where(content_type: "ArticleSession")
+    video_interviews = self.video_interviews
+
+    (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}
   end
 
   def live_sessions
