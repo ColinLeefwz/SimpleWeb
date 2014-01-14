@@ -1,8 +1,8 @@
 <h2>
-  <%= @kx_user.user_name %>
+  <%= @co_user.user_name %>
 </h2>
-<%= form_for(@kx_user, {:url => "/admin_kx_users/update"} ) do |f| %>
-<%= hidden_field_tag :id, @kx_user.id %>
+<%= form_for(@co_user, {:url => "/admin_co_users/update"} ) do |f| %>
+<%= hidden_field_tag :id, @co_user.id %>
   <div class="field">
     姓名:<br />
     <%= f.text_field :name %>
