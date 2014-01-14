@@ -7,7 +7,7 @@ class PageViewFetcher
       :application_name => "Prodygia",
       :application_version => "1.0"
     )
-    key = Google::APIClient::PKCS12.load_key("f1635f21f8785aea9b799423754c9218d2fa1ce8-privatekey.p12", "notasecret")
+    key = Google::APIClient::PKCS12.load_key(ENV['PRIVATE_KEY_NAME'], "notasecret")
     service_account = Google::APIClient::JWTAsserter.new("114507681566-nagtao2ud8vh0a872icve2hhksr5rdsr@developer.gserviceaccount.com", scope, key)
     client.authorization = service_account.authorize
     oauth_client = OAuth2::Client.new("", "", {
