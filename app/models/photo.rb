@@ -45,7 +45,7 @@ class Photo
 
   def img_url(type=nil)
     if type
-      "http://dface.img.aliyuncs.com/#{self.id}/0.jpg@200w_200h_1e_1c_80Q.jpg"
+      "http://dface.img.aliyuncs.com/#{self.id}/0.jpg@200w_200h_1e_1c_90Q.jpg"
     else
       "http://dface.oss.aliyuncs.com/#{self.id}/0.jpg"
     end
