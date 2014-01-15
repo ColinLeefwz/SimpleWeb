@@ -44,6 +44,10 @@
       .string.optional.customize-label
         = p.label :orgnization
         = p.input_field :company
+      .string.optional.customize-label
+        = p.input :country, priority: ["China", "United States", "Italy"]
+        = p.input :city
+      = f.input :time_zone
       = p.input :twitter
       = p.input :web_site
       = p.input :expertise

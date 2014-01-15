@@ -31,8 +31,8 @@ class MembersController < ApplicationController
       format.js{
         @member.update_attributes(user_params)
         @member.profile.update_attributes(member_profile_params)
-
-        render js: "window.location='#{profile_member_path(current_user)}'"
+        flash[:success] = "successfully update your profile"
+        render js: "window.location='#{dashboard_member_path(current_user)}'"
       }
     end
   end
@@ -100,11 +100,11 @@ class MembersController < ApplicationController
   end
 
   def user_params
-    params.require(:profile).permit(:first_name, :last_name, :avatar)
+    params.require(:profile).permit(:first_name, :last_name, :avatar, :time_zone)
   end
 
   def member_profile_params
-    params.require(:profile).permit(:title, :company, :location)
+    params.require(:profile).permit(:title, :company, :location, :country, :city)
   end
 
 end
