@@ -10,7 +10,7 @@
     = simple_fields_for @profile do |p|
       = p.input :title
       .string.optional.customize-label.input
-        = p.label :orgnization
+        = p.label :organization
         = p.input_field :company
       .string.optional.customize-label
         = p.input :country, priority: ["China", "United States", "Italy"]
