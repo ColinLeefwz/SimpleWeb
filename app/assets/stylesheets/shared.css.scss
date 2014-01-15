@@ -68,3 +68,26 @@ input[type="file"]{
 .display-block{
   display: block;
 }
+
+$prodygia-purple: #880848;
+$prodygia-light-purple: #9e3660;
+
+.btn-prodygia{
+  color: #ffffff;
+  background-color: $prodygia-purple;
+  background-image: -moz-linear-gradient(top, $prodygia-purple, $prodygia-purple);
+  background-image: -webkit-linear-gradient(top, $prodygia-purple, $prodygia-purple);
+  background-image: -o-linear-gradient(top, $prodygia-purple, $prodygia-purple);
+  background-image: linear-gradient(to bottom, $prodygia-purple, $prodygia-purple);
+}
+
+.btn-prodygia:hover,
+.btn-prodygia:focus,
+.btn-prodygia:active,
+.btn-prodygia.active,
+.btn-prodygia.disabled,
+.btn-prodygia[disabled] {
+  color: #ffffff;
+  background-color: $prodygia-light-purple;
+  *background-color: $prodygia-light-purple;
+}
