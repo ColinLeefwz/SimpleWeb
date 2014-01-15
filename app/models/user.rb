@@ -112,12 +112,12 @@ class User
   def shop
     Shop.find_by_id(self.id.to_s[1..-1])
   end
-  
+
+  #如果当前用户其实是商家，对应的商家和子商家帐号  
   def all_shops
     s = shop
     return [] unless s
-    return s unless s.shops
-    [s] + shops
+    [s] + s.sub_shops
   end
   
   def self.find_by_qq(qq, redis_only=false)
