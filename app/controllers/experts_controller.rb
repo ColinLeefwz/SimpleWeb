@@ -100,10 +100,10 @@ class ExpertsController < ApplicationController
 
 
   def expert_profile_params
-    params.require(:profile).permit(:title, :company, :twitter, :career, :education, :expertise, :location, :web_site)
+    params.require(:profile).permit(:title, :company, :country, :city, :twitter, :career, :education, :expertise, :location, :web_site)
   end
 
   def user_params
-		params.require(:expert).permit(:first_name, :last_name, :avatar, intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
+		params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
   end
 end
