@@ -6,7 +6,7 @@ then
    exit 1
 fi
 #convert -size 268x360 xc:none bg.png
-ruby ./crop3.rb $1 230 310 $2
-convert -quality 90 -draw "image Over 25,5 0,0 \"$2\"" new_year_bg.png $3
+ruby ./crop3.rb $1 255 345 $2
+convert -quality 90 -draw "image Over 1,1 0,0 \"$2\"" new_year_bg.png $3
 jpegoptim --strip-all  $3
 mv $3 ../public/
