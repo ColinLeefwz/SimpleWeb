@@ -792,7 +792,7 @@ class Shop
   end
   
   def msg_sender
-    return "s#{self.sid}" if self.password
+    return "s#{self.id}" if self.password
     return $gfuid
   end
         
