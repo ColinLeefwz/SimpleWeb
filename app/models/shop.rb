@@ -791,8 +791,14 @@ class Shop
     end
   end
   
+  def has_logo?
+    Rails.cache.fetch("HAS_LOGO#{self.id}") do
+      self.logo != nil
+    end
+  end
+  
   def msg_sender
-    return "s#{self.id}" if self.password
+    return "s#{self.id}" if self.password && self.t && self.has_logo?
     return $gfuid
   end
         
