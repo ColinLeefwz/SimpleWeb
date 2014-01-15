@@ -48,7 +48,7 @@ class MembersController < ApplicationController
   def experts
     @followed_experts = current_user.followed_users
     if @followed_experts.empty?
-      @followed_experts = Expert.all(order: "RANDOM()", limit: 3)
+      @followed_experts = Expert.where("id != ?", current_user.id).order("RANDOM()").limit(3)
       @recommendation = true
     end
     @from = "expert"
