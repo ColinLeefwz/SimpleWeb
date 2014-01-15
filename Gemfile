@@ -33,6 +33,7 @@ gem 'newrelic_rpm'
 gem 'legato'  # google analytics reporting api client
 gem 'google-api-client'  # official google analytics gem
 gem 'whenever', require: false   # generate crontab directives, not used in the application, so set require to false
+gem 'country_select'
 
 group :doc do
   gem 'sdoc', require: false

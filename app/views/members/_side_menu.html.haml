@@ -23,14 +23,14 @@
     .item-text #{link_to 'Content', contents_member_path(current_user), remote: true}
   .item
     = render 'item_icon', item_name: 'follow_video'
-    .item-text #{link_to 'Video on demand', video_on_demand_member_path(current_user), remote: true}
+    .item-text #{link_to 'Video courses', video_on_demand_member_path(current_user), remote: true}
 .block-title
   %span
     MANAGE
 .toolkit
   .item
     = render 'item_icon', item_name: 'video_library'
-    .item-text #{link_to 'Video on Demand Library', vod_library_member_path(current_user), remote: true}
+    .item-text #{link_to 'Video course library', vod_library_member_path(current_user), remote: true}
   .item
     = render 'item_icon', item_name: 'account'
     .item-text #{link_to 'Settings', edit_user_registration_path, remote: true}

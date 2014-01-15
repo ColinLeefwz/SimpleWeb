@@ -7,6 +7,14 @@ module FavoriteHelper
 		end
 	end
 
+
+  def decide_tip_title(method)
+    if method == :has_subscribed?
+      "add to favorite"
+    elsif method == :follow?
+      "follow this expert"
+    end
+  end
 	# def favorite_expert_class(expert, extra="")
 	# 	if current_user.try(:follow?, expert)
 	# 		"favorite#{extra} solid-star "

@@ -19,7 +19,7 @@ class AjaxEffect
 	
 	start: ->
 		@create_new_session_date()
-		@session_preview()
+		# @session_preview()
 
 	create_new_session_date: ->
 		currentdate = new Date()
@@ -43,30 +43,12 @@ class AjaxEffect
 			pick12HourFormat: true
 		})
 
-	session_preview: ->
-		$("#session-preview").on "click", ->
-      mon_arr = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
-      date = new Date()
-      mm = date.getMonth()
-      dd = date.getDate()
-      $("#session-datetime").html('originally published on ' + mon_arr[mm] + " " + dd + " |")
 
-      title = $("#session-title-input").val()
-      $("#session-title").html("<h1>"+title+"</h1>")
+$(document).ready ->
+  side_bar()
 
-      $("input:checked").each( ->
-        $("#article-session-categories").html($("#article-session-categories").html() + " " + $(this).next("label").text())
-        $("#live-session-categories").html($("#live-session-categories").html() + "<p>" + $(this).next("label").text() + "</p>")
-      )
-      if(CKEDITOR.instances["live_session_description"] != undefined)
-        live_description = CKEDITOR.instances["live_session_description"].getData()
-        $("#live-session-description").html(live_description)
-      if(CKEDITOR.instances["article_session_description"] != undefined)
-        article_description = CKEDITOR.instances['article_session_description'].getData()
-        $("#article-session-description").html(article_description)
-
-$(document).ready(side_bar)
-$(document).on 'page:load', side_bar
+$(document).on 'page:load', ->
+  side_bar()
 
 $(document).on 'ajax:success', ->
 	(new AjaxEffect).start()
