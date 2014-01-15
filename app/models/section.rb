@@ -9,7 +9,7 @@ class Section < ActiveRecord::Base
   default_scope {order(order: :asc)}
 
   def has_video?
-    return not(self.resources.empty?)
+    self.resources.inject(false) { |memo, obj|  memo or obj.attached_file_file_path.present? }
   end
 
   def sd_url
