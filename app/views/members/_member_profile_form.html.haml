@@ -12,6 +12,10 @@
       .string.optional.customize-label.input
         = p.label :orgnization
         = p.input_field :company
+      .string.optional.customize-label
+        = p.input :country, priority: ["China", "United States", "Italy"]
+        = p.input :city
+      = f.input :time_zone
 
     .display-block
       = f.submit "update", class: 'btn'
