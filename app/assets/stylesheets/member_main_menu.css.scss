@@ -173,16 +173,14 @@
         }
         .favorite-session-expert-name, .favorite-session-categories{
           float: left;
-        }
-        .favorite-session-expert-name{
-          padding-right: 2%;
-          border-right: 1px solid black;
-          font-family: "Latoitalic";
-        }
-        .favorite-session-categories{
-          padding-left: 2%;
           font-family: "Latoreg";
-          font-size: 15px;
+          color: #777;
+          font-size: 13px;
+        }
+        .favorite-session-expert-name:after{
+          content: " | ";
+          color: #777;
+          font-size: 13px;
         }
 
         .favorite-session-description{

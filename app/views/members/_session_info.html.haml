@@ -5,13 +5,13 @@
     .favorite-session-expert-name
       by 
       = link_to "#{content.expert.name}", profile_expert_path(content.expert) 
+      = "(published at #{content.created_at.to_date.to_formatted_s(:course_date)})"
     .favorite-session-categories
       = content.categories.join(", ")
     .clear-fix
 
     .favorite-session-description
       = truncate_html(content.description, length: 300, omission: '...')
-      = "published at #{content.created_at.to_date.to_formatted_s(:course_date)}"
   .see-more
     = link_to "see more", session_path(content)
 
