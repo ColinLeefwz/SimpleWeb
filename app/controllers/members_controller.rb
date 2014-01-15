@@ -31,6 +31,7 @@ class MembersController < ApplicationController
       format.js{
         @member.update_attributes(user_params)
         @member.profile.update_attributes(member_profile_params)
+        flash[:success] = "successfully update your profile"
         render js: "window.location='#{dashboard_member_path(current_user)}'"
       }
     end
