@@ -31,8 +31,7 @@ class MembersController < ApplicationController
       format.js{
         @member.update_attributes(user_params)
         @member.profile.update_attributes(member_profile_params)
-
-        render js: "window.location='#{profile_member_path(current_user)}'"
+        render js: "window.location='#{dashboard_member_path(current_user)}'"
       }
     end
   end

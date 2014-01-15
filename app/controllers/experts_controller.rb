@@ -57,7 +57,7 @@ class ExpertsController < ApplicationController
         @expert.update_attributes(user_params)
         @expert.profile.update_attributes(expert_profile_params)
 
-        render js: "window.location='#{profile_expert_path(current_user)}'"
+        render js: "window.location='#{dashboard_expert_path(current_user)}'"
       }
     end
 
