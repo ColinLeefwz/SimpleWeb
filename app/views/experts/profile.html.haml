@@ -9,10 +9,6 @@
         %br
         %span.title_company
           #{empty_expert_info_filter(@profile.title, @profile.company)}
-        %br
-        %span.job.light-font
-          = @profile.company
-
       %table
         - if @profile.web_site
           %tr
