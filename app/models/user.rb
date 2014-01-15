@@ -113,6 +113,13 @@ class User
     Shop.find_by_id(self.id.to_s[1..-1])
   end
   
+  def all_shops
+    s = shop
+    return [] unless s
+    return s unless s.shops
+    [s] + shops
+  end
+  
   def self.find_by_qq(qq, redis_only=false)
     uid = $redis.get("Q:#{qq}")
     return User.find_by_id(uid) if uid
