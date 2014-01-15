@@ -9,6 +9,7 @@
     .statistic
       = truncate_html(item.description, length: 300, omission: '...')
       = "#{item.visit.page_views} people viewed" if item.visit
+      = "(published at #{item.created_at.to_date.to_formatted_s(:course_date)})"
 
       -# note: there is no place to edit a video interview now
       - if item.is_a? ArticleSession
@@ -17,7 +18,8 @@
           - if item.try(:draft)
             = "|"
             = link_to "post it", post_a_draft_session_path(item), remote: true
-
+            = "|"
+            = link_to "delete", cancel_draft_content_session_path(item), remote: true
   .draft-ribbon
     - if item.try(:draft)
       = image_tag("draft_ribbon.png")
