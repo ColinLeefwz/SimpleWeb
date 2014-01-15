@@ -790,5 +790,10 @@ class Shop
       ca
     end
   end
+  
+  def msg_sender
+    return "s#{self.sid}" if self.password
+    return $gfuid
+  end
         
 end
