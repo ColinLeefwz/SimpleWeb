@@ -70,33 +70,40 @@ input[type="file"]{
 }
 
 $prodygia-purple: #880848;
-$prodygia-light-purple: #881950;
-$prodygia-dark-purple: #741428;
+$prodygia-light-purple: #a3384e;
+$prodygia-dark-purple: #8f002e;
 
-.btn-prodygia{
+// overrider bootstrap's btn-primary class
+.btn-primary{
   color: #ffffff;
-  // background-color: $prodygia-purple;
-  background-image: -moz-linear-gradient(top, $prodygia-purple, $prodygia-purple);
-  background-image: -webkit-linear-gradient(top, $prodygia-purple, $prodygia-purple);
-  background-image: -o-linear-gradient(top, $prodygia-purple, $prodygia-purple);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: $prodygia-purple;
+  *background-color: $prodygia-light-purple;
+  background-image: -moz-linear-gradient(top, $prodygia-light-purple, $prodygia-purple);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($prodygia-light-purple), to($prodygia-purple));
+  background-image: -webkit-linear-gradient(top, $prodygia-light-purple, $prodygia-purple);
+  background-image: -o-linear-gradient(top, $prodygia-light-purple, $prodygia-purple);
   background-image: linear-gradient(to bottom, $prodygia-light-purple, $prodygia-purple);
-  boder-color: #ffffff;
+  background-repeat: repeat-x;
+  border-color: #0044cc #0044cc #002a80;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+
 }
 
-.btn-prodygia:hover,
-.btn-prodygia:focus,
-.btn-prodygia:active,
-.btn-prodygia.active,
-.btn-prodygia.disabled,
-.btn-prodygia[disabled] {
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
   color: #ffffff;
   background-color: $prodygia-dark-purple;
   *background-color: $prodygia-dark-purple;
-  background-image: -moz-linear-gradient(top, $prodygia-dark-purple, $prodygia-dark-purple);
-  background-image: -webkit-linear-gradient(top, $prodygia-dark-purple, $prodygia-dark-purple);
-  background-image: -o-linear-gradient(top, $prodygia-dark-purple, $prodygia-dark-purple);
-  background-image: linear-gradient(to bottom, $prodygia-dark-purple, $prodygia-dark-purple);
-  border-color: #000000;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #003399 \9;
 }
