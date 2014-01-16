@@ -70,15 +70,18 @@ input[type="file"]{
 }
 
 $prodygia-purple: #880848;
-$prodygia-light-purple: #9e3660;
+$prodygia-light-purple: #881950;
+$prodygia-dark-purple: #741428;
 
 .btn-prodygia{
   color: #ffffff;
-  background-color: $prodygia-purple;
+  // background-color: $prodygia-purple;
   background-image: -moz-linear-gradient(top, $prodygia-purple, $prodygia-purple);
   background-image: -webkit-linear-gradient(top, $prodygia-purple, $prodygia-purple);
   background-image: -o-linear-gradient(top, $prodygia-purple, $prodygia-purple);
-  background-image: linear-gradient(to bottom, $prodygia-purple, $prodygia-purple);
+  background-image: linear-gradient(to bottom, $prodygia-light-purple, $prodygia-purple);
+  boder-color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
 .btn-prodygia:hover,
@@ -88,6 +91,12 @@ $prodygia-light-purple: #9e3660;
 .btn-prodygia.disabled,
 .btn-prodygia[disabled] {
   color: #ffffff;
-  background-color: $prodygia-light-purple;
-  *background-color: $prodygia-light-purple;
+  background-color: $prodygia-dark-purple;
+  *background-color: $prodygia-dark-purple;
+  background-image: -moz-linear-gradient(top, $prodygia-dark-purple, $prodygia-dark-purple);
+  background-image: -webkit-linear-gradient(top, $prodygia-dark-purple, $prodygia-dark-purple);
+  background-image: -o-linear-gradient(top, $prodygia-dark-purple, $prodygia-dark-purple);
+  background-image: linear-gradient(to bottom, $prodygia-dark-purple, $prodygia-dark-purple);
+  border-color: #000000;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
