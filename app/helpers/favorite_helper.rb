@@ -8,11 +8,11 @@ module FavoriteHelper
 	end
 
 
-  def decide_tip_title(method)
+  def decide_tip_title(method, object)
     if method == :has_subscribed?
-      "add to favorite"
+      current_user.try(method, object) ? "remove from Favorites" : " add to Favorites"
     elsif method == :follow?
-      "follow this expert"
+      current_user.try(method, object) ? "unfollow this expert" : "follow this expert"
     end
   end
 	# def favorite_expert_class(expert, extra="")
