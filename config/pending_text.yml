@@ -44,3 +44,9 @@ calendar:
   <<: *common
   content: |
     <p>It’ll be released in early 2014 and let you track dates for upcoming online engagements on Prodygia. The more active you are, the more this feature will come in handy and help you organize your time.</p>
+
+video_courses:
+  <<: *common
+  content: |
+    <p>If you would like to record a video course and sell it online via Prodygia, as other experts are doing, then please let us know by emailing experts@prodygia.com with the topic you would like to cover. Typically video courses are 90-120 minutes of content divided into 5-8 minute videos. Prodygia can film you in either Shanghai or Beijing and will handle all technical aspects for free, including post-production. You choose the selling price. Then, when the video course is posted and Members pay online to view it, there is revenue sharing between you and Prodygia. Further detail will be provided when you reach out to us.</p>
+  footer: 

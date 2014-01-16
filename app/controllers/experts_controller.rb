@@ -81,9 +81,10 @@ class ExpertsController < ApplicationController
     end
   end
 
-  def video_on_demand
-    @videos = Resource.video.where(expert_id: current_user.id)
-    @from = 'experts/video_on_demand'
+  def video_courses
+    # @videos = Resource.video.where(expert_id: current_user.id)
+    @courses = current_user.courses
+    @from = 'experts/video_courses'
     respond_to do |format|
       format.js { render 'experts/update' }
     end
