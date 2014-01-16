@@ -5,6 +5,7 @@
     .favorite-session-expert-name
       by 
       = link_to "#{content.expert.name}", profile_expert_path(content.expert) 
+      = "(published at #{content.created_at.to_date.to_formatted_s(:course_date)})"
     .favorite-session-categories
       = content.categories.join(", ")
     .clear-fix
@@ -16,4 +17,4 @@
 
 .favorite-social-share
   = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: subscribe_session_path(content)
-  = render 'shared/social_share', session_title: content.title, session_url: session_url(content)
+  = render 'shared/social_share', item: content 

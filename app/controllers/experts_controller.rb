@@ -56,15 +56,17 @@ class ExpertsController < ApplicationController
       format.js{
         @expert.update_attributes(user_params)
         @expert.profile.update_attributes(expert_profile_params)
+        flash[:success] = "successfully update your profile"
 
-        render js: "window.location='#{profile_expert_path(current_user)}'"
+        render js: "window.location='#{dashboard_expert_path(current_user)}'"
       }
     end
 
   end
 
   def contents
-    @sessions = current_user.contents
+    @items = current_user.contents
+    @show_shares = true
     @from = 'sessions/sessions'
     respond_to do |format|
       format.js { render 'experts/update'}
@@ -99,10 +101,10 @@ class ExpertsController < ApplicationController
 
 
   def expert_profile_params
-    params.require(:profile).permit(:title, :company, :twitter, :career, :education, :expertise, :location, :web_site)
+    params.require(:profile).permit(:title, :company, :country, :city, :twitter, :career, :education, :expertise, :location, :web_site)
   end
 
   def user_params
-		params.require(:expert).permit(:first_name, :last_name, :avatar, intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
+		params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
   end
 end

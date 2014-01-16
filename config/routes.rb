@@ -40,6 +40,8 @@ Prodygia::Application.routes.draw do
       patch :update_live_session
       get :post_a_draft
       post :update_timezone
+
+      get :cancel_draft_content
     end
     post :create_post_content, on: :collection
     post :create_live_session, on: :collection

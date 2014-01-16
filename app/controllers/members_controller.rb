@@ -31,8 +31,8 @@ class MembersController < ApplicationController
       format.js{
         @member.update_attributes(user_params)
         @member.profile.update_attributes(member_profile_params)
-
-        render js: "window.location='#{profile_member_path(current_user)}'"
+        flash[:success] = "successfully update your profile"
+        render js: "window.location='#{dashboard_member_path(current_user)}'"
       }
     end
   end
@@ -48,7 +48,7 @@ class MembersController < ApplicationController
   def experts
     @followed_experts = current_user.followed_users
     if @followed_experts.empty?
-      @followed_experts = Expert.all(order: "RANDOM()", limit: 3)
+      @followed_experts = Expert.where("id != ?", current_user.id).order("RANDOM()").limit(3)
       @recommendation = true
     end
     @from = "expert"
@@ -58,7 +58,7 @@ class MembersController < ApplicationController
   end
 
   def contents
-    @favorite_contents = current_user.get_subscribed_sessions("ArticleSession")
+    @favorite_contents = current_user.get_subscribed_contents
     if @favorite_contents.empty?
       @favorite_contents = ArticleSession.where.not(draft: true).order("RANDOM()").limit(3)
       @recommendation = true
@@ -100,11 +100,11 @@ class MembersController < ApplicationController
   end
 
   def user_params
-    params.require(:profile).permit(:first_name, :last_name, :avatar)
+    params.require(:profile).permit(:first_name, :last_name, :avatar, :time_zone)
   end
 
   def member_profile_params
-    params.require(:profile).permit(:title, :company, :location)
+    params.require(:profile).permit(:title, :company, :location, :country, :city)
   end
 
 end
