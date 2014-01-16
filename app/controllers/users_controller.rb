@@ -31,14 +31,14 @@ class UsersController < ApplicationController
         
         if current_user.blank?
           render js: "window.location='#{new_user_session_path}'"
-          flash[:alert] = "Sorry! You have to sign in to follow an expert"
-        elsif
+          flash[:alert] = "Sorry! You have to sign in to follow an Expert"
+        else
           if current_user.try(:follow?, followed_user)
             current_user.unfollow(followed_user)
           else
             current_user.follow(followed_user)
           end
-          render nothing: true
+          render "shared/update_favorite_star"
         end
       }
     end
@@ -54,12 +54,17 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js{
         current_session = Session.where(id: params[:session_id]).first
-        if current_user.has_subscribed?(current_session)
-          current_user.unsubscribe(current_session)
+        if current_user.blank?
+          render js: "window.location='#{new_user_session_path}'"
+          flash[:alert] = "Sorry! You have to sign in to follow an Article"
         else
-          current_user.subscribe(current_session)
+          if current_user.has_subscribed?(current_session)
+            current_user.unsubscribe(current_session)
+          else
+            current_user.subscribe(current_session)
+          end
+          render "shared/update_favorite_star"
         end
-        render nothing: true
      } 
     end
   end
@@ -68,12 +73,17 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js{
         current_course = Course.where(id: params[:course_id]).first
-        if current_user.has_subscribed?(current_course)
-          current_user.unsubscribe(current_course)
+        if current_user.blank?
+          render js: "window.location='#{new_user_session_path}'"
+          flash[:alert] = "Sorry! You have to sign in to follow a Course"
         else
-          current_user.subscribe(current_course)
+          if current_user.has_subscribed?(current_course)
+            current_user.unsubscribe(current_course)
+          else
+            current_user.subscribe(current_course)
+          end
+          render "shared/update_favorite_star"
         end
-        render nothing: true
      } 
     end
   end
@@ -82,12 +92,17 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js{
         video_interview = VideoInterview.where(id: params[:video_interview_id]).first
-        if current_user.has_subscribed?(video_interview)
-          current_user.unsubscribe(video_interview)
+        if current_user.blank?
+          render js: "window.location='#{new_user_session_path}'"
+          flash[:alert] = "Sorry! You have to sign in to follow a Video Interview"
         else
-          current_user.subscribe(video_interview)
+          if current_user.has_subscribed?(video_interview)
+            current_user.unsubscribe(video_interview)
+          else
+            current_user.subscribe(video_interview)
+          end
+          render "shared/update_favorite_star"
         end
-        render nothing: true
      } 
     end
   end
