@@ -71,10 +71,10 @@ input[type="file"]{
 
 $prodygia-purple: #880848;
 $prodygia-light-purple: #a3384e;
-$prodygia-dark-purple: #8f002e;
+$prodygia-dark-purple: #880731;
 
-// overrider bootstrap's btn-primary class
-.btn-primary{
+// overrider bootstrap's btn-prodygia class
+.btn-prodygia{
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: $prodygia-purple;
@@ -92,18 +92,18 @@ $prodygia-dark-purple: #8f002e;
 
 }
 
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
-.btn-primary.disabled,
-.btn-primary[disabled] {
+.btn-prodygia:hover,
+.btn-prodygia:focus,
+.btn-prodygia:active,
+.btn-prodygia.active,
+.btn-prodygia.disabled,
+.btn-prodygia[disabled] {
   color: #ffffff;
-  background-color: $prodygia-dark-purple;
-  *background-color: $prodygia-dark-purple;
+  background-color: $prodygia-purple;
+  *background-color: $prodygia-purple;
 }
 
-.btn-primary:active,
-.btn-primary.active {
+.btn-prodygia:active,
+.btn-prodygia.active {
   background-color: #003399 \9;
 }
