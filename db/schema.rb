@@ -353,7 +353,6 @@ ActiveRecord::Schema.define(version: 20140115065736) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "time_zone",              default: "UTC"
-    t.string   "subdomain"
   end
 
   add_index "users", ["email", "provider"], name: "index_users_on_email_and_provider", unique: true, using: :btree

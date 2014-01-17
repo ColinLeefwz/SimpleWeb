@@ -84,6 +84,13 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
   .contact{
     float: right;
     .contact-button{
+      .favorite{
+        margin-bottom: 5px;
+        img{
+          width: 20px;
+          height: 20px;
+        }
+      }
       .left-side{
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;

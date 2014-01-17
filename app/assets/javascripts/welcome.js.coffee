@@ -54,14 +54,14 @@ ready = ->
 		container.isotope {
 			layoutMode: 'masonry'
 		}
-  sublime.load()
+  # sublime.load()
 
-	for video in $("video")
-		sublime.ready( ->
-			sublime.prepare(video, (player) ->
-				player.pause()
-			)
-		 )
+	# for video in $("video")
+		# sublime.ready( ->
+			# sublime.prepare(video, (player) ->
+				# player.pause()
+			# )
+		 # )
 
 	$container = $('#content')
 	$('nav li .filters').on 'click', ->
@@ -78,6 +78,18 @@ ready = ->
 				filter: selector
 			}
 
+load_sublime = ->
+  sublime.load()
+  for video in $("video")
+    sublime.ready( ->
+      sublime.prepare(video, (player) ->
+        player.pause()
+      )
+     )
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
+
+$(document).ready(load_sublime)
+$(document).on('page:load', load_sublime)
+$(document).on "ajax:success", load_sublime

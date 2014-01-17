@@ -10,7 +10,6 @@
           = link_to "Enroll for only #{number_to_currency(@course.price)}", enroll_course_path(@course)
 
       .description-box.inline
-        -# title & expert
         .title
           = @course.title
         .producers.inline
@@ -23,7 +22,6 @@
         -# .separator.inline
         .category.inline
           = @course.categories.join(", ")
-        -# description
         .description
           = @course.description
 
@@ -31,12 +29,11 @@
         = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_course_path(@course)
         = render 'shared/social_share', item: @course
 
-      -# todo: add real progress bar
-      .percentage{style: "visibility: hidden"}
-        %span 20
-        %span % complete
-      .progress
-        .bar{style: "width: 0%"}
+      -# .percentage{style: "visibility: hidden"}
+      -#   %span 20
+      -#   %span % complete
+      -# .progress
+      -#   .bar{style: "width: 0%"}
 
 
   - @course.chapters.each do |c|
