@@ -6,3 +6,4 @@ change_star_class = ->
 
 $(document).ready(change_star_class)
 $(document).on 'page:load', change_star_class
+$(document).on 'ajax:success', change_star_class

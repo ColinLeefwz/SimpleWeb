@@ -2,12 +2,10 @@
   if ($(".favorite-icon").hasClass("solid-star-icon"))
   {
     $(".favorite-icon").removeClass("solid-star-icon").addClass("hollow-star-icon");
-    $(".favorite-icon").attr("src", "/assets/favorite_unselected.png");
   }
   else
   {
     $(".favorite-icon").removeClass("hollow-star-icon").addClass("solid-star-icon");
-    $(".favorite-icon").attr("src", "/assets/favorite.png");
   }
   if ($("#follower-count").length){
     var follower_num = +$("#follower-count").html()
