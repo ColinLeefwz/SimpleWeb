@@ -1,8 +1,8 @@
 - @courses.each do |course|
   .favorite-session-box.shadow.white-background
     .favorite-session-cover
-      -# = image_tag(course.cover.url)
-      = render "shared/sublime_video", item_resource: course.intro_video, poster_url: course.cover.url
+      = image_tag(course.cover.url)
+      -# = render "shared/sublime_video", item_resource: course.intro_video, poster_url: course.cover.url
     .favorite-session-info
       .favorite-session-main
         .favorite-session-title
