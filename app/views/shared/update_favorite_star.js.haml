@@ -1,14 +1,1 @@
 :plain
-  if ($(".favorite-icon").hasClass("solid-star-icon"))
-  {
-    $(".favorite-icon").removeClass("solid-star-icon").addClass("hollow-star-icon");
-  }
-  else
-  {
-    $(".favorite-icon").removeClass("hollow-star-icon").addClass("solid-star-icon");
-  }
-  if ($("#follower-count").length){
-    var follower_num = +$("#follower-count").html()
-    $("#follower-count").html($(".hollow-star-icon").length ? follower_num - 1 : follower_num + 1 )
-  }
-
