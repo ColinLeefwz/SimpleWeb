@@ -1,18 +1,25 @@
 module FavoriteHelper
 	def favorite_class(method, object, extra="")
 		if current_user.try(method, object)
-			"favorite#{extra} solid-star "
+			"favorite#{extra} solid-star#{extra}"
 		else
-			"favorite#{extra} hollow-star"
+			"favorite#{extra} hollow-star#{extra}"
 		end
 	end
 
-
-  def decide_tip_title(method)
+  def decide_tip_title(method, object)
     if method == :has_subscribed?
-      "add to favorite"
+      current_user.try(method, object) ? "remove from Favorites" : " add to Favorites"
     elsif method == :follow?
-      "follow this expert"
+      current_user.try(method, object) ? "unfollow this expert" : "follow this expert"
+    end
+  end
+
+  def get_favorite_type(object)
+    if object.is_a? User
+      "user"
+    else
+      "content"
     end
   end
 	# def favorite_expert_class(expert, extra="")

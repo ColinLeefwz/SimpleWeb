@@ -68,3 +68,42 @@ input[type="file"]{
 .display-block{
   display: block;
 }
+
+$prodygia-purple: #880848;
+$prodygia-light-purple: #a3384e;
+$prodygia-dark-purple: #880731;
+
+// overrider bootstrap's btn-prodygia class
+.btn-prodygia{
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: $prodygia-purple;
+  *background-color: $prodygia-light-purple;
+  background-image: -moz-linear-gradient(top, $prodygia-light-purple, $prodygia-purple);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($prodygia-light-purple), to($prodygia-purple));
+  background-image: -webkit-linear-gradient(top, $prodygia-light-purple, $prodygia-purple);
+  background-image: -o-linear-gradient(top, $prodygia-light-purple, $prodygia-purple);
+  background-image: linear-gradient(to bottom, $prodygia-light-purple, $prodygia-purple);
+  background-repeat: repeat-x;
+  border-color: #0044cc #0044cc #002a80;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+
+}
+
+.btn-prodygia:hover,
+.btn-prodygia:focus,
+.btn-prodygia:active,
+.btn-prodygia.active,
+.btn-prodygia.disabled,
+.btn-prodygia[disabled] {
+  color: #ffffff;
+  background-color: $prodygia-purple;
+  *background-color: $prodygia-purple;
+}
+
+.btn-prodygia:active,
+.btn-prodygia.active {
+  background-color: #003399 \9;
+}

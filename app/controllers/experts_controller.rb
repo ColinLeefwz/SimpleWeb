@@ -14,10 +14,7 @@ class ExpertsController < ApplicationController
   end
 
   def pending_page
-		all_text = YAML.load_file(File.join(Rails.root, 'config', 'pending_text.yml'))
-		text_params = params[:text]
-		text_hash = all_text[text_params.to_s]
-		@pending_text = [text_hash['title'], text_hash['content'], text_hash['footer']].join
+    get_pending_text(params[:text].to_s)
     @from = 'pending_page'
     respond_to do |format|
       format.js { render 'update'}
@@ -81,15 +78,27 @@ class ExpertsController < ApplicationController
     end
   end
 
-  def video_on_demand
-    @videos = Resource.video.where(expert_id: current_user.id)
-    @from = 'experts/video_on_demand'
+  def video_courses
+    @courses = current_user.courses
+
+    if @courses.empty?
+      get_pending_text("video_courses")
+      @from = 'pending_page'
+    else
+      @from = 'experts/video_courses'
+    end
+
     respond_to do |format|
       format.js { render 'experts/update' }
     end
   end
 
   private
+  def get_pending_text(type)
+    all_text = YAML.load_file(File.join(Rails.root, 'config', 'pending_text.yml'))
+    text_hash = all_text[type]
+    @pending_text = [text_hash['title'], text_hash['content'], text_hash['footer']].join
+  end
 
   def set_expert
     @expert = Expert.find params[:id]

@@ -1,0 +1,25 @@
+- @courses.each do |course|
+  .favorite-session-box.shadow.white-background
+    .favorite-session-cover
+      = link_to image_tag(course.cover.url), course_path(course)
+      -# = render "shared/sublime_video", item_resource: course.intro_video, poster_url: course.cover.url
+    .favorite-session-info
+      .favorite-session-main
+        .favorite-session-title
+          = link_to "#{course.title}", course_path(course)
+        -# .favorite-session-expert-name
+        -#   by 
+        -#   = link_to "#{course.expert.name}", profile_expert_path(content.expert) 
+        -#   = "(published at #{content.created_at.to_date.to_formatted_s(:course_date)})"
+        .favorite-session-categories
+          = course.categories.join(", ")
+        .clear-fix
+
+        .favorite-session-description
+          = truncate_html(course.description, length: 300, omission: '...')
+      -# .see-more
+      -#   = link_to "see more", session_path(content)
+
+    -# .favorite-social-share
+    -#   = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: subscribe_session_path(content)
+    -#   = render 'shared/social_share', item: content 

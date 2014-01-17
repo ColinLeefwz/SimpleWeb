@@ -81,7 +81,7 @@ Prodygia::Application.routes.draw do
       get :contents
       get :edit_profile
       patch :update_profile
-      get :video_on_demand
+      get :video_courses
     end
 
     collection do
