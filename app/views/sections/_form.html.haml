@@ -21,12 +21,12 @@
       = r.hidden_field :attached_file_content_type
       = r.hidden_field :attached_file_file_path
 
-= s3_uploader_form class: "s3_uploader", acl: "private", callback_param: "direct_upload_url", data: {definition: "SD"} do
+= s3_uploader_form class: "s3_uploader", acl: "public-read", callback_param: "direct_upload_url", data: {definition: "SD"} do
   %span SD:
   = file_field_tag :file, multiple: false
   %span.status
 
-= s3_uploader_form class: "s3_uploader", acl: "private", callback_param: "direct_upload_url", data: {definition: "HD"} do
+= s3_uploader_form class: "s3_uploader", acl: "public-read", callback_param: "direct_upload_url", data: {definition: "HD"} do
   %span HD:
   = file_field_tag :file, multiple: false
   %span.status
