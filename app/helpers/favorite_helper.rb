@@ -14,6 +14,14 @@ module FavoriteHelper
       current_user.try(method, object) ? "unfollow this expert" : "follow this expert"
     end
   end
+
+  def get_favorite_type(object)
+    if object.is_a? User
+      "user"
+    else
+      "content"
+    end
+  end
 	# def favorite_expert_class(expert, extra="")
 	# 	if current_user.try(:follow?, expert)
 	# 		"favorite#{extra} solid-star "
