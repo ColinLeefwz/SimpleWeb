@@ -1,12 +1,12 @@
 - @courses.each do |course|
   .favorite-session-box.shadow.white-background
     .favorite-session-cover
-      = image_tag(course.cover.url)
+      = link_to image_tag(course.cover.url), course_path(course)
       -# = render "shared/sublime_video", item_resource: course.intro_video, poster_url: course.cover.url
     .favorite-session-info
       .favorite-session-main
         .favorite-session-title
-          = course.title
+          = link_to "#{course.title}", course_path(course)
         -# .favorite-session-expert-name
         -#   by 
         -#   = link_to "#{course.expert.name}", profile_expert_path(content.expert) 
