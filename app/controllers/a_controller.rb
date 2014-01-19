@@ -28,7 +28,7 @@ class AController < ApplicationController
     if params[:x].nil?  #不带x则尝试直接下载
       if c.agent.index("Android")
         if c.agent.index("MicroMessenger")
-          render :file => "~/lianlian/public/mini.html", :use_full_path => true
+          render :file => "~/lianlian/public/wx_down.html", :use_full_path => true
           return
         else
           ver = $redis.get("android_version")
