@@ -20,8 +20,14 @@ module GpsOffset
         $redis.hset(hash,field,ret.join(","))
         return ret
       end
-      return downv.split(",").map{|x| x.to_f} if downv
-      return upv.split(",").map{|x| x.to_f} if upv
+      if downv
+        $redis.hset(hash,field,downv)
+        return downv.split(",").map{|x| x.to_f}
+      end
+      if upv
+        $redis.hset(hash,field,upv)
+        return upv.split(",").map{|x| x.to_f}
+      end
       return ofs.first[1].split(",").map{|x| x.to_f}
     end
     str.split(",").map{|x| x.to_f}
@@ -77,8 +83,14 @@ module GpsOffset
         $redis.hset(hash,field,ret.join(","))
         return ret
       end
-      return downv.split(",").map{|x| x.to_f} if downv
-      return upv.split(",").map{|x| x.to_f} if upv
+      if downv
+        $redis.hset(hash,field,downv)
+        return downv.split(",").map{|x| x.to_f}
+      end
+      if upv
+        $redis.hset(hash,field,upv)
+        return upv.split(",").map{|x| x.to_f}
+      end
       return ofs.first[1].split(",").map{|x| x.to_f}
     end
     str.split(",").map{|x| x.to_f}
