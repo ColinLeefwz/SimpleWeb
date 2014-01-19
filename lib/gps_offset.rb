@@ -7,7 +7,7 @@ module GpsOffset
     str = $redis.hget(hash,field)
     if str.nil?
       Xmpp.error_notify("百度纠偏数据没有:#{lo}")
-      ofs = $redis.hgetall(hash,field)
+      ofs = $redis.hgetall(hash)
       return [0,0] if ofs.nil? || ofs.size==0
       down = (field.to_i-1)%10
       downv = ofs[down.to_s]
@@ -28,7 +28,9 @@ module GpsOffset
         $redis.hset(hash,field,upv)
         return upv.split(",").map{|x| x.to_f}
       end
-      return ofs.first[1].split(",").map{|x| x.to_f}
+      ret = ofs.first[1]
+      $redis.hset(hash,field,ret)
+      return ret.split(",").map{|x| x.to_f}
     end
     str.split(",").map{|x| x.to_f}
   end
@@ -70,7 +72,7 @@ module GpsOffset
     str = $redis.hget(hash,field)
     if str.nil?
       Xmpp.error_notify("GCJ纠偏数据没有:#{lo}")
-      ofs = $redis.hgetall(hash,field)
+      ofs = $redis.hgetall(hash)
       return [0,0] if ofs.nil? || ofs.size==0
       down = (field.to_i-1)%10
       downv = ofs[down.to_s]
@@ -91,7 +93,9 @@ module GpsOffset
         $redis.hset(hash,field,upv)
         return upv.split(",").map{|x| x.to_f}
       end
-      return ofs.first[1].split(",").map{|x| x.to_f}
+      ret = ofs.first[1]
+      $redis.hset(hash,field,ret)
+      return ret.split(",").map{|x| x.to_f}
     end
     str.split(",").map{|x| x.to_f}
   end
