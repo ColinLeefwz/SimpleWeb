@@ -108,8 +108,16 @@ class UserInfoController < ApplicationController
   end
   
   def get_self
-    user = session_user_no_cache
-    render :json => user.output_self.to_json
+    hash = session_user_no_cache.output_self
+    if $redis.get("wbexpire#{session[:user_id]}").to_i > Time.now.to_i
+      wbtoken = $redis.get("wbtoken#{session[:user_id]}")
+      hash.merge!(wbtoken:wbtoken) if wbtoken
+    end
+    if $redis.get("qqexpire#{session[:user_id]}").to_i > Time.now.to_i
+      qqtoken = $redis.get("qqtoken#{session[:user_id]}")
+      hash.merge!(qqtoken:qqtoken) if qqtoken
+    end
+    render :json => hash.to_json
   end
 
   def set
