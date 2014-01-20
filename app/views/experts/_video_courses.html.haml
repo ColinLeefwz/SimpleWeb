@@ -3,7 +3,7 @@
     - @courses.each do |course|
       .item
         .item-title
-          = link_to course.title, course_path(course)
+          = link_to course.title, course_path(course), class: "course-title-font"
         .item-body
           .cover-wrapper
             = link_to image_tag(course.cover.url, class: "cover"), course_path(course)
