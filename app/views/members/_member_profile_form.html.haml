@@ -19,4 +19,4 @@
 
     .display-block
       = f.submit "update", class: 'btn btn-prodygia dashboard-buttons'
-      = link_to "Cancel", edit_profile_member_path(current_user), remote: true, class: 'btn dashboard-buttons'
+      = link_to "Cancel", activity_stream_member_path(current_user), remote: true, class: 'btn dashboard-buttons'
