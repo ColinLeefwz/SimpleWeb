@@ -46,6 +46,8 @@
       var title = $("#session-title-input").val();
       $("#session-title").html("<h1>"+title+"</h1>");
 
+      $("#article-session-categories").html("")
+      $("#live-session-categories").html("")
       $("input:checked").each(function(){
         $("#article-session-categories").html($("#article-session-categories").html() + " " + $(this).next("label").text());
         $("#live-session-categories").html($("#live-session-categories").html() + "<p>" + $(this).next("label").text() + "</p>");
