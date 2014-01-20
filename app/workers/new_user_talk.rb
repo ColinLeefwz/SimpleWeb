@@ -54,7 +54,7 @@ class NewUserTalk
     end
     if seq == 2 && (to == "51418836c90d8bc37b000567")
       shop = Shop.find_by_id(sid)
-      Xmpp.send_chat(to, uid, "hi,你也在#{shop.name}？")
+      Xmpp.send_chat(to, uid, "hi,你也在#{shop.name}附近？")
     end
   end
 
