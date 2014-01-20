@@ -7,7 +7,7 @@
         .cover
           = render "shared/sublime_video", item_resource: @course.intro_video, poster_url: @course.cover.url
         .enroll-button
-          = link_to "Enroll for only #{number_to_currency(@course.price)}", enroll_course_path(@course)
+          = link_to "Enroll for #{number_to_currency(@course.price)}", enroll_course_path(@course)
 
       .description-box.inline
         .title
