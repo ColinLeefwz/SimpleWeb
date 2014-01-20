@@ -6,13 +6,14 @@
       .cover-box.inline
         .cover
           = render "shared/sublime_video", item_resource: @course.intro_video, poster_url: @course.cover.url
-        .enroll-button
-          = link_to "Enroll for only #{number_to_currency(@course.price)}", enroll_course_path(@course)
+        - unless current_user.enrolled? @course
+          .enroll-button
+            = link_to "Enroll for #{number_to_currency(@course.price)}", enroll_course_path(@course)
 
       .description-box.inline
         .title
           = @course.title
-        .producers.inline
+        .producers.inline.separator
           = producer_links(@course)
         -# video-length & category
 
