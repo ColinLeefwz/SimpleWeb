@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 # coding: utf-8
 
 #<20275139,百度数据
@@ -790,5 +792,8 @@ class Shop
       ca
     end
   end
-        
+  
+  def has_food_purview?
+    /测试|脸脸/ =~ self.name ? true : false
+  end
 end
