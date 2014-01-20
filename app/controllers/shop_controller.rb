@@ -72,10 +72,12 @@ class ShopController < ApplicationController
     else
       ret = []
       # TODO: 默认搜索同城， 国外搜国家
-#      city = Shop.get_city(lo)
-#      shop1s = Shop.where2({city: city, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})
-
-      shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})        
+      if params[:sname].length>=4
+        city = Shop.get_city(lo)
+        shop1s = Shop.where2({city: city, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})
+      else
+        shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10}) 
+      end
       shop1s.each do |s| 
         hash = output(s,lo).merge!(s.group_hash(session[:user_id]))
         distance = s.min_distance(s,lo)
