@@ -135,6 +135,8 @@ class SessionsController < ApplicationController
 
   def update_content
     @session.update_attributes(article_session_params)
+    @session.update_attributes draft: false
+
     @items = current_user.contents
     @from = "sessions"
     render 'experts/update'
