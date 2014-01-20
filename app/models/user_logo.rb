@@ -42,6 +42,11 @@ class UserLogo
   end
   
   def self.ids_no_cache(uid)
+    if User.is_shop_id?(uid)
+      shop = Shop.find_by_id(uid[1..-1])
+      return [] if shop.nil? || shop.logo.nil?
+      return [shop.logo.id]
+    end
     UserLogo.only(:id).where({user_id: uid}).order_by([:ord,:asc]).map{|x| x.id}
   end
   

@@ -5,7 +5,33 @@ module GpsOffset
     hash = "OF%.2f%.1f" %  lo
     field = ("%.2f" %  lo[1])[-1..-1]
     str = $redis.hget(hash,field)
-    return [0,0] if str.nil?
+    if str.nil?
+      Xmpp.error_notify("百度纠偏数据没有:#{lo}")
+      ofs = $redis.hgetall(hash)
+      return [0,0] if ofs.nil? || ofs.size==0
+      down = (field.to_i-1)%10
+      downv = ofs[down.to_s]
+      up = (field.to_i+1)%10
+      upv = ofs[up.to_s]
+      if downv && upv
+        dvv = downv.split(",").map{|x| x.to_f}
+        upvv = upv.split(",").map{|x| x.to_f}
+        ret = [(dvv[0]+upvv[0])/2, (dvv[1]+upvv[1])/2]
+        $redis.hset(hash,field,ret.join(","))
+        return ret
+      end
+      if downv
+        $redis.hset(hash,field,downv)
+        return downv.split(",").map{|x| x.to_f}
+      end
+      if upv
+        $redis.hset(hash,field,upv)
+        return upv.split(",").map{|x| x.to_f}
+      end
+      ret = ofs.first[1]
+      $redis.hset(hash,field,ret)
+      return ret.split(",").map{|x| x.to_f}
+    end
     str.split(",").map{|x| x.to_f}
   end
   
@@ -44,7 +70,33 @@ module GpsOffset
     hash = "GCJ%.2f%.1f" %  lo
     field = ("%.2f" %  lo[1])[-1..-1]
     str = $redis.hget(hash,field)
-    return [0,0] if str.nil?
+    if str.nil?
+      Xmpp.error_notify("GCJ纠偏数据没有:#{lo}")
+      ofs = $redis.hgetall(hash)
+      return [0,0] if ofs.nil? || ofs.size==0
+      down = (field.to_i-1)%10
+      downv = ofs[down.to_s]
+      up = (field.to_i+1)%10
+      upv = ofs[up.to_s]
+      if downv && upv
+        dvv = downv.split(",").map{|x| x.to_f}
+        upvv = upv.split(",").map{|x| x.to_f}
+        ret = [(dvv[0]+upvv[0])/2, (dvv[1]+upvv[1])/2]
+        $redis.hset(hash,field,ret.join(","))
+        return ret
+      end
+      if downv
+        $redis.hset(hash,field,downv)
+        return downv.split(",").map{|x| x.to_f}
+      end
+      if upv
+        $redis.hset(hash,field,upv)
+        return upv.split(",").map{|x| x.to_f}
+      end
+      ret = ofs.first[1]
+      $redis.hset(hash,field,ret)
+      return ret.split(",").map{|x| x.to_f}
+    end
     str.split(",").map{|x| x.to_f}
   end
   

@@ -36,12 +36,21 @@ class Photo
   def self.img_url(id,type=nil)
     # return self.find_by_id(id).img.url(type) if Rails.env !="production"
     if type
-      #"http://dface.img.aliyuncs.com/#{id}/0.jpg@200w_200h_1e_1c_80Q.jpg"
-      "http://dface.oss.aliyuncs.com/#{id}/#{type}_0.jpg"
+      "http://dface.img.aliyuncs.com/#{id}/0.jpg@200w_200h_1e_1c_80Q.jpg"
+      #"http://dface.oss.aliyuncs.com/#{id}/#{type}_0.jpg"
     else
       "http://dface.oss.aliyuncs.com/#{id}/0.jpg"
     end
   end
+
+  def img_url(type=nil)
+    if type
+      "http://dface.img.aliyuncs.com/#{self.id}/0.jpg@200w_200h_1e_1c_90Q.jpg"
+    else
+      "http://dface.oss.aliyuncs.com/#{self.id}/0.jpg"
+    end
+  end  
+  
   
   def desc_multi
     "#{total_str}#{desc}"
@@ -364,7 +373,8 @@ class Photo
   
   
   def logo_thumb_hash
-    {:logo => self.img.url, :logo_thumb2 => self.img.url(:t2)  }
+    #{:logo => self.img.url, :logo_thumb2 => self.img.url(:t2)  }
+    {:logo => self.img_url, :logo_thumb2 => self.img_url(:t2)  }
   end
   
   def top10_like(u=nil)

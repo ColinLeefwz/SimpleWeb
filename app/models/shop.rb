@@ -36,7 +36,7 @@ class Shop
   field :creator, type: Moped::BSON::ObjectId #该地点的创建者
   field :seller_id, type: Moped::BSON::ObjectId #负责该地点销售的人员
   field :group_id, type: Moped::BSON::ObjectId #旅行团id
-  field :has_menu, type: Boolean #该地点有自定义菜单
+  field :has_menu, type:Integer #该地点有自定义菜单, 1默认是聊天工具栏；2默认是菜单栏
   
   field :i, type: Boolean #用户添加的地点 已处理标记
   field :utype #用户添加的类型
@@ -210,7 +210,7 @@ class Shop
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
     hash.merge!( {"user"=>total_user})
-    hash.merge!( {"has_menu"=>1}) if self.has_menu
+    hash.merge!( {"has_menu"=>self.has_menu.to_i}) if self.has_menu.to_i>0
     hash
   end
   
@@ -792,7 +792,18 @@ class Shop
       ca
     end
   end
+
+  def has_logo?
+    Rails.cache.fetch("HAS_LOGO#{self.id}") do
+      self.logo != nil
+    end
+  end
   
+  def msg_sender
+    return "s#{self.id}" if self.password && self.t && self.has_logo?
+    return $gfuid
+  end
+
   def has_food_purview?
     /测试|脸脸/ =~ self.name ? true : false
   end

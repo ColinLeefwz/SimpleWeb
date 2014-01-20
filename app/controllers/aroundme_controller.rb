@@ -7,9 +7,8 @@ class AroundmeController < ApplicationController
   
   def shops
     if session[:user_id] && User.is_shop_id?(session[:user_id])
-      ret = [session_user.shop.safe_output_with_users]
-      render :json =>  ret.to_json
-      return
+      ret = session_user.all_shops.map {|x| x.safe_output_with_users}
+      return render :json =>  ret.to_json
     end
     fake_city = $redis.get("FCITY#{session[:user_id]}")
     if fake_city

@@ -71,7 +71,7 @@ class ShopFaq
     sid = self.sid if sid.nil?
     attrs, ext = self.attr_ext
     text = self.output
-    Xmpp.send_gchat2($gfuid,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
+    Xmpp.send_gchat2(self.shop.msg_sender,sid,uid, text, "FAQ#{sid}#{uid}#{Time.now.to_i}", attrs, ext)
     zwyd_delay_send(uid, sid) if sid.to_s =='21828958' && self.od.to_s == '02'
   end
 

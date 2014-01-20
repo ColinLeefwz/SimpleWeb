@@ -181,6 +181,8 @@ $(document).ready(function(){
 	$('#editBack').click(function(){
 		var m = $('.selected')[0]
 		set_action_content(m.id)
+		$('.jsMain').css('display', 'none')
+		$("#index").css('display', 'block')
 	})
 
 	// 选择‘文字’
