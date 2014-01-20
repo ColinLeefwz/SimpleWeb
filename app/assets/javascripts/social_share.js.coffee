@@ -25,6 +25,5 @@ social_popup = ->
 
 $(document).ready(social_popup)
 $(document).on('page:load', social_popup)
-
-# $(document).on('ajax:success', count_shares)
+$(document).on('ajax:success', social_popup)
 

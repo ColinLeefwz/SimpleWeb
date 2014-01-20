@@ -19,6 +19,7 @@
   -else
 
   .caption
+    %div.description= truncate_html(course.description, length: 300, omission: '...')
     %p.learn-more= link_to "Learn more", course_path(course)
     .social-share-icons
       = render 'shared/social_share', item: course
