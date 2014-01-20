@@ -135,7 +135,8 @@ class SessionsController < ApplicationController
 
   def update_content
     @session.update_attributes(article_session_params)
-    @session.update_attributes draft: false
+
+		update_session_draft
 
     @items = current_user.contents
     @from = "sessions"
@@ -155,20 +156,21 @@ class SessionsController < ApplicationController
     @items = current_user.sessions.order("draft desc")
     respond_to do |format|
       format.js{
-        if params[:commit] == Session::COMMIT_TYPE[:publish]
-          @session.draft = false
-          @session.save
-          @from = "sessions"
-          render 'experts/update'
-        elsif params[:commit] == Session::COMMIT_TYPE[:draft]
-          @session.draft = true
-          @session.save
-          @from = "sessions"
-          render 'experts/update'
-        end
+				update_session_draft
+				@from = "sessions"
+				render 'experts/update'
       }
     end
   end
+
+	def update_session_draft
+		case params[:commit]
+		when Session::COMMIT_TYPE[:publish]
+			@session.update_attributes draft: false
+		when Session::COMMIT_TYPE[:draft]
+			@session.update_attributes draft: true
+		end
+	end
 
   def set_session
     @session = Session.find params[:id]
