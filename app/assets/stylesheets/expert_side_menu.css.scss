@@ -29,22 +29,25 @@ $shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
         text-align: center;
       }
       p{
-        font-size: 12px;
+        font-size: 14px;
         color: #777;
         font-family: Latoreg;
         margin: 0;
+        line-height: 1;
+        padding-bottom: 1px;
       }
       .expert-name{
         p{
           font-family: Oswaldreg;
-          font-size: 16px;
+          font-size: 19px;
 					color: #333333;
+          padding-bottom:5px;
         }
       }
       
       .edit-profile{
         p{
-          font-size: 15px;
+          font-size: 12px;
           line-height: 1.2em;
           a{
             font-size: 13px;

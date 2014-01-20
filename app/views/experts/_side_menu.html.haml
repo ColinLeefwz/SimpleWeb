@@ -4,8 +4,7 @@
   .expert-text-info
     .expert-name
       %p= @expert.name
-    %p= @profile.title
-    %p= @profile.company
+    %p #{empty_expert_info_filter(@profile.title, @profile.company)}
     .edit-profile
       %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
   .clear-fix
