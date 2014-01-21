@@ -63,8 +63,8 @@ class MembersController < ApplicationController
       if current_user.is_a? Expert
         @favorite_contents = ArticleSession.where.not(draft: true).order("RANDOM()").limit(3)
       elsif current_user.is_a? Member
-        @staff = User.where(email: "prodygia@prodygia.com").take
-        @favorite_contents = ArticleSession.where.not(draft: true, expert: @staff).order("RANDOM()").limit(3)
+        staff = User.where(email: "prodygia@prodygia.com").take
+        @favorite_contents = ArticleSession.where.not(draft: true, expert: staff).order("RANDOM()").limit(3)
       end
       @recommendation = true
     end
@@ -80,8 +80,8 @@ class MembersController < ApplicationController
       if current_user.is_a? Expert
         @subscribed_courses = Course.all(order: "RANDOM()", limit: 3)
       elsif current_user.is_a? Member
-        @staff = User.where(email: "prodygia@prodygia.com").take
-        @subscribed_courses = Course.where.not(expert: @staff).order("RANDOM()").limit(3)
+        staff = User.where(email: "prodygia@prodygia.com").take
+        @subscribed_courses = Course.where.not(expert: staff).order("RANDOM()").limit(3)
       end
       @recommendation = true
     end
