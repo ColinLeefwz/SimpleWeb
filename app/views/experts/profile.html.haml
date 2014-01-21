@@ -57,7 +57,7 @@
           %div
             - if @expert.intro_video.present?
               .intro-video.pull-right
-                = render "shared/sublime_video", item_resource: @expert.intro_video, poster_url: @expert.avatar.url
+                = render "shared/sublime_video", item_resource: @expert.intro_video, poster_url: @expert.intro_video.cover.url
             - expertise = @profile.expertise || "Expertise to be filled"
             = expertise.html_safe
             .clear-fix
