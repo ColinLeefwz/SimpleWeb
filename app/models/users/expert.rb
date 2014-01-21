@@ -9,7 +9,7 @@ class Expert < Member
   accepts_nested_attributes_for :intro_video
   # alias_method :profile=, :profile_attributes=   # NOTE add this line for active admin working properly
 
-  after_create :create_a_profile
+  after_create :create_a_profile, :create_an_intro_video
 
   def name
     "#{first_name} #{last_name}"
@@ -36,8 +36,11 @@ class Expert < Member
 
   private
   def create_a_profile
-    logger.info "create a profile automatically for a new expert"
-      self.profile || self.create_profile
+    self.profile || self.create_profile
+  end
+
+  def create_an_intro_video
+    self.intro_video || self.create_intro_video
   end
 
 end

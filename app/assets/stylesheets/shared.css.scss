@@ -29,6 +29,9 @@
   display: none;
 }
 
+.separator:after{
+  content: " | "
+}
 // simple way for file input not displaying "no file chosen"
 input[type="file"]{
   // width: 92px;

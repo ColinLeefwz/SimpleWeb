@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140115065736) do
+ActiveRecord::Schema.define(version: 20140121073405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,6 +173,10 @@ ActiveRecord::Schema.define(version: 20140115065736) do
     t.datetime "updated_at"
     t.integer  "introable_id"
     t.string   "introable_type"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
   end
 
   add_index "intro_videos", ["course_id"], name: "index_intro_videos_on_course_id", using: :btree
@@ -353,6 +357,7 @@ ActiveRecord::Schema.define(version: 20140115065736) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "time_zone",              default: "UTC"
+    t.string   "subdomain"
   end
 
   add_index "users", ["email", "provider"], name: "index_users_on_email_and_provider", unique: true, using: :btree
