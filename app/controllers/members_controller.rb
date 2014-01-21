@@ -60,7 +60,12 @@ class MembersController < ApplicationController
   def contents
     @favorite_contents = current_user.get_subscribed_contents
     if @favorite_contents.empty?
-      @favorite_contents = ArticleSession.where.not(draft: true).order("RANDOM()").limit(3)
+      if current_user.is_a? Expert
+        @favorite_contents = ArticleSession.where.not(draft: true).order("RANDOM()").limit(3)
+      elsif current_user.is_a? Member
+        @staff = User.where(email: "prodygia@prodygia.com").take
+        @favorite_contents = ArticleSession.where.not(draft: true, expert: @staff).order("RANDOM()").limit(3)
+      end
       @recommendation = true
     end
     @from = "content"
@@ -72,7 +77,12 @@ class MembersController < ApplicationController
   def video_on_demand
     @subscribed_courses = current_user.subscribed_courses
     if @subscribed_courses.empty?
-      @subscribed_courses = Course.all(order: "RANDOM()", limit: 3)
+      if current_user.is_a? Expert
+        @subscribed_courses = Course.all(order: "RANDOM()", limit: 3)
+      elsif current_user.is_a? Member
+        @staff = User.where(email: "prodygia@prodygia.com").take
+        @subscribed_courses = Course.where.not(expert: @staff).order("RANDOM()").limit(3)
+      end
       @recommendation = true
     end
     @from = "video_on_demand"
