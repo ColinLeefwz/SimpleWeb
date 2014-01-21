@@ -54,8 +54,8 @@ class ExpertsController < ApplicationController
         @expert.update_attributes(user_params)
         @expert.profile.update_attributes(expert_profile_params)
         flash[:success] = "successfully update your profile"
-
-        render js: "window.location='#{dashboard_expert_path(current_user)}'"
+        render nothing: true
+        # render js: "window.location='#{dashboard_expert_path(current_user)}'"
       }
     end
 
