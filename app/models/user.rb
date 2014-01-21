@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
 
   # User follow sessions
   has_many :subscriptions, foreign_key: "subscriber_id"
-  # has_many :subscribed_sessions, through: :subscriptions
 
   has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Session"
   has_many :subscribed_courses, through: :subscriptions, source: :subscribable, source_type: "Course"
@@ -28,7 +27,7 @@ class User < ActiveRecord::Base
   # enrollments and orders
   has_many :enrollments
   has_many :enrolled_courses, through: :enrollments, source: :enrollable, source_type: "Course"
-  # has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
+
   has_many :orders
   has_many :email_messages
 
