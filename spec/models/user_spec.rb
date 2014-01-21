@@ -19,20 +19,20 @@ describe User do
   end
 
   describe ".has_subscribed?" do
-    it "returns false if not subscribe the session" do
-      expect(jevan.has_subscribed? session_intro).to be_false
+    it "returns false if not subscribe the course" do
+      expect(jevan.has_subscribed? first_course).to be_false
     end
 
     it "returns true if already subscribe the session" do
-      jevan.subscribed_sessions << session_intro
-      expect(jevan.has_subscribed? session_intro).to be_true
+      jevan.subscribe first_course
+      expect(jevan.has_subscribed? first_course).to be_true
     end
   end
 
   describe ".subscribe" do
     it "adds the course to user's subscribed_courses" do
       jevan.subscribe first_course
-      expect(jevan.reload.subscribed_courses).to include first_course
+      expect(jevan.subscribed_courses).to include first_course
     end
 
     it "add video interview to user's subscribed_video_interviews" do
