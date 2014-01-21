@@ -2,20 +2,18 @@
   .favorite-session-left
     .cover
       = image_tag(course.cover.url)
-    .enroll-button
-      -if current_user.has_enrolled? course 
-        Enrolled
-      -elsif
+    - unless (current_user) && (current_user.enrolled? course)
+      .enroll-button
         = link_to "Enroll", enroll_course_path(course)
 
   .favorite-session-info
     .favorite-session-main
       .favorite-session-title
         = course.title
-      .favorite-session-expert-name
+      .favorite-session-expert-name.separator.inline
         by 
         = link_to "#{course.first_expert.name}", profile_expert_path(course.first_expert) 
-      .favorite-session-categories
+      .favorite-session-categories.inline
         = course.categories.join(", ")
       .clear-fix
 

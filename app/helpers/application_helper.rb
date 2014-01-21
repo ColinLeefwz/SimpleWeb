@@ -29,7 +29,7 @@ module ApplicationHelper
   # display the enroll button(free) or paypal button
   def paypal_or_enroll_button(params, item)
 
-    if current_user.enrolled? item
+    if (current_user) && (current_user.enrolled? item)
       "Enrolled"
     else
       if item.free?

@@ -17,9 +17,7 @@
       = "published on #{item.created_at.to_date.to_formatted_s(:course_date)}"
       &nbsp
     -unless item.categories.empty?
-      .category-name
-        = "|"
-        &nbsp
+      .category-name.separator
         = item.categories.join(", ")
   .text-page-right-side
     .text-page-social-buttons
