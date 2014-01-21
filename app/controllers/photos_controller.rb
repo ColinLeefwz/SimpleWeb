@@ -137,7 +137,7 @@ class PhotosController < ApplicationController
   def like
     photo = Photo.find(params[:id])
     flag = $redis.zadd("Like#{photo.id}", Time.now.to_i, session[:user_id])
-    if flag
+    if flag && session[:user_id] != photo.user_id
       Rails.cache.fetch("Like#{photo.id}#{session[:user_id]}") do
         Resque.enqueue(XmppMsg,  session[:user_id], photo.user_id,
           "#{photo.total_str}'赞'了你的照片",
