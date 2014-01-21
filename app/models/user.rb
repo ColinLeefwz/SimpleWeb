@@ -45,11 +45,6 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
-  ##methods for enroll sessions
-  def has_enrolled? (item)
-    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item)
-  end
-
   ## methods for subscribe sessions
   def get_subscribed_sessions(session_type)
     self.subscribed_sessions.where(content_type: session_type)
