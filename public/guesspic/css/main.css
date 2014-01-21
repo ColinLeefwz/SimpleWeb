@@ -155,3 +155,30 @@ animation:box1animation 1.5s ease-out, box1animation 1.5s ease-out;
 	80% {-ms-transform:translateY(10px);}
 	100% {-ms-transform:translateY(0px);}
 }
+.shake {
+	-webkit-animation:shakeanimate 1.0s ease-out, shakeanimate 1.0s ease-out;
+	-moz-animation:shakeanimate 1.0s ease-out, shakeanimate 1.0s ease-out
+	-o-animation:shakeanimate 1.0s ease-out, shakeanimate 1.0s ease-out;
+	-ms-animation:shakeanimate 1.0s ease-out, shakeanimate 1.0s ease-out;
+	animation:shakeanimate 1.0s ease-out, shakeanimate 1.0s ease-out;
+}
+@-webkit-keyframes shakeanimate {
+	0%, 100% {-webkit-transform: translateX(0px);}
+	10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);}
+	20%, 40%, 60%, 80% {-webkit-transform: translateX(10px);}
+}
+@-moz-keyframes shakeanimate {
+	0%, 100% {-moz-transform: translateX(0px);}
+	10%, 30%, 50%, 70%, 90% {-moz-transform: translateX(-10px);}
+	20%, 40%, 60%, 80% {-moz-transform: translateX(10px);}
+}
+@-o-keyframes shakeanimate {
+	0%, 100% {-o-transform: translateX(0px);}
+	10%, 30%, 50%, 70%, 90% {-o-transform: translateX(-10px);}
+	20%, 40%, 60%, 80% {-o-transform: translateX(10px);}
+}
+@-ms-keyframes shakeanimate {
+	0%, 100% {-ms-transform: translateX(0px);}
+	10%, 30%, 50%, 70%, 90% {-ms-transform: translateX(-10px);}
+	20%, 40%, 60%, 80% {-ms-transform: translateX(10px);}
+}
