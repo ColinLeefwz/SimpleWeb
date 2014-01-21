@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   end
 
   def has_subscribed? (item)
-    Subscription.find(subscriber_id: self.id,
+    Subscription.find_by(subscriber_id: self.id,
                       subscribable_id: item.id,
                       subscribable_type: item.class.name)
   end
