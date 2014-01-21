@@ -19,27 +19,22 @@ class Ability
       cannot :create, Expert
 
       can [:read, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
-      can :manage, Course do |course|  #note: template solution
+      can :manage, Course do |course|
 				course.experts.include?(user)
 			end
 
     elsif user.is_a? Member
       can :read, Session
-
       can :read, Expert
-
-      # can :read, Course  #note: template solution
       can [:read, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
-
       can :manage, Member do |member|
         member == user
       end
 
       cannot :delete, Member
       cannot :refer_new_expert, Expert
-
     else
-      can [:read, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
+      can [:show, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
     end
   end
 end
