@@ -30,9 +30,14 @@ describe User do
   end
 
   describe ".subscribe" do
-    it "adds the session to user's subscribed_sessions" do
-      jevan.subscribe session_intro
-      expect(jevan.reload.subscribed_sessions).to include session_intro
+    it "adds the course to user's subscribed_courses" do
+      jevan.subscribe first_course
+      expect(jevan.reload.subscribed_courses).to include first_course
+    end
+
+    it "add video interview to user's subscribed_video_interviews" do
+      gecko.subscribe video_interview
+      expect(gecko.subscribed_video_interviews).to include video_interview
     end
   end
 
