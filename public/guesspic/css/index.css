@@ -1,25 +1,25 @@
-#BG{width:100%;background:url("../images/bg4.png");position:absolute;left:0px;top:0px;z-index:1;height:0px;cursor:pointer;}
-#Share{width:245px;position:absolute;left:50%;margin-left:-132px;line-height:20px;z-index:2;background-color:#fff;padding:10px;
-border-radius:5px;box-shadow:1px 0px 10px #fff;display:none;top:-100px;}
-#Share ul{display:block;overflow:hidden;margin-top:10px;}
-#Share ul li{float:left;text-align:center;display:block;overflow:hidden;font-size:11px;width:80px;}
-.btn1{font-family:微软雅黑;font-size:28px;color:#fff;display:block;border-radius:5px;line-height:28px;width:120px;padding:5px 8px;
-margin:0px auto;text-align:center;background-color:#C4261D;cursor:pointer;
--webkit-animation:box1animation 2.5s ease-out, btnanimation 2.5s ease-out;
--moz-animation:box1animation 2.5s ease-out, btnanimation 2.5s ease-out
--o-animation:box1animation 2.5s ease-out, btnanimation 2.5s ease-out;
--ms-animation:box1animation 2.5s ease-out, btnanimation 2.5s ease-out;
+.main{background:url("../images/bg1.jpg") left top no-repeat;}
+.con{padding-top:180px;height:398px;background:url("../images/bg2.jpg") left bottom no-repeat;position:relative;}
+
+.btn1{font-family:微软雅黑;font-size:18px;color:#56B4DF;display:block;line-height:35px;width:137px;height:40px;
+background:url("../images/btn1.png") left bottom no-repeat;
+font-weight:normal;margin:0px auto;text-align:center;cursor:pointer;letter-spacing:2px;
+-webkit-animation:btnanimation 2.5s ease-out, btnanimation 2.5s ease-out;
+-moz-animation:btnanimation 2.5s ease-out, btnanimation 2.5s ease-out
+-o-animation:btnanimation 2.5s ease-out, btnanimation 2.5s ease-out;
+-ms-animation:btnanimation 2.5s ease-out, btnanimation 2.5s ease-out;
 animation:btnanimation 2.5s ease-out, btnanimation 2.5s ease-out;
 }
-
-.btn2{font-family:微软雅黑;font-size:16px;color:#6B6B6B;display:block;border-radius:5px;line-height:28px;width:120px;padding:5px 8px;
-margin:0px auto;text-align:center;background-color:#E4E4E4;cursor:pointer;
+.btn2{font-family:微软雅黑;font-size:16px;color:#8F8B8B;display:block;line-height:35px;width:137px;height:40px;
+background:url("../images/btn2.png") left bottom no-repeat;
+font-weight:normal;margin:0px auto;text-align:center;cursor:pointer;
 -webkit-animation:btnanimation 2.5s ease-out,btnanimation 2.5s ease-out;
 -moz-animation:btnanimation 2.5s ease-out,btnanimation 2.5s ease-out;
 -o-animation:btnanimation 2.5s ease-out,btnanimation 2.5s ease-out;
 -ms-animation:btnanimation 2.5s ease-out,btnanimation 2.5s ease-out;
 animation:btnanimation 2.5s ease-out,btnanimation 2.5s ease-out;
 }
+
 @-webkit-keyframes btnanimation{
 	0%{-webkit-transform:scale(0);opacity:0;}
 	40%{-webkit-transform:scale(1);opacity:1;}
@@ -40,38 +40,67 @@ animation:btnanimation 2.5s ease-out,btnanimation 2.5s ease-out;
 	40%{-ms-transform:scale(1);opacity:1;}
 	100%{opacity:1;}
 }
-.plane{width:100%;height:116px;overflow:hidden;position:relative;}
-.box1, .box2, .box3, .box4{font-family:微软雅黑;font-size:12px;float:left;width:142px;border:1px solid #fff;background-color:#F2F2F2;padding:8px;
-overflow:hidden;position:absolute; left:0px; top:0px; height:40px;
--webkit-animation:box1animation 1.5s ease-in,box1animation 1.5s ease-in;
--moz-animation:box1animation 1.5s ease-in,box1animation 1.5s ease-in;
--o-animation:box1animation 1.5s ease-in,box1animation 1.5s ease-in;
--ms-animation:box1animation 1.5s ease-in,box1animation 1.5s ease-in;
+
+.plane{width:233px;height:70px;overflow:hidden;position:absolute;top:15px;left:5px;
+-webkit-animation:plane1animation 1s ease-in,plane1animation 1s ease-in;
+-moz-animation:plane1animation 1s ease-in,plane1animation 1s ease-in;
+-o-animation:plane1animation 1s ease-in,plane1animation 1s ease-in;
+-ms-animation:plane1animation 1s ease-in,plane1animation 1s ease-in;
 }
-.box2{left:auto;right:0px;}
-.box3{top:57px;}
-.box4{left:auto;right:0px;top:57px;}
-@-webkit-keyframes box1animation{
-	0% {-webkit-transform:translateY(200px);}
-	60% {-webkit-transform:translateY(-30px);}
-	80% {-webkit-transform:translateY(10px);}
-	100% {-webkit-transform:translateY(0px);}
+
+@-webkit-keyframes plane1animation{
+	0% {-webkit-transform:translateX(200px);}
+	100% {-webkit-transform:translateX(5px);}
 }
-@-moz-keyframes box1animation{
-	0% {-moz-transform:translateY(200px);}
-	60% {-moz-transform:translateY(-30px);}
-	80% {-moz-transform:translateY(10px);}
-	100% {-moz-transform:translateY(0px);}
+@-moz-keyframes plane1animation{
+	0% {-moz-transform:translateX(200px);}
+	100% {-moz-transform:translateX(5px);}
 }
-@-o-keyframes box1animation{
-	0% {-o-transform:translateY(200px);}
-	60% {-o-transform:translateY(-30px);}
-	80% {-o-transform:translateY(10px);}
-	100% {-o-transform:translateY(0px);}
+@-o-keyframes plane1animation{
+	0% {-o-transform:translateX(200px);}
+	100% {-o-transform:translateX(5px);}
 }
-@-ms-keyframes box1animation{
-	0% {-ms-transform:translateY(200px);}
-	60% {-ms-transform:translateY(-30px);}
-	80% {-ms-transform:translateY(10px);}
-	100% {-ms-transform:translateY(0px);}
+@-ms-keyframes plane1animation{
+	0% {-ms-transform:translateX(200px);}
+	100% {-ms-transform:translateX(5px);}
+}
+
+.title1 h2{
+-webkit-animation:h2animation 1s ease-in,h2animation 1s ease-in;
+-moz-animation:h2animation 1s ease-in,h2animation 1s ease-in;
+-o-animation:h2animation 1s ease-in,h2animation 1s ease-in;
+-ms-animation:h2animation 1s ease-in,h2animation 1s ease-in;
+}
+
+@-webkit-keyframes h2animation{
+	0% {-webkit-transform:translateY(-10px);}
+	20% {-webkit-transform:translateY(10px);}
+	40% {-webkit-transform:translateY(-10px);}
+	60% {-webkit-transform:translateY(10px);}
+	80% {-webkit-transform:translateY(-10px);}
+	100% {-webkit-transform:translateY(0);}
+}
+@-moz-keyframes h2animation{
+	0% {-moz-transform:translateY(-10px);}
+	20% {-moz-transform:translateY(10px);}
+	40% {-moz-transform:translateY(-10px);}
+	60% {-moz-transform:translateY(10px);}
+	80% {-moz-transform:translateY(-10px);}
+	100% {-moz-transform:translateY(0);}
+}
+@-o-keyframes h2animation{
+	0% {-o-transform:translateY(-10px);}
+	20% {-o-transform:translateY(10px);}
+	40% {-o-transform:translateY(-10px);}
+	60% {-o-transform:translateY(10px);}
+	80% {-o-transform:translateY(-10px);}
+	100% {-o-transform:translateY(0);}
+}
+@-ms-keyframes h2animation{
+	0% {-ms-transform:translateY(-10px);}
+	20% {-ms-transform:translateY(10px);}
+	40% {-ms-transform:translateY(-10px);}
+	60% {-ms-transform:translateY(10px);}
+	80% {-ms-transform:translateY(-10px);}
+	100% {-ms-transform:translateY(0);}
 }

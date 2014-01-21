@@ -10,10 +10,11 @@
 		<link rel="stylesheet" href="/guesspic/css/main.css" />
 		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
     </head>
-    <body class="h465">
-        <div class="main visible">
-			<div class="tit">店名</div>
-			<img src="images/pic12.jpg" id="Img"/>
+    <body>
+        <div class="main visible h475">
+			<div class="con">
+			<div id="Img"><img src="images/pic12.jpg" width="100%"/></div>
+			
 			<span class="names mb10">猜中获得8折优惠券</span>
 			<article class="plane2">
 				<ul id="ZF">
@@ -24,7 +25,7 @@
 				</ul>
 			</article>
 			<aside id="WP" class="visible">
-				<ul class="ds visible" rel="0">
+				<ul class="ds visible top0 box1animation2" rel="0">
 					<li data-key="银" data-num="0">银</li>
                     <li data-key="月" data-num="1">月</li>
                     <li data-key="泰" data-num="2">泰</li>
@@ -51,6 +52,7 @@
                     <li data-key="货" data-num="23">货</li>
 				</ul>
 			</aside>
+			</div>
 		</div>
     </body>
 	<script>
@@ -88,7 +90,7 @@
 					str=str+$("#ZF li").eq(j).html();
 				}
 				if(str!="银泰百货"){
-					$("#ZF li").addClass("shake red2");
+					$("#ZF li").addClass("shake orange");
 					return false;
 				}else{
 					setTimeout(function(){window.location.href="http://shop.dface.cn/guesspic/next.html"},500);
@@ -96,14 +98,14 @@
 			});
 
 			$("#ZF li").click(function(){
-				$("#ZF li").removeClass("shake red2");
+				$("#ZF li").removeClass("shake orange");
 				if($(this).html()=="") return false;
 				$("#ZF li").removeClass("bg1");
 				var num=$(this).attr("data-num");
 				$(".ds li").eq(num).removeAttr("style");
 				$(this).html("").addClass("bg1").attr("data-num","");
 			});
-			$(".ds").eq(0).css("display","table").animate({"top":"0px"},800);
+			$(".ds").eq(0).css("display","table");
 			$("#ZF li").eq(0).addClass("bg1");
 		});
 	</script>

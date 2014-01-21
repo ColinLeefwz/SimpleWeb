@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="/guesspic/css/public.css" />
 		<link rel="stylesheet" href="/guesspic/css/main.css" />
 		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
+		<script src="/guesspic/js/jquery.mobile-1.3.2.js"></script>
     </head>
     <body>
 		<div id="BG"></div>
@@ -23,59 +24,84 @@
 				<li><a href="#"><img src="images/pic11.jpg"/><br/>短信</a></li>
 			</ul>
 		</div>
-        <div class="main">
-			<div class="tit2">即将进入下一关</div>
-			<article class="h195">
-				<aside id="SpanWord">
-					<span class="w1">抢</span>
-					<span class="w2">答</span>
-					<span class="w3">赢</span>
-					<span class="w4">大</span>
-					<span class="w5">奖</span>
-				</aside>
-
-				<div id="Word">
-					只要抢先猜中图片内容，就能赢得相应大奖。每道题有三次猜图机会，每错一次，就会延长答题间隔时间；三次全错时，该题被别人猜中后才能进入下一关
+        <div class="main visible h475">
+			<div class="con">
+			<div class="title1"><h2>抢答赢大奖</h2></div>
+				<div class="h210">
+					<div id="Word">
+						只要抢先猜中图片内容，就能赢得相应大奖。每道题有三次猜图机会，每错一次，就会延长答题间隔时间；三次全错时，该题被别人猜中后才能进入下一关
+					</div>
+					<div id="Tel">
+						<form>
+							请填写你的手机号，以便及时接收获奖通知
+							<input type="text" id="Text" style="border:none;background-color:transparent;"/>
+						</form>
+					</div>
 				</div>
-				<div id="Tel">
-					<form>
-						请填写你的手机号，以便及时接收获奖通知
-						<input type="text" id="Text"/>
-					</form>
-				</div>
-			</article>
-			<a href="last2.html" class="btn1 mt8 none">开始抢答</a>
-			<a class="btn2 mt12 mb10 none" id="Btn2">分享赢大奖</a>
-			<div class="tit3 none">他们正在疯狂抢答</div>
+				<a href="last2.html" class="btn1 mt8 none">开始抢答</a>
+				<a class="btn2 mt12 mb10 none" id="Btn2">分享赢大奖</a>
+			
+			<div class="tit3 pt10 none">他们正在疯狂抢答：</div>
 			<div class="hs">
 				<ul>
-					<li><a href="#"><img src="images/pic2.jpg" align="middle"/></a><li>
-					<li><a href="#"><img src="images/pic3.jpg" align="middle"/></a><li>
-					<li><a href="#"><img src="images/pic4.jpg" align="middle"/></a><li>
-					<li><a href="#"><img src="images/pic5.jpg" align="middle"/></a><li>
-					<li><a href="#"><img src="images/pic2.jpg" align="middle"/></a><li>
-					<li><a href="#"><img src="images/pic3.jpg" align="middle"/></a><li>
+					<li><img src="images/pic3.jpg" align="middle"/></li>
+					<li><img src="images/pic4.jpg" align="middle"/></li>
+					<li><img src="images/pic5.jpg" align="middle"/></li>
+					<li><img src="images/pic6.jpg" align="middle"/></li>
+					<li><img src="images/pic7.jpg" align="middle"/></li>
+					<li><img src="images/pic8.jpg" align="middle"/></li>
+					<li><img src="images/pic9.jpg" align="middle"/></li>
+					<li><img src="images/pic10.jpg" align="middle"/></li>
+					<li><img src="images/pic3.jpg" align="middle"/></li>
+					<li><img src="images/pic4.jpg" align="middle"/></li>
+					<li><img src="images/pic5.jpg" align="middle"/></li>
+					<li><img src="images/pic6.jpg" align="middle"/></li>
+					<li><img src="images/pic7.jpg" align="middle"/></li>
+					<li><img src="images/pic8.jpg" align="middle"/></li>
+					<li><img src="images/pic9.jpg" align="middle"/></li>
 				</ul>
+			</div>
 			</div>
 		</div>
     </body>
 	<script>
 	$(document).ready(function(){
-		for(var i=0;i<5;i++){
-			$("#SpanWord span").eq(i).delay(500*i).animate({"top":"40px"});
-		}
+		$("div.hs ul").css("width",$("div.hs ul li").length*63+"px");
+		$("div.hs ul").swipeleft(function(e){
+			var num=parseInt($("div.hs ul").css("margin-left"));
+			num=Math.abs(num);
+			if((parseInt($("div.hs ul").css("width"))-num)>(63*5)){
+				$(this).animate({"margin-left":-(num+5*63)+"px"});
+			}
+			e.stopPropagation();
+			return false;
+		});
+		
+		$("div.hs ul").swiperight(function(e){
+			var num=parseInt($("div.hs ul").css("margin-left"));
+			num=Math.abs(num);
+			
+			if(num<=0){
+				return false;
+			}else{
+				$(this).animate({"margin-left":-(num-5*63)+"px"});
+			}
+			
+			e.stopPropagation();
+			return false;
+		});
+	
+		$("#Word").animate({"left":"30px"},800);
+
 		setTimeout(function(){
-			$("#Word").animate({"left":"12px"},500);
-		},2600);
-		setTimeout(function(){
-			$("#Tel").animate({"right":"12px"},500,function(){
+			$("#Tel").animate({"right":"26px"},800,function(){
 				$(".btn1, .btn2").removeClass("none").addClass("box1animation2");
 			});
-		},3100);
+		},800);
 		setTimeout(function(){
 			$(".tit3").removeClass("none");
-			$(".hs").fadeIn(500);
-		},5100);
+			$(".hs").fadeIn(800);
+		},2300);
 		$("#Btn2").click(function(){
 			var top;
 			var documentHeight=$(document).height();

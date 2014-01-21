@@ -23,9 +23,12 @@
 				<li><a href="#"><img src="images/pic11.jpg"/><br/>短信</a></li>
 			</ul>
 		</div>
-		<a href="#" id="Help">求<br/>助</a>
-        <div class="main visible">
-			<div class="tit">品牌名</div>
+        <div class="main visible h470">
+			<ul id="Blood">
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
 			<img src="images/pic13.jpg" id="Img"/>
 			<span class="names mb10">猜中免单</span>
 			<article class="plane2">
@@ -34,11 +37,6 @@
 					<li rel="1" data-num=""></li>
 					<li rel="2" data-num=""></li>
 					<li rel="3" data-num=""></li>
-				</ul>
-				<ul id="Blood">
-					<li></li>
-					<li></li>
-					<li></li>
 				</ul>
 			</article>
 			
@@ -148,7 +146,7 @@
                     <li data-key="英" data-num="23">英</li>
 				</ul>
 				<div id="Mes" class="mes"><br/>状态不佳啊，答错了，休息一会再答<br/><br/><span>0 : 10</span></div>
-				<div id="Mes2" class="mes"><br/>又答错了，加油啊，还有最后一次机会<br/><span class="mt10 block">0 : 20</span><br/><a id="Btn3" class="btn3 mt5">赶快求助小伙伴们</a></div>
+				<div id="Mes2" class="mes"><br/>又答错了，加油啊，还有最后一次机会<br/><span class="mt10 block">0 : 20</span><br/><a id="Btn3" class="btn3 mt5">赶快求助小伙伴</a></div>
 				<div id="Mes3" class="mes"><br><br><a href="lastover.html">哎呀！答错3次了，休息一会吧。<br>这道题被人抢答后，你才能进入下一题。</a></div>
 				<div id="Mes4" class="mes"><br/>动作不够快啊，已被别人抢答了<br/>休息一会挑战下一题<br/><br/><span>3：00</span></div>
 			</aside>
@@ -182,7 +180,7 @@
 					var str=str+$("#ZF li").eq(i).html();
 				}
 				if(str!="斐克迪思"){
-					$("#ZF li").addClass("shake red2");
+					$("#ZF li").addClass("shake orange");
 					for(i=0;i<3;i++){
 						if(i==0&&$("#Blood li").eq(i).attr("class")!="on"){
 							$("#Blood li").eq(i).addClass("on");
@@ -253,7 +251,7 @@
 			});
 
 			$("#ZF li").click(function(){
-				$("#ZF li").removeClass("shake red2");
+				$("#ZF li").removeClass("shake orange");
 				if($(this).html()=="") return false;
 				$("#ZF li").removeClass("bg1");
 				$(this).html("").addClass("bg1");
