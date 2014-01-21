@@ -28,4 +28,6 @@
     - text = (item.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
     %p.learn-more= link_to text, currect_path(item)
     .social-share-icons
+      .social-share.favorite-star
+        = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: subscribe_session_path(item)
       = render 'shared/social_share', item: item
