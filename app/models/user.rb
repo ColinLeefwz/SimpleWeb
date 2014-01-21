@@ -62,27 +62,22 @@ class User < ActiveRecord::Base
   end
 
   def has_subscribed? (item)
-    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item) || self.subscribed_video_interviews.include?(item)
+    Subscription.find(subscriber_id: self.id,
+                      subscribable_id: item.id,
+                      subscribable_type: item.class.name)
   end
 
   def subscribe (item)
-    if item.is_a? Session
-      self.subscribed_sessions << item
-    elsif item.is_a? Course
-      self.subscribed_courses << item
-    elsif item.is_a? VideoInterview
-      self.subscribed_video_interviews << item
-    end
+    Subscription.create(subscriber_id: self.id,
+                        subscribable_id: item.id,
+                        subscribable_type: item.class.name )
   end
 
   def unsubscribe (item)
-    if item.is_a? Session
-      self.subscribed_sessions.delete item
-    elsif item.is_a? Course
-      self.subscribed_courses.delete item
-    elsif item.is_a? VideoInterview
-      self.subscribed_video_interviews.delete item
-    end
+    record = Subscription.find(subscriber_id: self.id,
+                               subscribable_id: item.id,
+                               subscribable_type: item.class.name)
+    record.destroy if record
   end
 
   ## methods for follow users
