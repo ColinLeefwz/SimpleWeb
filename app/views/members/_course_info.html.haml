@@ -10,10 +10,10 @@
     .favorite-session-main
       .favorite-session-title
         = course.title
-      .favorite-session-expert-name
+      .favorite-session-expert-name.separator.inline
         by 
         = link_to "#{course.first_expert.name}", profile_expert_path(course.first_expert) 
-      .favorite-session-categories
+      .favorite-session-categories.inline
         = course.categories.join(", ")
       .clear-fix
 
