@@ -2,13 +2,12 @@
   .favorite-session-main
     .favorite-session-title
       = content.title
-    .favorite-session-expert-name
+    .favorite-session-expert-name.separator.inline
       by 
       = link_to "#{content.expert.name}", profile_expert_path(content.expert) 
       = "(published at #{content.created_at.to_date.to_formatted_s(:course_date)})"
-    .favorite-session-categories
+    .favorite-session-categories.inline
       = content.categories.join(", ")
-    .clear-fix
 
     .favorite-session-description
       = truncate_html(content.description, length: 300, omission: '...')
