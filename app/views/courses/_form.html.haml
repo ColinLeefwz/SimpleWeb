@@ -32,7 +32,6 @@
   = f.association :experts
   = f.input :categories, as: :check_boxes, collection: Category.all, label_method: :name, value_method: :name
   = f.input :cover
-  = f.input :duration
 
   = f.simple_fields_for :chapters do |c|
     = render 'chapter_fields', f: c
