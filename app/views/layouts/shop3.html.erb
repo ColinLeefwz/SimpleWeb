@@ -79,7 +79,11 @@
           <span class="navline"></span>
           <% if $redis.smembers("MobileShops").include?session_shop.id.to_s %>
           <a href="/shop3_mobile/index3">手机网站</a>
+          
+          <% if session_shop.has_food_purview? %>
           <a href="#" class="food">点菜管理</a>
+          <% end %>
+          
           <span class="navline"></span>
           <% end %>
 

@@ -42,6 +42,10 @@ class ShopController < ApplicationController
       render :json => [Shop.find_by_id(21837941)].map {|s| {id:s.id,name:s.name, visit:0, distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
       return
     end
+    if params[:sname]=="铜梁安居" || params[:sname]=="铜梁安居古镇"
+      render :json => [Shop.find_by_id(21838424)].map {|s| {id:s.id,name:s.name, visit:0, distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
+      return
+    end
     if params[:sname]=="微+" || params[:sname]=="微＋" || params[:sname]=="微加"
       render :json => [Shop.find_by_id(21837950)].map {|s| {id:s.id,name:s.name, visit:0,distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
       return
@@ -72,14 +76,16 @@ class ShopController < ApplicationController
     else
       ret = []
       # TODO: 默认搜索同城， 国外搜国家
-#      city = Shop.get_city(lo)
-#      shop1s = Shop.where2({city: city, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})
-
-      shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})        
+      if params[:sname].length>=4
+        city = Shop.get_city(lo)
+        shop1s = Shop.where2({city: city, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10})
+      else
+        shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10}) 
+      end
       shop1s.each do |s| 
         hash = output(s,lo).merge!(s.group_hash(session[:user_id]))
         distance = s.min_distance(s,lo)
-        if distance>2000 && !s.group_id && s.id != 21834120
+        if distance>3000 && !s.group_id && s.id != 21834120 && !is_kx_user?(session[:user_id]) && !is_co_user?(session[:user_id])
           hash.merge!( {visit:1} )
         else
           hash.merge!( {visit:0} )
