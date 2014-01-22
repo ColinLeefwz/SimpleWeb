@@ -8,7 +8,7 @@ class Course < ActiveRecord::Base
   has_many :enrollments, as: :enrollable
 
   has_and_belongs_to_many :experts
-  has_many :chapters, dependent: :destroy
+  has_many :chapters, -> {order(order: :asc)}, dependent: :destroy
   accepts_nested_attributes_for :chapters, reject_if: lambda{|c| c[:title].blank?}, allow_destroy: true
 
 	has_one :intro_video, as: :introable, dependent: :destroy

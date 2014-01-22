@@ -16,9 +16,9 @@ class CoursesController < ApplicationController
     @course.build_intro_video
   end
 
+  # todo: add error handler
   def create
-    @course = Course.new(course_params)
-    @course.save
+    @course = Course.create(course_params)
     redirect_to preview_course_path(@course)
   end
 
@@ -32,7 +32,6 @@ class CoursesController < ApplicationController
     else
       redirect_to preview_course_path(@course), flash: {error: "Failed to Update"}
     end
-
   end
 
   def preview
@@ -79,6 +78,6 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:id, :title, :description, :cover, :price, {categories:[]}, {expert_ids: []}, :duration, chapters_attributes: [:id, :title, :description, :order, :_destroy, sections_attributes: [:id, :title, :description, :order, :_destroy] ], intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
+    params.require(:course).permit(:id, :title, :description, :cover, :price, {categories:[]}, {expert_ids: []}, chapters_attributes: [:id, :title, :description, :order, :_destroy, sections_attributes: [:id, :title, :description, :duration, :order, :_destroy] ], intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
   end
 end

@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   after_action :store_location
 
   ## Peter: based on this site https://gist.github.com/hbrandl/5253211 to show flash mesaage when using AJAX
-  after_action :flash_to_headers 
+  # after_action :flash_to_headers 
 
   protect_from_forgery with: :exception
 
@@ -81,29 +81,29 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  def flash_to_headers
-    return unless request.xhr?
-    msg = flash_message
-    response.headers["X-Message"] = msg
-    response.headers["X-Message-Type"] = flash_type.to_s
+  # def flash_to_headers
+  #   return unless request.xhr?
+  #   msg = flash_message
+  #   response.headers["X-Message"] = msg
+  #   response.headers["X-Message-Type"] = flash_type.to_s
 
-    flash.discard 
-  end
+  #   flash.discard 
+  # end
 
-  def flash_message
-    [:success, :error, :warning, :notice].each do |type|
-      return flash[type] unless flash[type].blank?
-    end
+  # def flash_message
+  #   [:success, :error, :warning, :notice].each do |type|
+  #     return flash[type] unless flash[type].blank?
+  #   end
 
-    return ""
-  end
+  #   return ""
+  # end
 
-  def flash_type
-    [:success, :error, :warning, :notice, :keep].each do |type|
-      return type unless flash[type].blank?
-    end
-    return :empty
-  end
+  # def flash_type
+  #   [:success, :error, :warning, :notice, :keep].each do |type|
+  #     return type unless flash[type].blank?
+  #   end
+  #   return :empty
+  # end
   
 end
 

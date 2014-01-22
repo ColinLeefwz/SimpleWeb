@@ -15,12 +15,10 @@
           = @course.title
         .producers.inline.separator
           = producer_links(@course)
-        -# video-length & category
 
-        -# todo: add real video-length data
-        -# .video-length.inline
-        -#   1h 33m
-        -# .separator.inline
+        .video-length.inline.separator
+          = distance_of_time_in_words @course.duration.to_i
+
         .category.inline
           = @course.categories.join(", ")
         .description

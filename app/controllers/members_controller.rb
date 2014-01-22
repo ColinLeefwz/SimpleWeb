@@ -31,12 +31,12 @@ class MembersController < ApplicationController
       format.js{
         @member.update_attributes(user_params)
         @member.profile.update_attributes(member_profile_params)
-        @profile = @member.profile || @member.create_profile
-
         flash[:success] = "successfully update your profile"
-        @from = 'edit_profile'
+        render js: "window.location='#{dashboard_member_path(current_user)}'"
 
-        render 'experts/update'
+        # @profile = @member.profile || @member.create_profile
+        # @from = 'edit_profile'
+        # render 'experts/update'
       }
     end
   end
