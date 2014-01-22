@@ -18,7 +18,7 @@ class Ability
       cannot :delete, Expert
       cannot :create, Expert
 
-      can [:read, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
+      can [:show, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
       can :manage, Course do |course|
 				course.experts.include?(user)
 			end
@@ -26,7 +26,7 @@ class Ability
     elsif user.is_a? Member
       can :read, Session
       can :read, Expert
-      can [:read, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
+      can [:show, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
       can :manage, Member do |member|
         member == user
       end
