@@ -113,10 +113,20 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         }
       }
       .title{
+        height: 100%;
         span{
-          height: 2em;
           font-size: 1.2em;
           font-family: Latobold;
+          vertical-align: middle;
+        }
+      }
+      .duration{
+        height: 100%;
+        float: right;
+        padding-right: 0.8em;
+        span{
+          font-size: 0.8em;
+          font-family: Latoitalic;
           vertical-align: middle;
         }
       }
@@ -128,6 +138,16 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         width: 2em;
         height: 2em;
         padding: 0.3em 0.3em;
+      }
+      .duration{
+        height: 100%;
+        float: right;
+        padding-right: 0.8em;
+        span{
+          font-size: 0.8em;
+          font-family: Latoitalic;
+          vertical-align: middle;
+        }
       }
     }
 
@@ -145,6 +165,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
     }
     .accordion-heading .accordion-toggle{
       padding: 0px;
+      height: 2.6em;
     }
     .accordion-toggle:hover {
       text-decoration: none;
