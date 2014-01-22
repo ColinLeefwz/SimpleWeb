@@ -8,12 +8,8 @@
        <title>测试Js接口</title>
 <script>
 	document.addEventListener('DfaceJSBridgeReady', function() {
-	        DfaceJSBridge.callHandler('getUsername', null, function(response) {
-							document.getElementById('name').innerHTML=response;
-					})
+	        DfaceJSBridge.call('wxShare', {'url': 'http://www.g.cn', 'title':'测试微信分享'})
 	}, false);
-	
-	//alert.call(window,"test")
 </script>
 </head>
 <body>

@@ -7,17 +7,19 @@
        <meta http-equiv="cleartype" content="on">
        <title>测试Js接口</title>
 <script>
+//DfaceJSBridge.callHandler = function(name,args,callback){
+//	var ret = DfaceJSBridge.call(name, args);
+//	callback(ret);
+//}
 	document.addEventListener('DfaceJSBridgeReady', function() {
-	        DfaceJSBridge.callHandler('getUsername', null, function(response) {
+	        DfaceJSBridge.callHandler('getUidSid', null, function(response) {
 							document.getElementById('name').innerHTML=response;
 					})
 	}, false);
-	
-	//alert.call(window,"test")
 </script>
 </head>
 <body>
-getUsername
+getUidSid: 返回值当前用户id和当前现场id
 <span id="name"></span>
 </body>
 </html>
