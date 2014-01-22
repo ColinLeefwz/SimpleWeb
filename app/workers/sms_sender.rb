@@ -7,12 +7,12 @@ class SmsSender
   def self.perform(phone,text)
     v = Rails.cache.read("Sms#{phone}")
     if v.nil?
-      send_sms_ihuiyi(phone, text)
+      send_sms_xuanwu(phone, text)
       Rails.cache.write("Sms#{phone}",Time.now.to_i, :expires_in => 1.days)
     else
       diff = Time.now.to_i - v.to_i
       if diff>30
-        send_sms_xuanwu(phone, text)
+        send_sms_ihuiyi(phone, text)
       else
         Xmpp.error_notify("#{phone}在#{diff}秒内重发请求短信验证码")
       end
