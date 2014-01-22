@@ -15,26 +15,33 @@
     height: 210px;
     .expert-info{
       display: inline-block;
+			text-align: center;
       width: 22%;
       max-width: 205px;
       max-height: 204px;
       .expert-avatar{
         padding: 8.68% 18.78% 1.64% 18.78%;
         img{
-          // min-width: 80px;
-          // min-height: 80px;
 					width: 80px;
 					height: 80px;
           border-radius: 50%;
         }
       }
       .expert-text-info{
+        font-size: 14px;
+        color: #777;
+        font-family: Latoreg;
+        margin: 0;
+        line-height: 1;
+        padding-bottom: 1px;
+
         width: 100%;
         text-align: center;
-        padding-bottom: 20px;
+        // padding-bottom: 20px;
         .expert-name{
-          font-family: 'Latobold';
-          font-size: 18px;
+          font-family: 'Oswaldreg';
+          font-size: 19px;
+					color: #333333;
         }
       }
     }
