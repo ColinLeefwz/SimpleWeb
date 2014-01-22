@@ -12,7 +12,6 @@ class Profile < ActiveRecord::Base
   end
 
   def generate_location
-    logger.info "generate location"
     self.location = "#{self.city} #{self.country}"
   end
 end

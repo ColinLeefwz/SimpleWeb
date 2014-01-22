@@ -53,9 +53,13 @@ class ExpertsController < ApplicationController
       format.js{
         @expert.update_attributes(user_params)
         @expert.profile.update_attributes(expert_profile_params)
-        flash[:success] = "successfully update your profile"
 
-        render js: "window.location='#{dashboard_expert_path(current_user)}'"
+        @profile = @expert.profile || @expert.create_profile
+        @intro_video = @expert.intro_video || @expert.create_intro_video
+
+        flash[:success] = "successfully update your profile"
+        @from = 'edit_profile'
+        render 'experts/update'
       }
     end
 

@@ -11,6 +11,7 @@
   %body
     #header
       = render "shared/header"
+    #flash_hook
     #flash
       - unless flash.empty?
         .alert{ class: "#{flash_class}" }
