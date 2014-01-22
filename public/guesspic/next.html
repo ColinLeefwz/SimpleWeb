@@ -24,25 +24,29 @@
 			</ul>
 		</div>
         <div class="main">
-			<div class="tit red1 f16">答对了</div>
-			<div id="Img">
-				<img src="images/pic12.jpg" id="Img"/>
-				<span>银泰百货</span>
+			<div class="con">
+				<div id="Img">
+					<img src="images/pic12.jpg" width="100%"/>
+					<span>银泰百货</span>
+				</div>
+				
+				<span class="names">
+					<span class="white">你的聪明才智为你赢得</span><br/>
+					<span class="yellow f16">银泰购物全场8折购物券一张</span>
+				</span>
+				
+				<a href="last.html" class="btn1 mt8 box1animation2">下一关</a>
+				<a class="btn2 mt12 mb10 box1animation2" id="Btn2">分享赢大奖</a>
+				<br/>
+				<br/>
 			</div>
-			
-			<span class="names">
-				<span class="gray2">你的聪明才智为你赢得</span><br/>
-				<span class="red1 f16">银泰购物全场8折购物券一张</span>
-			</span>
-			
-			<a href="last.html" class="btn1 mt8 box1animation">下一关</a>
-			<a class="btn2 mt12 mb10 box1animation" id="Btn2">分享赢大奖</a>
 		</div>
     </body>
 	<script>
 	$(document).ready(function(){
 		var h=$("#Img span").height();
 		$("#Img span").css({"top":(220-h)/2+"px"});
+		
 		$("#Btn2").click(function(){
 			var top;
 			var documentHeight=$(document).height();

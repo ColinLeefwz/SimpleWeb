@@ -1,0 +1,35 @@
+.main{background:url("../images/bg5.jpg") left top no-repeat;height:500px;}
+.animatetop{
+-webkit-animation:at 1.2s ease-in,at 1.2s ease-in;
+-moz-animation:at 1.2s ease-in,at 1.2s ease-in;
+-o-animation:at 1.2s ease-in,at 1.2s ease-in;
+-ms-animation:at 1.2s ease-in,at 1.2s ease-in;
+}
+.plane{width:233px;height:70px;overflow:hidden;position:absolute;top:15px;left:5px;}
+.plane2{width:260px;margin:20px auto 0px auto;font-size:16px;color:#fff;font-family:微软雅黑;
+line-height:25px;letter-spacing:2px;}
+
+@-webkit-keyframes at{
+	0% {-webkit-transform:translateY(200px);}
+	60% {-webkit-transform:translateY(-50px);}
+	80% {-webkit-transform:translateY(10px);}
+	100% {-webkit-transform:translateY(0px);}
+}
+@-moz-keyframes at{
+	0% {-moz-transform:translateY(200px);}
+	60% {-moz-transform:translateY(-50px);}
+	80% {-moz-transform:translateY(10px);}
+	100% {-moz-transform:translateY(0px);}
+}
+@-o-keyframes at{
+	0% {-o-transform:translateY(200px);}
+	60% {-o-transform:translateY(-50px);}
+	80% {-o-transform:translateY(10px);}
+	100% {-o-transform:translateY(0px);}
+}
+@-ms-keyframes at{
+	0% {-ms-transform:translateY(200px);}
+	60% {-ms-transform:translateY(-50px);}
+	80% {-ms-transform:translateY(10px);}
+	100% {-ms-transform:translateY(0px);}
+}

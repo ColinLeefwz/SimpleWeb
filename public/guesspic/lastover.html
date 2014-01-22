@@ -24,20 +24,25 @@
 			</ul>
 		</div>
         <div class="main">
-			<div class="tit red1 f16">答对了</div>
-			<div id="Img">
-				<img src="images/pic13.jpg" id="Img"/>
-				<span>斐克迪思</span>
+			<ul id="Blood">
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<div class="con">
+				<div id="Img">
+					<img src="images/pic13.jpg" wdith="100%"/>
+					<span>斐克迪思</span>
+				</div>
+				<span class="names texts">
+					<span class="white">你的智慧为你赢得</span><br/>
+					<span class="yellow f16">一条斐克迪思牛仔裤（价值1200元）</span>
+				</span>
+				<a href="guess.html" class="btn1 mt8 box1animation">查看奖品</a>
+				<a href="#" class="btn2 mt12 mb10 box1animation" id="Btn2">分享赢大奖</a>
+				<div class="plane">每天只能参加一次，请明天再来吧~</div>
+				<br/>
 			</div>
-			
-			<span class="names texts">
-				<span class="gray2">你的智慧为你赢得</span><br/>
-				<span class="red1 f16">一条斐克迪思牛仔裤（价值1200元）</span>
-			</span>
-			
-			<a href="guess.html" class="btn1 mt8 box1animation">查看奖品</a>
-			<a href="#" class="btn2 mt12 mb10 box1animation" id="Btn2">分享赢大奖</a>
-			<div class="plane">每天只能参加一次，请明天再来</div>
 		</div>
     </body>
 	<script>
@@ -65,7 +70,7 @@
 				$("#Share,#BG").css("display","none");
 			});
 		});
-		var i=0;
+		/*var i=0;
 		setInterval(function(){
 			switch(i){
 				case 0: $(".plane").css("color","#F26521");break;
@@ -73,7 +78,7 @@
 				case 2: $(".plane").css("color","#2E3092");i=-1;break;
 			}
 			i++;
-		},1000);
+		},1000);*/
 	});
 	</script>
 </html>
