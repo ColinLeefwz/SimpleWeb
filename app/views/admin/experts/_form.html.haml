@@ -19,7 +19,7 @@
 = simple_form_for [:admin, @expert] do |f|
   %fieldset
     = f.simple_fields_for :intro_video do |intro|
-      = intro.input :cover
+      = intro.input_field :cover
       = intro.input :attached_video_hd_file_name, as: :hidden
       = intro.input :attached_video_hd_content_type, as: :hidden
       = intro.input :attached_video_hd_file_size, as: :hidden
