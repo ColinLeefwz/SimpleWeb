@@ -13,11 +13,10 @@
   .text-page-middle
     .title
       = item.title
-    .datetime
+    .datetime.separator
       = "published on #{item.created_at.to_date.to_formatted_s(:course_date)}"
-      &nbsp
     -unless item.categories.empty?
-      .category-name.separator
+      .category-name
         = item.categories.join(", ")
   .text-page-right-side
     .text-page-social-buttons
