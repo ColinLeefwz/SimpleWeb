@@ -21,8 +21,10 @@
       .expert-avatar{
         padding: 8.68% 18.78% 1.64% 18.78%;
         img{
-          min-width: 80px;
-          min-height: 80px;
+          // min-width: 80px;
+          // min-height: 80px;
+					width: 80px;
+					height: 80px;
           border-radius: 50%;
         }
       }
