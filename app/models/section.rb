@@ -6,7 +6,6 @@ class Section < ActiveRecord::Base
 
   accepts_nested_attributes_for :resources, allow_destroy: true  #todo add "reject_if" block
 
-  default_scope {order(order: :asc)}
   before_save :convert_duration
   after_save :update_parent_duration
 
