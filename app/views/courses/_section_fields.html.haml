@@ -3,8 +3,7 @@
 .fields.section-fields
   = f.input :title, label: "Section Title"
   = f.input :description
+  = f.input :duration, as: :string, hint: " hh:mm:ss"
   = f.input :order, label: "Section Order:", wrapper_html: {class: "inline"}
   = link_to_remove_fields "remove section", f
-
-
 

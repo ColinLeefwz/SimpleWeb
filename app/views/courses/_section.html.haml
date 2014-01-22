@@ -5,6 +5,8 @@
         = image_tag "content.png"
       .section-title.inline
         %span= section.title
+      .duration.inline.center-container
+        %span= distance_of_time_in_words section.duration.to_i
 
   %div{id: "collapse#{section.id}", class: "accordion-body collapse"}
     .accordion-inner
