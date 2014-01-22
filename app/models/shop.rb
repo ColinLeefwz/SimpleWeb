@@ -809,6 +809,6 @@ class Shop
   end
 
   def has_trade_purview?
-    self.id == '21838725' ? true : false
+    self.shop_id == '21838725' ? true : false
   end
 end
