@@ -150,6 +150,12 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         }
       }
     }
+    .section-detail{
+      .description{
+        vertical-align: top;
+        text-indent: 1em;
+      }
+    }
 
     // override bootstrap accordion style 
     .accordion-group{

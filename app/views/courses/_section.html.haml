@@ -9,9 +9,11 @@
         %span= distance_of_time_in_words section.duration.to_i
 
   %div{id: "collapse#{section.id}", class: "accordion-body collapse"}
-    .accordion-inner
-      - if section.has_video?
-        %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
-          %source{src: section.sd_url}
-          %source{src: section.hd_url, data: {quality: "hd"}}
-      = section.description
+    .accordion-inner.section-detail
+      .video.inline
+        - if section.has_video?
+          %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
+            %source{src: section.sd_url}
+            %source{src: section.hd_url, data: {quality: "hd"}}
+      .description.inline
+        = section.description
