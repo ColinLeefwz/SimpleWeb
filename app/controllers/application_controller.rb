@@ -10,6 +10,9 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   after_action :store_location
 
+  ## Peter: based on this site https://gist.github.com/hbrandl/5253211 to show flash mesaage when using AJAX
+  after_action :flash_to_headers 
+
   protect_from_forgery with: :exception
 
 
@@ -67,7 +70,6 @@ class ApplicationController < ActionController::Base
     mandrill = MandrillApi.new
     mandrill.enroll_comfirm(current_user, item, item.cover.url)
   end
-  
 
 
   protected
@@ -76,6 +78,31 @@ class ApplicationController < ActionController::Base
     unless current_admin_user.nil?
       current_admin_user
     end
+  end
+
+  private
+  def flash_to_headers
+    return unless request.xhr?
+    msg = flash_message
+    response.headers["X-Message"] = msg
+    response.headers["X-Message-Type"] = flash_type.to_s
+
+    flash.discard 
+  end
+
+  def flash_message
+    [:success, :error, :warning, :notice].each do |type|
+      return flash[type] unless flash[type].blank?
+    end
+
+    return ""
+  end
+
+  def flash_type
+    [:success, :error, :warning, :notice, :keep].each do |type|
+      return type unless flash[type].blank?
+    end
+    return :empty
   end
   
 end

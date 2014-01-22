@@ -37,7 +37,6 @@ class MembersController < ApplicationController
         @from = 'edit_profile'
 
         render 'experts/update'
-        # render js: "window.location='#{dashboard_member_path(current_user)}'"
       }
     end
   end
