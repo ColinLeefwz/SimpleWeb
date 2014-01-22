@@ -69,6 +69,10 @@
           <span class="navline"></span>
           <a href="/shop3_menu">自定义菜单</a>
           <span class="navline"></span>
+          <% if [21835801].include?(session[:shop_id].to_i)%>
+            <%= link_to "猜图管理","http://caitu.dface.cn/login?id=#{session[:shop_id]}&hash=#{Digest::SHA256.hexdigest('ciatu'+session[:shop_id].to_i.to_s)[0,32]}", :target => '_blank' %>
+            <span class="navline"></span>
+          <% end %>
           <% unless session_shop.shops.blank? %>
             <a href="/shop3_subshops">内部商家</a>
           <% end %>
