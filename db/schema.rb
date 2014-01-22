@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140121073405) do
+ActiveRecord::Schema.define(version: 20140122073607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20140121073405) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.string   "duration"
   end
 
   add_index "chapters", ["course_id"], name: "index_chapters_on_course_id", using: :btree
@@ -267,6 +268,7 @@ ActiveRecord::Schema.define(version: 20140121073405) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.string   "duration"
   end
 
   add_index "sections", ["chapter_id"], name: "index_sections_on_chapter_id", using: :btree
@@ -357,7 +359,6 @@ ActiveRecord::Schema.define(version: 20140121073405) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "time_zone",              default: "UTC"
-    t.string   "subdomain"
   end
 
   add_index "users", ["email", "provider"], name: "index_users_on_email_and_provider", unique: true, using: :btree
