@@ -807,4 +807,8 @@ class Shop
   def has_food_purview?
     /测试|脸脸/ =~ self.name ? true : false
   end
+
+  def has_trade_purview?
+    self.id == '21838725' ? true : false
+  end
 end

@@ -23,6 +23,9 @@
         $(".food").click(function(){
           $("#food #submit").click();
         });
+        $(".trade").click(function(){
+          $("#trade #submit").click();
+        });
       });
     </script>
   </head>
@@ -83,6 +86,10 @@
           <% if session_shop.has_food_purview? %>
           <a href="#" class="food">点菜管理</a>
           <% end %>
+
+          <% if session_shop.has_trade_purview? %>
+          <a href="#" class="trade">订单管理</a>
+          <% end %>
           
           <span class="navline"></span>
           <% end %>
@@ -104,6 +111,11 @@
 
     <div style="display:none;">
       <form action="http://food.dface.cn/admin/sessions" id="food" name="food" method="post">
+        <input type="hidden" name="sid" value="<%= session[:shop_id] %>">
+        <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32] %>">
+        <input type="submit" name="submit" id="submit">
+      </form>
+      <form action="http://trade.dface.cn/admin/sessions" id="trade" name="trade" method="post">
         <input type="hidden" name="sid" value="<%= session[:shop_id] %>">
         <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32] %>">
         <input type="submit" name="submit" id="submit">
