@@ -31,11 +31,13 @@ class Coupon
   field :name 
   field :desc
   field :t, type: Integer #发布的方式,1.是图文混合模式发布的，2. 是全图模式发布的,
-  field :t2, type: Integer #发布的方式,1.签到触发，2. 图片分享到微博触发类,  
+  field :t2, type: Integer #发布的方式,1.签到触发，2. 图片分享到微博触发类, 3.猜图类 
   field :text #图片分享到微博触发类, 必须包含的文字。
   field :hidden, type:Integer #状态， 1.是停用
   #  field :endt, type:DateTime
-  field :rule #t2==1 时 0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，3常客累计满多少次签到优惠。  t2==2时， 0 每日分享优惠， 1首次分享有虎
+  field :rule #t2==1 时 0每日签到优惠，1每日前几名签到优惠，2新用户首次签到优惠，
+              #3常客累计满多少次签到优惠。  t2==2时， 0 每日分享优惠， 1首次分享有虎
+              # t2==3 1,普通题回答正确， 2。抢答题回答正确
   field :rulev #1每日前几名签到优惠的数量;3常客累计满多少次签到优惠的数量。
   field :hint  #优惠券使用时的要求输入信息的消费提示
   field :scd, type: Integer  #share_condition, 分享优惠券触发条件， 0， 个人拍照分享， 1. 分享指定问答。
@@ -201,7 +203,7 @@ class Coupon
   #  end
 
   def show_t2
-    ['签到类','分享类'][self.t2.to_i-1]
+    ['签到类','分享类', '猜图类'][self.t2.to_i-1]
   end
   
   def show_scd
