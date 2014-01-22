@@ -8,6 +8,7 @@ class Section < ActiveRecord::Base
 
   default_scope {order(order: :asc)}
   before_save :convert_duration
+  after_save :update_parent_duration
 
   def has_video?
     self.resources.inject(false) { |memo, obj|  memo or obj.attached_file_file_name.present? }
@@ -35,4 +36,9 @@ class Section < ActiveRecord::Base
     end
   end
 
+  def update_parent_duration
+    chapter = self.chapter
+    duration = chapter.sections.inject(0) { |memo, obj| memo + obj.duration.to_i }
+    chapter.update_attributes duration: duration.to_s
+  end
 end
