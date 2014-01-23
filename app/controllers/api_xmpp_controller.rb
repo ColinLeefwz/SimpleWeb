@@ -1,4 +1,5 @@
 class ApiXmppController < ApplicationController
+  layout nil
 
   def push_message
     return if to.blank? || params[:msg].blank?
