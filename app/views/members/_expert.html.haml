@@ -18,40 +18,25 @@
       .expert-action-info
         .block-title
           %span RECENT ACTIVITY
-        .recent-activity
-          .course-icon
-            =image_tag("missing.png")
-          .course-info
-            .action
-              Posted 
-            .title
-              Consulting service in China
-          .published-time
-            5 days ago
-            
-        .recent-activity
-          .course-icon
-            =image_tag("missing.png")
-          .course-info
-            .action
-              Posted 
-            .title
-              Consulting service in China
-          .published-time
-            5 days ago
-
-                                    
-        .recent-activity
-          .course-icon
-            = image_tag("missing.png")
-          .course-info
-            .action
-              Posted 
-            .title
-              Consulting service in China
-          .published-time
-            5 days ago
-      
+          - e.contents.take(3).each do |content|
+            .recent-activity
+              .course-icon
+                - if content.is_a? ArticleSession
+                  = link_to image_tag(content.cover), session_path(content)
+                - elsif content.is_a? VideoInterview
+                  = link_to image_tag(content.cover), video_interview_path(content)
+              .course-info
+                .action
+                  Posted
+                .title
+                  - if content.is_a? ArticleSession
+                    = link_to content.title, session_path(content)
+                  - elsif content.is_a? VideoInterview
+                    = link_to content.title, video_interview_path(content)
+              .published-time
+                -# = distance_of_time_in_words_to_now(content.updated_at)
+                = time_ago_in_words(content.updated_at)
+                = "ago"
       .see-more
         =link_to "see more", profile_expert_path(e)
 
