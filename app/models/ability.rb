@@ -22,6 +22,7 @@ class Ability
       can :manage, Course do |course|
 				course.experts.include?(user)
 			end
+      cannot :index, Course
 
     elsif user.is_a? Member
       can :read, Session
