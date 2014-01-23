@@ -5,6 +5,11 @@ common: &common
   footer: |
     <p>Stay tuned!</p>
 
+my_activity_stream:
+  <<: *common
+  content: |
+    <p>It’ll be released soon and enable you to see your activity on the platform.</p>
+
 create_new_session:
   <<: *common
   content: |
