@@ -11,11 +11,13 @@
 		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
     </head>
     <body>
-        <div class="main visible h475">
-			<div class="con">
-			<div id="Img"><img src="images/pic12.jpg" width="100%"/></div>
+		<div class="mainbox">
+        <div class="main">
+			<div class="title2"><h2>猜店名</h2></div>
+			<div id="Img">
+				<img src="images/pic12.jpg" width="100%"/></div>
 			
-			<span class="names mb10">猜中获得8折优惠券</span>
+			<span class="names">猜中获得8折优惠券</span>
 			<article class="plane2">
 				<ul id="ZF">
 					<li data-num=""></li>
@@ -53,10 +55,15 @@
 				</ul>
 			</aside>
 			</div>
-		</div>
+	</div>
     </body>
 	<script>
 		$(document).ready(function(){
+			var h0=$(window).height(),
+				h1=$(".main").height();
+				if(h0>h1){
+					$(".mainbox").css("padding-top",(h0-h1)/2+"px");
+				}
 			var len=$("#ZF li").length;
 			
 			$(".ds li").click(function(){

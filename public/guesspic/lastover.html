@@ -11,27 +11,23 @@
 		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
     </head>
     <body>
+		<div class="mainbox">
 		<div id="BG"></div>
-		<div id="Share">
-			<span>分享给小伙伴们，赢iPad、iPhone。</span>
-			<ul>
-				<li><a href="#"><img src="images/pic6.jpg"/><br/>发给微信好友</a></li>
-				<li><a href="#"><img src="images/pic7.jpg"/><br/>发给QQ好友</a></li>
-				<li><a href="#"><img src="images/pic8.jpg"/><br/>分享到QQ空间</a></li>
-				<li><a href="#"><img src="images/pic9.jpg"/><br/>分享到朋友圈</a></li>
-				<li><a href="#"><img src="images/pic10.jpg"/><br/>分享到微博</a></li>
-				<li><a href="#"><img src="images/pic11.jpg"/><br/>短信</a></li>
-			</ul>
-		</div>
         <div class="main">
-			<ul id="Blood">
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-			<div class="con">
+			<div id="Share">
+				<span>分享给小伙伴们，赢iPad、iPhone。</span>
+				<ul>
+					<li><a href="#"><img src="images/pic6.jpg"/><br/>发给微信好友</a></li>
+					<li><a href="#"><img src="images/pic7.jpg"/><br/>发给QQ好友</a></li>
+					<li><a href="#"><img src="images/pic8.jpg"/><br/>分享到QQ空间</a></li>
+					<li><a href="#"><img src="images/pic9.jpg"/><br/>分享到朋友圈</a></li>
+					<li><a href="#"><img src="images/pic10.jpg"/><br/>分享到微博</a></li>
+					<li><a href="#"><img src="images/pic11.jpg"/><br/>短信</a></li>
+				</ul>
+			</div>
+				<div class="title2"><h2>猜店名</h2></div>
 				<div id="Img">
-					<img src="images/pic13.jpg" wdith="100%"/>
+					<img src="images/pic13.jpg" width="100%"/>
 					<span>斐克迪思</span>
 				</div>
 				<span class="names texts">
@@ -41,14 +37,18 @@
 				<a href="guess.html" class="btn1 mt8 box1animation">查看奖品</a>
 				<a href="#" class="btn2 mt12 mb10 box1animation" id="Btn2">分享赢大奖</a>
 				<div class="plane">每天只能参加一次，请明天再来吧~</div>
-				<br/>
 			</div>
 		</div>
     </body>
 	<script>
 	$(document).ready(function(){
+		var h0=$(window).height(),
+			h1=$(".main").height();
+		if(h0>h1){
+			$(".mainbox").css("padding-top",(h0-h1)/2+"px");
+		}
 		var h=$("#Img span").height();
-		$("#Img span").css({"top":(220-h)/2+"px"});
+		$("#Img span").css({"top":(190-h)/2+"px"});
 		$("#Btn2").click(function(){
 			var top;
 			var documentHeight=$(document).height();

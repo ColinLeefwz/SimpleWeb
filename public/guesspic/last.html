@@ -12,22 +12,22 @@
 		<script src="/guesspic/js/jquery.mobile-1.3.2.js"></script>
     </head>
     <body>
+	<div class="mainbox">
 		<div id="BG"></div>
-		<div id="Share">
-			<span>分享给小伙伴们，赢iPad、iPhone。</span>
-			<ul>
-				<li><a href="#" data-ajax="false"><img src="images/pic6.jpg"/><br/>发给微信好友</a></li>
-				<li><a href="#" data-ajax="false"><img src="images/pic7.jpg"/><br/>发给QQ好友</a></li>
-				<li><a href="#" data-ajax="false"><img src="images/pic8.jpg"/><br/>分享到QQ空间</a></li>
-				<li><a href="#" data-ajax="false"><img src="images/pic9.jpg"/><br/>分享到朋友圈</a></li>
-				<li><a href="#" data-ajax="false"><img src="images/pic10.jpg"/><br/>分享到微博</a></li>
-				<li><a href="#" data-ajax="false"><img src="images/pic11.jpg"/><br/>短信</a></li>
-			</ul>
-		</div>
-        <div class="main visible h475">
-			<div class="con">
-			<div class="title1"><h2>抢答赢大奖</h2></div>
-				<div class="h210">
+        <div class="main">
+			<div id="Share">
+				<span>分享给小伙伴们，赢iPad、iPhone。</span>
+				<ul>
+					<li><a href="#" data-ajax="false"><img src="images/pic6.jpg"/><br/>发给微信好友</a></li>
+					<li><a href="#" data-ajax="false"><img src="images/pic7.jpg"/><br/>发给QQ好友</a></li>
+					<li><a href="#" data-ajax="false"><img src="images/pic8.jpg"/><br/>分享到QQ空间</a></li>
+					<li><a href="#" data-ajax="false"><img src="images/pic9.jpg"/><br/>分享到朋友圈</a></li>
+					<li><a href="#" data-ajax="false"><img src="images/pic10.jpg"/><br/>分享到微博</a></li>
+					<li><a href="#" data-ajax="false"><img src="images/pic11.jpg"/><br/>短信</a></li>
+				</ul>
+			</div>
+			<div class="title1 mt10"><h2>抢答赢大奖</h2></div>
+				<div class="h160">
 					<div id="Word">
 						只要抢先猜中图片内容，就能赢得相应大奖。每道题有三次猜图机会，每错一次，就会延长答题间隔时间；三次全错时，该题被别人猜中后才能进入下一关
 					</div>
@@ -38,8 +38,8 @@
 						</form>
 					</div>
 				</div>
-				<a href="last2.html" class="btn1 mt8 none" data-ajax="false">开始抢答</a>
-				<a class="btn2 mt12 mb10 none" id="Btn2" data-ajax="false">分享赢大奖</a>
+				<a href="last2.html" class="btn1 mt6 none" data-ajax="false">开始抢答</a>
+				<a class="btn2 mt10 mb8 none" id="Btn2" data-ajax="false">分享赢大奖</a>
 			
 			<div class="tit3 pt10 none">他们正在疯狂抢答：</div>
 			<div class="hs">
@@ -61,11 +61,16 @@
 					<li><img src="images/pic9.jpg" align="middle"/></li>
 				</ul>
 			</div>
-			</div>
+		</div>
 		</div>
     </body>
 	<script>
 	$(document).ready(function(){
+		var h0=$(window).height(),
+			h1=$(".main").height();
+		if(h0>h1){
+			$(".mainbox").css("padding-top",(h0-h1)/2+"px");
+		}
 		$("div.hs ul").css("width",$("div.hs ul li").length*63+"px");
 		$("div.hs ul").swipeleft(function(e){
 			var num=parseInt($("div.hs ul").css("margin-left"));
@@ -111,17 +116,11 @@
 			}else{
 			  $("#BG").css({"height":documentHeight+"px","display":"block"});
 			}
-			$("#Share").css("display","block");
-			top=$(document).scrollTop()+(windowHeight-$("#Share").height())/2;
-			
-			if(top<0){top=0;}
-			$("#Share").animate({"top":top-16+"px"},450);
+			$("#Share").addClass("animatebottom");
 		});
 		$("#BG").click(function(){
-			$("#Share").fadeOut(500,function(){
-				$("#Share").css("top","-240px");
-				$("#Share,#BG").css("display","none");
-			});
+			$("#Share").removeClass("animatebottom");
+			$("#BG").css("display","none");
 		});
 	});
 	</script>

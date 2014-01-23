@@ -11,26 +11,23 @@
 		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
     </head>
     <body>
+		<div class="mainbox">
 		<div id="BG"></div>
-		<div id="Share">
-			<span>分享给小伙伴们，赢iPad、iPhone。</span>
-			<ul>
-				<li><a href="#"><img src="images/pic6.jpg"/><br/>发给微信好友</a></li>
-				<li><a href="#"><img src="images/pic7.jpg"/><br/>发给QQ好友</a></li>
-				<li><a href="#"><img src="images/pic8.jpg"/><br/>分享到QQ空间</a></li>
-				<li><a href="#"><img src="images/pic9.jpg"/><br/>分享到朋友圈</a></li>
-				<li><a href="#"><img src="images/pic10.jpg"/><br/>分享到微博</a></li>
-				<li><a href="#"><img src="images/pic11.jpg"/><br/>短信</a></li>
-			</ul>
-		</div>
-        <div class="main visible h470">
-			<ul id="Blood">
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-			<img src="images/pic13.jpg" id="Img"/>
-			<span class="names mb10">猜中免单</span>
+        <div class="main">
+			<div id="Share">
+				<span>分享给小伙伴们，赢iPad、iPhone。</span>
+				<ul>
+					<li><a href="#"><img src="images/pic6.jpg"/><br/>发给微信好友</a></li>
+					<li><a href="#"><img src="images/pic7.jpg"/><br/>发给QQ好友</a></li>
+					<li><a href="#"><img src="images/pic8.jpg"/><br/>分享到QQ空间</a></li>
+					<li><a href="#"><img src="images/pic9.jpg"/><br/>分享到朋友圈</a></li>
+					<li><a href="#"><img src="images/pic10.jpg"/><br/>分享到微博</a></li>
+					<li><a href="#"><img src="images/pic11.jpg"/><br/>短信</a></li>
+				</ul>
+			</div>
+			<div class="title2"><h2>猜品牌</h2></div>
+			<div id="Img"><img src="images/pic13.jpg" width="100%"/></div>
+			<span class="names">猜中免单</span>
 			<article class="plane2">
 				<ul id="ZF">
 					<li rel="0" data-num=""></li>
@@ -39,7 +36,11 @@
 					<li rel="3" data-num=""></li>
 				</ul>
 			</article>
-			
+			<ul id="Blood">
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
 			<aside id="WP" class="visible">
 				<ul class="ds visible" rel="0">
 					<li data-key="斐" data-num="0">斐</li>
@@ -145,15 +146,21 @@
                     <li data-key="夫" data-num="22">夫</li>
                     <li data-key="英" data-num="23">英</li>
 				</ul>
-				<div id="Mes" class="mes"><br/>状态不佳啊，答错了，休息一会再答<br/><br/><span>0 : 10</span></div>
-				<div id="Mes2" class="mes"><br/>又答错了，加油啊，还有最后一次机会<br/><span class="mt10 block">0 : 20</span><br/><a id="Btn3" class="btn3 mt5">赶快求助小伙伴</a></div>
-				<div id="Mes3" class="mes"><br><br><a href="lastover.html">哎呀！答错3次了，休息一会吧。<br>这道题被人抢答后，你才能进入下一题。</a></div>
-				<div id="Mes4" class="mes"><br/>动作不够快啊，已被别人抢答了<br/>休息一会挑战下一题<br/><br/><span>3：00</span></div>
+
+				<div id="Mes" class="mes"><br/>状态不佳啊，答错了，<br/>休息一会再答<br/><span class="pt10 block">0 : 10</span></div>
+				<div id="Mes2" class="mes lh20 pt5">又答错了，加油啊<br/>还有最后一次机会哦~<span class="mt10 block">0 : 20</span><a id="Btn3" class="btn3 mt10">赶快求助小伙伴</a></div>
+				<div id="Mes3" class="mes"><br/>哎呀！答错3次了，休息一会吧!<br/>这道题被人抢答后，才能进入下一题~<span class="mt10 block">3：00</span></div>
 			</aside>
+		</div>
 		</div>
     </body>
 	<script>
 		$(document).ready(function(){
+			var h0=$(window).height(),
+				h1=$(".main").height();
+				if(h0>h1){
+					$(".mainbox").css("padding-top",(h0-h1)/2+"px");
+				}
 			var len=$(".ds").length; var timer;
 			$(".ds li").click(function(){
 				var zf=$(this).attr("data-key");
