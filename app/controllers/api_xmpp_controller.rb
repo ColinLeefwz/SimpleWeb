@@ -1,14 +1,17 @@
 class ApiXmppController < ApplicationController
-  
+
   def push_message
     if !to.blank? && !params[:msg].blank?
       if to.is_a? Array
-        to.each { |t| Resque.enqueue(XmppMsg, from, t, params[:msg])}
+        result = []
+        to.each { |t| result << Resque.enqueue(XmppMsg, from, t, params[:msg])}
       else
-        Resque.enqueue(XmppMsg, from, to, params[:msg])
+        result = Resque.enqueue(XmppMsg, from, to, params[:msg])
       end
+      render json: { error: 0, message: result }
+    else
+      render json: { error: 0, message: "noting to push" }
     end
-    render json: { error: 0 }
   end
 
   private
