@@ -8,9 +8,13 @@
        <meta http-equiv="cleartype" content="on">
        <title>测试Js接口</title>
 <script>
-			document.addEventListener('DfaceJSBridgeReady', function() {
-				DfaceJSBridge.call('hideOptionMenu');
-			}, false);
+if (window.DfaceJSBridge) {
+        DfaceJSBridge.call('hideOptionMenu');
+} else {
+        document.addEventListener('DfaceJSBridgeReady', function() {
+                DfaceJSBridge.call('hideOptionMenu');
+        }, false)
+}
 </script>
 </head>
 <body>
