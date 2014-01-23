@@ -26,7 +26,7 @@ module Gps
   end
   
   def min_distance(shop,loc)
-    return 1 if loc.nil? || loc.size==0 || shop["lo"].nil? || shop["lo"].size==0
+    return 9999999 if loc.nil? || loc.size==0 || shop["lo"].nil? || shop["lo"].size==0
     if(shop["lo"][0].class==Array)
       shop["lo"].map {|x| get_distance(x,loc)}.min
     else
