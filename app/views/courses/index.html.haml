@@ -6,11 +6,13 @@
       %th Price
       %th Experts
       %th
+      %th
     - @courses.each do |c|
       %tr
         %td= link_to c.title, course_path(c)
         %td= c.price
         %td= c.producers
         %td= link_to "edit", edit_course_path(c)
+        %td= link_to "delete", course_path(c), method: :delete, data: {confirm: "Are you sure?"}
 
   = link_to "create new course", new_course_path, class: "btn"
