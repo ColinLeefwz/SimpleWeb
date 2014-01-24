@@ -12,7 +12,10 @@
     .favorite-session-description
       = truncate_html(content.description, length: 300, omission: '...')
   .see-more
-    = link_to "see more", session_path(content)
+    - if content.is_a? VideoInterview
+      = link_to "see more", video_interview_path(content)
+    -elsif content.is_a? ArticleSession
+      = link_to "see more", article_path(content)
 
 .favorite-social-share
   = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: subscribe_session_path(content)
