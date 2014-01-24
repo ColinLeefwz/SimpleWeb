@@ -1014,6 +1014,11 @@ GET & \multicolumn{3}{|c|}{/menu/click} \\
 执行成功后，脸脸会发送回一条消息。
 
 \section{脸脸WEB应用嵌入接口}
+
+本章所有的功能只对域名以dface.cn结尾的网址有效。
+
+\subsection{加载和退出}
+
 \begin{verbatim}
 
 启动时：
@@ -1024,6 +1029,29 @@ GET & \multicolumn{3}{|c|}{/menu/click} \\
 第一步：WEB应用退出时，触发链接“dface://close”，
 第二步：脸脸客户端监测到链接“dface://close”，关闭WebView浏览器。
 \end{verbatim}
+
+\subsection{脸脸客户端Js API}
+
+\subsubsection{隐藏脸脸右上角的选择项按钮}
+DfaceJSBridge.call('hideOptionMenu');
+
+\subsubsection{设置脸脸的标题}
+setTitle
+
+\subsubsection{获得当前用户名}
+getUsername
+
+\subsubsection{获得当前用户id和商家id}
+getUidSid
+
+\subsubsection{获得当前经纬度}
+getLoc
+
+\subsubsection{分享到微信好友}
+wxShare
+
+\subsubsection{分享到微信朋友圈}
+wxmShare
 
 
 \section{脸脸应用内跳转规范}
