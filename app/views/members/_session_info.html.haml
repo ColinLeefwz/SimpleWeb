@@ -1,7 +1,11 @@
 .favorite-session-info
   .favorite-session-main
     .favorite-session-title
-      = content.title
+      - if content.is_a? ArticleSession
+        = link_to content.title, article_path(content)
+      -elsif content.is_a? VideoInterview
+        = link_to content.title, video_interview_path(content)
+
     .favorite-session-expert-name.separator.inline
       by 
       = link_to "#{content.expert.name}", profile_expert_path(content.expert) 
