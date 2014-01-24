@@ -101,6 +101,7 @@ class SessionsController < ApplicationController
 
   def create_post_content
     @session = ArticleSession.new(article_session_params)
+    @session.expert = current_user
     if @session.valid?
       create_response
     else
