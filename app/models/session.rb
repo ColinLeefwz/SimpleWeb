@@ -1,4 +1,4 @@
-class CategoriesValidator < ActiveModel::EachValidator
+class CategoriesExistValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value.any? {|x| !x.empty?}
       record.errors[attribute] << (options[:message] || "can not be blank")
@@ -12,7 +12,7 @@ class Session < ActiveRecord::Base
 
   validates :title, presence: true
   validates :price, numericality: {greater_than_or_equal_to: 0}
-  validates :categories, presence: true, categories: true
+  validates :categories, presence: true, categories_exist: true
 
   CONTENT_TYPE = %w(ArticleSession LiveSession).freeze
 
