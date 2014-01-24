@@ -8,10 +8,11 @@ class ApiShareController < ApplicationController
 
 	def qqshare
 		title = params[:title]
-    	text = params[:str]
+    	desc = params[:desc]
     	url = params[:url]
+    	img_url = params[:img_url]
     	return render :json => 0 if $redis.get("qqtoken#{params[:id]}").blank?
-		Resque.enqueue(QqPhoto, params[:id], title, text, url, nil, nil)
+		Resque.enqueue(QqPhoto, params[:id], title, desc, url, desc, img_url)
 		render :json => 1
 	end
 end
