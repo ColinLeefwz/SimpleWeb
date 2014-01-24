@@ -10,7 +10,7 @@
       %p= item.categories.join(", ")
       %p= item.language.split(",")[0] if item.language
   .title
-    = link_to "#{item.title}", currect_path(item)
+    = link_to "#{item.title}", correct_path(item)
   -if (item.is_a? VideoInterview) || (item.is_a? Announcement)
     .cover
       = render "shared/sublime_video", item_resource: item, poster_url: item.cover.url
@@ -26,7 +26,7 @@
     - else
       %div.description= truncate_html(item.description, length: 600, omission: '...')
     - text = (item.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
-    %p.learn-more= link_to text, currect_path(item)
+    %p.learn-more= link_to text, correct_path(item)
     .social-share-icons
       .social-share.favorite-star
         = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: subscribe_session_path(item)

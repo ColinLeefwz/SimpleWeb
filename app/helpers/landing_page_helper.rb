@@ -1,5 +1,5 @@
 module LandingPageHelper
-  def currect_path(content)
+  def correct_path(content)
     if content.is_a? Session
       article_path(content)
     elsif content.is_a? VideoInterview
