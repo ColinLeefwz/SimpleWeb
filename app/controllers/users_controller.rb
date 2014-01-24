@@ -50,10 +50,21 @@ class UsersController < ApplicationController
   def followers
   end
 
+	## Peter at 2014-01-24: this action and "subscribe_video_interview" can be refactor together
   def subscribe_session
     respond_to do |format|
       format.js{
-        current_session = Session.where(id: params[:session_id]).first
+				type = params[:type]
+
+				current_session = 
+					case type
+					when "VideoInterview"
+						VideoInterview.find(params[:session_id])
+					when "ArticleSession"
+						Session.find(params[:session_id])
+						# Session.where(id: params[:session_id]).first
+					end
+
         if current_user.blank?
           render js: "window.location='#{new_user_session_path}'"
           flash[:alert] = "Sorry! You have to sign in to follow an Article"
