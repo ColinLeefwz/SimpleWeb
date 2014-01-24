@@ -1,6 +1,9 @@
 -if @recommendation
   .recommendation.white-background.shadow
-    Recommended
+    Recommended Experts
+-else
+  .recommendation.white-background.shadow
+    Favorite Experts 
 - @followed_experts.each do |e|
   .expert-action-box.shadow.white-background
     .expert-info
