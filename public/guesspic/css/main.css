@@ -34,6 +34,15 @@ animation:btnanimation 1.5s ease-out,btnanimation 1.5s ease-out;
 }
 .btn3{width:165px;height:34px;line-height:34px;border:none;text-align:center;color:#4CCEEC !important;cursor:pointer;
 font-family:微软雅黑;font-size:16px;background:url("../images/btn3.png") left top no-repeat;display:block;margin:0px auto;}
+.btn4{font-family:微软雅黑;font-size:18px;color:#fff;display:block;line-height:35px;width:137px;height:40px;
+background:url("../images/btn4.png") left bottom no-repeat;
+font-weight:normal;margin:0px auto;text-align:center;cursor:pointer;letter-spacing:2px;
+-webkit-animation:box1animation 1.5s ease-out, btnanimation 1.5s ease-out;
+-moz-animation:box1animation 1.5s ease-out, btnanimation 1.5s ease-out
+-o-animation:box1animation 1.5s ease-out, btnanimation 1.5s ease-out;
+-ms-animation:box1animation 1.5s ease-out, btnanimation 1.5s ease-out;
+animation:btnanimation 1.5s ease-out, btnanimation 1.5s ease-out;
+}
 
 @-webkit-keyframes btnanimation{
 	0%{-webkit-transform:scale(0);opacity:0;}

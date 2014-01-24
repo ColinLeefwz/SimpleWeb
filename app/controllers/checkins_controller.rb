@@ -145,6 +145,7 @@ class CheckinsController < ApplicationController
   end
 
   def self.send_faq_notice_if_exist(user,shop)
+    return if shop.has_menu.to_i>0 #有自定义菜单的地点不推送问答的列表
     #return if shop.faqs.count<1
     text = shop.faqs_text(user)
     return if text=="本地点未启用数字问答系统"
