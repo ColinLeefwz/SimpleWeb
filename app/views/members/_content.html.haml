@@ -4,9 +4,6 @@
 - @favorite_contents.each do |content|
   .favorite-session-box.shadow.white-background
     .favorite-session-cover
-      - if content.is_a? ArticleSession
-        = link_to image_tag(content.cover.url), article_path(content)
-      -elsif content.is_a? VideoInterview
-        = link_to image_tag(content.cover.url), video_interview_path(content)
+      = link_to image_tag(content.cover.url), currect_path(content)
         
     = render "session_info", content: content

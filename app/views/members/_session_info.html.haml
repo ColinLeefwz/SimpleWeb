@@ -1,10 +1,7 @@
 .favorite-session-info
   .favorite-session-main
     .favorite-session-title
-      - if content.is_a? ArticleSession
-        = link_to content.title, article_path(content)
-      -elsif content.is_a? VideoInterview
-        = link_to content.title, video_interview_path(content)
+      = link_to content.title, currect_path(content)
 
     .favorite-session-expert-name.separator.inline
       by 
