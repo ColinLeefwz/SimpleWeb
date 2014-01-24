@@ -24,6 +24,11 @@ class Section < ActiveRecord::Base
   def course
     @course || self.chapter.course
   end
+
+  def available_for(user)
+    available = (user && user.enrolled?(self.course)) or (self.free_preview)
+  end
+
   private
   def convert_duration
     matcher = /(?<hour>\d*):(?<minute>[0-5]?[0-9]):(?<second>[0-5]?[0-9])/
