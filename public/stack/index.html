@@ -12,16 +12,16 @@
 <style type="text/css">
 <!--
   *{padding:0px;margin:0px;}
-  body{font-family:"微软雅黑";font-size:15px;color:#fff;}
-  .main{width:320px;background-color:#00A0E9;position:absolute;left:0px;padding-top:10px;}
+  .main{width:320px;background-color:#00A0E9;position:absolute;left:0px;padding-top:10px;font-family:"微软雅黑";font-size:15px;color:#fff;z-index:99999;min-height:360px;}
   #Close{position:absolute;right:0px;top:0px;background:url(/stack/i/close.png);width:47px;height:46px;}
   .mt20{margin-top:20px;}
   .mr50{margin-right:50px;}
   .tab1{border:none;margin:0px auto 0px auto;}
-  .tab1 th{text-align:left;font-weight:normal;padding:8px 0px;}
-  .tab1 th.r{text-align:right;}
-  .tab1 td{border-bottom:1px solid #fff;padding:8px;}
-  .tab1 td.noneborder{border-bottom:none;}
+  .tab1 th{text-align:left;font-weight:normal;padding:8px 0px;color:#fff;}
+  .tab1 th.r{text-align:right !important;}
+  .tab1 td{border-bottom:1px solid #fff;padding:8px;text-align:left;color:#fff;}
+    .tab1 td.r{text-align:right !important;}
+  .tab1 td.bottom{border-bottom:none;text-align:center;}
   .btn1{background:transparent url(/stack/i/btn1.png);width:77px;height:30px;text-align:center;border:none;color:#00A0E9;cursor:pointer;}
   .btn2{background:transparent url(/stack/i/close.png);width:23px;height:23px;cursor:pointer;display:block;right:10px;top:10px;position:absolute;}
   .yellow{color:#FCFF00;}
@@ -123,6 +123,7 @@ var admob_vars = {
 firstinit();
 ialert('<a onclick="dface_close()" style="margin-left:280px;text-align:right;font-size:30px;">X</a><h1>堆木头!</h1><p style="margin: 0 20px 0 120px; text-align:left;"><img src="/stack/i/icon.png" alt="Stack the log!" style="width:64px; height:64px;float:left; margin-right:5px;"/></p>'+
 '<div style="width:110px; margin:30px auto -30px auto;"></div>','restartgame()');
+
 </script>
 </div>
 <iframe src="dface://init?mode=0" style="display:none" />

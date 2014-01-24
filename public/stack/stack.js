@@ -318,9 +318,11 @@ function gameover() {
   setCookie('stack_bestscore',stscore);
   document.getElementById('yourbest').innerHTML=stscore;
   theirbest=stscore;
-  ialert('<h1>Game over</h1>恭喜您，获得新高分!<br><br>'+'<h1>分数：'+stscore+'</h1>','gamerank();');
+  //ialert('<h1>Game over</h1>恭喜您，获得新高分!<br><br>'+'<h1>分数：'+stscore+'</h1>','gamerank();');
+  gamerank();
  } else {
-  ialert('<h1>Game over</h1>堆木头得分:<br><br>'+'<h1>分数：'+stscore+'</h1>','gamerank();');
+  //ialert('<h1>Game over</h1>堆木头得分:<br><br>'+'<h1>分数：'+stscore+'</h1>','gamerank();');
+  gamerank();
  }
  //urchinTracker('/stack/gamesplayed/');
  return false;
@@ -331,11 +333,9 @@ function gamerank() {
 // dface_var.sid = 21835409;
 // dface_var.uid = "51910153c90d8b1e2000015e";
 // dface_var.gid = 1;
-  var h = "";
+  var h = "";  
   dface_var.score = stscore;
-  $.get('/game/new_score', {
-    game: dface_var
-  })
+  $.get('/game/new_score',{game: dface_var},function(){});
 }
 
 // (function($st) {
