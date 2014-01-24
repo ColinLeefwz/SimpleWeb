@@ -20,6 +20,7 @@ function dface_close(){
 
 function dface_restart(){
     $('#gameRank').remove();
+    window.close();
     restartgame();
 }
 
@@ -335,7 +336,7 @@ function gamerank() {
 // dface_var.gid = 1;
   var h = "";  
   dface_var.score = stscore;
-  $.get('/game/new_score',{game: dface_var},function(){});
+  $.get('/game/new_score',{game: dface_var});
 }
 
 // (function($st) {
