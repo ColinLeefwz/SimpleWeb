@@ -85,7 +85,8 @@ class MembersController < ApplicationController
         @subscribed_courses = Course.all(order: "RANDOM()", limit: 3)
       elsif current_user.is_a? Member
         staff = User.where(email: "prodygia@prodygia.com").take
-        @subscribed_courses = Course.where.not(expert: staff).order("RANDOM()").limit(3)
+        staff_course = staff.courses
+        @subscribed_courses = (Course.all - staff.courses).sample(3)
       end
       @recommendation = true
     end
