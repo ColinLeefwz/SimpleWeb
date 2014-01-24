@@ -4,6 +4,7 @@
   = f.input :title, label: "Section Title"
   = f.input :description
   = f.input :duration, as: :string, hint: " hh:mm:ss"
-  = f.input :order, label: "Section Order:", wrapper_html: {class: "inline"}
+  = f.input :order, label: "Section Order", wrapper_html: {class: "inline"}
+  = f.input :free_preview, label: "Free Preview?"
   = link_to_remove_fields "remove section", f
 
