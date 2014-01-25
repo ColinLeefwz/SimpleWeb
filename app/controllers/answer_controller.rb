@@ -34,7 +34,7 @@ class AnswerController < ApplicationController
       if text_faq.class == ShopFaq
         text_faq.send_to_room(uid,sid)
       else
-        Xmpp.send_gchat2($gfuid,sid,uid, text_faq, "FAQ#{sid}#{uid}#{Time.now.to_i}")
+        Xmpp.send_gchat2(shop.msg_sender,sid,uid, text_faq, "FAQ#{sid}#{uid}#{Time.now.to_i}")
       end
     else
       Xmpp.error_notify("问答返回nil:#{sid},#{uid},#{msg}")

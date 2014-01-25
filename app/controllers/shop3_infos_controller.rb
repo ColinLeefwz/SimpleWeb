@@ -38,6 +38,7 @@ class Shop3InfosController < ApplicationController
       @shop_logo = ShopLogo.new(params[:shop_logo])
       @shop_logo.shop_id = session[:shop_id]
       @shop_logo.save
+      Rails.cache.write("HAS_LOGO#{session[:shop_id]}", true)
     end
 
     redirect_to :action => "index"
