@@ -46,6 +46,10 @@ class ShopController < ApplicationController
       render :json => [Shop.find_by_id(21838424)].map {|s| {id:s.id,name:s.name, visit:0, distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
       return
     end
+    if params[:sname][0,2]=="行酷" || params[:sname][-3..-1]=="车友会"
+      render :json => [Shop.find_by_id(21838725)].map {|s| {id:s.id,name:s.name, visit:0, distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
+      return
+    end
     if params[:sname]=="微+" || params[:sname]=="微＋" || params[:sname]=="微加"
       render :json => [Shop.find_by_id(21837950)].map {|s| {id:s.id,name:s.name, visit:0,distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
       return
