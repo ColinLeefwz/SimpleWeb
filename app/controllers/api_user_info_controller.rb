@@ -1,7 +1,7 @@
 class ApiUserInfoController < ApplicationController
 
   def basic
-    if params[:session]
+    if !params[:session].blank?
       cache = $redis.get(params[:session])
       user_id = Marshal.load(cache)["user_id"] unless cache.blank?
     else
