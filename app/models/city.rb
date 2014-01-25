@@ -64,6 +64,12 @@ class City
     return pro_city_name(city)
   end
   
+  def City.isJZH(city) #江浙沪
+    city=="021" ||
+    ["0571", "0574", "0577", "0573", "0572", "0575", "0579", "0570", "0580", "0576", "0578"].index(city) ||
+    ["025", "0512", "0514", "0510", "0516", "0519", "0513", "0518", "0517", "0515", "0511", "0523", "0527"].index(city)
+  end
+  
   def self.init_redis
     Oversea.all.each do |o|
       $redis.set("CountryName#{o.country_code}", o.country)

@@ -303,7 +303,7 @@ $(document).ready(function(){
 		var m = $('.selected')[0]
 		var indexs = get_menu_map(m.id)
 		var url = $('#urlText').val()
-		if(!((/^http\:\/\//).test(url))){
+		if(!((/(^http\:\/\/)|(^https\:\/\/)/).test(url))){
 			$('#urlFail').css('display', 'block')
 			return
 		}
