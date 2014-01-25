@@ -42,7 +42,7 @@ class Game
   
   def add_redis
     if Game.where({uid:self.uid}).size > 0 
-      $redis.zadd(redis_key,score,self.uid) if $redis.zscore(redis_key,self.uid)< Game.where({uid:self.uid}).all.map{|m| m.score}.max
+      $redis.zadd(redis_key,score,self.uid) if score > Game.where({uid:self.uid}).all.map{|m| m.score}.max
     else
       $redis.zadd(redis_key,score,self.uid)
     end
