@@ -19,14 +19,16 @@
     <%= yield :ahead %>
     <script type="text/javascript">
       var navmove = ($.cookie('navmove')==null?$.cookie( 'navmove', 'off', { path: '/' } ):$.cookie('navmove')), runing;
-      $(function(){
-        $(".food").click(function(){
-          $("#food #submit").click();
-        });
-        $(".trade").click(function(){
-          $("#trade #submit").click();
-        });
+    </script>
+    <script type="text/javascript">
+    $(function(){
+      $(".food").click(function(){
+        $("#food #submit").click();
       });
+      $(".trade").click(function(){
+        $("#trade #submit").click();
+      });
+    });
     </script>
   </head>
 
