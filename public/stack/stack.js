@@ -24,6 +24,15 @@ function dface_restart(){
     restartgame();
 }
 
+function rank_close(){
+  $('#Main').css("display","none");
+  restartgame();
+}
+
+function close_window(){
+  $('#Main').css("display","none");
+}
+
 
 //---------------------- 
 
