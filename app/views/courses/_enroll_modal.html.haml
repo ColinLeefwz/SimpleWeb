@@ -1,0 +1,7 @@
+.modal-body.center-container
+  .enroll.inline
+    %p Enroll to see the full course
+    = link_to "Enroll", enroll_course_path(course), class: "btn btn-prodygia"
+  .sign-in.inline
+    %P Already enrolled? Sign in to view the video
+    = render "devise/sessions/sign_in_form"
