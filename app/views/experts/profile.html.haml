@@ -38,7 +38,7 @@
       -# %button.btn.right-side#follower-count
       -# = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
     .clear-fix 
-  - unless @profile.expertise.blank? && @profile.expertise.blank? && @profile.expertise.blank?
+  - unless @profile.expertise.blank? && @profile.career.blank? && @profile.education.blank?
     .detail.sub-wrapper.second-sub
       %ul.nav.nav-tabs
         - if @profile.expertise.present?
