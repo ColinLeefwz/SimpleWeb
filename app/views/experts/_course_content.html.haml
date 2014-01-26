@@ -13,10 +13,11 @@
       %p= course.categories.join(", ")
   .title
     = link_to "#{course.title}", course_path(course)
-  -if course.cover.url
-    .cover
+  .cover
+    -if course.intro_video
       = render "shared/sublime_video", item_resource: course.intro_video, poster_url: course.cover.url
-  -else
+    -elsif course.cover.url
+      = image_tag course.cover.url
 
   .caption
     %div.description= truncate_html(course.description, length: 300, omission: '...')
