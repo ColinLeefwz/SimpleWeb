@@ -45,7 +45,6 @@ class SessionsController < ApplicationController
   def show
     if @session.is_a? ArticleSession
       render 'content'
-      # elsif @session.is_a? VideoSession
     elsif @session.is_a? VideoInterview
       render 'video'
     elsif @session.is_a? Announcement
