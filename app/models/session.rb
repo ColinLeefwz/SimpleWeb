@@ -14,7 +14,7 @@ class Session < ActiveRecord::Base
 	attached_file :cover, styles: {}
 	attached_file :video
 
-  default_scope where("canceled is null or canceled = false")
+  default_scope{ where("canceled is null or canceled = false") }
   # relationship with expert
   belongs_to :expert
   validates :expert, presence: true
