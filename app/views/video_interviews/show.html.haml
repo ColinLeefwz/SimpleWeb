@@ -1,3 +1,5 @@
+- content_for(:title){ @video_interview.title }
+
 = render "sessions/page_header", item: @video_interview, link_path: subscribe_video_interview_path(@video_interview)
 .text-page-article-box.shadow.margin-bottom
   .text-page-main-content
