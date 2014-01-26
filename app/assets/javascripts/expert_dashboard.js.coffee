@@ -7,13 +7,6 @@ side_bar = ->
 		$(".item").find(".item-text > a").css("color", "")
 		$(this).parents(".item").find(".item-text > a").css("color", "#880848")
 
-## Original one, clear the form
-# cancel = ->
-# 	$(".cancel").on 'click', ->
-# 		$(this).closest("form")[0].reset()
-# 		$.each CKEDITOR.instances, (index, instance) ->
-# 			instance.setData("")
-
 class AjaxEffect
 	constructor: ->
 	
