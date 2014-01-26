@@ -72,10 +72,10 @@ class AroundmeController < ApplicationController
       shop = Shop.find_by_id(21838725) # 行酷车友会
       if shop
 	      shop.city = city
-        arr = arr+[ shop ]
+        arr = arr[0,3]+[ shop ]+arr[3..-1]
       end
     end    
-    if city
+    if city && city!="0571"
       shop = Shop.find_by_id(21838499) # 一起回家过年
       if shop
 	      shop.city = city
