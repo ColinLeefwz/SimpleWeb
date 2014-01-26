@@ -32,16 +32,6 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         width: 160px * 1.8;
         height: 90px * 1.8;
       }
-      .enroll-button{
-        background-color: #8a2649;
-        font-family: Latobold;
-        width: 10em;
-        text-align: center;
-        margin: 0 auto;
-        margin-top: 1em;
-        padding: 0.3em 0.3em;
-        a{  color: white;  }
-      }
     }
 
 
@@ -158,6 +148,41 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         text-indent: 1em;
       }
     }
+    .enroll-modal{
+      width: 670px;
+      margin-left: -335px; /* override bootstrap style */
+      .modal-body{
+        height: 300px;
+        .enroll{
+          width: 40%;
+          box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          border-right: 1px solid #eee;
+          vertical-align: middle;
+          text-align: center;
+        }
+        .sign-in{
+          width: 58%;
+          box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          vertical-align: middle;
+          padding-left: 2em;
+          p{
+            font-size: 0.8em;
+          }
+          .form-horizontal{
+            .control-group{
+              .control-label{
+                width: 65px;
+              }
+              .controls{
+                margin-left: 70px;
+              }
+            }
+          }
+        }
+      }
+    }
 
     // override bootstrap accordion style 
     .accordion-group{
@@ -170,17 +195,14 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         border-top: 0;
         border-bottom: 1px solid #C9C9C9;
       }
+      .accordion-heading .accordion-toggle{
+        padding: 0px;
+        height: 2.6em;
+      }
+      .accordion-toggle:hover {
+        text-decoration: none;
+        color: #333333;
+      }
     }
-    .accordion-heading .accordion-toggle{
-      padding: 0px;
-      height: 2.6em;
-    }
-    .accordion-toggle:hover {
-      text-decoration: none;
-      color: #333333;
-    }
-    // end
-
-
-  }
+  } // chapter
 }

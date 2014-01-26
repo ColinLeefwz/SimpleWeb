@@ -1,5 +1,5 @@
 .accordion-group
-  .section.accordion-heading
+  .section.accordion-heading{data: {toggle: "modal", target: ".enroll-modal"}}
     %a.accordion-toggle{data: {toggle: "collapse", parent: "#chapter#{section.chapter.order}"}, href: "#collapse#{section.id}"}
       .content-icon.inline
         = image_tag "content.png"
@@ -9,11 +9,17 @@
         %span= distance_of_time_in_words section.duration.to_i
 
   %div{id: "collapse#{section.id}", class: "accordion-body collapse"}
-    .accordion-inner.section-detail
-      .video.inline
-        - if section.has_video?
-          %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
-            %source{src: section.sd_url}
-            %source{src: section.hd_url, data: {quality: "hd"}}
-      .description.inline
-        = section.description
+    - if section.available_for current_user
+      .accordion-inner.section-detail
+        .video.inline
+          - if section.has_video?
+            %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
+              %source{src: section.sd_url}
+              %source{src: section.hd_url, data: {quality: "hd"}}
+        .description.inline
+          = section.description
+    - else
+      .enroll-modal.modal.hide
+        = render partial: "enroll_modal", locals: {course: section.course}
+
+
