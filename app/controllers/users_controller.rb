@@ -69,7 +69,7 @@ class UsersController < ApplicationController
 
         if current_user.blank?
           render js: "window.location='#{new_user_session_path}'"
-          flash[:alert] = "Sorry! You have to sign in to follow an Article"
+          flash[:alert] = "Sorry! You have to sign in to follow #{decide_item_type(current_item)}"
         else
           if current_user.has_subscribed?(current_item)
             current_user.unsubscribe(current_item)
@@ -82,6 +82,14 @@ class UsersController < ApplicationController
     end
   end
 
+  private 
+  def decide_item_type(item)
+    if item.is_a? ArticleSession
+     "an Article" 
+    elsif item.is_a? Course
+      "a Course"
+    elsif item.is_a? VideoInterview
+      "a Video interview"
     end
   end
 end
