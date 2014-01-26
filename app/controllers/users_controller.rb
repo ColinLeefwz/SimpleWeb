@@ -56,16 +56,7 @@ class UsersController < ApplicationController
       format.js{
 				type = params[:type]
 
-				current_item = 
-					case type
-					when "VideoInterview"
-						VideoInterview.find(params[:item_id])
-					when "ArticleSession"
-						Session.find(params[:item_id])
-          when "Course"
-            Course.find(params[:item_id])
-						# Session.where(id: params[:session_id]).first
-					end
+				current_item = type.constantize.find(params[:item_id])
 
         if current_user.blank?
           render js: "window.location='#{new_user_session_path}'"
