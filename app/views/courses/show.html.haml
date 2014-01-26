@@ -25,7 +25,7 @@
           = @course.description
 
       .social-box.inline
-        = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_course_path(@course)
+        = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_path(@course, type: @course.class.name)
         = render 'shared/social_share', item: @course
 
       -# .percentage{style: "visibility: hidden"}
