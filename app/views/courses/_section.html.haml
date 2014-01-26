@@ -1,5 +1,5 @@
 .accordion-group
-  .section.accordion-heading{data: {toggle: "modal", target: "#section#{section.id}"}}
+  .section.accordion-heading{data: {toggle: "modal", target: "#section-#{section.id}"}}
     %a.accordion-toggle{data: {toggle: "collapse", parent: "#chapter#{section.chapter.order}"}, href: "#collapse#{section.id}"}
       .content-icon.inline
         = image_tag "content.png"
@@ -19,7 +19,7 @@
         .description.inline
           = section.description
     - else
-      .enroll-modal.modal.hide{id: "section#{section.id}"}
+      .enroll-modal.modal.hide{id: "section-#{section.id}"}
         = render partial: "enroll_modal", locals: {course: section.course}
 
 
