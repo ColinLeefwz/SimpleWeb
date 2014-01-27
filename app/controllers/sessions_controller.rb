@@ -101,14 +101,7 @@ class SessionsController < ApplicationController
 
   def create_post_content
     @session = ArticleSession.new(article_session_params)
-    @session.expert = current_user
-    if @session.valid?
-      create_response
-    else
-      respond_to do |format|
-        format.js { render js: "alert('Sorry! You have to select at least one category')" }
-      end
-    end
+    create_response
   end
 
   # TODO: can we refactor this one with the "edit_live_session" ?
