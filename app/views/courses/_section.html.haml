@@ -1,25 +1,24 @@
-.accordion-group
-  .section.accordion-heading{data: {toggle: "modal", target: "#section-#{section.id}"}}
-    %a.accordion-toggle{data: {toggle: "collapse", parent: "#chapter#{section.chapter.order}"}, href: "#collapse#{section.id}"}
-      .content-icon.inline
-        = image_tag "content.png"
-      .section-title.inline
-        %span= section.title
-      .duration.inline.center-container
-        %span= distance_of_time_in_words section.duration.to_i
+.section{data: {toggle: "modal", target: "#section-#{section.id}"}}
+  .content-icon.inline
+    = image_tag "content.png"
 
-  %div{id: "collapse#{section.id}", class: "accordion-body collapse"}
+  .section-title.inline
+    %span= section.title
+
+  .duration.inline.center-container
+    %span= distance_of_time_in_words section.duration.to_i
+
+  .section-detail
     - if section.available_for current_user
-      .accordion-inner.section-detail
-        .video.inline
-          - if section.has_video?
+      .section-modal.modal.hide{id: "section-#{section.id}"}
+        - if section.has_video?
+          .video
             %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
               %source{src: section.sd_url}
               %source{src: section.hd_url, data: {quality: "hd"}}
-        .description.inline
+        .description
           = section.description
     - else
       .enroll-modal.modal.hide{id: "section-#{section.id}"}
         = render partial: "enroll_modal", locals: {course: section.course}
-
 

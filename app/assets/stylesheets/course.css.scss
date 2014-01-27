@@ -87,7 +87,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 
 
   .chapter{
-    margin-bottom: 1em;
+    margin-top: 1em;
     .chapter-title{
       height: 2em;
       border-bottom: 1px solid #4E2971;
@@ -110,97 +110,76 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
           vertical-align: middle;
         }
       }
-      .duration{
-        height: 100%;
-        float: right;
-        padding-right: 0.8em;
-        span{
-          font-size: 0.8em;
-          font-family: Latoitalic;
-          vertical-align: middle;
-        }
-      }
     }
 
     .section{
       border-bottom: 1px solid #C9C9C9;
+      .section-title{
+        height: 2em;
+      }
       .content-icon{
         width: 2em;
         height: 2em;
-        padding: 0.3em 0.3em;
+        padding: 0.3em;
       }
-      .duration{
-        height: 100%;
-        float: right;
-        padding-right: 0.8em;
-        span{
-          font-size: 0.8em;
-          font-family: Latoitalic;
-          vertical-align: middle;
-        }
-      }
-    }
-    .section-detail{
-      .description{
-        vertical-align: top;
-        text-indent: 1em;
-      }
-    }
-    .enroll-modal{
-      width: 670px;
-      margin-left: -335px; /* override bootstrap style */
-      .modal-body{
-        height: 300px;
-        .enroll{
-          width: 40%;
-          box-sizing: border-box;
-          -webkit-box-sizing: border-box;
-          border-right: 1px solid #eee;
-          vertical-align: middle;
-          text-align: center;
-        }
-        .sign-in{
-          width: 58%;
-          box-sizing: border-box;
-          -webkit-box-sizing: border-box;
-          vertical-align: middle;
-          padding-left: 2em;
-          p{
-            font-size: 0.8em;
+      .section-detail{
+        .section-modal{
+          width: 640px;
+          margin-left: -320px; /* override bootstrap style */
+          background-color: #eee;
+          .description{
+            margin-top: 1em;
+            text-indent: 1em;
+            font-family: LatoItalic;
           }
-          .form-horizontal{
-            .control-group{
-              .control-label{
-                width: 65px;
+        }
+        .enroll-modal{
+          width: 670px;
+          margin-left: -335px; /* override bootstrap style */
+          .modal-body{
+            height: 300px;
+            .enroll{
+              width: 40%;
+              box-sizing: border-box;
+              -webkit-box-sizing: border-box;
+              border-right: 1px solid #eee;
+              vertical-align: middle;
+              text-align: center;
+            }
+            .sign-in{
+              width: 58%;
+              box-sizing: border-box;
+              -webkit-box-sizing: border-box;
+              vertical-align: middle;
+              padding-left: 2em;
+              p{
+                font-size: 0.8em;
               }
-              .controls{
-                margin-left: 70px;
+              .form-horizontal{
+                .control-group{
+                  .control-label{
+                    width: 65px;
+                  }
+                  .controls{
+                    margin-left: 70px;
+                  }
+                }
               }
             }
           }
         }
       }
+    }  // section
+    .duration{ 
+      height: 2em;
+      float: right;
+      padding-right: 0.8em;
+      span{
+        font-size: 0.8em;
+        font-family: Latoitalic;
+        vertical-align: middle;
+      }
     }
 
-    // override bootstrap accordion style 
-    .accordion-group{
-      margin-bottom: 0px;
-      border: 0px;
-      border-radius: 0px;
-      -webkit-border-radius: 0px;
-      -moz-border-radius: 0px;
-      .accordion-inner{
-        border-top: 0;
-        border-bottom: 1px solid #C9C9C9;
-      }
-      .accordion-heading .accordion-toggle{
-        padding: 0px;
-        height: 2.6em;
-      }
-      .accordion-toggle:hover {
-        text-decoration: none;
-        color: #333333;
-      }
-    }
   } // chapter
 }
