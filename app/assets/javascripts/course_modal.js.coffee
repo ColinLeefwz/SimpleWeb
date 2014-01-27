@@ -6,7 +6,7 @@ course_modal = ->
 
   $(".close-icon").on "click", (e)->
     e.stopPropagation()
-    $(".modal").modal("hide")
+    $(this).closest(".modal").modal("hide")
 
 $(document).ready(course_modal)
 $(document).on "page:load", course_modal
