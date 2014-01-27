@@ -1,13 +1,18 @@
 
 .enroll-button{
+  cursor: pointer;
   background-color: #8a2649;
   font-family: Latobold;
   width: 10em;
   text-align: center;
   margin: 0 auto;
   margin-top: 1em;
-  padding: 0.3em 0.3em;
+  padding: 0.3em;
   color: white;
+  a:hover{
+    color: white;
+    text-decoration: none;
+  }
 }
 
 .course-title-font{
@@ -62,13 +67,6 @@ input[type="file"]{
 }
 .solid-star{
   cursor: pointer;
-}
-
-
-
-/* displaying producers */
-.producers{
-  font-family: Latoitalic;
 }
 
 .shared-links{

@@ -43,7 +43,14 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         font-family: Oswaldreg;
         font-size: 1.5em;
       }
+
+      .producers, .video-length, .category{
+        font-family: Latoitalic;
+        font-size: 0.8em;
+      }
+
       .description{
+        text-indent: 1em;
         color: #000000;
         padding-top: 10px;
         padding-bottom: 10px;

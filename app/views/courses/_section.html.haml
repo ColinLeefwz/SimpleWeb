@@ -10,7 +10,7 @@
 
   .section-detail
     - if section.available_for current_user
-      .section-modal.modal.hide{id: "section-#{section.id}"}
+      .section-modal.modal.hide.fade{id: "section-#{section.id}"}
         - if section.has_video?
           .video
             %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
@@ -19,6 +19,6 @@
         .description
           = section.description
     - else
-      .enroll-modal.modal.hide{id: "section-#{section.id}"}
+      .enroll-modal.modal.hide.fade{id: "section-#{section.id}"}
         = render partial: "subscribe_modal", locals: {course: section.course}
 
