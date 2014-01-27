@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
   <meta http-equiv="mobile-agent" content="format=xhtml; url=http://dface.cn/mini.html" />
-  <title>快来看！<%= @wish.people %>为<%= @wish.photo_user.try(:name) %>发来了2014新年祝福！</title>
+  <title>快来看！<%= @wish.people %>为<%= @wish.photo_user.try(:name) %>发来了2014新春祝福！</title>
   <link rel="stylesheet" href="http://shop.dface.cn/nyd/css/public.css" type="text/css" media="screen"/>
   <script src="http://shop.dface.cn/nyd/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
   <script src="http://shop.dface.cn/nyd/js/jq.snow.js"></script>
@@ -95,7 +95,7 @@
           <a href="/nyd/rule.html" target="_blank" class="f13">（活动详情）</a><br>
           <%if @wish.total.to_i < 30 %>
           <span class="pink">
-            还差<%= (30 - @wish.total.to_i) < 0 ? 0: (30- @wish.total.to_i)%>个祝福就有机会拿到1000元新年红包啦，
+            还差<%= (30 - @wish.total.to_i) < 0 ? 0: (30- @wish.total.to_i)%>个祝福就有机会拿到1000元春节红包啦，
             赶紧祝福我噢~
           </span>
           <%else%>
@@ -184,7 +184,7 @@
       $(".imgs2").addClass("none");
       $(".imgs2").eq(n).removeClass("none");
       $(".btn2").text("我也要" + name_list[n] + "的祝福~");
-      $("title").text("快来看！" + name_list[n] + "为<%= @wish.photo_user.try(:name) %>发来了2014新年祝福！");
+      $("title").text("快来看！" + name_list[n] + "为<%= @wish.photo_user.try(:name) %>发来了2014新春祝福！");
       $.post("/new_year_wish/update", {
         template: n, 
         id: $("#wish_id").val(), 
