@@ -123,6 +123,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
       border-bottom: 1px solid #C9C9C9;
       .section-title{
         height: 2em;
+        cursor: pointer;
       }
       .content-icon{
         width: 2em;
@@ -130,6 +131,19 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         padding: 0.3em;
       }
       .section-detail{
+        position: relative;
+        .close-icon{
+          margin-right: -25px;
+          margin-top: -20px;
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: #eee;
+          border-radius: 50%;
+          -webkit-border-radius: 50%;
+        }
         .section-modal{
           width: 640px;
           margin-left: -320px; /* override bootstrap style */

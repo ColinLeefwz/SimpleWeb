@@ -16,8 +16,11 @@
             %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
               %source{src: section.sd_url}
               %source{src: section.hd_url, data: {quality: "hd"}}
+
         .description
           = section.description
+        .close-icon
+          = image_tag "close-icon.png"
     - else
       .enroll-modal.modal.hide.fade
         = render partial: "subscribe_modal", locals: {course: section.course}
