@@ -1,5 +1,8 @@
 -if @recommendation
   .recommendation.white-background.shadow
     Recommended Content
+-else
+  .recommendation.white-background.shadow
+    Favorite Video Courses
 - @subscribed_courses.each do |course|
   = render "course_info", course: course

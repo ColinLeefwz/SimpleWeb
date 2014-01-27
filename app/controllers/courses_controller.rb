@@ -34,6 +34,12 @@ class CoursesController < ApplicationController
     end
   end
 
+  def destroy
+    # todo: add error handling
+    @course.destroy
+    redirect_to courses_path
+  end
+
   def preview
   end
 
