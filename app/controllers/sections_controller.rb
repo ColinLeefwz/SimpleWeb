@@ -18,6 +18,6 @@ class SectionsController < ApplicationController
     @section = Section.find params[:id]
   end
   def section_params
-    params.require(:section).permit(:title, :description, resources_attributes: [:video_definition, :direct_upload_url, :attached_file_file_name, :attached_file_file_size, :attached_file_content_type, :attached_file_file_path])
+    params.require(:section).permit(:title, :description, :duration, :free_preview, resources_attributes: [:video_definition, :direct_upload_url, :attached_file_file_name, :attached_file_file_size, :attached_file_content_type, :attached_file_file_path])
   end
 end

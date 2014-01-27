@@ -4,7 +4,7 @@
       = image_tag(course.cover.url)
     - unless (current_user) && (current_user.enrolled? course)
       .enroll-button
-        = link_to "Enroll", enroll_course_path(course)
+        = link_to "Subscribe", enroll_course_path(course)
 
   .favorite-session-info
     .favorite-session-main

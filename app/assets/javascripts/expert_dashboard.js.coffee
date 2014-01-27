@@ -7,12 +7,14 @@ side_bar = ->
 		$(".item").find(".item-text > a").css("color", "")
 		$(this).parents(".item").find(".item-text > a").css("color", "#880848")
 
-## Original one, clear the form
-# cancel = ->
-# 	$(".cancel").on 'click', ->
-# 		$(this).closest("form")[0].reset()
-# 		$.each CKEDITOR.instances, (index, instance) ->
-# 			instance.setData("")
+validate_categoreis = ->
+  $("#publish").on 'click', (e)->
+    if $("input[type=checkbox]:checked").length == 0
+      alert "You have to at least select one category"
+      e.preventDefault()
+    else
+      confirm "Are you sure you want to publish this content and make it visible on the home page?"
+
 
 class AjaxEffect
 	constructor: ->
@@ -46,9 +48,12 @@ class AjaxEffect
 
 $(document).ready ->
   side_bar()
+  validate_categoreis()
 
 $(document).on 'page:load', ->
   side_bar()
+  validate_categoreis()
 
 $(document).on 'ajax:success', ->
+  validate_categoreis()
 	(new AjaxEffect).start()
