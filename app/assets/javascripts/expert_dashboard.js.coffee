@@ -9,12 +9,11 @@ side_bar = ->
 
 validate_categoreis = ->
   $("#publish").on 'click', (e)->
-    if $(".article_session_categories").length
-      if $("input[type=checkbox]:checked").length <= 0
-        alert "You have to at least select one category"
-        e.preventDefault()
-      else
-        confirm "Are you sure you want to publish this content and make it visible on the home page?"
+    if $("input[type=checkbox]:checked").length == 0
+      alert "You have to at least select one category"
+      e.preventDefault()
+    else
+      confirm "Are you sure you want to publish this content and make it visible on the home page?"
 
 
 class AjaxEffect
