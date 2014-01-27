@@ -160,6 +160,7 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
           margin-left: -335px; /* override bootstrap style */
           .modal-body{
             height: 300px;
+            overflow-y: visible; /* override bootstrap, otherwise close icon won't show */
             .enroll{
               width: 40%;
               box-sizing: border-box;
