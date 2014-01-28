@@ -28,7 +28,7 @@ class AController < ApplicationController
     if params[:x].nil?  #不带x则尝试直接下载
       if c.agent.index("Android")
         if c.agent.index("MicroMessenger")
-          #return redirect_to "http://3g.qq.com.dface.cn/dface2.7.1.apk"
+          return redirect_to "http://dd.myapp.com/16891/external_EC325DF2C79795CCE3725D873B97B775.apk?fsname=cn%2Edface%5F2%2E7%2E1%5F61.apk"
           render :file => "~/lianlian/public/wx_down.html", :use_full_path => true
           return
         else
@@ -70,7 +70,7 @@ class AController < ApplicationController
     c.save
     if false && c.agent.index("Android")
       if c.agent.index("MicroMessenger")
-        return redirect_to "http://3g.qq.com.dface.cn/dface2.7.1.apk"
+        return redirect_to "http://dd.myapp.com/16891/external_EC325DF2C79795CCE3725D873B97B775.apk?fsname=cn%2Edface%5F2%2E7%2E1%5F61.apk"
         render :file => "~/lianlian/public/mini.html", :use_full_path => true
         return
       end
