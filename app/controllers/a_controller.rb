@@ -28,7 +28,7 @@ class AController < ApplicationController
     if params[:x].nil?  #不带x则尝试直接下载
       if c.agent.index("Android")
         if c.agent.index("MicroMessenger")
-          return redirect_to "http://3g.qq.com.dface.cn/dface2.7.1.apk"
+          #return redirect_to "http://3g.qq.com.dface.cn/dface2.7.1.apk"
           render :file => "~/lianlian/public/wx_down.html", :use_full_path => true
           return
         else
