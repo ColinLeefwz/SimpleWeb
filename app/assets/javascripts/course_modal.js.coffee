@@ -6,7 +6,11 @@ course_modal = ->
 
   $(".close-icon").on "click", (e)->
     e.stopPropagation()
-    $(".modal").modal("hide")
+    modal = $(this).closest(".modal")
+
+    player = sublime.player(modal.find("video")[0])
+    player.stop()
+    modal.modal("hide")
 
 $(document).ready(course_modal)
 $(document).on "page:load", course_modal
