@@ -15,6 +15,10 @@ class Expert < Member
     "#{first_name} #{last_name}"
   end
 
+  def name_with_inital
+    return "#{first_name.first}. #{last_name}"
+  end
+
   def password_required?
     new_record? ? false : super
   end
