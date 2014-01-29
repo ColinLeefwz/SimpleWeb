@@ -15,14 +15,16 @@
       %p= item.language.split(",")[0] if item.language
   .title
     = link_to "#{item.title}", correct_path(item)
-  -if (item.is_a? VideoInterview) || (item.is_a? Announcement)
-    .cover
-      = render "shared/sublime_video", item_resource: item, poster_url: item.cover.url
 
-  -elsif (item.is_a? ArticleSession) || (item.is_a?LiveSession)  && (!item.cover.url.eql?"/covers/original/missing.png")
-    .cover
-      = link_to image_tag(item.cover.url), article_path(item)
-  -else
+  .cover
+    -# todo: duck type item: item.has_video?
+    -if (item.is_a? VideoInterview) || (item.is_a?(Announcement) && item.has_video?)
+      = render "shared/sublime_video", item_resource: item, poster_url: item.cover.url
+    -else
+      - if item.is_a? ArticleSession
+        = link_to image_tag(item.cover.url), article_path(item)
+      - elsif item.is_a? Announcement
+        = link_to image_tag(item.cover.url), announcement_path(item)
 
   .caption
     - if (item.cover.url) && (!item.cover.url.eql?"/covers/original/missing.png")
