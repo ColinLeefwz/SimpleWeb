@@ -35,7 +35,7 @@ class ExpertsController < ApplicationController
     courses = @expert.courses
     sessions = @expert.sessions.where(draft: false)
     @items = video_interviews + courses + sessions
-    @profile = @expert.profile || @expert.create_profile
+    @profile = @expert.profile
   end
 
   def edit_profile
