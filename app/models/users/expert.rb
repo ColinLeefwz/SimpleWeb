@@ -15,6 +15,10 @@ class Expert < Member
     "#{first_name} #{last_name}"
   end
 
+  def name_with_inital
+    return "#{first_name.first}. #{last_name}"
+  end
+
   def password_required?
     new_record? ? false : super
   end
@@ -30,8 +34,12 @@ class Expert < Member
     (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}
   end
 
-  def live_sessions
-    self.sessions.where("content_type = 'LiveSession'").order("draft desc")
+  def is_staff
+    return (self.id == 2)
+  end
+
+  def self.staff
+    @staff || User.find(2)
   end
 
   private
