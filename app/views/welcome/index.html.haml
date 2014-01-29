@@ -1,2 +1,3 @@
 #content.container
-  =render partial: 'box_content', collection: @sessions, as: :item
+  - @sessions.each do |item|
+    = render partial: "box_content", locals: {item: item, expert: item.expert}

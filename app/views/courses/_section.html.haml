@@ -2,14 +2,14 @@
   .content-icon.inline
     = image_tag "content.png"
 
-  .section-title.inline
+  .section-title.inline.tooltips{data: {available: available.to_s, placement: "right"}}
     %span= section.title
 
   .duration.inline.center-container
     %span= distance_of_time_in_words section.duration.to_i
 
   .section-detail
-    - if section.available_for current_user
+    - if available
       .section-modal.modal.hide.fade
         - if section.has_video?
           .video

@@ -2,7 +2,7 @@
   .control-group
     %label.control-label{for: "user_email"}Email
     .controls
-      = f.email_field :email, placeholder: "Email"
+      = f.email_field :email, placeholder: "Email", autofocus: true
 
   .control-group
     %label.control-label{for: "user_password"}Password
