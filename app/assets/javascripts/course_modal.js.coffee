@@ -1,7 +1,7 @@
 course_modal = ->
   $(".section").on "click", (e)->
     $(this).find(".modal").modal({
-      backdrop: "static"
+      keyboard: true
     })
 
   $(".close-icon").on "click", (e)->
