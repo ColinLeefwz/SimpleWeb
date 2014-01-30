@@ -19,7 +19,7 @@
         height: 88px;
         margin: 20px 40px;
         border-radius: 50%;
-        }
+      }
     }
 
     .text-page-expert-info{
@@ -133,8 +133,9 @@
     }
     .announcement-cover{
       padding-left: 20px;
-			width: 320px;
-			height: 180px;
+      width: 320px;
+      height: 180px;
+      overflow: hidden;
     }
     p{
       text-indent: 0em;
