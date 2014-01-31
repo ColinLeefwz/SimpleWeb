@@ -24,7 +24,7 @@
         .category.inline
           = @course.categories.join(", ")
         .description
-          = @course.description
+          = @course.description.html_safe
 
       .social-box.inline
         = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_course_path(@course)

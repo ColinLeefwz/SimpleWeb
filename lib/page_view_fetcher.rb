@@ -24,7 +24,7 @@ class PageViewFetcher
   end
 
   def self.process_data(queries)
-    expression = /\/(?<type>\b(sessions|article|courses|video_interviews)\b)\/(?<id>\d+)[\w-]*$/
+    expression = /\/(?<type>\b(sessions|article|courses|video_interviews|announcements)\b)\/(?<id>\d+)[\w-]*$/
 
     queries.each do |query|
       result = expression.match(query.pagePath)  # test the path
