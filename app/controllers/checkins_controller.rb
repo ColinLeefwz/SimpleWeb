@@ -10,8 +10,8 @@ class CheckinsController < ApplicationController
   end
   
   def new_shop
-    if params[:sname].length<4
-      render :json => {error: "地点名称不能少于四个字"}.to_json
+    if params[:sname].length<3
+      render :json => {error: "地点名称不能少于三个字"}.to_json
       return
     end
     if params[:sname][0,3]=="@@@"
@@ -70,7 +70,7 @@ class CheckinsController < ApplicationController
   def gen_new_shop
     shop = Shop.new
     shop._id = Shop.next_id
-    shop.name = params[:sname]
+    shop.name = params[:sname].strip
     shop.lo = [params[:lat].to_f, params[:lng].to_f]
     shop.lo = Shop.lob_to_lo(shop.lo) if params[:baidu]
     shop.city = shop.get_city
