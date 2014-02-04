@@ -672,6 +672,11 @@ class Shop
     field = ("%.2f" %  lo[1])[-1..-1]
     city = $redis.hget(hash,field)
     city = get_ex_city(lo) if city.nil?
+    if city.nil?
+      Xmpp.error_notify("经纬度－>城市数据没有:#{lo}")
+      hx = $redis.hgetall(hash)
+      city = hx.values[0] if hx
+    end
     city
   end
   
