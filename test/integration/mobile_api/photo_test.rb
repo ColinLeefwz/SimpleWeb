@@ -65,7 +65,7 @@ class PhotoTest < ActionDispatch::IntegrationTest
     assert_equal data["room"], "4928288"
     assert_equal data["weibo"], false
     assert_equal data["desc"],  '一张图片'
-    assert_nil data["logo_thumb2"]
+    #assert_nil data["logo_thumb2"]
     
     Photo.last.after_async_store
     
