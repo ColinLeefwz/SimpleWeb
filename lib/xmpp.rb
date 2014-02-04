@@ -75,7 +75,13 @@ class Xmpp
   end
   
   def self.error_notify(str, uid=$yuanid)
-    Resque.enqueue(XmppMsg, $gfuid,uid,str)  if Rails.env=="production"
+    return unless Rails.env=="production"
+    Rails.cache.fetch("XMPP_ERR#{str[0,10]}", :expires_in => 30.minutes) do
+      Rails.cache.fetch("XMPP_ERR#{str[0,20]}", :expires_in => 6.hours) do
+        Resque.enqueue(XmppMsg, $gfuid,uid,str)
+        "1"
+      end
+    end
   end
   
   def self.escape(str)

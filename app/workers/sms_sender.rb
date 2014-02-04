@@ -14,7 +14,7 @@ class SmsSender
       if diff>30
         send_sms_ihuiyi(phone, text)
       else
-        Xmpp.error_notify("#{phone}在#{diff}秒内重发请求短信验证码")
+        Xmpp.error_notify("重发请求短信验证码,#{phone}在#{diff}秒内")
       end
     end
   end
@@ -25,10 +25,8 @@ class SmsSender
       info = RestClient.get "http://106.ihuyi.com/webservice/sms.php?method=Submit&account=cf_llh&password=#{pass}&mobile=#{phone}&content=#{URI.escape(text)}"
       match = info.index("<code>2</code>")
       return true if match && match>0
-      Xmpp.send_chat($gfuid, $yuanid, "短信错误：#{Time.now},#{text}")
-      Rails.logger.warn "短信错误：#{Time.now},#{text}"
-      Rails.logger.warn info
-      Xmpp.send_chat($gfuid, $yuanid, info)
+      Xmpp.error_notify("短信错误：#{Time.now},#{text}")
+      Xmpp.error_notify(info)
       return nil
   end
   
@@ -44,7 +42,7 @@ class SmsSender
       str = URI.encode(text.encode('gbk','utf-8'))
       info = RestClient.get "http://211.147.239.62:9050/cgi-bin/sendsms?username=cadmin@zjll&password=Dface.cn1234&to=#{phone}&text=#{str}&msgtype=1"
       return true if info=="0"
-      Xmpp.send_chat($gfuid, $yuanid, "短信错误：#{Time.now},#{info}")
+      Xmpp.error_notify("短信错误：#{Time.now},#{info}")
       return nil
   end
   

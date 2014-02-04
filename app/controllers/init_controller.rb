@@ -66,8 +66,10 @@ class InitController < ApplicationController
   
   def debug
     Rails.cache.fetch("XMPPDEBUG#{params[:uid2]}", :expires_in => 5.minutes) do
-      Resque.enqueue(XmppMsg, params[:uid1], params[:uid2], params[:str])
-      "1"
+      Rails.cache.fetch("XMPPDEBUG#{params[:uid2]}#{params[:str][0,10]}", :expires_in => 5.hours) do
+        Resque.enqueue(XmppMsg, params[:uid1], params[:uid2], params[:str])
+        "1"
+      end
     end
     render :json => {ok:1}.to_json
   end
