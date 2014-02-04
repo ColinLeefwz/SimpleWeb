@@ -14,7 +14,7 @@
 				<div id="Plane3" class="none"><img src="/images/sign21.png" class="imgs opacityanimation"/>如遇无法下载情况，请点击右上角，<br/>选择在浏览器中打开后下载。</div>
 				<%=image_tag Photo.img_url(@photo.id),:class=>"width100p block" %>
 				
-				<% unless @photo.total.nil? %>
+				<% if @photo.is_multi? %>
 				<% @photo.multi_photos[:photos].each_with_index do |url, index| %>
 					<br>
 						<%=image_tag url,:class=>"width100p block" %>

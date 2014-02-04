@@ -347,6 +347,10 @@ class Photo
     end
   end
   
+  def is_multi?
+    self.total.to_i > 1
+  end
+  
   def multi_photos
     return {} if total.nil? || total<2
     photos = []
