@@ -12,7 +12,7 @@
         = course.title
       .favorite-session-expert-name.separator.inline
         by 
-        = link_to "#{course.first_expert.name}", profile_expert_path(course.first_expert) 
+        = producer_links(course)
       .favorite-session-categories.inline
         = course.categories.join(", ")
       .clear-fix
