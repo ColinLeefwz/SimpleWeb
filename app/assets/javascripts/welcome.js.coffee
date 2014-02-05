@@ -64,10 +64,18 @@ update_profile_message = ->
   $("input[type='submit']").on 'click', ->
     $("input[type='file']").css("width", "95px")
 
-$(document).ready(ready)
-$(document).on('page:load', ready)
+    
 
-$(document).ready(load_sublime)
-$(document).on('page:load ajax:success', load_sublime)
+$(document).ready ->
+  load_isotope()
+  load_sublime()
 
-$(document).on 'page:load ajax:success', update_profile_message
+$(document).on 'page:load', ->
+  load_isotope()
+  load_sublime()
+  update_profile_message()
+
+$(document).on 'ajax:success', ->
+  load_sublime()
+  update_profile_message()
+
