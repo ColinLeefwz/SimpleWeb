@@ -3,8 +3,8 @@ class SectionsController < ApplicationController
   before_filter :set_section, only: [:edit, :update]
 
   def edit
-    @hd_resource = @section.resources.find_by(video_definition: "HD") || Resource.new(video_definition: "HD")
-    @sd_resource = @section.resources.find_by(video_definition: "SD") || Resource.new(video_definition: "SD")
+    @hd_resource = @section.resources.where(video_definition: "HD").first_or_initialize
+    @sd_resource = @section.resources.where(video_definition: "SD").first_or_initialize
   end
 
   def update
