@@ -36,8 +36,10 @@ class Resource < ActiveRecord::Base
 
         source = s3.buckets[bucket_name].objects["#{sub_source}"]
 
-        source.copy_to(destination)
-        source.delete
+        if source.exists?
+          source.copy_to(destination)
+          source.delete
+        end
       end
     end
 end
