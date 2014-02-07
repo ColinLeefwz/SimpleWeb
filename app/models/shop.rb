@@ -210,7 +210,11 @@ class Shop
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
     hash.merge!( {"user"=>total_user})
-    hash.merge!( {"has_menu"=>self.has_menu.to_i}) if self.has_menu.to_i>0
+    if id == 21828768
+      hash.merge!( {"has_menu"=>2}) if self.has_menu.to_i>0 
+    else
+      hash.merge!( {"has_menu"=>self.has_menu.to_i}) if self.has_menu.to_i>0
+    end
     hash
   end
   

@@ -158,7 +158,11 @@ class ShopController < ApplicationController
   
   def basic
     shop = Shop.find_by_id(params[:id])
-    render :json => shop.safe_output.to_json
+    data = shop.safe_output
+    if !is_kx_user?(session[:user_id]) && shop.id.to_i == 21828768
+      data.delete('has_menu')
+    end
+    render :json => data.to_json
   end
     
   def info
