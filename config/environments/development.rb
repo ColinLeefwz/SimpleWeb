@@ -49,6 +49,19 @@ Prodygia::Application.configure do
   config.active_record.migration_error = :page_load
 
   Paperclip.options[:command_path] = "/usr/bin/"
+
+  config.paperclip_defaults = {
+    storage: :s3,
+    s3_credentials: {
+      bucket: ENV["AWS_BUCKET"],
+      access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+      secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
+    },
+    s3_host_name: "s3-us-west-1.amazonaws.com",
+    path: ":class/:attachment/:id/:style/:filename",
+    default_url: "https://s3-us-west-1.amazonaws.com/#{ENV["AWS_BUCKET"]}/images/missing.png" 
+  }
+
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
