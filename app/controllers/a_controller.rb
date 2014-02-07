@@ -41,6 +41,9 @@ class AController < ApplicationController
       if agent.index("iphone") || agent.index("ipad")
         return redirect_to "https://itunes.apple.com/cn/app/lianlian/id577710538"
       end
+      if agent.index("windows")
+        return redirect_to $apk_url
+      end
     end
     
     case params[:v]
