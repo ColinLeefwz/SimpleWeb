@@ -9,7 +9,10 @@ course_modal = ->
     modal = $(this).closest(".modal")
 
     modal.modal("hide")
-    player = sublime.player(modal.find("video")[0])
+
+  $(".modal").on "hidden", (e)->
+    video = $(this).find("video")[0]
+    player = sublime.player(video)
     player.stop() if player
 
 $(document).ready(course_modal)
