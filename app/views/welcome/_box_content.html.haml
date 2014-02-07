@@ -35,5 +35,5 @@
     %p.learn-more= link_to text, correct_path(item)
     .social-share-icons
       .social-share.favorite-star
-        = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: subscribe_session_path(item)
+        = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: subscribe_session_path(item, type: item.class.name)
       = render 'shared/social_share', item: item
