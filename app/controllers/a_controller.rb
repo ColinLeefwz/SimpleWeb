@@ -4,8 +4,8 @@ class AController < ApplicationController
   
   before_filter :weixin_filter, :only => [:index]
   
-  $apk_url = "http://dd.myapp.com/16891/external_EC325DF2C79795CCE3725D873B97B775.apk"
-  
+  #$apk_url = "http://dd.myapp.com/16891/external_EC325DF2C79795CCE3725D873B97B775.apk"  #二次扫描不行
+  $apk_url = "http://android.myapp.com/android/down.jsp?type=2&appid=1064735&pkgid=17363330&icfa=-1&g_f=990976"
   
   def index
     c = Channel.new
