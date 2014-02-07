@@ -26,7 +26,7 @@ class Section < ActiveRecord::Base
   end
 
   def available_for?(user)
-    available = (user && user.enrolled?(self.course)) or (self.free_preview)
+    available = (user && user.enrolled?(self.course)) || (self.free_preview)
     return available ? true : false
   end
 
