@@ -3,11 +3,12 @@ require 'spec_helper'
 describe User do
 	helper_objects
 
-  # describe ".get_subscribed_sessions" do 
-  #   it "gets the user's subscribed sessions with specific type" do
-  #     expect(jevan.get_subscribed_sessions("ArticleSession")).to eq jevan.subscribed_sessions.where(content_type: "ArticleSession")
-  #   end
-  # end
+  describe ".get_subscribed_sessions" do 
+    it "gets the user's subscribed sessions with specific type" do
+      jevan.subscribe(session_communication)
+      expect(jevan.get_subscribed_sessions("ArticleSession")).to include session_communication
+    end
+  end
 
   describe ".get_subscribed_contents" do
     it "gets the user's subscribed articles and video_interviews" do
@@ -49,13 +50,14 @@ describe User do
     end
   end
 
-	describe ".enroll_session" do
-		it "adds a session to user's enrolled_sessions" do
-			allen.enroll_session session_find
-			allen.enroll_session session_map
-			expect(allen.enrolled_sessions.count).to eq 2
-		end
-	end
+  ##Peter at 2014-02-08: there's no enrollment for sessions now
+	# describe ".enroll" do
+	# 	it "adds a session to user's enrolled_sessions" do
+	# 		allen.enroll session_find
+	# 		allen.enroll session_map
+	# 		expect(allen.enrolled_sessions.count).to eq 2
+	# 	end
+	# end
 
 	describe ".follow?" do
 		it "returns true if already followed me" do

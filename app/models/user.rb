@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   # User follow sessions
   has_many :subscriptions, foreign_key: "subscriber_id"
 
-  has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Session"
+  has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "ArticleSession"
   has_many :subscribed_courses, through: :subscriptions, source: :subscribable, source_type: "Course"
   has_many :subscribed_video_interviews, through: :subscriptions, source: :subscribable, source_type: "VideoInterview"
 
