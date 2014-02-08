@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
 
   # User follow sessions
   has_many :subscriptions, foreign_key: "subscriber_id"
-  # has_many :subscribed_sessions, through: :subscriptions
 
   has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Session"
   has_many :subscribed_courses, through: :subscriptions, source: :subscribable, source_type: "Course"
@@ -28,7 +27,7 @@ class User < ActiveRecord::Base
   # enrollments and orders
   has_many :enrollments
   has_many :enrolled_courses, through: :enrollments, source: :enrollable, source_type: "Course"
-  # has_and_belongs_to_many :enrolled_sessions, class_name: 'Session'
+
   has_many :orders
   has_many :email_messages
 
@@ -46,11 +45,6 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
-  ##methods for enroll sessions
-  def has_enrolled? (item)
-    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item)
-  end
-
   ## methods for subscribe sessions
   def get_subscribed_sessions(session_type)
     self.subscribed_sessions.where(content_type: session_type)
@@ -63,27 +57,22 @@ class User < ActiveRecord::Base
   end
 
   def has_subscribed? (item)
-    self.subscribed_sessions.include?(item) || self.subscribed_courses.include?(item) || self.subscribed_video_interviews.include?(item)
+    Subscription.find_by(subscriber_id: self.id,
+                      subscribable_id: item.id,
+                      subscribable_type: item.class.name)
   end
 
   def subscribe (item)
-    if item.is_a? Session
-      self.subscribed_sessions << item
-    elsif item.is_a? Course
-      self.subscribed_courses << item
-    elsif item.is_a? VideoInterview
-      self.subscribed_video_interviews << item
-    end
+    Subscription.create(subscriber_id: self.id,
+                        subscribable_id: item.id,
+                        subscribable_type: item.class.name )
   end
 
   def unsubscribe (item)
-    if item.is_a? Session
-      self.subscribed_sessions.delete item
-    elsif item.is_a? Course
-      self.subscribed_courses.delete item
-    elsif item.is_a? VideoInterview
-      self.subscribed_video_interviews.delete item
-    end
+    record = Subscription.find(subscriber_id: self.id,
+                               subscribable_id: item.id,
+                               subscribable_type: item.class.name)
+    record.destroy if record
   end
 
   ## methods for follow users
