@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
   def shop_authorize
     if session[:shop_id].nil?
       session[:o_uri_path] = request.path unless request.path =~ /\/login/
-      redirect_to(:controller => 'shop_login', :action => 'login' )
+      redirect_to(:controller => 'shop3_login', :action => 'login' )
     end
   end
 
