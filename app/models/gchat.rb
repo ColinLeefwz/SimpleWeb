@@ -15,7 +15,7 @@ class Gchat
   before_create :tryst2, :tryst 
 
     # 速配
-  def tryst(msg, user, shop)
+  def tryst
     msg = self.txt
     user = self.user
     shop = self.shop
