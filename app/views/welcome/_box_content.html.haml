@@ -14,7 +14,7 @@
       %p= item.categories.join(", ")
       %p= item.language.split(",")[0] if item.language
   .title
-    = link_to "#{item.title}", correct_path(item)
+    = link_to "#{item.title}", polymorphic_path(item)
 
   .cover
     -# todo: duck type item: item.has_video?
@@ -32,7 +32,7 @@
     - else
       %div.description= truncate_html(item.description, length: 600, omission: '...')
     - text = (item.is_a? Article) ?  'Continue reading' :  'Learn more'
-    %p.learn-more= link_to text, correct_path(item)
+    %p.learn-more= link_to text, polymorphic_path(item)
     .social-share-icons
       .social-share.favorite-star
         = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: subscribe_session_path(item, type: item.class.name)
