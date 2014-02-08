@@ -1,4 +1,4 @@
-ActiveAdmin.register Session do
+ActiveAdmin.register Article do
 
   index do
     column :cover do |session|
