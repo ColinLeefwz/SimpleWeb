@@ -5,5 +5,5 @@
     -unless @session.cover.url.eql? "missing.png"
       .text-page-image
         = image_tag(@session.cover.url)
-    %p= @session.description.html_safe
+    %p= @session.description.html_safe if @session.description
     .clear-fix
