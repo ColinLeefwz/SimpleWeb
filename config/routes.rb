@@ -92,7 +92,8 @@ Prodygia::Application.routes.draw do
 
   controller :users do
     get 'relationship/:the_followed' => :relationship, as: :relationship
-    get 'subscirbe_session/:item_id' => :subscribe, as: :subscribe
+    # get 'subscirbe_session/:item_id' => :subscribe, as: :subscribe
+    get 'subscirbe/:item_id' => :subscribe, as: :subscribe
     get 'following'
     get 'followers'
   end

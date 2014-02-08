@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   end
 
   def unsubscribe (item)
-    record = Subscription.find(subscriber_id: self.id,
+    record = Subscription.find_by(subscriber_id: self.id,
                                subscribable_id: item.id,
                                subscribable_type: item.class.name)
     record.destroy if record
