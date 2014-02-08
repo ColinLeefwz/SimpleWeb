@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
   def shop_authorize
     if session[:shop_id].nil?
       session[:o_uri_path] = request.path unless request.path =~ /\/login/
-      redirect_to(:controller => 'shop_login', :action => 'login' )
+      redirect_to(:controller => 'shop3_login', :action => 'login' )
     end
   end
 
@@ -91,6 +91,7 @@ class ApplicationController < ActionController::Base
   #    log.save
   #  end
   
+  #Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; TencentTraveler)
   def weixin_filter
     if params[:sukey] && request.env["HTTP_USER_AGENT"].index("TencentTraveler")
       render :text => "请点击右上地址栏中的 '查看原网页 >' "
