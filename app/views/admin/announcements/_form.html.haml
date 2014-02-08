@@ -21,6 +21,7 @@
   = f.input :cover
   = f.input :expert_id, as: :select, collection: Expert.all, selected: (Expert.staff.id)
   = f.input :categories, as: :check_boxes, collection: Category.all.map(&:name)
+  = f.input :always_show
 
   = f.input_field :attached_video_hd_file_name, as: :hidden
   = f.input_field :attached_video_hd_content_type, as: :hidden
