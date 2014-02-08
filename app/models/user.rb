@@ -2,11 +2,10 @@ require 'mandrill_api'
 
 class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
-	include Storagable
 
   USER_TYPE = { member: "Member", expert: "Expert" }
 
-	attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 
   has_one :profile
 
@@ -91,14 +90,14 @@ class User < ActiveRecord::Base
   # session/course enrollment
   def enrolled?(item)
     record = Enrollment.find_by user_id: self.id, 
-                                enrollable_id: item.id,
-                                enrollable_type: item.class.name
+      enrollable_id: item.id,
+      enrollable_type: item.class.name
   end
 
   def enroll(item)
     record = Enrollment.create user_id: self.id,
-                               enrollable_id: item.id,
-                               enrollable_type: item.class.name
+      enrollable_id: item.id,
+      enrollable_type: item.class.name
   end
 
 
