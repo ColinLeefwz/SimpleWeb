@@ -11,7 +11,7 @@
       = "#{item.visit.page_views} people viewed" if item.visit
       = "(published at #{item.created_at.to_date.to_formatted_s(:course_date)})"
 
-      - if item.is_a? ArticleSession
+      - if item.is_a? Article
         %h4
           = link_to "edit", edit_content_session_path(item), remote: true
           - if item.try(:draft)

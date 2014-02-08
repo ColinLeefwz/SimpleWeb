@@ -5,7 +5,7 @@ describe User do
 
   # describe ".get_subscribed_sessions" do 
   #   it "gets the user's subscribed sessions with specific type" do
-  #     expect(jevan.get_subscribed_sessions("ArticleSession")).to eq jevan.subscribed_sessions.where(content_type: "ArticleSession")
+  #     expect(jevan.get_subscribed_sessions("Article")).to eq jevan.subscribed_sessions.where(content_type: "Article")
   #   end
   # end
 

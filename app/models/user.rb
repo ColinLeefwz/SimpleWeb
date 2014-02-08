@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   # User follow sessions
   has_many :subscriptions, foreign_key: "subscriber_id"
 
-  has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Session"
+  has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Article"
   has_many :subscribed_courses, through: :subscriptions, source: :subscribable, source_type: "Course"
   has_many :subscribed_video_interviews, through: :subscriptions, source: :subscribable, source_type: "VideoInterview"
 
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def get_subscribed_contents
-    articles = self.get_subscribed_sessions("ArticleSession")
+    articles = self.get_subscribed_sessions("Article")
     video_interviews = self.subscribed_video_interviews
     (articles + video_interviews).sort { |x, y| x.updated_at <=> y.updated_at}
   end

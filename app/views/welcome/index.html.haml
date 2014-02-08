@@ -1,3 +1,3 @@
 #content.container
-  - @sessions.each do |item|
+  - @items.each do |item|
     = render partial: "box_content", locals: {item: item, expert: item.expert}

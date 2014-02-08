@@ -60,7 +60,7 @@ class UsersController < ApplicationController
 					case type
 					when "VideoInterview"
 						VideoInterview.find(params[:session_id])
-					when "ArticleSession"
+					when "Article"
 						Session.find(params[:session_id])
 						# Session.where(id: params[:session_id]).first
 					end

@@ -43,7 +43,7 @@ class SessionsController < ApplicationController
   end
 
   def show
-    if @session.is_a? ArticleSession
+    if @session.is_a? Article
       render 'content'
     elsif @session.is_a? VideoInterview
       render 'video'
@@ -89,7 +89,7 @@ class SessionsController < ApplicationController
   end
 
   def new_post_content
-    @session = ArticleSession.new  # use Session.new so that form params are wrapped in :session
+    @session = Article.new  # use Session.new so that form params are wrapped in :session
     @session.expert = current_user
     @url = create_post_content_sessions_path
     @from = 'post_content'
@@ -99,7 +99,7 @@ class SessionsController < ApplicationController
   end
 
   def create_post_content
-    @session = ArticleSession.new(article_session_params)
+    @session = Article.new(article_session_params)
     create_response
   end
 

@@ -1,4 +1,4 @@
-- if item.is_a?ArticleSession
+- if item.is_a? Article
   - item_url = session_url(item).sub("sessions", "article")
 - else
   - item_url = polymorphic_url(item)

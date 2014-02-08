@@ -15,7 +15,7 @@
   .see-more
     - if content.is_a? VideoInterview
       = link_to "see more", video_interview_path(content)
-    -elsif content.is_a? ArticleSession
+    -elsif content.is_a? Article
       = link_to "see more", article_path(content)
 
 .favorite-social-share
