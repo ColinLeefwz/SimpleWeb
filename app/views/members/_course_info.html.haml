@@ -9,7 +9,7 @@
   .favorite-session-info
     .favorite-session-main
       .favorite-session-title
-        = course.title
+        = link_to course.title, course_path(course)
       .favorite-session-expert-name.separator.inline
         by 
         = producer_links(course)
