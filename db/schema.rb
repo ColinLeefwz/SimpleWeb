@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140124024725) do
+ActiveRecord::Schema.define(version: 20140207032249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20140124024725) do
     t.string   "language"
     t.boolean  "draft"
     t.boolean  "canceled"
-    t.string   "categories",                     default: [], array: true
+    t.string   "categories",                     default: [],    array: true
     t.integer  "expert_id"
     t.string   "attached_video_hd_file_name"
     t.string   "attached_video_hd_content_type"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20140124024725) do
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
+    t.boolean  "always_show",                    default: false
   end
 
   add_index "announcements", ["categories"], name: "index_announcements_on_categories", using: :gin
