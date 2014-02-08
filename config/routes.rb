@@ -23,28 +23,20 @@ Prodygia::Application.routes.draw do
   ActiveAdmin.routes(self)
   mount Ckeditor::Engine => '/ckeditor'
 
-  resources :sessions do
+  resources :articles do
     member do
-      get :enroll
-      get :enroll_confirm
-      get :purchase
-      post :sign_up_confirm
       post :email_friend
 
       get :new_post_content
       get :edit_content
       get :cancel_content
       patch :update_content
-      get :new_live_session
-      get :edit_live_session
-      patch :update_live_session
       get :post_a_draft
       post :update_timezone
 
       get :cancel_draft_content
     end
     post :create_post_content, on: :collection
-    post :create_live_session, on: :collection
   end
 
 
@@ -108,8 +100,6 @@ Prodygia::Application.routes.draw do
   get "/faq", to: 'static_pages#faq'
   get "/terms", to: 'static_pages#terms'
   get "/privacy", to: 'static_pages#privacy'
-
-  get "/article/:id", to: "sessions#show", as: :article
 
   get "*page" => redirect("/")
 end
