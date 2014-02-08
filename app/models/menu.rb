@@ -74,6 +74,10 @@ class Menu
     {menu:{button: data}}.to_json
   end
 
+  def shop 
+    Shop.find_by_id(self.id)
+  end 
+
 
   
 end
