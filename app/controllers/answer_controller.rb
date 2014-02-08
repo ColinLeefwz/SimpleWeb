@@ -22,14 +22,14 @@ class AnswerController < ApplicationController
     end
     shop = Shop.find_by_id(sid)
     user = User.find_by_id(uid)
-    if msg[0,3]=="脸脸赐"
-      tryst(msg, user, shop)
-      return render :text => "1"
-    end
-    if msg[0,3]=="银泰赐" && shop.id.to_i == 21831643 
-      tryst(msg, user, shop)
-      return render :text => "1"
-    end
+    # if msg[0,3]=="脸脸赐"
+    #   tryst(msg, user, shop)
+    #   return render :text => "1"
+    # end
+    # if msg[0,3]=="银泰赐" && shop.id.to_i == 21831643 
+    #   tryst(msg, user, shop)
+    #   return render :text => "1"
+    # end
     return render :text => "1" if shop.preset?(user) && pre_answer(msg, user, shop)
     text_faq = shop.answer_text(msg)
     @text = text_faq if ENV["RAILS_ENV"] == "test"
@@ -264,19 +264,19 @@ class AnswerController < ApplicationController
     end
   end
 
-  # 速配
-  def tryst(msg, user, shop)
-     gender = {"脸脸赐我女神" => 2, "脸脸赐我男神" => 1 }[msg]
-     return false if gender.nil?
-     ta = [nil,"他", "她"][gender]
-     us = shop.checkin_users
-     sbu = us.reject{|r| r.gender != gender || r.id==user.id }.sample(1).first
-     return false if sbu.nil?
-     Xmpp.send_chat(sbu.id, user.id, ": #{sbu.time_desc(shop)}，我也在#{shop.name}噢，快跟我打个招呼吧～", "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
-     link = "dface://scheme/user/info?id=#{sbu.id}"
-     text = "#{ta}，叫#{sbu.name}😊\n#{ta}在这个城市驻足或行走，#{sbu.time_desc(shop)},#{ta}也同在#{shop.name}。你和#{ta}擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，#{ta}来了..."
-     Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
-  end
+  # # 速配
+  # def tryst(msg, user, shop)
+  #    gender = {"脸脸赐我女神" => 2, "脸脸赐我男神" => 1 }[msg]
+  #    return false if gender.nil?
+  #    ta = [nil,"他", "她"][gender]
+  #    us = shop.checkin_users
+  #    sbu = us.reject{|r| r.gender != gender || r.id==user.id }.sample(1).first
+  #    return false if sbu.nil?
+  #    Xmpp.send_chat(sbu.id, user.id, ": #{sbu.time_desc(shop)}，我也在#{shop.name}噢，快跟我打个招呼吧～", "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
+  #    link = "dface://scheme/user/info?id=#{sbu.id}"
+  #    text = "#{ta}，叫#{sbu.name}😊\n#{ta}在这个城市驻足或行走，#{sbu.time_desc(shop)},#{ta}也同在#{shop.name}。你和#{ta}擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，#{ta}来了..."
+  #    Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
+  # end
 
     #预置问答的响应
   def pre_answer(msg, user, shop)

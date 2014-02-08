@@ -12,7 +12,25 @@ class Gchat
     option.delegate :name, :gender, :birthday, :weibo_home,:show_gender, :to => :user
   end
 
-  before_create :tryst2 
+  before_create :tryst2, :tryst 
+
+    # 速配
+  def tryst(msg, user, shop)
+    msg = self.txt
+    user = self.user
+    shop = self.shop
+    return if msg[0,4] != '脸脸赐我' ||!(msg[0,4] == '银泰赐我' && shop.id.to_i == 21831643)
+    gender = {"女神" => 2, "男神" => 1 }[msg[4,2]]
+    return if gender.nil?
+    ta = [nil,"他", "她"][gender]
+    us = shop.checkin_users
+    sbu = us.reject{|r| r.gender != gender || r.id==user.id }.sample(1).first
+    return if sbu.nil?
+    Xmpp.send_chat(sbu.id, user.id, ": #{sbu.time_desc(shop)}，我也在#{shop.name}噢，快跟我打个招呼吧～", "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
+    link = "dface://scheme/user/info?id=#{sbu.id}"
+    text = "#{ta}，叫#{sbu.name}😊\n#{ta}在这个城市驻足或行走，#{sbu.time_desc(shop)},#{ta}也同在#{shop.name}。你和#{ta}擦肩而过，如果再有一次机会，你想有怎样的开场白？返回对话页，#{ta}来了..."
+    Xmpp.send_link_gchat($gfuid,shop.id,user.id, text,link, "SUPI#{shop.id}#{user.id}#{Time.now.to_i}")
+  end
 
   # @@@我要回＋‘目的地’
   def tryst2
