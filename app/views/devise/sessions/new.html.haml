@@ -1,22 +1,10 @@
+- content_for(:title){ "Sign In" }
+
 .devise-style.sign-in
   .social-login
     %h2 Sign in
     = render "devise/shared/social_login"
   .devise-form
-    = form_for resource, :as => resource_name, :url => user_session_path, html: {class: "form-horizontal"} do |f|
-      .control-group
-        %label.control-label{for: "user_email"}Email
-        .controls
-          = f.email_field :email, placeholder: "Email"
-
-      .control-group
-        %label.control-label{for: "user_password"}Password
-        .controls
-          = f.password_field :password, placeholder: "Password"
-
-      .control-group
-        .controls
-          = f.submit "Sign in", class: 'btn'
-          .shared-links
-            = render "devise/shared/links"
-          
+    = render "sign_in_form"
+    .shared-links
+      = render "devise/shared/links"

@@ -19,7 +19,7 @@
         height: 88px;
         margin: 20px 40px;
         border-radius: 50%;
-        }
+      }
     }
 
     .text-page-expert-info{
@@ -133,8 +133,9 @@
     }
     .announcement-cover{
       padding-left: 20px;
-			width: 320px;
-			height: 180px;
+      width: 320px;
+      height: 180px;
+      overflow: hidden;
     }
     p{
       text-indent: 0em;
@@ -148,23 +149,4 @@
 
 .range{
   height: 50px;
-}
-
-.enroll-button{
-  .enroll-text{
-    font-size: 20px;
-    display: block;
-    border-radius: 3px;
-    border-bottom: 3px solid #65002c;
-    background: #880848;
-    color: #ffffff;
-    font-weight: bold;
-    text-align: center;
-    padding:15px;
-    width: 60px;
-    height: 20px;
-  }
-  a {
-    cursor: pointer;
-  }
 }

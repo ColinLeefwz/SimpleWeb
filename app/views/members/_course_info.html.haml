@@ -4,7 +4,7 @@
       = image_tag(course.cover.url)
     - unless (current_user) && (current_user.enrolled? course)
       .enroll-button
-        = link_to "Enroll", enroll_course_path(course)
+        = link_to "Subscribe", enroll_course_path(course)
 
   .favorite-session-info
     .favorite-session-main
@@ -12,7 +12,7 @@
         = course.title
       .favorite-session-expert-name.separator.inline
         by 
-        = link_to "#{course.first_expert.name}", profile_expert_path(course.first_expert) 
+        = producer_links(course)
       .favorite-session-categories.inline
         = course.categories.join(", ")
       .clear-fix

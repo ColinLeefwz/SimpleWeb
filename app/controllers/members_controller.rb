@@ -65,9 +65,9 @@ class MembersController < ApplicationController
     @favorite_contents = current_user.get_subscribed_contents
     if @favorite_contents.empty?
       if current_user.is_a? Expert
-        @favorite_contents = ArticleSession.where.not(draft: true).order("RANDOM()").limit(3)
+        @favorite_contents = ArticleSession.where.not(draft: true, expert: current_user).order("RANDOM()").limit(3)
       elsif current_user.is_a? Member
-        @favorite_contents = ArticleSession.where.not(draft: true, expert: get_staff).order("RANDOM()").limit(3)
+        @favorite_contents = ArticleSession.where.not(draft: true, expert: Expert.staff).order("RANDOM()").limit(3)
       end
       @recommendation = true
     end
@@ -81,9 +81,9 @@ class MembersController < ApplicationController
     @subscribed_courses = current_user.subscribed_courses
     if @subscribed_courses.empty?
       if current_user.is_a? Expert
-        @subscribed_courses = Course.all(order: "RANDOM()", limit: 3)
+        @subscribed_courses = Course.where.not(expert: current_user).order("RANDOM()").limit(3)
       elsif current_user.is_a? Member
-        @subscribed_courses = (Course.all - get_staff.courses).sample(3)
+        @subscribed_courses = (Course.all - Expert.staff.courses).sample(3)
       end
       @recommendation = true
     end
@@ -106,10 +106,6 @@ class MembersController < ApplicationController
   end
 
   private
-	def get_staff
-		# staff = User.where(email: "prodygia@prodygia.com").take ## the former one, use email to find the Staff Expert
-		User.find 2 ## Peter at 2014-01-24: we now use the id to determine the Staff
-	end
 
   def set_member
     @member = Member.find params[:id]

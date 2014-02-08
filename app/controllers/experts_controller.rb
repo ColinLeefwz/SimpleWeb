@@ -31,11 +31,11 @@ class ExpertsController < ApplicationController
   end
 
   def profile
-		video_interviews = @expert.video_interviews.to_a
-		courses = @expert.courses.to_a
-		sessions = @expert.sessions.where(draft: false).to_a
-    @items = video_interviews.concat(courses).concat(sessions)
-    @profile = @expert.profile || @expert.create_profile
+    video_interviews = @expert.video_interviews
+    courses = @expert.courses
+    sessions = @expert.sessions.where(draft: false)
+    @items = video_interviews + courses + sessions
+    @profile = @expert.profile
   end
 
   def edit_profile

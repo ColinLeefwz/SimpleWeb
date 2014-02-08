@@ -8,6 +8,8 @@ class Course < ActiveRecord::Base
   has_many :enrollments, as: :enrollable
 
   has_and_belongs_to_many :experts
+  validates :experts, presence: true
+
   has_many :chapters, -> {order(order: :asc)}, dependent: :destroy
   accepts_nested_attributes_for :chapters, reject_if: lambda{|c| c[:title].blank?}, allow_destroy: true
 
@@ -33,18 +35,6 @@ class Course < ActiveRecord::Base
     styles: {
 
     }
-
-  def num_of_experts 
-    self.experts.length
-  end
-
-  def first_expert
-    self.experts.first
-  end
-
-  def second_expert
-    self.experts.second
-  end
 
   def producers
     "by " + self.experts.map(&:name).join(" and ")

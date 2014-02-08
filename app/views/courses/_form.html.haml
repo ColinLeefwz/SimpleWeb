@@ -28,7 +28,7 @@
 
   = f.input :title, label: "Course Title"
   = f.input :price
-  = f.input :description
+  = f.input :description, input_html: {class: "ckeditor"}
   = f.association :experts
   = f.input :categories, as: :check_boxes, collection: Category.all, label_method: :name, value_method: :name
   = f.input :cover

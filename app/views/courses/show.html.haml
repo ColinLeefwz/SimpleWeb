@@ -1,3 +1,5 @@
+- content_for(:title){ @course.title }
+
 .course_show.margin-bottom
 
   .overview-wrapper.box
@@ -8,7 +10,7 @@
           = render "shared/sublime_video", item_resource: @course.intro_video, poster_url: @course.cover.url
         - unless (current_user) && (current_user.enrolled? @course)
           .enroll-button
-            = link_to "Enroll for #{number_to_currency(@course.price)}", enroll_course_path(@course)
+            = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
 
       .description-box.inline
         .title
@@ -22,18 +24,11 @@
         .category.inline
           = @course.categories.join(", ")
         .description
-          = @course.description
+          = @course.description.html_safe
 
       .social-box.inline
         = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_path(@course, type: @course.class.name)
         = render 'shared/social_share', item: @course
-
-      -# .percentage{style: "visibility: hidden"}
-      -#   %span 20
-      -#   %span % complete
-      -# .progress
-      -#   .bar{style: "width: 0%"}
-
 
   - @course.chapters.each do |c|
     = render partial: "chapter", locals: {chapter: c}

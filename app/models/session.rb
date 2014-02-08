@@ -1,8 +1,17 @@
+class CategoriesExistValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    unless value.any? {|x| !x.empty?}
+      record.errors[attribute] << (options[:message] || "can not be blank")
+    end
+  end
+end
+
 class Session < ActiveRecord::Base
-	include Storagable
   include ParamsConfig
+
   validates :title, presence: true
   validates :price, numericality: {greater_than_or_equal_to: 0}
+  validates :categories, presence: true, categories_exist: true
 
   CONTENT_TYPE = %w(ArticleSession LiveSession).freeze
 
@@ -11,10 +20,10 @@ class Session < ActiveRecord::Base
 
   self.inheritance_column = 'content_type'
 
-	attached_file :cover, styles: {}
-	attached_file :video
+  has_attached_file :cover
+  has_attached_file :video
 
-  default_scope where("canceled is null or canceled = false")
+  default_scope{ where("canceled is null or canceled = false") }
   # relationship with expert
   belongs_to :expert
   validates :expert, presence: true
@@ -29,6 +38,10 @@ class Session < ActiveRecord::Base
 
   # page view statistics
   has_one :visit, as: :visitable
+
+  # def categories_can_not_be_blank
+  #   errors.add(:categories, "cannot be blank") unless categories.any? {|x| !x.empty?}
+  # end
 
   def free?
     self.price <= 0.0
@@ -75,3 +88,4 @@ class Session < ActiveRecord::Base
     self.end_date_time = DateTime.new(original.year, original.month, original.day, t.hour, t.min, t.sec)
   end
 end
+

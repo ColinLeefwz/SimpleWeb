@@ -108,4 +108,6 @@ Prodygia::Application.routes.draw do
   get "/privacy", to: 'static_pages#privacy'
 
   get "/article/:id", to: "sessions#show", as: :article
+
+  get "*page" => redirect("/")
 end
