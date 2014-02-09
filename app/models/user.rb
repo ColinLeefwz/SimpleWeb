@@ -88,7 +88,6 @@ class User < ActiveRecord::Base
     self.followed_users.delete followed_user
   end
 
-  # session/course enrollment
   def enrolled?(item)
     record = Enrollment.find_by user_id: self.id, 
                                 enrollable_id: item.id,

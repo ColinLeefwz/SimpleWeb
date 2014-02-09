@@ -16,15 +16,11 @@ class Expert < Member
   end
 
   def name_with_inital
-    return "#{first_name.first}. #{last_name}"
+    "#{first_name.first}. #{last_name}"
   end
 
   def password_required?
     new_record? ? false : super
-  end
-
-  def sessions_with_draft
-    self.sessions.order('draft desc') 
   end
 
   def contents
