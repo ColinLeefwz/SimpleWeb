@@ -1,17 +1,9 @@
-# class CategoriesExistValidator < ActiveModel::EachValidator
-#   def validate_each(record, attribute, value)
-#     unless value.any? {|x| !x.empty?}
-#       record.errors[attribute] << (options[:message] || "can not be blank")
-#     end
-#   end
-# end
-
 class Article < ActiveRecord::Base
 	include Storagable
   include ParamsConfig
 
   validates :title, presence: true
-  validates :categories, presence: true
+  validate :empty_categories
 
   COMMIT_TYPE = { draft: "Save Draft", publish:  "Publish", preview: "Preview", cancel: "Cancel" }
   attr_accessor :format, :strategic_question, :save_draft, :preview
@@ -37,13 +29,13 @@ class Article < ActiveRecord::Base
   # page view statistics
   has_one :visit, as: :visitable
 
-  # def categories_can_not_be_blank
-  #   errors.add(:categories, "cannot be blank") unless categories.any? {|x| !x.empty?}
-  # end
-
-
   def producers
     "by " + self.expert.name
+  end
+
+  private
+  def empty_categories
+    errors.add(:categories, "cannot be blank") unless categories.any? {|string| string.length > 0}
   end
 
 end
