@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Session do
+describe Article do
   helper_objects
 
   # it{ should have_and_belong_to_many :enroll_users }

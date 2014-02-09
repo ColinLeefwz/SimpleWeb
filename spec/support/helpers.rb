@@ -31,26 +31,13 @@ def helper_objects
   let(:tech) { create :category, name: "tech" }
 
   #sessions
-  let(:session_intro) { create :live_session, title: 'Intro Session to Lean Start-Up', expert: sameer,
-                        description: 'How can lean start-up methods help me build a better business?',
-                        status: 'Upcoming' }
 
-
-  let(:session_communication) { create :article_session, title: 'Communicating With Chinese', expert: sameer,
+  let(:session_communication) { create :article, title: 'Communicating With Chinese', expert: sameer,
                                 description: 'What cultural differences should I know when communicating with Chinese?',
                                 status: 'Prodygia Picks' }
 
-  let(:session_find) { create :live_session, title: 'Find The Happier You', expert: alex,
-                       description: 'How can I be happy despite the challenges of life?',
-                       status: 'Scheduled' }
-
-  let(:session_map) { create :live_session, title: 'China RoadMap', expert: alex,
-                      description: 'Show you China road map',
-                      status: 'Scheduled' }
   let(:announcement) { create :announcement, title: 'Just an Announcement', expert: alex,
                       description: 'Show you China road map'}
-
-  let(:session_draft_map) { create :live_session, title: 'live_session_draft', expert: alex, description: 'dddd', draft: true }
 
   #courses
   let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer] }

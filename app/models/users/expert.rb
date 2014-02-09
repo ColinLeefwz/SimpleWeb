@@ -1,5 +1,5 @@
 class Expert < Member
-  has_many :sessions, dependent: :destroy
+  has_many :articles, dependent: :destroy
   has_and_belongs_to_many :courses
   has_many :video_interviews, -> {order "updated_at DESC"}
   has_many :resources
@@ -28,7 +28,7 @@ class Expert < Member
   end
 
   def contents
-    articles = self.sessions.where(content_type: "Article")
+    articles = self.articles
     video_interviews = self.video_interviews
 
     (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}

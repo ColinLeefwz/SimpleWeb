@@ -4,7 +4,7 @@
     %h3#email-modal-label
       Mail to Your Friend
   .email-modal-body
-    = simple_form_for :email_friend, { url: email_friend_session_path } do |f|
+    = simple_form_for :email_friend, { url: email_friend_article_path } do |f|
       = f.input :your_name, input_html: {value: current_user.try(:name) }
       = f.input :your_address, input_html: {value: current_user.try(:email) }
       = f.input :to_name

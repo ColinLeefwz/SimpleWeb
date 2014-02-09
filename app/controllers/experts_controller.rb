@@ -33,8 +33,8 @@ class ExpertsController < ApplicationController
   def profile
     video_interviews = @expert.video_interviews
     courses = @expert.courses
-    sessions = @expert.sessions.where(draft: false)
-    @items = video_interviews + courses + sessions
+    articles = @expert.articles.where(draft: false)
+    @items = video_interviews + courses + articles
     @profile = @expert.profile
   end
 

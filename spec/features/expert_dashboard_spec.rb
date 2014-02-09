@@ -6,10 +6,10 @@ def login_expert
 end
 
 def fill_post_new_content
-	within("form#new_article_session") do
+	within("form#new_article") do
 		fill_in("Title", with: "a new article session")
-		attach_file("article_session_cover", File.join( Rails.root.join('spec', 'fixtures', 'about_us.jpg') ))
-		check("article_session_categories_macro")
+		attach_file("article_cover", File.join( Rails.root.join('spec', 'fixtures', 'about_us.jpg') ))
+		check("article_categories_macro")
 	end
 end
 
@@ -53,7 +53,7 @@ feature "Expert Dashboard" do
 	context "Post new content" do
 		background do
 			click_link("Post new content")
-			expect(page).to have_css("form#new_article_session")
+			expect(page).to have_css("form#new_article")
 			## fill in the post new content form
 			fill_post_new_content
 		end
