@@ -2,19 +2,15 @@
 
 class AController < ApplicationController
   
-  before_filter :weixin_filter, :only => [:index]
+  before_filter :weixin_filter, :only => [:index, :webdown]
   
   #$apk_url = "http://dd.myapp.com/16891/external_EC325DF2C79795CCE3725D873B97B775.apk"  #二次扫描不行
   $apk_url = "http://android.myapp.com/android/down.jsp?type=2&appid=1064735&pkgid=17363330&icfa=-1&g_f=990976"
   $ios_url = "https://itunes.apple.com/cn/app/lianlian/id577710538"
   
+  #通过二维码下载
   def index
-    c = Channel.new
-    c.ip = real_ip
-    c.v = params[:v] #1微博来自脸脸，2首次发微博分享, 3照片链接， 4二维码
-    c.time = Time.now
-    c.agent = request.env["HTTP_USER_AGENT"]
-    c.save
+    c = save_channel(params[:v])
     Rails.logger.error c.agent
     agent = c.agent.downcase
     #Mozilla/5.0 (iPhone; CPU iPhone OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206 MicroMessenger/5.0.3
@@ -59,21 +55,42 @@ class AController < ApplicationController
     
   end
   
+  #官网直接android下载，可以考虑取消
   def down
-    c = Channel.new
-    c.ip = real_ip
-    c.v = 0
-    c.time = Time.now
-    c.agent = request.env["HTTP_USER_AGENT"]
-    c.save
+    c = save_channel("0")
     if c.agent.index("Android")
       if c.agent.index("MicroMessenger")
         return redirect_to $apk_url
-        #return render :file => "~/lianlian/public/mini.html", :use_full_path => true
       end
     end
     ver = $redis.get("android_version")
     redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
+  end
+  
+  #由于在微信的网页中无法打开app store，而通过微信二维码扫描却可以，所以在网页中点击下载使用本方法
+  def webdown
+    c = save_channel(params[:v])
+    Rails.logger.error c.agent
+    agent = c.agent.downcase
+    if c.agent.index("Android")
+      if c.agent.index("MicroMessenger")
+        return redirect_to $apk_url
+      else
+        ver = $redis.get("android_version")
+        return redirect_to "http://oss.aliyuncs.com/dface/dface#{ver}.apk"
+      end
+    end
+    if agent.index("iphone") || agent.index("ipad")
+      if c.agent.index("MicroMessenger")
+        return render :file => "~/lianlian/public/wx_down.html", :use_full_path => true 
+      else
+        return redirect_to $ios_url
+      end
+    end
+    if agent.index("windows")
+      return redirect_to $apk_url
+    end
+    render :file => "~/lianlian/public/mini.html", :use_full_path => true 
   end
   
   def xmpp_test
@@ -83,6 +100,18 @@ class AController < ApplicationController
     rescue Exception => e
       render :text => e.to_s, :status => 500
     end
+  end
+  
+  private 
+  
+  def save_channel(v)
+    c = Channel.new
+    c.ip = real_ip
+    c.v = v
+    c.time = Time.now
+    c.agent = request.env["HTTP_USER_AGENT"]
+    c.save
+    c
   end
   
 end
