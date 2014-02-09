@@ -377,6 +377,18 @@ class User
   def self.last_loc_cache(id)
     Rails.cache.fetch("LASTL:#{id}")
   end
+  
+  def self.in_shop(uid,sid)
+    begin
+      u = User.find_by_id(uid)
+      shop = Shop.find_by_id(sid)
+      lo = u.last_loc[2]
+      diff = shop.min_distance(shop,lo)
+      return true if diff<1500
+    rescue
+    end
+    return false
+  end
     
   def last_loc_no_cache
     arr = $redis.smembers("UnBroadcast").map{|x| x.to_i}

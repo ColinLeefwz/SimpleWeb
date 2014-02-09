@@ -10,4 +10,11 @@ class ApiUserInfoController < ApplicationController
     user = User.find_by_id(user_id)
     render json: user.safe_output.to_json
   end
+  
+  def in_shop
+    return render text: false if params[:uid].nil? || params[:sid].to_i==0
+    flag = User.in_shop(params[:uid],params[:sid])
+    render text: flag
+  end
+  
 end

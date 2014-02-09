@@ -10,12 +10,14 @@ class GpsLog
   field :speed #速度
   field :wifi, type: Array
   field :gps, type: Hash
+  
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :to => :user
   end
+  
   def user
-  User.find_by_id(uid)
+    User.find_by_id(uid)
   end
-
+  
 end
 
