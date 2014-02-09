@@ -1,17 +1,15 @@
 class Article < ActiveRecord::Base
-	include Storagable
   include ParamsConfig
 
   validates :title, presence: true
   validate :empty_categories
 
   COMMIT_TYPE = { draft: "Save Draft", publish:  "Publish", preview: "Preview", cancel: "Cancel" }
-  attr_accessor :format, :strategic_question, :save_draft, :preview
 
   self.inheritance_column = 'content_type'
 
-	attached_file :cover, styles: {}
-	attached_file :video
+  has_attached_file :cover, styles: {}
+  has_attached_file :video
 
   default_scope{ where("canceled is null or canceled = false") }
 

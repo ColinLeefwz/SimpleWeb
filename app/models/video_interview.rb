@@ -1,5 +1,4 @@
 class VideoInterview < ActiveRecord::Base
-  include Storagable
   include ParamsConfig
 
   # video interviews always belongs to an expert
@@ -12,9 +11,7 @@ class VideoInterview < ActiveRecord::Base
   # page view statistics
   has_one :visit, as: :visitable
 
-  attached_file :attached_video_hd
-  attached_file :attached_video_sd
-  attached_file :cover
+  has_attached_file :cover
 
   def to_param
     permalink
