@@ -6,7 +6,7 @@ class AController < ApplicationController
   
   #$apk_url = "http://dd.myapp.com/16891/external_EC325DF2C79795CCE3725D873B97B775.apk"  #二次扫描不行
   $apk_url = "http://android.myapp.com/android/down.jsp?type=2&appid=1064735&pkgid=17363330&icfa=-1&g_f=990976"
-  $ios_url = "itms-appss://itunes.apple.com/cn/app/lianlian/id577710538"
+  $ios_url = "https://itunes.apple.com/cn/app/lianlian/id577710538"
   
   def index
     c = Channel.new
