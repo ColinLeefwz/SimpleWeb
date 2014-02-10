@@ -81,7 +81,12 @@ class MembersController < ApplicationController
     @subscribed_courses = current_user.subscribed_courses
     if @subscribed_courses.empty?
       if current_user.is_a? Expert
-        @subscribed_courses = Course.all(order: "RANDOM()", limit: 3)
+        staff_courses = Expert.staff.courses.take(3)
+        @subscribed_courses << staff_courses
+        if staff_courses.count <= 3
+          other_courses = Course.all.sample(3 - staff_courses.count)
+          @subscribed_courses << other_courses
+        end
       elsif current_user.is_a? Member
         @subscribed_courses = (Course.all - Expert.staff.courses).sample(3)
       end

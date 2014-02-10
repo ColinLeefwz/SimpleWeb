@@ -4,7 +4,7 @@ describe MembersController do
   helper_objects
 
   before :each do
-    staff = create(:expert, id: 2, email: "staff@prodygia.com", password: '11111111')
+    @staff = create(:expert, id: 2, email: "staff@prodygia.com", password: '11111111')
   end
 
   describe "GET dashboard" do
@@ -131,6 +131,19 @@ describe MembersController do
       expect(response).to be_success
     end
 
+    it "excludes Staff's courses in recommendation to members if the user is just member" do
+      staff_course = create(:course, title: "staff course", experts: [@staff], categories: ["culture"])
+      get :video_on_demand, id: jevan.id, format: :js
+      expect(assigns[:subscribed_courses]).not_to include staff_course
+    end
 
+    it "show Staff's courses in recommendation at the first for experts in his member dashboard" do
+      courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
+      staff_course = create_list(:course, 4, title: "staff course", experts: [@staff], categories: ["culture"])
+      sign_in sameer
+      get :video_on_demand, id: sameer.id, format: :js
+      expect(assigns[:subscribed_courses]).to include staff_course[0]
+      expect(assigns[:subscribed_courses].count).to eq 3
+    end
   end
 end
