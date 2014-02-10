@@ -79,3 +79,6 @@
   .sessions.sub-wrapper
     #content.container
       =render partial: 'item_box', collection: @items, as: :item
+
+    :javascript
+      load_isotope()
