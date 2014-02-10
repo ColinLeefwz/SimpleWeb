@@ -80,6 +80,7 @@ class MembersController < ApplicationController
   def video_on_demand
     @subscribed_courses = current_user.subscribed_courses
     if @subscribed_courses.empty?
+      ##Peter at 2014-02-10: the code below should be extracted out to Course Model, and named "recommended_courses"
       if current_user.is_a? Expert
         staff_courses = Expert.staff.courses.take(3)
         @subscribed_courses << staff_courses
