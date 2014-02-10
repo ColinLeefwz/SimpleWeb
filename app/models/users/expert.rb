@@ -40,11 +40,11 @@ class Expert < Member
 
   private
   def create_a_profile
-    self.profile || self.create_profile
+    self.create_profile
   end
 
   def create_an_intro_video
-    self.intro_video || self.create_intro_video
+    self.create_intro_video
   end
 
 end

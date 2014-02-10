@@ -14,17 +14,15 @@ class Article < ActiveRecord::Base
   default_scope{ where("canceled is null or canceled = false") }
 
   belongs_to :expert
-  # validates :expert, presence: true
+  validates :expert, presence: true
 
   # enrollments and orders
   has_many :enrollments, as: :enrollable
   has_many :orders
 
-  # has_many :subscriptions, foreign_key: "subscribed_session_id"
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions
 
-  # page view statistics
   has_one :visit, as: :visitable
 
   def producers

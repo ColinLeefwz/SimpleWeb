@@ -27,8 +27,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js{
         the_followed_id = params[:the_followed]
-				followed_user = User.find the_followed_id
-        
+        followed_user = User.find the_followed_id
+
         if current_user.blank?
           render js: "window.location='#{new_user_session_path}'"
           flash[:alert] = "Sorry! You have to sign in to follow an Expert"
@@ -50,71 +50,25 @@ class UsersController < ApplicationController
   def followers
   end
 
-	## Peter at 2014-01-24: this action and "subscribe_video_interview" can be refactor together
-  def subscribe_session
+  def subscribe
     respond_to do |format|
       format.js{
-				type = params[:type]
+        type = params[:type]
 
-				current_session = 
-					case type
-					when "VideoInterview"
-						VideoInterview.find(params[:session_id])
-					when "Article"
-						Session.find(params[:session_id])
-						# Session.where(id: params[:session_id]).first
-					end
+        current_item = type.constantize.find(params[:item_id])
 
         if current_user.blank?
           render js: "window.location='#{new_user_session_path}'"
-          flash[:alert] = "Sorry! You have to sign in to follow an Article"
+          flash[:alert] = "Sorry! You have to sign in to subscribe"
         else
-          if current_user.has_subscribed?(current_session)
-            current_user.unsubscribe(current_session)
+          if current_user.has_subscribed?(current_item)
+            current_user.unsubscribe(current_item)
           else
-            current_user.subscribe(current_session)
+            current_user.subscribe(current_item)
           end
           render "shared/update_favorite_star"
         end
-     } 
-    end
-  end
-
-  def subscribe_course
-    respond_to do |format|
-      format.js{
-        current_course = Course.where(id: params[:course_id]).first
-        if current_user.blank?
-          render js: "window.location='#{new_user_session_path}'"
-          flash[:alert] = "Sorry! You have to sign in to follow a Course"
-        else
-          if current_user.has_subscribed?(current_course)
-            current_user.unsubscribe(current_course)
-          else
-            current_user.subscribe(current_course)
-          end
-          render "shared/update_favorite_star"
-        end
-     } 
-    end
-  end
-
-  def subscribe_video_interview
-    respond_to do |format|
-      format.js{
-        video_interview = VideoInterview.where(id: params[:video_interview_id]).first
-        if current_user.blank?
-          render js: "window.location='#{new_user_session_path}'"
-          flash[:alert] = "Sorry! You have to sign in to follow a Video Interview"
-        else
-          if current_user.has_subscribed?(video_interview)
-            current_user.unsubscribe(video_interview)
-          else
-            current_user.subscribe(video_interview)
-          end
-          render "shared/update_favorite_star"
-        end
-     } 
+      } 
     end
   end
 
