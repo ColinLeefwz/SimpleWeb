@@ -1,0 +1,10 @@
+
+$(".main-menu").html('<%=j render partial: "form"%>');
+
+$("#save-draft").on("click", function(){
+  draft_field = $(this).closest("form").find("#article_draft");
+  draft_field.val(true);
+});
+
+CKEDITOR.replaceAll();
+

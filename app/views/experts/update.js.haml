@@ -3,25 +3,8 @@
     $(".main-menu").html("#{j(render partial: @from)}");
     CKEDITOR.replaceAll();
 
-    $('#session-cover-input').change(function(){
-      filename = $(this).val();
-    });
-
-    $('#session-video-input').change(function(){
-      filename = $(this).val();
-    });
-
-
     $("#session-cover-input").change(function(){
       readURL(this);
-    });
-
-    $("#session-video-input").change(function(){
-      $(".live-modal-video-frame").css("display", "block");
-    });
-
-    $(".modal-submit").click(function(){
-      $("#modal").modal("hide");
     });
 
     function readURL(input) {
@@ -35,6 +18,10 @@
         reader.readAsDataURL(input.files[0]);
       }
     }
+
+    $(".modal-submit").click(function(){
+      $("#modal").modal("hide");
+    });
     
     $("#session-preview").on("click", function(){
       var mon_arr = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
