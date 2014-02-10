@@ -11,7 +11,7 @@ class Article < ActiveRecord::Base
   has_attached_file :cover, styles: {}
   has_attached_file :video
 
-  default_scope{ where("canceled is null or canceled = false") }
+  default_scope{ where("canceled = false") }
 
   belongs_to :expert
   validates :expert, presence: true
