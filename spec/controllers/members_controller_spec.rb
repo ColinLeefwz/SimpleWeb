@@ -3,9 +3,13 @@ require 'spec_helper'
 describe MembersController do
   helper_objects
 
+  before :each do
+    staff = create(:expert, id: 2, email: "staff@prodygia.com", password: '11111111')
+  end
+
   describe "GET dashboard" do
   end
-   
+
   describe "GET profile" do 
   end
 
@@ -71,23 +75,26 @@ describe MembersController do
     end
   end
 
-	describe "GET experts" do
-		context "logged in member" do
-			before :each do
-				sign_in peter
-			end
+  describe "GET experts" do
+    context "logged in member" do
+      before :each do
+        sign_in peter
+      end
 
-			it "assigns all the experts the member followed" do
-				get :experts, id: peter.id, format: :js
-				expect(assigns[:followed_experts]).to eq peter.followed_users
-			end
+      it "assigns all the experts the member followed" do
+        peter.follow sameer
+        peter.follow alex
+        get :experts, id: peter.id, format: :js
+        expect(assigns[:followed_experts]).to include sameer
+        expect(assigns[:followed_experts]).to include alex
+      end
 
       it "can access to followed experts page" do
         get :experts, id: peter.id, format: :js
         expect(response).to be_success
       end
-		end
-	end
+    end
+  end
 
   describe "GET contents" do
     before :each do 
@@ -123,5 +130,7 @@ describe MembersController do
       get :video_on_demand, id: jevan.id, format: :js
       expect(response).to be_success
     end
+
+
   end
 end
