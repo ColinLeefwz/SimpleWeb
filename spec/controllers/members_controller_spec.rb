@@ -114,11 +114,6 @@ describe MembersController do
       sign_in jevan
     end
 
-    # it "assigns the video sessions the member subscribed" do
-    #   get :video_on_demand, id: jevan.id, format: :js
-    #   expect(assigns[:favorite_session]).to eq jevan.get_subscribed_sessions("VideoSession")
-    # end
-
     it "can access to contents page" do
       get :video_on_demand, id: jevan.id, format: :js
       expect(response).to be_success

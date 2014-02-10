@@ -44,16 +44,6 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
-  ## methods for subscribe sessions
-  def get_subscribed_sessions(session_type)
-    self.subscribed_sessions.where(content_type: session_type)
-  end
-
-  def get_subscribed_contents
-    articles = self.get_subscribed_sessions("Article")
-    video_interviews = self.subscribed_video_interviews
-    (articles + video_interviews).sort { |x, y| x.updated_at <=> y.updated_at}
-  end
 
   def has_subscribed? (item)
     Subscription.find_by(subscriber_id: self.id,

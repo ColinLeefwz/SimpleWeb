@@ -1,23 +1,7 @@
 require 'spec_helper'
 
 describe User do
-	helper_objects
-
-  describe ".get_subscribed_sessions" do 
-    it "gets the user's subscribed sessions with specific type" do
-      jevan.subscribe(session_communication)
-      expect(jevan.get_subscribed_sessions("ArticleSession")).to include session_communication
-    end
-  end
-
-  describe ".get_subscribed_contents" do
-    it "gets the user's subscribed articles and video_interviews" do
-      jevan.subscribe(video_interview)
-      jevan.subscribe(session_communication)
-      expect(jevan.get_subscribed_contents).to include video_interview
-      expect(jevan.get_subscribed_contents).to include session_communication
-    end
-  end
+  helper_objects
 
   describe ".has_subscribed?" do
     it "returns false if not subscribe the course" do
