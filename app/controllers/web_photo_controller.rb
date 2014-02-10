@@ -15,7 +15,6 @@ class WebPhotoController < ApplicationController
     else
       redirect_to "/404.html"
     end
-    render :layout => false
   end
 
 end
