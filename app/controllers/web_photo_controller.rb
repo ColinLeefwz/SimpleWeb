@@ -11,7 +11,7 @@ class WebPhotoController < ApplicationController
     end
     if @photo
       @user = @photo.user
-      render :file => "/web_photo/show.html"
+      render :file => "/web_photo/show.html", :layout => false
     else
       redirect_to "/404.html"
     end
