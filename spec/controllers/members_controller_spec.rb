@@ -117,33 +117,50 @@ describe MembersController do
   end
 
   describe "GET video_on_demand" do
-    before :each do 
-      sign_in jevan
+    context "current user is an expert" do
+      before :each do
+        sign_in sameer
+      end
+
+      it "can access to contents page" do
+        get :video_on_demand, id: sameer.id, format: :js
+        expect(response).to be_success
+      end
+
+      it "shows Staff's courses for recommendation" do
+        courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
+        staff_course = create_list(:course, 4, title: "staff course", experts: [@staff], categories: ["culture"])
+        sign_in sameer
+        get :video_on_demand, id: sameer.id, format: :js
+        expect(assigns[:subscribed_courses]).to include staff_course[0]
+        expect(assigns[:subscribed_courses].count).to eq 3
+      end
+
+      it "excludes his own courses for recommendation" do
+        Course.delete_all
+        courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
+        staff_course = create(:course, title: "staff course", experts: [@staff], categories: ["culture"])
+        get :video_on_demand, id: sameer.id, format: :js
+        expect(assigns[:subscribed_courses]).to eq [staff_course]
+        expect(assigns[:subscribed_courses].count).to eq 1
+      end
     end
 
-    # it "assigns the video sessions the member subscribed" do
-    #   get :video_on_demand, id: jevan.id, format: :js
-    #   expect(assigns[:favorite_session]).to eq jevan.get_subscribed_sessions("VideoSession")
-    # end
+    context "current user is a member" do
+      before :each do
+        sign_in jevan
+      end
 
-    it "can access to contents page" do
-      get :video_on_demand, id: jevan.id, format: :js
-      expect(response).to be_success
-    end
+      it "can access to contents page" do
+        get :video_on_demand, id: jevan.id, format: :js
+        expect(response).to be_success
+      end
 
-    it "excludes Staff's courses in recommendation to members if the user is just member" do
-      staff_course = create(:course, title: "staff course", experts: [@staff], categories: ["culture"])
-      get :video_on_demand, id: jevan.id, format: :js
-      expect(assigns[:subscribed_courses]).not_to include staff_course
-    end
-
-    it "show Staff's courses in recommendation at the first for experts in his member dashboard" do
-      courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
-      staff_course = create_list(:course, 4, title: "staff course", experts: [@staff], categories: ["culture"])
-      sign_in sameer
-      get :video_on_demand, id: sameer.id, format: :js
-      expect(assigns[:subscribed_courses]).to include staff_course[0]
-      expect(assigns[:subscribed_courses].count).to eq 3
+      it "excludes Staff's courses for recommendation" do
+        staff_course = create(:course, title: "staff course", experts: [@staff], categories: ["culture"])
+        get :video_on_demand, id: jevan.id, format: :js
+        expect(assigns[:subscribed_courses]).not_to include staff_course
+      end
     end
   end
 end

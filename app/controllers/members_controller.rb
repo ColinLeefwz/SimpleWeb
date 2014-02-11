@@ -82,14 +82,13 @@ class MembersController < ApplicationController
     if @subscribed_courses.empty?
       ##Peter at 2014-02-10: the code below should be extracted out to Course Model, and named "recommended_courses"
       if current_user.is_a? Expert
+        own_courses = current_user.courses
         staff_courses = Expert.staff.courses.take(3)
         @subscribed_courses << staff_courses
         if staff_courses.count <= 3
-          other_courses = Course.all.sample(3 - staff_courses.count)
+          other_courses = (Course.all - own_courses - staff_courses).sample(3 - staff_courses.count)
           @subscribed_courses << other_courses
         end
-        #TODO: should not include the expert's own courses
-        # @subscribed_courses = Course.where.not(expert: current_user).order("RANDOM()").limit(3)
       elsif current_user.is_a? Member
         @subscribed_courses = (Course.all - Expert.staff.courses).sample(3)
       end
