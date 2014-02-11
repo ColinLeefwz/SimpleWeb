@@ -17,4 +17,12 @@ class ApiUserInfoController < ApplicationController
     render text: flag
   end
   
+  def in_shop_with_lo
+    return render text: false if params[:sid].to_i==0 || params[:lat].nil? || params[:lng].nil?
+    lo = [params[:lat].to_f,params[:lng].to_f]
+    shop = Shop.find_by_id(params[:sid])
+    flag = shop.in_shop?(lo)
+    render text: flag
+  end
+  
 end
