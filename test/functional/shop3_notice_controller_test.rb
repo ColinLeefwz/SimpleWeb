@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'test_helper'
 
-class Shop3NoticesControllerTest < ActionController::TestCase
+class Shop3NoticeControllerTest < ActionController::TestCase
   def setup
     reload("shop_notices.js")
   end
