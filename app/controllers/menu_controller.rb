@@ -5,8 +5,6 @@ class MenuController < ApplicationController
   def get
     menu = Menu.find_by_id(params[:id])
     return render :json => [].to_json if menu.nil?
-    shop = menu.shop
-    return render :json => [].to_json if !is_kx_user?(session[:user_id]) && shop.id.to_i == 21831643
     render :json => menu.to_json
   end
   
