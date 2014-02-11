@@ -19,5 +19,9 @@ class GpsLog
     User.find_by_id(uid)
   end
   
+  def last_loc(uid)
+    GpsLog.where({uid:uid}).last
+  end
+  
 end
 
