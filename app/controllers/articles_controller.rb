@@ -45,9 +45,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def preview
-  end
-
   def show
   end
 
@@ -56,16 +53,6 @@ class ArticlesController < ApplicationController
     @zone = params[:time_zone][:time_zone]
     respond_to do |format|
       format.js {}
-    end
-  end
-
-  def cancel_content
-    @article.update_attributes canceled: true
-    @from = 'articles'
-    @articles = current_user.articles.where("canceled = false")
-
-    respond_to do |format|
-      format.js { render 'experts/update' }
     end
   end
 

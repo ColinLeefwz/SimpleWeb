@@ -29,7 +29,6 @@ Prodygia::Application.routes.draw do
 
       get :new_post_content
       get :edit_content
-      get :cancel_content
       patch :update_content
       get :post_a_draft
       post :update_timezone
@@ -84,7 +83,6 @@ Prodygia::Application.routes.draw do
 
   controller :users do
     get 'relationship/:the_followed' => :relationship, as: :relationship
-    # get 'subscirbe_session/:item_id' => :subscribe, as: :subscribe
     get 'subscirbe/:item_id' => :subscribe, as: :subscribe
     get 'following'
     get 'followers'
