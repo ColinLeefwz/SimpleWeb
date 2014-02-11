@@ -19,10 +19,10 @@ class CouponTest < ActionDispatch::IntegrationTest
     
     #未登录发布签到优惠券
     post "/shop_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "rulev"=>""}}
-    assert_redirected_to(:controller => 'shop_login', :action => 'login' )
+    assert_redirected_to(:controller => 'shop3_login', :action => 'login' )
     #未登录发布分享优惠券
     post "/shop_share_coupons/create",{"coupon"=>{"t"=>"1", "name"=>"点此输入名称", "desc"=>"点此输入描述", "rule"=>"0", "rulev"=>""}}
-    assert_redirected_to(:controller => 'shop_login', :action => 'login' )
+    assert_redirected_to(:controller => 'shop3_login', :action => 'login' )
 
     #登录
     slogin(Shop.find(1).id)

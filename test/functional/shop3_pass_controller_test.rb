@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'test_helper'
 
-class ShopPassControllerTest < ActionController::TestCase
+class Shop3PassControllerTest < ActionController::TestCase
 
     def setup
     reload("shops.js")
@@ -9,7 +9,7 @@ class ShopPassControllerTest < ActionController::TestCase
   
   test '没有登录' do
     get :index
-    assert_redirected_to :controller => :shop_login, :action => :login
+    assert_redirected_to :controller => :shop3_login, :action => :login
   end
   test '原始密码不正确' do
     shop_login(2)
@@ -29,7 +29,7 @@ class ShopPassControllerTest < ActionController::TestCase
     post :index,{:oldpass => '123456',"shop" => {:password => '1234567', :password_confirmation => '1234567'}}
     assert_equal '密码修改成功.', flash[:notice]
     assert_equal '1234567', assigns[:shop].password
-    assert_redirected_to '/shop_login/index'
+    assert_redirected_to '/shop3_login/index'
   end
 
 end
