@@ -1,7 +1,7 @@
 require 'simplecov'
 SimpleCov.start 'rails' do
-	add_filter "/config/"
-	add_filter "/app/helpers/"
+  add_filter "/config/"
+  add_filter "/app/helpers/"
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
@@ -53,8 +53,8 @@ RSpec.configure do |config|
   #     --seed 1234
   #config.order = "random"
 
-	# Devise Helpers
-	config.include Devise::TestHelpers, type: :controller
+  # Devise Helpers
+  config.include Devise::TestHelpers, type: :controller
 
   # For Factory_girls
   config.include FactoryGirl::Syntax::Methods
@@ -73,7 +73,14 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-	## Capybara wait time
-	Capybara.default_wait_time = 5
+  ## Capybara wait time
+  Capybara.default_wait_time = 5
+
+
+  # Gecko: tell Capybara about chrome, you need to install chrome/chrominium driver first
+  # Capybara.register_driver :chrome do |app|
+  #   Capybara::Selenium::Driver.new(app, browser: :chrome)
+  # end
+  # Capybara.javascript_driver = :chrome
 
 end

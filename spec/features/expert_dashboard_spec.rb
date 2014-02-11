@@ -7,7 +7,7 @@ feature "Expert Dashboard" do
     login_as(sameer, scope: :user)
     create(:category, name: "macro")
     create(:category, name: "tech")
-    visit dashboard_expert_path(sameer.id)
+    visit dashboard_expert_path(sameer)
   end
 
   context "post new content" do

@@ -1,6 +1,6 @@
 - content_for(:title) { @article.title }
 
-= render "page_header", item: @article, link_path: subscribe_article_path(@article, type: @article.class.name)
+= render "sessions/page_header", item: @article, link_path: subscribe_path(@article, type: @article.class.name)
 .text-page-article-box.shadow.margin-bottom
   .text-page-main-content
     -unless @article.cover.url.eql? "missing.png"

@@ -6,6 +6,7 @@ class Course < ActiveRecord::Base
 
   # enrollments and orders
   has_many :enrollments, as: :enrollable
+  has_many :orders, as: :enrollable
 
   has_and_belongs_to_many :experts
   validates :experts, presence: true
@@ -21,6 +22,8 @@ class Course < ActiveRecord::Base
   has_many :subscribers, through: :subscriptions
 
   has_one :visit, as: :visitable
+
+  has_attached_file :cover
 
   after_create :create_an_intro_video
 
