@@ -1,12 +1,12 @@
 module ParamsConfig
-	extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
-	def to_param
-		permalink
-	end
+  def to_param
+    permalink
+  end
 
-	protected
-	def permalink
-		"#{id}-#{title.parameterize}"
-	end
+  protected
+  def permalink
+    "#{id}-#{title.parameterize}"
+  end
 end
