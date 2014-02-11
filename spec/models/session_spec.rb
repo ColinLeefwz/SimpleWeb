@@ -25,14 +25,14 @@ describe Session do
 
   describe ".set_default" do
     it "set default price to 0.00 for the session" do
-      session = create(:session, title: "test", expert: sameer)
+      session = create(:session, title: "test", expert: sameer, categories: ["culture"])
       expect(session.price).to eq 0.00
     end
   end
 
   describe "canceled" do
     it "can be canceled" do
-      session = create(:session, title: "test", expert: sameer)
+      session = create(:session, title: "test", expert: sameer, categories: ["culture"])
       session.update_attributes canceled: true
       expect(session.reload).to be_canceled
     end
