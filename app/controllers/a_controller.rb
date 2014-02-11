@@ -18,7 +18,9 @@ class AController < ApplicationController
 
     if params[:x].nil?  #不带x则尝试直接下载
       if c.agent.index("Android")
-        if c.agent.index("MicroMessenger")
+        if c.agent.index("vivo ")
+          return render :file => "~/lianlian/public/mini.html", :use_full_path => true 
+        elsif c.agent.index("MicroMessenger")
           return redirect_to $apk_url
           #render :file => "~/lianlian/public/wx_down.html", :use_full_path => true
           return
@@ -73,7 +75,9 @@ class AController < ApplicationController
     Rails.logger.error c.agent
     agent = c.agent.downcase
     if c.agent.index("Android")
-      if c.agent.index("MicroMessenger")
+      if c.agent.index("vivo ")
+        return render :file => "~/lianlian/public/mini.html", :use_full_path => true 
+      elsif c.agent.index("MicroMessenger")
         return redirect_to $apk_url
       else
         ver = $redis.get("android_version")
