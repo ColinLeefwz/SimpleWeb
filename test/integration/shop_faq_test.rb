@@ -12,7 +12,7 @@ class ShopFaqTest < ActionDispatch::IntegrationTest
     
     #未登录发布文答
     post "/shop_faqs/create",{"shop_faq"=>{"od"=>"01", "title"=>"获取wifi密码", "text"=>"1111"}}
-    assert_redirected_to(:controller => 'shop_login', :action => 'login' )
+    assert_redirected_to(:controller => 'shop3_login', :action => 'login' )
 
     #登录
     slogin(Shop.find(1).id)

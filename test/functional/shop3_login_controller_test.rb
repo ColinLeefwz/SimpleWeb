@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'test_helper'
 
-class ShopLoginControllerTest < ActionController::TestCase
+class Shop3LoginControllerTest < ActionController::TestCase
 
   def setup
     Rails.cache.delete("LE#{request.ip}")

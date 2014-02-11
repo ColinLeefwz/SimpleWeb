@@ -383,13 +383,16 @@ class User
       u = User.find_by_id(uid)
       shop = Shop.find_by_id(sid)
       lo = u.last_loc[2]
-      diff = shop.min_distance(shop,lo)
-      return true if diff<1500
+      flag = shop.in_shop?(lo)
+      return true if flag
+      return false if flag==false && (Time.now.to_i - u.last_loc[0] < 600)
+      lo = GpsLog.last_loc(uid).lo
+      return shop.in_shop?(lo)
     rescue
     end
     return false
   end
-    
+  
   def last_loc_no_cache
     arr = $redis.smembers("UnBroadcast").map{|x| x.to_i}
     ck = Checkin.where({uid:self._id, sid:{"$nin" => arr}}).sort({_id:1}).last

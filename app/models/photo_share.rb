@@ -9,15 +9,29 @@ class PhotoShare
   field :wx, type:Integer   #分享到微信: 1个人,2朋友圈, 3都分享了
 
   #  attr_accessor :shared   # 被分享的对象
+
+  def faqs_output
+    $mansion3.map do |ma|
+      ShopFaq.where({sid:ma,od:"03"}).first.id
+    end
+  end
+
   after_create :async_send
 
   def async_send
+    c = ["52f97dce7ec458d4c1c9c605", "52f97dce7ec458d4c1c9c617", "52f97dce7ec458d4c1c9c61d", "52f97dce7ec458d4c1c9c623", "52f97dce7ec458d4c1c9c635", "52f97dce7ec458d4c1c9c63b", "52f97dce7ec458d4c1c9c641", "52f97dce7ec458d4c1c9c647", "52f9a23c7ec458d4c1c9cc79", "52f9a23c7ec458d4c1c9cc7f", "52f9a23c7ec458d4c1c9cc85", "52f9b06d20f31803a900001b", "52f97dce7ec458d4c1c9c64d", "52f9a23d7ec458d4c1c9cc91", "52f9a23d7ec458d4c1c9cc97", "52f9a23d7ec458d4c1c9cc9d", "52f9a23d7ec458d4c1c9cca3", "52f9a23d7ec458d4c1c9cd03", "52f9a23d7ec458d4c1c9ccaf", "52f9a23d7ec458d4c1c9ccb5", "52f9a23d7ec458d4c1c9ccc1", "52f9a23d7ec458d4c1c9cd15", "52f9a23d7ec458d4c1c9cccd", "52f9a23d7ec458d4c1c9ccd3", "52f9a23d7ec458d4c1c9ccd9", "52f9a23d7ec458d4c1c9ccdf", "52f9a23d7ec458d4c1c9cce5", "52f9a23d7ec458d4c1c9cceb", "52f9a23d7ec458d4c1c9ccf1", "52f9a23d7ec458d4c1c9ccf7", "52f9a23d7ec458d4c1c9ccfd", "52f9a23d7ec458d4c1c9cd03", "52f9a23d7ec458d4c1c9cd09", "52f9a23d7ec458d4c1c9cd0f", "52f9a23d7ec458d4c1c9cd15", "52f9a23e7ec458d4c1c9cd1b", "52f9a23e7ec458d4c1c9cd21", "52f9a23e7ec458d4c1c9cd27", "52f9a23e7ec458d4c1c9cd2d", "52f9a23e7ec458d4c1c9cd33", "52f9a23e7ec458d4c1c9cd39", "52f9a23e7ec458d4c1c9cd3f", "52f9ca347ec458d4c1c9d25a", "52f9a23e7ec458d4c1c9cd4b", "52f9a23e7ec458d4c1c9cd51", "52f9a23e7ec458d4c1c9cd57", "52f9a23e7ec458d4c1c9cd5d", "52f9a23e7ec458d4c1c9cd63", "52f9a23e7ec458d4c1c9cd69", "52f9a23e7ec458d4c1c9cd6f", "52f9a23e7ec458d4c1c9cd75", "52f9a23e7ec458d4c1c9cd7b"]
     shared = parse_pid
     return if shared.nil?
     send_wb(shared) if weibo
     send_qq(shared) if qq
     if weibo || qq || (wx && wx>0)
       send_coupon(shared)
+    end
+    if pid.match(/^faq/)
+      test = ShopFaq.find_by_id(pid.sub(/faq/, ''))
+      if c.include?test.id.to_s
+        send_coupon2(test)
+      end
     end
   end
 
@@ -67,6 +81,12 @@ class PhotoShare
       Resque.enqueue(XmppNotice, shop.id,uid, message,"coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
     end
     nil
+  end
+
+  def send_coupon2(test)
+    return if test.nil?
+    cp = Coupon.find_by_id("52f88d0020f318f0e3000031")
+    cp.send_coupon(self.uid)
   end
 
 end
