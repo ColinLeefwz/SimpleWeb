@@ -28,20 +28,12 @@ describe User do
 
   describe ".unsubscribe" do
     it "deletes the session from user's subscribed_sessions" do
-      jevan.subscribe session_intro
-      jevan.unsubscribe session_intro
-      expect(jevan.reload.subscribed_sessions).not_to include session_intro
+      article = create(:article, title: "subscribe me")
+      Subscription.create(subscriber_id: gecko.id, subscribable: article)
+      gecko.unsubscribe article
+      expect(gecko.subscribed_sessions).not_to include article
     end
   end
-
-  ##Peter at 2014-02-08: there's no enrollment for sessions now
-  # describe ".enroll" do
-  # 	it "adds a session to user's enrolled_sessions" do
-  # 		allen.enroll session_find
-  # 		allen.enroll session_map
-  # 		expect(allen.enrolled_sessions.count).to eq 2
-  # 	end
-  # end
 
   describe ".follow?" do
     it "returns true if already followed me" do
@@ -69,8 +61,6 @@ describe User do
     end
 
     it "just unfollows the one" do
-      # peter.followers << allen
-      # sameer.followers << allen
       allen.followed_users << [peter, sameer, alex]
       allen.unfollow peter
       expect(allen.reload.followed_users).to include alex
