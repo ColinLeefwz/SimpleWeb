@@ -3,14 +3,11 @@ require 'spec_helper'
 describe Article do
   helper_objects
 
-  it { should belong_to(:expert) }
+  subject {create(:article, expert: sameer)}
 
-  describe "canceled" do
-    it "can be canceled" do
-      article = create(:article, title: "test", expert: sameer, categories: ["test"])
-      article.update_attributes canceled: true
-      expect(article.reload).to be_canceled
+  describe "#producers" do
+    it "returns a string containing expert name" do
+      expect(subject.producers).to eq "by sameer karim"
     end
   end
-
 end

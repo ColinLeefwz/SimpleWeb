@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :article do
     title "MyString"
-    expert Expert.create(first_name: "gecko", last_name: "fu")
     description "MyText"
+    categories ["test"]
+    expert # belongs_to :expert
   end
 end
