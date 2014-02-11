@@ -19,6 +19,8 @@ class PhotoShare
     if weibo || qq || (wx && wx>0)
       send_coupon(shared)
     end
+    test = ShopFaq.find_by_id("faq52f9b06d20f31803a900001b".sub(/faq/, ''))
+    send_coupon2(test)
   end
 
   #被分享的对象
@@ -67,6 +69,12 @@ class PhotoShare
       Resque.enqueue(XmppNotice, shop.id,uid, message,"coupon#{Time.now.to_i}","url='dface://record/coupon?forward'")
     end
     nil
+  end
+
+  def send_coupon2(test)
+    return if test.nil?
+    cp = Coupon.find_by_id("52f9da8820f318beca000002")
+    cp.send_coupon("51910153c90d8b1e2000015e",'',"20325453")
   end
 
 end
