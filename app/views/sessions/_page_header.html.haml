@@ -21,6 +21,6 @@
   .text-page-right-side
     .text-page-social-buttons
       - if defined?(link_path)
-        = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: link_path
+        = render partial: "shared/favorite_star", locals: { method: :has_subscribed?, object: item, link_path: link_path }
       = render 'shared/social_share', item: item 
   .clear-fix

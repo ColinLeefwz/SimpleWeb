@@ -65,7 +65,7 @@ class MembersController < ApplicationController
     @favorite_contents = current_user.get_subscribed_contents
     if @favorite_contents.empty?
       if current_user.is_a? Expert
-        @favorite_contents = ArticleSession.where.not(draft: true).order("RANDOM()").limit(3)
+        @favorite_contents = ArticleSession.where.not(draft: true, expert: current_user).order("RANDOM()").limit(3)
       elsif current_user.is_a? Member
         @favorite_contents = ArticleSession.where.not(draft: true, expert: Expert.staff).order("RANDOM()").limit(3)
       end
@@ -88,6 +88,8 @@ class MembersController < ApplicationController
           other_courses = Course.all.sample(3 - staff_courses.count)
           @subscribed_courses << other_courses
         end
+        #TODO: should not include the expert's own courses
+        # @subscribed_courses = Course.where.not(expert: current_user).order("RANDOM()").limit(3)
       elsif current_user.is_a? Member
         @subscribed_courses = (Course.all - Expert.staff.courses).sample(3)
       end
