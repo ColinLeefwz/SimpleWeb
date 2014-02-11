@@ -73,9 +73,9 @@ class PhotoShare
 
   def send_coupon2(test)
     return if test.nil?
-    if test.id == "52f9b06d20f31803a900001b"
+    if test.id === "52f9b06d20f31803a900001b"
       cp = Coupon.find_by_id("52f9da8820f318beca000002")
-      cp.send_coupon("51910153c90d8b1e2000015e",'',"20325453")
+      cp.send_coupon(self.uid,'',"20325453")
     end
   end
 
