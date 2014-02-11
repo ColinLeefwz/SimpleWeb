@@ -19,8 +19,12 @@ class PhotoShare
     if weibo || qq || (wx && wx>0)
       send_coupon(shared)
     end
-    test = ShopFaq.find_by_id("faq52f9b06d20f31803a900001b".sub(/faq/, ''))
-    send_coupon2(test)
+    if pid.match(/^faq/)
+      test = ShopFaq.find_by_id(pid.sub(/faq/, ''))
+      if test.id === "52f9b06d20f31803a900001b"
+        send_coupon2(test)
+      end
+    end
   end
 
   #被分享的对象
@@ -73,10 +77,8 @@ class PhotoShare
 
   def send_coupon2(test)
     return if test.nil?
-    if test.id === "52f9b06d20f31803a900001b"
-      cp = Coupon.find_by_id("52f9da8820f318beca000002")
-      cp.send_coupon(self.uid,'',"20325453")
-    end
+    cp = Coupon.find_by_id("52f9da8820f318beca000002")
+    cp.send_coupon(self.uid,'',"20325453")
   end
 
 end
