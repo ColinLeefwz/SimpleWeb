@@ -277,7 +277,7 @@ class AroundmeController < ApplicationController
   end
   
   def in_hubin_intime?(hb_shop, lo, acc)
-    diff = hb_shop.min_distance(shop,lo)
+    diff = hb_shop.min_distance(hb_shop,lo)
     return diff < 500+acc
   end
   
