@@ -22,7 +22,8 @@
 				
 			</center>
 			<% if !@photo.desc.blank? %>
-				<div class="plane7"><pre><%= @photo.desc%></pre>
+				<div class="plane7">
+					<%= text_to_html @photo.desc%>
 				</div>
 			<% end %> 
 			<div class="plane8">
