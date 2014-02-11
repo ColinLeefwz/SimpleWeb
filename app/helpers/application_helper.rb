@@ -12,6 +12,10 @@ module ApplicationHelper
     end
     s.html_safe
   end
+  
+  def text_to_html(str)
+    "#{h(str)}".gsub(/\n/,'<br>').html_safe
+  end
 
 
   def no_nav
