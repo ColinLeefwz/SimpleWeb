@@ -9,7 +9,7 @@
     .statistic
       = truncate_html(item.description, length: 300, omission: '...')
       %p#visits
-        = "#{item.visit.page_views} people viewed" if item.visit
+        = "viewed by #{item.visit.page_views} people" if item.visit
         = "(published on #{item.created_at.to_date.to_formatted_s(:course_date)})"
 
       - if item.is_a? ArticleSession
