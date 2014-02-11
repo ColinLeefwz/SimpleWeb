@@ -80,18 +80,7 @@ class MembersController < ApplicationController
   def video_on_demand
     @subscribed_courses = current_user.subscribed_courses
     if @subscribed_courses.empty?
-      ##Peter at 2014-02-10: the code below should be extracted out to Course Model, and named "recommended_courses"
-      if current_user.is_a? Expert
-        own_courses = current_user.courses
-        staff_courses = Expert.staff.courses.take(3)
-        @subscribed_courses << staff_courses
-        if staff_courses.count <= 3
-          other_courses = (Course.all - own_courses - staff_courses).sample(3 - staff_courses.count)
-          @subscribed_courses << other_courses
-        end
-      elsif current_user.is_a? Member
-        @subscribed_courses = (Course.all - Expert.staff.courses).sample(3)
-      end
+      @subscribed_courses = Course.recommend_courses(current_user)
       @recommendation = true
     end
     @from = "video_on_demand"
