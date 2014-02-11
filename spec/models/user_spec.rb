@@ -3,11 +3,12 @@ require 'spec_helper'
 describe User do
 	helper_objects
 
-  # describe ".get_subscribed_sessions" do 
-  #   it "gets the user's subscribed sessions with specific type" do
-  #     expect(jevan.get_subscribed_sessions("ArticleSession")).to eq jevan.subscribed_sessions.where(content_type: "ArticleSession")
-  #   end
-  # end
+  describe ".get_subscribed_sessions" do 
+    it "gets the user's subscribed sessions with specific type" do
+      jevan.subscribe(session_communication)
+      expect(jevan.get_subscribed_sessions("ArticleSession")).to include session_communication
+    end
+  end
 
   describe ".get_subscribed_contents" do
     it "gets the user's subscribed articles and video_interviews" do
@@ -19,20 +20,25 @@ describe User do
   end
 
   describe ".has_subscribed?" do
-    it "returns false if not subscribe the session" do
-      expect(jevan.has_subscribed? session_intro).to be_false
+    it "returns false if not subscribe the course" do
+      expect(jevan.has_subscribed? first_course).to be_false
     end
 
     it "returns true if already subscribe the session" do
-      jevan.subscribed_sessions << session_intro
-      expect(jevan.has_subscribed? session_intro).to be_true
+      jevan.subscribe first_course
+      expect(jevan.has_subscribed? first_course).to be_true
     end
   end
 
   describe ".subscribe" do
-    it "adds the session to user's subscribed_sessions" do
-      jevan.subscribe session_intro
-      expect(jevan.reload.subscribed_sessions).to include session_intro
+    it "adds the course to user's subscribed_courses" do
+      jevan.subscribe first_course
+      expect(jevan.subscribed_courses).to include first_course
+    end
+
+    it "add video interview to user's subscribed_video_interviews" do
+      gecko.subscribe video_interview
+      expect(gecko.subscribed_video_interviews).to include video_interview
     end
   end
 
@@ -44,13 +50,14 @@ describe User do
     end
   end
 
-	describe ".enroll_session" do
-		it "adds a session to user's enrolled_sessions" do
-			allen.enroll_session session_find
-			allen.enroll_session session_map
-			expect(allen.enrolled_sessions.count).to eq 2
-		end
-	end
+  ##Peter at 2014-02-08: there's no enrollment for sessions now
+	# describe ".enroll" do
+	# 	it "adds a session to user's enrolled_sessions" do
+	# 		allen.enroll session_find
+	# 		allen.enroll session_map
+	# 		expect(allen.enrolled_sessions.count).to eq 2
+	# 	end
+	# end
 
 	describe ".follow?" do
 		it "returns true if already followed me" do

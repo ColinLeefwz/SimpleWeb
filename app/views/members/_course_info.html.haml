@@ -9,7 +9,7 @@
   .favorite-session-info
     .favorite-session-main
       .favorite-session-title
-        = course.title
+        = link_to course.title, course_path(course)
       .favorite-session-expert-name.separator.inline
         by 
         = producer_links(course)
@@ -23,5 +23,5 @@
       = link_to "see more", course_path(course)
 
   .favorite-social-share
-    = render 'shared/favorite_star', method: :has_subscribed?, object: course, link_path: subscribe_course_path(course)
+    = render 'shared/favorite_star', method: :has_subscribed?, object: course, link_path: subscribe_path(course, type: course.class.name)
     = render 'shared/social_share', item: course
