@@ -30,12 +30,8 @@ def helper_objects
   let(:business) { create :category, name: "business" }
   let(:tech) { create :category, name: "tech" }
 
-  #sessions
-  let(:session_communication) { create :article, title: 'Communicating With Chinese', expert: sameer,
-                                description: 'What cultural differences should I know when communicating with Chinese?',
-                                status: 'Prodygia Picks',
-                                categories: ["culture"]
-  }
+  #article
+  let(:article) { create :article, title: 'Communicating With Chinese', expert: sameer, description: 'What cultural differences should I know when communicating with Chinese?', categories: ["culture"]}
 
   let(:announcement) { create :announcement, title: 'Just an Announcement', expert: alex,
                        description: 'Show you China road map'}

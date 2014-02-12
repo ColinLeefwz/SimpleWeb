@@ -5,7 +5,7 @@ describe MembersController do
 
   describe "GET dashboard" do
   end
-   
+
   describe "GET profile" do 
   end
 
@@ -71,40 +71,40 @@ describe MembersController do
     end
   end
 
-	describe "GET experts" do
-		context "logged in member" do
-			before :each do
-				sign_in peter
-			end
+  describe "GET experts" do
+    context "logged in member" do
+      before :each do
+        sign_in peter
+      end
 
-			it "assigns all the experts the member followed" do
-				get :experts, id: peter.id, format: :js
-				expect(assigns[:followed_experts]).to eq peter.followed_users
-			end
+      it "assigns all the experts the member followed" do
+        get :experts, id: peter.id, format: :js
+        expect(assigns[:followed_experts].to_a).to eq peter.followed_users.to_a
+      end
 
       it "can access to followed experts page" do
         get :experts, id: peter.id, format: :js
         expect(response).to be_success
       end
-		end
-	end
+    end
+  end
 
   describe "GET contents" do
     before :each do 
-      sign_in jevan
+      sign_in gecko
+      staff = create(:expert, id: 2)
     end
 
     it "assigns the article sessions the member subscribed" do
-      jevan.subscribe(video_interview)
-      jevan.subscribe(session_communication)
-      get :contents, id: jevan.id, format: :js
+      gecko.subscribe(article)
+      gecko.subscribe(video_interview)
+      get :contents, id: gecko.id, format: :js
       expect(assigns[:favorite_contents]).to include video_interview
-      expect(assigns[:favorite_contents]).to include session_communication
-
+      expect(assigns[:favorite_contents]).to include article
     end
 
     it "can access to contents page" do
-      get :contents, id: jevan.id, format: :js
+      get :contents, id: gecko.id, format: :js
       expect(response).to be_success
     end
   end
@@ -112,6 +112,7 @@ describe MembersController do
   describe "GET video_on_demand" do
     before :each do 
       sign_in jevan
+      staff = create(:expert, id: 2)
     end
 
     it "can access to contents page" do
