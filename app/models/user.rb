@@ -386,8 +386,8 @@ class User
       flag = shop.in_shop?(lo)
       return true if flag
       return false if flag==false && (Time.now.to_i - u.last_loc[0] < 600)
-      lo = GpsLog.last_loc(uid).lo
-      return shop.in_shop?(lo)
+      gps = GpsLog.last_loc(uid)
+      return shop.in_shop?(gps.lo, gps.acc)
     rescue
     end
     return false

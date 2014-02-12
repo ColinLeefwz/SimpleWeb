@@ -13,6 +13,7 @@ class ApiUserInfoController < ApplicationController
   
   def in_shop
     return render text: false if params[:uid].nil? || params[:sid].to_i==0
+    return render text: true
     flag = User.in_shop(params[:uid],params[:sid])
     render text: flag
   end

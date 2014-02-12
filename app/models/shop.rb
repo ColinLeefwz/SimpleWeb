@@ -817,9 +817,13 @@ class Shop
     self.id.to_s == '21838725' || self.id.to_s == '21835409' ? true : false
   end
   
-  def in_shop?(lo)
+  def in_shop?(lo,acc=0)
     diff = self.min_distance(self,lo)
-    return diff<1500
+    if acc==0
+      return diff < 3000
+    else
+      return diff < 1000 + acc.to_f
+    end
   end
   
 end
