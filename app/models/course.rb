@@ -58,7 +58,7 @@ class Course < ActiveRecord::Base
 
 
     def producers
-      "by " + self.experts.map(&:name).join(" and ")
+      "by " + self.experts.pluck(:name).join(" and ")
     end
 
     def free?
