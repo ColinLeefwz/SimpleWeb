@@ -11,7 +11,7 @@ feature "Expert Dashboard" do
   end
 
   context "post new content" do
-    background do
+    background js: true do
       click_link("Post new content")
 
       within("form#new_article") do
