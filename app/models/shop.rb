@@ -476,6 +476,8 @@ class Shop
     #内部地点的“每日签到优惠券”
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
 
+    coupons += [Coupon.find_by_id("52fb074520f318cf0200001a")] if $mansion3.include?(self.id)
+
     coupons.each{|coupon| coupon.send_coupon(user_id,nil,self.id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
