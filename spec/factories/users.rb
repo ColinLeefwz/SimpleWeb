@@ -8,7 +8,6 @@ FactoryGirl.define do
     last_name 'last_name'
 
     factory :member, class: 'Member' do
-
       factory :expert, class: 'Expert' do
         first_name 'expert_first_name'
         last_name 'expert_last_name'

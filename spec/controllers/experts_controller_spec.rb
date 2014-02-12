@@ -84,4 +84,71 @@ describe ExpertsController do
       end
     end
   end
+
+  describe "GET profile" do
+    it "shows the expert's profile page" do
+      get :profile, id: sameer.id
+      expect(response).to be_success
+    end
+
+    it "assigns the expert's sessions, video_interviews and courses" do
+      [video_interview, session_communication, first_course]
+      get :profile, id: sameer.id
+      expect(assigns[:items]).to eq [video_interview, first_course, session_communication]
+    end
+
+  end
+
+
+  describe "GET contents" do
+    context "not logged in"
+    context "logged in as expert" do
+      before :each do
+        sign_in sameer
+      end
+
+      it "get all contents belongs to the expert" do
+        [session_intro, session_communication, video_interview]
+        get :contents, id: sameer.id, format: :js
+        expect(assigns[:items].count).to eq 3
+      end
+    end
+  end
+
+  describe "GET edit profile" do
+    context "not logged in" do
+      it "can't access edit profile page" do
+        get :edit_profile, id: sameer.id, format: :js
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context "logged in as expert" do 
+      before :each do
+        sign_in sameer
+      end
+      it "get the right profile object" do
+        get :edit_profile, id: sameer.id, format: :js
+        expect(assigns[:profile]).to eq sameer.profile
+      end
+    end
+  end
+
+
+  describe "PATCH update profile" do
+    context "logged in as expert" do
+      before :each do
+        sameer_profile
+        sign_in sameer
+      end
+      it "update corresponding user profile" do
+        patch :update_profile, id: sameer.id, expert: sameer.attributes, profile: attributes_for(:profile, title: "new title"), format: :js
+        expect(sameer.reload.profile.title).to eq "new title"
+      end
+      it "update corresponding user attributes" do
+        patch :update_profile, id: sameer.id, expert: attributes_for(:expert, first_name: 'gecko'), profile: sameer.profile.attributes, format: :js
+        expect(sameer.reload.first_name).to eq "gecko"
+      end
+    end
+  end
 end

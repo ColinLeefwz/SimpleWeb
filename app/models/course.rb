@@ -27,6 +27,24 @@ class Course < ActiveRecord::Base
 
   after_create :create_an_intro_video
 
+  class << self
+    def recommend_courses(current_user)
+      staff_courses = Expert.staff.courses.take(3)
+      if current_user.is_a? Expert
+        own_courses = current_user.courses
+        show_courses = staff_courses
+        if staff_courses.count <= 3
+          other_courses = (Course.all - own_courses - staff_courses).sample(3 - staff_courses.count)
+          show_courses << other_courses unless other_courses.empty?
+        end
+      elsif current_user.is_a? Member
+        show_courses = (Course.all - staff_courses).sample(3)
+      end
+      show_courses
+    end
+  end
+
+
   def producers
     "by " + self.experts.map(&:name).join(" and ")
   end

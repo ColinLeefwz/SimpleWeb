@@ -81,11 +81,7 @@ class MembersController < ApplicationController
   def video_on_demand
     @subscribed_courses = current_user.subscribed_courses
     if @subscribed_courses.empty?
-      if current_user.is_a? Expert
-        @subscribed_courses = Course.where.not(expert: current_user).order("RANDOM()").limit(3)
-      elsif current_user.is_a? Member
-        @subscribed_courses = (Course.all - Expert.staff.courses).sample(3)
-      end
+      @subscribed_courses = Course.recommend_courses(current_user)
       @recommendation = true
     end
     @from = "video_on_demand"
