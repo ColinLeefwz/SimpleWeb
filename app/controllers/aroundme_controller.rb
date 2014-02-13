@@ -49,7 +49,8 @@ class AroundmeController < ApplicationController
         #lo = Shop.new.mid_loc(lo1,params[:accuracy],lo2,acc2)
       end
     end
-    arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid])  
+    arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid]) 
+    Rails.cache.write("LLOC#{session[:user_id]}",[lo,params[:accuracy].to_f]) 
     record_gps(lo, gps, wifi)
     if is_kx_user?(session[:user_id])
       $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}

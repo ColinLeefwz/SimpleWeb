@@ -382,10 +382,8 @@ class User
     begin
       u = User.find_by_id(uid)
       shop = Shop.find_by_id(sid)
-      lo = u.last_loc[2]
-      flag = shop.in_shop?(lo)
-      return true if flag
-      return false if flag==false && (Time.now.to_i - u.last_loc[0] < 600)
+      lloc = Rails.cache.read("LLOC#{uid}") 
+      return shop.in_shop?(lloc[0], lloc[1]) if lloc
       gps = GpsLog.last_loc(uid)
       return shop.in_shop?(gps.lo, gps.acc)
     rescue
