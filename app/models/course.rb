@@ -13,9 +13,9 @@ class Course < ActiveRecord::Base
   has_many :chapters, -> {order(order: :asc)}, dependent: :destroy
   accepts_nested_attributes_for :chapters, reject_if: lambda{|c| c[:title].blank?}, allow_destroy: true
 
-	has_one :intro_video, as: :introable, dependent: :destroy
+  has_one :intro_video, as: :introable, dependent: :destroy
 
-	accepts_nested_attributes_for :intro_video
+  accepts_nested_attributes_for :intro_video
 
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions
@@ -48,14 +48,13 @@ class Course < ActiveRecord::Base
         Course.includes(:experts).references(:experts).where.not(users: {id: Expert.staff}).sample(3)
       end
     end
-  end
 
 
-  def producers
-    "by " + self.experts.map(&:name).join(" and ")
-  end
+    def producers
+      "by " + self.experts.pluck(:name).join(" and ")
+    end
 
-  def free?
-    self.price == 0
-  end
+    def free?
+      self.price == 0
+    end
 end
