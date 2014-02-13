@@ -265,6 +265,7 @@ module SearchScore
         xx[2] +=10;
       end
     end
+    xx[2] -=30 if t==10 #2014楼宇运营
   end
   
   def user_to_score(uc)
