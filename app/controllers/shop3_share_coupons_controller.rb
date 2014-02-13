@@ -66,7 +66,7 @@ class Shop3ShareCouponsController < ApplicationController
         @coupon.save
         CarrierWave::Workers::StoreAsset.perform("Coupon",@coupon.id.to_s,"img")
       end
-      Rails.cache.delete("views/SI#{@coupon.shop_id}.json") if @coupon.text
+      Rails.cache.delete("SCPT#{@coupon.shop_id}") if @coupon.text
       sadd_city_coupon_redis
       redirect_to :action => :show, :id => @coupon.id
     else
@@ -92,7 +92,7 @@ class Shop3ShareCouponsController < ApplicationController
       @coupon.img_tmp = "coupon_#{@coupon.id}.jpg"
       @coupon.save
       CarrierWave::Workers::StoreAsset.perform("Coupon",@coupon.id.to_s,"img")
-      Rails.cache.delete("views/SI#{@coupon.shop_id}.json") if @coupon.text
+      Rails.cache.delete("SCPT#{@coupon.shop_id}") if @coupon.text
       return redirect_to :action => :show, :id => @coupon.id
     end
    
@@ -101,7 +101,7 @@ class Shop3ShareCouponsController < ApplicationController
       if @coupon.t.to_i == 1
         @coupon.gen_img if !@coupon.img.blank? || !@coupon.img2.blank?
       end
-      Rails.cache.delete("views/SI#{@coupon.shop_id}.json") if @coupon.text
+      Rails.cache.delete("SCPT#{@coupon.shop_id}") if @coupon.text
       redirect_to :action => :show, :id => @coupon.id
     else
       render :action => :edit

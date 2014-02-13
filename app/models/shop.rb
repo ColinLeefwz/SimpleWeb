@@ -229,11 +229,12 @@ class Shop
   def default_text_when_photo
     return '#我的2014心愿#' if self.id.to_s == "21838292"
     # return '#说出我的心愿#' if self.id.to_s == "21828958" 
-    ret = ""
-    coupon = share_coupon
-    ret += coupon.text if coupon
-    #shop_wb = BindWb.wb_name(self.id)
-    #ret += " @#{shop_wb}" if shop_wb
+    Rails.cache.fetch("SCPT#{self.id}") do
+      ret = ""
+      coupon = share_coupon
+      ret += coupon.text if coupon && coupon.text
+      ret
+    end
   end
   
   def photo_filter
