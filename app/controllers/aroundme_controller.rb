@@ -99,7 +99,7 @@ class AroundmeController < ApplicationController
       shop = Shop.find_by_id(21839275) # 2014全城热恋
       if shop
 	      shop.city = city
-        arr = arr[0,5]+[ shop ]+arr[5..-1]
+        arr = arr[0,3]+[ shop ]+arr[3..-1]
       end
     end
     if city && city=="023"
