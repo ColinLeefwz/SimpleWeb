@@ -4,7 +4,6 @@ require 'cgi'
 class ShopController < ApplicationController
 
   layout nil
-  caches_action :info, cache_path: ->(c) {"SI#{c.params[:id]}"}
   
   def nearby
     page = params[:page].to_i

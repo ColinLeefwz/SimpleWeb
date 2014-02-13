@@ -150,7 +150,7 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"手机号码或者密码不正确"}.to_json
       return      
     end
-    user.unset(:phone_hidden)  if user.phone_hidden
+    user.unset(:phone_hidden)  if user.phone_hidden #TODO:这里有漏洞、防止新的用户找回密码
     session[:user_id] = user.id
     save_device_info(user.id, false)
 	  render :json => user.output_self.to_json
