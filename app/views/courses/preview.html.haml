@@ -1,13 +1,17 @@
 
 .general-wrapper
 
-  .course
+  .course_preview
     %h1= @course.title
 
-    %span Description:
-    = @course.description
+    .cover
+      = image_tag @course.cover.url
 
-    = image_tag @course.cover.url
+    .description
+      %span Description:
+      = @course.description.html_safe
+    .clearfix
+
 
     - @course.chapters.each do |c|
       .chapter.chapter-fields
