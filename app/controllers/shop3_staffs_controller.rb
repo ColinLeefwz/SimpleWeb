@@ -27,8 +27,7 @@ class Shop3StaffsController < ApplicationController
       $redis.sadd("STAFF#{user.id}",session_shop.id)
       text =  staff.save ? "添加成功" : "添加失败"
     end
-    expire_fragment "SI#{session_shop.id}"
-    Rails.cache.delete("views/SI#{session_shop.id}.json")
+    Rails.cache.delete("STF#{session_shop.id}")
     render :json => {:text => text }.to_json
   end
 
@@ -36,8 +35,7 @@ class Shop3StaffsController < ApplicationController
     staff = Staff.find_by_id(params[:id])
     staff.destroy if staff
     $redis.srem("STAFF#{staff.user_id}",session_shop.id)
-    expire_fragment "SI#{session_shop.id}"
-    Rails.cache.delete("views/SI#{session_shop.id}.json")
+    Rails.cache.delete("STF#{session_shop.id}")
     render :json => {:text => '删除成功'}
   end
   

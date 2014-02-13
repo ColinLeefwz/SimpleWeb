@@ -59,7 +59,6 @@ class AdminShopsController < ApplicationController
     @shop = Shop.find(params[:id])
     if request.post?
       if @shop.update_attributes(params[:shop])
-        expire_cache_shop(@shop.id)
         redirect_to :action => "show", :id => @shop.id
       else
         flash[:notice] = '密码修改失败.'
@@ -95,7 +94,6 @@ class AdminShopsController < ApplicationController
         shop_info.save
       end
     end
-    expire_cache_shop(@shop.id)
     redirect_to :action => "show", :id => @shop.id
   end
 
@@ -193,7 +191,6 @@ class AdminShopsController < ApplicationController
     @shop.shops = @shop.shops.uniq
     @shop.save
     @shop.merge_subshops_locations 
-    expire_cache_shop(@shop.id)
     redirect_to "/admin_shops/subshops?shop_id=#{@shop.id}"
   end
 
@@ -235,7 +232,6 @@ class AdminShopsController < ApplicationController
       text += "<td>#{shop.show_t}</td>"
       text += "<td><a onclick='ajaxDelSub($(this),\"#{shop.id}\", \"#{pshop.id}\")'>移除</a></td></tr>"
     end
-    expire_cache_shop(shop.id)
     render :json => {text: text}
   end
 
@@ -245,14 +241,12 @@ class AdminShopsController < ApplicationController
     pshop.shops.to_a.delete(shop.id.to_i)
     pshop.save
     pshop.merge_subshops_locations
-    expire_cache_shop(shop.id)
     render :js => true
   end
 
   def del
     shop = Shop.find(params[:id])
     shop.shop_del
-    expire_cache_shop(shop.id)
     redirect_to :action => :index
   end
 
@@ -260,7 +254,6 @@ class AdminShopsController < ApplicationController
     shop = Shop.find(params[:sid])
     user = User.find(params[:uid])
     shop.update_attribute(:seller_id, user.id)
-    expire_cache_shop(shop.id)
     render :json => {'text' => "已绑定销售人员: #{user.name} #{user.show_gender}"}
   rescue
     render :json => {'text' => '绑定销售人员失败'}
@@ -270,7 +263,6 @@ class AdminShopsController < ApplicationController
   def ajaxdel
     shop = Shop.find(params[:shop_id])
     shop.shop_del
-    expire_cache_shop(shop.id)
     render :json => {}
   end
 
@@ -280,7 +272,6 @@ class AdminShopsController < ApplicationController
       render :json => {text: "有签到商家不能删除"}
     else
       Del.insert(shop)
-      expire_cache_shop(shop.id)
       render :json => {}
     end
   end
@@ -301,7 +292,6 @@ class AdminShopsController < ApplicationController
     @shop = Shop.find(params[:id])
     if request.post?
       @shop.update_attribute(:v, params["shop"]["v"].to_i)
-      expire_cache_shop(@shop.id)
       redirect_to :action => "show", :id => @shop.id
     end
   end
@@ -323,8 +313,5 @@ class AdminShopsController < ApplicationController
     end
   end
 
-  def expire_cache_shop(sid)
-    Rails.cache.delete("views/SI#{sid}.json")
-  end
 
 end

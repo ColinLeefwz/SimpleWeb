@@ -249,35 +249,13 @@ class PhotosController < ApplicationController
     if skip>6 && stranger
       return render :json => {:error => "非对方的朋友只显示最多5张照片"}.to_json
     end
-    photos = user_photo_cache(params[:uid], skip, pcount)
+    photos = PhotoCache.new.user_photo_cache(params[:uid], skip, pcount)
     render :json => photos.map {|p| p.output_hash_with_shopname }.to_json
-  end
-  
-  def user_photo_cache_key(uid,skip,pcount)
-    "UP#{uid}-#{pcount}"
-  end
-  
-  def user_photo_cache(uid,skip,pcount)
-    if skip>0
-      return user_photo_no_cache(uid,skip,pcount)
-    end
-    Rails.cache.fetch(user_photo_cache_key(uid,skip,pcount)) do
-      user_photo_no_cache(uid,skip,pcount)
-    end
-  end
-  
-  def user_photo_no_cache(uid,skip,pcount)
-    arr = $redis.smembers("UnBroadcast")
-    arr.push(nil)
-    arr.push("")
-    Photo.where({user_id: uid, room:{"$nin" => arr} }).
-      sort({updated_at: -1}).skip(skip).limit(pcount).to_a
   end
 
   
   private 
   def expire_cache_shop(sid,uid=nil)
-    Rails.cache.delete("views/SI#{sid}.json")
     Rails.cache.delete("SP#{sid}-5")
     Rails.cache.delete("UP#{uid}-5") if uid 
   end

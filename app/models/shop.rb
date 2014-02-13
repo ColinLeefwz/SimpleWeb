@@ -83,11 +83,7 @@ class Shop
   end
   
   def top4_photos
-    if self.id == 21834120
-      Photo.where({room: self.id.to_i.to_s, hide: nil, user_id: "s21834120"}).sort({od: -1, updated_at: -1}).limit(4).to_a
-    else
-      Photo.where({room: self.id.to_i.to_s, hide: nil}).sort({od: -1, updated_at: -1}).limit(4).to_a
-    end
+    PhotoCache.new.shop_photo_cache(self.id, 0, 5)[0,4]
   end
   
   def card_photo #显示为卡片效果的图片
@@ -252,7 +248,12 @@ class Shop
   end
 
   def safe_output_with_staffs
-    safe_output.merge!( {"staffs"=> staffs, "notice" => nil} ).merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash_to_user} }).merge!({text: default_text_when_photo}).merge!(photo_filter)
+    ret = safe_output
+    ret.merge!( {"staffs"=> staffs_cache, "notice" => nil} )
+    ret.merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash_to_user} }).
+    ret.merge!({text: default_text_when_photo})
+    ret.merge!(photo_filter)
+    ret
   end  
   
   def preset_p(photos)
@@ -348,6 +349,12 @@ class Shop
 
   def staffs
     Staff.only(:user_id).where({shop_id: self.id}).map {|x| x.user_id}
+  end
+  
+  def staffs_cache
+    Rails.cache.fetch("STF#{self.id}") do
+      staffs
+    end
   end
   
   def lord
@@ -845,6 +852,7 @@ class Shop
     end 
     self.lo = self.lo.uniq
     self.save
-  end 
+  end
+  
   
 end
