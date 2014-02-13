@@ -1,6 +1,7 @@
 #content.container
   - @sessions.each do |item|
     = render partial: "box_content", locals: {item: item, expert: item.expert}
+= render "box_content_modal"
 
 :javascript
   load_isotope()

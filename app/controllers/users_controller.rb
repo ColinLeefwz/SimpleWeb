@@ -30,8 +30,6 @@ class UsersController < ApplicationController
 				followed_user = User.find the_followed_id
         
         if current_user.blank?
-          render js: "window.location='#{new_user_session_path}'"
-          flash[:alert] = "Sorry! You have to sign in to follow an Expert"
         else
           if current_user.try(:follow?, followed_user)
             current_user.unfollow(followed_user)
