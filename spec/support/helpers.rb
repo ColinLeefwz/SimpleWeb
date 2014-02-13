@@ -31,8 +31,8 @@ def helper_objects
   let(:business) { create :category, name: "business" }
   let(:tech) { create :category, name: "tech" }
 
-  #sessions
-  let(:session_intro) { create :live_session, title: 'Intro Session to Lean Start-Up', expert: sameer,
+  #articles
+  let(:session_intro) { create :article_session, title: 'Intro Session to Lean Start-Up', expert: sameer,
                         description: 'How can lean start-up methods help me build a better business?',
                         categories: ["culture"],
                         status: 'Upcoming' }
@@ -43,12 +43,12 @@ def helper_objects
                                 categories: ["culture"],
                                 status: 'Prodygia Picks' }
 
-  let(:session_find) { create :live_session, title: 'Find The Happier You', expert: alex,
+  let(:session_find) { create :article_session, title: 'Find The Happier You', expert: alex,
                        description: 'How can I be happy despite the challenges of life?',
                        categories: ["culture"],
                        status: 'Scheduled' }
 
-  let(:session_map) { create :live_session, title: 'China RoadMap', expert: alex,
+  let(:session_map) { create :article_session, title: 'China RoadMap', expert: alex,
                       description: 'Show you China road map',
                       categories: ["culture"],
                       status: 'Scheduled' }
@@ -56,7 +56,7 @@ def helper_objects
                        categories: ["culture"],
                       description: 'Show you China road map'}
 
-  let(:session_draft_map) { create :live_session, 
+  let(:session_draft_map) { create :article_session, 
                             title: 'live_session_draft', 
                             expert: alex,
                             categories: ["culture"],

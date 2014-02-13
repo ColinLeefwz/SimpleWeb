@@ -75,6 +75,7 @@ class ExpertsController < ApplicationController
     end
   end
 
+  #Peter at 2014-02-11: this action seems not been used yet
   def sessions
     @sessions = current_user.live_sessions
     @from = 'sessions/sessions'

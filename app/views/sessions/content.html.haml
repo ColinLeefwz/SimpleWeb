@@ -1,5 +1,6 @@
 - content_for(:title) { @session.title }
 = render "page_header", item: @session, link_path: subscribe_path(@session, type: @session.class.name)
+= render "content_modal"
 .text-page-article-box.shadow.margin-bottom
   .text-page-main-content
     -unless @session.cover.url.eql? "missing.png"
