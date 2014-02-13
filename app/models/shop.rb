@@ -829,5 +829,20 @@ class Shop
       return diff < 1000 + acc.to_f
     end
   end
+
+  #大地点上下左右坐标范围加大,每次time 各变化0.005
+  def add_range(time=1)
+    return if !self.lo.first.is_a?(Array)
+    loc = self.loc_first
+    1.upto(time) do |t|
+      offs = t*0.005
+      self.lo << [loc[0]+offs, loc[1]]
+      self.lo << [loc[0]-offs, loc[1]]
+      self.lo << [loc[0], loc[1]+offs]
+      self.lo << [loc[0], loc[1]-offs]
+    end 
+    self.lo = self.lo.uniq
+    self.save
+  end 
   
 end
