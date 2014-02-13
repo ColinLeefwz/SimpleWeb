@@ -83,11 +83,7 @@ class Shop
   end
   
   def top4_photos
-    if self.id == 21834120
-      Photo.where({room: self.id.to_i.to_s, hide: nil, user_id: "s21834120"}).sort({od: -1, updated_at: -1}).limit(4).to_a
-    else
-      Photo.where({room: self.id.to_i.to_s, hide: nil}).sort({od: -1, updated_at: -1}).limit(4).to_a
-    end
+    PhotoCache.new.shop_photo_cache(self.id, 0, 5)[0,4]
   end
   
   def card_photo #显示为卡片效果的图片
@@ -856,6 +852,7 @@ class Shop
     end 
     self.lo = self.lo.uniq
     self.save
-  end 
+  end
+  
   
 end

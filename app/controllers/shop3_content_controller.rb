@@ -154,7 +154,6 @@ class Shop3ContentController < ApplicationController
   def expire_cache_shop(sid)
     Rails.cache.delete("SP#{sid.to_i}-5")
     Rails.cache.delete("SP#{sid.to_i}-6")
-    Rails.cache.delete("views/SI#{sid}.json")
   end
 
 
