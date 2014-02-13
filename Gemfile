@@ -35,6 +35,8 @@ gem 'google-api-client'  # official google analytics gem
 gem 'whenever', require: false   # generate crontab directives, not used in the application, so set require to false
 gem 'country_select'
 
+gem 'twitter-bootstrap-rails'
+
 group :doc do
   gem 'sdoc', require: false
 end
