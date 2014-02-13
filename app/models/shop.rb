@@ -228,7 +228,6 @@ class Shop
   
   def default_text_when_photo
     return '#我的2014心愿#' if self.id.to_s == "21838292"
-    return ""
     # return '#说出我的心愿#' if self.id.to_s == "21828958" 
     Rails.cache.fetch("SCPT#{self.id}") do
       ret = ""
