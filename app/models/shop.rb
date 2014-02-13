@@ -477,7 +477,7 @@ class Shop
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
 
     if $mansion3.include?(self.id)
-      ["52fb074520f318cf0200001a","52fc278620f318cb4a000009","52fc27d820f3183190000015"].each do |cp|
+      ["52fb074520f318cf0200001a","52fc278620f318cb4a000009","52fc3dad20f318429c00001b"].each do |cp|
         coupon1 = Coupon.find_by_id(cp)
         coupon1.send_coupon(user_id,nil,self.id)
       end
