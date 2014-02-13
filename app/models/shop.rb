@@ -252,7 +252,7 @@ class Shop
   def safe_output_with_staffs
     ret = safe_output
     ret.merge!( {"staffs"=> staffs_cache, "notice" => nil} )
-    ret.merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash_to_user} }).
+    ret.merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash_to_user} })
     ret.merge!({text: default_text_when_photo})
     ret.merge!(photo_filter)
     ret
