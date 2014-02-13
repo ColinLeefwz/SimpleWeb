@@ -229,11 +229,12 @@ class Shop
   def default_text_when_photo
     return '#我的2014心愿#' if self.id.to_s == "21838292"
     # return '#说出我的心愿#' if self.id.to_s == "21828958" 
-    ret = ""
-    coupon = share_coupon
-    ret += coupon.text if coupon
-    #shop_wb = BindWb.wb_name(self.id)
-    #ret += " @#{shop_wb}" if shop_wb
+    Rails.cache.fetch("SCPT#{self.id}") do
+      ret = ""
+      coupon = share_coupon
+      ret += coupon.text if coupon && coupon.text
+      ret
+    end
   end
   
   def photo_filter
@@ -250,7 +251,7 @@ class Shop
   def safe_output_with_staffs
     ret = safe_output
     ret.merge!( {"staffs"=> staffs_cache, "notice" => nil} )
-    ret.merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash_to_user} }).
+    ret.merge!({"photos" => preset_p(top4_photos).map {|p| p.output_hash_to_user} })
     ret.merge!({text: default_text_when_photo})
     ret.merge!(photo_filter)
     ret
@@ -833,9 +834,9 @@ class Shop
   def in_shop?(lo,acc=0)
     diff = self.min_distance(self,lo)
     if acc==0
-      return diff < 3000
+      return diff < 2000
     else
-      return diff < 1000 + acc.to_f
+      return diff < 500 + acc.to_f
     end
   end
 
