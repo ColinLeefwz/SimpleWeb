@@ -1,5 +1,5 @@
 class RenameSessionsTable < ActiveRecord::Migration
-  def change
+  def up
     remove_column :sessions, :status
     remove_column :sessions, :content_type
     remove_column :sessions, :video_url
@@ -9,5 +9,10 @@ class RenameSessionsTable < ActiveRecord::Migration
     remove_column :sessions, :end_date_time
 
     rename_table :sessions, :articles
+  end
+
+  def down
+    rename_table :articles, :sessions
+    add_column :sessions, :content_type, :string
   end
 end
