@@ -1,3 +1,5 @@
+require "mandrill_api"
+
 class CoursesController < ApplicationController
   load_and_authorize_resource
 
@@ -70,11 +72,19 @@ class CoursesController < ApplicationController
     else
       redirect_to purchase_course_path(@course)
     end
-
   end
 
 
   private
+  def send_enrolled_mail(item)
+    domain_url = request.base_url
+    if domain_url == "http://localhost:3000"
+      domain_url = "http://www.prodygia.com"
+    end
+    mandrill = MandrillApi.new
+    mandrill.enroll_comfirm(current_user, item, item.cover.url)
+  end
+
   def member_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :time_zone)
   end
