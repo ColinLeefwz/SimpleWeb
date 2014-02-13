@@ -58,12 +58,15 @@ class UsersController < ApplicationController
 
 				current_item = type.constantize.find(params[:item_id])
 
-        if current_user.has_subscribed?(current_item)
-          current_user.unsubscribe(current_item)
+        if current_user.blank?
         else
-          current_user.subscribe(current_item)
+          if current_user.has_subscribed?(current_item)
+            current_user.unsubscribe(current_item)
+          else
+            current_user.subscribe(current_item)
+          end
+          render "shared/update_favorite_star"
         end
-        render "shared/update_favorite_star"
      } 
     end
   end
