@@ -28,7 +28,7 @@ def fill_new_session_form
 	end
 
 	## choose date from the datapicker
-	page.find("i.icon-calendar").click
+	page.find("i.glyphicon.glyphicon-calendar").click
 	page.find("div.datepicker-days").first(:css, ".day", text: "20").click
 
 end
