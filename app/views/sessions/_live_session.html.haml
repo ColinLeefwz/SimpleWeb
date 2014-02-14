@@ -15,21 +15,21 @@
     = f.input :video, input_html: {id: "session-video-input"}
     .start_date
       = f.label :date
-      #datepicker.input-append.date
+      #datepicker.input-group.date
         = f.text_field :date, data: {format: "yyyy-MM-dd"}, type: "text"
-        %span.add-on
+        %span.input-group-addon
           %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
     .start_time
       = f.label :start_at
-      #starttimepicker.input-append.date
+      #starttimepicker.input-group.date
         = f.text_field :start_time, data: {format: "hh:mm"}, type: "text"
-        %span.add-on
+        %span.input-group-addon
           %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
     .end_time
       = f.label :end_at
-      #endtimepicker.input-append.date
+      #endtimepicker.input-group.date
         = f.text_field :end_time, data: {format: "hh:mm:ss"}, type: "text"
-        %span.add-on
+        %span..input-group-addon
           %i{ data: { time_icon: "icon-time", date_icon: "icon-calendar"}}
     = f.input :time_zone, input_html: {id: "session-timezone-input"}
     = f.input :location, input_html: {id: "session-location-input"}
