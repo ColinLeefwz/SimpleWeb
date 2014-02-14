@@ -1,4 +1,4 @@
-load_isotope = ->
+@load_isotope = ->
   $.Isotope.prototype._getCenteredMasonryColumns = ->
     @width = @element.width()
     parentWidth = @element.parent().width()
@@ -73,11 +73,9 @@ update_profile_message = ->
     
 
 $(document).ready ->
-  load_isotope()
   load_sublime()
 
 $(document).on 'page:load', ->
-  load_isotope()
   load_sublime()
   update_profile_message()
 

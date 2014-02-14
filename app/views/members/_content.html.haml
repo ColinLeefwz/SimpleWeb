@@ -1,8 +1,7 @@
--if @recommendation
-  .recommendation.white-background.shadow
+.recommendation.white-background.shadow
+  -if @recommendation
     Recommended Content
--else
-  .recommendation.white-background.shadow
+  -else
     Favorite Content
 - @favorite_contents.each do |content|
   .favorite-session-box.shadow.white-background

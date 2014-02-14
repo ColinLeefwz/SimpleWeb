@@ -7,7 +7,6 @@ class CategoriesExistValidator < ActiveModel::EachValidator
 end
 
 class Session < ActiveRecord::Base
-	include Storagable
   include ParamsConfig
 
   validates :title, presence: true
@@ -21,8 +20,8 @@ class Session < ActiveRecord::Base
 
   self.inheritance_column = 'content_type'
 
-	attached_file :cover, styles: {}
-	attached_file :video
+  has_attached_file :cover
+  has_attached_file :video
 
   default_scope{ where("canceled is null or canceled = false") }
   # relationship with expert

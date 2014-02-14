@@ -25,11 +25,11 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 
             .cover-wrapper, .statistic, .something{
               display: inline-block;
-              vertical-align: middle;
             }
 
             .cover-wrapper{
               margin-left: 1em;
+              vertical-align: middle;
               .cover{
                 width: 160px;
               }
@@ -69,6 +69,12 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
            .statistic{
              margin-left: 3em; 
              width: 66%;
+             vertical-align: top;
+
+             p#visits {
+               font-family: 'LatoItalic';
+               font-size: 14px;
+             }
            }
 
            .something{

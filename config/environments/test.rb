@@ -31,6 +31,19 @@ Prodygia::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
+  
+  config.paperclip_defaults = {
+    storage: :s3,
+    s3_credentials: {
+      bucket: ENV["AWS_BUCKET"],
+      access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+      secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
+    },
+    s3_host_name: "s3-us-west-1.amazonaws.com",
+    path: ":class/:attachment/:id/:style/:filename",
+    default_url: "https://s3-us-west-1.amazonaws.com/#{ENV["AWS_BUCKET"]}/images/missing.png" 
+  }
+
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 end

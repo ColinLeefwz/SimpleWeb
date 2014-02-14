@@ -11,5 +11,5 @@
               = render "shared/social_share", item: course
           .statistic
             = truncate_html(course.description, length: 300, omission: "...")
-            = "#{course.visit.page_views} people viewed" if course.visit
+            = "Viewed by #{item.visit.page_views} people" if course.visit
             = "(published at #{course.created_at.to_date.to_formatted_s(:course_date)})"
