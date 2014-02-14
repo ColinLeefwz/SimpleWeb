@@ -1,24 +1,24 @@
 .form-group
-  %label.control-label{for: "user_first_name"}First Name
-  .controls
-    = f.text_field :first_name, placeholder: "First Name", autofocus: true
+  %label.col-sm-2.control-label{for: "user_first_name"}First Name
+  .col-sm-offset-4
+    = f.text_field :first_name, placeholder: "First Name", autofocus: true, class: 'form-control'
 
 .form-group
-  %label.control-label{for: "user_last_name"}Last Name
-  .controls
-    = f.text_field :last_name, placeholder: "Last Name"
+  %label.col-sm-2.control-label{for: "user_last_name"}Last Name
+  .col-sm-offset-4
+    = f.text_field :last_name, placeholder: "Last Name", class: 'form-control'
 
 .form-group
-  %label.control-label{for: "user_email"}Email
-  .controls
-    = f.email_field :email, placeholder: "Email"
+  %label.col-sm-2.control-label{for: "user_email"}Email
+  .col-sm-offset-4
+    = f.email_field :email, placeholder: "Email", class: 'form-control'
 
 .form-group
-  %label.control-label{for: "user_password"}Password
-  .controls
-    = f.password_field :password, placeholder: "Password"
+  %label.col-sm-2.control-label{for: "user_password"}Password
+  .col-sm-offset-4
+    = f.password_field :password, placeholder: "Password", class: 'form-control'
 
 .form-group
-  %label.control-label{for: "user_timezone"}Timezone
-  .controls
-    = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
+  %label.col-sm-2.control-label{for: "user_timezone"}Timezone
+  .col-sm-offset-4
+    = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, class: 'form-control'

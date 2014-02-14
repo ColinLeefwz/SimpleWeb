@@ -23,13 +23,6 @@
       margin: 0 auto;
     }
 
-    /* override bootstrap horizontal form */
-    .form-horizontal .controls{
-      margin-left: 77px;
-    }
-    .form-horizontal, .control-label{
-      width: 70px;
-    }
 
     .terms-of-service{
       width: 310px;
@@ -51,17 +44,5 @@
     .check-box-wrapper{
       width: 200px;
     }
-}
-
-
-
-.form-horizontal{
-  .password-setting-label{
-    width: 653px;
-  }
-
-  .password-setting-control{
-    margin-left: 678px;
-  }
 }
 
