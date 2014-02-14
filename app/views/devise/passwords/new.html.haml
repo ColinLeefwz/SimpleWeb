@@ -5,7 +5,7 @@
       .alert.alert-danger
         %button{ type: "button", class: 'close', data: { dismiss: 'alert' } } &times;
         = devise_error_messages!
-    .control-group
+    .form-group
       = f.label :email
       = f.email_field :email, :autofocus => true
     %div= f.submit "Send me reset password"
