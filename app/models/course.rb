@@ -38,16 +38,21 @@ class Course < ActiveRecord::Base
 
   class << self
     def recommend_courses(current_user)
+      show_courses = []
       if current_user.is_a? Expert
         staff_courses = Expert.staff.courses.take(3)
+        show_courses = staff_courses
         if staff_courses.count <= 3
           other_courses = Course.includes(:experts).references(:experts).where.not(users: {id: [Expert.staff, current_user]}).sample(3 - staff_courses.count)
-          staff_courses.concat(other_courses) unless other_courses.empty?
+          # staff_courses.concat(other_courses) unless other_courses.empty?
+          show_courses.concat(other_courses) unless other_courses.empty?
         end
       elsif current_user.is_a? Member
-        Course.includes(:experts).references(:experts).where.not(users: {id: Expert.staff}).sample(3)
+        show_courses = Course.includes(:experts).references(:experts).where.not(users: {id: Expert.staff}).sample(3)
       end
+      show_courses
     end
+  end
 
 
     def producers
