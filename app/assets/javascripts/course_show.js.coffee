@@ -3,7 +3,7 @@ set_progress = ->
   percentage = $(".percentage").find("span").first().text()
   width = $(".progress").width() * (percentage/100.00)
 
-  $(".bar").width(width)
+  $(".progress-bar").width(width)
 
 
 settings = ->
