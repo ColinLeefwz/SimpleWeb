@@ -36,6 +36,9 @@ gem 'whenever', require: false   # generate crontab directives, not used in the 
 gem 'country_select'
 
 gem 'twitter-bootstrap-rails'
+gem 'bootstrap-sass'
+gem 'less-rails-bootstrap'
+gem 'therubyracer'
 
 group :doc do
   gem 'sdoc', require: false
