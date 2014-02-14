@@ -3,7 +3,7 @@
 .devise-style
   #flash
     - if flash[:alert]
-      .alert.alert-error
+      .alert.alert-danger
         %button{ type: "button", class: 'close', data: { dismiss: 'alert' } } &times;
         = flash[:alert]
   .social-login
