@@ -5,7 +5,7 @@
   .form-group
     .col-sm-2
       = f.label :email, class: "control-label password-setting-label"
-    .col-sm-offset-2
+    .col-sm-4
       = f.email_field :email, :autofocus => true , class: 'form-control'
   - if devise_mapping.confirmable? && resource.pending_reconfirmation?
     %div
@@ -13,17 +13,17 @@
   .form-group
     .col-sm-2
       = f.label :password, class: "control-label password-setting-label"
-    .col-sm-offset-2
+    .col-sm-4
       = f.password_field :password, :autocomplete => "off", placeholder: "if you want to change it", class: 'form-control'
   .form-group
     .col-sm-2
       = f.label :password_confirmation, class: "control-label password-setting-label"
-    .col-sm-offset-2
+    .col-sm-4
       = f.password_field :password_confirmation, class: 'form-control'
   .form-group
     .col-sm-2
       = f.label :current_password, class: "control-label password-setting-label"
-    .col-sm-offset-2
+    .col-sm-4
       = f.password_field :current_password, placeholder: "to confirm your identity", class: 'form-control'
   .form-group
     .col-sm-offset-2
