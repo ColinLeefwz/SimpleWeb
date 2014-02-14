@@ -22,9 +22,9 @@
       = render "shared/sublime_video", item_resource: item, poster_url: item.cover.url
     -else
       - if item.is_a? ArticleSession
-        = link_to image_tag(item.cover.url), article_path(item), class: 'img-responsive'
+        = link_to image_tag(item.cover.url), article_path(item), class: 'thumbnail'
       - elsif item.is_a? Announcement
-        = link_to image_tag(item.cover.url), announcement_path(item), class: 'img-responsive'
+        = link_to image_tag(item.cover.url), announcement_path(item)
 
   .caption
     - if (item.cover.url) && (!item.cover.url.eql?"/covers/original/missing.png")
