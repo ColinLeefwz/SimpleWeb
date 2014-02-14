@@ -834,9 +834,9 @@ class Shop
   def in_shop?(lo,acc=0)
     diff = self.min_distance(self,lo)
     if acc==0
-      return diff < 2000
+      return diff < 3000
     else
-      return diff < 500 + acc.to_f
+      return diff < 1000 + acc.to_f
     end
   end
 
