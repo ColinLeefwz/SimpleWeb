@@ -2,8 +2,10 @@
 
 FactoryGirl.define do
   factory :course do
-    title "MyTitle"
-    description "MyText"
-    categories "MyString"
+    title "course title"
+    description "course description"
+    categories ["test"]
+    price 19.50
+    duration 3600
   end
 end
