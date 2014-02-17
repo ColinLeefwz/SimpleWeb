@@ -487,7 +487,9 @@ class Shop
     if $mansion3.include?(self.id)
       ["52fc278620f318cb4a000009","52fc3dad20f318429c00001b"].each do |cp|
         coupon1 = Coupon.find_by_id(cp)
-        coupon1.send_coupon(user_id,nil,self.id)
+        if coupon1.allow_send_checkin?(user_id, :single => true)
+          coupon1.send_coupon(user_id,nil,self.id)
+        end
       end
     end
     coupons.each{|coupon| coupon.send_coupon(user_id,nil,self.id)}
