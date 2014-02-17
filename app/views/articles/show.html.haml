@@ -6,5 +6,5 @@
     -unless @article.cover.url.eql? "missing.png"
       .text-page-image
         = image_tag(@article.cover.url)
-    %p= @article.description.html_safe
+    %p= @article.description.try :html_safe
     .clear-fix
