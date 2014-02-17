@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
     @article = current_user.articles.create(article_params)
     respond_to do |format|
       format.js {
-        render partial: "contents", locals: {items: current_user.contents}
+        render partial: "shared/cards", locals: {items: current_user.contents}
       }
     end
   end
@@ -31,7 +31,7 @@ class ArticlesController < ApplicationController
     @article.update_attributes(article_params)
     respond_to do |format|
       format.js{
-        render partial: "contents", locals: {items: current_user.contents}
+        render partial: "shared/cards", locals: {items: current_user.contents}
       }
     end
   end
@@ -40,7 +40,7 @@ class ArticlesController < ApplicationController
     @article.update_attributes(draft: false)
     respond_to do |format|
       format.js {
-        render partial: "contents", locals: {items: current_user.contents}
+        render partial: "shared/cards", locals: {items: current_user.contents}
       }
     end
   end
