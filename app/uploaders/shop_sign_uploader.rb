@@ -7,7 +7,7 @@ class ShopSignUploader < CarrierWave::Uploader::Base
  
   def aliyun_bucket
     return "lianlian" if ENV["RAILS_ENV"] == "production"
-    return "coupon_test"
+    return "coupon-test"
   end
 
   process :set_content_type

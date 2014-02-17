@@ -113,11 +113,7 @@ class AroundmeController < ApplicationController
       shop = Shop.find_by_id(21831643) # 湖滨银泰
       if shop
 	      shop.city = city
-        arr = arr[0,2]+[ shop ]+arr[2..-1]
-      end
-      if shop && in_hubin_intime?(shop, lo, params[:accuracy].to_f)
-        shops = [21831645, 21834019, 21839200, 21839201, 21839203, 21839204, 21839205, 21839206, 21839207, 21839208, 21839211, 21839215, 21839216, 21839217, 21839218, 21839219, 21839220, 21839221, 21839222, 21839223, 21839224, 21839225, 21839226, 21839228, 21839229, 21839230, 21839232, 21839234, 21839235, 21839236, 21839238].map {|x| Shop.find_by_id(x)}
-        arr = arr + shops
+        arr = arr[0,4]+[ shop ]+arr[4..-1]
       end
     end    
     arr.uniq!

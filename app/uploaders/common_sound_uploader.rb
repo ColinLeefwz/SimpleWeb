@@ -8,7 +8,7 @@ class CommonSoundUploader < CarrierWave::Uploader::Base
   
   def bucket_suffix
     return "" if ENV["RAILS_ENV"] == "production"
-    return "_test"
+    return "-test"
   end
   
   def store_dir
