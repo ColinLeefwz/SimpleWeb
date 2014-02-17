@@ -6,7 +6,7 @@ class Article < ActiveRecord::Base
   has_many :subscribers, through: :subscriptions
   has_one :visit, as: :visitable
   has_attached_file :cover
-  default_scope{ where("canceled = false") }
+  default_scope{ where(canceled: [nil, false]) }
 
   validates :title, presence: true
   validate :empty_categories
