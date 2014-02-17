@@ -16,6 +16,10 @@ class Article < ActiveRecord::Base
     "by " + self.expert.name
   end
 
+  def editable
+    true
+  end
+
   private
   # validation
   def empty_categories
