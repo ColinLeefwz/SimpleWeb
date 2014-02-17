@@ -58,8 +58,6 @@ class UsersController < ApplicationController
         current_item = type.constantize.find(params[:item_id])
 
         if current_user.blank?
-          render js: "window.location='#{new_user_session_path}'"
-          flash[:alert] = "Sorry! You have to sign in to subscribe"
         else
           if current_user.has_subscribed?(current_item)
             current_user.unsubscribe(current_item)
