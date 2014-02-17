@@ -4,8 +4,7 @@
 = render "welcome/box_content_modal"
 .text-page-article-box.shadow.margin-bottom
   .text-page-main-content
-    -unless @article.cover.url.eql? "missing.png"
-      .text-page-image
-        = image_tag(@article.cover.url)
+    .text-page-image
+      = image_tag(@article.cover.url)
     %p= @article.description.try :html_safe
     .clear-fix
