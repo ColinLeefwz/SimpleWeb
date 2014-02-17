@@ -10,7 +10,6 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @course.intro_video || @course.create_intro_video
   end
 
   def new
@@ -25,7 +24,7 @@ class CoursesController < ApplicationController
   end
 
   def edit
-    @course.intro_video || @course.create_intro_video
+    @course.intro_video
   end
 
   def update

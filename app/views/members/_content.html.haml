@@ -6,6 +6,6 @@
 - @favorite_contents.each do |content|
   .favorite-session-box.shadow.white-background
     .favorite-session-cover
-      = link_to image_tag(content.cover.url), correct_path(content)
+      = link_to image_tag(content.cover.url), polymorphic_path(content)
         
     = render "session_info", content: content

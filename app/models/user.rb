@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   # User follow sessions
   has_many :subscriptions, foreign_key: "subscriber_id"
 
-  has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "ArticleSession"
+  has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Article"
   has_many :subscribed_courses, through: :subscriptions, source: :subscribable, source_type: "Course"
   has_many :subscribed_video_interviews, through: :subscriptions, source: :subscribable, source_type: "VideoInterview"
 
@@ -44,15 +44,10 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
-  ## methods for subscribe sessions
-  def get_subscribed_sessions(session_type)
-    self.subscribed_sessions.where(content_type: session_type)
-  end
-
-  def get_subscribed_contents
-    articles = self.get_subscribed_sessions("ArticleSession")
+  def subscribed_contents
+    articles = self.subscribed_sessions
     video_interviews = self.subscribed_video_interviews
-    (articles + video_interviews).sort { |x, y| x.updated_at <=> y.updated_at}
+    (articles + video_interviews).sort{|x,y| x.updated_at <=> y.updated_at}
   end
 
   def has_subscribed? (item)
@@ -87,7 +82,6 @@ class User < ActiveRecord::Base
     self.followed_users.delete followed_user
   end
 
-  # session/course enrollment
   def enrolled?(item)
     record = Enrollment.find_by user_id: self.id, 
       enrollable_id: item.id,

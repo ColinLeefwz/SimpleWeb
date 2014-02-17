@@ -2,5 +2,9 @@
 
 FactoryGirl.define do
   factory :video_interview do
+    title "video interview title"
+    expert
+    categories ["test"]
+    description "video interview description"
   end
 end

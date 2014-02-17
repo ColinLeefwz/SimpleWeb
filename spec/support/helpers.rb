@@ -31,38 +31,11 @@ def helper_objects
   let(:business) { create :category, name: "business" }
   let(:tech) { create :category, name: "tech" }
 
-  #articles
-  let(:session_intro) { create :article_session, title: 'Intro Session to Lean Start-Up', expert: sameer,
-                        description: 'How can lean start-up methods help me build a better business?',
-                        categories: ["culture"],
-                        status: 'Upcoming' }
+  #article
+  let(:article) { create :article, title: 'Communicating With Chinese', expert: sameer, description: 'What cultural differences should I know when communicating with Chinese?', categories: ["culture"]}
 
-
-  let(:session_communication) { create :article_session, title: 'Communicating With Chinese', expert: sameer,
-                                description: 'What cultural differences should I know when communicating with Chinese?',
-                                categories: ["culture"],
-                                status: 'Prodygia Picks' }
-
-  let(:session_find) { create :article_session, title: 'Find The Happier You', expert: alex,
-                       description: 'How can I be happy despite the challenges of life?',
-                       categories: ["culture"],
-                       status: 'Scheduled' }
-
-  let(:session_map) { create :article_session, title: 'China RoadMap', expert: alex,
-                      description: 'Show you China road map',
-                      categories: ["culture"],
-                      status: 'Scheduled' }
   let(:announcement) { create :announcement, title: 'Just an Announcement', expert: alex,
-                       categories: ["culture"],
-                      description: 'Show you China road map'}
-
-  let(:session_draft_map) { create :article_session, 
-                            title: 'live_session_draft', 
-                            expert: alex,
-                            categories: ["culture"],
-                            description: 'dddd',
-                            draft: true }
-
+                       description: 'Show you China road map'}
   #courses
   let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer] }
 
@@ -72,9 +45,9 @@ def helper_objects
   #sections
   let(:first_section) { create :section, title: "first section", description: "section description", chapter: first_chapter }
 
-	# video_interview
-	let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer" }
-	
+  # video_interview
+  let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer" }
+
 end
 
 

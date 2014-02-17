@@ -1,5 +1,5 @@
 class Expert < Member
-  has_many :sessions, dependent: :destroy
+  has_many :articles, dependent: :destroy
   has_and_belongs_to_many :courses
   has_many :video_interviews, -> {order "updated_at DESC"}
   has_many :resources
@@ -16,19 +16,15 @@ class Expert < Member
   end
 
   def name_with_inital
-    return "#{first_name.first}. #{last_name}"
+    "#{first_name.first}. #{last_name}"
   end
 
   def password_required?
     new_record? ? false : super
   end
 
-  def sessions_with_draft
-    self.sessions.order('draft desc') 
-  end
-
   def contents
-    articles = self.sessions.where(content_type: "ArticleSession")
+    articles = self.articles
     video_interviews = self.video_interviews
 
     (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}
@@ -44,11 +40,11 @@ class Expert < Member
 
   private
   def create_a_profile
-    self.profile || self.create_profile
+    self.create_profile
   end
 
   def create_an_intro_video
-    self.intro_video || self.create_intro_video
+    self.create_intro_video
   end
 
 end

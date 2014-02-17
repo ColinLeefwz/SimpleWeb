@@ -1,6 +1,0 @@
-= f.submit Session::COMMIT_TYPE[:draft], id: 'save_draft', class: 'btn dashboard-buttons'
-%a#session-preview{href: '#modal', role: 'button', class: 'btn dashboard-buttons', data:{toggle: "modal"}} Preview
-= f.submit Session::COMMIT_TYPE[:publish], id: 'publish', class: 'btn btn-prodygia dashboard-buttons'
-= link_to Session::COMMIT_TYPE[:cancel], activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
-
-= render modal, f: f
