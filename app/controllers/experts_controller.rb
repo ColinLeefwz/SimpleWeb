@@ -73,13 +73,13 @@ class ExpertsController < ApplicationController
   def video_courses
     courses = current_user.courses
 
+    #todo:  we can split the role of experts/update into something like shared/(dashboard)/cards, shared/(dashboard)/static, so that we don't need to pass instant variable into experts/update
     respond_to do |format|
       format.js {
         if courses.empty?
           get_pending_text("video_courses")
           @from = 'pending_page'
           render 'experts/update'
-          #note:  we can split the role of experts/update into something like shared/(dashboard)/cards, shared/(dashboard)/static, so that we don't need to pass instant variable into experts/update
         else
           render partial: 'shared/cards', locals: {items: courses}
         end
