@@ -6,7 +6,7 @@
     .favorite-session-expert-name.separator.inline
       by 
       = link_to "#{content.expert.name}", profile_expert_path(content.expert) 
-      = "(published at #{content.created_at.to_date.to_formatted_s(:course_date)})"
+      = "(published on #{content.created_at.to_date.to_formatted_s(:course_date)})"
     .favorite-session-categories.inline
       = content.categories.join(", ")
 
