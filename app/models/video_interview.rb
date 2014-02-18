@@ -10,4 +10,8 @@ class VideoInterview < ActiveRecord::Base
   has_one :visit, as: :visitable
 
   has_attached_file :cover
+
+  def editable
+    true
+  end
 end

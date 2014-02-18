@@ -14,7 +14,7 @@
     .title
       = item.title
     .datetime.separator
-      = "published on #{item.created_at.to_date.to_formatted_s(:course_date)}"
+      = item.created_at.to_date.to_formatted_s(:course_date)
     .category-name
       = item.categories.join(", ")
   .text-page-right-side
