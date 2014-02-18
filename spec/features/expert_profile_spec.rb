@@ -1,44 +1,27 @@
 require 'spec_helper'
 
 feature "Expert Profile Page" do
-	helper_objects
+  helper_objects
 
-	background do
-		[session_intro, session_communication]
-		[sameer_profile, alex_profile]
-	end
+  background do
+    create(:course, experts: [sameer])
+    create(:article, expert: sameer)
+    create(:video_interview, expert: sameer)
+    login_as gecko, scope: :user
+    visit profile_expert_path(sameer)
+  end
 
-	scenario "lists all my sessions", js: true do
-		login_as peter
-		visit profile_expert_path(sameer)
-		expect(page).to have_css("div.box-header", count: 2)
-	end
+  scenario "lists all my contents and courses" do
+    expect(page).to have_css("div.box-header", count: 3)
+  end
 
-	context "follow the expert", js: true do
-		background do
-			login_as peter
-			visit profile_expert_path(sameer)
-		end
+  scenario "follow the expert", js: true do
+    page.find("#follow a").click
+    expect(page).to have_css(".solid-star-icon", count: 1)
+    expect(page.find("#follower-count")).to have_content("1")
 
-		scenario "follow successfully" do
-			page.find("i.fa-star").click
-			expect(page).to have_content("Unfollow")
-			expect(sameer.reload.followers).to include peter
-		end
-	end
-
-	context "unfollow the expert", js: true do
-		background do
-			sameer.followers << peter
-			login_as peter
-			visit profile_expert_path(sameer)
-		end
-
-		scenario "unfollow successfully" do
-			expect(page).to have_content("Unfollow")
-			page.find("i.fa-star").click
-			expect(page).to have_content("Follow")
-			expect(sameer.reload.followers).not_to include peter
-		end
-	end
+    page.find("#follow a").click
+    expect(page).to have_css(".hollow-star-icon", count: 3) # cause course box doesn't have star now
+    expect(page.find("#follower-count")).to have_content("0")
+  end
 end

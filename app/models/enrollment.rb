@@ -1,5 +1,5 @@
 class Enrollment< ActiveRecord::Base
-  belongs_to :enrollable, polymorphic: true  # belongs to courses and sessions
+  belongs_to :enrollable, polymorphic: true 
   belongs_to :user
 
   validates :user_id, :enrollable_id, :enrollable_type, presence: true
