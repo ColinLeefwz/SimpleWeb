@@ -9,7 +9,8 @@
     .statistic
       = truncate_html(item.description, length: 300, omission: '...')
       %p#visits
-        - count = course.visit.page_views
+        - visit = item.visit || Visit.create(visitable: item)
+        - count = visit.page_views
         = "Viewed by #{count} #{'person'.pluralize(count)}"
 
       - if item.is_a? Article

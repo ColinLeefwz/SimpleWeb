@@ -59,10 +59,11 @@ class ArticlesController < ApplicationController
   def cancel_draft_content
     @article.update_attributes canceled: true
     @items = current_user.contents
-    @show_shares = true
-    @from = 'sessions/sessions'
     respond_to do |format|
-      format.js { render 'experts/update'}
+      format.js {
+        @show_shares = true
+        render partial: 'shared/cards', locals: { items: @items }
+      }
     end
   end
 
