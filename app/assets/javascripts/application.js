@@ -23,5 +23,4 @@
 //= require ckeditor/init
 //= require paypal-button.min
 //= require bootstrap-datetimepicker.min
-//= require analytics
 //= require_tree .
