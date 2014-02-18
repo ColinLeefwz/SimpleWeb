@@ -2,8 +2,8 @@ common: &common
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: prodygia
-  password: prodygia
+  username: 
+  password: 
   min_messages: WARNING
 
 
