@@ -8,11 +8,8 @@
         = render "shared/social_share", item: item
     .statistic
       = truncate_html(item.description, length: 300, omission: '...')
-      - if course.visit.page_views > 1
-        = "Viewed by #{course.visit.page_views} people" if course.visit
-      - else
-        = "Viewed by a person" if course.visit
-      = "(published at #{item.created_at.to_date.to_formatted_s(:course_date)})"
+      - count = course.visit.page_views
+      = "Viewed by #{count} #{'person'.pluralize(count)}"
 
       - if item.is_a? ArticleSession
         %h4
