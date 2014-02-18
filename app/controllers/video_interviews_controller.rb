@@ -17,10 +17,11 @@ class VideoInterviewsController < ApplicationController
   def update
     @video_interview.update_attributes(video_interview_params)
 
-    @from = 'sessions/sessions'
     @items = current_user.contents
     respond_to do |format|
-      format.js{render 'experts/update'}
+      format.js{
+        render partial: 'shared/cards', locals: { items: @items }
+      }
     end
   end
 
