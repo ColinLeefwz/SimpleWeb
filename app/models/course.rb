@@ -54,6 +54,10 @@ class Course < ActiveRecord::Base
     self.price == 0
   end
 
+  def editable
+    false
+  end
+
   private
   def create_an_intro_video
     self.create_intro_video

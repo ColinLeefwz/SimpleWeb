@@ -20,11 +20,14 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
     .item-body{
       margin-bottom: 1em;
 
-      .cover-wrapper, .statistic, .something{
+      .cover-wrapper, .statistic{
         display: inline-block;
+        float: left;
       }
 
       .cover-wrapper{
+        width: 20%;
+        box-sizing: border-box;
         margin-left: 1em;
         vertical-align: middle;
         .cover{
@@ -59,23 +62,20 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
               vertical-align: middle;
             }
           }
-
-          .statistic{
-            margin-left: 3em; 
-            width: 66%;
-            vertical-align: top;
-
-            p#visits {
-              font-family: 'LatoItalic';
-              font-size: 14px;
-            }
-          }
-
-          .something{
-          }
         }
       }
-    }
+      .statistic{
+        margin-left: 3em; 
+        width: 66%;
+        vertical-align: top;
+
+        p#visits {
+          padding-top: 0.5rem;
+          font-family: 'LatoItalic';
+          font-size: 14px;
+        }
+      }
+    } // item body end
 
     .draft-ribbon{
       position: absolute;
@@ -85,5 +85,5 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
         width: 156px;
       }
     }
-  }
-}
+  } // item end
+} // main menu end

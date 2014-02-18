@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140212063008) do
+ActiveRecord::Schema.define(version: 20140217093716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -399,7 +399,7 @@ ActiveRecord::Schema.define(version: 20140212063008) do
   create_table "visits", force: true do |t|
     t.integer "visitable_id"
     t.string  "visitable_type"
-    t.integer "page_views"
+    t.integer "page_views",     default: 0
   end
 
   add_index "visits", ["visitable_id", "visitable_type"], name: "index_visits_on_visitable_id_and_visitable_type", using: :btree
