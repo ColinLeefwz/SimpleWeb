@@ -1,16 +1,30 @@
 .form-horizontal {
+
+  %h3 {
+    text-align: center;
+  }
   .form-group {
   	margin-top: 10px;
 
-  	.col-sm-7  {
+  	.col-sm-7 {
   	  .form-control {
   	    width: 100%;
   	  }
 
   	  select {
-  	  	width: 100%;
+  	  	width: inherit;
   	  }
   	}
+
+    .col-sm-6 {
+      .form-control {
+        width: 60%;
+      }
+
+      select {
+        width: inherit;
+      }
+    }
 
   	.col-sm-5 {
   	  .label {
