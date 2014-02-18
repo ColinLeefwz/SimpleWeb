@@ -14,26 +14,29 @@
       %p= item.categories.join(", ")
       %p= item.language.split(",")[0] if item.language
   .title
-    = link_to "#{item.title}", correct_path(item)
+    = link_to "#{item.title}", polymorphic_path(item)
 
   .cover
     -# todo: duck type item: item.has_video?
     -if (item.is_a? VideoInterview) || (item.is_a?(Announcement) && item.has_video?)
       = render "shared/sublime_video", item_resource: item, poster_url: item.cover.url
     -else
-      - if item.is_a? ArticleSession
-        = link_to image_tag(item.cover.url), article_path(item)
-      - elsif item.is_a? Announcement
-        = link_to image_tag(item.cover.url), announcement_path(item)
+      = link_to image_tag(item.cover.url), polymorphic_path(item)
 
   .caption
     - if (item.cover.url) && (!item.cover.url.eql?"/covers/original/missing.png")
-      %div.description= truncate_html(item.description, length: 300, omission: '...')
+      .description
+        = truncate_html(item.description, length: 300, omission: '...')
     - else
-      %div.description= truncate_html(item.description, length: 600, omission: '...')
-    - text = (item.is_a? ArticleSession) ?  'Continue reading' :  'Learn more'
-    %p.learn-more= link_to text, correct_path(item)
+      .description
+        = truncate_html(item.description, length: 600, omission: '...')
+    - text = (item.is_a? Article) ?  'Continue reading' :  'Learn more'
+    %p.learn-more= link_to text, polymorphic_path(item)
     .social-share-icons
       .social-share.favorite-star
-        = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: subscribe_path(item, type: item.class.name)
+        - unless item.is_a? Announcement
+          - if current_user.blank?
+            = link_to image_tag('favorite_unselected.png'),'#modal', data:{toggle: "modal"}
+          - else
+            = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: subscribe_path(item, type: item.class.name)
       = render 'shared/social_share', item: item

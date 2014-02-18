@@ -58,6 +58,12 @@
 
 load_sublime = ->
   sublime.load()
+  for video in $("video")
+    sublime.ready( ->
+      sublime.prepare(video, (player) ->
+        player.pause()
+      )
+    )
 
 
 update_profile_message = ->

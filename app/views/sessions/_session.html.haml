@@ -8,17 +8,16 @@
         = render "shared/social_share", item: item
     .statistic
       = truncate_html(item.description, length: 300, omission: '...')
-      = "Viewed by #{item.visit.page_views} people" if item.visit
-      = "(published at #{item.created_at.to_date.to_formatted_s(:course_date)})"
+      %p#visits
+        = "Viewed by #{item.visit.page_views} people" if item.visit
+        = "(Published on #{item.created_at.to_date.to_formatted_s(:course_date)})"
 
-      - if item.is_a? ArticleSession
+      - if item.is_a? Article
         %h4
-          = link_to "edit", edit_content_session_path(item), remote: true
-          - if item.try(:draft)
-            = "|"
-            = link_to "post it", post_a_draft_session_path(item), remote: true
-            = "|"
-            = link_to "delete", cancel_draft_content_session_path(item), remote: true
+          = link_to "edit", edit_article_path(item), class: "separator", remote: true
+          - if item.draft
+            = link_to "post it", post_a_draft_article_path(item), class: "separator", remote: true
+            = link_to "delete", cancel_draft_content_article_path(item), remote: true
       - elsif item.is_a? VideoInterview
         %h4
           = link_to "edit", edit_video_interview_path(item), remote: true
