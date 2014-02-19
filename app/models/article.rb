@@ -20,6 +20,10 @@ class Article < ActiveRecord::Base
     true
   end
 
+  def has_video_to_present?
+    false
+  end
+
   private
   # validation
   def empty_categories

@@ -58,6 +58,10 @@ class Course < ActiveRecord::Base
     false
   end
 
+  def has_video_to_present?
+    self.intro_video.attached_video_hd_file_name.present? || self.intro_video.attached_video_sd_file_name.present?
+  end
+
   private
   def create_an_intro_video
     self.create_intro_video

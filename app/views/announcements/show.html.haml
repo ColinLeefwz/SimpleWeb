@@ -4,7 +4,7 @@
 = render "welcome/box_content_modal"
 .text-page-article-box.shadow.margin-bottom
   .text-page-main-content
-    - if @announcement.has_video?
+    - if @announcement.has_video_to_present?
       .announcement-cover.pull-right
         = render "shared/sublime_video", item_resource: @announcement, poster_url: @announcement.cover.url
     - elsif @announcement.cover_file_name
