@@ -1,3 +1,4 @@
+
 .header{
   background: white;
   margin: 0 auto;
@@ -73,4 +74,37 @@
     width: 20px;
     height: 20px;
   }
+}
+
+
+
+
+
+//-------- detail --------
+.detail{
+  background: white;
+  margin: 0 auto;
+  margin-top: 1rem;
+  @media (min-width: 767px){
+    width: 65%;
+    min-width: 415px; 
+  }
+  @media (max-width: 766px){
+    width: 90%;
+  }
+}
+
+.detail .video-cover{
+  padding: 1rem;
+  float: right;
+
+  img{
+    overflow: hidden;
+    width: 320px;
+  }
+}
+
+.detail article{
+  padding-top: 1rem;
+  padding-left: 2rem;
 }
