@@ -13,9 +13,9 @@
     = link_to "#{item.title}", polymorphic_path(item)
 
   .cover
-    -# todo: duck type item: item.has_video?
-    -if (item.is_a? VideoInterview) || (item.is_a?(Announcement) && item.has_video?)
-      = render "shared/sublime_video", item_resource: item, poster_url: item.cover.url
+    -if item.has_video_to_present?
+      - video_resource = item.is_a?(Course) ? item.intro_video : item
+      = render "shared/sublime_video", item_resource: video_resource, poster_url: video_resource.cover.url
     -else
       = link_to image_tag(item.cover.url), polymorphic_path(item)
 
