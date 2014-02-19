@@ -11,7 +11,7 @@
       %p#visits
         -# - count = item.visit.page_views
         - visit = item.visit || Visit.create(visitable: item)
-        = "Viewd by #{pluralize(visit.page_views, 'person')} "
+        = "Viewed by #{pluralize(visit.page_views, 'person')} "
         = "(published on #{item.created_at.to_date.to_formatted_s(:course_date)})"
 
       - if item.editable
