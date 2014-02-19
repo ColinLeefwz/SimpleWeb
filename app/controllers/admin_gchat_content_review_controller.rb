@@ -6,10 +6,10 @@ class AdminGchatContentReviewController < ApplicationController
   
   def index
     kxs = KxUser.all.map{|m| m.id}
-    hash = "(this.txt.length > 30 && this.txt[0] !='[' && this.del != true ) || (this.txt[0] == '[' && this.txt[1] == 'i' && this.txt.length > 60 && this.del != true)" && {uid:{'$nin'=>kxs}}
+    hash = {uid:{'$nin'=>kxs}} && "(this.txt.length > 30 && this.txt[0] !='[' && this.del != true ) || (this.txt[0] == '[' && this.txt[1] == 'i' && this.txt.length > 60 && this.del != true)" 
     sort = {_id: -1}
     @gchat_review =  paginate3("Gchat", params[:page], hash, sort)
-    # @gchat_review = Gchat.where("(this.txt.length > 30 && this.txt[0] !='[' && this.del != true) || this.txt[0] == '['").limit(50)
+    # @gchat_review = Gchat.where("(this.txt.length > 30 && this.txt[0] !='[' && this.del != true ) || (this.txt[0] == '[' && this.txt[1] == 'i' && this.txt.length > 60 && this.del != true)" && {uid:{'$nin'=>kxs}}).limit(50)
   end
 
   def ajax_pb

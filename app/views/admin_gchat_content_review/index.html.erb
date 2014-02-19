@@ -10,6 +10,7 @@
   </tr>
 
   <% @gchat_review.each do |gchat_review| %>
+    <% if !$redis.sismember('KxUsers', gchat_review.uid) %>
     <tr>
       <td><%= Shop.find_by_id(gchat_review.sid).try(:name) %></td>
       <td><%= link_to gchat_review.uid, "/admin_users/show?id=#{gchat_review.uid}" %></td>
@@ -22,6 +23,7 @@
       <td><%= gchat_review.txt %></td>
       <% end %>
     </tr>
+    <% end %>
   <% end %>
 </table>
 
