@@ -2,37 +2,31 @@
   = simple_form_for(@session, url: @url, remote: true)  do |f|
     %h3 Post New Content
     .form-group
-      .col-sm-5
+      .col-sm-2
         = f.label :title, class: "control-label"
       .col-sm-6
         = f.text_field :title, :autofocus => true, class: 'form-control', input_html: { id: 'session-title-input' }
-    //= f.input :title, input_html: { id: 'session-title-input' }
     .categories
-      .form-group
-        .col-sm-5
-          = f.label :categories, class: "control-label"
-        .col-sm-6
-          = f.input :categories, :autofocus => true, collection: Category.all.map(&:name), as: :check_boxes, required: true
-      //= f.input :categories, collection: Category.all.map(&:name), as: :check_boxes, required: true
+      .col-sm-2
+        = f.label :categories, class: "control-label"
+      = f.input :categories, :autofocus => true, collection: Category.all.map(&:name), as: :check_boxes, required: true, class: 'checkbox-inline', label: false
     -# .language
     -#   = f.input :language, collection: Language.all, label_method: :long_version, value_method: :combine_version, include_blank: false
     .form-group
-      .col-sm-5
+      .col-sm-2
         = f.label :upload_image, class: "control-label"
       .col-sm-6
         = f.file_field :cover, input_html: { id: 'session-cover-input' }
-    //= f.input :cover, label: "Upload image", input_html: { id: 'session-cover-input' }
     .form-group
-      .col-sm-5
+      .col-sm-2
         = f.label :current_image
       .col-sm-6
         - if f.object.cover.url
           = image_tag(f.object.cover.url)
     .form-group
-      .col-sm-5
+      .col-sm-2
         = f.label :description, class: "control-label"
-      .col-sm-6
-        = f.text_area :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}
-    //= f.text_field :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}
-
+      .col-sm-8
+        = f.input :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}, label: false
+    .form-group
     = render "session_submit", { modal: 'post_content_modal', f: f }

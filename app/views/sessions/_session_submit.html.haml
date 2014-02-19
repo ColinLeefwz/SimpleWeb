@@ -1,6 +1,11 @@
-= f.submit Session::COMMIT_TYPE[:draft], id: 'save_draft', class: 'btn dashboard-buttons'
-%a#session-preview{href: '#modal', role: 'button', class: 'btn dashboard-buttons', data:{toggle: "modal"}} Preview
-= f.submit Session::COMMIT_TYPE[:publish], id: 'publish', class: 'btn btn-prodygia dashboard-buttons'
-= link_to Session::COMMIT_TYPE[:cancel], activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
+.form-group
+  .col-sm-2
+    = f.submit Session::COMMIT_TYPE[:draft], id: 'save_draft', class: 'btn btn-primary'
+  .col-sm-2
+    %a#session-preview{href: '#modal', role: 'button', class: 'btn btn-info', data:{toggle: "modal"}} Preview
+  .col-sm-2
+    = f.submit Session::COMMIT_TYPE[:publish], id: 'publish', class: 'btn btn-prodygia dashboard-buttons'
+  .col-sm-2
+    = link_to Session::COMMIT_TYPE[:cancel], activity_stream_expert_path(current_user), remote: true, class: "btn btn-default"
 
 = render modal, f: f

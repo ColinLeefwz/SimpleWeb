@@ -57,7 +57,7 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     bcrypt-ruby (3.1.2)
-    bootstrap-sass (3.1.0.2)
+    bootstrap-sass (3.1.1.0)
       sass (~> 3.2)
     bourbon (3.1.8)
       sass (>= 3.2.0)
@@ -90,7 +90,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
-    commonjs (0.2.7)
     country_select (1.2.0)
     database_cleaner (1.2.0)
     devise (3.2.1)
@@ -194,14 +193,6 @@ GEM
       addressable (~> 2.3)
     legato (0.3.0)
       multi_json
-    less (2.4.0)
-      commonjs (~> 0.2.7)
-    less-rails (2.4.2)
-      actionpack (>= 3.1)
-      less (~> 2.4.0)
-    less-rails-bootstrap (3.0.6)
-      less-rails (~> 2.4.2)
-    libv8 (3.16.14.3)
     listen (2.2.0)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -288,7 +279,6 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
-    ref (1.0.5)
     remotipart (1.2.1)
     responders (1.0.0)
       railties (>= 3.2, < 5)
@@ -360,9 +350,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    therubyracer (0.12.1)
-      libv8 (~> 3.16.14.0)
-      ref
     thor (0.18.1)
     thread_safe (0.1.3)
       atomic
@@ -374,11 +361,6 @@ GEM
     truncate_html (0.9.2)
     turbolinks (1.3.1)
       coffee-rails
-    twitter-bootstrap-rails (2.2.8)
-      actionpack (>= 3.1)
-      execjs
-      rails (>= 3.1)
-      railties (>= 3.1)
     tzinfo (0.3.38)
     uglifier (2.3.1)
       execjs (>= 0.3.0)
@@ -400,7 +382,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin!
   aws-sdk
-  bootstrap-sass
+  bootstrap-sass (~> 3.1.1)
   cancan
   capybara
   ckeditor
@@ -422,7 +404,6 @@ DEPENDENCIES
   jquery-rails
   launchy
   legato
-  less-rails-bootstrap
   mandrill-api
   newrelic_rpm
   omniauth
@@ -444,9 +425,7 @@ DEPENDENCIES
   simplecov
   spring
   spring-commands-rspec
-  therubyracer
   truncate_html
   turbolinks
-  twitter-bootstrap-rails
   uglifier (>= 1.3.0)
   whenever
