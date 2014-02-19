@@ -1,6 +1,7 @@
 <h1>聊天室内容审核</h1>
 <table border="1">
   <tr>
+    <th>商家</th>
     <th>用户</th>
     <th>时间</th>
     <th>屏蔽</th>
@@ -10,6 +11,7 @@
 
   <% @gchat_review.each do |gchat_review| %>
     <tr>
+      <td><%= Shop.find_by_id(gchat_review.sid).try(:name) %></td>
       <td><%= link_to gchat_review.uid, "/admin_users/show?id=#{gchat_review.uid}" %></td>
       <td><%= gchat_review.cat.strftime("%Y-%m-%d %H:%M") %></td>
       <% if gchat_review.txt[0] == '[' %>
