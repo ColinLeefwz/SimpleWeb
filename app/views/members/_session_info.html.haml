@@ -1,7 +1,7 @@
 .favorite-session-info
   .favorite-session-main
     .favorite-session-title
-      = link_to content.title, correct_path(content)
+      = link_to content.title, polymorphic_path(content)
 
     .favorite-session-expert-name.separator.inline
       by 
@@ -13,10 +13,7 @@
     .favorite-session-description
       = truncate_html(content.description, length: 300, omission: '...')
   .see-more
-    - if content.is_a? VideoInterview
-      = link_to "see more", video_interview_path(content)
-    -elsif content.is_a? ArticleSession
-      = link_to "see more", article_path(content)
+    = link_to "see more", polymorphic_path(content)
 
 .favorite-social-share
   = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: subscribe_path(content, type: content.class.name)

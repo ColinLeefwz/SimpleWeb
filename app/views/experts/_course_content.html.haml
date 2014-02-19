@@ -20,4 +20,6 @@
     %div.description= truncate_html(course.description, length: 300, omission: '...')
     %p.learn-more= link_to "Learn more", course_path(course)
     .social-share-icons
+      .social-share.favorite-star
+        = render 'shared/favorite_star', method: :has_subscribed?, object: course, link_path: subscribe_path(course, type: course.class.name)
       = render 'shared/social_share', item: course

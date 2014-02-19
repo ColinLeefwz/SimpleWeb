@@ -3,9 +3,13 @@ require 'spec_helper'
 describe MembersController do
   helper_objects
 
+  before :each do
+    @staff = create(:expert, id: 2, email: "staff@prodygia.com", password: '11111111')
+  end
+
   describe "GET dashboard" do
   end
-   
+
   describe "GET profile" do 
   end
 
@@ -71,57 +75,95 @@ describe MembersController do
     end
   end
 
-	describe "GET experts" do
-		context "logged in member" do
-			before :each do
-				sign_in peter
-			end
+  describe "GET experts" do
+    context "logged in member" do
+      before :each do
+        sign_in peter
+      end
 
-			it "assigns all the experts the member followed" do
-				get :experts, id: peter.id, format: :js
-				expect(assigns[:followed_experts]).to eq peter.followed_users
-			end
+      it "assigns all the experts the member followed" do
+        # todo: gecko: test follow recommendation (no user followed)
+        # get :experts, id: peter.id, format: :js
+        # expect(assigns[:followed_experts].to_a).to eq peter.followed_users.to_a
+        peter.follow sameer
+        peter.follow alex
+        get :experts, id: peter.id, format: :js
+        expect(assigns[:followed_experts]).to include sameer
+        expect(assigns[:followed_experts]).to include alex
+      end
 
       it "can access to followed experts page" do
         get :experts, id: peter.id, format: :js
         expect(response).to be_success
       end
-		end
-	end
+    end
+  end
 
   describe "GET contents" do
     before :each do 
-      sign_in jevan
+      sign_in gecko
+      staff = create(:expert, id: 2)
     end
 
     it "assigns the article sessions the member subscribed" do
-      jevan.subscribe(video_interview)
-      jevan.subscribe(session_communication)
-      get :contents, id: jevan.id, format: :js
+      gecko.subscribe(article)
+      gecko.subscribe(video_interview)
+      get :contents, id: gecko.id, format: :js
       expect(assigns[:favorite_contents]).to include video_interview
-      expect(assigns[:favorite_contents]).to include session_communication
-
+      expect(assigns[:favorite_contents]).to include article
     end
 
     it "can access to contents page" do
-      get :contents, id: jevan.id, format: :js
+      get :contents, id: gecko.id, format: :js
       expect(response).to be_success
     end
   end
 
   describe "GET video_on_demand" do
-    before :each do 
-      sign_in jevan
+    context "current user is an expert" do
+      before :each do
+        sign_in sameer
+      end
+
+      it "can access to contents page" do
+        get :video_on_demand, id: sameer.id, format: :js
+        expect(response).to be_success
+      end
+
+      it "shows Staff's courses for recommendation" do
+        courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
+        staff_course = create_list(:course, 4, title: "staff course", experts: [@staff], categories: ["culture"])
+        sign_in sameer
+        get :video_on_demand, id: sameer.id, format: :js
+        expect(assigns[:subscribed_courses]).to include staff_course[0]
+        expect(assigns[:subscribed_courses].count).to eq 3
+      end
+
+      it "excludes his own courses for recommendation" do
+        Course.delete_all
+        courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
+        staff_course = create(:course, title: "staff course", experts: [@staff], categories: ["culture"])
+        get :video_on_demand, id: sameer.id, format: :js
+        expect(assigns[:subscribed_courses]).to eq [staff_course]
+        expect(assigns[:subscribed_courses].count).to eq 1
+      end
     end
 
-    # it "assigns the video sessions the member subscribed" do
-    #   get :video_on_demand, id: jevan.id, format: :js
-    #   expect(assigns[:favorite_session]).to eq jevan.get_subscribed_sessions("VideoSession")
-    # end
+    context "current user is a member" do
+      before :each do
+        sign_in jevan
+      end
 
-    it "can access to contents page" do
-      get :video_on_demand, id: jevan.id, format: :js
-      expect(response).to be_success
+      it "can access to contents page" do
+        get :video_on_demand, id: jevan.id, format: :js
+        expect(response).to be_success
+      end
+
+      it "excludes Staff's courses for recommendation" do
+        staff_course = create(:course, title: "staff course", experts: [@staff], categories: ["culture"])
+        get :video_on_demand, id: jevan.id, format: :js
+        expect(assigns[:subscribed_courses]).not_to include staff_course
+      end
     end
   end
 end
