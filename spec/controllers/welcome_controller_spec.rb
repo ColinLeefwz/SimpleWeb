@@ -5,12 +5,12 @@ describe WelcomeController do
 
   describe 'GET index' do
     it "assigns sessions" do
-			session_communication.update_attributes created_at: Date.today
-			announcement.update_attributes created_at: 1.days.ago
-			video_interview.update_attributes created_at: 3.days.ago
-			landing_items = [video_interview, announcement, session_communication]
+      article.update_attributes created_at: Date.today
+      announcement.update_attributes created_at: 1.days.ago
+      video_interview.update_attributes created_at: 3.days.ago
+      landing_items = [video_interview, announcement, article]
       get :index
-      expect(assigns[:sessions]).to eq landing_items
+      expect(assigns[:items]).to eq landing_items
     end
   end
 end

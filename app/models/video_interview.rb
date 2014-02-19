@@ -1,24 +1,21 @@
 class VideoInterview < ActiveRecord::Base
   include ParamsConfig
 
-  # video interviews always belongs to an expert
   belongs_to :expert
   validates :expert, presence: true
 
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions
 
-  # page view statistics
   has_one :visit, as: :visitable
 
   has_attached_file :cover
 
-  def to_param
-    permalink
+  def editable
+    true
   end
 
-  protected
-  def permalink
-    "#{id}-#{title.parameterize}"
+  def has_video_to_present?
+    self.attached_video_hd_file_name.present? || self.attached_video_sd_file_name.present?
   end
 end

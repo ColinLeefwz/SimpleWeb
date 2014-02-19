@@ -33,4 +33,8 @@ feature "Index", js: true do
     page.should have_content 'For Experts'
   end
 
+  scenario "has title 'Prodygia | Home'" do
+    page.should have_title 'Prodygia | Home'
+  end
+
 end 

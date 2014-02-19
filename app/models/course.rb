@@ -6,6 +6,7 @@ class Course < ActiveRecord::Base
 
   # enrollments and orders
   has_many :enrollments, as: :enrollable
+  has_many :orders, as: :enrollable
 
   has_and_belongs_to_many :experts
   validates :experts, presence: true
@@ -20,21 +21,11 @@ class Course < ActiveRecord::Base
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions
 
-  # page view statistics
   has_one :visit, as: :visitable
 
-  has_attached_file :cover,
-    storage: :s3,
-    s3_credentials: {
-      bucket: ENV["AWS_BUCKET"],
-      access_key_id: ENV["AWS_ACCESS_KEY_ID"],
-      secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
-    },
-    s3_host_name: "s3-us-west-1.amazonaws.com",
-    path: ":class/:attachment/:id/:style/:filename",
-    styles: {
+  has_attached_file :cover
 
-    }
+  after_create :create_an_intro_video
 
   class << self
     def recommend_courses(current_user)
@@ -55,11 +46,24 @@ class Course < ActiveRecord::Base
   end
 
 
-    def producers
-      "by " + self.experts.pluck(:name).join(" and ")
-    end
+  def producers
+    "by " + self.experts.pluck(:name).join(" and ")
+  end
 
-    def free?
-      self.price == 0
-    end
+  def free?
+    self.price == 0
+  end
+
+  def editable
+    false
+  end
+
+  def has_video_to_present?
+    self.intro_video.attached_video_hd_file_name.present? || self.intro_video.attached_video_sd_file_name.present?
+  end
+
+  private
+  def create_an_intro_video
+    self.create_intro_video
+  end
 end

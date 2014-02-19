@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title= "Prodygia | " + (content_for(:title) ? yield(:title) : "Home page")
+    %title=  "Prodygia | #{(content_for(:title) ? yield(:title) : "Home")}".html_safe
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
     %script{src: "//cdn.sublimevideo.net/js/2nbe61v6.js"}
