@@ -2,7 +2,6 @@
   background: white;
   margin: 0 auto;
   margin-top: 1rem;
-  text-align: left; // necessary?
   @media (min-width: 767px){
     width: 65%;
     min-width: 415px; 
@@ -13,11 +12,13 @@
 }
 
 .detail .video-cover{
-  width: 320px;
-  height: 180px;
   padding: 1rem;
   float: right;
-  overflow: hidden;
+
+  img{
+    overflow: hidden;
+    width: 320px;
+  }
 }
 
 .detail article{

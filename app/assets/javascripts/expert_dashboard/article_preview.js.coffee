@@ -3,9 +3,7 @@ cover_preview = ->
     if (this.files && this.files[0])
       reader = new FileReader()
       reader.onload = (e)->
-        $("#default-session-cover").css("display", "none")
-        $("#session-cover").css("display", "block")
-        $("#session-cover").attr("src", e.target.result)
+        $(".video-cover img").attr("src", e.target.result)
       reader.readAsDataURL(this.files[0])
 
 @article_preview = ->
@@ -25,4 +23,4 @@ cover_preview = ->
 
     if CKEDITOR.instances["article_description"]
       article_description = CKEDITOR.instances['article_description'].getData()
-      $("#article-session-description").html(article_description)
+      $(".detail article").html(article_description)
