@@ -10,7 +10,7 @@
           = @expert.name
         %br
         %span.title_company
-          #{empty_expert_info_filter(@profile.title, @profile.company)}
+          = [@profile.title, @profile.company].join(",")
       %table
         - if @profile.web_site.present?
           %tr
