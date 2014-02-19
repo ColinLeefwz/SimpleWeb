@@ -1,7 +1,7 @@
 - content_for(:title) { @expert.name }
 
 .general-wrapper
-  .brief.sub-wrapper.first-sub
+  .brief.sub-wrapper.first-sub.clearfix
     .avatar.brief-item
       = image_tag(@expert.avatar.url)
     .resume.brief-item
@@ -26,7 +26,7 @@
               %td.twitter-value
                 = link_to "#{@profile.twitter}", "https://twitter.com/#{@profile.twitter}"
 
-    .contact.brief-item-last
+    .contact.brief-item-last.clearfix
       .contact-button#follow
         = render 'shared/favorite_star', method: :follow?, object: @expert, link_path: relationship_path(@expert.id)
       #follower-count
@@ -39,7 +39,6 @@
 
       -# %button.btn.right-side#follower-count
       -# = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
-    .clear-fix 
   - unless @profile.expertise.blank? && @profile.career.blank? && @profile.education.blank?
     .detail.sub-wrapper.second-sub
       %ul.nav.nav-tabs
@@ -56,13 +55,12 @@
       .tab-content
         -# `Overview` tab
         .tab-pane.active#tab1
-          %div
+          %div.clearfix
             - if @expert.intro_video.present?
               .intro-video.pull-right
                 = render "shared/sublime_video", item_resource: @expert.intro_video, poster_url: @expert.intro_video.cover.url
             - expertise = @profile.expertise || "Expertise to be filled"
             = expertise.html_safe
-            .clear-fix
 
         -# `Career` tab
         .tab-pane#tab2
