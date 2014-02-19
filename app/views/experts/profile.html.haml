@@ -74,7 +74,8 @@
 
   .sessions.sub-wrapper
     #content.container
-      =render partial: 'item_box', collection: @items, as: :item
+      - @items.each do |item|
+        = render partial: "welcome/box_content", locals: { item: item }
 
     :javascript
       load_isotope()
