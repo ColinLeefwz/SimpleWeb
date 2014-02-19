@@ -1,14 +1,14 @@
 - content_for(:title){@announcement.title}
 
 = render "sessions/page_header", item: @announcement, item: @announcement, link_path: subscribe_path(@announcement, type: @announcement.class.name)
-= render "welcome/box_content_modal"
-.text-page-article-box.shadow.margin-bottom
-  .text-page-main-content
+
+.detail.shadow.margin-bottom.clearfix
+  .video-cover
     - if @announcement.has_video?
-      .announcement-cover.pull-right
-        = render "shared/sublime_video", item_resource: @announcement, poster_url: @announcement.cover.url
-    - elsif @announcement.cover_file_name
-      .announcement-cover.pull-right
-        = image_tag @announcement.cover.url
-    %p= @announcement.description.html_safe
-    .clear-fix
+      = render "shared/sublime_video", item_resource: @announcement, poster_url: @announcement.cover.url
+    - else
+      = image_tag @announcement.cover.url
+  %article
+    = @announcement.description.html_safe
+
+= render "welcome/box_content_modal"

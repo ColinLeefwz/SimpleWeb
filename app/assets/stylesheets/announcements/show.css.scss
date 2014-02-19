@@ -1,0 +1,26 @@
+.detail{
+  background: white;
+  margin: 0 auto;
+  margin-top: 1rem;
+  text-align: left; // necessary?
+  @media (min-width: 767px){
+    width: 65%;
+    min-width: 415px; 
+  }
+  @media (max-width: 766px){
+    width: 90%;
+  }
+}
+
+.detail .video-cover{
+  width: 320px;
+  height: 180px;
+  padding: 1rem;
+  float: right;
+  overflow: hidden;
+}
+
+.detail article{
+  padding-top: 1rem;
+  padding-left: 2rem;
+}
