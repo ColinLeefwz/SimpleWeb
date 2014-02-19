@@ -1,6 +1,9 @@
-.text-page-header-box{
-  background: #ffffff;
+.header{
+  background: white;
   margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  position: relative;
   @media (min-width: 767px){
     width: 65%;
     min-width: 415px; 
@@ -8,90 +11,66 @@
   @media (max-width: 766px){
     width: 90%;
   }
+}
 
-  .text-page-left-side{
-    float: left;
-    text-align: center;
-    max-width: 20%;
-    .text-page-portrait{
-      img{
-        width: 88px;
-        height: 88px;
-        margin: 20px 40px;
-        border-radius: 50%;
-      }
-    }
-
-    .text-page-expert-info{
-      float: left;
-      margin-bottom: 5px;
-      width: 100%;
-      .name{
-        font-size: 16px;
-        // font-family: Latobold;
-        font-family: Oswaldreg;
-      }
-      .title, .company{
-        font-size: 12px;
-        color: #777;
-        line-height: 1.2em;
-      }
-    }
-  }
-
-  .text-page-middle{
-    float: left;
-    padding: 20px 20px 20px;
-    max-width: 70%;
-    .title{
-      font-family: "Oswaldreg";
-      font-weight: 400;
-      font-size: 30px;
-      min-height: 105px;
-      color: #454545;
-      line-height: 1.2em;
-    }
-    .datetime, .category-name{
-      margin-bottom: 5px;
-      padding-bottom: 0px;
-      font-family: "Latoreg";
-      color: #777;
-      display: inline;
-      font-size: 13px;
-    }
-  }
-
-  .text-page-right-side{
-    @media (min-width: 767px){
-      float: right;
-    }
-    @media (max-width: 766px){
-      float: left;
-    }
-    .text-page-social-buttons{
-      margin: 5px;
-      .social-share, .favorite{
-        margin-bottom: 5px;
-        img{
-          width: 20px;
-          height: 20px;
-        }
-      }
-    }
-
-    .text-page-favorite {
-      margin-top: 20px;
-      margin-right: 20px;
-      text-align: right;
-      font-size: 20px;
-      color: #8a2649;
-      .fa{
-        cursor: pointer;
-      }
-    }
+//-------- user ---------
+.header .user{
+  float: left;
+  text-align: center;
+  .avatar img{
+      width: 88px;
+      height: 88px;
+      margin: 0 40px;
+      margin-bottom: 10px;
+      border-radius: 50%;
   }
 }
 
-.range{
-  height: 50px;
+.header .user{
+  .name{
+    font-size: 16px;
+    font-family: Oswaldreg;
+  }
+  .title, .company{
+    font-size: 12px;
+    color: #777;
+  }
+}
+
+
+//-------- meta --------
+
+.header .meta{
+  float: left;
+  max-width: 70%;
+  .title{
+    font-family: "Oswaldreg";
+    font-weight: 400;
+    font-size: 30px;
+    min-height: 105px;  // for social-share 
+    color: #454545;
+    line-height: 1.2em;
+  }
+}
+
+.header .meta{
+  .date, .category{
+    font-family: "Latoreg";
+    color: #777;
+    display: inline;
+    font-size: 13px;
+  }
+}
+
+
+//-------- social-share --------
+
+.header .social-share-icons{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  img{
+    width: 20px;
+    height: 20px;
+  }
 }

@@ -1,30 +1,26 @@
-.text-page-header-box.shadow
-  .text-page-left-side
-    .text-page-portrait
+.header.shadow.clearfix
+  .user
+    .avatar
       = link_to image_tag("#{item.expert.avatar.url}"), profile_expert_path(item.expert)
-    .text-page-expert-info
-      .name
-        = link_to item.expert.name, profile_expert_path(item.expert)
-      .title
-        = item.expert.profile.title
-      .company
-        = item.expert.profile.company
-    .clear-fix.visible-phone
-  .text-page-middle
+    .name
+      = link_to item.expert.name, profile_expert_path(item.expert)
+    .title
+      = item.expert.profile.title
+    .company
+      = item.expert.profile.company
+
+  .meta
     .title
       = item.title
-    .datetime.separator
+    .date.separator
       = item.created_at.to_date.to_formatted_s(:course_date)
-    .category-name
+    .category
       = item.categories.join(", ")
-  .text-page-right-side
-    .text-page-social-buttons
-      .social-share-icons
-        .social-share.favorite-star
-          -# - if defined?(link_path)
-          - if current_user.blank?
-            = link_to image_tag('favorite_unselected.png'),'#modal', data:{toggle: "modal"}
-          - else
-            = render partial: "shared/favorite_star", locals: { method: :has_subscribed?, object: item, link_path: link_path }
+
+  .social-share-icons.favorite-star
+    - if current_user.blank?
+      = link_to image_tag('favorite_unselected.png'),'#modal', data:{toggle: "modal"}
+    - else
+      = render partial: "shared/favorite_star", locals: { method: :has_subscribed?, object: item, link_path: link_path }
       = render 'shared/social_share', item: item 
-  .clear-fix
+
