@@ -35,6 +35,7 @@ class UsersController < ApplicationController
           else
             current_user.follow(followed_user)
           end
+          render "shared/update_favorite_star"
         end
       }
     end
