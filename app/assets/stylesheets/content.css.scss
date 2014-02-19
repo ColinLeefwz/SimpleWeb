@@ -92,29 +92,6 @@
   }
 }
 
-.text-page-article-box{
-  margin: 0 auto;
-  margin-top: 10px;
-  background: white;
-  text-align: left;
-  @media (min-width: 767px){
-    width: 65%;
-    min-width: 415px; 
-  }
-  @media (max-width: 766px){
-    width: 90%;
-  }
-
-  .text-page-main-content{
-    padding: 20px 40px 20px 50px;
-    p{
-      margin-top: 0px;
-      padding-top: 5px;
-      line-height: 1.4em;
-    }
-  }
-}
-
 .range{
   height: 50px;
 }
