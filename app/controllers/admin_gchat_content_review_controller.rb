@@ -5,10 +5,10 @@ class AdminGchatContentReviewController < ApplicationController
   layout 'admin'
   
   def index
-    hash = "this.txt.length > 30 && this.txt[0] !='[' && this.del != true"
+    hash = "(this.txt.length > 30 && this.txt[0] !='[' && this.del != true) || this.txt[0] == '['"
     sort = {_id: -1}
     @gchat_review =  paginate3("Gchat", params[:page], hash, sort)
-    # @gchat_review = Gchat.where("this.txt.length > 30 && this.txt[0] !='[' && this.del != true").limit(50)
+    # @gchat_review = Gchat.where("(this.txt.length > 30 && this.txt[0] !='[' && this.del != true) || this.txt[0] == '['").limit(50)
   end
 
   def ajax_pb
