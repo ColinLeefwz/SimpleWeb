@@ -1,18 +1,14 @@
--# expert = item.respond_to :experts ? item.experts.first : item.expert
-
 %div{class: get_box_class(item)}
 
   .box-header
     .portrait
-      - image = image_tag(expert.avatar.url)
-      = expert.is_staff ? (raw image) : (link_to image, profile_expert_path(expert))
+      = expert_image_helper(item)
       .expert-name
-        - name = expert.name
-        = expert.is_staff ? (raw name) : (link_to name, profile_expert_path(expert))
+        = expert_name_helper(item)
     .content-type
       = image_tag(get_image_tag(item), class: "tooltips", title: get_tooltip(item), data: {placement: "bottom"})
       %p= item.categories.join(", ")
-      %p= item.language.split(",")[0] if item.language
+      %p= item.language.split(",")[0] if (item.respond_to? :language and item.language)
   .title
     = link_to "#{item.title}", polymorphic_path(item)
 

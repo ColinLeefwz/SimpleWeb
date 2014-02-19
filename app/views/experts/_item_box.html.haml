@@ -1,4 +1,1 @@
-- if item.is_a? Course
-  = render "course_content", course: item
-- else
-  = render partial: "welcome/box_content", locals: {item: item, expert: item.expert}
+= render partial: "welcome/box_content", locals: { item: item }
