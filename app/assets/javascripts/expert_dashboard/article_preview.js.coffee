@@ -13,13 +13,13 @@ cover_preview = ->
     date = new Date()
     mm = date.getMonth()
     dd = date.getDate()
-    $("#session-datetime").html('published on ' + mon_arr[mm] + " " + dd + " |")
+    $(".meta .date").html(mon_arr[mm] + " " + dd)
 
     title = $("#session-title-input").val()
-    $("#session-title").html("<h1>"+title+"</h1>")
+    $(".meta .title").html(title)
 
     $("input:checked").each ->
-      $("#article-session-categories").html($("#article-session-categories").html() + " " + $(this).next("label").text())
+      $(".meta .category").html($(".meta .category").html() + " " + $(this).next("label").text())
 
     if CKEDITOR.instances["article_description"]
       article_description = CKEDITOR.instances['article_description'].getData()

@@ -1,7 +1,7 @@
 .header.shadow.clearfix
   .user
     .avatar
-      = link_to image_tag("#{item.expert.avatar.url}"), profile_expert_path(item.expert)
+      = link_to image_tag(item.expert.avatar.url), profile_expert_path(item.expert)
     .name
       = link_to item.expert.name, profile_expert_path(item.expert)
     .title
