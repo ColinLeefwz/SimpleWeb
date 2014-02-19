@@ -12,10 +12,11 @@
     <tr>
       <td><%= link_to gchat_review.uid, "/admin_users/show?id=#{gchat_review.uid}" %></td>
       <td><%= gchat_review.cat.strftime("%Y-%m-%d %H:%M") %></td>
-      <td><%= link_to '屏蔽', "javascript:void(0)", :onclick => "ajaxPb($(this), '#{gchat_review.id}')"%></td>
       <% if gchat_review.txt[0] == '[' %>
+      <td><%= link_to '屏蔽', "javascript:void(0)", :onclick => "ajaxPb2($(this), '#{gchat_review.id}')"%></td>
       <td><%= image_tag(Photo.img_url(Gchat.find_by_id(gchat_review.id).txt.slice(5,24),1), :size => "50x50") %><%= gchat_review.txt %></td>
       <% else %>
+      <td><%= link_to '屏蔽', "javascript:void(0)", :onclick => "ajaxPb($(this), '#{gchat_review.id}')"%></td>
       <td><%= gchat_review.txt %></td>
       <% end %>
     </tr>
@@ -29,5 +30,9 @@
 
   function ajaxPb(obj, id){
     $.get("/admin_gchat_content_review/ajax_pb", {id: id}, function(){ obj.replaceWith("已屏蔽")})
+  }
+
+  function ajaxPb2(obj, id){
+    $.get("/admin_gchat_content_review/ajax_pb_and_photo", {id: id}, function(){ obj.replaceWith("已屏蔽")})
   }
 </script>
