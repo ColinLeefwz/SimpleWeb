@@ -1,11 +1,21 @@
 .white-background.shadow
   = simple_form_for(@session, url: @url, remote: true) do |f|
     %h3 Create new session
-    = f.input :title, input_html: { id: "session-title-input"}
+    .form-group
+      .col-sm-2
+        = f.label :title, class: "control-label"
+      .col-sm-6
+        = f.text_field :title, class: 'form-control', input_html: { id: 'session-title-input' }
+    //= f.input :title, input_html: { id: "session-title-input"}
     .categories
-      = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
+      .col-sm-2
+        = f.label :categories, class: "control-label"
+      = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes, required: true, class: 'checkbox-inline', label: false
+      //= f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
     .language
-      = f.input :language, collection: Language.all, label_method: :long_version, value_method: :combine_version, include_blank: false
+      .col-sm-2
+        = f.label :language, class: "control-label"
+      = f.input :language, collection: Language.all, label_method: :long_version, value_method: :combine_version, include_blank: false, label: false
     = f.input :format, collection: %w(Lounge Forum Livestreaming), as: :select
     = f.input :cover, input_html: {id: "session-cover-input"}
     = f.label :current_image

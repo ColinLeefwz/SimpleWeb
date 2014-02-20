@@ -7,10 +7,37 @@
           Mail to Your Friend
       .email-modal-body
         = simple_form_for :email_friend, { url: email_friend_session_path } do |f|
-          = f.input :your_name, input_html: {value: current_user.try(:name) }
-          = f.input :your_address, input_html: {value: current_user.try(:email) }
-          = f.input :to_name
-          = f.input :to_address
-          = f.input :content, as: :text
-          = f.submit "cancel", class: "btn"
-          = f.submit "post", class: "btn btn-primary"
+          .form-group
+            .col-sm-2
+              = f.label :your_name, class: "control-label"
+            .col-sm-6
+              = f.text_field :your_name, class: 'form-control', input_html: {value: current_user.try(:name) }
+          //= f.input :your_name, input_html: {value: current_user.try(:name) }
+          .form-group
+            .col-sm-2
+              = f.label :your_address, class: "control-label"
+            .col-sm-6
+              = f.text_field :your_address, class: 'form-control', input_html: {value: current_user.try(:email) }
+          //= f.input :your_address, input_html: {value: current_user.try(:email) }
+          .form-group
+            .col-sm-2
+              = f.label :to_name, class: "control-label"
+            .col-sm-6
+              = f.text_field :to_name, class: 'form-control'
+          //= f.input :to_name
+          .form-group
+            .col-sm-2
+              = f.label :to_address, class: "control-label"
+            .col-sm-6
+              = f.text_field :to_address, class: 'form-control'
+          //= f.input :to_address
+          .form-group
+            .col-sm-2
+              = f.label :content class: "control-label"
+            .col-sm-6
+              = f.input :content, as: :text, label: false
+          .form-group
+            .col-sm-2
+              = f.submit "cancel", class: "btn"
+            .col-sm-2
+              = f.submit "post", class: "btn btn-primary"

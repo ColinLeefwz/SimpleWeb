@@ -27,6 +27,7 @@
       .col-sm-6
         = f.password_field :current_password, placeholder: "to confirm your identity", class: 'form-control'
     .form-group
-      .col-sm-offset-5
+      .col-sm-5
         = f.submit "Update", class: 'btn btn-prodygia'
+      .col-sm-6
         = link_to "Back", :back, class: 'btn'

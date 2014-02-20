@@ -28,5 +28,5 @@
         = f.label :description, class: "control-label"
       .col-sm-8
         = f.input :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}, label: false
-    .form-group
+        
     = render "session_submit", { modal: 'post_content_modal', f: f }
