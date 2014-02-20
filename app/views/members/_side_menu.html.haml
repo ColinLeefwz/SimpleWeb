@@ -7,10 +7,10 @@
     .edit-profile
       %p= link_to 'edit profile', edit_profile_member_path(current_user), remote: true
   .clear-fix
-  .toolkit
-    .item
-      = render 'item_icon', item_name: 'activity_stream'
-      .item-text #{link_to 'My activity stream', pending_page_expert_path(text: "my_activity_stream"), remote: true}
+  -# .toolkit
+  -#   .item
+  -#     = render 'item_icon', item_name: 'activity_stream'
+  -#     .item-text #{link_to 'My activity stream', pending_page_expert_path(text: "my_activity_stream"), remote: true}
 .block-title
   %span
     FAVORITES
