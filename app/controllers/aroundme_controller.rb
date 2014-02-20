@@ -50,7 +50,7 @@ class AroundmeController < ApplicationController
       end
     end
     arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid]) 
-    Rails.cache.write("LLOC#{session[:user_id]}",[lo,params[:accuracy].to_f]) 
+    Rails.cache.write("LLOC#{session[:user_id]}",[lo,params[:accuracy].to_f,params[:bssid]]) 
     record_gps(lo, gps, wifi)
     if is_kx_user?(session[:user_id])
       $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
@@ -88,13 +88,6 @@ class AroundmeController < ApplicationController
         arr = arr+[ shop ] if city=="0571"
       end
     end
-    if city && city!="0571" && city!="023"
-      shop = Shop.find_by_id(21838499) # 一起回家过年
-      if shop
-	      shop.city = city
-        arr = arr+[ shop ]
-      end
-    end
     if city && city!="0571"
       shop = Shop.find_by_id(21839275) # 2014全城热恋
       if shop
@@ -116,13 +109,7 @@ class AroundmeController < ApplicationController
         arr = arr[0,4]+[ shop ]+arr[4..-1]
       end
     end    
-    if city=="0571"
-      shop = Shop.find_by_id(21839547) # 千岛湖
-      if shop
-	      shop.city = city
-        arr = arr+[ shop ]
-      end
-    end
+    $redis.zrange("LL3#{session[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id); arr << s if s}
     arr.uniq!
     ret = arr.map do |x| 
       hash = x.safe_output_with_users
