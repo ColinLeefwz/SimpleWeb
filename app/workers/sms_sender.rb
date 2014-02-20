@@ -7,7 +7,11 @@ class SmsSender
   def self.perform(phone,text)
     v = Rails.cache.read("Sms#{phone}")
     if v.nil?
-      send_sms_xuanwu(phone, text)
+      if is_yidong(phone)
+        send_sms_xuanwu(phone, text)
+      else
+        send_sms_ihuiyi(phone, text)
+      end
       Rails.cache.write("Sms#{phone}",Time.now.to_i, :expires_in => 1.days)
     else
       diff = Time.now.to_i - v.to_i
@@ -25,7 +29,7 @@ class SmsSender
       info = RestClient.get "http://106.ihuyi.com/webservice/sms.php?method=Submit&account=cf_llh&password=#{pass}&mobile=#{phone}&content=#{URI.escape(text)}"
       match = info.index("<code>2</code>")
       return true if match && match>0
-      Xmpp.error_notify("短信错误：#{Time.now},#{text}")
+      Xmpp.error_notify("ihuiyi短信错误：#{Time.now},#{text}")
       Xmpp.error_notify(info)
       return nil
   end
@@ -42,9 +46,19 @@ class SmsSender
       str = URI.encode(text.encode('gbk','utf-8'))
       info = RestClient.get "http://211.147.239.62:9050/cgi-bin/sendsms?username=cadmin@zjll&password=Dface.cn1234&to=#{phone}&text=#{str}&msgtype=1"
       return true if info=="0"
-      Xmpp.error_notify("短信错误：#{Time.now},#{info}")
+      Xmpp.error_notify("玄武短信错误：#{Time.now},#{info}")
+      return nil
+  end
+    
+  def self.send_sms_mandao(phone, text)
+      return true if ENV["RAILS_ENV"] != "production"
+      str = text.encode('gbk','utf-8')
+      info = RestClient.post "http://sdk2.entinfo.cn:8060/webservice.asmx/SendSMS", 
+        :sn => "SDK-NSF-010-00034", :pwd => "DD07e9-8", :mobile => phone, :content => str
+      return true if info.index(">0 ")
+      Xmpp.error_notify("漫道短信错误：#{Time.now},#{info}")
       return nil
   end
   
-  
+    
 end
