@@ -8,8 +8,8 @@ class Ability
       can :manage, :all
 
     elsif user.is_a? Expert
-      can :manage, Session do |session|
-        session.try(:expert) == user
+      can :manage, Article do |article|
+        article.try(:expert) == user
       end
 
       can :manage, Expert do |expert|
@@ -25,7 +25,7 @@ class Ability
       cannot :index, Course
 
     elsif user.is_a? Member
-      can :read, Session
+      can :read, Article 
       can :read, Expert
       can [:show, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
       can :manage, Member do |member|

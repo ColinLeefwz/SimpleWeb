@@ -1,4 +1,4 @@
 :plain
   $(document).ready(function(){
-    $("#time").html("#{j(render partial: "timezone", locals: {time: @session.start_date, fallback: @session.time_zone, zone: @zone}) }");
+    $("#time").html("#{j(render partial: "timezone", locals: {time: @article.start_date, fallback: @article.time_zone, zone: @zone}) }");
   });

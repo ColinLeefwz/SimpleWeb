@@ -82,6 +82,9 @@ describe MembersController do
       end
 
       it "assigns all the experts the member followed" do
+        # todo: gecko: test follow recommendation (no user followed)
+        # get :experts, id: peter.id, format: :js
+        # expect(assigns[:followed_experts].to_a).to eq peter.followed_users.to_a
         peter.follow sameer
         peter.follow alex
         get :experts, id: peter.id, format: :js
@@ -98,20 +101,20 @@ describe MembersController do
 
   describe "GET contents" do
     before :each do 
-      sign_in jevan
+      sign_in gecko
+      staff = create(:expert, id: 2)
     end
 
     it "assigns the article sessions the member subscribed" do
-      jevan.subscribe(video_interview)
-      jevan.subscribe(session_communication)
-      get :contents, id: jevan.id, format: :js
+      gecko.subscribe(article)
+      gecko.subscribe(video_interview)
+      get :contents, id: gecko.id, format: :js
       expect(assigns[:favorite_contents]).to include video_interview
-      expect(assigns[:favorite_contents]).to include session_communication
-
+      expect(assigns[:favorite_contents]).to include article
     end
 
     it "can access to contents page" do
-      get :contents, id: jevan.id, format: :js
+      get :contents, id: gecko.id, format: :js
       expect(response).to be_success
     end
   end

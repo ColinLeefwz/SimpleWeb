@@ -27,12 +27,9 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js{
         the_followed_id = params[:the_followed]
-				followed_user = User.find the_followed_id
-        
-        if current_user.blank?
-          render js: "window.location='#{new_user_session_path}'"
-          flash[:alert] = "Sorry! You have to sign in to follow an Expert"
-        else
+        followed_user = User.find the_followed_id
+
+        unless current_user.blank?
           if current_user.try(:follow?, followed_user)
             current_user.unfollow(followed_user)
           else
@@ -50,21 +47,23 @@ class UsersController < ApplicationController
   def followers
   end
 
-	## Peter at 2014-01-24: this action and "subscribe_video_interview" can be refactor together
   def subscribe
     respond_to do |format|
       format.js{
-				type = params[:type]
+        type = params[:type]
 
-				current_item = type.constantize.find(params[:item_id])
+        current_item = type.constantize.find(params[:item_id])
 
-        if current_user.has_subscribed?(current_item)
-          current_user.unsubscribe(current_item)
+        if current_user.blank?
         else
-          current_user.subscribe(current_item)
+          if current_user.has_subscribed?(current_item)
+            current_user.unsubscribe(current_item)
+          else
+            current_user.subscribe(current_item)
+          end
+          render "shared/update_favorite_star"
         end
-        render "shared/update_favorite_star"
-     } 
+      } 
     end
   end
 

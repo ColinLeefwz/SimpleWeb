@@ -1,2 +1,0 @@
-class ArticleSession < Session
-end

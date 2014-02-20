@@ -1,0 +1,20 @@
+.white-background.shadow
+  = simple_form_for(@article, remote: true)  do |f|
+    %h3 Post New Content
+    = f.input :title, input_html: { id: 'session-title-input' }
+    .categories
+      = f.input :categories, collection: Category.pluck(:name), as: :check_boxes, required: true
+    = f.input :cover, label: "Upload image", input_html: { id: 'session-cover-input' }
+    = f.label :current_image
+    - if f.object.cover.url
+      #cover-image
+        = image_tag(f.object.cover.url)
+    = f.input :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}
+    = f.hidden_field :draft
+
+    = f.submit "Save Draft", class: 'btn dashboard-buttons', id: "save-draft"
+    = link_to "Preview", "#modal", id: "session-preview", class: "btn dashboard-buttons", data:{toggle: "modal"}
+    = f.submit "Publish", class: 'btn dashboard-buttons btn-prodygia', id: "publish"
+    = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
+
+    = render "article_preview", f: f
