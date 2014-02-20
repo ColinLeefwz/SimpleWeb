@@ -86,4 +86,17 @@ class Shop3MenuController < ApplicationController
   	render :json => menu.view_json
   end
 
+  def sort_menu
+    menu = Menu.find_by_id(session[:shop_id])
+    button = menu.button
+    tmp_button = []
+    params[:index].each_with_index do |hash_arr, index|
+      tmp_button[index] = button[hash_arr[0].to_i]
+      tmp_button[index]['sub_button'] = hash_arr[1].map{|m| button[hash_arr[0].to_i]['sub_button'][m.to_i]}
+    end 
+    menu.button = tmp_button
+    menu.save
+    render :json => menu.reload.view_json
+  end 
+
 end

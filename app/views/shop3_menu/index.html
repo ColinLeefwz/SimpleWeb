@@ -1,7 +1,15 @@
 <%= content_for :ahead do %>
     <link href="/newbackstage/css/menu.css" rel="stylesheet" type="text/css">
     <link href="/newbackstage/css/megsend.css" rel="stylesheet" type="text/css">
-    <script src="/newbackstage/js/menuset.js" type="application/javascript"></script>
+    <script type="text/javascript">
+        var menujson = {};
+        var trigger_click = true;
+        $.get('/shop3_menu.json', function(data){
+            menujson = data
+        })
+    </script>
+    <script src="/newbackstage/js/menuset.js" type="text/javascript"></script>
+    <script src="/newbackstage/js/menu_drag.js" type="text/javascript"></script>
 <% end %>
 <div class="con">
     <div class="parent_title_bar">
@@ -18,11 +26,11 @@
                     <div class="menu_manage">                        
                         <div class="sub_title_bar light">                            
                             <h4>菜单管理</h4>
-                            <div class="btn_wrp">                                
-                                <a class="btn btn_primary" id="addBt" href="javascript:void(0);" style="display: inline-block;">添加</a>
-                                <!-- <a class="btn btn_default" id="orderBt" href="javascript:void(0);" style="display: inline-block;">排序</a> -->
-                                <a style="display: none;" class="btn btn_primary btn_sorting" id="finishBt" href="javascript:void(0);">完成</a>
-                                <a style="display: none;" class="btn btn_default btn_sorting" id="cancelBt" href="javascript:void(0);">取消</a>&nbsp;
+                            <div class="btn_wrp" style="float:right;padding-top:5px;">
+                                <a class="btn btn_default r" id="orderBt" href="javascript:void(0);" style="padding:0px 7px;">排序</a>
+                                <a class="btn btn_primary r" id="addBt" href="javascript:void(0);" style="padding:0px 7px;">添加</a>
+                                <a style="display: none;padding:0px 7px;" class="btn btn_primary btn_sorting" id="finishBt" href="javascript:void(0);">完成</a>
+                                <a style="display: none;padding:0px 7px;" class="btn btn_default btn_sorting" id="cancelBt" href="javascript:void(0);">取消</a>&nbsp;
                             </div>
                         </div>
                         <div id="menuList" class="inner_menu_box with_switch blue ui-sortable ui-sortable-disabled">
@@ -30,7 +38,6 @@
                                 <dl class="inner_menu jsMenu ui-sortable ui-sortable-disabled">
                                     <dt id="menu_<%= index %>" class="inner_menu_item jslevel1">
                                         <i class="icon_inner_menu_switch"></i>
-                                    <!-- <dt id="menu_0" class="inner_menu_item jslevel1 selected"> -->
                                         <a class="inner_menu_link" href="javascript:void(0);">
                                             <strong><%= m['name']%></strong>
                                         </a>

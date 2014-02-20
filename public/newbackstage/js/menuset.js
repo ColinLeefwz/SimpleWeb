@@ -1,10 +1,36 @@
-var menujson = {};
-$.get('/shop3_menu.json', function(data){
-		menujson = data
-})
+function relist_menu(){
+    var html = ''
+    $(menujson.menu.button).each(function(index, val){
+        html += '<dl class="inner_menu jsMenu ui-sortable ui-sortable-disabled">'
+        html += '<dt id="menu_' + index +'" class="inner_menu_item jslevel1">'
+        html += '<i class="icon_inner_menu_switch"></i>'
+        html += '<a class="inner_menu_link" href="javascript:void(0);">'
+        html += '<strong>' + val.name + '</strong></a><span class="menu_opr">'  
+        if(!val.type){
+            html += '<a class="icon14_common add_gray jsAddBt" href="javascript:void(0);" rel="' + index + '">添加</a>'
+        }  
+        html += '<a class="icon14_common  edit_gray jsEditBt" href="javascript:void(0);" rel="' + index + '">编辑</a>'
+        html += '<a class="icon14_common del_gray jsDelBt" href="javascript:void(0);" rel="' + index + '">删除</a>'
+        html += '<a style="display:none" class="icon14_common sort_gray jsOrderBt" href="javascript:void(0);">排序</a>'
+        html += '</span></dt>'
+        $(val.sub_button).each(function(sub_index, sub_val){
+            html += '<dd id="subMenu_menu_'+ index + '_'+ sub_index +'" class="inner_menu_item jslevel2">'
+            html += '<i class="icon_dot">●</i>'
+            html += '<a class="inner_menu_link" href="javascript:void(0);"><strong>'+ sub_val.name +'</strong></a>'
+            html += '<span class="menu_opr">'
+            html += '<a class="icon14_common edit_gray jsSubEditBt" href="javascript:void(0);" rel="'+ index + ',' + sub_index + '">编辑</a>'
+            html += '<a class="icon14_common del_gray jsSubDelBt" href="javascript:void(0);" rel="'+ index + ',' + sub_index + '">删除</a>'
+            html += '<a style="display:none" class="icon14_common sort_gray jsOrderBt" href="javascript:void(0);">排序</a></span></dd>'
+        })
+         html += "</dl>"
+    })
+    $('dl').remove()
+    $('#menuList').append(html)
+};
+
 $(document).ready(function(){ 
 	var inter1 = null;
-	// 增加菜单
+// 增加菜单
 	$(document).delegate('#addBt, .jsAddBt','click', function(event){
 		$('#menu_val').val('')
 		$('#popupForm_ .fail').css('display', 'none')
@@ -138,9 +164,11 @@ $(document).ready(function(){
 		})
 	})
 
-
 	//选中菜单
 	$(document).delegate(".inner_menu_item", 'click',function(){
+		if(!trigger_click){
+			return false;
+		}
 		$(".inner_menu_item").removeClass('selected')
 		$(this).addClass('selected')
 		set_action_content(this.id)
@@ -362,35 +390,6 @@ $(document).ready(function(){
 		}
 	}
 
-	function relist_menu(){
-		var html = '<dl class="inner_menu jsMenu ui-sortable ui-sortable-disabled">'
-		$(menujson.menu.button).each(function(index, val){
-            html += '<dt id="menu_' + index +'" class="inner_menu_item jslevel1">'
-            html += '<i class="icon_inner_menu_switch"></i>'
-            html += '<a class="inner_menu_link" href="javascript:void(0);">'
-            html += '<strong>' + val.name + '</strong></a><span class="menu_opr">'  
-            if(!val.type){
-            	html += '<a class="icon14_common add_gray jsAddBt" href="javascript:void(0);" rel="' + index + '">添加</a>'
-            }  
-            html += '<a class="icon14_common  edit_gray jsEditBt" href="javascript:void(0);" rel="' + index + '">编辑</a>'
-            html += '<a class="icon14_common del_gray jsDelBt" href="javascript:void(0);" rel="' + index + '">删除</a>'
-            html += '<a style="display:none" class="icon14_common sort_gray jsOrderBt" href="javascript:void(0);">排序</a>'
-            html += '</span></dt>'
-            $(val.sub_button).each(function(sub_index, sub_val){
-				html += '<dd id="subMenu_menu_'+ index + '_'+ sub_index +'" class="inner_menu_item jslevel2">'
-				html += '<i class="icon_dot">●</i>'
-				html += '<a class="inner_menu_link" href="javascript:void(0);"><strong>'+ sub_val.name +'</strong></a>'
-				html += '<span class="menu_opr">'
-				html += '<a class="icon14_common edit_gray jsSubEditBt" href="javascript:void(0);" rel="'+ index + ',' + sub_index + '">编辑</a>'
-				html += '<a class="icon14_common del_gray jsSubDelBt" href="javascript:void(0);" rel="'+ index + ',' + sub_index + '">删除</a>'
-				html += '<a style="display:none" class="icon14_common sort_gray jsOrderBt" href="javascript:void(0);">排序</a></span></dd>'
-            })
-   		})
-   		html += "</dl>"
-   		$('dl').remove()
-   		$('#menuList').append(html)
-	}
-
 	function mobile_review_list(){
 		var html = '<ul id="viewList" class="pre_menu_list">'
 		$(menujson.menu.button).each(function(index, val){
@@ -406,8 +405,6 @@ $(document).ready(function(){
 		html += '</ul>'
 		$("#viewList").replaceWith(html)
 	}
-
-
 
 	function checkMenuNameInput(name, index){
 		var length = 0 
