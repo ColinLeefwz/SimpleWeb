@@ -1,8 +1,9 @@
 
 social_popup = ->
   $('a[data-popup]').on('click', (e)->
-     window.open( $(this).attr('href'), "Popup", "height=600, width=600")
-     e.preventDefault()
+    ratio = if $(this).parent().hasClass("facebook") then "height=560, width=1080" else "height=600, width=600" # if use click on facebook share, open a larger pop-up
+    window.open( $(this).attr('href'), "Popup", ratio)
+    e.preventDefault()
   )
 
 # count_shares = ->
