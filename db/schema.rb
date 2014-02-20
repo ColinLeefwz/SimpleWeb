@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207032249) do
+ActiveRecord::Schema.define(version: 20140218105459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,27 @@ ActiveRecord::Schema.define(version: 20140207032249) do
 
   add_index "announcements", ["categories"], name: "index_announcements_on_categories", using: :gin
   add_index "announcements", ["expert_id"], name: "index_announcements_on_expert_id", using: :btree
+
+  create_table "articles", force: true do |t|
+    t.string   "title"
+    t.integer  "expert_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
+    t.string   "language"
+    t.boolean  "always_show",        default: false
+    t.string   "categories",         default: [],    array: true
+    t.boolean  "draft",              default: false
+    t.string   "time_zone",          default: "UTC"
+    t.boolean  "canceled",           default: false
+  end
+
+  add_index "articles", ["categories"], name: "index_articles_on_categories", using: :gin
+  add_index "articles", ["expert_id"], name: "index_articles_on_expert_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -134,6 +155,7 @@ ActiveRecord::Schema.define(version: 20140207032249) do
     t.integer "expert_id"
   end
 
+  add_index "courses_users", ["course_id", "expert_id"], name: "index_courses_users_on_course_id_and_expert_id", unique: true, using: :btree
   add_index "courses_users", ["course_id"], name: "index_courses_users_on_course_id", using: :btree
   add_index "courses_users", ["expert_id"], name: "index_courses_users_on_expert_id", using: :btree
 
@@ -285,38 +307,6 @@ ActiveRecord::Schema.define(version: 20140207032249) do
 
   add_index "sections", ["chapter_id"], name: "index_sections_on_chapter_id", using: :btree
 
-  create_table "sessions", force: true do |t|
-    t.string   "title"
-    t.integer  "expert_id"
-    t.text     "description"
-    t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "content_type"
-    t.string   "video_url"
-    t.string   "cover_file_name"
-    t.string   "cover_content_type"
-    t.integer  "cover_file_size"
-    t.datetime "cover_updated_at"
-    t.string   "video_file_name"
-    t.string   "video_content_type"
-    t.integer  "video_file_size"
-    t.datetime "video_updated_at"
-    t.string   "location"
-    t.decimal  "price",              default: 0.0
-    t.string   "language"
-    t.boolean  "always_show",        default: false
-    t.datetime "start_date"
-    t.string   "categories",         default: [],    array: true
-    t.boolean  "draft",              default: false
-    t.string   "time_zone",          default: "UTC"
-    t.datetime "end_date_time"
-    t.boolean  "canceled"
-  end
-
-  add_index "sessions", ["categories"], name: "index_sessions_on_categories", using: :gin
-  add_index "sessions", ["expert_id"], name: "index_sessions_on_expert_id", using: :btree
-
   create_table "static_pages", force: true do |t|
     t.string   "title"
     t.text     "content"
@@ -354,7 +344,6 @@ ActiveRecord::Schema.define(version: 20140207032249) do
     t.integer  "rolable_id"
     t.string   "rolable_type"
     t.string   "type"
-    t.string   "name"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "avatar_file_name"
@@ -372,6 +361,7 @@ ActiveRecord::Schema.define(version: 20140207032249) do
     t.string   "invited_by_type"
     t.string   "time_zone",              default: "UTC"
     t.string   "subdomain"
+    t.string   "user_name"
   end
 
   add_index "users", ["email", "provider"], name: "index_users_on_email_and_provider", unique: true, using: :btree
@@ -410,7 +400,7 @@ ActiveRecord::Schema.define(version: 20140207032249) do
   create_table "visits", force: true do |t|
     t.integer "visitable_id"
     t.string  "visitable_type"
-    t.integer "page_views"
+    t.integer "page_views",     default: 0
   end
 
   add_index "visits", ["visitable_id", "visitable_type"], name: "index_visits_on_visitable_id_and_visitable_type", using: :btree

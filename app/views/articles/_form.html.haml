@@ -1,0 +1,43 @@
+.white-background.shadow
+  = simple_form_for(@article, remote: true)  do |f|
+    %h3 Post New Content
+    .form-group
+      .col-sm-2
+        = f.label :title, class: "control-label"
+      .col-sm-6
+        = f.text_field :title, :autofocus => true, class: 'form-control', id: 'session-title-input'
+    .categories
+      .col-sm-2
+        = f.label :categories, class: "control-label"
+      = f.input :categories, collection: Category.pluck(:name), as: :check_boxes, required: true, class: 'checkbox-inline', label: false
+
+    .form-group
+      .col-sm-2
+        = f.label :upload_image, class: "control-label"
+      .col-sm-6
+        = f.file_field :cover, id: 'session-cover-input'
+    .form-group
+      .col-sm-2
+        = f.label :current_image
+      .col-sm-6
+        #cover-image
+          = image_tag(f.object.cover.url)
+    .form-group
+      .col-sm-2
+        = f.label :description, class: "control-label"
+      .col-sm-8
+        = f.text_area :description, class: 'ckeditor session-description-input'
+      = f.hidden_field :draft
+        
+
+    .form-group
+      .col-sm-2
+        = f.submit "Save Draft", class: 'btn dashboard-buttons', id: "save-draft"
+      .col-sm-2
+        = link_to "Preview", "#modal", id: "session-preview", class: "btn dashboard-buttons", data:{toggle: "modal"}
+      .col-sm-2
+        = f.submit "Publish", class: 'btn dashboard-buttons btn-prodygia', id: "publish"
+      .col-sm-2
+        = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
+
+    = render "article_preview", f: f

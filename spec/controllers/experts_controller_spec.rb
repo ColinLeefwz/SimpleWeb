@@ -9,11 +9,6 @@ describe ExpertsController do
         get :dashboard, id: sameer.id
         expect(response).to redirect_to root_path
       end
-
-      it "can not assign sessions" do
-        get :dashboard, id: sameer.id
-        expect(assigns[:sessions]).to be_nil
-      end
     end
 
     context "logged in as member" do
@@ -24,11 +19,6 @@ describe ExpertsController do
       it "can not access the dashboard page" do
         get :dashboard, id: sameer.id
         expect(response).to redirect_to root_path
-      end
-
-      it "can not assign sessions" do
-       get :dashboard, id: sameer.id
-        expect(assigns[:sessions]).to be_nil
       end
     end
 
@@ -95,19 +85,19 @@ describe ExpertsController do
     end
   end
 
-	describe "GET profile" do
-		it "shows the expert's profile page" do
-			get :profile, id: sameer.id
-			expect(response).to be_success
-		end
+  describe "GET profile" do
+    it "shows the expert's profile page" do
+      get :profile, id: sameer.id
+      expect(response).to be_success
+    end
 
-		it "assigns the expert's sessions, video_interviews and courses" do
-			[video_interview, session_communication, first_course]
-			get :profile, id: sameer.id
-			expect(assigns[:items]).to eq [video_interview, first_course, session_communication]
-		end
+    it "assigns the expert's sessions, video_interviews and courses" do
+      [video_interview, session_communication, first_course]
+      get :profile, id: sameer.id
+      expect(assigns[:items]).to eq [video_interview, first_course, session_communication]
+    end
 
-	end
+  end
 
 
   describe "GET contents" do
@@ -146,20 +136,19 @@ describe ExpertsController do
 
 
   describe "PATCH update profile" do
-   context "logged in as expert" do
-     before :each do
-       sameer_profile
-       sign_in sameer
-     end
-     it "update corresponding user profile" do
-       patch :update_profile, id: sameer.id, expert: sameer.attributes, profile: attributes_for(:profile, title: "new title"), format: :js
-       expect(sameer.reload.profile.title).to eq "new title"
-     end
-     it "update corresponding user attributes" do
-       patch :update_profile, id: sameer.id, expert: attributes_for(:expert, first_name: 'gecko'), profile: sameer.profile.attributes, format: :js
-       expect(sameer.reload.first_name).to eq "gecko"
-     end
-   end
+    context "logged in as expert" do
+      before :each do
+        sameer_profile
+        sign_in sameer
+      end
+      it "update corresponding user profile" do
+        patch :update_profile, id: sameer.id, expert: sameer.attributes, profile: attributes_for(:profile, title: "new title"), format: :js
+        expect(sameer.reload.profile.title).to eq "new title"
+      end
+      it "update corresponding user attributes" do
+        patch :update_profile, id: sameer.id, expert: attributes_for(:expert, first_name: 'gecko'), profile: sameer.profile.attributes, format: :js
+        expect(sameer.reload.first_name).to eq "gecko"
+      end
+    end
   end
-
 end

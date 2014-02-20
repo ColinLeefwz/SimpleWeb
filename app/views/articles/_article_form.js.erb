@@ -1,0 +1,23 @@
+
+// render the main form 
+$(".main-menu").html('<%=j render partial: "form"%>');
+
+// helper for save_draft
+$("#save-draft").on("click", function(){
+  draft_field = $(this).closest("form").find("#article_draft");
+  draft_field.val(true);
+});
+
+// preview helper, get user input and fill in the modal
+article_preview();
+
+$(".modal-submit").click(function(){
+  $("#modal").modal("hide");
+});
+
+// article form validation
+form_validation();
+
+// editor helper
+CKEDITOR.replaceAll();
+

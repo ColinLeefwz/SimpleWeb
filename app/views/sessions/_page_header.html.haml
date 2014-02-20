@@ -14,18 +14,17 @@
     .title
       = item.title
     .datetime.separator
-      = "published on #{item.created_at.to_date.to_formatted_s(:course_date)}"
-    -unless item.categories.empty?
-      .category-name
-        = item.categories.join(", ")
+      = item.created_at.to_date.to_formatted_s(:course_date)
+    .category-name
+      = item.categories.join(", ")
   .text-page-right-side
     .text-page-social-buttons
       .social-share-icons
         .social-share.favorite-star
-          - if defined?(link_path)
-            - if current_user.blank?
-              = link_to image_tag('favorite_unselected.png'),'#modal', data:{toggle: "modal"}
-            - else
-              = render partial: "shared/favorite_star", locals: { method: :has_subscribed?, object: item, link_path: link_path }
+          -# - if defined?(link_path)
+          - if current_user.blank?
+            = link_to image_tag('favorite_unselected.png'),'#modal', data:{toggle: "modal"}
+          - else
+            = render partial: "shared/favorite_star", locals: { method: :has_subscribed?, object: item, link_path: link_path }
       = render 'shared/social_share', item: item 
   .clear-fix

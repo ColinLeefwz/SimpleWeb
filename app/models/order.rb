@@ -2,7 +2,7 @@ require 'paypal-sdk-rest'
 include PayPal::SDK::REST
 
 class Order < ActiveRecord::Base
-  belongs_to :enrollable, polymorphic: true  # order belongs to courses and sessions
+  belongs_to :enrollable, polymorphic: true 
   belongs_to :user
 
   validates :user_id, :enrollable_id, :enrollable_type, presence: true

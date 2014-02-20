@@ -61,13 +61,14 @@ class MembersController < ApplicationController
     end
   end
 
+  # gecko: we should duck type that
   def contents
-    @favorite_contents = current_user.get_subscribed_contents
+    @favorite_contents = current_user.subscribed_contents
     if @favorite_contents.empty?
       if current_user.is_a? Expert
-        @favorite_contents = ArticleSession.where.not(draft: true, expert: current_user).order("RANDOM()").limit(3)
+        @favorite_contents = Article.where.not(draft: true, expert: current_user).order("RANDOM()").limit(3)
       elsif current_user.is_a? Member
-        @favorite_contents = ArticleSession.where.not(draft: true, expert: Expert.staff).order("RANDOM()").limit(3)
+        @favorite_contents = Article.where.not(draft: true, expert: Expert.staff).order("RANDOM()").limit(3)
       end
       @recommendation = true
     end

@@ -11,7 +11,7 @@
         = item.producers
       .duration-category
         %span.duration
-          = item.duration
+          = distance_of_time_in_words @course.duration.to_i
         %span.category
           = item.categories.join(", ")
       .time

@@ -15,9 +15,6 @@
       .text-page-middle
         .title#session-title
         .datetime#session-datetime
-          -# = "originally published on updated time"
-          &nbsp
-        -# -unless content.categories.empty?
         .category-name#article-session-categories
       .text-page-right-side
         .text-page-social-buttons
@@ -36,29 +33,11 @@
       .text-page-main-content
         .text-page-image
           #default-session-cover
-            = image_tag(@session.cover.url)
+            = image_tag(@article.cover.url)
           %img#session-cover
         %p#article-session-description
       .clear-fix
 
-    -# .content-modal-header-box
-    -#   .content-modal-left-side
-    -#     .content-modal-portrait
-    -#       = image_tag("#{current_user.avatar.url}")
-    -#     .content-modal-expert-name
-    -#       %span by #{current_user.name}
-    -#     .clear-fix.visible-phone
-    -#   .content-modal-right-side
-    -#     .content-modal-social-buttons
-    -#       = render 'shared/social_share', session_title: 'title', session_url: 'url'
-    -#     .content-modal-category-name
-    -#       #article-session-categories
-    -#   .clear-fix
-    -# .content-modal-article-box
-    -#   .content-modal-title#session-title
-    -#     %p originally published on example time
-    -#   .content-modal-main-content#article-session-description
   .modal-footer
-    %button.btn.btn-default{data:{dismiss:'modal'}, aria:{hidden:'true'}} Close
-    = f.submit Session::COMMIT_TYPE[:publish], class: 'btn btn-prodygia modal-submit'
-
+    %button.btn{data:{dismiss:'modal'}, aria:{hidden:'true'}} Close
+    = f.submit "Publish", class: 'btn btn-prodygia modal-submit'
