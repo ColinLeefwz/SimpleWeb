@@ -116,6 +116,13 @@ class AroundmeController < ApplicationController
         arr = arr[0,4]+[ shop ]+arr[4..-1]
       end
     end    
+    if city=="0571"
+      shop = Shop.find_by_id(21839547) # 千岛湖
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
     arr.uniq!
     ret = arr.map do |x| 
       hash = x.safe_output_with_users

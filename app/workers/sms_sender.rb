@@ -60,5 +60,7 @@ class SmsSender
       return nil
   end
   
+  #sleep 30;["18665313145","18679426779","15158000625","15397888138","18910803153"].each {|phone| SmsSender.send_sms_xuanwu(phone,"测试#{Time.now.to_s}")}
+  #测试结果 ： 玄武不能发电信，漫道不能发联通
     
 end
