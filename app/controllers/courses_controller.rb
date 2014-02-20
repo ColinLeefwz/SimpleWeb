@@ -52,7 +52,7 @@ class CoursesController < ApplicationController
   def enroll_confirm
     current_user.enroll(@course)
     send_enrolled_mail(@course)
-    redirect_to @course, flash: {success: "Enrolled Success!"}
+    redirect_to @course, flash: {success: "Subscribed successfully!"}
   end
 
   def purchase
