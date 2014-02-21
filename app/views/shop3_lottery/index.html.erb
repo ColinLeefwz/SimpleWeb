@@ -1,0 +1,32 @@
+<div class="con2">
+  <div class="title1 mb30"><h2 class="f18 l">刮刮卡管理</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_lottery/new">添加活动</a></li>
+    </ul>
+  </div>
+
+
+  <table width="100%" cellpadding="0" cellspacing="0" class="tab2">
+    <tr>
+      <th width="">活动名称</th>
+      <th>参与人数</th>
+      <th>浏览次数</th>
+      <th>开始时间/结束时间</th>
+      <th width="305">操作</th>
+    </tr>
+    <% @lottery.each do |lottery| %>
+      <tr>
+        <td><%= lottery.name %></td>
+        <td><%= 123 %></td>
+        <td><%= 232 %></td>
+        <td><%= Time.now %>&nbsp;</td>
+        <td width="305">
+          <%= link_to "编辑", "/shop3_lottery/edit?id=#{lottery.id}" %>&nbsp;&nbsp;
+          <a href="javascript:void(0)" onclick="ajaxApply('<%= lottery.id %>')">活动结束</a>&nbsp;&nbsp;
+          <a href="javascript:void(0)" onclick="ajaxDel('<%= lottery.id %>')">删除</a>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
