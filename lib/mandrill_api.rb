@@ -52,7 +52,7 @@ class MandrillApi
       "headers"=>{"Reply-To"=>user.email}
     }
 
-    send_template_mail("invite_expert", template_content, addition_message)
+    send_template_mail("invite-expert", template_content, addition_message)
   end
 
   def invite_by_member(user, email_message, token_link)
@@ -74,7 +74,7 @@ class MandrillApi
       "headers"=>{"Reply-To"=>user.email}
     }
 
-    send_template_mail("refer_a_friend", template_content, addition_message)
+    send_template_mail("refer-a-friend", template_content, addition_message)
   end
 
 	def reset_password(user, reset_link)
@@ -84,7 +84,7 @@ class MandrillApi
 			"to"=>[{"name"=>user.first_name, "email"=>user.email}]
 		}
 		
-    send_template_mail("reset_password", template_content, addition_message)
+    send_template_mail("reset-password", template_content, addition_message)
 
 	end
 
@@ -104,7 +104,7 @@ class MandrillApi
 			"headers" => { "Reply-To"=> from_address}
 		}
 
-    send_template_mail("tell_friend", template_content, addition_message)
+    send_template_mail("tell-friend", template_content, addition_message)
 	end
 
   protected
