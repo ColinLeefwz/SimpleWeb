@@ -30,6 +30,9 @@ class PhotosController < ApplicationController
     else
       Xmpp.error_notify("图片上传七牛回调出错：#{request.params}")
     end
+    if params[:size].to_i > 99999
+      Xmpp.error_notify("图片上传七牛文件过大：#{request.params}")
+    end
     render :json => request.params.to_json
   end
 

@@ -150,7 +150,9 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"手机号码或者密码不正确"}.to_json
       return      
     end
-    user.unset(:phone_hidden)  if user.phone_hidden #TODO:这里有漏洞、防止新的用户找回密码
+    if user.phone_hidden
+      render :json => {"error"=>"该手机号码不能直接登录，请先注册或者登录后绑定该手机号码"}.to_json
+    end
     session[:user_id] = user.id
     save_device_info(user.id, false)
 	  render :json => user.output_self.to_json
@@ -159,7 +161,11 @@ class PhoneController < ApplicationController
   def bind
     user = User.find_by_phone(params[:phone])
     if user && user.id != session_user.id
-      render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
+      if user.phone_hidden
+        user.unset(:phone)
+        user.unset(:phone_hidden)
+      else
+        render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
       return      
     end
     if session_user.phone && params[:phone] != session_user.phone
