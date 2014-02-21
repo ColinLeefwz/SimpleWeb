@@ -21,7 +21,6 @@
     .text-page-social-buttons
       .social-share-icons
         .social-share.favorite-star
-          -# - if defined?(link_path)
           - if current_user.blank?
             = link_to image_tag('favorite_unselected.png'),'#modal', data:{toggle: "modal"}
           - else
