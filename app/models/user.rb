@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :subscribed_sessions, through: :subscriptions, source: :subscribable, source_type: "Article"
   has_many :subscribed_courses, through: :subscriptions, source: :subscribable, source_type: "Course"
   has_many :subscribed_video_interviews, through: :subscriptions, source: :subscribable, source_type: "VideoInterview"
+  has_many :subscribed_announcements, through: :subscriptions, source: :subscribable, source_type: "Announcement"
 
   # User follows User
   has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
@@ -44,10 +45,15 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def subscribed_contents
     articles = self.subscribed_sessions
     video_interviews = self.subscribed_video_interviews
-    (articles + video_interviews).sort{|x,y| x.updated_at <=> y.updated_at}
+    announcements = self.subscribed_announcements
+    (announcements + articles + video_interviews).sort{|x,y| x.updated_at <=> y.updated_at}
   end
 
   def has_subscribed? (item)
