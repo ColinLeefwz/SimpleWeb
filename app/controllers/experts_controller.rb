@@ -10,7 +10,7 @@ class ExpertsController < ApplicationController
   end
 
   def dashboard
-    @profile = @expert.profile || @expert.create_profile
+    @profile = @expert.profile
   end
 
   def pending_page
@@ -33,14 +33,14 @@ class ExpertsController < ApplicationController
   def profile
     video_interviews = @expert.video_interviews
     courses = @expert.courses
-    sessions = @expert.sessions.where(draft: false)
-    @items = video_interviews + courses + sessions
+    articles = @expert.articles.where(draft: false)
+    @items = video_interviews + courses + articles
     @profile = @expert.profile
   end
 
   def edit_profile
-    @profile = @expert.profile || @expert.create_profile
-		@intro_video = @expert.intro_video || @expert.create_intro_video
+    @profile = @expert.profile
+    @intro_video = @expert.intro_video
     @from = 'edit_profile'
 
     respond_to do |format|
@@ -51,16 +51,11 @@ class ExpertsController < ApplicationController
   def update_profile
     respond_to do |format|
       format.js{
-        @expert.update_attributes(user_params)
+        @expert.update_attributes(expert_params)
         @expert.profile.update_attributes(expert_profile_params)
         flash[:success] = "successfully update your profile"
         render js: "window.location='#{dashboard_expert_path(current_user)}'"
 
-        # @profile = @expert.profile || @expert.create_profile
-        # @intro_video = @expert.intro_video || @expert.create_intro_video
-
-        # @from = 'edit_profile'
-        # render 'experts/update'
       }
     end
 
@@ -68,33 +63,29 @@ class ExpertsController < ApplicationController
 
   def contents
     @items = current_user.contents
-    @show_shares = true
-    @from = 'sessions/sessions'
-    respond_to do |format|
-      format.js { render 'experts/update'}
-    end
-  end
 
-  def sessions
-    @sessions = current_user.live_sessions
-    @from = 'sessions/sessions'
     respond_to do |format|
-      format.js { render 'experts/update'}
+      format.js {
+        @show_shares = true
+        render partial: 'shared/cards', locals: { items: @items }
+      }
     end
   end
 
   def video_courses
-    @courses = current_user.courses
+    courses = current_user.courses
 
-    if @courses.empty?
-      get_pending_text("video_courses")
-      @from = 'pending_page'
-    else
-      @from = 'experts/video_courses'
-    end
-
+    #todo:  we can split the role of experts/update into something like shared/(dashboard)/cards, shared/(dashboard)/static, so that we don't need to pass instant variable into experts/update
     respond_to do |format|
-      format.js { render 'experts/update' }
+      format.js {
+        if courses.empty?
+          get_pending_text("video_courses")
+          @from = 'pending_page'
+          render 'experts/update'
+        else
+          render partial: 'shared/cards', locals: {items: courses}
+        end
+      }
     end
   end
 
@@ -109,16 +100,11 @@ class ExpertsController < ApplicationController
     @expert = Expert.find params[:id]
   end
 
-  def session_params
-    params.require(:session).permit(:title, :description, :cover, :video, {categories:[]}, :location, :price, :language, :start_date, :time_zone )
-  end
-
-
   def expert_profile_params
     params.require(:profile).permit(:title, :company, :country, :city, :twitter, :career, :education, :expertise, :location, :web_site)
   end
 
-  def user_params
-		params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
+  def expert_params
+    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
   end
 end

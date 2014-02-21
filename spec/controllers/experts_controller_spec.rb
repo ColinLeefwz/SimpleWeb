@@ -9,11 +9,6 @@ describe ExpertsController do
         get :dashboard, id: sameer.id
         expect(response).to redirect_to root_path
       end
-
-      it "can not assign sessions" do
-        get :dashboard, id: sameer.id
-        expect(assigns[:sessions]).to be_nil
-      end
     end
 
     context "logged in as member" do
@@ -25,11 +20,6 @@ describe ExpertsController do
         get :dashboard, id: sameer.id
         expect(response).to redirect_to root_path
       end
-
-      it "can not assign sessions" do
-       get :dashboard, id: sameer.id
-        expect(assigns[:sessions]).to be_nil
-      end
     end
 
     context "logged in as expert" do
@@ -40,11 +30,6 @@ describe ExpertsController do
       it "access his own dashboard page" do
         get :dashboard, id: sameer.id
         expect(response).to render_template "dashboard"
-      end
-
-      it "assigns sessions" do
-        get :dashboard, id: sameer.id
-        expect(assigns[:sessions]).to eq sameer.sessions_with_draft
       end
 
       it "can not access other's dashboard page" do
@@ -100,19 +85,19 @@ describe ExpertsController do
     end
   end
 
-	describe "GET profile" do
-		it "shows the expert's profile page" do
-			get :profile, id: sameer.id
-			expect(response).to be_success
-		end
+  describe "GET profile" do
+    it "shows the expert's profile page" do
+      get :profile, id: sameer.id
+      expect(response).to be_success
+    end
 
-		it "assigns the expert's sessions, video_interviews and courses" do
-			[video_interview, session_communication, first_course]
-			get :profile, id: sameer.id
-			expect(assigns[:items]).to eq [session_communication, video_interview, first_course]
-		end
+    it "assigns the expert's sessions, video_interviews and courses" do
+      [video_interview, session_communication, first_course]
+      get :profile, id: sameer.id
+      expect(assigns[:items]).to eq [video_interview, first_course, session_communication]
+    end
 
-	end
+  end
 
 
   describe "GET contents" do
@@ -123,9 +108,9 @@ describe ExpertsController do
       end
 
       it "get all contents belongs to the expert" do
+        [session_intro, session_communication, video_interview]
         get :contents, id: sameer.id, format: :js
-
-        expect(assigns[:sessions].count).to eq sameer.contents.count
+        expect(assigns[:items].count).to eq 3
       end
     end
   end
@@ -151,58 +136,19 @@ describe ExpertsController do
 
 
   describe "PATCH update profile" do
-   context "logged in as expert" do
-     before :each do
-       sameer_profile
-       sign_in sameer
-     end
-     it "update corresponding user profile" do
-       patch :update_profile, id: sameer.id, profile: attributes_for(:profile, title: "new title"), format: :js
-       expect(sameer.profile.title).to eq "new title"
-     end
-     it "update corresponding user attributes" do
-       patch :update_profile, id: sameer.id, profile: {first_name: "gecko"}, format: :js
-       sameer.reload
-       expect(sameer.first_name).to eq "gecko"
-     end
-   end
+    context "logged in as expert" do
+      before :each do
+        sameer_profile
+        sign_in sameer
+      end
+      it "update corresponding user profile" do
+        patch :update_profile, id: sameer.id, expert: sameer.attributes, profile: attributes_for(:profile, title: "new title"), format: :js
+        expect(sameer.reload.profile.title).to eq "new title"
+      end
+      it "update corresponding user attributes" do
+        patch :update_profile, id: sameer.id, expert: attributes_for(:expert, first_name: 'gecko'), profile: sameer.profile.attributes, format: :js
+        expect(sameer.reload.first_name).to eq "gecko"
+      end
+    end
   end
-
-
-
-
-  # describe "GET new live session" do
-
-  #   context "not logged in" do
-
-  #     it "can not access new live session page" do
-  #       get :new_live_session, id: sameer.id 
-  #       expect(response).to redirect_to root_path
-  #     end
-  #   end
-
-  #   context "logged in as expert" do
-  #     before :each do 
-  #       sign_in sameer
-  #     end
-
-  #     it "access new live session page" do
-  #       get :new_live_session, id: sameer.id, format: :js
-  #       expect(response).to be_success 
-  #     end
-
-  #     it "can not access other expert's new live session page" do
-  #       get :new_live_session, id: alex.id, format: :js
-  #       expect(response).not_to be_success 
-  #     end
-
-  #     it "assigns new live session" do
-  #       get :new_live_session, id: sameer.id, format: :js
-  #       expect(assigns[:live_session]).to be_a_new(Session)
-  #     end
-  #   end
-  #   
-  # end
-
-
 end

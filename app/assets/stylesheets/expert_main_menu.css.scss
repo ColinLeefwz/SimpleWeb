@@ -1,96 +1,89 @@
 $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
 .main-menu{
-  .cards-body{
-    .session-items{
-      width: 100%;
-      border-bottom: 1px solid #ddd;
-      .item{
-        box-shadow: $shadow_param;
-        background-color: white;
-        padding-top: 1em;
-        border-bottom: 1px solid #ddd;
-        position: relative;
-        margin-bottom: 10px;
-        
-        .item-title{
-          font-family: Oswaldreg;
-          font-size: 19px;
-          color: #333333;
-          padding-left: 1rem;
-          margin-bottom: 1rem;
+  .item{
+    width: 100%;
+    box-shadow: $shadow_param;
+    background-color: white;
+    padding-top: 1em;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    margin-bottom: 10px;
+
+    .item-title{
+      font-family: Oswaldreg;
+      font-size: 19px;
+      color: #333333;
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .item-body{
+      margin-bottom: 1em;
+
+      .cover-wrapper, .statistic{
+        display: inline-block;
+        float: left;
+      }
+
+      .cover-wrapper{
+        width: 20%;
+        box-sizing: border-box;
+        margin-left: 1em;
+        vertical-align: middle;
+        .cover{
+          width: 160px;
         }
 
-          .item-body{
-            margin-bottom: 1em;
-
-            .cover-wrapper, .statistic, .something{
-              display: inline-block;
+        .social-share-icons{
+          margin-top: 0.9em;
+          width: 130px;
+          img{
+            width: 25px;
+            height: 25px;
+          }
+          .social-share{
+            width: 8%;
+            display: inline;
+            position: relative;
+            margin-right: 5px;
+          }
+          .count{
+            color: white;
+            background: #8A2649;
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            top: -8px;
+            left: 16px;
+            text-align: center;
+            font-size: 12px;
+            span{
               vertical-align: middle;
             }
-
-            .cover-wrapper{
-              margin-left: 1em;
-              .cover{
-                width: 160px;
-              }
-
-              .social-share-icons{
-                margin-top: 0.9em;
-                width: 130px;
-                img{
-                  width: 25px;
-                  height: 25px;
-                }
-                .social-share{
-                  width: 8%;
-                  display: inline;
-                  position: relative;
-                  margin-right: 5px;
-                }
-                .count{
-                  color: white;
-                  background: #8A2649;
-                  position: absolute;
-                  width: 15px;
-                  height: 15px;
-                  border-radius: 50%;
-                  top: -8px;
-                  left: 16px;
-                  text-align: center;
-                  font-size: 12px;
-                  span{
-                    vertical-align: middle;
-                  }
-                }
-              }
-            }
-
-
-           .statistic{
-             margin-left: 3em; 
-             width: 66%;
-
-             p#visits {
-               font-family: 'LatoItalic';
-               font-size: 14px;
-             }
-           }
-
-           .something{
-           }
           }
+        }
+      }
+      .statistic{
+        margin-left: 3em; 
+        width: 66%;
+        vertical-align: top;
 
-          
-       .draft-ribbon{
-         position: absolute;
-         top: 0;
-         right: 0;
-         img{
-           width: 156px;
-         }
-       }
+        p#visits {
+          padding-top: 0.5rem;
+          font-family: 'LatoItalic';
+          font-size: 14px;
+        }
+      }
+    } // item body end
 
+    .draft-ribbon{
+      position: absolute;
+      top: 0;
+      right: 0;
+      img{
+        width: 156px;
       }
     }
-  }
-}
+  } // item end
+} // main menu end

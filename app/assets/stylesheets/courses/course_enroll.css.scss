@@ -1,0 +1,107 @@
+
+$shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
+
+/* preview card */
+.card{
+    box-shadow: $shadow_param;
+    background-color: white;
+
+    width: 50%;
+    min-width: 300px;
+    margin: 0 auto;
+    margin-bottom: 30px;  //todo: extract the above code out
+
+  .card-header{
+
+    font-family: 'Oswaldreg';
+    font-size: 1.5em;
+    font-weight: 400;
+    text-indent: 1em;
+    border-bottom: 2px solid #6C2C85;
+    
+    .login{
+      font-family: 'Lato', sans-serif;
+      font-size: 0.5em;
+      .underlined{
+        text-decoration: underline;
+      } 
+    }
+  } 
+
+  .card-body{
+    padding: 1em 0;
+    .cover{
+      width: 40%;
+      padding: 0 1rem;
+      display: inline-block;
+      img{
+        /* center the image */
+        display: block;
+        margin: 0 auto;
+        vertical-align: middle;
+      }
+    }
+
+    .detail{
+      display: inline-block;
+      vertical-align: top;
+      width: 50%;
+      .title{
+        font-family: 'Oswaldreg';
+        font-size: 1.5em;
+        font-weight: 400
+      }
+
+      .duration-category{
+        .duration:after{
+          content: "| ";
+        }
+      }
+
+      .time, .price{
+        padding: 0.2em 0;
+        font-weight: 600;
+        .icon{
+          /* icon size */
+          width: 20px;
+          height: 20px;
+          vertical-align: text-bottom;
+        }
+      }
+
+      .payment{
+        margin-top: 0.5em;
+      }
+    }
+
+  } 
+
+} 
+
+/* account card */
+.card{
+  .card-body{
+
+    .confirm{
+      padding-left: 318px;
+      margin-top: 2em;
+      .confirm-button{
+        cursor: pointer;
+        padding: 0.4em 2em;
+
+        color: white;
+        background-color: #6A243C;
+      }
+      .confirm-button:hover{
+        color: white;
+      }
+      .hint{
+        font-family: 'Latoitalic';
+        font-size: 0.9em;
+        display: block;
+        margin: 0 auto;
+        margin-top: 0.4em;
+      }
+    }
+  }
+}

@@ -1,23 +1,7 @@
 require 'spec_helper'
 
 describe User do
-	helper_objects
-
-  describe ".get_subscribed_sessions" do 
-    it "gets the user's subscribed sessions with specific type" do
-      jevan.subscribe(session_communication)
-      expect(jevan.get_subscribed_sessions("ArticleSession")).to include session_communication
-    end
-  end
-
-  describe ".get_subscribed_contents" do
-    it "gets the user's subscribed articles and video_interviews" do
-      jevan.subscribe(video_interview)
-      jevan.subscribe(session_communication)
-      expect(jevan.get_subscribed_contents).to include video_interview
-      expect(jevan.get_subscribed_contents).to include session_communication
-    end
-  end
+  helper_objects
 
   describe ".has_subscribed?" do
     it "returns false if not subscribe the course" do
@@ -44,56 +28,46 @@ describe User do
 
   describe ".unsubscribe" do
     it "deletes the session from user's subscribed_sessions" do
-      jevan.subscribe session_intro
-      jevan.unsubscribe session_intro
-      expect(jevan.reload.subscribed_sessions).not_to include session_intro
+      article = create(:article, title: "subscribe me")
+      Subscription.create(subscriber_id: gecko.id, subscribable: article)
+      gecko.unsubscribe article
+      expect(gecko.subscribed_sessions).not_to include article
     end
   end
 
-  ##Peter at 2014-02-08: there's no enrollment for sessions now
-	# describe ".enroll" do
-	# 	it "adds a session to user's enrolled_sessions" do
-	# 		allen.enroll session_find
-	# 		allen.enroll session_map
-	# 		expect(allen.enrolled_sessions.count).to eq 2
-	# 	end
-	# end
+  describe ".follow?" do
+    it "returns true if already followed me" do
+      peter.followers << allen
+      expect(allen.follow? peter).to be_true
+    end
 
-	describe ".follow?" do
-		it "returns true if already followed me" do
-			peter.followers << allen
-			expect(allen.follow? peter).to be_true
-		end
+    it "returns false if not followed me" do
+      expect(allen.follow? peter).to be_false
+    end
+  end
 
-		it "returns false if not followed me" do
-			expect(allen.follow? peter).to be_false
-		end
-	end
+  describe ".follow" do
+    it "follows the followed one" do
+      peter.follow allen
+      expect(peter.reload.followed_users).to include allen
+    end
+  end
 
-	describe ".follow" do
-		it "follows the followed one" do
-			peter.follow allen
-			expect(peter.reload.followed_users).to include allen
-		end
-	end
+  describe ".unfollow" do
+    it "un-follows the followed one" do
+      peter.followers << allen
+      allen.unfollow peter
+      expect(peter.reload.followers).not_to include allen
+    end
 
-	describe ".unfollow" do
-		it "un-follows the followed one" do
-			peter.followers << allen
-			allen.unfollow peter
-			expect(peter.reload.followers).not_to include allen
-		end
-
-		it "just unfollows the one" do
-			# peter.followers << allen
-			# sameer.followers << allen
-			allen.followed_users << [peter, sameer, alex]
-			allen.unfollow peter
-			expect(allen.reload.followed_users).to include alex
-			expect(allen.reload.followed_users).to include sameer
-			expect(peter.reload.followers).not_to include allen
-		end
-	end
+    it "just unfollows the one" do
+      allen.followed_users << [peter, sameer, alex]
+      allen.unfollow peter
+      expect(allen.reload.followed_users).to include alex
+      expect(allen.reload.followed_users).to include sameer
+      expect(peter.reload.followers).not_to include allen
+    end
+  end
 
   describe ".build_refer_message" do 
     context "member can build an email message" do

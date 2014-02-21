@@ -1,12 +1,9 @@
-- if item.is_a?ArticleSession
-  - item_url = session_url(item).sub("sessions", "article")
-- else
-  - item_url = polymorphic_url(item)
-- item_url = CGI.escape item_url
+- item_url = CGI.escape polymorphic_url(item)
 - item_title = CGI.escape item.title
+- item_image = CGI.escape item.cover.url
 
 .social-share.facebook
-  - url = "http://www.facebook.com/sharer/sharer.php?u=#{item_url}&title=#{item_title}"
+  - url = "https://www.facebook.com/dialog/feed?app_id=#{ENV["FACEBOOK_APPID"]} &link=#{item_url} &redirect_uri=http://prodygia.com &picture=#{item_image}"
   = link_to image_tag("facebook.png", class: "tooltips", title: "share via Facebook", data:{placement: "bottom"}), url, data: { popup: true}
   - if @show_shares
     #fb-shares.social-share.count

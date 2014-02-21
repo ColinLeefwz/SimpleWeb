@@ -59,19 +59,6 @@ class ApplicationController < ActionController::Base
     current_user
   end
 
-
-  # todo: move it to concern
-  # send mail after user successfully enrolled 
-  def send_enrolled_mail(item)
-    domain_url = request.base_url
-    if domain_url == "http://localhost:3000"
-      domain_url = "http://www.prodygia.com"
-    end
-    mandrill = MandrillApi.new
-    mandrill.enroll_comfirm(current_user, item, item.cover.url)
-  end
-
-
   protected
   ## Override devise-invitable before_filter
   def authenticate_inviter!
