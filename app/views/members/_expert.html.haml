@@ -13,7 +13,7 @@
           = link_to e.name, profile_expert_path(e)
         .expert-title
           - profile = e.profile
-          = [profile.title, profile.company].reject(&:empty?).join(",")
+          = [profile.title, profile.company].reject(&:blank?).join(",")
     .expert-actions
       .follow-star
         = render 'shared/favorite_star', method: :follow?, object: e, link_path: relationship_path(e)
