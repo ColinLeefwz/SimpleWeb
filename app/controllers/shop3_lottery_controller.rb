@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class Shop3LotteryController < ApplicationController
-  before_filter :shop_authorize
+  before_filter :shop_authorize, :except => [:game,:ajax_phone]
   layout 'shop3'
 
   def index
