@@ -52,7 +52,7 @@ class CoursesController < ApplicationController
   def enroll_confirm
     current_user.enroll(@course)
     send_enrolled_mail(@course)
-    redirect_to @course, flash: {success: "Enrolled Success!"}
+    redirect_to @course, flash: {success: "Subscribed successfully!"}
   end
 
   def purchase
@@ -81,7 +81,7 @@ class CoursesController < ApplicationController
       domain_url = "http://www.prodygia.com"
     end
     mandrill = MandrillApi.new
-    mandrill.enroll_comfirm(current_user, item, item.cover.url)
+    mandrill.enroll_confirm(current_user, item, item.cover.url)
   end
 
   def member_params

@@ -1,6 +1,4 @@
-$box_header_font_size: 18px;
-$white: #ffffff;
-$shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
+@import "globals/variables";
 
 html {
   height:100%;
@@ -15,6 +13,7 @@ body {
   font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 17px;
+  -webkit-font-smoothing: antialiased;
   background: #edefec;
   margin: 0;
   position: relative;
@@ -28,7 +27,7 @@ body {
   padding-bottom: 50px;
 
   .item {
-    background: $white;
+    background: white;
     -webkit-box-shadow: $shadow_param;
     box-shadow: $shadow_param;
     width: 330px;
