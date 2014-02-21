@@ -1,6 +1,5 @@
 - content_for(:title){@announcement.title}
 
-= render "sessions/page_header", item: @announcement
 = render "sessions/page_header", item: @announcement, item: @announcement, link_path: subscribe_path(@announcement, type: @announcement.class.name)
 = render "welcome/box_content_modal"
 .text-page-article-box.shadow.margin-bottom
