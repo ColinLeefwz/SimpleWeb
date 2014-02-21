@@ -6,7 +6,7 @@ class MandrillApi
     @mandrill = Mandrill::API.new ENV['MANDRILL_API']
   end
 
-  def enroll_comfirm(user, item, item_cover)
+  def enroll_confirm(user, item, item_cover)
 
     #todo: change "session-title" to "item-title" (confirm with peter)
     #todo: course.start_date
@@ -18,7 +18,7 @@ class MandrillApi
       "to"=>[{"name"=>user.first_name, "email"=>user.email}],
     }
 
-    send_template_mail("enroll_comfirm", template_content, addition_message)
+    send_template_mail("enroll-confirm", template_content, addition_message)
   end
 
   def welcome_confirm(user)
