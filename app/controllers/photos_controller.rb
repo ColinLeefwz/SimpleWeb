@@ -18,7 +18,18 @@ class PhotosController < ApplicationController
   end
   
   def callback
-    #TODO: 判断调用来自七牛
+    #{"from"=>"5198febcc90d8bd138000338", "room"=>"20314866", "id"=>"5198febcc90d8bd138000338/1392964949-2", "key"=>"Fnyr8lxbaqgkjyObS2-EdtaK8kT9", "size"=>"60866", "controller"=>"photos", "action"=>"callback"}
+    if params[:id][0,25]==params[:from]+"/"
+      user = User.find_by_id(params[:from])
+      room = params[:room]
+      time,total = params[:id][25..-1].split("-").map{|x| x.to_i}
+      photo = Photo.where({user_id:user.id, room:room, time:time, total:total]}).first
+      unless photo
+        Xmpp.error_notify("多图上传，七牛先上传完成：#{user.name},#{Shop.find_by_id(room).name}")
+      end
+    else
+      Xmpp.error_notify("图片上传七牛回调出错：#{request.params}")
+    end
     render :json => request.params.to_json
   end
 
