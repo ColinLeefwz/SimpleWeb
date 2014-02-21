@@ -4,7 +4,7 @@
 
 .text-page-article-box.shadow.margin-bottom
   .text-page-main-content
-    -unless (@video_interview.sd_url.blank? and @video_interview.hd_url.blank?)
+    - if @video_interview.has_video_to_present?
       .announcement-cover.pull-right
         = render "shared/sublime_video", item_resource: @video_interview, poster_url: @video_interview.cover.url
     %p= @video_interview.description.html_safe

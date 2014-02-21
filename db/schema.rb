@@ -364,14 +364,6 @@ ActiveRecord::Schema.define(version: 20140220124526) do
     t.integer  "expert_id"
     t.string   "categories",                     default: [], array: true
     t.text     "description"
-    t.string   "attached_video_hd_file_name"
-    t.string   "attached_video_hd_content_type"
-    t.integer  "attached_video_hd_file_size"
-    t.datetime "attached_video_hd_updated_at"
-    t.string   "attached_video_sd_file_name"
-    t.string   "attached_video_sd_content_type"
-    t.integer  "attached_video_sd_file_size"
-    t.datetime "attached_video_sd_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "hd_url"
@@ -382,6 +374,14 @@ ActiveRecord::Schema.define(version: 20140220124526) do
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
     t.string   "cover_url"
+    t.string   "attached_video_hd_file_name"
+    t.string   "attached_video_hd_content_type"
+    t.integer  "attached_video_hd_file_size"
+    t.datetime "attached_video_hd_updated_at"
+    t.string   "attached_video_sd_file_name"
+    t.string   "attached_video_sd_content_type"
+    t.integer  "attached_video_sd_file_size"
+    t.datetime "attached_video_sd_updated_at"
   end
 
   add_index "video_interviews", ["categories"], name: "index_video_interviews_on_categories", using: :gin

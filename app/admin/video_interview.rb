@@ -13,6 +13,9 @@ ActiveAdmin.register VideoInterview do
     default_actions
   end
 
-  permit_params :title, :language, :cover, :description, :expert_id, {categories:[]}, :attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :hd_url, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :id
-
+  controller do
+    def permitted_params
+      params.permit video_interview: [:id, :title, :language, :cover, :description, :expert_id, {categories:[]}, video_attributes: [:id, :SD_file_name, :SD_content_type, :SD_file_size, :SD_file_path,  :HD_file_name, :HD_content_type, :HD_file_size, :HD_file_path]]
+    end
+  end
 end
