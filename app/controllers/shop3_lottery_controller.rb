@@ -35,6 +35,8 @@ class Shop3LotteryController < ApplicationController
     game.sn = params[:txt]
     game.phone = params[:tel]
     game.save!
+    cp = Coupon.find_by_id("5305d4e220f3186569000064")
+    cp.send_coupon(params[:uid])
   end
 
 end

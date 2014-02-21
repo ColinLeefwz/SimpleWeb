@@ -33,11 +33,13 @@
 							<p>
 								中奖时间：
 								<span class="red">
-									2014年2月22日 12:30:26
+									<%= Time.now.strftime("%Y年%m月%d日 %H:%M:%S") %>
 								</span>
 							</p>
-							<p class="red">线下兑奖请到指定地点，出示此页面给我们的工作人员输入兑奖密码确认兑奖！兑奖请联系我们，电话：13899999999</p>
-							<p class="red">中奖者手机号：发哥好好</p>
+							<p class="red">
+							<%= @lottery.try(:info) %>
+							</p>
+							<p class="red"></p>
 						</div>
 					</div>
 				</div>
@@ -156,11 +158,14 @@
 					code: $("#sncode").text(),
 					tel: tel,
 					action: "setTel",
-					txt: txt
+					txt: txt,
+                    gid: dface_var.gid,
+                    sid: dface_var.sid,
+                    uid: dface_var.uid
 				};
 
 				alert("手机号码提交成功!");
-				$.post('/shop3_lottery/ajax_phone', submitData, dface_var,
+				$.post('/shop3_lottery/ajax_phone', submitData, 
 				function(data) {
 					if (data.success == true) {
 						// alert(data.msg);
