@@ -12,7 +12,7 @@
     resource_field.find("[id$=file_name]").val(content.filename)
     resource_field.find("[id$=file_size]").val(content.filesize)
     resource_field.find("[id$=content_type]").first().val(content.filetype)
-    resource_field.find("[id$=file_path]").val(content.filepath)
+    resource_field.find("[id$=temp_path]").val(content.filepath)
     $(e.target).find(".status").text("success!")
 
   $(document).on "s3_upload_failed", (e, content) ->
