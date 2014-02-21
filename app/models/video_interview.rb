@@ -14,4 +14,8 @@ class VideoInterview < ActiveRecord::Base
   def editable
     true
   end
+
+  def has_video_to_present?
+    self.attached_video_hd_file_name.present? || self.attached_video_sd_file_name.present?
+  end
 end

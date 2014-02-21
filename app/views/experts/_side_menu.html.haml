@@ -1,22 +1,18 @@
 .user-info.clearfix
   .avatar
-    = image_tag(@expert.avatar.url)
+    = link_to image_tag(@expert.avatar.url), profile_expert_path(@expert)
   .profile
     .name
       = @expert.name
     .title
-      = [@profile.title, @profile.company].join(",")
+      = [@profile.title, @profile.company].reject(&:blank?).join(",")
     .edit
       %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
-
-
 
 .toolkit
   .item
     = render 'item_icon', item_name: 'activity_stream'
     .item-text #{link_to 'My activity stream', pending_page_expert_path(text: "my_activity_stream"), remote: true}
-
-
 
 .block-title
   %span
@@ -31,8 +27,6 @@
   .item
     = render 'item_icon', item_name: 'private_session'
     .item-text #{link_to 'Schedule private session', pending_page_expert_path(text: 'schedule_private_session'), remote: true}
-
-
 
 .block-title
   %span
@@ -54,8 +48,6 @@
     = render 'item_icon', item_name: 'refer_expert'
     .item-text #{link_to 'Refer new experts', refer_new_expert_experts_path, remote: true }
 
-
-
 .block-title
   %span
     VIEW
@@ -75,8 +67,6 @@
   .item
     = render 'item_icon', item_name: 'statistics'
     .item-text #{link_to 'Statistics', pending_page_expert_path(text: 'statistics'), remote: true}
-
-
 
 .toolkit
   .item

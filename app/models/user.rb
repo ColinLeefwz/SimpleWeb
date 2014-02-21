@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def subscribed_contents
     articles = self.subscribed_sessions
     video_interviews = self.subscribed_video_interviews
@@ -100,31 +104,20 @@ class User < ActiveRecord::Base
   end
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
-    user = User.where(:provider => auth.provider, :uid => auth.uid).first
-    unless user
-      user = User.create(name: auth.extra.raw_info.name,
-                         provider: auth.provider,
-                         uid: auth.uid,
-                         email: auth.info.email,
-                         password: Devise.friendly_token[0,20]
-                        )
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first_or_create do |user|
+      user.name = auth.extra.raw_info.name
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
     end
-    user
   end
 
   def self.find_for_linkedin(access_token, sign_in_resource=nil)
     data = access_token.info
-    user = User.where(email: data["email"], provider: 'linkedin').first
-
-    unless user
-      user = User.create(first_name: data['first_name'],
-                         last_name: data['last_name'],
-                         email: data["email"],
-                         password: Devise.friendly_token[0,20],
-                         provider: 'linkedin'
-                        )
+    user = User.where(email: data["email"], provider: 'linkedin').first_or_create do |user|
+      user.first_name = data['first_name']
+      user.last_name = data['last_name']
+      user.password = Devise.friendly_token[0,20]
     end
-    user
   end
 
   protected
