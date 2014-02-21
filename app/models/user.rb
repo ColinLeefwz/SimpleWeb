@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def subscribed_contents
     articles = self.subscribed_sessions
     video_interviews = self.subscribed_video_interviews
