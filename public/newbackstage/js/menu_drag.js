@@ -19,6 +19,7 @@ $(document).ready(function(){
 	function back_up(){
 		trigger_click = true;
 		$("dl.jsMenu,dd.jslevel2").unbind('mousedown')
+		$(document).unbind("mouseup")
 	   	$(".add_gray,.edit_gray, .del_gray").css('display', '');
 	    $(".r").css('display', '');
 	    $("dd, dt").removeClass('selected').attr('style', '')
