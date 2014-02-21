@@ -1,6 +1,7 @@
 class Video < ActiveRecord::Base
   belongs_to :videoable, polymorphic: true
 
+  has_attached_file :cover
   has_attached_file :SD, path: ":class/:attachment/:id/:filename"
   has_attached_file :HD, path: ":class/:attachment/:id/:filename"
 
