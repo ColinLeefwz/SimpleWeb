@@ -1,5 +1,4 @@
-
-$shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
+@import "globals/variables";
 
 /* preview card */
 .card{
@@ -31,8 +30,8 @@ $shadow_param: 0 3px 8px rgba(170, 180, 190, 1);
   .card-body{
     padding: 1em 0;
     .cover{
-      width: 45%;
-      margin-right: 1em;
+      width: 40%;
+      padding: 0 1rem;
       display: inline-block;
       img{
         /* center the image */

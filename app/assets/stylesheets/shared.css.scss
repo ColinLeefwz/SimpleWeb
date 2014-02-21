@@ -1,3 +1,4 @@
+@import "globals/variables";
 
 .enroll-button{
   cursor: pointer;
@@ -54,7 +55,7 @@ input[type="file"]{
 }
 
 .shadow {
-  box-shadow: 0 3px 8px #aab4be;
+  box-shadow: $shadow_param;
 }
 
 .hollow-star{
