@@ -1,0 +1,19 @@
+#modal.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h4#myModalLabel.modal-title Guidelines for posting an article 
+      .modal-body
+        %ul.list-group
+          %li.list-group-item Content must be China-relevant.
+          %li.list-group-item Statements should ideally include one or more examples to illustrate your point.
+          %li.list-group-item Keep to topics within the macro, business, entrepreneurship, tech and culture categories.Anything outside this scope will not be accepted. 
+          %li.list-group-item Communicate your opinions, experience and research. Do not, however, turn this into a commercial pitch.
+          %li.list-group-item Use of bullet points, lists or rankings is recommended to organize your thoughts; remember that the reader will want to get your main point very quickly
+          %li.list-group-item Word count should range between 300 and 1,500 .
+          %li.list-group-item Include a cover image which is high quality and consistent with your content.
+          %li.list-group-item For key Chinese terms or names, we urge you to feature the Chinese characters in parentheses. 
+          %li.list-group-item Do not copy or plagiarize content from other sources.  
+      .modal-footer
+        = link_to 'Next', new_article_path, class: 'btn btn-primary', type: 'button', data:{dismiss: 'modal'}, remote: true

@@ -18,7 +18,7 @@
 .toolkit
   .item
     = render 'item_icon', item_name: 'new_content'
-    .item-text #{link_to 'Post new content', new_article_path, remote: true }
+    .item-text #{link_to 'Post new content', '#modal', data:{toggle: "modal"}, remote: true }
   .item
     = render 'item_icon', item_name: 'new_session'
     .item-text #{link_to 'Create new session', pending_page_expert_path(text: "create_new_session"), remote: true}
