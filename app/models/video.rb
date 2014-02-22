@@ -2,48 +2,64 @@ class Video < ActiveRecord::Base
   belongs_to :videoable, polymorphic: true
 
   has_attached_file :cover
-  has_attached_file :SD, path: ":class/:attachment/:id/:filename"
-  has_attached_file :HD, path: ":class/:attachment/:id/:filename"
+  has_attached_file :SD, path: ":class/:id/:attachment/:filename", default_url: ""
+  has_attached_file :HD, path: ":class/:id/:attachment/:filename", default_url: ""
 
+  after_initialize :get_current_path
+  before_save :get_temp_path
   after_save :paperclip_path
 
-
   private
-  #todo: add Exception Handle
-  def paperclip_path
-    bucket = get_bucket
-
-    %w(SD HD).each do |definition|
-      raw_path = get_raw_path(self.send(definition+"_file_path"))
-      object = bucket.objects[raw_path]
-
-      if object.exists?
-        object.copy_to get_destination(definition)
-        object.delete
-      end
-    end
+  def get_current_path
+    @SD_current_path = /videos\/\d+\/sds\/.+/.match CGI.unescape(self.SD.url)
+    @HD_current_path = /videos\/\d+\/hds\/.+/.match CGI.unescape(self.HD.url)
   end
 
 
-  def get_bucket
-    return @bucket if defined?(@bucket)
-    s3 = AWS::S3.new
-    @bucket = s3.buckets[ENV["AWS_BUCKET"]]
+  def get_temp_path
+    @SD_temp_path = chop_bucket(CGI.unescape self.SD_temp_path)
+    @HD_temp_path = chop_bucket(CGI.unescape self.HD_temp_path)
+
+    self.SD_temp_path, self.HD_temp_path = nil, nil
   end
 
+  def chop_bucket(path)
+    return nil if path.blank?
 
-  def get_raw_path(path)
-    path = (CGI.unescape path).split("/")
+    path = path.split("/")
     2.times{ path.shift() }
     path = path.join("/")
   end
 
 
-  def get_destination(definition)
-    expect_path = "videos/#{definition.downcase.pluralize}/#{self.id}/#{self.send(definition+'_file_name')}"
-    bucket = get_bucket
-    destination = bucket.objects[expect_path]
+
+  #todo: add Exception Handle
+  def paperclip_path
+    @bucket = AWS::S3.new.buckets[ENV["AWS_BUCKET"]]
+    #SD
+    if @SD_temp_path.present?
+      @bucket.objects[@SD_current_path].delete if @SD_current_path.present?
+
+      expect_path = "videos/#{self.id}/sds/#{self.SD_file_name}"
+      copy_and_delete(@SD_temp_path, expect_path)
+    end
+
+    #HD
+    if @HD_temp_path.present?
+      @bucket.objects[@HD_current_path].delete if @HD_current_path.present?
+
+      expect_path = "videos/#{self.id}/hds/#{self.HD_file_name}"
+      copy_and_delete(@HD_temp_path, expect_path)
+    end
   end
 
+
+  def copy_and_delete(temp_path, expect_path)
+    temp = @bucket.objects[temp_path]
+    expect = @bucket.objects[expect_path]
+
+    temp.copy_to(expect)
+    temp.delete
+  end
 end
 
