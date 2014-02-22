@@ -1,30 +1,30 @@
 %h3 Create an intro video for this course
-%span HD
-= s3_uploader_form id: "s3_intro_video_hd", callback_param: 'intro_video_hd', key: "intro_videos/hd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/hd", acl: 'public-read' do
-  = file_field_tag :file, multiple: false
-  = link_to "upload", "javascript:void(0)", id: "hd_upload_submit"
-  .upload.js-progress-bars
-    .progress
-      .bars
-
 %span SD
-= s3_uploader_form id: "s3_intro_video_sd", callback_param: 'intro_video_sd', key: "intro_videos/sd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/sd", acl: 'public-read' do
+= s3_uploader_form class: "s3_uploader", acl: 'public-read', data:{definition: "SD"} do
   = file_field_tag :file, multiple: false
-  = link_to "upload", "javascript:void(0)", id: "sd_upload_submit"
-  .upload.js-progress-bars
-    .progress
-      .bars
+  %span.status
+
+%span HD
+= s3_uploader_form class: "s3_uploader", acl: 'public-read', data:{definition: "HD"} do
+  = file_field_tag :file, multiple: false
+  %span.status
 
 = simple_form_for @course, html: {class: "fields"} do |f|
-  = f.simple_fields_for :intro_video do |intro|
-    = intro.input :attached_video_hd_file_name, as: :hidden
-    = intro.input :attached_video_hd_content_type, as: :hidden
-    = intro.input :attached_video_hd_file_size, as: :hidden
-    = intro.input :hd_url, as: :hidden
-    = intro.input :attached_video_sd_file_name, as: :hidden
-    = intro.input :attached_video_sd_content_type, as: :hidden
-    = intro.input :attached_video_sd_file_size, as: :hidden
-    = intro.input :sd_url, as: :hidden
+
+  = f.fields_for :video, (f.object.video || f.object.build_video) do |v|
+    = v.label :cover, "Video Cover"
+    = v.file_field :cover
+    .SD
+      = v.hidden_field :SD_file_name
+      = v.hidden_field :SD_content_type
+      = v.hidden_field :SD_file_size
+      = v.hidden_field :SD_temp_path
+
+    .HD
+      = v.hidden_field :HD_file_name
+      = v.hidden_field :HD_content_type
+      = v.hidden_field :HD_file_size
+      = v.hidden_field :HD_temp_path
 
   = f.input :title, label: "Course Title"
   = f.input :price
@@ -42,6 +42,8 @@
   = link_to_add_fields("add chapter", f, :chapters)
   = f.submit
 
-
 -# todo: space above footer
 .footer-spacer{style: "height: 50px;"}
+
+:javascript
+  upload_helper()

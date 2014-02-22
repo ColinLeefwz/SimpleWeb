@@ -14,7 +14,6 @@ class CoursesController < ApplicationController
 
   def new
     @course = Course.new
-    @course.build_intro_video
   end
 
   # todo: add error handler
@@ -24,7 +23,6 @@ class CoursesController < ApplicationController
   end
 
   def edit
-    @course.intro_video
   end
 
   def update
@@ -93,6 +91,9 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:id, :title, :description, :cover, :price, {categories:[]}, {expert_ids: []}, chapters_attributes: [:id, :title, :description, :order, :_destroy, sections_attributes: [:id, :title, :description, :duration, :order, :free_preview, :_destroy] ], intro_video_attributes: [:id, :attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
+    params.require(:course).permit(:id, :title, :description, :cover, :price, {categories:[]}, {expert_ids: []}, 
+                                   chapters_attributes: [:id, :title, :description, :order, :_destroy, sections_attributes: [:id, :title, :description, :duration, :order, :free_preview, :_destroy] ], 
+                                   video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path,  :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path] )
   end
 end
+
