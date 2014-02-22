@@ -11,11 +11,11 @@
   .section-detail
     - if available
       .section-modal.modal.hide.fade
-        - if section.has_video?
+        - if section.has_video_to_present?
           .video
-            %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
-              %source{src: section.sd_url}
-              %source{src: section.hd_url, data: {quality: "hd"}}
+            %video.sublime{title: section.title, width: "640", height: "352", preload: "none"}
+              %source{src: section.video.SD.url}
+              %source{src: section.video.HD.url, data: {quality: "hd"}}
 
         .description
           = section.description

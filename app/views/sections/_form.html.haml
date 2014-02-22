@@ -1,35 +1,35 @@
 
-= simple_form_for @section do |f|
-  = f.input :title
-  = f.input :description
-
-  = f.fields_for :resources, @sd_resource do |r|
-    .SD
-      = r.hidden_field :video_definition
-      = r.hidden_field :direct_upload_url
-      = r.hidden_field :attached_file_file_name
-      = r.hidden_field :attached_file_file_size
-      = r.hidden_field :attached_file_content_type
-      = r.hidden_field :attached_file_file_path
-
-  = f.fields_for :resources, @hd_resource do |r|
-    .HD
-      = r.hidden_field :video_definition
-      = r.hidden_field :direct_upload_url
-      = r.hidden_field :attached_file_file_name
-      = r.hidden_field :attached_file_file_size
-      = r.hidden_field :attached_file_content_type
-      = r.hidden_field :attached_file_file_path
-
-= s3_uploader_form class: "s3_uploader", acl: "public-read", callback_param: "direct_upload_url", data: {definition: "SD"} do
+= s3_uploader_form class: "s3_uploader", acl: "public-read", data: {definition: "SD"} do
   %span SD:
   = file_field_tag :file, multiple: false
   %span.status
 
-= s3_uploader_form class: "s3_uploader", acl: "public-read", callback_param: "direct_upload_url", data: {definition: "HD"} do
+= s3_uploader_form class: "s3_uploader", acl: "public-read", data: {definition: "HD"} do
   %span HD:
   = file_field_tag :file, multiple: false
   %span.status
 
+= simple_form_for @section do |f|
 
-%span.btn.section-save Save
+  = f.fields_for :video, (f.object.video || f.object.build_video) do |v|
+    = v.label :cover, "Video Cover"
+    = v.file_field :cover
+    .SD
+      = v.hidden_field :SD_file_name
+      = v.hidden_field :SD_content_type
+      = v.hidden_field :SD_file_size
+      = v.hidden_field :SD_temp_path
+
+    .HD
+      = v.hidden_field :HD_file_name
+      = v.hidden_field :HD_content_type
+      = v.hidden_field :HD_file_size
+      = v.hidden_field :HD_temp_path
+  
+  = f.input :title
+  = f.input :description
+
+  = f.button :submit, class: "btn"
+
+:javascript
+  upload_helper()

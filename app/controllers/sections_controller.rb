@@ -3,13 +3,11 @@ class SectionsController < ApplicationController
   before_filter :set_section, only: [:edit, :update]
 
   def edit
-    @hd_resource = @section.resources.where(video_definition: "HD").first_or_initialize
-    @sd_resource = @section.resources.where(video_definition: "SD").first_or_initialize
   end
 
   def update
     @section.update_attributes(section_params)
-    redirect_to preview_course_path(@section.chapter.course)
+    redirect_to preview_course_path(@section.course)
   end
 
 
@@ -18,6 +16,7 @@ class SectionsController < ApplicationController
     @section = Section.find params[:id]
   end
   def section_params
-    params.require(:section).permit(:id, :title, :description, :duration, :free_preview, resources_attributes: [:id, :video_definition, :direct_upload_url, :attached_file_file_name, :attached_file_file_size, :attached_file_content_type, :attached_file_file_path])
+    params.require(:section).permit(:id, :title, :description, :duration, :free_preview, 
+                                    video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path,  :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path])
   end
 end
