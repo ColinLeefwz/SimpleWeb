@@ -151,7 +151,7 @@ class PhoneController < ApplicationController
       return      
     end
     if user.phone_hidden
-      render :json => {"error"=>"该手机号码不能直接登录，请先注册或者登录后绑定该手机号码"}.to_json
+      return render :json => {"error"=>"该手机号码不能直接登录，请先注册或者登录后绑定该手机号码"}.to_json
     end
     session[:user_id] = user.id
     save_device_info(user.id, false)
@@ -165,8 +165,8 @@ class PhoneController < ApplicationController
         user.unset(:phone)
         user.unset(:phone_hidden)
       else
-        render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
-      return      
+        return render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
+      end
     end
     if session_user.phone && params[:phone] != session_user.phone
       Xmpp.error_notify("用户手机号码#{session_user.phone}，重新绑定新的手机号码#{params[:phone]}")
