@@ -3,10 +3,11 @@ class Expert < Member
   has_and_belongs_to_many :courses
   has_many :video_interviews, -> {order "updated_at DESC"}
   has_many :resources
-  has_one :intro_video, as: :introable, dependent: :destroy
+
+  has_one :video, as: :videoable, dependent: :destroy
+  accepts_nested_attributes_for :video, allow_destroy: true
 
   accepts_nested_attributes_for :profile
-  accepts_nested_attributes_for :intro_video
   # alias_method :profile=, :profile_attributes=   # NOTE add this line for active admin working properly
 
   after_create :create_a_profile, :create_a_video

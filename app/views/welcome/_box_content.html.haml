@@ -14,8 +14,7 @@
 
   .cover
     -if item.has_video_to_present?
-      - video_resource = item.is_a?(Course) ? item.intro_video : item
-      = render "shared/sublime_video", item_resource: video_resource, poster_url: video_resource.cover.url
+      = render "shared/sublime_video", item_resource: item, poster_url: item.cover.url
     -else
       = link_to image_tag(item.cover.url), polymorphic_path(item)
 

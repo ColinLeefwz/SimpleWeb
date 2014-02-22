@@ -53,9 +53,9 @@
         -# `Overview` tab
         .tab-pane.active#tab1
           %div
-            - if @expert.intro_video.present?
+            - if @expert.video.present?
               .intro-video.pull-right
-                = render "shared/sublime_video", item_resource: @expert.intro_video, poster_url: @expert.intro_video.cover.url
+                = render "shared/sublime_video", item_resource: @expert, poster_url: @expert.video.cover.url
             - expertise = @profile.expertise || "Expertise to be filled"
             = expertise.html_safe
             .clear-fix
