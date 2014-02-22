@@ -19,6 +19,6 @@ class VideoInterview < ActiveRecord::Base
   end
 
   def has_video_to_present?
-    self.video.SD_file_name|| self.video.HD_file_name
+    self.video.try(:SD_file_name) || self.video.try(:HD_file_name)
   end
 end

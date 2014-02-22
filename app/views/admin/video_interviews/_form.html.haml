@@ -9,25 +9,28 @@
   %span.status
 
 = simple_form_for [:admin, @video_interview] do |f|
+
+  = f.fields_for :video, (f.object.video || f.object.build_video) do |v|
+    = v.label :cover, "Video Cover"
+    = v.file_field :cover
+    .SD
+      = v.hidden_field :SD_file_name
+      = v.hidden_field :SD_content_type
+      = v.hidden_field :SD_file_size
+      = v.hidden_field :SD_temp_path
+
+    .HD
+      = v.hidden_field :HD_file_name
+      = v.hidden_field :HD_content_type
+      = v.hidden_field :HD_file_size
+      = v.hidden_field :HD_temp_path
+
   = f.input :title
   = f.input :description
   = f.input :language, collection: Language.all, label_method: :long_version, value_method: :combine_version, include_blank: false
   = f.input :cover
   = f.input :expert_id, as: :select, collection: Expert.all
   = f.input :categories, as: :check_boxes, collection: Category.pluck(:name)
-
-  = f.fields_for :video, (f.object.video || f.object.build_video) do |v|
-    .SD
-      = v.hidden_field :SD_file_name
-      = v.hidden_field :SD_content_type
-      = v.hidden_field :SD_file_size
-      = v.hidden_field :SD_file_path
-
-    .HD
-      = v.hidden_field :HD_file_name
-      = v.hidden_field :HD_content_type
-      = v.hidden_field :HD_file_size
-      = v.hidden_field :HD_file_path
 
   = f.button :submit
 
