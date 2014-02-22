@@ -24,6 +24,8 @@ class Course < ActiveRecord::Base
 
   has_attached_file :cover
 
+  after_create :create_a_video
+
   class << self
     def recommend_courses(current_user)
       show_courses = []
@@ -59,4 +61,7 @@ class Course < ActiveRecord::Base
     self.video.try(:SD_file_name) || self.video.try(:HD_file_name)
   end
   private
+  def create_a_video
+    self.create_video
+  end
 end
