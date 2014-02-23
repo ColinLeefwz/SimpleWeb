@@ -26,9 +26,9 @@ module PhoneUtil
   end
   
   def phone_operator
-    return "移动" is_yidong(phone)
-    return "联通" is_liantong(phone)
-    return "电信" is_dianxin(phone)
+    return "移动" if is_yidong(phone)
+    return "联通" if is_liantong(phone)
+    return "电信" if is_dianxin(phone)
     return "未知运营商"   
   end
 
