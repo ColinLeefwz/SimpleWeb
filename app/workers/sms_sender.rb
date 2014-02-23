@@ -7,7 +7,7 @@ class SmsSender
   def self.perform(phone,text)
     v = Rails.cache.read("Sms#{phone}")
     if v.nil?
-      if is_yidong(phone)
+      if is_yidong(phone) || is_liantong(phone)
         send_sms_xuanwu(phone, text)
       else
         send_sms_ihuiyi(phone, text)
@@ -29,8 +29,9 @@ class SmsSender
       info = RestClient.get "http://106.ihuyi.com/webservice/sms.php?method=Submit&account=cf_llh&password=#{pass}&mobile=#{phone}&content=#{URI.escape(text)}"
       match = info.index("<code>2</code>")
       return true if match && match>0
-      Xmpp.error_notify("ihuiyi短信错误：#{Time.now},#{text}")
+      Xmpp.error_notify("ihuiyi短信错误：#{Time.now},#{phone_operator(phone)} #{phone}")
       Xmpp.error_notify(info)
+      Xmpp.error_notify(info.encode('utf-8','gbk'))
       return nil
   end
   
