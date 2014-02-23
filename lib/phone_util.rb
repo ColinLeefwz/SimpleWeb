@@ -25,7 +25,7 @@ module PhoneUtil
     str.size==11 && str.to_i>10000000000
   end
   
-  def phone_operator
+  def phone_operator(phone)
     return "移动" if is_yidong(phone)
     return "联通" if is_liantong(phone)
     return "电信" if is_dianxin(phone)
