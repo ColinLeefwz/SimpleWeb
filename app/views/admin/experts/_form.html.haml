@@ -13,19 +13,7 @@
 
 = simple_form_for [:admin, @expert] do |f|
   %fieldset
-    = f.fields_for :video, (f.object.video || f.object.build_video) do |v|
-      = v.file_field :cover
-      .SD
-        = v.hidden_field :SD_file_name
-        = v.hidden_field :SD_content_type
-        = v.hidden_field :SD_file_size
-        = v.hidden_field :SD_temp_path
-
-      .HD
-        = v.hidden_field :HD_file_name
-        = v.hidden_field :HD_content_type
-        = v.hidden_field :HD_file_size
-        = v.hidden_field :HD_temp_path
+    = render "shared/video_form_builder", f:f
       
   %fieldset
     = f.input :email, required: true
