@@ -1,0 +1,110 @@
+
+.header{
+  background: white;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  position: relative;
+  @media (min-width: 767px){
+    width: 65%;
+    min-width: 415px; 
+  }
+  @media (max-width: 766px){
+    width: 90%;
+  }
+}
+
+//-------- user ---------
+.header .user{
+  float: left;
+  text-align: center;
+  .avatar img{
+      width: 88px;
+      height: 88px;
+      margin: 0 40px;
+      margin-bottom: 10px;
+      border-radius: 50%;
+  }
+}
+
+.header .user{
+  .name{
+    font-size: 16px;
+    font-family: Oswaldreg;
+  }
+  .title, .company{
+    font-size: 12px;
+    color: #777;
+  }
+}
+
+
+//-------- meta --------
+
+.header .meta{
+  float: left;
+  max-width: 70%;
+  .title{
+    font-family: "Oswaldreg";
+    font-weight: 400;
+    font-size: 30px;
+    min-height: 105px;  // for social-share 
+    color: #454545;
+    line-height: 1.2em;
+  }
+}
+
+.header .meta{
+  .date, .category{
+    font-family: "Latoreg";
+    color: #777;
+    display: inline;
+    font-size: 13px;
+  }
+}
+
+
+//-------- social-share --------
+
+.header .social-share-icons{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  img{
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+
+
+
+//-------- detail --------
+.detail{
+  background: white;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  @media (min-width: 767px){
+    width: 65%;
+  }
+  @media (max-width: 766px){
+    width: 90%;
+  }
+}
+
+.detail .video-cover{
+  padding: 1rem;
+  float: right;
+
+  img{
+    overflow: hidden;
+    width: 320px;
+  }
+}
+
+.detail article{
+  padding-top: 1rem;
+  padding-left: 2rem;
+}
