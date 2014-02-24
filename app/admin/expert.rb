@@ -88,9 +88,8 @@ ActiveAdmin.register Expert do
     end
 
     def permitted_params
-      params.permit :id, expert: [:id, :name, :avatar, :first_name, :last_name, :password, :email, :time_zone, 
-                             profile_attributes: [:id, :title, :company, :location, :country, :city, :expertise, :web_site, :testimonials, :additional, :career, :education, :twitter], 
-                             video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path,  :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path]]
+      params.permit :id, expert: [:id, :name, :avatar, :first_name, :last_name, :password, :email, :time_zone, Video::Attributes,
+                                  profile_attributes: [:id, :title, :company, :location, :country, :city, :expertise, :web_site, :testimonials, :additional, :career, :education, :twitter] ]
     end
   end
 end

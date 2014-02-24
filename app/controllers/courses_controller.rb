@@ -91,9 +91,9 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:id, :title, :description, :cover, :price, {categories:[]}, {expert_ids: []}, 
-                                   chapters_attributes: [:id, :title, :description, :order, :_destroy, sections_attributes: [:id, :title, :description, :duration, :order, :free_preview, :_destroy] ], 
-                                   video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path,  :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path] )
+    params.require(:course).permit(:id, :title, :description, :cover, :price, {categories:[]}, {expert_ids: []}, Video::Attributes,
+                                   chapters_attributes: [:id, :title, :description, :order, :_destroy, sections_attributes: [:id, :title, :description, :duration, :order, :free_preview, :_destroy] ]
+                                  )
   end
 end
 

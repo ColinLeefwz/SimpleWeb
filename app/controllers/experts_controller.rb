@@ -105,7 +105,6 @@ class ExpertsController < ApplicationController
   end
 
   def expert_params
-    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, 
-                                   video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path,  :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path] )
+    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, Video::Attributes)
   end
 end
