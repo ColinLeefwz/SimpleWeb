@@ -6,6 +6,6 @@
   .video-cover
     = image_tag @article.cover.url
   %article
-    = @article.description.html_safe
+    = @article.description.try :html_safe
 
 = render "welcome/box_content_modal"

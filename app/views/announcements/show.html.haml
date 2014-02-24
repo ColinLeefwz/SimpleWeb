@@ -9,6 +9,6 @@
     - else
       = image_tag @announcement.cover.url
   %article
-    = @announcement.description.html_safe
+    = @announcement.description.try :html_safe
 
 = render "welcome/box_content_modal"
