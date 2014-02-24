@@ -94,19 +94,6 @@ body {
     .cover{
       text-align: center;
       padding: 20px;
-      .video-img {
-        cursor: pointer;
-        position: relative;
-        min-height: 158px; 
-
-        .play-video-icon{
-          position: absolute;
-          width: 20%;
-          top: 40%;
-          left: 40%;
-          z-index: 10;
-        }
-      }
     }
 
     .caption{
