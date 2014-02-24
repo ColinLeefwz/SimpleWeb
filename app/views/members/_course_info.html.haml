@@ -2,12 +2,12 @@
   .favorite-session-left
     .cover
       = image_tag(course.cover.url)
-    - if (current_user) && (current_user.enrolled? @course)
+    - if (current_user) && (current_user.enrolled? course)
       .subscribed-button
         = link_to "You're subscribed", "#"
     - else
       .enroll-button
-        = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
+        = link_to "Subscribe", enroll_course_path(course)
 
   .favorite-session-info
     .favorite-session-main
