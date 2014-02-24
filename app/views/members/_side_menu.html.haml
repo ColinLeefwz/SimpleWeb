@@ -1,12 +1,11 @@
-.member-info
-  .member-avatar
+.user-info.clearfix
+  .avatar
     = link_to image_tag(@member.avatar.url), edit_profile_member_path(current_user), remote: true
-  .member-text-info
-    .member-name
+  .profile
+    .name
       %p= @member.name
-    .edit-profile
+    .edit
       %p= link_to 'edit profile', edit_profile_member_path(current_user), remote: true
-  .clear-fix
   -# Peter at 2012-02-20: don't remove the code below.Keep them there until we make the activity_stream work for Members
   -# .toolkit
   -#   .item
@@ -25,6 +24,9 @@
   .item
     = render 'item_icon', item_name: 'follow_video'
     .item-text #{link_to 'Video courses', video_on_demand_member_path(current_user), remote: true}
+
+
+
 .block-title
   %span
     MANAGE

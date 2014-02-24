@@ -47,7 +47,10 @@ class Course < ActiveRecord::Base
 
 
   def producers
-    "by " + self.experts.pluck(:name).join(" and ")
+    ## Peter at 2014-02-21: we should remove name attribute from User Table,
+    # use `name` method instead
+    # "by " + self.experts.pluck(:name).join(" and ") 
+    "by " + self.experts.map(&:name).join(" and ")
   end
 
   def free?

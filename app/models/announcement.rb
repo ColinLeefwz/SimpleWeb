@@ -4,6 +4,11 @@ class Announcement < ActiveRecord::Base
   belongs_to :expert
   validates :expert, presence: true
 
+  has_many :subscriptions, as: :subscribable
+  has_many :subscribers, through: :subscriptions
+
+  has_one :visit, as: :visitable
+
   has_attached_file :cover
 
   def has_video_to_present?
