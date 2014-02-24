@@ -1,6 +1,4 @@
-$box_header_font_size: 18px;
-$white: #ffffff;
-$shadow_param: 0 6px 12px rgba(170, 180, 190, 1);
+@import "globals/variables";
 
 html {
   height:100%;
@@ -29,7 +27,7 @@ body {
   padding-bottom: 50px;
 
   .item {
-    background: $white;
+    background: white;
     -webkit-box-shadow: $shadow_param;
     box-shadow: $shadow_param;
     width: 330px;
@@ -96,19 +94,6 @@ body {
     .cover{
       text-align: center;
       padding: 20px;
-      .video-img {
-        cursor: pointer;
-        position: relative;
-        min-height: 158px; 
-
-        .play-video-icon{
-          position: absolute;
-          width: 20%;
-          top: 40%;
-          left: 40%;
-          z-index: 10;
-        }
-      }
     }
 
     .caption{

@@ -12,10 +12,6 @@ class Expert < Member
 
   after_create :create_a_profile, :create_a_video
 
-  def name
-    "#{first_name} #{last_name}"
-  end
-
   def name_with_inital
     "#{first_name.first}. #{last_name}"
   end

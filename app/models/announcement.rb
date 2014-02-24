@@ -7,6 +7,11 @@ class Announcement < ActiveRecord::Base
   has_one :video, as: :videoable
   accepts_nested_attributes_for :video, allow_destroy: true
 
+  has_many :subscriptions, as: :subscribable
+  has_many :subscribers, through: :subscriptions
+
+  has_one :visit, as: :visitable
+
   has_attached_file :cover
 
   def has_video_to_present?

@@ -79,7 +79,7 @@ class CoursesController < ApplicationController
       domain_url = "http://www.prodygia.com"
     end
     mandrill = MandrillApi.new
-    mandrill.enroll_comfirm(current_user, item, item.cover.url)
+    mandrill.enroll_confirm(current_user, item, item.cover.url)
   end
 
   def member_params

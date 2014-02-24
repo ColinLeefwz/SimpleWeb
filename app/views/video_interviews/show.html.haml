@@ -2,11 +2,9 @@
 = render "sessions/page_header", item: @video_interview, link_path: subscribe_path(@video_interview, type: @video_interview.class.name)
 = render "welcome/box_content_modal"
 
-.text-page-article-box.shadow.margin-bottom
-  .text-page-main-content
-    - if @video_interview.has_video_to_present?
-      .announcement-cover.pull-right
-        = render "shared/sublime_video", item_resource: @video_interview, poster_url: @video_interview.cover.url
-    %p= @video_interview.description.html_safe
-    .clear-fix
-
+.detail.shadow.margin-bottom.clearfix
+  .video-cover
+    - if @video_interview.video
+      = render "shared/sublime_video", video: @video_interview.video
+  %article
+    = @video_interview.description.try :html_safe

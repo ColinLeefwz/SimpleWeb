@@ -13,8 +13,8 @@
     = link_to "#{item.title}", polymorphic_path(item)
 
   .cover
-    -if item.has_video_to_present?
-      = render "shared/sublime_video", item_resource: item, poster_url: item.cover.url
+    -if item.try(:video)
+      = render "shared/sublime_video", video: item.video
     -else
       = link_to image_tag(item.cover.url), polymorphic_path(item)
 

@@ -1,6 +1,7 @@
 .white-background.shadow
   = simple_form_for(@article, remote: true)  do |f|
     %h3 Post New Content
+    = link_to 'Guide lines', '#modal-guideline', class: 'text-info', data:{toggle: "modal"}
     = f.input :title, input_html: { id: 'session-title-input' }
     .categories
       = f.input :categories, collection: Category.pluck(:name), as: :check_boxes, required: true
@@ -18,3 +19,4 @@
     = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
 
     = render "article_preview", f: f
+    = render "experts/guideline_page_modal"

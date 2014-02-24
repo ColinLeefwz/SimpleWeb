@@ -17,8 +17,4 @@ class VideoInterview < ActiveRecord::Base
   def editable
     true
   end
-
-  def has_video_to_present?
-    self.video.try(:SD_file_name) || self.video.try(:HD_file_name)
-  end
 end
