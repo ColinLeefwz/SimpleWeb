@@ -3,9 +3,8 @@ module DeviseHelper
     return '' if resource.errors.empty?
 
     messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
-    sentence = I18n.t('errors.messages.not_saved',
-      count: resource.errors.count,
-      resource: resource.class.model_name.human.downcase)
+    #sentence = I18n.t('errors.messages.not_saved',count: resource.errors.count,resource: resource.class.model_name.human.downcase)
+    sentence = "Ops! Your changes could not be saved for the following reason(s):"
 
     html = <<-HTML
     <div class="alert alert-error alert-block">
