@@ -153,6 +153,12 @@
         height: 2em;
         padding: 0.3em;
       }
+      .label-preview {
+        background-color: #AEAEFF;
+        color: darken(#4E2971, 25%);
+        margin-left: 5px;
+        font-weight: 400;
+      }
       .section-detail{
         position: relative;
         .close-icon{
