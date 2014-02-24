@@ -13,8 +13,4 @@ class Announcement < ActiveRecord::Base
   has_one :visit, as: :visitable
 
   has_attached_file :cover
-
-  def has_video_to_present?
-    self.video.try(:SD_file_name) || self.video.try(:HD_file_name)
-  end
 end

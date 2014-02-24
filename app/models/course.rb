@@ -60,9 +60,6 @@ class Course < ActiveRecord::Base
     false
   end
 
-  def has_video_to_present?
-    self.video.try(:SD_file_name) || self.video.try(:HD_file_name)
-  end
   private
   def create_a_video
     self.create_video

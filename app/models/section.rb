@@ -8,18 +8,6 @@ class Section < ActiveRecord::Base
   before_save :convert_duration
   after_save :update_parent_duration
 
-  def has_video_to_present?
-    self.video.try(:SD_file_name) || self.video.try(:HD_file_name)
-  end
-
-  def sd_url
-    self.resources.where(video_definition: "SD").first.attached_file.url || " "
-  end
-
-  def hd_url
-    self.resources.where(video_definition: "HD").first.attached_file.url  || " "
-  end
-
   def course
     @course || self.chapter.course
   end
