@@ -11,6 +11,10 @@
 .course_show{
 
   .box{
+    box-sizing:border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+    
     background-color: white;
     box-shadow: $shadow_param;
   }
@@ -93,15 +97,33 @@
 
 
   .chapter{
+    .box {
+      box-sizing:border-box;
+      -moz-box-sizing:border-box; /* Firefox */
+      -webkit-box-sizing:border-box; /* Safari */
+    }
+
     margin-top: 1em;
+
     .chapter-title{
       height: 2em;
       border-bottom: 1px solid #4E2971;
+
+      .center-container {
+        box-sizing:border-box;
+        -o-box-sizing:border-box;
+        -ms-box-sizing:border-box;
+        -icab-box-sizing:border-box;
+        -khtml-box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+      }
       .anchor{
         width: 2em;
         height: 2em;
         background-color: #4E2971;
         text-align: center;
+        float:left;
         span{
           vertical-align: middle;
           color: white;
@@ -110,8 +132,10 @@
       }
       .title{
         height: 100%;
+        width:80%;
+        float:middle;
         span{
-          font-size: 1.2em;
+          font-size: 1em;
           font-family: Latobold;
           vertical-align: middle;
         }
@@ -162,16 +186,12 @@
             overflow-y: visible; /* override bootstrap, otherwise close icon won't show */
             .enroll{
               width: 40%;
-              box-sizing: border-box;
-              -webkit-box-sizing: border-box;
               border-right: 1px solid #eee;
               vertical-align: middle;
               text-align: center;
             }
             .sign-in{
               width: 58%;
-              box-sizing: border-box;
-              -webkit-box-sizing: border-box;
               vertical-align: middle;
               padding-left: 2em;
               p{
@@ -195,6 +215,7 @@
     .duration{ 
       height: 2em;
       float: right;
+      width:16%;
       padding-right: 0.8em;
       span{
         font-size: 0.8em;

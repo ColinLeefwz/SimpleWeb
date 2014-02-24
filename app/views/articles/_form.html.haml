@@ -15,6 +15,6 @@
     = f.submit "Save Draft", class: 'btn dashboard-buttons', id: "save-draft"
     = link_to "Preview", "#modal", id: "session-preview", class: "btn dashboard-buttons", data:{toggle: "modal"}
     = f.submit "Publish", class: 'btn dashboard-buttons btn-prodygia', id: "publish"
-    = link_to "Cancle", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
+    = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
 
     = render "article_preview", f: f

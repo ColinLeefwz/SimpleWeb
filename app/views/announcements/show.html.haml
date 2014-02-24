@@ -4,7 +4,7 @@
 
 .detail.shadow.margin-bottom.clearfix
   .video-cover
-    - if @announcement.has_video?
+    - if @announcement.has_video_to_present?
       = render "shared/sublime_video", item_resource: @announcement, poster_url: @announcement.cover.url
     - else
       = image_tag @announcement.cover.url

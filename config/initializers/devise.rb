@@ -256,7 +256,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
 	require "omniauth-facebook"
-  # config.omniauth :facebook, '1413664912184592', '01860bd49ef473f1a8c44e14e69c01c0' # Production vertion
+  # config.omniauth :facebook, '1413664912184592', '01860bd49ef473f1a8c44e14e69c01c0' # Production vertion, Nick's id
   config.omniauth :facebook, '169058009963289', '0dafe6ee2b60ac5819f56d99b1de771f' # peter's APP_ID
 
 
