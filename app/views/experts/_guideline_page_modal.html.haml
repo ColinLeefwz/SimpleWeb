@@ -1,4 +1,4 @@
-#modal.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
+#modal-guideline.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
   .modal-dialog
     .modal-content
       .modal-header
@@ -16,4 +16,5 @@
           %li.list-group-item For key Chinese terms or names, we urge you to feature the Chinese characters in parentheses. 
           %li.list-group-item Do not copy or plagiarize content from other sources.  
       .modal-footer
-        = link_to 'Next', new_article_path, class: 'btn btn-primary', type: 'button', data:{dismiss: 'modal'}, remote: true
+        %button.btn.btn-primary{type: 'button', data: {dismiss: 'modal'}} Next
+        //= link_to 'Next', new_article_path, class: 'btn btn-primary', type: 'button', data:{dismiss: 'modal'}, remote: true
