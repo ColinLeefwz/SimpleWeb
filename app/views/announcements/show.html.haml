@@ -1,6 +1,6 @@
 - content_for(:title){@announcement.title}
 
-= render "sessions/page_header", item: @announcement, item: @announcement, link_path: subscribe_path(@announcement, type: @announcement.class.name)
+= render "sessions/page_header", item: @announcement, link_path: subscribe_path(@announcement, type: @announcement.class.name)
 
 .detail.shadow.margin-bottom.clearfix
   .video-cover
