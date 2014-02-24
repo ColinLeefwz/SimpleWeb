@@ -14,7 +14,7 @@ task :migrate_videos => :environment do
         video.videoable_type = t.introable_type
         video.videoable_id = t.introable_id
       else
-        video = t.build_video
+        video = t.video || t.build_video
       end
 
       video.SD_file_name = t.attached_video_sd_file_name
@@ -35,23 +35,26 @@ task :migrate_videos => :environment do
       video.save
 
       # SD Video
-      current_sd_path = /#{t.to_s.underscore.pluralize}\/.+/.match CGI.unescape(t.sd_url || "")
+      current_sd_path = /#{t.class.name.underscore.pluralize}\/.+/.match(CGI.unescape(t.sd_url || ""))
       current_sd_object = bucket.objects[current_sd_path]
       expect_sd_path = "videos/#{video.id}/sds/#{video.SD_file_name}"
       expect_sd_object = bucket.objects[expect_sd_path]
       current_sd_object.copy_to expect_sd_object if (current_sd_path.present? && current_sd_object.exists?)
 
       # HD Video
-      current_hd_path = /#{t.to_s.underscore.pluralize}\/.+/.match CGI.unescape(t.hd_url || "")
+      current_hd_path = /#{t.class.name.underscore.pluralize}\/.+/.match CGI.unescape(t.hd_url || "")
       current_hd_object = bucket.objects[current_hd_path]
       expect_hd_path = "videos/#{video.id}/hds/#{video.HD_file_name}"
       expect_hd_object = bucket.objects[expect_hd_path]
       current_hd_object.copy_to expect_hd_object if (current_hd_path.present? && current_hd_object.exists?)
 
       # Cover
-      current_cover_path = /#{t.to_s.underscore.pluralize}\/covers\/.+/.match CGI.unescape(t.cover.url || "")
+      current_cover_path = /#{t.class.name.underscore.pluralize}\/covers\/.+/.match CGI.unescape(t.cover.url || "")
+      current_cover_path = current_cover_path.to_s.sub(/\?\d+$/, "") if current_cover_path.present?
+      puts "****** #{t.class.name}  #{current_cover_path} ******"
       current_cover_object = bucket.objects[current_cover_path]
       expect_cover_path = "videos/covers/#{video.id}/original/#{video.cover_file_name}"
+      puts "****** #{t.class.name}  #{expect_cover_path} ******"
       expect_cover_object = bucket.objects[expect_cover_path]
       current_cover_object.copy_to expect_cover_object if (current_cover_path.present? && current_cover_object.exists?)
     end
@@ -62,10 +65,12 @@ end
 task :migrate_sections => :environment do 
   s3 = AWS::S3.new
   bucket = s3.buckets[ENV["AWS_BUCKET"]]
+  not_nil = Resource.where.not(attached_file_file_name: nil)
 
   Section.all.each do |section|
-    sd_resource = Resource.find_by(section_id: section.id, video_definition: "SD")
+    sd_resource = Resource.where(section_id: section.id, video_definition: "SD").merge(not_nil).take
     if sd_resource.present?
+      puts "++++++++ sd_resource present +++++++++"
       video = Video.new
       video.videoable_type = "Section"
       video.videoable_id = section.id
@@ -77,14 +82,16 @@ task :migrate_sections => :environment do
 
       current_sd_path = /resources\/attached_files\/.+/.match CGI.unescape(sd_resource.attached_file.url || "")
       current_sd_object = bucket.objects[current_sd_path]
+      puts "++++++ current_sd_object present? #{current_sd_object.exists?} +++++++"
       expect_sd_path = "videos/#{video.id}/sds/#{video.SD_file_name}"
       expect_sd_object = bucket.objects[expect_sd_path]
       current_sd_object.copy_to expect_sd_object if (current_sd_path.present? && current_sd_object.exists?)
     end
 
 
-    hd_resource = Resource.find_by(section_id: section.id, video_definition: "HD")
+    hd_resource = Resource.where(section_id: section.id, video_definition: "HD").merge(not_nil).take
     if hd_resource.present?
+      puts "++++++++ hd_resource present +++++++++"
       video = Video.new
       video.videoable_type = "Section"
       video.videoable_id = section.id
@@ -96,6 +103,7 @@ task :migrate_sections => :environment do
 
       current_hd_path = /resources\/attached_files\/.+/.match CGI.unescape(hd_resource.attached_file.url || "")
       current_hd_object = bucket.objects[current_hd_path]
+      puts "++++++ current_hd_object present? #{current_hd_object.exists?} +++++++"
       expect_hd_path = "videos/#{video.id}/hds/#{video.HD_file_name}"
       expect_hd_object = bucket.objects[expect_hd_path]
       current_hd_object.copy_to expect_hd_object if (current_hd_path.present? && current_hd_object.exists?)
