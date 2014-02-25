@@ -20,7 +20,7 @@ ActiveAdmin.register AdminUser do
   end
   controller do
     def permitted_params
-      params.permit admin_user: [:email, :password, :password_confirmation]
+      params.permit :id, admin_user: [:id, :email, :password, :password_confirmation]
     end
   end
 end

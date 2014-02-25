@@ -4,7 +4,9 @@
 
 .detail.shadow.margin-bottom.clearfix
   .video-cover
-    -# todo: if video_interview.has_video?
-    = render "shared/sublime_video", item_resource: @video_interview, poster_url: @video_interview.cover.url
+    - if @video_interview.try :video
+      = render "shared/sublime_video", video: @video_interview.video
+    - else
+      = image_tag @video_interview.cover.url
   %article
     = @video_interview.description.try :html_safe

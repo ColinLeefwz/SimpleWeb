@@ -1,6 +1,9 @@
 class VideoInterview < ActiveRecord::Base
   include ParamsConfig
 
+  has_one :video, as: :videoable, dependent: :destroy
+  accepts_nested_attributes_for :video, allow_destroy: true
+
   belongs_to :expert
   validates :expert, presence: true
 
@@ -13,9 +16,5 @@ class VideoInterview < ActiveRecord::Base
 
   def editable
     true
-  end
-
-  def has_video_to_present?
-    self.attached_video_hd_file_name.present? || self.attached_video_sd_file_name.present?
   end
 end

@@ -28,7 +28,7 @@ ActiveAdmin.register StaticPages do
         
   controller do 
     def permitted_params
-      params.permit static_pages: [:title, :content, :image]
+      params.permit :id, static_pages: [:id, :title, :content, :image]
     end
   end
 end

@@ -40,7 +40,7 @@ class ExpertsController < ApplicationController
 
   def edit_profile
     @profile = @expert.profile
-    @intro_video = @expert.intro_video
+    @video = @expert.video
     @from = 'edit_profile'
 
     respond_to do |format|
@@ -105,6 +105,6 @@ class ExpertsController < ApplicationController
   end
 
   def expert_params
-    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, intro_video_attributes: [:attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url])
+    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, Video::Attributes)
   end
 end
