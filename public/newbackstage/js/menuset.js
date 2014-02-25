@@ -153,12 +153,35 @@ $(document).ready(function(){
 		$('#menu_pub').css('display', 'block');
 		$('#pub_add').unbind().click(function(){
 			$('#menu_pub').css('display', 'none');
-			$.post("/shop3_menu/pub", function(data){
+			var allow_pub = true
+			menujson.menu.button.forEach(function(button){
+				if(button.sub_button.length > 0){
+					button.sub_button.forEach(function(sub_button){
+						if(!sub_button.type){
+							allow_pub = false;
+						}
+					});
+				}else{
+					if(!button.type){
+						allow_pub = false;
+					}
+				}
+			});
+			if(allow_pub){
+				$.post("/shop3_menu/pub", function(data){
+					$('#wxTipserr').css('display',"inline-block").css('opacity',"1")
+					$('#wxTipserr .inner').css('background-color', '#56A447' ).html('发布成功')
+					set_interval()
+				})
+			}else{
 				$('#wxTipserr').css('display',"inline-block").css('opacity',"1")
-				$('#wxTipserr .inner').css('background-color', '#56A447' ).html('发布成功')
+				$('#wxTipserr .inner').css('background-color', '#EAA000' ).html('存在还未设置响应动作的菜单,请检查')
 				set_interval()
-			})
-		})
+			}
+
+		});
+
+
 		$('#pub_closed, #pub_cancel').unbind().click(function(){
 			$('#menu_pub').css('display', 'none');
 		})
