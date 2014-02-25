@@ -2,24 +2,11 @@ class Section < ActiveRecord::Base
   validates :title, presence: true
 
   belongs_to :chapter
-  has_many :resources, dependent: :destroy
-
-  accepts_nested_attributes_for :resources, allow_destroy: true  #todo add "reject_if" block
+  has_one :video, as: :videoable
+  accepts_nested_attributes_for :video, allow_destroy: true
 
   before_save :convert_duration
   after_save :update_parent_duration
-
-  def has_video?
-    self.resources.inject(false) { |memo, obj|  memo or obj.attached_file_file_name.present? }
-  end
-
-  def sd_url
-    self.resources.where(video_definition: "SD").first.attached_file.url || " "
-  end
-
-  def hd_url
-    self.resources.where(video_definition: "HD").first.attached_file.url  || " "
-  end
 
   def course
     @course || self.chapter.course

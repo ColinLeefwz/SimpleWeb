@@ -54,7 +54,7 @@ ActiveAdmin.register Article do
 
   controller do
     def permitted_params
-      params.permit article: [:title, :expert_id, :always_show, :description, :cover, {categories:[]}]
+      params.permit :id, article: [:id, :title, :expert_id, :always_show, :description, :cover, {categories:[]}]
     end
   end
 

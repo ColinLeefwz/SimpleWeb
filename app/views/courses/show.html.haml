@@ -7,8 +7,11 @@
     .overview
       .cover-box.inline
         .cover
-          = render "shared/sublime_video", item_resource: @course.intro_video, poster_url: @course.cover.url
-        
+          - if @course.try :video
+            = render "shared/sublime_video", video: @course.video
+          - else
+            = image_tag @course.cover.url
+
         - if (current_user) && (current_user.enrolled? @course)
           .subscribed-button You're subscribed
         - else
