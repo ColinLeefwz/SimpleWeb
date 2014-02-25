@@ -80,8 +80,8 @@ class Emailer < ActionMailer::Base
     end
 
     def self.send_mail
-      toa = ['149235521@qq.com', 'yinghk@163.com', 'yuan_xin_yu@hotmail.com', 'puxizhe@163.com', '16186088@qq.com',
-        '35473820@qq.com', 'heyibing@gmail.com', 'huang123qwe@126.com',"454413959@qq.com" ]
+      toa = ['yinghk@163.com', 'yuan_xin_yu@hotmail.com', 'puxizhe@163.com', '16186088@qq.com',
+         'heyibing@gmail.com', 'huang123qwe@126.com',"454413959@qq.com" ]
       #      toa = ['huang123qwe@126.com', '345699420@qq.com']
       head = "#{Time.now.strftime("%m月%d日")}脸脸相关数据统计"
       Emailer.smail(head, toa, day_stat).deliver
