@@ -20,29 +20,35 @@
       font-size: 22px;
       text-decoration: none;
       color: #575757;
-      font-size: 12px;
      }
 
-     .pull-left {
-      margin-left: 40px;
-     }
+    .visible-desktop {
 
-     .pull-right {
-      margin-right: 40px;
-     }
+      
+      
 
-     .visible-desktop {
-       img {
+      .pull-left {
+        margin-left: 40px;
+        a {
+          font-size: 17px;
+        }
+        
+      }
+
+      .pull-right {
+        margin-right: 40px;
+      }
+      img {
         width: 30px;
         height: 30px;
-        background-color: lighten($blue, 10%);
-       }
-       a{
+      }
+
+      a{
         margin-top: 3px;
         margin: auto 1px;
-        color: darken($blue, 10%);
-       }
-     }
+        font-size: 12px;
+      }
+    }
   }
 
   #footer-select{
