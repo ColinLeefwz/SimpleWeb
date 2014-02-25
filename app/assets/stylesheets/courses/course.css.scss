@@ -200,6 +200,8 @@
               width: 58%;
               vertical-align: middle;
               padding-left: 2em;
+              box-sizing: border-box;
+              -webkit-box-sizing: border-box;
               p{
                 font-size: 0.8em;
               }
