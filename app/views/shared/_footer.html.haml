@@ -1,10 +1,25 @@
+
 .links
   .visible-desktop
-    = link_to 'About Us', about_us_path 
-    = link_to 'FAQ', faq_path  
-    = link_to 'For Experts', for_experts_path
-    = link_to 'Terms', '/terms'
-    = link_to 'Privacy', '/privacy'
+    .pull-left
+      &copy;
+      = raw "#{copyright_notice_year_range(2014)} #{link_to 'Prodygia, Inc.', root_path}"
+      = link_to 'About Us', about_us_path 
+      = link_to 'FAQ', faq_path  
+      = link_to 'For Experts', for_experts_path
+      = link_to 'Terms', '/terms'
+      = link_to 'Privacy', '/privacy'
+
+    .pull-right
+      Follow us by:
+      - url_facebook = "https://www.facebook.com/dialog/feed?app_id=#{ENV["FACEBOOK_APPID"]}"
+      = link_to image_tag("facebook.png", class: "tooltips-inner", title: "share via Facebook", data:{placement: "bottom"}), url_facebook, data: { popup: true}
+      - url_twitter = "http://twitter.com/home"
+      = link_to image_tag("twitter.png", class: "tooltips-inner", title: "share via Twitter", data:{placement: "bottom"}), url_twitter, data: { popup: true}
+      - url_linkedin = "http://www.linkedin.com/shareArticle?mini=true"
+      = link_to image_tag("linkedin.png", class: "tooltips-inner", title: "share via Linkedin", data:{placement: "bottom"}), url_linkedin, data: { popup: true}
+      - url_googleplus = "https://plus.google.com/100344111177650366494"
+      = link_to image_tag("googleplus.png", class: "tooltips-inner", title: "share via Google+", data:{placement: "bottom"}), url_googleplus, data: { popup: true}
 
   %select#footer-select.hidden-desktop
     %option{value: '/'}info
