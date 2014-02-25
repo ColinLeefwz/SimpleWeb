@@ -7,8 +7,11 @@
   position: absolute;
   bottom: 0;
   z-index: 1000;
+  font-size: 12px;
+  $blue: #3bbfce;
   .links{
     margin: 13px auto 10px;
+
     a{
       text-align: center;
       display: inline-block;
@@ -17,16 +20,27 @@
       font-size: 22px;
       text-decoration: none;
       color: #575757;
-      font-size: 17px;
+      font-size: 12px;
      }
+
+     .pull-left {
+      margin-left: 40px;
+     }
+
+     .pull-right {
+      margin-right: 40px;
+     }
+
      .visible-desktop {
        img {
         width: 30px;
         height: 30px;
+        background-color: lighten($blue, 10%);
        }
        a{
         margin-top: 3px;
         margin: auto 1px;
+        color: darken($blue, 10%);
        }
      }
   }
