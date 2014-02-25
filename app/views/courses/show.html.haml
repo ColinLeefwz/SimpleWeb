@@ -11,7 +11,10 @@
             = render "shared/sublime_video", video: @course.video
           - else
             = image_tag @course.cover.url
-        - unless (current_user) && (current_user.enrolled? @course)
+
+        - if (current_user) && (current_user.enrolled? @course)
+          .subscribed-button You're subscribed
+        - else
           .enroll-button
             = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
 

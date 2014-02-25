@@ -4,6 +4,8 @@
 
   .section-title.inline.tooltips{data: {available: available.to_s, placement: "right"}}
     %span= section.title
+    - if show_preview
+      %span.label.label-preview Free preview
 
   .duration.inline.center-container
     %span= distance_of_time_in_words section.duration.to_i

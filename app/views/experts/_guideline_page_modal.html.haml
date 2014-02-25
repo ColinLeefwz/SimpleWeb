@@ -3,18 +3,20 @@
     .modal-content
       .modal-header
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-        %h4#myModalLabel.modal-title Guidelines for posting an article 
+        %h1#myModalLabel.modal-title Guidelines for posting an article 
       .modal-body
         %ul.list-group
-          %li.list-group-item Content must be China-relevant.
-          %li.list-group-item Statements should ideally include one or more examples to illustrate your point.
-          %li.list-group-item Keep to topics within the macro, business, entrepreneurship, tech and culture categories.Anything outside this scope will not be accepted. 
-          %li.list-group-item Communicate your opinions, experience and research. Do not, however, turn this into a commercial pitch.
-          %li.list-group-item Use of bullet points, lists or rankings is recommended to organize your thoughts; remember that the reader will want to get your main point very quickly
-          %li.list-group-item Word count should range between 300 and 1,500 .
-          %li.list-group-item Include a cover image which is high quality and consistent with your content.
-          %li.list-group-item For key Chinese terms or names, we urge you to feature the Chinese characters in parentheses. 
-          %li.list-group-item Do not copy or plagiarize content from other sources.  
+          %li.list-group-item.lead Keep in mind Prodygia’s slogan “Log Into China” and make your content China-relevant
+          %li.list-group-item.lead Word count should range between 300 and 1,500.
+          %li.list-group-item.lead Choose a topic that fits within the following categories: macro, business, entrepreneurship, technology and culture. If you feel your topic does not fit into any of these categories, please email us at expert@prodygia.com to discuss. 
+          %li.list-group-item.lead Statements should ideally include one or more examples to illustrate your point.
+          %li.list-group-item.lead Convey your opinions, experience and insights; avoid turning this into a commercial pitch.
+          %li.list-group-item.lead Use of bullet points, lists or rankings where appropriate to organize your thoughts; keep in mind that the reader will want to get your main point quickly.
+          %li.list-group-item.lead If you have one, include a cover image which is high quality and consistent with your content; if you don’t have one, feel free to email us at expert@prodygia.com and we’ll upload one for you.
+          %li.list-group-item.lead For key Chinese terms or names, please include the Chinese characters in parentheses. 
+          %li.list-group-item.lead We strive to produce quality content: do not copy or plagiarize content from other sources, and avoid negative language or the use of sensitive words.
+          %li.list-group-item.lead When posting your article you agree to have our Editorial team review it and make small changes if needed (for example, to correct typos or punctuation); we will let you know when changes are made on your behalf.
+
       .modal-footer
-        %button.btn.btn-primary{type: 'button', data: {dismiss: 'modal'}} Next
+        %button.btn.btn-default{type: 'button', data: {dismiss: 'modal'}} Close
         //= link_to 'Next', new_article_path, class: 'btn btn-primary', type: 'button', data:{dismiss: 'modal'}, remote: true

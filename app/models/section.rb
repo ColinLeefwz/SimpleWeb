@@ -17,6 +17,15 @@ class Section < ActiveRecord::Base
     return available ? true : false
   end
 
+  def show_preview_label_for?(user)
+    if user.nil?
+      show_preview = self.free_preview
+    else
+      show_preview = (!user.enrolled?(self.course) && self.free_preview)
+    end
+    return show_preview ? true : false
+  end
+
   private
   def convert_duration
     matcher = /(?<hour>\d*):(?<minute>[0-5]?[0-9]):(?<second>[0-5]?[0-9])/

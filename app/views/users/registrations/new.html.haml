@@ -1,17 +1,12 @@
 - content_for(:title){ "Sign Up" }
 
 .devise-style
-  #flash
-    - if flash[:alert]
-      .alert.alert-error
-        %button{ type: "button", class: 'close', data: { dismiss: 'alert' } } &times;
-        = flash[:alert]
   .social-login
     %h2 Sign up
+    = devise_error_messages!
     = render "devise/shared/social_login"
   .devise-form
     = form_for :user, url: user_registration_path, html: {class: "form-horizontal"} do |f|
-      = devise_error_messages!
       = render 'sessions/form_fields', f: f
       .terms-of-service
 
