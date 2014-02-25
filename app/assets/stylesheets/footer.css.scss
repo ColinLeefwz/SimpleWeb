@@ -7,8 +7,11 @@
   position: absolute;
   bottom: 0;
   z-index: 1000;
+  font-size: 12px;
+  $blue: #3bbfce;
   .links{
     margin: 13px auto 10px;
+
     a{
       text-align: center;
       display: inline-block;
@@ -18,6 +21,34 @@
       text-decoration: none;
       color: #575757;
      }
+
+    .visible-desktop {
+
+      
+      
+
+      .pull-left {
+        margin-left: 40px;
+        a {
+          font-size: 17px;
+        }
+        
+      }
+
+      .pull-right {
+        margin-right: 40px;
+      }
+      img {
+        width: 30px;
+        height: 30px;
+      }
+
+      a{
+        margin-top: 3px;
+        margin: auto 1px;
+        font-size: 12px;
+      }
+    }
   }
 
   #footer-select{
