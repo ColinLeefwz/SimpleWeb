@@ -92,7 +92,9 @@ class Shop3MenuController < ApplicationController
     tmp_button = []
     params[:index].each_with_index do |hash_arr, index|
       tmp_button[index] = button[hash_arr[0].to_i]
-      tmp_button[index]['sub_button'] = hash_arr[1].map{|m| button[hash_arr[0].to_i]['sub_button'][m.to_i]}
+      if hash_arr[1].is_a?(Array)
+        tmp_button[index]['sub_button'] = hash_arr[1].map{|m| button[hash_arr[0].to_i]['sub_button'][m.to_i]}
+      end
     end 
     menu.button = tmp_button
     menu.save

@@ -46,12 +46,13 @@ $(document).ready(function(){
 			var posi = obj.position();
 			var objx = parseInt(posi.left);
 	        var objy = parseInt(posi.top);
+	        var objheight = parseInt(obj.height());
+	        objheight = objheight > 100 ? objheight : 100
 	        obj.after("<dl class='drag_placeholder'></dl>");
 	        obj.addClass('dragging').addClass('ui_sortable_helper');
-	        obj.attr('style', "width:180px; height: 192px; z-index:9999;position:absolute;background-color:#ffffff");
+	        obj.attr('style', "width:180px; height: "+objheight+"px; z-index:9999;position:absolute;background-color:#ffffff");
 	        obj.css('left', objx+'px').css('top', objy+'px');
 	        var last_ny = y;
-	        var objheight = parseInt(obj.height());
 	        $(document).mousemove(function(move_ent){
 	        	var nx = parseInt(move_ent.pageX); //移动后的鼠标位置
 				var ny = parseInt(move_ent.pageY);
@@ -84,7 +85,7 @@ $(document).ready(function(){
 				}
 	        });
 
-	        obj.mouseup(function(){
+	        obj.unbind('mouseup').mouseup(function(){
 				$(document).unbind('mousemove')
 				obj.removeAttr('style')
 				obj.removeClass('dragging').removeClass('ui_sortable_helper')
@@ -93,7 +94,7 @@ $(document).ready(function(){
 				return false;
 			});
 
-			$(document).mouseup(function(){
+			$(document).unbind('mouseup').mouseup(function(){
 				$(document).unbind('mousemove')
 				obj.removeAttr('style')
 				obj.removeClass('dragging').removeClass('ui_sortable_helper')
@@ -153,7 +154,7 @@ $(document).ready(function(){
 				}
 			});
 			// 鼠标松开
-			objdd.mouseup(function(up_e){
+			objdd.unbind('mouseup').mouseup(function(up_e){
 				$(document).unbind('mousemove')
 				objdd.removeAttr('style')
 				objdd.removeClass('dragging').removeClass('ui_sortable_helper')
@@ -163,7 +164,7 @@ $(document).ready(function(){
 			});
 
 			// 当objdd.mouseup没有执行后执行鼠标松开 
-			$(document).mouseup(function(){
+			$(document).unbind('mouseup').mouseup(function(){
 				$(document).unbind('mousemove')
 				objdd.removeAttr('style')
 				objdd.removeClass('dragging').removeClass('ui_sortable_helper')
@@ -188,7 +189,7 @@ $(document).ready(function(){
 				var dd_index = last_index($(this).attr('id'))
 				dd_arr.push(parseInt(dd_index))
 			});
-			index[dt_index] = dd_arr
+			index[dt_index] = dd_arr.length > 0 ? dd_arr : null
 		});
 		return index;
 	};
