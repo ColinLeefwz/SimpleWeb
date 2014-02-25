@@ -145,7 +145,6 @@ ActiveAdmin.setup do |config|
   # To load a javascript file:
   config.register_javascript 'ckeditor/init.js'
   config.register_javascript 's3_direct_upload'
-  config.register_javascript 's3_file_direct_upload'
   config.register_javascript 'upload_helper'
 
   config.register_stylesheet 's3_direct_upload_progress_bars'
