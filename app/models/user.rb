@@ -418,6 +418,7 @@ class User
   end
   
   def stranger?(user_id)
+    return false if user_id.to_s == self.id.to_s
     !friend?(user_id) && !fan?(user_id)
   end
   

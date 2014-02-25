@@ -288,31 +288,29 @@ class Oauth2Controller < ApplicationController
   end
 
   def bind_sina(wb_uid,token,expires_in,data)
+    u = User.find_by_wb(wb_uid)
+    if u && u.id != session[:user_id]
+      if u.wb_hidden.to_i==2
+        $redis.del("W:#{wb_uid}")
+        u.unset(:wb_hidden)
+        u.unset(:wb_uid)
+        clear_old_wb_info(u)
+      else
+        render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
+        return
+      end
+    end
     user = session_user_no_cache
     if user.wb_uid
       if user.wb_uid != wb_uid
-        #render :json => {error: "绑定新浪微博帐号失败"}.to_json
-        #return
         clear_old_wb_info(user)
-        do_bind_sina(user,wb_uid,token)
-        do_login_wb_done(user,token,expires_in,data)
+        Xmpp.error_notify("原微博有效的情况下绑定新微博：#{user.name}")
       else
         Xmpp.error_notify("#{session[:user_id]} 重复绑定wb：#{wb_uid}") unless user.wb_hidden.to_i==2
-        do_login_wb_done(user,token,expires_in,data)
       end
-    else
-      u = User.find_by_wb(wb_uid)
-      if u && u.id != session[:user_id]
-        if u.wb_hidden.to_i==2
-          $redis.del("W:#{u.id}")
-        else
-          render :json => {error: "该新浪微博帐号帐号已经注册过了，不能绑定。"}.to_json
-          return
-        end
-      end
-      do_bind_sina(user,wb_uid,token)
-      do_login_wb_done(session_user_no_cache,token,expires_in,data)
     end
+    do_bind_sina(user,wb_uid,token)
+    do_login_wb_done(session_user_no_cache,token,expires_in,data)
   end
   
   def clear_old_wb_info(user)
@@ -378,30 +376,27 @@ class Oauth2Controller < ApplicationController
   end
   
   def bind_qq(openid,token,expires_in,data)
+    u = User.find_by_qq(openid)
+    if u && u.id != session[:user_id]
+      if u.qq_hidden
+        $redis.del("Q:#{openid}")
+        u.unset(:qq)
+        u.unset(:qq_hidden)
+      else
+        render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
+        return
+      end
+    end
     user = session_user_no_cache
     if user.qq
       if user.qq != openid
-        #render :json => {error: "绑定qq帐号失败"}.to_json
-        #return
-        do_bind_qq(user,openid,token)
-        do_login_qq_done(user,token,expires_in,data)
+        Xmpp.error_notify("原qq有效的情况下绑定新qq：#{user.name}")
       else
         Xmpp.error_notify("#{user.name} 重复绑定qq：#{openid}")  unless user.qq_hidden
-        do_login_qq_done(user,token,expires_in,data)
       end
-    else
-      u = User.find_by_qq(openid)
-      if u && u.id != session[:user_id]
-        if u.qq_hidden
-          $redis.del("Q:#{u.id}")
-        else
-          render :json => {error: "该qq帐号已经注册过了，不能绑定。"}.to_json
-          return
-        end
-      end
-      do_bind_qq(user,openid,token)
-      do_login_qq_done(session_user_no_cache,token,expires_in,data)
     end
+    do_bind_qq(user,openid,token)
+    do_login_qq_done(session_user_no_cache,token,expires_in,data)
   end
   
   def do_bind_qq(user,openid,token)

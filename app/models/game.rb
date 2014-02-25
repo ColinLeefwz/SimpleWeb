@@ -7,6 +7,8 @@ class Game
   field :sid, type: Integer #商家
   field :uid, type: Moped::BSON::ObjectId #用户
   field :score, type: Integer #游戏分数
+  field :sn #兑奖SN码
+  field :phone #中奖者手机号
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :to => :user

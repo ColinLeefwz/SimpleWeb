@@ -485,7 +485,7 @@ class Shop
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
 
     if $mansion3.include?(self.id)
-      ["52fc278620f318cb4a000009","52fc3dad20f318429c00001b"].each do |cp|
+      ["52fc278620f318cb4a000009"].each do |cp|
         coupon1 = Coupon.find_by_id(cp)
         if coupon1.allow_send_checkin?(user_id, :single => true)
           coupon1.send_coupon(user_id,nil,self.id)
@@ -826,7 +826,7 @@ class Shop
   end
 
   def has_food_purview?
-    /测试|脸脸/ =~ self.name || self.id.to_s == '21832844' || self.id.to_s == '21837941' ? true : false
+    /测试|脸脸/ =~ self.name || self.id.to_s == '21832844' || self.id.to_s == '21837941' || self.id.to_s == '21839738' ? true : false
   end
 
   def has_trade_purview?
