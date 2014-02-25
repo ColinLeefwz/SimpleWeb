@@ -2,8 +2,8 @@
 %html
   %head
     %title=  "Prodygia | #{(content_for(:title) ? yield(:title) : "Home")}".html_safe
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
-    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "application"
     %script{src: "//cdn.sublimevideo.net/js/2nbe61v6.js"}
     %link{href: "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel: "stylesheet"}
     = csrf_meta_tags
