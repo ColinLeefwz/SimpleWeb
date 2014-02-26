@@ -52,6 +52,7 @@
         = f.time_zone_select :time_zone
 
     .form-group
-      .col-sm-offset-5
+      .col-sm-6
         = f.submit "update", class: 'btn btn-prodygia dashboard-buttons'
+      .col-sm-offset-2
         = link_to "Cancel", activity_stream_member_path(current_user), remote: true, class: 'btn dashboard-buttons'
