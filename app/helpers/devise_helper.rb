@@ -7,7 +7,7 @@ module DeviseHelper
     sentence = "Oops! Your changes could not be saved for the following reason(s):"
 
     html = <<-HTML
-    <div class="alert alert-error alert-block">
+    <div class="alert alert-danger alert-block">
       <button type="button" class="close" data-dismiss="alert">x</button>
       <h4>#{sentence}</h4>
       #{messages}
