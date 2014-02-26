@@ -1,0 +1,15 @@
+
+= f.fields_for :video, (f.object.video || f.object.build_video) do |v|
+  = v.label :cover, "Video Cover"
+  = v.file_field :cover
+  .SD
+    = v.hidden_field :SD_file_name
+    = v.hidden_field :SD_content_type
+    = v.hidden_field :SD_file_size
+    = v.hidden_field :SD_temp_path
+
+  .HD
+    = v.hidden_field :HD_file_name
+    = v.hidden_field :HD_content_type
+    = v.hidden_field :HD_file_size
+    = v.hidden_field :HD_temp_path

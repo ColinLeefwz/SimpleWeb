@@ -29,7 +29,7 @@ ActiveAdmin.register Expert do
     default_actions
   end
 
-	form partial: "form"
+  form partial: "form"
 
   show do |expert|
     attributes_table do
@@ -79,20 +79,17 @@ ActiveAdmin.register Expert do
 
 
   controller do
-		def new
-			@expert = Expert.new
-			@expert.build_intro_video
-			@expert.build_profile
-		end
+    def new
+      @expert = Expert.new
+    end
 
-		def edit
-			@expert = Expert.find params[:id]
-			@expert.intro_video || @expert.create_intro_video
-			@expert.profile || @expert.create_profile
-		end
+    def edit
+      @expert = Expert.find params[:id]
+    end
 
     def permitted_params
-      params.permit(:id, :commit, :authenticity_token, expert: [:id, :name, :avatar, :first_name, :last_name, :password, :email, :time_zone, profile_attributes: [:id, :title, :company, :location, :country, :city, :expertise, :web_site, :testimonials, :additional, :career, :education, :twitter], intro_video_attributes: [:id, :attached_video_hd_file_name, :attached_video_hd_content_type, :attached_video_hd_file_size, :attached_video_sd_file_name, :attached_video_sd_content_type, :attached_video_sd_file_size, :sd_url, :hd_url, :cover]])
+      params.permit :id, expert: [:id, :name, :avatar, :first_name, :last_name, :password, :email, :time_zone, Video::Attributes,
+                                  profile_attributes: [:id, :title, :company, :location, :country, :city, :expertise, :web_site, :testimonials, :additional, :career, :education, :twitter] ]
     end
   end
 end

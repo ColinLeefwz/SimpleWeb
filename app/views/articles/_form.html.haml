@@ -1,11 +1,11 @@
 .white-background.shadow
   = simple_form_for(@article, remote: true)  do |f|
-    %h3 Post New Content
-    .form-group
-      .col-sm-2
-        = f.label :title, class: "control-label"
-      .col-sm-6
-        = f.text_field :title, :autofocus => true, class: 'form-control', id: 'session-title-input'
+    .page-header
+      %h3 Post New Content
+      .btn.btn-info
+        = link_to 'Guidelines for posting your article on Prodygia', '#modal-guideline', class: 'lead', data:{toggle: "modal"}
+    = f.input :title, input_html: { id: 'session-title-input' }
+
     .categories
       .col-sm-2
         = f.label :categories, class: "control-label"
@@ -41,3 +41,4 @@
         = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
 
     = render "article_preview", f: f
+    = render "experts/guideline_page_modal"

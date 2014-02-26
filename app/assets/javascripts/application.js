@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require s3_direct_upload
-//= require turbolinks
 //= require jquery.throttledresize
 //= require bootstrap
 //= require imagesloaded.pkgd.min

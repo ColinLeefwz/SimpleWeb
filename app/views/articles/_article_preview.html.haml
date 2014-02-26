@@ -1,42 +1,39 @@
 #modal.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
   .modal-body
-    .text-page-header-box.shadow
-      .text-page-left-side
-        .text-page-portrait
-          = image_tag("#{current_user.avatar.url}")
-        .text-page-expert-info
-          .name
-            = current_user.name
-          .title
-            = current_user.profile.title
-          .company
-            = current_user.profile.company
-        .clear-fix.visible-xs
-      .text-page-middle
-        .title#session-title
-        .datetime#session-datetime
-        .category-name#article-session-categories
-      .text-page-right-side
-        .text-page-social-buttons
-          .favorite
-            = image_tag("favorite.png")
-          .social-share.facebook
-            = image_tag("facebook.png")
-          .social-share.twitter
-            = image_tag("twitter.png")
-          .social-share.linkedin
-            = image_tag("linkedin.png")
-          .social-share.google_plus
-            = image_tag("googleplus.png")
-      .clear-fix
-    .text-page-article-box.shadow
-      .text-page-main-content
-        .text-page-image
-          #default-session-cover
-            = image_tag(@article.cover.url)
-          %img#session-cover
-        %p#article-session-description
-      .clear-fix
+    .header.shadow.clearfix
+      .user
+        .avatar
+          = image_tag current_user.avatar.url
+        .name
+          = current_user.name
+        .title
+          = current_user.profile.title
+        .company
+          = current_user.profile.company
+
+      .meta
+        .title
+        .date.separator
+        .category
+
+
+      .social-share-icons.favorite-star
+        .favorite
+          = image_tag("favorite.png")
+        .facebook
+          = image_tag("facebook.png")
+        .twitter
+          = image_tag("twitter.png")
+        .linkedin
+          = image_tag("linkedin.png")
+        .googleplus
+          = image_tag("googleplus.png")
+
+
+    .detail.shadow.clearfix
+      .video-cover
+        = image_tag @article.cover.url
+      %article
 
   .modal-footer
     %button.btn{data:{dismiss:'modal'}, aria:{hidden:'true'}} Close

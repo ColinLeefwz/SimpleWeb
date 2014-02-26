@@ -1,38 +1,10 @@
 .edit-profile-title
   %h3 Edit Your Profile
--# Peter: hide the intro video now, don't remove the code below. 2014-01-14
--# .edit-intro-video
--#   %h4 Intro Video
--#   %span HD
--#   = s3_uploader_form id: "s3_intro_video_hd", callback_param: 'intro_video_hd', key: "intro_videos/hd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/hd", acl: 'public-read' do
--#     = file_field_tag :file, multiple: false
--#     = link_to "upload", "javascript:void(0)", id: "hd_upload_submit"
--#     .upload.js-progress-bars
--#       .progress
--#         .bars
-
--#   %span SD
--#   = s3_uploader_form id: "s3_intro_video_sd", callback_param: 'intro_video_sd', key: "intro_videos/sd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "intro_videos/sd", acl: 'public-read' do
--#     = file_field_tag :file, multiple: false
--#     = link_to "upload", "javascript:void(0)", id: "sd_upload_submit"
--#     .upload.js-progress-bars
--#       .progress
--#         .bars
 
 = form_for @expert, url: update_profile_expert_path(current_user), remote: true, :html => { :method => :put, :class => "form-horizontal"} do |f|
 
-  -# Peter: hide the intro video now. 2014-01-14
-  -# %fieldset
-  -#   = f.simple_fields_for :intro_video do |intro|
-  -#     = intro.input :attached_video_hd_file_name, as: :hidden
-  -#     = intro.input :attached_video_hd_content_type, as: :hidden
-  -#     = intro.input :attached_video_hd_file_size, as: :hidden
-  -#     = intro.input :hd_url, as: :hidden
-  -#     = intro.input :attached_video_sd_file_name, as: :hidden
-  -#     = intro.input :attached_video_sd_content_type, as: :hidden
-  -#     = intro.input :attached_video_sd_file_size, as: :hidden
-  -#     = intro.input :sd_url, as: :hidden
-    -# %legend Overview
+
+  %fieldset
   .form-group
     .col-sm-5
       = f.label :first_name, class: "control-label"

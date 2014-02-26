@@ -4,6 +4,8 @@
 
   .section-title.inline.tooltips{data: {available: available.to_s, placement: "right"}}
     %span= section.title
+    - if show_preview
+      %span.label.label-preview Free preview
 
   .duration.inline.center-container
     %span= distance_of_time_in_words section.duration.to_i
@@ -11,11 +13,11 @@
   .section-detail
     - if available
       .section-modal.modal.hide.fade
-        - if section.has_video?
+        - if section.try :video
           .video
-            %video.sublime{title: section.title, width: "640", height: "360", preload: "none"}
-              %source{src: section.sd_url}
-              %source{src: section.hd_url, data: {quality: "hd"}}
+            %video.sublime{title: section.title, width: "640", height: "352", preload: "none"}
+              %source{src: section.video.SD.url}
+              %source{src: section.video.HD.url, data: {quality: "hd"}}
 
         .description
           = section.description
