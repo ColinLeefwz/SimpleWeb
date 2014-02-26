@@ -89,15 +89,12 @@ class User < ActiveRecord::Base
   end
 
   def enrolled?(item)
-    record = Enrollment.find_by user_id: self.id, 
-      enrollable_id: item.id,
-      enrollable_type: item.class.name
+    record = Enrollment.find_by user_id: self.id, enrollable_id: item.id, enrollable_type: item.class.name
+    return record ? true : false
   end
 
   def enroll(item)
-    record = Enrollment.create user_id: self.id,
-      enrollable_id: item.id,
-      enrollable_type: item.class.name
+    record = Enrollment.create user_id: self.id, enrollable_id: item.id, enrollable_type: item.class.name
   end
 
 
