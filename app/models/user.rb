@@ -584,11 +584,13 @@ class User
   end
 
   def chat
-    JSON.parse(Xmpp.get("api/chat?uid=#{self.id.to_s}"))
+    resp = RestClient.get("http://#{Xmpp.cur_xmpp_ip}/chat_logs/search.php?uid=#{self.id}")
+    JSON.parse(resp)
   end
 
   def human_chat(uid)
-    JSON.parse(Xmpp.get("api/chat2?uid1=#{self.id.to_s}&uid2=#{uid}"))
+    resp = RestClient.get("http://#{Xmpp.cur_xmpp_ip}/chat_logs/search.php?uid1=#{self.id.to_s}&uid2=#{uid}")
+    JSON.parse(resp)
   end
   
   def merge_to_checkin(cins,photo)
