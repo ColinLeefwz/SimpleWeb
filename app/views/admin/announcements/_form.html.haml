@@ -1,20 +1,17 @@
-%span HD
-= s3_uploader_form id: "s3_announcement_hd", callback_param: 'announcement_hd', key: "announcements/hd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "announcements/hd", acl: 'public-read' do
-  = file_field_tag :file, multiple: false
-  = link_to "upload", "javascript:void(0)", id: "hd_upload_submit"
-  .upload.js-progress-bars
-    .progress
-      .bars
-
 %span SD
-= s3_uploader_form id: "s3_announcement_sd", callback_param: 'announcement_sd', key: "announcements/sd/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", key_starts_with: "announcements/sd", acl: 'public-read' do
+= s3_uploader_form class: "s3_uploader", acl: 'public-read', data:{definition: "SD"} do
   = file_field_tag :file, multiple: false
-  = link_to "upload", "javascript:void(0)", id: "sd_upload_submit"
-  .upload.js-progress-bars
-    .progress
-      .bars
+  %span.status
+
+%span HD
+= s3_uploader_form class: "s3_uploader", acl: 'public-read', data:{definition: "HD"} do
+  = file_field_tag :file, multiple: false
+  %span.status
 
 = simple_form_for [:admin, @announcement] do |f|
+
+  = render "shared/video_form_builder", f:f
+
   = f.input :title
   = f.input :description, input_html: {class: "ckeditor"}
   = f.input :language, collection: Language.all, label_method: :long_version, value_method: :combine_version, include_blank: false
@@ -23,13 +20,7 @@
   = f.input :categories, as: :check_boxes, collection: Category.all.map(&:name)
   = f.input :always_show
 
-  = f.input_field :attached_video_hd_file_name, as: :hidden
-  = f.input_field :attached_video_hd_content_type, as: :hidden
-  = f.input_field :attached_video_hd_file_size, as: :hidden
-  = f.input_field :hd_url, as: :hidden
-  = f.input_field :attached_video_sd_file_name, as: :hidden
-  = f.input_field :attached_video_sd_content_type, as: :hidden
-  = f.input_field :attached_video_sd_file_size, as: :hidden
-  = f.input_field :sd_url, as: :hidden
-
   = f.button :submit
+
+:javascript
+  upload_helper()

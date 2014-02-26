@@ -1,11 +1,11 @@
 - content_for(:title){@announcement.title}
 
-= render "sessions/page_header", item: @announcement, item: @announcement, link_path: subscribe_path(@announcement, type: @announcement.class.name)
+= render "sessions/page_header", item: @announcement, link_path: subscribe_path(@announcement, type: @announcement.class.name)
 
 .detail.shadow.margin-bottom.clearfix
   .video-cover
-    - if @announcement.has_video_to_present?
-      = render "shared/sublime_video", item_resource: @announcement, poster_url: @announcement.cover.url
+    - if @announcement.try :video
+      = render "shared/sublime_video", video: @announcement.video
     - else
       = image_tag @announcement.cover.url
   %article
