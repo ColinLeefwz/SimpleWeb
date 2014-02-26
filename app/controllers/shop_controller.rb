@@ -37,6 +37,11 @@ class ShopController < ApplicationController
       render :json => [].to_json
       return
     end
+    if params[:sname]=="即"
+      shops = (21839801..21839814).map {|x| Shop.find_by_id(x)}.find_all{|x| x!=nil}
+      render :json => shops.map {|s| {id:s.id,name:s.name, visit:0, distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
+      return
+    end
     if params[:sname]=="素非餐厅" || params[:sname]=="素非"
       render :json => [Shop.find_by_id(21837941)].map {|s| {id:s.id,name:s.name, visit:0, distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
       return
