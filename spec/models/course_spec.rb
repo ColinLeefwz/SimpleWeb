@@ -17,6 +17,16 @@ describe Course do
       it "has 3 items" do
         expect(Course.recommend_courses(jevan)).to have(3).items
       end
+
+      it "excludes my subscribed courses" do ## Peter at 2014-02-26: here subscribed eq enrolled for old uses
+        Course.delete_all
+        enrolled_course = create(:course, title: "subscribed course", experts: [sameer], categories: ["culture"])
+        courses = create_list(:course, 2, title: "course", experts: [sameer], categories: ["culture"])
+        staff_course = create(:course, title: "staff course", experts: [staff], categories: ["culture"])
+        jevan.enroll enrolled_course
+        expect(Course.recommend_courses(jevan)).not_to include enrolled_course
+        expect(Course.recommend_courses(jevan).count).to eq 2
+      end
     end
 
     context "current user is an expert" do
