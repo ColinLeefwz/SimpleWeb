@@ -27,6 +27,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
   <% @users.each do |user| %>
@@ -45,6 +46,9 @@
       </td>
       <td>
         <%= link_to '授权', "javascript:void(0)", :onclick => "ajaxCo($(this), '#{user.id}')" if !$redis.sismember('CoUsers', user.id) %>
+      </td>
+      <td>
+        <%= link_to '外部', "javascript:void(0)", :onclick => "ajaxW($(this), '#{user.id}')" if !$redis.sismember('WUsers', user.id) %>
       </td>
       <td>
         <%= link_to '详情', "/admin_users/show?id=#{user.id}" %>
@@ -71,6 +75,9 @@
     $.get("/admin_users/ajax_co", {id: id}, function(){ obj.replaceWith("已添加")})
   }
 
+  function ajaxW(obj, id){
+    $.get("/admin_users/ajax_w", {id: id}, function(){ obj.replaceWith("已添加")})
+  }
 
   $(document).ready(function() {
     $("a#imgt2").fancybox({

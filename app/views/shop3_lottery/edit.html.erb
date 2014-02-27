@@ -2,9 +2,9 @@
 #wizard {border:0px solid #789;font-size:12px;height:1140px;margin:20px auto;width:590px;overflow:hidden;position:relative;-moz-border-radius:0px;-webkit-border-radius:0px;}
 #wizard .items{width:20000px; clear:both; position:absolute;}
 #wizard .right{float:right;}
-#wizard #status{height:45px;background:#c2c2c2;padding-left:25px !important;}
+#wizard #status{height:45px;background:;padding-left:25px !important;}
 #status li{float:left;color:#fff;padding:15px 30px;font-size: 16px;}
-#status li.active{background-color:#6CA6CD;font-weight:normal;}
+#status li.active{background-color:#369;font-weight:normal;}
 .input{width:240px; height:18px; margin:10px auto; line-height:20px; border:1px solid #d3d3d3; padding:2px}
 .page{padding:20px 30px;width:500px;float:left;}
 .page h3{height:42px; font-size:16px; border-bottom:1px dotted #ccc; margin-bottom:20px; padding-bottom:5px}
@@ -31,14 +31,14 @@
       <li><strong>3.</strong>活动设置</li>
     </ul>
    
-   <%= form_for(@lottery, :url => '/shop3_lottery/create' ) do |f| %>
+   <%= form_for(@lottery, :url => "/shop3_lottery/update?id=#{params[:id]}" ) do |f| %>
     <div class="items">
            
            <div class="page">
 
                <h3>创建活动欢迎语<br/><em>在此创建活动欢迎语</em></h3>
                <p><%= f.label "活动名称："%> <%= f.text_field :name, :class=> "inputs2 mb10" %><span class="orange2 ml10 f18">*</span></p>
-               <p><%= f.label "兑奖信息："%> <%= f.text_field :info, :class=> "inputs2 mb10", :placeholder=>"如：兑奖请联系我们，电话15888888888" %><span class="orange2 ml10 f18">*</span></p>
+               <p><%= f.label "兑奖信息："%> <%= f.text_field :info, :class=> "inputs2 mb10" %><span class="orange2 ml10 f18">*</span></p>
                <p><label>活动开始时间:</label><%= f.text_field :stime, :class => "datePicker inputs2 mb10", :readonly => "readonly" %><span class="orange2 ml10 f18">*</span></p>
                <p><label>活动结束时间:</label><%= f.text_field :etime, :class => "datePicker2 inputs2 mb10", :readonly => "readonly" %><span class="orange2 ml10 f18">*</span></p>
                <p>
