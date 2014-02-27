@@ -363,6 +363,7 @@ class Oauth2Controller < ApplicationController
       return
     end
     session[:user_id] = user.id
+    Resque.enqueue(LoginNotice, user.id )
     do_login_wb_done(user,token,expires_in,data)
   end
   
@@ -430,6 +431,7 @@ class Oauth2Controller < ApplicationController
       return
     end
     session[:user_id] = user.id
+    Resque.enqueue(LoginNotice, user.id )
     do_login_qq_done(user,token,expires_in,data)
   end
   

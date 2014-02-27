@@ -153,6 +153,7 @@ class PhoneController < ApplicationController
       return render :json => {"error"=>"该手机号码不能直接登录，请先注册或者登录后绑定该手机号码"}.to_json
     end
     session[:user_id] = user.id
+    Resque.enqueue(LoginNotice, user.id )
     save_device_info(user.id, false)
 	  render :json => user.output_self.to_json
   end
