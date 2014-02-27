@@ -10,7 +10,7 @@
 
 - if @show_category == true
   %nav
-    %ul.visible-desktop
+    %ul.visible-md.visible-lg
 
       %li.category
         %a.filters{href: "#all", data: {filter: '*'}}all
@@ -27,7 +27,7 @@
           %li.filters{href: "#article", data: {filter: '.article'}} article
           %li.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
 
-    %select#collapsed_navbar.span12.hidden-desktop
+    %select#collapsed_navbar.col-md-12.hidden-md.hidden-lg
       %option.filters{data: {filter: '*'}} all
       - @categories.each do |category|
         %option.filters{data: {filter: ".#{category.name}"}}
