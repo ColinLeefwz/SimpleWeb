@@ -1,6 +1,5 @@
 - content_for(:title) { @expert.name }
 
-= render "welcome/box_content_modal"
 .general-wrapper
   .brief.sub-wrapper.first-sub.clearfix
     .avatar.brief-item
@@ -84,5 +83,8 @@
       - @items.each do |item|
         = render partial: "welcome/box_content", locals: { item: item }
 
-    :javascript
-      load_isotope()
+-# hidden modals
+= render "shared/sign_in_modal"
+
+:javascript
+  load_isotope()
