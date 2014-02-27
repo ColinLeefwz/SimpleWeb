@@ -29,7 +29,7 @@
     .contact.brief-item-last.clearfix
       .contact-button#follow
         - if current_user.blank?
-          = link_to image_tag('favorite_unselected.png'),'#modal', data:{toggle: "modal"}, class: 'favorite hollow-star'
+          = link_to image_tag('favorite_unselected.png'),'#sign-in-modal', data:{toggle: "modal"}, class: 'favorite hollow-star'
         - else
           = render 'shared/favorite_star', method: :follow?, object: @expert, link_path: relationship_path(@expert.id)
       #follower-count

@@ -3,7 +3,7 @@
     .page-header
       %h3 Post New Content
       .guideline-sentence
-        = link_to 'Guidelines ', '#modal-guideline', data:{toggle: "modal"} 
+        = link_to 'Guidelines ', '#guideline-modal', data:{toggle: "modal"} 
         for posting your article on Prodygia
     = f.input :title, input_html: { id: 'session-title-input' }
     .categories
@@ -17,7 +17,7 @@
     = f.hidden_field :draft
 
     = f.submit "Save Draft", class: 'btn dashboard-buttons', id: "save-draft"
-    = link_to "Preview", "#modal", id: "session-preview", class: "btn dashboard-buttons", data:{toggle: "modal"}
+    = link_to "Preview", "#preview-modal", id: "session-preview", class: "btn dashboard-buttons", data:{toggle: "modal"}
     = f.submit "Publish", class: 'btn dashboard-buttons btn-prodygia', id: "publish"
     = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
 
