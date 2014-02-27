@@ -30,8 +30,8 @@ class SmsSender
       match = info.index("<code>2</code>")
       return true if match && match>0
       Xmpp.error_notify("ihuiyi短信错误：#{Time.now},#{phone_operator(phone)} #{phone}")
-      Xmpp.error_notify(info)
       Xmpp.error_notify(info.encode('utf-8','gbk'))
+      Xmpp.error_notify("原编码："+info)
       return nil
   end
   
