@@ -1,5 +1,7 @@
 Prodygia::Application.routes.draw do
 
+  resources :comments
+
   resources :courses do
     member do
       get :preview
