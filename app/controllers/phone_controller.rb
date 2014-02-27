@@ -78,7 +78,6 @@ class PhoneController < ApplicationController
       return
     end
     sms = "您的验证码是：#{code}。请不要把验证码泄露给其他人。"
-    #TODO: 短信重发切换渠道／短信60秒内限流
     Resque.enqueue(SmsSender, params[:phone], sms )  unless fake
     session[:phone_code] = code
     session[:phone_try] = 5
