@@ -24,7 +24,7 @@ class Course < ActiveRecord::Base
 
   has_attached_file :cover
 
-  after_create :create_a_video
+  after_create :create_a_video, :expert_enrolled_own
 
   class << self
     def recommend_courses(current_user)
@@ -63,5 +63,11 @@ class Course < ActiveRecord::Base
   private
   def create_a_video
     self.create_video
+  end
+
+  def expert_enrolled_own
+    self.experts.each do |exp|
+      exp.enroll self
+    end
   end
 end
