@@ -1,5 +1,6 @@
 <div class="con2">
   <div class="title1 mb30"><h2 class="f18 l">刮刮卡管理</h2></div>
+  <div style="color:green;font-size:20px;text-align:center;"><%= flash[:notice] %></div>
   <div class="submenu">
     <ul>
       <li><a href="/shop3_lottery/new">添加活动</a></li>
@@ -20,11 +21,11 @@
         <td><%= lottery.name %></td>
         <td><%= 123 %></td>
         <td><%= 232 %></td>
-        <td><%= Time.now %>&nbsp;</td>
+        <td><%= lottery.stime %>至<%= lottery.etime %></td>
         <td width="305">
           <%= link_to "编辑", "/shop3_lottery/edit?id=#{lottery.id}" %>&nbsp;&nbsp;
           <a href="javascript:void(0)" onclick="ajaxApply('<%= lottery.id %>')">活动结束</a>&nbsp;&nbsp;
-          <a href="javascript:void(0)" onclick="ajaxDel('<%= lottery.id %>')">删除</a>
+          <%= link_to "删除", "/shop3_lottery/destroy?id=#{lottery.id}" %>
         </td>
       </tr>
     <% end %>

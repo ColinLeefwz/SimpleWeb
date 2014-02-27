@@ -41,7 +41,7 @@
       <td><%= user.ver %></td>
       <td><%= user.os.to_i == 1 ? "android" : "ios" %></td>
       <td>
-        <%= link_to '可信', "javascript:void(0)", :onclick => "ajaxKx($(this), '#{user.id}')" if !$redis.sismember('KxUsers', user.id) %>
+        <%= link_to '可信', "/admin_users/add_kx?id=#{user.id}" if !$redis.sismember('KxUsers', user.id) %>
       </td>
       <td>
         <%= link_to '授权', "javascript:void(0)", :onclick => "ajaxCo($(this), '#{user.id}')" if !$redis.sismember('CoUsers', user.id) %>

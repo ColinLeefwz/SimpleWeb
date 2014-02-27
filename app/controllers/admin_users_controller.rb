@@ -57,19 +57,9 @@ class AdminUsersController < ApplicationController
     render :nothing => true
   end
 
-  # def add_kx
-  #   @ku = KxUser.new
-  # end
-
-  # def create_kx
-  #   @ku = KxUser.new(params[:kx_user])
-  #   @ku._id = params[:id].__mongoize_object_id__
-  #   if @ku.save
-  #     $redis.sadd("KxUsers", @ku._id)
-  #   else
-  #     render :new
-  #   end
-  # end
+  def add_kx
+    @ku = KxUser.new
+  end
 
   def ajax_co
     begin

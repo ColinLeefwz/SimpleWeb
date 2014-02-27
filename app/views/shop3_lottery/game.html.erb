@@ -33,7 +33,7 @@
 							<p>
 								中奖时间：
 								<span class="red">
-									<%= Time.now.strftime("%Y年%m月%d日 %H:%M:%S") %>
+									<%= Time.now.strftime("%Y年%m月%d日%H:%M:%S") %>
 								</span>
 							</p>
 							<p class="red">
@@ -82,7 +82,24 @@
 						</div>
 						<div class="Detail">
 							<p>
-								<%= @lottery.try(:type) %>:<%= @lottery.try(:jname) %>
+							    <% if @lottery.try(:type1).present? %>
+								<%= @lottery.try(:type1) %>:<%= @lottery.try(:jname1) %><br>
+								<% end %>
+								<% if @lottery.try(:type2).present? %>
+								<%= @lottery.try(:type2) %>:<%= @lottery.try(:jname2) %><br>
+								<% end %>
+								<% if @lottery.try(:type3).present? %>
+								<%= @lottery.try(:type3) %>:<%= @lottery.try(:jname3) %><br>
+								<% end %>
+								<% if @lottery.try(:type4).present? %>
+								<%= @lottery.try(:type4) %>:<%= @lottery.try(:jname4) %><br>
+								<% end %>
+								<% if @lottery.try(:type5).present? %>
+								<%= @lottery.try(:type5) %>:<%= @lottery.try(:jname5) %><br>
+								<% end %>
+								<% if @lottery.try(:type5).present? %>
+								<%= @lottery.try(:type6) %>:<%= @lottery.try(:jname6) %><br>
+								<% end %>
 							</p>
 						</div>
 					</div>
