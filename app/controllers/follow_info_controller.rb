@@ -4,9 +4,9 @@ class FollowInfoController < ApplicationController
   def followers
     who = User.find_by_id(params[:id])   
     users = who.fans
-    #TODO: redis端分页
     users.delete_if {|x| x.name.index(params[:name])==nil } unless params[:name].nil?
     users.delete_if {|x| who.black?(x._id) }
+    #TODO: 如何避免一次性加载所有数据
     output_users(users)
   end
   

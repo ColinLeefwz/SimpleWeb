@@ -148,7 +148,7 @@ class User
   end
   
   def follow_ids
-    $redis.zrange("Fol#{self.id}",0,-1).delete_if {|x| x.size==0}
+    $redis.zrevrange("Fol#{self.id}",0,-1).delete_if {|x| x.size==0}
   end
   
   def follows
@@ -441,7 +441,7 @@ class User
   end
     
   def fan_ids
-    $redis.zrange("Fan#{self.id}",0,-1)
+    $redis.zrevrange("Fan#{self.id}",0,-1)
   end
   
   def fan_not_friend_ids
@@ -449,7 +449,7 @@ class User
   end
   
   def good_friend_ids
-    $redis.zrange("Frd#{id}",0,-1)
+    $redis.zrevrange("Frd#{id}",0,-1)
   end
   
   def good_friends
