@@ -7,4 +7,4 @@
   %section
     = comment.content
   %footer
-    = link_to("delete", comment_path(comment), method: :delete, remote: true) if can? :destroy, comment
+    = link_to("delete", comment_path(comment), method: :delete, remote: true, data: {confirm: "Please confirm the deletion"}) if can? :destroy, comment
