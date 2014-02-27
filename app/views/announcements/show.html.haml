@@ -11,6 +11,14 @@
   %article
     = @announcement.description.try :html_safe
 
+.comments.margin-bottom
+  %h4 
+    = pluralize(@announcement.comments.count, "Comment")
+  = render partial: "comments/comment", collection: @announcement.comments, as: :comment
+  = render partial: "comments/form", locals: {parent: @announcement}
+
+
+
 -# hidden modals
 = render "shared/sign_in_modal"
 
