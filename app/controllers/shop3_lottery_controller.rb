@@ -5,7 +5,7 @@ class Shop3LotteryController < ApplicationController
   layout 'shop3'
 
   def index
-    @lottery = Lottery.all
+    @lottery = Lottery.ggk
   end
 
   def new
@@ -67,8 +67,12 @@ class Shop3LotteryController < ApplicationController
     game.sn = params[:txt]
     game.phone = params[:tel]
     game.save!
-    cp = Coupon.find_by_id("5305d4e220f3186569000064")
+    cp = Coupon.find_by_id("530ef03320f318fad8000039")
     cp.send_coupon(params[:uid])
+  end
+
+  def zhuan
+    @zhuan = Lottery.dzp
   end
 
 end

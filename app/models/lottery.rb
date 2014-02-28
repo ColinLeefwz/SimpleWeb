@@ -2,6 +2,7 @@ class Lottery
   include Mongoid::Document
 
   field :sid, type: Integer
+  field :gid, type: Integer
   field :name #活动名称
   field :info #兑奖信息
   field :stime #活动开始时间
@@ -39,11 +40,23 @@ class Lottery
 
   # has_many :lottery_prizes, :dependent => :destroy
 
+  scope :ggk, -> { where(:gid => 1) }
+
+  scope :dzp, -> { where(:gid => 2) }
+
   validates_presence_of :name, :info, :stime, :etime, :des
 
   def show_guaguaka_reword
     hash = { "一等奖" => gl/300.0000, "二等奖" => gl/300.0000, "三等奖" => gl/300.0000, "谢谢惠顾" => (1-gl/100.0000) }
     hash.to_a.map { |el| Array.new(el[1]*100, el[0]) }.flatten.sample
+  end
+
+  def redis_key
+    "Lottery#{self.gid}-#{self.sid}"
+  end
+  
+  def add_redis
+    $redis.zadd(redis_key,score,self.uid)
   end
 
 end
