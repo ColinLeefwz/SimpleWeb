@@ -21,6 +21,7 @@ class Course < ActiveRecord::Base
   has_many :subscribers, through: :subscriptions
 
   has_one :visit, as: :visitable
+  has_many :comments, -> {order "updated_at DESC"}, as: :commentable
 
   has_attached_file :cover
 

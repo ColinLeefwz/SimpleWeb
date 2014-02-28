@@ -1,6 +1,9 @@
 #content.container
   - @items.each do |item|
     = render partial: "box_content", locals: { item: item }
-= render "box_content_modal"
+
+-# hidden modals
+= render "shared/sign_in_modal"
+
 :javascript
   load_isotope()

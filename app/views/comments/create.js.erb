@@ -1,0 +1,5 @@
+<% commentable = @comment.commentable %>
+
+$('<%=j render partial: "comment", locals: {comment: @comment}%>').insertBefore($("form"));
+$(".comments").find("h4").html('<%= pluralize(commentable.comments.count, "Comment") %>');
+$("form")[0].reset();
