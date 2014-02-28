@@ -27,6 +27,13 @@ class Expert < Member
     (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}
   end
 
+  def published_contents
+    articles = self.articles.where.not(draft: true)
+    video_interviews = self.video_interviews
+
+    (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}
+  end
+
   def is_staff
     return (self.id == 2)
   end
