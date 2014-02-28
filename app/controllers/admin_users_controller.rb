@@ -61,6 +61,10 @@ class AdminUsersController < ApplicationController
     @ku = KxUser.new
   end
 
+  def add_co
+    @cu = CoUser.new
+  end
+
   def ajax_co
     begin
       couser = CoUser.new(type: '脸脸')

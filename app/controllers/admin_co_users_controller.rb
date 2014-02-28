@@ -46,5 +46,16 @@ class AdminCoUsersController < ApplicationController
     redirect_to :action => "index"
   end
 
+  def create_co
+    @cu = CoUser.new(params[:co_user])
+    @cu._id = params[:id].__mongoize_object_id__
+    if @cu.save
+      $redis.sadd("CoUsers", @cu._id)
+      redirect_to :action => :index
+    else
+      render :new
+    end
+  end
+
 end
 
