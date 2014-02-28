@@ -7,7 +7,7 @@
     .overview
       .cover-box.inline
         .cover
-          - if @course.try :video
+          - if @course.video.available?
             = render "shared/sublime_video", video: @course.video
           - else
             = image_tag @course.cover.url
