@@ -21,8 +21,8 @@ class Expert < Member
   end
 
   def contents
-    articles = self.articles
-    video_interviews = self.video_interviews
+    articles = Article.includes(:visit).where(expert_id: self.id)
+    video_interviews = VideoInterview.includes(:visit).where(expert_id: self.id)
 
     (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}
   end
