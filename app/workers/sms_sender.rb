@@ -31,7 +31,7 @@ class SmsSender
       return true if match && match>0
       Xmpp.error_notify("ihuiyi短信错误：#{Time.now},#{phone_operator(phone)} #{phone}")
       Xmpp.error_notify(info.encode('utf-8','gbk',{:invalid => :replace}))
-      Xmpp.error_notify("原编码："+info)
+      Xmpp.error_notify(info)
       return nil
   end
   
