@@ -6,7 +6,7 @@ class Announcement < ActiveRecord::Base
 
   has_one :video, as: :videoable
   accepts_nested_attributes_for :video, allow_destroy: true
-  has_many :comments, as: :commentable
+  has_many :comments, -> {order "updated_at DESC"}, as: :commentable
 
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions

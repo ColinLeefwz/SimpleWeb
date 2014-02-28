@@ -5,7 +5,7 @@ class Article < ActiveRecord::Base
   has_many :subscriptions, as: :subscribable
   has_many :subscribers, through: :subscriptions
 
-  has_many :comments, as: :commentable
+  has_many :comments, -> {order "updated_at DESC"}, as: :commentable
   has_one :visit, as: :visitable
   has_attached_file :cover
   default_scope{ where(canceled: [nil, false]) }
