@@ -12,19 +12,16 @@
     #navbar-collapse2.collapse.navbar-collapse
       = render 'shared/user_session'
 
-#subnav.navbar.navbar-default
+%ul.nav.navbar-nav.navbar-header
   .col-md-12
-    .navbar-header
+    %li.dropdown
       %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-        %i.glyphicon.glyphicon-list
-        Menu
-        %small
-          %i.glyphicon.glyphicon-chevron-down
+        %i.glyphicon.glyphicon-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
       %ul.nav.dropdown-menu
         #navbar-collapse2.collapse.navbar-collapse
-          %form.navbar-form.pull-left
+          %form.navbar-form
             .input-group
-              %input#srch-term.form-control{:name => "srch-term", :placeholder => "Search", :type => "text"}
+              %input.form-control.pull-left{ :placeholder => "Search", :type => "text"}
                 .input-group-btn
                   %button.btn.btn-default.btn-primary{:type => "submit"}
                     %i.glyphicon.glyphicon-search

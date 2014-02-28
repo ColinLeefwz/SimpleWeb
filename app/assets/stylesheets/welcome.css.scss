@@ -22,10 +22,6 @@ body {
   background-image: image-url("bg.jpg");
 }
 
-#subnav {
-  width: 100%;
-}
-
 .navbar-default {
   border-width: 0;
 }
@@ -43,6 +39,9 @@ body {
     .input-group {
       max-width: 470px;
     }
+  }
+  .dropdown-menu {
+    width: 300px;
   }
 }
 
