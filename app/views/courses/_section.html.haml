@@ -13,7 +13,7 @@
   .section-detail
     - if available
       .section-modal.modal.hide.fade
-        - if section.try :video
+        - if section.video.available?
           .video
             %video.sublime{title: section.title, width: "640", height: "352", preload: "none"}
               %source{src: section.video.SD.url}
