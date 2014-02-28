@@ -1,0 +1,43 @@
+.form-horizontal {
+
+  %h3 {
+    text-align: center;
+  }
+  .form-group {
+  	margin-top: 10px;
+
+  	.col-sm-7 {
+  	  .form-control {
+  	    width: 100%;
+  	  }
+
+  	  select {
+  	  	width: inherit;
+  	  }
+  	}
+
+    .col-sm-6 {
+      .form-control {
+        width: 60%;
+      }
+
+      select {
+        width: inherit;
+      }
+    }
+
+  	.col-sm-5 {
+  	  .label {
+  	    width: 100%;
+  	  }
+  	}
+
+  	.control-label {
+  	  float: right;
+  	}
+
+  	.form-control {
+  	  width: 60%;
+  	}
+  }
+}

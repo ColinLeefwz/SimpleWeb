@@ -6,20 +6,40 @@
         = link_to 'Guidelines ', '#guideline-modal', data:{toggle: "modal"} 
         for posting your article on Prodygia
     = f.input :title, input_html: { id: 'session-title-input' }
-    .categories
-      = f.input :categories, collection: Category.pluck(:name), as: :check_boxes, required: true
-    = f.input :cover, label: "Upload image", input_html: { id: 'session-cover-input' }
-    = f.label :current_image
-    - if f.object.cover.url
-      #cover-image
-        = image_tag(f.object.cover.url)
-    = f.input :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}
-    = f.hidden_field :draft
 
-    = f.submit "Save Draft", class: 'btn dashboard-buttons', id: "save-draft"
-    = link_to "Preview", "#preview-modal", id: "session-preview", class: "btn dashboard-buttons", data:{toggle: "modal"}
-    = f.submit "Publish", class: 'btn dashboard-buttons btn-prodygia', id: "publish"
-    = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
+    .categories
+      .col-sm-2
+        = f.label :categories, class: "control-label"
+      = f.input :categories, collection: Category.pluck(:name), as: :check_boxes, required: true, class: 'checkbox-inline', label: false
+
+    .form-group
+      .col-sm-2
+        = f.label :upload_image, class: "control-label"
+      .col-sm-6
+        = f.file_field :cover, id: 'session-cover-input'
+    .form-group
+      .col-sm-2
+        = f.label :current_image
+      .col-sm-6
+        #cover-image
+          = image_tag(f.object.cover.url)
+    .form-group
+      .col-sm-2
+        = f.label :description, class: "control-label"
+      .col-sm-8
+        = f.text_area :description, class: 'ckeditor session-description-input'
+      = f.hidden_field :draft
+        
+
+    .form-group
+      .col-sm-2
+        = f.submit "Save Draft", class: 'btn dashboard-buttons', id: "save-draft"
+      .col-sm-2
+        = link_to "Preview", "#preview-modal", id: "session-preview", class: "btn dashboard-buttons", data:{toggle: "modal"}
+      .col-sm-2
+        = f.submit "Publish", class: 'btn dashboard-buttons btn-prodygia', id: "publish"
+      .col-sm-2
+        = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
 
     = render "article_preview", f: f
     = render "experts/guideline_page_modal"

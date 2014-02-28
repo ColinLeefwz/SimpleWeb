@@ -7,8 +7,9 @@ def helper_objects
   let(:staff) { create :expert, id: 2, email: "staff@prodygia.com", password: '11111111' }
 
   #experts
-  let(:sameer) { create :expert, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim' } # , avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
-  let(:alex) {create :expert, email: 'alex@test.com', password: '11111111', first_name: 'alex', last_name: 'lalo' } # , avatar: fixture_file_upload(('AD pic.jpg'), 'image/png') }
+  let(:sameer) { create :expert, id: 1, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim' } # , avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
+  let(:staff) { create :expert, id: 2, email: 'staff@prodygia.com', password: '11111111', first_name: 'staff', last_name: 'prodygia' } # , avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
+  let(:alex) {create :expert, id: 3, email: 'alex@test.com', password: '11111111', first_name: 'alex', last_name: 'lalo' } # , avatar: fixture_file_upload(('AD pic.jpg'), 'image/png') }
 
   #admins
   let(:admin) { create :admin_user, email: 'admin@example.com', password: 'password', first_name: 'admin', last_name: 'example'}

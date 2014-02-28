@@ -25,7 +25,7 @@ class Course < ActiveRecord::Base
 
   has_attached_file :cover
 
-  after_create :create_a_video
+  after_create :create_a_video, :expert_enrolled_own
 
   class << self
     def recommend_courses(current_user)
@@ -35,11 +35,11 @@ class Course < ActiveRecord::Base
         show_courses = staff_courses
         if staff_courses.count <= 3
           other_courses = Course.includes(:experts).references(:experts).where.not(users: {id: [Expert.staff, current_user]}).sample(3 - staff_courses.count)
-          # staff_courses.concat(other_courses) unless other_courses.empty?
           show_courses.concat(other_courses) unless other_courses.empty?
         end
       elsif current_user.is_a? Member
-        show_courses = Course.includes(:experts).references(:experts).where.not(users: {id: Expert.staff}).sample(3)
+        show_courses = Course.includes(:experts).references(:experts).where.not(users: {id: Expert.staff})
+        show_courses = (show_courses - current_user.enrolled_courses).sample(3)
       end
       show_courses
     end
@@ -64,5 +64,11 @@ class Course < ActiveRecord::Base
   private
   def create_a_video
     self.create_video
+  end
+
+  def expert_enrolled_own
+    self.experts.each do |exp|
+      exp.enroll self
+    end
   end
 end
