@@ -21,10 +21,11 @@ class Expert < Member
   end
 
   def contents
-    articles = self.articles
-    video_interviews = self.video_interviews
+    fetch_contents
+  end
 
-    (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}
+  def published_contents
+    fetch_contents(draft: false)
   end
 
   def is_staff
@@ -42,6 +43,14 @@ class Expert < Member
 
   def create_a_video
     self.create_video
+  end
+
+  private
+  def fetch_contents(article_option = {})
+    articles = self.articles.where(article_option)
+    video_interviews = self.video_interviews
+
+    (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}
   end
 
 end
