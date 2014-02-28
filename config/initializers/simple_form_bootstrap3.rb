@@ -8,7 +8,6 @@ GroupedCollectionSelectInput
 NumericInput
 PasswordInput
 RangeInput
-StringInput
 TextInput
 ]
 inputs.each do |input_type|
