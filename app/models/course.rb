@@ -21,10 +21,11 @@ class Course < ActiveRecord::Base
   has_many :subscribers, through: :subscriptions
 
   has_one :visit, as: :visitable
+  has_many :comments, -> {order "updated_at DESC"}, as: :commentable
 
   has_attached_file :cover
 
-  after_create :create_a_video
+  after_create :create_a_video, :expert_enrolled_own
 
   class << self
     def recommend_courses(current_user)
@@ -46,10 +47,7 @@ class Course < ActiveRecord::Base
 
 
   def producers
-    ## Peter at 2014-02-21: we should remove name attribute from User Table,
-    # use `name` method instead
-    # "by " + self.experts.pluck(:name).join(" and ") 
-    "by " + self.experts.map(&:name).join(" and ")
+    "by " + self.experts.map(&:name).to_sentence
   end
 
   def free?
@@ -63,5 +61,11 @@ class Course < ActiveRecord::Base
   private
   def create_a_video
     self.create_video
+  end
+
+  def expert_enrolled_own
+    self.experts.each do |exp|
+      exp.enroll self
+    end
   end
 end

@@ -4,11 +4,21 @@
 
 .detail.shadow.margin-bottom.clearfix
   .video-cover
-    - if @announcement.try :video
+    - if @announcement.video.available?
       = render "shared/sublime_video", video: @announcement.video
     - else
       = image_tag @announcement.cover.url
   %article
     = @announcement.description.try :html_safe
 
-= render "welcome/box_content_modal"
+.comments.margin-bottom
+  %h4 
+    = pluralize(@announcement.comments.count, "Comment")
+  = render partial: "comments/comment", collection: @announcement.comments, as: :comment
+  = render partial: "comments/form", locals: {parent: @announcement}
+
+
+
+-# hidden modals
+= render "shared/sign_in_modal"
+

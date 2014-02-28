@@ -47,9 +47,8 @@ class Expert < Member
 
   private
   def fetch_contents(article_option = {})
-    articles = self.articles.where(article_option)
-    video_interviews = self.video_interviews
-
+    articles = Article.includes(:visit).where(expert_id: self.id).where(article_option)
+    video_interviews = VideoInterview.includes(:visit).where(expert_id: self.id)
     (articles+video_interviews).sort{|x,y| y.updated_at <=> x.updated_at}
   end
 

@@ -7,7 +7,7 @@
     .overview
       .cover-box.inline
         .cover
-          - if @course.try :video
+          - if @course.video.available?
             = render "shared/sublime_video", video: @course.video
           - else
             = image_tag @course.cover.url
@@ -38,3 +38,14 @@
 
   - @course.chapters.each do |c|
     = render partial: "chapter", locals: {chapter: c}
+
+.comments.margin-bottom
+  %h4 
+    = pluralize(@course.comments.count, "Comment")
+  = render partial: "comments/comment", collection: @course.comments, as: :comment
+  = render partial: "comments/form", locals: {parent: @course}
+
+
+-# hidden modals
+= render "shared/sign_in_modal"
+

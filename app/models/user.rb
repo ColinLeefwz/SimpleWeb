@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 
   has_one :profile
+  has_many :comments
 
   # User follow sessions
   has_many :subscriptions, foreign_key: "subscriber_id"
