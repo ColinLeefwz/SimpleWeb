@@ -58,8 +58,8 @@ class User < ActiveRecord::Base
 
   def has_subscribed? (item)
     Subscription.find_by(subscriber_id: self.id,
-                      subscribable_id: item.id,
-                      subscribable_type: item.class.name)
+                         subscribable_id: item.id,
+                         subscribable_type: item.class.name)
   end
 
   def subscribe (item)
@@ -70,8 +70,8 @@ class User < ActiveRecord::Base
 
   def unsubscribe (item)
     record = Subscription.find_by(subscriber_id: self.id,
-                               subscribable_id: item.id,
-                               subscribable_type: item.class.name)
+                                  subscribable_id: item.id,
+                                  subscribable_type: item.class.name)
     record.destroy if record
   end
 
@@ -89,15 +89,12 @@ class User < ActiveRecord::Base
   end
 
   def enrolled?(item)
-    record = Enrollment.find_by user_id: self.id, 
-      enrollable_id: item.id,
-      enrollable_type: item.class.name
+    record = Enrollment.find_by user_id: self.id, enrollable_id: item.id, enrollable_type: item.class.name
+    return record ? true : false
   end
 
   def enroll(item)
-    record = Enrollment.create user_id: self.id,
-      enrollable_id: item.id,
-      enrollable_type: item.class.name
+    record = Enrollment.create user_id: self.id, enrollable_id: item.id, enrollable_type: item.class.name
   end
 
 

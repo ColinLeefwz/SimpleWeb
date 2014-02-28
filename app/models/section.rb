@@ -13,17 +13,11 @@ class Section < ActiveRecord::Base
   end
 
   def available_for?(user)
-    available = (user && user.enrolled?(self.course)) || (self.free_preview)
-    return available ? true : false
+    (user && user.enrolled?(self.course)) || (self.free_preview)
   end
 
   def show_preview_label_for?(user)
-    if user.nil?
-      show_preview = self.free_preview
-    else
-      show_preview = (!user.enrolled?(self.course) && self.free_preview)
-    end
-    return show_preview ? true : false
+    (user && user.enrolled?(self.course)) ? false : self.free_preview
   end
 
   private
