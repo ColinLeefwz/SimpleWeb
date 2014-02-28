@@ -22,6 +22,30 @@ body {
   background-image: image-url("bg.jpg");
 }
 
+#subnav {
+  width: 100%;
+}
+
+.navbar-default {
+  border-width: 0;
+}
+
+.navbar-header{
+  .btn-plus {
+    .dropdown-toggle {
+      margin-left: 15px;
+    }
+  }
+  li {
+    margin-left: 17px;
+  }
+  .navbar-form {
+    .input-group {
+      max-width: 470px;
+    }
+  }
+}
+
 #content{
   margin: 0 auto;
   padding-bottom: 50px;

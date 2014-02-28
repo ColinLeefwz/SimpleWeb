@@ -1,37 +1,54 @@
+
 - @categories = Category.all
+.navbar.navbar-default
+  .col-md-12
+    .navbar-header
+      .navbar-left
+        #logo_container
+          #logo
+            = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
+      %button.navbar-toggle{"data-target" => "#navbar-collapse1", "data-toggle" => "collapse", :type => "button"}
+        %i.glyphicon.glyphicon-search
+    #navbar-collapse2.collapse.navbar-collapse
+      = render 'shared/user_session'
 
-#logo_container
-  #logo.pull-left
-    = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
+#subnav.navbar.navbar-default
+  .col-md-12
+    .navbar-header
+      %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        %i.glyphicon.glyphicon-list
+        Menu
+        %small
+          %i.glyphicon.glyphicon-chevron-down
+      %ul.nav.dropdown-menu
+        #navbar-collapse2.collapse.navbar-collapse
+          %form.navbar-form.pull-left
+            .input-group
+              %input#srch-term.form-control{:name => "srch-term", :placeholder => "Search", :type => "text"}
+                .input-group-btn
+                  %button.btn.btn-default.btn-primary{:type => "submit"}
+                    %i.glyphicon.glyphicon-search
 
-  #user-session.pull-right
-    = render 'shared/user_session'
-  .fixed
 
-- if @show_category == true
-  %nav
-    %ul.visible-md.visible-lg
+        - if @show_category == true
+          - @categories.each do |category|
+            %li
+              %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
+                = category.name
+        %li.divider
+        %li.dropdown-submenu
+          %a{:href => "#"}
+            format
+          %ul.dropdown-menu
+            %li
+              %a.filters{href: "#video", data: {filter: '.videointerview'}} video
+            %li
+              %a.filters{href: "#article", data: {filter: '.article'}} article
+            %li
+              %a.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
 
-      %li.category
-        %a.filters{href: "#all", data: {filter: '*'}}all
-
-      - @categories.each do |category|
-        %li.category
-          %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
-            = category.name
-      %li#format
-        %a format
-        %ul.subcategory
-          %li.filters{href: "#video", data: {filter: '.videointerview'}} video
-          -# %li.filters{href: "#live", data: {filter: '.livesession'}} live
-          %li.filters{href: "#article", data: {filter: '.article'}} article
-          %li.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
-
-    %select#collapsed_navbar.col-md-12.hidden-md.hidden-lg
-      %option.filters{data: {filter: '*'}} all
-      - @categories.each do |category|
-        %option.filters{data: {filter: ".#{category.name}"}}
-          = category.name
-- else
-  %nav
-
+      %button.navbar-toggle{"data-target" => "#navbar-collapse2", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar

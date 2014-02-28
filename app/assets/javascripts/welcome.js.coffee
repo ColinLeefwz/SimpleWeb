@@ -40,7 +40,7 @@
     }
 
   $container = $('#content')
-  $('nav li .filters').on 'click', ->
+  $('li .filters').on 'click', ->
     selector = $(this).data('filter') + ', .always_show'
     $container.isotope {
       filter: selector
