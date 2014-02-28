@@ -37,7 +37,7 @@ class Lottery
   field :jname6
   field :jnum6
 
-  has_many :lottery_prizes, :dependent => :destroy
+  # has_many :lottery_prizes, :dependent => :destroy
 
   validates_presence_of :name, :info, :stime, :etime, :des
 
