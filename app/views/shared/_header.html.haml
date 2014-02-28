@@ -12,40 +12,40 @@
     #navbar-collapse2.collapse.navbar-collapse
       = render 'shared/user_session'
 
-%ul#subnav.nav.navbar-nav.navbar-header
-  .col-md-12
-    %li.dropdown
-      %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-        %i.glyphicon.glyphicon-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
-      %ul.nav.dropdown-menu
-        #navbar-collapse2.collapse.navbar-collapse
-          %form.navbar-form
-            .input-group
-              %input.form-control.pull-left{ :placeholder => "Search", :type => "text"}
-                .input-group-btn
-                  %button.btn.btn-default.btn-primary{:type => "submit"}
-                    %i.glyphicon.glyphicon-search
+- if @show_category == true
+  %ul#subnav.nav.navbar-nav.navbar-header
+    .col-md-12
+      %li.dropdown
+        %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          %i.glyphicon.glyphicon-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
+        %ul.nav.dropdown-menu
+          #navbar-collapse2.collapse.navbar-collapse
+            %form.navbar-form
+              .input-group
+                %input.form-control.pull-left{ :placeholder => "Search", :type => "text"}
+                  .input-group-btn
+                    %button.btn.btn-default.btn-primary{:type => "submit"}
+                      %i.glyphicon.glyphicon-search
 
 
-        - if @show_category == true
           - @categories.each do |category|
             %li
               %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
                 = category.name
-        %li.divider
-        %li.dropdown-submenu
-          %a{:href => "#"}
-            format
-          %ul.dropdown-menu
-            %li
-              %a.filters{href: "#video", data: {filter: '.videointerview'}} video
-            %li
-              %a.filters{href: "#article", data: {filter: '.article'}} article
-            %li
-              %a.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
+          %li.divider
+          %li.dropdown-submenu
+            %a{:href => "#"}
+              format
+            %ul.dropdown-menu
+              %li
+                %a.filters{href: "#video", data: {filter: '.videointerview'}} video
+              %li
+                %a.filters{href: "#article", data: {filter: '.article'}} article
+              %li
+                %a.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
 
-      %button.navbar-toggle{"data-target" => "#navbar-collapse2", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
+        %button.navbar-toggle{"data-target" => "#navbar-collapse2", "data-toggle" => "collapse", :type => "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
