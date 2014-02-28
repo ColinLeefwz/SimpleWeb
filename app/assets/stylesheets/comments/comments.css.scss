@@ -1,0 +1,79 @@
+@import "globals/variables";
+
+.comments{
+  margin: 0 auto;
+  margin-top: 3rem;
+  @media (min-width: 767px){
+    width: 65%;
+  }
+  @media (max-width: 766px){
+    width: 90%;
+  }
+
+  h4{
+    font-family: "Oswaldreg";
+    text-transform: uppercase;
+    font-weight: 200;
+    width: 100%;
+    border-bottom: 1px solid #bbb;
+  }
+}
+
+.comment{
+  font-size: 16px;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #fdfdfd;
+  box-shadow: $shadow_param;
+
+  &:hover{
+    .author, footer{
+      color: black;
+    }
+  }
+}
+
+.comment header{
+  color: #ccc;
+  font-weight: 200;
+
+  .author{
+    font-family: "Oswaldreg";
+    font-weight: 200;
+    text-transform: uppercase;
+
+    transition: 0.3s color;
+  }
+  time{
+    font-variant: small-caps;
+    padding-left: 1rem;
+  }
+}
+
+.comment section{
+  font-weight: 300;
+  padding-top: 0.5rem;
+}
+
+.comment footer{
+  color: #ccc;
+  font-family: Latoitalic;
+  text-shadow: 1px 1px #fff;
+  float: right;
+  margin-right: 1.7rem;
+
+  transition: 0.3s color;
+}
+
+.comments form{
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #fdfdfd;
+  box-shadow: $shadow_param;
+  textarea{
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+}

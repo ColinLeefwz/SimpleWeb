@@ -8,11 +8,18 @@ $("#save-draft").on("click", function(){
   draft_field.val(true);
 });
 
+// make publish button to change draft=false
+$("#publish").on("click", function(){
+  draft_field = $(this).closest("form").find("#article_draft");
+  draft_field.val(false);
+})
+
+
 // preview helper, get user input and fill in the modal
 article_preview();
 
 $(".modal-submit").click(function(){
-  $("#modal").modal("hide");
+  $("#preview-modal").modal("hide");
 });
 
 // article form validation

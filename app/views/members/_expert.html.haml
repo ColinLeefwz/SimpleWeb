@@ -21,7 +21,7 @@
       .expert-action-info
         .block-title
           %span RECENT ACTIVITY
-          - e.contents.take(3).each do |content|
+          - e.published_contents.take(3).each do |content|
             .recent-activity
               .course-icon
                 = link_to image_tag(content.cover), polymorphic_path(content)

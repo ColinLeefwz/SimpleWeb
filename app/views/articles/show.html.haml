@@ -2,10 +2,18 @@
 
 = render "sessions/page_header", item: @article, link_path: subscribe_path(@article, type: @article.class.name)
 
-.detail.shadow.margin-bottom.clearfix
+.detail.shadow.clearfix
   .video-cover
     = image_tag @article.cover.url
   %article
     = @article.description.try :html_safe
 
-= render "welcome/box_content_modal"
+.comments.margin-bottom
+  %h4 
+    = pluralize(@article.comments.count, "Comment")
+  = render partial: "comments/comment", collection: @article.comments, as: :comment
+  = render partial: "comments/form", locals: {parent: @article}
+
+
+-# hidden modals
+= render "shared/sign_in_modal"

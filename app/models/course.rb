@@ -21,6 +21,7 @@ class Course < ActiveRecord::Base
   has_many :subscribers, through: :subscriptions
 
   has_one :visit, as: :visitable
+  has_many :comments, -> {order "updated_at DESC"}, as: :commentable
 
   has_attached_file :cover
 
@@ -46,10 +47,7 @@ class Course < ActiveRecord::Base
 
 
   def producers
-    ## Peter at 2014-02-21: we should remove name attribute from User Table,
-    # use `name` method instead
-    # "by " + self.experts.pluck(:name).join(" and ") 
-    "by " + self.experts.map(&:name).join(" and ")
+    "by " + self.experts.map(&:name).to_sentence
   end
 
   def free?
