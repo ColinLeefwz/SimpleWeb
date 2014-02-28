@@ -7,6 +7,36 @@ $font-color: #575757;
 .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
 .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
 
+.navbar-default {
+  border-width: 0;
+}
+
+.navbar-header{
+  .btn-plus {
+    .dropdown-toggle {
+      margin-left: 15px;
+    }
+  }
+  li {
+    margin-left: 17px;
+  }
+  .navbar-form {
+    .input-group {
+      max-width: 470px;
+    }
+  }
+  .dropdown-menu {
+    width: 300px;
+  }
+}
+.navbar-fixed-top {
+  position: fixed;
+}
+#subnav {
+  position: fixed;
+  margin-top: 70px;
+  z-index: 5;
+}
 #header {
   width: 100%;
   background: #fff;

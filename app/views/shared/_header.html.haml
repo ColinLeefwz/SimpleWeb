@@ -1,6 +1,6 @@
 
 - @categories = Category.all
-.navbar.navbar-default
+.navbar.navbar-default.navbar-fixed-top
   .col-md-12
     .navbar-header
       .navbar-left
@@ -12,7 +12,7 @@
     #navbar-collapse2.collapse.navbar-collapse
       = render 'shared/user_session'
 
-%ul.nav.navbar-nav.navbar-header
+%ul#subnav.nav.navbar-nav.navbar-header
   .col-md-12
     %li.dropdown
       %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
