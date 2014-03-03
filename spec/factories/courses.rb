@@ -7,6 +7,7 @@ FactoryGirl.define do
     categories ["test"]
     price 19.50
     duration 3600
+    experts {[FactoryGirl.create(:expert)]}
     video
   end
 end
