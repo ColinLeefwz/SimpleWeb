@@ -9,15 +9,15 @@
   - if current_user.is_a? Expert
     %ul.nav.navbar-nav.navbar-right
       %li
-        = link_to "", dashboard_expert_path(current_user), class: "fa fa-dashboard", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
+        = link_to image_tag("dashboard.png"), dashboard_expert_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
   - elsif current_user.is_a? Member
     %ul.nav.navbar-nav.navbar-right
       %li
-        = link_to "", dashboard_member_path(current_user), class: "fa fa-dashboard", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
+        = link_to image_tag("dashboard.png"), dashboard_member_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
 - else
   %ul.nav.navbar-nav.navbar-right
     %li
-      = link_to "", new_user_registration_path, class: "glyphicon glyphicon-registration-mark", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
+      = link_to "", new_user_registration_path, class: "fa fa-user", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
   %ul.nav.navbar-nav.navbar-right
     %li
       = link_to "", new_user_session_path, class: "fa fa-sign-in", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"
