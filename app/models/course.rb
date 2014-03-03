@@ -36,7 +36,7 @@ class Course < ActiveRecord::Base
         if staff_courses.count <= 3
           other_courses = Course.includes(:experts).references(:experts).where.not(users: {id: [Expert.staff, current_user]})
           other_courses -= current_user.enrolled_courses
-          other_courses.sample(3 - staff_courses.count)
+          other_courses = other_courses.sample(3 - staff_courses.count)
 
           show_courses.concat(other_courses) unless other_courses.empty?
         end
