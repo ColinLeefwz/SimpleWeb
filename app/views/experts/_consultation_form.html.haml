@@ -1,0 +1,5 @@
+= form_for :consultation, url: consultations_path do |f|
+  .form-group
+    = f.text_area :description, class: "form-control"
+  .form-group
+    = f.submit "send", class: "btn btn-prodygia"

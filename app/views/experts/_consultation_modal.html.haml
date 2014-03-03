@@ -1,0 +1,10 @@
+#consultation-modal.modal.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+        %h4#myModalLabel.modal-title Private Consultation
+      .modal-body
+        %h3 What do you want to consult me?
+        .consutation-form
+          = render "consultation_form"

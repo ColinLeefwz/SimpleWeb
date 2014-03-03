@@ -5,6 +5,7 @@ describe Consultation do
 
   describe "relationship with users" do
     before :each do
+      User.delete_all
       @consultation = create(:consultation,  consultant: sameer,requester: jevan, description: "jevan's consultation to sameer")
     end
 
