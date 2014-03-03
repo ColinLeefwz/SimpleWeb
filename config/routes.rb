@@ -1,6 +1,7 @@
 Prodygia::Application.routes.draw do
 
   resources :comments
+  resources :consultations
 
   resources :courses do
     member do
