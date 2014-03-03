@@ -1,9 +1,9 @@
 #content.container
-  - @items.each do |item|
-    = render partial: "box_content", locals: { item: item }
+  - @items.in_groups_of(3, false).each_with_index do |group, index|
+    .row
+      - group.each do |item|
+        .col-md-4.col-sm-6
+          = render partial: "box_content", locals: { item: item }
 
 -# hidden modals
 = render "shared/sign_in_modal"
-
-:javascript
-  load_isotope()
