@@ -18,6 +18,7 @@ class Shop
   attr_accessor :lob
   
   field :_id, type: Integer
+  field :id2, type:String #容易记忆的商家编号，规则："区号-流水号"
   field :pass
   field :name
   #field :lob, type:Array #百度地图上的经纬度  
@@ -484,14 +485,14 @@ class Shop
     #内部地点的“每日签到优惠券”
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
 
-    # if $mansion3.include?(self.id)
-    #   ["52fc278620f318cb4a000009"].each do |cp|
-    #     coupon1 = Coupon.find_by_id(cp)
-    #     if coupon1.allow_send_checkin?(user_id, :single => true)
-    #       coupon1.send_coupon(user_id,nil,self.id)
-    #     end
-    #   end
-    # end
+    if $mansion3.include?(self.id)
+      ["52fc278620f318cb4a000009"].each do |cp|
+        coupon1 = Coupon.find_by_id(cp)
+        if coupon1.allow_send_checkin?(user_id, :single => true)
+          coupon1.send_coupon(user_id,nil,self.id)
+        end
+      end
+    end
     coupons.each{|coupon| coupon.send_coupon(user_id,nil,self.id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
@@ -855,6 +856,13 @@ class Shop
     end 
     self.lo = self.lo.uniq
     self.save
+  end
+  
+  
+  def shop_or_staff?(uid)
+    uid = uid.to_s
+    return true if uid == "s#{self.id}"
+    return shop.staffs_cache.find{|x| x.to_s==uid} != nil
   end
   
   

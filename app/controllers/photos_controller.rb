@@ -135,8 +135,8 @@ class PhotosController < ApplicationController
       render :json => {:deleted => params[:id]}.to_json
       return
     end
-    if photo.user_id != session[:user_id]
-      render :json => {:error => "photo's owner #{photo.user_id} != session user #{session[:user_id]}"}.to_json
+    if photo.user_id != session[:user_id] && !photo.shop.shop_or_staff?(session[:user_id])
+      render :json => {:error => "无权限"}.to_json
       return
     end
     sid = photo.room

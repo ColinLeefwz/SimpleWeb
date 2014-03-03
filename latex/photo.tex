@@ -206,7 +206,29 @@ POST & \multicolumn{3}{|c|}{/photos/delete} \\
    \end{center}
 \end{table}
 个人只能删除自己发布的照片。
+商家和商家的员工（也就是在聊天室加V的用户）可以删除本商家的图片。
 
+\subsection{删除聊天室消息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/del\_gchat} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 聊天室消息的ID\\
+\hline
+ sid  & 字符串 & 必须 & 商家ID\\
+\hline
+user_ id  & 字符串 & 必须 & 当前登录用户id\\
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+只有商家和商家的员工（也就是在聊天室加V的用户）删除聊天室消息时才调用本接口，其它用户删除聊天室消息只是删除自己本地的消息。
 
 
 \subsection{对聊天室图片点赞}

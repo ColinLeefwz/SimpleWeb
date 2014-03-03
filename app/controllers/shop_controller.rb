@@ -2,6 +2,9 @@
 require 'cgi'
 
 class ShopController < ApplicationController
+  before_filter :user_login_filter, :only => [:del_gchat]
+  before_filter :user_is_session_user, :only => [:del_gchat]
+  
 
   layout nil
   
@@ -38,7 +41,8 @@ class ShopController < ApplicationController
       return
     end
     if params[:sname]=="即"
-      shops = (21839801..21839814).map {|x| Shop.find_by_id(x)}.find_all{|x| x!=nil}
+      ids = (21839801..21839814).to_a<<(21839911)
+      shops = ids.map {|x| Shop.find_by_id(x)}.find_all{|x| x!=nil}
       render :json => shops.map {|s| {id:s.id,name:s.name, visit:0, distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
       return
     end
@@ -132,6 +136,22 @@ class ShopController < ApplicationController
     end
     gchat = Gchat.new(sid: params[:sid], uid: params[:uid], mid: params[:mid], txt: params[:txt])
     if gchat.save
+      render :text => '1'
+    else
+      render :text => '0'
+    end
+  end
+  
+  def del_gchat
+    shop = Shop.find_by_id(params[:sid])
+    unless shop.shop_or_staff?(params[:user_id])
+      render :json => {:error => "无权限"}.to_json 
+    end
+    gchat = Gchat.find(params[:id])
+    if gchat.sid.to_s != params[:sid] || gchat.uid.to_s != params[:user_id]
+      render :json => {:error => "无法删除该记录"}.to_json
+    end
+    if gchat.delete
       render :text => '1'
     else
       render :text => '0'
