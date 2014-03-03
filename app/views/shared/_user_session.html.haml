@@ -2,22 +2,22 @@
 - if user_signed_in?
   %ul.nav.navbar-nav.navbar-right
     %li
-      = link_to "", edit_user_registration_path, class: "glyphicon glyphicon-user", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "#{current_user.email.truncate(16)}"
+      = link_to "", edit_user_registration_path, class: "fa fa-user", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "#{current_user.email.truncate(16)}"
   %ul.nav.navbar-nav.navbar-right
     %li
-      = link_to "", destroy_user_session_path, method: :delete, class: "glyphicon glyphicon-log-out", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Log out"
+      = link_to "", destroy_user_session_path, method: :delete, class: "fa fa-sign-out", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Log out"
   - if current_user.is_a? Expert
     %ul.nav.navbar-nav.navbar-right
       %li
-        = link_to "", dashboard_expert_path(current_user), class: "glyphicon glyphicon-dashboard", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
+        = link_to "", dashboard_expert_path(current_user), class: "fa fa-dashboard", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
   - elsif current_user.is_a? Member
     %ul.nav.navbar-nav.navbar-right
       %li
-        = link_to "", dashboard_member_path(current_user), class: "glyphicon glyphicon-dashboard", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
+        = link_to "", dashboard_member_path(current_user), class: "fa fa-dashboard", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
 - else
   %ul.nav.navbar-nav.navbar-right
     %li
       = link_to "", new_user_registration_path, class: "glyphicon glyphicon-registration-mark", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
   %ul.nav.navbar-nav.navbar-right
     %li
-      = link_to "", new_user_session_path, class: "glyphicon glyphicon-log-in", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"
+      = link_to "", new_user_session_path, class: "fa fa-sign-in", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"

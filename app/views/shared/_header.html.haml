@@ -7,8 +7,7 @@
         #logo_container
           #logo
             = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
-      %button.navbar-toggle{"data-target" => "#navbar-collapse1", "data-toggle" => "collapse", :type => "button"}
-        %i.glyphicon.glyphicon-search
+            
     #navbar-collapse2.collapse.navbar-collapse
       = render 'shared/user_session'
 
@@ -17,7 +16,7 @@
     .col-md-12
       %li.dropdown
         %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-          %i.glyphicon.glyphicon-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
+          %i.fa.fa-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
         %ul.nav.dropdown-menu
           #navbar-collapse2.collapse.navbar-collapse
             %form.navbar-form
@@ -25,7 +24,7 @@
                 %input.form-control.pull-left{ :placeholder => "Search", :type => "text"}
                   .input-group-btn
                     %button.btn.btn-default.btn-primary{:type => "submit"}
-                      %i.glyphicon.glyphicon-search
+                      %i.fa.fa-search
 
 
           - @categories.each do |category|
