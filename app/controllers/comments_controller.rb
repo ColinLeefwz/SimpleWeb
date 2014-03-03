@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
 
   def destroy
     respond_to do |format|
-      format.js{ @comment.destroy }
+      format.js{ current_user.delete(@comment) }
     end
   end
 
