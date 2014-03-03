@@ -4,7 +4,7 @@
       .modal-header
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
         %h4#myModalLabel.modal-title Private Consultation
-      .modal-body
+      .modal-body.clearfix
         %h3 What do you want to consult me?
         .consutation-form
-          = render "consultation_form"
+          = render "consultations/form"
