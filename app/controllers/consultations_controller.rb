@@ -9,9 +9,14 @@ class ConsultationsController < ApplicationController
 
   def create
     @consultation = Consultation.new consultation_params
+    @consultation.status = Consultation::STATUS[:pending]
     if @consultation.save
       #TODO: Peter at 2014-03-02: redirect or show something
-      logger.info "created a new consultation"
+      # send email to Admin account
+      # set this consultation's status to "pending"
+      respond_to do |format|
+        format.js {  }
+      end
     end
   end
 
