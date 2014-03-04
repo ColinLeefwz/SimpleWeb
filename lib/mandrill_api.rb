@@ -116,8 +116,7 @@ class MandrillApi
 
     #todo  Peter at 03-04: change the "to" name and address to real Lalo's email
     addition_message = {
-      "to"=>[{"name"=> "peterzd", "email" => "zdsunshine0640@126.com"}],
-      "headers" => { "Reply-To"=> from_address}
+      "to"=>[{"name"=> "peterzd", "email" => "zdsunshine0640@126.com"}]
     }
 
     send_template_mail("consultation-pending", template_content, addition_message)
