@@ -8,8 +8,11 @@
           #logo
             = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
       %button.navbar-toggle{"data-target" => "#navbar-collapse1", "data-toggle" => "collapse", :type => "button"}
-        %i.glyphicon.glyphicon-search
-    #navbar-collapse2.collapse.navbar-collapse
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+    #navbar-collapse1.collapse.navbar-collapse
       = render 'shared/user_session'
 
 - if @show_category == true
