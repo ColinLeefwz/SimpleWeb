@@ -27,7 +27,7 @@ class MandrillApi
     addition_message = {
       "merge_vars"=>
       [{"rcpt"=>user.email, "vars"=>[{"name"=>"SHARETWITTER", "content"=>"http://twitter.com/home?status=http://www.prodygia.com"}, { "name"=>"SHAREFB", "content"=>"http://www.facebook.com/sharer/sharer.php?u=http://www.prodygia.com" }]}],
-      "to"=>[{"name"=>user.first_name, "email"=>user.email}],
+        "to"=>[{"name"=>user.first_name, "email"=>user.email}],
     }
 
     send_template_mail("welcome", template_content, addition_message)
@@ -79,37 +79,48 @@ class MandrillApi
     send_template_mail("refer-a-friend", template_content, addition_message)
   end
 
-	def reset_password(user, reset_link)
-		template_content = [{"name" => "reset-link", "content" => "<a href='#{reset_link}'>#{reset_link}</a>"}, {"name"=>"first-name", "content"=>user.first_name}, {"name"=>"email-address", "content"=>user.email}]
+  def reset_password(user, reset_link)
+    template_content = [{"name" => "reset-link", "content" => "<a href='#{reset_link}'>#{reset_link}</a>"}, {"name"=>"first-name", "content"=>user.first_name}, {"name"=>"email-address", "content"=>user.email}]
 
-		addition_message = {
-			"to"=>[{"name"=>user.first_name, "email"=>user.email}]
-		}
-		
+    addition_message = {
+      "to"=>[{"name"=>user.first_name, "email"=>user.email}]
+    }
+
     send_template_mail("reset-password", template_content, addition_message)
 
-	end
+  end
 
-	def email_friend_session(email_content, session_link)
-		from_name = email_content[:your_name]
-		from_address = email_content[:your_address]
-		to_name = email_content[:to_name]
-		to_address = email_content[:to_address]
-		content = email_content[:content]
+  def email_friend_session(email_content, session_link)
+    from_name = email_content[:your_name]
+    from_address = email_content[:your_address]
+    to_name = email_content[:to_name]
+    to_address = email_content[:to_address]
+    content = email_content[:content]
 
-		template_content = [{"name"=> "to-name", "content" => to_name}, {"name" => "from-name", "content" => from_name}, {"name"=> "session-link", "content" => "<a href='#{session_link}'>#{session_link}</a>"}, {"name"=>"want-to-say", "content"=> content}]
+    template_content = [{"name"=> "to-name", "content" => to_name}, {"name" => "from-name", "content" => from_name}, {"name"=> "session-link", "content" => "<a href='#{session_link}'>#{session_link}</a>"}, {"name"=>"want-to-say", "content"=> content}]
 
-		addition_message = {
-			"from_name" => from_name,
-			"from_email" => from_address,
-			"to"=>[{"name"=> to_name, "email" => to_address}],
-			"headers" => { "Reply-To"=> from_address}
-		}
+    addition_message = {
+      "from_name" => from_name,
+      "from_email" => from_address,
+      "to"=>[{"name"=> to_name, "email" => to_address}],
+      "headers" => { "Reply-To"=> from_address}
+    }
 
     send_template_mail("tell-friend", template_content, addition_message)
-	end
+  end
 
   def consultation_pending_mail(consultation)
+    requester_name = consultation.requester.name
+    consultant_name = consultation.consultant.name
+    template_content = [{"name"=> "requester-name", "content" => requester_name}, {"name" => "consultant-name", "content" => consultant_name}]
+
+    #todo  Peter at 03-04: change the "to" name and address to real Lalo's email
+    addition_message = {
+      "to"=>[{"name"=> "peterzd", "email" => "zdsunshine0640@126.com"}],
+      "headers" => { "Reply-To"=> from_address}
+    }
+
+    send_template_mail("consultation-pending", template_content, addition_message)
 
   end
 

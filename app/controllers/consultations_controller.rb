@@ -13,9 +13,6 @@ class ConsultationsController < ApplicationController
     @consultation = Consultation.new consultation_params
     @consultation.status = Consultation::STATUS[:pending]
     if @consultation.save
-      #TODO: Peter at 2014-03-02: redirect or show something
-      # send email to Admin account
-
       send_consultation_pending_mail
       respond_to do |format|
         format.js {  }
