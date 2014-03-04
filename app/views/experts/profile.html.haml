@@ -61,7 +61,7 @@
         -# `Overview` tab
         .tab-pane.active#tab1
           %div.clearfix
-            - if @expert.video
+            - if @expert.video.available?
               .intro-video.pull-right
                 = render "shared/sublime_video", video: @expert.video
             - expertise = @profile.expertise || "Expertise to be filled"
