@@ -8,7 +8,9 @@ describe ConsultationsController do
 
   describe "GET 'create'" do
     before :each do
-      post :create, consultation: attributes_for(:consultation, consultant_id: sameer, requester_id: peter,)
+      User.delete_all
+      post :create, consultation: attributes_for(:consultation, consultant_id: sameer.id, requester_id: peter.id), format: :js
+      double(send_consultation_pending_mail: true)
     end
 
     it "creates a new consultation" do

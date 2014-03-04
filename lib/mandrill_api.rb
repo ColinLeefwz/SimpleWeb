@@ -33,6 +33,8 @@ class MandrillApi
     send_template_mail("welcome", template_content, addition_message)
   end
 
+  ##Peter at 2014-03-04: the two methods below seems the same, but only the template_name(slug_name)
+  # why not merge them ?
   def invite_by_expert(user, email_message, token_link)
     template_content = [{"name" => "message_content", "content" => email_message.message }, { "name"=>"token_link", "content"=>"<a href='#{token_link}'>#{token_link}</a>"}]
 
@@ -106,6 +108,10 @@ class MandrillApi
 
     send_template_mail("tell-friend", template_content, addition_message)
 	end
+
+  def consultation_pending_mail(consultation)
+
+  end
 
   protected
 

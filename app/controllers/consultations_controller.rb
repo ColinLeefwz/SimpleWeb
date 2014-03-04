@@ -1,3 +1,5 @@
+require "mandrill_api"
+
 class ConsultationsController < ApplicationController
   def new
     @consultation = Consultation.new(consultant: Expert.find(params[:expert]), requester: current_user)
@@ -13,7 +15,8 @@ class ConsultationsController < ApplicationController
     if @consultation.save
       #TODO: Peter at 2014-03-02: redirect or show something
       # send email to Admin account
-      # set this consultation's status to "pending"
+
+      send_consultation_pending_mail
       respond_to do |format|
         format.js {  }
       end
@@ -23,5 +26,9 @@ class ConsultationsController < ApplicationController
   private
   def consultation_params
     params.require(:consultation).permit(:id, :requester_id, :consultant_id, :description)
+  end
+
+  def send_consultation_pending_mail
+    MandrillApi.new.consultation_pending_mail(@consultation)
   end
 end
