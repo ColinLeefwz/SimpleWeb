@@ -1,6 +1,7 @@
 class Video < ActiveRecord::Base
 
-  Attributes = {video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path,  :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path]}
+  attr_accessor :destroy_SD, :destroy_HD
+  Attributes = {video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path, :destroy_SD, :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path, :destroy_HD]}
 
   belongs_to :videoable, polymorphic: true
 
@@ -10,7 +11,8 @@ class Video < ActiveRecord::Base
 
   after_initialize :get_current_path
   before_save :get_temp_path
-  after_save :paperclip_path
+  before_save :destroy_video?
+  after_save :paperclip_path  # if SD/HD_temp_path.present
 
   private
   def get_current_path
@@ -32,6 +34,11 @@ class Video < ActiveRecord::Base
     path = path.split("/")
     2.times{ path.shift() }
     path = path.join("/")
+  end
+
+  def destroy_video?
+    self.SD.clear if @destroy_SD == "true"
+    self.HD.clear if @destroy_HD == "true"
   end
 
 
