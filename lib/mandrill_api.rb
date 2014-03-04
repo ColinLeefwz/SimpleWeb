@@ -114,13 +114,26 @@ class MandrillApi
     consultant_name = consultation.consultant.name
     template_content = [{"name"=> "requester-name", "content" => requester_name}, {"name" => "consultant-name", "content" => consultant_name}]
 
-    #todo  Peter at 03-04: change the "to" name and address to real Lalo's email
+    #todo  Peter at 03-04: change the "to" name and address to real Admin's email
+    # That should be  "support@prodygia.com"
     addition_message = {
       "to"=>[{"name"=> "peterzd", "email" => "zdsunshine0640@126.com"}]
     }
 
     send_template_mail("consultation-pending", template_content, addition_message)
+  end
 
+  def consultation_processed_mail(consultation)
+    consultant = consultation.consultant
+    requester_name = consultation.requester.name
+    consultant_name = consultation.consultant.name
+    template_content = [{"name"=> "requester-name", "content" => requester_name}, { "name" => "consultant-name", "content" => consultant_name}]
+
+    addition_message = {
+      "to"=>[{"name"=> consultant.name, "email" => consultant.email}]
+    }
+
+    send_template_mail("consultation-processed", template_content, addition_message)
   end
 
   protected

@@ -1,8 +1,11 @@
+require "mandrill_api"
+
 ActiveAdmin.register Consultation do
   member_action :execute  do ##Peter at 03-04: can not use "process" here
     consultation = Consultation.find params[:id]
     consultation.update_attributes status: Consultation::STATUS[:processed]
     ##todo Peter at 03-04: will send email to the expert to notice
+    MandrillApi.new.consultation_processed_mail(consultation)
     redirect_to action: :show
   end
 
