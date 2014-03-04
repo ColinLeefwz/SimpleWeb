@@ -1,13 +1,13 @@
 %span SD
 = s3_uploader_form class: "s3_uploader", acl: 'public-read', data:{definition: "SD"} do
   = file_field_tag :file, multiple: false
-  = check_box_tag :destroy_SD
-  = label_tag :destroy_SD
   %span.status
+  = check_box_tag :destroy_SD
+  = label_tag :destroy_SD, "remove SD"
 
 %span HD
 = s3_uploader_form class: "s3_uploader", acl: 'public-read', data:{definition: "HD"} do
   = file_field_tag :file, multiple: false
-  = check_box_tag :destroy_HD
-  = label_tag :destroy_HD
   %span.status
+  = check_box_tag :destroy_HD
+  = label_tag :destroy_HD, "remove HD"
