@@ -10,7 +10,6 @@ class Video < ActiveRecord::Base
   has_attached_file :HD, path: ":class/:id/:attachment/:filename", default_url: ""
 
   after_initialize :get_current_path
-  before_save :get_temp_path
   after_save :paperclip_path
 
 
@@ -26,11 +25,6 @@ class Video < ActiveRecord::Base
   end
 
 
-  def get_temp_path
-    @SD_temp_path = chop_bucket CGI.unescape(self.SD_temp_path || "")
-    @HD_temp_path = chop_bucket CGI.unescape(self.HD_temp_path || "")
-
-    self.SD_temp_path, self.HD_temp_path = nil, nil
   end
 
   def chop_bucket(path)
