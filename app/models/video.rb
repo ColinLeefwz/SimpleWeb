@@ -1,6 +1,7 @@
 class Video < ActiveRecord::Base
 
   Attributes = {video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path,  :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path]}
+  attr_accessor :SD_temp_path, :HD_temp_path
 
   belongs_to :videoable, polymorphic: true
 
