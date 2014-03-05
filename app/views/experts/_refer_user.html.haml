@@ -6,6 +6,7 @@
     = f.label :to, class: "control-label"
   .col-sm-6
     = f.text_field :to, :autofocus => true, class: 'form-control', placeholder: hint
+    .alert.validation-message
 //= f.input :to, label: "To", placeholder: hint
 .form-group
   .col-sm-2
@@ -13,7 +14,6 @@
   .col-sm-6
     = f.text_field :subject, :autofocus => true, class: 'form-control', input_html: {class: "wider-input"}
 //= f.input :subject, label: "Subject", input_html: {class: "wider-input"}
-.alert.validation-message.hide
 .form-group
   .col-sm-2
     = f.label :message, class: "control-label"
