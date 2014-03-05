@@ -147,7 +147,7 @@ class ShopController < ApplicationController
     unless shop.shop_or_staff?(params[:user_id])
       render :json => {:error => "无权限"}.to_json 
     end
-    gchat = Gchat.find(params[:id])
+    gchat = Gchat.where(mid:params[:id]).first
     if gchat.sid.to_s != params[:sid] || gchat.uid.to_s != params[:user_id]
       render :json => {:error => "无法删除该记录"}.to_json
     end
