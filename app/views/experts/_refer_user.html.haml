@@ -21,9 +21,11 @@
     = f.input :message, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}, label: false
 //= f.input :message, label: "Message", input_html: { class: 'ckeditor' }
 .form-group
+  .col-sm-2
   .col-sm-5
     = f.input :copy_me, label: "Copy me on the message", wrapper_html: {class: "checkbox-align"}, label_html: {class: "checkbox-label"}, input_html: {class: "checkbox-input"}
 .form-group
+  .col-sm-4
   .col-sm-4
     = f.submit "Send", class: "btn btn-prodygia"
 
