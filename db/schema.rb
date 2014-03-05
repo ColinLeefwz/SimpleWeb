@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140303025914) do
+ActiveRecord::Schema.define(version: 20140304045436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -436,8 +436,6 @@ ActiveRecord::Schema.define(version: 20140303025914) do
     t.string   "HD_content_type"
     t.integer  "HD_file_size"
     t.datetime "HD_updated_at"
-    t.string   "SD_temp_path"
-    t.string   "HD_temp_path"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
