@@ -6,8 +6,10 @@ class ConsultationsController < ApplicationController
     respond_to do |format|
       if current_user.blank?
         @show_modal = 'shared/sign_in_modal'
+        @alert_message = "good"
       else
         @show_modal = 'consultations/consultation_modal'
+        @alert_message = "good"
       end
       format.js { render 'new_consultation' }
     end

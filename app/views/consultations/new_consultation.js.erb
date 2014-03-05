@@ -1,6 +1,6 @@
-$("#show-modal").html('<%=j render partial: @show_modal%>')
-<%# $(".modal").modal() %>
-$("#consultation-modal").modal()
+$("#show-modal").html('<%=j render partial: @show_modal, locals: { alert_message: @alert_message }%>')
+$(".modal").modal()
+<%# $("#consultation-modal").modal() %>
 $("#send-consultation").on("click", function(e){
   e.preventDefault();
   $(".modal").modal("hide")

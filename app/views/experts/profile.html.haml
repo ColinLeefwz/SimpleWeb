@@ -5,11 +5,12 @@
     .avatar.brief-item
       = image_tag(@expert.avatar.url)
       .consulation
+        = link_to "Private consultation", new_consultation_path(expert: @expert), class: "btn btn-prodygia", remote: true
         -# Peter at 03-05: jsut use for now, we should move the logic here to controller
-        - if current_user.blank?
-          = link_to "Private consultation", "#sign-in-modal", data:{toggle: "modal"}, class: "btn btn-prodygia"
-        - else
-          = link_to "Private consultation", new_consultation_path(expert: @expert), class: "btn btn-prodygia", remote: true
+        -# - if current_user.blank?
+        -#   = link_to "Private consultation", "#sign-in-modal", data:{toggle: "modal"}, class: "btn btn-prodygia"
+        -# - else
+        -#   = link_to "Private consultation", new_consultation_path(expert: @expert), class: "btn btn-prodygia", remote: true
     .resume.brief-item
       %p
         %span.name
@@ -90,7 +91,7 @@
         = render partial: "welcome/box_content", locals: { item: item }
 
 -# hidden modals
-= render "shared/sign_in_modal"
+-# = render "shared/sign_in_modal"
 
 #show-modal
 
