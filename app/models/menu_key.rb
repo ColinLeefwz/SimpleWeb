@@ -25,6 +25,8 @@ class MenuKey
   	when 'faq'
   		'问答：' + ShopFaq.find_by_id(tv).title
   	end
+    rescue 
+      ""
   end
   
   def send_to_user(uid)
