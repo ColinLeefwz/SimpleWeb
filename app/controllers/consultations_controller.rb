@@ -4,6 +4,11 @@ class ConsultationsController < ApplicationController
   def new
     @consultation = Consultation.new(consultant: Expert.find(params[:expert]), requester: current_user)
     respond_to do |format|
+      if current_user.blank?
+        @show_modal = 'shared/sign_in_modal'
+      else
+        @show_modal = 'consultations/consultation_modal'
+      end
       format.js { render 'new_consultation' }
     end
 

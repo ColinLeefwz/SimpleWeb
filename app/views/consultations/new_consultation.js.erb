@@ -1,7 +1,8 @@
+$("#show-modal").html('<%=j render partial: @show_modal%>')
+<%# $(".modal").modal() %>
 $("#consultation-modal").modal()
-$("#consultation-form").html('<%=j render partial: 'form'%>')
 $("#send-consultation").on("click", function(e){
   e.preventDefault();
-  $("#consultation-modal").modal("hide")
+  $(".modal").modal("hide")
   $("#new_consultation").submit()
 })
