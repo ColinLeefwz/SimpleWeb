@@ -1,3 +1,20 @@
+.nav.navbar-nav
+  .col-md-12
+    %li.dropdown
+      %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        %i.glyphicon.glyphicon-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
+      %ul.nav.dropdown-menu
+        .user-info.clearfix
+          .avatar
+            = link_to image_tag(@expert.avatar.url), profile_expert_path(@expert)
+        .profile
+          .name
+            = @expert.name
+          .title
+            = [@profile.title, @profile.company].reject(&:blank?).join(",")
+          .edit
+            %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
+
 
 .user-info.clearfix
   .avatar
