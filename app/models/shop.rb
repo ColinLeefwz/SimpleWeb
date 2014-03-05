@@ -862,7 +862,7 @@ class Shop
   def shop_or_staff?(uid)
     uid = uid.to_s
     return true if uid == "s#{self.id}"
-    return shop.staffs_cache.find{|x| x.to_s==uid} != nil
+    return staffs_cache.find{|x| x.to_s==uid} != nil
   end
   
   
