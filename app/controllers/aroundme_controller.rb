@@ -109,7 +109,7 @@ class AroundmeController < ApplicationController
         arr = arr[0,4]+[ shop ]+arr[4..-1]
       end
     end    
-    $redis.zrange("LL3#{session[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id); arr << s if s}
+    #$redis.zrange("LL3#{session[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id); arr << s if s}
     arr.uniq!
     ret = arr.map do |x| 
       hash = x.safe_output_with_users

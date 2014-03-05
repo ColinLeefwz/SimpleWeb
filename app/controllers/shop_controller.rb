@@ -148,6 +148,10 @@ class ShopController < ApplicationController
       render :json => {:error => "无权限"}.to_json 
     end
     gchat = Gchat.where(mid:params[:id]).first
+    if gchat.nil?
+      Xmpp.error_notify("删除不存在的聊天室消息：#{shop.name} #{params[:sid]}")
+      render :text => '1'
+    end
     if gchat.sid.to_s != params[:sid] || gchat.uid.to_s != params[:user_id]
       render :json => {:error => "无法删除该记录"}.to_json
     end
