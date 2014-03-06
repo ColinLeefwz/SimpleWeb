@@ -18,8 +18,12 @@ cover_preview = ->
     title = $("#session-title-input").val()
     $(".meta .title").html(title)
 
-    $("checkboxes:checked").each ->
-      $(".meta .category").html($(".meta .category").html() + " " + $(this).next("label").text())
+    categories = []
+    $("input:checked").each ->
+      categories.push($(this).val())
+    category = categories.join(',') + ''
+    $(".meta .category").html(category)
+
 
     if CKEDITOR.instances["article_description"]
       article_description = CKEDITOR.instances['article_description'].getData()
