@@ -130,6 +130,19 @@ ActiveRecord::Schema.define(version: 20140304045436) do
   add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
+  create_table "consultations", force: true do |t|
+    t.integer  "requester_id"
+    t.integer  "consultant_id"
+    t.string   "description"
+    t.string   "status"
+    t.decimal  "price",         precision: 8, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "consultations", ["consultant_id"], name: "index_consultations_on_consultant_id", using: :btree
+  add_index "consultations", ["requester_id"], name: "index_consultations_on_requester_id", using: :btree
+
   create_table "contact_messages", force: true do |t|
     t.string   "name"
     t.string   "email"

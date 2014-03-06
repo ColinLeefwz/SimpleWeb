@@ -19,6 +19,12 @@ class Video < ActiveRecord::Base
   end
 
 
+
+  def available?
+    self.SD_file_name.present? || self.HD_file_name.present?
+  end
+
+
   private
   def get_current_path
     @SD_current_path = /videos\/\d+\/sds\/.+/.match CGI.unescape(self.SD.url)
