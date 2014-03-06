@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes">
+	<meta content="no-cache" http-equiv="Pragma">
+    <meta content="no-cache" http-equiv="Cache-Control">
+    <meta name="keywords" content="脸脸，商家管理后台">
+    <meta name="description" content="脸脸，商家管理后台">
+    <title>微+运营商业务系统</title>
+    <link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+  <div id="BG"></div>
+  <div id="Message" class="message">
+	<center>
+		<img src="/images/logo2.png" class="imgs"/>
+		<img src="/images/arrow3.png" class="mlr10"/>
+		<img src="/images/logo5.png" class="imgs2">
+	</center>
+	<div class="mtb30">您还未成为即立方用户，<br/>
+	请拨打电话 400-12345678 联系客服人员。</div>
+	<a href="#" class="btn9 l">去脸脸管理</a>
+	<a onclick="Close()" class="btn9 r">我知道了</a>
+  </div>
+  <div id="Message2" class="message">
+	<div class="mtb30">找回密码<br/><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;请拨打电话 400-12345678 联系客服人员重置密码。</div>
+	<a onclick="Close2()" class="btn9 r">我知道了</a>
+  </div>
+  
+    <div id="Area" class="area">
+      <form action="/agent/login" method="post">
+        <div class="logo2">脸脸网</div>
+        <div id="Notice" class="notice"></div>
+
+        <div class="plane"><label>用户名</label>
+          <input class="txt" id="name" name="name" onfocus="this.focus()" type="text">
+        </div>
+
+        <div class="plane"><label for="pwd">密&nbsp;&nbsp;码</label>
+          <input class="txt" id="pwd" maxlength="16" name="password" type="password">
+        </div>
+        <div class="plane2">
+		  <div class="plane2leftdiv">
+		  	<p><input type="checkbox" class="l mr10 mt4" id="rememberMe"> 记住我 </p>
+		  	<p class="mt4"><input type="checkbox" class="l mr10 mt4" id="rememberMe"> 两周内免登录 </p>
+		  </div>
+          <input value="登 录" class="btn8 r" type="button" onclick="Submit()"/>
+		  <div class="clear1"></div>
+		  <div><a class="r mt15" onClick="Submit2()">找回密码</a></div>
+          <span class="plane2inner">© 2014 微+ 浙ICP备11027288号<a href="http://www.3mway.com/" class="fn ml15">WWW.3MWAY.COM</a></span>
+        </div>
+      </form>
+    </div>
+<script>
+function Obj(id){
+	return document.getElementById(id);
+}
+function Close(){
+	Obj("Message").className="message bounceOut";
+	setTimeout(function(){Obj("Message").style.display="none";Obj("BG").style.display="none";},600);
+}
+function Close2(){
+	Obj("Message2").className="message bounceOut";
+	setTimeout(function(){Obj("Message2").style.display="none";Obj("BG").style.display="none";},600);
+}
+function Submit(){
+	Obj("BG").style.display="block";
+	Obj("Message").style.display="block";
+	
+	var w=Obj("Message").offsetWidth,
+		h=Obj("Area").offsetHeight;
+	Obj("BG").style.minWidth=w+"px";
+	Obj("BG").style.minHeight=h+"px";
+	Obj("Message").className="message bounceIn";
+}
+function Submit2(){
+	Obj("BG").style.display="block";
+	Obj("Message2").style.display="block";
+	
+	var w=Obj("Message2").offsetWidth,
+		h=Obj("Area").offsetHeight;
+	Obj("BG").style.minWidth=w+"px";
+	Obj("BG").style.minHeight=h+"px";
+	Obj("Message2").className="message bounceIn";
+}
+</script>
+</body>
+</html>

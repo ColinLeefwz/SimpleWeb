@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class Shop3LoginController < ApplicationController
-  before_filter :shop_authorize, :except => [:login, :find_shop]
+  before_filter :shop_authorize, :except => [:login, :find_shop, :login2]
   include Paginate
 
   def index
