@@ -1,4 +1,6 @@
 class Expert < Member
+  include ActiveAdmin::Callbacks
+
   has_many :articles, dependent: :destroy
   has_and_belongs_to_many :courses
   has_many :video_interviews, -> {order "updated_at DESC"}
@@ -10,7 +12,8 @@ class Expert < Member
   accepts_nested_attributes_for :profile
   # alias_method :profile=, :profile_attributes=   # NOTE add this line for active admin working properly
 
-  after_create :create_a_profile, :create_a_video
+  define_active_admin_callbacks :save
+  after_save :create_association
 
   def name_with_inital
     "#{first_name.first}. #{last_name}"
@@ -36,16 +39,18 @@ class Expert < Member
     @staff || User.find(2)
   end
 
-  private
-  def create_a_profile
-    self.create_profile
-  end
-
-  def create_a_video
-    self.create_video
+  def save
+    run_save_callbacks do
+      save!
+    end
   end
 
   private
+  def create_association
+    self.profile ||= self.create_profile
+    self.video ||= self.create_video
+  end
+
   def fetch_contents(article_option = {})
     articles = self.articles.where(article_option)
     video_interviews = self.video_interviews
