@@ -14,16 +14,4 @@
     float: none;
   }
 
-  .modal{
-    width: 1100px;
-    margin-left: -555px;
-  }
-  .modal-body{
-    background-image: url(/assets/bg.jpg);
-    max-height: 500px;
-  }
-
-  .modal.fade.in{
-    top: 5%;
-  }
 }

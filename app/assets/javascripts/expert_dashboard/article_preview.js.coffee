@@ -8,7 +8,7 @@ cover_preview = ->
 
 @article_preview = ->
   cover_preview()
-  $("#session-preview").on "click", ->
+  $("#preview-button").on "click", ->
     mon_arr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     date = new Date()
     mm = date.getMonth()
@@ -18,7 +18,7 @@ cover_preview = ->
     title = $("#session-title-input").val()
     $(".meta .title").html(title)
 
-    $("input:checked").each ->
+    $("checkboxes:checked").each ->
       $(".meta .category").html($(".meta .category").html() + " " + $(this).next("label").text())
 
     if CKEDITOR.instances["article_description"]
