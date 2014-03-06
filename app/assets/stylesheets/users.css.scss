@@ -12,7 +12,7 @@
   	  }
 
   	  select {
-  	  	width: inherit;
+        max-width: 200px;
   	  }
   	}
 
@@ -22,7 +22,7 @@
       }
 
       select {
-        width: inherit;
+        max-width: 200px;
       }
     }
 
