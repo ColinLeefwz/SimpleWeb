@@ -99,6 +99,7 @@ Prodygia::Application.routes.draw do
   get "/faq", to: 'static_pages#faq'
   get "/terms", to: 'static_pages#terms'
   get "/privacy", to: 'static_pages#privacy'
+  get "/search", to: 'search#query', as: :search
 
   get "*page" => redirect("/")
 end
