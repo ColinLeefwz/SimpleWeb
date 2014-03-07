@@ -1,7 +1,7 @@
 class Video < ActiveRecord::Base
 
-  Attributes = {video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path,  :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path]}
-  attr_accessor :SD_temp_path, :HD_temp_path
+  attr_accessor :destroy_SD, :destroy_HD, :SD_temp_path, :HD_temp_path
+  Attributes = {video_attributes: [:id, :cover, :SD_file_name, :SD_content_type, :SD_file_size, :SD_temp_path, :destroy_SD, :HD_file_name, :HD_content_type, :HD_file_size, :HD_temp_path, :destroy_HD]}
 
   belongs_to :videoable, polymorphic: true
 
@@ -10,14 +10,10 @@ class Video < ActiveRecord::Base
   has_attached_file :HD, path: ":class/:id/:attachment/:filename", default_url: ""
 
   after_initialize :get_current_path
+
+  before_save :destroy_video?
   after_save :sd_paperclip_path, if: ->{@SD_temp_path.present?}
   after_save :hd_paperclip_path, if: ->{@HD_temp_path.present?}
-
-
-  def available?
-    self.SD_file_name.present? || self.HD_file_name.present?
-  end
-
 
 
   def available?
@@ -31,7 +27,11 @@ class Video < ActiveRecord::Base
     @HD_current_path = /videos\/\d+\/hds\/.+/.match CGI.unescape(self.HD.url)
   end
 
-  
+  def destroy_video?
+    self.SD.clear if @destroy_SD == "true"
+    self.HD.clear if @destroy_HD == "true"
+  end
+
   #todo: add Exception Handle
   def sd_paperclip_path
     @bucket ||= AWS::S3.new.buckets[ENV["AWS_BUCKET"]]
