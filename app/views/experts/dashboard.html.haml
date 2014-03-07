@@ -1,10 +1,10 @@
 - content_for(:title){"Expert Dashboard"}
 
+= render "guideline_page_modal"
 .dash-wrapper.margin-bottom
-  .container-fluid
-    .row-fluid
-      .span3.side-menu
+  .container
+    .row
+      .col-md-3.side-menu
         = render 'side_menu'
-      .span9.main-menu
+      .col-md-9.main-menu
         = render 'experts/welcome_page'
-      = render "guideline_page_modal"

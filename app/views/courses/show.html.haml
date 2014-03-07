@@ -7,7 +7,7 @@
     .overview
       .cover-box.inline
         .cover
-          - if @course.try :video
+          - if @course.video.available?
             = render "shared/sublime_video", video: @course.video
           - else
             = image_tag @course.cover.url
@@ -38,3 +38,9 @@
 
   - @course.chapters.each do |c|
     = render partial: "chapter", locals: {chapter: c}
+
+= render partial: "comments/comments", locals: {commentable: @course}
+
+-# hidden modals
+= render "shared/sign_in_modal"
+

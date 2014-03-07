@@ -1,30 +1,89 @@
 .edit-profile-title
   %h3 Edit Your Profile
 
-= simple_form_for @expert, url: update_profile_expert_path(current_user), remote: true do |f|
+= form_for @expert, url: update_profile_expert_path(current_user), remote: true, :html => {:class => "form-horizontal"} do |f|
 
   %fieldset
-    -# %legend Overview
-    = f.input :first_name
-    = f.input :last_name
-    .string.optional.customize-label
-      = f.label :profile_picture
-      = f.input_field :avatar
-    = simple_fields_for @profile do |p|
-      = p.input :title
-      .string.optional.customize-label
-        = p.label :organization
-        = p.input_field :company
-      .string.optional.customize-label
-        = p.input :country, priority: ["China", "United States", "Italy"]
-        = p.input :city
-      = f.input :time_zone
-      = p.input :twitter
-      = p.input :web_site
-      = p.input :expertise
-      = p.input :career, input_html: {class: 'ckeditor'}
-      = p.input :education
+  .form-group
+    .col-sm-5
+      = f.label :first_name, class: "control-label"
+    .col-sm-6
+      = f.text_field :first_name, :autofocus => true, class: 'form-control' 
+  .form-group
+    .col-sm-5
+      = f.label :last_name, class: "control-label"
+    .col-sm-6
+      = f.text_field :last_name, :autofocus => true, class: 'form-control' 
 
+  .form-group
+    .col-sm-5
+      = f.label :profile_picture, class: "control-label"
+    .col-sm-6
+      = f.file_field :avatar
 
-    = f.submit "Update", class: "btn btn-prodygia dashboard-buttons"
-    = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons" 
+  = fields_for @profile do |p|
+    .form-group
+      .col-sm-5
+        = p.label :title, class: "control-label"
+      .col-sm-6
+        = p.text_field :title, :autofocus => true, class: 'form-control' 
+
+    .form-group
+      .col-sm-5
+        = p.label :organization, class: "control-label"
+      .col-sm-6
+        = p.text_field :company, class: 'form-control'
+
+    .form-group
+      .col-sm-5
+        = p.label :country, class: "control-label"
+      .col-sm-6
+        = p.country_select :country, ["China", "United States", "Italy"]
+
+    .form-group
+      .col-sm-5
+        = p.label :city, class: "control-label"
+      .col-sm-6
+        = p.text_field :city, class: 'form-control'
+
+    .form-group
+      .col-sm-5
+        = f.label :time_zone, class: "control-label"
+      .col-sm-6
+        = f.time_zone_select :time_zone
+
+    .form-group
+      .col-sm-5
+        = p.label :twitter, class: "control-label"
+      .col-sm-6
+        = p.text_field :twitter, class: 'form-control'
+
+    .form-group
+      .col-sm-5
+        = p.label :web_site, class: "control-label"
+      .col-sm-6
+        = p.text_field :web_site, class: 'form-control'
+
+    .form-group
+      .col-sm-5
+        = p.label :expertise, class: "control-label"
+      .col-sm-6
+        = p.text_field :expertise, class: 'form-control'
+
+    .form-group
+      .col-sm-5
+        = p.label :career, class: "control-label"
+      .col-sm-6
+        = p.text_field :career, input_html: {class: 'ckeditor'}, class: 'form-control'
+
+    .form-group
+      .col-sm-5
+        = p.label :education, class: "control-label"
+      .col-sm-6
+        = p.text_field :education, class: 'form-control'
+
+  .form-group
+    .col-sm-6
+      = f.submit "Update", class: "btn btn-prodygia dashboard-buttons"
+    .col-sm-offset-2
+      = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons" 

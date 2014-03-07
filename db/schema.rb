@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140221102340) do
+ActiveRecord::Schema.define(version: 20140304045436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,32 @@ ActiveRecord::Schema.define(version: 20140221102340) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+
+  create_table "comments", force: true do |t|
+    t.integer  "user_id"
+    t.string   "commentable_type"
+    t.integer  "commentable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "content"
+    t.boolean  "soft_deleted",     default: false
+  end
+
+  add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "consultations", force: true do |t|
+    t.integer  "requester_id"
+    t.integer  "consultant_id"
+    t.string   "description"
+    t.string   "status"
+    t.decimal  "price",         precision: 8, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "consultations", ["consultant_id"], name: "index_consultations_on_consultant_id", using: :btree
+  add_index "consultations", ["requester_id"], name: "index_consultations_on_requester_id", using: :btree
 
   create_table "contact_messages", force: true do |t|
     t.string   "name"
@@ -410,8 +436,6 @@ ActiveRecord::Schema.define(version: 20140221102340) do
     t.string   "HD_content_type"
     t.integer  "HD_file_size"
     t.datetime "HD_updated_at"
-    t.string   "SD_temp_path"
-    t.string   "HD_temp_path"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
     t.integer  "cover_file_size"

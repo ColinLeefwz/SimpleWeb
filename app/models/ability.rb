@@ -4,6 +4,10 @@ class Ability
   def initialize(user, params)
     user ||= User.new
 
+    can :manage, Comment do |comment|
+      comment.user == user
+    end
+
     if user.is_a? AdminUser
       can :manage, :all
 
@@ -20,8 +24,8 @@ class Ability
 
       can [:show, :enroll, :enroll_confirm, :purchase, :sign_up_confirm], Course
       can :manage, Course do |course|
-				course.experts.include?(user)
-			end
+        course.experts.include?(user)
+      end
       cannot :index, Course
 
     elsif user.is_a? Member

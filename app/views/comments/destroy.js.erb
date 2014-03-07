@@ -1,0 +1,5 @@
+<% commentable = @comment.commentable %>
+
+var comment = $('#<%= dom_id(@comment) %>');
+comment.fadeOut(1000);
+$(".comments").find("h4").html('<%= pluralize(commentable.comments.count, "Comment") %>');

@@ -19,6 +19,7 @@
 
   .checkbox{
     padding-right: 0.8em;
+    float: right;
   }
 
   input[type="checkbox"]{
@@ -61,14 +62,12 @@
   background: white;
 }
 
-.form-horizontal{
-  margin-top: 20px;
-  padding-bottom: 10px;
-}
-
 .edit-profile-title, .edit-intro-video{
   h4{
     margin: 0;
+  }
+  h3 {
+    text-align: center;
   }
   padding-left: 1em;
 }
@@ -85,4 +84,7 @@
   p{
     text-align: justify;
   }
+}
+img {
+  max-width: 100%;
 }

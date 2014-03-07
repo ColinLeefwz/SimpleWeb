@@ -10,7 +10,7 @@
   = f.input :description, input_html: {class: "ckeditor"}
   = f.association :experts
   = f.input :categories, as: :check_boxes, collection: Category.all, label_method: :name, value_method: :name
-  = f.input :cover
+  = f.file_field :cover
 
   = f.simple_fields_for :chapters do |c|
     = render 'chapter_fields', f: c
@@ -20,6 +20,7 @@
 
   = link_to_add_fields("add chapter", f, :chapters)
   = f.submit
+  = link_to "Cancel", courses_path, class: "btn btn-warning"
 
 -# todo: space above footer
 .footer-spacer{style: "height: 50px;"}
