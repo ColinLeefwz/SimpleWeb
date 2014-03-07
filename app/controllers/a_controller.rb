@@ -4,8 +4,9 @@ class AController < ApplicationController
   
   before_filter :weixin_filter, :only => [:index, :webdown]
   
-  #$apk_url = "http://dd.myapp.com/16891/external_EC325DF2C79795CCE3725D873B97B775.apk"  #二次扫描不行
-  $apk_url = "http://android.myapp.com/android/down.jsp?type=2&appid=1064735&pkgid=17395713&icfa=-1&g_f=990976"
+  #$apk_url = "http://dd.myapp.com/16891/external_EC325DF2C79795CCE3725D873B97B775.apk"  #二次扫描不行  
+  $apk_url = "http://android.myapp.com/android/down.jsp?appid=1064735&pkgid=17623821&icfa=-1&lmid=1022&g_f=990976&actiondetail=0&downtype=1&softname=%E8%84%B8%E8%84%B8"
+  
   $ios_url = "https://itunes.apple.com/cn/app/lianlian/id577710538"
   
   #通过二维码下载

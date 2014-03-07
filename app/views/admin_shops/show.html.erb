@@ -6,7 +6,8 @@
 <p>
 
   <b></b>
-  <%= link_to '开通密码', "/admin_shops/set_password?id=#{@shop.id}"  if @shop.password.blank? %>
+  <%= link_to '开通密码', "/admin_shops/set_password?id=#{@shop.id}"  if !@shop.password.blank? %>
+  <%= link_to '设置流水号', "/admin_shops/set_id2?id=#{@shop.id}"  unless @shop.password.blank? %>
   <%= link_to('加权', "/admin_shops/upgrade_v?id=#{@shop.id}") %>
   <%= link_to('编辑', "/admin_shops/edit?id=#{@shop.id}") %>
   <%= link_to('标记删除', "/admin_shops/del?id=#{@shop.id}") %>
@@ -51,9 +52,12 @@
   <%= @shop.name %>
 </p>
 <p>
+  <b>登录帐号:</b>
+  <%= @shop.id2 || "未设置" %>
+</p>
+<p>
   <b>密码:</b>
   <%= @shop.password || '未开通' %>
-
 </p>
 
 <p>
