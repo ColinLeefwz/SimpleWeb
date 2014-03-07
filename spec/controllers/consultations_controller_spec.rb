@@ -27,4 +27,11 @@ describe ConsultationsController do
     end
   end
 
+  describe "GET 'accept'" do
+    it "changes the consulation's status to accepted" do
+      get :accept, id: consultation, format: :js
+      expect(assigns(:consultation).status).to eq "accepted"
+    end
+  end
+
 end

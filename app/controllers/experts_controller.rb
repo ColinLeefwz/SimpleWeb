@@ -61,7 +61,7 @@ class ExpertsController < ApplicationController
   end
 
   def consultations
-    @consultations = @expert.received_consultations.where(status: Consultation::STATUS[:processed])
+    @consultations = @expert.received_consultations.where(status: [Consultation::STATUS[:processed], Consultation::STATUS[:accepted]])
     respond_to do |format|
       @from = "consultations/items"
       format.js { render "experts/update" }

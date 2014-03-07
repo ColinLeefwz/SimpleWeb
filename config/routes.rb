@@ -1,7 +1,11 @@
 Prodygia::Application.routes.draw do
 
   resources :comments
-  resources :consultations
+  resources :consultations do
+    member do
+      get :accept
+    end
+  end
 
   resources :courses do
     member do

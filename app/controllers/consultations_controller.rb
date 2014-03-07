@@ -26,6 +26,14 @@ class ConsultationsController < ApplicationController
     end
   end
 
+  def accept
+    @consultation = Consultation.find params[:id]
+    @consultation.update_attributes status: Consultation::STATUS[:accepted]
+    respond_to do |format|
+      format.js { render "accept_or_reject" }
+    end
+  end
+
   private
   def consultation_params
     params.require(:consultation).permit(:id, :requester_id, :consultant_id, :description)
