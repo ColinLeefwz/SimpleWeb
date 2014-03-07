@@ -1,5 +1,7 @@
 ActiveAdmin.register Expert do
 
+  config.clear_action_items!  # clear default buttons on top-right (New Expert)
+
   action_item only:[:index] do
     link_to 'Invit An Expert', new_user_invitation_path
   end

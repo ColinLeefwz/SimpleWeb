@@ -124,6 +124,8 @@ GEM
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
+    font-awesome-sass (4.0.3.1)
+      sass (~> 3.2)
     formatador (0.2.4)
     formtastic (2.3.0.rc2)
       actionpack (>= 3.0)
@@ -392,6 +394,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   figaro
+  font-awesome-sass
   fuubar
   google-api-client
   guard

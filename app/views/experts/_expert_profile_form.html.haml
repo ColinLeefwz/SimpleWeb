@@ -1,8 +1,7 @@
 .edit-profile-title
   %h3 Edit Your Profile
 
-= form_for @expert, url: update_profile_expert_path(current_user), remote: true, :html => { :method => :put, :class => "form-horizontal"} do |f|
-
+= form_for @expert, url: update_profile_expert_path(current_user), remote: true, :html => {:class => "form-horizontal"} do |f|
 
   %fieldset
   .form-group

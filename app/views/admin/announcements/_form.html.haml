@@ -1,12 +1,4 @@
-%span SD
-= s3_uploader_form class: "s3_uploader", acl: 'public-read', data:{definition: "SD"} do
-  = file_field_tag :file, multiple: false
-  %span.status
-
-%span HD
-= s3_uploader_form class: "s3_uploader", acl: 'public-read', data:{definition: "HD"} do
-  = file_field_tag :file, multiple: false
-  %span.status
+= render "shared/video_uploader"
 
 = simple_form_for [:admin, @announcement] do |f|
 

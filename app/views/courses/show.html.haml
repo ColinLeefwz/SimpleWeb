@@ -38,3 +38,9 @@
 
   - @course.chapters.each do |c|
     = render partial: "chapter", locals: {chapter: c}
+
+= render partial: "comments/comments", locals: {commentable: @course}
+
+-# hidden modals
+= render "shared/sign_in_modal"
+

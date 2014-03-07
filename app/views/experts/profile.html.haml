@@ -1,6 +1,5 @@
 - content_for(:title) { @expert.name }
 
-= render "welcome/box_content_modal"
 .general-wrapper
   .brief.sub-wrapper.first-sub.clearfix
     .avatar.brief-item
@@ -30,7 +29,7 @@
     .contact.brief-item-last.clearfix
       .contact-button#follow
         - if current_user.blank?
-          = link_to image_tag('favorite_unselected.png'),'#modal', data:{toggle: "modal"}, class: 'favorite hollow-star'
+          = link_to image_tag('favorite_unselected.png'),'#sign-in-modal', data:{toggle: "modal"}, class: 'favorite hollow-star'
         - else
           = render 'shared/favorite_star', method: :follow?, object: @expert, link_path: relationship_path(@expert.id)
       #follower-count
@@ -84,5 +83,8 @@
       - @items.each do |item|
         = render partial: "welcome/box_content", locals: { item: item }
 
-    :javascript
-      load_isotope()
+-# hidden modals
+= render "shared/sign_in_modal"
+
+:javascript
+  load_isotope()

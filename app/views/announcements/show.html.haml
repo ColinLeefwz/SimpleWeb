@@ -11,4 +11,9 @@
   %article
     = @announcement.description.try :html_safe
 
-= render "welcome/box_content_modal"
+= render partial: "comments/comments", locals: {commentable: @announcement}
+
+
+-# hidden modals
+= render "shared/sign_in_modal"
+
