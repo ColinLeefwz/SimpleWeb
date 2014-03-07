@@ -19,7 +19,6 @@
 
   .checkbox{
     padding-right: 0.8em;
-    float: right;
   }
 
   input[type="checkbox"]{
@@ -27,7 +26,6 @@
   }
 
   .cke_chrome {
-    width: 76% !important;
     overflow: hidden;
     display: inline-block;
   }
@@ -47,11 +45,6 @@
     display: inline;
     width: 30%;
   }
-}
-
-#cover-image{
-  width: 300px;
-  margin-left: 14%;
 }
 
 .ckeditor{

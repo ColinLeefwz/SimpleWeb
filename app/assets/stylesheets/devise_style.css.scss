@@ -2,6 +2,7 @@
   margin: 0px auto;
   max-width: 450px;
   margin-bottom: 50px;
+  font-size: 15px;
   label{
     display: inline-block;
   }
@@ -26,7 +27,8 @@
 
 
     .terms-of-service{
-      height: 3em;
+      width: 310px;
+      height: 15em;
       overflow: auto;
       padding: 1em 0.5em;
       margin: 0 auto;
@@ -39,10 +41,6 @@
       p{
         text-indent: 1em;
       }
-    }
-
-    .check-box-wrapper{
-      width: 200px;
     }
 }
 
