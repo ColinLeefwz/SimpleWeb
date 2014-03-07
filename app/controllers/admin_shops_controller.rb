@@ -55,6 +55,17 @@ class AdminShopsController < ApplicationController
     @shop_info = @shop.info || ShopInfo.new
   end
 
+
+  def set_id2
+    @shop = Shop.find(params[:id])
+    return unless request.post?
+    if @shop.update_attributes(params[:shop])
+      redirect_to :action => "show", :id => @shop.id
+    else
+      flash[:notice] = '流水号设置失败'
+    end
+  end
+
   def set_password
     @shop = Shop.find(params[:id])
     if request.post?

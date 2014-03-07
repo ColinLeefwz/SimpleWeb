@@ -65,6 +65,14 @@ class Shop
   def self.default_hash
     {del: {"$exists" => false}}
   end
+
+  def self.find_by_id_or_id2(id)
+    id.match('-') ? Shop.find_by_id2(id) : Shop.find_by_id(id)
+  end
+
+  def self.find_by_id2(id)
+    Shop.where(id2: id).first
+  end
   
   def city_name
     City.city_name(city)
