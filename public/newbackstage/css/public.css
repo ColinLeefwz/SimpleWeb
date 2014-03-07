@@ -126,6 +126,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .ml10{margin-left:10px;}
 .ml15{margin-left:15px;}
 .ml20{margin-left:20px;}
+.ml37{margin-left:37px !important;}
 .ml48{margin-left:48px;}
 .ml100{margin-left:100px;}
 .ml110{margin-left:110px;}
@@ -264,13 +265,14 @@ word-break:keep-all;cursor:pointer;background:transparent url(../images/sign17.p
 .header{background:url(../images/bg1.png) left top repeat-x;width:100%;overflow:hidden;}
 .header .sign{width:61px;height:50px;position:absolute;left:0px;top:0px;cursor:pointer;background:url(../images/line.png) left top no-repeat;}
 .header .logo{position:absolute;top:0px;right:5px;z-index:20;cursor:pointer;}
-.headercon{width:830px;height:50px;position:relative;margin:0px auto;}
+.headercon{width:830px;position:relative;margin:0px auto;}
 .headercon .toptitle{width:100%;position:absolute;height:50px;line-height:50px;color:#fff;text-align:center;background:transparent url(../images/bg1.png) left top repeat-x;z-index:20;}
 .headercon h1{font-size:20px;color:#FFFFFF;font-family:"微软雅黑";letter-spacing:2px;}
 .headercon h1 a{color:#fff;}
 .headercon h1 a:hover{text-decoration:underline;}
-.headercon #Message{position:absolute;top:50px;left:0px;width:800px;border:1px solid #D7D7D7;border-top:none;border-radius:0px 0px 8px 8px;
-background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:40px;z-index:15;padding:0px 14px;display:none;}
+.headercon #Message{width:800px;border:1px solid #D7D7D7;border-top:none;border-radius:0px 0px 8px 8px;background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:50px;padding:0px 14px;margin:50px auto 0px auto;}
+.headercon #Message a{margin-left:10px;padding-right:10px;border-right:1px dotted #f60;}
+.headercon #Message a{color:#f60;}
 
 .submenu{background:url("../images/line3.png") left bottom repeat-x;font-size:14px;line-height:30px;padding-top:10px;overflow:hidden;border-radius:0px 0px 10px 0px;}
 .submenu ul{overflow:hidden;display:block;zoom:1;float:left;}

@@ -493,14 +493,15 @@ class Shop
     #内部地点的“每日签到优惠券”
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
 
-    if $mansion3.include?(self.id)
-      ["52fc278620f318cb4a000009"].each do |cp|
-        coupon1 = Coupon.find_by_id(cp)
-        if coupon1.allow_send_checkin?(user_id, :single => true)
-          coupon1.send_coupon(user_id,nil,self.id)
-        end
-      end
-    end
+    #停用活动期间优惠券
+    # if $mansion3.include?(self.id)
+    #   ["52fc278620f318cb4a000009"].each do |cp|
+    #     coupon1 = Coupon.find_by_id(cp)
+    #     if coupon1.allow_send_checkin?(user_id, :single => true)
+    #       coupon1.send_coupon(user_id,nil,self.id)
+    #     end
+    #   end
+    # end
     coupons.each{|coupon| coupon.send_coupon(user_id,nil,self.id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
