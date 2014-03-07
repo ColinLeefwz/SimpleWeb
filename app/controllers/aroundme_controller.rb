@@ -55,6 +55,9 @@ class AroundmeController < ApplicationController
     if is_kx_user?(session[:user_id])
       $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
     end
+    if is_co_user?(session[:user_id])
+      $redis.smembers("CoShops").each {|id| arr << Shop.find_by_id(id)}
+    end
     if session_user #本人加入的群定位时总是出现
       if Rails.cache.read("PHONEREG#{session_user.id}")
         arr = session_user.groups + arr  #手机号码注册用户首次定位
