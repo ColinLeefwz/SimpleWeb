@@ -4,6 +4,7 @@ Prodygia::Application.routes.draw do
   resources :consultations do
     member do
       get :accept
+      get :reject
     end
   end
 

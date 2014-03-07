@@ -8,5 +8,5 @@
         - if consultation.status == Consultation::STATUS[:accepted]
           .btn accepted
         - else
-          = link_to "reject", "#", class: "btn pull-right"
+          = link_to "reject", reject_consultation_path(consultation), remote: true, class: "btn pull-right"
           = link_to "accept", accept_consultation_path(consultation), remote: true, class: "btn btn-prodygia pull-right"

@@ -30,6 +30,16 @@ class ConsultationsController < ApplicationController
     @consultation = Consultation.find params[:id]
     @consultation.update_attributes status: Consultation::STATUS[:accepted]
     respond_to do |format|
+      @word = Consultation::STATUS[:accepted]
+      format.js { render "accept_or_reject" }
+    end
+  end
+
+  def reject
+    @consultation = Consultation.find params[:id]
+    @consultation.update_attributes status: Consultation::STATUS[:rejected]
+    respond_to do |format|
+      @word = Consultation::STATUS[:rejected]
       format.js { render "accept_or_reject" }
     end
   end
