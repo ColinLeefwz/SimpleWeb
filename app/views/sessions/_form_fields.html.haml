@@ -1,29 +1,29 @@
 .form-group
-  .col-sm-5
+  .col-sm-4
     %label.control-label{for: "user_first_name"}First Name
   .col-sm-7
     = f.text_field :first_name, placeholder: "First Name", autofocus: true, class: 'form-control'
 
 .form-group
-  .col-sm-5
+  .col-sm-4
     %label.control-label{for: "user_last_name"}Last Name
   .col-sm-7
     = f.text_field :last_name, placeholder: "Last Name", class: 'form-control'
 
 .form-group
-  .col-sm-5
+  .col-sm-4
     %label.control-label{for: "user_email"}Email
   .col-sm-7
     = f.email_field :email, placeholder: "Email", class: 'form-control'
 
 .form-group
-  .col-sm-5
+  .col-sm-4
     %label.control-label{for: "user_password"}Password
   .col-sm-7
     = f.password_field :password, placeholder: "Password", class: 'form-control'
 
 .form-group
-  .col-sm-5
+  .col-sm-4
     %label.control-label{for: "user_timezone"}Timezone
   .col-sm-7
     = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, class: 'form-control'
