@@ -28,9 +28,10 @@
           - @categories.sort_by{|category| category[:name]}.each do |category|
             %li
               %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
+                - category_count = Article.where("'#{category.name}' = ANY(categories)").count + VideoInterview.where("'#{category.name}' = ANY(categories)").count + Announcement.where("'#{category.name}' = ANY(categories)").count
+                %span.badge.pull-right
+                  = category_count
                 = category.name
-                %span.badge
-                  = @items.where(categories: '#{category.name}').count
           %li.divider
           %li.dropdown-submenu
             %a{:href => "#"}
@@ -38,19 +39,20 @@
             %ul.dropdown-menu
               %li
                 %a.filters{href: "#video", data: {filter: '.videointerview'}} 
-                  video
                   %span.badge
                     = VideoInterview.count
+                  video
+                  
               %li
                 %a.filters{href: "#article", data: {filter: '.article'}} 
-                  article
                   %span.badge
                     = Article.count
+                  article
               %li
                 %a.filters{href: "#announcement", data: {filter: '.announcement'}} 
-                  announcement
                   %span.badge
                     = Announcement.count
+                  announcement
 
         %button.navbar-toggle{"data-target" => "#navbar-collapse2", "data-toggle" => "collapse", :type => "button"}
           %span.sr-only Toggle navigation
