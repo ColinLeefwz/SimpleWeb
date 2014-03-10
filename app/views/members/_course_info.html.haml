@@ -1,12 +1,13 @@
 .jumbotron.container.shadow
-  .col-sm-4.favorite-session-left
-    .cover
-      = image_tag(course.cover.url)
-    - if (current_user) && (current_user.enrolled? course)
-      .subscribed-button You're subscribed
-    - else
-      .enroll-button
-        = link_to "Subscribe", enroll_course_path(course)
+  .col-sm-3
+    .favorite-session-left
+      .cover
+        = image_tag(course.cover.url)
+      - if (current_user) && (current_user.enrolled? course)
+        .subscribed-button You're subscribed
+      - else
+        .enroll-button
+          = link_to "Subscribe", enroll_course_path(course)
 
   .col-sm-8
     .favorite-session-info
