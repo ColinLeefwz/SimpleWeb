@@ -25,14 +25,6 @@
                 = submit_tag "search", class: "btn btn-primary"
 
 
-            -# %form.navbar-form
-            -#   .input-group
-            -#     %input.form-control.pull-left{ :placeholder => "Search", :type => "text"}
-            -#       .input-group-btn
-            -#         %button.btn.btn-default.btn-primary{:type => "submit"}
-            -#           %i.fa.fa-search
-
-
           - @categories.each do |category|
             %li
               %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase}"}}
