@@ -18,9 +18,13 @@
           %i.fa.fa-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
         %ul.nav.dropdown-menu
           #navbar-collapse2.collapse.navbar-collapse
-            = form_tag search_path, method: :get, remote: true do
-              = search_field_tag :query
-              = submit_tag "search"
+            = form_tag search_path, class: "form-inline", method: :get, remote: true do
+              .form-group
+                = text_field_tag :query, params[:query], class: "form-control", id: "search_field", autocomplete: "off"
+              .form-group
+                = submit_tag "search", class: "btn btn-primary"
+
+
             -# %form.navbar-form
             -#   .input-group
             -#     %input.form-control.pull-left{ :placeholder => "Search", :type => "text"}

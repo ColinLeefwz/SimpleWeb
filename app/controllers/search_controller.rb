@@ -20,4 +20,16 @@ class SearchController < ApplicationController
     end
   end
 
+  def autocomplete
+    query = "*#{params[:query]}*"
+
+    titles = %w(Article Announcement VideoInterview Course).inject([]) do |memo, obj|
+      memo + obj.constantize.search(query).records.pluck(:title)
+    end
+
+    results = titles.map{|t| {val: t}}
+
+    render json: results
+  end
+  
 end
