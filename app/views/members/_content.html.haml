@@ -4,7 +4,7 @@
   -else
     Favorite Content
 - @favorite_contents.each do |content|
-  .favorite-session-box.shadow.white-background
+  .jumbotron.container.shadow
     .col-sm-3
       .favorite-session-cover
         = link_to image_tag(content.cover.url), polymorphic_path(content)

@@ -1,5 +1,5 @@
-.favorite-session-box.shadow.white-background
-  .favorite-session-left
+.jumbotron.container.shadow
+  .col-sm-4.favorite-session-left
     .cover
       = image_tag(course.cover.url)
     - if (current_user) && (current_user.enrolled? course)
@@ -8,18 +8,19 @@
       .enroll-button
         = link_to "Subscribe", enroll_course_path(course)
 
-  .favorite-session-info
-    .favorite-session-main
-      .favorite-session-title
-        = link_to course.title, course_path(course)
-      .favorite-session-expert-name.separator.inline
-        = producer_links(course)
-      .favorite-session-categories.inline
-        = course.categories.join(", ")
-      .clear-fix
+  .col-sm-8
+    .favorite-session-info
+      .favorite-session-main
+        .favorite-session-title
+          = link_to course.title, course_path(course)
+        .favorite-session-expert-name.separator.inline
+          = producer_links(course)
+        .favorite-session-categories.inline
+          = course.categories.join(", ")
+        .clear-fix
 
-      .favorite-session-description
-        = truncate_html(course.description, length: 300, omission: '...')
+        .favorite-session-description
+          = truncate_html(course.description, length: 300, omission: '...')
     .see-more
       = link_to "see more", course_path(course)
 

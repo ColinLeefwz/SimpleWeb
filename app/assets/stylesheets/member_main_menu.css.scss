@@ -8,15 +8,14 @@
     font-size: 2em;
   }
   // expert page
-  .expert-action-box{
-    padding-bottom: 5px;
-    margin-bottom: 10px;
+  .jumbotron{
+    border-radius: 0px;
     width: 100%;
-    height: 210px;
+    padding: 0px;
+    background: white;
     .expert-info{
       display: inline-block;
 			text-align: center;
-      width: 22%;
       max-width: 205px;
       max-height: 204px;
       .expert-avatar{
@@ -47,9 +46,12 @@
     }
 
     .expert-actions{
+      width: 100%;
       float: right;
       display: inline-block;
-      width: 77%;
+      .clear-fix {
+        content: " "
+      }
       .expert-action-info{
         margin-right: 10px;
         .block-title{
@@ -119,11 +121,7 @@
   }
   
   // content
-  .favorite-session-box{
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-    width: 100%;
-    height: 240px;
+  
 		.favorite-session-cover{
 			width: 28%;
 			height: 75%;
@@ -161,7 +159,6 @@
     }
 
     .favorite-session-info{
-      width: 60%;
       height: 80%;
       float: left;
       padding-top: 1%;
@@ -200,4 +197,4 @@
       }
     }
   }
-}
+
