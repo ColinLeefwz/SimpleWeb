@@ -25,22 +25,32 @@
                     %button.btn.btn-default.btn-primary{:type => "submit"}
                       %i.fa.fa-search
 
-
-          - @categories.each do |category|
+          - @categories.sort_by{|category| category[:name]}.each do |category|
             %li
               %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
                 = category.name
+                %span.badge
+                  = @items.where(categories: '#{category.name}').count
           %li.divider
           %li.dropdown-submenu
             %a{:href => "#"}
               format
             %ul.dropdown-menu
               %li
-                %a.filters{href: "#video", data: {filter: '.videointerview'}} video
+                %a.filters{href: "#video", data: {filter: '.videointerview'}} 
+                  video
+                  %span.badge
+                    = VideoInterview.count
               %li
-                %a.filters{href: "#article", data: {filter: '.article'}} article
+                %a.filters{href: "#article", data: {filter: '.article'}} 
+                  article
+                  %span.badge
+                    = Article.count
               %li
-                %a.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
+                %a.filters{href: "#announcement", data: {filter: '.announcement'}} 
+                  announcement
+                  %span.badge
+                    = Announcement.count
 
         %button.navbar-toggle{"data-target" => "#navbar-collapse2", "data-toggle" => "collapse", :type => "button"}
           %span.sr-only Toggle navigation
