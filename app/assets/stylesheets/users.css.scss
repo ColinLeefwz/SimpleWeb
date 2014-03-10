@@ -30,8 +30,15 @@
       }
     }
 
+    .col-sm-4 {
+      .control-label {
+        float: right;
+        font-size: 15px;
+      }
+    }
+
   	.col-sm-5 {
-     float: center;
+      float: center;
       .control-label {
         text-align: right;
         font-size: 15px;
@@ -39,11 +46,6 @@
       .form-control {
         width: 90%;
       }
-  	}
-
-  	.control-label {
-  	  text-align: right;
-      font-size: 15px;
   	}
 
   	.form-control {
