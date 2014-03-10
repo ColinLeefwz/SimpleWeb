@@ -77,18 +77,8 @@ class AroundmeController < ApplicationController
       if shop
 	      shop.city = city
         if City.isJZH(city)
-          arr = arr[0,3]+[ shop ]+arr[3..-1] 
-        else
           arr = arr+[ shop ]
         end
-      end
-    end    
-    if city
-      shop = Shop.find_by_id(21838292) # 2014马年新春许愿
-      if shop
-	      shop.city = city
-        arr = arr[0,3]+[ shop ]+arr[3..-1] if city!="0571"
-        arr = arr+[ shop ] if city=="0571"
       end
     end
     if city && city!="0571" && city!="023"
@@ -105,11 +95,18 @@ class AroundmeController < ApplicationController
         arr = arr+[ shop ]
       end
     end
+    if city && city=="023" && lo[0].to_s[0,4]=="29.8" && lo[1].to_s[0,5]=="106.0" 
+      shop = Shop.find_by_id(21839992) # 铜梁脸脸
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
     if city=="0571"
       shop = Shop.find_by_id(21831643) # 湖滨银泰
       if shop
 	      shop.city = city
-        arr = arr[0,4]+[ shop ]+arr[4..-1]
+        arr = arr+[ shop ]
       end
     end    
     #$redis.zrange("LL3#{session[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id); arr << s if s}
