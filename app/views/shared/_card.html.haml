@@ -19,8 +19,8 @@
         - if item.try(:draft)
           = link_to "post it", post_a_draft_article_path(item), class: "separator", remote: true
           = link_to "delete", cancel_draft_content_article_path(item), remote: true
-      .see-more
-        = link_to "see more", polymorphic_path(item)
+    .see-more
+      = link_to "see more", polymorphic_path(item)
 
   .draft-ribbon
     - if item.try(:draft)
