@@ -2,8 +2,6 @@
 
 .side-menu{
   -webkit-box-shadow: $shadow_param;
-  box-shadow: $shadow_param;
-  background: white;
   a{
     color: #888;
 
@@ -15,7 +13,12 @@
 }
 
 
-
+.nav.dropdown-menu {
+  width: 100px;
+  %ul.dropdown-menu {
+    width: 350px;
+  }
+}
 .side-menu .user-info{
   .avatar{
     padding: 15px;
@@ -93,6 +96,7 @@
   .item{
     margin-bottom: 10px;
     font-weight: bold;
+    width: 200px;
     .item-icon{
       vertical-align: middle;
       display: inline-block;
