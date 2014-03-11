@@ -1,45 +1,49 @@
 - content_for(:title){ @course.title }
 
-.course_show.margin-bottom
+.row
+  .col-md-12
 
-  .overview-wrapper.box
+    .jumbotron.container.shadow
+      .col-sm-4
+        .cover-box.inline
+          .cover
+            - if @course.video.available?
+              = render "shared/sublime_video", video: @course.video
+            - else
+              = image_tag @course.cover.url
 
-    .overview
-      .cover-box.inline
-        .cover
-          - if @course.video.available?
-            = render "shared/sublime_video", video: @course.video
+          - if (current_user) && (current_user.enrolled? @course)
+            .subscribed-button You're subscribed
           - else
-            = image_tag @course.cover.url
+            .enroll-button
+              = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
 
-        - if (current_user) && (current_user.enrolled? @course)
-          .subscribed-button You're subscribed
-        - else
-          .enroll-button
-            = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
+      .col-sm-6
+        .description-box.inline
+          .title
+            = @course.title
+          .producers.inline.separator
+            = producer_links(@course)
 
-      .description-box.inline
-        .title
-          = @course.title
-        .producers.inline.separator
-          = producer_links(@course)
+          .video-length.inline.separator
+            = distance_of_time_in_words @course.duration.to_i
 
-        .video-length.inline.separator
-          = distance_of_time_in_words @course.duration.to_i
+          .category.inline
+            = @course.categories.join(", ")
+          .description
+            = @course.description.try :html_safe
+      .col-sm-2
+        .social-box.inline
+          = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_path(@course, type: @course.class.name)
+          = render 'shared/social_share', item: @course
 
-        .category.inline
-          = @course.categories.join(", ")
-        .description
-          = @course.description.try :html_safe
-
-      .social-box.inline
-        = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_path(@course, type: @course.class.name)
-        = render 'shared/social_share', item: @course
-
-  - @course.chapters.each do |c|
-    = render partial: "chapter", locals: {chapter: c}
-
-= render partial: "comments/comments", locals: {commentable: @course}
+.row
+  .col-md-12
+    - @course.chapters.each do |c|
+      = render partial: "chapter", locals: {chapter: c}
+.row
+  .col-md-12
+    = render partial: "comments/comments", locals: {commentable: @course}
 
 -# hidden modals
 = render "shared/sign_in_modal"
