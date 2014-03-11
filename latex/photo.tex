@@ -535,3 +535,25 @@ GET & \multicolumn{3}{|c|}{/photo2s/show} \\
 \subsection{消息状态}
 和普通的文字消息一样，接收者收到图片后发送状态更新消息（收到／已读）给发送者。发送者将状态显示在图片旁边。
 
+
+\subsection{收到个人聊天图片后转发给好友}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photo2s/forward} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+ user\_id  & 字符串 & 必须 & 转发者的id\\
+\hline
+ to\_uid  & 字符串 & 必须 & 接收者的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+图片转发成功返回值中包含mid字段，表示该图片转发到会话的消息id。
+
