@@ -31,6 +31,10 @@ ul.nav.navbar-nav.navbar-right {
   }
   .dropdown-menu {
     width: 322px;
+
+    li{
+      padding-left: 0.5em;
+    }
   }
 }
 #subnav {
@@ -152,3 +156,4 @@ ul.nav.navbar-nav.navbar-right {
   } /*end of nav_container in desktop*/
 
 }  /*end of header*/
+
