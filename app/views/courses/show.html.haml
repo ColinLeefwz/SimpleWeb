@@ -18,7 +18,7 @@
             .enroll-button
               = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
 
-      .col-sm-6
+      .col-sm-7
         .description-box.inline
           .title
             = @course.title
@@ -32,7 +32,7 @@
             = @course.categories.join(", ")
           .description
             = @course.description.try :html_safe
-      .col-sm-2
+      .col-sm-1
         .social-box.inline
           = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_path(@course, type: @course.class.name)
           = render 'shared/social_share', item: @course
