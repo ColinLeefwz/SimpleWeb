@@ -4,32 +4,43 @@ class SearchController < ApplicationController
     respond_to do |format|
       format.js{
         query = "*#{params[:query]}*"
+        records = weight_based_sort(query)
 
-        @items = %w(VideoInterview Announcement Article Course).inject([]) do |memo, obj|
-          memo + obj.constantize.search(query).records
+        @items = records.inject([]) do |memo, obj|
+          memo << obj[:type].constantize.find(obj[:id])
         end
-
-        %w(Chapter Section).each do |c|
-          c.constantize.search(query).records.each do |r|
-            @items << r.try(:course)
-          end
-        end
-
-        @items = @items.flatten.sort{|x, y| y.updated_at <=> x.updated_at}
       }
     end
   end
 
   def autocomplete
+
     query = "*#{params[:query]}*"
+    records = weight_based_sort(query)
 
-    titles = %w(Article Announcement VideoInterview Course).inject([]) do |memo, obj|
-      memo + obj.constantize.search(query).records.pluck(:title)
+    results = records.inject([]) do |memo, obj|
+      memo << {val: obj[:type].constantize.where(id: obj[:id]).pluck(:title)}
     end
-
-    results = titles.map{|t| {val: t}}
 
     render json: results
   end
-  
+
+
+  private
+  def weight_based_sort(query)
+    results = %w(VideoInterview Announcement Article Course).inject([]) do |memo, obj|
+      memo << obj.constantize.search(query)
+    end
+
+    records = []
+
+    results.each do |collection|
+      collection.each do |hit|
+        records << {type: hit._type.camelize, id: hit._source.id, score: hit._score}
+      end
+    end
+
+    records.sort{|x,y| y[:score] <=> x[:score]}
+  end
+
 end
