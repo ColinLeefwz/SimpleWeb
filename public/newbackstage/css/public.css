@@ -265,9 +265,9 @@ word-break:keep-all;cursor:pointer;background:transparent url(../images/sign17.p
 .header{background:url(../images/bg1.png) left top repeat-x;width:100%;overflow:hidden;}
 .header .sign{width:61px;height:50px;position:absolute;left:0px;top:0px;cursor:pointer;background:url(../images/line.png) left top no-repeat;}
 .header .logo{position:absolute;top:0px;right:5px;z-index:20;cursor:pointer;}
-.headercon{width:830px;position:relative;margin:0px auto;}
-.headercon .toptitle{width:100%;position:absolute;height:50px;line-height:50px;color:#fff;text-align:center;background:transparent url(../images/bg1.png) left top repeat-x;z-index:20;}
-.headercon h1{font-size:20px;color:#FFFFFF;font-family:"微软雅黑";letter-spacing:2px;}
+.headercon{width:830px;margin:0px auto;height:50px;}
+.headercon .toptitle{width:100%;line-height:50px;height:50px;}
+.headercon h1{font-size:20px;color:#FFFFFF;font-family:"微软雅黑";letter-spacing:2px;text-align:center;}
 .headercon h1 a{color:#fff;}
 .headercon h1 a:hover{text-decoration:underline;}
 .headercon #Message{width:800px;border:1px solid #D7D7D7;border-top:none;border-radius:0px 0px 8px 8px;background-color:#fff;
