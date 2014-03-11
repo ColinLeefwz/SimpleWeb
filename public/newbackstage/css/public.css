@@ -270,8 +270,9 @@ word-break:keep-all;cursor:pointer;background:transparent url(../images/sign17.p
 .headercon h1{font-size:20px;color:#FFFFFF;font-family:"微软雅黑";letter-spacing:2px;}
 .headercon h1 a{color:#fff;}
 .headercon h1 a:hover{text-decoration:underline;}
-.headercon #Message{width:800px;border:1px solid #D7D7D7;border-top:none;border-radius:0px 0px 8px 8px;background-color:#fff;text-align:center;font-size:14px;color:#f60;line-height:50px;padding:0px 14px;margin:50px auto 0px auto;}
-.headercon #Message a{margin-left:10px;padding-right:10px;border-right:1px dotted #f60;}
+.headercon #Message{width:800px;border:1px solid #D7D7D7;border-top:none;border-radius:0px 0px 8px 8px;background-color:#fff;
+text-align:center;font-size:14px;color:#f60;line-height:50px;padding:0px 14px;margin:50px auto 0px auto;height:1px;}
+.headercon #Message a{margin-left:10px;padding-right:10px;border-right:1px dotted #f60;display:none;}
 .headercon #Message a{color:#f60;}
 
 .submenu{background:url("../images/line3.png") left bottom repeat-x;font-size:14px;line-height:30px;padding-top:10px;overflow:hidden;border-radius:0px 0px 10px 0px;}
@@ -483,6 +484,8 @@ line-height:25px;color:#333333;}
 .box14 .box14_plane3 .smallarrow{position:absolute;width:25px;height:17px;background:url("../images/sign45.jpg") left top no-repeat;left:25px;top:4px;}
 .box14 .box14_plane4{margin-top:18px;border:1px solid #E4E4E4;padding:15px;background-color:#fff;border-radius:5px;color:#666666;
 min-height:80px;font-size:12px;word-break:break-all;word-wrap:break-word;}
+
+.box15{font-size:12px;margin-top:10px;overflow:hidden;}
 
 
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
