@@ -1,6 +1,6 @@
 
 - @categories = Category.all
-.navbar.navbar-default
+.navbar.navbar-default.shawd
   .col-md-12
     .navbar-header
       .navbar-left
@@ -14,7 +14,7 @@
     %ul#subnav.nav.navbar-nav.navbar-header
 
       %li.dropdown
-        %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        %a.navbar-btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
           %i.fa.fa-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
         %ul.nav.dropdown-menu
           #navbar-collapse2.collapse.navbar-collapse
