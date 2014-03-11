@@ -1,5 +1,10 @@
 .form-horizontal {
 
+  .dashboard-buttons {
+    float: right;
+    margin-bottom: 5px;
+  }
+  
   %h3 {
     text-align: center;
   }
@@ -12,7 +17,7 @@
   	  }
 
   	  select {
-  	  	width: inherit;
+  	  	width: 100%;
   	  }
   	}
 
@@ -22,7 +27,7 @@
       }
 
       select {
-        width: inherit;
+        width: 100%;
       }
     }
 
