@@ -20,7 +20,7 @@
           #navbar-collapse2.collapse.navbar-collapse
             = form_tag search_path, class: "form-inline", method: :get, remote: true do
               .form-group
-                = text_field_tag :query, params[:query], class: "form-control", id: "search_field", autocomplete: "off"
+                = text_field_tag :query, "", class: "form-control", id: "search_field", autocomplete: "off"
               .form-group
                 = submit_tag "search", class: "btn btn-primary"
 

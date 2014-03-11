@@ -1,0 +1,23 @@
+.tt-dropdown-menu,
+.tt-suggestions,
+.tt-suggestion{
+  width: 100%;
+}
+
+
+.tt-suggestions{
+  border: 1px solid #ccc;
+  border-top: 0px;
+}
+
+
+.tt-suggestion{
+  height: 2em;
+  overflow: hidden;
+  background-color: white;
+  padding: 5px 20px;
+  p{
+    margin: 0;
+  }
+}
+
