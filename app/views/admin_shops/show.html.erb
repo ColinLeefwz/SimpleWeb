@@ -6,7 +6,7 @@
 <p>
 
   <b></b>
-  <%= link_to '开通密码', "/admin_shops/set_password?id=#{@shop.id}"  if !@shop.password.blank? %>
+  <%= link_to '开通密码', "/admin_shops/set_password?id=#{@shop.id}"  if @shop.password.blank? %>
   <%= link_to '设置流水号', "/admin_shops/set_id2?id=#{@shop.id}"  unless @shop.password.blank? %>
   <%= link_to('加权', "/admin_shops/upgrade_v?id=#{@shop.id}") %>
   <%= link_to('编辑', "/admin_shops/edit?id=#{@shop.id}") %>

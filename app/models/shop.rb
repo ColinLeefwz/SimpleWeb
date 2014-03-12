@@ -42,6 +42,7 @@ class Shop
   field :i, type: Boolean #用户添加的地点 已处理标记
   field :utype #用户添加的类型
   field :tid, type: Integer #旅行社编号
+  field :mweb, type: Boolean #是否开通手机网站
   
   field :sub_coupon_by_share, type: Boolean #进入大地点收到资地点签到优惠券的触发条件
   #默认nil 代表签到即可获得，true代表分享后获得，false代表不发送子地点优惠券。

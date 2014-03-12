@@ -55,6 +55,13 @@ class Shop3LoginController < ApplicationController
     render :layout => false
   end
 
+  def login2
+    if Digest::SHA256.hexdigest(params[:id] + "mweb")[0,32] == params[:hash]
+      session[:shop_id] = params[:id]
+      redirect_to '/shop3_login/index'
+    end
+  end
+
   def logout
     session[:shop_id] = nil
     session[:shop_id] = session[:admin_sid]
@@ -63,7 +70,7 @@ class Shop3LoginController < ApplicationController
   end
 
   def find_shop
-    shop = Shop.find_by_id(params[:id])
+    shop = Shop.find_by_id_or_id2(params[:id])
     render :json => {:text => shop ? shop.name : '错误id.'}
   end
 

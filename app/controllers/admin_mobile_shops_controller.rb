@@ -23,6 +23,8 @@ class AdminMobileShopsController < ApplicationController
   
   def create
     $redis.sadd("MobileShops", params[:id])
+    shop = Shop.find_by_id(params[:id])
+    shop.set(:mweb, true)
     respond_to do |format|
       format.html { redirect_to :action => "index"}
       format.json { render json: {} }
