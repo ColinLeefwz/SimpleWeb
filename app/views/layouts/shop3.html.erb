@@ -96,16 +96,6 @@
             <span class="navline"></span>
           <% end %>
 
-          <% if session_shop.id == 21835409 %>
-            <a href="/shop3_lottery">刮刮卡</a>
-            <span class="navline"></span>
-          <% end %>
-
-          <% if session_shop.id == 21835409 %>
-            <a href="/shop3_lottery/zhuan">大转盘</a>
-            <span class="navline"></span>
-          <% end %>
-
           <% if $redis.smembers("MobileShops").include?session_shop.id.to_s %>
           <a href="/shop3_mobile/index3">手机网站</a>
           <span class="navline"></span>
