@@ -219,7 +219,7 @@ class User
   end
   
   def kill_photos
-    photos.each {|x| x.set(:hide, true)}      
+    photos.each {|x| x.set(:hide, true)}    
     Photo.where({"com.id" => self.id}).each do |x|
       x.hidecom(self.id)
     end
@@ -691,6 +691,7 @@ class User
     user_logos.each {|x| x.destroy}
     photos.each {|x| x.destroy}
     Checkin.where({uid: _id}).each {|x| x.destroy}
+    Gchat.where({uid: _id}).each {|x| x.destroy}
     self.destroy
   end
   

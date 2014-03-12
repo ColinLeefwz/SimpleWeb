@@ -40,14 +40,8 @@ class AroundmeController < ApplicationController
           Xmpp.error_notify("wifi:#{e.backtrace[0..3]}\n#{params[:wifi]}")
         end
       end
-      if lo2.nil?
-        lo = lo1
-      elsif lo1.nil?
-        lo = lo2
-      else
-        lo = lo1
-        #lo = Shop.new.mid_loc(lo1,params[:accuracy],lo2,acc2)
-      end
+      lo = lo1
+      lo = lo2 if lo.nil?
     end
     arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid]) 
     Rails.cache.write("LLOC#{session[:user_id]}",[lo,params[:accuracy].to_f,params[:bssid]]) 
