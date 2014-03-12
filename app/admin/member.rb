@@ -11,6 +11,10 @@ ActiveAdmin.register Member do
 
     column :email
 
+    column "registration time" do |member|
+      member.created_at.to_date
+    end
+
     column "social login?", :provider
   end
 
