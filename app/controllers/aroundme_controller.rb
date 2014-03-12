@@ -76,9 +76,7 @@ class AroundmeController < ApplicationController
       shop = Shop.find_by_id(21838725) # 行酷车友会
       if shop
 	      shop.city = city
-        if City.isJZH(city)
-          arr = arr+[ shop ]
-        end
+        arr = arr+[ shop ]
       end
     end
     if city && city!="0571" && city!="023"
