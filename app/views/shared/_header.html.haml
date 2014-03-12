@@ -1,4 +1,3 @@
-
 - @categories = Category.all
 .navbar.navbar-default.shadow
   .col-md-12
@@ -14,7 +13,7 @@
     %ul#subnav.nav.navbar-nav.navbar-header
 
       %li.dropdown
-        %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        %a.navbar-btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
           %i.fa.fa-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
         %ul.nav.dropdown-menu
           #navbar-collapse2.collapse.navbar-collapse
@@ -25,10 +24,12 @@
                     %button.btn.btn-default.btn-primary{:type => "submit"}
                       %i.fa.fa-search
 
-
-          - @categories.each do |category|
+          - @categories.sort_by{|category| category[:name]}.each do |category|
             %li
               %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
+                - category_count = Article.where("'#{category.name}' = ANY(categories)").count + VideoInterview.where("'#{category.name}' = ANY(categories)").count + Announcement.where("'#{category.name}' = ANY(categories)").count
+                %span.badge.pull-right
+                  = category_count
                 = category.name
           %li.divider
           %li.dropdown-submenu
@@ -36,11 +37,21 @@
               format
             %ul.dropdown-menu
               %li
-                %a.filters{href: "#video", data: {filter: '.videointerview'}} video
+                %a.filters{href: "#video", data: {filter: '.videointerview'}} 
+                  %span.badge
+                    = VideoInterview.count
+                  video
+                  
               %li
-                %a.filters{href: "#article", data: {filter: '.article'}} article
+                %a.filters{href: "#article", data: {filter: '.article'}} 
+                  %span.badge
+                    = Article.count
+                  article
               %li
-                %a.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
+                %a.filters{href: "#announcement", data: {filter: '.announcement'}} 
+                  %span.badge
+                    = Announcement.count
+                  announcement
 
         %button.navbar-toggle{"data-target" => "#navbar-collapse2", "data-toggle" => "collapse", :type => "button"}
           %span.sr-only Toggle navigation
