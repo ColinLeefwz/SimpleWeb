@@ -8,6 +8,16 @@ class Photo2sController < ApplicationController
     render :json => p.output_hash.to_json
   end
   
+  def forward
+    id = params[:id]
+    id = id[1..24] if id[0]=="U"
+    p = Photo.find_by_id(id)
+    mid = p.id+params[:user_id]
+    Resque.enqueue(XmppMsg, params[:user_id], params[:to_uid], "[img:U#{p.id}]", mid)
+    #TODO: 确认params[:to_uid]是好友
+    render :json => {mid: mid}.to_json
+  end
+  
   def show
     if params[:id][0]=="U"
       id = params[:id][1..24]
