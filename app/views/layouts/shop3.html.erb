@@ -36,10 +36,16 @@
     <div class="main">
       <div class="header">
         <div class="headercon">
-          <div id="Message">创建成功</div>
           <div class="toptitle">
             <h1><%= link_to session_shop.name, "/shop3_login" %></h1>
           </div>
+		  <div class="clear1"></div>
+		  <div id="Message">
+			<a href="#">脸脸管理</a>
+			<a href="#">手机网站</a>
+			<a href="#">微信管理</a>
+			<a href="#" class="noneborder">账户设置</a>
+		  </div>
         </div>
         <a href="http://www.dface.cn"><img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/></a>
         <img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
@@ -70,7 +76,9 @@
           <span class="navline"></span>
           <a href="/shop3_checkins?page=1">签到管理</a>
           <span class="navline"></span>
-          <a href="/shop3_infos">商家设置</a>
+		  <a href="/shop3_infos">账户设置</a>
+		  <span class="navline"></span>
+          <a href="/shop3_staffs">商家设置</a>
           <span class="navline"></span>
           <a href="/shop3_menu">自定义菜单</a>
           <span class="navline"></span>

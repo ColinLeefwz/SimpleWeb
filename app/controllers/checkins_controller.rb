@@ -88,7 +88,11 @@ class CheckinsController < ApplicationController
     checkin.uid = session[:user_id]
     checkin.sex = session_user.gender
     checkin.sid = shop.id
-    checkin.city = shop.city if shop
+    if shop && shop.city
+      checkin.city = shop.city 
+    else
+      checkin.city = Shop.get_city(checkin.loc)
+    end
     checkin.od = params[:od]
     checkin.bd = params[:baidu] if params[:baidu]
     checkin.bssid = params[:bssid] if params[:bssid] && !fake

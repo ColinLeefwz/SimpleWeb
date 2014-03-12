@@ -34,7 +34,7 @@ class Shop3LoginController < ApplicationController
     #   Rails.cache.delete("LE#{real_ip}")
     return redirect_to :action  => 'index' if session[:shop_id]
     if request.post?
-      shop =  Shop.find_by_id(params[:id])
+      shop =  Shop.find_by_id_or_id2(params[:id])
       return flash.now[:notice] = 'id没有找到.' if shop.nil?
       ip = real_ip
       err_cache = cache_err_num(ip)
@@ -98,7 +98,7 @@ class Shop3LoginController < ApplicationController
       cityname = cityname.sub(/[市]/, '')
       citycode= City.where(name: /#{cityname}/).limit(1).to_a.first.try(:code)
     end
-    [1, (citycode && citycode != city_code) ? 5 : 10]
+    [1, (citycode && citycode != city_code) ? 50 : 100]
   end
 
 

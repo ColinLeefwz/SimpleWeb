@@ -55,6 +55,9 @@ class AroundmeController < ApplicationController
     if is_kx_user?(session[:user_id])
       $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
     end
+    if is_co_user?(session[:user_id])
+      $redis.smembers("CoShops").each {|id| arr << Shop.find_by_id(id)}
+    end
     if session_user #本人加入的群定位时总是出现
       if Rails.cache.read("PHONEREG#{session_user.id}")
         arr = session_user.groups + arr  #手机号码注册用户首次定位
@@ -73,19 +76,7 @@ class AroundmeController < ApplicationController
       shop = Shop.find_by_id(21838725) # 行酷车友会
       if shop
 	      shop.city = city
-        if City.isJZH(city)
-          arr = arr[0,3]+[ shop ]+arr[3..-1] 
-        else
-          arr = arr+[ shop ]
-        end
-      end
-    end    
-    if city
-      shop = Shop.find_by_id(21838292) # 2014马年新春许愿
-      if shop
-	      shop.city = city
-        arr = arr[0,3]+[ shop ]+arr[3..-1] if city!="0571"
-        arr = arr+[ shop ] if city=="0571"
+        arr = arr+[ shop ]
       end
     end
     if city && city!="0571" && city!="023"
@@ -102,16 +93,23 @@ class AroundmeController < ApplicationController
         arr = arr+[ shop ]
       end
     end
+    if city && city=="023" && lo[0].to_s[0,4]=="29.8" && lo[1].to_s[0,5]=="106.0" 
+      shop = Shop.find_by_id(21839992) # 铜梁脸脸
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
     if city=="0571"
       shop = Shop.find_by_id(21831643) # 湖滨银泰
       if shop
 	      shop.city = city
-        arr = arr[0,4]+[ shop ]+arr[4..-1]
+        arr = arr+[ shop ]
       end
     end    
-    $redis.zrange("LL3#{session[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id); arr << s if s}
+    #$redis.zrange("LL3#{session[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id); arr << s if s}
     arr.uniq!
-    ret = arr.map do |x| 
+    ret = arr.find_all{|x| x!=nil}.map do |x|  
       hash = x.safe_output_with_users
       ghash = x.group_hash(session[:user_id])
       #logger.info ghash

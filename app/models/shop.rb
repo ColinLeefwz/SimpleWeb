@@ -65,6 +65,14 @@ class Shop
   def self.default_hash
     {del: {"$exists" => false}}
   end
+
+  def self.find_by_id_or_id2(id)
+    id.match('-') ? Shop.find_by_id2(id) : Shop.find_by_id(id)
+  end
+
+  def self.find_by_id2(id)
+    Shop.where(id2: id).first
+  end
   
   def city_name
     City.city_name(city)
@@ -485,14 +493,15 @@ class Shop
     #内部地点的“每日签到优惠券”
     coupons += allow_sub_coupons(user_id) if self.sub_coupon_by_share.nil?
 
-    if $mansion3.include?(self.id)
-      ["52fc278620f318cb4a000009"].each do |cp|
-        coupon1 = Coupon.find_by_id(cp)
-        if coupon1.allow_send_checkin?(user_id, :single => true)
-          coupon1.send_coupon(user_id,nil,self.id)
-        end
-      end
-    end
+    #停用活动期间优惠券
+    # if $mansion3.include?(self.id)
+    #   ["52fc278620f318cb4a000009"].each do |cp|
+    #     coupon1 = Coupon.find_by_id(cp)
+    #     if coupon1.allow_send_checkin?(user_id, :single => true)
+    #       coupon1.send_coupon(user_id,nil,self.id)
+    #     end
+    #   end
+    # end
     coupons.each{|coupon| coupon.send_coupon(user_id,nil,self.id)}
     return if coupons.count == 0
     name = coupons.map { |coupon| coupon.name  }.join(',').truncate(50)
@@ -827,7 +836,7 @@ class Shop
   end
 
   def has_food_purview?
-    /测试|脸脸/ =~ self.name || self.id.to_s == '21839855' || self.id.to_s == '21832844' || self.id.to_s == '21837941' || self.id.to_s == '21839738' ? true : false
+    /测试|脸脸/ =~ self.name || self.id.to_s == '21839855' || self.id.to_s == '21832844' || self.id.to_s == '21837941' || self.id.to_s == '21839738' || self.id.to_s == '21840235' ? true : false
   end
 
   def has_trade_purview?
@@ -862,7 +871,7 @@ class Shop
   def shop_or_staff?(uid)
     uid = uid.to_s
     return true if uid == "s#{self.id}"
-    return shop.staffs_cache.find{|x| x.to_s==uid} != nil
+    return staffs_cache.find{|x| x.to_s==uid} != nil
   end
   
   
