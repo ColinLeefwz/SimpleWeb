@@ -2,9 +2,11 @@
   .chapter-title
     .anchor.inline.center-container
       %span= chapter.order
-    .title.inline.center-container
-      %span= chapter.title
-    .duration.inline.center-container
-      %span= distance_of_time_in_words chapter.duration.to_i
+    .col-sm-8
+      .title.inline.center-container
+        %span= chapter.title
+    .col-sm-3
+      .duration.inline
+        %span= distance_of_time_in_words chapter.duration.to_i
   - chapter.sections.each do |section|
     = render partial: "section", locals: {section: section, available: section.available_for?(current_user), show_preview: section.show_preview_label_for?(current_user)}
