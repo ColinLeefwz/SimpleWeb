@@ -1,14 +1,6 @@
 @import "globals/variables";
 
-.course_show{
-  width: 79%;
-  min-width: 300px;
-  margin: 0 auto;
-}
-
-
-
-.course_show{
+.row{
 
   .box{
     box-sizing:border-box;
@@ -19,17 +11,20 @@
     box-shadow: $shadow_param;
   }
 
-  .overview{
+  .jumbotron.container{
+    width: 80%;
     position: relative;
     padding-top: 2em;
-    min-height: 14em;
+    background: white;
+    p {
+      font-size: inherit;
+      font-weight: inherit;
+    }
     .inline{
       display: inline-block;
     }
 
     .cover-box{
-      margin-left: 5%;
-      // width: 30%;
 
       .cover{
         width: 160px * 1.8;
@@ -41,7 +36,6 @@
 
     .description-box{
       vertical-align: top;
-      width: 50%;
       padding-left: 10px;
       .title{
         font-family: Oswaldreg;
@@ -62,11 +56,9 @@
     }
 
     .social-box{
-      position: absolute;
       top: 2em;
-      right: 0;
+      float: right;
 
-      width: 10%;
       img{
         margin-bottom: 10px;
         width: 25px;
@@ -98,6 +90,9 @@
 
 
   .chapter{
+    width: 80%;
+    min-width: 300px;
+    margin: 0 auto;
     .box {
       box-sizing:border-box;
       -moz-box-sizing:border-box; /* Firefox */
@@ -110,6 +105,9 @@
       height: 2em;
       border-bottom: 1px solid #4E2971;
 
+      .col-sm-3 {
+        float: right;
+      }
       .center-container {
         box-sizing:border-box;
         -o-box-sizing:border-box;
@@ -213,10 +211,7 @@
       }
     }  // section
     .duration{ 
-      height: 2em;
       float: right;
-      width:16%;
-      padding-right: 0.8em;
       span{
         font-size: 0.8em;
         font-family: Latoitalic;
