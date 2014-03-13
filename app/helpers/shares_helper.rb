@@ -31,4 +31,25 @@ module SharesHelper
       "#{current_year}"
     end
   end
+
+  def category_count(category)
+    category_count = Article.where("'#{category.name}' = ANY(categories)").count + VideoInterview.where("'#{category.name}' = ANY(categories)").count + Announcement.where("'#{category.name}' = ANY(categories)").count
+  end
+
+  def all_count
+    all_count = Article.count + VideoInterview.count + Announcement.count
+  end
+
+  def video_interview_count
+    video_interview_count = VideoInterview.count
+  end
+
+  def article_count
+    article_count = Article.count
+  end
+
+  def announcement_count
+    announcement_count = Announcement.count
+  end
+
 end
