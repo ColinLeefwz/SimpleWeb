@@ -102,7 +102,7 @@ module GpsOffset
   
   def log_to_lo(log)
     data = get_gcj_offset(log)
-    [lob[0]-data[0],lob[1]-data[1]]
+    [log[0]-data[0],log[1]-data[1]]
   end
   
   def lo_to_log(lo)
