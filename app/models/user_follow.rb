@@ -67,9 +67,9 @@ class UserFollow
   
   def self.add_good_friend_redis(uid1,uid2)
     u1 = $redis.zcard("Frd#{uid1}") || 0
-    $redis.zadd("Frd#{uid1}",u1,uid2)
+    $redis.zadd("Frd#{uid1}",u1+1,uid2)
     u2 = $redis.zcard("Frd#{uid2}") || 0
-    $redis.zadd("Frd#{uid2}",u2,uid1)    
+    $redis.zadd("Frd#{uid2}",u2+1,uid1)    
   end
 
   def self.del_good_friend_redis(uid1,uid2)
@@ -88,7 +88,7 @@ class UserFollow
   
   def self.add_fans_redis(uid,fid)
     u1 = $redis.zcard("Fan#{fid}") || 0
-    $redis.zadd("Fan#{fid}",u1,uid)
+    $redis.zadd("Fan#{fid}",u1+1,uid)
   end
   
   def self.del_fans_redis(uid,fid)
@@ -97,7 +97,7 @@ class UserFollow
   
   def self.add_follows_redis(uid,fid)
     u1 = $redis.zcard("Fol#{uid}") || 0
-    $redis.zadd("Fol#{uid}",u1,fid)
+    $redis.zadd("Fol#{uid}",u1+1,fid)
   end
   
   def self.del_follows_redis(uid,fid)
