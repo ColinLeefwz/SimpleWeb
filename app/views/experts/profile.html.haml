@@ -6,11 +6,6 @@
       = image_tag(@expert.avatar.url)
       .consultation
         = link_to "Private session", new_consultation_path(expert: @expert), class: "btn btn-prodygia", remote: true
-        -# Peter at 03-05: jsut use for now, we should move the logic here to controller
-        -# - if current_user.blank?
-        -#   = link_to "Private consultation", "#sign-in-modal", data:{toggle: "modal"}, class: "btn btn-prodygia"
-        -# - else
-        -#   = link_to "Private consultation", new_consultation_path(expert: @expert), class: "btn btn-prodygia", remote: true
     .resume.brief-item
       %p
         %span.name
