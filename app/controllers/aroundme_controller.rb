@@ -98,7 +98,7 @@ class AroundmeController < ApplicationController
       shop = Shop.find_by_id(21831643) # 湖滨银泰
       if shop
 	      shop.city = city
-        arr = arr+[ shop ]
+        arr = arr[0,4]+[ shop ]+arr[4..-1]
       end
     end    
     #$redis.zrange("LL3#{session[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id); arr << s if s}
