@@ -248,7 +248,7 @@ class User
   
   #是否是被封杀的用户
   def forbidden?
-    name[0,6]=="FORBID"
+    name.nil? || name[0,6]=="FORBID"
   end
   
 
