@@ -11,8 +11,12 @@ class Photo2sController < ApplicationController
   def forward
     id = params[:id]
     id = id[1..24] if id[0]=="U"
-    p = Photo.find_by_id(id)
-    mid = p.id+params[:user_id]
+    p = Photo2.find_by_id(id)
+    if p.nil?
+      render :json => {error: "被转发的图片被删除或者不存在"}.to_json
+      return
+    end
+    mid = params[:user_id]+p.id
     Resque.enqueue(XmppMsg, params[:user_id], params[:to_uid], "[img:U#{p.id}]", mid)
     #TODO: 确认params[:to_uid]是好友
     render :json => {mid: mid}.to_json
