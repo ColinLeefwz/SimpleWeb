@@ -1,3 +1,3 @@
-alert("sent the consultation! ")
-//Peter at 2014-03-04: we need to think a way to show success message
-// but not the flash way, maybe use the modal to show some more message
+$("#alert-message").html("<div>successfully sent the request!</div>")
+$("#send-consultation").attr("disabled", true)
+$("#consultation_description").attr("disabled", true)

@@ -21,7 +21,7 @@ class ConsultationsController < ApplicationController
     if @consultation.save
       send_consultation_pending_mail
       respond_to do |format|
-        format.js {  }
+        format.js { render 'create' }
       end
     end
   end
