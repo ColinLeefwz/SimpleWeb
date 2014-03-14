@@ -29,7 +29,7 @@
                 = all_count
               all
           %li.divider
-          - @categories.sort_by{|category| category[:name]}.each do |category|
+          - @categories.each do |category|
             %li
               %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
                 %span.badge.pull-right
@@ -44,19 +44,19 @@
               %li
                 %a.filters{href: "#announcement", data: {filter: '.announcement'}} 
                   %span.badge.pull-right
-                    = announcement_count
+                    = model_count('Announcement')
                   announcement
 
               %li
                 %a.filters{href: "#article", data: {filter: '.article'}} 
                   %span.badge.pull-right
-                    = article_count
+                    = model_count('Article')
                   article
 
               %li
                 %a.filters{href: "#video", data: {filter: '.videointerview'}} 
                   %span.badge.pull-right
-                    = video_interview_count
+                    = model_count('VideoInterview')
                   video
 
         %button.navbar-toggle{"data-target" => "#navbar-collapse2", "data-toggle" => "collapse", :type => "button"}
