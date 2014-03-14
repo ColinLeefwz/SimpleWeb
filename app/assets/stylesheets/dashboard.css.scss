@@ -19,10 +19,14 @@
 
   .checkbox{
     padding-right: 0.8em;
+    font-size: 15px;
   }
 
   input[type="checkbox"]{
     margin-right: 0.1em;
+  }
+  input[type="file"]{
+    font-size: 15px;
   }
 
   .cke_chrome {

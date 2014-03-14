@@ -1,20 +1,19 @@
-.favorite-session-info
-  .favorite-session-main
-    .favorite-session-title
-      = link_to content.title, polymorphic_path(content)
+.col-xs-11
+  .favorite-session-info
+    .favorite-session-main
+      .favorite-session-title
+        = link_to content.title, polymorphic_path(content)
 
-    .favorite-session-expert-name.separator.inline
-      by 
-      = link_to "#{content.expert.name}", profile_expert_path(content.expert) 
-      = "(published on #{content.created_at.to_date.to_formatted_s(:course_date)})"
-    .favorite-session-categories.inline
-      = content.categories.join(", ")
+      .favorite-session-expert-name.separator.inline
+        by 
+        = link_to "#{content.expert.name}", profile_expert_path(content.expert) 
+        = "(published on #{content.created_at.to_date.to_formatted_s(:course_date)})"
+      .favorite-session-categories.inline
+        = content.categories.join(", ")
 
-    .favorite-session-description
-      = truncate_html(content.description, length: 300, omission: '...')
-  .see-more
-    = link_to "see more", polymorphic_path(content)
-
-.favorite-social-share
-  = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: subscribe_path(content, type: content.class.name)
-  = render 'shared/social_share', item: content 
+      .favorite-session-description
+        = truncate_html(content.description, length: 300, omission: '...')
+.col-xs-1
+  .favorite-social-share
+    = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: subscribe_path(content, type: content.class.name)
+    = render 'shared/social_share', item: content 

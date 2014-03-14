@@ -6,7 +6,7 @@
   .video-cover
     = image_tag @article.cover.url
   %article
-    = @article.description.try :html_safe
+    = @article.description.html_safe
 
 = render partial: "comments/comments", locals: {commentable: @article}
 
