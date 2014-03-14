@@ -506,6 +506,19 @@ class Oauth2Controller < ApplicationController
     if pass.length>(1+64) #硬编码了token的长度：64
       Resque.enqueue(TokenUpdate, id, pass)
     end
+    activity0314(id)
+  end
+  
+  def activity0314(id) #2014-03-14湖滨银泰活动
+    if $yuanid == id # || $redis.sismember("TMP0314", id)
+      $redis.srem("TMP0314", id)
+      str = <<-EOF   
+脸脸福利！快去湖滨银泰抢礼物啦~ 日韩船票、千颂伊同色唇彩，情侣吊坠、免费美甲……                   白色情人节，都教授与你相约湖滨银泰，带你疯狂猜图！
+3.14--3.16 人人有奖！更有皇家加勒比游轮票、大牌美妆、休闲餐饮，总价值超过十万元，10000份奖品等你来领！猜对就拿走，奖品直接抱回家！就在湖滨银泰2期B区中庭，还不赶快来玩~~~
+      EOF
+      Resque.enqueue(XmppMsg, $gfuid, id, "[img:U53226c1920f31856a2000059]", "tmp0314i","NOLOG='1' NOPUSH='1'")
+      Resque.enqueue(XmppMsg, $gfuid, id, str, "tmp0314", "NOLOG='1' NOPUSH='1'")
+    end
   end
   
 end
