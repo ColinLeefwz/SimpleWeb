@@ -9,7 +9,8 @@
       .col-md-3
         .favorite-session-cover
           = link_to image_tag(content.cover.url), polymorphic_path(content)
-          
       .col-md-9
         .row
           = render "session_info", content: content
+    .see-more
+      = link_to "see more", polymorphic_path(content)

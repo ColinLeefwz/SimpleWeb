@@ -13,8 +13,6 @@
 
       .favorite-session-description
         = truncate_html(content.description, length: 300, omission: '...')
-    .see-more
-      = link_to "see more", polymorphic_path(content)
 .col-xs-1
   .favorite-social-share
     = render 'shared/favorite_star', method: :has_subscribed?, object: content, link_path: subscribe_path(content, type: content.class.name)
