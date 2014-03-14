@@ -9,7 +9,7 @@
     - else
       = image_tag @announcement.cover.url
   %article
-    = @announcement.description.try :html_safe
+    = @announcement.description.html_safe
 
 = render partial: "comments/comments", locals: {commentable: @announcement}
 
