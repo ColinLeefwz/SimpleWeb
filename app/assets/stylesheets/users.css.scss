@@ -25,9 +25,6 @@
         width: 60%;
       }
 
-      select {
-        max-width: 200px;
-      }
     }
 
     .col-sm-4 {
@@ -45,6 +42,11 @@
       }
       .form-control {
         width: 90%;
+      }
+
+      select {
+        max-width: 200px;
+        //width: 60%;
       }
   	}
 
