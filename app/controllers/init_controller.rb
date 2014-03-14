@@ -2,6 +2,9 @@
 
 class InitController < ApplicationController
   def init
+    if "665b2d90f7a527731fb1fc6beb543922" == params[:mac] #被封杀的设备
+      render :json => {ip: "1.1.1.1", xmpp: "1.1.1.1" , ver: 1, version:1 }.to_json
+    end
     hash = Digest::SHA1.hexdigest("#{params[:model]}#{params[:os]}#{params[:mac]}init")[0,32]
     if params[:hash].nil? || hash != params[:hash][0,32]
       render :json => {error: "hash error: #{hash}."}.to_json
