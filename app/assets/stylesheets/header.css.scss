@@ -12,6 +12,7 @@ $font-color: #575757;
 }
 
 ul.nav.navbar-nav.navbar-right {
+  margin-top: 0.5%;
   img {
     height: 30px;
     width: 30px;
@@ -43,12 +44,28 @@ ul.nav.navbar-nav.navbar-right {
 }
 #subnav {
   z-index: 5;
+  position: absolute;
+  .dropdown {
+    top: 25px;
+  }
+  .dropdown .open {
+    top: 45px;
+    margin-bottom: 0px;
+  }
+  a {
+    padding-bottom: 0;
+    background-color: rgba(0,0,0,0);
+  }
+  .dropdown-toggle {
+    padding-left: 0px;
+  }
 }
 
 #logo_container{
   #logo {
     display: inline-block;
-    margin-top: 6%;
+    padding-top: 5%;
+    padding-bottom: 6%;
     width: 85%;
     margin-right: 5%;
   }
