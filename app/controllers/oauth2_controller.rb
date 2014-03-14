@@ -510,7 +510,7 @@ class Oauth2Controller < ApplicationController
   end
   
   def activity0314(id) #2014-03-14湖滨银泰活动
-    if $yuanid == id # || $redis.sismember("TMP0314", id)
+    if $redis.sismember("TMP0314", id)
       $redis.srem("TMP0314", id)
       str = <<-EOF   
 脸脸福利！快去湖滨银泰抢礼物啦~ 日韩船票、千颂伊同色唇彩，情侣吊坠、免费美甲……                   白色情人节，都教授与你相约湖滨银泰，带你疯狂猜图！
