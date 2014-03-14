@@ -4,55 +4,55 @@
 = form_for @member, as: :profile, url: update_profile_member_path(current_user), remote: true, :html => { :method => :put, :class => "form-horizontal"} do |f|
   
   .form-group
-    .col-sm-5
+    .col-sm-4.col-xs-4
       = f.label :first_name, class: "control-label"
-    .col-sm-6
+    .col-sm-5.col-xs-5
       = f.text_field :first_name, :autofocus => true, class: 'form-control' 
   .form-group
-    .col-sm-5
+    .col-sm-4.col-xs-4
       = f.label :last_name, class: "control-label"
-    .col-sm-6
+    .col-sm-5.col-xs-5
       = f.text_field :last_name, :autofocus => true, class: 'form-control' 
 
   .form-group
-    .col-sm-5
+    .col-sm-4.col-xs-4
       = f.label :profile_picture, class: "control-label"
-    .col-sm-6
+    .col-sm-5.col-xs-5
       = f.file_field :avatar
 
   = fields_for @profile do |p|
     .form-group
-      .col-sm-5
+      .col-sm-4.col-xs-4
         = p.label :title, class: "control-label"
-      .col-sm-6
+      .col-sm-5.col-xs-5
         = p.text_field :title, :autofocus => true, class: 'form-control' 
 
     .form-group
-      .col-sm-5
+      .col-sm-4.col-xs-4
         = p.label :organization, class: "control-label"
-      .col-sm-6
+      .col-sm-5.col-xs-5
         = p.text_field :company, class: 'form-control'
 
     .form-group
-      .col-sm-5
+      .col-sm-4.col-xs-4
         = p.label :country, class: "control-label"
-      .col-sm-6
+      .col-sm-5.col-xs-5
         = p.country_select :country, ["China", "United States", "Italy"]
 
     .form-group
-      .col-sm-5
+      .col-sm-4.col-xs-4
         = p.label :city, class: "control-label"
-      .col-sm-6
+      .col-sm-5.col-xs-5
         = p.text_field :city, class: 'form-control'
 
     .form-group
-      .col-sm-5
+      .col-sm-4.col-xs-4
         = f.label :time_zone, class: "control-label"
-      .col-sm-6
+      .col-sm-5.col-xs-5
         = f.time_zone_select :time_zone
 
     .form-group
-      .col-sm-6
+      .col-sm-5.col-xs-5
+      .col-sm-5.col-xs-5
         = f.submit "update", class: 'btn btn-prodygia dashboard-buttons'
-      .col-sm-offset-2
         = link_to "Cancel", activity_stream_member_path(current_user), remote: true, class: 'btn dashboard-buttons'

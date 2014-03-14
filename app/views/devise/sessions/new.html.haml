@@ -1,10 +1,20 @@
-- content_for(:title){ "Sign In" }
+.container
+  .row
+    - content_for(:title){ "Sign In" }
 
-.devise-style.sign-in
-  .social-login
-    %h2 Sign in
-    = render "devise/shared/social_login"
-  .devise-form
-    = render "sign_in_form"
-    .shared-links
-      = render "devise/shared/links"
+    .devise-style.sign-in
+      .social-login
+        
+        %button.navbar-toggle{"data-target" => "#social-login", "data-toggle" => "collapse", :type => "button"}
+          %i.fa.fa-search
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %h2 Sign in
+        #social-login.collapse.navbar-collapse
+          = render "devise/shared/social_login"
+      .devise-form
+        = render "sign_in_form"
+        .shared-links
+          = render "devise/shared/links"

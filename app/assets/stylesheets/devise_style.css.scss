@@ -1,6 +1,6 @@
 .devise-style {
-  width: 40%;
-  margin: 0 auto;
+  margin: 0px auto;
+  max-width: 450px;
   margin-bottom: 50px;
   font-size: 15px;
   label{
@@ -16,8 +16,9 @@
 }
 
 .devise-form{
-    width: 295px;
-    margin: 0 auto;
+    margin: 0px auto;
+    max-width: 350px;
+
     margin-top: 2em;
     input[type='submit']{
       display: block;
