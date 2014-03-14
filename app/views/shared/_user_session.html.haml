@@ -19,6 +19,6 @@
     %li
       = link_to "", new_user_registration_path, class: "fa fa-user", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
   %ul.nav.navbar-nav.navbar-right
-    %li
-      = link_to '','#sign-in-modal', data:{toggle: "modal"}, class: "fa fa-sign-in", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"
+    %li.session_user
+      = link_to image_tag("signin_icon.png"),'#sign-in-modal', data:{toggle: "modal"},"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"
       //= link_to "", new_user_session_path, class: "fa fa-sign-in", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"
