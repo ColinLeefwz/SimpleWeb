@@ -31,4 +31,20 @@ module SharesHelper
       "#{current_year}"
     end
   end
+
+  def category_count(category)
+    %w{Article VideoInterview Announcement}.inject(0) do |count, klazz|
+      count + klazz.constantize.where("'#{category.name}' = ANY(categories)").count
+    end
+    
+  end
+
+  def model_count(klazz)
+    klazz.constantize.count
+  end
+
+  def all_count
+    all_count = Article.count + VideoInterview.count + Announcement.count
+  end
+
 end
