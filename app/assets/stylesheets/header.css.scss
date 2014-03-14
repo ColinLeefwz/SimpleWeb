@@ -13,15 +13,23 @@ $font-color: #575757;
 
 ul.nav.navbar-nav.navbar-right {
   img {
-    height: 18px;
-    width: 18px;
+    height: 30px;
+    width: 30px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
 
 .navbar-header{
-  .btn-plus {
-    .dropdown-toggle {
-      margin-left: 15px;
+  .dropdown-toggle {
+    margin-left: 15px;
+  }
+  #sidebar_icon {
+    img {
+      width: 25px;
+      height: 25px;
     }
   }
   .navbar-form {

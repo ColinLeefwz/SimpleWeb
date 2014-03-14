@@ -93,10 +93,6 @@ input[type="file"]{
   display: block;
 }
 
-$prodygia-purple: #880848;
-$prodygia-light-purple: #a3384e;
-$prodygia-dark-purple: #880731;
-
 // overrider bootstrap's btn-prodygia class
 .btn-prodygia{
   color: #ffffff;
@@ -134,8 +130,4 @@ $prodygia-dark-purple: #880731;
 img {
   max-width: 100%;
 }
-#sidebar_icon {
-  img {
-    width: 60%;
-  }
-}
+
