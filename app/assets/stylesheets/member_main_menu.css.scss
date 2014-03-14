@@ -18,7 +18,10 @@
       max-width: 205px;
       max-height: 204px;
       .expert-avatar{
-        padding: 8.68% 18.78% 1.64% 18.78%;
+        padding-top: 8.68%;
+        padding-bottom: 1.64%;
+        padding-left: auto;
+        padding-right: auto;
         img{
 					width: 80px;
 					height: 80px;
@@ -71,14 +74,14 @@
         .recent-activity{
           width: 100%;
           height: 50px;
-          .course-icon{
+          .post-icon{
             float: left;
             img{
               width: 40px;
               height: 40px;
             }
           }
-          .course-info{
+          .post-info{
             margin-left: 20px;
             float: left;
             .action{
@@ -122,9 +125,10 @@
   // content
   
 		.favorite-session-cover{
-			width: 28%;
+			width: 75%;
 			height: 75%;
-			padding: 2% 2%;
+      margin-top: 10px;
+      margin-left: 10px;
 			float: left;
       text-align: center;
 			img{
