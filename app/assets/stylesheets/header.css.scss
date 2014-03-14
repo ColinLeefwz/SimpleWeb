@@ -44,21 +44,17 @@ ul.nav.navbar-nav.navbar-right {
 #subnav {
   z-index: 5;
 }
-#header {
-  width: 100%;
-  background: #fff;
-  margin-bottom: 25px;
-  -webkit-box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
-  box-shadow: 0 6px 12px rgba(170, 180, 190, 1);
 
-  #logo_container{
-    #logo {
-      display: inline-block;
-			margin-left: 1%;
-			width: 100%;
-      margin-right: 5%;
-    }
+#logo_container{
+  #logo {
+    display: inline-block;
+    margin-top: 6%;
+    width: 85%;
+    margin-right: 5%;
   }
+}
+
+#header {
 
   #tagline{
     color: #575757;
