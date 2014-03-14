@@ -1,8 +1,8 @@
-.modal-body.center-container
-  .enroll.inline
+.modal-body
+  .enroll
     %p Subscribe to see the full course
     = link_to "Subscribe", enroll_course_path(course), class: "btn btn-prodygia"
-  .sign-in.inline
+  .sign-in
     %P Already subscribed? Sign in to view the video
     = render "devise/sessions/sign_in_form"
   .close-icon

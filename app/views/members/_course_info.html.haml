@@ -3,9 +3,9 @@
     .cover
       = image_tag(course.cover.url)
     - if (current_user) && (current_user.enrolled? course)
-      .subscribed-button You're subscribed
+      .button.subscribed You're subscribed
     - else
-      .enroll-button
+      .button.subscribe
         = link_to "Subscribe", enroll_course_path(course)
 
   .favorite-session-info

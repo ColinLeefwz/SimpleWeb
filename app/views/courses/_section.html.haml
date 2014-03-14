@@ -1,14 +1,14 @@
 .section
-  .content-icon.inline
-    = image_tag "content.png"
+  .section-title
+    .content-icon
+      = image_tag "content.png"
 
-  .section-title.inline.tooltips{data: {available: available.to_s, placement: "right"}}
-    %span= section.title
-    - if show_preview
-      %span.label.label-preview Free preview
+    .title.tooltips{data: {available: available.to_s, placement: "right"}}
+      %span= section.title
+      %span.label.label-preview= "Free preview"  if show_preview
 
-  .duration.inline.center-container
-    %span= distance_of_time_in_words section.duration.to_i
+    .duration
+      %span= distance_of_time_in_words section.duration.to_i
 
   .section-detail
     - if available
@@ -20,10 +20,10 @@
               %source{src: section.video.HD.url, data: {quality: "hd"}}
 
         .description
-          = section.description
+          = section.description.html_safe
         .close-icon
           = image_tag "close-icon.png"
     - else
-      .enroll-modal.modal.hide.fade
+      .subscribe-modal.modal.hide.fade
         = render partial: "subscribe_modal", locals: {course: section.course}
 
