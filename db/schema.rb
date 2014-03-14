@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140313031303) do
+ActiveRecord::Schema.define(version: 20140314083921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20140313031303) do
 
   create_table "announcements", force: true do |t|
     t.string   "title"
-    t.text     "description"
+    t.text     "description",        default: "  "
     t.string   "language"
     t.boolean  "draft"
     t.boolean  "canceled"
