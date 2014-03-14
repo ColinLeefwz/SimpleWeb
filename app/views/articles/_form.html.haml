@@ -12,10 +12,11 @@
       .col-sm-6
         = f.text_field :title, id: 'session-title-input'
 
-    .categories
+    .form-group
       .col-sm-2
         = f.label :categories, class: "control-label", required: true
-      = f.input :categories, collection: Category.pluck(:name), as: :check_boxes, required: true, class: 'checkbox-inline', label: false
+      .col-sm-6
+        = f.input :categories, collection: Category.pluck(:name), as: :check_boxes, required: true, class: 'checkbox-inline', label: false
 
     .form-group
       .col-sm-2

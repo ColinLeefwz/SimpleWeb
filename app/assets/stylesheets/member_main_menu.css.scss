@@ -2,25 +2,26 @@
   .recommendation{
     padding-bottom: 5px;
     margin-bottom: 10px;
-    width: 100%;
     text-align: center;
     color: rgb(136, 8, 72);
     font-size: 2em;
   }
   // expert page
-  .expert-action-box{
-    padding-bottom: 5px;
-    margin-bottom: 10px;
+  .jumbotron{
+    border-radius: 0px;
     width: 100%;
-    height: 210px;
+    padding: 0px;
+    background: white;
     .expert-info{
       display: inline-block;
 			text-align: center;
-      width: 22%;
       max-width: 205px;
       max-height: 204px;
       .expert-avatar{
-        padding: 8.68% 18.78% 1.64% 18.78%;
+        padding-top: 8.68%;
+        padding-bottom: 1.64%;
+        padding-left: auto;
+        padding-right: auto;
         img{
 					width: 80px;
 					height: 80px;
@@ -47,9 +48,12 @@
     }
 
     .expert-actions{
+      width: 100%;
       float: right;
       display: inline-block;
-      width: 77%;
+      .clear-fix {
+        content: " "
+      }
       .expert-action-info{
         margin-right: 10px;
         .block-title{
@@ -70,14 +74,14 @@
         .recent-activity{
           width: 100%;
           height: 50px;
-          .course-icon{
+          .post-icon{
             float: left;
             img{
               width: 40px;
               height: 40px;
             }
           }
-          .course-info{
+          .post-info{
             margin-left: 20px;
             float: left;
             .action{
@@ -119,38 +123,24 @@
   }
   
   // content
-  .favorite-session-box{
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-    width: 100%;
-    height: 240px;
+  
 		.favorite-session-cover{
-			width: 28%;
+			width: 75%;
 			height: 75%;
-			padding: 2% 2%;
-			float: left;
-      text-align: center;
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
 			img{
 				max-width: 100%;
 				max-height: 100%;
 			}
 		}
-    .favorite-session-left{
-      width: 28%;
-      height: 75%;
-      padding: 2% 2%;
-      float: left;
-      text-align: center;
-      .cover{
-        img{
-          max-width: 100%;
-          max-height: 100%;
-        }
-      }
+
+    .session-button{
+      margin-top: 5px;
     }
 
     .favorite-session-info{
-      width: 60%;
       height: 80%;
       float: left;
       padding-top: 1%;
@@ -189,4 +179,4 @@
       }
     }
   }
-}
+

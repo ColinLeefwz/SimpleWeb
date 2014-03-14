@@ -1,7 +1,6 @@
 .form-horizontal {
 
   .dashboard-buttons {
-    float: right;
     margin-bottom: 5px;
   }
   
@@ -17,7 +16,7 @@
   	  }
 
   	  select {
-  	  	width: 100%;
+        max-width: 200px;
   	  }
   	}
 
@@ -26,19 +25,29 @@
         width: 60%;
       }
 
-      select {
-        width: 100%;
+    }
+
+    .col-sm-4 {
+      .control-label {
+        float: right;
+        font-size: 15px;
       }
     }
 
   	.col-sm-5 {
-  	  .label {
-  	    width: 100%;
-  	  }
-  	}
+      float: center;
+      .control-label {
+        text-align: right;
+        font-size: 15px;
+      }
+      .form-control {
+        width: 90%;
+      }
 
-  	.control-label {
-  	  float: right;
+      select {
+        max-width: 200px;
+        //width: 60%;
+      }
   	}
 
   	.form-control {
