@@ -15,10 +15,12 @@
         = "(published on #{item.created_at.to_date.to_formatted_s(:course_date)})"
 
       - if item.editable
-        = link_to "edit", edit_polymorphic_path(item), remote: true
+        = link_to "edit", edit_polymorphic_path(item), remote: true, class: "btn btn-primary"
         - if item.try(:draft)
-          = link_to "post it", post_a_draft_article_path(item), class: "separator", remote: true
-          = link_to "delete", cancel_draft_content_article_path(item), remote: true
+          = link_to "post it", post_a_draft_article_path(item), class: "btn btn-prodygia dashboard-buttons", remote: true
+          = link_to "delete", cancel_draft_content_article_path(item), class: "btn btn-primary", remote: true
+    .see-more
+      = link_to "see more", polymorphic_path(item)
 
   .draft-ribbon
     - if item.try(:draft)

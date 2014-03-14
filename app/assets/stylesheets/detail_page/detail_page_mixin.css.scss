@@ -1,0 +1,24 @@
+@import "globals/variables";
+
+@mixin detail_page_box{
+  margin: 0 auto;
+  @media (min-width: 767px){ width: 80%; }
+  @media (max-width: 766px){ width: 90%; }
+}
+
+@mixin separator{
+  &:after{
+    content: " | "
+  }
+}
+
+
+@mixin center_container{
+  &:before{
+    content: '';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: -0.25em;
+  }
+}

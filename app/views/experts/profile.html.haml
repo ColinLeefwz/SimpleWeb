@@ -10,7 +10,7 @@
           = @expert.name
         %br
         %span.title_company
-          = [@profile.title, @profile.company].reject(&:blank?).join(",")
+          = [@profile.title, @profile.company].reject(&:blank?).join(", ")
       %table
         - if @profile.web_site.present?
           %tr

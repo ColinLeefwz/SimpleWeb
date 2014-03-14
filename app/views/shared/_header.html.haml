@@ -1,6 +1,5 @@
-
 - @categories = Category.all
-.navbar.navbar-default
+.navbar.navbar-default.shadow
   .col-md-12
     .navbar-header
       .navbar-left
@@ -20,7 +19,7 @@
     %ul#subnav.nav.navbar-nav.navbar-header
 
       %li.dropdown
-        %a.navbar-btn.btn.btn-default.btn-plus.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        %a.navbar-btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
           %i.fa.fa-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
         %ul.nav.dropdown-menu
           #navbar-collapse2.collapse.navbar-collapse
@@ -30,20 +29,45 @@
                   .input-group-btn
                     %button.btn.btn-default.btn-primary{:type => "submit"}
                       %i.fa.fa-search
-
-
+          %li
+            %a.filters{href: "#all", data: {filter: '*'}}
+              %span.badge.pull-right
+                = all_count
+              all
+          %li.divider
           - @categories.each do |category|
             %li
               %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
+                %span.badge.pull-right
+                  = category_count(category)
                 = category.name
           %li.divider
           %li.dropdown-submenu
             %a{:href => "#"}
               format
             %ul.dropdown-menu
+
               %li
-                %a.filters{href: "#video", data: {filter: '.videointerview'}} video
+                %a.filters{href: "#announcement", data: {filter: '.announcement'}} 
+                  %span.badge.pull-right
+                    = model_count('Announcement')
+                  announcement
+
               %li
-                %a.filters{href: "#article", data: {filter: '.article'}} article
+                %a.filters{href: "#article", data: {filter: '.article'}} 
+                  %span.badge.pull-right
+                    = model_count('Article')
+                  article
+
               %li
-                %a.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
+                %a.filters{href: "#video", data: {filter: '.videointerview'}} 
+                  %span.badge.pull-right
+                    = model_count('VideoInterview')
+                  video
+
+        %button.navbar-toggle{"data-target" => "#navbar-collapse2", "data-toggle" => "collapse", :type => "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+= render "shared/sign_in_modal"

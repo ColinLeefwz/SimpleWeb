@@ -17,3 +17,11 @@
 
   $(document).on "s3_upload_failed", (e, content) ->
     alert("#{content.filename} failed to upload: #{content.error_thrown}")
+
+  $("#destroy_SD").on "click", ->
+    destroy_SD = if $("#destroy_SD:checked").length then true else false
+    $("[id$=_destroy_SD]").val(destroy_SD)
+
+  $("#destroy_HD").on "click", ->
+    destroy_HD = if $("#destroy_HD:checked").length then true else false
+    $("[id$=_destroy_HD]").val(destroy_HD)

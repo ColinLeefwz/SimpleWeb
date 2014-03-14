@@ -6,20 +6,20 @@
     = f.label :to, class: "control-label"
   .col-sm-6
     = f.text_field :to, :autofocus => true, class: 'form-control', placeholder: hint
-    .alert.validation-message
-//= f.input :to, label: "To", placeholder: hint
+.alert.validation-message.alert-danger
+
 .form-group
   .col-sm-2
     = f.label :subject, class: "control-label"
   .col-sm-6
     = f.text_field :subject, :autofocus => true, class: 'form-control', input_html: {class: "wider-input"}
-//= f.input :subject, label: "Subject", input_html: {class: "wider-input"}
+
 .form-group
   .col-sm-2
     = f.label :message, class: "control-label"
   .col-sm-8
     = f.input :message, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}, label: false
-//= f.input :message, label: "Message", input_html: { class: 'ckeditor' }
+
 .form-group
   .col-sm-2
   .col-sm-5
@@ -31,6 +31,7 @@
 
 
 :coffee
+  $(".validation-message").hide()
   send = $("input[value='Send']")
   send.attr('disabled', 'disabled')
 

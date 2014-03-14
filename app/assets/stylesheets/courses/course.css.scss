@@ -1,228 +1,65 @@
 @import "globals/variables";
+@import "detail_page/detail_page_mixin";
 
-.course_show{
-  width: 79%;
-  min-width: 300px;
-  margin: 0 auto;
+.course-info{
+  @include detail_page_box;
+  position: relative;
+  padding-top: 2em;
+  background: white;
+  box-shadow: $shadow_param;
 }
 
 
-
-.course_show{
-
-  .box{
-    box-sizing:border-box;
-    -moz-box-sizing:border-box; /* Firefox */
-    -webkit-box-sizing:border-box; /* Safari */
-    
-    background-color: white;
-    box-shadow: $shadow_param;
-  }
-
-  .overview{
-    position: relative;
-    padding-top: 2em;
-    min-height: 14em;
-    .inline{
-      display: inline-block;
-    }
-
-    .cover-box{
-      margin-left: 5%;
-      // width: 30%;
-
-      .cover{
-        width: 160px * 1.8;
-        height: 90px * 1.8;
-        overflow: hidden;
-      }
-    }
-
-
-    .description-box{
-      vertical-align: top;
-      width: 50%;
-      padding-left: 10px;
-      .title{
-        font-family: Oswaldreg;
-        font-size: 1.5em;
-      }
-
-      .producers, .video-length, .category{
-        font-family: Latoitalic;
-        font-size: 0.8em;
-      }
-
-      .description{
-        text-indent: 1em;
-        color: #000000;
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
-    }
-
-    .social-box{
-      position: absolute;
-      top: 2em;
-      right: 0;
-
-      width: 10%;
-      img{
-        margin-bottom: 10px;
-        width: 25px;
-        height: 25px;
-      }
-    }
-
-    .percentage{
-      float: right;
-      padding-right: 10px;
-    }
-    .progress{
-      width: 100%;
-      height: 4px;
-      border-radius: 0;
-      -webkit-border-radius: 0;
-
-      position: absolute;
-      bottom: 0;
-      margin-bottom: 0; // place the progress bar on the bottom
-      .progress-bar{
-        width: 100%;
-        height: 4px;
-        background-image: none;
-        background-color: #9AA2FC;
-      }
-    }
-  }
-
-
-  .chapter{
-    .box {
-      box-sizing:border-box;
-      -moz-box-sizing:border-box; /* Firefox */
-      -webkit-box-sizing:border-box; /* Safari */
-    }
-
-    margin-top: 1em;
-
-    .chapter-title{
-      height: 2em;
-      border-bottom: 1px solid #4E2971;
-
-      .center-container {
-        box-sizing:border-box;
-        -o-box-sizing:border-box;
-        -ms-box-sizing:border-box;
-        -icab-box-sizing:border-box;
-        -khtml-box-sizing:border-box;
-        -moz-box-sizing:border-box;
-        -webkit-box-sizing:border-box;
-      }
-      .anchor{
-        width: 2em;
-        height: 2em;
-        background-color: #4E2971;
-        text-align: center;
-        float:left;
-        span{
-          vertical-align: middle;
-          color: white;
-          font-family: Latobold;
-        }
-      }
-      .title{
-        height: 100%;
-        width:80%;
-        float:middle;
-        span{
-          font-size: 1em;
-          font-family: Latobold;
-          vertical-align: middle;
-        }
-      }
-    }
-
-    .section{
-      border-bottom: 1px solid #C9C9C9;
-      .section-title{
-        height: 2em;
-        cursor: pointer;
-      }
-      .content-icon{
-        width: 2em;
-        height: 2em;
-        padding: 0.3em;
-      }
-      .label-preview {
-        background-color: #AEAEFF;
-        color: darken(#4E2971, 25%);
-        margin-left: 5px;
-        font-weight: 400;
-      }
-      .section-detail{
-        position: relative;
-        .close-icon{
-          margin-right: -25px;
-          margin-top: -20px;
-          width: 25px;
-          height: 25px;
-          position: absolute;
-          top: 0;
-          right: 0;
-          background: #eee;
-          border-radius: 50%;
-          -webkit-border-radius: 50%;
-        }
-        .section-modal{
-          width: 640px;
-          margin-left: -320px; /* override bootstrap style */
-          background-color: #eee;
-          .description{
-            margin-top: 1em;
-            text-indent: 1em;
-            font-family: LatoItalic;
-            padding: 0 1em;
-          }
-        }
-        .enroll-modal{
-          width: 670px;
-          margin-left: -335px; /* override bootstrap style */
-          .modal-body{
-            height: 300px;
-            overflow-y: visible; /* override bootstrap, otherwise close icon won't show */
-            .enroll{
-              width: 40%;
-              border-right: 1px solid #eee;
-              vertical-align: middle;
-              text-align: center;
-            }
-            .sign-in{
-              width: 58%;
-              vertical-align: middle;
-              padding-left: 2em;
-              box-sizing: border-box;
-              -webkit-box-sizing: border-box;
-              p{
-                font-size: 0.8em;
-              }
-              
-            }
-          }
-        }
-      }
-    }  // section
-    .duration{ 
-      height: 2em;
-      float: right;
-      width:16%;
-      padding-right: 0.8em;
-      span{
-        font-size: 0.8em;
-        font-family: Latoitalic;
-        vertical-align: middle;
-      }
-    }
-
-  } // chapter
+.course-info .cover{
+    float: left;
+    margin-left: 2rem;
+    width: 288px;
+    height: 162px;
+    overflow: hidden;
+    margin-bottom: 1em;
 }
+
+.subscribe, .subscribed{
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+}
+
+.course-info .description{
+  float: left;
+  vertical-align: top;
+  padding-left: 10px;
+  margin-bottom: 1em;
+
+  .title{
+    font-family: Oswaldreg;
+    font-size: 1.5em;
+  }
+
+  .producers, .video-duration, .category{
+    display: inline-block;
+    font-family: Latoitalic;
+    font-size: 0.8em;
+    @include separator;
+  }
+
+  article{
+    text-indent: 1em;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.course-info .social-box{
+  position: absolute;
+  top: 2em;
+  right: 0.5em;
+
+  img{
+    margin-bottom: 10px;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+

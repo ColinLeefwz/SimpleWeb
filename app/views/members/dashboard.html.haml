@@ -1,9 +1,10 @@
-.side-menu
-  = render 'side_menu'
+
 - content_for(:title){"Member Dashboard"}
 
 .dash-wrapper.margin-bottom
   .container
     .row
-      .col-md-9.col-sm-12.main-menu
+      .col-md-3.side-menu
+        = render 'side_menu'
+      .col-md-9.main-menu
         = render 'members/welcome_page'
