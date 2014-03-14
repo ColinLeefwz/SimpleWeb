@@ -14,7 +14,8 @@
 
       %li.dropdown
         %a.navbar-btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-          %i.fa.fa-list{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Menu"}
+          %i#sidebar_icon
+            = image_tag("sidebar_icon.png")
         %ul.nav.dropdown-menu
           #navbar-collapse2.collapse.navbar-collapse
             %form.navbar-form
