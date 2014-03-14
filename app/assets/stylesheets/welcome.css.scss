@@ -20,7 +20,10 @@ body {
   padding: 1px;
   background-image: image-url("bg.jpg");
 }
-
+.badge {
+  float: right;
+  white-space: normal;
+}
 #content{
   margin: 0 auto;
   padding-bottom: 50px;
