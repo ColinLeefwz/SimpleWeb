@@ -1,30 +1,29 @@
 .jumbotron.container.shadow
-  .col-sm-3
-    .favorite-session-left
-      .cover
+  .row
+    .col-md-3
+      .favorite-session-cover
         = image_tag(course.cover.url)
-      - if (current_user) && (current_user.enrolled? course)
-        .button.subscribed You're subscribed
-      - else
-        .button.subscribe
-          = link_to "Subscribe", enroll_course_path(course)
-
-  .col-sm-8
-    .favorite-session-info
-      .favorite-session-main
-        .favorite-session-title
-          = link_to course.title, course_path(course)
-        .favorite-session-expert-name.separator.inline
-          = producer_links(course)
-        .favorite-session-categories.inline
-          = course.categories.join(", ")
-        .clear-fix
-
-        .favorite-session-description
-          = truncate_html(course.description, length: 300, omission: '...')
-    .see-more
-      = link_to "see more", course_path(course)
-
-  .favorite-social-share
-    = render 'shared/favorite_star', method: :has_subscribed?, object: course, link_path: subscribe_path(course, type: course.class.name)
-    = render 'shared/social_share', item: course
+      .session-button
+        - if (current_user) && (current_user.enrolled? course)
+          .button.subscribed You're subscribed
+        - else
+          .button.subscribe
+            = link_to "Subscribe", enroll_course_path(course)
+    .col-md-8
+      .favorite-session-info
+        .favorite-session-main
+          .favorite-session-title
+            = link_to course.title, course_path(course)
+          .favorite-session-expert-name.separator.inline
+            = producer_links(course)
+          .favorite-session-categories.inline
+            = course.categories.join(", ")
+          .clear-fix
+          .favorite-session-description
+            = truncate_html(course.description, length: 300, omission: '...')
+    .col-md-1
+      .favorite-social-share
+        = render 'shared/favorite_star', method: :has_subscribed?, object: course, link_path: subscribe_path(course, type: course.class.name)
+        = render 'shared/social_share', item: course
+  .see-more
+    = link_to "see more", course_path(course)
