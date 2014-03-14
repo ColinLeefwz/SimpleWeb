@@ -8,7 +8,7 @@
     - else
       = image_tag @video_interview.cover.url
   %article
-    = @video_interview.description.try :html_safe
+    = @video_interview.description.html_safe
 
 = render partial: "comments/comments", locals: {commentable: @video_interview}
 
