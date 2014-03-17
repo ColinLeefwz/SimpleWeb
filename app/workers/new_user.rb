@@ -32,10 +32,10 @@ class NewUser
     #Resque.enqueue_in(3.seconds, NewUserWelcome, uid,sid,2)
     #Resque.enqueue_in(6.seconds, NewUserWelcome, uid,sid,3)
     Resque.enqueue_in(10.seconds, NewUserWelcome, uid,sid,4) unless Shop.find_by_id(sid).city=="0571"
-    # if User.find(uid).gender
-    #   Resque.enqueue_in(120.seconds, NewUserTalk, uid,sid,1)
-    #   Resque.enqueue_in(180.seconds, NewUserTalk, uid,sid,2)
-    # end
+    if User.find(uid).gender
+      Resque.enqueue_in(120.seconds, NewUserTalk, uid,sid,1)
+      Resque.enqueue_in(180.seconds, NewUserTalk, uid,sid,2)
+    end
   end
   
   def self.notify(uid,sid, to, od, ud, gender=0, city=nil)
