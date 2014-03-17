@@ -114,7 +114,7 @@ class MandrillApi
     consultant_name = consultation.consultant.name
     template_content = [{"name"=> "requester-name", "content" => requester_name}, {"name" => "consultant-name", "content" => consultant_name}]
 
-    addition_message = (Rails.env == "development") ? {"to"=>[{"name"=> "peterzd", "email" => "zdsunshine0640@126.com"}]} : {"to"=>[{"name"=> "Prodygia Admin", "email" => "support@prodygia.com"}]}
+    addition_message = (Rails.env.development?) ? {"to"=>[{"name"=> "peterzd", "email" => "zdsunshine0640@126.com"}]} : {"to"=>[{"name"=> "Prodygia Admin", "email" => "support@prodygia.com"}]}
 
     send_template_mail("consultation-pending", template_content, addition_message)
   end
