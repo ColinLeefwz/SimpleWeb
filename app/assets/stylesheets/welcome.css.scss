@@ -20,6 +20,18 @@ body {
   padding: 1px;
   background-image: image-url("bg.jpg");
 }
+
+@media screen and (max-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 100px;
+  }
+}
+@media screen and (min-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 200px;
+  }
+}
+
 .badge {
   float: right;
   white-space: normal;

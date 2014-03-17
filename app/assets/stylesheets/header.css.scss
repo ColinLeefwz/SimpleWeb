@@ -42,6 +42,18 @@ ul.nav.navbar-nav.navbar-right {
     width: 300px;
   }
 }
+
+.nav-sidebar {
+  position: absolute; 
+  top: 100px !important;
+  opacity: 0.8;
+  background:#FFF;
+  font-weight: bold;
+}
+.divider {
+  color: #623C84;
+}
+
 #subnav {
   z-index: 5;
   position: absolute;
@@ -51,6 +63,7 @@ ul.nav.navbar-nav.navbar-right {
   .dropdown .open {
     top: 45px;
     margin-bottom: 0px;
+
   }
   a {
     padding-bottom: 0;
