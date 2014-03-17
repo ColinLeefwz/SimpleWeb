@@ -73,13 +73,6 @@ class AroundmeController < ApplicationController
         arr = arr+[ shop ]
       end
     end
-    if city && city!="0571"
-      shop = Shop.find_by_id(21839275) # "2014白色情人节"
-      if shop
-       shop.city = city
-        arr = arr[0,4]+[ shop ]+arr[4..-1]
-      end
-    end
     if city && city=="023"
       shop = Shop.find_by_id(21839246) # 重庆的2014我们在一起
       if shop
