@@ -61,6 +61,7 @@
   .avatar{
     float: left;
     vertical-align: baseline;
+    text-align: center;
     img{
       width: 100px;
       height: 100px;
@@ -188,5 +189,12 @@
 
   #content .item{
     width: 280px;
+  }
+}
+
+.consultation{
+  margin-top: 5px;
+  a {
+    line-height: 1em;
   }
 }

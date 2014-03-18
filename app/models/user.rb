@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
   has_many :orders
   has_many :email_messages
 
+  # consultations
+  has_many :sent_consultations, class_name: "Consultation", foreign_key: "requester_id"
+  has_many :received_consultations, class_name: "Consultation", foreign_key: "consultant_id"
+
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
   # Peter: we remove the :validatable to allow us to create multiple email with different provider
   devise :invitable, :database_authenticatable, :registerable, :recoverable, 

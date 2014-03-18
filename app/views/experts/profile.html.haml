@@ -4,6 +4,8 @@
   .brief.sub-wrapper.first-sub.clearfix
     .avatar.brief-item
       = image_tag(@expert.avatar.url)
+      .consultation
+        = link_to "Private session", new_consultation_path(expert: @expert), class: "btn btn-prodygia", remote: true
     .resume.brief-item
       %p
         %span.name
@@ -85,6 +87,8 @@
 
 -# hidden modals
 = render "shared/sign_in_modal"
+
+#show-modal
 
 :javascript
   load_isotope()

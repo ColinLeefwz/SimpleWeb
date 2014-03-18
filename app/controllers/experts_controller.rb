@@ -55,10 +55,17 @@ class ExpertsController < ApplicationController
         @expert.profile.update_attributes(expert_profile_params)
         flash[:success] = "successfully update your profile"
         render js: "window.location='#{dashboard_expert_path(current_user)}'"
-
       }
     end
 
+  end
+
+  def consultations
+    @consultations = @expert.received_consultations.where(status: [Consultation::STATUS[:processed], Consultation::STATUS[:accepted]])
+    respond_to do |format|
+      @from = "consultations/items"
+      format.js { render "experts/update" }
+    end
   end
 
   def contents
