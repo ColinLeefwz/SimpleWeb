@@ -1,9 +1,22 @@
 .white-background.shadow
   = simple_form_for @video_interview, remote: true do |f|
-    = f.input :title
-    = f.input :categories, collection: Category.all.map(&:name), as: :check_boxes
-    = f.input :description
-    = f.submit "submit", class: "btn btn-prodygia dashboard-buttons"
+    .form-group
+      .col-sm-2
+        = f.label :title, class: "control-label"
+      .col-sm-6
+        = f.text_field :title, :autofocus => true, class: 'form-control', input_html: { id: 'session-title-input' }
+    .categories
+      .col-sm-2
+        = f.label :categories, class: "control-label"
+      = f.input :categories, :autofocus => true, collection: Category.all.map(&:name), as: :check_boxes, required: true, class: 'checkbox-inline', label: false
+    .form-group
+      .col-sm-2
+        = f.label :description, class: "control-label"
+      .col-sm-8
+        = f.input :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}, label: false
+    .form-group
+      .col-sm-2
+        = f.submit "submit", class: "btn btn-prodygia dashboard-buttons"
 
 
   -# note: non-SIMPLE_FORM way, please don't delete that for now

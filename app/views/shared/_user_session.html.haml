@@ -1,10 +1,19 @@
-- if user_signed_in?
-  = link_to current_user.email.truncate(16), edit_user_registration_path
-  = link_to "log out", destroy_user_session_path, method: :delete
-  - if current_user.is_a? Expert
-    = link_to "dashboard", dashboard_expert_path(current_user)
-  - elsif current_user.is_a? Member
-    = link_to "dashboard", dashboard_member_path(current_user)
-- else
-  = link_to "Sign Up", new_user_registration_path
-  = link_to "Sign In", new_user_session_path
+
+%ul.nav.navbar-nav.navbar-right
+  - if user_signed_in?
+    - if current_user.is_a? Expert
+      %li
+        = link_to image_tag("dashboard_icon.png"), dashboard_expert_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
+    - elsif current_user.is_a? Member
+      %li
+        = link_to image_tag("dashboard_icon.png"), dashboard_member_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
+    %li
+      = link_to image_tag("signout_icon.png"), destroy_user_session_path, method: :delete, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Log out"
+    %li
+      = link_to image_tag("user_icon.png"), edit_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "#{current_user.email.truncate(16)}"
+  - else
+    %li
+      = link_to image_tag("user_icon.png"), new_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
+    %li.session_user
+      = link_to image_tag("signin_icon.png"),'#sign-in-modal', data:{toggle: "modal"},"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"
+      //= link_to "", new_user_session_path, class: "fa fa-sign-in", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"

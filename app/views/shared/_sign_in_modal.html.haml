@@ -1,4 +1,4 @@
-#modal.modal.hide.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
+#sign-in-modal.modal.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
   .modal-dialog
     .modal-content
       .modal-header
@@ -7,7 +7,10 @@
       .modal-body.social-login
         .alert.alert-success
           %button.close{data:{dismiss: 'alert'}, type: 'button'} ×
-          Please sign in to use this feature or sign up if you are new to Prodygia; once you are signed in, you will be able to see your favorite content in your member dashboard.
+          - if defined? alert_message
+            = alert_message
+          - else
+            = "Please sign in to use this feature or sign up if you are new to Prodygia; once you are signed in, you will be able to see your favorite content in your member dashboard."
         = render "devise/shared/social_login"
         .devise-form
           = render "devise/sessions/sign_in_form"

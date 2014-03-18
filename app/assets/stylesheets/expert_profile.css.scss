@@ -61,6 +61,7 @@
   .avatar{
     float: left;
     vertical-align: baseline;
+    text-align: center;
     img{
       width: 100px;
       height: 100px;
@@ -170,13 +171,13 @@
     padding: 10px 30px;
     .intro-video{
       padding-left: 20px;
-			width: 320px;
-			height: 180px;
+      width: 320px;
+      height: 180px;
     }
 
     p{
       margin-top: 10px;
-			text-align: justify;
+      text-align: justify;
     }
   }
 }
@@ -188,5 +189,12 @@
 
   #content .item{
     width: 280px;
+  }
+}
+
+.consultation{
+  margin-top: 5px;
+  a {
+    line-height: 1em;
   }
 }

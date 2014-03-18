@@ -1,5 +1,7 @@
 ActiveAdmin.register Expert do
 
+  config.clear_action_items!  # clear default buttons on top-right (New Expert)
+
   action_item only:[:index] do
     link_to 'Invit An Expert', new_user_invitation_path
   end
@@ -8,7 +10,7 @@ ActiveAdmin.register Expert do
     column :name do |expert|
       link_to(expert.name, admin_expert_path(expert))
     end
-    column "Avatar", :image_url do |expert|
+    column :avatar do |expert|
       link_to image_tag(expert.avatar.url, width: "50"), admin_expert_path(expert)
     end
     column :title do |e|

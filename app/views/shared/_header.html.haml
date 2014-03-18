@@ -1,37 +1,62 @@
 - @categories = Category.all
+.navbar.navbar-default.shadow
+  .col-md-8.col-sm-8.col-xs-8
+    .navbar-header
+      .navbar-left
+        #logo_container
+          #logo
+            = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
 
-#logo_container
-  #logo.pull-left
-    = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
-
-  #user-session.pull-right
-    = render 'shared/user_session'
-  .fixed
-
+  .col-sm-4.col-xs-4
+    %button.navbar-toggle{"data-target" => "#navbar-collapse1", "data-toggle" => "collapse", :type => "button"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+  .col-md-4.col-sm-4.col-xs-4
+    #navbar-collapse1.collapse.navbar-collapse
+      = render 'shared/user_session'
 - if @show_category == true
-  %nav
-    %ul.visible-desktop
+  %ul#subnav.nav.navbar-header
 
-      %li.category
-        %a.filters{href: "#all", data: {filter: '*'}}all
+    %li.dropdown
+      %a.navbar-btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        %i#sidebar_icon
+          = image_tag("sidebar_icon.png")
+      %ul.nav.dropdown-menu.nav-sidebar
+        %li
+          %a.filters{href: "#all", data: {filter: '*'}}
+            %span.badge.pull-right
+              = all_count
+            all
+        %li.divider
+        - @categories.each do |category|
+          %li
+            %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
+              %span.badge.pull-right
+                = category_count(category)
+              = category.name
+        %li.dropdown-submenu
+          %a{:href => "#"}
+            format
+          %ul.dropdown-menu
 
-      - @categories.each do |category|
-        %li.category
-          %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
-            = category.name
-      %li#format
-        %a format
-        %ul.subcategory
-          %li.filters{href: "#video", data: {filter: '.videointerview'}} video
-          -# %li.filters{href: "#live", data: {filter: '.livesession'}} live
-          %li.filters{href: "#article", data: {filter: '.article'}} article
-          %li.filters{href: "#announcement", data: {filter: '.announcement'}} announcement
+            %li
+              %a.filters{href: "#announcement", data: {filter: '.announcement'}} 
+                %span.badge.pull-right
+                  = model_count('Announcement')
+                announcement
 
-    %select#collapsed_navbar.span12.hidden-desktop
-      %option.filters{data: {filter: '*'}} all
-      - @categories.each do |category|
-        %option.filters{data: {filter: ".#{category.name}"}}
-          = category.name
-- else
-  %nav
+            %li
+              %a.filters{href: "#article", data: {filter: '.article'}} 
+                %span.badge.pull-right
+                  = model_count('Article')
+                article
 
+            %li
+              %a.filters{href: "#video", data: {filter: '.videointerview'}} 
+                %span.badge.pull-right
+                  = model_count('VideoInterview')
+                video
+
+= render "shared/sign_in_modal"

@@ -57,6 +57,8 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     bcrypt-ruby (3.1.2)
+    bootstrap-sass (3.1.1.0)
+      sass (~> 3.2)
     bourbon (3.1.8)
       sass (>= 3.2.0)
       thor
@@ -122,6 +124,8 @@ GEM
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
+    font-awesome-sass (4.0.3.1)
+      sass (~> 3.2)
     formatador (0.2.4)
     formtastic (2.3.0.rc2)
       actionpack (>= 3.0)
@@ -378,6 +382,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin!
   aws-sdk
+  bootstrap-sass (~> 3.1.1)
   cancan
   capybara
   ckeditor
@@ -389,6 +394,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   figaro
+  font-awesome-sass
   fuubar
   google-api-client
   guard

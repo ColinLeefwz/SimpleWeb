@@ -1,7 +1,7 @@
 module ApplicationHelper
   def flash_class
     if flash[:alert]
-      "alert-error"
+      "alert-danger"
     elsif flash[:error]
       "alert-something"
     elsif (flash[:notice] or flash[:success])

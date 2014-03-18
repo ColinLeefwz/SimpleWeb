@@ -1,7 +1,8 @@
 .devise-style {
-  width: 40%;
-  margin: 0 auto;
+  margin: 0px auto;
+  max-width: 450px;
   margin-bottom: 50px;
+  font-size: 15px;
   label{
     display: inline-block;
   }
@@ -15,25 +16,19 @@
 }
 
 .devise-form{
-    width: 295px;
-    margin: 0 auto;
+    margin: 0px auto;
+    max-width: 350px;
+
     margin-top: 2em;
     input[type='submit']{
       display: block;
       margin: 0 auto;
     }
 
-    /* override bootstrap horizontal form */
-    .form-horizontal .controls{
-      margin-left: 77px;
-    }
-    .form-horizontal, .control-label{
-      width: 70px;
-    }
 
     .terms-of-service{
       width: 310px;
-      height: 3em;
+      height: 15em;
       overflow: auto;
       padding: 1em 0.5em;
       margin: 0 auto;
@@ -47,21 +42,5 @@
         text-indent: 1em;
       }
     }
-
-    .check-box-wrapper{
-      width: 200px;
-    }
-}
-
-
-
-.form-horizontal{
-  .password-setting-label{
-    width: 653px;
-  }
-
-  .password-setting-control{
-    margin-left: 678px;
-  }
 }
 

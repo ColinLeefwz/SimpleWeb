@@ -1,0 +1,6 @@
+$("#show-modal").html('<%=j render partial: @show_modal, locals: { alert_message: @alert_message }%>')
+$("#show-modal .modal").modal()
+$("#send-consultation").on("click", function(e){
+  e.preventDefault();
+  $("#new_consultation").submit()
+})

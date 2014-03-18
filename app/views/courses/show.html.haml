@@ -1,40 +1,34 @@
 - content_for(:title){ @course.title }
 
-.course_show.margin-bottom
+.course-info.clearfix
+  .cover
+    = @course.video.available? ? (render "shared/sublime_video", video: @course.video) : (image_tag @course.cover.url)
 
-  .overview-wrapper.box
+  .description
+    .title
+      = @course.title
+    .producers
+      = producer_links(@course)
+    .video-duration
+      = distance_of_time_in_words @course.duration.to_i
+    .category
+      = @course.categories.join(", ")
+    %article
+      = @course.description.html_safe
 
-    .overview
-      .cover-box.inline
-        .cover
-          - if @course.video.available?
-            = render "shared/sublime_video", video: @course.video
-          - else
-            = image_tag @course.cover.url
+  .social-box
+    = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_path(@course, type: @course.class.name)
+    = render 'shared/social_share', item: @course
 
-        - if (current_user) && (current_user.enrolled? @course)
-          .subscribed-button You're subscribed
-        - else
-          .enroll-button
-            = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
+  - if (current_user) && (current_user.enrolled? @course)
+    .button.subscribed You're subscribed
+  - else
+    .button.subscribe
+      = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
 
-      .description-box.inline
-        .title
-          = @course.title
-        .producers.inline.separator
-          = producer_links(@course)
+= render partial: "chapter", collection: @course.chapters
+= render partial: "comments/comments", locals: {commentable: @course}
 
-        .video-length.inline.separator
-          = distance_of_time_in_words @course.duration.to_i
+-# hidden modals
+= render "shared/sign_in_modal"
 
-        .category.inline
-          = @course.categories.join(", ")
-        .description
-          = @course.description.try :html_safe
-
-      .social-box.inline
-        = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_path(@course, type: @course.class.name)
-        = render 'shared/social_share', item: @course
-
-  - @course.chapters.each do |c|
-    = render partial: "chapter", locals: {chapter: c}

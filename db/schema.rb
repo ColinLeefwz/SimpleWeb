@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140304045436) do
+ActiveRecord::Schema.define(version: 20140314085819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,29 +43,19 @@ ActiveRecord::Schema.define(version: 20140304045436) do
 
   create_table "announcements", force: true do |t|
     t.string   "title"
-    t.text     "description"
-    t.string   "sd_url"
-    t.string   "hd_url"
+    t.text     "description",        default: "  "
     t.string   "language"
     t.boolean  "draft"
     t.boolean  "canceled"
-    t.string   "categories",                     default: [],    array: true
+    t.string   "categories",         default: [],    array: true
     t.integer  "expert_id"
-    t.string   "attached_video_hd_file_name"
-    t.string   "attached_video_hd_content_type"
-    t.integer  "attached_video_hd_file_size"
-    t.datetime "attached_video_hd_updated_at"
-    t.string   "attached_video_sd_file_name"
-    t.string   "attached_video_sd_content_type"
-    t.integer  "attached_video_sd_file_size"
-    t.datetime "attached_video_sd_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
-    t.boolean  "always_show",                    default: false
+    t.boolean  "always_show",        default: false
   end
 
   add_index "announcements", ["categories"], name: "index_announcements_on_categories", using: :gin
@@ -74,7 +64,7 @@ ActiveRecord::Schema.define(version: 20140304045436) do
   create_table "articles", force: true do |t|
     t.string   "title"
     t.integer  "expert_id"
-    t.text     "description"
+    t.text     "description",        default: "  "
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cover_file_name"
@@ -161,10 +151,10 @@ ActiveRecord::Schema.define(version: 20140304045436) do
   end
 
   create_table "courses", force: true do |t|
-    t.text     "description"
+    t.text     "description",        default: "  "
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "categories",         default: [],  array: true
+    t.string   "categories",         default: [],   array: true
     t.string   "title"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
@@ -217,30 +207,6 @@ ActiveRecord::Schema.define(version: 20140304045436) do
     t.datetime "updated_at"
   end
 
-  create_table "intro_videos", force: true do |t|
-    t.string   "hd_url"
-    t.string   "sd_url"
-    t.integer  "course_id"
-    t.string   "attached_video_hd_file_name"
-    t.string   "attached_video_hd_content_type"
-    t.integer  "attached_video_hd_file_size"
-    t.datetime "attached_video_hd_updated_at"
-    t.string   "attached_video_sd_file_name"
-    t.string   "attached_video_sd_content_type"
-    t.integer  "attached_video_sd_file_size"
-    t.datetime "attached_video_sd_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "introable_id"
-    t.string   "introable_type"
-    t.string   "cover_file_name"
-    t.string   "cover_content_type"
-    t.integer  "cover_file_size"
-    t.datetime "cover_updated_at"
-  end
-
-  add_index "intro_videos", ["course_id"], name: "index_intro_videos_on_course_id", using: :btree
-
   create_table "languages", force: true do |t|
     t.string   "long_version"
     t.string   "short_version"
@@ -284,15 +250,6 @@ ActiveRecord::Schema.define(version: 20140304045436) do
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
-  create_table "propose_topics", force: true do |t|
-    t.string   "Name"
-    t.string   "Location"
-    t.string   "Email"
-    t.text     "Topic"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
     t.integer  "followed_id"
@@ -303,22 +260,6 @@ ActiveRecord::Schema.define(version: 20140304045436) do
 
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
-
-  create_table "resources", force: true do |t|
-    t.integer  "expert_id"
-    t.string   "attached_file_file_path"
-    t.string   "direct_upload_url"
-    t.string   "attached_file_file_name"
-    t.string   "attached_file_content_type"
-    t.integer  "attached_file_file_size"
-    t.datetime "attached_file_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "section_id"
-    t.string   "video_definition"
-  end
-
-  add_index "resources", ["section_id"], name: "index_resources_on_section_id", using: :btree
 
   create_table "sections", force: true do |t|
     t.text     "description"
@@ -398,26 +339,15 @@ ActiveRecord::Schema.define(version: 20140304045436) do
   create_table "video_interviews", force: true do |t|
     t.string   "title"
     t.integer  "expert_id"
-    t.string   "categories",                     default: [], array: true
-    t.text     "description"
-    t.string   "attached_video_hd_file_name"
-    t.string   "attached_video_hd_content_type"
-    t.integer  "attached_video_hd_file_size"
-    t.datetime "attached_video_hd_updated_at"
-    t.string   "attached_video_sd_file_name"
-    t.string   "attached_video_sd_content_type"
-    t.integer  "attached_video_sd_file_size"
-    t.datetime "attached_video_sd_updated_at"
+    t.string   "categories",         default: [],   array: true
+    t.text     "description",        default: "  "
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "hd_url"
-    t.string   "sd_url"
     t.string   "language"
     t.string   "cover_file_name"
     t.string   "cover_content_type"
     t.integer  "cover_file_size"
     t.datetime "cover_updated_at"
-    t.string   "cover_url"
   end
 
   add_index "video_interviews", ["categories"], name: "index_video_interviews_on_categories", using: :gin

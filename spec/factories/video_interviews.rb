@@ -6,5 +6,6 @@ FactoryGirl.define do
     expert
     categories ["test"]
     description "video interview description"
+    video
   end
 end

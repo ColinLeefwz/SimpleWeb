@@ -1,13 +1,17 @@
 @import "globals/variables";
 
-.enroll-button{
+.video-wrapper{
+  width: 320px;
+  height: 176px;
+  margin: 0 auto;
+}
+
+.subscribe{
+  clear: both;
   cursor: pointer;
   background-color: #8a2649;
   font-family: Latobold;
-  width: 10em;
   text-align: center;
-  margin: 0 auto;
-  margin-top: 1em;
   padding: 0.3em;
   color: white;
   a:hover{
@@ -16,13 +20,11 @@
   }
 }
 
-.subscribed-button{
+.subscribed{
+  clear: both;
   background-color: #5A268A;
   font-family: Latobold;
-  width: 10em;
   text-align: center;
-  margin: 0 auto;
-  margin-top: 0.5em;
   padding: 0.3em 0.3em;
   color: white;
   a{  color: white;  }
@@ -36,6 +38,7 @@
 
 // add "center-container" to an element, then you can use "vertical-align: middle" to any of its inline child element
 // "vertical-align" only works with table element or inline text/image element by default
+//todo: gecko: remove it someday, we have center_container() mixin
 .center-container:before{
   content: '';
   height: 100%;
@@ -45,7 +48,7 @@
 }
 
 // add "inline" class to a div, then it will be displayed as "inline-block"
-// bootstrap deals with other elements with "inline", like ul.inline, .checkbox.inline
+// bootstrap deals with other elements with "inline", like .ul-inline, .checkbox-inline
 .inline{
   display: inline-block;
 }
@@ -54,6 +57,8 @@
   display: none;
 }
 
+
+//todo: gecko: remove it someday, we have separator() mixin
 .separator:after{
   content: " | "
 }
@@ -78,7 +83,7 @@ input[type="file"]{
 }
 
 .shared-links{
-  width: 280px;
+  max-width: 280px;
 }
 
 .float-image{
@@ -93,10 +98,6 @@ input[type="file"]{
 .display-block{
   display: block;
 }
-
-$prodygia-purple: #880848;
-$prodygia-light-purple: #a3384e;
-$prodygia-dark-purple: #880731;
 
 // overrider bootstrap's btn-prodygia class
 .btn-prodygia{
@@ -132,3 +133,7 @@ $prodygia-dark-purple: #880731;
 .btn-prodygia.active {
   background-color: #003399 \9;
 }
+img {
+  max-width: 100%;
+}
+

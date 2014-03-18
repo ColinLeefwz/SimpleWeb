@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 
   has_one :profile
+  has_many :comments
 
   # User follow sessions
   has_many :subscriptions, foreign_key: "subscriber_id"
@@ -30,6 +31,10 @@ class User < ActiveRecord::Base
 
   has_many :orders
   has_many :email_messages
+
+  # consultations
+  has_many :sent_consultations, class_name: "Consultation", foreign_key: "requester_id"
+  has_many :received_consultations, class_name: "Consultation", foreign_key: "consultant_id"
 
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
   # Peter: we remove the :validatable to allow us to create multiple email with different provider

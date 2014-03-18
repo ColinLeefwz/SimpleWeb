@@ -2,9 +2,16 @@
 
 .devise-style
   .social-login
+    %button.navbar-toggle{"data-target" => "#social-login", "data-toggle" => "collapse", :type => "button"}
+      %i.fa.fa-search
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
     %h2 Sign up
     = devise_error_messages!
-    = render "devise/shared/social_login"
+    #social-login.collapse.navbar-collapse
+      = render "devise/shared/social_login"
   .devise-form
     = form_for :user, url: user_registration_path, html: {class: "form-horizontal"} do |f|
       = render 'sessions/form_fields', f: f
@@ -170,6 +177,6 @@
         = check_box_tag "terms", checked: false
         = label_tag :terms, "I agree to the terms above"
 
-      = f.submit "Sign up", disabled: true
+      = f.submit "Sign up", class: "btn btn-prodygia", disabled: true
 
     = render "devise/shared/links"

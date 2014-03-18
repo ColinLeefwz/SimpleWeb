@@ -1,17 +1,18 @@
 - content_for(:title) { @expert.name }
 
-= render "welcome/box_content_modal"
-.general-wrapper
+.general-wrapper.margin-bottom
   .brief.sub-wrapper.first-sub.clearfix
     .avatar.brief-item
       = image_tag(@expert.avatar.url)
+      .consultation
+        = link_to "Private session", new_consultation_path(expert: @expert), class: "btn btn-prodygia", remote: true
     .resume.brief-item
       %p
         %span.name
           = @expert.name
         %br
         %span.title_company
-          = [@profile.title, @profile.company].reject(&:blank?).join(",")
+          = [@profile.title, @profile.company].reject(&:blank?).join(", ")
       %table
         - if @profile.web_site.present?
           %tr
@@ -30,7 +31,7 @@
     .contact.brief-item-last.clearfix
       .contact-button#follow
         - if current_user.blank?
-          = link_to image_tag('favorite_unselected.png'),'#modal', data:{toggle: "modal"}, class: 'favorite hollow-star'
+          = link_to image_tag('favorite_unselected.png'),'#sign-in-modal', data:{toggle: "modal"}, class: 'favorite hollow-star'
         - else
           = render 'shared/favorite_star', method: :follow?, object: @expert, link_path: relationship_path(@expert.id)
       #follower-count
@@ -84,5 +85,10 @@
       - @items.each do |item|
         = render partial: "welcome/box_content", locals: { item: item }
 
-    :javascript
-      load_isotope()
+-# hidden modals
+= render "shared/sign_in_modal"
+
+#show-modal
+
+:javascript
+  load_isotope()

@@ -34,6 +34,9 @@ gem 'google-api-client'  # official google analytics gem
 gem 'whenever', require: false   # generate crontab directives, not used in the application, so set require to false
 gem 'country_select'
 
+gem 'bootstrap-sass', '~> 3.1.1'
+gem 'font-awesome-sass'
+
 group :doc do
   gem 'sdoc', require: false
 end

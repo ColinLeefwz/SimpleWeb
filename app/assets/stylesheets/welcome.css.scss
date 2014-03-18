@@ -10,7 +10,6 @@ a {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 17px;
   -webkit-font-smoothing: antialiased;
@@ -22,8 +21,24 @@ body {
   background-image: image-url("bg.jpg");
 }
 
+@media screen and (max-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 150px;
+  }
+}
+@media screen and (min-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 250px;
+  }
+}
+
+.badge {
+  float: right;
+  white-space: normal;
+}
 #content{
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 50px;
 
   .item {
@@ -93,7 +108,8 @@ body {
 
     .cover{
       text-align: center;
-      padding: 20px;
+      width: 320px;
+      margin: 0 auto;
     }
 
     .caption{

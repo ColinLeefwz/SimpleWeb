@@ -1,48 +1,46 @@
-.user-info.clearfix
-  .avatar
-    = link_to image_tag(@member.avatar.url), edit_profile_member_path(current_user), remote: true
-  .profile
-    .name
-      %p= @member.name
-    .edit
-      %p= link_to 'edit profile', edit_profile_member_path(current_user), remote: true
-  -# Peter at 2012-02-20: don't remove the code below.Keep them there until we make the activity_stream work for Members
-  -# .toolkit
-  -#   .item
-  -#     = render 'item_icon', item_name: 'activity_stream'
-  -#     .item-text #{link_to 'My activity stream', pending_page_expert_path(text: "my_activity_stream"), remote: true}
-.block-title
-  %span
-    FAVORITES
-.toolkit
-  .item
-    = render 'item_icon', item_name: 'follow_expert'
-    .item-text #{link_to 'Expert', experts_member_path(current_user), remote: true }
-  .item
-    = render 'item_icon', item_name: 'follow_content'
-    .item-text #{link_to 'Content', contents_member_path(current_user), remote: true}
-  .item
-    = render 'item_icon', item_name: 'follow_video'
-    .item-text #{link_to 'Video courses', video_on_demand_member_path(current_user), remote: true}
-
-
-
-.block-title
-  %span
-    MANAGE
-.toolkit
-  .item
-    = render 'item_icon', item_name: 'video_library'
-    .item-text #{link_to 'Video course library', vod_library_member_path(current_user), remote: true}
-  .item
-    = render 'item_icon', item_name: 'account'
-    .item-text #{link_to 'Settings', edit_user_registration_path, remote: true}
-  .item
-    = render 'item_icon', item_name: 'refer_friend'
-    .item-text #{link_to 'Refer a Friend', refer_a_friend_member_path(current_user), remote: true}
-
-- if current_user.is_a? Expert
+.navbar.navbar-default.shadow
+  .user-info.clearfix
+    .avatar
+      = link_to image_tag(@member.avatar.url), edit_profile_member_path(current_user), remote: true
+    .profile
+      .name
+        %p= @member.name
+      .edit
+        %p= link_to 'edit profile', edit_profile_member_path(current_user), remote: true
+    -# Peter at 2012-02-20: don't remove the code below.Keep them there until we make the activity_stream work for Members
+    -# .toolkit
+    -#   .item
+    -#     = render 'item_icon', item_name: 'activity_stream'
+    -#     .item-text #{link_to 'My activity stream', pending_page_expert_path(text: "my_activity_stream"), remote: true}
+  .block-title
+    %span
+      FAVORITES
   .toolkit
     .item
-      = render 'item_icon', item_name: 'dashboard'
-      .item-text #{link_to 'Go to expert dashboard', dashboard_expert_path(current_user)}
+      = render 'item_icon', item_name: 'follow_expert'
+      .item-text #{link_to 'Expert', experts_member_path(current_user), remote: true }
+    .item
+      = render 'item_icon', item_name: 'follow_content'
+      .item-text #{link_to 'Content', contents_member_path(current_user), remote: true}
+    .item
+      = render 'item_icon', item_name: 'follow_video'
+      .item-text #{link_to 'Video courses', video_on_demand_member_path(current_user), remote: true}
+  .block-title
+    %span
+      MANAGE
+  .toolkit
+    .item
+      = render 'item_icon', item_name: 'video_library'
+      .item-text #{link_to 'Video course library', vod_library_member_path(current_user), remote: true}
+    .item
+      = render 'item_icon', item_name: 'account'
+      .item-text #{link_to 'Settings', edit_user_registration_path, remote: true}
+    .item
+      = render 'item_icon', item_name: 'refer_friend'
+      .item-text #{link_to 'Refer a Friend', refer_a_friend_member_path(current_user), remote: true}
+
+  - if current_user.is_a? Expert
+    .toolkit
+      .item
+        = render 'item_icon', item_name: 'dashboard'
+        .item-text #{link_to 'Go to expert dashboard', dashboard_expert_path(current_user)}

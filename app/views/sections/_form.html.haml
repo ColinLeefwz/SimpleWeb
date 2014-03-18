@@ -1,13 +1,5 @@
 
-= s3_uploader_form class: "s3_uploader", acl: "public-read", data: {definition: "SD"} do
-  %span SD:
-  = file_field_tag :file, multiple: false
-  %span.status
-
-= s3_uploader_form class: "s3_uploader", acl: "public-read", data: {definition: "HD"} do
-  %span HD:
-  = file_field_tag :file, multiple: false
-  %span.status
+= render "shared/video_uploader"
 
 = simple_form_for @section do |f|
 
@@ -18,5 +10,9 @@
 
   = f.button :submit, class: "btn"
 
+<<<<<<< HEAD
+%span.btn.btn-default.section-save Save
+=======
 :javascript
   upload_helper()
+>>>>>>> 0795b6f973b0ed348c26ab4140a39ad31a43c545
