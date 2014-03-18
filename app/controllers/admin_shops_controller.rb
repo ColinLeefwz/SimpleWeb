@@ -70,6 +70,7 @@ class AdminShopsController < ApplicationController
     @shop = Shop.find(params[:id])
     if request.post?
       if @shop.update_attributes(params[:shop])
+        @shop.hashize_password
         redirect_to :action => "show", :id => @shop.id
       else
         flash[:notice] = '密码修改失败.'

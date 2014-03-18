@@ -39,7 +39,7 @@ class Shop3LoginController < ApplicationController
       ip = real_ip
       err_cache = cache_err_num(ip)
       return  flash.now[:notice] = "您的ip已经被锁定一小时，请稍后再试!" if !err_cache.nil? && err_cache[0] == err_cache[1]
-      if shop.password.blank? || shop.password != params[:password]
+      if shop.password.blank? || shop.password != Digest::SHA1.hexdigest(params[:password])[0,16]
         error_num, allow_err_num = err_cache ? [err_cache[0] +1, err_cache[1]] :  city_err_num(shop.city, ip)
         Rails.cache.write("LE#{ip}" ,"#{error_num};#{allow_err_num}", :expires_in => 1.hour)
         LoginFail.create(:name => params[:id], :password => params[:password], :login_at => Time.now, :ip => ip, :agent => request.env['HTTP_USER_AGENT'] )
