@@ -24,12 +24,6 @@
         %i#sidebar_icon
           = image_tag("sidebar_icon.png")
       %ul.nav.dropdown-menu.nav-sidebar
-        %form.navbar-form
-          .input-group
-            %input.form-control.pull-left{ :placeholder => "Search", :type => "text"}
-              .input-group-btn
-                %button.btn.btn-prodygia{:type => "submit"}
-                  %i.fa.fa-search
         %li
           %a.filters{href: "#all", data: {filter: '*'}}
             %span.badge.pull-right
