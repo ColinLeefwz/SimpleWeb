@@ -1,0 +1,17 @@
+
+
+// hot-fix: cover overflows out of the box in expert profile page
+// because in welcome.css we set .cover's width to 320px
+// I'm overriding it based on "expert_profile.css" .sessions > #content > .item
+
+
+.sessions{
+  .video-wrapper{
+    width: 280px;
+    height: 154px;
+    margin: 0 auto;
+  }
+  #content .item .cover{
+    width: 280px;
+  }
+}
