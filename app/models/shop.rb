@@ -62,6 +62,16 @@ class Shop
   after_find do |obj|
     obj._id = obj._id.to_i
   end
+
+  def self.hashize_string(str)
+    Digest::SHA1.hexdigest(str)[0,16]
+  end
+
+  #hash加密 密码
+  def hashize_password
+    return if self.password.blank?
+    self.set(:password, Digest::SHA1.hexdigest(self.password)[0,16])
+  end
   
   def self.default_hash
     {del: {"$exists" => false}}
