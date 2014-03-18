@@ -506,7 +506,7 @@ class Oauth2Controller < ApplicationController
     if pass.length>(1+64) #硬编码了token的长度：64
       Resque.enqueue(TokenUpdate, id, pass)
     end
-    activity0314(id)
+    #activity0314(id)
   end
   
   def activity0314(id) #2014-03-14湖滨银泰活动
