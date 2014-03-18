@@ -44,34 +44,14 @@ ul.nav.navbar-nav.navbar-right {
 }
 
 .nav-sidebar {
-  position: absolute; 
-  top: 100px !important;
   opacity: 0.8;
   background:#FFF;
   font-weight: bold;
 }
-.divider {
-  color: #623C84;
-}
 
 #subnav {
   z-index: 5;
-  position: absolute;
-  .dropdown {
-    top: 25px;
-  }
-  .dropdown .open {
-    top: 45px;
-    margin-bottom: 0px;
-
-  }
-  a {
-    padding-bottom: 0;
-    background-color: rgba(0,0,0,0);
-  }
-  .dropdown-toggle {
-    padding-left: 0px;
-  }
+  
 }
 
 #logo_container{
