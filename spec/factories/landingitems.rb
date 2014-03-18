@@ -2,6 +2,5 @@
 
 FactoryGirl.define do
   factory :landingitem do
-    landingable nil
   end
 end

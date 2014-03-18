@@ -1,3 +1,3 @@
 class Landingitem < ActiveRecord::Base
-  belongs_to :landingable
+  belongs_to :expert
 end

@@ -14,6 +14,8 @@ class Article < ActiveRecord::Base
   validate :empty_categories
   validates :expert, presence: true
 
+  after_save :added_to_landingitems
+
   def producers
     "by " + self.expert.name
   end
@@ -26,6 +28,10 @@ class Article < ActiveRecord::Base
   # validation
   def empty_categories
     errors.add(:categories, "cannot be blank") unless categories.any? {|string| string.length > 0}
+  end
+
+  def added_to_landingitems
+    Landingitem.create(landingable_type: self.class.name, landingable_id: self.id, updated_at: self.updated_at, created_at: self.created_at, only_index: true, expert: self.expert)
   end
 end
 
