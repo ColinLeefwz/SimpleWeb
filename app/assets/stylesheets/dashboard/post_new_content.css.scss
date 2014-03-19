@@ -1,7 +1,18 @@
+@import "globals/variables";
 .guideline-sentence {
   color: #880848;
 
   a {
   	font-weight: bold;
+  }
+}
+#guideline-modal {
+  .modal-content, .modal-body, .list-group-item {
+    background-color: $prodygia-light-purple;
+    color: #FFF;
+  }
+
+  .modal-dialog {
+    width: 800px;
   }
 }
