@@ -31,7 +31,8 @@
 
 <% @photos.each do |photo| %>
    <div class="box photo col">
-    <a id="imgt2" href="<%= photo.img_url(true) %>"><%= image_tag(photo.img_url(true), :size => "204x204")%>
+    <a id="imgt2" href="<%= photo.img_url(true) %>" target='_blank'>
+      <%= image_tag(photo.img_url(true), :size => "204x204")%>
     </a>
     <br/>
     <%= link_to "屏蔽", "javascript:void(0)", :class => "AHide", rel: photo.id unless photo.hide %>
