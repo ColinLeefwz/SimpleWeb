@@ -21,3 +21,9 @@
       = f.submit "Update", class: 'btn btn-prodygia'
       = link_to "Back", :back, class: 'btn btn-default'
 
+  .setting
+    %h3 Subscription
+
+    - action = current_user.subscribed ? "Unsubscribe" : "Subscribe"
+    = link_to action, subscription_path, class: "btn btn-primary"
+

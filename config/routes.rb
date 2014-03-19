@@ -97,6 +97,10 @@ Prodygia::Application.routes.draw do
     get 'followers'
   end
 
+  controller :mailchimp do
+    get 'subscription'
+  end
+
   resources :resources 
 
   root to: "welcome#index"
