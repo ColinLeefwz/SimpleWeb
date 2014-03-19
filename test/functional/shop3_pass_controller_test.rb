@@ -28,7 +28,7 @@ class Shop3PassControllerTest < ActionController::TestCase
     shop_login(3)
     post :index,{:oldpass => '123456',"shop" => {:password => '1234567', :password_confirmation => '1234567'}}
     assert_equal '密码修改成功.', flash[:notice]
-    assert_equal '1234567', assigns[:shop].password
+    assert_equal Digest::SHA1.hexdigest('1234567')[0,16], assigns[:shop].password
     assert_redirected_to '/shop_login/index'
   end
 

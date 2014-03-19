@@ -5,13 +5,13 @@ db.shops.insert({
     "city" : "0571",
     'loc': [39.896445, 116.317378],
     'shops': [2],
-    'password': '123456'
+    'password': '7c4a8d09ca3762af'
 })
 
 db.shops.insert({
     "_id" : 111,
     "name" : "测试1分店",
-    "password": '123456',
+    "password": '7c4a8d09ca3762af',
     "city" : "0571",
     'loc': [39.896445, 116.317378],
     'psid': 1
@@ -28,7 +28,7 @@ db.shops.insert({
 
 db.shops.insert({
     "_id" : 2,
-    "password" : '123456',
+    "password" : '7c4a8d09ca3762af',
     "name" : "测试2",
     'loc': [[39.896445, 30.2359], 116.317378],
     "city" : "0571"
@@ -36,14 +36,14 @@ db.shops.insert({
 
 db.shops.insert({ 
     "_id" : 3,
-    "password" : '123456',
+    "password" : '7c4a8d09ca3762af',
     "name" : "测试3",
     "city" : "0571"
 })
 
 db.shops.insert({ 
     "_id" : 4,
-    "password" : '123456',
+    "password" : '7c4a8d09ca3762af',
     "name" : "测试4",
     "city" : "0571"
 })
@@ -55,7 +55,7 @@ db.shops.insert({
     "lo" : [ [ 30.282535, 120.117039 ], [ 30.282558, 120.116757 ] ],
     "loc" : [ [ 30.280254, 120.121824 ], [ 30.280277, 120.121542 ] ],
     "name" : "浙江科技产业大厦",
-    "password" : "123456",
+    "password" : "7c4a8d09ca3762af",
     "shops" : [1,2],
     "t" : 6,
     "tel" : "",
@@ -74,7 +74,7 @@ db.shops.insert({
         [ 30.2837623503445, 120.117419815138 ],
         [ 30.283494, 120.116104 ] ],
     "name" : "西湖国际科技大厦",
-    "password" : "123456",
+    "password" : "7c4a8d09ca3762af",
     "password_confirmation" : "123456",
     "t" : 10,
     "utotal" : 2,
@@ -87,7 +87,7 @@ db.shops.insert({
     "creator" : ObjectId("50ea8be1c90d8bd530000020"),
     "i" : true,
     "name" : "脸脸商厦",
-    "password" : "123456",
+    "password" : "7c4a8d09ca3762af",
     "shops" : [
         21830327,
         21830326,

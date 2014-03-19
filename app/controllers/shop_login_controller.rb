@@ -26,6 +26,7 @@ class ShopLoginController < ApplicationController
 
   def login
     #   Rails.cache.delete("LE#{real_ip}")
+    return redirect_to :controller => "shop3_login"
     return redirect_to :action  => 'index' if session[:shop_id]
     if request.post?
       shop =  Shop.find_by_id(params[:id])
