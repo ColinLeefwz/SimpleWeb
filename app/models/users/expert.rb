@@ -4,7 +4,6 @@ class Expert < Member
   has_many :articles, dependent: :destroy
   has_and_belongs_to_many :courses
   has_many :video_interviews, -> {order "updated_at DESC"}
-  has_many :resources
 
   has_one :video, as: :videoable, dependent: :destroy
   accepts_nested_attributes_for :video, allow_destroy: true
