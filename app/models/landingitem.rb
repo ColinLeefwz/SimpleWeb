@@ -21,5 +21,14 @@ class Landingitem < ActiveRecord::Base
                            expert: obj.expert)
       end
     end
+
+    def all_index_items
+      all_items = []
+      where(only_index: true).order(updated_at: :desc).each do |item|
+        all_items << item.landingable_type.constantize.find(item.landingable_id)
+      end
+      all_items
+    end
   end
+
 end

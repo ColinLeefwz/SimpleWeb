@@ -29,4 +29,13 @@ describe Landingitem do
       expect(Landingitem.first.only_index).to be_false
     end
   end
+
+  describe "#all_index_items" do
+    it "lists all items shown only in landing page" do
+      article
+      video_interview
+      announcement
+      expect(Landingitem.all_index_items).to eq [announcement, video_interview, article]
+    end
+  end
 end
