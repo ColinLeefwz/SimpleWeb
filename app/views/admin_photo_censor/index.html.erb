@@ -39,7 +39,7 @@
      <%= photo.user.try(:name)%>
     <br/>
     <%= link_to "屏蔽", "javascript:void(0)", :class => "AHide", rel: photo.id unless photo.hide %>
-    <%= link_to "显示", "/admin_photo_censor/display?id=#{photo.id}", :class => "ADisplay", rel: photo.id if photo.hide %>
+    <%= link_to "显示", "javascript:void(0)", :class => "ADisplay", rel: photo.id if photo.hide %>
   </div>
 <% end %>
   
@@ -70,7 +70,8 @@
         })
       });
       $('.ADisplay').click(function(){
-        $.get("/admin_photo_censor/display", {id: $(this).attr('rel')}, function(){
+        var obj = $(this);
+        $.get("/admin_photo_censor/display", {id: obj.attr('rel')}, function(){
           obj.replaceWith('已显示')
         })
       });

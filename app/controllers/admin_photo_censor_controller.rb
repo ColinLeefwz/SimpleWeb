@@ -18,12 +18,21 @@ class AdminPhotoCensorController < ApplicationController
   def hide
     photo = Photo.find_by_id(params[:id])
     photo.set(:hide, true)
+    Gchat.delete_all(mid: photo.mid)
+    expire_cache_shop(photo.room)
     render json: 1
   end
 
   def display
     photo = Photo.find_by_id(params[:id])
     photo.unset(:hide)
+    expire_cache_shop(photo.room)
     render json: 1
+  end
+
+  private
+  def expire_cache_shop(sid)
+    Rails.cache.delete("SP#{sid.to_i}-5")
+    Rails.cache.delete("SP#{sid.to_i}-6")
   end
 end
