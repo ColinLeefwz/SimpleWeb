@@ -35,6 +35,9 @@
       <%= image_tag(photo.img_url(true), :size => "204x204")%>
     </a>
     <br/>
+     <%= photo.shop.try(:name)%> -> 
+     <%= photo.user.try(:name)%>
+    <br/>
     <%= link_to "屏蔽", "javascript:void(0)", :class => "AHide", rel: photo.id unless photo.hide %>
     <%= link_to "显示", "/admin_photo_censor/display?id=#{photo.id}", :class => "ADisplay", rel: photo.id if photo.hide %>
   </div>
@@ -45,6 +48,8 @@
 <br />
 <br />
 <%= generate_paginate3.html_safe %>
+<br />
+<br />
 
 
 
