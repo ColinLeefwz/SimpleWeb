@@ -933,6 +933,45 @@ class User
       end
     end
   end
+
+  def self.check_qq_redis
+    $redis.keys("Q:*").each do |key|
+      qq = key[2..-1]
+      next if qq.size==0
+      count = User.where({qq:qq}).count
+      if count==0
+        user = User.find_by_qq(qq)
+        if user.qq.class != String
+          puts "#{key} : #{$redis.get(key)}, #{user.qq}"
+          user = User.find(user.id)
+          puts user.to_json
+          Xmpp.error_notify("QQ#{qq}对应用户count=0")
+        else
+          puts "#{key} : #{$redis.get(key)}, #{user.qq}"
+        end
+        #$redis.del(key)
+      end
+      if count==1
+        uid1 = User.where({qq:qq}).first.id.to_s
+        uid2 = $redis.get(key)
+        if uid1 != uid2
+          puts "#{uid1} != #{uid2}"
+        end
+      end
+      if count>1
+        puts "#{qq}:#{count}"
+        Xmpp.error_notify("QQ#{qq}不唯一")
+        #$redis.del(key)
+        user = User.find_by_qq(qq)
+        User.where({qq:qq}).each do |u|
+          next if user.id == u.id
+          Xmpp.error_notify("QQ#{qq}重复")
+          #u.set(:qq, "_"+u.qq.to_s)
+        end
+      end
+    end
+  end
+
   
   def self.check_qq_redis
     $redis.keys("Q:*").each do |key|
