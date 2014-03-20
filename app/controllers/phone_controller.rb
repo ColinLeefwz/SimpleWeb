@@ -133,9 +133,9 @@ class PhoneController < ApplicationController
   
   def login
     if params[:phone] && params[:phone].size<11 && !fake_phone(params[:phone]) 
-      shop = Shop.find_by_id( params[:phone])
+      shop = Shop.find_by_id_or_id2( params[:phone])
       if shop
-        if shop.password == params[:password]
+        if shop.password == Shop.hashize_string(params[:password])
           session[:user_id] = "s#{shop.id}"
     	    render :json => User.find_by_id("s#{shop.id}").output_self.to_json
         else
