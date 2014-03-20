@@ -2,6 +2,8 @@ class WelcomeController < ApplicationController
 
   def index
     @items = Landingitem.all_index_items
+
+    ## Peter at 2014-03-20: keep them for a while to make a comparation
     # video_interviews = VideoInterview.includes(:expert)
     # annoucements = Announcement.includes(:expert)
     # articles = Article.includes(:expert).where(draft: false)
@@ -11,7 +13,7 @@ class WelcomeController < ApplicationController
   end
 
   def load_more
-    logger.info "welcome load more"
+    @items = Landingitem.all_index_items
     respond_to do |format|
       format.js { render "load_more" }
     end

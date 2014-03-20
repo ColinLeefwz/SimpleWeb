@@ -1,16 +1,20 @@
-load_more = ->
-  alert "will send request to ask load more"
-  $.get("/welcome/load_more")
+top = 0
+hgth = 0
+@load_more = ->
+  # alert "top is #{top}, height is : #{hgth}"
+  if(top > parseInt(hgth/3)*2)
+    $.get("/welcome/load_more")
+    top = 0
+    hgth = 0
 
 
 scroll_load = ->
   $(document).scroll( ->
-    hght = $("#content")[0].scrollHeight
+    hgth = $("#content")[0].scrollHeight
     top = $(document).scrollTop()
-
-    if (top > parseInt(hght/3)*2)
-      load_more()
   )
+
+setInterval("load_more();", 2000)
 
 $(document).ready ->
   scroll_load()
