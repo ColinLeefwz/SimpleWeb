@@ -10,4 +10,11 @@ class WelcomeController < ApplicationController
     @show_category = true
   end
 
+  def load_more
+    logger.info "welcome load more"
+    respond_to do |format|
+      format.js { render "load_more" }
+    end
+  end
+
 end
