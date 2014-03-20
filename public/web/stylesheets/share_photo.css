@@ -1,139 +1,124 @@
 /* CSS Document */
+html{ overflow-x:hidden;}
 *{padding:0px;margin:0px;outline:none;}
 body {font-size: 12px;background:#F2F2F2;font-family:Arial;}
 img{border:none;}
 .l{float:left;}
 .r{float:right;}
 a{text-decoration:none;}
+ul{list-style:none}
 .f18{font-size:18px;}
 .f20{font-size:20px;}
 .p3p{padding:3% !important;}
 .pl3p{padding-left:3% !important;}
 .mt5{margin-top:5px;}
-.mt15{margin-top:15px !important;}
 .ml8p{margin-left:8% !important;}
 .ml10{margin-left:10px;}
 .mr5{margin-right:5px;}
 .mr20{margin-right:20px;}
 .mb10{margin-bottom:10px}
 .mb20{margin-bottom:20px}
-.width100p{width:100%;}
-.wordstyle{font-size:14px;color:#333333;}
-.wordstyle2{font-size:23px;color:#949494;display:block;overflow:hidden;width:100%;margin:10px 0px 20px 0px;font-family:宋体;}
+.wordstyle{font-size:14px;color:#666;}
+.wordstyle2{font-size:22px;color:#333333;display:block;overflow:hidden;width:100%;margin:10px 0px 20px 0px;}
 .bold{font-weight:bold;}
 .lh18{line-height:18px !important;}
 .lh25{line-height:25px !important;}
 .gay1{color:#949494 !important}
-a.btn1{width:151px;height:84px;background:url(/admin/image/share_weibo/btn1.png) left top no-repeat;display:block;float:left;margin-right:15px;_margin-right:7px;_display:inline;}
+a.btn1{width:135px;height:65px;background:url(/admin/image/share_weibo/btn1.png) left top no-repeat;display:block;_display:inline;}
 a.btn1:hover{background-image:url(/admin/image/share_weibo/btn1_2.png);}
-a.btn2{width:151px;height:84px;background:url(/admin/image/share_weibo/btn2.png) left top no-repeat;display:block;float:left;margin-right:15px;_margin-right:7px;_display:inline;}
+a.btn2{width:150px;height:60px;background:url(/admin/image/share_weibo/btn2.png) left top no-repeat;display:block;_display:inline;}
 a.btn2:hover{background-image:url(/admin/image/share_weibo/btn2_2.png);}
 a.btn3{width: 126px;height: 46px;display: inline-block;text-align:center;background: url("/admin/image/share_weibo/btn5.png") left top no-repeat;
 color:#ffffff;font-size:14px;font-weight:bold;line-height:46px;letter-spacing:-0.5px;}
-a.btn4{width: 252px;height: 92px;display: inline-block;text-align:center;background: url("/admin/image/share_weibo/images/btn5_1.png") left top no-repeat;
+a.btn4{width: 252px;height: 92px;display: inline-block;text-align:center;background: url("/admin/image/share_weibo/btn5_1.png") left top no-repeat;
 color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
-a.btn5{width:125px;font-size:14px;line-height:45px;height:45px;color:#fff;border:1px solid #009ADF;display:block;text-align:center;border-radius:10px 0 0 10px;
-background:url(/admin/image/share_weibo/bg2.jpg) center center;box-shadow: 1px 1px 1px #999;}
-a.btn5:hover{background:url(/admin/image/share_weibo/bg3.jpg) center center;border:1px solid #F59D60;}
-
-.block{display:block !important;}
-.none{display:none !important;}
-.relative{position:relative !important;}
-
-.w127{width:127px;}
+.dow_2code{ position:absolute; right:0px; top:0px;}
 
 .clear1{width:100%;height:0px;clear:both;overflow:hidden;zoom:1;}
 
 #BG1{position:absolute;left:0px;top:0px;width:100%;background-image:url(/admin/image/share_weibo/bg1.png);overflow:hidden;}
-#SmallPic{cursor:pointer;max-width:438px;}
+#SmallPic{cursor:pointer; width:100%;}
 #BigPic{cursor:pointer;position:absolute;z-index:5;}
 
-#Main{width:785px;margin:0px auto;position:relative;zoom:1;}
-#Main .mainleft{width:468px;float:left; box-shadow:3px 3px 2px #e6e6e6;border:1px solid #DDDDDD;background-color:#ffffff;}
-#Main .mainright{float:right;zoom:1;overflow:hidden;width:246px;}
+#Main{ max-width:800px; margin:0px auto; position:relative; zoom:1;}
+#Main .mainleft{ width:460px;float:left; box-shadow:3px 3px 2px #e6e6e6;border:1px solid #DDDDDD;background-color:#ffffff; text-align:center;}
+#Main .mainright{float:right;zoom:1;overflow:hidden; width:280px;}
+.mainright img.logo{ width:100%;}
 
 .main2{width:640px;margin:0px auto;display:block;overflow:hidden;}
-.con{display:block;overflow:hidden;box-shadow:0 1px 5px #ccc;border:1px solid #ccc;border-radius:5px;background-color:#ffffff;width:96%;margin:2.6% auto 0px auto;}
+.con{display:block;overflow:hidden;box-shadow:0 1px 5px #ccc;border:1px solid #ccc;border-radius:5px;background-color:#ffffff;width:96%;margin:3% auto 0px auto;}
 
 .footer{width:96%;margin:40px auto;overflow:hidden;color:#949494;line-height:30px;font-size:23px;}
-.footer h2{font-size:28px;color:#333;display:block;margin:10px 0px 10px 0px;}
+.footer h2{font-size:28px;color:#333;display:block;margin:20px 0px 10px 0px;}
 .footer  .fl{width:250px;float:left;}
 .footer  .fr{width:310px;float:left;padding-left:20px;}
-.footer2{margin-top:20px;line-height:22px;color:#949494;text-align:center;width:470px;float:left;clear:both;}
+.footer2{margin-top:20px;line-height:22px;color:#949494;text-align:center;}
 .footer2 a{color:#949494;}
 .footer2 a:hover{color:#469EEE;}
 
-.plane{padding:15px 19px;border-top:none;border-bottom:0px;color:#949494;background:#fff;line-height:18px;}
+.plane{padding:3%;border-top:none;border-bottom:0px;color:#949494;background:#fff;line-height:18px; text-align:left; text-indent:24px;}
 
-.plane2{padding:15px 19px;border-top:1px solid #DDDDDD;color:#949494;background:#F8F8F8;line-height:18px;clear:both;overflow:hidden;zoom:1;}
-.plane2 .plane2left{float:left; white-space:nowrap;}
-.plane2 .plane2right{float:right;background: url("/admin/image/share_weibo/pic9.png") left center no-repeat;padding-left:25px;margin-top:10px;}
-.plane2 .plane2left img{float:left;margin-right:10px;}
-
-.plane2  .shareto_button_tsina .stico_tsina, 
-.plane2  .shareto_button_fav .stico_fav,
-.plane2  .shareto_button_qzone .stico_qzone,
-.plane2  .shareto_button_renren .stico_renren{background: url("/admin/image/share_weibo/pic10.png") no-repeat left top;cursor: pointer;display: block;height: 32px;
-outline: 0 none;overflow: hidden;padding:0;text-indent: -9999px;width: 32px;float:left;}
-.plane2  .shareto_button_fav .stico_fav{background-position: -76px 0;}
-.plane2  .shareto_button_qzone .stico_qzone{background-position: -152px 0;}
-.plane2  .shareto_button_renren .stico_renren{background-position: -309px 0;}
-.plane2  .shareto_button_tsina:hover .stico_tsina{background-position: -38px 1px;}
-@media screen and (-webkit-min-device-pixel-ratio:0){ .plane2  .shareto_button_tsina:hover .stico_tsina{background-position: -38px 2px;} }
-.plane2  .shareto_button_fav:hover .stico_fav{background-position: -114px 0;}
-.plane2  .shareto_button_qzone:hover .stico_qzone{background-position: -190px 0;}
-.plane2  .shareto_button_renren:hover .stico_renren{background-position: -348px 0;}
-
+.plane2{padding:2%;border-top:1px solid #DDDDDD;color:#949494;background:#F8F8F8;line-height:18px;clear:both;overflow:hidden;zoom:1; position:relative; height:38px;}
+.plane2 .plane2left{ white-space:nowrap; position:absolute; left:3%;}
+.plane2 .plane2right{ background: url("/admin/image/share_weibo/pic9.png") 0 2px no-repeat; padding-left:20px; position:absolute; right:3%; top:30%;}
+.plane2 .plane2left img{ padding-right:10%;}
 
 .plane3{margin:30px 0px 50px 0px;color:#949494;line-height:22px;clear:both;overflow:hidden;font-size:14px;}
-.plane4{width:100%;overflow:hidden;margin-bottom:45px;clear:both;}
+.plane4{width:100%;overflow:hidden;clear:both; position:relative;}
 .plane6{width:96%;margin:0px auto 30px auto;overflow:hidden;text-align:center;}
-.plane7{padding:3% !important;border-bottom:0px;color:black;background:#fff;line-height:40px;font-size:28px;}
+.plane7{padding:3% !important;border-bottom:0px;color:#949494;background:#fff;line-height:30px;font-size:25px;}
 .plane8{padding:3% !important;border-top:2px solid #e2e2e1;color:#949494;background:#F8F8F8;line-height:25px;font-size:23px;clear:both;overflow:hidden;zoom:1;}
 .plane8 img{float:left;margin-right:10px;}
 .plane8 .plane8left{width:96px;float:left;}
 .plane8 .plane8left2{width:465px;float:left;padding-left:15px;}
 
-#Plane3{overflow:hidden;text-align:center;color:#fff;position:absolute;left:0px;top:0px;width:100%;background-color:rgba(82,88,94,0.6);
-font-size:22px;padding:5px 0px;line-height:30px;}
-#Plane3 .imgs{position:absolute;right:20px;top:10px;width:50px;}
-.opacityanimation{
--webkit-animation:oa 3s ease-out;
--moz-animation:oa 3s ease-out;
--o-animation:oa 3s ease-out;
--ms-animation:oa 3s ease-out;
-animation:oa 3s ease-out;
+ul.share_nav_bt{ float:right;}
+ul.share_nav_bt li{ float:left; line-height:32px;}
+ul.share_nav_bt li a{ display:block; width:32px; height:32px; background:url(/admin/image/share_weibo/share-icons.png) no-repeat;}
+ul.share_nav_bt li a.sn_weibo{ background-position:0px 0px;}
+ul.share_nav_bt li a.sn_weibo:hover{ background-position:-38px 1px;}
+ul.share_nav_bt li a.tx_weibo{ background-position:-75px 0px;}
+ul.share_nav_bt li a.tx_weibo:hover{ background-position:-113px 0px;}
+ul.share_nav_bt li a.qq_kj{ background-position:-150px 0px;}
+ul.share_nav_bt li a.qq_kj:hover{ background-position:-188px 0px;}
+
+.head{ display:none; position:relative; padding:10px 0;}
+.head img.logo{ width:auto; height:60px;}
+.head div.plane3{ margin:0px; position:absolute; right:0px; top:18px;}
+.head div.plane3 div{ margin:0px;}
+.plane2_download{ line-height:38px; display:none;}
+.plane2_download a{ padding:0 20px; color:#00b6e4;}
+.bdsharebuttonbox{ padding-top:5px;}
+.mainleft img.width100p{ width: 100%; height: auto;}
+.plane2left img{ position: absolute; left: 0px; top: 0px;}
+.plane2left span{ position: absolute; left: 45px; top: 0px;}
+.plane2left span.wordstyle_time{ top: 20px;}
+@media screen and (max-width: 640px) {
+	#Main{ width: 98%; margin: 0 auto;}
+	.head{ display:block;}
+	#Main .mainleft{ float:none; width:100%; max-width:100%;}
+	.mainright { display:none;}
+	.plane2_download{ display:block;}
 }
-@-webkit-keyframes oa{
-	0%{opacity:0;}
-	18%{opacity:1;}
-	36%{opacity:0;}
-	54%{opacity:1;}
-	70%{opacity:0;}
-	100%{opacity:1;}
+@media screen and (max-width: 320px) {
+	.head img.logo{ width:auto; height:50px;}
+	.head div.plane3{ margin:0px; position:absolute; right:0px; top:14px;}
 }
-@-moz-keyframes oa{
-	0%{opacity:0;}
-	18%{opacity:1;}
-	36%{opacity:0;}
-	54%{opacity:1;}
-	70%{opacity:0;}
-	100%{opacity:1;}
-}
-@-o-keyframes oa{
-	0%{opacity:0;}
-	18%{opacity:1;}
-	36%{opacity:0;}
-	54%{opacity:1;}
-	70%{opacity:0;}
-	100%{opacity:1;}
-}
-@-ms-keyframes oa{
-	0%{opacity:0;}
-	18%{opacity:1;}
-	36%{opacity:0;}
-	54%{opacity:1;}
-	70%{opacity:0;}
-	100%{opacity:1;}
-}
-/*.center_image{width:100%;height:468px;}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
