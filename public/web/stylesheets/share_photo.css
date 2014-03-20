@@ -90,6 +90,9 @@ ul.share_nav_bt li a.qq_kj:hover{ background-position:-188px 0px;}
 .plane2_download a{ padding:0 20px; color:#00b6e4;}
 .bdsharebuttonbox{ padding-top:5px;}
 .mainleft img.width100p{ width: 100%; height: auto;}
+.plane2left img{ position: absolute; left: 0px; top: 0px;}
+.plane2left span{ position: absolute; left: 45px; top: 0px;}
+.plane2left span.wordstyle_time{ top: 20px;}
 @media screen and (max-width: 640px) {
 	#Main{ width: 98%; margin: 0 auto;}
 	.head{ display:block;}
