@@ -215,6 +215,7 @@ class Shop
   def total_user
     total = $redis.get("suac#{self.id.to_i}")
     total = self.utotal.to_i if total.nil?
+    total = 836 if self.id.to_i == 21838725 # 行酷车友会
     total
   end
 
@@ -847,7 +848,7 @@ class Shop
   end
 
   def has_food_purview?
-    /测试|脸脸/ =~ self.name || self.id.to_s == '21839855' || self.id.to_s == '21832844' || self.id.to_s == '21837941' || self.id.to_s == '21839738' || self.id.to_s == '21840235' ? true : false
+    /测试|脸脸/ =~ self.name || self.id.to_s == '21839855' || self.id.to_s == '21832844' || self.id.to_s == '21837941' || self.id.to_s == '21839738' || self.id.to_s == '21840235' || self.id.to_s == '21837783' ? true : false
   end
 
   def has_trade_purview?
