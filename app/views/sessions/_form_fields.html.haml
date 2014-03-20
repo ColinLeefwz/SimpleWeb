@@ -27,3 +27,8 @@
     %label.control-label{for: "user_timezone"}Timezone
   .col-sm-7
     = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, class: 'form-control'
+
+
+.form-group
+  = f.check_box :subscribed
+  %label.control-label{for: "user_subscribed"} Keep me informed with upcoming news
