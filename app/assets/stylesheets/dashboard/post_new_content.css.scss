@@ -4,18 +4,15 @@
 
   a {
   	font-weight: bold;
+    color: $prodygia-purple;
+    &:hover {
+      color: #FFF;
+      text-decoration: none;
+      background: $prodygia-light-purple;
+    }
   }
 }
 #guideline-modal {
-  .guideline-sentence {
-    a {
-      color: $prodygia-purple;
-    }
-    a:hover {
-      color: #FFF;
-      background-color: $prodygia-light-purple;
-    }
-  }
   .modal-dialog {
     width: 800px;
   }
