@@ -22,7 +22,7 @@
     %li.dropdown
       %a.navbar-btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
         %i#sidebar_icon
-          = image_tag("sidebar_icon.png")
+          = image_tag("sidebar_icon.png", class:'tooltips', title:'add to Favorites', data:{placement: 'right'})
       %ul.nav.dropdown-menu.nav-sidebar
         %li
           %a.filters{href: "#all", data: {filter: '*'}}
@@ -42,19 +42,19 @@
           %ul.dropdown-menu
 
             %li
-              %a.filters{href: "#announcement", data: {filter: '.announcement'}} 
+              %a.filters{href: "#announcement", data: {filter: '.announcement'}}
                 %span.badge.pull-right
                   = model_count('Announcement')
                 announcement
 
             %li
-              %a.filters{href: "#article", data: {filter: '.article'}} 
+              %a.filters{href: "#article", data: {filter: '.article'}}
                 %span.badge.pull-right
                   = model_count('Article')
                 article
 
             %li
-              %a.filters{href: "#video", data: {filter: '.videointerview'}} 
+              %a.filters{href: "#video", data: {filter: '.videointerview'}}
                 %span.badge.pull-right
                   = model_count('VideoInterview')
                 video
