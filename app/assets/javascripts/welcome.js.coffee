@@ -54,7 +54,7 @@
         filter: selector
       }
 
-      
+
 
 load_sublime = ->
   sublime.load()
@@ -65,15 +65,13 @@ load_sublime = ->
       )
     )
 
-
 update_profile_message = ->
   $("input[type='submit']").on 'click', ->
     $("input[type='file']").css("width", "95px")
 
-    
-
 $(document).ready ->
   load_sublime()
+  $("#tip-trigger").find("a").trigger("click")
 
 $(document).on 'page:load', ->
   load_sublime()
