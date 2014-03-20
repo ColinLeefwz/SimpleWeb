@@ -934,7 +934,7 @@ class User
     end
   end
 
-  def self.check_qq_redis
+  def self.check_qq_redis2
     $redis.keys("Q:*").each do |key|
       qq = key[2..-1]
       next if qq.size==0
