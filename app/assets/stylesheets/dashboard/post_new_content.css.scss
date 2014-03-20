@@ -7,11 +7,15 @@
   }
 }
 #guideline-modal {
-  .modal-content, .modal-body, .list-group-item {
-    background-color: $prodygia-light-purple;
-    color: #FFF;
+  .guideline-sentence {
+    a {
+      color: $prodygia-purple;
+    }
+    a:hover {
+      color: #FFF;
+      background-color: $prodygia-light-purple;
+    }
   }
-
   .modal-dialog {
     width: 800px;
   }
