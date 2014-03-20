@@ -1,12 +1,9 @@
-#tip-trigger
-  %a{"data-target" => "#tip-modal", "data-toggle" => "modal", href: "#", tabindex: "-1"}
 #content.container.margin-bottom
   - @items.each do |item|
     = render partial: "box_content", locals: { item: item }
 
 -# hidden modals
 = render "shared/sign_in_modal"
-= render "shared/tip_modal"
 
 :javascript
   load_isotope()

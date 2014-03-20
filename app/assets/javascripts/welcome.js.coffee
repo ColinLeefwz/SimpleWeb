@@ -71,7 +71,6 @@ update_profile_message = ->
 
 $(document).ready ->
   load_sublime()
-  $("#tip-trigger").find("a").trigger("click")
 
 $(document).on 'page:load', ->
   load_sublime()

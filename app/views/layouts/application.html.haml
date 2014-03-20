@@ -9,6 +9,9 @@
     = csrf_meta_tags
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
   %body
+
+    #tip-trigger
+      %a{"data-target" => "#tip-modal", "data-toggle" => "modal", href: "#", tabindex: "-1"}
     = render "shared/header"
     #flash_hook
     #flash
@@ -21,4 +24,4 @@
     = render "shared/sign_in_modal"
     %footer
       = render "shared/footer"
-
+    = render "shared/tip_modal"

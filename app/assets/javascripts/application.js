@@ -23,3 +23,8 @@
 //= require paypal-button.min
 //= require bootstrap-datetimepicker.min
 //= require_tree .
+
+
+$(document).ready(function() {
+  $("#tip-trigger").find("a").trigger("click")
+}
