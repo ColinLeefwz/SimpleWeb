@@ -1,8 +1,14 @@
 - content_for(:title){ @course.title }
 
 .course-info.clearfix
-  .cover
-    = @course.video.available? ? (render "shared/sublime_video", video: @course.video) : (image_tag @course.cover.url)
+  .cover-wrapper
+    .cover
+      = @course.video.available? ? (render "shared/sublime_video", video: @course.video) : (image_tag @course.cover.url)
+    - if (current_user) && (current_user.enrolled? @course)
+      .button.subscribed You're subscribed
+    - else
+      .button.subscribe
+        = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
 
   .description
     .title
@@ -20,11 +26,6 @@
     = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_path(@course, type: @course.class.name)
     = render 'shared/social_share', item: @course
 
-  - if (current_user) && (current_user.enrolled? @course)
-    .button.subscribed You're subscribed
-  - else
-    .button.subscribe
-      = link_to "Subscribe for #{number_to_currency(@course.price)}", enroll_course_path(@course)
 
 = render partial: "chapter", collection: @course.chapters
 = render partial: "comments/comments", locals: {commentable: @course}
