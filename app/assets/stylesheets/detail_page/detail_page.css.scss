@@ -80,6 +80,21 @@
 
 
 //-------- detail --------
+@media screen and (max-width: 500px) {
+  .video-cover {
+    img {
+      width: 100px;
+    }
+  }
+}
+@media screen and (min-width: 500px) {
+  .video-cover {
+    img {
+      width: 200px;
+    }
+  }
+}
+
 .detail{
   background: white;
   margin-left: auto;
@@ -99,7 +114,6 @@
 
   img{
     overflow: hidden;
-    width: 320px;
   }
 }
 
@@ -110,5 +124,6 @@
   p {
     padding-top: 1rem;
     padding-bottom: 1rem;
+    line-height: inherit;
   }
 }
