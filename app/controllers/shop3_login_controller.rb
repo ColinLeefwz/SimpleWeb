@@ -56,6 +56,7 @@ class Shop3LoginController < ApplicationController
   end
 
   def login2
+    reset_session
     if Digest::SHA256.hexdigest(params[:id] + "mweb")[0,32] == params[:hash]
       session[:shop_id] = params[:id]
       redirect_to '/shop3_login/index'
