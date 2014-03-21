@@ -2,6 +2,7 @@
 module GpsOffset
 
   def get_baidu_offset(lo)
+    return nil unless lo
     hash = "OF%.2f%.1f" %  lo
     field = ("%.2f" %  lo[1])[-1..-1]
     str = $redis.hget(hash,field)
@@ -34,22 +35,6 @@ module GpsOffset
     end
     str.split(",").map{|x| x.to_f}
   end
-  
-  def get_baidu_offset_riak(lo)
-    #return [0,0] if ENV["RAILS_ENV"] != "production"
-    begin
-      client = Ripple.client
-      bucket = client.bucket('boffsets')
-      k = "%.2f%.2f" %  lo
-      data = bucket.get(k).data
-      return data
-    rescue Exception => e
-      logger.warn e
-      offset = Mongoid.session(:dooo)[:offsetbaidus].where({loc: {'$near' => lo}}).first
-      return offset['d'] if offset
-      return [0,0]
-    end
-  end
 
   def lob_to_lo(lob)
     data = get_baidu_offset(lob)
@@ -67,6 +52,7 @@ module GpsOffset
   end
   
   def get_gcj_offset(lo)
+    return nil unless lo
     hash = "GCJ%.2f%.1f" %  lo
     field = ("%.2f" %  lo[1])[-1..-1]
     str = $redis.hget(hash,field)
