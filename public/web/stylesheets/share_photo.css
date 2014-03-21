@@ -103,6 +103,8 @@ ul.share_nav_bt li a.qq_kj:hover{ background-position:-188px 0px;}
 	.head img.logo{ width:auto; height:50px;}
 	.head div.plane3{ margin:0px; position:absolute; right:0px; top:4px;}
 }
+.mainleft .width100p{cursor:pointer; width:96%; padding-top: 2%;}
+.none{ display: none;}
 
 
 
