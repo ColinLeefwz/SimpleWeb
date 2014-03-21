@@ -24,7 +24,7 @@
 			</div>
         </div>
 		<div class="mainleft" id="MainLeft">
-			<%=image_tag Photo.img_url(@photo.id),:class=>"width100p block" %>				
+			<%=image_tag Photo.img_url(@photo.id),:class=>"width100p block" %>
 			<% if @photo.is_multi? %>
 			<% @photo.multi_photos[:photos].each_with_index do |url, index| %>
 				<br>
@@ -48,10 +48,10 @@
 			</div>
 			<div class="plane2">
                 <div class="bdsharebuttonbox"><a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a><a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a><a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a><a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a><a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a></div>
-<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"<%= Photo.img_url(@photo.id) %>","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 			</div>
 			<div class="plane2 plane2_download">
-            	<p>赶快加入我们吧：<a href="https://www.dface.cn/a?v=130">Android版</a><a href="www.dface.cn/a?v=130">App Store</a></p>
+            	<p>赶快加入我们吧：<a href="https://www.dface.cn/a?v=130">Android版</a><a href="https://www.dface.cn/a?v=130">App Store</a></p>
 			</div>
 		</div>
 		<div class="mainright">
@@ -61,7 +61,7 @@
 				脸脸--基于现场的移动社交
 			</div>
 			<div class="plane4">
-				<a href="https://www.dface.cn/a?v=130" alt="iPhone版" class="btn1"></a>
+				<a href="http://www.dface.cn/a?v=130" alt="iPhone版" class="btn1"></a>
 				<a href="http://www.dface.cn/a?v=130" alt="android版" class="btn2"></a>
 				<img src="/admin/image/share_weibo/qrcode.png" alt="" height="128" class="dow_2code"/>
 			</div>
@@ -71,7 +71,6 @@
 	</div>
 	<script src="/web/js/jquery-1.10.2.min.js"></script>
 	<script src="/web/js/public.js"></script>
-	<script src="js/public.js"></script>
 	<!--script type="text/javascript">
 		(function(){
 			var mobile_host = "http://www.dface.cn/mini.html";
