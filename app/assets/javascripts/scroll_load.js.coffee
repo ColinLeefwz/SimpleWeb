@@ -1,7 +1,6 @@
 top = 0
 hgth = 0
 @load_more = ->
-  # alert "top is #{top}, height is : #{hgth}"
   if(top > parseInt(hgth/3)*2)
     $.get("/welcome/load_more")
     top = 0

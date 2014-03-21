@@ -1,8 +1,5 @@
 #content.container.margin-bottom
   = render "items"
-  - @items.each do |item|
-    = render partial: "box_content", locals: { item: item }
-  #load-more
 
 -# hidden modals
 = render "shared/sign_in_modal"

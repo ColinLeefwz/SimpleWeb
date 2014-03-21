@@ -108,5 +108,5 @@ Prodygia::Application.routes.draw do
   get "/privacy", to: 'static_pages#privacy'
   get "welcome/load_more", to: "welcome#load_more"
 
-  get "*page" => redirect("/")
+  # get "*page" => redirect("/")
 end

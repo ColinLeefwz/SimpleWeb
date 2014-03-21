@@ -22,9 +22,10 @@ class Landingitem < ActiveRecord::Base
       end
     end
 
-    def all_index_items
+    def all_index_items(start_point)
       all_items = []
-      where(only_index: true).order(updated_at: :desc).each do |item|
+      start = start_point * 10
+      where(only_index: true).order(updated_at: :desc).limit(12).offset(start).each do |item|
         all_items << item.landingable_type.constantize.find(item.landingable_id)
       end
       all_items

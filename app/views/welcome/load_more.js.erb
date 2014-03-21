@@ -1,1 +1,2 @@
-$("#content").isotope("appended", "<%=j render partial: "items"%>")
+elems = $($.parseHTML("<%= j render partial: 'items' %>"))
+$("#content").append(elems).isotope("appended", elems)

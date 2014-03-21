@@ -35,7 +35,13 @@ describe Landingitem do
       article
       video_interview
       announcement
-      expect(Landingitem.all_index_items).to eq [announcement, video_interview, article]
+      expect(Landingitem.all_index_items(0)).to eq [announcement, video_interview, article]
+    end
+
+    it "limits the count to 10" do
+      article_list = create_list(:article, 14, title: "article", expert: sameer, categories: ["culture"])
+      video_interview_list = create_list(:video_interview, 14, expert: sameer, categories: ["culture"])
+      expect(Landingitem.all_index_items(0).count).to eq 10
     end
   end
 end
