@@ -30,6 +30,15 @@ describe Landingitem do
     end
   end
 
+  describe "update record in landingitems if update an real content" do
+    it "updated landingitem record if update an article" do
+      article.update_attributes title: "new title"
+      expect(Landingitem.count).to eq 1
+      expect(Landingitem.first.updated_at).to eq article.updated_at
+    end
+
+  end
+
   describe "#all_index_items" do
     it "lists all items shown only in landing page" do
       article
@@ -41,7 +50,8 @@ describe Landingitem do
     it "limits the count to 10" do
       article_list = create_list(:article, 14, title: "article", expert: sameer, categories: ["culture"])
       video_interview_list = create_list(:video_interview, 14, expert: sameer, categories: ["culture"])
-      expect(Landingitem.all_index_items(0).count).to eq 10
+      expect(Landingitem.all_index_items(0).count).to eq 12
     end
   end
+
 end

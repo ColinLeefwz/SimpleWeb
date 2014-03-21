@@ -22,9 +22,13 @@ class Landingitem < ActiveRecord::Base
       end
     end
 
+    def update_record(obj)
+      Landingitem.where(landingable_type: obj.class.name, landingable_id: obj.id).first.update_attributes(updated_at: obj.updated_at)
+    end
+
     def all_index_items(start_point)
       all_items = []
-      start = start_point * 10
+      start = start_point * 12
       where(only_index: true).order(updated_at: :desc).limit(12).offset(start).each do |item|
         all_items << item.landingable_type.constantize.find(item.landingable_id)
       end
