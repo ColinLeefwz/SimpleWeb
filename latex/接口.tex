@@ -1107,6 +1107,107 @@ dface://scheme/user/info?id=XXXXX 查看用户信息
 3. 上述规则只使用于聊天图片，个人头像还是采用原来的压缩到640*640的规则。
 
 
+\section{坐标转换接口}
+
+\subsection{实际经纬度坐标转GCJ坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/real2gcj} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回转换后的坐标｛lat:, lng:｝
+
+\subsection{实际经纬度坐标转Baidu坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/real2bd09} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsection{GCJ坐标转实际坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/gcj2real} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{百度坐标转实际经纬度坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/bd092real} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{百度坐标转GCJ坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/bd092gcj} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
 \section{关于程序各页面之间的切换规则}
 
 程序的首页是选择现场页面。现场则是一个聊天室页面。
