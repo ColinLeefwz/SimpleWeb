@@ -4,19 +4,28 @@ class Shop3FaqsController < ApplicationController
   before_filter :shop_authorize, :except => [:show]
   layout 'shop3'
 
+  def faqs
+    ods = %w(01 02 03 04 05 06 07 08 09)
+    ShopFaq.where({sid: session[:shop_id], od: {"$in" => ods}}).sort({od: 1})
+  end
+
   def index
-    @shop_faqs = session_shop.faqs
+    if params[:all]
+      @shop_faqs = session_shop.faqs
+    else
+      @shop_faqs=  faqs
+    end
   end
   
   def new
     @shop_faq = ShopFaq.new
     # @shop_faq.save!
-    @shop_faqs = session_shop.faqs
+    @shop_faqs=  faqs
   end
 
   def edit
-    @shop_faqs = session_shop.faqs
     @shop_faq = ShopFaq.find(params[:id])
+    @shop_faqs=  faqs
   end
 
   def update
