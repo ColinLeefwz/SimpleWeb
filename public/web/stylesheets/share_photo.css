@@ -56,7 +56,7 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 .footer2 a{color:#949494;}
 .footer2 a:hover{color:#469EEE;}
 
-.plane{padding:3%;border-top:none;border-bottom:0px;color:#949494;background:#fff;line-height:18px; text-align:left; text-indent:24px;}
+.plane{padding:3%;border-top:none;border-bottom:0px;color:#949494;background:#fff;line-height:18px; text-align:left;}
 
 .plane2{padding:4%;border-top:1px solid #DDDDDD;color:#949494;background:#F8F8F8;line-height:18px;clear:both;overflow:hidden;zoom:1; position:relative; height:38px;}
 .plane2 .plane2left{ white-space:nowrap; position:absolute; left:3%;}
