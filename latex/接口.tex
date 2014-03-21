@@ -1168,7 +1168,7 @@ GET & \multicolumn{3}{|c|}{/loc/gcj2real} \\
 
 
 
-\subsection{百度坐标实际经纬度坐标}
+\subsection{百度坐标转实际经纬度坐标}
 
 \begin{table}[H]
    \begin{center}
@@ -1188,6 +1188,23 @@ GET & \multicolumn{3}{|c|}{/loc/bd092real} \\
 
 
 
+\subsection{百度坐标转GCJ坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/bd092gcj} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
 
 
 
