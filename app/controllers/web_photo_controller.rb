@@ -10,8 +10,13 @@ class WebPhotoController < ApplicationController
       return
     end
     if @photo
+      agent = request.env["HTTP_USER_AGENT"].downcase
       @user = @photo.user
-      render :file => "/web_photo/show.html", :layout => false
+      if agent.index("iphone") || agent.index("ipad") || agent.index("android") || agent.index("mobile")
+        render :file => "/web_photo/show.mobile", :layout => false
+      else
+        render :file => "/web_photo/show.html", :layout => false
+      end
     else
       redirect_to "/404.html"
     end
