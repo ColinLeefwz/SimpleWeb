@@ -27,5 +27,12 @@ class LocController < ApplicationController
     ret = Shop.lob_to_lo(lo)
     render :json => {lat:ret[0], lng:ret[1]}
   end
+  
+  def bd092gcj
+    lo=[params[:lat].to_f, params[:lng].to_f]
+    ret = Shop.lob_to_lo(lo)
+    ret = Shop.lo_to_log(ret)
+    render :json => {lat:ret[0], lng:ret[1]}
+  end
     
 end
