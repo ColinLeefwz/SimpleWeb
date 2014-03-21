@@ -1,9 +1,10 @@
 top = 0
 hgth = 0
+get_url = ""
 @load_more = ->
   if $.cookie("no_more_load") is "false"
     if(top > parseInt(hgth/3)*2)
-      $.get("/welcome/load_more")
+      $.get(get_url)
       top = 0
       hgth = 0
   else
@@ -15,10 +16,21 @@ scroll_load = ->
     top = $(document).scrollTop()
   )
 
+set_get_url = ->
+  current_url = document.URL
+  profile_pattern = new RegExp("profile$")
+  if current_url.match(profile_pattern)
+    expert_id = $.cookie("expert_id")
+    get_url = "/experts/#{expert_id}/load_more"
+  else
+    get_url = "/welcome/load_more"
+
 interval = setInterval("load_more();", 2000)
 
 $(document).ready ->
   scroll_load()
+  set_get_url()
 
 $(document).on 'page:load', ->
   scroll_load()
+  set_get_url()
