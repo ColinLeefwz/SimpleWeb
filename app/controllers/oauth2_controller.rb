@@ -504,7 +504,7 @@ class Oauth2Controller < ApplicationController
   
   def update_token0(id,pass)
     if pass.length>(1+64) #硬编码了token的长度：64
-      Resque.enqueue(TokenUpdate, id, pass)
+      #Resque.enqueue(TokenUpdate, id, pass)
     end
     #activity0314(id)
   end
