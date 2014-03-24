@@ -37,6 +37,13 @@ describe Landingitem do
       expect(Landingitem.first.updated_at).to eq article.updated_at
     end
 
+    it "updated the draft attributes" do
+      User.delete_all
+      ar = create(:article, title: "draft one", expert: sameer, categories: ["culture"], draft: true)
+      ar.update_attributes draft: false
+      expect(Landingitem.last.draft).to be_false
+    end
+
   end
 
   describe "#all_index_items" do

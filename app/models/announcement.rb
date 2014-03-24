@@ -15,4 +15,8 @@ class Announcement < ActiveRecord::Base
   has_one :visit, as: :visitable
 
   has_attached_file :cover
+
+  def draft
+    false
+  end
 end

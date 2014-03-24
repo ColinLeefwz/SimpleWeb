@@ -37,7 +37,7 @@ class Expert < Member
 
   def load_landingitems(point)
     all_items = []
-    self.landingitems.limit(6).offset(point * 6).each do |item|
+    self.landingitems.where(draft: false).limit(6).offset(point * 6).each do |item|
       all_items << item.landingable_type.constantize.find(item.landingable_id)
     end
     all_items

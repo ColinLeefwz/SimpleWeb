@@ -62,6 +62,10 @@ class Course < ActiveRecord::Base
     false
   end
 
+  def draft
+    false
+  end
+
   private
   def create_a_video
     self.create_video

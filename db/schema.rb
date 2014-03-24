@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140318072527) do
+ActiveRecord::Schema.define(version: 20140324082125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,6 +214,7 @@ ActiveRecord::Schema.define(version: 20140318072527) do
     t.boolean  "only_index"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "draft",            default: false
   end
 
   add_index "landingitems", ["expert_id"], name: "index_landingitems_on_expert_id", using: :btree

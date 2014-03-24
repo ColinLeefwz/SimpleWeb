@@ -20,4 +20,8 @@ class VideoInterview < ActiveRecord::Base
   def editable
     true
   end
+
+  def draft
+    false
+  end
 end
