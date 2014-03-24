@@ -33,7 +33,7 @@
                       .action
                         Posted
                       .title
-                        = link_to content.title, polymorphic_path(content)
+                        = link_to truncate_html(content.title, length: 35, omission: '...'), polymorphic_path(content), class: 'tooltips', title: "#{content.title}", data:{placement: 'bottom'}
                   .col-md-4
                     .published-time
                       = time_ago_in_words(content.updated_at)
