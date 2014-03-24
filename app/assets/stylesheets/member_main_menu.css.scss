@@ -153,7 +153,6 @@
       padding-top: 1%;
       .favorite-session-main{
         height: 110%;
-        font-size: 15px;
         .favorite-session-title{
           font-family: "Oswaldreg";
           font-weight: 400;
@@ -167,7 +166,9 @@
 
         .favorite-session-description{
           padding-top: 2%;
+          font-size: 16px;
           p{
+            font-size: 16px;
             margin: 0;
             font-family: "Latoreg";
             line-height: 1em;
