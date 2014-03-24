@@ -6,15 +6,16 @@
 - @followed_experts.each do |e|
   .jumbotron.container.shadow
     .col-md-3.col-sm-2
-      .expert-info
-        .expert-avatar
-          = link_to image_tag(e.avatar.url), profile_expert_path(e)
-        .expert-text-info
-          .expert-name
-            = link_to e.name, profile_expert_path(e)
-          .expert-title
-            - profile = e.profile
-            = [profile.title, profile.company].reject(&:blank?).join(",")
+      .expert-side
+        .expert-info
+          .expert-avatar
+            = link_to image_tag(e.avatar.url), profile_expert_path(e)
+          .expert-text-info
+            .expert-name
+              = link_to e.name, profile_expert_path(e)
+            .expert-title
+              - profile = e.profile
+              = [profile.title, profile.company].reject(&:blank?).join(",")
     .col-md-9.col-sm-10
       .expert-actions
         .follow-star
