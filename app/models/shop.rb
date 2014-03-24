@@ -237,6 +237,10 @@ class Shop
       total = self.utotal
       female = total/2
     end
+    if self.id.to_i == 21838725 # 行酷车友会
+      total = 836 
+      female = 385
+    end
     male = total - female
     safe_output.merge!( {"user"=>total, "male"=>male, "female"=>female} )
   end

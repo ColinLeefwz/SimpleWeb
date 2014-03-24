@@ -107,7 +107,7 @@ class AroundmeController < ApplicationController
     if coupons
       ret.each_with_index do |xx,i|
         ret[i]["coupon"] = 1 if coupons.index(xx["id"].to_i.to_s)
-        ret[i]["coupon"] = 1 if ret[i]["id"].to_i == 21838725  # 行酷车友会
+        ret[i].delete("coupon") if ret[i]["id"].to_i == 21838725  # 行酷车友会
         ret[i]["city"] = City.city_name(city) if i==0
       end
     end

@@ -503,8 +503,13 @@ class Oauth2Controller < ApplicationController
   end
   
   def update_token0(id,pass)
+    return
+    #TODO: 脸脸Web登录成功后设置push token，且强制单点登录
     if pass.length>(1+64) #硬编码了token的长度：64
-      Resque.enqueue(TokenUpdate, id, pass)
+      Rails.cache.fetch("UPTOKEN#{id}", :expires_in => 1.days) do
+        Resque.enqueue(TokenUpdate, id, pass)
+        "1"
+      end
     end
     #activity0314(id)
   end

@@ -25,7 +25,7 @@ class PhotosController < ApplicationController
       time,total = params[:id][25..-1].split("-").map{|x| x.to_i}
       photo = Photo.where({user_id:user.id, room:room, time:time, total:total}).first
       unless photo
-        Xmpp.error_notify("多图上传，七牛先上传完成：#{user.name},#{Shop.find_by_id(room).name}")
+        #Xmpp.error_notify("多图上传，七牛先上传完成：#{user.name},#{Shop.find_by_id(room).name}")
       end
     else
       Xmpp.error_notify("图片上传七牛回调出错：#{request.params}")

@@ -37,7 +37,7 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 .clear1{width:100%;height:0px;clear:both;overflow:hidden;zoom:1;}
 
 #BG1{position:absolute;left:0px;top:0px;width:100%;background-image:url(/admin/image/share_weibo/bg1.png);overflow:hidden;}
-#SmallPic{cursor:pointer; width:100%;}
+#SmallPic{cursor:pointer; width:96%; padding-top: 2%;}
 #BigPic{cursor:pointer;position:absolute;z-index:5;}
 
 #Main{ max-width:800px; margin:0px auto; position:relative; zoom:1;}
@@ -56,9 +56,9 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 .footer2 a{color:#949494;}
 .footer2 a:hover{color:#469EEE;}
 
-.plane{padding:3%;border-top:none;border-bottom:0px;color:#949494;background:#fff;line-height:18px; text-align:left; text-indent:24px;}
+.plane{padding:3%;border-top:none;border-bottom:0px;color:#555;background:#fff;line-height:18px; text-align:left;}
 
-.plane2{padding:2%;border-top:1px solid #DDDDDD;color:#949494;background:#F8F8F8;line-height:18px;clear:both;overflow:hidden;zoom:1; position:relative; height:38px;}
+.plane2{padding:4%;border-top:1px solid #DDDDDD;color:#949494;background:#F8F8F8;line-height:18px;clear:both;overflow:hidden;zoom:1; position:relative; height:38px;}
 .plane2 .plane2left{ white-space:nowrap; position:absolute; left:3%;}
 .plane2 .plane2right{ background: url("/admin/image/share_weibo/pic9.png") 0 2px no-repeat; padding-left:20px; position:absolute; right:3%; top:30%;}
 .plane2 .plane2left img{ padding-right:10%;}
@@ -82,28 +82,24 @@ ul.share_nav_bt li a.tx_weibo:hover{ background-position:-113px 0px;}
 ul.share_nav_bt li a.qq_kj{ background-position:-150px 0px;}
 ul.share_nav_bt li a.qq_kj:hover{ background-position:-188px 0px;}
 
-.head{ display:none; position:relative; padding:10px 0;}
-.head img.logo{ width:auto; height:60px;}
-.head div.plane3{ margin:0px; position:absolute; right:0px; top:18px;}
+.head{ position:relative; overflow: hidden; height: 68px; width:100%; max-width:310px; margin: 20px auto 20px;}
+.head img.logo{ width:auto; height:60px; position: absolute; left: 0px; top: 0px;}
+.head div.plane3{ margin:0px; position:absolute; right:10px; top:0px;}
 .head div.plane3 div{ margin:0px;}
-.plane2_download{ line-height:38px; display:none;}
-.plane2_download a{ padding:0 20px; color:#00b6e4;}
+.plane2_download{ line-height:38px; height: 58px; padding-top: 10px; padding-bottom: 20px; }
+.plane3{ font-size: 12px;}
+.plane2_download a{ padding:0 20px; color:#00b6e4; width: 100%; height: 68px;}
 .bdsharebuttonbox{ padding-top:5px;}
-.mainleft img.width100p{ width: 100%; height: auto;}
 .plane2left img{ position: absolute; left: 0px; top: 0px;}
 .plane2left span{ position: absolute; left: 45px; top: 0px;}
 .plane2left span.wordstyle_time{ top: 20px;}
-@media screen and (max-width: 640px) {
-	#Main{ width: 98%; margin: 0 auto;}
 	.head{ display:block;}
-	#Main .mainleft{ float:none; width:100%; max-width:100%;}
+	#Main .mainleft{ float:none; width:100%; max-width:640px; margin: 0 auto;}
 	.mainright { display:none;}
 	.plane2_download{ display:block;}
-}
-@media screen and (max-width: 320px) {
-	.head img.logo{ width:auto; height:50px;}
-	.head div.plane3{ margin:0px; position:absolute; right:0px; top:14px;}
-}
+.mainleft .width100p{cursor:pointer; width:96%; padding-top: 2%;}
+.none{ display: none;}
+.mainleft .plane{ font-size: 14px; line-height: 22px;}
 
 
 
