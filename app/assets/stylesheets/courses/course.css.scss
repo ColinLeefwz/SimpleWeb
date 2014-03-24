@@ -10,23 +10,28 @@
 }
 
 
-.course-info .cover{
-    float: left;
-    margin-left: 2rem;
-    width: 288px;
-    height: 162px;
+//------------ course cover ------------
+.course-info .cover-wrapper{
+  float: left;
+  margin: 0 0 3rem 2rem;
+
+  .cover{
+    width: 320px;
+    height: 176px;
     overflow: hidden;
-    margin-bottom: 1em;
+  }
+
+  .button{
+    width: 320px;
+    margin-top: 1em;
+  }
 }
 
-.subscribe, .subscribed{
-  margin-left: 2rem;
-  margin-right: 2rem;
-  margin-bottom: 2rem;
-}
 
+//------------ course description ------------
 .course-info .description{
   float: left;
+  width: 65%;
   vertical-align: top;
   padding-left: 10px;
   margin-bottom: 1em;
@@ -51,6 +56,8 @@
   }
 }
 
+
+//------------ course social share------------
 .course-info .social-box{
   position: absolute;
   top: 2em;
@@ -63,4 +70,24 @@
   }
 }
 
+/***********************************************************************
+                                                                       *
+    on screen smaller than 1024px (iPad and smaller)                   *
+                                                                       *
+***********************************************************************/
 
+@media (max-width: 1024px){
+  .course-info .cover-wrapper{
+    float: none;
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  .course-info .description{
+    float: none;
+    width: 75%;
+    margin: 0 auto;
+    padding-left: 0;
+    padding-top: 2rem;
+  }
+}

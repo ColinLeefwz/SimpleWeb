@@ -1,7 +1,19 @@
+@import "globals/variables";
 .guideline-sentence {
   color: #880848;
 
   a {
   	font-weight: bold;
+    color: $prodygia-purple;
+    &:hover {
+      color: #FFF;
+      text-decoration: none;
+      background: $prodygia-light-purple;
+    }
+  }
+}
+#guideline-modal {
+  .modal-dialog {
+    width: 800px;
   }
 }
