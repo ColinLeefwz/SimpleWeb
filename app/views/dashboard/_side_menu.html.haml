@@ -24,15 +24,16 @@
 
 
   -# ----- CREATE -----
-  .block-title
-    %span
-      CREATE
+  - if user.is_a? Expert
+    .block-title
+      %span
+        CREATE
 
-  .toolkit
-    -# ----- Post New Article -----
-    .item
-      = render 'item_icon', item_name: 'new_content'
-      .item-text= link_to 'Post new article', new_article_path, remote: true
+    .toolkit
+      -# ----- Post New Article -----
+      .item
+        = render 'item_icon', item_name: 'new_content'
+        .item-text= link_to 'Post new article', new_article_path, remote: true
 
 
 
@@ -44,9 +45,10 @@
 
   .toolkit
     -# ------ Content ------
-    .item
-      = render 'item_icon', item_name: 'content'
-      .item-text= link_to 'Content', contents_expert_path, remote: true
+    - if user.is_a? Expert
+      .item
+        = render 'item_icon', item_name: 'content'
+        .item-text= link_to 'Content', contents_expert_path, remote: true
 
     -# ----- Video Courses -----
     .item
