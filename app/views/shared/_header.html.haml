@@ -19,11 +19,10 @@
 .row
   - if @show_category == true
     %ul#subnav.nav.navbar-header
-
       %li.dropdown
         %a.navbar-btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
           %i#sidebar_icon
-            = image_tag("sidebar_icon.png")
+            = image_tag("sidebar_icon.png", class:'tooltips', title:'Navigation', data:{placement: 'right'})
         %ul.nav.dropdown-menu.nav-sidebar
           %li
             %a.filters{href: "#all", data: {filter: '*'}}
@@ -59,5 +58,4 @@
                   %span.badge.pull-right
                     = model_count('VideoInterview')
                   video
-
 = render "shared/sign_in_modal"
