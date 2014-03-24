@@ -29,8 +29,23 @@
 
     .col-sm-4 {
       .control-label {
-        float: right;
         font-size: 15px;
+      }
+    }
+    
+    @media(min-width: 760px){
+      .col-md-5 {
+        .control-label {
+          float: right;
+          font-size: 15px;
+        }
+      }
+    }
+    @media(max-width: 760px){
+      .col-md-5 {
+        .control-label {
+          font-size: 15px;
+        }
       }
     }
 
