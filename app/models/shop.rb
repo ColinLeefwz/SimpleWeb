@@ -215,7 +215,7 @@ class Shop
   def total_user
     total = $redis.get("suac#{self.id.to_i}")
     total = self.utotal.to_i if total.nil?
-    total = 836 if self.id.to_i == 21838725 # 行酷车友会
+    total = 836 if false && self.id.to_i == 21838725 # 行酷车友会
     total
   end
 
@@ -237,7 +237,7 @@ class Shop
       total = self.utotal
       female = total/2
     end
-    if self.id.to_i == 21838725 # 行酷车友会
+    if false && self.id.to_i == 21838725 # 行酷车友会
       total = 836 
       female = 385
     end
