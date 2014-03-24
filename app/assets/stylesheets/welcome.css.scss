@@ -36,6 +36,14 @@ body {
   float: right;
   white-space: normal;
 }
+.container {
+  .jumbotron {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
 #content{
   margin-left: auto;
   margin-right: auto;

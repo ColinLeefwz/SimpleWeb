@@ -2,10 +2,10 @@
   -if @recommendation
     Recommended Experts
   -else
-    Favorite Experts 
+    Favorite Experts
 - @followed_experts.each do |e|
   .jumbotron.container.shadow
-    .col-md-2.col-sm-2
+    .col-md-3.col-sm-2
       .expert-info
         .expert-avatar
           = link_to image_tag(e.avatar.url), profile_expert_path(e)
@@ -15,7 +15,7 @@
           .expert-title
             - profile = e.profile
             = [profile.title, profile.company].reject(&:blank?).join(",")
-    .col-md-10.col-sm-10
+    .col-md-9.col-sm-10
       .expert-actions
         .follow-star
           = render 'shared/favorite_star', method: :follow?, object: e, link_path: relationship_path(e)
@@ -25,30 +25,32 @@
             %span RECENT ACTIVITY
             - e.published_contents.take(3).each do |content|
               .recent-activity
-                .row.hidden-xs
+                .hidden-xs
                   .col-md-8
-                    .row
-                      .post-icon
-                        = link_to image_tag(content.cover), polymorphic_path(content)
-                      .post-info
-                        .action
-                          Posted
-                        .title
-                          = link_to content.title, polymorphic_path(content)
-                  .col-md-4
-                    .published-time
-                      = time_ago_in_words(content.updated_at)
-                      = "ago"
-                .row.visible-xs
-                  .visible-xs.clearfix
                     .post-icon
                       = link_to image_tag(content.cover), polymorphic_path(content)
-                  .visible-xs.clearfix
                     .post-info
                       .action
                         Posted
                       .title
                         = link_to content.title, polymorphic_path(content)
+                  .col-md-4
+                    .published-time
+                      = time_ago_in_words(content.updated_at)
+                      = "ago"
+                .visible-xs
+                  .col-xs-8
+                    .post-icon
+                      = link_to image_tag(content.cover), polymorphic_path(content)
+                    .post-info
+                      .action
+                        Posted
+                      .title
+                        = link_to content.title, polymorphic_path(content)
+                  .col-xs-4
+                    .published-time
+                      = time_ago_in_words(content.updated_at)
+                      = "ago"
             .see-more
               =link_to "see more", profile_expert_path(e)
 
