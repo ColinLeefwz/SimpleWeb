@@ -1,3 +1,18 @@
+@media screen and (max-width: 500px) {
+  .favorite-session-cover {
+    img {
+      width: 100px;
+    }
+  }
+}
+@media screen and (min-width: 500px) {
+  .favorite-session-cover {
+    img {
+      width: 200px;
+    }
+  }
+}
+
 .main-menu{
   .recommendation{
     padding-bottom: 5px;
@@ -82,8 +97,7 @@
             }
           }
           .post-info{
-            margin-left: 20px;
-            float: left;
+            margin-left: 60px;
             .action{
               font-family: "Oswaldreg";
               font-size: 16px;
@@ -93,7 +107,6 @@
             .title{
               font-family: "Oswaldreg";
               font-size: 17px;
-              float: right;
               color: #454545;
             }
           }
@@ -128,10 +141,6 @@
       margin-top: 10px;
       margin-left: auto;
       margin-right: auto;
-			img{
-				max-width: 100%;
-				max-height: 100%;
-			}
 		}
 
     .session-button{
