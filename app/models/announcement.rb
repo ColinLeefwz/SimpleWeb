@@ -1,5 +1,6 @@
 class Announcement < ActiveRecord::Base
   include ParamsConfig
+  include ActAsCategoriable
 
   belongs_to :expert
   validates :expert, presence: true
@@ -12,6 +13,5 @@ class Announcement < ActiveRecord::Base
   has_many :subscribers, through: :subscriptions
 
   has_one :visit, as: :visitable
-
   has_attached_file :cover
 end
