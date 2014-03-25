@@ -1,8 +1,6 @@
 course_modal = ->
-  $(".section").on "click", (e)->
-    $(this).find(".modal").modal({
-      keyboard: true
-    })
+  $(".section-title").on "click", (e)->
+    $(this).closest(".section").find(".modal").modal('show')
 
   $(".close-icon").on "click", (e)->
     e.stopPropagation()
@@ -16,4 +14,3 @@ course_modal = ->
     player.stop() if player
 
 $(document).ready(course_modal)
-$(document).on "page:load", course_modal
