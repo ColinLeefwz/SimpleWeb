@@ -1,6 +1,6 @@
 #!/usr/bin/env puma
 
-directory '/mnt/lian2'
+directory '/mnt/lianlian'
 environment 'production'
 
 # Use an object or block as the rack application. This allows the
@@ -25,12 +25,12 @@ environment 'production'
 # this be combined with “pidfile” and “stdout_redirect”.
 daemonize true
 
-pidfile '/mnt/lian2/log/puma.pid'
+pidfile '/mnt/lianlian/log/puma.pid'
 
 # Use “path” as the file to store the server info state. This is
 # used by “pumactl” to query and control the server.
 #
-state_path '/mnt/lian2/log/puma.state'
+state_path '/mnt/lianlian/log/puma.state'
 
 # Redirect STDOUT and STDERR to files specified. The 3rd parameter
 # (“append”) specifies whether the output is appended, the default is
@@ -57,9 +57,9 @@ state_path '/mnt/lian2/log/puma.state'
 #
 # The default is “tcp://0.0.0.0:9292”.
 #
-bind 'tcp://0.0.0.0:9292'
+bind 'tcp://0.0.0.0:9291'
 # bind 'unix:///var/run/puma_mweb.sock'
-bind 'unix:///mnt/lian2/log/puma.sock'
+bind 'unix:///mnt/lianlian/log/puma.sock'
 # bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'
 
 # Instead of “bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'” you

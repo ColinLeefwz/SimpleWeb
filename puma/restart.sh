@@ -1,2 +1,2 @@
 #!/bin/bash
-bundle exec pumactl -P ../log/puma.pid restart
+bundle exec pumactl -P /mnt/lianlian/log/puma.pid restart

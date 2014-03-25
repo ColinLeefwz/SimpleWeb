@@ -1,1 +1,1 @@
-bundle exec puma  -C ./puma.rb
+bundle exec puma  -C /mnt/lianlian/config/puma.rb
