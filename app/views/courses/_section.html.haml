@@ -19,7 +19,7 @@
               = section.title
             - if (section.video && section.video.available?)
               .modal-body
-                .video
+                .video-wrapper
                   %video.sublime{title: section.title, width: "640", height: "352", preload: "none"}
                     %source{src: section.video.SD.url}
                     %source{src: section.video.HD.url, data: {quality: "hd"}}
