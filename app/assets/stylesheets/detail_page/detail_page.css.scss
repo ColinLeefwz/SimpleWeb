@@ -1,5 +1,7 @@
 
 .header{
+  text-align:center;
+  padding-left: 10px;
   background: white;
   margin: 0 auto;
   padding-top: 20px;
@@ -41,8 +43,7 @@
 //-------- meta --------
 
 .header .meta{
-  float: left;
-  max-width: 70%;
+  max-width: 90%;
   .title{
     font-family: "Oswaldreg";
     font-weight: 400;
