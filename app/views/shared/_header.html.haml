@@ -34,13 +34,12 @@
             %li
               %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
                 %span.badge.pull-right
-                  = category_count(category)
+                  = category.count
                 = category.name
           %li.dropdown-submenu
             %a{:href => "#"}
               format
             %ul.dropdown-menu
-
               %li
                 %a.filters{href: "#announcement", data: {filter: '.announcement'}}
                   %span.badge.pull-right
@@ -58,4 +57,5 @@
                   %span.badge.pull-right
                     = model_count('VideoInterview')
                   video
+
 = render "shared/sign_in_modal"
