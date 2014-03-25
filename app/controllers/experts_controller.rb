@@ -82,7 +82,6 @@ class ExpertsController < ApplicationController
   def video_courses
     courses = current_user.courses
 
-    #todo:  we can split the role of experts/update into something like shared/(dashboard)/cards, shared/(dashboard)/static, so that we don't need to pass instant variable into experts/update
     respond_to do |format|
       format.js {
         if courses.empty?
