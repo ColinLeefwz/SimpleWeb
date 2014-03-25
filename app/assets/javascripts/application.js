@@ -26,5 +26,18 @@
 
 
 $(document).ready(function() {
-  $("#tip-trigger").find("a").trigger("click")
+//  var current_user = $.cookie('current_user');
+//  if (current_user) {
+//    return false;
+//  }
+//  else {
+//    openTipbox();
+//  }
+  openTipbox();
+});
+
+function openTipbox() {
+  setTimeout( function() {
+    $("#tip-trigger").find("a").trigger("click")
+  }, 60000);
 }
