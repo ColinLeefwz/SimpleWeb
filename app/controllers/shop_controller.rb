@@ -68,8 +68,6 @@ class ShopController < ApplicationController
     end
     lo = [params[:lat].to_f, params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
-    gcj_offset = Shop.get_gcj_offset(lo)
-    headers[:GCJOFFSET] = gcj_offset.join(",")
     def output(s,lo)
       distance = s.min_distance(s,lo)
       if distance>=1000
