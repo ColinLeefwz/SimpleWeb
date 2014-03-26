@@ -26,9 +26,10 @@
 
 
 $(document).ready(function() {
-  if (sign_in_confirm) {
+  if (sign_in_confirm() == true) {
     return false;
-  } else {
+  }
+  else {
     openTipbox();
   }
 });
