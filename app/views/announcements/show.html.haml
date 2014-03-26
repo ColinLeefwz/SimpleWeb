@@ -1,17 +1,18 @@
 - content_for(:title){@announcement.title}
 
-= render "sessions/page_header", item: @announcement, link_path: subscribe_path(@announcement, type: @announcement.class.name)
+.detail-wrapper
+  = render "sessions/page_header", item: @announcement, link_path: subscribe_path(@announcement, type: @announcement.class.name)
 
-.detail.shadow.margin-bottom.clearfix
-  .video-cover
-    - if @announcement.video.available?
-      = render "shared/sublime_video", video: @announcement.video
-    - else
-      = image_tag @announcement.cover.url
-  %article
-    = @announcement.description.html_safe
+  .detail.shadow.margin-bottom.clearfix
+    .video-cover
+      - if @announcement.video.available?
+        = render "shared/sublime_video", video: @announcement.video
+      - else
+        = image_tag @announcement.cover.url
+    %article
+      = @announcement.description.html_safe
 
-= render partial: "comments/comments", locals: {commentable: @announcement}
+  = render partial: "comments/comments", locals: {commentable: @announcement}
 
 
 -# hidden modals
