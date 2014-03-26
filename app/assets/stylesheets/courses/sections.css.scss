@@ -87,12 +87,17 @@
 }
 
 .close-icon{
-  margin-right: -25px;
-  margin-top: -20px;
+  margin-right: -22px;
+  margin-top: -38px;
   width: 25px;
-  height: 25px;
   position: absolute;
   top: 0;
   right: 0;
+  @include center_container;
+
+  img{
+    background: white;
+    border-radius: 50%;
+  }
 }
 
