@@ -25,6 +25,7 @@ class SimilarShop
     end
     Shop.where({city: city, t:{"$exists" => true}, _id:{"$gt" => stid}}).sort({_id: 1}).each  do |shop|
       produce(shop,simv)
+      sleep(3)
     end
 
     #SimilarShop.where({data: {"$elemMatch"=>{"id" => 1207785}}})
