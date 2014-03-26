@@ -44,7 +44,8 @@
 //-------- meta --------
 
 .header .meta{
-  max-width: 90%;
+  float: left;
+  max-width: 70%;
   .title{
     font-family: "Oswaldreg";
     font-weight: 400;
@@ -57,6 +58,7 @@
 
 .header .meta{
   .date, .category{
+    float: left;
     font-family: "Latoreg";
     color: #777;
     display: inline;
