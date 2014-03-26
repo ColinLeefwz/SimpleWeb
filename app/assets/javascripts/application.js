@@ -26,14 +26,11 @@
 
 
 $(document).ready(function() {
-//  var current_user = $.cookie('current_user');
-//  if (current_user) {
-//    return false;
-//  }
-//  else {
-//    openTipbox();
-//  }
-  openTipbox();
+  if (sign_in_confirm) {
+    return false;
+  } else {
+    openTipbox();
+  }
 });
 
 function openTipbox() {
