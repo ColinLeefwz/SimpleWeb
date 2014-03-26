@@ -1,5 +1,7 @@
 
 .header{
+  text-align:center;
+  padding-left: 10px;
   background: white;
   margin: 0 auto;
   padding-top: 20px;
@@ -15,6 +17,7 @@
 
 //-------- user ---------
 .header .user{
+  width: 200px;
   float: left;
   text-align: center;
   .avatar img{
@@ -41,13 +44,12 @@
 //-------- meta --------
 
 .header .meta{
-  float: left;
-  max-width: 70%;
+  max-width: 90%;
   .title{
     font-family: "Oswaldreg";
     font-weight: 400;
     font-size: 30px;
-    min-height: 105px;  // for social-share 
+    min-height: 105px;  // for social-share
     color: #454545;
     line-height: 1.2em;
   }
@@ -80,6 +82,21 @@
 
 
 //-------- detail --------
+@media screen and (max-width: 500px) {
+  .video-cover {
+    img {
+      width: 200px;
+    }
+  }
+}
+@media screen and (min-width: 500px) {
+  .video-cover {
+    img {
+      width: 280px;
+    }
+  }
+}
+
 .detail{
   background: white;
   margin-left: auto;
@@ -94,16 +111,21 @@
 }
 
 .detail .video-cover{
-  padding: 1rem;
+  padding: 4rem;
   float: right;
 
   img{
     overflow: hidden;
-    width: 320px;
   }
 }
 
 .detail article{
-  padding-top: 1rem;
-  padding-left: 2rem;
+  padding-top: 4rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  p {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    line-height: inherit;
+  }
 }

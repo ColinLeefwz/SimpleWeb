@@ -21,20 +21,17 @@ body {
   background-image: image-url("bg.jpg");
 }
 
-@media screen and (max-width: 600px) {
-  .nav.dropdown-menu.nav-sidebar {
-    width: 150px;
-  }
-}
-@media screen and (min-width: 600px) {
-  .nav.dropdown-menu.nav-sidebar {
-    width: 250px;
-  }
-}
-
 .badge {
   float: right;
   white-space: normal;
+}
+.container {
+  .jumbotron {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
 #content{
   margin-left: auto;
@@ -165,3 +162,21 @@ body {
   z-index: 1;
 }
 
+@media (max-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 150px;
+    margin-left: 40px;
+  }
+  .navbar-header .dropdown-menu {
+    width: 150px;
+  }
+}
+@media (min-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 250px;
+    margin-left: 40px;
+  }
+  .navbar-header .dropdown-menu {
+    width: 250px;
+  }
+}

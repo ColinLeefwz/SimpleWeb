@@ -5,8 +5,6 @@ ActiveAdmin.register Announcement do
     column :title
     column :categories
     column :always_show
-    column :attached_video_hd_file_name
-    column :attached_video_sd_file_name
     column :created_at
     column :updated_at
 

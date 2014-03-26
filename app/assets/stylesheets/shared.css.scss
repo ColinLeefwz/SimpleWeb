@@ -2,32 +2,30 @@
 
 .video-wrapper{
   width: 320px;
-  height: 176px;
+  height: 180px;
   margin: 0 auto;
 }
 
-.subscribe{
+
+.button{
   clear: both;
   cursor: pointer;
-  background-color: #8a2649;
   font-family: Latobold;
   text-align: center;
   padding: 0.3em;
   color: white;
-  a:hover{
+  a:hover{  
     color: white;
-    text-decoration: none;
+    text-decoration: none; 
   }
 }
 
+.subscribe{
+  background-color: #8a2649;
+}
+
 .subscribed{
-  clear: both;
   background-color: #5A268A;
-  font-family: Latobold;
-  text-align: center;
-  padding: 0.3em 0.3em;
-  color: white;
-  a{  color: white;  }
 }
 
 .general-wrapper{
@@ -125,7 +123,7 @@ input[type="file"]{
 .btn-prodygia.disabled,
 .btn-prodygia[disabled] {
   color: #ffffff;
-  background-color: $prodygia-purple;
+  background-color: $prodygia-light-purple;
   *background-color: $prodygia-purple;
 }
 

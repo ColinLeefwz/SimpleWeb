@@ -42,18 +42,25 @@
 
 //--------- modals: section modal & subscribe modal ---------
 
-.section-modal{
-  position: relative;
-  width: 640px;
-  margin-left: -320px; /* override bootstrap style */
-  background-color: #eee;
-  .description{
-    margin-top: 1em;
-    text-indent: 1em;
-    font-family: LatoItalic;
-    padding: 0 1em;
-  }
+.section-modal .modal-header{
+  font-size: 1.2em;
+  font-family: Oswaldreg;
 }
+
+.section-modal .description{
+  font-family: LatoItalic;
+  text-align: left;
+}
+
+.section-modal .video-wrapper{
+  width: 640px;
+  height: 320px;
+}
+
+.section-modal video{
+  margin: 0 auto;
+}
+
 
 .subscribe-modal{
   width: 670px;
@@ -87,8 +94,5 @@
   position: absolute;
   top: 0;
   right: 0;
-  background: #eee;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
 }
 
