@@ -19,7 +19,7 @@ class MenuKey
   def content
   	case type
   	when 'text'
-  		tv
+  		tv.gsub(/(<[a-z1-6]+?>)|(<\/[a-z1-6]+?>)/,'')
   	when 'photo'
   		Photo.find_by_id(tv).img.url(:t2)
   	when 'faq'

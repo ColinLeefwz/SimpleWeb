@@ -113,6 +113,8 @@ GEM
     origin (1.1.0)
     osmlib-base (0.1.4)
     polyglot (0.3.4)
+    puma (2.7.1)
+      rack (>= 1.1, < 2.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -232,6 +234,7 @@ DEPENDENCIES
   newrelic_rpm
   oauth2
   osmlib-base
+  puma
   qiniu-rs!
   rails (~> 3.2)
   rails-i18n
