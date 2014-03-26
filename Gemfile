@@ -12,6 +12,7 @@ group :production do
   gem 'unicorn', '~> 4.3'
   gem 'unicorn-worker-killer'
   gem 'god'
+  gem 'puma'
   gem 'newrelic_rpm'
 end
 
