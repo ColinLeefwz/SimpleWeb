@@ -26,6 +26,8 @@
             .modal-footer
               .description
                 = section.description.html_safe
+              .close-icon
+                = image_tag "close-icon.png"
     - else
       .subscribe-modal.modal.hide.fade
         = render partial: "subscribe_modal", locals: {course: section.course}

@@ -1,3 +1,13 @@
+.detail-wrapper{
+  margin: 0 auto;
+  @media (min-width: 767px){
+    width: 75%;
+  }
+  @media (max-width: 766px){
+    width: 80%;
+  }
+}
+
 
 .header{
   text-align:center;
@@ -7,12 +17,6 @@
   padding-top: 20px;
   padding-bottom: 10px;
   position: relative;
-  @media (min-width: 767px){
-    width: 80%;
-  }
-  @media (max-width: 766px){
-    width: 90%;
-  }
 }
 
 //-------- user ---------
@@ -44,7 +48,8 @@
 //-------- meta --------
 
 .header .meta{
-  max-width: 90%;
+  float: left;
+  max-width: 70%;
   .title{
     font-family: "Oswaldreg";
     font-weight: 400;
@@ -57,6 +62,7 @@
 
 .header .meta{
   .date, .category{
+    float: left;
     font-family: "Latoreg";
     color: #777;
     display: inline;
@@ -82,32 +88,26 @@
 
 
 //-------- detail --------
-//@media screen and (max-width: 500px) {
-//  .video-cover {
-//    img {
-//      width: 200px;
-//    }
-//  }
-//}
-//@media screen and (min-width: 500px) {
-//  .video-cover {
-//    img {
-//      width: 280px;
-//    }
-//  }
-//}
+@media screen and (max-width: 500px) {
+  .video-cover {
+    img {
+      width: 320px;
+    }
+  }
+}
+@media screen and (min-width: 500px) {
+  .video-cover {
+    img {
+      width: 320px;
+    }
+  }
+}
 
 .detail{
   background: white;
   margin-left: auto;
   margin-right: auto;
   margin-top: 1rem;
-  @media (min-width: 767px){
-    width: 80%;
-  }
-  @media (max-width: 766px){
-    width: 90%;
-  }
 }
 
 .detail .video-cover{
