@@ -19,10 +19,10 @@ class WelcomeController < ApplicationController
     point = cookies[:landing_batch_point].to_i
     @items = Landingitem.all_index_items(point)
     respond_to do |format|
-      if Landingitem.all_index_items(point + 1).empty?
-        cookies[:no_more_load] = true
-      else
+      if Landingitem.next(point + 1)
         cookies[:no_more_load] = false
+      else
+        cookies[:no_more_load] = true
       end
       increase_cookie
       format.js { render "load_more" }

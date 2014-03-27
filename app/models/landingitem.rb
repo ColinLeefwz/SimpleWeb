@@ -36,6 +36,11 @@ class Landingitem < ActiveRecord::Base
       end
       all_items
     end
+
+    def next(start_point)
+      @max_count = where(only_index: true, draft: false).count
+      ((start_point * 12) > @max_count) ? false : true
+    end
   end
 
 end

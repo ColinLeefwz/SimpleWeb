@@ -25,7 +25,7 @@ set_get_url = ->
   else
     get_url = "/welcome/load_more"
 
-interval = setInterval("load_more();", 200)
+interval = setInterval("load_more();", 5000)
 
 $(document).ready ->
   scroll_load()
