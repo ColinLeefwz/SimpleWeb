@@ -10,7 +10,6 @@ a {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
   font-weight: 400;
   font-size: 17px;
   -webkit-font-smoothing: antialiased;
@@ -22,8 +21,21 @@ body {
   background-image: image-url("bg.jpg");
 }
 
+.badge {
+  float: right;
+  white-space: normal;
+}
+.container {
+  .jumbotron {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
 #content{
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 50px;
 
   .item {
@@ -93,7 +105,8 @@ body {
 
     .cover{
       text-align: center;
-      padding: 20px;
+      width: 320px;
+      margin: 0 auto;
     }
 
     .caption{
@@ -149,3 +162,21 @@ body {
   z-index: 1;
 }
 
+@media (max-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 150px;
+    margin-left: 40px;
+  }
+  .navbar-header .dropdown-menu {
+    width: 150px;
+  }
+}
+@media (min-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 277px;
+    margin-left: 40px;
+  }
+  .navbar-header .dropdown-menu {
+    width: 250px;
+  }
+}

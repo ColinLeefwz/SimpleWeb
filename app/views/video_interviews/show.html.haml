@@ -1,16 +1,18 @@
 - content_for(:title){ @video_interview.title }
-= render "sessions/page_header", item: @video_interview, link_path: subscribe_path(@video_interview, type: @video_interview.class.name)
 
-.detail.shadow.margin-bottom.clearfix
-  .video-cover
-    - if @video_interview.video.available?
-      = render "shared/sublime_video", video: @video_interview.video
-    - else
-      = image_tag @video_interview.cover.url
-  %article
-    = @video_interview.description.try :html_safe
+.detail-wrapper
+  = render "sessions/page_header", item: @video_interview, link_path: subscribe_path(@video_interview, type: @video_interview.class.name)
 
-= render partial: "comments/comments", locals: {commentable: @video_interview}
+  .detail.shadow.margin-bottom.clearfix
+    .video-cover
+      - if @video_interview.video.available?
+        = render "shared/sublime_video", video: @video_interview.video
+      - else
+        = image_tag @video_interview.cover.url
+    %article
+      = @video_interview.description.html_safe
+
+  = render partial: "comments/comments", locals: {commentable: @video_interview}
 
 
 -# hidden modals

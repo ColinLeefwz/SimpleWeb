@@ -1,5 +1,5 @@
 .dash-wrapper{
-  width: 90%;
+  width: 85%;
   margin-left: auto;
   margin-right:  auto;
   margin-top: 43px;
@@ -19,15 +19,17 @@
 
   .checkbox{
     padding-right: 0.8em;
-    float: right;
+    font-size: 15px;
   }
 
   input[type="checkbox"]{
     margin-right: 0.1em;
   }
+  input[type="file"]{
+    font-size: 15px;
+  }
 
   .cke_chrome {
-    width: 76% !important;
     overflow: hidden;
     display: inline-block;
   }
@@ -49,17 +51,13 @@
   }
 }
 
-#cover-image{
-  width: 300px;
-  margin-left: 14%;
-}
-
 .ckeditor{
   margin-left: 14%;
 }
 
 .white-background{
   background: white;
+  padding: 40px;
 }
 
 .edit-profile-title, .edit-intro-video{

@@ -1,0 +1,12 @@
+- @consultations.each do |consultation|
+  .item
+    .item-body.clearfix
+      = "#{consultation.requester.name} requests a private consultation about #{consultation.description}"
+      .item-date
+        on #{consultation.created_at.to_date}
+      .operations.pull-right
+        - if consultation.status == Consultation::STATUS[:accepted]
+          .btn accepted
+        - else
+          = link_to "reject", reject_consultation_path(consultation), remote: true, class: "btn pull-right"
+          = link_to "accept", accept_consultation_path(consultation), remote: true, class: "btn btn-prodygia pull-right"

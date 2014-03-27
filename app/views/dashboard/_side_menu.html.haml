@@ -1,0 +1,93 @@
+- user = @expert || @member
+
+.navbar.navbar-default.shadow
+  .user-info.clearfix
+    .avatar
+      = link_to image_tag(user.avatar.url), profile_expert_path(user)
+    .profile
+      .name
+        = user.name
+      .title
+        = [@profile.title, @profile.company].reject(&:blank?).join(",")
+      .edit
+        %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
+
+  -# ----- Activity Stream -----
+  .toolkit
+    .item
+      = render 'item_icon', item_name: 'activity_stream'
+      .item-text= link_to 'My activity stream', pending_page_experts_path(text: "my_activity_stream"), remote: true
+
+  -# ----- CREATE -----
+  - if user.is_a? Expert
+    .block-title
+      %span
+        CREATE
+
+    .toolkit
+      -# ----- Post New Article -----
+      .item
+        = render 'item_icon', item_name: 'new_content'
+        .item-text= link_to 'Post new article', new_article_path, remote: true
+
+  -# ------ MANAGE ------
+  .block-title
+    %span
+      MANAGE
+
+  .toolkit
+    -# ------ Content ------
+    - if user.is_a? Expert
+      .item
+        = render 'item_icon', item_name: 'content'
+        .item-text= link_to 'Content', contents_expert_path, remote: true
+
+    -# ----- Video Courses -----
+    - if user.is_a? Expert
+      .item.panel
+        .panel-heading
+          = render "item_icon", item_name: "video_library"
+          .item-text= link_to 'Video courses', '#video-courses', data: {toggle: 'collapse'}
+        .collapse.panel-collapse#video-courses
+          .panel-body
+            %li= link_to 'My produced courses', video_courses_expert_path(user), remote: true
+            %li= link_to 'My subscribed courses', vod_library_member_path(user), remote: true
+    - else
+      .item
+        = render 'item_icon', item_name: 'video_library'
+        .item-text= link_to 'Video courses', vod_library_member_path(user), remote: true
+
+    -# ----- Private Sessions -----
+    .item
+      = render 'item_icon', item_name: 'new_session'
+      .item-text= link_to 'Private sessions', pending_page_experts_path(text: "schedule_private_session"), remote: true
+
+    -# ----- Favorites -----
+    .item.panel
+      .panel-heading
+        = render 'item_icon', item_name: 'favorite_dash'
+        .item-text= link_to 'Favorite', '#favorite', data: {toggle: 'collapse'}
+
+      .collapse.panel-collapse#favorite
+        .panel-body
+          %li= link_to 'Experts', experts_member_path(current_user), remote: true
+          %li= link_to 'Content', contents_member_path(current_user), remote: true
+          %li= link_to 'Courses', video_on_demand_member_path(current_user), remote: true
+          -# %li Video interviews
+
+    -# ----- Refer Expert -----
+    .item.panel
+      .panel-heading
+        = render 'item_icon', item_name: 'refer_expert'
+        .item-text= link_to 'Refer', '#refer', data: {toggle: 'collapse'}
+
+      .collapse.panel-collapse#refer
+        .panel-body
+          %li= link_to 'New expert', refer_new_expert_experts_path, remote: true
+          %li= link_to 'A friend', refer_a_friend_member_path, remote: true
+
+
+    -# ------ Settings ------
+    .item
+      = render 'item_icon', item_name: 'account'
+      .item-text= link_to 'Settings', edit_user_registration_path, remote: true

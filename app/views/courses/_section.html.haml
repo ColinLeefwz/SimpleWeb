@@ -1,29 +1,34 @@
 .section
-  .content-icon.inline
-    = image_tag "content.png"
+  .section-title
+    .content-icon
+      = image_tag "content.png"
 
-  .section-title.inline.tooltips{data: {available: available.to_s, placement: "right"}}
-    %span= section.title
-    - if show_preview
-      %span.label.label-preview Free preview
+    .title.tooltips{data: {available: available.to_s, placement: "right"}}
+      %span= section.title
+      %span.label.label-preview= "Free preview"  if show_preview
 
-  .duration.inline.center-container
-    %span= distance_of_time_in_words section.duration.to_i
+    .duration
+      %span= distance_of_time_in_words section.duration.to_i
 
   .section-detail
     - if available
-      .section-modal.modal.hide.fade
-        - if (section.video && section.video.available?)
-          .video
-            %video.sublime{title: section.title, width: "640", height: "352", preload: "none"}
-              %source{src: section.video.SD.url}
-              %source{src: section.video.HD.url, data: {quality: "hd"}}
-
-        .description
-          = section.description
-        .close-icon
-          = image_tag "close-icon.png"
+      .section-modal.modal.fade
+        .modal-dialog.modal-lg
+          .modal-content
+            .modal-header
+              = section.title
+            - if (section.video && section.video.available?)
+              .modal-body
+                .video-wrapper
+                  %video.sublime{title: section.title, width: "640", height: "352", preload: "none"}
+                    %source{src: section.video.SD.url}
+                    %source{src: section.video.HD.url, data: {quality: "hd"}}
+            .modal-footer
+              .description
+                = section.description.html_safe
+              .close-icon
+                = image_tag "close-icon.png"
     - else
-      .enroll-modal.modal.hide.fade
+      .subscribe-modal.modal.hide.fade
         = render partial: "subscribe_modal", locals: {course: section.course}
 

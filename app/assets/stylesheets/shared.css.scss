@@ -1,31 +1,31 @@
 @import "globals/variables";
 
-.enroll-button{
-  cursor: pointer;
-  background-color: #8a2649;
-  font-family: Latobold;
-  width: 10em;
-  text-align: center;
+.video-wrapper{
+  width: 320px;
+  height: 180px;
   margin: 0 auto;
-  margin-top: 1em;
+}
+
+
+.button{
+  clear: both;
+  cursor: pointer;
+  font-family: Latobold;
+  text-align: center;
   padding: 0.3em;
   color: white;
-  a:hover{
+  a:hover{  
     color: white;
-    text-decoration: none;
+    text-decoration: none; 
   }
 }
 
-.subscribed-button{
+.subscribe{
+  background-color: #8a2649;
+}
+
+.subscribed{
   background-color: #5A268A;
-  font-family: Latobold;
-  width: 10em;
-  text-align: center;
-  margin: 0 auto;
-  margin-top: 0.5em;
-  padding: 0.3em 0.3em;
-  color: white;
-  a{  color: white;  }
 }
 
 .general-wrapper{
@@ -36,6 +36,7 @@
 
 // add "center-container" to an element, then you can use "vertical-align: middle" to any of its inline child element
 // "vertical-align" only works with table element or inline text/image element by default
+//todo: gecko: remove it someday, we have center_container() mixin
 .center-container:before{
   content: '';
   height: 100%;
@@ -54,6 +55,8 @@
   display: none;
 }
 
+
+//todo: gecko: remove it someday, we have separator() mixin
 .separator:after{
   content: " | "
 }
@@ -78,7 +81,7 @@ input[type="file"]{
 }
 
 .shared-links{
-  width: 280px;
+  max-width: 280px;
 }
 
 .float-image{
@@ -94,14 +97,9 @@ input[type="file"]{
   display: block;
 }
 
-$prodygia-purple: #880848;
-$prodygia-light-purple: #a3384e;
-$prodygia-dark-purple: #880731;
-
 // overrider bootstrap's btn-prodygia class
 .btn-prodygia{
   color: #ffffff;
-  float: right;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: $prodygia-purple;
   *background-color: $prodygia-light-purple;
@@ -125,7 +123,7 @@ $prodygia-dark-purple: #880731;
 .btn-prodygia.disabled,
 .btn-prodygia[disabled] {
   color: #ffffff;
-  background-color: $prodygia-purple;
+  background-color: $prodygia-light-purple;
   *background-color: $prodygia-purple;
 }
 
@@ -136,3 +134,4 @@ $prodygia-dark-purple: #880731;
 img {
   max-width: 100%;
 }
+

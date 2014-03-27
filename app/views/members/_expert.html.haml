@@ -2,37 +2,56 @@
   -if @recommendation
     Recommended Experts
   -else
-    Favorite Experts 
+    Favorite Experts
 - @followed_experts.each do |e|
-  .expert-action-box.shadow.white-background
-    .expert-info
-      .expert-avatar
-        = link_to image_tag(e.avatar.url), profile_expert_path(e)
-      .expert-text-info
-        .expert-name
-          = link_to e.name, profile_expert_path(e)
-        .expert-title
-          - profile = e.profile
-          = [profile.title, profile.company].reject(&:blank?).join(",")
-    .expert-actions
-      .follow-star
-        = render 'shared/favorite_star', method: :follow?, object: e, link_path: relationship_path(e)
-      .clear-fix
-      .expert-action-info
-        .block-title
-          %span RECENT ACTIVITY
-          - e.published_contents.take(3).each do |content|
-            .recent-activity
-              .course-icon
-                = link_to image_tag(content.cover), polymorphic_path(content)
-              .course-info
-                .action
-                  Posted
-                .title
-                  = link_to content.title, polymorphic_path(content)
-              .published-time
-                = time_ago_in_words(content.updated_at)
-                = "ago"
-      .see-more
-        =link_to "see more", profile_expert_path(e)
+  .jumbotron.container.shadow
+    .col-md-3.col-sm-2
+      .expert-side
+        .expert-info
+          .expert-avatar
+            = link_to image_tag(e.avatar.url), profile_expert_path(e)
+          .expert-text-info
+            .expert-name
+              = link_to e.name, profile_expert_path(e)
+            .expert-title
+              - profile = e.profile
+              = [profile.title, profile.company].reject(&:blank?).join(",")
+    .col-md-9.col-sm-10
+      .expert-actions
+        .follow-star
+          = render 'shared/favorite_star', method: :follow?, object: e, link_path: relationship_path(e)
+        .clear-fix
+        .expert-action-info
+          .block-title
+            %span RECENT ACTIVITY
+            - e.published_contents.take(3).each do |content|
+              .recent-activity
+                .hidden-xs
+                  .col-md-8
+                    .post-icon
+                      = link_to image_tag(content.cover), polymorphic_path(content)
+                    .post-info
+                      .action
+                        Posted
+                      .title
+                        = link_to truncate_html(content.title, length: 35, omission: '...'), polymorphic_path(content), class: 'tooltips', title: "#{content.title}", data:{placement: 'bottom'}
+                  .col-md-4
+                    .published-time
+                      = time_ago_in_words(content.updated_at)
+                      = "ago"
+                .visible-xs
+                  .col-xs-8
+                    .post-icon
+                      = link_to image_tag(content.cover), polymorphic_path(content)
+                    .post-info
+                      .action
+                        Posted
+                      .title
+                        = link_to content.title, polymorphic_path(content)
+                  .col-xs-4
+                    .published-time
+                      = time_ago_in_words(content.updated_at)
+                      = "ago"
+            .see-more
+              =link_to "see more", profile_expert_path(e)
 

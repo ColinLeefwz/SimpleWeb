@@ -1,14 +1,15 @@
 - content_for(:title) { @article.title }
 
-= render "sessions/page_header", item: @article, link_path: subscribe_path(@article, type: @article.class.name)
+.detail-wrapper
+  = render "sessions/page_header", item: @article, link_path: subscribe_path(@article, type: @article.class.name)
 
-.detail.shadow.clearfix
-  .video-cover
-    = image_tag @article.cover.url
-  %article
-    = @article.description.try :html_safe
+  .detail.shadow.clearfix
+    .video-cover
+      = image_tag @article.cover.url
+    %article
+      = @article.description.html_safe
 
-= render partial: "comments/comments", locals: {commentable: @article}
+  = render partial: "comments/comments", locals: {commentable: @article}
 
 -# hidden modals
 = render "shared/sign_in_modal"

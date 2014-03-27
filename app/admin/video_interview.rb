@@ -5,8 +5,6 @@ ActiveAdmin.register VideoInterview do
     column :title
     column :categories
     column :description
-    column :attached_video_hd_file_name
-    column :attached_video_sd_file_name
     column :created_at
     column :updated_at
 

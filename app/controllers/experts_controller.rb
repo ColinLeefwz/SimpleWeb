@@ -55,10 +55,17 @@ class ExpertsController < ApplicationController
         @expert.profile.update_attributes(expert_profile_params)
         flash[:success] = "successfully update your profile"
         render js: "window.location='#{dashboard_expert_path(current_user)}'"
-
       }
     end
 
+  end
+
+  def consultations
+    @consultations = @expert.received_consultations.where(status: [Consultation::STATUS[:processed], Consultation::STATUS[:accepted]])
+    respond_to do |format|
+      @from = "consultations/items"
+      format.js { render "experts/update" }
+    end
   end
 
   def contents
@@ -75,7 +82,6 @@ class ExpertsController < ApplicationController
   def video_courses
     courses = current_user.courses
 
-    #todo:  we can split the role of experts/update into something like shared/(dashboard)/cards, shared/(dashboard)/static, so that we don't need to pass instant variable into experts/update
     respond_to do |format|
       format.js {
         if courses.empty?

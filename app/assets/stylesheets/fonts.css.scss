@@ -1,70 +1,70 @@
 @font-face{
 	font-family: 'Latoblack';
-	src: url(font-path('lato-black-webfont.ttf')) format('turetype'),
-	url(font-path('lato-black-webfont.eot')) format('embedded-opentype'),
-	url(font-path('lato-black-webfont.woff')) format('woff'),
-	url(font-path('lato-black-webfont.svg') + "#Latobold") format('svg');
+	src: font-url(font-path('lato-black-webfont.ttf')) format('truetype'),
+	font-url(font-path('lato-black-webfont.eot')) format('embedded-opentype'),
+	font-url(font-path('lato-black-webfont.woff')) format('woff'),
+	font-url(font-path('lato-black-webfont.svg') + "#Latobold") format('svg');
 }
 
 @font-face{
 	font-family: 'Latoblackitalic';
-	src: url(font-path('lato-blackitalic-webfont.ttf')) format('turetype'),
-	url(font-path('lato-blackitalic-webfont.eot')) format('embedded-opentype'),
-	url(font-path('lato-blackitalic-webfont.woff')) format('woff'),
-	url(font-path('lato-blackitalic-webfont.svg') + "#Latobold") format('svg');
+	src: font-url(font-path('lato-blackitalic-webfont.ttf')) format('truetype'),
+	font-url(font-path('lato-blackitalic-webfont.eot')) format('embedded-opentype'),
+	font-url(font-path('lato-blackitalic-webfont.woff')) format('woff'),
+	font-url(font-path('lato-blackitalic-webfont.svg') + "#Latobold") format('svg');
 }
 @font-face{
 	font-family: 'Latobold';
-	src: url(font-path('Lato-Bold.ttf')) format('turetype'),
-	url(font-path('lato-bold-webfont.eot')) format('embedded-opentype'),
-	url(font-path('lato-bold-webfont.woff')) format('woff'),
-	url(font-path('lato-bold-webfont.svg') + "#Latobold") format('svg');
+	src: font-url(font-path('latobold.ttf')) format('truetype'),
+	font-url(font-path('lato-bold-webfont.eot')) format('embedded-opentype'),
+	font-url(font-path('lato-bold-webfont.woff')) format('woff'),
+	font-url(font-path('lato-bold-webfont.svg') + "#Latobold") format('svg');
 }
 
 @font-face{
 	font-family: 'Latoreg';
-	src: url(font-path('lato-regular-webfont.ttf')) format('turetype'),
-			 url(font-path('lato-regular-webfont.eot')) format('embedded-opentype'),
-			 url(font-path('lato-regular-webfont.woff')) format('woff'),
-			 url(font-path('lato-regular-webfont.svg') + "#Latoreg") format('svg');
+	src: font-url(font-path('Lato-Regular.ttf')) format('truetype'),
+			 font-url(font-path('lato-regular-webfont.eot')) format('embedded-opentype'),
+			 font-url(font-path('lato-regular-webfont.woff')) format('woff'),
+			 font-url(font-path('lato-regular-webfont.svg') + "#Latoreg") format('svg');
 }
 
 @font-face{
 	font-family: 'Latolight';
-	src: url(font-path('lato-light-webfont.ttf')) format('turetype'),
-			 url(font-path('lato-light-webfont.eot')) format('embedded-opentype'),
-			 url(font-path('lato-light-webfont.woff')) format('woff'),
-			 url(font-path('lato-light-webfont.svg') + "#Latolight") format('svg');
+	src: font-url(font-path('Lato-Light.ttf')) format('truetype'),
+			 font-url(font-path('lato-light-webfont.eot')) format('embedded-opentype'),
+			 font-url(font-path('lato-light-webfont.woff')) format('woff'),
+			 font-url(font-path('lato-light-webfont.svg') + "#Latolight") format('svg');
 }
 
 @font-face{
 	font-family: 'Latolightitalic';
-	src: url(font-path('lato-lightitalic-webfont.ttf')) format('turetype'),
-			 url(font-path('lato-lightitalic-webfont.eot')) format('embedded-opentype'),
-			 url(font-path('lato-lightitalic-webfont.woff')) format('woff'),
-			 url(font-path('lato-lightitalic-webfont.svg') + "#Latolightitalic") format('svg');
+	src: font-url(font-path('lato-lightitalic-webfont.ttf')) format('truetype'),
+			 font-url(font-path('lato-lightitalic-webfont.eot')) format('embedded-opentype'),
+			 font-url(font-path('lato-lightitalic-webfont.woff')) format('woff'),
+			 font-url(font-path('lato-lightitalic-webfont.svg') + "#Latolightitalic") format('svg');
 }
 
 @font-face{
 	font-family: 'Latoitalic';
-	src: url(font-path('lato-italic-webfont.ttf')) format('turetype'),
-			 url(font-path('lato-italic-webfont.eot')) format('embedded-opentype'),
-			 url(font-path('lato-italic-webfont.woff')) format('woff'),
-			 url(font-path('lato-italic-webfont.svg') + "#Latoitalic") format('svg');
+	src: font-url(font-path('Lato-Italic.ttf')) format('truetype'),
+			 font-url(font-path('lato-italic-webfont.eot')) format('embedded-opentype'),
+			 font-url(font-path('lato-italic-webfont.woff')) format('woff'),
+			 font-url(font-path('lato-italic-webfont.svg') + "#Latoitalic") format('svg');
 }
 
 @font-face{
 	font-family: 'Oswaldbold';
-	src: url(font-path('oswald-bold-webfont.ttf')) format('turetype'),
-			 url(font-path('oswald-bold-webfont.eot')) format('embedded-opentype'),
-			 url(font-path('oswald-bold-webfont.woff')) format('woff'),
-			 url(font-path('oswald-bold-webfont.svg') + "#Oswaldbold") format('svg');
+	src: font-url(font-path('oswald-bold-webfont.ttf')) format('truetype'),
+			 font-url(font-path('oswald-bold-webfont.eot')) format('embedded-opentype'),
+			 font-url(font-path('oswald-bold-webfont.woff')) format('woff'),
+			 font-url(font-path('oswald-bold-webfont.svg') + "#Oswaldbold") format('svg');
 }
 
 @font-face{
 	font-family: 'Oswaldreg';
-	src: url(font-path('oswald-regular-webfont.ttf')) format('turetype'),
-			 url(font-path('oswald-regular-webfont.eot')) format('embedded-opentype'),
-			 url(font-path('oswald-regular-webfont.woff')) format('woff'),
-			 url(font-path('oswald-regular-webfont.svg') + "#Oswaldreg") format('svg');
+	src: font-url(font-path('oswald-regular-webfont.ttf')) format('truetype'),
+			 font-url(font-path('oswald-regular-webfont.eot')) format('embedded-opentype'),
+			 font-url(font-path('oswald-regular-webfont.woff')) format('woff'),
+			 font-url(font-path('oswald-regular-webfont.svg') + "#Oswaldreg") format('svg');
 }

@@ -1,0 +1,36 @@
+@import "globals/variables";
+@import "detail_page/detail_page_mixin";
+
+.chapter{
+  @include detail_page_box;
+  background-color: white;
+  margin-top: 1em;
+
+  .chapter-title{
+    height: 2em;
+    border-bottom: 1px solid #4E2971;
+    font-family: Latobold;
+  }
+}
+
+
+//--------- anchor of chapter title ---------
+.chapter-title .anchor{
+  display: inline-block;
+  @include center_container;
+  width: 2em;
+  height: 2em;
+  color: white;
+  background-color: #4E2971;
+  text-align: center;
+  span{ vertical-align: middle; }
+}
+
+//--------- word of chapter title ---------
+.chapter-title .title{
+  display: inline-block;
+  @include center_container;
+  text-indent: 1rem;
+  span{ vertical-align: middle; }
+}
+

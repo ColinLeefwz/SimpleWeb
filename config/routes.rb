@@ -1,6 +1,12 @@
 Prodygia::Application.routes.draw do
 
   resources :comments
+  resources :consultations do
+    member do
+      get :accept
+      get :reject
+    end
+  end
 
   resources :courses do
     member do
@@ -68,8 +74,8 @@ Prodygia::Application.routes.draw do
       get :activity_stream
       get :dashboard
       get :main_menu
-      get :pending_page
       get :profile
+      get :consultations
       get :sessions
       get :contents
       get :edit_profile
@@ -80,6 +86,7 @@ Prodygia::Application.routes.draw do
     collection do
       get :refer_new_expert
       post :refer_new_expert
+      get :pending_page
     end
   end
 
