@@ -17,10 +17,17 @@
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="28%" rowspan="9">
-          <%= image_tag Photo.img_url(@photo.id), :width => "280", :height=> "280", :class => "imgstyle" %>
+          <%=link_to(image_tag(Photo.img_url(@photo.id), :width => "280", :height=> "280", :class => "imgstyle"), Photo.img_url(@photo.id), :target => "_blank"  ) %>
         </td>
         <td width="14%" height="40" class="pl20">用 户：</td>
-        <td width="58%" height="40"><%=link_to  @photo.user.try(:name)||'', "/shop3_checkins/user?uid=#{@photo.user_id}" %></td>
+
+        <td width="58%" height="40">
+          <% if @photo.from_shop? %>
+            <a><%= @photo.user.try(:name) %></a>
+          <% else %>
+            <%=link_to  @photo.user.try(:name)||'', "/shop3_checkins/user?uid=#{@photo.user_id}" %>
+          <% end %>
+        </td>
       </tr>
       <tr>
         <td height="40" class="pl20">发布时间：</td>
