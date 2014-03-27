@@ -216,7 +216,19 @@ resque和resque-scheduler都采用god进行监控和启动。
  * 删除对象要调用destory， 这样才能清除对象的缓存。调用delete时不会清除缓存。
  
 
+###Web服务器配置
+web1
+unicorn 8082 脸脸API服务器
 
+web2
+unicorn 8082 脸脸商家后台／管理员后台 shop.dface.cn,admin.dface.cn
+puma	9292 猜图游戏 caitu.dface.cn
+puma	9293 即立方网站／业务系统和管理后台 w.dface.cn
+puma	9294 刮刮卡等小游戏 game.dface.cn
+
+web4
+puma	9292 店小二点菜 food.dface.cn
+puma	9293 行酷购买系统 trade.dface.cn
  
 
 依赖的库：ghostscript,imagemagick，	

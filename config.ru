@@ -1,5 +1,6 @@
 # This file is used by Rack-based servers to start the application.
-if ENV["RAILS_ENV"] == "production"
+puts ENV["NEWRELIC_DISPATCHER"]
+if ENV["RAILS_ENV"] == "production" && ENV["NEWRELIC_DISPATCHER"] != "puma"
     require 'unicorn/oob_gc'
     require 'unicorn/worker_killer'
     #每10次请求，才执行一次GC
