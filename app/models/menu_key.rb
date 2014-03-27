@@ -19,7 +19,7 @@ class MenuKey
   def content
   	case type
   	when 'text'
-  		tv.gsub(/(<[a-z1-6]+?>)|(<\/[a-z1-6]+?>)/,'')
+  		tv.gsub(/(<.*?>)|(<\/.*?>)/,'')
   	when 'photo'
   		Photo.find_by_id(tv).img.url(:t2)
   	when 'faq'
@@ -32,7 +32,7 @@ class MenuKey
   def send_to_user(uid)
   	case type
   	when 'text'
-  		Xmpp.send_gchat2(shop.msg_sender, shop_id, uid, tv.gsub(/(<[a-z1-6]+?>)|(<\/[a-z1-6]+?>)/,''))
+  		Xmpp.send_gchat2(shop.msg_sender, shop_id, uid, tv.gsub(/(<.*?>)|(<\/.*?>)/,''))
   	when 'photo'
   		photo = Photo.find_by_id(tv)
       Xmpp.send_gchat2(shop.msg_sender, shop_id, uid, "[img:#{photo._id}]#{photo.desc_multi}")
