@@ -1,3 +1,5 @@
+require 'mandrill_api'
+
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
@@ -5,6 +7,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       sign_in @user
       @user.update_attributes type: "Member"
+      mandrill_welcome(@user)
       redirect_to cookies[:previous_path]
 
     else
@@ -19,6 +22,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       sign_in @user
       @user.update_attributes type: "Member"
+      mandrill_welcome(@user)
       redirect_to cookies[:previous_path]
     else
       session["devise.linkedin.data"] = request.env["omniauth.auth"]
@@ -26,4 +30,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  private
+  def mandrill_welcome(user)
+    mandrill = MandrillApi.new
+    mandrill.welcome_confirm(user)
+  end
 end
