@@ -4,14 +4,21 @@ class ApiCouponController < ApplicationController
   
   layout nil
 
-  def send
+  def init_send
     @id = params[:id]
     @name = params[:name]
   end
   
   def do_send
-    user = User.find_by_id(params[:uid])
-    Coupon.last.send_coupon(user.id)
+    Rails.cache.fetch("APICOUPON#{params[:uidsid]}") do
+      uid, sid = params[:uidsid][1..-2].split(",")
+      user = User.find_by_id(uid)
+      @coupon = Coupon.where({:shop_id => sid.to_i}).last
+      @cpdown = @coupon.send_coupon(user.id)
+    end
+    unless @coupon
+      return render :text => "..."
+    end
   end
   
 end

@@ -9,8 +9,7 @@
 <script>
 	document.addEventListener('DfaceJSBridgeReady', function() {
 	        DfaceJSBridge.callHandler('getUidSid', null, function(response) {
-				
-				document.location = 'http://shop.dface.cn/api_coupon/do_send?uid='+response;
+				document.location = 'http://shop.dface.cn/api_coupon/do_send?uidsid='+response;
 					})
 	}, false);
 </script>
