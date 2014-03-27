@@ -108,6 +108,8 @@ Prodygia::Application.routes.draw do
   get "/terms", to: 'static_pages#terms'
   get "/privacy", to: 'static_pages#privacy'
   get "welcome/load_more", to: "welcome#load_more"
+  get "/search", to: 'search#query', as: :search
+  get "/search/autocomplete", to: 'search#autocomplete'
 
   # get "*page" => redirect("/")
 end

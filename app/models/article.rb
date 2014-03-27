@@ -1,6 +1,7 @@
 class Article < ActiveRecord::Base
   include ParamsConfig
   include Landingable
+  include Searchable
 
   belongs_to :expert
   has_many :subscriptions, as: :subscribable

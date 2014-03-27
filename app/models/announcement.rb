@@ -1,6 +1,7 @@
 class Announcement < ActiveRecord::Base
   include ParamsConfig
   include Landingable
+  include Searchable
 
   belongs_to :expert
   validates :expert, presence: true
