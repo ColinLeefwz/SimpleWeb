@@ -70,7 +70,6 @@ update_profile_message = ->
   $("input[type='submit']").on 'click', ->
     $("input[type='file']").css("width", "95px")
 
-    
 
 $(document).ready ->
   load_sublime()
