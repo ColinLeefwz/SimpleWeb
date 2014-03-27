@@ -56,7 +56,7 @@
 
       
 
-load_sublime = ->
+@load_sublime = ->
   sublime.load()
   for video in $("video")
     sublime.ready( ->
@@ -74,12 +74,4 @@ update_profile_message = ->
 
 $(document).ready ->
   load_sublime()
-
-$(document).on 'page:load', ->
-  load_sublime()
-  update_profile_message()
-
-$(document).on 'ajax:success', ->
-  load_sublime()
-  update_profile_message()
 

@@ -22,4 +22,5 @@
 //= require ckeditor/init
 //= require paypal-button.min
 //= require bootstrap-datetimepicker.min
+//= require typeahead.bundle.min
 //= require_tree .
