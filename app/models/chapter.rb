@@ -1,4 +1,5 @@
 class Chapter < ActiveRecord::Base
+  include Searchable
   validates :title, presence: true
 
   belongs_to :course
