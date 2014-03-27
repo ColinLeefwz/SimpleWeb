@@ -32,7 +32,7 @@ class MenuKey
   def send_to_user(uid)
   	case type
   	when 'text'
-  		Xmpp.send_gchat2(shop.msg_sender, shop_id, uid, tv)
+  		Xmpp.send_gchat2(shop.msg_sender, shop_id, uid, tv.gsub(/(<[a-z1-6]+?>)|(<\/[a-z1-6]+?>)/,''))
   	when 'photo'
   		photo = Photo.find_by_id(tv)
       Xmpp.send_gchat2(shop.msg_sender, shop_id, uid, "[img:#{photo._id}]#{photo.desc_multi}")
