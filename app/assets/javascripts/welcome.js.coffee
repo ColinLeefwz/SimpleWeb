@@ -56,7 +56,7 @@
 
       
 
-load_sublime = ->
+@load_sublime = ->
   sublime.load()
   for video in $("video")
     sublime.ready( ->
