@@ -1,6 +1,6 @@
 class ExpertsController < ApplicationController
-  load_and_authorize_resource except: [:profile]
-  before_filter :set_expert, only: [:profile]
+  load_and_authorize_resource except: [:profile, :load_more]
+  before_filter :set_expert, only: [:profile, :load_more]
 
   def activity_stream
     @from = 'activity_stream'
@@ -31,11 +31,33 @@ class ExpertsController < ApplicationController
   end
 
   def profile
-    video_interviews = @expert.video_interviews
-    courses = @expert.courses
-    articles = @expert.articles.where(draft: false)
-    @items = video_interviews + courses + articles
+    cookies[:profile_batch_point] = 0
+    cookies[:no_more_load] = false
+    cookies[:expert_id] = @expert.id
+
+    @items = @expert.load_landingitems(0)
+    increase_cookie
+    # video_interviews = @expert.video_interviews
+    # courses = @expert.courses
+    # articles = @expert.articles.where(draft: false)
+    # @items = video_interviews + courses + articles
     @profile = @expert.profile
+  end
+
+  def load_more
+    point = cookies[:profile_batch_point].to_i
+    @items = @expert.load_landingitems(point)
+    respond_to do |format|
+      if @expert.load_landingitems(point + 1).empty?
+        cookies[:no_more_load] = true
+      else
+        cookies[:no_more_load] = false
+      end
+      increase_cookie
+      format.js { render "welcome/load_more" }
+    end
+
+
   end
 
   def edit_profile
@@ -96,6 +118,11 @@ class ExpertsController < ApplicationController
   end
 
   private
+  def increase_cookie
+    new_val = cookies[:profile_batch_point].to_i + 1
+    cookies[:profile_batch_point] = new_val
+  end
+
   def get_pending_text(type)
     all_text = YAML.load_file(File.join(Rails.root, 'config', 'pending_text.yml'))
     text_hash = all_text[type]
