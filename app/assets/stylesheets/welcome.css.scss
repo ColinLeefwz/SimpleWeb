@@ -21,17 +21,6 @@ body {
   background-image: image-url("bg.jpg");
 }
 
-@media screen and (max-width: 600px) {
-  .nav.dropdown-menu.nav-sidebar {
-    width: 150px;
-  }
-}
-@media screen and (min-width: 600px) {
-  .nav.dropdown-menu.nav-sidebar {
-    width: 250px;
-  }
-}
-
 .badge {
   float: right;
   white-space: normal;
@@ -173,3 +162,21 @@ body {
   z-index: 1;
 }
 
+@media (max-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 150px;
+    margin-left: 40px;
+  }
+  .navbar-header .dropdown-menu {
+    width: 150px;
+  }
+}
+@media (min-width: 600px) {
+  .nav.dropdown-menu.nav-sidebar {
+    width: 250px;
+    margin-left: 40px;
+  }
+  .navbar-header .dropdown-menu {
+    width: 250px;
+  }
+}
