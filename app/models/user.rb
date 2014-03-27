@@ -80,6 +80,9 @@ class User
     u.psd = shop.password
     u.head_logo_id = logo.id if logo
     u.phone = shop.id
+    u.job = "商业"
+    u.jobtype = 2
+    u.birthday = "2013-01-01"
     u
   end
   
