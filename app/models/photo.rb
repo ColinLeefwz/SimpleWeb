@@ -510,5 +510,15 @@ class Photo
     photo.destroy
   end
 
+  # 图片的来源
+  def source
+    user_id.is_a?(Moped::BSON::ObjectId) ? 0 : 1 
+  end
+
+  #图片来商家么
+  def from_shop?
+    source == 1
+  end
+
 
 end
