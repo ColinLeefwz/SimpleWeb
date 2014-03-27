@@ -21,6 +21,10 @@ class PhotoCache
     end
   end
   
+  def del_shop_photo_cache(sid,skip,pcount)
+    Rails.cache.delete(shop_photo_cache_key(sid,skip,pcount))
+  end
+  
   
   
   def user_photo_cache_key(uid,skip,pcount)
@@ -43,6 +47,11 @@ class PhotoCache
     Photo.where({user_id: uid, room:{"$nin" => arr} }).
       sort({updated_at: -1}).skip(skip).limit(pcount).to_a
   end
+  
+  def del_user_photo_cache(sid,skip,pcount)
+    Rails.cache.delete(user_photo_cache_key(sid,skip,pcount))
+  end
+  
   
 
 end

@@ -150,10 +150,11 @@ class Shop3ContentController < ApplicationController
     expire_cache_shop(photo.room)
     render nothing: true
   end
+  
   private
   def expire_cache_shop(sid)
-    Rails.cache.delete("SP#{sid.to_i}-5")
-    Rails.cache.delete("SP#{sid.to_i}-6")
+    PhotoCache.new.del_shop_photo_cache(sid,0,5))
+    PhotoCache.new.del_user_photo_cache("s"+sid,0,5))
   end
 
 
