@@ -39,5 +39,5 @@ $(document).ready(function() {
 function openTipbox() {
   setTimeout( function() {
     $("#tip-trigger").find("a").trigger("click")
-  }, 60000);
+  }, 20000);
 }
