@@ -50,22 +50,16 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
-  # validates_format_of :name, :without => /^\d/
-
   def to_param
     user_name
   end
 
-  def self.find_by_param(input)
-    find_by_user_name(input)
-  end
-
   def self.find(input)
-    input.to_i == 0 ? find_by_user_name(input) : super
+    input.to_i == 0 ? find_by(user_name: input) : super
   end
 
   def name
-    "#{first_name}#{last_name}"
+    "#{first_name} #{last_name}"
   end
 
   def subscribed_contents
