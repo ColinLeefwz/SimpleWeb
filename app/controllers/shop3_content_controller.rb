@@ -154,7 +154,7 @@ class Shop3ContentController < ApplicationController
   private
   def expire_cache_shop(sid)
     PhotoCache.new.del_shop_photo_cache(sid,0,5)
-    PhotoCache.new.del_user_photo_cache("s"+sid,0,5)
+    PhotoCache.new.del_user_photo_cache("s"+sid.to_s,0,5)
   end
 
 
