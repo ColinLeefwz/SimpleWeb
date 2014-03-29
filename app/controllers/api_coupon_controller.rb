@@ -17,7 +17,7 @@ class ApiCouponController < ApplicationController
       @cpdown = @coupon.send_coupon(user.id)
     end
     unless @coupon
-      return render :text => "..."
+      return render :text => "你已经获得过优惠券了"
     end
   end
   
