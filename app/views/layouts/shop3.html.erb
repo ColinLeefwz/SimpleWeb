@@ -82,7 +82,7 @@
           <span class="navline"></span>
           <a href="/shop3_menu">自定义菜单</a>
           <span class="navline"></span>
-          <% if [21835801,21831643, 21831686].include?(session[:shop_id].to_i)%>
+          <% if [21835801,21831643, 21831686, 21840900].include?(session[:shop_id].to_i)%>
             <%= link_to "猜图管理","http://caitu.dface.cn/login?id=#{session[:shop_id]}&hash=#{Digest::SHA256.hexdigest('caitu'+session[:shop_id].to_i.to_s)[0,32]}", :target => '_blank' %>
             <span class="navline"></span>
           <% end %>
