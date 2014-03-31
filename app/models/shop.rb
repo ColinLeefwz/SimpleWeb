@@ -852,7 +852,7 @@ class Shop
   end
 
   def has_food_purview?
-    /测试|脸脸/ =~ self.name || self.id.to_s == '21839855' || self.id.to_s == '21832844' || self.id.to_s == '21837941' || self.id.to_s == '21839738' || self.id.to_s == '21840235' || self.id.to_s == '21837783' ? true : false
+    /测试|脸脸/ =~ self.name || self.id.to_s == '21839855' || self.id.to_s == '21832844' || self.id.to_s == '21837941' || self.id.to_s == '21839738' || self.id.to_s == '21840235' || self.id.to_s == '21837783' || self.id.to_s == '21839806' ? true : false
   end
 
   def has_trade_purview?
