@@ -2,7 +2,7 @@
 
 .comments.margin-bottom
   %h4 
-    = pluralize(comments.count, "Comment")
+    = comment_counting(comments)
   = render partial: "comments/comment", collection: comments, as: :comment
   = render partial: "comments/form", locals: {parent: commentable}
 
