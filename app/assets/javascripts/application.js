@@ -24,20 +24,5 @@
 //= require bootstrap-datetimepicker.min
 //= require jquery.cookie
 //= require typeahead.bundle.min
+//= require spin.min.js
 //= require_tree .
-
-
-$(document).ready(function() {
-  if (sign_in_confirm() == true) {
-    return false;
-  }
-  else {
-    openTipbox();
-  }
-});
-
-function openTipbox() {
-  setTimeout( function() {
-    $("#tip-trigger").find("a").trigger("click")
-  }, 20000);
-}
