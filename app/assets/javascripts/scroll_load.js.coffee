@@ -1,18 +1,18 @@
 top = 0
-hgth = 0
+height = 0.0
 get_url = ""
 @load_more = ->
   if $.cookie("no_more_load") is "false"
     if(top > parseInt(hgth/3)*2)
       $.get(get_url)
       top = 0
-      hgth = 0
+      height = 0
   else
     clearInterval(interval)
 
 scroll_load = ->
   $(document).scroll( ->
-    hgth = $("#content")[0].scrollHeight
+    height = $("#content")[0].scrollHeight
     top = $(document).scrollTop()
   )
 
@@ -31,6 +31,3 @@ $(document).ready ->
   scroll_load()
   set_get_url()
 
-$(document).on 'page:load', ->
-  scroll_load()
-  set_get_url()
