@@ -1,5 +1,7 @@
 class VideoInterview < ActiveRecord::Base
   include ParamsConfig
+  include Landingable
+  include Searchable
 
   has_one :video, as: :videoable, dependent: :destroy
   accepts_nested_attributes_for :video, allow_destroy: true
@@ -18,5 +20,9 @@ class VideoInterview < ActiveRecord::Base
 
   def editable
     true
+  end
+
+  def draft
+    false
   end
 end
