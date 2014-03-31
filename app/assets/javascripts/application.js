@@ -24,6 +24,7 @@
 //= require bootstrap-datetimepicker.min
 //= require jquery.cookie
 //= require typeahead.bundle.min
+//= require spin.min.js
 //= require_tree .
 
 

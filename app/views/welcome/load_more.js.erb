@@ -1,3 +1,4 @@
 elems = $($.parseHTML("<%= j render partial: 'welcome/items' %>"))
 $("#content").append(elems).isotope("appended", elems)
+$(".spinner").css({"display": "none"})
 load_sublime()
