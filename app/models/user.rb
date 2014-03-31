@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
-  after_create :get_user_name
+  after_save :set_user_name
 
   def to_param
     user_name
@@ -146,7 +146,7 @@ class User < ActiveRecord::Base
     !persisted? || !password.nil? || !password_confirmation.nil?
   end
 
-  def get_user_name
+  def set_user_name
     self.update_attributes user_name: "#{self.name.parameterize}"
   end
 
