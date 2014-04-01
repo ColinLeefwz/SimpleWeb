@@ -19,6 +19,7 @@
   <% end %>
   <br/>
 
+
 <div id="sellContainer" style="display: <%= @shop.seller ? "none" : '' %>">
   <%= link_to('绑定销售人员', "#", :onclick => 'show_sell();', :class => "aSeller") %>
   <span id="seller" style="display: none ">
@@ -28,7 +29,13 @@
   </span>
 </div>
 
-<br/>
+  <br/>
+    <p>
+      <%= link_to "开通点菜", "/admin_foods/create?id=#{@shop.id}"%>
+      <%= link_to "开通猜图", "/admin_caitus/create?id=#{@shop.id}"%>
+    </p>
+  <br/>
+
 <%= link_to "合并到", "javascript:void(0)" , :onclick => "showFormMerge($(this))" %>
 
 <%= form_tag "/admin_shops/merge_to", :id=> "formMerge", :style => "display: none" do   %>

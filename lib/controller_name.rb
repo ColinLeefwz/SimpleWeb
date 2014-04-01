@@ -1,6 +1,7 @@
 # encoding: utf-8
 module ControllerName
-  Menu = ['用户管理','地点管理','优惠券管理','活动管理','签到管理','系统权限','客户端管理','用户统计','商家统计','活动统计','点评统计','个人用户统计', '系统日志']
+  Menu = ['用户管理','地点管理','优惠券管理','活动管理','签到管理','系统权限','客户端管理','用户统计',
+    '商家统计','活动统计','点评统计','个人用户统计', '系统日志','渠道管理', '插件管理']
   Right= {
     0=>{"admin_users"=>"用户列表", "admin_kx_users"=>"可信用户","admin_co_users"=> '外部授权用户', "admin_user_logos" => '头像审核', "user_chatroom_upload_photos" => '聊天室上传图片',
       "admin_gchat_content_review" =>'聊天室内容审核',"admin_photo_censor" =>'聊天室图片审核', "admin_blacks"=>"举报用户", 
@@ -23,6 +24,7 @@ module ControllerName
     10=>{},
     11=>{},
     12=>{'admin_app_logs' => "日志"},
-    13=>{'admin_channels_desc' => "渠道管理"}
+    13=>{'admin_channels_desc' => "渠道管理"},
+    14=>{'admin_mobile_shops' => "插件管理", "admin_foods" => "点菜", 'admin_caitus' => '猜图'}
   }
 end
