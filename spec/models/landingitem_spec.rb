@@ -22,11 +22,15 @@ describe Landingitem do
       expect(Landingitem.first.expert).to eq alex
     end
 
-    it "created one after creating a new Announcement" do
+    it "created one after creating a new Course" do
       course = create :course, title: "first course", description: "course description", experts: [sameer, alex], categories: ["culture"]
       expect(Landingitem.count).to eq 2
       expect(Landingitem.first.expert).to eq sameer
-      expect(Landingitem.first.only_index).to be_false
+    end
+
+    it "will not add one after create an Staff course" do
+      course = create :course, title: "first course", description: "course description", experts: [staff], categories: ["culture"]
+      expect(Landingitem.count).to eq 0
     end
   end
 
