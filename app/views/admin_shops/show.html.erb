@@ -30,11 +30,11 @@
 </div>
 
   <br/>
-    <p>
-      <%= link_to "开通手机网站", "/admin_mobile_shops/create?id=#{@shop.id}"%>
-      <%= link_to "开通点菜", "/admin_foods/create?id=#{@shop.id}"%>
-      <%= link_to "开通猜图", "/admin_caitus/create?id=#{@shop.id}"%>
-    </p>
+  <p>
+    <%= link_to "开通手机网站", "/admin_mobile_shops/create?id=#{@shop.id}" unless session_shop.has_mweb_purview? %>
+    <%= link_to "开通点菜", "/admin_foods/create?id=#{@shop.id}" unless session_shop.has_food_purview? %>
+    <%= link_to "开通猜图", "/admin_caitus/create?id=#{@shop.id}" unless session_shop.has_caitu_purview? %>
+  </p>
   <br/>
 
 <%= link_to "合并到", "javascript:void(0)" , :onclick => "showFormMerge($(this))" %>

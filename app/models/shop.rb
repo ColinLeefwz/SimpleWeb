@@ -860,6 +860,10 @@ class Shop
     $redis.zscore('CAITUSHOPS', self.id)
   end
 
+  def has_mweb_purview?
+    $redis.sismember('MobileShops', self.id)
+  end
+
   def has_trade_purview?
     self.id.to_s == '21838725' || self.id.to_s == '21835409' ? true : false
   end
