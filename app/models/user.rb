@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
-  after_create :check_subscription
+  after_create :check_newsletter
   before_save :set_user_name
 
   def to_param
@@ -155,8 +155,8 @@ class User < ActiveRecord::Base
     true
   end
 
-  def check_subscription
-    return if !self.subscribed
+  def check_newsletter
+    return if !self.subscribe_newsletter
 
     subscription = UserSubscription.new(self, ENV['MAILCHIMP_LIST_ID'])
     subscription.create
