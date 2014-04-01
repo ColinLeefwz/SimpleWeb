@@ -342,7 +342,7 @@ ActiveRecord::Schema.define(version: 20140328040948) do
     t.string   "time_zone",              default: "UTC"
     t.string   "subdomain"
     t.string   "user_name"
-    t.boolean  "subscribe_newsletter",   default: true
+    t.boolean  "subscribe_newsletter",   default: false
   end
 
   add_index "users", ["email", "provider"], name: "index_users_on_email_and_provider", unique: true, using: :btree
