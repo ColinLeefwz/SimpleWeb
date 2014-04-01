@@ -856,6 +856,10 @@ class Shop
     #21839855,21832844,21837941,21839738,21840235, 21837783,21839806
   end
 
+  def has_caitu_purview?
+    $redis.zscore('CAITUSHOPS', self.id)
+  end
+
   def has_trade_purview?
     self.id.to_s == '21838725' || self.id.to_s == '21835409' ? true : false
   end

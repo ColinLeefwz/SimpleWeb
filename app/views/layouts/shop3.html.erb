@@ -28,6 +28,9 @@
       $(".trade").click(function(){
         $("#trade #submit").click();
       });
+      $(".caitu").click(function(){
+        $("#caitu #submit").click();
+      });
     });
     </script>
   </head>
@@ -82,8 +85,8 @@
           <span class="navline"></span>
           <a href="/shop3_menu">自定义菜单</a>
           <span class="navline"></span>
-          <% if [21835801,21831643, 21831686, 21840900].include?(session[:shop_id].to_i)%>
-            <%= link_to "猜图管理","http://caitu.dface.cn/login?id=#{session[:shop_id]}&hash=#{Digest::SHA256.hexdigest('caitu'+session[:shop_id].to_i.to_s)[0,32]}", :target => '_blank' %>
+          <% if session_shop.has_caitu_purview? %>
+            <%= link_to "猜图管理", "javascript:void(0)", :target => '_blank', :class => 'caitu' %>
             <span class="navline"></span>
           <% end %>
           <% unless session_shop.shops.blank? %>
@@ -135,6 +138,11 @@
       <form action="http://trade.dface.cn/admin/sessions" id="trade" name="trade" method="post" target="_blank">
         <input type="hidden" name="sid" value="<%= session[:shop_id] %>">
         <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32] %>">
+        <input type="submit" name="submit" id="submit">
+      </form>
+      <form action="http://caitu.dface.cn/login" id="caitu" name="caitu" method="post" target="_blank">
+        <input type="hidden" name="id" value="<%= session[:shop_id] %>">
+        <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest('caitu'+session[:shop_id].to_i.to_s)[0,32] %>">
         <input type="submit" name="submit" id="submit">
       </form>
     </div>

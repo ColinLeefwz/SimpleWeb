@@ -31,6 +31,7 @@
 
   <br/>
     <p>
+      <%= link_to "开通手机网站", "/admin_mobile_shops/create?id=#{@shop.id}"%>
       <%= link_to "开通点菜", "/admin_foods/create?id=#{@shop.id}"%>
       <%= link_to "开通猜图", "/admin_caitus/create?id=#{@shop.id}"%>
     </p>
