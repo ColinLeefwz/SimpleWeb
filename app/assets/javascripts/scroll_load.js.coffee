@@ -21,8 +21,8 @@ set_get_url = ->
   current_url = document.URL
   profile_pattern = new RegExp("profile$")
   if current_url.match(profile_pattern)
-    expert_id = $.cookie("expert_id")
-    get_url = "/experts/#{expert_id}/load_more"
+    expert_token = $.cookie("expert_token")
+    get_url = "/experts/#{expert_token}/load_more"
   else
     get_url = "/welcome/load_more"
 
@@ -37,7 +37,7 @@ $(document).ready ->
 
 
 create_spinner = ->
-  opts = 
+  opts =
     lines : 5,
     length : 0,
     width : 18,
