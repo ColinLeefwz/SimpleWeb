@@ -30,5 +30,5 @@
 
 
 .form-group
-  = f.check_box :subscribed
-  %label.control-label{for: "user_subscribed"} Keep me informed with upcoming news
+  = f.check_box :subscribe_newsletter, checked: true
+  %label.control-label{for: "user_subscribe_newsletter"} Keep me informed with upcoming news
