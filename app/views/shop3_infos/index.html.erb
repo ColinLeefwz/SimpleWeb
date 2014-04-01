@@ -16,7 +16,9 @@
                         <%=image_tag( "#{ShopLogo.img_url(@shop_logo.id, :t1)}?t=#{Time.now}", :class=>"imgstyle4 mt5", :alt => "")%>
                         <% end %>
                         </td>
-                        <td width="82%" align="left" valign="top" class="red1">商家ID：<%= @shop.id %></td>
+                        <td width="82%" align="left" valign="top" class="red1">
+                          商家ID：<%= @shop.id2.blank? ? @shop.id : "#{@shop.id2}  (#{@shop.id})" %>
+                        </td>
                       </tr>
                       <tr>
                         <td align="left" valign="top">商家名称：<%= @shop.name %></td>
