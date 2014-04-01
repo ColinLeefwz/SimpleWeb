@@ -109,7 +109,7 @@ class MembersController < ApplicationController
   end
 
   def user_params
-    params.require(:profile).permit(:first_name, :last_name, :avatar, :time_zone)
+    params.require(:profile).permit(:first_name, :last_name, :avatar, :time_zone, :subscribed)
   end
 
   def member_profile_params
