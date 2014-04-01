@@ -33,7 +33,7 @@ class ExpertsController < ApplicationController
   def profile
     cookies[:profile_batch_point] = 0
     cookies[:no_more_load] = false
-    cookies[:expert_id] = @expert.id
+    cookies[:expert_token] = @expert.user_name
 
     @items = @expert.load_landingitems(0)
     increase_cookie
