@@ -63,5 +63,10 @@
                   %span.badge.pull-right
                     = model_count('VideoInterview')
                   video
+              %li
+                %a.filters{href: "#course", data: {filter: '.course'}}
+                  %span.badge.pull-right
+                    = model_count('Course')
+                  course
 = render "shared/sign_in_modal"
 
