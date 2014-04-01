@@ -1,0 +1,44 @@
+@import 'globals/variables';
+
+.main-menu .dashboard-settings{ // only settings on dashboard need shadow (not settings on localhost:3000/users/edit)
+  background-color: white;
+  box-shadow: $shadow_param;
+}
+
+
+.dashboard-settings{
+  padding: 0% 62% 8% 5%;
+  h3{
+    font-family: Latobold;
+  }
+  label{
+    font-weight: normal;
+    font-size: 15px;
+    color: grey;
+  }
+}
+
+
+.setting{
+  padding: 3rem 0 2rem 0;
+  border-bottom: 1px solid #eee;
+
+  .btn{
+    margin-top: 1rem;
+  }
+}
+
+
+
+/***********************************************************************
+                                                                       *
+    on screen smaller than 767px                                       *
+                                                                       *
+***********************************************************************/
+
+
+@media (max-width: 766px){
+  .dashboard-settings{
+    padding: 0% 25% 8% 29%;
+  }
+}

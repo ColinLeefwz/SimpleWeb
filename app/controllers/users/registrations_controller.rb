@@ -19,10 +19,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-    @from = "users/registrations/settings"
     respond_to do |format|
-      format.js {render "members/update"}
-      format.html {render "edit"}
+      format.js {}
+      format.html {}
     end
   end
 
