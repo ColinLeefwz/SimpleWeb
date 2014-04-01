@@ -36,32 +36,23 @@
   </head>
 
   <body>
-    <div class="main">
-      <div class="header">
-        <div class="headercon">
-          <div class="toptitle">
-            <h1><%= link_to session_shop.name, "/shop3_login" %></h1>
-          </div>
-		  <div class="clear1"></div>
-		  <div id="Message">
-			<a href="#">脸脸管理</a>
-			<a href="#">手机网站</a>
-			<a href="#">微信管理</a>
-			<a href="#" class="noneborder">账户设置</a>
-		  </div>
-        </div>
-        <a href="http://www.dface.cn"><img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/></a>
-        <img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
-        <div id="LinkBox">
-          <a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
-          <a href="/shop3_login/logout" class="links2">退出</a>
-          <span class="linkarrow"></span>
-        </div>
-      </div>
-      <div id="Nav" class="nav">
-        <a class="sign" id="CloseNav"></a>
-        <div id="Navcon" class="navcon">
-          <a href="/shop3_login">首页</a>
+    <div class="main">	  
+	  <div class="header2">
+			<a href="/mobile"><img src="/newbackstage/images/logo3.png" class="logo"/></a>
+			<div class="header2_change">
+				<a class="hover" href="http://shop.dface.cn/shop3_login/login2?id=21835801&amp;hash=57329899a9ec2a7585dfd5a6d545b703">APP管理<span class="arrow"></span></a>
+				<a href="/mobile/index">手机网站</a>
+				<a href="/mobile_weixin">微信营销</a>
+				<a href="/mobile_user/index">账户设置</a>
+			</div>
+			<a href="/shop3_login/logout" class="r f14 mr70 mt25">退出</a>
+			<span class="r f14 mr20 mt25"><%= link_to session_shop.name, "/shop3_login" %></span>
+			<div class="clear1"></div>
+		</div>
+	  
+      <div id="Nav" class="nav2">
+        <div id="Navcon" class="nav2con">
+          <a href="/shop3_login" style="padding-top:80px;">首页</a>
           <span class="navline"></span>
           <% if session[:shop_id].in?($travel) ||  ENV["RAILS_ENV"] != "production"%>
             <a href="/shop3_lines">拓展功能</a>
@@ -79,8 +70,6 @@
           <span class="navline"></span>
           <a href="/shop3_checkins?page=1">签到管理</a>
           <span class="navline"></span>
-		  <a href="/shop3_infos">账户设置</a>
-		  <span class="navline"></span>
           <a href="/shop3_staffs">商家设置</a>
           <span class="navline"></span>
           <a href="/shop3_menu">自定义菜单</a>
@@ -118,9 +107,9 @@
             <%= session[:admin_sid] ? "返回总店" : "退出" %>
           </a>
           <span class="navline"></span>
-          <label id="CB1" class="checkboxs1" style="display:none;">取消动画</label>
+          <label id="CB1" class="checkboxs1 none">取消动画</label>
           <span class="navline"></span>
-          <a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+          <a id="Btn" class="none"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
         </div>
       </div>
       <div class="clear1"></div>
