@@ -5,11 +5,17 @@
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
         %h1#myModalLabel.modal-title Thank you for visiting us!
       .modal-body
-        %p
-          Consider joining our
-          = link_to ' Prodygia community', new_user_registration_path
-          ; it will be easier to stay in touch and let you know the latest news. You will be in full control on how much you will or will not hear from us
+        .rounded-box
+          %p
+            Consider joining our
+            = link_to ' Prodygia community', new_user_registration_path
+            ; it will be easier to stay in touch and let you know the latest news. You will be in full control on how much you will or will not hear from us
+        = form_for :guest, class: 'form-horizontal'  do |f|
+          .form-group
+            .col-md-6.col-sm-6
+              = f.email_field :email, placeholder: "Your Email Address" ,class: 'form-control'
+            .col-md-4.col-sm-4
+              = f.submit "Subscribe", class: 'btn btn-primary'
 
       .modal-footer
-        %button.btn.btn-default{type: 'button', data: {dismiss: 'modal'}} Close
         //= link_to 'Next', new_article_path, class: 'btn btn-primary', type: 'button', data:{dismiss: 'modal'}, remote: true

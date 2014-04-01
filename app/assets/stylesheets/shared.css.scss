@@ -8,15 +8,18 @@
 
 #tip-modal {
   .modal-content {
-    background: url('forbidden city.jpg');
-    opacity: 0.8;
+    background-image: url('forbidden city.jpg');
     color: white;
 
-    p {
-      font-weight: bold;
+    .rounded-box {
 
-      a {
-        color: blue;
+      background-color: rgba(0,0,0,0.5);
+      p {
+        font-weight: bold;
+
+        a {
+          color: blue;
+        }
       }
     }
   }
