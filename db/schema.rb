@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328040948) do
+ActiveRecord::Schema.define(version: 20140401122629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,7 +211,6 @@ ActiveRecord::Schema.define(version: 20140328040948) do
     t.integer  "landingable_id"
     t.string   "landingable_type"
     t.integer  "expert_id"
-    t.boolean  "only_index"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "draft",            default: false

@@ -4,7 +4,6 @@ def helper_objects
   let(:jevan) { create :member, email: 'jevan@test.com', password: '11111111', first_name: 'jevan', last_name: 'wu'  } #, avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
   let(:gecko) { create :member, email: 'gecko@test.com', password: '11111111', first_name: 'gecko', last_name: 'fu' }
   let(:allen) { create :user, email: 'allen@test.com', password: '11111111', first_name: 'allen', last_name: 'wang' }
-  let(:staff) { create :expert, id: 2, email: "staff@prodygia.com", password: '11111111' }
 
   #experts
   let(:sameer) { create :expert, id: 1, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim' } # , avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}

@@ -5,20 +5,20 @@ class Landingitem < ActiveRecord::Base
     def add_record(obj)
       if obj.class.name == "Course"
         obj.experts.each do |exp|
-          create(landingable_type: obj.class.name,
-                             landingable_id: obj.id,
-                             updated_at: obj.updated_at,
-                             created_at: obj.created_at,
-                             only_index: false,
-                             draft: obj.draft,
-                             expert: exp)
+          unless exp.is_staff
+            create(landingable_type: obj.class.name,
+                               landingable_id: obj.id,
+                               updated_at: obj.updated_at,
+                               created_at: obj.created_at,
+                               draft: obj.draft,
+                               expert: exp)
+          end
         end
       else
         create(landingable_type: obj.class.name,
                            landingable_id: obj.id,
                            updated_at: obj.updated_at, 
                            created_at: obj.created_at,
-                           only_index: true,
                            draft: obj.draft,
                            expert: obj.expert)
       end
@@ -31,14 +31,14 @@ class Landingitem < ActiveRecord::Base
     def all_index_items(start_point)
       all_items = []
       start = start_point * 12
-      where(only_index: true, draft: false).order(updated_at: :desc).limit(12).offset(start).each do |item|
+      where(draft: false).select(:landingable_id, :landingable_type, :updated_at).uniq.order(updated_at: :desc).limit(12).offset(start).each do |item|
         all_items << item.landingable_type.constantize.find(item.landingable_id)
       end
       all_items
     end
 
     def next(start_point)
-      @max_count = where(only_index: true, draft: false).count
+      @max_count = where(draft: false).count
       ((start_point * 12) > @max_count) ? false : true
     end
   end
