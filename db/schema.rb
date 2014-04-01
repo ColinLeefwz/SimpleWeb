@@ -31,16 +31,6 @@ ActiveRecord::Schema.define(version: 20140328040948) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "activity_streams", force: true do |t|
-    t.integer  "activity_streamable_id"
-    t.string   "activity_streamable_type"
-    t.string   "action"
-    t.integer  "operation_id"
-    t.string   "operation_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "announcements", force: true do |t|
     t.string   "title"
     t.text     "description",        default: "  "
@@ -77,6 +67,7 @@ ActiveRecord::Schema.define(version: 20140328040948) do
     t.boolean  "draft",              default: false
     t.string   "time_zone",          default: "UTC"
     t.boolean  "canceled",           default: false
+    t.string   "content_type"
   end
 
   add_index "articles", ["categories"], name: "index_articles_on_categories", using: :gin
@@ -86,6 +77,12 @@ ActiveRecord::Schema.define(version: 20140328040948) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "categorizations", force: true do |t|
+    t.integer "category_id"
+    t.string  "categoriable_type"
+    t.integer "categoriable_id"
   end
 
   create_table "chapters", force: true do |t|
@@ -340,7 +337,6 @@ ActiveRecord::Schema.define(version: 20140328040948) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "time_zone",              default: "UTC"
-    t.string   "subdomain"
     t.string   "user_name"
     t.boolean  "subscribe_newsletter",   default: false
   end
