@@ -50,6 +50,9 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
+  validates_presence_of   :first_name, :allow_blank => false
+  validates_presence_of   :last_name, :allow_blank => false
+
   before_save :set_user_name
 
   def to_param
