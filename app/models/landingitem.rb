@@ -31,15 +31,14 @@ class Landingitem < ActiveRecord::Base
     def all_index_items(start_point)
       all_items = []
       start = start_point * 12
-      # where(only_index: true, draft: false).order(updated_at: :desc).limit(12).offset(start).each do |item|
-      where(draft: false).order(updated_at: :desc).limit(12).offset(start).each do |item|
+      where(draft: false).select(:landingable_id, :landingable_type, :updated_at).uniq.order(updated_at: :desc).limit(12).offset(start).each do |item|
         all_items << item.landingable_type.constantize.find(item.landingable_id)
       end
       all_items
     end
 
     def next(start_point)
-      @max_count = where(only_index: true, draft: false).count
+      @max_count = where(draft: false).count
       ((start_point * 12) > @max_count) ? false : true
     end
   end

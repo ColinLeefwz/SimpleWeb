@@ -58,10 +58,15 @@ describe Landingitem do
       expect(Landingitem.all_index_items(0)).to eq [announcement, video_interview, article]
     end
 
-    it "limits the count to 10" do
+    it "limits the count to 12" do
       article_list = create_list(:article, 14, title: "article", expert: sameer, categories: ["culture"])
       video_interview_list = create_list(:video_interview, 14, expert: sameer, categories: ["culture"])
       expect(Landingitem.all_index_items(0).count).to eq 12
+    end
+
+    it "only shows one if there're two same courses" do
+      course = create :course, title: "first course", description: "course description", experts: [sameer, alex], categories: ["culture"]
+      expect(Landingitem.all_index_items(0).count).to eq 1
     end
   end
 
