@@ -6,6 +6,21 @@
   margin: 0 auto;
 }
 
+#tip-modal {
+  .modal-content {
+    background: url('forbidden city.jpg');
+    opacity: 0.8;
+    color: white;
+
+    p {
+      font-weight: bold;
+
+      a {
+        color: blue;
+      }
+    }
+  }
+}
 
 .button{
   clear: both;
@@ -14,9 +29,9 @@
   text-align: center;
   padding: 0.3em;
   color: white;
-  a:hover{  
+  a:hover{
     color: white;
-    text-decoration: none; 
+    text-decoration: none;
   }
 }
 

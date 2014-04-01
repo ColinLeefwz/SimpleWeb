@@ -5,8 +5,10 @@
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
         %h1#myModalLabel.modal-title Thank you for visiting us!
       .modal-body
-        %ul.list-group
-          %li.list-group-item.lead Consider joining our Prodygia community; it will be easier to stay in touch and let you know the latest news. You will be in full control on how much you will or will not hear from us
+        %p
+          Consider joining our
+          = link_to ' Prodygia community', new_user_registration_path
+          ; it will be easier to stay in touch and let you know the latest news. You will be in full control on how much you will or will not hear from us
 
       .modal-footer
         %button.btn.btn-default{type: 'button', data: {dismiss: 'modal'}} Close
