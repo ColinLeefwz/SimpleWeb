@@ -1,10 +1,10 @@
 class Expert < Member
   include ActiveAdmin::Callbacks
 
+  has_many :landingitems
   has_many :articles, dependent: :destroy
   has_and_belongs_to_many :courses
   has_many :video_interviews, -> {order "updated_at DESC"}
-  has_many :resources
 
   has_one :video, as: :videoable, dependent: :destroy
   accepts_nested_attributes_for :video, allow_destroy: true
@@ -33,6 +33,14 @@ class Expert < Member
 
   def is_staff
     return (self.id == 2)
+  end
+
+  def load_landingitems(point)
+    all_items = []
+    self.landingitems.where(draft: false).limit(6).offset(point * 6).each do |item|
+      all_items << item.landingable_type.constantize.find(item.landingable_id)
+    end
+    all_items
   end
 
   def self.staff

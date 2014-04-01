@@ -12,17 +12,22 @@
 
   .section-detail
     - if available
-      .section-modal.modal.hide.fade
-        - if (section.video && section.video.available?)
-          .video
-            %video.sublime{title: section.title, width: "640", height: "352", preload: "none"}
-              %source{src: section.video.SD.url}
-              %source{src: section.video.HD.url, data: {quality: "hd"}}
-
-        .description
-          = section.description.html_safe
-        .close-icon
-          = image_tag "close-icon.png"
+      .section-modal.modal.fade
+        .modal-dialog.modal-lg
+          .modal-content
+            .modal-header
+              = section.title
+            - if (section.video && section.video.available?)
+              .modal-body
+                .video-wrapper
+                  %video.sublime{title: section.title, width: "640", height: "352", preload: "none"}
+                    %source{src: section.video.SD.url}
+                    %source{src: section.video.HD.url, data: {quality: "hd"}}
+            .modal-footer
+              .description
+                = section.description.html_safe
+              .close-icon
+                = image_tag "close-icon.png"
     - else
       .subscribe-modal.modal.hide.fade
         = render partial: "subscribe_modal", locals: {course: section.course}

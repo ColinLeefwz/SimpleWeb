@@ -25,10 +25,11 @@ ul.nav.navbar-nav.navbar-right {
 
 .navbar-header{
   .dropdown-toggle {
-    margin-left: 15px;
+    margin-left: 30px;
 
     padding-top: 0;
     margin-top: 0;
+    margin-bottom: -50px;
   }
   #sidebar_icon {
     img {
@@ -42,7 +43,11 @@ ul.nav.navbar-nav.navbar-right {
     }
   }
   .dropdown-menu {
-    width: 300px;
+    width: 322px;
+
+    li{
+      padding-left: 0.5em;
+    }
   }
 }
 
@@ -89,11 +94,11 @@ ul.nav.navbar-nav.navbar-right {
       font-size: 14px;
       font-family: 'Latoreg';
     }
-    
+
     a:hover, a:focus{
       text-decoration: none;
       color: #880848;
-    } 
+    }
 	}
 
 	.fixed {
@@ -167,3 +172,4 @@ ul.nav.navbar-nav.navbar-right {
   } /*end of nav_container in desktop*/
 
 }  /*end of header*/
+

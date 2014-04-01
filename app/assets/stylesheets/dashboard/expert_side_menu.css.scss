@@ -1,6 +1,29 @@
 @import "globals/variables";
 
+
+//------ Override Bootstrap Collapse
+.panel{
+  border: none;
+  box-shadow: none !important;
+  -webkit-box-shadow: none;
+}
+
+.panel li{ 
+  list-style-type: none; 
+  font-size: 15px;
+  color: #888;
+  padding-left: 3rem;
+  margin-bottom: 0.4rem;
+  width: 200px;
+}
+
+.panel .panel-heading{
+  padding: 0;
+  background: white;
+}
+
 .side-menu{
+  margin-left: 10%;
   a{
     color: #888;
 

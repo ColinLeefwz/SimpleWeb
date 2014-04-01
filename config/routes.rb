@@ -74,7 +74,6 @@ Prodygia::Application.routes.draw do
       get :activity_stream
       get :dashboard
       get :main_menu
-      get :pending_page
       get :profile
       get :consultations
       get :sessions
@@ -82,11 +81,13 @@ Prodygia::Application.routes.draw do
       get :edit_profile
       patch :update_profile
       get :video_courses
+      get :load_more
     end
 
     collection do
       get :refer_new_expert
       post :refer_new_expert
+      get :pending_page
     end
   end
 
@@ -110,6 +111,9 @@ Prodygia::Application.routes.draw do
   get "/faq", to: 'static_pages#faq'
   get "/terms", to: 'static_pages#terms'
   get "/privacy", to: 'static_pages#privacy'
+  get "welcome/load_more", to: "welcome#load_more"
+  get "/search", to: 'search#query', as: :search
+  get "/search/autocomplete", to: 'search#autocomplete'
 
-  get "*page" => redirect("/")
+  # get "*page" => redirect("/")
 end

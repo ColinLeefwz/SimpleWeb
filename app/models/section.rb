@@ -1,4 +1,5 @@
 class Section < ActiveRecord::Base
+  include Searchable
   validates :title, presence: true
 
   belongs_to :chapter
