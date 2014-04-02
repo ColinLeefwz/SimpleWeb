@@ -24,6 +24,11 @@
           %i#sidebar_icon
             = image_tag("sidebar_icon.png", class:'tooltips', title:'Navigation', data:{placement: 'right'})
         %ul.nav.dropdown-menu.nav-sidebar
+          = form_tag search_path, class: "form-inline", method: :get, remote: true do
+            .form-group
+              = text_field_tag :query, "", class: "form-control", id: "search_field", autocomplete: "off"
+            .form-group
+              = submit_tag "search", class: "btn btn-primary"
           %li
             %a.filters{href: "#all", data: {filter: '*'}}
               %span.badge.pull-right
@@ -57,5 +62,10 @@
                   %span.badge.pull-right
                     = model_count('VideoInterview')
                   video
-
+              %li
+                %a.filters{href: "#course", data: {filter: '.course'}}
+                  %span.badge.pull-right
+                    = model_count('Course')
+                  course
 = render "shared/sign_in_modal"
+

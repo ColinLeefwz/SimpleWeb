@@ -1,6 +1,8 @@
 class Course < ActiveRecord::Base
   include ParamsConfig
   include ActAsCategoriable
+  include Landingable
+  include Searchable
 
   validates :title, presence: true
   validates :price, numericality: {greater_than_or_equal_to: 0}
@@ -59,6 +61,10 @@ class Course < ActiveRecord::Base
   end
 
   def editable
+    false
+  end
+
+  def draft
     false
   end
 

@@ -1,6 +1,8 @@
 class Article < ActiveRecord::Base
   include ParamsConfig
   include ActAsCategoriable
+  include Landingable
+  include Searchable
 
   # ----- Associations -----
   belongs_to :expert
@@ -32,4 +34,3 @@ class Article < ActiveRecord::Base
     errors.add(:categories, "cannot be blank") unless categories.any?
   end
 end
-

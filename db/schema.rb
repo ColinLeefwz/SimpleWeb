@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140324092132) do
+ActiveRecord::Schema.define(version: 20140401122629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,18 @@ ActiveRecord::Schema.define(version: 20140324092132) do
     t.datetime "updated_at"
   end
 
+  create_table "landingitems", force: true do |t|
+    t.integer  "landingable_id"
+    t.string   "landingable_type"
+    t.integer  "expert_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "draft",            default: false
+  end
+
+  add_index "landingitems", ["expert_id"], name: "index_landingitems_on_expert_id", using: :btree
+  add_index "landingitems", ["landingable_id", "landingable_type"], name: "index_landingitems_on_landingable_id_and_landingable_type", using: :btree
+
   create_table "languages", force: true do |t|
     t.string   "long_version"
     t.string   "short_version"
@@ -325,7 +337,9 @@ ActiveRecord::Schema.define(version: 20140324092132) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "time_zone",              default: "UTC"
-    t.boolean  "subscribed",             default: true
+    t.string   "subdomain"
+    t.string   "user_name"
+    t.boolean  "subscribe_newsletter",   default: false
   end
 
   add_index "users", ["email", "provider"], name: "index_users_on_email_and_provider", unique: true, using: :btree

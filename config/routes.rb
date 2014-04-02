@@ -81,6 +81,7 @@ Prodygia::Application.routes.draw do
       get :edit_profile
       patch :update_profile
       get :video_courses
+      get :load_more
     end
 
     collection do
@@ -97,6 +98,10 @@ Prodygia::Application.routes.draw do
     get 'followers'
   end
 
+  controller :mailchimp do
+    get 'subscription'
+  end
+
   resources :resources 
 
   root to: "welcome#index"
@@ -106,6 +111,9 @@ Prodygia::Application.routes.draw do
   get "/faq", to: 'static_pages#faq'
   get "/terms", to: 'static_pages#terms'
   get "/privacy", to: 'static_pages#privacy'
+  get "welcome/load_more", to: "welcome#load_more"
+  get "/search", to: 'search#query', as: :search
+  get "/search/autocomplete", to: 'search#autocomplete'
 
-  get "*page" => redirect("/")
+  # get "*page" => redirect("/")
 end

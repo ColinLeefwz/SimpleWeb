@@ -54,9 +54,9 @@
         filter: selector
       }
 
-      
 
-load_sublime = ->
+
+@load_sublime = ->
   sublime.load()
   for video in $("video")
     sublime.ready( ->
@@ -65,21 +65,10 @@ load_sublime = ->
       )
     )
 
-
 update_profile_message = ->
   $("input[type='submit']").on 'click', ->
     $("input[type='file']").css("width", "95px")
 
-    
-
 $(document).ready ->
   load_sublime()
-
-$(document).on 'page:load', ->
-  load_sublime()
-  update_profile_message()
-
-$(document).on 'ajax:success', ->
-  load_sublime()
-  update_profile_message()
 

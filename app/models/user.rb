@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
 
   # other available modules are: :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
   # Peter: we remove the :validatable to allow us to create multiple email with different provider
-  devise :invitable, :database_authenticatable, :registerable, :recoverable, 
+  devise :invitable, :database_authenticatable, :registerable, :recoverable,
     :rememberable, :trackable, :omniauthable, omniauth_providers: [:facebook, :linkedin]
 
   ## validations
@@ -49,6 +49,18 @@ class User < ActiveRecord::Base
   validates_presence_of     :password, :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
+  validates :first_name, :last_name, presence: true
+
+  after_create :check_newsletter
+  before_save :set_user_name
+
+  def to_param
+    user_name
+  end
+
+  def self.find(input)
+    input.to_i == 0 ? find_by(user_name: input) : super
+  end
 
   def name
     "#{first_name} #{last_name}"
@@ -136,7 +148,18 @@ class User < ActiveRecord::Base
     !persisted? || !password.nil? || !password_confirmation.nil?
   end
 
-  def email_required?
+  def set_user_name
+    self.user_name = "#{self.name.parameterize}"
+  end
+
+ def email_required?
     true
+  end
+
+  def check_newsletter
+    return if !self.subscribe_newsletter
+
+    subscription = UserSubscription.new(self, ENV['MAILCHIMP_LIST_ID'])
+    subscription.create
   end
 end
