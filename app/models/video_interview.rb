@@ -1,5 +1,6 @@
 class VideoInterview < ActiveRecord::Base
   include ParamsConfig
+  include ActAsCategoriable
   include Landingable
   include Searchable
 

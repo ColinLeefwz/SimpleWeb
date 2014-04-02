@@ -13,7 +13,7 @@
         %span.duration
           = distance_of_time_in_words @course.duration.to_i
         %span.category
-          = item.categories.join(", ")
+          = item.category_names
       .time
         = image_tag "time.png", class: "icon"
         = "Available immediately"

@@ -45,6 +45,9 @@
     display: inline-block;
     font-family: Latoitalic;
     font-size: 0.8em;
+  }
+
+  .producers, .video-duration{
     @include separator;
   }
 

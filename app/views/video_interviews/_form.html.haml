@@ -5,10 +5,13 @@
         = f.label :title, class: "control-label"
       .col-sm-6
         = f.text_field :title, :autofocus => true, class: 'form-control', input_html: { id: 'session-title-input' }
+
     .categories
-      .col-sm-2
-        = f.label :categories, class: "control-label"
-      = f.input :categories, :autofocus => true, collection: Category.all.map(&:name), as: :check_boxes, required: true, class: 'checkbox-inline', label: false
+      .form-group
+        .col-sm-2
+          = f.label :categories, class: "control-label", required: true
+        .col-sm-6
+          = f.association :categories, as: :check_boxes, collection: Category.all, label: false
     .form-group
       .col-sm-2
         = f.label :description, class: "control-label"
