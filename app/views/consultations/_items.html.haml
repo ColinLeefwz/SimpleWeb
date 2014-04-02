@@ -1,9 +1,10 @@
 - @consultations.each do |consultation|
   .item
     .item-body.clearfix
-      = "#{consultation.requester.name} requests a private consultation about #{consultation.description}"
-      .item-date
-        on #{consultation.created_at.to_date}
+      .consultation-content
+        .item-date.consultation-date
+          = "#{distance_of_time_in_words(consultation.created_at, Date.today)} ago"
+        = "#{consultation.requester.name} requests a private consultation about #{consultation.description}"
       .operations.pull-right
         - if consultation.status == Consultation::STATUS[:accepted]
           .btn accepted
