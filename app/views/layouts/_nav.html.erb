@@ -34,7 +34,7 @@
     <a href="/shop3_menu">自定义菜单</a>
     <span class="navline"></span>
     <% if session_shop.has_caitu_purview? %>
-      <%= link_to "猜图管理", "javascript:void(0)", :target => '_blank', :class => 'caitu' %>
+      <%= link_to "猜图管理", "javascript:void(0)", :class => 'caitu' %>
       <span class="navline"></span>
     <% end %>
     <% unless session_shop.shops.blank? %>
