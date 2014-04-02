@@ -17,7 +17,7 @@
           .favorite-session-expert-name.separator.inline
             = producer_links(course)
           .favorite-session-categories.inline
-            = course.categories.join(", ")
+            = course.category_names
           .clear-fix
           .favorite-session-description
             = truncate_html(course.description, length: 300, omission: '...')

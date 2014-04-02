@@ -9,7 +9,7 @@
         = link_to "#{content.expert.name}", profile_expert_path(content.expert)
         = "(published on #{content.created_at.to_date.to_formatted_s(:course_date)})"
       .favorite-session-categories.inline
-        = content.categories.join(", ")
+        = content.category_names
 
       .favorite-session-description
         = truncate_html(content.description, length: 300, omission: '...')

@@ -31,6 +31,6 @@ class VideoInterviewsController < ApplicationController
   end
 
   def video_interview_params
-    params.require(:video_interview).permit(:title, {categories: []}, :description, :cover)
+    params.require(:video_interview).permit(:title, {category_ids: []}, :description, :cover)
   end
 end

@@ -16,7 +16,7 @@
       .col-sm-2
         = f.label :categories, class: "control-label", required: true
       .col-sm-6
-        = f.input :categories, collection: Category.pluck(:name), as: :check_boxes, required: true, class: 'checkbox-inline', label: false
+        = f.association :categories, as: :check_boxes, collection: Category.all, label: false
 
     .form-group
       .col-sm-2

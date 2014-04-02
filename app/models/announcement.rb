@@ -1,5 +1,6 @@
 class Announcement < ActiveRecord::Base
   include ParamsConfig
+  include ActAsCategoriable
   include Landingable
   include Searchable
 
@@ -14,7 +15,6 @@ class Announcement < ActiveRecord::Base
   has_many :subscribers, through: :subscriptions
 
   has_one :visit, as: :visitable
-
   has_attached_file :cover
 
   def draft

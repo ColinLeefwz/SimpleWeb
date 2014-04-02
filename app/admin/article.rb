@@ -13,7 +13,9 @@ ActiveAdmin.register Article do
     column :always_show do |article|
       article.always_show.to_s
     end
-    column :categories
+    column :categories do |article|
+      article.category_names
+    end
 
     default_actions
   end
@@ -49,13 +51,16 @@ ActiveAdmin.register Article do
         description = article.description || "  "
         description.html_safe
       end
-      row :categories
+
+      row :categories do |article|
+        article.category_names
+      end
     end
   end
 
   controller do
     def permitted_params
-      params.permit :id, article: [:id, :title, :expert_id, :always_show, :description, :cover, {categories:[]}]
+      params.permit :id, article: [:id, :title, :expert_id, :always_show, :description, :cover, {category_ids:[]}]
     end
   end
 
