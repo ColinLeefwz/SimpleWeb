@@ -20,132 +20,14 @@
     <script type="text/javascript">
       var navmove = ($.cookie('navmove')==null?$.cookie( 'navmove', 'off', { path: '/' } ):$.cookie('navmove')), runing;
     </script>
-    <script type="text/javascript">
-    $(function(){
-      $(".food").click(function(){
-        $("#food #submit").click();
-      });
-      $(".trade").click(function(){
-        $("#trade #submit").click();
-      });
-      $(".caitu").click(function(){
-        $("#caitu #submit").click();
-      });
-    });
-    </script>
   </head>
 
   <body>
     <div class="main">
-      <div class="header">
-        <div class="headercon">
-          <div class="toptitle">
-            <h1><%= link_to session_shop.name, "/shop3_login" %></h1>
-          </div>
-		  <div class="clear1"></div>
-		  <div id="Message">
-			<a href="#">脸脸管理</a>
-			<a href="#">手机网站</a>
-			<a href="#">微信管理</a>
-			<a href="#" class="noneborder">账户设置</a>
-		  </div>
-        </div>
-        <a href="http://www.dface.cn"><img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/></a>
-        <img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
-        <div id="LinkBox">
-          <a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
-          <a href="/shop3_login/logout" class="links2">退出</a>
-          <span class="linkarrow"></span>
-        </div>
-      </div>
-      <div id="Nav" class="nav">
-        <a class="sign" id="CloseNav"></a>
-        <div id="Navcon" class="navcon">
-          <a href="/shop3_login">首页</a>
-          <span class="navline"></span>
-          <% if session[:shop_id].in?($travel) ||  ENV["RAILS_ENV"] != "production"%>
-            <a href="/shop3_lines">拓展功能</a>
-          <%end%>
-          <span class="navline" style="display:none"></span>
-          <a href="/shop3_coupons/list">优惠券管理</a>
-          <span class="navline"></span>
-          <a href="/shop3_faqs">问答系统</a>
-          <span class="navline"></span>
-          <a href="/shop3_data">数据统计</a>
-          <span class="navline"></span>
-          <a href="/shop3_content/user_photo">照片墙管理</a>
-          <span class="navline"></span>
-          <a href="/shop3_content/gchat">聊天室管理</a>
-          <span class="navline"></span>
-          <a href="/shop3_checkins?page=1">签到管理</a>
-          <span class="navline"></span>
-		  <a href="/shop3_infos">账户设置</a>
-		  <span class="navline"></span>
-          <a href="/shop3_staffs">商家设置</a>
-          <span class="navline"></span>
-          <a href="/shop3_menu">自定义菜单</a>
-          <span class="navline"></span>
-          <% if session_shop.has_caitu_purview? %>
-            <%= link_to "猜图管理", "javascript:void(0)", :target => '_blank', :class => 'caitu' %>
-            <span class="navline"></span>
-          <% end %>
-          <% unless session_shop.shops.blank? %>
-            <a href="/shop3_subshops">内部商家</a>
-          <% end %>
-          <span class="navline"></span>
-
-          <% if session_shop.id == 21835409 %>
-            <a href="/shop3_case/new">动态案例</a>
-            <span class="navline"></span>
-          <% end %>
-
-          <% if $redis.smembers("MobileShops").include?session_shop.id.to_s %>
-          <a href="/shop3_mobile/index3">手机网站</a>
-          <span class="navline"></span>
-          <% end %>
-
-          <% if session_shop.has_food_purview? %>
-            <a href="#" class="food">点菜管理</a>
-            <span class="navline"></span>
-          <% end %>
-
-          <% if session_shop.has_trade_purview? %>
-            <a href="#" class="trade">订单管理</a>
-            <span class="navline"></span>
-          <% end %>
-
-          <a href="/shop3_login/logout">
-            <%= session[:admin_sid] ? "返回总店" : "退出" %>
-          </a>
-          <span class="navline"></span>
-          <label id="CB1" class="checkboxs1" style="display:none;">取消动画</label>
-          <span class="navline"></span>
-          <a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
-        </div>
-      </div>
+      <%= render :partial => "layouts/header" %>
+      <%= render :partial => "layouts/nav" %>
       <div class="clear1"></div>
-
       <%= yield %>
-
     </div>
-
-    <div style="display:none;">
-      <form action="http://food.dface.cn/admin/sessions" id="food" name="food" method="post" target="_blank">
-        <input type="hidden" name="sid" value="<%= session[:shop_id] %>">
-        <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32] %>">
-        <input type="submit" name="submit" id="submit">
-      </form>
-      <form action="http://trade.dface.cn/admin/sessions" id="trade" name="trade" method="post" target="_blank">
-        <input type="hidden" name="sid" value="<%= session[:shop_id] %>">
-        <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32] %>">
-        <input type="submit" name="submit" id="submit">
-      </form>
-      <form action="http://caitu.dface.cn/login" id="caitu" name="caitu" method="post" target="_blank">
-        <input type="hidden" name="id" value="<%= session[:shop_id] %>">
-        <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest('caitu'+session[:shop_id].to_i.to_s)[0,32] %>">
-        <input type="submit" name="submit" id="submit">
-      </form>
-    </div>
-
   </body>
 </html>
