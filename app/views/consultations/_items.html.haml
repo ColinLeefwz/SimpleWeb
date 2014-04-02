@@ -4,10 +4,12 @@
       .consultation-content
         .item-date.consultation-date
           = "#{distance_of_time_in_words(consultation.created_at, Date.today)} ago"
-        = "#{consultation.requester.name} requests a private consultation about #{consultation.description}"
+        = "<strong><em>#{consultation.requester.name}</em></strong> requests a private consultation about: #{consultation.description}".html_safe
+
+
       .operations.pull-right
         - if consultation.status == Consultation::STATUS[:accepted]
-          .btn accepted
+          .operation.subscribed accepted
         - else
-          = link_to "reject", reject_consultation_path(consultation), remote: true, class: "btn pull-right"
-          = link_to "accept", accept_consultation_path(consultation), remote: true, class: "btn btn-prodygia pull-right"
+          = link_to "reject", reject_consultation_path(consultation), remote: true, class: "btn btn-info pull-right operation"
+          = link_to "accept", accept_consultation_path(consultation), remote: true, class: "btn btn-prodygia pull-right operation"
