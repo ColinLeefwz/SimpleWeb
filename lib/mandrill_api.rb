@@ -18,7 +18,7 @@ class MandrillApi
       "to"=>[{"name"=>user.first_name, "email"=>user.email}],
     }
 
-    send_template_mail("enroll-confirm", template_content, addition_message)
+    send_template_mail("enroll-comfirm", template_content, addition_message)
   end
 
   def welcome_confirm(user)
