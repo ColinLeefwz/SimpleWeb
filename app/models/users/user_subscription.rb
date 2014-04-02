@@ -13,7 +13,7 @@ class UserSubscription
 
   def toggle
     begin
-      @user.subscribed ? destroy : create
+      @user.subscribe_newsletter ? destroy : create
     rescue Mailchimp::ListAlreadySubscribedError
       @message = "You are already subscribed."
     rescue Mailchimp::EmailAlreadyUnsubscribedError
@@ -24,7 +24,6 @@ class UserSubscription
   end
 
 
-  private
   def create
     @mail_chimp.lists.subscribe(@list_id, {email: @user.email}, {FNAME: @user.first_name, LNAME: @user.last_name})
     @user.update_attributes(subscribe_newsletter: true) # guest return nil because of method_missing
