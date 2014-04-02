@@ -80,6 +80,12 @@ class AroundmeController < ApplicationController
         arr = arr+[ shop ]
       end
     end
+    if city && city=="0571"
+      shop = Shop.find_by_id(21831686) # 西溪印象城
+      if shop
+        arr = arr+[ shop ]
+      end
+    end
     if city && city=="023" && lo[0].to_s[0,4]=="29.8" && lo[1].to_s[0,5]=="106.0" 
       shop = Shop.find_by_id(21839992) # 铜梁脸脸
       if shop
@@ -93,7 +99,7 @@ class AroundmeController < ApplicationController
 	      shop.city = city
         arr = arr+[ shop ]
       end
-    end    
+    end
     #$redis.zrange("LL3#{session[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id); arr << s if s}
     arr.uniq!
     ret = arr.find_all{|x| x!=nil}.map do |x|  

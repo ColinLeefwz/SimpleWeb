@@ -17,6 +17,9 @@ module ApplicationHelper
     "#{h(str)}".gsub(/\n/,'<br>').html_safe
   end
 
+  def from_mweb?
+    session[:source] == 'mweb'
+  end
 
   def no_nav
     content_for :nav do

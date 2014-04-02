@@ -852,7 +852,16 @@ class Shop
   end
 
   def has_food_purview?
-    /测试|脸脸/ =~ self.name || self.id.to_s == '21839855' || self.id.to_s == '21832844' || self.id.to_s == '21837941' || self.id.to_s == '21839738' || self.id.to_s == '21840235' || self.id.to_s == '21837783' || self.id.to_s == '21839806' ? true : false
+    /测试|脸脸/ =~ self.name || $redis.zscore('FOODSHOPS', self.id)
+    #21839855,21832844,21837941,21839738,21840235, 21837783,21839806
+  end
+
+  def has_caitu_purview?
+    $redis.zscore('CAITUSHOPS', self.id)
+  end
+
+  def has_mweb_purview?
+    $redis.sismember('MobileShops', self.id)
   end
 
   def has_trade_purview?
