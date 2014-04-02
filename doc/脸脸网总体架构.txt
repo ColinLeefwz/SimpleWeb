@@ -118,6 +118,7 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 37. 需要修改密码的商家，"WeakPassword", 类型sadd
 38. 开通点菜的商家，"FOODSHOPS", 类型zadd
 39. 开通猜图的商家，"CAITUSHOPS", 类型zadd
+40. 是否禁止陪聊，“no_fake_talk“，类型是String
 
 
 

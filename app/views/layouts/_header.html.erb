@@ -1,14 +1,14 @@
 <% if from_mweb? %>
   <div class="header2">
-    <a href="/mobile"><img src="/newbackstage/images/logo3.png" class="logo"/></a>
+    <a href="<%= Host::Mweb %>/login/welcome"><img src="/newbackstage/images/logo3.png" class="logo"/></a>
     <div class="header2_change">
       <a class="hover" href="/shop3_login">APP管理<span class="arrow"></span></a>
       <%= link_to '手机网站', "#{Host::Mweb}/mobile/index" %>
       <%= link_to '微信营销', "#{Host::Mweb}/mobile_weixin" %>
-      <%= link_to '账户设置', "#{Host::Mweb}/mobile_user/index" %>
+      <!--<%= link_to '账户设置', "#{Host::Mweb}/mobile_user/index" %>-->
     </div>
     <a href="/shop3_login/logout" class="r f14 mr70 mt25">退出</a>
-    <span class="r f14 mr20 mt25"><%= link_to session_shop.name, "/shop3_login" %></span>
+    <span class="r f14 mr20 mt25 sign3"><%= link_to session_shop.name, "#{Host::Mweb}/mobile_user/index" %></span>
     <div class="clear1"></div>
   </div>
 <% else %>
