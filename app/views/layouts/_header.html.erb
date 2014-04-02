@@ -1,6 +1,6 @@
 <% if from_mweb? %>
   <div class="header2">
-    <a href="/mobile"><img src="/newbackstage/images/logo3.png" class="logo"/></a>
+    <a href="<%= Host::Mweb %>/login/welcome"><img src="/newbackstage/images/logo3.png" class="logo"/></a>
     <div class="header2_change">
       <a class="hover" href="/shop3_login">APP管理<span class="arrow"></span></a>
       <%= link_to '手机网站', "#{Host::Mweb}/mobile/index" %>
