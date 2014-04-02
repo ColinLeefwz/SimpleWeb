@@ -58,9 +58,10 @@
         .item-text= link_to 'Video courses', vod_library_member_path(user), remote: true
 
     -# ----- Private Sessions -----
-    .item
-      = render 'item_icon', item_name: 'new_session'
-      .item-text= link_to 'Private sessions', pending_page_experts_path(text: "schedule_private_session"), remote: true
+    - if user.is_a? Expert
+      .item
+        = render 'item_icon', item_name: 'new_session'
+        .item-text= link_to 'Private sessions', consultations_expert_path(user), remote: true
 
     -# ----- Favorites -----
     .item.panel
@@ -83,7 +84,7 @@
 
       .collapse.panel-collapse#refer
         .panel-body
-          %li= link_to 'New expert', refer_new_expert_experts_path, remote: true
+          %li= link_to 'New expert', refer_new_expert_experts_path, remote: true if user.is_a? Expert
           %li= link_to 'A friend', refer_a_friend_member_path, remote: true
 
 
