@@ -9,7 +9,7 @@
   = f.input :price
   = f.input :description, input_html: {class: "ckeditor"}
   = f.association :experts
-  = f.input :categories, as: :check_boxes, collection: Category.all, label_method: :name, value_method: :name
+  = f.association :categories, as: :check_boxes, collection: Category.all
   = f.file_field :cover
 
   = f.simple_fields_for :chapters do |c|

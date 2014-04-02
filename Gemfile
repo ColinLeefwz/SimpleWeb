@@ -40,6 +40,8 @@ gem 'elasticsearch-rails'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'font-awesome-sass'
 
+gem 'mailchimp-api'
+
 group :doc do
   gem 'sdoc', require: false
 end

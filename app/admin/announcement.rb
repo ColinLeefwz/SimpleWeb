@@ -3,7 +3,9 @@ ActiveAdmin.register Announcement do
 
   index do
     column :title
-    column :categories
+    column :categories do |announcement|
+      announcement.category_names
+    end
     column :always_show
     column :created_at
     column :updated_at
@@ -13,7 +15,7 @@ ActiveAdmin.register Announcement do
 
   controller do
     def permitted_params
-      params.permit :id, announcement: [:id, :title, :language, :cover, :description, :always_show, :expert_id, {categories:[]}, Video::Attributes ]
+      params.permit :id, announcement: [:id, :title, :language, :cover, :description, :always_show, :expert_id, {category_ids:[]}, Video::Attributes ]
     end
   end
 

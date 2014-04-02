@@ -7,7 +7,7 @@
         = expert_name_helper(item)
     .content-type
       = image_tag(get_image_tag(item), class: "tooltips", title: get_tooltip(item), data: {placement: "bottom"})
-      %p= item.categories.join(", ")
+      %p= item.category_names
       %p= item.language.split(",")[0] if (item.respond_to? :language and item.language)
   .title
     = link_to "#{item.title}", polymorphic_path(item)

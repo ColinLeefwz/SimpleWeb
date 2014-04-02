@@ -33,7 +33,7 @@ class ExpertsController < ApplicationController
   def profile
     cookies[:profile_batch_point] = 0
     cookies[:no_more_load] = false
-    cookies[:expert_id] = @expert.id
+    cookies[:expert_token] = @expert.user_name
 
     @items = @expert.load_landingitems(0)
     increase_cookie
@@ -138,6 +138,6 @@ class ExpertsController < ApplicationController
   end
 
   def expert_params
-    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, Video::Attributes)
+    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, :subscribed, Video::Attributes)
   end
 end

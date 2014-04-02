@@ -26,6 +26,23 @@
         float: left;
       }
 
+      // about consultations
+      .consultation-date {
+        font-size: 1em;
+        font-family: 'Latolightitalic'
+      }
+
+      .consultation-content {
+        padding: 15px;
+      }
+
+      .operation {
+        color: white;
+        margin: 5px;
+        padding: 5px;
+      }
+      // end consultation
+
       .cover-wrapper{
         width: 20%;
         box-sizing: border-box;
