@@ -22,7 +22,7 @@
       = link_to "Back", :back, class: 'btn btn-default'
 
   .setting
-    %h3 Subscription
+    %h3 Notification
 
-    - action = current_user.subscribe_newsletter? ? "Unsubscribe" : "Subscribe"
-    = link_to action, subscription_path, class: "btn btn-primary"
+    = check_box_tag :subscribe_newsletter, "1", current_user.subscribe_newsletter
+    = label_tag :subscribe_newsletter
