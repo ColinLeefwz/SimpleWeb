@@ -237,7 +237,7 @@ POST & \multicolumn{3}{|c|}{/phone/register} \\
 \hline
  code  & 字符串 & 必须 &  验证码\\
 \hline
- password  & 字符串 & 必须 &  用户设置的密码\\
+ password  & 字符串 & 选填 &  用户设置的密码\\
 \hline
 \end{tabular}
    \end{center}
@@ -245,6 +245,7 @@ POST & \multicolumn{3}{|c|}{/phone/register} \\
 
 调用成功返回生成的用户id，如果有错误，错误信息保存在error中。
 
+[3014-4-2] 手机号码注册时，密码变为选填。
 
 \subsubsection{忘记密码}
 \label{hash_algorithm}

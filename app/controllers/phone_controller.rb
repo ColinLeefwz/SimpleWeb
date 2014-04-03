@@ -3,7 +3,7 @@
 class PhoneController < ApplicationController
   before_filter :user_login_filter, :only => [:bind, :unbind, :change_password, :set_password] 
   before_filter :code_match, :only => [:register, :forgot_password, :bind] 
-  before_filter :password_check, :only => [:register, :forgot_password, :change_password, :set_password] 
+  before_filter :password_check, :only => [:forgot_password, :change_password, :set_password] 
   before_filter :phone_check, :only => [:unbind, :set_password, :upload_address_list] 
 
   def phone_check
@@ -92,7 +92,7 @@ class PhoneController < ApplicationController
     end
     user = User.new
     user.phone = params[:phone]
-    user.psd = slat_hash_pass(params[:password])
+    user.psd = slat_hash_pass(params[:password]) if params[:password]
     user.name = "" #user.phone
     user.save!
     $redis.set("P:#{user.phone}", user.id)
