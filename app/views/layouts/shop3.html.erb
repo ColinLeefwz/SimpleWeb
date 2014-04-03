@@ -11,7 +11,11 @@
     <%= yield :header_css %>
     <script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
     <script src="/newbackstage/js/jquery.cookie.js"></script>
-    <script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<% if from_mweb? %>
+		<script src="/newbackstage/js/public1.js" type="text/javascript"></script>
+	<% else %>
+		<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<% end %>
     <%= yield :header_js %>
     <script type="text/javascript" src="/ueditor/editor_all.js"></script>
     <script type="text/javascript" src="/ueditor/editor_config.js"></script>
