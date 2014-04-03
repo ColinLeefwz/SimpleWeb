@@ -27,7 +27,7 @@ class UserSubscription
   def create
     @mail_chimp.lists.subscribe(@list_id, {email: @user.email}, {FNAME: @user.first_name, LNAME: @user.last_name})
     @user.update_attributes(subscribe_newsletter: true) # guest return nil because of method_missing
-    @message = "High Fives! Subscribed successfully! Please confirm the email sending to you"
+    @message = "Thanks for subscribing"
   end
 
   def destroy
