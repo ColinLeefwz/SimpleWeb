@@ -5,7 +5,7 @@ module ArticleHelper
     tooltips[item.class.name]
   end
   def get_image_tag(item)
-    images = { "LiveSession" => "livestreaming.png", "Article" => "text.png", "VideoInterview" => "video.png", "Announcement" => "announcement.png", "Course" => "video.png" }
+    images = { "LiveSession" => "livestreaming.png", "Article" => "text.png", "VideoInterview" => "video.png", "Announcement" => "announcement.png", "Course" => "video_course_icon.png" }
     images[item.class.name]
 
   end
