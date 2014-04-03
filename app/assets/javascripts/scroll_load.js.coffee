@@ -45,6 +45,5 @@ create_spinner = ->
     left: 'auto'
 
   spinner = new Spinner(opts).spin().el
-  # $("#content").append(spinner)
   $(spinner).insertBefore($("body footer"))
 
