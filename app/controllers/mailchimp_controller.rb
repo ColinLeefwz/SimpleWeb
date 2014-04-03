@@ -1,16 +1,19 @@
 class MailchimpController < ApplicationController
 
   def subscription
-    subscription = UserSubscription.new(current_user, ENV["MAILCHIMP_LIST_ID"])
+    user = current_user || Guest.new(guest_params)
+    subscription = UserSubscription.new(user, ENV["MAILCHIMP_LIST_ID"])
+    subscription.toggle
 
-    status = current_user.subscribed
-    status ? subscription.destroy : subscription.create
-    current_user.update_attributes(subscribed: !status)
-
-    #note: gecko: we will unify the ExpertDashboard and MemberDashboard
     flash[:success] = subscription.message
-    path = current_user.is_a?(Expert) ? dashboard_expert_path(current_user) : dashboard_member_path(current_user)
-    redirect_to path
+    redirect_to root_path
+    # path = current_user.is_a?(Expert) ? dashboard_expert_path(current_user) : dashboard_member_path(current_user)
+  end
+
+
+  private
+  def guest_params
+    params.require(:guest).permit(:email)
   end
 
 end
