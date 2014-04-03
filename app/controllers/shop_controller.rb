@@ -41,7 +41,7 @@ class ShopController < ApplicationController
       return
     end
     if params[:sname]=="即"
-      ids = (21839801..21839814).to_a<<(21839911)
+      ids = (21839801..21839814).to_a<<(21839911)<<(21840495)
       shops = ids.map {|x| Shop.find_by_id(x)}.find_all{|x| x!=nil}
       render :json => shops.map {|s| {id:s.id,name:s.name, visit:0, distance: ''}.merge!(s.group_hash(session[:user_id])) }.to_json
       return

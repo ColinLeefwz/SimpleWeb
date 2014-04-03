@@ -503,26 +503,27 @@ class Oauth2Controller < ApplicationController
   end
   
   def update_token0(id,pass)
+    return if pass.length<=64 #硬编码了token的长度：64
+    activity0403(id)
     return
-    #TODO: 脸脸Web登录成功后设置push token，且强制单点登录
-    if pass.length>(1+64) #硬编码了token的长度：64
-      Rails.cache.fetch("UPTOKEN#{id}", :expires_in => 1.days) do
-        Resque.enqueue(TokenUpdate, id, pass)
-        "1"
-      end
+    Rails.cache.fetch("UPTOKEN#{id}", :expires_in => 1.days) do
+      #TODO: 脸脸Web登录成功后设置push token，且强制单点登录
+      Resque.enqueue(TokenUpdate, id, pass)
+      "1"
     end
-    #activity0314(id)
   end
   
-  def activity0314(id) #2014-03-14湖滨银泰活动
-    if $redis.sismember("TMP0314", id)
-      $redis.srem("TMP0314", id)
+  def activity0403(id) #2014-03-14湖滨银泰活动
+    #准备数据
+    #uids = Checkin.only(:uid).where({city:"0571"}).sort({_id:-1}).limit(9999).map{|x| x.uid}.uniq
+    #uids.each{|x| $redis.sadd("TMP0403", x)}
+    if $redis.sismember("TMP0403", id)
+      $redis.srem("TMP0403", id)
       str = <<-EOF   
-脸脸福利！快去湖滨银泰抢礼物啦~ 日韩船票、千颂伊同色唇彩，情侣吊坠、免费美甲……                   白色情人节，都教授与你相约湖滨银泰，带你疯狂猜图！
-3.14--3.16 人人有奖！更有皇家加勒比游轮票、大牌美妆、休闲餐饮，总价值超过十万元，10000份奖品等你来领！猜对就拿走，奖品直接抱回家！就在湖滨银泰2期B区中庭，还不赶快来玩~~~
+4月3日--4月7日，杭州西溪印象城疯狂猜图赢大奖，猜对就拿走！不花钱，随便抢，3秒变土豪！！！全球限量谷歌眼镜免费送！另有银乐迪欢唱券、必胜客、巴蜀江南、第二乐章免单券，caffe bene、山姆、义源珠宝、酷乐潮玩、黛拉美甲……各种餐饮随便吃，美容美体美甲随便做~所有奖品现场直接兑现！地点：印象城一楼中庭！
       EOF
-      Resque.enqueue(XmppMsg, $gfuid, id, "[img:U53226c1920f31856a2000059]", "tmp0314i","NOLOG='1' NOPUSH='1'")
-      Resque.enqueue(XmppMsg, $gfuid, id, str, "tmp0314", "NOLOG='1' NOPUSH='1'")
+      Resque.enqueue(XmppMsg, $gfuid, id, "[img:faq533bea0220f3187a60000df4]", "tmp0403i","NOLOG='1' NOPUSH='1'")
+      Resque.enqueue(XmppMsg, $gfuid, id, str, "tmp0403", "NOLOG='1' NOPUSH='1'")
     end
   end
   
