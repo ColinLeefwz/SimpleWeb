@@ -118,5 +118,12 @@ class ShopFaq
     end
   end
 
+  def copy_to(option)
+    faq_hash = self.clone.attributes.keep_if{|k,v| !k.in?(['_id'])}.merge(option)  
+    shop_faq = ShopFaq.new(faq_hash)
+    shop_faq.remote_img_url = self.img_url
+    shop_faq.save
+  end
+
 
 end
