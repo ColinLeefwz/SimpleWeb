@@ -15,7 +15,7 @@ ActiveAdmin.register Member do
       member.created_at.to_date
     end
 
-    column :subscribed
+    column :subscribe_newsletter
 
     column "social login?", :provider
   end
