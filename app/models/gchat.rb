@@ -22,8 +22,9 @@ class Gchat
     flag = false
     flag = true if msg[0,4] == '脸脸赐我'
     flag = true if msg[0,4] == '银泰赐我' && shop.id.to_i == 21831643
+    flag = true if msg.in?(["赐我男神", '赐我女神']) && shop.id.to_i == 21831686
     return if !flag
-    gender = {"女神" => 2, "男神" => 1 }[msg[4,3]]
+    gender = {"女神" => 2, "男神" => 1 }[msg[-2,2]]
     return if gender.nil?
     ta = [nil,"他", "她"][gender]
     us = shop.checkin_users
