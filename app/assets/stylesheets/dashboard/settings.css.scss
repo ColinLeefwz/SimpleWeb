@@ -19,7 +19,7 @@
 }
 
 
-.setting{
+.dashboard-settings .setting{
   padding: 3rem 0 2rem 0;
   border-bottom: 1px solid #eee;
 
@@ -29,6 +29,12 @@
 }
 
 
+.setting.newsletter{
+
+  .status{
+    font-size: 14px;
+    color: green;
+}
 
 /***********************************************************************
                                                                        *

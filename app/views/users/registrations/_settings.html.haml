@@ -1,6 +1,6 @@
 .dashboard-settings
 
-  .setting
+  .setting.password
     %h3 Change Password
 
     = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f|
@@ -21,8 +21,11 @@
       = f.submit "Update", class: 'btn btn-prodygia'
       = link_to "Back", :back, class: 'btn btn-default'
 
-  .setting
+  .setting.newsletter
     %h3 Notification
 
     = check_box_tag :subscribe_newsletter, "1", current_user.subscribe_newsletter
     = label_tag :subscribe_newsletter
+    %span.status
+:javascript
+  subscriber()
