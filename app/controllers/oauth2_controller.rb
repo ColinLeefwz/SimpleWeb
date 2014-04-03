@@ -522,7 +522,7 @@ class Oauth2Controller < ApplicationController
       str = <<-EOF   
 4月3日--4月7日，杭州西溪印象城疯狂猜图赢大奖，猜对就拿走！不花钱，随便抢，3秒变土豪！！！全球限量谷歌眼镜免费送！另有银乐迪欢唱券、必胜客、巴蜀江南、第二乐章免单券，caffe bene、山姆、义源珠宝、酷乐潮玩、黛拉美甲……各种餐饮随便吃，美容美体美甲随便做~所有奖品现场直接兑现！地点：印象城一楼中庭！
       EOF
-      Resque.enqueue(XmppMsg, $gfuid, id, "[img:faq533bea0220f3187a60000df4]", "tmp0403i","NOLOG='1' NOPUSH='1'")
+      Resque.enqueue(XmppMsg, $gfuid, id, "[img:U533d01d420f3184be9000c46]", "tmp0403i","NOLOG='1' NOPUSH='1'")
       Resque.enqueue(XmppMsg, $gfuid, id, str, "tmp0403", "NOLOG='1' NOPUSH='1'")
     end
   end
