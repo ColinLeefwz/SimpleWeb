@@ -18,7 +18,10 @@ class UserSubscription
       @message = "You are already subscribed."
     rescue Mailchimp::EmailAlreadyUnsubscribedError
       @message = "You have already unsubscribed."
-    rescue Mailchimp::Error
+    rescue Mailchimp::ListNotSubscribedError
+      @message = "Unsubscribed"  # user unsubscribe before email confirmed
+      @user.update_attributes(subscribe_newsletter: false)
+    rescue Mailchimp::Error 
       @message = "We are sorry, but something went wrong."
     end
   end
