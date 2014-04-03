@@ -34,7 +34,19 @@
   .status{
     font-size: 14px;
     color: green;
+  }
+
+
+  .spinner-wrapper{
+    position: relative;
+    .spinner{
+      left: 16px;
+      bottom: 10px;
+      display: none;
+    }
+  }
 }
+
 
 /***********************************************************************
                                                                        *

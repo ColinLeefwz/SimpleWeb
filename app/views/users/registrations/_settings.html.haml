@@ -27,5 +27,8 @@
     = check_box_tag :subscribe_newsletter, "1", current_user.subscribe_newsletter
     = label_tag :subscribe_newsletter
     %span.status
+    %span.spinner-wrapper
+
+
 :javascript
   subscriber()
