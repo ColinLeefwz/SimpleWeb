@@ -77,15 +77,20 @@
           -# %li Video interviews
 
     -# ----- Refer Expert -----
-    .item.panel
-      .panel-heading
-        = render 'item_icon', item_name: 'refer_expert'
-        .item-text= link_to 'Refer', '#refer', data: {toggle: 'collapse'}
+    - if user.is_a? Expert
+      .item.panel
+        .panel-heading
+          = render 'item_icon', item_name: 'refer_expert'
+          .item-text= link_to 'Refer', '#refer', data: {toggle: 'collapse'}
 
-      .collapse.panel-collapse#refer
-        .panel-body
-          %li= link_to 'New expert', refer_new_expert_experts_path, remote: true if user.is_a? Expert
-          %li= link_to 'A friend', refer_a_friend_member_path, remote: true
+        .collapse.panel-collapse#refer
+          .panel-body
+            %li= link_to 'New expert', refer_new_expert_experts_path, remote: true if user.is_a? Expert
+            %li= link_to 'A friend', refer_a_friend_member_path, remote: true
+    - else
+      .item
+        = render 'item_icon', item_name: 'refer_expert'
+        .item-text= link_to 'Refer friend', refer_a_friend_member_path, remote: true
 
 
     -# ------ Settings ------
