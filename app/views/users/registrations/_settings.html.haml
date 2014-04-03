@@ -1,13 +1,13 @@
 .dashboard-settings
 
-  .setting
-    %h3 Change Password
+  .setting.password
+    %h3.title Change Password
 
     = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f|
       = devise_error_messages!
 
-      = f.label :email, class: "control-label"
-      = f.email_field :email, class: 'form-control' 
+      -# = f.label :email, class: "control-label"
+      -# = f.email_field :email, class: 'form-control' 
 
       = f.label :password, class: "control-label"
       = f.password_field :password, :autocomplete => "off", class: 'form-control'
@@ -21,8 +21,14 @@
       = f.submit "Update", class: 'btn btn-prodygia'
       = link_to "Back", :back, class: 'btn btn-default'
 
-  .setting
-    %h3 Subscription
+  .setting.newsletter
+    %h3.title Notification
 
-    - action = current_user.subscribe_newsletter? ? "Unsubscribe" : "Subscribe"
-    = link_to action, subscription_path, class: "btn btn-primary"
+    = check_box_tag :subscribe_newsletter, "1", current_user.subscribe_newsletter
+    = label_tag :subscribe_newsletter
+    %span.status
+    %span.spinner-wrapper
+
+
+:javascript
+  subscriber()

@@ -18,7 +18,10 @@ class UserSubscription
       @message = "You are already subscribed."
     rescue Mailchimp::EmailAlreadyUnsubscribedError
       @message = "You have already unsubscribed."
-    rescue Mailchimp::Error
+    rescue Mailchimp::ListNotSubscribedError
+      @message = "Unsubscribed"  # user unsubscribe before email confirmed
+      @user.update_attributes(subscribe_newsletter: false)
+    rescue Mailchimp::Error 
       @message = "We are sorry, but something went wrong."
     end
   end
@@ -27,7 +30,7 @@ class UserSubscription
   def create
     @mail_chimp.lists.subscribe(@list_id, {email: @user.email}, {FNAME: @user.first_name, LNAME: @user.last_name})
     @user.update_attributes(subscribe_newsletter: true) # guest return nil because of method_missing
-    @message = "High Fives! Subscribed successfully! Please confirm the email sending to you"
+    @message = "Thanks for subscribing"
   end
 
   def destroy

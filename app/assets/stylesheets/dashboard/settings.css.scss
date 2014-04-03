@@ -7,7 +7,7 @@
 
 
 .dashboard-settings{
-  padding: 0% 62% 8% 5%;
+  padding: 0% 59% 8% 5%;
   h3{
     font-family: Latobold;
   }
@@ -19,14 +19,38 @@
 }
 
 
-.setting{
+.dashboard-settings .setting{
   padding: 3rem 0 2rem 0;
   border-bottom: 1px solid #eee;
+
+  .title{
+    font-size: 20px;
+  }
 
   .btn{
     margin-top: 1rem;
   }
 }
+
+
+.setting.newsletter{
+
+  .status{
+    font-size: 14px;
+    color: green;
+  }
+
+
+  .spinner-wrapper{
+    position: relative;
+    .spinner{
+      left: 16px;
+      bottom: 10px;
+      display: none;
+    }
+  }
+}
+
 
 
 
