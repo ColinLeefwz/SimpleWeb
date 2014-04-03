@@ -1,7 +1,7 @@
 openTipbox = ->
   setTimeout ( ->
     $("#tip-trigger").find("a").trigger("click")
-  ), 20000
+  ), 40000
   $.cookie("show_tip_modal", false, { expires: 1 })
 
 $(document).ready( ->
