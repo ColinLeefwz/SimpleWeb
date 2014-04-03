@@ -1,7 +1,7 @@
 .dashboard-settings
 
   .setting.password
-    %h3 Change Password
+    %h3.title Change Password
 
     = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f|
       = devise_error_messages!
@@ -22,7 +22,7 @@
       = link_to "Back", :back, class: 'btn btn-default'
 
   .setting.newsletter
-    %h3 Notification
+    %h3.title Notification
 
     = check_box_tag :subscribe_newsletter, "1", current_user.subscribe_newsletter
     = label_tag :subscribe_newsletter
