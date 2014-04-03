@@ -13,6 +13,9 @@ module Prodygia
     config.autoload_paths += Dir[Rails.root.join('app', 'controllers', '{**}')]
     config.autoload_paths += Dir[Rails.root.join('lib', '{**}')]
 
+    config.i18n.enforce_available_locales = true
+    config.i18n.default_locale = :de
+
 		config.assets.precompile += Ckeditor.assets
 		config.assets.precompile += %w(ckeditor/*)
     # Settings in config/environments/* take precedence over those specified here.
