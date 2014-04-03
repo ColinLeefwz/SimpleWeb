@@ -21,6 +21,8 @@ ActiveAdmin.register Member do
   end
 
   controller do
+    defaults :finder => :find_by_user_name
+
     def scoped_collection
       Member.where(type: "Member")
     end
