@@ -28,7 +28,7 @@ favorite_click = ->
 
     if $("#follower-count").length
       follower_num = +$("#follower-count").html()
-      $("#follower-count").html($(".solid-star-icon").length ? follower_num - 1 : follower_num + 1 )
+      $("#follower-count").html($("#follow .solid-star-icon").length ? follower_num - 1 : follower_num + 1 )
 
 $(document).ready ->
   favorite_click()
