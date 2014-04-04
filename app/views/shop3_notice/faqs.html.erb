@@ -20,7 +20,9 @@
     <div class="box4plane2">
       <div class="box4con1">
         <%=image_tag( "#{ShopFaq.img_url(@shop_notice.faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgstyle l", :align => "left") unless @shop_notice.faq.img.blank? %>
+        <br/><br/>
         <div class="box4plane3"><%= @shop_notice.faq.text%></div>
+        <br/><br/>
         <%= link_to '重新选择问答', "/shop3_notice/faqs?e=1" %>
       </div>
     </div>

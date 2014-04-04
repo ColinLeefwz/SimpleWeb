@@ -54,6 +54,8 @@ $(document).ready(function(){
 								<div class="mes"><a href="/shop3_notice">还没有公告，立即发布</a></div>
 							<% elsif @shop_notice.text? %>
 								<div class="mes"><a href="/shop3_notice"><%= @shop_notice.title %></a></div>
+							<% else %>
+								<div class="mes" style='background: none'>&nbsp;</div>
 							<% end %>
 							<div class="shopanswer">
 								<img src="/newbackstage/images/sign8.png" class="head"/>
