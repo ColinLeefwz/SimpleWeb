@@ -2,7 +2,7 @@ class MailchimpController < ApplicationController
 
   def subscription
     # responsibility: guest subscription, dashboard settings
-    user = current_user || Guest.new(guest_params)
+    user = current_user || Guest.new(guest_params[:email])
     subscription = UserSubscription.new(user, ENV["MAILCHIMP_LIST_ID"])
     subscription.toggle
 
