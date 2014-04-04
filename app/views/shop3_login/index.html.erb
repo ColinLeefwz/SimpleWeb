@@ -50,11 +50,11 @@ $(document).ready(function(){
 					</div>
 					<div class="qa">
 						<div id="QAC">
-						<% if @shop_notice.nil? || @shop_notice.title.blank? %>
-							<div class="mes"><a href="/shop3_notice">还没有公告，立即发布</a></div>
-						<% else %>
-						    <div class="mes"><a href="/shop3_notice"><%= @shop_notice.title %></a></div>
-						<% end %>
+							<% if @shop_notice.nil? %>
+								<div class="mes"><a href="/shop3_notice">还没有公告，立即发布</a></div>
+							<% elsif @shop_notice.text? %>
+								<div class="mes"><a href="/shop3_notice"><%= @shop_notice.title %></a></div>
+							<% end %>
 							<div class="shopanswer">
 								<img src="/newbackstage/images/sign8.png" class="head"/>
 								<div class="cons">

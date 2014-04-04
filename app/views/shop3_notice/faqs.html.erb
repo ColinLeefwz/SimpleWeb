@@ -11,11 +11,20 @@
     </ul>
   </div>
 	<div class="notice_submenu">
-		<%= link_to "文本模式", "/shop3_notice?title=true",:class=>"linkbtn"%>
-		<a href="/shop3_notice/edit" class="linkbtn">从商家图片中选择</a>
+		<%= link_to "文本模式", "/shop3_notice/text",:class=>"linkbtn"%>
+		<a href="/shop3_notice/photo" class="linkbtn">从商家图片中选择</a>
 		<a href="/shop3_notice/faqs" class="linkbtn2">从商家问答中选择</a>
 		<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
 	</div>
+  <% if @shop_notice && @shop_notice.faq && !params[:e]%>
+    <div class="box4plane2">
+      <div class="box4con1">
+        <%=image_tag( "#{ShopFaq.img_url(@shop_notice.faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgstyle l", :align => "left") unless @shop_notice.faq.img.blank? %>
+        <div class="box4plane3"><%= @shop_notice.faq.text%></div>
+        <%= link_to '重新选择问答', "/shop3_notice/faqs?e=1" %>
+      </div>
+    </div>
+  <% else %>
 		<table width="100%" cellspacing="0" cellpadding="0" class="tab2">
 			<tr>
 				<th class="textcenter pl0" width="50">编号</th>
@@ -28,10 +37,11 @@
 						<td>
 							<%= faq.title%>
 						</td>
-						<td align="center"><%= link_to "选择", "/shop3_notice/from_faq?id=#{faq.id}" %></td>
+						<td align="center"><%= link_to "选择", "/shop3_notice/update?faq_id=#{faq.id}" %></td>
 					</tr>
 			<% end %>
 		</table>
+  <% end %>
 </div>
 <script>
   $(document).ready(function(){

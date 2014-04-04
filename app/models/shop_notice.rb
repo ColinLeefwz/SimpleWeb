@@ -29,6 +29,10 @@ class ShopNotice
     sn
   end
 
+  def text?
+    !self.title.blank?
+  end
+
   def photo
     Photo.find_by_id(photo_id)
   end
