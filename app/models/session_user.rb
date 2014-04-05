@@ -5,5 +5,6 @@ class SessionUser
   include Mongoid::Document
   field :_id, type:String #session_id
   field :uid, type: Moped::BSON::ObjectId
+  field :cat, type:Integer
 
 end
