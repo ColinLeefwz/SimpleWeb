@@ -46,7 +46,7 @@ class Shop3MenuController < ApplicationController
     butn = menu.button[indexs.shift.to_i]
     butn = butn['sub_button'][indexs.first.to_i] if indexs.any?
     butn_hash = params[:button]
-    butn_hash['url'] = URI.encode(URI.unescape(butn_hash['url'].strip))
+    butn_hash['url'] = URI.encode(URI.unescape(butn_hash['url'].strip)) #TODO:加测试
     butn.merge!(butn_hash)
     menu.save
     render :json => menu.view_json

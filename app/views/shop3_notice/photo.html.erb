@@ -28,22 +28,37 @@
     </div>
   </div>
   <div class="notice_submenu">
-	<%= link_to "文本模式", "/shop3_notice?title=true",:class=>"linkbtn"%>
-	<a href="/shop3_notice/edit" class="linkbtn2">从商家图片中选择</a>
-	<a href="/shop3_notice/faqs" class="linkbtn">从商家问答中选择</a>
-	<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
+  	<%= link_to "文本模式", "/shop3_notice/text",:class=>"linkbtn"%>
+  	<a href="/shop3_notice/photo" class="linkbtn2">从商家图片中选择</a>
+  	<a href="/shop3_notice/faqs" class="linkbtn">从商家问答中选择</a>
+  	<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
   </div>
-  <div class="clear1"></div>
-  <div class="box9" id="Waterfall">
-    <% @photos.each_with_index do |photo, index| %>
-      <div class="box9plane">
-        <a href="<%= "/shop3_notice/update?id=#{photo.id}" %>">
-          <%= image_tag photo.img.url %>
-          <div class="m"><span><%=photo.desc.to_s.truncate(20) %></span></div>
-        </a>
-      </div>
-    <% end %>
-  </div>
+
+  <% if @shop_notice && @shop_notice.photo && !params[:e]%>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab3 mt20 pt10">
+      <tr>
+        <td width="158"><%= image_tag @shop_notice.photo.img.url, :alt=>"0", :class => "imgstyle2" %></td>
+        <td valign="top"><%= @shop_notice.photo_desc %></td>
+      </tr>
+      <tr>
+        <td width="158"><%= link_to '重新选择图片', "/shop3_notice/photo?e=1" %></td>
+        <td valign="top"></td>
+      </tr>
+    </table>
+  <% else %>
+    <div class="clear1"></div>
+    <div class="box9" id="Waterfall">
+      <% @photos.each_with_index do |photo, index| %>
+        <div class="box9plane">
+          <a href="<%= "/shop3_notice/update?photo_id=#{photo.id}" %>">
+            <%= image_tag photo.img.url %>
+            <div class="m"><span><%=photo.desc.to_s.truncate(20) %></span></div>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
   <%= generate_paginate.html_safe %>
 </div>
 <script defer="defer">

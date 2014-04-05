@@ -136,6 +136,11 @@ class Shop
     User.find_by_id(self.seller_id)
   end
 
+  #是不是有了手机网站的空间
+  def mobile_space
+    MobileSpace.where({sid: self.id}).first
+  end
+
   #合作商家
   def partners
     shop_partner = ShopPartner.find_by_id(id)

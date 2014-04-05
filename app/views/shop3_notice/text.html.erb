@@ -12,7 +12,7 @@
     </ul>
   </div>
   <div class="notice_submenu">
-    <%= link_to "文本模式", "/shop3_notice/text",:class=>"linkbtn2"%>
+    <%= link_to "文本模式", "",:class=>"linkbtn2"%>
     <%= link_to "从商家图片中选择", '/shop3_notice/photo',:class => "linkbtn" %>
     <%= link_to "从商家问答中选择", '/shop3_notice/faqs',:class => "linkbtn" %>
     <a href="/shop3_notice/del" class="btn17 l">取消公告</a>
@@ -69,7 +69,7 @@
   function ajaxCreateNotice(notice_id){
     var title = $("#noticeTitle").val();
     // if(title==""){
-    // 	title="用于在脸脸客户端显示公告";
+    //  title="用于在脸脸客户端显示公告";
     // }
     $.get("/shop3_notice/ajax_release", {id: notice_id, title: title}, function(data){
       $("#ShowTitle").show();

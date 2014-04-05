@@ -61,7 +61,8 @@
       <a href="#" class="trade">订单管理</a>
       <span class="navline"></span>
     <% end %>
-
+	
+	<% unless from_mweb? %>
     <a href="/shop3_login/logout">
       <%= session[:admin_sid] ? "返回总店" : "退出" %>
     </a>
@@ -69,6 +70,7 @@
     <label id="CB1" class="checkboxs1" style="display:none;">取消动画</label>
     <span class="navline"></span>
     <a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+	<% end %>
   </div>
 </div>
 

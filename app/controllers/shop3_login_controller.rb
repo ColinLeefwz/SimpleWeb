@@ -50,9 +50,16 @@ class Shop3LoginController < ApplicationController
       session[:shop_id] = shop.id
       cookies[:id], cookies[:password] =params[:id],params[:password] if params[:remember]=='1'
       o_uri_path, session[:o_uri_path] = session[:o_uri_path]||'/shop3_login/index' , nil
+      o_uri_path = mweb_url if session_shop.mweb
       return redirect_to o_uri_path
     end
     render :layout => false
+  end
+
+  def mweb_url
+    url = "#{Host::Mweb}/login/"
+    url += session_shop.mobile_space ? 'index2' : "index"
+    url += "?sid=#{session[:shop_id]}&hash=#{Digest::SHA256.hexdigest(session[:shop_id].to_s + "12191008")[0,32]}"
   end
 
   def login2
