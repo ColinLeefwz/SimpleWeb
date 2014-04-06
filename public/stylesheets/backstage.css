@@ -34,6 +34,8 @@ body {font-size: 12px;font-family:"宋体",Sans-Serif;background:transparent url
 .mt30{margin-top:30px !important;}
 .mb20{margin-bottom:20px !important;}
 .m_auto{margin-left:auto !important;margin-right:auto !important;}
+.mlr10{margin-left:10px !important;margin-right:10px !important;}
+.mtb30{margin-top:30px !important;margin-bottom:30px !important;}
 
 .red{color:#F85454;}
 .blue2{color:#0B99D7;}
@@ -92,6 +94,10 @@ padding-left:40px;font-size:14px;padding-right:25px;}
 .btn7{background:transparent url("../images/btn2.jpg") left -145px no-repeat;border:none;color: #FFFFFF;cursor: pointer;
 display: block;height: 43px;line-height: 43px;text-align: center;width: 122px;text-indent:-999em;}
 
+.btn8, .btn9{background-color:#00B8FF;color:#ffffff;width:190px;height:45px;line-height:45px;border:none;cursor:pointer;
+font-family:微软雅黑;font-size:18px;border-radius:5px;text-align:center;}
+.btn9{width:165px;height:35px;line-height:35px;}
+
 .btn_file1{position: absolute;width:60px;height:200px;left:150px;top:23px;filter:alpha(Opacity=0);Opacity:0;cursor:pointer;}
 .btn_file2{position: absolute;width:70px;height:200px;left:90px;top:23px;filter:alpha(Opacity=0);Opacity:0;z-index:2;cursor:pointer;}
 .btn_file3{position: absolute;width:70px;height:200px;left:22px;top:23px;filter:alpha(Opacity=0);Opacity:0;z-index:5;cursor:pointer;}
@@ -103,7 +109,16 @@ display: block;height: 43px;line-height: 43px;text-align: center;width: 122px;te
 .btn_file9{position: absolute;width:25px;height:200px;left:560px;top:23px;filter:alpha(Opacity=0);Opacity:0;cursor:pointer;}
 .btn_file10{position: absolute;width:68px;height:25px;left:0px;top:0px;filter:alpha(Opacity=0);Opacity:0;cursor:pointer;}
 /*登录页样式表 begin*/
-.logo{width:202px;height:80px;display:block;text-indent:-999em;margin:0px auto 40px auto;background:url("http://oss.aliyuncs.com/dface/images_logo2.png");}
+#BG{width:100%;height:100%;background:url("../images/bg4.png");position:absolute;left:0px;top:0px;z-index:10;
+display:none;}
+.message{width:400px;height:230px;position:absolute;left:50%;margin-left:-210px;top:50%;margin-top:-115px;background-color:rgba(255,255,255,0.9);
+*background-color:#fff;background-color:#fff\9;line-height:30px;color: #333;padding:20px;border-radius:5px;box-shadow:1px 0px 10px #fff;z-index:20;font-family: 微软雅黑;font-size: 16px;
+display:none;}
+.message .imgs{width:165px;}
+.message .imgs2{width:140px;}
+
+.logo, .logo2{width:202px;height:80px;display:block;text-indent:-999em;margin:0px auto 40px auto;background:url("http://oss.aliyuncs.com/dface/images_logo2.png");}
+.logo2 {width: 252px;height: 118px;background: url("../images/logo5.png");    }
 .area{width:383px;height:500px;position:absolute;left:50%;top:50%;margin-left:-191px;margin-top:-250px;}
 
 .login_plane{font-family:微软雅黑;font-size:18px;color:#434343;margin-bottom:25px;}
@@ -117,9 +132,7 @@ line-height:45px;border:1px solid #e0e0e0;}
 
 .plane2{clear:both;overflow:hidden;zoom:1;font-size:12px;font-family: arial;}
 .plane2 .plane2leftdiv{font-family:微软雅黑;font-size:14px;color:#333333;float:left;}
-.plane2 input.btn{background-color:#00B8FF;color:#ffffff;width:190px;height:45px;line-height:45px;float:right;border:none;cursor:pointer;
-font-family:微软雅黑;font-size:18px;border-radius:5px;}
-.plane2 a{color:#00B8FF;float:left;}
+.plane2 a{color:#00B8FF;float:left;cursor:pointer;}
 .plane2 a:hover{color:#ff7700;}
 .plane2 .plane2inner{color: #666;display:block;padding-top:80px;clear:both;overflow:hidden;text-align:center;position:relative;}
 /*登录页样式表 over*/
@@ -305,3 +318,58 @@ font-size:13px;}
 #footer a{color:#00B8FF;}
 #footer a:hover{color:#ff7700;}
 
+/*动画效果*/
+.bounceIn{
+	-webkit-animation:bounceIn 1s both;
+	-moz-animation:bounceIn 1s both;
+	-o-animation:bounceIn 1s both;
+	-ms-animation:bounceIn 1s both;
+	animation:bounceIn 1s both;
+}
+@-webkit-keyframes bounceIn{
+	0%{opacity:0;-webkit-transform:scale(.3);}
+	100%{-webkit-transform:scale(1);}
+}
+@-moz-keyframes bounceIn{
+	0%{opacity:0;-moz-transform:scale(.3);}
+	100%{-moz-transform:scale(1);}
+}
+@-o-keyframes bounceIn{
+	0%{opacity:0;-o-transform:scale(.3);}
+	100%{-o-transform:scale(1);}
+}
+@-ms-keyframes bounceIn{
+	0%{opacity:0;-ms-transform:scale(.3);}
+	100%{-ms-transform:scale(1);}
+}
+@keyframes bounceIn{
+	0%{opacity:0;transform:scale(.3);}
+	100%{transform:scale(1);}
+}
+.bounceOut{
+	-webkit-animation:bounceOut 0.8s both;
+	-moz-animation:bounceOut 0.8s both;
+	-o-animation:bounceOut 0.8s both;
+	-ms-animation:bounceOut 0.8s both;
+	animation:bounceOut 0.8s both;
+}
+@-webkit-keyframes bounceOut{
+	0%{-webkit-transform:scale(1);}
+	100%{opacity:0;-webkit-transform:scale(.3);}
+}
+@-moz-keyframes bounceOut{
+	0%{-moz-transform:scale(1);}
+	100%{opacity:0;-moz-transform:scale(.3);}
+}
+@-o-keyframes bounceOut{
+	0%{-o-transform:scale(1);}
+	100%{opacity:0;-o-transform:scale(.3);}
+}
+@-ms-keyframes bounceOut{
+	0%{-ms-transform:scale(1);}
+	100%{opacity:0;-ms-transform:scale(.3);}
+}
+@keyframes bounceOut{
+	0%{transform:scale(1);}
+	100%{opacity:0;transform:scale(.3);}
+}
