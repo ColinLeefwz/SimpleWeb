@@ -131,8 +131,8 @@ class UserTest < ActiveSupport::TestCase
     UserFollow.add(u2.id,u1.id)
     assert_equal u1.friend?(u2.id), true
     assert_equal u1.follower?(u2.id), true
-    assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 0.0
-    assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 0.0
+    assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 1.0
+    assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 1.0
     assert_equal $redis.zcard("Fan#{u1.id}"), 2
     assert_equal $redis.zcard("Fan#{u2.id}"), 1
     UserFollow.del(u2.id,u1.id)
@@ -145,8 +145,8 @@ class UserTest < ActiveSupport::TestCase
     UserFollow.add(u2.id,u1.id)
     assert_equal u1.friend?(u2.id), true
     assert_equal u1.follower?(u2.id), true
-    assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 0.0
-    assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 0.0
+    assert_equal $redis.zscore("Frd#{u1.id}",u2.id), 1.0
+    assert_equal $redis.zscore("Frd#{u2.id}",u1.id), 1.0
     assert_equal $redis.zcard("Fan#{u1.id}"), 2
     assert_equal $redis.zcard("Fan#{u2.id}"), 1   
   end
