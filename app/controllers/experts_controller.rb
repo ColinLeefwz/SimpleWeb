@@ -10,7 +10,6 @@ class ExpertsController < ApplicationController
   end
 
   def dashboard
-    logger.info "the expert is #{@expert.email}"
     @profile = @expert.profile
   end
 
