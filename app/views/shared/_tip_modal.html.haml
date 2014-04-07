@@ -5,10 +5,10 @@
         .rounded-box
           .modal-body
             %button.btn.btn-prodygia.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-            %h1#myModalLabel.modal-title Thank you for visiting us!
-            = raw "Consider joining our #{link_to ' Prodygia community', new_user_registration_path}; it will be easier to stay in touch and let you know the latest news. You will be in full control on how much you will or will not hear from us"
-            = form_for :guest, url: subscription_path,  class: 'form-horizontal'  do |f|
-              .form-group
+            %h1#myModalLabel.modal-title Thanks for visiting us!
+            = raw "Consider joining our #{link_to ' Prodygia community', new_user_registration_path}. It will be easier to stay in touch and let you know the latest news. You will be in full control of how much you will or will not hear from us."
+            = form_for :guest, url: subscription_path do |f|
+              .form-group.form-inline
                 = f.email_field :email, placeholder: "Your Email Address" ,class: 'form-control'
                 = f.submit "Subscribe", class: 'btn btn-prodygia'
 
