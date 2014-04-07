@@ -32,11 +32,7 @@ class MembersController < ApplicationController
         @member.update_attributes(user_params)
         @member.profile.update_attributes(member_profile_params)
         flash[:success] = "successfully update your profile"
-        render js: "window.location='#{dashboard_member_path(current_user)}'"
-
-        # @profile = @member.profile || @member.create_profile
-        # @from = 'edit_profile'
-        # render 'experts/update'
+        render js: "window.location='#{dashboard_member_path(current_user.reload)}'"
       }
     end
   end
@@ -93,7 +89,7 @@ class MembersController < ApplicationController
   def vod_library
     @enrolled_courses = current_user.enrolled_courses
     if @enrolled_courses.empty?
-      @enrolled_courses = Course.all(order: "RANDOM()", limit: 3)
+      @enrolled_courses = Course.recommend_courses(current_user)
       @recommendation = true
     end
     @from = "vod_library"
