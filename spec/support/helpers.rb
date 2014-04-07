@@ -38,7 +38,7 @@ def helper_objects
   let(:announcement) { create :announcement, title: 'Just an Announcement', expert: alex,
                        description: 'Show you China road map'}
   #courses
-  let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer] }
+  let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer], categories: [culture] }
 
   #chapters
   let(:first_chapter) { create :chapter, title: "first chapter", description: "chapter description", course: first_course }
