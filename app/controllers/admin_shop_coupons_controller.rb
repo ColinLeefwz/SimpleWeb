@@ -1,6 +1,6 @@
 class AdminShopCouponsController < ApplicationController
   include Paginate
-  before_filter :admin_authorize
+  before_filter :admin_authorize, :except => [:sendto ]
   layout "admin"
   
   def index
@@ -55,7 +55,7 @@ class AdminShopCouponsController < ApplicationController
   end
   
   def sendto
-    @coupon = Coupon.find(params[:id])
+    @coupon = Coupon.find(params[:coupon_id])
     user = User.find_by_id(params[:user_id])
     if @coupon.send_coupon(user.id)
       render :text => "#{@coupon.name}成功发送给#{user.name}"
