@@ -80,6 +80,14 @@
   </p>
 <% end %>
 
+<form method="post" action="./sendto">
+	输入用户id：
+	<input type="hidden" name="coupon_id" value="<%= @coupon.id %>">
+	<input type="text" name="user_id" size="25">
+	<input type="submit" name="submit" value="发送优惠券">	
+</form>
+
+
 <p>
   <b>下载</b>
   <%= link_to @coupon.down_users.length, "/admin_shop_coupons/detail?id=#{@coupon.id}&type=down"  %>

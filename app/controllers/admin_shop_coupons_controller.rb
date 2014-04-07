@@ -53,6 +53,16 @@ class AdminShopCouponsController < ApplicationController
     @coupon_downs = paginate3("CouponDown", params[:page],hash, sort )
 
   end
+  
+  def sendto
+    @coupon = Coupon.find(params[:id])
+    user = User.find_by_id(params[:user_id])
+    if @coupon.send_coupon(user.id)
+      render :text => "#{@coupon.name}成功发送给#{user.name}"
+    else
+      render :text => "#{@coupon.name}发送失败"      
+    end
+  end
 
   def ajax_lapse
     coupon = Coupon.find(params[:id])
