@@ -31,16 +31,17 @@ class ExpertsController < ApplicationController
   end
 
   def profile
-    cookies[:profile_batch_point] = 0
-    cookies[:no_more_load] = false
-    cookies[:expert_token] = @expert.user_name
+    # Peter at 2014-04-07: comment them, after we fix the overlap bug
+    # cookies[:profile_batch_point] = 0
+    # cookies[:no_more_load] = false
+    # cookies[:expert_token] = @expert.user_name
+    # @items = @expert.load_landingitems(0)
+    # increase_cookie
 
-    @items = @expert.load_landingitems(0)
-    increase_cookie
-    # video_interviews = @expert.video_interviews
-    # courses = @expert.courses
-    # articles = @expert.articles.where(draft: false)
-    # @items = video_interviews + courses + articles
+    video_interviews = @expert.video_interviews
+    courses = @expert.courses
+    articles = @expert.articles.where(draft: false)
+    @items = video_interviews + courses + articles
     @profile = @expert.profile
   end
 
