@@ -103,6 +103,19 @@ GEM
       devise (>= 3.1.0)
     diff-lcs (1.2.5)
     docile (1.1.1)
+    elasticsearch (1.0.1)
+      elasticsearch-api (= 1.0.1)
+      elasticsearch-transport (= 1.0.1)
+    elasticsearch-api (1.0.1)
+      multi_json
+    elasticsearch-model (0.1.0)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.0)
+    elasticsearch-transport (1.0.1)
+      faraday
+      multi_json
     em-websocket (0.5.0)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.5.3)
@@ -203,6 +216,9 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mailchimp-api (2.0.4)
+      excon (>= 0.16.0)
+      json (>= 1.7.7)
     mandrill-api (1.0.49)
       excon (>= 0.16.0, < 1.0)
       json (>= 1.7.7, < 2.0)
@@ -391,6 +407,8 @@ DEPENDENCIES
   database_cleaner
   devise
   devise_invitable
+  elasticsearch-model
+  elasticsearch-rails
   factory_girl_rails
   faker
   figaro
@@ -405,6 +423,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   legato
+  mailchimp-api
   mandrill-api
   newrelic_rpm
   omniauth

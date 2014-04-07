@@ -4,7 +4,6 @@ def helper_objects
   let(:jevan) { create :member, email: 'jevan@test.com', password: '11111111', first_name: 'jevan', last_name: 'wu'  } #, avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
   let(:gecko) { create :member, email: 'gecko@test.com', password: '11111111', first_name: 'gecko', last_name: 'fu' }
   let(:allen) { create :user, email: 'allen@test.com', password: '11111111', first_name: 'allen', last_name: 'wang' }
-  let(:staff) { create :expert, id: 2, email: "staff@prodygia.com", password: '11111111' }
 
   #experts
   let(:sameer) { create :expert, id: 1, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim' } # , avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
@@ -31,14 +30,15 @@ def helper_objects
   #categories
   let(:business) { create :category, name: "business" }
   let(:tech) { create :category, name: "tech" }
+  let(:culture) { create :category, name: "culture" }
 
   #article
-  let(:article) { create :article, title: 'Communicating With Chinese', expert: sameer, description: 'What cultural differences should I know when communicating with Chinese?', categories: ["culture"]}
+  let(:article) { create :article, title: 'Communicating With Chinese', expert: sameer, description: 'What cultural differences should I know when communicating with Chinese?', categories: [culture]}
 
   let(:announcement) { create :announcement, title: 'Just an Announcement', expert: alex,
                        description: 'Show you China road map'}
   #courses
-  let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer] }
+  let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer], categories: [culture] }
 
   #chapters
   let(:first_chapter) { create :chapter, title: "first chapter", description: "chapter description", course: first_course }
@@ -47,7 +47,7 @@ def helper_objects
   let(:first_section) { create :section, title: "first section", description: "section description", chapter: first_chapter }
 
   # video_interview
-  let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer" }
+  let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer", categories: [culture] }
 
 end
 

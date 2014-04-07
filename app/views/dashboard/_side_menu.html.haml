@@ -10,7 +10,11 @@
       .title
         = [@profile.title, @profile.company].reject(&:blank?).join(",")
       .edit
-        %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
+        - if user.is_a? Expert
+          %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
+        - else
+          %p= link_to 'edit profile', edit_profile_member_path(current_user), remote: true
+
 
   -# ----- Activity Stream -----
   .toolkit
@@ -58,9 +62,10 @@
         .item-text= link_to 'Video courses', vod_library_member_path(user), remote: true
 
     -# ----- Private Sessions -----
-    .item
-      = render 'item_icon', item_name: 'new_session'
-      .item-text= link_to 'Private sessions', pending_page_experts_path(text: "schedule_private_session"), remote: true
+    - if user.is_a? Expert
+      .item
+        = render 'item_icon', item_name: 'new_session'
+        .item-text= link_to 'Private sessions', consultations_expert_path(user), remote: true
 
     -# ----- Favorites -----
     .item.panel
@@ -76,15 +81,20 @@
           -# %li Video interviews
 
     -# ----- Refer Expert -----
-    .item.panel
-      .panel-heading
-        = render 'item_icon', item_name: 'refer_expert'
-        .item-text= link_to 'Refer', '#refer', data: {toggle: 'collapse'}
+    - if user.is_a? Expert
+      .item.panel
+        .panel-heading
+          = render 'item_icon', item_name: 'refer_expert'
+          .item-text= link_to 'Refer', '#refer', data: {toggle: 'collapse'}
 
-      .collapse.panel-collapse#refer
-        .panel-body
-          %li= link_to 'New expert', refer_new_expert_experts_path, remote: true
-          %li= link_to 'A friend', refer_a_friend_member_path, remote: true
+        .collapse.panel-collapse#refer
+          .panel-body
+            %li= link_to 'New expert', refer_new_expert_experts_path, remote: true if user.is_a? Expert
+            %li= link_to 'A friend', refer_a_friend_member_path, remote: true
+    - else
+      .item
+        = render 'item_icon', item_name: 'refer_expert'
+        .item-text= link_to 'Refer friend', refer_a_friend_member_path, remote: true
 
 
     -# ------ Settings ------

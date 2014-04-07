@@ -4,7 +4,6 @@ FactoryGirl.define do
   factory :course do
     title "course title"
     description "course description"
-    categories ["test"]
     price 19.50
     duration 3600
     experts {[FactoryGirl.create(:expert)]}

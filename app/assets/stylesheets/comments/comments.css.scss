@@ -1,5 +1,5 @@
 @import "globals/variables";
-@import "detail_page/detail_page_mixin";
+@import "globals/shared_mixin";
 
 //-------- comments ---------
 .comments{
@@ -13,6 +13,7 @@
     font-weight: 200;
     width: 100%;
     border-bottom: 1px solid #bbb;
+    color: grey;
   }
 }
 

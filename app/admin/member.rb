@@ -15,10 +15,14 @@ ActiveAdmin.register Member do
       member.created_at.to_date
     end
 
+    column :subscribe_newsletter
+
     column "social login?", :provider
   end
 
   controller do
+    defaults :finder => :find_by_user_name
+
     def scoped_collection
       Member.where(type: "Member")
     end

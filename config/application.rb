@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'elasticsearch/rails/instrumentation'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -12,8 +13,8 @@ module Prodygia
     config.autoload_paths += Dir[Rails.root.join('app', 'controllers', '{**}')]
     config.autoload_paths += Dir[Rails.root.join('lib', '{**}')]
 
-		config.assets.precompile += Ckeditor.assets
-		config.assets.precompile += %w(ckeditor/*)
+    config.assets.precompile += Ckeditor.assets
+    config.assets.precompile += %w(ckeditor/*)
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

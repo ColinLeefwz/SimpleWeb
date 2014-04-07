@@ -9,6 +9,7 @@ $font-color: #575757;
 
 .navbar-default {
   border-width: 0;
+  background: white;
 }
 
 ul.nav.navbar-nav.navbar-right {
@@ -43,7 +44,11 @@ ul.nav.navbar-nav.navbar-right {
     }
   }
   .dropdown-menu {
-    width: 300px;
+    width: 322px;
+
+    li{
+      padding-left: 0.5em;
+    }
   }
 }
 
@@ -54,6 +59,7 @@ ul.nav.navbar-nav.navbar-right {
 }
 
 #subnav {
+  // background-color: rgba(0,0,0,0);
 }
 
 #logo_container{
@@ -168,3 +174,4 @@ ul.nav.navbar-nav.navbar-right {
   } /*end of nav_container in desktop*/
 
 }  /*end of header*/
+

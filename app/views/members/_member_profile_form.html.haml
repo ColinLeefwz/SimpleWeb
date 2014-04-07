@@ -1,7 +1,7 @@
 .edit-profile-title
   %h3 Edit your profile
 
-= form_for @member, as: :profile, url: update_profile_member_path(current_user), remote: true, :html => { :method => :put, :class => "form-horizontal"} do |f|
+= form_for @member, as: :profile, url: update_profile_member_path(current_user), remote: true, :html => { :class => "form-horizontal"} do |f|
   
   .form-group
     .col-sm-4.col-xs-4

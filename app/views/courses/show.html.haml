@@ -18,7 +18,7 @@
     .video-duration
       = distance_of_time_in_words @course.duration.to_i
     .category
-      = @course.categories.join(", ")
+      = @course.category_names
     %article
       = @course.description.html_safe
 

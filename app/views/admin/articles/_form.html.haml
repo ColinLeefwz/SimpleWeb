@@ -1,8 +1,8 @@
 = simple_form_for [:admin, @article] do |f|
   = f.input :title
-  = f.input :expert, collection: Expert.all, selected: @article.expert.id
+  = f.association :expert, collection: Expert.all, selected: @article.expert
   = f.input :always_show
   = f.input :cover, as: :file # , hint: f.template.image_tag(f.object.cover.url)
   = f.input :description, :input_html => { :class => 'ckeditor' }
-  = f.input :categories, as: :check_boxes, collection: Category.pluck(:name)
+  = f.association :categories, as: :check_boxes, collection: Category.all
   = f.button :submit

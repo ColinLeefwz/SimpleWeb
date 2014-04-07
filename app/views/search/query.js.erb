@@ -1,0 +1,8 @@
+
+$("#content").html("<%=j render partial: 'welcome/box_content', collection: @items, as: :item%>");
+
+var container = $('#content');
+container.isotope('destroy'); // destroy isotope and re-build it
+load_isotope();
+load_sublime();
+

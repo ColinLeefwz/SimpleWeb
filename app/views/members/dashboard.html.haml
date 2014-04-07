@@ -1,10 +1,4 @@
 
 - content_for(:title){"Member Dashboard"}
 
-.dash-wrapper.margin-bottom
-  .container
-    .row
-      .col-md-3.side-menu
-        = render 'dashboard/side_menu'
-      .col-md-9.main-menu
-        = render 'members/welcome_page'
+= render partial: "dashboard/dash"

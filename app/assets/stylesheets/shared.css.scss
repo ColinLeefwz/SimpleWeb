@@ -6,6 +6,64 @@
   margin: 0 auto;
 }
 
+#tip-modal {
+  .modal-dialog {
+    width: 55%;
+    height: 55%;
+  }
+
+  .close {
+    color: #333;
+  }
+  .modal-content {
+    background-image: url(image-path('forbidden city.jpg'));
+    background-repeat: no-repeat;
+    color: #333;
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+
+    #guest_email {
+      width: 80%;
+    }
+
+    .rounded-box {
+      height: 100%;
+
+      background-color: rgba(255, 255, 255 ,0.8);
+      .modal-body {
+        height: 100%;
+        font-size: 24px;
+        padding-left: 35px;
+
+        h1 {
+          color: $prodygia-purple;
+          margin-bottom: 5%;
+          // font-weight: 700;
+        }
+
+        .form-group {
+          margin-top: 10%;
+
+          input {
+            margin-bottom: 10px;
+          }
+        }
+
+        a {
+          color: $prodygia-light-purple;
+        }
+      }
+    }
+  }
+}
+
+.nav-sidebar {
+  .form-group {
+    margin-left: 20px;
+    margin-bottom: 5px;
+  }
+}
 
 .button{
   clear: both;
@@ -14,9 +72,9 @@
   text-align: center;
   padding: 0.3em;
   color: white;
-  a:hover{  
+  a:hover{
     color: white;
-    text-decoration: none; 
+    text-decoration: none;
   }
 }
 
