@@ -30,9 +30,10 @@ def helper_objects
   #categories
   let(:business) { create :category, name: "business" }
   let(:tech) { create :category, name: "tech" }
+  let(:culture) { create :category, name: "culture" }
 
   #article
-  let(:article) { create :article, title: 'Communicating With Chinese', expert: sameer, description: 'What cultural differences should I know when communicating with Chinese?', categories: ["culture"]}
+  let(:article) { create :article, title: 'Communicating With Chinese', expert: sameer, description: 'What cultural differences should I know when communicating with Chinese?', categories: [culture]}
 
   let(:announcement) { create :announcement, title: 'Just an Announcement', expert: alex,
                        description: 'Show you China road map'}
@@ -46,7 +47,7 @@ def helper_objects
   let(:first_section) { create :section, title: "first section", description: "section description", chapter: first_chapter }
 
   # video_interview
-  let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer" }
+  let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer", categories: [culture] }
 
 end
 

@@ -135,8 +135,8 @@ describe MembersController do
       end
 
       it "shows Staff's courses for recommendation" do
-        courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
-        staff_course = create_list(:course, 4, title: "staff course", experts: [staff], categories: ["culture"])
+        courses = create_list(:course, 5, title: "course", experts: [sameer], categories: [culture])
+        staff_course = create_list(:course, 4, title: "staff course", experts: [staff], categories: [culture])
         sign_in sameer
         get :video_on_demand, id: sameer.id, format: :js
         expect(assigns[:subscribed_courses]).to include staff_course[0]
@@ -145,8 +145,8 @@ describe MembersController do
 
       it "excludes his own courses for recommendation" do
         Course.delete_all
-        courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
-        staff_course = create(:course, title: "staff course", experts: [staff], categories: ["culture"])
+        courses = create_list(:course, 5, title: "course", experts: [sameer], categories: [culture])
+        staff_course = create(:course, title: "staff course", experts: [staff], categories: [culture])
         get :video_on_demand, id: sameer.id, format: :js
         expect(assigns[:subscribed_courses]).to eq [staff_course]
         expect(assigns[:subscribed_courses].count).to eq 1
@@ -165,14 +165,14 @@ describe MembersController do
 
       context "no favoriteed courses, show recommendations" do
         it "excludes Staff's courses" do
-          staff_course = create(:course, title: "staff course", experts: [staff], categories: ["culture"])
+          staff_course = create(:course, title: "staff course", experts: [staff], categories: [culture])
           get :video_on_demand, id: jevan.id, format: :js
           expect(assigns[:subscribed_courses]).not_to include staff_course
         end
 
         it "excludes my subscribed courses" do
-          enrolled_course = create(:course, title: "subscribed course", experts: [sameer], categories: ["culture"])
-          jevan.enroll new_course
+          enrolled_course = create(:course, title: "subscribed course", experts: [sameer], categories: [culture])
+          jevan.enroll enrolled_course
           get :video_on_demand, id: jevan.id, format: :js
           expect(assigns[:recommendation]).to be_true ## recommendation
           expect(assigns[:subscribed_courses]).not_to include enrolled_course
@@ -180,4 +180,66 @@ describe MembersController do
       end
     end
   end
+
+  # describe "GET vod_library" do
+  #   before :each do
+  #     staff
+  #   end
+
+  #   context "current user is an expert" do
+  #     before :each do
+  #       sign_in sameer
+  #     end
+
+  #     it "can access to contents page" do
+  #       get :video_on_demand, id: sameer.id, format: :js
+  #       expect(response).to be_success
+  #     end
+
+  #     it "shows Staff's courses for recommendation" do
+  #       courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
+  #       staff_course = create_list(:course, 4, title: "staff course", experts: [staff], categories: ["culture"])
+  #       sign_in sameer
+  #       get :video_on_demand, id: sameer.id, format: :js
+  #       expect(assigns[:subscribed_courses]).to include staff_course[0]
+  #       expect(assigns[:subscribed_courses].count).to eq 3
+  #     end
+
+  #     it "excludes his own courses for recommendation" do
+  #       Course.delete_all
+  #       courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
+  #       staff_course = create(:course, title: "staff course", experts: [staff], categories: ["culture"])
+  #       get :video_on_demand, id: sameer.id, format: :js
+  #       expect(assigns[:subscribed_courses]).to eq [staff_course]
+  #       expect(assigns[:subscribed_courses].count).to eq 1
+  #     end
+  #   end
+
+  #   context "current user is a member" do
+  #     before :each do
+  #       sign_in jevan
+  #     end
+
+  #     it "can access to contents page" do
+  #       get :video_on_demand, id: jevan.id, format: :js
+  #       expect(response).to be_success
+  #     end
+
+  #     context "no favoriteed courses, show recommendations" do
+  #       it "excludes Staff's courses" do
+  #         staff_course = create(:course, title: "staff course", experts: [staff], categories: ["culture"])
+  #         get :video_on_demand, id: jevan.id, format: :js
+  #         expect(assigns[:subscribed_courses]).not_to include staff_course
+  #       end
+
+  #       it "excludes my subscribed courses" do
+  #         enrolled_course = create(:course, title: "subscribed course", experts: [sameer], categories: ["culture"])
+  #         jevan.enroll new_course
+  #         get :video_on_demand, id: jevan.id, format: :js
+  #         expect(assigns[:recommendation]).to be_true ## recommendation
+  #         expect(assigns[:subscribed_courses]).not_to include enrolled_course
+  #       end
+  #     end
+  #   end
+  # end
 end
