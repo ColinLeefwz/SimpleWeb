@@ -3,8 +3,8 @@ class Guest
 
   def initialize(email)
     @subscribe_newsletter = false
-    @first_name = "A"
-    @last_name = "GUEST"
+    @first_name = ""
+    @last_name = ""
     @email = email
   end
 

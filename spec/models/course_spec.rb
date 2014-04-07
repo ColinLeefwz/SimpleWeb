@@ -6,8 +6,8 @@ describe Course do
   describe "#recommended_courses" do
     before :each do
       User.delete_all
-      @courses = create_list(:course, 5, title: "course", experts: [sameer], categories: ["culture"])
-      @staff_course = create(:course, title: "staff course", experts: [staff], categories: ["culture"])
+      @courses = create_list(:course, 5, title: "course", experts: [sameer], categories: [culture])
+      @staff_course = create(:course, title: "staff course", experts: [staff], categories: [culture])
     end
 
     context "current user is member" do
@@ -21,9 +21,9 @@ describe Course do
 
       it "excludes my subscribed courses" do ## Peter at 2014-02-26: here subscribed eq enrolled for old uses
         Course.delete_all
-        enrolled_course = create(:course, title: "subscribed course", experts: [sameer], categories: ["culture"])
-        courses = create_list(:course, 2, title: "course", experts: [sameer], categories: ["culture"])
-        staff_course = create(:course, title: "staff course", experts: [staff], categories: ["culture"])
+        enrolled_course = create(:course, title: "subscribed course", experts: [sameer], categories: [culture])
+        courses = create_list(:course, 2, title: "course", experts: [sameer], categories: [culture])
+        staff_course = create(:course, title: "staff course", experts: [staff], categories: [culture])
         jevan.enroll enrolled_course
         expect(Course.recommend_courses(jevan)).not_to include enrolled_course
         expect(Course.recommend_courses(jevan).count).to eq 2
@@ -42,9 +42,9 @@ describe Course do
 
       it "excludes my subscribed courses" do ## Peter at 2014-02-26: here subscribed eq enrolled for old uses
         Course.delete_all
-        enrolled_course = create(:course, title: "subscribed course", experts: [alex], categories: ["culture"])
-        courses = create_list(:course, 2, title: "course", experts: [alex], categories: ["culture"])
-        staff_course = create(:course, title: "staff course", experts: [staff], categories: ["culture"])
+        enrolled_course = create(:course, title: "subscribed course", experts: [alex], categories: [culture])
+        courses = create_list(:course, 2, title: "course", experts: [alex], categories: [culture])
+        staff_course = create(:course, title: "staff course", experts: [staff], categories: [culture])
         sameer.enroll enrolled_course
         expect(Course.recommend_courses(sameer)).not_to include enrolled_course
         expect(Course.recommend_courses(sameer).count).to eq 3
