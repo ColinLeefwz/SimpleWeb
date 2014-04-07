@@ -36,6 +36,12 @@ class AdminCouponsController < ApplicationController
   def edit
     @coupon = Coupon.find(params[:id])
   end
+  
+  def sendto
+    @coupon = Coupon.find(params[:id])
+    user = User.find_by_id(params[:user_id])
+    @coupon.send_coupon(user.id)
+  end
 
   # POST /coupons
   # POST /coupons.json
