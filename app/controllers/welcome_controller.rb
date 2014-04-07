@@ -1,17 +1,18 @@
 class WelcomeController < ApplicationController
 
   def index
-    cookies[:landing_batch_point] = 0
-    cookies[:no_more_load] = false
-    @items = Landingitem.all_index_items(0)
-    increase_cookie
+    # Peter at 2014-04-07: comment them, after we fix the overlap bug
+    # cookies[:landing_batch_point] = 0
+    # cookies[:no_more_load] = false
+    # @items = Landingitem.all_index_items(0)
+    # increase_cookie
 
     ## Peter at 2014-03-20: keep them for a while to make a comparation
-    # video_interviews = VideoInterview.includes(:expert)
-    # annoucements = Announcement.includes(:expert)
-    # articles = Article.includes(:expert).where(draft: false)
-    # collection = video_interviews + annoucements + articles
-    # @items = collection.sort{|x, y| y.updated_at <=> x.updated_at}
+    video_interviews = VideoInterview.includes(:expert)
+    annoucements = Announcement.includes(:expert)
+    articles = Article.includes(:expert).where(draft: false)
+    collection = video_interviews + annoucements + articles
+    @items = collection.sort{|x, y| y.updated_at <=> x.updated_at}
     @show_category = true
   end
 
