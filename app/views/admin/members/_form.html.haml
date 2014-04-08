@@ -1,0 +1,7 @@
+= simple_form_for [:admin, @member] do |f|
+  %fieldset
+    = f.input :email, required: true
+    = f.input :first_name
+    = f.input :last_name
+    = f.input :user_name
+    = f.submit
