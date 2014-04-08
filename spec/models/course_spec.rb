@@ -52,6 +52,13 @@ describe Course do
     end
   end
 
+  describe "#all_without_staff" do
+    it "lists all courses without staff's courses" do
+      staff_course = create(:course, experts: [staff], title: "staff course", categories: [culture])
+      expect(Course.all_without_staff).not_to include staff_course
+    end
+  end
+
   describe "expert should auto enroll his own courses" do
     it "enrolled his own course after create the course" do
       first_course

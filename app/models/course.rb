@@ -49,6 +49,10 @@ class Course < ActiveRecord::Base
       end
       show_courses
     end
+
+    def all_without_staff
+      Course.joins(:experts).where.not(users: {id: 2}).uniq
+    end
   end
 
 

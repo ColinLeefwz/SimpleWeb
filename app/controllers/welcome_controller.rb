@@ -11,7 +11,7 @@ class WelcomeController < ApplicationController
     video_interviews = VideoInterview.includes(:expert)
     annoucements = Announcement.includes(:expert)
     articles = Article.includes(:expert).where(draft: false)
-    courses = Course.all
+    courses = Course.all_without_staff
     collection = video_interviews + annoucements + articles + courses
     @items = collection.sort{|x, y| y.updated_at <=> x.updated_at}
     @show_category = true

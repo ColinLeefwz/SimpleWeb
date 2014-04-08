@@ -16,7 +16,8 @@ class Expert < Member
   after_create :create_association
 
   def name_with_inital
-    "#{first_name.first}. #{last_name}"
+    # "#{first_name.first}. #{last_name}" ## Peter at 2014-04-08: use full name for now
+    "#{first_name} #{last_name}"
   end
 
   def password_required?
