@@ -51,9 +51,7 @@ class Course < ActiveRecord::Base
     end
 
     def all_without_staff
-      staff = Expert.find 2
-      staff_courses = staff.courses
-      return Course.all - staff_courses
+      Course.joins(:experts).where.not(users: {id: 2}).uniq
     end
   end
 
