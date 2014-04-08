@@ -3,6 +3,21 @@ require 'spec_helper'
 describe User do
   helper_objects
 
+  describe "#find" do
+    before :each do
+      sameer
+    end
+    it "returns the user if input is String type" do
+      expect(User.find("sameer-karim")).to eq sameer
+    end
+
+    it "returns the user if input is id, but not 0" do
+      expect(User.find(1)).to eq sameer
+    end
+
+  end
+
+
   describe ".has_subscribed?" do
     it "returns false if not subscribe the course" do
       expect(jevan.has_subscribed? first_course).to be_false
@@ -28,7 +43,7 @@ describe User do
 
   describe ".unsubscribe" do
     it "deletes the session from user's subscribed_sessions" do
-      article = create(:article, title: "subscribe me")
+      article = create(:article, title: "subscribe me", categories: [culture])
       Subscription.create(subscriber_id: gecko.id, subscribable: article)
       gecko.unsubscribe article
       expect(gecko.subscribed_sessions).not_to include article

@@ -36,7 +36,7 @@ def helper_objects
   let(:article) { create :article, title: 'Communicating With Chinese', expert: sameer, description: 'What cultural differences should I know when communicating with Chinese?', categories: [culture]}
 
   let(:announcement) { create :announcement, title: 'Just an Announcement', expert: alex,
-                       description: 'Show you China road map'}
+                       description: 'Show you China road map', categories: [culture]}
   #courses
   let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer], categories: [culture] }
 
@@ -50,5 +50,3 @@ def helper_objects
   let(:video_interview) { create :video_interview, title: "video interview", expert: sameer, description: "a video interview for sameer", categories: [culture] }
 
 end
-
-
