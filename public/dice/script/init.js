@@ -20,9 +20,8 @@
 		[10,10],
 		[120,10],
 		[230,10],
-		[10,120],
-		[120,120],
-		[230,120]
+		[60,120],
+		[180,120],
 	];									//骰子的坐标
 
     window.onload = function(){
@@ -113,7 +112,7 @@
         //ctx.fillStyle='#2ea8e5';
         //ctx.fillText("本次摇的点数是："+num,70,280);
         _p.style.display = 'block';
-        _p.innerHTML = "本次摇的点数是："+num;
+        //_p.innerHTML = "本次摇的点数是："+num;
         document.getElementById('btnStart').disabled=false;
     }
 
