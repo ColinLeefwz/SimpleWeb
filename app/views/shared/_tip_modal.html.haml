@@ -10,7 +10,7 @@
               Join the Prodygia community for free by
               = link_to 'signing up.', new_user_registration_path
               Subscribe to the newsletter to receive regular updates from our experts on China-related topics. You can unsubscribe at any time.
-            = form_for :guest, url: subscription_path do |f|
+            = form_for :guest, url: guest_subscription_path do |f|
               .form-group.form-inline
                 = f.email_field :email, placeholder: "Your Email Address" ,class: 'form-control'
                 = f.submit "Subscribe", class: 'btn btn-prodygia'
