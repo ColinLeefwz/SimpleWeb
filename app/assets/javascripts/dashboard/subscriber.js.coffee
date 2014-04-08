@@ -2,8 +2,8 @@
 @subscriber = ->
   create_spinner()
 
-  $("#subscribe_newsletter").on "change", ->
-    $.ajax "/subscription.js"
+  $("#subscription_newsletter").on "change", ->
+    $(this).closest("form").submit()
     $(".newsletter .spinner").css({"display": "inline"})
 
 

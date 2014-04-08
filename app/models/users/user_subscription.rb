@@ -39,4 +39,12 @@ class UserSubscription
     @message = "Unsubscribed."
   end
 
+
+  def subscribed
+    return @subscribed if defined?(@subscribed)
+
+    result = @mail_chimp.lists.member_info(ENV['MAILCHIMP_LIST_ID'], {emails: {email: @user.email}})
+    @subscribed = (result["success_count"] == 1 && result["data"][0]["status"] == "subscribed")
+  end
+
 end
