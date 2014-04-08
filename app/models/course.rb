@@ -49,6 +49,12 @@ class Course < ActiveRecord::Base
       end
       show_courses
     end
+
+    def all_without_staff
+      staff = Expert.find 2
+      staff_courses = staff.courses
+      return Course.all - staff_courses
+    end
   end
 
 
