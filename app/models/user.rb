@@ -160,6 +160,6 @@ class User < ActiveRecord::Base
     return if !self.subscribe_newsletter
 
     subscription = UserSubscription.new(self, ENV['MAILCHIMP_LIST_ID'])
-    subscription.create
+    subscription.toggle(:create)
   end
 end

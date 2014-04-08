@@ -11,9 +11,9 @@ class UserSubscription
   end
 
 
-  def toggle
+  def toggle(action)
     begin
-      @user.subscribe_newsletter ? destroy : create
+      self.send(action)
     rescue Mailchimp::ListAlreadySubscribedError
       @message = "You are already subscribed."
     rescue Mailchimp::EmailAlreadyUnsubscribedError
@@ -48,3 +48,4 @@ class UserSubscription
   end
 
 end
+
