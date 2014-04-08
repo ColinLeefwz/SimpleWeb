@@ -5,11 +5,11 @@
         .rounded-box
           .modal-body
             %button.btn.btn-prodygia.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-            %h1#myModalLabel.modal-title Thanks for visiting us!
+            %h1#myModalLabel.modal-title Thanks for visiting!
             %p  
               Join the Prodygia community for free by
               = link_to 'signing up.', new_user_registration_path
-              Or just subscribe to our newsletter to stay connected by entering your email below. You can unsubscribe at any time.
+              Subscribe to the newsletter to receive regular updates from our experts on China-related topics. You can unsubscribe at any time.
             = form_for :guest, url: subscription_path do |f|
               .form-group.form-inline
                 = f.email_field :email, placeholder: "Your Email Address" ,class: 'form-control'
