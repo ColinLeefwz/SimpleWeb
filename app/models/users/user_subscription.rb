@@ -35,7 +35,7 @@ class UserSubscription
 
   def destroy
     @mail_chimp.lists.unsubscribe(@list_id, {email: @user.email})
-    @user.update_attributes(subscribe_newsletter: false)
+    @user.update_attributes(subscribe_newsletter: false) unless @user.destroyed?
     @message = "Unsubscribed."
   end
 
