@@ -26,7 +26,11 @@ Prodygia::Application.routes.draw do
 
   get "/users/validate_invite_email", to: 'users#validate_invite_email'
 
-  resources :users
+  resources :users do
+    collection do
+      get 'validate_user_name'
+    end
+  end
 
   ActiveAdmin.routes(self)
   mount Ckeditor::Engine => '/ckeditor'
