@@ -139,6 +139,6 @@ class ExpertsController < ApplicationController
   end
 
   def expert_params
-    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, :subscribed, Video::Attributes)
+    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, :subscribe_newsletter, Video::Attributes)
   end
 end

@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
 
   after_create :check_newsletter
   before_save :set_user_name
+  after_destroy :unsubscribe_newsletter
 
   def to_param
     user_name
@@ -151,7 +152,7 @@ class User < ActiveRecord::Base
     self.user_name = name.blank? ? self.id : "#{self.name.parameterize}"
   end
 
- def email_required?
+  def email_required?
     true
   end
 
@@ -160,5 +161,10 @@ class User < ActiveRecord::Base
 
     subscription = UserSubscription.new(self, ENV['MAILCHIMP_LIST_ID'])
     subscription.toggle(:create)
+  end
+
+  def unsubscribe_newsletter
+    subscription = UserSubscription.new(self, ENV['MAILCHIMP_LIST_ID'])
+    subscription.toggle(:destroy) if subscription.subscribed?
   end
 end
