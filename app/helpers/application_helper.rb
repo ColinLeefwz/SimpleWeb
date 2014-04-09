@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def from_mweb?
-    session[:source] == 'mweb'
+    session_shop.mweb && session[:admin_sid].blank?
   end
 
   def no_nav

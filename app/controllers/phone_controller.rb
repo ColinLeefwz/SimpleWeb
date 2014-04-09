@@ -215,6 +215,18 @@ class PhoneController < ApplicationController
     end
     render :json => {imported: ua.list.size}.to_json
   end
+  
+  def sms_up
+    ret = {phone:"1069800020086645", txt:"注册码#{params[:phone][3..-1]}, 发送此短信立刻注册脸脸"}
+  end
+  
+  def do_register
+    if Rails.cache.read("SMSUP#{params[:phone]}").nil?
+      render :json => {"error"=>"还未收到短信"}.to_json
+      return
+    end
+    register
+  end
 
   private 
   def slat_hash_pass(password)
