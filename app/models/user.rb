@@ -49,7 +49,6 @@ class User < ActiveRecord::Base
   validates_presence_of     :password, :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
-  validates :first_name, :last_name, presence: true
 
   after_create :check_newsletter
   before_save :set_user_name
@@ -149,7 +148,7 @@ class User < ActiveRecord::Base
   end
 
   def set_user_name
-    self.user_name = "#{self.name.parameterize}"
+    self.user_name = name.blank? ? self.id : "#{self.name.parameterize}"
   end
 
  def email_required?
