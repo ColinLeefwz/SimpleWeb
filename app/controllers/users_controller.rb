@@ -23,6 +23,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def validate_user_name
+    if User.where(user_name: params[:user_name]).count == 0
+      render json: {status: true}
+    else
+      render json: {status: false}
+    end
+
+  end
+
   def relationship
     respond_to do |format|
       format.js{
@@ -63,7 +72,7 @@ class UsersController < ApplicationController
           end
           render "shared/update_favorite_star"
         end
-      } 
+      }
     end
   end
 
