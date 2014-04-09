@@ -151,7 +151,7 @@ class User < ActiveRecord::Base
     self.user_name = name.blank? ? self.id : "#{self.name.parameterize}"
   end
 
- def email_required?
+  def email_required?
     true
   end
 
