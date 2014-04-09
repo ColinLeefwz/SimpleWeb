@@ -165,6 +165,6 @@ class User < ActiveRecord::Base
 
   def unsubscribe_newsletter
     subscription = UserSubscription.new(self, ENV['MAILCHIMP_LIST_ID'])
-    subscription.toggle(:destroy) if subscription.subscribed
+    subscription.toggle(:destroy) if subscription.subscribed?
   end
 end

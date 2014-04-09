@@ -40,7 +40,7 @@ class UserSubscription
   end
 
 
-  def subscribed
+  def subscribed?
     return @subscribed if defined?(@subscribed)
 
     result = @mail_chimp.lists.member_info(ENV['MAILCHIMP_LIST_ID'], {emails: {email: @user.email}})

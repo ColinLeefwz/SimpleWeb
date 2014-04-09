@@ -25,7 +25,7 @@
     %h3.title Notification
 
     = form_for :subscription, url: subscription_path, remote: true do |f|
-      = f.check_box :newsletter, {checked: UserSubscription.new(current_user, ENV['MAILCHIMP_LIST_ID']).subscribed}, "create", "destroy"
+      = f.check_box :newsletter, {checked: UserSubscription.new(current_user, ENV['MAILCHIMP_LIST_ID']).subscribed?}, "create", "destroy"
       = f.label "Subscribe to newsletter"
     %span.status
     %span.spinner-wrapper
