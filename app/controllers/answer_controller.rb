@@ -20,6 +20,10 @@ class AnswerController < ApplicationController
       Xmpp.send_gchat2($gfuid,sid,uid, sid.to_s)
       return render :text => "1"
     end
+    if msg=='@@@1234'
+	Xmpp.send_link_gchat($gfuid,sid,uid, '猜图','http://caitu.dface.cn/caitu/index1')
+	return render :text => '1'
+    end
     shop = Shop.find_by_id(sid)
     user = User.find_by_id(uid)
     # if msg[0,3]=="脸脸赐"
