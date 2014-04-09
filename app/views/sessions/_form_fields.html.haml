@@ -12,6 +12,13 @@
 
 .form-group
   .col-sm-4
+    %label.control-label{for: "user_user_name"}User Name
+  .col-sm-7
+    = f.text_field :user_name, required: true, placeholder: "User Name", "data-validate" => "/users/validate_user_name", class: 'form-control'
+    #User_Name_Info
+
+.form-group
+  .col-sm-4
     %label.control-label{for: "user_email"}Email
   .col-sm-7
     = f.email_field :email, placeholder: "Email", class: 'form-control'
