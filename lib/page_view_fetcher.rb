@@ -20,7 +20,7 @@ class PageViewFetcher
 
   def self.fetch_page_views(user)
     profile = user.profiles.first
-    profile.page_view
+    PageView.results(profile, start_date: 1.year.ago)
   end
 
   def self.process_data(queries)
