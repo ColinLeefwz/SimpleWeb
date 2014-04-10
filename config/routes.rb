@@ -29,6 +29,7 @@ Prodygia::Application.routes.draw do
   resources :users do
     collection do
       get 'validate_user_name'
+      post 'validate_user_name'
     end
   end
 
