@@ -24,7 +24,7 @@ module SharesHelper
   def get_gp_shares(url)
     data = {method: "pos.plusones.get", id: "p", params: {nolog: true, id: url, source: "widget", userId: "@viewer", groupId: "@self"}, jsonrpc: "2.0", key: "p", apiVersion: "v1"}
 
-    query_uri = URI("https://clients6.google.com/rpc?key=AIzaSyCe4-FAq9qN5n4yXUFJIBi7SerNAbje_x4")
+    query_uri = URI("https://clients6.google.com/rpc?key=#{ENV['GOOGLE_API_KEY']}")
     query_request = Net::HTTP::Post.new(query_uri.path, {"Content-Type" => "application/json"})
     query_request.body = data.to_json
     http = Net::HTTP.new(query_uri.host, query_uri.port)
