@@ -7,27 +7,28 @@
   = link_to image_tag("facebook.png", class: "tooltips", title: "share via Facebook", data:{placement: "bottom"}), url, data: { popup: true}
   - if @show_shares
     #fb-shares.social-share.count
-      = get_fb_shares("#{item_url}")
+      = get_fb_shares(item_url)
 
 .social-share.twitter
   - url = "http://twitter.com/home?status=#{item_title}+#{item_url}"
   = link_to image_tag("twitter.png", class: "tooltips", title: "share via Twitter", data:{placement: "bottom"}), url, data: { popup: true}
   - if @show_shares
     #tw-shares.count
-      = get_tw_shares("#{item_url}")
+      = get_tw_shares(item_url)
 
 .social-share.linkedin
   - url = "http://www.linkedin.com/shareArticle?mini=true&url=#{item_url}&title=#{item_title}"
   = link_to image_tag("linkedin.png", class: "tooltips", title: "share via Linkedin", data:{placement: "bottom"}), url, data: { popup: true}
   - if @show_shares
     #li-shares.count
-      = get_li_shares("#{item_url}")
+      = get_li_shares(item_url)
 
 .social-share.google_plus
   - url = "http://plus.google.com/share?url=#{item_url}&title=#{item_title}"
   = link_to image_tag("googleplus.png", class: "tooltips", title: "share via Google+", data:{placement: "bottom"}), url, data: { popup: true}
   - if @show_shares
-    #li-shares
+    #gp-shares.count
+      = get_gp_shares(item_url)
 
 -# TODO: add email functionality
 -# .social-share.email
