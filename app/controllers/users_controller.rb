@@ -24,10 +24,10 @@ class UsersController < ApplicationController
   end
 
   def validate_user_name
-    if User.where(user_name: params[:user_name]).count == 0
-      render json: {status: true}
+    if User.where(user_name: params[:user_name].parameterize).count == 0
+      render :json =>  {status:"true", name: params[:user_name]}
     else
-      render json: {status: false}
+      render :json =>  {status:"false", name: params[:user_name]}
     end
 
   end
