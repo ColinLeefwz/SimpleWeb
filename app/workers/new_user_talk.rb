@@ -10,8 +10,7 @@ class NewUserTalk
     week = Time.now.wday
     date = Time.now.strftime("%Y-%m-%d")
 
-    to2 = ["50bc20fcc90d8ba33600004b" #“浦靠谱” 运营总监浦希哲
-          ]
+    to2 = ["50bc20fcc90d8ba33600004b"] #“浦靠谱” 运营总监浦希哲
 
     if ((1..5).include?week) && hour > 8 && hour < 19
       if user.gender == 2
@@ -50,7 +49,7 @@ class NewUserTalk
       Xmpp.send_chat(to, uid, "hi")
     end
     if seq == 1 && user.gender == 2
-      Xmpp.send_chat(to2[0], uid, "hi")
+      Resque.enqueue_in(55.seconds,XmppMsg, to2[0], uid, "😄💛🌟😜")
     end
     if seq == 2 && (to == "51418836c90d8bc37b000567")
       shop = Shop.find_by_id(sid)

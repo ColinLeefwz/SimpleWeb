@@ -1,7 +1,7 @@
 require 'savon'
 require 'dalli'
 
-dc = Dalli::Client.new("10.200.141.171:11211")
+dc = Dalli::Client.new(["10.200.141.171:11211", "10.200.141.172:11211"])
 
 #host="211.147.239.62:8480"
 #host="211.147.239.62:9070"
@@ -19,9 +19,10 @@ client = Savon.client(wsdl: "http://#{host}/services/EsmsService?wsdl")
     txt = arr.find{|x| x.match /^msgcontent/}["msgcontent]".size..-1]
     dc.set("SMSUP#{phone}", 1)
   end
-  t = ENV["SMS_CHECK_INTEVAL"].to_i
-  t = 3 if t==0
-  sleep t
+  sleep 1
+  while dc.get("SMS_CHECK").nil?
+    sleep 1
+  end
 end
 
 exit

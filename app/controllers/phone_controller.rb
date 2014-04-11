@@ -5,6 +5,7 @@ class PhoneController < ApplicationController
   before_filter :code_match, :only => [:register, :forgot_password, :bind] 
   before_filter :password_check, :only => [:forgot_password, :change_password, :set_password] 
   before_filter :phone_check, :only => [:unbind, :set_password, :upload_address_list] 
+  before_filter :phone_register_check, :only => [:register, :do_register] 
 
   def phone_check
     user = session_user
@@ -12,6 +13,14 @@ class PhoneController < ApplicationController
       str = "手机号码#{params[:phone]}不是以前绑定的那个#{user.phone}"
       Xmpp.error_notify(str)
       render :json => {"error"=>str}.to_json
+    end
+  end
+  
+  def phone_register_check
+    user = User.find_by_phone(params[:phone], false)
+    if user
+      render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
+      return      
     end
   end
     
@@ -85,11 +94,6 @@ class PhoneController < ApplicationController
   end
   
   def register
-    user = User.find_by_phone(params[:phone], false)
-    if user
-      render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
-      return      
-    end
     user = User.new
     user.phone = params[:phone]
     user.psd = slat_hash_pass(params[:password]) if params[:password]
@@ -217,15 +221,20 @@ class PhoneController < ApplicationController
   end
   
   def sms_up
+    Rails.cache.write("SMS_CHECK", params[:phone], :expires_in => 2.minutes)
     ret = {phone:"1069800020086645", txt:"注册码#{params[:phone][3..-1]}, 发送此短信立刻注册脸脸"}
+    render :json => {"error"=>"还未收到短信"}.to_json
   end
   
   def do_register
-    if Rails.cache.read("SMSUP#{params[:phone]}").nil?
-      render :json => {"error"=>"还未收到短信"}.to_json
-      return
+    (1..5).each do |x|
+      if Rails.cache.read("SMSUP#{params[:phone]}")
+        register
+        return
+      end
+      sleep 1
     end
-    register
+    render :json => {"error"=>"还未收到短信"}.to_json
   end
 
   private 

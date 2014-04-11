@@ -4,6 +4,7 @@ class LocationNotice
   @queue = :normal
 
   def self.perform(uid,sid)
+    return
     user = User.find_primary(uid)
     shop = Shop.find_by_id(sid)
     return if shop.lo.nil?
