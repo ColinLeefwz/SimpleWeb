@@ -1,7 +1,10 @@
-- item_url = CGI.escape polymorphic_url(item)
+- item_url = polymorphic_url(item)
+- share_counter = ShareCounter.new(item_url)
+
+
+- item_url = CGI.escape item_url
 - item_title = CGI.escape item.title
 - item_image = CGI.escape item.cover.url
-- share_counter = ShareCounter.new(item_url)
 
 .social-share.facebook
   - url = "https://www.facebook.com/dialog/feed?app_id=#{ENV["FACEBOOK_APPID"]} &link=#{item_url} &redirect_uri=http://prodygia.com &picture=#{item_image}"
