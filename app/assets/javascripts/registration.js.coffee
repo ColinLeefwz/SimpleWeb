@@ -12,13 +12,13 @@ $ ->
       data:
         user_name: $(this).val()
       success: (data) ->
-        $("#User_Name_Info").empty()
+        $("#User-Name-Info").empty()
         if data.status == 'true'
-          $("#User_Name_Info").css "color", "green"
-          $("#User_Name_Info").append "" + "Name: #{data.name} still can be used as your user name"
+          $("#User-Name-Info").css "color", "green"
+          $("#User-Name-Info").append "" + "Name: #{data.name} still can be used as your user name"
         else
-          $("#User_Name_Info").css "color", "red"
-          $("#User_Name_Info").append "" + "Sorry, name: #{data.name} has ever been registered by other users"
+          $("#User-Name-Info").css "color", "red"
+          $("#User-Name-Info").append "" + "Sorry, name: #{data.name} has ever been registered by other users"
     return
 
 $(document).ready(check_terms_approved)
