@@ -8,33 +8,32 @@ side_bar = ->
 		$(this).parents(".item").find(".item-text > a").css("color", "#880848")
 
 class AjaxEffect
-	constructor: ->
+  constructor: ->
 
-	start: ->
+  start: ->
     @create_new_session_date()
-		# @session_preview()
 
-	create_new_session_date: ->
-		currentdate = new Date()
-		$('#datepicker').datetimepicker({
-			maskInput: true,
-			startDate: currentdate,
-			pickTime: false
-		})
+  create_new_session_date: ->
+    currentdate = new Date()
+    $('#datepicker').datetimepicker({
+      maskInput: true,
+      startDate: currentdate,
+      pickTime: false
+    })
 
-		$('#starttimepicker').datetimepicker({
-			maskInput: true,
-			pickDate: false,
-			pickSeconds: false,
-			pick12HourFormat: true
-		})
+    $('#starttimepicker').datetimepicker({
+      maskInput: true,
+      pickDate: false,
+      pickSeconds: false,
+      pick12HourFormat: true
+    })
 
-		$('#endtimepicker').datetimepicker({
-			maskInput: true,
-			pickDate: false,
-			pickSeconds: false,
-			pick12HourFormat: true
-		})
+    $('#endtimepicker').datetimepicker({
+      maskInput: true,
+      pickDate: false,
+      pickSeconds: false,
+      pick12HourFormat: true
+    })
 
 
 $(document).ready ->
@@ -44,7 +43,7 @@ $(document).on 'page:load', ->
   side_bar()
 
 $(document).on 'ajax:success', ->
-  (new AjaxEffect).start()
+  # (new AjaxEffect).start()
   $("[data-validate]").blur ->
     $.ajax
       type: 'POST'

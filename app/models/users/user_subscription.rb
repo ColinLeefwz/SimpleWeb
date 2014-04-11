@@ -35,12 +35,12 @@ class UserSubscription
 
   def destroy
     @mail_chimp.lists.unsubscribe(@list_id, {email: @user.email})
-    @user.update_attributes(subscribe_newsletter: false)
+    @user.update_attributes(subscribe_newsletter: false) unless @user.destroyed?
     @message = "Unsubscribed."
   end
 
 
-  def subscribed
+  def subscribed?
     return @subscribed if defined?(@subscribed)
 
     result = @mail_chimp.lists.member_info(ENV['MAILCHIMP_LIST_ID'], {emails: {email: @user.email}})
