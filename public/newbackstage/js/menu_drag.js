@@ -2,44 +2,45 @@ $(document).ready(function(){
 	
 	//取消
 	$('#cancelBt').click(function(){
-		relist_menu()
+		Relist_Menu()
 		back_up()
 	});
 
 	//完成
 	$('#finishBt').click(function(){
-		back_up()
+		Relist_Menu();
+		back_up();
 		var index = order_index();
 		$.post('/shop3_menu/sort_menu', {index: index}, function(data){
 			menujson = data;
-			relist_menu();
+			sort="sort";
 		})
 	})
 
 	function back_up(){
 		trigger_click = true;
-		$("dl.jsMenu,dd.jslevel2").unbind('mousedown')
+		$("#MenuList dl,#MenuList dd").unbind('mousedown')
 		$(document).unbind("mouseup")
 	   	$(".add_gray,.edit_gray, .del_gray").css('display', '');
-	    $(".r").css('display', '');
+		$("#finishBt, #cancelBt").css('display', 'none');
+		$("#addBt, #orderBt").css('display', 'block');
 	    $("dd, dt").removeClass('selected').attr('style', '')
-	    $(".jsOrderBt").css('display', 'none');
-	    $(".btn_sorting").css('display', 'none');
 	    $('dl').addClass('ui-sortable-disabled')
 	}
 
 	$("#orderBt").click(function(){
+		sort="nosort";
 		$("#index, #url, #view, #edit, #none").css("display", 'none')
 		trigger_click = false;
 		$("dd, dt").addClass('selected').css('background-color', '#FFFFFF');
 	    $(".add_gray,.edit_gray, .del_gray").css('display', 'none');
-	    $(".r").css('display', 'none');
-	    $(".jsOrderBt").css('display', '');
-	    $(".btn_sorting").css('display', '');
+		$("#MenuList a.sort_gray").css('display', '');
+		$("#finishBt, #cancelBt").css('display', 'block');
+		$("#addBt, #orderBt").css('display', 'none');
 	    $('dl').removeClass('ui-sortable-disabled');
 
 	    //一级菜单拖拽
-		$('dl.jsMenu').mousedown(function(downe){
+		$('#MenuList dl').mousedown(function(downe){
 			var x = parseInt(downe.pageX);
 			var y = parseInt(downe.pageY);
 			var obj= $(this);
@@ -106,8 +107,8 @@ $(document).ready(function(){
 		});
 
 		//二级菜单拖拽
-		// $(document).delegate('dd.jslevel2','mousedown', function(downe){
-		$('dd.jslevel2').mousedown(function(downe){
+		// $(document).delegate('#MenuList dd','mousedown', function(downe){
+		$('#MenuList dd').mousedown(function(downe){
 			var x = parseInt(downe.pageX);
 			var y = parseInt(downe.pageY);
 			var objdd = $(this);
@@ -181,7 +182,7 @@ $(document).ready(function(){
 
 	function order_index(){
 		var index = {}
-		$("#menuList dl").each(function(){
+		$("#MenuList dl").each(function(){
 			var dd_arr = []
 			var dt_obj = $(this).find('dt').first()
 			var dt_index = last_index(dt_obj.attr('id'))

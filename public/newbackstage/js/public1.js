@@ -275,6 +275,7 @@ function Photo(){//照片墙动画
 	}
 }
 function WindowResizeA(){
+	$("#Nav").removeAttr("style");
 	var w1=$(window).width(),
 		h1=$(document).height(),
 		h2=$(window).height();
