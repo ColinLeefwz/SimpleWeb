@@ -412,7 +412,6 @@ list是一个json字符串表示的数组，其中每一个条目是一个hash, 
 
 
 \subsubsection{获取短信发送号码和内容}
-\label{hash_algorithm}
 
 \begin{table}[H]
    \begin{center}
@@ -439,8 +438,8 @@ GET & \multicolumn{3}{|c|}{/phone/sms\_up} \\
 \end{verbatim}
 
 
-\subsubsection{轮训用户是否短信注册通过}
-\label{hash_algorithm}
+\subsubsection{用户是否短信注册通过}
+当用户点击本机的短信发送按钮后，调用本接口。
 
 \begin{table}[H]
    \begin{center}
@@ -457,7 +456,6 @@ GET & \multicolumn{3}{|c|}{/phone/do\_register} \\
 \end{table}
 
 注册成功时，本接口的返回值和register接口一致。短信未收到则返回error信息。
-
 
 
 
