@@ -41,7 +41,7 @@ class PageViewFetcher
 
 
   private
-  def min_created_at
+  def self.min_created_at
     array = %w(Article Announcement VideoInterview Course).map{|model| model.constantize.minimum(:created_at)}
     array.min
   end
