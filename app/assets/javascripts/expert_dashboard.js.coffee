@@ -9,9 +9,9 @@ side_bar = ->
 
 class AjaxEffect
 	constructor: ->
-	
+
 	start: ->
-		@create_new_session_date()
+    @create_new_session_date()
 		# @session_preview()
 
 	create_new_session_date: ->
@@ -44,4 +44,21 @@ $(document).on 'page:load', ->
   side_bar()
 
 $(document).on 'ajax:success', ->
-	(new AjaxEffect).start()
+  (new AjaxEffect).start()
+  $("[data-validate]").blur ->
+    $.ajax
+      type: 'POST'
+      url:  '/users/validate_user_name'
+      data:
+        user_name: $(this).val()
+      success: (data) ->
+        $("#User-Name-Info").empty()
+        if data.status == 'true'
+          $("#User-Name-Info").css "color", "green"
+          $("#User-Name-Info").append "" + "Name: #{data.name} still can be used as your user name"
+        else
+          $("#User-Name-Info").css "color", "red"
+          $("#User-Name-Info").append "" + "Sorry, name: #{data.name} has ever been registered by other users"
+    return
+
+
