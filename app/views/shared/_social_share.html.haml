@@ -1,33 +1,35 @@
 - item_url = CGI.escape polymorphic_url(item)
 - item_title = CGI.escape item.title
 - item_image = CGI.escape item.cover.url
+- share_counter = ShareCounter.new(item_url)
 
 .social-share.facebook
   - url = "https://www.facebook.com/dialog/feed?app_id=#{ENV["FACEBOOK_APPID"]} &link=#{item_url} &redirect_uri=http://prodygia.com &picture=#{item_image}"
   = link_to image_tag("facebook.png", class: "tooltips", title: "share via Facebook", data:{placement: "bottom"}), url, data: { popup: true}
   - if @show_shares
     #fb-shares.social-share.count
-      = get_fb_shares("#{item_url}")
+      = share_counter.facebook
 
 .social-share.twitter
   - url = "http://twitter.com/home?status=#{item_title}+#{item_url}"
   = link_to image_tag("twitter.png", class: "tooltips", title: "share via Twitter", data:{placement: "bottom"}), url, data: { popup: true}
   - if @show_shares
     #tw-shares.count
-      = get_tw_shares("#{item_url}")
+      = share_counter.twitter
 
 .social-share.linkedin
   - url = "http://www.linkedin.com/shareArticle?mini=true&url=#{item_url}&title=#{item_title}"
   = link_to image_tag("linkedin.png", class: "tooltips", title: "share via Linkedin", data:{placement: "bottom"}), url, data: { popup: true}
   - if @show_shares
     #li-shares.count
-      = get_li_shares("#{item_url}")
+      = share_counter.linked_in
 
 .social-share.google_plus
   - url = "http://plus.google.com/share?url=#{item_url}&title=#{item_title}"
   = link_to image_tag("googleplus.png", class: "tooltips", title: "share via Google+", data:{placement: "bottom"}), url, data: { popup: true}
   - if @show_shares
-    #li-shares
+    #gp-shares.count
+      = share_counter.google_plus
 
 -# TODO: add email functionality
 -# .social-share.email

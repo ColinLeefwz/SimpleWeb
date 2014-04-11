@@ -20,7 +20,7 @@ class PageViewFetcher
 
   def self.fetch_page_views(user)
     profile = user.profiles.first
-    profile.page_view
+    PageView.results(profile, start_date: min_created_at)
   end
 
   def self.process_data(queries)
@@ -38,4 +38,12 @@ class PageViewFetcher
       end
     end
   end
+
+
+  private
+  def min_created_at
+    array = %w(Article Announcement VideoInterview Course).map{|model| model.constantize.minimum(:created_at)}
+    array.min
+  end
+
 end
