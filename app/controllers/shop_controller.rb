@@ -23,15 +23,18 @@ class ShopController < ApplicationController
       hash.merge!( { del:{"$exists"=>false} }  )  
     end
     if params[:type]
-      t = params[:type].to_i*2-1
-      hash.merge!( {t: { "$in" => [ t-1, t ] } }  ) 
+      ts = Shop.type2ts(params[:type].to_i)
+      hash.merge!( {t: { "$in" => ts } }  ) 
     end
     shops = Shop.where(hash).sort({utotal:-1}).skip(skip).limit(pcount)
-    if city=="0571"
-      shops = shops.to_a
-      shops=shops[1..-1] << shops[0]  if shops[0]["_id"]==$zjkjcyds
+    ret = shops.map {|s| s.safe_output_with_users}
+    coupons = $redis.smembers("ACS#{city}") 
+    if coupons
+      ret.each_with_index do |xx,i|
+        ret[i]["coupon"] = 1 if coupons.index(xx["id"].to_i.to_s)
+      end
     end
-    render :json =>  shops.map {|s| s.safe_output_with_users}.to_json
+    render :json =>  ret.to_json
   end
   
   #签到时输入地点名称查找地点

@@ -14,6 +14,10 @@ class CheckinsController < ApplicationController
       render :json => {error: "地点名称不能少于三个字"}.to_json
       return
     end
+    if params[:accuracy].to_i==0 || params[:accuracy].to_i > 500
+      render :json => {error: "手机误差大于500米，不能创建地点"}.to_json
+      return
+    end
     if params[:sname][0,3]=="@@@"
       render :json => {error: "没权限创建：#{params[:sname]}"}.to_json
       return
@@ -84,6 +88,7 @@ class CheckinsController < ApplicationController
     shop = Shop.find_by_id(params[:shop_id]) if shop.nil?
     checkin = Checkin.new
     checkin.loc = [params[:lat].to_f, params[:lng].to_f]
+    checkin.loc = Shop.lob_to_lo(checkin.loc) if params[:baidu]
     checkin.acc = params[:accuracy]
     checkin.uid = session[:user_id]
     checkin.sex = session_user.gender

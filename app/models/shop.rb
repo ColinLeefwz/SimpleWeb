@@ -231,6 +231,7 @@ class Shop
   def safe_output
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
+    hash.merge!({type: Shop.t2type(self.t)})
     hash.merge!( {"user"=>total_user})
     hash.merge!( {"has_menu"=>self.has_menu.to_i}) if self.has_menu.to_i>0
     hash
@@ -902,6 +903,40 @@ class Shop
     uid = uid.to_s
     return true if uid == "s#{self.id}"
     return staffs_cache.find{|x| x.to_s==uid} != nil
+  end
+  
+  def self.type2ts(type)
+    case type
+    when 1
+      [4]
+    when 2
+      [5]
+    when 3
+      [1,2,3]
+    when 4
+      [6, 7]
+    when 5
+      [10, 11, 12]
+    else
+      [8,9,13,14,15, 51, 52, 53]
+    end
+  end
+  
+  def self.t2type(t)
+    case t
+    when 1..3
+      3
+    when 4
+      1
+    when 5
+      2
+    when 6,7
+      4
+    when 10..12
+      5
+    else
+      6
+    end
   end
   
   
