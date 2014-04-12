@@ -3,6 +3,8 @@
 module Similarity
   include Gps
   
+  MAX_SCORE = 100
+  
   def trim(str)
     str.sub!(/\([^)]+\)/, "")
     str.sub!(/（[^）]+）/, "")
@@ -121,7 +123,17 @@ module Similarity
     end
   end
   
+  def weight_score(shop1,shop2)
+    ret = 0
+    ret += 1 if shop1["t"] || shop2["t"]
+    ret += 5 if shop1["password"] || shop2["password"]
+    ret += (1+ shop1["shops"].size / 10.0) if shop1["shops"]
+    ret += (1+ shop2["shops"].size / 10.0) if shop2["shops"]
+    ret
+  end
+  
   def similarity(shop1,shop2)
+    return MAX_SCORE if shop1["name"]==shop2["name"] && shop1["city"]==shop2["city"] && (shop1["password"] || shop2["password"] )
     return 0 if shop1["shops"] && shop1["shops"].index(shop2["_id"])
     return 0 if shop2["shops"] && shop2["shops"].index(shop1["_id"])
     citys = []
@@ -135,15 +147,16 @@ module Similarity
     type_score = 4*(shop1["t"]==shop2["t"]? 1:0) + 4*(shop1["type"]==shop2["type"]? 1:0)
     #puts "distance: #{distance(shop1,shop2)}"  if $0=="script/rails"
     dist_score = dist_score(distance(shop1,shop2))
-    #puts [name_score,addr_score,type_score,dist_score] if $0=="script/rails"
-    return name_score+addr_score+type_score+dist_score
+    w_score = weight_score(shop1,shop2)
+    puts [name_score,addr_score,type_score,dist_score,w_score] #if $0=="script/rails"
+    return name_score+addr_score+type_score+dist_score+w_score
   end
 
   def similarity_by_id(id1,id2)
     return similarity(Shop.find(id1),Shop.find(id2))
   end
   
-  def similar_shops(x, min_score=60)
+  def similar_shops(x, min_score=60, early_exit=false)
     sames =[]
     Shop.where({lo:{"$within" => {"$center" => [x.loc_first_of(x),0.03]}}} ).each do |y|
       next if y.id==x.id
@@ -152,9 +165,23 @@ module Similarity
       rescue
         next
       end
+      return true if early_exit && score>min_score
       sames << [y,score] if score>min_score
     end
+    if x["city"] && x["lo"]
+      Shop.where({city:x["city"], name:x["name"], password:{"$exists" => true} }).each do |y|
+        next if y.id==x.id
+        next if y.del
+        return true if early_exit
+        sames << [y,MAX_SCORE]
+      end
+    end
+    return false if early_exit
     sames.sort{|a,b| b[1]<=>a[1]}.map{|x| x[0]}
+  end
+  
+  def has_similar_shop?(x, min_score=60)
+    similar_shops(x,min_score,true)
   end
   
 end

@@ -34,13 +34,12 @@ class CheckinsController < ApplicationController
     else
       score = 68
     end
-    ss = Shop.similar_shops(shop,score)
-    if ss.length>0
-      shop = ss[0]
-    else
-      shop.save!
-      Rails.cache.write("ADDSHOP#{session[:user_id]}", 1, :expires_in => 24.hours)
+    if Shop.has_similar_shop?(shop,score)
+      render :json => {error: "已经存在雷同的地点，不能重复创建"}.to_json
+      return
     end
+    shop.save!
+    Rails.cache.write("ADDSHOP#{session[:user_id]}", 1, :expires_in => 24.hours)
     params[:shop_id] = shop.id
     do_checkin(shop,false,true)
     render :json => shop.safe_output.to_json
