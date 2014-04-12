@@ -145,7 +145,7 @@ module Similarity
   
   def similar_shops(x, min_score=60)
     sames =[]
-    Shop.where({lo:{"$within" => {"$center" => [x.loc_first_of(x),0.003]}}} ).each do |y|
+    Shop.where({lo:{"$within" => {"$center" => [x.loc_first_of(x),0.03]}}} ).each do |y|
       next if y.id==x.id
       begin
         score = Shop.similarity(x,y)
