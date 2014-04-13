@@ -14,6 +14,9 @@ class AroundmeController < ApplicationController
   end
   
   def my_shops
+    lo = [params[:lat].to_f,params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    city = Shop.get_city(lo)
     arr = session_user.groups
     staffs = session_user.belong_shops
     arr = arr + staffs if staffs.size>0
@@ -35,6 +38,9 @@ class AroundmeController < ApplicationController
   end
   
   def hot
+    lo = [params[:lat].to_f,params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    city = Shop.get_city(lo)
     arr = []
     if is_kx_user?(session[:user_id])
       $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
@@ -42,7 +48,6 @@ class AroundmeController < ApplicationController
     if is_co_user?(session[:user_id])
       $redis.smembers("CoShops").each {|id| arr << Shop.find_by_id(id)}
     end
-    city = Shop.get_city(lo)
     if city
       shop = Shop.find_by_id(21838725) # 行酷车友会
       if shop
