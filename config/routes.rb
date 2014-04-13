@@ -24,13 +24,9 @@ Prodygia::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
-  get "/users/validate_invite_email", to: 'users#validate_invite_email'
-
-  resources :users do
-    collection do
-      get 'validate_user_name'
-      post 'validate_user_name'
-    end
+  controller :users do
+    get 'validate_invite_email'
+    get 'validate_user_name'
   end
 
   ActiveAdmin.routes(self)
