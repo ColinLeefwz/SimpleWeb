@@ -26,7 +26,6 @@ Xmpp端提供的API包括：
 * /api/room?roomid=&message=&uid=，以给定uid的身份在roomid聊天室发送消息message
 * /api/block?uid=&bid=，用户uid屏蔽bid的消息
 * /api/unblock?uid=&bid=，用户uid取消屏蔽用户bid
-* /api/gchat?room=，获得聊天室room的消息历史
 * /api/chat?uid=，获得用户uid的聊天历史
 * /api/chat?uid1=&uid2=，获得用户uid1和uid2之间的聊天记录
 
@@ -38,14 +37,6 @@ Xmpp端提供的API包括：
 每分钟监测图片处理错误的程序Photo.fix_error_of_all_type_image跑在web1上。
 
 目前两台服务器只有web1在跑真实的应用，web2主要用于测试。
-
-###应用
-目前脸脸的web应用分为三块：
-
-* 脸脸客户端API／商家管理后台／管理员后台，用unicorn部署
-* 猜图游戏，用puma部署
-* 微加移动网站，用puma部署
-       
  
 ###Nginx
 
@@ -187,7 +178,7 @@ Unicorn是Rails的Http服务器，启动在8081端口，作为nginx的up-stream�
  * 启动:unicorn -D -E production -c unicorn.conf.rb
  * 重启:kill -HUP \`cat log/unicorn.pid`
 
-unicorn只适合运行短任务。所有耗时的任务，以及调用第三方API的任务，都需要异步执行。异步执行有两种办法：1、使用resque，2、考虑使用node.js。
+unicorn只适合运行短任务。所有耗时的任务，以及调用第三方API的任务，都需要异步执行。异步执行有两种办法：1、使用resque后台执行，2、换用puma作为rake服务器。
 
 ####Resque
 
@@ -217,21 +208,6 @@ resque和resque-scheduler都采用god进行监控和启动。
  * find, mongoid库默认提供的方法，找不到报错，不使用缓存。建议在更新操作时调用。比如find后要立即修改的场合，此时不要用find_by_id。
  * find_by_id, 利用缓存，找不到返回nil，建议只读操作时调用。
  * 删除对象要调用destory， 这样才能清除对象的缓存。调用delete时不会清除缓存。
- 
-
-###Web服务器配置
-web1
-unicorn 8082 脸脸API服务器
-
-web2
-unicorn 8082 脸脸商家后台／管理员后台 shop.dface.cn,admin.dface.cn
-puma	9292 猜图游戏 caitu.dface.cn
-puma	9293 即立方网站／业务系统和管理后台 w.dface.cn
-puma	9294 刮刮卡等小游戏 game.dface.cn
-
-web4
-puma	9292 店小二点菜 food.dface.cn
-puma	9293 行酷购买系统 trade.dface.cn
  
 
 依赖的库：ghostscript,imagemagick，	
