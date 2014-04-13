@@ -64,6 +64,11 @@ class User < ActiveRecord::Base
     input.to_i == 0 ? find_by(user_name: input) : super
   end
 
+  def self.user_name_duplicated?(user_name)
+    count = where(user_name: user_name).count
+    count > 0 ? true : false
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

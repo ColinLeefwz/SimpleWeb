@@ -24,12 +24,9 @@ class UsersController < ApplicationController
   end
 
   def validate_user_name
-    if User.where(user_name: params[:user_name].parameterize).count == 0
-      render :json =>  {status:"true", name: params[:user_name]}
-    else
-      render :json =>  {status:"false", name: params[:user_name]}
-    end
-
+    user_name = params[:user_name].parameterize
+    duplication = User.user_name_duplicated?(user_name)
+    render partial: 'dashboard/profile/validate_user_name', locals: {duplication: duplication}
   end
 
   def relationship
