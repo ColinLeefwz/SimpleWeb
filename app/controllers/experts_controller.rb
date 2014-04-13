@@ -63,11 +63,10 @@ class ExpertsController < ApplicationController
 
   def edit_profile
     @profile = @expert.profile
-    @video = @expert.video
-    @from = 'edit_profile'
-
     respond_to do |format|
-      format.js {render 'experts/update'}
+      format.js{
+        render partial: 'dashboard/profile/edit'
+      }
     end
   end
 
