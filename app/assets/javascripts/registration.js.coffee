@@ -1,4 +1,4 @@
-check_terms_approved = ->
+@check_terms_approved = ->
   $("#terms").on "change", ->
     if $("#terms").is(':checked')
       $("input[type='submit']").attr("disabled", false)
@@ -21,6 +21,4 @@ $ ->
           $("#User-Name-Info").append "" + "Sorry, name: #{data.name} has ever been registered by other users"
     return
 
-$(document).ready(check_terms_approved)
-$(document).on "page:load", check_terms_approved
 
