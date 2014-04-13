@@ -99,8 +99,8 @@ Prodygia::Application.routes.draw do
   end
 
   controller :mailchimp do
-    get 'subscription'
     post 'subscription'
+    post 'guest_subscription'
   end
 
   resources :resources

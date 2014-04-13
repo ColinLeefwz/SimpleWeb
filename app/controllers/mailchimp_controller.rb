@@ -1,17 +1,10 @@
 class MailchimpController < ApplicationController
 
   def subscription
-    # responsibility: guest subscription, dashboard settings
-    user = current_user || Guest.new(guest_params[:email])
-    subscription = UserSubscription.new(user, ENV["MAILCHIMP_LIST_ID"])
-    subscription.toggle
+    subscription = UserSubscription.new(current_user, ENV["MAILCHIMP_LIST_ID"])
+    subscription.toggle(params[:subscription][:newsletter])
 
     respond_to do |format|
-      format.html{
-        flash[:success] = subscription.message
-        redirect_to root_path
-      }
-
       format.js{
         render partial: 'dashboard/newsletter', locals: {message: subscription.message}
       }
@@ -19,9 +12,13 @@ class MailchimpController < ApplicationController
   end
 
 
-  private
-  def guest_params
-    params.require(:guest).permit(:email)
+  def guest_subscription
+    user = Guest.new(params[:guest][:email])
+    subscription = UserSubscription.new(user, ENV["MAILCHIMP_LIST_ID"])
+    subscription.toggle(:create)
+
+    flash[:success] = subscription.message
+    redirect_to root_path
   end
 
 end
