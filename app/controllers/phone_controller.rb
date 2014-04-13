@@ -7,6 +7,8 @@ class PhoneController < ApplicationController
   before_filter :phone_check, :only => [:unbind, :set_password, :upload_address_list] 
   before_filter :phone_register_check, :only => [:register, :do_register] 
 
+  FAKE_CODE = "12321"
+
   def phone_check
     user = session_user
     if user.phone != params[:phone]
@@ -35,7 +37,7 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"验证码错误"}.to_json
       return
     end
-    if params[:code] != session[:phone_code] && params[:code] != "13579"
+    if params[:code] != session[:phone_code] && params[:code] != FAKE_CODE
       session[:phone_try] -= 1
       if session[:phone_try]<1
         session[:phone_try] = nil 
@@ -75,10 +77,15 @@ class PhoneController < ApplicationController
     end 
     fake = fake_phone(params[:phone]) 
     if Rails.env == "production"
-      # code = rand(999999).to_s
-      str = Digest::SHA1.hexdigest("#{params[:phone]}@dface#{Time.now.day}")[0,6]
-      code = str.to_i(16).to_s[0,6]
-      code = "13579" if fake
+      if fake
+        code = FAKE_CODE
+      else
+        str = Digest::SHA1.hexdigest("#{params[:phone]}@dface#{Time.now.day}")[0,6]
+        code = str.to_i(16).to_s[0,5]
+        while code.size<5
+          code = "0#{code}" 
+        end
+      end
     else
       code = "123456"
     end
@@ -90,7 +97,7 @@ class PhoneController < ApplicationController
     Resque.enqueue(SmsSender, params[:phone], sms )  unless fake
     session[:phone_code] = code
     session[:phone_try] = 5
-    render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json #TODO: 取消code
+    render :json => {"code"=>""}.to_json
   end
   
   def register
