@@ -221,12 +221,22 @@ class PhoneController < ApplicationController
   end
   
   def sms_up
-    Rails.cache.write("SMS_CHECK", params[:phone], :expires_in => 2.minutes)
-    ret = {phone:"1069800020086645", txt:"注册码#{params[:phone][3..-1]}, 发送此短信立刻注册脸脸"}
-    render :json => {"error"=>"还未收到短信"}.to_json
+    if fake_phone(params[:phone])
+      up = "+#{params[:phone]}"
+      ret = {phone:up, txt:"注册码#{params[:phone][3..-1]}, 发送此短信立刻注册脸脸"}
+    else
+      up = "1069800020086645"
+      ret = {phone:up, txt:"注册码#{params[:phone][3..-1]}, 发送此短信立刻注册脸脸"}
+      Rails.cache.write("SMS_CHECK", params[:phone], :expires_in => 2.minutes)
+    end
+    render :json => ret.to_json
   end
   
   def do_register
+    if fake_phone(params[:phone])
+      register
+      return
+    end
     (1..5).each do |x|
       if Rails.cache.read("SMSUP#{params[:phone]}")
         register
@@ -243,7 +253,7 @@ class PhoneController < ApplicationController
   end
   
   def fake_phone(phone)
-    phone[0,3]=="000"
+    phone[0,3]=="0001"
   end
   
   
