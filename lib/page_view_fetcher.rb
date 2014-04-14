@@ -25,11 +25,13 @@ class PageViewFetcher
 
   def self.process_data(queries)
     queries.each do |q|
-      type, id, param = extract_data(q)
+      type, id, param, views = extract_data(q)
       update_views(type, id, param, views)
     end
   end
 
+
+  
 
   private
   def self.min_created_at
@@ -37,11 +39,12 @@ class PageViewFetcher
     array.min
   end
 
+
   def self.extract_data(query)
     type, id, param, views = nil
-    expression = /\/(?<type>\b(sessions|articles|courses|video_interviews|announcements)\b)\/(?<param>\d+[\w-]*)$/
+    expression = /\/(?<type>\b(articles|courses|video_interviews|announcements)\b)\/(?<param>\d+[\w-]*)$/
 
-    result = expression.match query
+    result = expression.match query.pagePath
     if result
       type = result[:type].classify
       param = result[:param]
@@ -55,7 +58,7 @@ class PageViewFetcher
   def self.update_views(type, id, param, views)
     return unless type && id && param && views
 
-    record = type.constantize.find id
+    record = type.constantize.where(id: id).first
     if record.to_param == param
       visit = Visit.find_or_create_by(visitable_id: id, visitable_type: type)
       visit.update_attributes(page_views: views)
