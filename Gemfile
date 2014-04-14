@@ -1,5 +1,5 @@
-# source 'https://rubygems.org'
-source 'http://ruby.taobao.org'
+source 'https://rubygems.org'
+# source 'http://ruby.taobao.org'
 
 ruby '2.0.0'
 gem 'rails', '4.0.0'
@@ -44,6 +44,10 @@ gem 'mailchimp-api'
 
 group :doc do
   gem 'sdoc', require: false
+end
+
+group :deployment do
+  gem 'mina'
 end
 
 group :development, :test do
