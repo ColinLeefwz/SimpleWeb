@@ -10,8 +10,8 @@ $(document).ready(function(){
       { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Superscript' ]},
       { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','-','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']},
       { name: 'links', items : [ 'Link','Unlink'] },
-      { name: 'insert', items : [ 'Image','Table', 'Iframe' ] },
-      { name: 'tools', items : [ 'Maximize', 'Templates','Scayt' ] },
+      { name: 'insert', items : [ 'Image','Table' ] },
+      // { name: 'tools', items : [ 'Maximize', 'Templates','Scayt' ] },
       { name: 'document', items: ['Source', '-']}
     ];
   };
