@@ -18,7 +18,7 @@
       .terms-of-service
 
         %h5
-          MEMBER TERMS OF SERVICE 
+          MEMBER TERMS OF SERVICE
         %p
           Welcome to Prodygia, an online marketplace aiming to match up demand for learning about China and supply of expertise on China. The Prodygia website and service including (without limitation) all websites and other interactive properties through which the service is delivered (collectively, the “Service”) are owned, operated and distributed by Prodygia, Inc., a Delaware corporation (referred to in these Terms of Service as “Prodygia” or “we” and through similar words such as “us,” “our,” etc.). By accessing any part of the Service, you are agreeing to the terms and conditions described below (these “Terms of Service”), the terms and conditions of our privacy policy (the “Privacy Policy”) and any other legal notices published by us on the Service. If you do not agree to any of these terms, you should not use the Service. These Terms of Service apply to all users, including both users who are simply viewing content available via the Service and users who have registered as members of Prodygia.
         %p
@@ -97,7 +97,7 @@
         %h5
           Special Rules for Users/Members
         %ol
-          %li You agree to accept all of the terms and conditions when you engage on the Prodygia site, whether or not you are viewing select free content or accessing paid content. 
+          %li You agree to accept all of the terms and conditions when you engage on the Prodygia site, whether or not you are viewing select free content or accessing paid content.
           %li Starting early 2014, the Sessions offered on Prodygia are offered directly by the Experts. Prodygia is not responsible or liable for any information on its Service listings or profiles.
           %li All Sessions offered on Prodygia are valid only for the specified date. Prodygia is not responsible for any changes or cancellations made to sessions by the Expert.
           %li You agree to follow all reasonable rules set by an Expert with respect to his/her video library and/or session, and not to take any actions to interfere with the Expert or anyone else.
@@ -173,10 +173,15 @@
 
 
       -# add a wrapper to wrap the checkbox and label into one line
-      .check-box-wrapper 
+      .check-box-wrapper
         = check_box_tag "terms", checked: false
         = label_tag :terms, "I agree to the terms above"
 
       = f.submit "Sign up", class: "btn btn-prodygia", disabled: true
 
     = render "devise/shared/links"
+
+
+
+:javascript
+  check_terms_approved()

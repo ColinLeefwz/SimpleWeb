@@ -90,7 +90,7 @@ ActiveAdmin.register Expert do
     end
 
     def permitted_params
-      params.permit :id, expert: [:id, :name, :avatar, :first_name, :last_name, :password, :email, :time_zone, Video::Attributes,
+      params.permit :id, expert: [:id, :name, :avatar, :first_name, :last_name, :user_name, :password, :email, :time_zone, Video::Attributes,
                                   profile_attributes: [:id, :title, :company, :location, :country, :city, :expertise, :web_site, :testimonials, :additional, :career, :education, :twitter] ]
     end
   end
