@@ -42,7 +42,7 @@ class PageViewFetcher
 
   def self.extract_data(query)
     type, id, param, views = nil
-    expression = /\/(?<type>\b(sessions|articles|courses|video_interviews|announcements)\b)\/(?<param>\d+[\w-]*)$/
+    expression = /\/(?<type>\b(articles|courses|video_interviews|announcements)\b)\/(?<param>\d+[\w-]*)$/
 
     result = expression.match query.pagePath
     if result
