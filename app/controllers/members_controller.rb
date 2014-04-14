@@ -36,7 +36,7 @@ class MembersController < ApplicationController
       }
     end
   end
-  
+
   def refer_a_friend
     @email_message = current_user.build_refer_message(User::USER_TYPE[:member])
     @from = "refer_member"
@@ -105,7 +105,7 @@ class MembersController < ApplicationController
   end
 
   def user_params
-    params.require(:profile).permit(:first_name, :last_name, :avatar, :time_zone, :subscribe_newsletter)
+    params.require(:profile).permit(:first_name, :last_name, :user_name, :avatar, :time_zone, :subscribe_newsletter)
   end
 
   def member_profile_params

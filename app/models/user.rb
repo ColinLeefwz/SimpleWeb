@@ -46,6 +46,8 @@ class User < ActiveRecord::Base
   validates_format_of     :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
   validates_uniqueness_of :email, scope: [:provider]
 
+  validates   :user_name, presence: true, uniqueness: true
+
   validates_presence_of     :password, :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
@@ -60,6 +62,11 @@ class User < ActiveRecord::Base
 
   def self.find(input)
     input.to_i == 0 ? find_by(user_name: input) : super
+  end
+
+  def self.user_name_duplicated?(user_name)
+    count = where(user_name: user_name).count
+    count > 0 ? true : false
   end
 
   def name
@@ -149,7 +156,7 @@ class User < ActiveRecord::Base
   end
 
   def set_user_name
-    self.user_name = name.blank? ? self.id : "#{self.name.parameterize}"
+    self.user_name = name.blank? ? self.id : "#{self.user_name.parameterize}"
   end
 
   def email_required?

@@ -5,11 +5,12 @@
 = simple_form_for [:admin, @expert] do |f|
   %fieldset
     = render "shared/video_form_builder", f:f
-      
+
   %fieldset
     = f.input :email, required: true
     = f.input :first_name
     = f.input :last_name
+    = f.input :user_name
     .string.optional
       = f.label :profile_picture
       = f.input_field :avatar

@@ -63,11 +63,10 @@ class ExpertsController < ApplicationController
 
   def edit_profile
     @profile = @expert.profile
-    @video = @expert.video
-    @from = 'edit_profile'
-
     respond_to do |format|
-      format.js {render 'experts/update'}
+      format.js{
+        render partial: 'dashboard/profile/edit'
+      }
     end
   end
 
@@ -139,6 +138,6 @@ class ExpertsController < ApplicationController
   end
 
   def expert_params
-    params.require(:expert).permit(:first_name, :last_name, :time_zone, :avatar, :subscribe_newsletter, Video::Attributes)
+    params.require(:expert).permit(:first_name, :last_name, :user_name, :time_zone, :avatar, :subscribe_newsletter, Video::Attributes)
   end
 end

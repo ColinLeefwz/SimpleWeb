@@ -23,6 +23,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def validate_user_name
+    user_name = params[:user_name].parameterize
+    duplication = User.user_name_duplicated?(user_name)
+    render partial: 'dashboard/profile/validate_user_name', locals: {duplication: duplication}
+  end
+
   def relationship
     respond_to do |format|
       format.js{
@@ -63,7 +69,7 @@ class UsersController < ApplicationController
           end
           render "shared/update_favorite_star"
         end
-      } 
+      }
     end
   end
 
