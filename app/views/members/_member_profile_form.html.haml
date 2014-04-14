@@ -14,12 +14,12 @@
     .col-sm-12.col-xs-12
       = f.text_field :last_name, :autofocus => true, class: 'form-control'
 
-  .form-group
+  .form-group.user_name
     .col-sm-4.col-xs-4
       = f.label :user_name, class: "control-label"
     .col-sm-12.col-xs-12
       = f.text_field :user_name, :autofocus => true, class: 'form-control'
-      #User-Name-Info
+      %span.uniqueness
 
   .form-group
     .col-sm-4.col-xs-4
@@ -62,3 +62,6 @@
       .col-sm-12.col-xs-12
         = f.submit "update", class: 'btn btn-prodygia dashboard-buttons'
         = link_to "Cancel", activity_stream_member_path(current_user), remote: true, class: 'btn dashboard-buttons'
+
+:javascript
+  user_name_uniqueness()
