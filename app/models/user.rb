@@ -125,6 +125,7 @@ class User < ActiveRecord::Base
     self.email_messages.build(from_name: "#{self.first_name} #{self.last_name}", from_address: "no-reply@prodygia", reply_to: "#{self.email}", invited_type: invited_type)
   end
 
+  ## Peter at 2014-04-15: these code should be extracted out to UserService
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first_or_create do |user|
       user.first_name = auth.extra.raw_info.first_name
