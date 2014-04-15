@@ -53,7 +53,6 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
   after_create :check_newsletter
-  # before_save :set_user_name
   after_destroy :unsubscribe_newsletter
 
   def to_param
@@ -155,10 +154,6 @@ class User < ActiveRecord::Base
   # because we remove the "validatable" model
   def password_required?
     !persisted? || !password.nil? || !password_confirmation.nil?
-  end
-
-  def set_user_name
-    self.user_name = name.blank? ? self.id : "#{self.name.parameterize}"
   end
 
   def email_required?
