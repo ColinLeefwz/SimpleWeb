@@ -66,9 +66,11 @@
     )
 
 prompt_newsletter = ->
-  $("#subscribe-newsletter-modal").modal("show")
-  $("#subscribe_newsletter").on "click", ->
-    $("#subscribe-newsletter-modal").modal("hide")
+  if $.cookie("prompt_newsletter") == "true"
+    $.cookie("prompt_newsletter", false)
+    $("#subscribe-newsletter-modal").modal("show")
+    $("#subscribe_newsletter").on "click", ->
+      $("#subscribe-newsletter-modal").modal("hide")
 
 update_profile_message = ->
   $("input[type='submit']").on 'click', ->
