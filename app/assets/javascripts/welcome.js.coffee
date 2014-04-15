@@ -67,6 +67,8 @@
 
 prompt_newsletter = ->
   $("#subscribe-newsletter-modal").modal("show")
+  $("#subscribe_newsletter").on "click", ->
+    $("#subscribe-newsletter-modal").modal("hide")
 
 update_profile_message = ->
   $("input[type='submit']").on 'click', ->

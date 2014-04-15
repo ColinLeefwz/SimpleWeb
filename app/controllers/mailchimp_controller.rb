@@ -3,10 +3,17 @@ class MailchimpController < ApplicationController
   def subscription
     subscription = UserSubscription.new(current_user, ENV["MAILCHIMP_LIST_ID"])
     subscription.toggle(params[:subscription][:newsletter])
+    
+    from = params[:from]
+    logger.info "from: #{from}"
 
     respond_to do |format|
       format.js{
-        render partial: 'dashboard/newsletter', locals: {message: subscription.message}
+        if from == :landing_page
+          render nothing: true
+        else
+          render partial: 'dashboard/newsletter', locals: {message: subscription.message}
+        end
       }
     end
   end
