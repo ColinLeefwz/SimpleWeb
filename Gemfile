@@ -42,6 +42,8 @@ gem 'font-awesome-sass'
 
 gem 'mailchimp-api'
 
+gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
+
 group :doc do
   gem 'sdoc', require: false
 end
