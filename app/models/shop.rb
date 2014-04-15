@@ -803,7 +803,7 @@ class Shop
   
   #将一些定位无关的商家信息保存到独立的ShopInfo中，为保持兼容性，添加一些代理addr等的方法。
   def info
-    ShopInfo.find_primary(self.id)
+    ShopInfo.find_primary(self.id) || ShopInfo.new
   end
   
   def addr

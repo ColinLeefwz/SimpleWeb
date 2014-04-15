@@ -260,7 +260,7 @@ class PhoneController < ApplicationController
   end
   
   def fake_phone(phone)
-    phone[0,3]=="0001"
+    phone[0,4]=="0001"
   end
   
   
