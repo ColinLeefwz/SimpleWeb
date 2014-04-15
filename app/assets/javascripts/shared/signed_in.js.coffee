@@ -1,4 +1,4 @@
-@sign_in_confirm = ->
+@signed_in = ->
   if get_cookie("signed_in") then true else false
 
 

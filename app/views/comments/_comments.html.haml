@@ -6,3 +6,7 @@
   = render partial: "comments/comment", collection: comments, as: :comment
   = render partial: "comments/form", locals: {parent: commentable}
 
+:javascript
+  bind_sign_in_modal($(".comment-btn"));
+  check_empty_comment();
+
