@@ -140,6 +140,8 @@ class User < ActiveRecord::Base
     user = User.where(email: data["email"], provider: 'linkedin').first_or_create do |user|
       user.first_name = data['first_name']
       user.last_name = data['last_name']
+      user.user_name = "#{user.name} linkedin".parameterize
+      user.email = data['email']
       user.password = Devise.friendly_token[0,20]
     end
   end
