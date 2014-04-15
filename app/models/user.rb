@@ -53,8 +53,10 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
   after_create :check_newsletter
+  after_create :create_activity_stream
   before_save :set_user_name
   after_destroy :unsubscribe_newsletter
+  after_destroy :destroy_activity_stream
 
   def to_param
     user_name
@@ -173,5 +175,14 @@ class User < ActiveRecord::Base
   def unsubscribe_newsletter
     subscription = UserSubscription.new(self, ENV['MAILCHIMP_LIST_ID'])
     subscription.toggle(:destroy) if subscription.subscribed?
+  end
+
+  def create_activity_stream
+    ActivityStream.create user_id: self.id
+  end
+
+  def destroy_activity_stream
+    activity_stream = ActivityStream.where(user_id: self.id).first
+    activity_stream.destroy if activity_stream
   end
 end
