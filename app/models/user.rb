@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
   after_create :check_newsletter
-  before_save :set_user_name
+  # before_save :set_user_name
   after_destroy :unsubscribe_newsletter
 
   def to_param
@@ -128,7 +128,9 @@ class User < ActiveRecord::Base
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first_or_create do |user|
-      user.name = auth.extra.raw_info.name
+      user.first_name = auth.extra.raw_info.first_name
+      user.last_name = auth.extra.raw_info.last_name
+      user.user_name = "#{user.name} facebook".parameterize
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
     end
@@ -156,7 +158,7 @@ class User < ActiveRecord::Base
   end
 
   def set_user_name
-    self.user_name = name.blank? ? self.id : "#{self.user_name.parameterize}"
+    self.user_name = name.blank? ? self.id : "#{self.name.parameterize}"
   end
 
   def email_required?
