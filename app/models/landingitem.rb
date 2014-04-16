@@ -31,7 +31,7 @@ class Landingitem < ActiveRecord::Base
     def all_items
       all_items = []
       where(draft: false).select(:landingable_id, :landingable_type, :updated_at, :num).uniq.order(num: :asc, updated_at: :desc).each do |item|
-        all_items << item.landingable_type.constantize.find(item.landingable_id)
+        all_items << item.fetch_object
       end
       all_items
     end
@@ -40,7 +40,7 @@ class Landingitem < ActiveRecord::Base
       all_items = []
       start = start_point * 12
       where(draft: false).select(:landingable_id, :landingable_type, :updated_at).uniq.order(updated_at: :desc).limit(12).offset(start).each do |item|
-        all_items << item.landingable_type.constantize.find(item.landingable_id)
+        all_items << item.fetch_object
       end
       all_items
     end
@@ -49,6 +49,10 @@ class Landingitem < ActiveRecord::Base
       @max_count = where(draft: false).count
       ((start_point * 12) > @max_count) ? false : true
     end
+  end
+
+  def fetch_object
+    self.landingable_type.constantize.find(self.landingable_id)
   end
 
 end

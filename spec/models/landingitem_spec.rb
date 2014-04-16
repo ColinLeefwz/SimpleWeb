@@ -91,4 +91,11 @@ describe Landingitem do
     end
   end
 
+  describe ".fetch_object" do
+    it "instances the corresponding object" do
+      article
+      expect(Landingitem.first.fetch_object).to eq article
+    end
+  end
+
 end
