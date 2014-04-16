@@ -67,12 +67,12 @@
       <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
 
       <td>
-        <% if shop.lo %>
+        <% if shop.lo &&  !shop.cooperationer? %>
           <a onclick="ajaxunsetlob($(this),<%= shop._id %>, false, '<%= shop.name %>')" >取消坐标</a>
         <% end %>
       </td>
       <td>
-        <% unless shop.del %>
+        <% if !shop.del && !shop.cooperationer? %>
           <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >标记删除</a>
         <% end %>
       </td>
@@ -107,8 +107,8 @@
   function ajaxdel(obj,shop_id,no_confirm, shop_name){
     text = "确定删除商家 "+shop_name+'？'
     if(no_confirm || confirm(text))
-      $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
-        obj.parent().parent().hide()
+      $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function(data) {
+        data.text ? obj.replaceWith(data.text) : obj.parent().parent().hide()
       });
   }
 
@@ -128,8 +128,8 @@
   function ajaxunsetlob(obj,shop_id,no_confirm, shop_name){
     text = "确定取消"+shop_name+'的坐标？'
     if(no_confirm || confirm(text))
-      $.post("/admin_shops/ajaxunsetlob",{ shop_id:shop_id}, function() {
-        obj.replaceWith("已取消")
+      $.post("/admin_shops/ajaxunsetlob",{ shop_id:shop_id}, function(data) {
+        obj.replaceWith(data.text || '已取消')
       });
   }
 

@@ -114,6 +114,11 @@ class Shop
       nil
     end
   end
+
+  #是否是合作商家, 开通密码或者即立方就是合作商家
+  def cooperationer?
+    !self.password.blank? || self.mweb
+  end
   
   def photos
     Photo.where({room: self.id.to_i.to_s, hide: nil})
