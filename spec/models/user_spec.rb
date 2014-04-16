@@ -61,28 +61,6 @@ describe User do
     end
   end
 
-  describe ".follow" do
-    it "follows the followed one" do
-      peter.follow allen
-      expect(peter.reload.followed_users).to include allen
-    end
-  end
-
-  describe ".unfollow" do
-    it "un-follows the followed one" do
-      peter.followers << allen
-      allen.unfollow peter
-      expect(peter.reload.followers).not_to include allen
-    end
-
-    it "just unfollows the one" do
-      allen.followed_users << [peter, sameer, alex]
-      allen.unfollow peter
-      expect(allen.reload.followed_users).to include alex
-      expect(allen.reload.followed_users).to include sameer
-      expect(peter.reload.followers).not_to include allen
-    end
-  end
 
   describe ".build_refer_message" do 
     context "member can build an email message" do

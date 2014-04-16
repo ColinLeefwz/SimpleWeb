@@ -33,9 +33,7 @@ favorite_click = ->
 $(document).ready ->
   favorite_click()
   change_star_class()
-$(document).on 'page:load', ->
-  favorite_click()
-  change_star_class()
+
 $(document).on 'ajax:success', ->
   favorite_click()
   change_star_class()

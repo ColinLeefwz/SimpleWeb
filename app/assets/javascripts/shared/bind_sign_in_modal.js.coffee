@@ -2,3 +2,4 @@
   if not signed_in()
     target.on "click", ->
       $("#sign-in-modal").modal()
+
