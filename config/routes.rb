@@ -93,10 +93,8 @@ Prodygia::Application.routes.draw do
   end
 
   controller :users do
-    get 'relationship/:the_followed' => :relationship, as: :relationship
+    get 'following/:target_id' => :following, as: :following
     get 'subscirbe/:item_id' => :subscribe, as: :subscribe
-    get 'following'
-    get 'followers'
   end
 
   controller :mailchimp do

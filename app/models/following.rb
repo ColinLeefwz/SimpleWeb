@@ -1,13 +1,8 @@
 class Following < ActiveRecord::Base
-  validates :the_followed, :follower, presence: true
-  validates :the_followed, :follower, numericality: { only_integer: true }
-  validate :duplicate
 
-  def duplicate
-    user = User.find follower
-    if user.follow? the_followed
-      errors.add(:duplicate, "you can't follow someone you already followed")
-    end
+  def self.follow?(user, target)
+    following = Following.where(follower_id: user.id, followed_id: target.id).first
+    following ? true : false
   end
 
 end
