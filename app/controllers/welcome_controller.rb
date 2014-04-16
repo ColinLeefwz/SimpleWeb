@@ -7,13 +7,14 @@ class WelcomeController < ApplicationController
     # @items = Landingitem.all_index_items(0)
     # increase_cookie
 
+    @items = Landingitem.all_items
     ## Peter at 2014-03-20: keep them for a while to make a comparation
-    video_interviews = VideoInterview.includes(:expert)
-    annoucements = Announcement.includes(:expert)
-    articles = Article.includes(:expert).where(draft: false)
-    courses = Course.all_without_staff
-    collection = video_interviews + annoucements + articles + courses
-    @items = collection.sort{|x, y| y.updated_at <=> x.updated_at}
+    # video_interviews = VideoInterview.includes(:expert)
+    # annoucements = Announcement.includes(:expert)
+    # articles = Article.includes(:expert).where(draft: false)
+    # courses = Course.all_without_staff
+    # collection = video_interviews + annoucements + articles + courses
+    # @items = collection.sort{|x, y| y.updated_at <=> x.updated_at}
     @show_category = true
   end
 

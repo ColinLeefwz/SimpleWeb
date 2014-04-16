@@ -23,13 +23,13 @@ describe Landingitem do
     end
 
     it "created one after creating a new Course" do
-      course = create :course, title: "first course", description: "course description", experts: [sameer, alex], categories: ["culture"]
+      course = create :course, title: "first course", description: "course description", experts: [sameer, alex], categories: [culture]
       expect(Landingitem.count).to eq 2
       expect(Landingitem.first.expert).to eq sameer
     end
 
     it "will not add one after create an Staff course" do
-      course = create :course, title: "first course", description: "course description", experts: [staff], categories: ["culture"]
+      course = create :course, title: "first course", description: "course description", experts: [staff], categories: [culture]
       expect(Landingitem.count).to eq 0
     end
   end
@@ -43,11 +43,20 @@ describe Landingitem do
 
     it "updated the draft attributes" do
       User.delete_all
-      ar = create(:article, title: "draft one", expert: sameer, categories: ["culture"], draft: true)
+      ar = create(:article, title: "draft one", expert: sameer, categories: [culture], draft: true)
       ar.update_attributes draft: false
       expect(Landingitem.last.draft).to be_false
     end
 
+  end
+
+  describe "#all_items" do
+    it "lists all items showing in landing page" do
+      article
+      video_interview
+      announcement
+      expect(Landingitem.all_items).to match_array([announcement, video_interview, article])
+    end
   end
 
   describe "#all_index_items" do
@@ -59,13 +68,13 @@ describe Landingitem do
     end
 
     it "limits the count to 12" do
-      article_list = create_list(:article, 14, title: "article", expert: sameer, categories: ["culture"])
-      video_interview_list = create_list(:video_interview, 14, expert: sameer, categories: ["culture"])
+      article_list = create_list(:article, 14, title: "article", expert: sameer, categories: [culture])
+      video_interview_list = create_list(:video_interview, 14, expert: sameer, categories: [culture])
       expect(Landingitem.all_index_items(0).count).to eq 12
     end
 
     it "only shows one if there're two same courses" do
-      course = create :course, title: "first course", description: "course description", experts: [sameer, alex], categories: ["culture"]
+      course = create :course, title: "first course", description: "course description", experts: [sameer, alex], categories: [culture]
       expect(Landingitem.all_index_items(0).count).to eq 1
     end
   end
