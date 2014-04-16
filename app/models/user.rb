@@ -101,18 +101,6 @@ class User < ActiveRecord::Base
     record.destroy if record
   end
 
-  ## methods for follow users
-  def follow? (other_user)
-    self.followed_users.include? (other_user)
-  end
-
-  def follow(followed_user)
-    self.followed_users << followed_user
-  end
-
-  def unfollow(followed_user)
-    self.followed_users.delete followed_user
-  end
 
   def enrolled?(item)
     record = Enrollment.find_by user_id: self.id, enrollable_id: item.id, enrollable_type: item.class.name

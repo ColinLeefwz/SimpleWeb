@@ -29,29 +29,19 @@ class UsersController < ApplicationController
     render partial: 'dashboard/profile/validate_user_name', locals: {duplication: duplication}
   end
 
-  def relationship
+
+  def following
+    target = User.find params[:target_id]
+
+    user_following = UserFollowing.new(current_user, target)
+    user_following.toggle
     respond_to do |format|
       format.js{
-        the_followed_id = params[:the_followed]
-        followed_user = User.find the_followed_id
-
-        unless current_user.blank?
-          if current_user.try(:follow?, followed_user)
-            current_user.unfollow(followed_user)
-          else
-            current_user.follow(followed_user)
-          end
-          render "shared/update_favorite_star"
-        end
+        render partial: 'following', locals: {target: target}
       }
     end
   end
 
-  def following
-  end
-
-  def followers
-  end
 
   def subscribe
     respond_to do |format|
