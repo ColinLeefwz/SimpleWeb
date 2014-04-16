@@ -1,7 +1,7 @@
 //$(document)放置的是滚动导航栏效果
 $(document).ready(function(){
 	var zb=0,timer;	
-	$("#LeftArrow").mousedown(function(){
+	$("#RightArrow").mousedown(function(){
 		clearInterval(timer);
 		timer=setInterval(function(){
 			if((558-ul_w)>0){clearInterval(timer);return false;}
@@ -10,7 +10,7 @@ $(document).ready(function(){
 			$("#B17LC ul").css("margin-left",-zb+"px");
 		},1);
 	});
-	$("#RightArrow").mousedown(function(){
+	$("#LeftArrow").mousedown(function(){
 		clearInterval(timer);
 		timer=setInterval(function(){
 			if((558-ul_w)>0){clearInterval(timer);return false;}
