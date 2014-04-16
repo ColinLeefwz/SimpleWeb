@@ -38,11 +38,13 @@ class ExpertsController < ApplicationController
     # @items = @expert.load_landingitems(0)
     # increase_cookie
 
-    video_interviews = @expert.video_interviews
-    courses = @expert.courses
-    articles = @expert.articles.where(draft: false)
-    @items = video_interviews + courses + articles
+    @items = @expert.all_profile_items
     @profile = @expert.profile
+    # video_interviews = @expert.video_interviews
+    # courses = @expert.courses
+    # articles = @expert.articles.where(draft: false)
+    # @items = video_interviews + courses + articles
+    # @profile = @expert.profile
   end
 
   def load_more
