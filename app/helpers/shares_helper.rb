@@ -14,11 +14,25 @@ module SharesHelper
   end
 
   def model_count(klazz)
-    klazz.constantize.count
+    if klazz == "Course"
+      if current_user.is_a? Expert
+        return Course.all.count
+      else
+        return Course.all_without_staff.count
+      end
+    elsif klazz == "Article"
+      return Article.all_draft.count
+    else
+      return klazz.constantize.count
+    end
   end
 
   def all_count
-    all_count = Article.count + VideoInterview.count + Announcement.count
+    all_count = 0
+    %w{Article VideoInterview Announcement Course}.each do |klazz|
+      all_count += model_count(klazz)
+    end
+    all_count
   end
 
 end

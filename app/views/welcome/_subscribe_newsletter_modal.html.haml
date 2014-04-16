@@ -1,0 +1,17 @@
+#subscribe-newsletter-modal.modal.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h4#myModalLabel.modal-title Subscribe Newsletter
+      .modal-body
+        = "Thanks for signing up. We've also signed you up for the newsletter but if you don't want to be signed up for that please uncheck the box below."
+        = form_for :subscription, url: subscription_path(from: :landing_page), class: 'form', remote: true do |f|
+          .form-group
+            = f.check_box :newsletter, { checked: true }, 'create', 'destroy'
+            = f.label "subscribe newsletter"
+          .form-group.pull-right
+            = f.submit class: "btn btn-primary", id: "subscribe_newsletter"
+            %button.btn.btn-default{ data: { dismiss: 'modal' } }
+              Close
+          .clearfix

@@ -22,19 +22,6 @@ ActiveAdmin.register Article do
 
   form partial: 'form'
 
-  # form html: {multipart: true} do |f|
-  #   f.inputs "Articles" do
-  #     f.input :title
-  #     f.input :expert
-  #     f.input :always_show
-  #     # f.input :cover, as: :file # , hint: f.template.image_tag(f.object.cover.url)
-  #     # f.input :description, :input_html => { :class => 'ckeditor' }
-  #     f.input :categories, as: :check_boxes, collection: Category.pluck(:name)
-  #   end
-  #   f.actions
-  # end
-
-
   show do |article|
     attributes_table do
       row :title
