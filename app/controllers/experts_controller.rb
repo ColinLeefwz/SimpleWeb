@@ -1,6 +1,6 @@
 class ExpertsController < ApplicationController
   load_and_authorize_resource except: [:profile, :load_more]
-  before_filter :set_expert, only: [:profile, :load_more]
+  before_action :set_expert, only: [:profile, :load_more]
 
   def activity_stream
     @from = 'activity_stream'
