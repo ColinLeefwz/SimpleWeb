@@ -18,12 +18,12 @@ class User < ActiveRecord::Base
   has_many :subscribed_video_interviews, through: :subscriptions, source: :subscribable, source_type: "VideoInterview"
   has_many :subscribed_announcements, through: :subscriptions, source: :subscribable, source_type: "Announcement"
 
-  # User follows User
-  has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
-  has_many :followers, through: :be_followed, class_name: "User"
+  # follow
+  has_many :followed_records, class_name: 'Following', foreign_key: "followed_id"   # user is followed by others
+  has_many :following_records, class_name: "Following", foreign_key: "follower_id"    # user follows someone else
 
-  has_many :following, class_name: "Relationship", foreign_key: "follower_id"
-  has_many :followed_users, through: :following, class_name: "User"
+  has_many :followers, through: :followed_records, class_name: "User"
+  has_many :followings, through: :following_records, class_name: "User"
 
   # enrollments and orders
   has_many :enrollments
