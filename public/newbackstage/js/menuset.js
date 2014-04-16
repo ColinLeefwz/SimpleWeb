@@ -189,7 +189,7 @@ function Relist_Menu(){									//重新排版菜单
         html += ('<a class="mlink" onClick="OpenPlane(this,\'parent\',sort)">'+val.name+ '</a>');
         html +='<span class="menu_opr">';  
         if(!val.type){
-            html += '<a class="add_gray" rel="'+ index +'" onClick="OpenPlane(this,\'parent\',sort)">添加</a>';
+            html += '<a class="add_gray" rel="'+ index +'" onClick="InfoDiv(\'\',\''+index+'\')">添加</a>';
         }  
         html += '<a class="edit_gray" rel="'+ index +'" onclick="InfoDiv(\'\',\''+ index+'\')" >编辑</a>'
         html += '<a class="del_gray"  rel="'+ index +'" onclick="DelDiv(\''+index+'\')" >删除</a>'
