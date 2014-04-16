@@ -186,8 +186,8 @@ function Relist_Menu(){									//重新排版菜单
         html += '<dl class="ui-sortable-disabled">';
         html += '<dt id="menu_' + index +'">';
         html += '<i class="downarrow"></i>';
-        html += '<a class="mlink" onClick="OpenPlane(this,\'parent\',sort)">';
-        html += val.name + '</a><span class="menu_opr">';  
+        html += ('<a class="mlink" onClick="OpenPlane(this,\'parent\',sort)">'+val.name+ '</a>');
+        html +='<span class="menu_opr">';  
         if(!val.type){
             html += '<a class="add_gray" rel="'+ index +'" onClick="OpenPlane(this,\'parent\',sort)">添加</a>';
         }  
@@ -198,13 +198,14 @@ function Relist_Menu(){									//重新排版菜单
         $(val.sub_button).each(function(sub_index, sub_val){
             html += '<dd id="subMenu_menu_'+ index + '_'+ sub_index +'">';
             html += '<i class="point">●</i>';
-            html += '<a class="mlink" onClick="OpenPlane(this,\'sub\',sort)>'+ sub_val.name +'</a>';
+            html += '<a class="mlink" onClick="OpenPlane(this,\'sub\',sort)">'+ sub_val.name +'</a>';
             html += '<span class="menu_opr">';
             html += '<a class="edit_gray" rel="'+ index +','+ sub_index +'" onclick="InfoDiv(\''+sub_val.name+'\',\''+index+','+sub_index+'\')" >编辑</a>';
             html += '<a class="del_gray" rel="'+ index +','+ sub_index +'" onclick="DelDiv(\''+index+','+sub_index+'\')">删除</a>';
             html += '<a style="display:none" class="sort_gray">排序</a></span></dd>';
         })
          html += "</dl>";
+		 
     })
     $('dl').remove();
     $('#MenuList').append(html);
@@ -213,7 +214,8 @@ function OpenPlane(obj,str,sort) {							//打开右侧面板
 	if(sort=="nosort"){return false;}
 	$(".mlink").parent().removeClass("selected");
 	$(obj).parent().addClass("selected");
-	var strs=$(obj).parent().next().html();
+	var strs=$(obj).parent().next().text();
+
 	$(".box17con").addClass("none");
 	if(str=="parent"&&strs!=""){
 		$("#Box17Con2").removeClass("none");
