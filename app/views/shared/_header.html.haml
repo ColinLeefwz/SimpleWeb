@@ -1,21 +1,21 @@
 - @categories = Category.all
 .navbar.navbar-default.shadow
-  .col-md-8.col-sm-8.col-xs-8
+  .col-md-4.col-sm-4.col-xs-4
     .navbar-header
       .navbar-left
         #logo_container
           #logo
             = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
 
-  .col-sm-4.col-xs-4
+  .col-md-8.col-sm-8.col-xs-8
     %button.navbar-toggle{"data-target" => "#navbar-collapse1", "data-toggle" => "collapse", :type => "button"}
       %span.sr-only Toggle navigation
       %span.icon-bar
       %span.icon-bar
       %span.icon-bar
-  .col-md-4.col-sm-4.col-xs-4
-    #navbar-collapse1.collapse.navbar-collapse
-      = render 'shared/user_session'
+    .pull-right
+      #navbar-collapse1.collapse.navbar-collapse
+        = render 'shared/user_session'
   .tagline
     Connect with experts online to learn about China
 
