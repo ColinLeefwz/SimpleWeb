@@ -53,7 +53,6 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
   after_create :check_newsletter
-  before_save :set_user_name
   after_destroy :unsubscribe_newsletter
 
   def to_param
@@ -126,9 +125,12 @@ class User < ActiveRecord::Base
     self.email_messages.build(from_name: "#{self.first_name} #{self.last_name}", from_address: "no-reply@prodygia", reply_to: "#{self.email}", invited_type: invited_type)
   end
 
+  ## Peter at 2014-04-15: these code should be extracted out to UserService
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first_or_create do |user|
-      user.name = auth.extra.raw_info.name
+      user.first_name = auth.extra.raw_info.first_name
+      user.last_name = auth.extra.raw_info.last_name
+      user.user_name = "#{user.name} facebook".parameterize
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
     end
@@ -139,6 +141,8 @@ class User < ActiveRecord::Base
     user = User.where(email: data["email"], provider: 'linkedin').first_or_create do |user|
       user.first_name = data['first_name']
       user.last_name = data['last_name']
+      user.user_name = "#{user.name} linkedin".parameterize
+      user.email = data['email']
       user.password = Devise.friendly_token[0,20]
     end
   end
@@ -153,10 +157,6 @@ class User < ActiveRecord::Base
   # because we remove the "validatable" model
   def password_required?
     !persisted? || !password.nil? || !password_confirmation.nil?
-  end
-
-  def set_user_name
-    self.user_name = name.blank? ? self.id : "#{self.user_name.parameterize}"
   end
 
   def email_required?
