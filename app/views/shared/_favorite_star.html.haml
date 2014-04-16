@@ -1,3 +1,3 @@
 %div{class: favorite_class(method, object)}
   - class_name = favorite_class(method, object, "-icon")
-  = link_to image_tag("favorite.png", class: "#{class_name} tooltips", title: decide_tip_title(method, object), data:{placement: "bottom", type: get_favorite_type(object)}), link_path, remote: true
+  = link_to image_tag("star_purple.png", class: "#{class_name} tooltips", title: decide_tip_title(method, object), data:{placement: "bottom", type: get_favorite_type(object)}), link_path, remote: true

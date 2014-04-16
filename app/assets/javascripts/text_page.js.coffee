@@ -2,9 +2,9 @@ change_star_class = ->
   favorite_imgs = $("img.favorite-icon")
   for img_icon in favorite_imgs
     if $(img_icon).hasClass("solid-star-icon")
-      $(img_icon).attr("src", "/assets/favorite.png")
+      $(img_icon).attr("src", "/assets/star_purple.png")
     else
-      $(img_icon).attr("src", "/assets/favorite_unselected.png")
+      $(img_icon).attr("src", "/assets/star_hollow.png")
     
 favorite_click = ->
   $("img.favorite-icon").unbind "click"
