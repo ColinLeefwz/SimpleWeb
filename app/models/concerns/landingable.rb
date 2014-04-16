@@ -6,6 +6,11 @@ module Landingable
     after_update :update_to_landingitems
   end
 
+  def update_landing_order(order=nil)
+    landing_item = Landingitem.find_by(landingable_id: self.id, landingable_type: self.class.name)
+    landing_item.update_attributes num: order
+  end
+
   protected
   def added_to_landingitems
     Landingitem.add_record(self)

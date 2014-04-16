@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401122629) do
+ActiveRecord::Schema.define(version: 20140416070245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(version: 20140401122629) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "activity_streams", force: true do |t|
+    t.integer  "activity_streamable_id"
+    t.string   "activity_streamable_type"
+    t.string   "action"
+    t.integer  "operation_id"
+    t.string   "operation_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "announcements", force: true do |t|
     t.string   "title"
@@ -67,7 +77,6 @@ ActiveRecord::Schema.define(version: 20140401122629) do
     t.boolean  "draft",              default: false
     t.string   "time_zone",          default: "UTC"
     t.boolean  "canceled",           default: false
-    t.string   "content_type"
   end
 
   add_index "articles", ["categories"], name: "index_articles_on_categories", using: :gin
@@ -211,6 +220,7 @@ ActiveRecord::Schema.define(version: 20140401122629) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "draft",            default: false
+    t.integer  "num"
   end
 
   add_index "landingitems", ["expert_id"], name: "index_landingitems_on_expert_id", using: :btree
@@ -283,6 +293,16 @@ ActiveRecord::Schema.define(version: 20140401122629) do
 
   add_index "sections", ["chapter_id"], name: "index_sections_on_chapter_id", using: :btree
 
+  create_table "sessions", force: true do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+
   create_table "static_pages", force: true do |t|
     t.string   "title"
     t.text     "content"
@@ -336,6 +356,7 @@ ActiveRecord::Schema.define(version: 20140401122629) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "time_zone",              default: "UTC"
+    t.string   "subdomain"
     t.string   "user_name"
     t.boolean  "subscribe_newsletter",   default: false
   end

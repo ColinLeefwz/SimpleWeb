@@ -45,6 +45,7 @@ class Expert < Member
   end
 
   def all_profile_items
+    ## Peter at 2014-04-16: could be extracted out to a service class
     all_items = []
     self.landingitems.where(draft: false).each do |item|
       all_items << item.landingable_type.constantize.find(item.landingable_id)
