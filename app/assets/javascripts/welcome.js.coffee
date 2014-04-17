@@ -65,10 +65,18 @@
       )
     )
 
+prompt_newsletter = ->
+  if $.cookie("prompt_newsletter") == "true"
+    $.cookie("prompt_newsletter", false)
+    $("#subscribe-newsletter-modal").modal("show")
+    $("#subscribe_newsletter").on "click", ->
+      $("#subscribe-newsletter-modal").modal("hide")
+
 update_profile_message = ->
   $("input[type='submit']").on 'click', ->
     $("input[type='file']").css("width", "95px")
 
 $(document).ready ->
   load_sublime()
+  prompt_newsletter()
 

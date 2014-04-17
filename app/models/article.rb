@@ -29,6 +29,12 @@ class Article < ActiveRecord::Base
     true
   end
 
+  class << self
+    def all_draft
+      Article.where.not(draft: 'true').uniq
+    end
+  end
+
   private
   # validation
   def empty_categories
