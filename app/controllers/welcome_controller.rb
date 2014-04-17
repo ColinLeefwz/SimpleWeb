@@ -7,11 +7,7 @@ class WelcomeController < ApplicationController
     # @items = Landingitem.all_index_items(0)
     # increase_cookie
 
-    if current_user.is_a? Expert
-      @items = LandingitemQuery.all_items
-    else
-      @items = LandingitemQuery.all_without_staff
-    end
+    @items = current_user.is_a?(Expert) ? LandingitemQuery.all_items : LandingitemQuery.all_without_staff
 
     @show_category = true
   end
