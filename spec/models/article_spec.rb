@@ -5,6 +5,21 @@ describe Article do
 
   subject {create(:article, expert: sameer, categories: [culture])}
 
+  describe "#non_draft" do
+    # before :each do
+    #   @article = Article.new
+    #   @article.save
+    #   subject.save
+    # end
+    it "returns false" do
+      expect(subject.draft).to be_false
+    end
+
+    it "should include the subject " do
+      expect(Article.non_draft).to include(subject)
+    end
+  end
+
   describe "#producers" do
     it "returns a string containing expert name" do
       expect(subject.producers).to eq "by sameer karim"
