@@ -7,9 +7,9 @@ class AroundmeController < ApplicationController
   caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
 
   def my4
-    arr = $redis.zrange("LL3#{params[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id)}
-    arr.uniq!
-    ret = arr.find_all{|x| x!=nil}.map {|x| x.safe_output_with_users}
+    arr = $redis.zrange("LL3#{params[:user_id]}",0,3,withscores:true)
+    arr = arr.map{|x| [Shop.find_by_id(x[0]),x[1].to_i]}.find_all{|x| x[0]!=nil}
+    ret = arr.map {|x| x[0].safe_output_with_users.merge!({time:Checkin.time_desc(x[1]), timei:x[1]})}
     render :json =>  ret.to_json
   end
   

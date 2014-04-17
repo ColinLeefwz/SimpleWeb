@@ -223,5 +223,20 @@ class ShopController < ApplicationController
     render :json => photos.map {|p| p.output_hash_with_username }.to_json
   end
   
+  def banners
+    ret = Photo.where({}).sort({_id:1}).limit(5).map {|x| x.logo_thumb_hash}
+    #TODO：Banner管理
+    render :json => ret.to_json
+  end
+  
+  def subs
+    shop = Shop.find_by_id(params[:id])
+    if shop.nil || shop.shops.nil?
+      render :json => [].to_json
+    else
+      render :json => shop.shops.map{|x| x.safe_output}.to_json
+    end
+  end
+  
 
 end
