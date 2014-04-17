@@ -50,7 +50,7 @@ class AnswerController < ApplicationController
   end
   
   def at3
-    if is_kx_user?(params[:from]) || User.is_fake_user?(params[:from]) || params[:from]==$gfuid
+    if User.is_kx?(params[:from]) || User.is_fake_user?(params[:from]) || params[:from]==$gfuid
       txt = params["msg"]
       attrs = " NOLOG='1' NOPUSH='1' "
       ext = nil
@@ -120,7 +120,7 @@ class AnswerController < ApplicationController
       want(uid,int)
     elsif  txt=="?" || txt=="？"
       faq(uid)
-    elsif txt=="ip" && is_kx_user?(uid) 
+    elsif txt=="ip" && User.is_kx?(uid) 
       Xmpp.send_chat($gfuid, uid, "Xmpp服务器ip：#{read_ip}", $uuid.generate, " NOLOG='1' NOPUSH='1' ")      
     elsif txt.downcase=="hi"
       Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"hi😄")

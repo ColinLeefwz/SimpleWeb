@@ -113,7 +113,7 @@ class ApplicationController < ActionController::Base
   end
   
   def is_session_user_kx
-    is_kx_user?(session[:user_id].to_s)
+    User.is_kx?(session[:user_id].to_s)
   end
 
   def is_co_user?(uid)
