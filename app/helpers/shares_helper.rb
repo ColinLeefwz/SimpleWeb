@@ -21,7 +21,7 @@ module SharesHelper
         return Course.all_without_staff.count
       end
     elsif klazz == "Article"
-      return Article.all_draft.count
+      return Article.non_draft.count
     else
       return klazz.constantize.count
     end
