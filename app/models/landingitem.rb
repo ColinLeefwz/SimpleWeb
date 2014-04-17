@@ -26,14 +26,6 @@ class Landingitem < ActiveRecord::Base
       Landingitem.find_by(landingable_type: obj.class.name, landingable_id: obj.id).update_attributes(updated_at: obj.updated_at, draft: obj.draft)
     end
 
-    # def all_items
-    #   all_items = []
-    #   where(draft: false).select(:landingable_id, :landingable_type, :updated_at, :num).uniq.order(num: :asc, updated_at: :desc).each do |item|
-    #     all_items << item.fetch_object
-    #   end
-    #   all_items
-    # end
-
     def all_index_items(start_point)
       all_items = []
       start = start_point * 12

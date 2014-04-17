@@ -49,28 +49,6 @@ describe Landingitem do
     end
   end
 
-  describe "#all_items" do
-    it "lists all items showing in landing page" do
-      [article, video_interview, announcement]
-      expect(Landingitem.all_items).to match_array([announcement, video_interview, article])
-    end
-
-    it "orders the items by attribute 'num'" do
-      article.update_landing_order(2)
-      video_interview.update_landing_order(1)
-      announcement.update_landing_order(3)
-      expect(Landingitem.all_items).to eq [video_interview, article, announcement]
-    end
-
-    it "puts un-ordered item to the last" do
-      new_article = create(:article, expert: sameer, categories: [culture])
-      article.update_landing_order(2)
-      video_interview.update_landing_order(1)
-      announcement.update_landing_order(3)
-      expect(Landingitem.all_items).to eq [video_interview, article, announcement, new_article]
-    end
-  end
-
   describe "#all_index_items" do
     it "lists all items shown only in landing page" do
       article
