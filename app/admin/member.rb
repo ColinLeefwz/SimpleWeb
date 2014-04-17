@@ -2,7 +2,7 @@ ActiveAdmin.register Member do
 
   index do
     column :id
-    column :name do |member| 
+    column :name do |member|
       link_to member.name, admin_member_path(member)
     end
     column :user_name
@@ -33,7 +33,7 @@ ActiveAdmin.register Member do
     end
 
     def permitted_params
-      params.permit :id, member: [:id, :name, :avatar, :first_name, :last_name, :password, :email, :time_zone]
+      params.permit :id, member: [:id, :name, :avatar, :first_name, :last_name, :user_name, :password, :email, :time_zone]
     end
   end
 
