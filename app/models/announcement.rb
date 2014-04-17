@@ -3,6 +3,7 @@ class Announcement < ActiveRecord::Base
   include ActAsCategoriable
   include Landingable
   include Searchable
+  include Stream::ContentActivity
 
   belongs_to :expert
   validates :expert, presence: true

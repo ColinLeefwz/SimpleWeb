@@ -3,6 +3,7 @@ class Course < ActiveRecord::Base
   include ActAsCategoriable
   include Landingable
   include Searchable
+  include Stream::ContentActivity
 
   validates :title, presence: true
   validates :price, numericality: {greater_than_or_equal_to: 0}

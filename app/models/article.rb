@@ -3,6 +3,7 @@ class Article < ActiveRecord::Base
   include ActAsCategoriable
   include Landingable
   include Searchable
+  include Stream::ContentActivity
 
   # ----- Associations -----
   belongs_to :expert
