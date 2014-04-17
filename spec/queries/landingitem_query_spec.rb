@@ -6,21 +6,21 @@ describe LandingitemQuery do
   describe "#all_items" do
     it "lists all items, including Staff's" do
       [article, video_interview, announcement, course_staff, first_course]
-      expect(LandingitemQuery.all_items).to match_array([article, video_interview, announcement, course_staff, first_course])
+      expect(LandingitemQuery.new.all_items).to match_array([article, video_interview, announcement, course_staff, first_course])
     end
   end
 
   describe "#all_without_staff" do
     it "lists all items without Staff's courses" do
       [article, video_interview, announcement, course_staff, first_course]
-      expect(LandingitemQuery.all_without_staff).to match_array([article, video_interview, announcement, first_course])
+      expect(LandingitemQuery.new.all_without_staff).to match_array([article, video_interview, announcement, first_course])
     end
   end
 
   describe "private #get_all_raw_data" do
     it "gets all raw Landingitem data" do
       [article, video_interview, announcement, course_staff, first_course]
-      expect(LandingitemQuery.send(:get_all_raw_data).count).to eq 5
+      expect(LandingitemQuery.new.send(:get_all_raw_data).count).to eq 5
     end
 
     context "order for items" do
@@ -31,12 +31,12 @@ describe LandingitemQuery do
       end
 
       it "orders the items by attribute 'num'" do
-        expect(LandingitemQuery.send(:get_all_raw_data).map(&:fetch_object)).to eq [video_interview, article, announcement]
+        expect(LandingitemQuery.new.send(:get_all_raw_data).map(&:fetch_object)).to eq [video_interview, article, announcement]
       end
 
       it "puts un-ordered item to the last" do
         new_article = create(:article, expert: sameer, categories: [culture])
-        expect(LandingitemQuery.send(:get_all_raw_data).map(&:fetch_object)).to eq [video_interview, article, announcement, new_article]
+        expect(LandingitemQuery.new.send(:get_all_raw_data).map(&:fetch_object)).to eq [video_interview, article, announcement, new_article]
       end
     end
   end
