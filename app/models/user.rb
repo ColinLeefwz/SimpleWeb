@@ -58,8 +58,6 @@ class User < ActiveRecord::Base
   after_create :create_activity_stream
   after_destroy :destroy_activity_stream
 
-  before_save :set_user_name
-
   def to_param
     user_name
   end
