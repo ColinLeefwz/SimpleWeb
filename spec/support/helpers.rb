@@ -41,6 +41,7 @@ def helper_objects
                        description: 'Show you China road map', categories: [culture]}
   #courses
   let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer], categories: [culture] }
+  let(:course_staff) { create :course, title: "staff course", description: "course description", experts: [staff], categories: [culture] }
 
   #chapters
   let(:first_chapter) { create :chapter, title: "first chapter", description: "chapter description", course: first_course }

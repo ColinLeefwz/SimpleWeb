@@ -28,9 +28,9 @@ describe Landingitem do
       expect(Landingitem.first.expert).to eq sameer
     end
 
-    it "will not add one after create an Staff course" do
-      course = create :course, title: "first course", description: "course description", experts: [staff], categories: [culture]
-      expect(Landingitem.count).to eq 0
+    it "will add one after create an Staff course" do
+      course_staff
+      expect(Landingitem.count).to eq 1
     end
   end
 
