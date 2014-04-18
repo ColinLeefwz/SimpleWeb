@@ -16,14 +16,14 @@ module SharesHelper
   def model_count(klazz)
     if klazz == "Course"
       if current_user.is_a? Expert
-        return Course.all.count
+        Course.all.count
       else
-        return Course.all_without_staff.count
+        Course.all_without_staff.count
       end
     elsif klazz == "Article"
-      return Article.non_draft.count
+      Article.non_draft.count
     else
-      return klazz.constantize.count
+      klazz.constantize.count
     end
   end
 
