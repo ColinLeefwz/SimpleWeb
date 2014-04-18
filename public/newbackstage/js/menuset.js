@@ -251,7 +251,8 @@ function OpenPlane(obj,str,sort,type2,url) {							//打开右侧面板
 		return false
 	}
 }
-function HttPLink(option={}){										//打开链接编辑页
+function HttPLink(option){										//打开链接编辑页
+	option = option || {}
 	$(".box17con").addClass("none");
 	$("#Box17Con4").removeClass("none");
 	if(option.no_action){
@@ -261,7 +262,8 @@ function HttPLink(option={}){										//打开链接编辑页
 	}
 
 }
-function PhoneLink(option={}){										//打开手机编辑页
+function PhoneLink(option){										//打开手机编辑页
+	option = option || {}
 	$(".box17con").addClass("none");
 	$("#Box17Con5").removeClass("none");
 	if(option.no_action){
@@ -271,7 +273,8 @@ function PhoneLink(option={}){										//打开手机编辑页
 		$('#B17LC li').first().click();
 	}
 }
-function APPLink(option={}){											//打开APP应用页
+function APPLink(option){											//打开APP应用页
+	option = option || {}
 	$(".box17con").addClass("none");
 	$("#Box17Con7").removeClass("none");
 	if(option.no_action){
