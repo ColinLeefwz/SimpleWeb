@@ -10,8 +10,8 @@
   <%= link_to '设置流水号', "/admin_shops/set_id2?id=#{@shop.id}"  unless @shop.password.blank? %>
   <%= link_to('加权', "/admin_shops/upgrade_v?id=#{@shop.id}") %>
   <%= link_to('编辑', "/admin_shops/edit?id=#{@shop.id}") %>
-  <%= link_to('标记删除', "/admin_shops/del?id=#{@shop.id}")  if !@shop.cooperationer? %>
-
+  <%= link_to('标记删除', "/admin_shops/del?id=#{@shop.id}")  if !@shop.cooperationer? && @shop.del.blank? %>
+  <%= link_to('取消标记删除', "/admin_shops/undel?id=#{@shop.id}")  if @shop.del %>
   <br/>
 
   <%  if @shop.seller  %>
