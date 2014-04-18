@@ -23,7 +23,6 @@ class EmailMessage < ActiveRecord::Base
     message_from_name = "<p>#{self.from_name.titleize}</p>"
     self.message = [message_content, message_from_name].join
 
-    self.from_name = (type == "expert") ? "Alessandro" : "Nicolas"
     self.from_address = "no-reply@prodygia.com"
     self.reply_to = "no-reply@prodygia.com"
   end

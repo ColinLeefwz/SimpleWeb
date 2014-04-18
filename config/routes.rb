@@ -24,9 +24,10 @@ Prodygia::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
-  get "/users/validate_invite_email", to: 'users#validate_invite_email'
-
-  resources :users
+  controller :users do
+    get 'validate_invite_email'
+    get 'validate_user_name'
+  end
 
   ActiveAdmin.routes(self)
   mount Ckeditor::Engine => '/ckeditor'
@@ -74,7 +75,6 @@ Prodygia::Application.routes.draw do
       get :activity_stream
       get :dashboard
       get :main_menu
-      get :pending_page
       get :profile
       get :consultations
       get :sessions
@@ -82,11 +82,13 @@ Prodygia::Application.routes.draw do
       get :edit_profile
       patch :update_profile
       get :video_courses
+      get :load_more
     end
 
     collection do
       get :refer_new_expert
       post :refer_new_expert
+      get :pending_page
     end
   end
 
@@ -97,7 +99,12 @@ Prodygia::Application.routes.draw do
     get 'followers'
   end
 
-  resources :resources 
+  controller :mailchimp do
+    post 'subscription'
+    post 'guest_subscription'
+  end
+
+  resources :resources
 
   root to: "welcome#index"
 
@@ -106,6 +113,9 @@ Prodygia::Application.routes.draw do
   get "/faq", to: 'static_pages#faq'
   get "/terms", to: 'static_pages#terms'
   get "/privacy", to: 'static_pages#privacy'
+  get "welcome/load_more", to: "welcome#load_more"
+  get "/search", to: 'search#query', as: :search
+  get "/search/autocomplete", to: 'search#autocomplete'
 
-  get "*page" => redirect("/")
+  # get "*page" => redirect("/")
 end

@@ -87,14 +87,14 @@ describe ExpertsController do
 
   describe "GET profile" do
     it "shows the expert's profile page" do
-      get :profile, id: sameer.id
+      get :profile, id: sameer.user_name
       expect(response).to be_success
     end
 
-    it "assigns the expert's sessions, video_interviews and courses" do
-      [video_interview, session_communication, first_course]
-      get :profile, id: sameer.id
-      expect(assigns[:items]).to eq [video_interview, first_course, session_communication]
+    it "assigns the expert's articles, video_interviews and courses" do
+      [video_interview, article, first_course]
+      get :profile, id: sameer.user_name
+      expect(assigns[:items]).to match_array([video_interview, first_course, article])
     end
 
   end
@@ -108,9 +108,9 @@ describe ExpertsController do
       end
 
       it "get all contents belongs to the expert" do
-        [session_intro, session_communication, video_interview]
-        get :contents, id: sameer.id, format: :js
-        expect(assigns[:items].count).to eq 3
+        [article, first_course, video_interview]
+        get :contents, id: sameer.user_name, format: :js
+        expect(assigns[:items]).to match_array([article, video_interview])
       end
     end
   end

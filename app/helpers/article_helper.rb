@@ -5,13 +5,13 @@ module ArticleHelper
     tooltips[item.class.name]
   end
   def get_image_tag(item)
-    images = { "LiveSession" => "livestreaming.png", "Article" => "text.png", "VideoInterview" => "video.png", "Announcement" => "announcement.png", "Course" => "video.png" }
+    images = { "LiveSession" => "livestreaming.png", "Article" => "text.png", "VideoInterview" => "video_interview_icon.png", "Announcement" => "announcement.png", "Course" => "video_course_icon.png" }
     images[item.class.name]
 
   end
 
   def get_box_class(item)
-    box_class = " item "+item.categories.join(" ")+" "
+    box_class = " item " + item.categories.pluck(:name).join(" ") + " "
     box_class += item.class.name
     box_class += " always_show" if item.try(:always_show)
 

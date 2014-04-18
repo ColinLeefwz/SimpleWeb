@@ -26,3 +26,5 @@
 /config/application.yml
 coverage
 
+# Ignore mina config file
+/config/deploy.rb

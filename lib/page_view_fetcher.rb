@@ -20,22 +20,49 @@ class PageViewFetcher
 
   def self.fetch_page_views(user)
     profile = user.profiles.first
-    profile.page_view
+    PageView.results(profile, start_date: min_created_at)
   end
 
   def self.process_data(queries)
-    expression = /\/(?<type>\b(sessions|articles|courses|video_interviews|announcements)\b)\/(?<id>\d+)[\w-]*$/
+    queries.each do |q|
+      type, id, param, views = extract_data(q)
+      update_views(type, id, param, views)
+    end
+  end
 
-    queries.each do |query|
-      result = expression.match(query.pagePath) 
-      if result
-        visitable_type = result[:type].singularize.camelize
-        visitable_id = result[:id].to_i
-        page_views = query.pageviews.to_i
 
-        visit = Visit.where(visitable_id: visitable_id, visitable_type: visitable_type).first_or_create
-        visit.update_attributes(page_views: page_views)
-      end
+  
+
+  private
+  def self.min_created_at
+    array = %w(Article Announcement VideoInterview Course).map{|model| model.constantize.minimum(:created_at)}
+    array.min
+  end
+
+
+  def self.extract_data(query)
+    type, id, param, views = nil
+    expression = /\/(?<type>\b(articles|courses|video_interviews|announcements)\b)\/(?<param>\d+[\w-]*)$/
+
+    result = expression.match query.pagePath
+    if result
+      type = result[:type].classify
+      param = result[:param]
+      id = param.to_i
+      views = query.pageviews.to_i
+    end
+
+    [type, id, param, views]
+  end
+
+  def self.update_views(type, id, param, views)
+    return unless type && id && param && views
+
+    record = type.constantize.where(id: id).first
+    if record.to_param == param
+      visit = Visit.find_or_create_by(visitable_id: id, visitable_type: type)
+      visit.update_attributes(page_views: views)
     end
   end
 end
+

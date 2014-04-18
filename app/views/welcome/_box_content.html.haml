@@ -7,7 +7,7 @@
         = expert_name_helper(item)
     .content-type
       = image_tag(get_image_tag(item), class: "tooltips", title: get_tooltip(item), data: {placement: "bottom"})
-      %p= item.categories.join(", ")
+      %p= item.category_names
       %p= item.language.split(",")[0] if (item.respond_to? :language and item.language)
   .title
     = link_to "#{item.title}", polymorphic_path(item)
@@ -30,7 +30,7 @@
     .social-share-icons
       .social-share.favorite-star
         - if current_user.blank?
-          = link_to image_tag('favorite_unselected.png'),'#sign-in-modal', data:{toggle: "modal"}
+          = link_to image_tag('favorite_unselected.png', class:'tooltips', title:'add to Favorites', data:{placement: 'bottom'}), '#sign-in-modal', data:{toggle: "modal"}
         - else
           = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: subscribe_path(item, type: item.class.name)
       = render 'shared/social_share', item: item

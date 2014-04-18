@@ -54,9 +54,9 @@
         filter: selector
       }
 
-      
 
-load_sublime = ->
+
+@load_sublime = ->
   sublime.load()
   for video in $("video")
     sublime.ready( ->
@@ -65,21 +65,18 @@ load_sublime = ->
       )
     )
 
+prompt_newsletter = ->
+  if $.cookie("prompt_newsletter") == "true"
+    $.cookie("prompt_newsletter", false)
+    $("#subscribe-newsletter-modal").modal("show")
+    $("#subscribe_newsletter").on "click", ->
+      $("#subscribe-newsletter-modal").modal("hide")
 
 update_profile_message = ->
   $("input[type='submit']").on 'click', ->
     $("input[type='file']").css("width", "95px")
 
-    
-
 $(document).ready ->
   load_sublime()
-
-$(document).on 'page:load', ->
-  load_sublime()
-  update_profile_message()
-
-$(document).on 'ajax:success', ->
-  load_sublime()
-  update_profile_message()
+  prompt_newsletter()
 

@@ -1,62 +1,74 @@
 - @categories = Category.all
 .navbar.navbar-default.shadow
-  .col-md-8.col-sm-8.col-xs-8
+  .col-md-4.col-sm-4.col-xs-4
     .navbar-header
       .navbar-left
         #logo_container
           #logo
             = link_to image_tag("logo.png"), root_path, {:title => "Home", :rel => "home"}
 
-  .col-sm-4.col-xs-4
+  .col-md-8.col-sm-8.col-xs-8
     %button.navbar-toggle{"data-target" => "#navbar-collapse1", "data-toggle" => "collapse", :type => "button"}
       %span.sr-only Toggle navigation
       %span.icon-bar
       %span.icon-bar
       %span.icon-bar
-  .col-md-4.col-sm-4.col-xs-4
-    #navbar-collapse1.collapse.navbar-collapse
-      = render 'shared/user_session'
-- if @show_category == true
-  %ul#subnav.nav.navbar-header
+    .pull-right
+      #navbar-collapse1.collapse.navbar-collapse
+        = render 'shared/user_session'
+  .tagline
+    Connect with experts online to learn about China
 
-    %li.dropdown
-      %a.navbar-btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-        %i#sidebar_icon
-          = image_tag("sidebar_icon.png")
-      %ul.nav.dropdown-menu.nav-sidebar
-        %li
-          %a.filters{href: "#all", data: {filter: '*'}}
-            %span.badge.pull-right
-              = all_count
-            all
-        %li.divider
-        - @categories.each do |category|
+.row
+  - if @show_category == true
+    %ul#subnav.nav.navbar-header
+      %li.dropdown
+        %a.navbar-btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          %i#sidebar_icon
+            = image_tag("sidebar_icon.png", class:'tooltips', title:'Navigation', data:{placement: 'right'})
+        %ul.nav.dropdown-menu.nav-sidebar
+          = form_tag search_path, class: "form-inline", method: :get, remote: true do
+            .form-group
+              = text_field_tag :query, "", class: "form-control", id: "search_field", autocomplete: "off"
+            .form-group
+              = submit_tag "search", class: "btn btn-primary"
           %li
-            %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
+            %a.filters{href: "#all", data: {filter: '*'}}
               %span.badge.pull-right
-                = category_count(category)
-              = category.name
-        %li.dropdown-submenu
-          %a{:href => "#"}
-            format
-          %ul.dropdown-menu
-
+                = all_count
+              all
+          %li.divider
+          - @categories.each do |category|
             %li
-              %a.filters{href: "#announcement", data: {filter: '.announcement'}} 
+              %a.filters{href: "##{category.name}", data: {filter: ".#{category.name.downcase()}"}}
                 %span.badge.pull-right
-                  = model_count('Announcement')
-                announcement
+                  = category.count
+                = category.name
+          %li.dropdown-submenu
+            %a{:href => "#"}
+              format
+            %ul.dropdown-menu
+              %li
+                %a.filters{href: "#announcement", data: {filter: '.announcement'}}
+                  %span.badge.pull-right
+                    = model_count('Announcement')
+                  announcement
 
-            %li
-              %a.filters{href: "#article", data: {filter: '.article'}} 
-                %span.badge.pull-right
-                  = model_count('Article')
-                article
+              %li
+                %a.filters{href: "#article", data: {filter: '.article'}}
+                  %span.badge.pull-right
+                    = model_count('Article')
+                  article
 
-            %li
-              %a.filters{href: "#video", data: {filter: '.videointerview'}} 
-                %span.badge.pull-right
-                  = model_count('VideoInterview')
-                video
-
+              %li
+                %a.filters{href: "#interview", data: {filter: '.videointerview'}}
+                  %span.badge.pull-right
+                    = model_count('VideoInterview')
+                  interview
+              %li
+                %a.filters{href: "#course", data: {filter: '.course'}}
+                  %span.badge.pull-right
+                    = model_count('Course')
+                  course
 = render "shared/sign_in_modal"
+

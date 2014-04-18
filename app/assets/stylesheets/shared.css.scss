@@ -2,14 +2,73 @@
 
 .video-wrapper{
   width: 320px;
-  height: 176px;
+  height: 180px;
   margin: 0 auto;
 }
 
-.subscribe{
+#tip-modal {
+  .modal-dialog {
+    width: 55%;
+    height: 55%;
+  }
+
+  .close {
+    color: #333;
+  }
+  .modal-content {
+    background-image: url(image-path('forbidden city.jpg'));
+    background-repeat: no-repeat;
+    color: #333;
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+
+    #guest_email {
+      width: 80%;
+    }
+
+    .rounded-box {
+      height: 100%;
+
+      background-color: rgba(255, 255, 255 ,0.8);
+      .modal-body {
+        height: 100%;
+        font-size: 24px;
+        padding-left: 35px;
+
+        h1 {
+          font-family: 'Oswaldreg';
+          color: $prodygia-purple;
+          margin-bottom: 5%;
+          // font-weight: 700;
+        }
+
+        .form-group {
+          margin-top: 10%;
+
+          input {
+            margin-bottom: 10px;
+          }
+        }
+
+        a {
+          color: $prodygia-light-purple;
+        }
+      }
+    }
+  }
+}
+
+.nav-sidebar {
+  .form-group {
+    margin-left: 20px;
+    margin-bottom: 5px;
+  }
+}
+
+.button{
   clear: both;
   cursor: pointer;
-  background-color: #8a2649;
   font-family: Latobold;
   text-align: center;
   padding: 0.3em;
@@ -20,14 +79,12 @@
   }
 }
 
+.subscribe{
+  background-color: #8a2649;
+}
+
 .subscribed{
-  clear: both;
   background-color: #5A268A;
-  font-family: Latobold;
-  text-align: center;
-  padding: 0.3em 0.3em;
-  color: white;
-  a{  color: white;  }
 }
 
 .general-wrapper{
@@ -125,7 +182,7 @@ input[type="file"]{
 .btn-prodygia.disabled,
 .btn-prodygia[disabled] {
   color: #ffffff;
-  background-color: $prodygia-purple;
+  background-color: $prodygia-light-purple;
   *background-color: $prodygia-purple;
 }
 
@@ -137,3 +194,11 @@ img {
   max-width: 100%;
 }
 
+.tagline {
+  padding-right: 30px;
+  font-family: 'LatoItalic';
+  font-weight: 400;
+  font-size: 22px;
+  color: $prodygia-blue;
+  float: right;
+}

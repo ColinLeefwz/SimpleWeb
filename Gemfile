@@ -1,5 +1,5 @@
-# source 'https://rubygems.org'
-source 'http://ruby.taobao.org'
+source 'https://rubygems.org'
+# source 'http://ruby.taobao.org'
 
 ruby '2.0.0'
 gem 'rails', '4.0.0'
@@ -34,11 +34,20 @@ gem 'google-api-client'  # official google analytics gem
 gem 'whenever', require: false   # generate crontab directives, not used in the application, so set require to false
 gem 'country_select'
 
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'font-awesome-sass'
 
+gem 'mailchimp-api'
+
 group :doc do
   gem 'sdoc', require: false
+end
+
+group :deployment do
+  gem 'mina'
 end
 
 group :development, :test do

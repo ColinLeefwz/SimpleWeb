@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   after_action :store_location
 
   ## Peter: based on this site https://gist.github.com/hbrandl/5253211 to show flash mesaage when using AJAX
-  # after_action :flash_to_headers 
+  # after_action :flash_to_headers
 
   protect_from_forgery with: :exception
 
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :password, :time_zone) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :user_name, :email, :password, :time_zone, :subscribe_newsletter) }
   end
 
 
@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
   #   response.headers["X-Message"] = msg
   #   response.headers["X-Message-Type"] = flash_type.to_s
 
-  #   flash.discard 
+  #   flash.discard
   # end
 
   # def flash_message
@@ -91,6 +91,6 @@ class ApplicationController < ActionController::Base
   #   end
   #   return :empty
   # end
-  
+
 end
 

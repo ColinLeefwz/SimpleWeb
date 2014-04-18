@@ -1,9 +1,10 @@
 #content.container.margin-bottom
-  - @items.each do |item|
-    = render partial: "box_content", locals: { item: item }
+  = render "items"
 
 -# hidden modals
 = render "shared/sign_in_modal"
+= render "subscribe_newsletter_modal"
 
 :javascript
   load_isotope()
+  autocomplete_on()

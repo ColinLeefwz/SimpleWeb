@@ -1,5 +1,8 @@
 class Course < ActiveRecord::Base
   include ParamsConfig
+  include ActAsCategoriable
+  include Landingable
+  include Searchable
 
   validates :title, presence: true
   validates :price, numericality: {greater_than_or_equal_to: 0}
@@ -46,6 +49,10 @@ class Course < ActiveRecord::Base
       end
       show_courses
     end
+
+    def all_without_staff
+      Course.joins(:experts).where.not(users: {id: 2}).uniq
+    end
   end
 
 
@@ -58,6 +65,10 @@ class Course < ActiveRecord::Base
   end
 
   def editable
+    false
+  end
+
+  def draft
     false
   end
 
