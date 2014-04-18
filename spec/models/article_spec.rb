@@ -3,26 +3,23 @@ require 'spec_helper'
 describe Article do
   helper_objects
 
-  subject {create(:article, expert: sameer, categories: [culture])}
-
   describe "#non_draft" do
-    # before :each do
-    #   @article = Article.new
-    #   @article.save
-    #   subject.save
-    # end
-    it "returns false" do
-      expect(subject.draft).to be_false
+    let(:draft_article) { create(:article, title: 'draft article', expert: sameer, description: 'draft', categories: [culture], draft: true)}
+
+    it "returns an array include non draft articles" do
+      article_array = create_list(:article, 5, expert: sameer, categories: [culture])
+      expect(Article.non_draft).to match_array article_array
     end
 
-    it "should include the subject " do
-      expect(Article.non_draft).to include(subject)
+    it "returns an array of articles without draft ones" do
+      article
+      expect(Article.non_draft).not_to include(draft_article)
     end
   end
 
   describe "#producers" do
     it "returns a string containing expert name" do
-      expect(subject.producers).to eq "by sameer karim"
+      expect(article.producers).to eq "by sameer karim"
     end
   end
 
