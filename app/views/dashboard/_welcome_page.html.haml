@@ -1,5 +1,6 @@
 .white-background.shadow
-  %h3.text-center Welcome to your Member Dashboard! 
+  %h3.text-center
+    = "Welcome to your #{current_user.class.name} Dashboard!"
 
   .tutorial-video.text-center
     %video{width: '320', height: '180', class: 'sublime', data: {autoresize: 'fill'}, preload: 'none'}
