@@ -17,7 +17,10 @@ ActiveAdmin.register Member do
       member.created_at.to_date
     end
 
-    column :subscribe_newsletter
+    column :subscribe_newsletter do |member|
+      subscription = UserSubscription.new(member, ENV['MAILCHIMP_LISTID'])
+      subscription.subscribed?
+    end
 
     column "social login?", :provider
     default_actions

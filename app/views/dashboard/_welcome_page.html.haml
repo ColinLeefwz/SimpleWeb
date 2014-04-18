@@ -1,0 +1,14 @@
+.white-background.shadow
+  %h3.text-center.welcome-title
+    = "Welcome to your #{current_user.class.name} Dashboard!"
+
+  .tutorial-video.text-center.shadow
+    %video{width: '320', height: '180', class: 'sublime', data: {autoresize: 'fill'}, preload: 'none'}
+      %source{ src: current_user.tutorial_video_sd_url }
+      %source{ src: current_user.tutorial_video_hd_url, data: {quality: 'hd'} }
+
+  .tutorial-video-text
+    Watch this short tutorial for an overview of the dashboard. It's only a few minutes and it is worth it!
+
+:coffeescript
+  load_sublime()

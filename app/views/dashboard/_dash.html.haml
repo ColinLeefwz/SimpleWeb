@@ -5,7 +5,4 @@
         .side-menu
           = render 'dashboard/side_menu'
       .col-lg-9.col-md-9.main-menu
-        - if current_user.is_a? Expert
-          = render "experts/welcome_page"
-        -else
-          = render 'members/welcome_page'
+        = render "dashboard/welcome_page"

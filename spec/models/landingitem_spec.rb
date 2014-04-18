@@ -28,9 +28,9 @@ describe Landingitem do
       expect(Landingitem.first.expert).to eq sameer
     end
 
-    it "will not add one after create an Staff course" do
-      course = create :course, title: "first course", description: "course description", experts: [staff], categories: [culture]
-      expect(Landingitem.count).to eq 0
+    it "will add one after create an Staff course" do
+      course_staff
+      expect(Landingitem.count).to eq 1
     end
   end
 
@@ -46,28 +46,6 @@ describe Landingitem do
       ar = create(:article, title: "draft one", expert: sameer, categories: [culture], draft: true)
       ar.update_attributes draft: false
       expect(Landingitem.last.draft).to be_false
-    end
-  end
-
-  describe "#all_items" do
-    it "lists all items showing in landing page" do
-      [article, video_interview, announcement]
-      expect(Landingitem.all_items).to match_array([announcement, video_interview, article])
-    end
-
-    it "orders the items by attribute 'num'" do
-      article.update_landing_order(2)
-      video_interview.update_landing_order(1)
-      announcement.update_landing_order(3)
-      expect(Landingitem.all_items).to eq [video_interview, article, announcement]
-    end
-
-    it "puts un-ordered item to the last" do
-      new_article = create(:article, expert: sameer, categories: [culture])
-      article.update_landing_order(2)
-      video_interview.update_landing_order(1)
-      announcement.update_landing_order(3)
-      expect(Landingitem.all_items).to eq [video_interview, article, announcement, new_article]
     end
   end
 
