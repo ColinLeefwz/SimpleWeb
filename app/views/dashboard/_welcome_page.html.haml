@@ -2,7 +2,7 @@
   %h3.text-center
     = "Welcome to your #{current_user.class.name} Dashboard!"
 
-  .tutorial-video.text-center
+  .tutorial-video.text-center.shadow
     %video{width: '320', height: '180', class: 'sublime', data: {autoresize: 'fill'}, preload: 'none'}
       %source{ src: current_user.tutorial_video_sd_url }
       %source{ src: current_user.tutorial_video_hd_url, data: {quality: 'hd'} }
