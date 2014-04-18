@@ -1,9 +1,103 @@
 # coding: utf-8
 
 class AroundmeController < ApplicationController
-  before_filter :user_login_filter, :only => [:hot_users, :shops]
+  before_filter :user_login_filter, :only => [:my4, :my_shops, :hot_users, :shops]
+  before_filter :user_is_session_user, :only => [:my4, :my_shops]
+  
   caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
 
+  def my4
+    arr = $redis.zrange("LL3#{params[:user_id]}",0,3,withscores:true)
+    arr = arr.map{|x| [Shop.find_by_id(x[0]),x[1].to_i]}.find_all{|x| x[0]!=nil}
+    ret = arr.map {|x| x[0].safe_output_with_users.merge!({time:Checkin.time_desc(x[1]), timei:x[1]})}
+    render :json =>  ret.to_json
+  end
+  
+  def my_shops
+    lo = [params[:lat].to_f,params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    city = Shop.get_city(lo)
+    arr = session_user.groups
+    staffs = session_user.belong_shops
+    arr = arr + staffs if staffs.size>0
+    arr.uniq!
+    ret = arr.find_all{|x| x!=nil}.map do |x|  
+      hash = x.safe_output_with_users
+      ghash = x.group_hash(session[:user_id])
+      #logger.info ghash
+      hash.merge!(ghash)
+      hash
+    end
+    coupons = $redis.smembers("ACS#{city}") 
+    if coupons
+      ret.each_with_index do |xx,i|
+        ret[i]["coupon"] = 1 if coupons.index(xx["id"].to_i.to_s)
+      end
+    end
+    render :json =>  ret.to_json
+  end
+  
+  def hot
+    lo = [params[:lat].to_f,params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    city = Shop.get_city(lo)
+    arr = []
+    if User.is_kx?(session[:user_id])
+      $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
+    end
+    if is_co_user?(session[:user_id])
+      $redis.smembers("CoShops").each {|id| arr << Shop.find_by_id(id)}
+    end
+    if city
+      shop = Shop.find_by_id(21838725) # 行酷车友会
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
+    if city && city=="023"
+      shop = Shop.find_by_id(21839246) # 重庆的2014我们在一起
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
+    if city && city=="0571"
+      shop = Shop.find_by_id(21831686) # 西溪印象城
+      if shop
+        arr = arr[0,3]+[ shop ]+arr[3..-1]
+      end
+    end
+    if city && city=="023" && lo[0].to_s[0,4]=="29.8" && lo[1].to_s[0,5]=="106.0" 
+      shop = Shop.find_by_id(21839992) # 铜梁脸脸
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
+    if city && city=="023" && lo[0].to_s[0,4]=="29.3" && ( lo[1].to_s[0,5]=="105.9" || lo[1].to_s[0,5]=="105.8")
+      shop = Shop.find_by_id(21840462) # 永川脸脸 [29.348392999999998, 105.913615]
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
+    arr.uniq!
+    ret = arr.find_all{|x| x!=nil}.map do |x|  
+      hash = x.safe_output_with_users
+      ghash = x.group_hash(session[:user_id])
+      #logger.info ghash
+      hash.merge!(ghash)
+      hash
+    end
+    coupons = $redis.smembers("ACS#{city}") 
+    if coupons
+      ret.each_with_index do |xx,i|
+        ret[i]["coupon"] = 1 if coupons.index(xx["id"].to_i.to_s)
+      end
+    end
+    render :json =>  ret.to_json
+  end
   
   def shops
     if session[:user_id] && User.is_shop_id?(session[:user_id])
@@ -46,7 +140,7 @@ class AroundmeController < ApplicationController
     arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid]) 
     Rails.cache.write("LLOC#{session[:user_id]}",[lo,params[:accuracy].to_f,params[:bssid]]) 
     record_gps(lo, gps, wifi)
-    if is_kx_user?(session[:user_id])
+    if User.is_kx?(session[:user_id])
       $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
     end
     if is_co_user?(session[:user_id])
@@ -93,14 +187,13 @@ class AroundmeController < ApplicationController
         arr = arr+[ shop ]
       end
     end
-    if city && city=="023" && lo[0].to_s[0,4]=="29.3" && ( lo[1].to_s[0,5]=="105.9" || lo[1].to_s[0,5]=="105.8")
+    if city && city=="023" && (lo[0].to_s[0,4]=="29.3" || lo[0].to_s[0,4]=="29.4" || lo[0].to_s[0,4]=="29.2") && ( lo[1].to_s[0,5]=="105.9" || lo[1].to_s[0,5]=="105.8")
       shop = Shop.find_by_id(21840462) # 永川脸脸 [29.348392999999998, 105.913615]
       if shop
 	      shop.city = city
         arr = arr+[ shop ]
       end
     end
-    #$redis.zrange("LL3#{session[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id); arr << s if s}
     arr.uniq!
     ret = arr.find_all{|x| x!=nil}.map do |x|  
       hash = x.safe_output_with_users

@@ -386,52 +386,6 @@ POST & \multicolumn{3}{|c|}{/user\_logos/create} \\
 \end{figure}
 
 
-\subsection{根据图片id获得用户相册里的图片}
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-GET & \multicolumn{3}{|c|}{/user\_logos/show} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-  \hline
- id  & 字符串 & 必须 & 图片id\\
-\hline
- size  & 整数 & 可选 &  目前0代表原图；1代表thumb1缩略图，大小为100*100；2代表thumb2缩略图，大小为200*200。默认为1。\\ 
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-
-
-\subsection{获得用户的头像}
-
-\begin{table}[H]
-   \begin{center}
-\begin{tabular}{|c|c|c|p{12cm}|}
-\hline
-GET & \multicolumn{3}{|c|}{/user\_info/logo} \\
-\hline\hline
- \  参数  & 类型 & 必填 &  说明  \\
-\hline
- id  & 整数 & 必须 &  用户id\\
-\hline
- size  & 整数 & 可选 &  目前0代表原图；1代表thumb缩略图，大小为100*100；2代表thumb2缩略图，大小为200*200。默认为1。\\ 
-\hline
-\end{tabular}
-   \end{center}
-\end{table}
-
-该接口应该只有一种情况下被使用：在聊天室里有一个陌生的用户发了一条消息。此时根据他在聊天室的resource获得其用户id，然后调用本接口拿头像。
-
-
-输出的Response Header中包含“Img\_url”头，这个头就是查看用户信息时显示的用户头像的路径。
-
-例如：“Img\_url:/system/imgs/1/thumb2/1.png?1339649979”
-
-注意：采用阿里云存储后，会输出302重定向，而不是直接给二进制流。
-
 
 \subsection{获得用户的图片列表}
 

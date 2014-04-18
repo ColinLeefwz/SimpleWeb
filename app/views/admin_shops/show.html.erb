@@ -10,7 +10,8 @@
   <%= link_to '设置流水号', "/admin_shops/set_id2?id=#{@shop.id}"  unless @shop.password.blank? %>
   <%= link_to('加权', "/admin_shops/upgrade_v?id=#{@shop.id}") %>
   <%= link_to('编辑', "/admin_shops/edit?id=#{@shop.id}") %>
-  <%= link_to('标记删除', "/admin_shops/del?id=#{@shop.id}") %>
+  <%= link_to('标记删除', "/admin_shops/del?id=#{@shop.id}")  if !@shop.cooperationer? && @shop.del.blank? %>
+  <%= link_to('取消标记删除', "/admin_shops/undel?id=#{@shop.id}")  if @shop.del %>
   <br/>
 
   <%  if @shop.seller  %>
@@ -30,14 +31,17 @@
 </div>
 
   <br/>
-  <p>
-    <%= link_to "开通手机网站", "/admin_mobile_shops/create?id=#{@shop.id}" unless @shop.has_mweb_purview? %>
-    <%= link_to "开通点菜", "/admin_foods/create?id=#{@shop.id}" unless @shop.has_food_purview? %>
-    <%= link_to "开通猜图", "/admin_caitus/create?id=#{@shop.id}" unless @shop.has_caitu_purview? %>
-  </p>
+  <% if @shop.cooperationer? %>
+    <p>
+      <%= link_to "开通手机网站", "/admin_mobile_shops/create?id=#{@shop.id}" unless @shop.has_mweb_purview? %>
+      <%= link_to "开通点菜", "/admin_foods/create?id=#{@shop.id}" unless @shop.has_food_purview? %>
+      <%= link_to "开通猜图", "/admin_caitus/create?id=#{@shop.id}" unless @shop.has_caitu_purview? %>
+    </p>
+  <% end %>
+
   <br/>
 
-<%= link_to "合并到", "javascript:void(0)" , :onclick => "showFormMerge($(this))" %>
+<%= link_to "合并到", "javascript:void(0)" , :onclick => "showFormMerge($(this))" if !@shop.cooperationer? %>
 
 <%= form_tag "/admin_shops/merge_to", :id=> "formMerge", :style => "display: none" do   %>
   <%= hidden_field_tag :id, @shop.id  %>

@@ -382,22 +382,7 @@ textarea {
     border-left-width: 0;
     margin-left: 14px;
 }
-.logo {
-    float: left;
-    font-size: 24px;
-    padding-top: 8px;
-}
-.logo a {
-    display: block;
-    height: 40px;
-    overflow: hidden;
-    text-decoration: none;
-    width: 248px;
-}
-.logo a:before {
-    content: url("/mpres/htmledition/images/bg/bg_logo.png");
-    display: inline-block;
-}
+
 .account {
     float: right;
     font-size: 0;
@@ -796,61 +781,7 @@ textarea {
 .inner_menu_box.with_switch dd .inner_menu_link {
     padding-left: 42px;
 }
-.inner_menu {
-    border-top: 1px solid #CCCCCC;
-}
-.inner_menu:first-child {
-    border-top-width: 0;
-}
-.inner_menu .menu_opr {
-    display: none;
-    position: absolute;
-    right: 1em;
-    top: 0;
-}
-.inner_menu .menu_opr a {
-    display: inline-block;
-    margin-left: 0.5em;
-    margin-top: -0.2em;
-}
-.inner_menu .menu_opr a.no_extra {
-    margin-left: 0;
-}
-.inner_menu_item {
-    line-height: 32px;
-    position: relative;
-}
-.inner_menu_item:hover, .inner_menu_item.selected {
-    background-color: #D6D6D6;
-}
-.inner_menu_item:hover .menu_opr, .inner_menu_item.selected .menu_opr {
-    display: block;
-}
-.inner_menu_item:hover a, .inner_menu_item.selected a {
-    text-decoration: none;
-}
-.inner_menu_link {
-    color: #222222;
-    display: block;
-    padding-left: 1em;
-    text-decoration: none;
-}
-dd .inner_menu_link {
-    padding-left: 2em;
-}
-.inner_menu_link strong {
-    cursor: pointer;
-    display: inline-block;
-    font-style: normal;
-    font-weight: 400;
-    margin-top: -2px;
-    max-width: 80px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    white-space: nowrap;
-    width: auto;
-}
+
 .drag_placeholder {
     border: 1px dotted #CCCCCC;
     height: 80px;
@@ -2471,7 +2402,7 @@ a:hover .icon_menu_action.other {
 .action_content .msg_wrp .richvideo, .action_content .msg_wrp .appmsg {
     width: 320px;
 }
-.action_content.default .action_tips {
+.action_content .action_tips {
     padding-top: 200px;
     text-align: center;
 }

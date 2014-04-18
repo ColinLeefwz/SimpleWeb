@@ -23,17 +23,20 @@
                         "type": "view",
                         "name": "搜索",
                         "url": "http://www.soso.com/",
+                        "type2": 'url',
                         "sub_button": []
                     },
                     {
                         "type": "view",
                         "name": "视频",
+                        "type2": 'mweb',
                         "url": "http://v.qq.com/",
                         "sub_button": []
                     },
                     {
                         "type": "click",
                         "name": "赞一下我们",
+                        "type2": 'app',
                         "key": "V1001_GOOD",
                         "sub_button": []
                     }

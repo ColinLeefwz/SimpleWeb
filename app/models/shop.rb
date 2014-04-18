@@ -114,6 +114,11 @@ class Shop
       nil
     end
   end
+
+  #是否是合作商家, 开通密码或者即立方就是合作商家
+  def cooperationer?
+    !self.password.blank? || self.mweb
+  end
   
   def photos
     Photo.where({room: self.id.to_i.to_s, hide: nil})
@@ -231,10 +236,17 @@ class Shop
   def safe_output
     hash = self.attributes.slice("name", "lo", "t")
     hash.merge!( {"lat"=>self.loc_first[0], "lng"=>self.loc_first[1], "address"=>"", "phone"=>"", "id"=>self.id.to_i} )
+    hash.merge!({type: Shop.t2type(self.t)})
     hash.merge!( {"user"=>total_user})
     hash.merge!( {"has_menu"=>self.has_menu.to_i}) if self.has_menu.to_i>0
+    if self.password
+      hash.merge!( {"sign"=>1, "tel"=>self.phone_or_tel, "addr"=>self.addr}) 
+      hash.merge!( self.logo.logo_thumb_hash) if self.logo
+    end
+    hash.merge!( {"sub"=>"有#{self.shops.size}个子地点"} ) if self.shops && self.shops.size>0
     hash
   end
+  
   
   def safe_output_with_users
     total,female = CheckinShopStat.get_user_count_redis(self._id)
@@ -645,7 +657,7 @@ class Shop
 
   # 是否对用户启用预置问答
   def preset?(user)
-    is_kx_user?(user.id) && self.no_faq?
+    User.is_kx?(user.id) && self.no_faq?
     # user && (user.cat+3.days) > Time.now && self.no_faq?
   end
 
@@ -802,7 +814,7 @@ class Shop
   
   #将一些定位无关的商家信息保存到独立的ShopInfo中，为保持兼容性，添加一些代理addr等的方法。
   def info
-    ShopInfo.find_primary(self.id)
+    ShopInfo.find_primary(self.id) || ShopInfo.new
   end
   
   def addr
@@ -815,6 +827,10 @@ class Shop
 
   def contact
     info && info.contact
+  end
+  
+  def phone_or_tel
+    phone || tel
   end
   
   def tel
@@ -902,6 +918,40 @@ class Shop
     uid = uid.to_s
     return true if uid == "s#{self.id}"
     return staffs_cache.find{|x| x.to_s==uid} != nil
+  end
+  
+  def self.type2ts(type)
+    case type
+    when 1
+      [4]
+    when 2
+      [5]
+    when 3
+      [1,2,3]
+    when 4
+      [6, 7]
+    when 5
+      [10, 11, 12]
+    else
+      [8,9,13,14,15, 51, 52, 53]
+    end
+  end
+  
+  def self.t2type(t)
+    case t
+    when 1..3
+      3
+    when 4
+      1
+    when 5
+      2
+    when 6,7
+      4
+    when 10..12
+      5
+    else
+      6
+    end
   end
   
   

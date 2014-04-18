@@ -6,6 +6,7 @@ class Shop3MenuController < ApplicationController
   	@menu = Menu.find_by_id(session[:shop_id])
     logo = session_shop.logo
     @logo = (logo ? logo.img.url(:t1) : '/newbackstage/images/pic1.png')
+    @mobile_space = MobileSpace.where(sid: session[:shop_id]).first || MobileSpace.new()
   	respond_to do |format|
   		format.html
   		format.json {render :json => @menu ? @menu.view_json : {menu: {button: []}}}

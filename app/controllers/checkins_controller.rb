@@ -14,11 +14,15 @@ class CheckinsController < ApplicationController
       render :json => {error: "地点名称不能少于三个字"}.to_json
       return
     end
+    if params[:accuracy].to_i==0 || params[:accuracy].to_i > 500
+      render :json => {error: "手机误差大于500米，不能创建地点"}.to_json
+      return
+    end
     if params[:sname][0,3]=="@@@"
       render :json => {error: "没权限创建：#{params[:sname]}"}.to_json
       return
     end
-    if !is_kx_user?(session[:user_id]) && !is_co_user?(session[:user_id])
+    if !session_user.is_kx_or_co?
       if Rails.cache.read("ADDSHOP#{session[:user_id]}")
         render :json => {error: "一个用户一天只能创建一个地点"}.to_json
         return
@@ -30,13 +34,12 @@ class CheckinsController < ApplicationController
     else
       score = 68
     end
-    ss = Shop.similar_shops(shop,score)
-    if ss.length>0
-      shop = ss[0]
-    else
-      shop.save!
-      Rails.cache.write("ADDSHOP#{session[:user_id]}", 1, :expires_in => 24.hours)
+    if Shop.has_similar_shop?(shop,score)
+      render :json => {error: "已经存在雷同的地点，不能重复创建"}.to_json
+      return
     end
+    shop.save!
+    Rails.cache.write("ADDSHOP#{session[:user_id]}", 1, :expires_in => 24.hours)
     params[:shop_id] = shop.id
     do_checkin(shop,false,true)
     render :json => shop.safe_output.to_json
@@ -84,6 +87,7 @@ class CheckinsController < ApplicationController
     shop = Shop.find_by_id(params[:shop_id]) if shop.nil?
     checkin = Checkin.new
     checkin.loc = [params[:lat].to_f, params[:lng].to_f]
+    checkin.loc = Shop.lob_to_lo(checkin.loc) if params[:baidu]
     checkin.acc = params[:accuracy]
     checkin.uid = session[:user_id]
     checkin.sex = session_user.gender

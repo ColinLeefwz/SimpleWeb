@@ -26,7 +26,6 @@ Xmpp端提供的API包括：
 * /api/room?roomid=&message=&uid=，以给定uid的身份在roomid聊天室发送消息message
 * /api/block?uid=&bid=，用户uid屏蔽bid的消息
 * /api/unblock?uid=&bid=，用户uid取消屏蔽用户bid
-* /api/gchat?room=，获得聊天室room的消息历史
 * /api/chat?uid=，获得用户uid的聊天历史
 * /api/chat?uid1=&uid2=，获得用户uid1和uid2之间的聊天记录
 
@@ -38,14 +37,6 @@ Xmpp端提供的API包括：
 每分钟监测图片处理错误的程序Photo.fix_error_of_all_type_image跑在web1上。
 
 目前两台服务器只有web1在跑真实的应用，web2主要用于测试。
-
-###应用
-目前脸脸的web应用分为三块：
-
-* 脸脸客户端API／商家管理后台／管理员后台，用unicorn部署
-* 猜图游戏，用puma部署
-* 微加移动网站，用puma部署
-       
  
 ###Nginx
 
@@ -113,7 +104,7 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 32. 内部用户地点漫游,“FCITY#{uid}”, 类型为string, 保存漫游到的城市编码。
 33. 可创建手机网站的地点: "MobileShops", 类型为set
 34. 授权用户的集合 "CoUsers",类型set
-35. 用户最近去过且有发言的3个地点： "LL3#{uid}",类型zset
+35. 用户最近去过的4个地点： "LL3#{uid}",类型zset
 36. 外部人员跟随地点 "CoShops",类型set
 37. 需要修改密码的商家，"WeakPassword", 类型sadd
 38. 开通点菜的商家，"FOODSHOPS", 类型zadd
@@ -187,7 +178,7 @@ Unicorn是Rails的Http服务器，启动在8081端口，作为nginx的up-stream�
  * 启动:unicorn -D -E production -c unicorn.conf.rb
  * 重启:kill -HUP \`cat log/unicorn.pid`
 
-unicorn只适合运行短任务。所有耗时的任务，以及调用第三方API的任务，都需要异步执行。异步执行有两种办法：1、使用resque，2、考虑使用node.js。
+unicorn只适合运行短任务。所有耗时的任务，以及调用第三方API的任务，都需要异步执行。异步执行有两种办法：1、使用resque后台执行，2、换用puma作为rake服务器。
 
 ####Resque
 
@@ -219,21 +210,6 @@ resque和resque-scheduler都采用god进行监控和启动。
  * 删除对象要调用destory， 这样才能清除对象的缓存。调用delete时不会清除缓存。
  
 
-###Web服务器配置
-web1
-unicorn 8082 脸脸API服务器
-
-web2
-unicorn 8082 脸脸商家后台／管理员后台 shop.dface.cn,admin.dface.cn
-puma	9292 猜图游戏 caitu.dface.cn
-puma	9293 即立方网站／业务系统和管理后台 w.dface.cn
-puma	9294 刮刮卡等小游戏 game.dface.cn
-
-web4
-puma	9292 店小二点菜 food.dface.cn
-puma	9293 行酷购买系统 trade.dface.cn
- 
-
 依赖的库：ghostscript,imagemagick，	
 ###God
 进程监控和管理
@@ -255,9 +231,9 @@ Mongodb数据库采用了replca set，目前是一主三从配置。
 | 脸脸后台 | mongodb/lian | memcache | redis/0 | puma/9291 | web2|
 | 猜图    | mongodb/caitu| memcache| redis/0  | puma/9292 | web2|
 | 即立方  | mongodb/mweb |    OCS | redis/2   |    puma/9293 | web2|
-| 游戏 | mongodb/?      |    ？ | ?     |    puma/9294 | web2|
-| 点菜 | RDS/foods  |   OCS | redis/2  |    puma/9292 | web4|
-| 购物 | RDS/trade  |   OCS | 无  |    puma/9293 | web4|
+| 游戏 | mongodb/dface   | memcache |  redis/2   |    puma/9294 | web2|
+| 点菜 | RDS/foods  |   OCS | redis/2  |    puma/9295 | web4|
+| 购物 | RDS/trade  |   OCS | 无  |    puma/9296 | web4|
 
 
 表格二
