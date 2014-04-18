@@ -32,8 +32,8 @@
 			<div class="box16inner">
 				<div class="warms">删除确认<br/>删除后该菜单下设置的消息将不会被保存</div>
 				<div class="clear1"></div>
-				<input type="submit" value="确 认" class="btn22 l mt30" onclick="DelSubMits()"/>
-				<input type="button" value="取 消" class="btn22 r mt30" onclick="Close('Del')"/>
+				<input type="submit" value="确 认" class="btn22 l mt10" onclick="DelSubMits()"/>
+				<input type="button" value="取 消" class="btn22 r mt10" onclick="Close('Del')"/>
 			</div>
 		</form>
 	</div>
@@ -43,11 +43,11 @@
 		<form onsubmit="return false;" method="post">
 			<p>菜单管理</p>
 			<div class="box16inner">
-				<p class="mt20 f14">菜单名称不能超过8个汉字：</p>
-				<p><input type="text" class="inputs4 mt10 mb15" id="Inputs"></p>
+				<p class="mt10 f12 orange1">菜单名称不能超过8个汉字：</p>
+				<p><input type="text" class="inputs4  mb15 w230" id="Inputs"></p>
 				<div class="clear1"></div>
-				<input type="submit" value="确 认" class="btn22 l mt30" onclick="SubMits()"/>
-				<input type="button" value="取 消" class="btn22 r mt30" onclick="Close('Info')"/>
+				<input type="submit" value="确 认" class="btn22 l mt10" onclick="SubMits()"/>
+				<input type="button" value="取 消" class="btn22_1 r mt10" onclick="Close('Info')"/>
 			</div>
 		</form>
 	</div>
@@ -55,12 +55,11 @@
 	<!--发布框架-->	
 	<div id="Message1" class="box16">
 		<form onsubmit="return false;" method="post">
-			<p>温馨提示</p>
-			<div class="box16inner w400">
+			<div class="box16inner">
 				<div class="warms">发布确认<br/><span class="f13 orange1">本次发布将在24小时内对所有用户生效。确认发布？</span></div>
 				<div class="clear1"></div>
 				<input type="submit" value="确 认" class="btn22 l mt30 ml30" onclick="FormMits()"/>
-				<input type="button" value="取 消" class="btn22 r mt30 mr30" onclick="Close('Message1')"/>
+				<input type="button" value="取 消" class="btn22_1 r mt30 mr30" onclick="Close('Message1')"/>
 			</div>
 		</form>
 	</div>
@@ -146,8 +145,8 @@
 	
 	<div class="st mt10 gay4 f14 lh25">发布<br/>编辑中的菜单不能直接在用户手机上生效，你需要进行发布，发布后24小时内所有的用户都将更新到新的菜单。</div>
 	<div class="line1 mt20 mb40"></div>
-    <div class="w400 m_auto">        
-		<a class="btn22 l" onclick="View()">预览</a>
-		<a onClick="MesSubMits()" class="btn22 r">发布</a>
+    <div class="w300 m_auto">        
+		<a onClick="MesSubMits()" class="btn2 l">发 布</a>
+		<a class="btn3 r" onclick="View()">预 览</a>
     </div>
 </div>
