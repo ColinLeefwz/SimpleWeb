@@ -68,6 +68,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .w140{width:140px !important;}
 .w150{width:150px !important;}
 .w180{width:180px !important;}
+.w230{width:230px !important;}
 .w235{width:235px !important;}
 .w260{width:260px !important;}
 .w300{width:300px !important;}
@@ -210,8 +211,14 @@ letter-spacing:2px;text-align:center;width:60px;background-color:#f8f8f8;}
 font-family:微软雅黑;font-size:18px;border:none;}
 .btn20:hover{background-color:#0099EE;}
 .btn21{padding:10px 18px;font-family:微软雅黑;font-size:14px;font-weight:bold;color:#6B6B6B;border:1px solid #E4E4E4;background-color:#fff;border-radius:5px;}
-.btn22{width:125px;height:35px;line-height:35px;background-color:#39f;color:#fff;border:none;cursor:pointer;
-font-family:微软雅黑;font-size:16px;border-radius:5px;text-align:center;}
+.btn22{width:95px;height:30px;line-height:30px;background-color:#39f;color:#fff;cursor:pointer;
+font-family:微软雅黑;font-size:13px;border-radius:5px;text-align:center;border:1px solid #1482F1;}
+.btn22_1{width:85px;height:30px;line-height:30px;background-color:#fff;text-align:center;color:#6b6b6b;display:block;font-size:12px;cursor:pointer;border-radius:5px;
+border:1px solid #E4E4E4;font-family:微软雅黑;}
+
+
+
+
 .btn23{width:40px;height:23px;line-height:23px;text-align:center;cursor:pointer;display:block;background-color:#39f;border:1px solid #1482F1;border-radius:3px;color:#fff;}
 .btn24{width:40px;height:23px;line-height:23px;text-align:center;cursor:pointer;display:block;background-color:#F8F8F8;border:1px solid #ccc;border-radius:3px;color:#818181;}
 .btn25{width:95px;height:30px;line-height:30px;border:1px #0099CC solid;text-align:center;display:block;color:#fff !important;cursor:pointer;
@@ -540,12 +547,13 @@ min-height:80px;font-size:12px;word-break:break-all;word-wrap:break-word;}
 
 .box15{font-size:12px;margin-top:10px;overflow:hidden;}
 
-.box16{width:400px;height:230px;background-color:rgba(255,255,255,0.9);position:fixed;left:50%;margin-left:-210px;top:50%;margin-top:-115px;
-*background-color:#fff;background-color:#fff\9;line-height:30px;color: #333;padding:20px;border-radius:5px;display:none;
+#BG{display:block;height:100%;}
+.box16{width:250px;height:170px;background-color:rgba(255,255,255,0.9);position:fixed;left:50%;margin-left:-125px;top:50%;margin-top:-85px;
+*background-color:#fff;background-color:#fff\9;line-height:30px;color: #333;padding:20px;border-radius:5px;display:block;
 box-shadow:1px 0px 10px #fff;z-index:122;font-family: 微软雅黑;font-size: 16px;border:1px solid #e0e0e0;}
 .box16 a{color:#00A0E3;font-size:13px;cursor:pointer;}
 .box16 a:hover{color:#666;}
-.box16 .box16inner{width:360px;margin:0px auto;position:relative;}
+.box16 .box16inner{width:250px;margin:0px auto;position:relative;}
 /**box17、box18框架已被定义，用于自定义菜单中，它们被放在自定义菜单框架内，未被写在这里。**/
 
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}

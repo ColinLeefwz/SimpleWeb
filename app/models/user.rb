@@ -129,11 +129,11 @@ class User
   end
   
   def self.is_kx?(uid)
-    $redis.sismember('CoUsers', uid)
+    $redis.sismember('KxUsers', uid)
   end
   
   def self.is_co?(uid)
-    $redis.sismember('KxUsers', uid)
+    $redis.sismember('CoUsers', uid)
   end
   
   def self.find_by_qq(qq, redis_only=false)
