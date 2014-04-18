@@ -1,18 +1,10 @@
-- video_sd_url, video_hd_url = ""
-- if current_user.is_a? Expert
-  - video_hd_url = "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/62/sds/tutorial_expert_dashboard_kbps600.mp4"
-  - video_hd_url = "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/62/hds/tutorial_expert_dashboard.mp4"
-- else
-  - video_sd_url = "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/61/sds/tutorial_member_dashboard_kbps600.mp4"
-  - video_hd_url = "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/61/hds/tutorial_member_dashboard.mp4"
-
 .white-background.shadow
   %h3.text-center Welcome to your Expert Dashboard! 
   
   .tutorial-video.text-center
     %video{width: '320', height: '180', class: 'sublime', data: {autoresize: 'fill'}, preload: 'none'}
-      %source{ src: video_sd_url }
-      %source{ src: video_hd_url, data: {quality: 'hd'} }
+      %source{ src: current_user.tutorial_video_sd_url }
+      %source{ src: current_user.tutorial_video_hd_url, data: {quality: 'hd'} }
 
   .tutorial-video-text
     Watch this short tutorial for an overview of the dashboard. It's only a few minutes and it is worth it!
