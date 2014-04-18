@@ -32,9 +32,8 @@
               <img src="/newbackstage/images/sign65.png"/>
             </div>
             <h2 class="tit"><%= ma.title %></h2>
-            <span class="time"><%= ma.cat %></span>
-            <!-- <img src="/newbackstage/images/pic36.jpg"/> -->
-            <%= image_tag ma.img_url(true), alt: '' %>
+            <span class="time"><%= ma.cat.strftime("%Y-%m-%d %H:%M:%S") %></span>
+            <%= image_tag ma.img_url, alt: '' %>
             <%=truncate ma.text, length: 40 %>
           </div>
         <% end %>
