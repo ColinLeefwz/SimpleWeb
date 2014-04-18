@@ -70,7 +70,7 @@ function Close3(){
 }
 function InfoDiv(strs,subnum){
 	if(strs==""){
-		if(menujson.menu.button.length>=3 ){
+		if(menujson.menu.button.length>=3&&subnum==""){
 			MessageDelDiv("<br/>一级菜单最多只能三个");
 			return false;
 		}
@@ -181,12 +181,14 @@ function Get_Menu_Map(tagid){
 		return menu_map
 	}
 function Relist_Menu(){									//重新排版菜单
+		var selected_id = $(".selected").attr('id')
     var html = ''
     $(menujson.menu.button).each(function(index, val){
         html += '<dl class="ui-sortable-disabled">';
         html += '<dt id="menu_' + index +'">';
         html += '<i class="downarrow"></i>';
-        html += ('<a class="mlink" onClick="OpenPlane(this,\'parent\',sort)">'+val.name+ '</a>');
+        var tp = "'"+ val.type2 +"'," + "'" + val.url + "'"
+        html += ('<a class="mlink" onClick="OpenPlane(this,\'parent\',sort,'+ tp +')">'+val.name+ '</a>');
         html +='<span class="menu_opr">';  
         if(!val.type){
             html += '<a class="add_gray" rel="'+ index +'" onClick="InfoDiv(\'\',\''+index+'\')">添加</a>';
@@ -198,7 +200,8 @@ function Relist_Menu(){									//重新排版菜单
         $(val.sub_button).each(function(sub_index, sub_val){
             html += '<dd id="subMenu_menu_'+ index + '_'+ sub_index +'">';
             html += '<i class="point">●</i>';
-            html += '<a class="mlink" onClick="OpenPlane(this,\'sub\',sort)">'+ sub_val.name +'</a>';
+            var stp = "'"+ sub_val.type2 +"'," + "'" + sub_val.url + "'"
+            html += '<a class="mlink" onClick="OpenPlane(this,\'sub\',sort,'+ stp +')">'+ sub_val.name +'</a>';
             html += '<span class="menu_opr">';
             html += '<a class="edit_gray" rel="'+ index +','+ sub_index +'" onclick="InfoDiv(\''+sub_val.name+'\',\''+index+','+sub_index+'\')" >编辑</a>';
             html += '<a class="del_gray" rel="'+ index +','+ sub_index +'" onclick="DelDiv(\''+index+','+sub_index+'\')">删除</a>';
@@ -209,11 +212,16 @@ function Relist_Menu(){									//重新排版菜单
     })
     $('dl').remove();
     $('#MenuList').append(html);
+    if(selected_id){
+    	$('#'+selected_id).addClass('selected')
+    }
 };
-function OpenPlane(obj,str,sort) {							//打开右侧面板
+function OpenPlane(obj,str,sort,type2,url) {							//打开右侧面板
+
 	if(sort=="nosort"){return false;}
 	$(".mlink").parent().removeClass("selected");
 	$(obj).parent().addClass("selected");
+	$('.box18bg').removeClass('jshover').hide();
 	var strs=$(obj).parent().next().text();
 
 	$(".box17con").addClass("none");
@@ -221,19 +229,56 @@ function OpenPlane(obj,str,sort) {							//打开右侧面板
 		$("#Box17Con2").removeClass("none");
 	}else{
 		$("#Box17Con3").removeClass("none");
-	}	
+	}
+	if(type2=="url"){
+		HttPLink({no_action: true});
+		$("#TextArea5").val(url);
+		return false;
+	}else if(type2=='mweb'){
+		PhoneLink({no_action: true});
+		var obj = $('.box18bg[rel="'+url+'"]').parent().clone().removeClass('box18change');
+		obj.find(".box18bg").remove();
+		$('#Box17Con5 .box18').replaceWith(obj)
+		return false
+	}else if(type2=='app'){
+		APPLink({no_action: true});
+		var obj = $('.box18bg[rel="'+url+'"]')
+		var src = obj.next().attr('src')
+		var title = obj.siblings().last().html()
+		var robj = $('#Box17Con7 .box18')
+		robj.find('img').attr('src', src)
+		robj.find('span').html(title)
+		return false
+	}
 }
-function HttPLink(){										//打开链接编辑页
+function HttPLink(option={}){										//打开链接编辑页
 	$(".box17con").addClass("none");
 	$("#Box17Con4").removeClass("none");
+	if(option.no_action){
+		return false;
+	}else{
+		$('#linkbtn').click();
+	}
+
 }
-function PhoneLink(){										//打开手机编辑页
+function PhoneLink(option={}){										//打开手机编辑页
 	$(".box17con").addClass("none");
 	$("#Box17Con5").removeClass("none");
+	if(option.no_action){
+		return false;
+	}else{
+		$('#mwebbtn').click();
+		$('#B17LC li').first().click();
+	}
 }
-function APPLink(){											//打开APP应用页
+function APPLink(option={}){											//打开APP应用页
 	$(".box17con").addClass("none");
 	$("#Box17Con7").removeClass("none");
+	if(option.no_action){
+		return false;
+	}else{
+		$('#appbtn').click();
+	}
 }
 function Res(){												//所有单元归零
 	$(".textarea5").attr("disabled","disabled");
@@ -254,7 +299,7 @@ function EditLink(obj){										//编辑链接
 			$("#UrlFail").removeClass("none");
 			return false;
 		}
-		$.post("/shop3_menu/set_view_action",{index: indexs, button: {url: url, type:"view"}}, function(data){
+		$.post("/shop3_menu/set_view_action",{index: indexs, button: {url: url, type:"view", type2: 'url'}}, function(data){
 			$("#TextArea5").attr("disabled","disabled");
 			$("#TextArea5").removeClass("orange1").addClass("textareachange2");
 			$(obj).val("编 辑");
@@ -273,14 +318,17 @@ function EditWeb(obj){									//选择跳转页面
 		ul_w+=($("#B17LC ul li").eq(i).width()+20);
 	}
 	$("#B17LC ul").css("width",ul_w+"px");
+	$('#B17LC li').first().click();
+	$(".box18bg").hide();
 }
 function EditAPP(){										//跳转到应用页面
 	$(".box17con").addClass("none");
+	$(".box18bg").hide();
 	$("#Box17Con8").removeClass("none");
 }
 function ChangePlane(obj){
-	$(obj).siblings().find("div.box18bg").hide();
-	$(obj).find("div.box18bg").toggle();
+	$(obj).siblings().find("div.box18bg").hide().removeClass('jshover');
+	$(obj).find("div.box18bg").toggle().addClass('jshover');
 }
 function More(obj,n){
 	$(obj).val("加载中...");
@@ -298,14 +346,39 @@ function More(obj,n){
 	$(window).resize();
 }
 function SaveWeb(obj){
-	$(".box17con").addClass("none");
-	$("#Box17Con5").removeClass("none");
-	$(window).resize();
+	var m = $('.selected')[0]
+	var indexs = Get_Menu_Map(m.id);
+	var url = $("#Box17Con6 div.jshover").attr('rel')
+	if(!url){
+		alert('没有选择文章')
+		return false;
+	}
+	$.post("/shop3_menu/set_view_action",{index: indexs, button: {url: url, type:"view", type2: 'mweb'}}, function(data){
+		menujson = data;
+		Relist_Menu();
+		$(".box17con").addClass("none");
+		$("#Box17Con5").removeClass("none");
+		$(window).resize();
+		$(".selected a.mlink").click();
+	})
 }
+
 function SaveAPP(){
-	$(".box17con").addClass("none");
-	$("#Box17Con7").removeClass("none");
-	$(window).resize();
+	var m = $('.selected')[0]
+	var indexs = Get_Menu_Map(m.id);
+	var url = $("#Box17Con8 div.jshover").attr('rel')
+	if(!url){
+		alert('没有选择应用')
+		return false;
+	}
+	$.post("/shop3_menu/set_view_action",{index: indexs, button: {url: url, type:"view", type2: 'app'}}, function(data){
+			menujson = data;
+			Relist_Menu();
+			$(".box17con").addClass("none");
+			$("#Box17Con7").removeClass("none");
+			$(window).resize();
+			$(".selected a.mlink").click();
+		})
 }
 function ResWeb(){
 	$(".box17con").addClass("none");

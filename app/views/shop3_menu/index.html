@@ -79,7 +79,7 @@
 					<dl class="ui-sortable-disabled">
 						<dt id="menu_<%= index %>">
 							<i class="downarrow"></i>
-							<a class="mlink" onClick="OpenPlane(this,'parent',sort)"><%= m['name']%></a>
+							<a class="mlink" onClick="OpenPlane(this,'parent',sort, '<%= m['type2']%>', '<%= m['url']%>')"><%= m['name']%></a>
 							<span class="menu_opr">
 								<% if m['type'].blank? %>
 									<a class="add_gray" onclick="InfoDiv('','<%= index %>')" rel='<%= index %>'>添加</a>
@@ -92,7 +92,8 @@
 					<% m['sub_button'] && m['sub_button'].each_with_index do |sb, sbi| %>
 						<dd id="subMenu_menu_<%= index %>_<%= sbi %>">
 							<i class="point">●</i>
-							<a class="mlink" onClick="OpenPlane(this,'sub',sort)"><%= sb['name'] %></a>
+<!-- 							<a class="mlink" onClick="OpenPlane(this,'sub',sort,'<%= m['type2']%>', '<%= m['url']%>' )"><%=  %></a> -->
+<%= link_to sb['name'], "javascript:void(0)", class: "mlink", onclick: "OpenPlane(this, 'sub', sort, '#{sb['type2']}', '#{sb['url']}')" %>
 							<span class="menu_opr">
 								<a class="edit_gray" onclick="InfoDiv('<%= sb['name'] %>','<%= "#{index},#{sbi}" %>')" rel='<%= "#{index},#{sbi}" %>'>编辑</a>
 								<a class="del_gray" onclick="DelDiv('<%= index %>,<%=sbi%>')" rel='<%= "#{index},#{sbi}" %>'>删除</a>
@@ -120,7 +121,9 @@
 				<div class="box17coninner1">
 					<center class="mt80">
 					<a onClick="HttPLink()" class="links1">跳转到其他页面</a>
-					<a onClick="PhoneLink()" class="links2">跳转到手机网站</a>
+					<% if @mobile_space.menu %>
+						<a onClick="PhoneLink()" class="links2">跳转到手机网站</a>
+					<% end %>
 					<a onClick="APPLink()" class="links3">跳转到脸脸应用</a>
 					</center>
 				</div>
@@ -129,162 +132,15 @@
 			<div class="box17con none" id="Box17Con4">
 				<div class="blue3 f15 mt20 mb20 ml20">请选择用户点击菜单后所做出的动作</div>
 				<div class="box17coninner1">
-					<textarea class="textarea5 m_auto textareachange2" disabled="disabled" id="TextArea5">http://www.baidu.com/baidu?wd=textarea&tn=monline_4_dg</textarea>
+					<textarea class="textarea5 m_auto textareachange2" disabled="disabled" id="TextArea5"></textarea>
 					<div class="orange1 f12 mt10 ml30 none" id="UrlFail">请输入正确的URL</div>
 					<div class="clear1"></div>
-					<input type="button" class="btn25 l mt20 ml120" value="编 辑" onClick="EditLink(this)"/>
+					<input type="button" id='linkbtn' class="btn25 l mt20 ml120" value="编 辑" onClick="EditLink(this)"/>
 					<input type="button" class="btn26 r mt20 mr120" value="取 消" onClick="Res()"/>
 				</div>
 			</div>
-			
-			<div class="box17con none" id="Box17Con5">
-				<div class="blue3 f15 mt20 mb20 ml20">请选择用户点击菜单后所跳转的页面</div>
-				<div class="box17coninner1">
-					<div class="box18">
-						<h2 class="tit">安居，一部厚重的书（序）</h2>
-						<span class="time">2014-03-22</span>
-						<img src="/newbackstage/images/pic36.jpg"/>
-						先看看安居历史之久远。差不多两亿年前，这里就有古生物活动。而在两万年前，就有人类居住了。三皇五帝，春秋战国，秦汉隋唐，宋元明清……
-					</div>
-					<input type="button" class="btn25 l mt20 ml120 mb20" value="编 辑" onClick="EditWeb()"/>
-					<input type="button" class="btn26 r mt20 mr120 mb20" value="取 消" onClick="Res()"/>
-				</div>
-			</div>
-			
-			<div class="box17con none" id="Box17Con6">
-				<div class="box17list mt10 mb20">
-					<a class="leftarrow" id="LeftArrow"></a>
-					<div class="box17listcon" id="B17LC">
-						<ul>
-							<li rel=0>景点咨询</li>
-							<li rel=1>旅游指南</li>
-							<li class="hover" rel=2>公司公告</li>
-							<li rel=3>现场视频</li>
-							<li rel=4>语音解说</li>
-							<li rel=5>服务热线</li>
-							<li rel=6>全球眼</li>
-							<li rel=7>重庆旅游</li>
-							<li rel=8>酒店住宿</li>
-							<li rel=9>名山风景</li>
-							<li rel=10>历史古迹</li>
-							<li rel=11>名人故居</li>
-						</ul>
-					</div>
-					<a class="rightarrow" id="RightArrow"></a>
-				</div>
-				
-				<div class="box17coninner1" id="B17C0">
-					<div class="box17ci">
-						<div class="box18 box18change" onclick="ChangePlane(this)">
-							<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-							<h2 class="tit">安居，一部厚重的书（序）</h2>
-							<span class="time">2014-03-22</span>
-							<img src="/newbackstage/images/pic36.jpg"/>
-							先看看安居历史之久远。差不多两亿年前，这里就有古生物活动。而在两万年前，就有人类居住了……
-						</div>
-						<div class="box18 box18change" onclick="ChangePlane(this)">
-							<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-							<h2 class="tit">安居，一部厚重的书（序）</h2>
-							<span class="time">2014-03-22</span>
-							<img src="/newbackstage/images/pic36.jpg"/>
-							先看看安居历史之久远。差不多两亿年前，这里就有古生物活动。而在两万年前，就有人类居住了……
-						</div>
-						<div class="box18 box18change" onclick="ChangePlane(this)">
-							<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-							<h2 class="tit">安居，一部厚重的书（序）</h2>
-							<span class="time">2014-03-22</span>
-							<img src="/newbackstage/images/pic36.jpg"/>
-							先看看安居历史之久远。差不多两亿年前，这里就有古生物活动。而在两万年前，就有人类居住了……
-						</div>
-						<div class="box18 box18change" onclick="ChangePlane(this)">
-							<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-							<h2 class="tit">安居，一部厚重的书（序）</h2>
-							<span class="time">2014-03-22</span>
-							<img src="/newbackstage/images/pic36.jpg"/>
-							先看看安居历史之久远。差不多两亿年前，这里就有古生物活动。而在两万年前，就有人类居住了……
-						</div>
-						<div class="box18 box18change" onclick="ChangePlane(this)">
-							<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-							<h2 class="tit">安居，一部厚重的书（序）</h2>
-							<span class="time">2014-03-22</span>
-							<img src="/newbackstage/images/pic36.jpg"/>
-							先看看安居历史之久远。差不多两亿年前，这里就有古生物活动。而在两万年前，就有人类居住了……
-						</div>
-						<div class="box18 box18change" onclick="ChangePlane(this)">
-							<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-							<h2 class="tit">安居，一部厚重的书（序）</h2>
-							<span class="time">2014-03-22</span>
-							<img src="/newbackstage/images/pic36.jpg"/>
-							先看看安居历史之久远。差不多两亿年前，这里就有古生物活动。而在两万年前，就有人类居住了……
-						</div>
-					</div>
-					<input type="button" class="btn25 l mt20 ml120 mb20" value="保 存" onClick="SaveWeb(this)"/>
-					<input type="button" class="btn26 r mt20 mr60 mb20" value="更 多" onClick="More(this,0)"/>
-					<a class="btn26 r mt20 mr40 mb20" onClick="ResWeb()"/>取 消</a>
-				</div>
-				<div class="box17coninner1 none" id="B17C1">
-					<div class="box17ci">
-						<div class="box18 box18change" onclick="ChangePlane(this)">
-							<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-							<h2 class="tit">安居，一部厚重的书（序）</h2>
-							<span class="time">2014-03-22</span>
-							<img src="/newbackstage/images/pic36.jpg"/>
-							先看看安居历史之久远。差不多两亿年前，这里就有古生物活动。而在两万年前，就有人类居住了……
-						</div>
-						<div class="box18 box18change" onclick="ChangePlane(this)">
-							<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-							<h2 class="tit">安居，一部厚重的书（序）</h2>
-							<span class="time">2014-03-22</span>
-							<img src="/newbackstage/images/pic36.jpg"/>
-							先看看安居历史之久远。差不多两亿年前，这里就有古生物活动。而在两万年前，就有人类居住了……
-						</div>
-					</div>
-					<input type="button" class="btn25 l mt20 ml120 mb20" value="保 存" onClick="SaveWeb(this)"/>
-					<input type="button" class="btn26 r mt20 mr60 mb20" value="更 多" onClick="More(this,1)"/>
-					<a class="btn26 r mt20 mr40 mb20" onClick="ResWeb()">取 消</a>
-				</div>
-			</div>
-			
-			<div class="box17con none" id="Box17Con7">
-				<div class="blue3 f15 mt20 mb20 ml20">请选择用户点击菜单后所跳到的应用页面</div>
-				<div class="box17coninner1">
-					<div class="box18 p0 w260">
-						<img src="/newbackstage/images/guaguaka.jpg"/>
-						<span class="tit">刮刮卡</span>
-					</div>
-					<input type="button" class="btn25 l mt20 ml120 mb20" value="编 辑" onClick="EditAPP()"/>
-					<input type="button" class="btn26 r mt20 mr120 mb20" value="取 消" onClick="Res()"/>
-				</div>
-			</div>
-
-			<div class="box17con none" id="Box17Con8">
-				<div class="blue3 f15 mt20 mb20 ml20">请选择用户点击菜单后所跳到的应用页面</div>
-				<div class="box17coninner1">
-					<div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
-						<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-						<img src="/newbackstage/images/guaguaka.jpg"/>
-						<span class="tit">刮刮卡</span>
-					</div>
-					<div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
-						<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-						<img src="/newbackstage/images/dazhuanpan.jpg"/>
-						<span class="tit">大转盘</span>
-					</div>
-					<div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
-						<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-						<img src="/newbackstage/images/fkct.jpg"/>
-						<span class="tit">疯狂猜图</span>
-					</div>
-					<div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
-						<div class="box18bg"><img src="/newbackstage/images/sign65.png"/></div>
-						<img src="/newbackstage/images/dianxiaoer.jpg"/>
-						<span class="tit">电小二点菜</span>
-					</div>
-					<input type="button" class="btn25 l mt20 ml120 mb20" value="保 存" onClick="SaveAPP()"/>
-					<input type="button" class="btn26 r mt20 mr120 mb20" value="取 消" onClick="Res()"/>
-				</div>
-			</div>
-
+			<%= render "mobile"%>			
+			<%= render 'app' %>
 		</div>
 	</div>
 	
