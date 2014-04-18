@@ -33,7 +33,7 @@ class CheckinNotice
       if at_here
         checkin.save!
       else
-        if is_kx_user?(checkin.uid)
+        if User.is_kx?(checkin.uid)
           checkin.save!
         elsif checkin.staff_checkin?
           # 商家员工（加V的用户）是随时可以摇入他管理的地点的。这里保证实际签到才保存，可用于考勤。

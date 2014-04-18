@@ -7,9 +7,9 @@ class AroundmeController < ApplicationController
   caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
 
   def my4
-    arr = $redis.zrange("LL3#{params[:user_id]}",0,3).map {|id| s=Shop.find_by_id(id)}
-    arr.uniq!
-    ret = arr.find_all{|x| x!=nil}.map {|x| x.safe_output_with_users}
+    arr = $redis.zrange("LL3#{params[:user_id]}",0,3,withscores:true)
+    arr = arr.map{|x| [Shop.find_by_id(x[0]),x[1].to_i]}.find_all{|x| x[0]!=nil}
+    ret = arr.map {|x| x[0].safe_output_with_users.merge!({time:Checkin.time_desc(x[1]), timei:x[1]})}
     render :json =>  ret.to_json
   end
   
@@ -42,7 +42,7 @@ class AroundmeController < ApplicationController
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     city = Shop.get_city(lo)
     arr = []
-    if is_kx_user?(session[:user_id])
+    if User.is_kx?(session[:user_id])
       $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
     end
     if is_co_user?(session[:user_id])
@@ -140,7 +140,7 @@ class AroundmeController < ApplicationController
     arr = find_shop_cache(lo,params[:accuracy].to_f,session[:user_id],params[:bssid]) 
     Rails.cache.write("LLOC#{session[:user_id]}",[lo,params[:accuracy].to_f,params[:bssid]]) 
     record_gps(lo, gps, wifi)
-    if is_kx_user?(session[:user_id])
+    if User.is_kx?(session[:user_id])
       $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
     end
     if is_co_user?(session[:user_id])
@@ -187,7 +187,7 @@ class AroundmeController < ApplicationController
         arr = arr+[ shop ]
       end
     end
-    if city && city=="023" && lo[0].to_s[0,4]=="29.3" && ( lo[1].to_s[0,5]=="105.9" || lo[1].to_s[0,5]=="105.8")
+    if city && city=="023" && (lo[0].to_s[0,4]=="29.3" || lo[0].to_s[0,4]=="29.4" || lo[0].to_s[0,4]=="29.2") && ( lo[1].to_s[0,5]=="105.9" || lo[1].to_s[0,5]=="105.8")
       shop = Shop.find_by_id(21840462) # 永川脸脸 [29.348392999999998, 105.913615]
       if shop
 	      shop.city = city

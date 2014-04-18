@@ -36,12 +36,6 @@ $zwyd = 21828958 #紫薇原点
 #UnBroadcast => [21828775,21830325,21830326,21830784,21830785,21835409,21835801], $redis.smembers("UnBroadcast")
 
 
-
-def is_kx_user?(uid)
-  $redis.sismember('KxUsers', uid)
-end
-
-
 $sina_api_key = "2054816412"  
 $sina_api_key_secret = "75487227b4ada206214904bb7ecc2ae1"  
 $sina_callback = "http://www.dface.cn/oauth2/sina_callback"

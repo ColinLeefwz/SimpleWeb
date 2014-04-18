@@ -119,6 +119,9 @@ class UserInfoController < ApplicationController
       qqtoken = $redis.get("qqtoken#{session[:user_id]}")
       hash.merge!(qqtoken:qqtoken, qqexpire:qqexpire) if qqtoken
     end
+    if session_user.is_kx_or_co?
+      hash.merge!({"kx"=>1})
+    end
     render :json => hash.to_json
   end
 

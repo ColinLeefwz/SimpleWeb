@@ -82,7 +82,7 @@ class ShopController < ApplicationController
     end
     if params[:sname][0,3]=="@@@" #测试人员输入商家id模拟签到
       shop = Shop.find_by_id(params[:sname][3..-1])  
-      if shop && (session[:user_id].to_s == shop.seller_id.to_s || is_kx_user?(session[:user_id]) || User.is_fake_user?(session[:user_id]) )
+      if shop && (session[:user_id].to_s == shop.seller_id.to_s || User.is_kx?(session[:user_id]) || User.is_fake_user?(session[:user_id]) )
          render :json => [shop].map {|s| output(s,lo).merge!(s.group_hash(session[:user_id])) }.to_json
         return
       end
@@ -102,7 +102,7 @@ class ShopController < ApplicationController
       shop1s.each do |s| 
         hash = output(s,lo).merge!(s.group_hash(session[:user_id]))
         distance = s.min_distance(s,lo)
-        if distance>3000 && !s.group_id && s.id != 21834120 && !is_kx_user?(session[:user_id]) && !is_co_user?(session[:user_id])
+        if distance>3000 && !s.group_id && s.id != 21834120 && !User.is_kx?(session[:user_id]) && !is_co_user?(session[:user_id])
           hash.merge!( {visit:1} )
         else
           hash.merge!( {visit:0} )
@@ -221,6 +221,21 @@ class ShopController < ApplicationController
       photos = shop.preset_p(photos)
     end
     render :json => photos.map {|p| p.output_hash_with_username }.to_json
+  end
+  
+  def banners
+    ret = Photo.where({}).sort({_id:1}).limit(5).map {|x| x.logo_thumb_hash}
+    #TODO：Banner管理
+    render :json => ret.to_json
+  end
+  
+  def subs
+    shop = Shop.find_by_id(params[:id])
+    if shop.nil || shop.shops.nil?
+      render :json => [].to_json
+    else
+      render :json => shop.sub_shops.map{|x| x.safe_output}.to_json
+    end
   end
   
 

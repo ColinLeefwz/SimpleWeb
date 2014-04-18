@@ -22,7 +22,7 @@ class CheckinsController < ApplicationController
       render :json => {error: "没权限创建：#{params[:sname]}"}.to_json
       return
     end
-    if !is_kx_user?(session[:user_id]) && !is_co_user?(session[:user_id])
+    if !session_user.is_kx_or_co?
       if Rails.cache.read("ADDSHOP#{session[:user_id]}")
         render :json => {error: "一个用户一天只能创建一个地点"}.to_json
         return

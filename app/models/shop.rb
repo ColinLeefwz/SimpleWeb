@@ -239,8 +239,14 @@ class Shop
     hash.merge!({type: Shop.t2type(self.t)})
     hash.merge!( {"user"=>total_user})
     hash.merge!( {"has_menu"=>self.has_menu.to_i}) if self.has_menu.to_i>0
+    if self.password
+      hash.merge!( {"sign"=>1, "tel"=>self.phone_or_tel, "addr"=>self.addr}) 
+      hash.merge!( self.logo.logo_thumb_hash) if self.logo
+    end
+    hash.merge!( {"sub"=>"有#{self.shops.size}个子地点"} ) if self.shops && self.shops.size>0
     hash
   end
+  
   
   def safe_output_with_users
     total,female = CheckinShopStat.get_user_count_redis(self._id)
@@ -651,7 +657,7 @@ class Shop
 
   # 是否对用户启用预置问答
   def preset?(user)
-    is_kx_user?(user.id) && self.no_faq?
+    User.is_kx?(user.id) && self.no_faq?
     # user && (user.cat+3.days) > Time.now && self.no_faq?
   end
 
@@ -821,6 +827,10 @@ class Shop
 
   def contact
     info && info.contact
+  end
+  
+  def phone_or_tel
+    phone || tel
   end
   
   def tel
