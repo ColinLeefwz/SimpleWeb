@@ -11,6 +11,10 @@ module Landingable
     landing_item.update_attributes num: order
   end
 
+  def is_staff_course?
+    (self.is_a? Course) && (self.experts.include? Expert.staff)
+  end
+
   protected
   def added_to_landingitems
     Landingitem.add_record(self)

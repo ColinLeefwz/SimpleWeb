@@ -1,14 +1,14 @@
 def helper_objects
-  # Members
-  let(:peter) { create :member, email: 'peter@test.com', password: '11111111', first_name: 'peter', last_name: 'zhao', user_name: "peter-zhao" } #, avatar: fixture_file_upload(('AD pic.jpg'), 'image/png')}
-  let(:jevan) { create :member, email: 'jevan@test.com', password: '11111111', first_name: 'jevan', last_name: 'wu', user_name: "jevan-wu"  } #, avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
-  let(:gecko) { create :member, email: 'gecko@test.com', password: '11111111', first_name: 'gecko', last_name: 'fu', user_name: "gecko-fu" }
-  let(:allen) { create :user, email: 'allen@test.com', password: '11111111', first_name: 'allen', last_name: 'wang', user_name: "allen-wang" }
-
   #experts
   let(:sameer) { create :expert, id: 1, email: 'sameer@test.com', password: '11111111', first_name: 'sameer', last_name: 'karim', user_name: "sameer-karim" } # , avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
   let(:staff) { create :expert, id: 2, email: 'staff@prodygia.com', password: '11111111', first_name: 'staff', last_name: 'prodygia', user_name: "staff" } # , avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
   let(:alex) {create :expert, id: 3, email: 'alex@test.com', password: '11111111', first_name: 'alex', last_name: 'lalo', user_name: "alex-lalo" } # , avatar: fixture_file_upload(('AD pic.jpg'), 'image/png') }
+
+  # Members
+  let(:peter) { create :member, id: 4, email: 'peter@test.com', password: '11111111', first_name: 'peter', last_name: 'zhao', user_name: "peter-zhao" } #, avatar: fixture_file_upload(('AD pic.jpg'), 'image/png')}
+  let(:jevan) { create :member, id: 5, email: 'jevan@test.com', password: '11111111', first_name: 'jevan', last_name: 'wu', user_name: "jevan-wu"  } #, avatar: fixture_file_upload(('sameerkarim.png'), 'image/png')}
+  let(:gecko) { create :member, id: 6, email: 'gecko@test.com', password: '11111111', first_name: 'gecko', last_name: 'fu', user_name: "gecko-fu" }
+  let(:allen) { create :user, id: 7, email: 'allen@test.com', password: '11111111', first_name: 'allen', last_name: 'wang', user_name: "allen-wang" }
 
   #admins
   let(:admin) { create :admin_user, email: 'admin@example.com', password: 'password', first_name: 'admin', last_name: 'example', user_name: "admin"}
@@ -41,6 +41,7 @@ def helper_objects
                        description: 'Show you China road map', categories: [culture]}
   #courses
   let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer], categories: [culture] }
+  let(:course_staff) { create :course, title: "staff course", description: "course description", experts: [staff], categories: [culture] }
 
   #chapters
   let(:first_chapter) { create :chapter, title: "first chapter", description: "chapter description", course: first_course }
