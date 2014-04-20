@@ -6,7 +6,7 @@
       .expert-name
         = expert_name_helper(item)
     .content-type
-      = image_tag(get_image_tag(item), class: "tooltips", title: item.decorate.get_tooltip, data: {placement: "bottom"})
+      = image_tag(item.decorate.get_image_tag, class: "tooltips", title: item.decorate.get_tooltip, data: {placement: "bottom"})
       %p= item.category_names
       %p= item.language.split(",")[0] if (item.respond_to? :language and item.language)
   .title

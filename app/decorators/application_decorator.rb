@@ -4,4 +4,9 @@ class ApplicationDecorator < Draper::Decorator
 
     tooltips[object.class.name]
   end
+
+  def get_image_tag
+    images = { "LiveSession" => "livestreaming.png", "Article" => "text.png", "VideoInterview" => "video_interview_icon.png", "Announcement" => "announcement.png", "Course" => "video_course_icon.png" }
+    images[object.class.name]
+  end
 end
