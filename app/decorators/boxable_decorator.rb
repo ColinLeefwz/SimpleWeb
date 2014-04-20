@@ -28,4 +28,19 @@ module BoxableDecorator
       expert.is_staff ? (raw image) : (link_to image, profile_expert_path(expert))
     end
   end
+
+  def expert_name_helper
+    html = ""
+    if object.is_a? Course
+      object.experts.each do |expert|
+        html << h.capture { link_to expert.name_with_inital, profile_expert_path(expert) }
+        html << "  "
+      end
+    else
+      expert = object.expert
+      name = object.expert.name
+      html = expert.is_staff ? (raw name) : (link_to name, profile_expert_path(expert))
+    end
+    html.html_safe
+  end
 end

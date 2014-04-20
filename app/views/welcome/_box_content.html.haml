@@ -4,7 +4,7 @@
     .portrait
       = item.decorate.expert_image_helper
       .expert-name
-        = expert_name_helper(item)
+        = item.decorate.expert_name_helper
     .content-type
       = image_tag(item.decorate.get_image_tag, class: "tooltips", title: item.decorate.get_tooltip, data: {placement: "bottom"})
       %p= item.category_names
