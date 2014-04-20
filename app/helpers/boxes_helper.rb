@@ -1,14 +1,4 @@
 module BoxesHelper
-  def expert_image_helper(item)
-    if item.is_a? Course
-      link_to image_tag(item.experts.first.avatar.url), profile_expert_path(item.experts.first)
-    else
-      expert = item.expert
-      image = image_tag(expert.avatar.url)
-      expert.is_staff ? (raw image) : (link_to image, profile_expert_path(expert))
-    end
-  end
-
   def expert_name_helper(item)
     html = ""
     if item.is_a? Course
