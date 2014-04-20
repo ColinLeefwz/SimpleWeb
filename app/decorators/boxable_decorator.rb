@@ -1,14 +1,11 @@
 module BoxableDecorator
   include Draper::LazyHelpers
   def get_tooltip
-    tooltips = {"Article" => "article", "VideoInterview" => "interview", "Course" => "course", "Announcement" => "announcement"}
-
-    tooltips[object.class.name]
+    Landingitem::TOOL_TIPS[object.class.name]
   end
 
   def get_image_tag
-    images = { "LiveSession" => "livestreaming.png", "Article" => "text.png", "VideoInterview" => "video_interview_icon.png", "Announcement" => "announcement.png", "Course" => "video_course_icon.png" }
-    images[object.class.name]
+    Landingitem::IMAGE_TAGS[object.class.name]
   end
 
   def get_box_class
