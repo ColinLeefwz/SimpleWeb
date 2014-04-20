@@ -1,4 +1,3 @@
-
 module SharesHelper
 
   def copyright_notice_year_range(start_year)
