@@ -1036,6 +1036,10 @@ class User
       end
     end
   end
+  
+  def my_loc
+    MyLoc.find_by_id(self.id)
+  end
 
     
 end
