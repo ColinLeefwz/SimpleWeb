@@ -1,5 +1,12 @@
 module BoxableDecorator
   include Draper::LazyHelpers
+
+  def comment_counting
+    comments = object.comments
+    count = comments.count
+    count > 0 ? pluralize(comments.count, "Comment") : "Be the first to comment"
+  end
+
   def get_tooltip
     Landingitem::TOOL_TIPS[object.class.name]
   end
