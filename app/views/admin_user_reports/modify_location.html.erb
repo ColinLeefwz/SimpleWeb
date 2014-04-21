@@ -1,0 +1,123 @@
+
+<div class="container" id="admin_user_reports">
+  <div class="row">
+    <div class="col-md-2 text-right">
+      商家ID:
+    </div>
+    <div class="col-md-4">
+      <%= @report.shop_id %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 text-right">
+      地点名称:
+    </div>
+    <div class="col-md-4">
+      <%= @report.shop_name %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 text-right">
+      地点地址:
+    </div>
+    <div class="col-md-4">
+      <%= @report.shop_addr %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 text-right">
+      百度经纬度:
+    </div>
+    <div class="col-md-3" id="lob">
+      <%= @report.shop.lo %>
+    </div>
+    <div class="col-md-2">
+      <a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank">查找百度经纬度</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 text-right">
+      计算经纬度:
+    </div>
+    <div class="col-md-3">
+      <input type="text" id="lob2" placeholder="输入查找到的百度经纬度"/>
+      <span id="warming"></span>
+    </div>
+    <div class="col-md-2">
+      <a herf="javascropt:void(0);" id="calculate-distance">计算距离</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 text-right">
+      偏离距离:
+    </div>
+    <div class="col-md-3">
+      <span id="distance"></span>
+    </div>
+    <div class="col-md-2">
+      <a href="#">更正地点坐标</a>
+    </div>
+    <div class="col-md-2">
+      <a href="#">新增地点坐标</a>
+    </div>
+  </div>
+
+  <div class="row" id="change-coordinate">
+    <div class="col-md-2 text-right">
+      更正坐标:
+    </div>
+    <div class="col-md-3">
+      <input type="text" id="change-coordinate-val" value="<%= @report.shop.lo_to_lob %>">
+    </div>
+    <div class="col-md-2">
+      <button type="button" id="change-corrdinate-submit" class="btn btn-primary  btn-xs">更正</button>
+    </div>
+  </div>
+
+  <div class="row" id="new-coordinate">
+    <div class="col-md-2 text-right">
+      新增坐标:
+    </div>
+    <div class="col-md-3">
+      <input type="text" id="new-coordinate-val">
+    </div>
+    <div class="col-md-2">
+      <button type="button" id="new-corrdinate-submit" class="btn btn-primary  btn-xs">新增</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2 text-right">
+      <%= link_to "返回", "/admin_user_reports", class: "btn btn-default" %>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#calculate-distance").click(function(){
+      var lob1 = "<%= @report.shop.lo_to_lob %>"
+      var lob2 = $('#lob2').val();
+      $.get('/admin_user_add_shops/ajax_dis', {lob1: lob1, lob2: lob2}, function(data){
+        $("#distance").text(data["distance"]+"（米）");
+      });
+    });
+
+    $("#change-corrdinate-submit").click(function(event) {
+      event.preventDefault();
+      var params = {lo: $("#change-coordinate-val").val()};
+      $.ajax({
+        url: "/admin_user_reports/update_corrdinate?id=<%= @report.id %>",
+        type: 'POST',
+        dataType: 'json',
+        data: params
+      })
+      .success(function(data) {
+        if(data.success) {
+          $("#lob").text(data.lo);
+        }
+      });
+    });
+  })
+</script>

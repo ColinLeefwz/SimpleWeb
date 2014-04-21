@@ -1,0 +1,68 @@
+<table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40 f13 agent_tab">
+  <tr id="Tr0">
+    <th width="150">商家ID</th>
+    <th width="200">商家名称</th>
+    <th width="220">报错人</th>
+    <th width="120">报错类型</th>
+    <th width="120">推荐操作</th>
+    <th width="90">误报</th>
+    <th width="120">查看</th>
+  </tr>
+
+  <% @shop_reports.each do |report| %>
+    <tr>
+      <td valign="middle"><%= report.sid %></td>
+      <td valign="middle"><%= link_to report.shop.name, "admin_shops/show?id=#{report.shop.id}" %></td>
+      <td valign="middle"><%= link_to report.user.name, "admin_users/show?id=#{report.user.id}" %></td>
+      <td valign="middle"><%= report.type %></td>
+      <td valign="middle">
+        <% if report.flag %>
+          <%= report.report_flag %>
+        <% else %>
+          <%= link_to report.recommend_operation[:operation], report.recommend_operation[:url], id: "operation" %>
+        <% end %>
+      </td>
+      <td valign="middle" id="error_push">
+        <% if report.flag %>
+          <%= report.report_flag %>
+        <% else %>
+          <%= link_to '忽略', "#", :onclick => "ajaxIgnor('#{report.id}', $(this))" %>
+        <% end %>
+      </td>
+      <td valign="middle"><%= link_to '查看', "/admin_user_reports/show?id=#{report.id} "%></td>
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>
+<script type="text/javascript">
+  function ajaxIgnor(report_id, obj){
+    if(confirm("确定忽略？")) {
+      $.ajax({
+        url: '/admin_user_reports/ignore',
+        type: 'POST',
+        dataType: 'json',
+        data: {report_id: report_id}
+      })
+      .success(function(data) {
+        if (data.success) {
+          $("#error_push").html('忽略');
+        }
+      });
+    }
+  }
+
+  function ajaxDel(report_id) {
+    if(confirm("确定删除？")) {
+      $.ajax({
+        url: "/admin_usera_add_shops/report_del",
+        type: 'POST',
+        dataType: 'json',
+        data: {id: report_id}
+      })
+      .success(function(data) {
+        if (data.success) {};
+      });
+    }
+  }
+
+</script>
