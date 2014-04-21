@@ -5,17 +5,17 @@ class Member < User
 
   def tutorial_video_sd_url
     if self.is_a? Expert
-      return "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/62/sds/tutorial_expert_dashboard_kbps600.mp4"
+      return "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/64/sds/tutorial_expert_dashboard_no_logo_kbps600.mp4"
     else
-      return "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/61/sds/tutorial_member_dashboard_kbps600.mp4"
+      return "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/63/sds/tutorial_member_dashboard_no_logo_kbps600.mp4"
     end
   end
 
   def tutorial_video_hd_url
     if self.is_a? Expert
-      return "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/62/hds/tutorial_expert_dashboard.mp4"
+      return "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/64/hds/tutorial_expert_dashboard_no_logo.mp4"
     else
-      return "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/61/hds/tutorial_member_dashboard.mp4"
+      return "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/63/hds/tutorial_member_dashboard_no_logo.mp4"
     end
   end
 
