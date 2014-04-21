@@ -6,7 +6,7 @@ class AdminUserAddShopsController < ApplicationController
 
   def index
     hash = {_id:{"$gt" => 21000000}, creator: {"$ne" => nil}}
-   
+
     case params[:flag]
     when '0'
     when '1'
@@ -66,7 +66,7 @@ class AdminUserAddShopsController < ApplicationController
       shop.lob = @shop.lo_to_lob.reverse.join(',')
     end
 
-    
+
     unless params[:shop][:addr].blank?
       info = @shop.info || ShopInfo.new()
       info._id = @shop.id
@@ -98,6 +98,12 @@ class AdminUserAddShopsController < ApplicationController
     @shop.shop_del
     @shop.update_attribute(:i, true)
     render :js => "rmshop('#{@shop.id.to_i}');"
+  end
+
+  def cancel_delete
+    @shop = Shop.find(params[:id])
+    @shop.del = nil
+    render :json => {:distance => distance}
   end
 
   def ajax_del
