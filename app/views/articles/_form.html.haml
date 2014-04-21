@@ -3,7 +3,7 @@
     .page-header
       %h3 Post New Content
       .guideline-sentence
-        = link_to 'Guidelines ', '#guideline-modal', data:{toggle: "modal"} 
+        = link_to 'Guidelines ', '#guideline-modal', data:{toggle: "modal"}
         for posting your article on Prodygia
 
     .form-group
@@ -34,7 +34,7 @@
       .col-sm-8
         = f.text_area :description, class: 'ckeditor session-description-input'
       = f.hidden_field :draft
-        
+
 
     .form-group
       .col-sm-4
@@ -44,7 +44,7 @@
       .col-sm-2
         = f.submit "Publish", class: 'btn dashboard-buttons btn-prodygia', id: "publish"
       .col-sm-2
-        = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons btn-default"
+        = link_to "Cancel", contents_expert_path(current_user), remote: true, class: "btn dashboard-buttons btn-default"
 
       = render "article_preview", f: f
       = render "experts/guideline_page_modal"
