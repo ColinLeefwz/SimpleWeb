@@ -245,4 +245,10 @@ class Coupon
     end
   end
 
+  #一个月前的优惠券自动过期
+  def self.auto_hide(day_ago=30)
+    bg_id = day_ago.days.to_i.to_s(16).ljust(24,'0') 
+    Coupon.where(_id: {'$lt' => bg_id}).where(hidden: nil).each{|c| c.set(:hidden, 1)}
+  end
+
 end
