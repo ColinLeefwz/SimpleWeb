@@ -8,11 +8,11 @@ $(document).ready(function(){
 
 	//完成
 	$('#finishBt').click(function(){
-		Relist_Menu();
 		back_up();
 		var index = order_index();
 		$.post('/shop3_menu/sort_menu', {index: index}, function(data){
 			menujson = data;
+			Relist_Menu();
 			sort="sort";
 		})
 	})
@@ -181,17 +181,18 @@ $(document).ready(function(){
 	}
 
 	function order_index(){
-		var index = {}
-		$("#MenuList dl").each(function(){
-			var dd_arr = []
-			var dt_obj = $(this).find('dt').first()
-			var dt_index = last_index(dt_obj.attr('id'))
-			$(this).find('dd').each(function(){
-				var dd_index = last_index($(this).attr('id'))
-				dd_arr.push(parseInt(dd_index))
-			});
-			index[dt_index] = dd_arr.length > 0 ? dd_arr : null
-		});
-		return index;
+	  var indexes = [];
+	  $("#MenuList dl").each(function(){
+	    var arr = []
+	    var dt_index = last_index($(this).find('dt').first().attr('id'))
+	    arr.push(dt_index)
+	    $(this).find('dd').each(function(){
+        var dd_index = last_index($(this).attr('id'))
+        arr.push(parseInt(dd_index))
+	    });
+	    indexes.push(arr)
+	  });
+	  return indexes;
 	};
+
 });

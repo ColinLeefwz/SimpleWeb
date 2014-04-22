@@ -106,15 +106,9 @@ class Gchat
       gchat = Gchat.new(uid: chat[0], sid: sid, mid: chat[3], txt: chat[1])
       gchat._id = (chat[2].to_s(16)+ '0'*10 +(0..9).to_a.sample(6).join('')).__mongoize_object_id__
       gchat.save
-      #gchat.insert_ll3
     rescue
       nil
     end
-  end
-  
-  def insert_ll3
-    $redis.zadd("LL3#{self.uid}",self.cati,self.sid)
-    $redis.zremrangebyrank("LL3#{self.uid}",-10,-4)
   end
 
   def self.remain_init_to_mongo(shop,skip, count)

@@ -11,6 +11,8 @@ class CheckinNotice
     else 
       checkin = ck #测试时直接调用
     end
+    $redis.zadd("LL3#{checkin.uid}",Time.now.to_i,checkin.sid)
+    $redis.zremrangebyrank("LL3#{checkin.uid}",-10,-5) #保留最新的4个
     shop = Shop.find_by_id(checkin.sid)
     user = User.find_by_id(checkin.uid)
     if new_shop

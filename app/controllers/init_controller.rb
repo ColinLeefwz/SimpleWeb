@@ -39,7 +39,7 @@ class InitController < ApplicationController
       version = "2.7.2"
       ver = 2.7
     end
-    render :json => {ip: ip, xmpp: xmpp , ver:ver, version:version }.to_json
+    render :json => {ip: ip, xmpp: xmpp , ver:ver, version:version,time:Time.now.to_i }.to_json
   end
   
  $ios = [
@@ -62,6 +62,10 @@ class InitController < ApplicationController
     else
       render :json => $ios[-1].to_json
     end
+  end
+  
+  def time
+    render :json => {time:Time.now.to_i}.to_json
   end
   
   def debug

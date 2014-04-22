@@ -1,3 +1,2 @@
-kill -KILL `cat log/unicorn.pid`
-god terminate
-pgp resque | awk '{print $2}' | xargs kill
+#!/bin/bash
+bundle exec pumactl -P /mnt/lianlian/log/puma.pid stop

@@ -1,61 +1,68 @@
-<div class="box17con none" id="Box17Con7">
-  <div class="blue3 f15 mt20 mb20 ml20">请选择用户点击菜单后所跳到的应用页面</div>
-  <div class="box17coninner1">
-    <div class="box18 p0 w260">
-      <img src="/newbackstage/images/guaguaka.jpg"/>
-      <span class="tit">刮刮卡</span>
-    </div>
-    <input type="button" id='appbtn' class="btn25 l mt20 ml120 mb20" value="编 辑" onClick="EditAPP()"/>
-    <input type="button" class="btn26 r mt20 mr120 mb20" value="取 消" onClick="Res()"/>
-  </div>
+<div class="box17right none" id="Box17Con7">
+	<div class="title5"><h2>设置动作</h2>
+		<a id='appbtn' class="btn23 mt5 r" onClick="EditAPP()"/>编辑</a>
+	</div>
+	<div class="box17con">
+	  <div class="blue3 f15 mt20 mb20 ml20">用户点击该子菜单会跳到以下脸脸应用页面</div>
+	  <div class="box17coninner1">
+		<div class="box18 p0 w260">
+		  <img src="/newbackstage/images/guaguaka.jpg"/>
+		  <span class="tit">刮刮卡</span>
+		</div>
+		
+	  </div>
+	</div>
 </div>
 
-<div class="box17con none" id="Box17Con8">
-  <div class="blue3 f15 mt20 mb20 ml20">请选择用户点击菜单后所跳到的应用页面</div>
-  <div class="box17coninner1">
-    <% if session_shop.has_caitu_purview? %>
-      <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
-        <div class="box18bg" rel='http://caitu.dface.cn'>
-          <img src="/newbackstage/images/sign65.png"/>
-        </div>
-        <img src="/newbackstage/images/fkct.jpg"/>
-        <span class="tit">疯狂猜图</span>
-      </div>
-    <% end %>
-    <% if session_shop.has_food_purview?%>
-      <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
-        <div class="box18bg" rel='http://food.dface.cn/home/order'>
-          <img src="/newbackstage/images/sign65.png"/>
-        </div>
-        <img src="/newbackstage/images/dianxiaoer.jpg"/>
-        <span class="tit">电小二订单</span>
-      </div>
-      <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
-        <div class="box18bg" rel='http://food.dface.cn/home/shop'>
-          <img src="/newbackstage/images/sign65.png"/>
-        </div>
-        <img src="/newbackstage/images/dianxiaoer.jpg"/>
-        <span class="tit">电小二菜谱</span>
-      </div>
-    <% end %>
-    <% if false%>
-      <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
-        <div class="box18bg" rel='http://game.dface.cn/guaguakas'>
-          <img src="/newbackstage/images/sign65.png"/>
-        </div>
-        <img src="/newbackstage/images/guaguaka.jpg"/>
-        <span class="tit">刮刮卡</span>
-      </div>
-      <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
-        <div class="box18bg" rel='http://game.dface.cn/dazhuanpas'>
-          <img src="/newbackstage/images/sign65.png"/>
-        </div>
-        <img src="/newbackstage/images/dazhuanpan.jpg"/>
-        <span class="tit">大转盘</span>
-      </div>
-    <% end %>
-    <span class="clear1"></span>
-    <input type="button" class="btn25 l mt20 ml120 mb20" value="保 存" onClick="SaveAPP()"/>
-    <input type="button" class="btn26 r mt20 mr120 mb20" value="取 消" onClick="Res()"/>
-  </div>
+<div class="box17right none" id="Box17Con8">
+	<div class="title5"><h2>设置动作</h2></div>
+	<div class="box17con">
+	  <div class="blue3 f15 mt20 mb20 ml20">用户点击该子菜单会跳到以下脸脸应用页面</div>
+	  <div class="box17coninner1">
+		<% if session_shop.has_caitu_purview? %>
+		  <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
+			<div class="box18bg" rel='http://caitu.dface.cn'>
+			  <img src="/newbackstage/images/sign65.png"/>
+			</div>
+			<img src="/newbackstage/images/fkct.jpg"/>
+			<span class="tit">疯狂猜图</span>
+		  </div>
+		<% end %>
+		<% if session_shop.has_food_purview?%>
+		  <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
+			<div class="box18bg" rel='http://food.dface.cn/home/order'>
+			  <img src="/newbackstage/images/sign65.png"/>
+			</div>
+			<img src="/newbackstage/images/dianxiaoer.jpg"/>
+			<span class="tit">电小二订单</span>
+		  </div>
+		  <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
+			<div class="box18bg" rel='http://food.dface.cn/home/shop'>
+			  <img src="/newbackstage/images/sign65.png"/>
+			</div>
+			<img src="/newbackstage/images/dianxiaoer.jpg"/>
+			<span class="tit">电小二菜谱</span>
+		  </div>
+		<% end %>
+		<% if false%>
+		  <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
+			<div class="box18bg" rel='http://game.dface.cn/guaguakas'>
+			  <img src="/newbackstage/images/sign65.png"/>
+			</div>
+			<img src="/newbackstage/images/guaguaka.jpg"/>
+			<span class="tit">刮刮卡</span>
+		  </div>
+		  <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
+			<div class="box18bg" rel='http://game.dface.cn/dazhuanpas'>
+			  <img src="/newbackstage/images/sign65.png"/>
+			</div>
+			<img src="/newbackstage/images/dazhuanpan.jpg"/>
+			<span class="tit">大转盘</span>
+		  </div>
+		<% end %>
+		<span class="clear1"></span>
+		<input type="button" class="btn22 l mt20 ml120 mb20" value="保 存" onClick="SaveAPP()"/>
+		<input type="button" class="btn22_1 r mt20 mr120 mb20" value="取 消" onClick="Res()"/>
+	  </div>
+	</div>
 </div>
