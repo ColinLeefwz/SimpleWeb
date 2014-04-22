@@ -764,6 +764,7 @@ font-size:14px;overflow:hidden;line-height:20px;min-height:400px;}
 .box18 h2.tit{font-size:15px;font-family:微软雅黑;font-weight:normal;}
 .box18 span.time{color:#949494;display:block;}
 .box18 span.tit{color:#666;display:block;font-size:14px;letter-spacing:2px;padding:0 0 5px;text-align:center;}
+.box18 .imgs{width:90px;float:left;height:90px;margin-right:10px;background:url(/newbackstage/images/pic38.jpg) left top no-repeat;}
 .box18 img{width:100%;}
 .box18 .box18bg{background:url(/newbackstage/images/bg4.png) left top repeat;width:100%;height:100%;position:absolute;left:0px;top:0px;z-index:10;display:none;}
 .box18 .box18bg img{left:50%;top:50%;position:absolute;width:70px;height:54px;margin-left:-35px;margin-top:-27px;}

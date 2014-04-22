@@ -34,13 +34,10 @@
 		  <div class="box17ci">
 			<% mobile_articles_desc_by_category(menu).each do |ma|%>
 			  <div class="box18 box18change h100 lh18" onclick="ChangePlane(this)">
-				<div class="box18bg" rel="<%= ma.mobile_url %>">
-				  <img src="/newbackstage/images/sign65.png"/>
-				</div>
-				<img src="/newbackstage/images/pic38.jpg" class="l w90 mr10"/>
+				<div class="box18bg" rel="<%= ma.mobile_url %>"><img src="/newbackstage/images/sign65.png"/></div>
+				<div class="imgs"><%= image_tag ma.img_url, alt: '' %></div>
 				<h2 class="tit"><%=truncate ma.title, length: 11 %></h2>
 				<span class="time mb5"><%= ma.cat.strftime("%Y-%m-%d %H:%M:%S") %></span>
-				<%= image_tag ma.img_url, alt: '' %>
 				<%=truncate ma.text, length: 35 %>
 			  </div>
 			<% end %>
