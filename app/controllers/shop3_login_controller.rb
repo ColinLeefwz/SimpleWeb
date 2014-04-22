@@ -66,20 +66,18 @@ class Shop3LoginController < ApplicationController
     reset_session
     if Digest::SHA256.hexdigest(params[:id] + "mweb")[0,32] == params[:hash]
       session[:shop_id] = params[:id]
-      session[:source] = 'mweb'
       redirect_to '/shop3_login/index'
     end
   end
 
   def logout
-    admin_sid = session[:admin_sid]
-    source = session[:source]
-    reset_session
-    session[:shop_id] = admin_sid if admin_sid
-    case source
-    when 'mweb'
+    if session_shop.mweb && session[:admin_sid].nil?
+      reset_session
       redirect_to "#{Host::Mweb}/login/logout"
     else
+      admin_sid = session[:admin_sid]
+      reset_session
+      session[:shop_id] = admin_sid
       redirect_to :action => :login
     end
   end
@@ -92,7 +90,7 @@ class Shop3LoginController < ApplicationController
 
   def branch_login
     shop= Shop.find_by_id(params[:id])
-    if shop.psid == session[:shop_id]
+    if shop.psid.to_i == session[:shop_id].to_i
       session[:admin_sid] = session[:shop_id]
       session[:shop_id] = shop.id
       redirect_to :controller => :shop3_login,:action => "index"

@@ -408,6 +408,55 @@ list是一个json字符串表示的数组，其中每一个条目是一个hash, 
 \end{verbatim}
 
 
+\subsection{短信上传注册接口}
+
+
+\subsubsection{获取短信发送号码和内容}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/phone/sms\_up} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+注意：本接口只支持自己手机号码的注册，也就是发送短信的号码必须是接口中填写的号码。
+
+
+\begin{verbatim}
+返回值为“{phone: 发送到的手机号码, txt:要发送的内容}”。
+
+然后客户端调用本机器的短信发送程序，把目标号码和短信内容设置好。
+
+
+\end{verbatim}
+
+
+\subsubsection{用户是否短信注册通过}
+当用户点击本机的短信发送按钮后，调用本接口。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/phone/do\_register} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注册成功时，本接口的返回值和register接口一致。短信未收到则返回error信息。
+
 
 
 \subsection{退出}

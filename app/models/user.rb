@@ -123,6 +123,19 @@ class User
     [s] + s.sub_shops
   end
   
+  #是否是内部用户或者合作外部用户
+  def is_kx_or_co?
+    User.is_kx?(self.id) || User.is_co?(self.id)
+  end
+  
+  def self.is_kx?(uid)
+    $redis.sismember('KxUsers', uid)
+  end
+  
+  def self.is_co?(uid)
+    $redis.sismember('CoUsers', uid)
+  end
+  
   def self.find_by_qq(qq, redis_only=false)
     uid = $redis.get("Q:#{qq}")
     return User.find_by_id(uid) if uid
@@ -1022,6 +1035,10 @@ class User
         end
       end
     end
+  end
+  
+  def my_loc
+    MyLoc.find_by_id(self.id)
   end
 
     

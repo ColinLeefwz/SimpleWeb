@@ -67,14 +67,17 @@
       <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
 
       <td>
-        <% if shop.lo %>
+        <% if shop.lo &&  !shop.cooperationer? %>
           <a onclick="ajaxunsetlob($(this),<%= shop._id %>, false, '<%= shop.name %>')" >取消坐标</a>
         <% end %>
       </td>
       <td>
-        <% unless shop.del %>
+        <% if !shop.del && !shop.cooperationer? %>
           <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >标记删除</a>
         <% end %>
+        <% if shop.del %>
+          <a onclick="ajaxundel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >取消标记删除</a>
+        <% end %> 
       </td>
       <% if session[:admin_id].to_s == '51f77abc20f318bc2b000001' && shop.checkins.limit(1).only(:_id).first.nil? %>
         <td>
@@ -107,9 +110,17 @@
   function ajaxdel(obj,shop_id,no_confirm, shop_name){
     text = "确定删除商家 "+shop_name+'？'
     if(no_confirm || confirm(text))
-      $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function() {
-        obj.parent().parent().hide()
+      $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function(data) {
+        data.text ? obj.replaceWith(data.text) : obj.parent().parent().hide()
       });
+  }
+
+  function ajaxundel(obj,shop_id,no_confirm, shop_name){
+    text = "确定还原商家 "+shop_name+'？'
+    if(no_confirm || confirm(text))
+      $.get("/admin_shops/undel",{id:shop_id}, function() {
+        obj.replaceWith('已取消') 
+      }, 'json');
   }
 
 
@@ -128,8 +139,8 @@
   function ajaxunsetlob(obj,shop_id,no_confirm, shop_name){
     text = "确定取消"+shop_name+'的坐标？'
     if(no_confirm || confirm(text))
-      $.post("/admin_shops/ajaxunsetlob",{ shop_id:shop_id}, function() {
-        obj.replaceWith("已取消")
+      $.post("/admin_shops/ajaxunsetlob",{ shop_id:shop_id}, function(data) {
+        obj.replaceWith(data.text || '已取消')
       });
   }
 

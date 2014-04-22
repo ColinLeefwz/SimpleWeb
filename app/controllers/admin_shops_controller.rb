@@ -258,6 +258,7 @@ class AdminShopsController < ApplicationController
 
   def del
     shop = Shop.find(params[:id])
+    return render :text => "合作商家不能删除" if shop.cooperationer?
     shop.shop_del
     redirect_to :action => :index
   end
@@ -274,12 +275,14 @@ class AdminShopsController < ApplicationController
 
   def ajaxdel
     shop = Shop.find(params[:shop_id])
+    return render :json => {:text => "合作商家不能删除"} if shop.cooperationer?
     shop.shop_del
     render :json => {}
   end
 
   def ajax_des
     shop = Shop.find(params[:id])
+    return render :json => {:text => "合作商家不能删除"} if shop.cooperationer?
     if shop.checkins.limit(1).only(:_id).first
       render :json => {text: "有签到商家不能删除"}
     else
@@ -288,8 +291,18 @@ class AdminShopsController < ApplicationController
     end
   end
 
+  def undel
+    shop = Shop.find(params[:id])
+    shop.unset(:del)
+    respond_to do |format|
+      format.json {render :json => {:text => "yyy"}}
+      format.html {redirect_to :action => :index}
+    end 
+  end 
+
   def ajaxunsetlob
     shop = Shop.find(params[:shop_id])
+    return render :json => {:text => "合作商家不能取消"} if shop.cooperationer?
     shop.unset(:lo)
     render :json => {}
   end

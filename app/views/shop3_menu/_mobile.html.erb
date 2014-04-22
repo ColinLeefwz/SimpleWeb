@@ -1,0 +1,55 @@
+<div class="box17right none" id="Box17Con5">
+	<div class="title5">
+		<h2>设置动作</h2>
+		<a class="btn23 r mt5" id='mwebbtn' onClick="EditWeb()"/>编辑</a>
+	</div>
+	<div class="box17con">
+	  <div class="blue3 f15 mt20 mb20 ml20">请选择用户点击菜单后所跳转的文章页面</div>
+	  <div class="box17coninner1">
+		<div class="mt60"></div>
+		<div class="box18"></div>
+	  </div>
+	</div>
+</div>
+
+<div class="box17right none" id="Box17Con6">
+	<div class="title5"><h2>设置动作</h2></div>
+	<div class="box17con">
+	  <div class="box17list mt10 mb20">
+		<a class="leftarrow" id="LeftArrow"></a>
+		<div class="box17listcon" id="B17LC">
+		  <ul>
+			<% @mobile_space.menu.to_a.each_with_index do  |menu, index| %>
+			  <%= content_tag :li, rel: index do %>
+				<%= menu%>
+			  <% end %>
+			<% end %>
+		  </ul>
+		</div>
+		<a class="rightarrow" id="RightArrow"></a>
+	  </div>
+
+	  <% @mobile_space.menu.to_a.each_with_index do  |menu, index| %>
+		<%= content_tag :div, class: 'box17coninner1', id: "B17C#{index}" do %>
+		  <div class="box17ci">
+			<% mobile_articles_desc_by_category(menu).each do |ma|%>
+			  <div class="box18 box18change h100 lh18" onclick="ChangePlane(this)">
+				<div class="box18bg" rel="<%= ma.mobile_url %>">
+				  <img src="/newbackstage/images/sign65.png"/>
+				</div>
+				<img src="/newbackstage/images/pic38.jpg" class="l w90 mr10"/>
+				<h2 class="tit"><%=truncate ma.title, length: 11 %></h2>
+				<span class="time mb5"><%= ma.cat.strftime("%Y-%m-%d %H:%M:%S") %></span>
+				<%= image_tag ma.img_url, alt: '' %>
+				<%=truncate ma.text, length: 35 %>
+			  </div>
+			<% end %>
+		  </div>
+		  <span class="clear1"></span>
+		  <input type="button" class="btn22 l mt20 ml120 mb20" value="保 存" onClick="SaveWeb(this)"/>
+		  <!--<input type="button" class="btn22_1 r mt20 mr60 mb20" value="更 多" onClick="More(this,0)"/>-->
+		  <a class="btn22_1 r mt20 mr40 mb20" onClick="Res()"/>取 消</a>
+		<% end %>
+	  <% end %>
+	</div>
+</div>

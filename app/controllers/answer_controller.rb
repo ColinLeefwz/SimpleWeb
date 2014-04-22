@@ -20,6 +20,10 @@ class AnswerController < ApplicationController
       Xmpp.send_gchat2($gfuid,sid,uid, sid.to_s)
       return render :text => "1"
     end
+    if msg=='@@@1234'
+	Xmpp.send_link_gchat($gfuid,sid,uid, '猜图','http://caitu.dface.cn/caitu/index1')
+	return render :text => '1'
+    end
     shop = Shop.find_by_id(sid)
     user = User.find_by_id(uid)
     # if msg[0,3]=="脸脸赐"
@@ -46,7 +50,7 @@ class AnswerController < ApplicationController
   end
   
   def at3
-    if is_kx_user?(params[:from]) || User.is_fake_user?(params[:from]) || params[:from]==$gfuid
+    if User.is_kx?(params[:from]) || User.is_fake_user?(params[:from]) || params[:from]==$gfuid
       txt = params["msg"]
       attrs = " NOLOG='1' NOPUSH='1' "
       ext = nil
@@ -116,7 +120,7 @@ class AnswerController < ApplicationController
       want(uid,int)
     elsif  txt=="?" || txt=="？"
       faq(uid)
-    elsif txt=="ip" && is_kx_user?(uid) 
+    elsif txt=="ip" && User.is_kx?(uid) 
       Xmpp.send_chat($gfuid, uid, "Xmpp服务器ip：#{read_ip}", $uuid.generate, " NOLOG='1' NOPUSH='1' ")      
     elsif txt.downcase=="hi"
       Resque.enqueue_in(3.seconds,XmppMsg, $gfuid,uid,"hi😄")

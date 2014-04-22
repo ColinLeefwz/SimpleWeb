@@ -5,6 +5,9 @@ class PhoneController < ApplicationController
   before_filter :code_match, :only => [:register, :forgot_password, :bind] 
   before_filter :password_check, :only => [:forgot_password, :change_password, :set_password] 
   before_filter :phone_check, :only => [:unbind, :set_password, :upload_address_list] 
+  before_filter :phone_register_check, :only => [:register, :do_register] 
+
+  FAKE_CODE = "12321"
 
   def phone_check
     user = session_user
@@ -12,6 +15,14 @@ class PhoneController < ApplicationController
       str = "手机号码#{params[:phone]}不是以前绑定的那个#{user.phone}"
       Xmpp.error_notify(str)
       render :json => {"error"=>str}.to_json
+    end
+  end
+  
+  def phone_register_check
+    user = User.find_by_phone(params[:phone], false)
+    if user
+      render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
+      return      
     end
   end
     
@@ -26,7 +37,7 @@ class PhoneController < ApplicationController
       render :json => {"error"=>"验证码错误"}.to_json
       return
     end
-    if params[:code] != session[:phone_code] && params[:code] != "13579"
+    if params[:code] != session[:phone_code] && params[:code] != FAKE_CODE
       session[:phone_try] -= 1
       if session[:phone_try]<1
         session[:phone_try] = nil 
@@ -66,10 +77,15 @@ class PhoneController < ApplicationController
     end 
     fake = fake_phone(params[:phone]) 
     if Rails.env == "production"
-      # code = rand(999999).to_s
-      str = Digest::SHA1.hexdigest("#{params[:phone]}@dface#{Time.now.day}")[0,6]
-      code = str.to_i(16).to_s[0,6]
-      code = "13579" if fake
+      if fake
+        code = FAKE_CODE
+      else
+        str = Digest::SHA1.hexdigest("#{params[:phone]}@dface#{Time.now.day}")[0,6]
+        code = str.to_i(16).to_s[0,5]
+        while code.size<5
+          code = "0#{code}" 
+        end
+      end
     else
       code = "123456"
     end
@@ -81,15 +97,10 @@ class PhoneController < ApplicationController
     Resque.enqueue(SmsSender, params[:phone], sms )  unless fake
     session[:phone_code] = code
     session[:phone_try] = 5
-    render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json #TODO: 取消code
+    render :json => {"code"=>""}.to_json
   end
   
   def register
-    user = User.find_by_phone(params[:phone], false)
-    if user
-      render :json => {"error"=>"手机号码不可用或已被注册"}.to_json
-      return      
-    end
     user = User.new
     user.phone = params[:phone]
     user.psd = slat_hash_pass(params[:password]) if params[:password]
@@ -215,6 +226,33 @@ class PhoneController < ApplicationController
     end
     render :json => {imported: ua.list.size}.to_json
   end
+  
+  def sms_up
+    if fake_phone(params[:phone])
+      up = "+#{params[:phone]}"
+      ret = {phone:up, txt:"注册码#{params[:phone][3..-1]}, 发送此短信立刻注册脸脸"}
+    else
+      up = "1069800020086645"
+      ret = {phone:up, txt:"注册码#{params[:phone][3..-1]}, 发送此短信立刻注册脸脸"}
+      Rails.cache.write("SMS_CHECK", params[:phone], :expires_in => 2.minutes)
+    end
+    render :json => ret.to_json
+  end
+  
+  def do_register
+    if fake_phone(params[:phone])
+      register
+      return
+    end
+    (1..5).each do |x|
+      if Rails.cache.read("SMSUP#{params[:phone]}")
+        register
+        return
+      end
+      sleep 1
+    end
+    render :json => {"error"=>"还未收到短信"}.to_json
+  end
 
   private 
   def slat_hash_pass(password)
@@ -222,7 +260,7 @@ class PhoneController < ApplicationController
   end
   
   def fake_phone(phone)
-    phone[0,3]=="000"
+    phone[0,4]=="0001"
   end
   
   

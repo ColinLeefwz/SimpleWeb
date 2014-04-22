@@ -1,353 +1,175 @@
 <%= content_for :ahead do %>
-    <link href="/newbackstage/css/menu.css" rel="stylesheet" type="text/css">
-    <link href="/newbackstage/css/megsend.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
+		var ul_w=0;
         var menujson = {};
         var trigger_click = true;
         $.get('/shop3_menu.json', function(data){
             menujson = data
         })
     </script>
-    <script src="/newbackstage/js/menuset.js" type="text/javascript"></script>
+	<script src="/newbackstage/js/menuset.js" type="text/javascript"></script>
     <script src="/newbackstage/js/menu_drag.js" type="text/javascript"></script>
 <% end %>
+<div id="BG"></div>
+<div id="DelDiv">
+	<center>这里放置提示信息</center>
+	<a onclick="Close2()" class="btn11 w55 mt10 m_auto">确定</a>
+</div>
+<div id="Phone">
+	<div class="phonetitle"><%= session_shop.name %></div>
+	<iframe name="IFrame"></iframe>
+	<div id="PhoneDS"></div>
+	<a class="close" onclick="Close3()"></a>
+</div>
 <div class="con">
-	<div class="title1">
-		<h2 class="f18 l">自定义菜单</h2>
+	<div class="title1"><h2 class="f18 l">自定义菜单</h2></div>
+	<div class="box15 orange1 f14">编辑：可创建最多 3 个一级菜单，每个一级菜单下可创建最多 5 个二级菜单。编辑中的菜单不会马上被用户看到，请放心调试。</div>
+
+	<!--提醒/警告框架-->	
+	<div id="Del" class="box16">
+		<form onsubmit="return false;" method="post">
+			<div class="box16inner">
+				<div class="warms">删除确认<br/><span class="f12">删除后该菜单下设置的消息将不<br/>会被保存</span></div>
+				<div class="clear1"></div>
+				<input type="submit" value="确 认" class="btn22 l mt10" onclick="DelSubMits()"/>
+				<input type="button" value="取 消" class="btn22_1 r mt10" onclick="Close('Del')"/>
+			</div>
+		</form>
 	</div>
-	<div class="box15 orange1">
-		 编辑：可创建最多 3 个一级菜单，每个一级菜单下可创建最多 5 个二级菜单。编辑中的菜单不会马上被用户看到，请放心调试。
+	
+	<!--菜单管理框架-->	
+	<div id="Info" class="box16">
+		<form onsubmit="return false;" method="post">
+			<p>菜单管理</p>
+			<div class="box16inner">
+				<div class="h100">
+					<p class="mt10 f12 orange1">菜单名称不能超过4个汉字或8个字母：</p>
+					<p><input type="text" class="inputs4  w230" id="Inputs"></p>
+					<div id="TS" class="orange1 f12 none"></div>
+				</div>
+				<div class="clear1"></div>
+				<input type="submit" value="确 认" class="btn22 l" onclick="SubMits()"/>
+				<input type="button" value="取 消" class="btn22_1 r" onclick="Close('Info')"/>
+			</div>
+		</form>
 	</div>
 	
+	<!--发布框架-->	
+	<div id="Message1" class="box16">
+		<form onsubmit="return false;" method="post">
+			<div class="box16inner">
+				<div class="warms">发布确认<br/><span class="f12">本次发布将在24小时内对所有用户生效。确认发布？</span></div>
+				<div class="clear1"></div>
+				<input type="submit" value="确 认" class="btn22 l mt30" onclick="FormMits()"/>
+				<input type="button" value="取 消" class="btn22_1 r mt30" onclick="Close('Message1')"/>
+			</div>
+		</form>
+	</div>
+
+	<div class="box17 mt30">            
+		<div class="box17left">                           
+			<div class="title5">                            
+				<h2>菜单管理</h2>
+				<a class="btn24 r mt5" id="orderBt">排序</a>
+				<a class="btn23 r mt5 mr10" onclick="InfoDiv('','')" id="addBt">添加</a>
+				<a style="display: none;" class="btn24 r mt5" id="cancelBt">取消</a>
+				<a style="display: none;" class="btn23 r mt5 mr10" id="finishBt">完成</a>
+			</div>
+			<div id="MenuList" class="menulist ui-sortable-disabled">
+				<% @menu && @menu.button.each_with_index do |m, index|%>
+					<dl class="ui-sortable-disabled">
+						<dt id="menu_<%= index %>">
+							<i class="downarrow"></i>
+							<a class="mlink" onClick="OpenPlane(this,'parent',sort, '<%= m['type2']%>', '<%= m['url']%>')"><%= m['name']%></a>
+							<span class="menu_opr">
+								<% if m['type'].blank? %>
+									<a class="add_gray" onclick="InfoDiv('','<%= index %>')" rel='<%= index %>'>添加</a>
+								<% end %>
+								<a class="edit_gray" onclick="InfoDiv('<%= m['name']%>','<%= index %>')" rel='<%= index %>'>编辑</a>
+								<a class="del_gray" onclick="DelDiv(<%= index %>)" rel='<%= index %>'>删除</a>
+								<a class="sort_gray" style="display:none">排序</a>
+							</span>
+						</dt>
+					<% m['sub_button'] && m['sub_button'].each_with_index do |sb, sbi| %>
+						<dd id="subMenu_menu_<%= index %>_<%= sbi %>">
+							<i class="point">●</i>
+<!-- 							<a class="mlink" onClick="OpenPlane(this,'sub',sort,'<%= m['type2']%>', '<%= m['url']%>' )"><%=  %></a> -->
+<%= link_to sb['name'], "javascript:void(0)", class: "mlink", onclick: "OpenPlane(this, 'sub', sort, '#{sb['type2']}', '#{sb['url']}')" %>
+							<span class="menu_opr">
+								<a class="edit_gray" onclick="InfoDiv('<%= sb['name'] %>','<%= "#{index},#{sbi}" %>')" rel='<%= "#{index},#{sbi}" %>'>编辑</a>
+								<a class="del_gray" onclick="DelDiv('<%= index %>,<%=sbi%>')" rel='<%= "#{index},#{sbi}" %>'>删除</a>
+								<a class="sort_gray" style="display:none">排序</a>
+							</span>
+						</dd>
+					<% end%>
+					</dl>
+				<% end %>
+			</div>
+		</div>
+
+		<div class="box17right" id="Box17Con1">
+			<div class="title5">                            
+				<h2>设置动作</h2>
+			</div>
+			<div class="box17con">
+				<center class="mt160">你可以先添加一个菜单，然后开始为其设置响应动作</center>
+			</div>
+		</div>
+		<div class="box17right none" id="Box17Con2">
+			<div class="title5"><h2>设置动作</h2></div>
+			<div class="box17con">
+				<center class="mt160 orange1">已有子菜单，无法设置动作</center>
+			</div>
+		</div>
+		<div class="box17right none" id="Box17Con3">
+			<div class="title5"><h2>设置动作</h2></div>
+			<div class="box17con">
+				<center class="blue3 f15 mt40">请选择用户点击菜单后所做出的动作</center>
+				<div class="box17coninner1">
+					<center class="mt70">
+					<a onClick="HttPLink()" class="links1">跳转到其他页面</a>
+					<% if @mobile_space.menu || Rails.env.development? %>
+						<a onClick="PhoneLink()" class="links2">跳转到手机网站</a>
+					<% end %>
+						<a onClick="APPLink()" class="links3">跳转到脸脸应用</a>
+					</center>
+				</div>
+			</div>
+		</div>
+		<div class="box17right none" id="Box17Con4">
+			<div class="title5">
+				<h2>设置动作</h2>
+				<a id='linkbtn' class="btn23 r mt5" onClick="EditLink()"/>编辑</a>
+			</div>
+			<div class="box17con">
+				<div class="blue3 f15 mt20 mb20 ml20">请选择用户点击菜单后所做出的动作</div>
+				<div class="box17coninner1">
+					<div class="pl20">http://www.baidu.com/v?a=34uffe&value=49234885@55344#ertef</div>
+				</div>
+			</div>
+		 </div>
+		 <div class="box17right none" id="Box17Con9">
+			<div class="title5"><h2>设置动作</h2></div>
+			<div class="box17con">
+				<div class="blue3 f15 mt20 mb20 ml20">请选择用户点击菜单后所做出的动作</div>
+				<div class="box17coninner1">
+					<textarea class="textarea5 m_auto" id="TextArea5"></textarea>
+					<div class="orange1 f12 mt10 ml30 none" id="UrlFail">请输入正确的URL</div>
+					<div class="clear1"></div>
+					<input type="button" class="btn22 l mt20 ml120" value="保 存" onClick="SaveLink()"/>
+					<input type="button" class="btn22_1 r mt20 mr120" value="取 消" onClick="Res()"/>
+				</div>
+			</div>
+		 </div>
+		<%= render "mobile"%>
+		<%= render 'app' %>
+
+	</div>
 	
-	
-	
-	
-	
-    <div class="menu_setting_area edit">
-        <div class="menu_setting_area_hd">
-           
-        </div>
-        <div class="inner_container_box side_l menu_setting_area_bd">            
-            <div class="inner_side">                
-                <div class="bd">                    
-                    <div class="menu_manage">                        
-                        <div class="sub_title_bar light">                            
-                            <h4>菜单管理</h4>
-                            <div class="btn_wrp" style="float:right;padding-top:5px;">
-                                <a class="btn btn_default r" id="orderBt" href="javascript:void(0);" style="padding:0px 7px;">排序</a>
-                                <a class="btn btn_primary r" id="addBt" href="javascript:void(0);" style="padding:0px 7px;">添加</a>
-                                <a style="display: none;padding:0px 7px;" class="btn btn_primary btn_sorting" id="finishBt" href="javascript:void(0);">完成</a>
-                                <a style="display: none;padding:0px 7px;" class="btn btn_default btn_sorting" id="cancelBt" href="javascript:void(0);">取消</a>&nbsp;
-                            </div>
-                        </div>
-                        <div id="menuList" class="inner_menu_box with_switch blue ui-sortable ui-sortable-disabled">
-                            <% @menu && @menu.button.each_with_index do |m, index|%>
-                                <dl class="inner_menu jsMenu ui-sortable ui-sortable-disabled">
-                                    <dt id="menu_<%= index %>" class="inner_menu_item jslevel1">
-                                        <i class="icon_inner_menu_switch"></i>
-                                        <a class="inner_menu_link" href="javascript:void(0);">
-                                            <strong><%= m['name']%></strong>
-                                        </a>
-                                        <span class="menu_opr">
-                                            <% if m['type'].blank? %>
-                                                <a class="icon14_common add_gray jsAddBt" href="javascript:void(0);" rel='<%= index %>'>添加</a>
-                                            <% end %>
-                                            <a class="icon14_common  edit_gray jsEditBt" href="javascript:void(0);" rel='<%= index %>'>编辑</a>
-                                            <a class="icon14_common del_gray jsDelBt" href="javascript:void(0);" rel='<%= index %>'>删除</a>
-                                            <a style="display:none" class="icon14_common sort_gray jsOrderBt" href="javascript:void(0);">排序</a>
-                                        </span>
-                                    </dt>
-                                <% m['sub_button'] && m['sub_button'].each_with_index do |sb, sbi| %>
-                                    <dd id="subMenu_menu_<%= index %>_<%= sbi %>" class="inner_menu_item jslevel2">
-                                        <i class="icon_dot">●</i>
-                                        <a class="inner_menu_link" href="javascript:void(0);"><strong><%= sb['name'] %></strong></a>
-                                        <span class="menu_opr">
-                                            <a class="icon14_common edit_gray jsSubEditBt" href="javascript:void(0);" rel='<%= "#{index},#{sbi}" %>'>编辑</a>
-                                            <a class="icon14_common del_gray jsSubDelBt" href="javascript:void(0);" rel='<%= "#{index},#{sbi}" %>'>删除</a>
-                                            <a style="display:none" class="icon14_common sort_gray jsOrderBt" href="javascript:void(0);">排序</a>
-                                        </span>
-                                    </dd>
-                                <% end%>
-                                </dl>
-                            <% end %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="inner_main">
-                <div class="bd">
-                    <div class="action_setting">
-                        <div class="sub_title_bar light">
-                            <h4>设置动作</h4>
-                            <div class="btn_wrp">
-                                <a id="changeBt" class="btn btn_default btn_editing" href="javascript:void(0);" style="display: none;">修改</a>
-                            </div>
-                        </div>
-                        <div id="none" class="action_content default jsMain" style="display: block;">
-                            <p class="action_tips">你可以先添加一个菜单，然后开始为其设置响应动作</p>
-                        </div>
-                        <div id="index" style="display: none;" class="action_content init jsMain">
-                            <p class="action_tips">请选择订阅者点击菜单后，公众号做出的相应动作</p>
-                            <a id="sendMsg" href="javascript:void(0);">
-                                <i class="icon_menu_action send"></i>
-                                <strong>发送信息</strong>
-                            </a>
-                            <a id="goPage" href="javascript:void(0);">
-                                <i class="icon_menu_action url"></i>
-                                <strong>跳转到网页</strong>
-                            </a>
-                        </div>
-                        <div id="url" class="action_content url jsMain" style="display: none;">
-                            <form onsubmit="return false;" id="urlForm" action="">
-                                <p class="action_tips">订阅者点击该子菜单会跳到以下链接</p>
-                                <div class="frm_control_group">
-                                    <span class="frm_input_box">
-                                        <input type="text" name="urlText" id="urlText" class="frm_input">
-                                    </span>
-                                    <p id="urlFail" style="display: none;" class="frm_msg fail">
-                                        <i>●</i>
-                                        <span style="display: inline;" class="frm_msg_content" for="urlText">请输入正确的URL</span>
-                                    </p>
-                                </div>
-                            </form>
-                            <div class="tool_bar">
-                                <a id="urlBack" class="btn btn_default" href="javascript:void(0);">返回</a>
-                                <a id="urlSave" type="submit" class="submit btn btn_primary">保存</a>
-                            </div>
-                        </div>
-                        <div id="view" class="action_content sended jsMain" style="display: none;">
-                            <p class="action_tips">订阅者点击该子菜单会跳到以下链接</p>
-                            <div id="viewDiv" class="msg_wrp">http://www.dface.cn/torus/index.html</div>
-                        </div>
-
-                        <%= render  'edit_dialog' %>
-
-                        <div id="edit" class="action_content send jsMain" style="display: none;">
-                            <p class="action_tips">订阅者点击该子菜单会收到以下消息</p>
-                            <div id="editDiv" class="msg_sender small"></div>
-                            <div class="tool_bar">
-                                <a id="editBack" class="btn btn_default" href="javascript:void(0);">返回</a>
-                                <a id="editSave" class="btn btn_primary" href="javascript:void(0);">保存</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>  
-    <div class="menu_setting_area release">        
-        <div class="menu_setting_area_hd">
-            <h3>发布</h3>
-            <p>编辑中的菜单不能直接在用户手机上生效，你需要进行发布，发布后24小时内所有的用户都将更新到新的菜单。</p>
-        </div>
-        <div class="menu_setting_area_bd">
-            <div class="tool_bar">
-                <a id="viewBt" class="btn btn_primary" href="javascript:void(0);">预览</a>
-                <a id="pubBt" class="btn btn_primary" href="javascript:void(0);">发布</a>
-            </div>
-        </div>
-    </div>  
-
-    <div style="width: 726px; margin-left: -363px; margin-top: -226px; display: none" class="dialog_wrp simple" id='tmpwxDialog_2'>
-        <div id="wxDialog_2" class="dialog">
-            <div class="dialog_hd">
-              <h3>温馨提示</h3>
-              <a class="pop_closed" href="javascript:;">关闭</a>
-            </div>
-            <div class="dialog_bd">
-              <div class="page_msg simple default ">
-                <div class="inner group">
-                  <span class="msg_icon_wrapper"><i class="icon_msg warn "></i></span>
-                  <div class="msg_content ">
-                  <h4>删除确认</h4>
-                  <p>删除后该菜单下设置的消息将不会被保存</p>
-                  </div>
-                </div>
-              </div>
-            </div> 
-            <div class="dialog_ft">
-              <a class="btn btn_primary js_btn" href="javascript:;">确定</a>
-              <a class="btn btn_default js_btn" href="javascript:;">取消</a>
-            </div>
-        </div>
-    </div>
-
-    <div id='dialog_display' style='display: none'>
-        <div style="width: 726px; margin-left: -363px; margin-top: -226px;" class="dialog_wrp simple" id='dumpdialog'>
-            <div class="dialog">
-                <div class="dialog_hd">
-                    <h3>输入提示框</h3>
-                    <a class="icon16_opr closed pop_closed" onclick="return false" href="javascript:;">关闭</a>
-                </div>
-                <div class="dialog_bd">
-                    <div class="simple_dialog_content">
-                        <form onsubmit="return false;" class="form" method="post" id="popupForm_" novalidate="novalidate">
-                            <div class="frm_control_group">
-                                <label class="frm_label">菜单名称名字不多于4个汉字或8个字母:</label>
-                                <span class="frm_input_box">
-                                    <input type="text" value="" name="name" class="frm_input" id='menu_val'>
-                                    <input style="display:none" id='menu_index' >
-                                </span>
-                                <p class="frm_msg fail" style="display: none;">
-                                    <i>●</i>
-                                    <span class="frm_msg_content" for="popInput" style="display: inline;">
-                                        多于4个汉字或8个字母
-                                    </span>
-                                </p>
-                            </div>       
-                            <div class="js_verifycode"></div>
-                        </form>
-                    </div>
-                </div>
-                <div class="dialog_ft">
-                    <span class="btn btn_primary btn_input js_btn_p">
-                        <button data-index="0" class="js_btn" id='jsbtn0'>确认</button>
-                    </span>
-                    <span class="btn btn_default btn_input js_btn_p">
-                        <button data-index="1" class="js_btn" id='jsbtn1'>取消</button>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<div id="wxTipserr" class="JS_TIPS page_tips error" style="display: none;z-index:999"><div class="inner"></div></div>
-
-</div>
-
-
-
-
-<div id='menu_image_dialog' style='display: none'>
-    <div style="z-index:999;width: 960px; margin-left: -480px; margin-top: -314.5px;" class="dialog_wrp media">
-        <div class="dialog">
-            <div class="dialog_hd">
-                <h3>选择图片</h3>
-                <a class="icon16_opr closed pop_closed" onclick="return false" href="javascript:;">关闭</a>
-            </div>
-            <div class="dialog_bd">
-                <div class="dialog_media_container ">
-                    <ul class="dialog_media_list js_media_list">
-                        <% session_shop.shop_photo.each do |photo| %>
-                            <li class="media_item">
-                              
-                                <div class="media_content" data-type="2" >
-                                    <label class="media_name frm_radio_label" for="checkbox3">
-                                        <input type="radio" value="<%= photo.id %>" name='image_val' >
-                                    </label>
-                                    <a class="media_img" target="_blank">
-                                        <img src="<%= photo.img.url(:t2)%>" class="wxmImg Zoomin">
-                                    </a>
-                                    <p class="media_size" style='top: 30px;'><%= photo.desc.truncate(20) %></p>
-                                </div>
-                            </li>
-                        <% end %>
-                    </ul>
-                </div>
-            </div>
-            <div class="dialog_ft">
-                <span class="btn btn_primary btn_input js_btn_p"><button data-index="0" class="js_btn" id='menu_img_add'>确定</button></span>
-                <span class="btn btn_default btn_input js_btn_p"><button data-index="1" class="js_btn" id='menu_img_cancel'>取消</button></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="mask" style="z-index:998">
-        <iframe frameborder="0" src="about:blank" style="filter:progid:DXImageTransform.Microsoft.Alpha(opacity:0);position:absolute;top:0px;left:0px;width:100%;height:100%;"></iframe>
-    </div>
-
-</div>
-
-<div id='menu_faq_dialog' style='display: none'>
-    <div style="z-index:999;width: 960px; margin-left: -480px; margin-top: -314.5px;" class="dialog_wrp media">
-        <div class="dialog">
-            <div class="dialog_hd">
-                <h3>选择问答</h3>
-                <a class="icon16_opr closed pop_closed" onclick="return false" href="javascript:;">关闭</a>
-            </div>
-            <div class="dialog_bd">
-                <div class="dialog_media_container ">
-                    <ul class="dialog_media_list js_media_list">
-                        <% session_shop.faqs.each do |faq| %>
-                            <li class="media_item">
-                              
-                                <div class="media_content" data-type="2" >
-                                    <label class="media_name frm_radio_label" for="checkbox3">
-                                        <input type="radio" value="<%= faq.id %>" name='image_val' >
-                                    </label>
-                                    <a class="media_img" target="_blank">
-                                        <span><%= faq.od %></span>
-                                    </a>
-                                    <p class="media_size" style='top: 30px;'><%= faq.title.truncate(20) %></p>
-                                </div>
-                            </li>
-                        <% end %>
-                    </ul>
-                </div>
-            </div>
-            <div class="dialog_ft">
-                <span class="btn btn_primary btn_input js_btn_p"><button data-index="0" class="js_btn" id='menu_faq_add'>确定</button></span>
-                <span class="btn btn_default btn_input js_btn_p"><button data-index="1" class="js_btn" id='menu_faq_cancel'>取消</button></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="mask" style="z-index:998">
-        <iframe frameborder="0" src="about:blank" style="filter:progid:DXImageTransform.Microsoft.Alpha(opacity:0);position:absolute;top:0px;left:0px;width:100%;height:100%;"></iframe>
-    </div>
-
-</div>
-
-<div id='mobile_review' style='display: none'>
-    <%= hidden_field_tag :logo_url, @logo, :id => 'mobile_logo' %>
-    <div id="mobileDiv" class="mobile_preview" style="display: block;z-index:999 ">    
-        <div class="mobile_preview_hd">        
-            <strong class="nickname"><%= session_shop.name %></strong>    
-        </div>    
-        <div class="mobile_preview_bd">        
-            <ul class="show_list" id="viewShow">                    
-            </ul>    
-        </div>    
-        <div class="mobile_preview_ft">        
-            <ul id="viewList" class="pre_menu_list">
-            </ul>    
-        </div>    
-        <a id="viewClose" class="mobile_preview_closed" href="javascript:void(0);">关闭</a>
-    </div>
-    <div class="mask" style="z-index:998">
-        <iframe frameborder="0" src="about:blank" style="filter:progid:DXImageTransform.Microsoft.Alpha(opacity:0);position:absolute;top:0px;left:0px;width:100%;height:100%;"></iframe>
+	<div class="st mt10 gay4 f14 lh25">发布<br/>编辑中的菜单不能直接在用户手机上生效，你需要进行发布，发布后24小时内所有的用户都将更新到新的菜单。</div>
+	<div class="line1 mt20 mb40"></div>
+    <div class="w300 m_auto">        
+		<a class="btn2 l" onclick="View()">预 览</a>
+		<a onClick="MesSubMits()" class="btn3 r">发 布</a>
     </div>
 </div>
-
-
-<!-- ++++++++++++++++++发布+++++++++++++++++++ -->
-<div id='menu_pub' style='display: none;'>
-    <div id="wxDialog_3" class="dialog dialog_wrp media" style='z-index: 999; width: 720px; height: 350;  left: 300px; top: 248px;'>
-        <div class="dialog_hd">
-          <h3>温馨提示</h3>
-          <a class="pop_closed" href="javascript:;" id='pub_closed'>关闭</a>
-        </div>
-        <div class="dialog_bd">
-          <div class="page_msg simple default ">
-            <div class="inner group">
-              <span class="msg_icon_wrapper"><i class="icon_msg warn "></i></span>
-              <div class="msg_content ">
-              <h4>发布确认</h4>
-              <p>本次发布将在24小时内对所有用户生效。确认发布？</p>
-              </div>
-            </div>
-          </div>
-        </div> 
-        <div class="dialog_ft">
-          <a class="btn btn_primary js_btn" href="javascript:;" id='pub_add'>确定</a>
-          <a class="btn btn_default js_btn" href="javascript:" id='pub_cancel'>取消</a>
-        </div>
-    </div>
-    <div class="mask" style="z-index:998">
-        <iframe frameborder="0" src="about:blank" style="filter:progid:DXImageTransform.Microsoft.Alpha(opacity:0);position:absolute;top:0px;left:0px;width:100%;height:100%;"></iframe>
-    </div>
-</div>
-<!-- ++++++++++++++++++发布+++++++++++++++++++ -->
-

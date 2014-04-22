@@ -169,4 +169,18 @@ class LocateTest < ActiveSupport::TestCase
     #布尔津旅游宾馆 - 阿勒泰旅游宾馆 ??
   end
   
+  def test_shop_similar2
+    x = Shop.find(21838543) #河南盘石软件技术开发有限公司
+    y = Shop.find(21838770)
+    assert Shop.similarity(x,y)>85
+  end
+  
+  def test_shop_similar3
+    x = Shop.find(21831686) #西溪印象城
+    y = Shop.find(21841338)
+    z = Shop.find(21841204)
+    assert Shop.similarity(x,y)==100
+    assert Shop.similarity(x,z)>80
+  end
+  
 end
