@@ -295,7 +295,6 @@ function APPLink(option){											//打开APP应用页
 	}
 }
 function Res(){												//所有单元归零
-	$(".textarea5").attr("disabled","disabled");
 	$(".box17right").addClass("none");
 	$("#Box17Con3").removeClass("none");
 	$(window).resize();
@@ -321,6 +320,7 @@ function SaveLink(){
 		$(".box17right").addClass("none");
 		$("#Box17Con4").removeClass("none");
 		$("#Box17Con4 .pl20").html(url);
+		$(".selected a.mlink").click();
 	});
 	
 }
