@@ -21,11 +21,29 @@ class CouponTest < SeleniumTest
     element = @driver.find_elements(:class, "box3inner")
     element = element[{checkin: 0, share: 1}[type]]
     @driver.mouse.move_to(element)
+    sleep(3)
     ###2. 移动到“图文混排格式”链接上
     element = element.find_element(:class, "box3plane2")
     @driver.mouse.move_to(element)
     ###3 点击
     element.find_element(:link,"图文混排格式").click
+  end
+
+  def aa
+
+        # @driver = Selenium::WebDriver.for :firefox
+        # @driver.navigate.to "http://shop.dface.cn/shop3_login/login"
+        # @driver.find_element(:name, 'id').send_keys "21836841"
+        # @driver.find_element(:name, 'password').send_keys "123456"
+        # @driver.find_element(:xpath, "//input[@type='submit']").click
+        # @driver.navigate.to "http://shop.dface.cn/shop3_coupons/new"
+
+
+
+     
+   
+
+
   end
 
   def release_checkin
@@ -38,14 +56,12 @@ class CouponTest < SeleniumTest
 
   #上传签到优惠券图片
   def checkin_upload
-    #隐藏元素不能操作， 先把文件输入框显示
-    @driver.execute_script("document.getElementById('shop_coupon_img').setAttribute('class', '')")
-    #图片上传路径
-    img_path = File.expand_path("../..", __FILE__)+ "/public/images/test/test.jpg"
-    #图片上传
-    @driver.find_element(:xpath, "//input[@id='shop_coupon_img']").send_keys(img_path)
-    #隐藏元素
-    @driver.execute_script("document.getElementById('shop_coupon_img').setAttribute('class', 'filebox3')")
+      @driver.find_element(:id, 'CropedImg').click
+     @driver.execute_script("var obj = document.getElementsByName('photo')[0]; 
+        obj.style.display='block'; obj.click()")
+     img_path = File.expand_path("../..", __FILE__)+ "/public/images/test/test.jpg"
+     @driver.first(:id, 'UpImgFile').send_keys('img_path')
+     @driver.find_element(:id, 'Btn2').click
   end
 
   #清空所有的优惠券
@@ -64,7 +80,7 @@ class CouponTest < SeleniumTest
     @driver.navigate.to @host +"/shop_login/login"
     @driver.find_element(:name, 'id').rsend_keys "21836841"
     @driver.find_element(:name, 'password').rsend_keys "123456"
-    @driver.find_element(:class, 'btn').click
+    @driver.find_element(:xpath, "//input[@type='submit']").click
 
     coupons_index #到优惠券首页
     clear_coupons #清空所有优惠券
@@ -78,13 +94,14 @@ class CouponTest < SeleniumTest
     #上传图片
     #    checkin_upload
     @driver.first(:name, 'commit').click
-    assert_equal @driver.find_element(:id, 'Box6Message').text, "请上传一张优惠券图片" 
+    assert_equal @driver.find_element(:id, 'Box6Message').text, "请上传图片." 
     sleep(3)
     coupons_index #到优惠券首页
     assert_equal @driver.find_elements(:tag_name, "tr").count, 1  #优惠券个数是0
 
     #发布每日签到
     release_checkin #到new页发布优惠券
+    sleep(3)
     @driver.find_element(:id, 'coupon_name').rsend_keys('测试每日签到')
     @driver.find_element(:id, 'coupon_desc').rsend_keys("测试优惠券\n测试优惠券\n测试优惠券\n测试优惠券\n测试优惠券")
     @driver.find_element(:id, 'coupon_rule').send_keys("每日签到优惠")
