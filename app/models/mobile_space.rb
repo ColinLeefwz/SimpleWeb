@@ -1,7 +1,8 @@
 class MobileSpace
   include Mongoid::Document
   include Mongoid::Timestamps
-  store_in({:database => "mweb_production"}) if Rails.env != "test"
+  store_in({:database => "mweb_production"}) if Rails.env.production?   
+  store_in({:database => "mweb_development"}) if Rails.env.development?
 
   field :sid, type: Integer
   field :name

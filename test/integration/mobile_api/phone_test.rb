@@ -18,7 +18,7 @@ class PhoneTest < ActionDispatch::IntegrationTest
     post "/phone/init", {phone: phone1, flag: true}
     assert_response :success
     data = JSON.parse(response.body)
-    assert_equal({"code"=>"56aabeb910e1e22c"}, data)
+    assert_equal({"code"=>""}, data)
 
     #手机号码注册, 错误的验证码
     post "/phone/register",{phone: phone1, code: 'jsfjs', password: '12345678'}
@@ -157,7 +157,7 @@ class PhoneTest < ActionDispatch::IntegrationTest
     post "/phone/init", {phone: phone1, flag: true}
     assert_response :success
     data = JSON.parse(response.body)
-    assert_equal({"code"=>"56aabeb910e1e22c"}, data)
+    assert_equal({"code"=>""}, data)
 
     #手机号码注册, 错误的验证码
     post "/phone/register",{phone: phone1, code: 'jsfjs', password: '12345678'}
