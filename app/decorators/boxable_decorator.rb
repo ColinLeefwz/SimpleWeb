@@ -1,6 +1,29 @@
 module BoxableDecorator
   include Draper::LazyHelpers
 
+  def favorite_class(method, extra="")
+    if current_user.try(method, object)
+      "favorite#{extra} solid-star#{extra}"
+    else
+      "favorite#{extra} hollow-star#{extra}"
+    end
+  end
+
+  def decide_tip_title(method)
+    if method == :has_subscribed?
+      current_user.try(method, object) ? "remove from Favorites" : " add to Favorites"
+    elsif method == :follow?
+      current_user.try(method, object) ? "unfollow this expert" : "follow this expert"
+    end
+  end
+
+  def get_favorite_type
+    if object.is_a? User
+      "user"
+    else
+      "content"
+    end
+  end
   def comment_counting
     comments = object.comments
     count = comments.count
