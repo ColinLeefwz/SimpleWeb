@@ -35,7 +35,8 @@
           %li
             %a.filters{href: "#all", data: {filter: '*'}}
               %span.badge.pull-right
-                = all_count
+                = ApplicationDecorator.all_count
+                -# = ApplicationDecorator.test_method
               all
           %li.divider
           - @categories.each do |category|
@@ -51,24 +52,24 @@
               %li
                 %a.filters{href: "#announcement", data: {filter: '.announcement'}}
                   %span.badge.pull-right
-                    = model_count('Announcement')
+                    = ApplicationDecorator.model_count('Announcement')
                   announcement
 
               %li
                 %a.filters{href: "#article", data: {filter: '.article'}}
                   %span.badge.pull-right
-                    = model_count('Article')
+                    = ApplicationDecorator.model_count('Article')
                   article
 
               %li
                 %a.filters{href: "#interview", data: {filter: '.videointerview'}}
                   %span.badge.pull-right
-                    = model_count('VideoInterview')
+                    = ApplicationDecorator.model_count('VideoInterview')
                   interview
               %li
                 %a.filters{href: "#course", data: {filter: '.course'}}
                   %span.badge.pull-right
-                    = model_count('Course')
+                    = ApplicationDecorator.model_count('Course')
                   course
 = render "shared/sign_in_modal"
 
