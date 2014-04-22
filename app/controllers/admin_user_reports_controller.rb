@@ -5,7 +5,7 @@ class AdminUserReportsController < ApplicationController
   layout "report"
 
   def index
-    hash, sort = {flag: nil}, {}
+    hash, sort = {}, {}
     case params[:type]
     when '1'
       hash.merge!({type: "地点位置错误"})
@@ -17,6 +17,7 @@ class AdminUserReportsController < ApplicationController
       hash.merge!({type: "地点重复"})
     end
 
+    # flag: 0: 未处理 1: 已处理 2: 忽略
     case params[:flag]
     when '0'
       hash.merge!({flag: {"$exists" => false}})
@@ -30,8 +31,8 @@ class AdminUserReportsController < ApplicationController
   end
 
   def show
-    @shop_report = ShopReport.find(params[:id])
-    @shop = @shop_report.shop
+    @report = ShopReport.find(params[:id])
+    @shop = @report.shop
   end
 
 
@@ -85,7 +86,7 @@ class AdminUserReportsController < ApplicationController
     end
   end
 
-  def repot_del
+  def report_del
     @shop_report = ShopReport.find(params[:id])
     @shop = @shop_report.shop
     if @shop_report.update_attribute(:flag, 1)
@@ -99,8 +100,8 @@ class AdminUserReportsController < ApplicationController
     @report = ShopReport.find(params[:id])
   end
 
-  def modify_infor
-
+  def modify_info
+    @shop = Shop.find_primary(params[:id])
   end
 
   def repeat
