@@ -133,6 +133,13 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \end{verbatim}
 
 
+\subsection{谁访问过我的主页的消息}
+\begin{verbatim}
+所有消息id以"VISIT"开头的单聊消息，都属于访问我的主页的提醒消息。
+该消息的id格式为“VISIT#{uid1},#{uid2}”，其中uid1是访问我的人的id，uid2是我的id。
+\end{verbatim}
+
+
 \input{./photo.tex}
 \input{./sound.tex}
 
