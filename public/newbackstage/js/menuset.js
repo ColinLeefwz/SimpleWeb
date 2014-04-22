@@ -241,8 +241,8 @@ function OpenPlane(obj,str,sort,type2,url) {							//打开右侧面板
 		$("#Box17Con3").removeClass("none");
 	}
 	if(type2=="url"){
-		HttPLink({no_action: true});
-		$("#TextArea5").val(url);
+		HttPLink({url: url});
+		$("#Box17Con4 .pl20").html(url);
 		return false;
 	}else if(type2=='mweb'){
 		PhoneLink({no_action: true});
@@ -265,12 +265,13 @@ function HttPLink(option){										//打开链接编辑页
 	option = option || {}
 	$(".box17right").addClass("none");
 	$("#Box17Con4").removeClass("none");
-	if(option.no_action){
-		return false;
+	if(option.url){
+		$("#linkbtn").unbind('click').click(function(){
+			EditLink(option.url)
+		})
 	}else{
-		$('#linkbtn').click();
+		EditLink()
 	}
-
 }
 function PhoneLink(option){										//打开手机编辑页
 	option = option || {}
@@ -299,9 +300,10 @@ function Res(){												//所有单元归零
 	$("#Box17Con3").removeClass("none");
 	$(window).resize();
 }
-function EditLink(){										//打开编辑页面
+function EditLink(url){										//打开编辑页面
 	$(".box17right").addClass("none");
 	$("#Box17Con9").removeClass("none");
+	$('#TextArea5').val(url||'')
 }
 function SaveLink(){
 	var m = $('.selected')[0];
@@ -318,6 +320,7 @@ function SaveLink(){
 		$("#UrlFail").addClass("none");
 		$(".box17right").addClass("none");
 		$("#Box17Con4").removeClass("none");
+		$("#Box17Con4 .pl20").html(url);
 	});
 	
 }

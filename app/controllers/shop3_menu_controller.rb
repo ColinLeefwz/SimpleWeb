@@ -93,10 +93,11 @@ class Shop3MenuController < ApplicationController
     menu = Menu.find_by_id(session[:shop_id])
     button = menu.button
     tmp_button = []
-    params[:index].each_with_index do |hash_arr, index|
-      tmp_button[index] = button[hash_arr[0].to_i]
-      if hash_arr[1].is_a?(Array)
-        tmp_button[index]['sub_button'] = hash_arr[1].map{|m| button[hash_arr[0].to_i]['sub_button'][m.to_i]}
+    params[:index].values.each_with_index do |arr, index|
+    tmp_index = arr.shift.to_i
+    tmp_button[index] = button[tmp_index]
+      if arr.any?
+        tmp_button[index]['sub_button'] = arr.map{|m| button[tmp_index]['sub_button'][m.to_i]}
       end
     end 
     menu.button = tmp_button
