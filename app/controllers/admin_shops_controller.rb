@@ -86,11 +86,11 @@ class AdminShopsController < ApplicationController
       @shop.lo = (os.lo.count == 1 ?os.lo.first.split(/[,，]/).map{|l| l.to_f} : os.lo.map { |m| m.split(/[,，]/).map{|l| l.to_f} })
       @shop.city = @shop.get_city
     end
-    
+
     @shop.name = os.name
     @shop.t = os.t.to_i
     #商家编辑不能编辑城市
-    
+
     @shop.save
 
     info = @shop.info
@@ -103,6 +103,7 @@ class AdminShopsController < ApplicationController
         shop_info._id = @shop.id.to_i
         shop_info.addr = new_info.try(:addr)
         shop_info.tel = new_info.try(:tel)
+        shop_info.phone = new_info.try(:phone)
         shop_info.save
       end
     end
@@ -163,7 +164,7 @@ class AdminShopsController < ApplicationController
     @shops = @shops.map{|shop| [shop._id.to_i, shop.name, shop.addr, ENV["RAILS_ENV"] == "production" ? shop.get_distance(shop.loc_first, @shop.loc_first) : '', shop.show_t]}
     @shops = @shops.sort { |a, b| a[3] <=> b[3] }[0,300]
     #    @shops = Shop.all.to_a
-    
+
   end
 
   def find_shops
@@ -191,7 +192,7 @@ class AdminShopsController < ApplicationController
       @shops = Shop.where(hash)
       @shops -= [@shop]
     end
-    
+
   end
 
   def bat_add_sub
@@ -202,7 +203,7 @@ class AdminShopsController < ApplicationController
     @shop.shops = (@shop.shops.to_a - ucs) | css
     @shop.shops = @shop.shops.uniq
     @shop.save
-    @shop.merge_subshops_locations 
+    @shop.merge_subshops_locations
     redirect_to "/admin_shops/subshops?shop_id=#{@shop.id}"
   end
 
