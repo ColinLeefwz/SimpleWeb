@@ -36,7 +36,7 @@
 			  <div class="box18 box18change h100 lh18" onclick="ChangePlane(this)">
 				<div class="box18bg" rel="<%= ma.mobile_url %>"><img src="/newbackstage/images/sign65.png"/></div>
 				<div class="imgs"><%= image_tag ma.img_url, alt: '' %></div>
-				<h2 class="tit"><%=truncate ma.title, length: 11 %></h2>
+				<h2 class="tit"><%=truncate ma.title, length: 9 %></h2>
 				<span class="time mb5"><%= ma.cat.strftime("%Y-%m-%d %H:%M:%S") %></span>
 				<%=truncate ma.text, length: 35 %>
 			  </div>
