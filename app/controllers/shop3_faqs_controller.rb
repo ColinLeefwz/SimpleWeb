@@ -6,7 +6,7 @@ class Shop3FaqsController < ApplicationController
 
   def faqs
     ods = %w(01 02 03 04 05 06 07 08 09)
-    ShopFaq.where({sid: session[:shop_id], od: {"$in" => ods}}).sort({od: 1})
+    ShopFaq.where({sid: session[:shop_id]}).sort({od: 1})
   end
 
   def index
