@@ -5,21 +5,28 @@
 	<div class="title1"><h2 class="f18">问答系统</h2></div>
 	<div class="box4 w950">
 	<%= form_for(@shop_faq, :url => '/shop3_faqs/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
-		<div class="box4left">
-		<% if @shop_faqs.blank? %>
-		还没有设置问答系统，请创建 ===》
-		<% end %>
-		<% @shop_faqs.each do |faq| %>
-			 <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
-				<a href="/shop3_faqs/edit?id=<%=faq.id%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
-		<% end %>
+		<div class="box4left" id="B4L">
+			<% if @shop_faqs.blank? %>
+				还没有设置问答系统，请创建 ===》
+			<% end %>
+			<% @shop_faqs.each do |faq| %>
+				<%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
+				<a href="/shop3_faqs/edit?id=<%=faq.id%>" rel="<%= faq.od%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
+			<% end %>
+			<span class="blue3">
+				<span id="NewNum"></span>
+				<span id="NewTitle"></span>
+			</span>
 		</div>
-<div class="box4right w400 pl20">
+<div class="box4right w400 pl20 zindex99 relative bg">
 
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
     <tr>
-      <td width="20%" align="right" valign="middle" class="pr20">回复数字</td>
-      <td width="86%"><%= f.select :od, ["01","02","03","04","05","06","07","08","09"] - session_shop.faqs.map{|m| "0#{m.od.to_i}"},{}, {:class => "ptb2 plr3"} %></td>
+      <td width="20%" align="right" valign="middle" class="pr20 pt10">回复数字</td>
+      <td width="86%" class="pt10">
+		<%= f.text_field :od, :class =>"inputs8 radius5 relative", :id=>"Inputs3", :value=>"请输入数字" %>
+		<div id="Mes3"></div>
+	  </td>
     </tr>
     <tr>
       <td width="20%" align="right" valign="middle" class="pr20">问题</td>
@@ -63,20 +70,23 @@
 
 				</div>
 <div class="box4right2">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 visible pt10">
 	<tr>
-		<td>
-			<span class="l mr20"><%= f.radio_button :link_rule, '0',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;链接到一个网页</span>
+		<td align="left" class="pb10">详细内容</td>
+	</tr>
+	<tr>
+		<td class="pb8">
+			<span class="l ml8 mr20"><%= f.radio_button :link_rule, '0',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;链接到一个网页</span>
 			<span class="l"><%= f.radio_button :link_rule, '1',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;创建详情页</span>
 		</td>
 	</tr>
 	<tr>
-		<td class="relative del2">
-			<%= f.text_field :url,:class=>"inputs2 radius5 relative",:id=>"link1", :placeholder => "http://", :disabled=>"disabled"%>
+		<td class="relative hidden">
+			<%= f.text_field :url,:class=>"inputs2 radius5 relative w300 mt10 mb20",:id=>"link1", :value => "http://", :disabled=>"disabled",:style=>"margin-left:8px;"%>
 			<div id="LinkDiv">
 				<div class="linkdivleft">
-					<%= f.text_field :head, :class=>"inputs2 radius5 w300",:id => "link2", :placeholder => "标题" %>
-					<div id="link3">
+					<%= f.text_field :head, :class=>"inputs2 radius5 relative w300 mt10 mlr8 mb20",:id => "link2", :value => "标题" %>
+					<div id="link3" class="ml8">
 						<%= f.text_area :content, :id=>"myEditor" %>
 						<input type="button" class="mt10 btn15 r mr5" id="Preview" value="预览"/>
 					</div>
@@ -94,7 +104,7 @@
 			</div>
 		</div>
 <script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
-<script src="/newbackstage/js/questions_answers.js" type="text/javascript"></script>
+<script src="/newbackstage/js/qa.js" type="text/javascript"></script>
 <script>
 $(document).ready(function(){
     runing=$("#CB1").attr("class");
@@ -115,23 +125,14 @@ $(document).ready(function(){
 	$("input[name='shop_faq[img]']").click(function(){
 		imgUploadPreview2(this, 'uploadPreview');
 	});
-	var html=$("#shop_faq_od option").eq(0).html();
-	
-	$("div.box4left a:last").after("<br/><span class='blue3'>"+html+"&nbsp;=&gt;&nbsp;</span>");
-	$("#shop_faq_od").change(function(){
-		var inputs1_val=$("#Inputs1").val();
-		if(inputs1_val=="3-12个字,如:获取wifi密码"){inputs1_val="";}
-		$("div.box4left span").eq(0).html($(this).val()+"&nbsp;=&gt;&nbsp;"+inputs1_val);
-	});
-	$("#Inputs1").keyup(function(){
-		var inputs1_val=$("#Inputs1").val();
-		if(inputs1_val=="3-12个字,如:获取wifi密码"){inputs1_val="";}
-		$("div.box4left span").eq(0).html($("#shop_faq_od").val()+"&nbsp;=&gt;&nbsp;"+inputs1_val);
-	});
+
 	if($("#link1").attr("disabled")=="disabled"){
 		$("#link1").css("background-color","#efefef");
 	}
+	Lianlian.Blog.init();
 });
+
+
 $(document).keyup(function(e){
 	if(e.which==116){$("#Reset").click();}
 });
@@ -171,22 +172,5 @@ Lianlian = window.Lianlian = {};
       });
     }
   };
-
-  $(document).ready(function() {
-    return Lianlian.Blog.init();
-  });
 }).call(this);
-
-  // function ajaxPreview() {
-
-  //   var od = $('#shop_faq_od').val();
-  //   var title = $('#Inputs1').val();
-  //   var text = $('#Inputs1').val();
-  //   var content = $('#baidu_editor_0').contents().find('body').html()
-
-  // 	$.post("/shop3_faqs/ajax_preview",{od:od, title:title, text:text, content:content},function(data){
-  // 		window.open("/shop3_faqs/preview?id="+data['id'])
-  // 	})
-  // }
-
 </script>
