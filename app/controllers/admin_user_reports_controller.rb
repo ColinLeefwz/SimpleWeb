@@ -1,7 +1,7 @@
 # encoding: utf-8
 class AdminUserReportsController < ApplicationController
   include Paginate
-  before_filter :admin_authorize
+  before_filter :authorize
   layout "report"
 
   def index
@@ -26,7 +26,10 @@ class AdminUserReportsController < ApplicationController
     when '2'
       hash.merge!({flag: 2})
     end
-
+    if session[:city]
+      hash.merge!({city: session[:city]})
+      @agent = session[:city].present?
+    end
     @shop_reports = paginate3('shop_report', params[:page], hash, sort)
   end
 
@@ -67,7 +70,6 @@ class AdminUserReportsController < ApplicationController
     else
       render :action => :edit
     end
-
   end
 
   def update_corrdinate
@@ -75,6 +77,15 @@ class AdminUserReportsController < ApplicationController
     @shop = @shop_report.shop
     if @shop.update_attribute(:lo, params[:lo][1..-2].split(",").map{|i| i.to_f})
       @shop_report.update_attribute(:flag, 1)
+      render json: {"success" => true, "lo" => @shop.lo}
+    end
+  end
+
+  def new_corrdinate
+    @shop_report = ShopReport.find(params[:id])
+    @shop = @shop_report.shop
+    @shop.lo << params[:lo].split(",").map{|i| i.to_f}
+    if @shop.save
       render json: {"success" => true, "lo" => @shop.lo}
     end
   end
@@ -94,6 +105,19 @@ class AdminUserReportsController < ApplicationController
       @shop.update_attribute(:i, true)
       redirect_to action: "index"
     end
+  end
+
+  def mark_del
+    @shop = Shop.find(params[:id])
+    @shop.shop_del
+    render :json => {result: 1}
+  end
+
+  def cancel_mark_del
+    @shop = Shop.find(params[:id])
+    @shop.del = nil
+    @shop.save
+    render :json => {result: 1}
   end
 
   def modify_location
@@ -128,5 +152,13 @@ class AdminUserReportsController < ApplicationController
     render :json => ''
   end
 
+  def authorize
+    if params[:city]
+      @city = params[:city]
+      @hash = Digest::SHA256.hexdigest(@city.to_s + "dface")
+      session[:city] = @city if @hash == params[:agent]
+    end
+    admin_authorize unless session[:city]
+  end
 
 end
