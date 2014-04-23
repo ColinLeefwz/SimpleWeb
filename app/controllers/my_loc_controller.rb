@@ -39,7 +39,8 @@ class MyLocController < ApplicationController
   
   def select_loc
     lo = [params[:lat].to_f , params[:lng].to_f]
-    hash = {lo:{'$near' => lo,'$maxDistance' => 0.1} }
+    #hash = {lo:{'$near' => lo,'$maxDistance' => 0.1} }
+    hash = {lo:{"$within" => {"$center" => [lo,0.1]}}}
     if params[:name]
       hash.merge!( {name: /#{params[:name]}/ }  )  
     else
