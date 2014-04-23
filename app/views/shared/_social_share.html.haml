@@ -34,6 +34,5 @@
     #gp-shares.count
       = share_counter.google_plus
 
--# TODO: add email functionality
--# .social-share.email
--#   = link_to image_tag("email.png"), remote: true
+.social-share.email
+  = link_to image_tag("email.png", class: "tooltips", title: "share via email", data:{placement: "bottom"}), new_share_message_path(item: { id: item.id, type: item.class.name }), remote: true
