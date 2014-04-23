@@ -26,4 +26,8 @@ class Announcement < ActiveRecord::Base
     Expert.where(id: expert.id)
   end
 
+  private
+  def user_list
+    User.all.pluck(:id)
+  end
 end
