@@ -5,15 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<meta name="keywords" content="脸脸 现场社交 聊天 签到 交友 APP 关于脸脸" />
 	<meta name="description" content="脸脸是一款基于现场的移动社交产品。通过脸脸，您可以进入您所在场所的虚拟现场，认识与您同在这里的人，与熟悉的或陌生的朋友打招呼、聊天。可以让你在酒吧、机场、车站、校园、楼宇、餐厅、会议、大型活动上认识在同一个现场的TA。" />	
-	<meta content="yes" name="apple-mobile-web-app-capable"/>
-	<meta content="yes" name="apple-touch-fullscreen"/>
-	<meta content="telephone=no" name="format-detection"/>
-    <meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
-	<meta content="black" name="apple-mobile-web-app-status-bar-style">
 	<meta name="author" content="www.dface.cn" />
 	<meta name="copyright"  content="Copyright &copy;www.dface.cn 版权所有" />
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 	<link href="/web/stylesheets/share_photo.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="/web/js/jquery-1.10.2.min.js"></script>
 </head>
 <body>
 	<div id="Main">
@@ -40,17 +36,20 @@
 					<%= @photo.shop.name %>
 				</div>
 			</div>
-		</div>        	
-    	<div class="head">
-        	<a target="_blank" href="http://www.dface.cn/a?v=130">
-	        	<img alt="" class="logo" src="/admin/image/share_weibo/logo.png">
-	            <div class="plane3">
-					<div class="wordstyle mb10 bold">此时此刻，我们在这里</div>
-					脸脸--基于现场的移动社交
-					<p>点击立即下载</p>
-				</div>
-			</a>
-        </div>
+		</div>        
+		<div class="mainright">
+			<a href="http://www.dface.cn" target="_blank"><img src="/images/share_logo.png" alt="" class="logo"/></a>
+			<div class="plane3">
+				<div class="wordstyle mb10 bold">此时此刻，我们在这里</div>
+				脸脸--基于现场的移动社交
+			</div>
+			<div class="plane4">
+				<a href="https://itunes.apple.com/cn/app/lianlian/id577710538" alt="iPhone版" class="btn1">iPhone版下载</a>
+				<a href="http://dface.cn/a/down" alt="android版" class="btn1">android版下载</a>
+				<img src="/images/code2.png" alt="" height="122" class="code2" />
+			</div>
+		</div>	
 	</div>
+	<script type="text/javascript" src="/web/js/public.js"></script>
 </body>
 </html>

@@ -11,6 +11,8 @@ class CheckinNotice
     else 
       checkin = ck #测试时直接调用
     end
+    $redis.zadd("LL3#{checkin.uid}",Time.now.to_i,checkin.sid)
+    $redis.zremrangebyrank("LL3#{checkin.uid}",-10,-5) #保留最新的4个
     shop = Shop.find_by_id(checkin.sid)
     user = User.find_by_id(checkin.uid)
     if new_shop
@@ -33,7 +35,7 @@ class CheckinNotice
       if at_here
         checkin.save!
       else
-        if is_kx_user?(checkin.uid)
+        if User.is_kx?(checkin.uid)
           checkin.save!
         elsif checkin.staff_checkin?
           # 商家员工（加V的用户）是随时可以摇入他管理的地点的。这里保证实际签到才保存，可用于考勤。

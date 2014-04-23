@@ -1,7 +1,7 @@
 /* CSS Document */
 html{ overflow-x:hidden;}
 *{padding:0px;margin:0px;outline:none;}
-body {font-size: 12px;background:#F2F2F2;font-family:Arial;}
+body {font-size: 12px;background:#F2F2F2;font-family:微软雅黑;}
 img{border:none;}
 .l{float:left;}
 .r{float:right;}
@@ -24,10 +24,10 @@ ul{list-style:none}
 .lh18{line-height:18px !important;}
 .lh25{line-height:25px !important;}
 .gay1{color:#949494 !important}
-a.btn1{width:135px;height:65px;background:url(/admin/image/share_weibo/btn1.png) left top no-repeat;display:block;_display:inline;}
-a.btn1:hover{background-image:url(/admin/image/share_weibo/btn1_2.png);}
-a.btn2{width:150px;height:60px;background:url(/admin/image/share_weibo/btn2.png) left top no-repeat;display:block;_display:inline;}
-a.btn2:hover{background-image:url(/admin/image/share_weibo/btn2_2.png);}
+a.btn1{width:123px;height:56px;background:url(/images/share_btn.png) no-repeat;display:block;_display:inline; margin-bottom: 10px; color: #fff; font-size: 14px; font-weight: bold; line-height: 56px; text-align: center;}
+a.btn1:hover{background-image:url(/images/share_btn.png);}
+a.btn2{width:123px;height:56px;background:url(/images/share_btn.png) no-repeat;display:block;_display:inline;}
+a.btn2:hover{background-image:url(/images/share_btn.png);}
 a.btn3{width: 126px;height: 46px;display: inline-block;text-align:center;background: url("/admin/image/share_weibo/btn5.png") left top no-repeat;
 color:#ffffff;font-size:14px;font-weight:bold;line-height:46px;letter-spacing:-0.5px;}
 a.btn4{width: 252px;height: 92px;display: inline-block;text-align:center;background: url("/admin/image/share_weibo/btn5_1.png") left top no-repeat;
@@ -41,9 +41,8 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 #BigPic{cursor:pointer;position:absolute;z-index:5;}
 
 #Main{ max-width:800px; margin:0px auto; position:relative; zoom:1;}
-#Main .mainleft{ width:460px;float:left; box-shadow:3px 3px 2px #e6e6e6;border:1px solid #DDDDDD;background-color:#ffffff; text-align:center;}
-#Main .mainright{float:right;zoom:1;overflow:hidden; width:280px;}
-.mainright img.logo{ width:100%;}
+#Main .mainleft{ width:460px;float:left; margin-right: -460px; box-shadow:3px 3px 2px #e6e6e6;border:1px solid #DDDDDD;background-color:#ffffff; text-align:center;}
+#Main .mainright{ zoom:1;overflow:hidden; width:280px; margin-left: 520px;}
 
 .main2{width:640px;margin:0px auto;display:block;overflow:hidden;}
 .con{display:block;overflow:hidden;box-shadow:0 1px 5px #ccc;border:1px solid #ccc;border-radius:5px;background-color:#ffffff;width:96%;margin:3% auto 0px auto;}
@@ -93,13 +92,13 @@ ul.share_nav_bt li a.qq_kj:hover{ background-position:-188px 0px;}
 .plane2left img{ position: absolute; left: 0px; top: 0px;}
 .plane2left span{ position: absolute; left: 45px; top: 0px;}
 .plane2left span.wordstyle_time{ top: 20px;}
-	.head{ display:block;}
-	#Main .mainleft{ float:none; width:100%; max-width:640px; margin: 0 auto;}
-	.mainright { display:none;}
-	.plane2_download{ display:block;}
+.plane2_download{ display:block;}
 .mainleft .width100p{cursor:pointer; width:96%; padding-top: 2%;}
 .none{ display: none;}
 .mainleft .plane{ font-size: 14px; line-height: 22px;}
+.mainright .plane3{ font-size: 16px;}
+.mainright .plane3 .wordstyle{ font-size: 20px;}
+.plane4 .code2{ position: absolute; right: 0px; top: 0px;}
 
 
 

@@ -48,6 +48,8 @@ GET & \multicolumn{3}{|c|}{https://42.121.79.210/init/init} \\
  mac  & 字符串 & 必须 &  无线网卡MAC地址的MD5\\
  \hline
  hash  & 字符串 & 必须 &  hash验证码\\
+ \hline
+ bssid  & 字符串 & 可选 &  所连接的wifi的bssid\\ 
   \hline
  ver  & 字符串 & 可选 &  软件版本,如"2.1.3"\\
   \hline
@@ -81,9 +83,31 @@ hash的计算方式为：model+os+mac+"init"进行SHA1算法后取前32位，和
 
 [2013-8-1] 新增version，表示脸脸当前线上的最新的具体版本，是一个字符串。当用户手动检查升级时，可以使用这个字段。
 
+
+[2014-4-21] 新增time，表示脸脸服务器的当前时间，从1970年开始到现在的秒数。
+
 \end{verbatim}
 
 本API的作用一个是给客户端推荐IP地址，一个是统计应用的开机情况和操作系统分布。
+
+\subsection{获得服务器的时间}
+
+用于安卓手机校准时间。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/init/time} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ time  & 数字 & 可选 &  手机本地时间\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值：{time: long}，long表示从1970年开始到现在的秒数。
 
 
 \subsection{获得最新的升级信息}
@@ -93,7 +117,7 @@ hash的计算方式为：model+os+mac+"init"进行SHA1算法后取前32位，和
    \begin{center}
 \begin{tabular}{|c|c|c|p{12cm}|}
 \hline
-GET & \multicolumn{3}{|c|}{https://42.121.79.210/init/upgrade} \\
+GET & \multicolumn{3}{|c|}{/init/upgrade} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
  \hline
@@ -220,6 +244,7 @@ GET & \multicolumn{3}{|c|}{/aroundme/my4} \\
    \end{center}
 \end{table}
 
+提供最后签到时间，｛time：字符串时间，timei: 整数时间｝
 
 
 \subsection{定位：根据经纬度获得可能的现场商家}
@@ -486,6 +511,8 @@ GET & \multicolumn{3}{|c|}{/shop/basic} \\
 \end{table}
 本接口用于不在现场聊天室获得商家基本信息。
 
+[2014-04-17] 增加五个参数：是否签约 sign，地址 addr，电话 tel，商标 logo , 子地点 sub）
+
 \subsection{在聊天室获得商家的信息}
 
 \begin{table}[H]
@@ -696,6 +723,40 @@ skip的大小应该是聊天室当前最新显示的消息的总数(但是不包
 \end{verbatim}
 \end{figure}
 
+\subsection{根据商家ID获得商家的顶部5张banner}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/banners} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{根据商家ID获得商家的子地点信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/subs} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
 
 
 \section{签到与足迹}
@@ -764,7 +825,11 @@ POST & \multicolumn{3}{|c|}{/checkins/new\_shop} \\
 \hline
  sname  & 字符串 & 必须 &  商家的全称\\  
 \hline
- type  & 字符串 & 可选 &  商家的类别\\   
+ t  & 整数 & 可选 &  商家的内部类别\\    
+\hline
+ addr  & 字符串 & 可选 &  商家的地址\\   
+ \hline
+ tel  & 字符串 & 可选 &  商家的联系电话\\    
 \hline
  altitude  &  浮点数 & 可选 & 海拔高度\\ 
 \hline
@@ -790,6 +855,29 @@ POST & \multicolumn{3}{|c|}{/checkins/new\_shop} \\
 2）定位时找不到商家，用户输入商家的全称（sname），客户端调用本接口并获得新建立的商家的id，然后进入该商家的聊天室。
 
 
+[2014-04-17] 增加三个参数：商家内部的整数类型 t，地址 addr，电话 tel ， 取消一个参数type。
+
+商家内部的整数类型 t的值如下：
+		0 活动
+		1 酒吧
+		2 咖啡
+		3 茶馆
+		4 餐饮
+		5 酒店
+		6 休闲娱乐
+		7 运动
+		8 购物
+		9 广场
+		10 写字楼
+		11 住宅
+		12 学校
+		13 交通
+		14 大型医院
+		15 景点
+		51 美容美发
+		52 公司
+		53 其他
+		
 例子：
 
 \begin{figure}[H]

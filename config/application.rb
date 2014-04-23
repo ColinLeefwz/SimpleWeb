@@ -12,7 +12,7 @@ require 'uuid'
 $xmpp_ips = ["42.121.98.157","42.121.0.193","42.121.0.192"]
 $web_ips = ["42.121.79.210","42.121.79.211"]
 $xmpp_ip = $xmpp_ips[0]
-$web_ip = $web_ips[1]
+$web_ip = $web_ips[0]
 $gfuid = "507f6bf3421aa93f40000005" #脸脸网络
 $dduid = "51418139c90d8bc67b0003bf" #脸脸地点审核
 $xpuid = "50bc20fcc90d8ba33600004b" #浦靠谱
@@ -34,12 +34,6 @@ $zwyd = 21828958 #紫薇原点
 
 #$fake_shops = [$llcf, $llsc, 21830784, 21830785, 21830326, 21830231, $llkfcs, $cezyfd, 21830719, 21833842]  ##存在redis中， $redis.smembers("FakeShops")
 #UnBroadcast => [21828775,21830325,21830326,21830784,21830785,21835409,21835801], $redis.smembers("UnBroadcast")
-
-
-
-def is_kx_user?(uid)
-  $redis.sismember('KxUsers', uid)
-end
 
 
 $sina_api_key = "2054816412"  

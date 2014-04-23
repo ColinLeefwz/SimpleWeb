@@ -88,7 +88,7 @@ class CheckinBssidStat
     Checkin.where({bssid:{"$exists" => true}}).each do |ck|
       next if ck["bssid"].nil? || ck["bssid"].size<10
       next if ck.del
-      next if is_kx_user?(ck.uid)
+      next if User.is_kx?(ck.uid)
       next if ck.sid && $redis.smembers("FakeShops").find{|id| ck.sid.to_i == id.to_i}
       add_bssid_redis(ck["bssid"],ck["sid"])
     end
@@ -98,7 +98,7 @@ class CheckinBssidStat
     Checkin.where({bssid:{"$exists" => true}}).each do |ck|
       next if ck["bssid"].nil? || ck["bssid"].size<10
       next if ck.del
-      next if is_kx_user?(ck.uid)
+      next if User.is_kx?(ck.uid)
       next if ck.sid && $redis.smembers("FakeShops").find{|id| ck.sid.to_i == id.to_i}
       cbs = CheckinBssidStat.find(ck["bssid"])
       if cbs.mobile

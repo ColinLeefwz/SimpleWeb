@@ -29,14 +29,55 @@ Xmpp端提供的API包括：
 * /api/chat?uid=，获得用户uid的聊天历史
 * /api/chat?uid1=&uid2=，获得用户uid1和uid2之间的聊天记录
 
+
+##Web项目的配置
+
+
+| 项目      | 数据库        | 缓存  | Redis   | http server | 部署 |
+| -------- |:-------------:| -----|:-------:| ---------:|---:|
+| 脸脸API | mongodb/lian | memcache | redis/0 | unicorn/8082 | web1|
+| 脸脸后台 | mongodb/lian | memcache | redis/0 | puma/9291 | web2|
+| 猜图    | mongodb/caitu| memcache| redis/0  | puma/9292 | web2|
+| 即立方  | mongodb/mweb |    OCS | redis/2   |    puma/9293 | web2|
+| 游戏 | mongodb/dface   | memcache |  redis/2   |    puma/9294 | web2|
+| 点菜 | RDS/foods  |   OCS | redis/2  |    puma/9295 | web4|
+| 购物 | RDS/trade  |   OCS | 无  |    puma/9296 | web4|
+
+
+表格二
+
+| 项目      | 域名       | 代码库地址 | Rails版本|
+| -------- |:-----------:| ------|:-------:|
+| 脸脸API | www.dface.cn | lian2.git | 3.2 |
+| 脸脸管理后台 | admin.dface.cn | 同上 | 3.2 |
+| 脸脸商家后台 | shop.dface.cn | 同上 | 3.2 |
+| 猜图    | caitu.dface.cn| caitu.git| 3.2 |
+| 即立方  | w.dface.cn |    mweb.git | 3.2 |
+| 游戏 | game.dface.cn   | game.git | 3.2  |
+| 点菜 | food.dface.cn |   food.git | 4.0  |
+| 购物 | trade.dface.cn | trade.git | 4.0  |
+
+###代码服务器的配置
+代码库地址前缀：ssh://git@code.dface.cn/
+
+代码服务器使用的是gitosis。目录是/mnt/gitosis-admin。要增加人员，先把公钥加入到keydir，然后编辑gitosis.conf分配权限，最后git提交代码并push就生效了。
+
+###产品原型服务器的配置
+通过smaba提供共享文件夹服务，地址是“smb://demo.dface.cn”。产品人员把产品原型拷贝的该share文件夹中。smaba的配置文件是“/etc/samba/smb.conf“。
+
+samba认证的用户名： new， 
+samba认证的密码： lianlian123
+
+要通过浏览器查看原型，访问http://demo.dface.cn。
+http访问时的用户名／密码都是"lian"
+
+
 ##脸脸网Web服务器集群
 
 脸脸网的Web服务器集群目前有两台服务器web1和web2。Web服务器集群主要包括：基于Nginx的Web接入层、基于Ror的应用层，以及基于Mongodb的数据库层。
 
 目前resque/resque-schedule跑在web1上, redis则跑在web2上。
 每分钟监测图片处理错误的程序Photo.fix_error_of_all_type_image跑在web1上。
-
-目前两台服务器只有web1在跑真实的应用，web2主要用于测试。
  
 ###Nginx
 
@@ -110,6 +151,7 @@ redis主要用于保存一些需要长期在内存中的信息，当作内存数
 38. 开通点菜的商家，"FOODSHOPS", 类型zadd
 39. 开通猜图的商家，"CAITUSHOPS", 类型zadd
 40. 是否禁止陪聊，“no_fake_talk“，类型是String
+41. 每个用户的访问列表,“VISIT#{uid}”, 类型为zset, 排序值为时间。
 
 
 
@@ -222,34 +264,6 @@ Mongodb数据库采用了replca set，目前是一主三从配置。
 
 初始建立索引：rake db:mongoid:create_indexes
 
-##Web项目的配置
-
-
-| 项目      | 数据库        | 缓存  | Redis   | http server | 部署 |
-| -------- |:-------------:| -----|:-------:| ---------:|---:|
-| 脸脸API | mongodb/lian | memcache | redis/0 | unicorn/8082 | web1|
-| 脸脸后台 | mongodb/lian | memcache | redis/0 | puma/9291 | web2|
-| 猜图    | mongodb/caitu| memcache| redis/0  | puma/9292 | web2|
-| 即立方  | mongodb/mweb |    OCS | redis/2   |    puma/9293 | web2|
-| 游戏 | mongodb/?      |    ？ | ?     |    puma/9294 | web2|
-| 点菜 | RDS/foods  |   OCS | redis/2  |    puma/9295 | web4|
-| 购物 | RDS/trade  |   OCS | 无  |    puma/9296 | web4|
-
-
-表格二
-
-| 项目      | 域名       | 代码库地址 | Rails版本|
-| -------- |:-----------:| ------|:-------:|
-| 脸脸API | www.dface.cn | lian2.git | 3.2 |
-| 脸脸管理后台 | admin.dface.cn | 同上 | 3.2 |
-| 脸脸商家后台 | shop.dface.cn | 同上 | 3.2 |
-| 猜图    | caitu.dface.cn| caitu.git| 3.2 |
-| 即立方  | w.dface.cn |    mweb.git | 3.2 |
-| 游戏 | game.dface.cn   | game.git | 3.2  |
-| 点菜 | food.dface.cn |   food.git | 4.0  |
-| 购物 | trade.dface.cn | trade.git | 4.0  |
-
-代码库地址前缀：ssh://git@code.dface.cn/
 
 ##Xmpp集群
 Xmpp服务器采用ejabberd-2.1.11，erlang的版本是Erlang R15B01, 采用riak保存聊天记录。这几个系统全部使用源代码编译安装，可以使用“head config.log”命令查看configure时的参数。

@@ -32,6 +32,11 @@ class UserInfoController < ApplicationController
   def lords
     user = User.find_by_id(params[:id])
     shops = user.lords[0,10].map{|id| Shop.find_by_id(id)}
+    if user.ver.to_f >= 3
+      if $redis.zadd("VISIT#{user.id}", Time.now.to_i, session[:user_id])
+        Xmpp.send_chat(user.id, session[:user_id],"#{user.name}访问了你的主页噢~", "VISIT#{user.id},#{session[:user_id]}", " NOLOG='1' NOPUSH='1' ")
+      end
+    end
     render :json => shops.select{|x| x!=nil}.map{|x| x.safe_output_with_users}.to_json    
   end
   
@@ -118,6 +123,9 @@ class UserInfoController < ApplicationController
     if qqexpire > Time.now.to_i
       qqtoken = $redis.get("qqtoken#{session[:user_id]}")
       hash.merge!(qqtoken:qqtoken, qqexpire:qqexpire) if qqtoken
+    end
+    if session_user.is_kx_or_co?
+      hash.merge!({"kx"=>1})
     end
     render :json => hash.to_json
   end
