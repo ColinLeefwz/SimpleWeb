@@ -7,7 +7,7 @@ class PhoneController < ApplicationController
   before_filter :phone_check, :only => [:unbind, :set_password, :upload_address_list] 
   before_filter :phone_register_check, :only => [:register, :do_register] 
 
-  extend PhoneUtil 
+  include PhoneUtil 
 
   FAKE_CODE = "12321"
 
@@ -99,7 +99,7 @@ class PhoneController < ApplicationController
     Resque.enqueue(SmsSender, params[:phone], sms )  unless fake
     session[:phone_code] = code
     session[:phone_try] = 5
-    render :json => {"code"=>""}.to_json
+    render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json
   end
   
   def register
