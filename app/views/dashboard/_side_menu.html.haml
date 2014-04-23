@@ -20,7 +20,7 @@
   .toolkit
     .item
       = render 'item_icon', item_name: 'activity_stream'
-      .item-text= link_to 'My activity stream', pending_page_experts_path(text: "my_activity_stream"), remote: true
+      .item-text= link_to 'My activity stream', activity_stream_path(current_user.id), remote: true
 
   -# ----- CREATE -----
   - if user.is_a? Expert
