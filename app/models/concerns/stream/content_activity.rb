@@ -12,7 +12,7 @@ module Stream::ContentActivity
   def push_activities
     activity_streams.each do |stream|
       stream.activities.create(
-        subject_name: subject.name,
+        subject_type: subject.class.name,
         subject_id: subject.id,
         object_type: object.class.name,
         object_id: object.id,
@@ -25,7 +25,7 @@ module Stream::ContentActivity
   def clean_activities
     activity_streams.each do |stream|
       activities = stream.activities.where(
-        subject_name: subject.name,
+        subject_type: subject.class.name,
         subject_id: subject.id,
         object_type: object.class.name,
         object_id: object.id)
