@@ -25,6 +25,10 @@ class Article < ActiveRecord::Base
     "by " + self.expert.name
   end
 
+  def experts
+    Expert.where(id: expert.id)
+  end
+
   def editable
     true
   end

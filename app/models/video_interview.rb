@@ -24,6 +24,10 @@ class VideoInterview < ActiveRecord::Base
     true
   end
 
+  def experts
+    Expert.where(id: expert.id)
+  end
+
   def draft
     false
   end

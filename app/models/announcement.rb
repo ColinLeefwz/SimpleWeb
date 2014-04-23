@@ -21,4 +21,9 @@ class Announcement < ActiveRecord::Base
   def draft
     false
   end
+
+  def experts
+    Expert.where(id: expert.id)
+  end
+
 end
