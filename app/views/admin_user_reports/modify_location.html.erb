@@ -117,5 +117,20 @@
         }
       });
     });
+
+    $("#new-corrdinate-submit").click(function(event) {
+      event.preventDefault();
+      var params = {lo: $("#new-coordinate-val").val()}
+      $.ajax({
+        url: "/admin_user_reports/new_corrdinate?id=<%= @report.id %>",
+        type: "POST",
+        dataType: 'json',
+        data: params
+      }).success(function(data){
+        if (data.success) {
+          $("#lob").text(data.lo);
+        }
+      })
+    });
   })
 </script>

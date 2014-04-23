@@ -2,9 +2,9 @@
   <tr id="Tr0">
     <th width="150">商家ID</th>
     <th width="200">商家名称</th>
-    <th width="220">报错人</th>
-    <th width="120">报错类型</th>
-    <th width="120">推荐操作</th>
+    <th width="120">报错人</th>
+    <th width="150">报错类型</th>
+    <th width="150">推荐操作</th>
     <th width="90">误报</th>
     <th width="120">查看</th>
   </tr>
@@ -12,8 +12,20 @@
   <% @shop_reports.each do |report| %>
     <tr>
       <td valign="middle"><%= report.sid %></td>
-      <td valign="middle"><%= link_to report.shop.name, "admin_shops/show?id=#{report.shop.id}" %></td>
-      <td valign="middle"><%= link_to report.user.name, "admin_users/show?id=#{report.user.id}" %></td>
+      <td valign="middle">
+        <% if @agent %>
+          <%= report.shop.name %>
+        <% else %>
+          <%= link_to report.shop.name, "admin_shops/show?id=#{report.shop.id}" %>
+        <% end %>
+      </td>
+      <td valign="middle">
+        <% if @agent %>
+          <%= report.user.name %>
+        <% else %>
+          <%= link_to report.user.name, "admin_users/show?id=#{report.user.id}" %>
+        <% end %>
+      </td>
       <td valign="middle"><%= report.type %></td>
       <td valign="middle">
         <% if report.flag %>
