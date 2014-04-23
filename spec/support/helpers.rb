@@ -40,6 +40,7 @@ def helper_objects
   let(:announcement_sameer) { create :announcement, title: 'Just an Announcement', expert: sameer,
                        description: 'Show you China road map', categories: [culture]}
   #courses
+  let(:course) { create :course, title: "course", description: "a course description", experts: [sameer], categories: [culture] }
   let(:first_course) { create :course, title: "first course", description: "course description", experts: [sameer], categories: [culture] }
   let(:course_staff) { create :course, title: "staff course", description: "course description", experts: [staff], categories: [culture] }
 
