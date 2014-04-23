@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
   has_many :subscribed_announcements, through: :subscriptions, source: :subscribable, source_type: "Announcement"
 
   # follow
-  has_many :followed_records, class_name: 'Following', foreign_key: "followed_id"   # user is followed by others
-  has_many :following_records, class_name: "Following", foreign_key: "follower_id"    # user follows someone else
+  has_many :followed_records, class_name: 'Following', foreign_key: "followed_id", dependent: :destroy   # user is followed by others
+  has_many :following_records, class_name: "Following", foreign_key: "follower_id", dependent: :destroy    # user follows someone else
 
   has_many :followers, through: :followed_records, class_name: "User"
   has_many :followings, through: :following_records, class_name: "User"
