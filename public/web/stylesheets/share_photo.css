@@ -40,7 +40,7 @@ color:#ffffff;font-size:14px;font-weight:bold;line-height:92px;font-size:25px;}
 #SmallPic{cursor:pointer; width:96%; padding-top: 2%;}
 #BigPic{cursor:pointer;position:absolute;z-index:5;}
 
-#Main{ max-width:800px; margin:0px auto; position:relative; zoom:1;}
+#Main{ max-width:800px; margin:0px auto; position:relative; zoom:1; overflow: hidden;}
 #Main .mainleft{ width:460px;float:left; margin-right: -460px; box-shadow:3px 3px 2px #e6e6e6;border:1px solid #DDDDDD;background-color:#ffffff; text-align:center;}
 #Main .mainright{ zoom:1;overflow:hidden; width:280px; margin-left: 520px;}
 

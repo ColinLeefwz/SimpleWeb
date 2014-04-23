@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= @user.name %>在<%= @photo.shop.name %>的分享</title>
+	<title>
+		<% if @photo.desc.blank? %>
+			<%= @user.name %>在<%= @photo.shop.name %>的分享
+		<% else%>
+			<%=truncate @photo.desc.gsub(/[^\d\s\w\u4e00-\u9fa5.|()；;,，]/, ''), :length => 25 %>
+		<% end %> 
+	</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<meta name="keywords" content="脸脸 现场社交 聊天 签到 交友 APP 关于脸脸" />
 	<meta name="description" content="脸脸是一款基于现场的移动社交产品。通过脸脸，您可以进入您所在场所的虚拟现场，认识与您同在这里的人，与熟悉的或陌生的朋友打招呼、聊天。可以让你在酒吧、机场、车站、校园、楼宇、餐厅、会议、大型活动上认识在同一个现场的TA。" />	

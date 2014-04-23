@@ -4,7 +4,13 @@
 <head>
 	<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=yes">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title><%= @user.name %>在<%= @photo.shop.try(:name) %>的分享</title>
+	<title>
+		<% if @photo.desc.blank? %>
+			<%= @user.name %>在<%= @photo.shop.name %>的分享
+		<% else%>
+			<%=truncate @photo.desc.gsub(/[^\d\s\w\u4e00-\u9fa5.|()；;,，]/, ''), :length => 25 %>
+		<% end %>
+	</title>
 	<link href="/web/stylesheets/share_photo.mobile.css" rel="stylesheet" type="text/css">
 </head>
 <body>
