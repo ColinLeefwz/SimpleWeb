@@ -106,6 +106,7 @@ Prodygia::Application.routes.draw do
 
   controller :email_messages do
     get :new_share_message
+    post :send_share_email
   end
 
   resources :resources

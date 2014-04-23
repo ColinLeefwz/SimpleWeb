@@ -7,7 +7,9 @@ class EmailMessagesController < ApplicationController
   end
 
   def send_share_email
-    @share_email_form = ShareEmailForm.new(email_params, current_user)
+    @share_email_form = ShareEmailForm.new(params[:share_email_form], current_user)
+    if @share_email_form.submit
+    end
   end
 
   private
