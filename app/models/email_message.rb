@@ -1,4 +1,5 @@
 class EmailMessage < ActiveRecord::Base
+  MESSAGE_TYPE = { refer: "refer", share: "share" }.freeze
   belongs_to :user
 
   after_initialize :set_default

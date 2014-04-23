@@ -1,9 +1,17 @@
 class EmailMessagesController < ApplicationController
   def new_share_message
-    logger.info "new_share_message"
-    @share_email_form = ShareEmailForm.new(params)
+    @share_email_form = ShareEmailForm.new(email_params, current_user)
     respond_to do |format|
       format.js {}
     end
+  end
+
+  def send_share_email
+    @share_email_form = ShareEmailForm.new(email_params, current_user)
+  end
+
+  private
+  def email_params
+    params
   end
 end
