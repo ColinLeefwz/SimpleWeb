@@ -72,13 +72,7 @@ class ShopController < ApplicationController
     lo = [params[:lat].to_f, params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     def output(s,lo)
-      distance = s.min_distance(s,lo)
-      if distance>=1000
-        dis = "%.1f公里" % (distance/1000.0)
-      else
-        dis = "%d0米" % (distance/10)
-      end
-      {id:s.id,name:s.name, visit:0, distance:dis, "lat"=>s.loc_first[0], "lng"=>s.loc_first[1] }
+      {id:s.id,name:s.name, visit:0, distance:s.distance_desc(lo), "lat"=>s.loc_first[0], "lng"=>s.loc_first[1] }
     end
     if params[:sname][0,3]=="@@@" #测试人员输入商家id模拟签到
       shop = Shop.find_by_id(params[:sname][3..-1])  
