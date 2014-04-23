@@ -6,6 +6,7 @@
         %h4#myModalLabel.modal-title Share via Email
       .modal-body
         = simple_form_for @share_email_form, url: send_share_email_path, remote: true do |f|
+          = f.input :item_url, as: :hidden
           = f.input :to
           = f.input :subject
           = f.input :message, as: :text

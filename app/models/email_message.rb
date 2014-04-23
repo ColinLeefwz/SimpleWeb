@@ -5,6 +5,8 @@ class EmailMessage < ActiveRecord::Base
   after_initialize :set_default
   validates :to, presence: true
 
+  attr_accessor :item_url
+
   def expert_email_content
     build_message_content("expert")
   end

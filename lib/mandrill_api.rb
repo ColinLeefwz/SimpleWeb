@@ -79,6 +79,23 @@ class MandrillApi
     send_template_mail("refer-a-friend", template_content, addition_message)
   end
 
+  def share_item_email(user, email_message)
+    template_content = [{ "name" => "message_content", "content" => email_message.message }, { "name"=>"item_url", "content"=>"<a href='#{email_message.item_url}'>#{email_message.item_url}</a>" }]
+
+    to_message = [{"type"=>"to", "name" =>"", "email"=> email_message.to}]
+
+    addition_message = {
+      "from_name" => email_message.from_name,
+      "from_email" => "no-reply@prodygia.com",
+      "subject" => email_message.subject,
+      "to"=>to_message,
+      "headers"=>{"Reply-To"=>user.email}
+    }
+
+    send_template_mail("share-via-email", template_content, addition_message)
+
+  end
+
   def reset_password(user, reset_link)
     template_content = [{"name" => "reset-link", "content" => "<a href='#{reset_link}'>#{reset_link}</a>"}, {"name"=>"first-name", "content"=>user.first_name}, {"name"=>"email-address", "content"=>user.email}]
 
