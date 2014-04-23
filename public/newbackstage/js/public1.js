@@ -150,7 +150,7 @@ function CouponPlane(){
 	}
 }
 
-function Del(id){//问答系统管理：删除
+/*function Del(id){//问答系统管理：删除
 	var div=$("#Div"+id);
 	var height=div.height();
 	var size;
@@ -190,18 +190,18 @@ function Del(id){//问答系统管理：删除
 			}
 		});
 	},670);
-}
+}*/
+
 function ShowDiv(){//问答系统管理：显示
 	var num=parseInt($("div.box4plane2:last").attr("rel")) ? parseInt($("div.box4plane2:last").attr("rel")): 0;
 	var opacity=1,n,i=0,x=0,z=0;
 	var arr=new Array(num);
-	
 	$("#Waterfall .box4plane1, #Waterfall .box4plane2").css("display","none");
 	for(;x<=num;x++){
 		arr[x]="flighting";
 	}
 	while(opacity){
-		n=parseInt(Math.random()*10);
+		n=parseInt(Math.random()*(num+1));
 		if(n<=num){
 			for(x=0;x<=num;x++){
 				if(arr[x]!=n){
@@ -232,12 +232,8 @@ function ShowDiv(){//问答系统管理：显示
 function DH(){//数据统计动画
 	$("#Dn2_b0,#Dn2_b2").css("height","0px");
 	$("#Dn2_b1").css({"height":"0px","top":"380px"});
-	//$("div.box2left1").css("width","0px");
-
 	$("#Dn2_b0,#Dn2_b2").animate({"height":"380px"},1600,"backout");
 	$("#Dn2_b1").animate({"height":"380px","top":"0px"},1300,"backinout");
-	//$("div.box2left1").animate({"width":"620px"},1000,"backin");
-	//$("div.box2right1").animate({"height":"380px"},1000,"backin");
 }
 function AllNoDH(){//取消动画
 	$(".header").css("overflow","visible");

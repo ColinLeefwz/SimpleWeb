@@ -3,7 +3,7 @@
 	<div class="box4">
 		<div class="box4left">
 		<% if @shop_faqs.blank? %>
-		还没有设置问答系统，请创建 ===》
+			还没有设置问答系统，请创建 ===》
 		<% end %>
 		<% st=0 %>
 		<% @shop_faqs.each do |faq| %>
@@ -116,6 +116,6 @@ $(document).ready(function(){
 			$("div.box4plane2").eq(div_i).find(".box4plane3").css("width","100%");
 		}
 	}
-	if($("div.box4plane2:last").attr("rel")==9){$("div.box4plane1 a").removeClass().addClass("wordpoistion2").html("只能创建9个，请删除一个再创建").removeAttr("href");}
+	//if($("div.box4plane2:last").attr("rel")==9){$("div.box4plane1 a").removeClass().addClass("wordpoistion2").html("只能创建9个，请删除一个再创建").removeAttr("href");}
 });
 </script>
