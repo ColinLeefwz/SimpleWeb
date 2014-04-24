@@ -16,7 +16,7 @@ class WeiboController < ApplicationController
 
   #请求微博关注api， 三次请求失败返回［］
   def visit_remote(token, cursor=0, time=0)
-    return [] if time >2
+    return {"users" => [], 'next_cursor' => 0 } if time >2
     url = "https://api.weibo.com/2/friendships/friends.json"
     hash= {access_token: token, uid: session_user.wb_uid, count: 200, cursor: cursor}
     begin
