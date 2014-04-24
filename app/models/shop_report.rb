@@ -6,7 +6,9 @@ class ShopReport
   field :des
   field :flag,type: Integer
   field :type  #报错类型
+  field :city
 
+  after_create :save_city_code
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :to => :user
@@ -20,6 +22,10 @@ class ShopReport
 
   def user
      User.find_by_id(self.uid)
+  end
+
+  def city
+    shop.city
   end
 
   def report_flag
@@ -41,7 +47,7 @@ class ShopReport
       @url = "/admin_user_reports/modify_location?id=#{self.id}"
     when "地点信息错误"
       @operation = "修改地点信息"
-      @url = "/admin_user_reports/modify_info?id=#{self.id}"
+      @url = "/admin_user_reports/modify_info?id=#{self.shop.id}"
     when "地点不存在"
       @operation = "删除地点"
       @url = "/admin_user_reports/report_del?id=#{self.id}"
@@ -50,5 +56,10 @@ class ShopReport
       @url = "/admin_user_reports/repeat?id=#{self.id}"
     end
     hash = {operation: @operation, url: @url}
+  end
+
+  def save_city_code
+    self.city = shop.city
+    self.save
   end
 end
