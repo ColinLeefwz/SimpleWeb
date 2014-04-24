@@ -168,14 +168,15 @@ module Similarity
       return true if early_exit && score>min_score
       sames << [y,score] if score>min_score
     end
-    if x["city"] && x["lo"]
-      Shop.where2({city:x["city"], name:x["name"] }).each do |y|
-        next if y.id==x.id
-        next if y.del
-        return true if early_exit
-        sames << [y,MAX_SCORE]
-      end
-    end
+    #暂时取消创建地点的时候的同城同名地点匹配，因为性能不行
+    # if x["city"] && x["lo"]
+    #   Shop.where2({city:x["city"], name:x["name"] }).each do |y|
+    #     next if y.id==x.id
+    #     next if y.del
+    #     return true if early_exit
+    #     sames << [y,MAX_SCORE]
+    #   end
+    # end
     return false if early_exit
     sames.sort{|a,b| b[1]<=>a[1]}.map{|x| x[0]}
   end
