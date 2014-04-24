@@ -7,7 +7,7 @@ class InvitationsController < Devise::InvitationsController
       admin_invite
     else
       @email_message = current_user.refer_emails.create(set_email_message)
-      @email_message.update_attributes message: params[:refer_email_form][:message]
+      @email_message.update_attributes(message: params[:refer_email_form][:message], from_address: current_user.email, from_name: current_user.name)
       type = @email_message.invited_type
       case type
       when User::USER_TYPE[:expert]
