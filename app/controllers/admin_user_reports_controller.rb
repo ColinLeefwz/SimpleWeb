@@ -26,10 +26,12 @@ class AdminUserReportsController < ApplicationController
     when '2'
       hash.merge!({flag: 2})
     end
-    if session[:city]
-      hash.merge!({city: session[:city]})
-      @agent = session[:city].present?
+
+    if session[:city_code]
+      hash.merge!({city: session[:city_code]})
+      @agent = session[:city_code].present?
     end
+
     @shop_reports = paginate3('shop_report', params[:page], hash, sort)
   end
 
@@ -39,36 +41,27 @@ class AdminUserReportsController < ApplicationController
   end
 
 
-  def update
+  def update_shop_info
     @shop = Shop.find(params[:id])
-    shop = Shop.new(params[:shop])
-    if shop.lob.blank?
-      shop.lob = @shop.lo_to_lob.reverse.join(',')
-    else
-      lobs = shop.lob.split(/[;；]/)
-      @shop.lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
-      @shop.lo = @shop.lob.map{|m| Shop.lob_to_lo(m)}
-      @shop.unset(:lob)
-
-    end
-
-    unless params[:shop][:addr].blank?
+    unless params[:shop_info][:addr].blank?
       info = @shop.info || ShopInfo.new()
       info._id = @shop.id
-      info.addr = params[:shop][:addr]
+      info.addr = params[:shop_info][:addr]
+      info.phone = params[:shop_info][:phone]
       info.save
     end
 
-    @shop.name = shop.name
-    @shop.t = shop.t
+    @shop.name = params[:shop][:name] if params[:shop][:name]
+    @shop.t = params[:shop][:t] if params[:shop][:t]
+
     if @shop.save
       ShopReport.where({:sid => params[:id].to_i, :flag => nil}).each do |report|
-        report.update_attribute(:flag, 3)
+        report.update_attribute(:flag, 1)
       end
       @shop = Shop.find_primary(@shop._id)
-      render :json => {'name' => @shop.name, 'lo' => @shop.lo, 'addr' => @shop.addr, 'lob' => shop.lob, 'st' => @shop.show_t}
+      redirect_to action: "index"
     else
-      render :action => :edit
+      render :action => :index
     end
   end
 
@@ -153,12 +146,12 @@ class AdminUserReportsController < ApplicationController
   end
 
   def authorize
-    if params[:city]
-      @city = params[:city]
-      @hash = Digest::SHA256.hexdigest(@city.to_s + "dface")
-      session[:city] = @city if @hash == params[:agent]
+    if params[:city_code]
+      @city_code = params[:city_code]
+      @hash = Digest::SHA256.hexdigest(@city_code.to_s + "dface")
+      session[:city_code] = @city_code if @hash == params[:agent]
     end
-    admin_authorize unless session[:city]
+    admin_authorize unless session[:city_code]
   end
 
 end
