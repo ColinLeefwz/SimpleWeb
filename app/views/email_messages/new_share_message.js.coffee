@@ -7,7 +7,7 @@ $ ->
     if valid_form()
       $("form#new_share_email_form").submit()
     else
-      alert "please input email"
+      $("#show-alert").html("<div class='alert alert-danger'>please input email</div>")
 
 valid_form = ()->
   emailPattern = /// ^ #begin of line

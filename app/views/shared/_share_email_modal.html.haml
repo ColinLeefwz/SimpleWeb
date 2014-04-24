@@ -4,6 +4,7 @@
       .modal-header
         %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
         %h4#myModalLabel.modal-title Share via Email
+        #show-alert
       .modal-body
         = simple_form_for @share_email_form, url: send_share_email_path, remote: true do |f|
           = f.input :item_url, as: :hidden
