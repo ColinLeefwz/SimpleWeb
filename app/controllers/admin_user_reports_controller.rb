@@ -32,7 +32,7 @@ class AdminUserReportsController < ApplicationController
       @agent = session[:city_code].present?
     end
 
-    @shop_reports = paginate3('shop_report', params[:page], hash, sort)
+    @shop_reports = paginate3('shop_report', params[:page], hash, sort, 10)
   end
 
   def show
