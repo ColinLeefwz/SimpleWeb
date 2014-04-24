@@ -33,6 +33,7 @@ ul,ol{list-style:none;}
 .blue2{color:#00BFF3 !important;}
 .blue3{color:#369bff !important;}
 .normal{font-weight:normal !important;}
+.bg{background-color:#F2F2F2;}
 
 .inputchange{border:2px solid #D8D5CE !important;width:310px !important;}
 .textareachange{border:2px solid #D8D5CE !important;width:310px !important;height:120px !important;overflow:hidden;}
@@ -72,6 +73,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .w230{width:230px !important;}
 .w235{width:235px !important;}
 .w260{width:260px !important;}
+.w270{width:270px !important;}
 .w300{width:300px !important;}
 .w400{width:400px !important;}
 .w480{width:480px !important;}
@@ -95,6 +97,8 @@ font-size:12px;color:#868686;position:absolute;left:0px;top:0px;z-index:100;}
 .inputs7 {border: 1px solid #bbb;border-radius:10px;color:#333;font-size:12px;height:30px;line-height:30px;
 padding:0 10px;width:200px;}
 .inputs7:focus{border-color:#47a0fa !important;box-shadow:0px 0px 12px rgba(54,155,255,0.8);color:#369bff;}
+.inputs8{border:1px solid #d7d7d7;border-radius:15px;width:250px;height:30px;line-height:30px;padding:0px 10px;
+font-size:12px;color:#868686;position:absolute;left:0px;top:0px;z-index:100;}
 .textarea1{width:280px;height:60px;border:1px solid #d7d7d7;border-radius:15px;padding:10px;font-size:12px;color:#868686;line-height:22px;word-wrap:break-word;}
 .textarea2{width:360px;height:110px;border:1px solid #d7d7d7;border-radius:15px;padding:10px;font-size:12px;color:#868686;line-height:22px;word-wrap:break-word;}
 .textarea3{width:280px;height:100px;border:1px solid #d7d7d7;border-radius:5px;padding:10px;font-size:13px;color:#868686;line-height:22px;word-wrap:break-word;}
@@ -114,6 +118,8 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .pl20{padding-left:20px;}
 .pr10{padding-right:10px;}
 .pr20{padding-right:20px;}
+.pb8{padding-bottom:8px !important;}
+.pb12{padding-bottom:12px !important;}
 .ptb2{padding-top:2px;padding-bottom:2px;}
 .ptb15{padding-top:15px;padding-bottom:15px;}
 .plr3{padding-left:3px;padding-right:3px;}
@@ -140,6 +146,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .mb0{margin-bottom:0px !important;}
 .mb5{margin-bottom:5px !important;}
 .mb10{margin-bottom:10px !important;}
+.mb12{margin-bottom:12px !important;}
 .mb15{margin-bottom:15px !important;}
 .mb20{margin-bottom:20px !important;}
 .mb30{margin-bottom:30px !important;}
@@ -147,6 +154,7 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .mb50{margin-bottom:50px !important;}
 .mb75{margin-bottom:75px !important;}
 .ml5{margin-left:5px;}
+.ml8{margin-left:8px;}
 .ml10{margin-left:10px;}
 .ml15{margin-left:15px;}
 .ml20{margin-left:20px;}
@@ -170,10 +178,12 @@ color:#868686;line-height:22px;position:absolute;left:0px;top:0px;z-index:100;}
 .mlr5 {margin-left:5px;margin-right:5px;}
 .mlr10{margin-left:10px;margin-right:10px;}
 .m_auto{margin-left:auto !important;margin-right:auto !important;}
+.mlr8{margin-left:8px !important;margin-right:8px !important;}
 .lh18{line-height:18px !important;}
 .lh20{line-height:20px !important;}
 .lh25{line-height:25px;}
 
+.zindex99{z-index:99;}
 .ie6mt5{_margin-top:5px;}
 
 .btn1{width:106px;height:38px;line-height:38px;background:transparent url(../images/btn1.png) left top no-repeat;border:none;text-align:center;display:block;color:#fff !important;cursor:pointer;}
@@ -573,7 +583,7 @@ box-shadow:1px 0px 10px #fff;z-index:122;font-family: 微软雅黑;font-size: 16
 .tab1 .imgstyle4{width:100px;height:100px;border-radius:10px;box-shadow:0px 0px 5px #aaa;}
 .tab1 tr.change td{padding:5px 0px;}
 .tab1 tr.change2 td{padding:0px 10px;}
-.tab1 div#Mes1, .tab1 div#Mes2{display:none;color:#FF6600;padding:10px 0px 0px 5px;clear:both;overflow:hidden;}
+.tab1 div#Mes1, .tab1 div#Mes2, .tab1 div#Mes3{display:none;color:#FF6600;padding:10px 0px 0px 5px;clear:both;overflow:hidden;}
 div#LinkDiv{width:616px;position:relative;overflow:hidden;margin-left:400px;display:none;}
 div#LinkDiv .linkdivleft{float:left;width:330px;}
 div#CellPhone{float:right;width:266px;height:466px;background:url(../images/cellphone.png) left top no-repeat;margin-left:20px;}

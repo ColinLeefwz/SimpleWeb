@@ -1,55 +1,24 @@
 <h1>地点纠错</h1>
-<%= javascript_include_tag "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js" %>
-<table border="1">
-  <tr>
-    <th>商家id</th>
-    <th>商家名称</th>
-    <th>报错人</th>
-    <th>错误类型</th>
-    <th>错误原因</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= form_tag '/admin_user_reports',:method =>:get, class: "form-inline" do %>
 
-  <% @shop_reports.each do |report| %>
+  <div class="form-group">
+    <span>商家名称</span>
+    <%= text_field_tag :name, nil, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <span>报错类型</span>
+    <%= select_tag :type,options_for_select([['全部','0'], ['地点位置错误','1'], ['地点信息错误','2'], ['地点不存在','3'], ['地点重复', '4']],params[:type])  %>
+  </div>
 
-    <tr class="shop<%= report.sid.to_i%>">
-      <td><%= report.sid.to_i %></td>
-      <td><%=link_to report.shop_name||'', "/admin_shops/show?id=#{report.sid}" %></td>
-      <td><%=link_to report.user_name||'' , "/admin_users/show?id=#{report.uid}" %></td>
-      <td><%= report.type %></td>
-      <td><%= report.des %></td>
-      <td><%= link_to '删除地点', "#", :onclick => "ajaxDel('#{report.sid.to_i}')" %></td>
-      <td><%= link_to '误报', "#", :onclick => "ajaxDistort('#{report.sid.to_i}')" %></td>
-      <td><%= link_to '处理', "/admin_user_reports/show?id=#{report.id}",:target => "blank" %></td>
+  <div class="form-group">
+    <span>操作结果</span>
+    <%= select_tag :flag, options_for_select([['全部',''], ['未处理','0'], ['已处理','1'], ['忽略', '2']],params[:flag]) %>
+  </div>
 
-    </tr>
+  <div  class="form-group">
+     <%= submit_tag "查 找", class: "btn9 r mr20" %>
+  </div>
+<% end %>
 
-  <% end %>
-</table>
-<br />
-<br />
-<%= generate_paginate3.html_safe %>
-<br />
-
-
-<script type="text/javascript">
-  function ajaxDel(sid){
-    $.get('/admin_user_reports/ajax_del', {sid: sid}, function(){
-      $(".shop"+sid).remove()
-    })
-  }
-  function ajaxDistort(sid){
-    $.get('/admin_user_reports/ajax_distort', {sid: sid}, function(){
-      $(".shop"+sid).remove()
-    })
-  }
-
-  function rmtr(sid){
-    $(".shop"+sid).remove()
-  }
-
-</script>
-
-
+<div class="clear1"></div>
+<%= render 'reports'%>

@@ -344,7 +344,7 @@ function CouponPlane(){
 	}
 }
 
-function Del(id){//问答系统管理：删除
+/*function Del(id){//问答系统管理：删除
 	var div=$("#Div"+id);
 	var height=div.height();
 	var size;
@@ -384,7 +384,8 @@ function Del(id){//问答系统管理：删除
 			}
 		});
 	},670);
-}
+}*/
+
 function ShowDiv(){//问答系统管理：显示
 	var num=parseInt($("div.box4plane2:last").attr("rel")) ? parseInt($("div.box4plane2:last").attr("rel")): 0;
 	var opacity=1,n,i=0,x=0,z=0;
