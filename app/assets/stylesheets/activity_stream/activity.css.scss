@@ -1,0 +1,42 @@
+
+@import "globals/variables";
+@import "globals/shared_mixin";
+
+.activity{
+  background-color: white;
+  padding: 7px;
+  margin-bottom: 18px;
+  box-shadow: $shadow_param;
+  @include center_container;
+}
+
+
+// ---------- cover and avatar ----------
+
+.activity .cover,
+.activity .avatar{
+  width: 60px;
+  display: inline-block;
+}
+
+
+// ---------- content of activity ----------
+
+.content{
+  margin-left: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  color: grey;
+  font-size: 16px;
+  font-family: LatoItalic;
+}
+
+.content a{
+  color: black;
+  text-transform: none;
+}
+
+.content a:hover{
+  color: black;
+}
+
