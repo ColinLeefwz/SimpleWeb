@@ -888,6 +888,10 @@ class Shop
     self.id.to_s == '21838725' || self.id.to_s == '21835409' ? true : false
   end
 
+  def has_game_purview?
+    $redis.sismember('GameShops', self.id)
+  end
+
   def in_shop?(lo,acc=0)
     diff = self.min_distance(self,lo)
     if acc==0
