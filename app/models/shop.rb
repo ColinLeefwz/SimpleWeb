@@ -954,5 +954,15 @@ class Shop
     end
   end
   
+  def distance_desc(lo)
+    distance = self.min_distance(self,lo)
+    if distance>=1000
+      dis = "%.1f公里" % (distance/1000.0)
+    else
+      dis = "%d0米" % (distance/10)
+    end
+    dis
+  end
+  
   
 end
