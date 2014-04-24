@@ -30,11 +30,14 @@
     %span.status
     %span.spinner-wrapper
 
-  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f|
-    = f.label :email, class: "control-label"
-    = f.email_field :email, class: 'form-control', id: "email"
+  .setting
+    %h3.title Change Email
 
-    = f.submit "Update", class: 'btn btn-prodygia', id: "update"
+    = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f|
+      = f.label :email, class: "control-label"
+      = f.email_field :email, class: 'form-control', id: "email"
+
+      = f.submit "Update", class: 'btn btn-prodygia', id: "update"
 
 :javascript
   subscriber()
