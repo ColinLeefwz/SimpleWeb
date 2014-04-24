@@ -5,4 +5,5 @@
   = link_to object.title, polymorphic_path(object)
   = " posted by "
   = link_to subject.name, polymorphic_path([:profile, subject])
+  = " in #{object.categories.pluck(:name).to_sentence}"
 
