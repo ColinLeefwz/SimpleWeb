@@ -889,7 +889,7 @@ class Shop
   end
 
   def has_game_purview?
-    $redis.sismember('GameShops', self.id)
+    $redis.zscore('GameShops', self.id)
   end
 
   def in_shop?(lo,acc=0)

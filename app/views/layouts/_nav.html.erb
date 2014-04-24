@@ -93,7 +93,7 @@
     <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest('caitu'+session[:shop_id].to_i.to_s)[0,32] %>">
     <input type="submit" name="submit" id="submit">
   </form>
-  <form action="http://game.dface.cn/admin/login2" id="game" name="game" method="post" target="_blank">
+  <form action="http://game.dface.cn/admin/login/login2" id="game" name="game" method="post" target="_blank">
     <input type="hidden" name="id" value="<%= session[:shop_id] %>">
     <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest('game'+session[:shop_id].to_i.to_s)[0,32] %>">
     <input type="submit" name="submit" id="submit">
