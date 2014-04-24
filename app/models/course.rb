@@ -83,4 +83,9 @@ class Course < ActiveRecord::Base
       exp.enroll self
     end
   end
+
+  # gecko: only take one expert as the subject of activity, we may change the one_to_many relationship to one_on_one, that's simpler
+  def subject
+    experts.first
+  end
 end
