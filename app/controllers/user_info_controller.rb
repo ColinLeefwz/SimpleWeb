@@ -34,7 +34,7 @@ class UserInfoController < ApplicationController
     shops = user.lords[0,10].map{|id| Shop.find_by_id(id)}
     if user.ver.to_f >= 3
       if $redis.zadd("VISIT#{user.id}", Time.now.to_i, session[:user_id])
-        Xmpp.send_chat(user.id, session[:user_id],"#{user.name}访问了你的主页噢~", "VISIT#{user.id},#{session[:user_id]}", " NOLOG='1' NOPUSH='1' ")
+        Xmpp.send_chat(session[:user_id], user.id,"#{session_user.name}访问了你的主页噢~", "VISIT#{session[:user_id]},#{user.id}", " NOLOG='1' NOPUSH='1' ")
       end
     end
     render :json => shops.select{|x| x!=nil}.map{|x| x.safe_output_with_users}.to_json    
