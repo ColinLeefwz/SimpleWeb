@@ -94,4 +94,5 @@
     .form-group
       .col-sm-12.col-xs-12
         = f.submit "Update", class: "btn btn-prodygia dashboard-buttons"
-        = link_to "Cancel", activity_stream_expert_path(current_user), remote: true, class: "btn dashboard-buttons"
+        = link_to "Cancel", activity_stream_path(current_user.id), remote: true, class: "btn dashboard-buttons"
+
