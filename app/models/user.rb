@@ -3,7 +3,7 @@ require 'mandrill_api'
 class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
-  USER_TYPE = { member: "Member", expert: "Expert" }
+  USER_TYPE = { member: "member", expert: "expert" }
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 

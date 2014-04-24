@@ -6,8 +6,8 @@ class InvitationsController < Devise::InvitationsController
     if current_user.is_a? AdminUser
       admin_invite
     else
-      @email_message = current_user.email_messages.create(set_email_message)
-      @email_message.update_attributes message: params[:email_message][:message]
+      @email_message = current_user.refer_emails.create(set_email_message)
+      @email_message.update_attributes message: params[:refer_email_form][:message]
       type = @email_message.invited_type
       case type
       when User::USER_TYPE[:expert]
@@ -87,7 +87,7 @@ class InvitationsController < Devise::InvitationsController
     @email_message.update_attributes invite_token: @invitation_token
 
     mandrill = MandrillApi.new
-    @candidate = Object.const_get(type.titleize).where(email: params[:email_message][:to]).first 
+    @candidate = Object.const_get(type.titleize).where(email: set_email_message[:to]).first 
     if @candidate.nil?
       mandrill.send("invite_by_#{type}", current_user, @email_message, token_link)
     end
@@ -101,6 +101,6 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def set_email_message
-    params.require(:email_message).permit(:subject, :to, :message, :copy_me, :from_name, :from_address, :to, :invited_type)
+    params.require(:refer_email_form).permit(:subject, :to, :message, :copy_me, :from_name, :from_address, :to, :invited_type)
   end
 end
