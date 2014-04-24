@@ -30,7 +30,8 @@ class User < ActiveRecord::Base
   has_many :enrolled_courses, through: :enrollments, source: :enrollable, source_type: "Course"
 
   has_many :orders
-  has_many :email_messages
+
+  has_many :refer_emails, -> { where email_type: "refer" }, class_name: "EmailMessage"
   has_many :shared_emails, -> { where email_type: "share" }, class_name: "EmailMessage"
 
   # consultations

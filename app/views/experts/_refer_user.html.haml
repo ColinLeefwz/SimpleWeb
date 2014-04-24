@@ -1,6 +1,4 @@
-= f.input :from_name, as: 'hidden'
-= f.input :from_address, as: 'hidden'
-= f.input :invited_type, as: 'hidden'
+= f.input :invited_type, as: :hidden
 .form-group
   .col-sm-2
     = f.label :to, class: "control-label"
@@ -18,36 +16,13 @@
   .col-sm-2
     = f.label :message, class: "control-label"
   .col-sm-8
-    = f.input :message, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}, label: false
+    = f.cktext_area :message, input_html: {class: 'session-description-input'}, label: false
 
 .form-group
   .col-sm-2
   .col-sm-5
-    = f.input :copy_me, label: "Copy me on the message", wrapper_html: {class: "checkbox-align"}, label_html: {class: "checkbox-label"}, input_html: {class: "checkbox-input"}
+    = f.input :copy_me, as: :boolean, label: "Copy me on the message"
 .form-group
   .col-sm-4
   .col-sm-4
     = f.submit "Send", class: "btn btn-prodygia"
-
-
-:coffee
-  $(".validation-message").hide()
-  send = $("input[value='Send']")
-  send.attr('disabled', 'disabled')
-
-  to = $("input#email_message_to")
-  enable_send = false
-  to.on 'blur', ->
-    to_value = to.val()
-    get_path = "/users/validate_invite_email"
-    $.get(get_path, {to_address: to_value}, (data)=>
-      enable_send = data.status
-      if enable_send
-        send.removeAttr("disabled")
-        $(".validation-message").hide()
-      else
-        send.attr('disabled', 'disabled')
-        $(".validation-message").show()
-        $(".validation-message").text data.error_message
-    )
-

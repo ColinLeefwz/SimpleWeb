@@ -24,12 +24,6 @@ Prodygia::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
-  controller :users do
-    patch 'change_email'
-    get 'validate_invite_email'
-    get 'validate_user_name'
-  end
-
   ActiveAdmin.routes(self)
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -94,10 +88,15 @@ Prodygia::Application.routes.draw do
   end
 
   controller :users do
+    patch 'change_email'
+    get 'validate_invite_email'
+    get 'validate_user_name'
+
     get 'relationship/:the_followed' => :relationship, as: :relationship
     get 'subscirbe/:item_id' => :subscribe, as: :subscribe
     get 'following'
     get 'followers'
+    get :validate_user_name
   end
 
   controller :mailchimp do
@@ -105,9 +104,13 @@ Prodygia::Application.routes.draw do
     post 'guest_subscription'
   end
 
-  controller :email_messages do
-    get :new_share_message
-    post :send_share_email
+  scope "email" do
+    controller :email_messages do
+      get :new_share_message
+      post :send_share_email
+      get :new_refer_message
+      get :validate_invite_email
+    end
   end
 
   resources :resources
