@@ -5,7 +5,8 @@ class AdminUserReportsController < ApplicationController
   layout "report"
 
   def index
-    hash, sort = {}, {}
+    hash, sort = {}, {_id: -1}
+
     case params[:type]
     when '1'
       hash.merge!({type: "地点位置错误"})
@@ -26,12 +27,11 @@ class AdminUserReportsController < ApplicationController
     when '2'
       hash.merge!({flag: 2})
     end
-
-    if session[:city_code]
-      hash.merge!({city: session[:city_code]})
-      @agent = session[:city_code].present?
+    if params[:name]
+      shop = Shop.where(name: params[:name]).first
+      hash.merge!({sid: shop.id}) if shop.present?
     end
-
+    hash.merge!({city: session[:city_code]}) if session[:city_code]
     @shop_reports = paginate3('shop_report', params[:page], hash, sort, 10)
   end
 
@@ -146,12 +146,13 @@ class AdminUserReportsController < ApplicationController
   end
 
   def authorize
-    if params[:city_code]
-      @city_code = params[:city_code]
-      @hash = Digest::SHA256.hexdigest(@city_code.to_s + "dface")
-      session[:city_code] = @city_code if @hash == params[:agent]
+    if params[:city_code].nil?
+      admin_authorize
+    else
+      city_code = params[:city_code]
+      hash = Digest::SHA256.hexdigest(city_code.to_s + "dface")
+      session[:city_code] = city_code if hash == params[:agent]
     end
-    admin_authorize unless session[:city_code]
   end
 
 end

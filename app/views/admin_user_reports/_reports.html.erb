@@ -15,14 +15,14 @@
     <tr>
       <td valign="middle"><%= report.sid %></td>
       <td valign="middle">
-        <% if @agent %>
+        <% if session[:city_code].present? %>
           <%= report.shop_name %>
         <% else %>
           <%= link_to report.shop_name, "admin_shops/show?id=#{report.shop_id}" %>
         <% end %>
       </td>
       <td valign="middle">
-        <% if @agent %>
+        <% if session[:city_code].present? %>
           <%= report.user_name %>
         <% else %>
           <%= link_to report.user_name, "admin_users/show?id=#{report.user_id}" %>
