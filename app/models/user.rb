@@ -63,7 +63,11 @@ class User < ActiveRecord::Base
   end
 
   def self.find(input)
-    input.to_i == 0 ? find_by(user_name: input) : super
+    if input.is_a? Array   # course has_many experts, so the form param would be: expert_ids: [1,2]
+      super
+    else
+      input.to_i == 0 ? find_by(user_name: input) : super
+    end
   end
 
   def self.user_name_duplicated?(user_name)

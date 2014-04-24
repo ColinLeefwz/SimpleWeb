@@ -1,0 +1,11 @@
+.white-background.shadow
+  %h3.text-center.welcome-title
+    = "Welcome to your #{current_user.class.name} Dashboard!"
+
+  .tutorial-video.text-center
+    %video{width: '320', height: '180', class: 'sublime', data: {autoresize: 'fill'}, preload: 'none', poster: "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/covers/64/original/nice_but_cliche_chinese_door.jpg"}
+      %source{ src: current_user.tutorial_video_sd_url }
+      %source{ src: current_user.tutorial_video_hd_url, data: {quality: 'hd'} }
+
+:coffeescript
+  load_sublime()

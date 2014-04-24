@@ -3,7 +3,10 @@
 .navbar.navbar-default.shadow
   .user-info.clearfix
     .avatar
-      = link_to image_tag(user.avatar.url), profile_expert_path(user)
+      - if current_user.is_a? Expert
+        = link_to image_tag(user.avatar.url), profile_expert_path(user)
+      - else
+        = image_tag(user.avatar.url)
     .profile
       .name
         = user.name

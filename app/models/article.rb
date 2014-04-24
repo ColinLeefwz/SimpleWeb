@@ -34,8 +34,8 @@ class Article < ActiveRecord::Base
   end
 
   class << self
-    def all_draft
-      Article.where.not(draft: 'true').uniq
+    def non_draft
+      where.not(draft: 'true')
     end
   end
 

@@ -5,14 +5,12 @@ class Landingitem < ActiveRecord::Base
     def add_record(obj)
       if obj.class.name == "Course"
         obj.experts.each do |exp|
-          unless exp.is_staff
-            create(landingable_type: obj.class.name,
-                               landingable_id: obj.id,
-                               updated_at: obj.updated_at,
-                               created_at: obj.created_at,
-                               draft: obj.draft,
-                               expert: exp)
-          end
+          create(landingable_type: obj.class.name,
+                             landingable_id: obj.id,
+                             updated_at: obj.updated_at,
+                             created_at: obj.created_at,
+                             draft: obj.draft,
+                             expert: exp)
         end
       else
         create(landingable_type: obj.class.name,
@@ -28,22 +26,16 @@ class Landingitem < ActiveRecord::Base
       Landingitem.find_by(landingable_type: obj.class.name, landingable_id: obj.id).update_attributes(updated_at: obj.updated_at, draft: obj.draft)
     end
 
-    def all_items
-      all_items = []
-      where(draft: false).select(:landingable_id, :landingable_type, :updated_at, :num).uniq.order(num: :asc, updated_at: :desc).each do |item|
-        all_items << item.fetch_object
-      end
-      all_items
-    end
-
-    def all_index_items(start_point)
-      all_items = []
-      start = start_point * 12
-      where(draft: false).select(:landingable_id, :landingable_type, :updated_at).uniq.order(updated_at: :desc).limit(12).offset(start).each do |item|
-        all_items << item.fetch_object
-      end
-      all_items
-    end
+    ## Peter at 2014-04-17: used for batch load items
+    #  not used until the "load more" function works
+    # def all_index_items(start_point)
+    #   all_items = []
+    #   start = start_point * 12
+    #   where(draft: false).select(:landingable_id, :landingable_type, :updated_at).uniq.order(updated_at: :desc).limit(12).offset(start).each do |item|
+    #     all_items << item.fetch_object
+    #   end
+    #   all_items
+    # end
 
     def next(start_point)
       @max_count = where(draft: false).count

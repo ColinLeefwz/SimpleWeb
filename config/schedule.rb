@@ -23,3 +23,7 @@
 every 15.minutes do
   rake "google_analytics:update_pageviews"
 end
+
+every 1.day, at: '1:00 am' do
+  command "backup perform -t prodygia"
+end
