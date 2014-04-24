@@ -33,7 +33,7 @@ class WeiboController < ApplicationController
     while true
       wb_users = visit_remote(token, cursor)
       wb_column = ['id', 'name', 'description', 'profile_image_url', 'gender','avatar_hd']
-      wb_users['users'].each{|wb_user| users[wb_user['id']] = wb_user.select{|k,v| k.in?(wb_column)} }
+      wb_users['users'].each{|wb_user| users[wb_user['id'].to_s] = wb_user.select{|k,v| k.in?(wb_column)} }
       return users if (cursor = wb_users['next_cursor'].to_i) == 0 
     end
   end 
