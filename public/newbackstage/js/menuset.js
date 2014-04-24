@@ -259,6 +259,10 @@ function OpenPlane(obj,str,sort,type2,url) {							//打开右侧面板
 		robj.find('img').attr('src', src)
 		robj.find('span').html(title)
 		return false
+	}else if(((/(^http\:\/\/)|(^https\:\/\/)/).test(url))){
+		HttPLink({url: url});
+		$("#Box17Con4 .pl20").html(url);
+		return false;
 	}
 }
 function HttPLink(option){										//打开链接编辑页
