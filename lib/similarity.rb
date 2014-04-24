@@ -148,7 +148,7 @@ module Similarity
     #puts "distance: #{distance(shop1,shop2)}"  if $0=="script/rails"
     dist_score = dist_score(distance(shop1,shop2))
     w_score = weight_score(shop1,shop2)
-    puts [name_score,addr_score,type_score,dist_score,w_score] #if $0=="script/rails"
+    #puts [name_score,addr_score,type_score,dist_score,w_score] #if $0=="script/rails"
     return name_score+addr_score+type_score+dist_score+w_score
   end
 
@@ -158,7 +158,7 @@ module Similarity
   
   def similar_shops(x, min_score=60, early_exit=false)
     sames =[]
-    Shop.where({lo:{"$within" => {"$center" => [x.loc_first_of(x),0.03]}}} ).each do |y|
+    Shop.where2({lo:{"$within" => {"$center" => [x.loc_first_of(x),0.03]}}} ).each do |y|
       next if y.id==x.id
       begin
         score = Shop.similarity(x,y)
@@ -169,7 +169,7 @@ module Similarity
       sames << [y,score] if score>min_score
     end
     if x["city"] && x["lo"]
-      Shop.where({city:x["city"], name:x["name"], password:{"$exists" => true} }).each do |y|
+      Shop.where2({city:x["city"], name:x["name"] }).each do |y|
         next if y.id==x.id
         next if y.del
         return true if early_exit

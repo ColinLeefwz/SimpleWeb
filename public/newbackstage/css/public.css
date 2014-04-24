@@ -79,6 +79,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .w480{width:480px !important;}
 .w600{width:600px !important;}
 .w700{width:700px !important;}
+.w720{width:720px !important;}
 .w950{width:950px !important;}
 .w1120{width:1120px !important;}
 .h100{height:100px !important;}
@@ -482,6 +483,10 @@ text-align:center;font-size:14px;color:#f60;line-height:50px;padding:0px 14px;ma
 .box4 .box4plane2 .shade{width:100%;position:absolute;left:0px;top:0px;background: url("../images/bg.png") repeat scroll left top transparent;color:#369BFF;cursor: pointer;text-align: center;z-index: 5;}
 
 .box5{width:100%;margin:20px auto;font-size:14px;color:#333;}
+.box5 .box5img{width:215px;height:215px;position:relative;background-color:#EAEAEA;float:left;}
+.box5 .box5img .edit, .box5 .box5img .del{text-align:center;color:#fff;font-size:14px;width:90px;height:30px;line-height:30px;border:1px solid #000;background-color:rgba(0,0,0,0.6);
+position:absolute;left:50%;margin-left:-46px;top:65px;z-index:2;cursor:pointer;}
+.box5 .box5img .del{top:120px;}
 
 .box6{width:610px;margin:40px 0px 20px 0px;background:transparent url("../images/pic21.png") no-repeat left top;position:relative;height:310px;}
 .box6 .boxinner{width:590px;overflow:hidden;z-index:10;position:relative;border-radius:8px;margin:0px auto;background-color:#fff;}
@@ -759,9 +764,9 @@ font-size:14px;overflow:hidden;line-height:20px;min-height:400px;}
 .box17 .box17left{width:185px;float:left;}
 .box17 .box17right{width:642px;float:right;}
 .box17 .box17con{display:block;overflow:hidden;padding:10px;}
-.box17 .links1, .box17 .links2, .box17 .links3{text-align:center;background: url("/newbackstage/images/sign61.jpg") center top no-repeat;width:104px;padding-top:116px;display:inline-block;font-size:13px;margin:0px 40px;cursor:pointer;}
-.box17 .links2{background-image:url("/newbackstage/images/sign62.jpg");}
-.box17 .links3{background-image:url("/newbackstage/images/sign63.jpg");}
+.box17 .links1, .box17 .links2, .box17 .links3{text-align:center;background: url("/newbackstage/images/sign61_1.png") center top no-repeat;width:120px;padding-top:145px;display:inline-block;font-size:13px;margin:0px 40px;cursor:pointer;}
+.box17 .links2{background-image:url("/newbackstage/images/sign62_1.png");}
+.box17 .links3{background-image:url("/newbackstage/images/sign63_1.png");}
 .box17 .box17coninner1{width:100%;overflow:hidden;margin:0px auto;}
 
 .box17list{width:600px;overflow:hidden;margin:0px auto;font-size:12px;color:#444;font-family:微软雅黑;}
