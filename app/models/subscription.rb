@@ -23,7 +23,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def action
-    "favorited"
+    "favorite"
   end
 end
 
