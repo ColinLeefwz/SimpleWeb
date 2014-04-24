@@ -39,8 +39,10 @@ class MyLocController < ApplicationController
   
   def select_loc
     lo = [params[:lat].to_f , params[:lng].to_f]
-    hash = {lo:{'$near' => lo,'$maxDistance' => 0.1} }
-    if params[:name]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    #hash = {lo:{'$near' => lo,'$maxDistance' => 0.1} }
+    hash = {lo:{"$within" => {"$center" => [lo,0.1]}}}
+    if params[:name] && params[:name].size>0
       hash.merge!( {name: /#{params[:name]}/ }  )  
     else
       hash.merge!( { del:{"$exists"=>false} }  )  
@@ -55,7 +57,7 @@ class MyLocController < ApplicationController
       return render :json => {error:"错误的地点类型:#{params[:type]}"}.to_json
     end
     shops = Shop.where2(hash, {limit:100})
-    ret = shops.map {|s| s.safe_output_with_users}
+    ret = shops.map {|s| s.safe_output_with_users.merge!({distance: s.distance_desc(lo)}) }
     render :json =>  ret.to_json  
   end
 

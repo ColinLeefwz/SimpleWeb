@@ -61,6 +61,16 @@ module PhoneUtil
       return false
     end
   end
+  
+  def fake_phone(phone)
+    phone[0,4]=="0001" || phone[0,3]=="000"
+  end
+  
+  def valid_phone(phone)
+    fake_phone(phone) || (phone.size == 11 && phone.to_i > 1E10)
+  end
+  
+  
 
   
 end

@@ -12,22 +12,22 @@
     <% @shop_faqs.each do |faq| %>
        <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
        <% if faq.od == @shop_faq.od %>
-       <a href="/shop3_faqs/edit?id=<%=faq.id%>" class="blue3"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
+			<a href="/shop3_faqs/edit?id=<%=faq.id%>" class="blue3"><span id="NewNum"><%= faq.od%>&nbsp;=>&nbsp;</span><span id="NewTitle"><%= faq.title%></span></a><br/>
        <% else %>
-       <a href="/shop3_faqs/edit?id=<%=faq.id%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
+			<a href="/shop3_faqs/edit?id=<%=faq.id%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
        <% end %>
     <% end %>
         </div>
         <div class="box4right w400 pl20">
-  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 pt10">
     <tr>
       <td width="20%" align="right" valign="middle" class="pr20">回复数字</td>
       <td width="86%">
-         <%= f.text_field :od %>
+		 <%= f.text_field :od, :class =>"inputs8 radius5 relative", :id=>"Inputs3" %>
+		<div id="Mes3"></div>
       </td>
 
-
-    </tr>
+    </tr>	  
     <tr>
       <td width="20%" align="right" valign="middle" class="pr20">问题</td>
       <td>
@@ -67,23 +67,23 @@
   </table>
  </div>
  <div class="box4right2">
- <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 visible pt10">
 	<tr>
 		<td align="left" class="pb10">详细内容</td>
 	</tr>
 	<tr>
-		<td>
-			<span class="l mr20"><%= f.radio_button :link_rule, '0',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;外部链接</span>
+		<td class="pb8">
+			<span class="l ml8 mr20"><%= f.radio_button :link_rule, '0',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;外部链接</span>
 			<span class="l"><%= f.radio_button :link_rule, '1',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;编辑详细内容</span>
 		</td>
 	</tr>
 	<tr>
 		<td class="relative del2">
-			<%= f.text_field :url,:class=>"inputs2 radius5 relative",:id=>"link1", :placeholder => "http://", :disabled=>"disabled"%>
+			<%= f.text_field :url,:class=>"inputs2 radius5 relative w300 mt10 mb20",:id=>"link1", :value => "http://", :disabled=>"disabled", :style=>"margin-left:8px;"%>
 			<div id="LinkDiv">
 				<div class="linkdivleft">
-					<%= f.text_field :head, :class=>"inputs2 radius5 w300",:id => "link2", :placeholder => "标题" %>
-					<div id="link3">
+					<%= f.text_field :head, :class=>"inputs2 radius5 relative w300 mt10 mlr8 mb20",:id => "link2", :value => "标题" %>
+					<div id="link3" class="ml8">
 						<%= f.text_area :content, :id=>"myEditor" %>
 						<input type="button" class="mt10 btn15 r mr5" id="Preview" value="预览"/>
 					</div>
@@ -102,9 +102,8 @@
 </div>
 
 <script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
-<script src="/newbackstage/js/questions_answers.js" type="text/javascript"></script>
+<script src="/newbackstage/js/qa.js" type="text/javascript"></script>
 <script>
-
 $(document).ready(function(){
 	imgUploadPreview2("input[name='shop_faq[img]']", 'uploadPreview');
 	runing=$("#CB1").attr("class");
@@ -125,6 +124,7 @@ $(document).ready(function(){
 	$("input[name='shop_faq[img]']").click(function(){
 		imgUploadPreview2(this, 'uploadPreview');
 	});
+	Lianlian.Blog.init();
 });
 
 ro = <%= @shop_faq.link_rule.nil? ? 0 : @shop_faq.link_rule %>;
@@ -168,9 +168,9 @@ Lianlian = window.Lianlian = {};
     }
   };
 
-  $(document).ready(function() {
+ /*8 $(document).ready(function() {
     return Lianlian.Blog.init();
-  });
+  });**/
 
 }).call(this);
 </script>
