@@ -11,7 +11,7 @@ class ShopReport
   after_create :save_city_code
 
   with_options :prefix => true, :allow_nil => true do |option|
-    option.delegate :name, :to => :user
+    option.delegate :name, :id, :to => :user
     option.delegate :name, :id, :addr, :lo, :to => :shop
   end
 
