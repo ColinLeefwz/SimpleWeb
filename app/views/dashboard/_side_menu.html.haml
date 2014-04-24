@@ -93,7 +93,7 @@
         .collapse.panel-collapse#refer
           .panel-body
             %li= link_to 'New expert', new_refer_message_path(invite_type: "expert"), remote: true
-            %li= link_to 'A friend', refer_a_friend_member_path, remote: true
+            %li= link_to 'A friend', new_refer_message_path(invite_type: "member"), remote: true
     - else
       .item
         = render 'item_icon', item_name: 'refer_expert'

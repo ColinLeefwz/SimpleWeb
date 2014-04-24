@@ -1,4 +1,4 @@
-$(".main-menu").html("<%=j render partial: 'experts/refer_expert'%>")
+$(".main-menu").html("<%=j render partial: 'dashboard/refer_user'%>")
 
 $(document).ready ->
   $(".validation-message").hide()
