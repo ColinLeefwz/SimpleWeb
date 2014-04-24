@@ -23,12 +23,6 @@
 
   .form-group
     .col-sm-4.col-xs-4
-      = f.label :email, class: "control-label"
-    .col-sm-12.col-xs-12
-      = f.email_field :email, class: 'form-control', id: "email"
-
-  .form-group
-    .col-sm-4.col-xs-4
       = f.label :profile_picture, class: "control-label"
     .col-sm-12.col-xs-12
       = f.file_field :avatar
@@ -66,9 +60,8 @@
 
     .form-group
       .col-sm-12.col-xs-12
-        = f.submit "update", class: 'btn btn-prodygia dashboard-buttons', id: "update"
+        = f.submit "update", class: 'btn btn-prodygia dashboard-buttons'
         = link_to "Cancel", activity_stream_member_path(current_user), remote: true, class: 'btn dashboard-buttons'
 
 :javascript
   user_name_uniqueness()
-  email_confirm()
