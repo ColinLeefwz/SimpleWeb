@@ -14,16 +14,16 @@
       <td valign="middle"><%= report.sid %></td>
       <td valign="middle">
         <% if @agent %>
-          <%= report.shop.name %>
+          <%= report.shop_name %>
         <% else %>
-          <%= link_to report.shop.name, "admin_shops/show?id=#{report.shop.id}" %>
+          <%= link_to report.shop_name, "admin_shops/show?id=#{report.shop.id}" %>
         <% end %>
       </td>
       <td valign="middle">
         <% if @agent %>
-          <%= report.user.name %>
+          <%= report.user_name %>
         <% else %>
-          <%= link_to report.user.name, "admin_users/show?id=#{report.user.id}" %>
+          <%= link_to report.user_name, "admin_users/show?id=#{report.user.id}" %>
         <% end %>
       </td>
       <td valign="middle"><%= report.type %></td>
