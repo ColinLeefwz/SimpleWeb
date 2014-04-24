@@ -7,6 +7,8 @@ class PhoneController < ApplicationController
   before_filter :phone_check, :only => [:unbind, :set_password, :upload_address_list] 
   before_filter :phone_register_check, :only => [:register, :do_register] 
 
+  include PhoneUtil 
+
   FAKE_CODE = "12321"
 
   def phone_check
@@ -89,7 +91,7 @@ class PhoneController < ApplicationController
     else
       code = "123456"
     end
-    if !fake && (params[:phone].size != 11 || params[:phone].to_i<10000000000)
+    if !valid_phone(params[:phone])
       render :json => {"error" => "#{params[:phone]}不是有效的手机号码。"}.to_json
       return
     end
@@ -97,7 +99,7 @@ class PhoneController < ApplicationController
     Resque.enqueue(SmsSender, params[:phone], sms )  unless fake
     session[:phone_code] = code
     session[:phone_try] = 5
-    render :json => {"code"=>""}.to_json
+    render :json => {"code"=>Digest::SHA1.hexdigest("#{code}@dface.cn")[0,16]}.to_json
   end
   
   def register
@@ -259,9 +261,5 @@ class PhoneController < ApplicationController
     Digest::SHA1.hexdigest(":dFace.#{password}@cn")[0,16]
   end
   
-  def fake_phone(phone)
-    phone[0,4]=="0001"
-  end
-  
-  
+
 end
