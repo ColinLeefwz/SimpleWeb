@@ -142,6 +142,35 @@ POST & \multicolumn{3}{|c|}{/oauth2/unbind\_sina} \\
 解除成功返回{unbind: true}，否则返回error信息。
 
 
+\subsubsection{新浪微博的好友匹配}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/weibo/relation} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    user\_id  & 字符串 & 必须 &  当前用户的id\\
+\hline
+    wb\_uid  & 字符串 & 必须 &  新浪微博的uid\\    
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+返回值格式：
+{
+to_add: [脸脸用户信息列表]   ；表示我关注微博用户也加入了脸脸的，可以直接关注
+to_invite:[微博用户信息列表]  ；表示我的微博粉丝还没有加入脸脸的，可以发微博邀请其加入脸脸
+friend: [脸脸用户信息列表]   ；表示我关注微博用户在脸脸上我已经关注他了，仅用于显示
+}
+
+\end{verbatim}
+
+
 
 \subsection{QQ相关接口}
 \subsubsection{QQ登录接口}

@@ -45,7 +45,7 @@ class WeiboController < ApplicationController
 
 
   def bind_weibo_filter
-    render :json => 0 if session_user.wb_uid.blank?
+    render :json => {:error => "未绑定新浪微博"}.to_json if session_user.wb_uid.blank?
   end
 
 end
