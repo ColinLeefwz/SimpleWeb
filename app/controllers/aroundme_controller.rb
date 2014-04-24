@@ -64,6 +64,13 @@ class AroundmeController < ApplicationController
         arr = arr+[ shop ]
       end
     end
+    if city && city=="023"
+      shop = Shop.find_by_id(21838424) # 铜梁安居古城
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end    
     if city && city=="0571"
       shop = Shop.find_by_id(21831686) # 西溪印象城
       if shop
