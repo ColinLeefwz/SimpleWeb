@@ -952,7 +952,7 @@ class Shop
       6
     end
   end
-<<<<<<< HEAD
+
   
   def distance_desc(lo)
     distance = self.min_distance(self,lo)
@@ -963,11 +963,5 @@ class Shop
     end
     dis
   end
-  
-  
 end
-=======
 
-
-end
->>>>>>> 9adbcc7c48556df5eb5c7aea40b3429c9a3f8c0b
