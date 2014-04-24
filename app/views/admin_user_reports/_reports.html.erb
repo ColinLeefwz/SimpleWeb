@@ -6,7 +6,9 @@
     <th width="150">报错类型</th>
     <th width="150">推荐操作</th>
     <th width="90">误报</th>
-    <th width="120">查看</th>
+    <% unless session[:city_code] %>
+      <th width="120">查看</th>
+    <% end %>
   </tr>
 
   <% @shop_reports.each do |report| %>
@@ -41,7 +43,9 @@
           <%= link_to '忽略', "#", :onclick => "ajaxIgnor('#{report.id}', $(this))" %>
         <% end %>
       </td>
-      <td valign="middle"><%= link_to '查看', "/admin_user_reports/show?id=#{report.id} "%></td>
+      <% unless session[:city_code] %>
+        <td valign="middle"><%= link_to '查看', "/admin_user_reports/show?id=#{report.id} "%></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
