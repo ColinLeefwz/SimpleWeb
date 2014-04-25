@@ -28,7 +28,8 @@ class AdminUserReportsController < ApplicationController
       hash.merge!({flag: 2})
     end
     if params[:name]
-      shop = Shop.where(name: params[:name]).first
+      shop = Shop.where(name: params[:name]).first #TODO 此代码有问题
+      #Thu Apr 24 20:14:53.213 [conn38232] query shop.shops query: { $query: { name: "浙江科技产业大厦" }, $orderby: { _id: 1 } } ntoreturn:1 ntoskip:0 nscanned:21893431 keyUpdates:0 numYields: 36 locks(micros) r:75436610 nreturned:1 reslen:267 37994ms
       hash.merge!({sid: shop.id}) if shop.present?
     end
     hash.merge!({city: session[:city_code]}) if session[:city_code]

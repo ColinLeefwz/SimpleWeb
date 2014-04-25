@@ -664,15 +664,36 @@ class User
   end
 
   def address_list_friends
+    address_lists(1) 
+  end
+  
+  def address_list_to_add
+    address_lists(2) 
+  end
+  
+  def address_list_to_invite
+    address_lists(3) 
+  end
+    
+  def address_lists(type=0) 
     adds = []
     ua = UserAddr.find_or_new(self.id)
     if ua && ua.list
       ua.list.each do |m|
-        if m.select{|k,v| k=="number" && $redis.get("P:#{v}")}
-          v = m.select{|k,v| k=="number"}.map{|k,v| v}[0]
-          uid = $redis.get("P:#{v}")
-          user = User.find_by_id(uid)
-          adds << user unless user.nil?
+        phone = m["number"]
+        next unless phone
+        uid = $redis.get("P:#{phone}")
+        user = User.find_by_id(uid)
+        if type==3 && user.nil?
+          adds << m
+        end
+        next if user.nil?
+        if type==1
+          adds << user if self.friend?(uid)
+        elsif type==2 
+          adds << user unless self.friend?(uid)
+        else
+          adds << user
         end
       end
     end
@@ -680,15 +701,7 @@ class User
   end
 
   def who_de_address_list_has_you
-    ua = User.find_by_id(self.id)
-    if ua
-      puser = UserAddr.where({"list.number" => ua.phone}).map {|x| User.where({phone:x.phone}).first}
-      if puser.size>0
-        user = puser.map{|m| User.find_by_id(m.id)}
-        user unless user.nil?
-      end
-    end
-    user.to_a
+    UserAddr.where({"list.number" => self.phone}).map {|x| User.find_by_phone(x.phone)}.find_all{|x| x!=nil}
   end
   
   def del_test_user

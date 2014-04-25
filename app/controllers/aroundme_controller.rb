@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class AroundmeController < ApplicationController
-  before_filter :user_login_filter, :only => [:my4, :my_shops, :hot_users, :shops]
+  before_filter :user_login_filter, :only => [:my4, :my_shops, :hot_users, :shops, :report_error]
   before_filter :user_is_session_user, :only => [:my4, :my_shops]
   
   caches_action :users, :expires_in => 24.hours, :cache_path => Proc.new { |c| c.params }
@@ -242,9 +242,16 @@ class AroundmeController < ApplicationController
     if user.nil?
       render :json => ""
     else
-      ShopReport.create(:uid => user.id, :sid => params[:sid], :des => params[:des], :type => params[:type] )
+      shop = Shop.find_by_id(params[:sid])
+      ShopReport.create(:uid => user.id, :sid => params[:sid], :name => shop.name, :des => params[:des], :type => params[:type] )
       render :json => ''
     end
+  end
+  
+  def report_error
+    shop = Shop.find_by_id(params[:sid])
+      ShopReport.create(:uid => session_user.id, :sid => params[:sid], :name => shop.name, :des => params[:des], :type => params[:type] )
+      render :json => {ok:params[:sid]}.to_json
   end
   
   def shop2

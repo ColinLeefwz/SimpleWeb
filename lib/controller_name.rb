@@ -25,6 +25,7 @@ module ControllerName
     11=>{},
     12=>{'admin_app_logs' => "日志"},
     13=>{'admin_channels_desc' => "渠道管理"},
-    14=>{'admin_mobile_shops' => "插件管理", "admin_foods" => "点菜", 'admin_caitus' => '猜图'}
+    14=>{'admin_mobile_shops' => "插件管理", "admin_foods" => "点菜", 
+      'admin_caitus' => '猜图', 'admin_games' => "游戏"}
   }
 end
