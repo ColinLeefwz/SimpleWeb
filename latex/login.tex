@@ -163,8 +163,8 @@ GET & \multicolumn{3}{|c|}{/weibo/relation} \\
 \begin{verbatim}
 返回值格式：
 {
-to_add: [脸脸用户信息列表]   ；表示我关注微博用户也加入了脸脸的，可以直接关注
-to_invite:[微博用户信息列表]  ；表示我的微博粉丝还没有加入脸脸的，可以发微博邀请其加入脸脸
+to_add: [脸脸用户信息列表]   ；表示我关注微博用户也加入了脸脸的但是我还没有关注的，可以直接关注
+to_invite:[微博用户信息列表]  ；表示我的微博好友还没有加入脸脸的，可以发微博邀请其加入脸脸
 friend: [脸脸用户信息列表]   ；表示我关注微博用户在脸脸上我已经关注他了，仅用于显示
 }
 
@@ -435,6 +435,38 @@ list是一个json字符串表示的数组，其中每一个条目是一个hash, 
 
 返回值为“{imported: 导入的通讯录的条数}”。
 \end{verbatim}
+
+
+
+\subsubsection{通讯录好友匹配}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/phone/relation} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    user\_id  & 字符串 & 必须 &  当前用户的id\\
+\hline
+    phone  & 字符串 & 必须 &  绑定的手机号码\\    
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+返回值格式：
+{
+to_add: [脸脸用户信息列表]   ；表示我的通讯录上的人也加入了脸脸的但是我还没有关注的，可以直接加好友的
+to_invite:[通讯录列表]  ；表示我的通讯录上的人还没有加入脸脸的，可以发短信邀请其加入脸脸
+friend: [脸脸用户信息列表]   ；表示我通讯录上的人在脸脸上已经成为好友的，仅用于显示
+}
+
+\end{verbatim}
+
+
 
 
 \subsection{短信上传注册接口}
