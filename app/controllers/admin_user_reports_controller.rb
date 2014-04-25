@@ -27,11 +27,8 @@ class AdminUserReportsController < ApplicationController
     when '2'
       hash.merge!({flag: 2})
     end
-    if params[:name]
-      shop = Shop.where(name: params[:name]).first #TODO 此代码有问题
-      #Thu Apr 24 20:14:53.213 [conn38232] query shop.shops query: { $query: { name: "浙江科技产业大厦" }, $orderby: { _id: 1 } } ntoreturn:1 ntoskip:0 nscanned:21893431 keyUpdates:0 numYields: 36 locks(micros) r:75436610 nreturned:1 reslen:267 37994ms
-      hash.merge!({sid: shop.id}) if shop.present?
-    end
+
+    hash.merge!({sname: params[:name]}) if params[:name].present?
     hash.merge!({city: session[:city_code]}) if session[:city_code]
     @shop_reports = paginate3('shop_report', params[:page], hash, sort, 10)
   end
@@ -87,7 +84,7 @@ class AdminUserReportsController < ApplicationController
   def ignore
     @shop_report = ShopReport.find(params[:report_id])
     if @shop_report.update_attribute(:flag, 2)
-      render json: {"success" => true}
+      redirect_to action: "index"
     end
   end
 
@@ -114,6 +111,13 @@ class AdminUserReportsController < ApplicationController
     render :json => {result: 1}
   end
 
+  def ajax_dis
+    lob1 = params[:lob1].split(/[,，]/).map { |m| m.to_f  }.reverse
+    lob2 = params[:lob2].split(/[,，]/).map {|m| m.to_f }.reverse
+    distance = Shop.new.get_distance(lob1, lob2)
+    render :json => {:distance => distance}
+  end
+
   def modify_location
     @report = ShopReport.find(params[:id])
   end
@@ -134,20 +138,8 @@ class AdminUserReportsController < ApplicationController
     redirect_to action: "index"
   end
 
-  def post_chat
-    Xmpp.send_chat($dduid, params[:to_uid], params[:text])
-    render :text => "消息已发送"
-  end
-
-  def ajax_distort
-    ShopReport.where({:sid => params[:sid].to_i, :flag => nil}).each do |report|
-      report.update_attribute(:flag, 2)
-    end
-    render :json => ''
-  end
-
   def authorize
-    if params[:city_code].nil?
+    if params[:city_code].nil? && session[:city_code].nil?
       admin_authorize
     else
       city_code = params[:city_code]
