@@ -27,6 +27,15 @@
     %span.status
     %span.spinner-wrapper
 
+  .setting
+    %h3.title Change Email
+
+    = form_for(resource, :as => resource_name, :url => change_email_path, :html => { :class => "form-horizontal"}, remote: true) do |f|
+      = f.label :email, class: "control-label"
+      = f.email_field :email, class: 'form-control', id: "email"
+
+      = f.submit "Update", class: 'btn btn-prodygia', id: "update"
 
 :javascript
   subscriber()
+  email_confirm()

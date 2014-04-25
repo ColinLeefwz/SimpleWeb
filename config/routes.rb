@@ -25,6 +25,7 @@ Prodygia::Application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
   controller :users do
+    patch 'change_email'
     get 'validate_invite_email'
     get 'validate_user_name'
   end
