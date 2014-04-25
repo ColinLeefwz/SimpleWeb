@@ -33,7 +33,7 @@
   .setting
     %h3.title Change Email
 
-    = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f|
+    = form_for(resource, :as => resource_name, :url => change_email_path, :html => { :class => "form-horizontal"}, remote: true) do |f|
       = f.label :email, class: "control-label"
       = f.email_field :email, class: 'form-control', id: "email"
 
