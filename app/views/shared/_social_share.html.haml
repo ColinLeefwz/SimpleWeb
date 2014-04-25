@@ -36,6 +36,6 @@
 
 .social-share.email
   - if current_user
-    = link_to image_tag("email.png", class: "tooltips", title: "share via email", data:{placement: "bottom"}), new_share_message_path(item: { id: item.id, type: item.class.name }), remote: true
+    = link_to image_tag("email.png", class: "tooltips", title: "share via email", data:{placement: "bottom"}), new_share_message_path(item: { id: item.id, type: item.class.name, item_url: polymorphic_url(item) }), remote: true
   - else
     = link_to image_tag("email.png", class: "tooltips", title: "share via email", data:{placement: "bottom"}), "mailto:someone@example.com?subject=Share%20from%20Prodygia"

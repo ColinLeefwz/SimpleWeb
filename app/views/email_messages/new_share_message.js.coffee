@@ -1,13 +1,12 @@
-$ ->
-  $("#show-email-modal").html "<%= j render "shared/share_email_modal"%>"
-  $("#share-email-modal").modal "show"
+$("#show-email-modal").html "<%= j render "shared/share_email_modal"%>"
+$("#share-email-modal").modal "show"
 
-  $("#new_share_email_form input[type='submit']").on "click", (e)->
-    e.preventDefault()
-    if valid_form()
-      $("form#new_share_email_form").submit()
-    else
-      $("#show-alert").html("<div class='alert alert-danger'>please input email</div>")
+$("#new_share_email_form input[type='submit']").on "click", (e)->
+  e.preventDefault()
+  if valid_form()
+    $("form#new_share_email_form").submit()
+  else
+    $("#show-alert").html("<div class='alert alert-danger'>please input email</div>")
 
 valid_form = ()->
   emailPattern = /// ^ #begin of line
