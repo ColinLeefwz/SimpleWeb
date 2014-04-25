@@ -2,9 +2,15 @@
 .header.shadow.clearfix
   .user
     .avatar
-      = link_to image_tag(item.expert.avatar.url), profile_expert_path(item.expert)
+      - if item.expert.is_staff
+        = image_tag(item.expert.avatar.url)
+      - else
+        = link_to image_tag(item.expert.avatar.url), profile_expert_path(item.expert)
     .name
-      = link_to item.expert.name, profile_expert_path(item.expert)
+      - if item.expert.is_staff
+        = item.expert.name
+      - else
+        = link_to item.expert.name, profile_expert_path(item.expert)
     .title
       = item.expert.profile.title
     .company
@@ -22,5 +28,5 @@
       = link_to image_tag('favorite_unselected.png'),'#sign-in-modal', data:{toggle: "modal"}
     - else
       = render partial: "shared/favorite_star", locals: { method: :has_subscribed?, object: item, link_path: link_path }
-    = render 'shared/social_share', item: item 
+    = render 'shared/social_share', item: item
 
