@@ -87,7 +87,7 @@ class AdminUserReportsController < ApplicationController
   def ignore
     @shop_report = ShopReport.find(params[:report_id])
     if @shop_report.update_attribute(:flag, 2)
-      render json: {"success" => true}
+      redirect_to action: "index"
     end
   end
 
@@ -132,18 +132,6 @@ class AdminUserReportsController < ApplicationController
     @shop_report = ShopReport.find(params[:id])
     @shop_report.update_attribute(:flag, 1)
     redirect_to action: "index"
-  end
-
-  def post_chat
-    Xmpp.send_chat($dduid, params[:to_uid], params[:text])
-    render :text => "消息已发送"
-  end
-
-  def ajax_distort
-    ShopReport.where({:sid => params[:sid].to_i, :flag => nil}).each do |report|
-      report.update_attribute(:flag, 2)
-    end
-    render :json => ''
   end
 
   def authorize
