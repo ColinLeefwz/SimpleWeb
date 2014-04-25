@@ -36,7 +36,6 @@
             %a.filters{href: "#all", data: {filter: '*'}}
               %span.badge.pull-right
                 = ApplicationDecorator.all_count
-                -# = ApplicationDecorator.test_method
               all
           %li.divider
           - @categories.each do |category|
