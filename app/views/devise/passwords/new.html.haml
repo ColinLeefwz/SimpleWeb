@@ -1,10 +1,10 @@
 .devise-style.text-center
   %h2 Forgot your password?
   = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, class: 'form-horizontal' }) do |f|
-    -if resource.decorate.devise_error_messages!
+    -if devise_error_messages!
       .alert.alert-danger
         %button{ type: "button", class: 'close', data: { dismiss: 'alert' } } &times;
-        = resource.decorate.devise_error_messages!
+        = devise_error_messages!
     .form-group
       = f.label :email
       = f.email_field :email, :autofocus => true
