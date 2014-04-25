@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
   end
 
   def shop_authorize
-    if session[:shop_id].nil?
+    if session[:shop_id].nil? || Shop.find_by_id(session[:shop_id]).nil?
       session[:o_uri_path] = request.path unless request.path =~ /\/login/
       redirect_to(:controller => 'shop3_login', :action => 'login' )
     end
