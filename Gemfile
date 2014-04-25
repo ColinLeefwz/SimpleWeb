@@ -1,5 +1,5 @@
-source 'https://rubygems.org'
-# source 'http://ruby.taobao.org'
+# source 'https://rubygems.org'
+source 'http://ruby.taobao.org'
 
 ruby '2.0.0'
 gem 'rails', '4.0.0'
@@ -41,6 +41,7 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem 'font-awesome-sass'
 
 gem 'mailchimp-api'
+gem 'draper'
 
 group :doc do
   gem 'sdoc', require: false
