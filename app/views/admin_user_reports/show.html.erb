@@ -52,7 +52,7 @@
       <%= link_to("重复地点查看", "/admin_user_reports/repeat?id=#{@report.id}", class: "btn btn-default") %>
     </div>
     <div class="col-md-2 text-right">
-      <%= link_to("删除地点", "/admin_user_report/repot_del?id=#{@report.id}", class: "btn btn-default") %>
+      <%= link_to("删除地点", "/admin_user_reports/report_del?id=#{@report.id}", class: "btn btn-default delete-btn") %>
     </div>
   </div>
 
@@ -89,3 +89,13 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(function(){
+    $(".delete-btn").click(function(event) {
+      if(!confirm("确定删除？")) {
+        event.preventDefault();
+      }
+    })
+  })
+</script>
