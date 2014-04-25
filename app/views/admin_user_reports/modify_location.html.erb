@@ -97,7 +97,7 @@
     $("#calculate-distance").click(function(){
       var lob1 = "<%= @report.shop.lo_to_lob %>"
       var lob2 = $('#lob2').val();
-      $.get('/admin_user_add_shops/ajax_dis', {lob1: lob1, lob2: lob2}, function(data){
+      $.get('/admin_user_reports/ajax_dis', {lob1: lob1, lob2: lob2}, function(data){
         $("#distance").text(data["distance"]+"（米）");
       });
     });

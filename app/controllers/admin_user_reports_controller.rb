@@ -111,6 +111,13 @@ class AdminUserReportsController < ApplicationController
     render :json => {result: 1}
   end
 
+  def ajax_dis
+    lob1 = params[:lob1].split(/[,，]/).map { |m| m.to_f  }.reverse
+    lob2 = params[:lob2].split(/[,，]/).map {|m| m.to_f }.reverse
+    distance = Shop.new.get_distance(lob1, lob2)
+    render :json => {:distance => distance}
+  end
+
   def modify_location
     @report = ShopReport.find(params[:id])
   end
@@ -132,7 +139,7 @@ class AdminUserReportsController < ApplicationController
   end
 
   def authorize
-    if params[:city_code].nil?
+    if params[:city_code].nil? && session[:city_code].nil?
       admin_authorize
     else
       city_code = params[:city_code]
