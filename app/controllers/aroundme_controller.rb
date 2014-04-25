@@ -242,13 +242,15 @@ class AroundmeController < ApplicationController
     if user.nil?
       render :json => ""
     else
-      ShopReport.create(:uid => user.id, :sid => params[:sid], :des => params[:des], :type => params[:type] )
+      shop = Shop.find_by_id(params[:sid])
+      ShopReport.create(:uid => user.id, :sid => params[:sid], :name => shop.name, :des => params[:des], :type => params[:type] )
       render :json => ''
     end
   end
   
   def report_error
-      ShopReport.create(:uid => session_user.id, :sid => params[:sid], :des => params[:des], :type => params[:type] )
+    shop = Shop.find_by_id(params[:sid])
+      ShopReport.create(:uid => session_user.id, :sid => params[:sid], :name => shop.name, :des => params[:des], :type => params[:type] )
       render :json => {ok:params[:sid]}.to_json
   end
   
