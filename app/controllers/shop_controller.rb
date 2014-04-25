@@ -225,7 +225,7 @@ class ShopController < ApplicationController
   
   def subs
     shop = Shop.find_by_id(params[:id])
-    if shop.nil || shop.shops.nil?
+    if shop.nil? || shop.shops.nil?
       render :json => [].to_json
     else
       render :json => shop.sub_shops.map{|x| x.safe_output}.to_json
