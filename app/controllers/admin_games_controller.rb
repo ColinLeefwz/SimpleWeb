@@ -10,7 +10,7 @@ class AdminGamesController < ApplicationController
 
   def delete
     $redis.zrem('GameShops', params[:id])
-    redirect_to :action => :index
+    render :json => 0 
   end
 
   def new
