@@ -27,11 +27,8 @@ class AdminUserReportsController < ApplicationController
     when '2'
       hash.merge!({flag: 2})
     end
-    if params[:name]
-      shop = Shop.where(name: params[:name]).first #TODO 此代码有问题
-      #Thu Apr 24 20:14:53.213 [conn38232] query shop.shops query: { $query: { name: "浙江科技产业大厦" }, $orderby: { _id: 1 } } ntoreturn:1 ntoskip:0 nscanned:21893431 keyUpdates:0 numYields: 36 locks(micros) r:75436610 nreturned:1 reslen:267 37994ms
-      hash.merge!({sid: shop.id}) if shop.present?
-    end
+
+    hash.merge!({sname: params[:name]}) if params[:name].present?
     hash.merge!({city: session[:city_code]}) if session[:city_code]
     @shop_reports = paginate3('shop_report', params[:page], hash, sort, 10)
   end
@@ -87,7 +84,7 @@ class AdminUserReportsController < ApplicationController
   def ignore
     @shop_report = ShopReport.find(params[:report_id])
     if @shop_report.update_attribute(:flag, 2)
-      render json: {"success" => true}
+      redirect_to action: "index"
     end
   end
 
@@ -132,18 +129,6 @@ class AdminUserReportsController < ApplicationController
     @shop_report = ShopReport.find(params[:id])
     @shop_report.update_attribute(:flag, 1)
     redirect_to action: "index"
-  end
-
-  def post_chat
-    Xmpp.send_chat($dduid, params[:to_uid], params[:text])
-    render :text => "消息已发送"
-  end
-
-  def ajax_distort
-    ShopReport.where({:sid => params[:sid].to_i, :flag => nil}).each do |report|
-      report.update_attribute(:flag, 2)
-    end
-    render :json => ''
   end
 
   def authorize

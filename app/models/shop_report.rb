@@ -8,8 +8,9 @@ class ShopReport
   field :flag,type: Integer
   field :type  #报错类型
   field :city
+  field :sname #商家名称
 
-  after_create :save_city_code
+  after_create :save_shop_info
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :id, :to => :user
@@ -59,8 +60,9 @@ class ShopReport
     hash = {operation: @operation, url: @url}
   end
 
-  def save_city_code
+  def save_shop_info
     self.city = shop.city
+    self.sname = shop.name
     self.save
   end
 end
