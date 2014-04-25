@@ -12,14 +12,10 @@ class PhoneFriend
 
   # 当新用户A注册或绑定手机时通知A通讯录中已有的脸脸老用户,当用户A通讯录中有新用户注册或者绑定手机时通知A
   def self.newbind_notice_all_oldbind(user)
-    user.address_list_friends.each do |x|
+    arr = user.address_list_to_add + user.who_de_address_list_has_you
+    arr.uniq!
+    arr.each do |x|
       PhoneFriend.friend_notice(user,x)
-    end
-    puser = user.who_de_address_list_has_you
-    if puser.size>0
-      puser.each do |x|
-        PhoneFriend.friend_notice(user,x)
-      end
     end
   end
   
