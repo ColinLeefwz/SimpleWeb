@@ -70,4 +70,13 @@ module BoxableDecorator
     end
     html.html_safe
   end
+
+  def description
+    if object.cover.url
+      truncate_html(object.description, length: 300, omission: '...')
+    else
+      truncate_html(object.description, length: 600, omission: '...')
+    end
+
+  end
 end
