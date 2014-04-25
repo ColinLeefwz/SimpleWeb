@@ -225,7 +225,9 @@ class PhoneController < ApplicationController
     Xmpp.error_notify("用户#{session_user.name}，#{ua.phone}已经有通讯录了") if ua.phone
     ua.phone = params[:phone]
     list = JSON.parse(params[:list])
-    list.delete_if {|x| x["number"].size<6}
+    list.delete_if {|x| x["number"]==nil || x["number"].size<11}
+    list.delete_if {|x| x["name"]==nil }
+    list = list.map{|x| x["number"] = phone_normalize(x["number"]); x}
     ua.list = list
     ua.save!
     session_user_no_cache.set(:pmatch, true)
