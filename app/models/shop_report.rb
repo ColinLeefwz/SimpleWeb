@@ -2,6 +2,7 @@ class ShopReport
   include Mongoid::Document
 
   field :sid, type: Integer
+  field :name, #商家名称
   field :uid, type: Moped::BSON::ObjectId
   field :des
   field :flag,type: Integer
