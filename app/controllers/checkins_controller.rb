@@ -15,7 +15,9 @@ class CheckinsController < ApplicationController
       return
     end
     if params[:accuracy].to_i==0 || params[:accuracy].to_i > 500
-      render :json => {error: "手机误差大于500米，不能创建地点"}.to_json
+      str = "手机当前定位误差大于500米，不能创建地点。"
+      str += "使用wifi可以提高定位精度" if params[:bssid]
+      render :json => {error: str}.to_json
       return
     end
     if params[:sname][0,3]=="@@@"
@@ -77,7 +79,11 @@ class CheckinsController < ApplicationController
     shop.lo = [params[:lat].to_f, params[:lng].to_f]
     shop.lo = Shop.lob_to_lo(shop.lo) if params[:baidu]
     shop.city = shop.get_city
-    #shop.d = 10
+    shop.t = params[:t].to_i
+    shop.addr = params[:addr] if params[:addr]
+    shop.tel = params[:tel] params[:tel]
+    shop.large = true if params[:large].to_i==1
+    shop.d = 10  if !session_user.is_kx_or_co?
     shop.creator = session[:user_id]
     shop.utype = params[:type] if params[:type]
     shop
