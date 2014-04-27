@@ -81,7 +81,7 @@ class CheckinsController < ApplicationController
     shop.city = shop.get_city
     shop.t = params[:t].to_i
     shop.addr = params[:addr] if params[:addr]
-    shop.tel = params[:tel] params[:tel]
+    shop.tel = params[:tel] if params[:tel]
     shop.large = true if params[:large].to_i==1
     shop.d = 10  if !session_user.is_kx_or_co?
     shop.creator = session[:user_id]
