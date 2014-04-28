@@ -4,7 +4,7 @@
 .content
   = link_to subject.name, polymorphic_path([:profile, subject])
   = " commented on "
-  = link_to object.title, polymorphic_path(object)
+  = link_to "\"#{object.title}\"", polymorphic_path(object)
   = " - from "
   = link_to object.expert.name, polymorphic_path([:profile, object.expert])
 
