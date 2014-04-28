@@ -15,19 +15,16 @@
   background: white;
   margin: 0 auto;
   padding-top: 20px;
-  padding-bottom: 10px;
-  position: relative;
+  padding-bottom: 32px;
 }
 
 //-------- user ---------
 .header .user{
-  width: 200px;
   float: left;
   text-align: center;
   .avatar img{
       width: 88px;
       height: 88px;
-      margin: 0 40px;
       margin-bottom: 10px;
       border-radius: 50%;
   }
@@ -57,6 +54,7 @@
     min-height: 105px;  // for social-share
     color: #454545;
     line-height: 1.2em;
+    text-align: left;
   }
 }
 
@@ -74,17 +72,11 @@
 //-------- social-share --------
 
 .header .social-share-icons{
-  position: absolute;
-  top: 20px;
-  right: 20px;
   img{
     width: 20px;
     height: 20px;
   }
 }
-
-
-
 
 
 //-------- detail --------
