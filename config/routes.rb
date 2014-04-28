@@ -105,6 +105,11 @@ Prodygia::Application.routes.draw do
     post 'guest_subscription'
   end
 
+  controller :email_messages do
+    get :new_share_message
+    post :send_share_email
+  end
+
   resources :resources
 
   root to: "welcome#index"

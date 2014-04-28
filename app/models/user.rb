@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 
   has_many :orders
   has_many :email_messages
+  has_many :shared_emails, -> { where email_type: "share" }, class_name: "EmailMessage"
 
   # consultations
   has_many :sent_consultations, class_name: "Consultation", foreign_key: "requester_id"

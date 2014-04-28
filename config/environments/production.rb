@@ -1,4 +1,5 @@
 Prodygia::Application.configure do
+  Rails.application.routes.default_url_options[:host] = "www.prodygia.com"
   # Settings specified here will take precedence over those in config/application.rb.
 
   # add fonts to assets

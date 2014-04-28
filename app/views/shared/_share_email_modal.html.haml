@@ -1,0 +1,14 @@
+#share-email-modal.modal.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h4#myModalLabel.modal-title Share via Email
+        #show-alert
+      .modal-body
+        = simple_form_for @share_email_form, url: send_share_email_path, remote: true do |f|
+          = f.input :item_url, as: :hidden
+          = f.input :to
+          = f.input :subject
+          = f.input :message, as: :text
+          = f.submit "Send"

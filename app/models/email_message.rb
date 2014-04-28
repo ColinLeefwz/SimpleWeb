@@ -1,8 +1,11 @@
 class EmailMessage < ActiveRecord::Base
+  MESSAGE_TYPE = { refer: "refer", share: "share" }.freeze
   belongs_to :user
 
   after_initialize :set_default
   validates :to, presence: true
+
+  attr_accessor :item_url
 
   def expert_email_content
     build_message_content("expert")
