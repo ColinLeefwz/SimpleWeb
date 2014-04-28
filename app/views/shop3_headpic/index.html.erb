@@ -1,11 +1,62 @@
-<div class="con relative">
+<% content_for  :ahead  do %>
+  <link href="/newbackstage/css/jquery.Jcrop.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+    document.write("\<script src=\'\/newbackstage\/js\/jquery.Jcrop.js\'\>\<\/script\>\<script src=\'\/newbackstage\/js\/imgUploadPreview2.js\'\>\<\/script\>");
+    if(/ipad/i.test(ua)){
+      document.write("\<style\>.jcrop-handle{background-color:#333;border:1px #eee solid;font-size:1px;width:15px !important;height:15px !important;\}\<\/style\>");
+    }
+  </script>
+
+<% end %>
+<div id="BG"></div>
+
+<div class="con relative mh650">
 	<div class="title1 w720 m_auto"><h2 class="f18">商家主页头图管理</h2></div>
 	<div class="box5 w720">
 		<span class="gay6 l mt10">客户端商家主页头图，最多5张，最佳尺寸640 * 640</span>
-		<a class="btn3 r" onclick="View()">预览</a>
-		<a class="btn3 r mr20" href="#">排序</a>
+		<a class="btn3 r" onclick="View(this)">预览</a>
+		<a class="btn3 r mr20" onclick="Sort()">排序</a>
 		<span class="clear1"></span>
 	</div>
+
+<div id="UpImg">
+    <div class="upimgplane">
+      <div class="upimgtab">
+        <span id="EM"><img id="UploadPic" src="/newbackstage/images/btn9.jpg" onClick="ImageUpload('UpImgFile')"/></span>
+        <form id="UploadForm">
+          <input type="file" id="UpImgFile" class="filebox6" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox7" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox8" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox9" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox10" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox11" onClick="ImageUpload(this)" name="photo"/>
+        </form>
+        <div id="CutDiv">
+          <div id="CutArea">
+            <div class="cutarealine1"></div>
+            <div class="cutarealine2"></div>
+            <div class="cutarealine3"></div>
+            <div class="cutarealine4"></div>
+            <div id="CAMove"></div>
+          </div>
+          <div id="CutBG1"></div>
+          <div id="CutBG2"></div>
+          <div id="CutBG3"></div>
+          <div id="CutBG4"></div>
+        </div>
+      </div>
+    </div>
+    <div id="SmallImgDiv"  class="cnm">
+      <img src="/newbackstage/images/pic23.jpg" class="jcrop-preview"/>
+    </div>
+    <div class="upimgdiv">
+      <input type="file" onClick="ImageUpload(this)" class="filebox14 none" id="UpImgFile"/>
+      <input type="file" onClick="ImageUpload(this)" class="filebox15 none" id="UpImgFile"/>
+      <input type="button" onClick="ImageUpload('UpImgFile')" value="重新上传" class="btn19 l none" id="Btn19"/>
+      <a onClick="NoCut()" class="btn3 r" href="#a1">取消</a>
+      <input type="button" id="Btn2" class="btn2 r mr10" value="提 交"/>
+    </div>
+  </div>
 
 	<div class="box5 box5change">
 		<div class="box5img" rel=0>
@@ -18,35 +69,42 @@
 			<span class="edit">修改图片</span>
 			<span class="del">删除图片</span>
 		</div>
-		<div class="box5img" rel=2>
-			<img src="/newbackstage/images/pic39.jpg">
-			<span class="edit">修改图片</span>
-			<span class="del">删除图片</span>
-		</div>
-		<div class="box5img" rel=3>
-			<img src="/newbackstage/images/pic39.jpg">
-			<span class="edit">修改图片</span>
-			<span class="del">删除图片</span>
-		</div>
-		<div class="box5img" rel=4>
-			<img src="/newbackstage/images/pic6_1.jpg" class="pointer">
+		<div class="box5img">
+			<img src="/newbackstage/images/pic6_1.jpg" class="pointer" id="AddPic">
 		</div>
 	</div>
 	<div id="ViewPic">
-		<div id="DHImg" class="dhimg">
-			<a><img src="/newbackstage/images/pic40.jpg"/></a>
-			<a><img src="/newbackstage/images/pic41.jpg" /></a>
+		<div id="DHImage" class="dhimage">
+			<ul>
+				<li><a><img src="/newbackstage/images/pic40.jpg"/></a></li>
+				<li><a><img src="/newbackstage/images/pic41.jpg" /></a></li>
+			</ul>
 		</div>
+		<a id="Prev" class="prevbtn" href="javascript:void(0)"></a>
 		<div id="DHNum" class="dhnum"> 
-			<a id="Prev" class="prevbtn" href="javascript:void(0)">左</a>
 			<a class="def selected" href="javascript:void(0)" title="1"></a>
 			<a class="def" href="javascript:void(0)" title="2"></a>
-			<a id="Next" class="nextbtn" href="javascript:void(0)">右</a>
 		</div>
+		<a id="Next" class="nextbtn" href="javascript:void(0)"></a>
+		<a id="CloseViewPic" class="closeviewpic" href="javascript:void(0)"></a>
+	</div>
+	
+	<div id="Sort">
+		<h2>请用鼠标拖拽排序，保存后商家主页的头图将按此顺序轮滑</h2>
+		<div class="sortcon">
+			<div class="scbox"><img src="/newbackstage/images/pic39.jpg"></div>
+			<div class="scbox"><img src="/newbackstage/images/pic40.jpg"></div>
+			<div class="scbox"><img src="/newbackstage/images/pic39.jpg"></div>
+			<div class="scbox"><img src="/newbackstage/images/pic40.jpg"></div>
+			<div class="scbox"><img src="/newbackstage/images/pic39.jpg"></div>
+			<div class="clear1"></div>
+		</div>
+		<a class="btn2 l">保 存</a>
+		<a class="btn3 l ml20" onclick="$('#Sort').css('display','none')">取 消</a>
 	</div>
 </div>
 <script defer="defer">
-  $(document).ready(function(){
+$(document).ready(function(){
     runing=$("#CB1").attr("class");
     if(runing=="checkboxs1"){
       NavDiv();
@@ -56,5 +114,87 @@
     }else if(runing=="checkboxs2"){
       AllNoDH();
     }
-  });
+	
+	//删除图片
+	$("span.del").click(function(){
+		var obj=$(this).closest("div.box5img");
+		obj.hide(function(){
+			obj.remove();
+		});
+	});
+	$("#AddPic").click(function(){
+		var h1=$(window).height(),
+			h2=$("#Nav").height();
+		if(h1>=h2){
+			$("#BG").css("height",h1);
+		}else{
+			$("#BG").css("height",h2);
+		}
+		$("#BG").css("display","block");
+		$("#UpImg").removeAttr("style").attr("src","/newbackstage/images/btn9.jpg");
+		$("#SmallImgDiv img").attr("src","/newbackstage/images/pic23.jpg");
+		$("#UpImg").slideDown(500);
+		
+	});
+	$("span.edit").click(function(){
+		$("#AddPic").click();
+		var imgsrc=$(this).siblings("img").attr("src");
+		$("#UploadPic").attr("src",imgsrc);
+		$("#SmallImgDiv img").attr("src",imgsrc);
+	});
+	
+	//动画
+	$(function(){
+		 var len  = $("#DHImage a img").length;/**获取图片数量**/
+		 var index = 0;
+		 var timer;
+		 $("#DHImage ul").css("width",320*len);
+		 $("#DHNum .def").click(function(){
+			index = $("#DHNum .def").index(this);/** 获取$("#DHNum .def")数组中关于本元素的索引 **/
+			showImg(index);
+		 });
+		 
+		 $("#ViewPic").hover(function(){
+				 clearInterval(timer);
+			 },function(){
+				 timer = setInterval(function(){
+					index++;
+					if(index==len){index=0;}
+					showImg(index);
+				  } , 2000);
+		 }).trigger("mouseleave");
+		 /** trigger()触发被选元素的指定类型事件 **/
+		 
+		 /** hover(over , out)当鼠标移动到一个匹配元素上面时会触发指定的第一个函数，当鼠标移出这个元素时会触发指定的第二个函数。而且，会伴随着对鼠标是否仍然处在特定元素中的检测。**/
+		 
+		 $("#Prev").click(function(){/** 左箭头 **/
+			index--;
+			if(index<0){index=len-1;}
+			showImg(index);
+		 });
+		 $("#Next").click(function(){/** 右箭头 **/
+			index++;
+			if(index==len){index=0;}
+			showImg(index);
+		 });
+	});
+	function showImg(index){
+		var w = 320;
+		$("#DHImage ul").stop().animate({"margin-left" : -w*index},1000);
+		$("#DHNum .def").removeClass("selected").eq(index).addClass("selected");
+	}
+});
+function View(obj){
+	if($(obj).html()=="预览"){
+		$(obj).html("关闭");
+		$("#ViewPic").fadeIn();
+	}else{
+		$(obj).html("预览");
+		$("#ViewPic").fadeOut();
+	}
+	$("#Sort").css("display","none");
+}
+function Sort(obj){	
+	$("#Sort").fadeIn();
+}
 </script>

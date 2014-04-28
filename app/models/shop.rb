@@ -21,6 +21,9 @@ class Shop
   field :id2, type:String #容易记忆的商家编号，规则："区号-流水号"
   field :pass
   field :name
+  field :addr
+  field :tel
+  field :large, type: Boolean #用户添加的, 是否是大地点
   #field :lob, type:Array #百度地图上的经纬度
   #field :loc, type:Array #google地图上的经纬度
   field :lo, type:Array #实际的经纬度
@@ -240,7 +243,7 @@ class Shop
     hash.merge!( {"user"=>total_user})
     hash.merge!( {"has_menu"=>self.has_menu.to_i}) if self.has_menu.to_i>0
     if self.password
-      hash.merge!( {"sign"=>1, "tel"=>self.phone_or_tel, "addr"=>self.addr})
+      hash.merge!( {"sign"=>1, "tel"=>self.tel, "addr"=>self.addr})
       hash.merge!( self.logo.logo_thumb_hash) if self.logo
     end
     hash.merge!( {"sub"=>"有#{self.shops.size}个子地点"} ) if self.shops && self.shops.size>0
@@ -816,24 +819,12 @@ class Shop
     ShopInfo.find_primary(self.id) || ShopInfo.new
   end
 
-  def addr
-    info.nil? ? nil : info.addr
-  end
-
   def phone
     info.nil? ? nil : info.phone
   end
 
   def contact
     info && info.contact
-  end
-
-  def phone_or_tel
-    phone || tel
-  end
-
-  def tel
-    info.nil? ? nil:info.tel
   end
 
   def type
