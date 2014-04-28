@@ -8,7 +8,6 @@ class ShopReport
   field :flag,type: Integer
   field :type  #报错类型
   field :city
-  field :sname #商家名称
 
   after_create :save_shop_info
 
@@ -38,6 +37,8 @@ class ShopReport
       @flag = "已处理"
     when 2
       @flag = "忽略"
+    when 3
+      @flag = "上报"
     end
     @flag
   end
@@ -60,9 +61,12 @@ class ShopReport
     hash = {operation: @operation, url: @url}
   end
 
+  def untreated?
+    flag.nil? || flag == 3
+  end
+
   def save_shop_info
     self.city = shop.city
-    self.sname = shop.name
     self.save
   end
 end
