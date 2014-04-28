@@ -20,7 +20,7 @@ class ShareEmailForm
   def init_new_form(params = {})
     item_params = params[:item]
     item = item_params[:type].classify.constantize.find item_params[:id]
-    item_class = item.class.name.downcase
+    item_class = item.class.name.titleize.downcase
     subject = params[:subject].blank? ?  "Check out this #{item_class} on Prodygia" : params[:subject]
     message = params[:message].blank? ?  "I found this interesting #{item_class} on prodygia.com. Prodygia provides curated content on China, so you can learn from experts working in China. You can check the #{item_class} out by following the link below, and can also sign up for Prodygia for free while you're on the site." : params[:message]
 
