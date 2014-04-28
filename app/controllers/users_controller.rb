@@ -47,6 +47,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def change_email
+    respond_to do |format|
+      format.js{
+        current_user.update_attributes(email_params)
+        flash[:success] = "successfully update your email"
+        if current_user.is_a? Expert
+          render js: "window.location='#{dashboard_expert_path(current_user.reload)}'"
+        else
+          render js: "window.location='#{dashboard_member_path(current_user.reload)}'"
+        end
+      }
+    end
+
+  end
+
   def following
   end
 
@@ -73,4 +88,7 @@ class UsersController < ApplicationController
     end
   end
 
+  def email_params
+    params.require(:user).permit(:email)
+  end
 end
