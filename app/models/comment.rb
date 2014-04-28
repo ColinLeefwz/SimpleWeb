@@ -26,7 +26,7 @@ class Comment < ActiveRecord::Base
   end
 
   def action
-    "commente"
+    "comment"
   end
 end
 
