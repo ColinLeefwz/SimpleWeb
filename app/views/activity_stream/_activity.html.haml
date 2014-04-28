@@ -3,3 +3,6 @@
 .activity{id: dom_id(activity)}
   = render partial: "activity_stream/activities/#{activity.action}", locals: {activity: activity, subject: activity.subject, object: activity.object}
 
+  %time
+    = time_ago_in_words(activity.created_at) + " ago"
+

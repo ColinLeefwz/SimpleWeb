@@ -3,11 +3,12 @@
 @import "globals/shared_mixin";
 
 .activity{
+  @include center_container;
   background-color: white;
   padding: 7px;
   margin-bottom: 18px;
   box-shadow: $shadow_param;
-  @include center_container;
+  position: relative;
 }
 
 
@@ -40,3 +41,15 @@
   color: black;
 }
 
+
+// --------- timestamp of activity ----------
+.activity time{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 5px;
+  margin-right: 5px;
+  font-size: 14px;
+  color: gray;
+  font-variant: small-caps;
+}
