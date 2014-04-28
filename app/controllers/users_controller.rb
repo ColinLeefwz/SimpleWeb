@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js{
         current_user.update_attributes(email_params)
-        flash[:success] = "successfully update your email"
+        flash[:success] = "Your email address has been updated"
         if current_user.is_a? Expert
           render js: "window.location='#{dashboard_expert_path(current_user.reload)}'"
         else
