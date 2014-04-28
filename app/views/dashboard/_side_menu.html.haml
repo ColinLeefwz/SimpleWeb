@@ -97,7 +97,7 @@
     - else
       .item
         = render 'item_icon', item_name: 'refer_expert'
-        .item-text= link_to 'Refer friend', refer_a_friend_member_path, remote: true
+        .item-text= link_to 'Refer friend', new_refer_message_path(invite_type: "member"), remote: true
 
 
     -# ------ Settings ------
