@@ -6,5 +6,5 @@
   = " commented on "
   = link_to object.title, polymorphic_path(object)
   = " - from "
-  = link_to object.subject.name, polymorphic_path([:profile, object.subject])
+  = link_to object.expert.name, polymorphic_path([:profile, object.expert])
 
