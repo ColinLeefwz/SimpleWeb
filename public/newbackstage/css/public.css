@@ -86,6 +86,7 @@ filter: alpha(opacity=60);opacity:0.6;}
 .h140{height:140px !important;}
 .h400{height:400px !important;}
 .h423{height:423px !important;}
+.mh650{min-height:650px !important;}
 .half{height:92.5px;}/*box8框架内已被使用，因此名称未改。*/
 
 .inputs{border:1px solid #d7d7d7;border-radius:15px;width:250px;height:30px;line-height:30px;padding:0px 10px;font-size:12px;color:#868686;}
@@ -234,8 +235,6 @@ font-family:微软雅黑;font-size:18px;border:none;}
 font-family:微软雅黑;font-size:13px;border-radius:5px;text-align:center;border:1px solid #1482F1;}
 .btn22_1{width:85px;height:30px;line-height:30px;background-color:#fff;text-align:center;color:#6b6b6b;display:block;font-size:12px;cursor:pointer;border-radius:4px;
 border:1px solid #E4E4E4;font-family:微软雅黑;}
-
-
 
 
 .btn23{width:40px;height:23px;line-height:23px;text-align:center;cursor:pointer;display:block;background-color:#39f;border:1px solid #1482F1;border-radius:3px;color:#fff;}
@@ -483,10 +482,19 @@ text-align:center;font-size:14px;color:#f60;line-height:50px;padding:0px 14px;ma
 .box4 .box4plane2 .shade{width:100%;position:absolute;left:0px;top:0px;background: url("../images/bg.png") repeat scroll left top transparent;color:#369BFF;cursor: pointer;text-align: center;z-index: 5;}
 
 .box5{width:100%;margin:20px auto;font-size:14px;color:#333;}
-.box5 .box5img{width:215px;height:215px;position:relative;background-color:#EAEAEA;float:left;}
+.box5 .box5img{width:215px;height:215px;position:relative;background-color:#EAEAEA;float:left;margin:0px 35px 35px 0px;}
 .box5 .box5img .edit, .box5 .box5img .del{text-align:center;color:#fff;font-size:14px;width:90px;height:30px;line-height:30px;border:1px solid #000;background-color:rgba(0,0,0,0.6);
-position:absolute;left:50%;margin-left:-46px;top:65px;z-index:2;cursor:pointer;}
+position:absolute;left:50%;margin-left:-46px;top:65px;z-index:2;cursor:pointer;display:none;}
 .box5 .box5img .del{top:120px;}
+.box5 .box5img:hover .edit, .box5 .box5img:hover .del{
+	display:block;
+	-webkit-animation:op 0.8s both;
+	-moz-animation:op 0.8s both;
+	-o-animation:op 0.8s both;
+	-ms-animation:op 0.8s both;
+	animation:op 0.8s both;
+}
+.box5change{width:800px;margin-left:55px;padding-top:20px;}
 
 .box6{width:610px;margin:40px 0px 20px 0px;background:transparent url("../images/pic21.png") no-repeat left top;position:relative;height:310px;}
 .box6 .boxinner{width:590px;overflow:hidden;z-index:10;position:relative;border-radius:8px;margin:0px auto;background-color:#fff;}
@@ -578,6 +586,24 @@ box-shadow:1px 0px 10px #fff;z-index:122;font-family: 微软雅黑;font-size: 16
 .box16 .box16inner{width:250px;margin:0px auto;position:relative;}
 /**box17、box18框架已被定义，用于自定义菜单中，它们被放在自定义菜单框架内，未被写在这里。**/
 
+#ViewPic{position:absolute;right:50px;top:130px;background-color:#fff;border:1px solid #D7D7D7;width:320px;height:320px;z-index:3;padding:20px;display:none;}
+#ViewPic .dhimage {width:320px;height:320px;overflow:hidden;position:absolute;}
+#ViewPic .dhimage ul{display:block;overflow:hidden;}
+#ViewPic .dhimage ul li{float:left;}
+#ViewPic .dhimage img {width:320px;height:320px;}
+#ViewPic .dhnum{position:absolute;width:720x;bottom:0px;_bottom:-2px;height:40px;left:0px;z-index:2;background-image:url(images/dhbg.png);text-align:center;line-height:40px;}
+#ViewPic .dhnum .def{display:none;}
+#ViewPic .dhnum .selected{display:none;}
+#ViewPic  .prevbtn{position:absolute;width:38px;height:38px;left:30px;top:50%;margin-top:-19px;background:url("../images/arrow7.png") left top no-repeat;}
+#ViewPic  .nextbtn{position:absolute;width:38px;height:38px;right:30px;top:50%;margin-top:-19px;background:url("../images/arrow6.png") left top no-repeat;}
+#ViewPic .closeviewpic{position:absolute;width:38px;height:38px;left:50%;margin-left:-19px;bottom:38px;background:url("../images/close3.png") left top no-repeat;display:none;}
+
+#Sort{position:absolute;left:50px;top:130px;background-color:#fff;border:1px solid #D7D7D7;width:680px;height:280px;z-index:3;padding:20px 0px 20px 40px;display:none;}
+#Sort h2{font-family:微软雅黑;font-size:18px;margin-top:10px;color:#333;font-weight:normal;}
+#Sort .sortcon{width:100%;margin:30px 0px 40px 0px;}
+#Sort .scbox{width:120px;height:120px;float:left;margin-right:10px;}
+#Sort .scbox img{width:100%;}
+
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
 .tab1 td{padding-bottom:20px;}
 .tab1 .uploadbox {width:194px;height:194px;}
@@ -642,6 +668,26 @@ div#CellPhone iframe{height: 280px;margin-left: 20px;margin-top: 120px;width: 22
 .phone .shopanswer .cons .small_arrow{position:absolute;left:-8px;bottom:-1px;}
 .phone .shopanswer .cons a{color:#333;}
 
+@-webkit-keyframes op{
+	0%{opacity:0}
+	100%{opacity:1}
+}
+@-moz-keyframes op{
+	0%{opacity:0}
+	100%{opacity:1}
+}
+@-ms-keyframes op{
+	0%{opacity:0}
+	100%{opacity:1}
+}
+@-o-keyframes op{
+	0%{opacity:0}
+	100%{opacity:1}
+}
+@keyframes op{
+	0%{opacity:0}
+	100%{opacity:1}
+}
 /**页码 begin**/
 .pagination{display:block;margin-top:50px;clear:both;line-height:20px;height:20px;position:relative;}
 .pagination .page{float:right;}
