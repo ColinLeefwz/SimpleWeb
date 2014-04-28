@@ -22,7 +22,7 @@
             %span Sign Out
   - else
     %li
-      = link_to image_tag("welcome_video_icon.png"), new_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
+      = link_to image_tag("welcome_video_icon.png", class: 'tooltips', title: "Welcome video", data:{placement: "bottom"}), "#tip-modal", data:{toggle: "modal"}
     %li
       = link_to image_tag("user_icon.png"), new_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
     %li.session_user
