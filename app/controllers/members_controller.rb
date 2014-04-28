@@ -37,14 +37,6 @@ class MembersController < ApplicationController
     end
   end
 
-  def refer_a_friend
-    @email_message = current_user.build_refer_message(User::USER_TYPE[:member])
-    @from = "refer_member"
-    respond_to do |format|
-      format.js {render "update"}
-    end
-  end
-
   def experts
     @followed_experts = current_user.followed_users
     if @followed_experts.empty?

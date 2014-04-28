@@ -21,15 +21,6 @@ class ExpertsController < ApplicationController
     end
   end
 
-  def refer_new_expert
-    @email_message = current_user.build_refer_message(User::USER_TYPE[:expert])
-
-    @from = "refer_expert"
-    respond_to do |format|
-      format.js { render "update" }
-    end
-  end
-
   def profile
     # Peter at 2014-04-07: comment them, after we fix the overlap bug
     # cookies[:profile_batch_point] = 0
