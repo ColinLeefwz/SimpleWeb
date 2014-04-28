@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
     user_name
   end
 
+  #todo course will have only one expert
   def self.find(input)
     if input.is_a? Array   # course has_many experts, so the form param would be: expert_ids: [1,2]
       super
