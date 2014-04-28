@@ -73,6 +73,11 @@ class Course < ActiveRecord::Base
     false
   end
 
+  # gecko: change to one_to_one relationship later
+  def expert
+    experts.first
+  end
+
   private
   def create_a_video
     self.create_video
