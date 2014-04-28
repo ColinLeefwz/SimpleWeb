@@ -11,9 +11,9 @@
             = f.input :item_url, as: :hidden
           .form-group
             .col-sm-2
-              = f.label :to, class: "share_email_to"
-            .col-sm-65
-              = f.text_field :to, :autofocus => true, class: 'form-control'
+              = f.label :to, class: "control-label"
+            .col-sm-6
+              = f.text_field :to, :autofocus => true, class: "share-email-subject"
           .form-group
             .col-sm-2
               = f.label :subject, class: "control-label"
