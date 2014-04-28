@@ -1,2 +1,1 @@
-$("#show-alert").html("<div class='alert alert-success'>send the email successfully!</div>")
-# $("#share-email-modal").modal("hide")
+$("#show-alert").html("<div class='alert alert-success'>Your email has been sent</div>")
