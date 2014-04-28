@@ -7,11 +7,22 @@
     - elsif current_user.is_a? Member
       %li
         = link_to image_tag("dashboard_icon.png"), dashboard_member_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
-    %li
-      = link_to image_tag("signout_icon.png"), destroy_user_session_path, method: :delete, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Log out"
-    %li
-      = link_to image_tag("user_icon.png"), edit_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "#{current_user.email.truncate(16)}"
+    %li.dropdown.open
+      %a{href: "#", class: "dropdown-toggle", "data-placement" => "bottom", "data-toggle" => "dropdown"}
+        %img{src: current_user.avatar.url}
+        %b.caret
+      %ul.dropdown-menu
+        %li
+          %a{href: destroy_user_session_path, method: :delete, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Setting"}
+            = image_tag("dropdown_settings_icon.png")
+            %span Settings
+        %li
+          %a{href: destroy_user_session_path, method: :delete, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Log out"}
+            = image_tag("signout_icon.png")
+            %span Sign Out
   - else
+    %li
+      = link_to image_tag("welcome_video_icon.png"), new_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
     %li
       = link_to image_tag("user_icon.png"), new_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
     %li.session_user
