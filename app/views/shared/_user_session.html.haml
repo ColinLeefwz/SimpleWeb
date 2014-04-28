@@ -7,19 +7,13 @@
     - elsif current_user.is_a? Member
       %li
         = link_to image_tag("dashboard_icon.png"), dashboard_member_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
-    %li.dropdown.open
-      %a{href: "#", class: "dropdown-toggle", "data-placement" => "bottom", "data-toggle" => "dropdown"}
-        %img{src: current_user.avatar.url}
-        %b.caret
+    %li.dropdown
+      = link_to (image_tag(current_user.avatar.url) + content_tag(:b, "", class: "caret")), "#", data: { placement: "bottom", toggle: "dropdown" }, title: "settings"
       %ul.dropdown-menu
         %li
-          %a{href: edit_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "#{current_user.email.truncate(16)}"}
-            = image_tag("dropdown_settings_icon.png")
-            %span Settings
+          = link_to (image_tag("dropdown_settings_icon.png") + " " + content_tag(:span, "Settings")), edit_user_registration_path, data: { placement: "bottom", toggle: "tooltip" }, title: "settings"
         %li
-          %a{href: destroy_user_session_path, "data-method" => "delete", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Log out"}
-            = image_tag("signout_icon.png")
-            %span Sign Out
+          = link_to (image_tag("signout_icon.png") + " " + content_tag(:span, "Sign out")),  destroy_user_session_path, method: :delete, data: { placement: "bottom", toggle: "tooltip" }, title: "Log out"
   - else
     %li
       = link_to image_tag("welcome_video_icon.png", class: 'tooltips', title: "Welcome video", data:{placement: "bottom"}), "#tip-modal", data:{toggle: "modal"}
@@ -27,4 +21,3 @@
       = link_to image_tag("user_icon.png"), new_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign up"
     %li.session_user
       = link_to image_tag("signin_icon.png"),'#sign-in-modal', data:{toggle: "modal"},"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"
-      //= link_to "", new_user_session_path, class: "fa fa-sign-in", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Sign in"
