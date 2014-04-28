@@ -7,8 +7,22 @@
         #show-alert
       .modal-body
         = simple_form_for @share_email_form, url: send_share_email_path, remote: true do |f|
-          = f.input :item_url, as: :hidden
-          = f.input :to
-          = f.input :subject
-          = f.input :message, as: :text
-          = f.submit "Send"
+          .form-group
+            = f.input :item_url, as: :hidden
+          .form-group
+            .col-sm-2
+              = f.label :to, class: "control-label"
+            .col-sm-65
+              = f.text_field :to, :autofocus => true, class: 'form-control'
+          .form-group
+            .col-sm-2
+              = f.label :subject, class: "control-label"
+            .col-sm-6
+              = f.text_field :subject, :autofocus => true, class: 'form-control'
+          .form-group
+            .col-sm-2
+              = f.label :message, class: "control-label"
+            .col-sm-8
+              = f.text_area :message, class: 'share-email-message', label: false
+          = f.submit "Send", class: "btn-prodygia pull-right"
+        .clearfix
