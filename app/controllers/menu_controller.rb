@@ -10,7 +10,7 @@ class MenuController < ApplicationController
   
   def click
     mk = MenuKey.find_by_id(params[:key])
-    if mk 
+    if mk && mk.shop_id==params[:sid]
       mk.send_to_user(session[:user_id])
     else
       Xmpp.send_gchat2($gfuid,params[:sid],session[:user_id], "出错了！" )
