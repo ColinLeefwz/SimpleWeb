@@ -13,11 +13,11 @@
         %b.caret
       %ul.dropdown-menu
         %li
-          %a{href: destroy_user_session_path, method: :delete, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Setting"}
+          %a{href: edit_user_registration_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "#{current_user.email.truncate(16)}"}
             = image_tag("dropdown_settings_icon.png")
             %span Settings
         %li
-          %a{href: destroy_user_session_path, method: :delete, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Log out"}
+          %a{href: destroy_user_session_path, "data-method" => "delete", "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Log out"}
             = image_tag("signout_icon.png")
             %span Sign Out
   - else
