@@ -30,6 +30,7 @@ class DashboardController < ApplicationController
   end
 
   def contents
+    authorize! :create, Article ## member can not access this action
     @items = current_user.contents
 
     respond_to do |format|
