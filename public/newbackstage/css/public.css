@@ -494,6 +494,7 @@ position:absolute;left:50%;margin-left:-46px;top:65px;z-index:2;cursor:pointer;d
 	-ms-animation:op 0.8s both;
 	animation:op 0.8s both;
 }
+.box5img img{width:215px;height:215px;}
 .box5change{width:800px;margin-left:55px;padding-top:20px;}
 
 .box6{width:610px;margin:40px 0px 20px 0px;background:transparent url("../images/pic21.png") no-repeat left top;position:relative;height:310px;}
