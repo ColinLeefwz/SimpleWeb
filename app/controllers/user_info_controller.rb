@@ -168,7 +168,6 @@ class UserInfoController < ApplicationController
     else
       render :json => {:error => "update user info failed"}.to_json
     end
-    
   end
   
   def set_comment_name
