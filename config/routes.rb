@@ -123,6 +123,9 @@ Prodygia::Application.routes.draw do
     end
   end
 
+  get "/dashboard/refer_new_expert", to: "email_messages#new_refer_expert_message"
+  get "/dashboard/refer_a_friend", to: "email_messages#new_refer_friend_message"
+
   resources :resources
 
   root to: "welcome#index"

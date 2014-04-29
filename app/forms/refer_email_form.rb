@@ -3,11 +3,11 @@ class ReferEmailForm
 
   delegate :to, :subject, :message, :copy_me, :invited_type, to: :email_message
 
-  def initialize(params)
-    type = params[:invite_type]
+  def initialize(type)
+    type = type
 
-    subject = params[:subject].blank? ?  "Invitation to be an #{type} on Prodygia" : params[:subject]
-    message = params[:message].blank? ?  build_message_content(type) : params[:message]
+    subject = "Invitation to be an #{type} on Prodygia"
+    message = build_message_content(type)
 
     @email_message = EmailMessage.new(subject: subject, message: message, reply_to: "no-reply@prodygia.com", invited_type: type)
   end

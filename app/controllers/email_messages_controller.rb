@@ -16,11 +16,12 @@ class EmailMessagesController < ApplicationController
     end
   end
 
-  def new_refer_message
-    @refer_email_form = ReferEmailForm.new(params)
-    respond_to do |format|
-      format.js {}
-    end
+  def new_refer_expert_message
+    new_refer_message(User::USER_TYPE[:expert])
+  end
+
+  def new_refer_friend_message
+    new_refer_message(User::USER_TYPE[:member])
   end
 
   def validate_invite_email
@@ -50,5 +51,13 @@ class EmailMessagesController < ApplicationController
   private
   def email_params
     params
+  end
+
+  def new_refer_message(type)
+    @refer_email_form = ReferEmailForm.new(type)
+    respond_to do |format|
+      format.js { render "new_refer_message" }
+      format.html { render "new_refer_message" }
+    end
   end
 end
