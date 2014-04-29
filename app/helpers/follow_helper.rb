@@ -8,7 +8,7 @@ module FollowHelper
 
   def follow_tooltip(target)
     user = nullable(current_user)
-    Following.follow?(user, target) ? "Unfollow" : "Follow"
+    Following.follow?(user, target) ? "unfollow this expert" : "follow this expert"
   end
 end
 

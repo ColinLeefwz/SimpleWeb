@@ -18,8 +18,8 @@
               = [profile.title, profile.company].reject(&:blank?).join(",")
     .col-md-9.col-sm-10
       .expert-actions
-        .follow-star
-          = render 'shared/favorite_star', method: :follow?, object: e, link_path: relationship_path(e)
+        #follow
+          = link_to image_tag(follow_star e), following_path(e.id), title: follow_tooltip(e), class: "tooltips", data: {placement: "bottom"}, remote: true
         .clear-fix
         .expert-action-info
           .block-title

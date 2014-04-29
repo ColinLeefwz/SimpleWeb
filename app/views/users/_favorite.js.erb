@@ -1,0 +1,4 @@
+
+$("#<%= dom_id(target) %>.favorite img").attr("src", "<%= "/assets/#{favorite_star(target)}"%>");
+$("#<%= dom_id(target) %>.favorite .tooltips").attr("data-original-title", "<%= favorite_tooltip(target) %>");
+

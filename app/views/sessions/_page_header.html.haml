@@ -18,9 +18,9 @@
     .category
       = item.category_names
   .social-share-icons.favorite-star
-    - if current_user.blank?
-      = link_to image_tag('star_hollow.png'),'#sign-in-modal', data:{toggle: "modal"}
-    - else
-      = render partial: "shared/favorite_star", locals: { method: :has_subscribed?, object: item, link_path: link_path }
+    = render partial: 'favorites/favorite', locals: {item: item}
     = render 'shared/social_share', item: item 
+
+:javascript
+  bind_sign_in_modal($(".favorite-star"));
 

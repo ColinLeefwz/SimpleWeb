@@ -1,7 +1,7 @@
 - content_for(:title) { @article.title }
 
 .detail-wrapper
-  = render "sessions/page_header", item: @article, link_path: subscribe_path(@article, type: @article.class.name)
+  = render "sessions/page_header", item: @article
 
   .detail.shadow.clearfix
     .video-cover

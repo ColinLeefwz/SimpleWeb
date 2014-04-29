@@ -43,24 +43,18 @@ class UsersController < ApplicationController
   end
 
 
-  def subscribe
+  def favorite
+    type = params[:item_type].classify.constantize
+    target = type.find params[:item_id]
+
+    favor = UserFavorite.new(current_user, target)
+    favor.toggle
     respond_to do |format|
       format.js{
-        type = params[:type]
-
-        current_item = type.constantize.find(params[:item_id])
-
-        if current_user.blank?
-        else
-          if current_user.has_subscribed?(current_item)
-            current_user.unsubscribe(current_item)
-          else
-            current_user.subscribe(current_item)
-          end
-          render "shared/update_favorite_star"
-        end
+        render partial: 'favorite', locals: {target: target}
       }
     end
   end
 
 end
+

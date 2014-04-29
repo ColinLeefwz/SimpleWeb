@@ -10,7 +10,7 @@ module ArticleHelper
 
   end
 
-  def get_box_class(item)
+  def box_class(item)
     box_class = " item " + item.categories.pluck(:name).join(" ") + " "
     box_class += item.class.name
     box_class += " always_show" if item.try(:always_show)

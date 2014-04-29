@@ -5,6 +5,10 @@ class Subscription < ActiveRecord::Base
   belongs_to :subscribable, polymorphic: true
   validates :subscriber, presence: true
 
+  def self.favorited?(user, target)
+    favor = Subscription.where(subscriber_id: user.id, subscribable: target).first
+    favor ? true : false
+  end
 
   private
   def user_list

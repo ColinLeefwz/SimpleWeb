@@ -1,2 +1,6 @@
 - @items.each do |item|
   = render partial: "welcome/box_content", locals: { item: item }
+
+:javascript
+  bind_sign_in_modal($(".favorite-star"));
+

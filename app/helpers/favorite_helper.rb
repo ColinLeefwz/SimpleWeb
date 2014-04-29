@@ -1,26 +1,14 @@
 module FavoriteHelper
-  def favorite_class(method, object, extra="")
-    if current_user.try(method, object)
-      "favorite#{extra} solid-star#{extra}"
-    else
-      "favorite#{extra} hollow-star#{extra}"
-    end
+  include NullableUser
+
+  def favorite_star(target)
+    user = nullable(current_user)
+    Subscription.favorited?(user, target) ? "star_purple.png" : "star_hollow.png"
   end
 
-  def decide_tip_title(method, object)
-    if method == :has_subscribed?
-      current_user.try(method, object) ? "remove from Favorites" : " add to Favorites"
-    elsif method == :follow?
-      current_user.try(method, object) ? "unfollow this expert" : "follow this expert"
-    end
-  end
-
-  def get_favorite_type(object)
-    if object.is_a? User
-      "user"
-    else
-      "content"
-    end
+  def favorite_tooltip(target)
+    user = nullable(current_user)
+    Subscription.favorited?(user, target) ? "remove from favorites" : "add to favorites"
   end
 
 end

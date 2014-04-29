@@ -11,3 +11,4 @@ class AdminUser < User
     self.name = self.email
   end
 end
+

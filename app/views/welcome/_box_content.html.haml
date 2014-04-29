@@ -1,4 +1,4 @@
-%div{class: get_box_class(item)}
+%div{class: box_class(item)}
 
   .box-header
     .portrait
@@ -29,8 +29,6 @@
     %p.learn-more= link_to text, polymorphic_path(item)
     .social-share-icons
       .social-share.favorite-star
-        - if current_user.blank?
-          = link_to image_tag('star_hollow.png', class:'tooltips', title:'add to Favorites', data:{placement: 'bottom'}), '#sign-in-modal', data:{toggle: "modal"}
-        - else
-          = render 'shared/favorite_star', method: :has_subscribed?, object: item, link_path: subscribe_path(item, type: item.class.name)
+        = render partial: 'favorites/favorite', locals: {item: item}
       = render 'shared/social_share', item: item
+

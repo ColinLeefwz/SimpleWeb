@@ -92,7 +92,7 @@ Prodygia::Application.routes.draw do
 
   controller :users do
     get 'following/:target_id' => :following, as: :following
-    get 'subscirbe/:item_id' => :subscribe, as: :subscribe
+    get 'favorite/:item_type/:item_id' => :favorite, as: :favorite
   end
 
   controller :mailchimp do

@@ -24,5 +24,7 @@ class UserFollowing
   def destroy
     following = Following.find_by follower_id: @user.id, followed_id: @target.id
     following.destroy
+    @message = "Unfollowed"
   end
 end
+

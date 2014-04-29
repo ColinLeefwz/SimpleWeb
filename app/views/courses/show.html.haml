@@ -23,7 +23,7 @@
       = @course.description.html_safe
 
   .social-box
-    = render 'shared/favorite_star', method: :subscribe?, object: @course, link_path: subscribe_path(@course, type: @course.class.name)
+    = render partial: 'favorites/favorite', locals: {item: @course}
     = render 'shared/social_share', item: @course
 
 

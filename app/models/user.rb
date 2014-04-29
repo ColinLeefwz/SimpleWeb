@@ -22,8 +22,8 @@ class User < ActiveRecord::Base
   has_many :followed_records, class_name: 'Following', foreign_key: "followed_id", dependent: :destroy   # user is followed by others
   has_many :following_records, class_name: "Following", foreign_key: "follower_id", dependent: :destroy    # user follows someone else
 
-  has_many :followers, through: :followed_records, class_name: "User"
-  has_many :followings, through: :following_records, class_name: "User"
+  has_many :followers, through: :followed_records, source: "followed", class_name: "User"
+  has_many :followings, through: :following_records, source: "follower", class_name: "User"
 
   # enrollments and orders
   has_many :enrollments
