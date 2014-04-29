@@ -7,3 +7,7 @@
     $(".item").find(".item-text > a").css("color", "")
     $(this).parents(".item").find(".item-text > a").css("color", "#880848")
 
+@pjax_dashboard = ->
+  $(".item-text a").on "click", ->
+    alert $(this).attr('href')
+    history.pushState(null, "", $(this).attr('href'))

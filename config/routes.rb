@@ -115,10 +115,10 @@ Prodygia::Application.routes.draw do
 
   controller :dashboard do
     get :dashboard
-    get :post_new_article
-    get :settings
-
-
+    scope :dashboard, as: :dashboard do
+      get :post_new_article
+      get :settings
+    end
   end
 
   resources :resources
