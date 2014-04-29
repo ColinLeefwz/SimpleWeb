@@ -10,6 +10,9 @@
 @pjax_dashboard = ->
   $(".item-pjax").on "click", ->
     history.pushState(null, "", $(this).attr('href'))
+  $(window).bind "popstate", ->
+    $.getScript(location.href)
+
 
 @validate_refer_message = ->
   $(".validation-message").hide()
@@ -31,3 +34,4 @@
         $(".validation-message").show()
         $(".validation-message").text data.error_message
     )
+

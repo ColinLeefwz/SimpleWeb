@@ -3,17 +3,11 @@
   - if user_signed_in?
     %li
       = link_to image_tag("dashboard_icon.png"), dashboard_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
-    -# - if current_user.is_a? Expert
-    -#   %li
-    -#     = link_to image_tag("dashboard_icon.png"), dashboard_expert_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
-    -# - elsif current_user.is_a? Member
-    -#   %li
-    -#     = link_to image_tag("dashboard_icon.png"), dashboard_member_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
     %li.dropdown
       = link_to (image_tag(current_user.avatar.url) + content_tag(:b, "", class: "caret")), "#", data: { placement: "bottom", toggle: "dropdown" }, title: "settings"
       %ul.dropdown-menu
         %li
-          = link_to (image_tag("dropdown_settings_icon.png") + " " + content_tag(:span, "Settings")), edit_user_registration_path, data: { placement: "bottom", toggle: "tooltip" }, title: "settings"
+          = link_to (image_tag("dropdown_settings_icon.png") + " " + content_tag(:span, "Settings")), dashboard_settings_path, data: { placement: "bottom", toggle: "tooltip" }, title: "settings"
         %li
           = link_to (image_tag("signout_icon.png") + " " + content_tag(:span, "Sign out")),  destroy_user_session_path, method: :delete, data: { placement: "bottom", toggle: "tooltip" }, title: "Log out"
   - else
