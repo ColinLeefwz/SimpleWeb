@@ -1,12 +1,14 @@
 
 %ul.nav.navbar-nav.navbar-right
   - if user_signed_in?
-    - if current_user.is_a? Expert
-      %li
-        = link_to image_tag("dashboard_icon.png"), dashboard_expert_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
-    - elsif current_user.is_a? Member
-      %li
-        = link_to image_tag("dashboard_icon.png"), dashboard_member_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
+    %li
+      = link_to image_tag("dashboard_icon.png"), dashboard_path, "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
+    -# - if current_user.is_a? Expert
+    -#   %li
+    -#     = link_to image_tag("dashboard_icon.png"), dashboard_expert_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
+    -# - elsif current_user.is_a? Member
+    -#   %li
+    -#     = link_to image_tag("dashboard_icon.png"), dashboard_member_path(current_user), "data-placement" => "bottom", "data-toggle" => "tooltip", :title => "dashboard"
     %li.dropdown
       = link_to (image_tag(current_user.avatar.url) + content_tag(:b, "", class: "caret")), "#", data: { placement: "bottom", toggle: "dropdown" }, title: "settings"
       %ul.dropdown-menu

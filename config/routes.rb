@@ -113,6 +113,14 @@ Prodygia::Application.routes.draw do
     end
   end
 
+  controller :dashboard do
+    get :dashboard
+    get :post_new_article
+    get :settings
+
+
+  end
+
   resources :resources
 
   root to: "welcome#index"
