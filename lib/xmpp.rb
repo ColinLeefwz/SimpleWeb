@@ -30,11 +30,21 @@ class Xmpp
       RestClient.post("http://#{next_xmpp_ip}:5280/#{path}", payload, headers, &block)
     end
   end
+  
+  def self.normal_chat(from,to,msg, id=nil)
+    msg2 = CGI.escapeHTML(msg)
+    mid = id.nil?? $uuid.generate : id
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='normal'><body>#{msg2}</body></message>"
+  end
+  
+  def self.send_normal(from,to,msg,id=nil)
+    post("rest", Xmpp.normal_chat(from,to,msg,id)) 
+  end
 
   def self.chat(from,to,msg, id=nil, attrs="", ext="")
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
-    attrs += " NOLOG='1' " if (from.to_s == $gfuid || from.to_s == 'scoupon' || from.to_s == 'sphoto' || msg[0]==':') && attrs.index("NOLOG").nil?
+    attrs += " NOLOG='1' " if (from.to_s == $gfuid || from.to_s == 'scoupon' || msg[0]==':') && attrs.index("NOLOG").nil?
     #TODO: 服务器端发送消息的回执不需要会给模拟发起的用户
     "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='chat' #{escape(attrs)}><body>#{msg2}</body><x xmlns='jabber:x:event'><displayed/></x>#{escape_amp(ext)}</message>"
   end

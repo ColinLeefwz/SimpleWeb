@@ -52,20 +52,8 @@ function ImageUpload(target){// 头图管理
             success: function(data){
                 $("#EM").html("<img id='UploadPic' src='"+ data +"' />");
                 pic.src= data;
-                sid.innerHTML="<img src=\'"+$("#UploadPic").attr("src")+"\' />";
-                    documentHeight=$(document).height();
-                    windowHeight=$(window).height();
-                    if(documentHeight<=windowHeight){
-                        $("#BG").css({
-                            "height":windowHeight+"px",
-                            "display":"block"
-                        });
-                    }else{
-                        $("#BG").css({
-                            "height":documentHeight+"px",
-                            "display":"block"
-                        });
-                    }
+                sid.innerHTML="<img src=\'"+$("#UploadPic").attr("src")+"\' />";				
+				
 					$(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css("display","none");
                     var cut = new ImgCut({
                         viewClass: 'cnm',  //初始化 大中小图片预览区域及个数，DOM结构决定
@@ -106,6 +94,29 @@ function ImageUpload(target){// 头图管理
                         }
                         cutObj.getApi().animateTo([h1, w1, h2, w2]);
                         cutObj.getApi().ui.selection.addClass('jcrop-selection');
+						
+						documentHeight=$(document).height();
+						windowHeight=$(window).height();
+						
+						$("#Nav").removeAttr("style");
+						var w1=$(window).width(),
+							h1=$(document).height(),
+							h2=$(window).height();
+						if(w1>1300){
+							$(".con").css("margin-left","auto");
+						}else if(w1<=1300&&w1>1024){
+							$(".con").css("margin-left",200);
+						}else if(w1<=1024){
+							$(".con").css("margin-left",180);
+						}
+						if(h1>h2){
+							$("#Nav").css("height",h1+"px");
+							$("#BG").css({"height":h1+"px","display":"block"});
+						}else{
+							$("#Nav").css("height",h2+"px");
+							$("#BG").css({"height":h2+"px","display":"block"});
+						}
+
                     }
                     );
 
@@ -139,9 +150,11 @@ function ImageUpload(target){// 头图管理
 								var obj=$(this).closest("div.box5img");
 								obj.hide(function(){
 									obj.remove();
+									$("#AddBox5Img").css("display","block");
 								});
 							});
-                            
+							if(num>=6){$("#AddBox5Img").css("display","none");}
+                            WindowResizeA();
                         })
 
                     // --------------------------------------------------
@@ -158,6 +171,7 @@ function NoCut(){
         "top":"-722px"
     },750,function(){
         $("#UpImg, #BG").css("display","none");
+		WindowResizeA();
     });
     $("#UpImgFile").val("");
     $("#EM").html(emObj).removeAttr("style");

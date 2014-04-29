@@ -11,7 +11,7 @@
 <% end %>
 <div id="BG"></div>
 
-<div class="con relative mh650">
+<div class="con relative mh650 visible">
 	<div class="title1 w720 m_auto"><h2 class="f18">商家主页头图管理</h2></div>
 	<div class="box5 w720">
 		<span class="gay6 l mt10">客户端商家主页头图，最多5张，最佳尺寸640 * 640</span>
@@ -120,8 +120,16 @@ $(document).ready(function(){
 	$("span.del").click(function(){
 		var obj=$(this).closest("div.box5img");
 		obj.hide(function(){
+			$("#AddBox5Img").css("display","block");
 			obj.remove();
 		});
+	});
+	//编辑图片
+	$("span.edit").click(function(){
+		$("#AddPic").click();
+		var imgsrc=$(this).siblings("img").attr("src");
+		$("#UploadPic").attr("src",imgsrc);
+		$("#SmallImgDiv img").attr("src",imgsrc);
 	});
 	$("#AddPic").click(function(){
 		var h1=$(window).height(),
@@ -136,12 +144,6 @@ $(document).ready(function(){
 		$("#SmallImgDiv img").attr("src","/newbackstage/images/pic23.jpg");
 		$("#UpImg").slideDown(500);
 		
-	});
-	$("span.edit").click(function(){
-		$("#AddPic").click();
-		var imgsrc=$(this).siblings("img").attr("src");
-		$("#UploadPic").attr("src",imgsrc);
-		$("#SmallImgDiv img").attr("src",imgsrc);
 	});
 	
 	//动画

@@ -119,7 +119,6 @@ $(document).ready(function(){
 		var n=$("#Inputs1").val();
 		var n2=$("#Inputs3").val();
 		var t2=$("#Inputs2").val();
-		alert(n);
 		
 		if(n2==""||n2=="请输入数字"){
 			$("#Inputs3").val("请输入数字");

@@ -21,6 +21,7 @@ class Shop
   field :id2, type:String #容易记忆的商家编号，规则："区号-流水号"
   field :pass
   field :name
+  field :addr
   field :tel
   field :large, type: Boolean #用户添加的, 是否是大地点
   #field :lob, type:Array #百度地图上的经纬度
@@ -611,7 +612,7 @@ class Shop
   end
 
   def faqs
-    ShopFaq.where({sid: self.id, od: {"$ne" => nil }}).sort({od: 1})
+    ShopFaq.where({sid: self.id, od: {"$in" => %w(01 02 03 04 05 06 07 08 09)}}).sort({od: 1})
   end
 
   def faq(od)
@@ -832,10 +833,6 @@ class Shop
 
   def type
     info.nil? ? nil : info.type
-  end
-
-  def addr 
-    info && info.addr
   end
 
   def self.node(ip)

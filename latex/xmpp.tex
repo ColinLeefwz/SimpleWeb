@@ -30,6 +30,15 @@
 
 
 
+\subsection{脸脸中的聊天消息的三种类型}
+
+\begin{enumerate}
+\item chat：个人之间的单聊消息，需要发送送达／已读回执。客户端未收到任何回执，则客户端重发; 服务器端未收到送达／已读回执，则服务器会重发消息。
+\item groupchat：聊天室消息，没有回执。客户端未收到自己发出的消息，则重发。
+\item normal：服务器推送的通知消息，没有回执，不重发。
+\end{enumerate}
+
+
 
 \subsection{消息ID}
 所有的消息（包括单聊和聊天室），要保证消息id的唯一性，建议使用uuid生成消息的id。客户端发送的消息，由客户端生成这个id；服务器端发送的消息，由服务器端生成这个id。
@@ -85,9 +94,8 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 \subsection{消息提醒}
 \begin{enumerate}
 \item 当不在现场的界面收到现场聊天室的消息时，在现场按钮旁边加红点提醒;
-\item 当收到发送人是"sphoto@dface.cn"发过来的单聊消息时，表明是有照片提醒消息。这时在我的照片等地方加红点提醒。［2.3以上版本，此功能取消］。
 \item 已发／已读类状态确认类消息不需要提醒。
-\item 好友动态消息以红点的方式提醒。
+\item 好友动态（新鲜事）消息以红点的方式提醒。
 \item 好友评论消息以数字计数的方式提醒。
 \item 其它个人之间聊天的消息以数字计数的方式提醒。
 \end{enumerate}
@@ -104,7 +112,7 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 不管是在单聊和群聊时，图片消息仅仅根据图片id即可判断出类别。
 
-\section{好友动态}
+\section{好友动态等服务器端推送的消息}
 \subsection{好友动态消息}
 所有消息id以"FEED"开头的，都属于好友动态消息。好友动态消息以红点的方式提醒，不计数。
 好友动态消息增加地点，IOS通过属性实现，Android通过扩展实现，如下：
@@ -135,8 +143,14 @@ XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extens
 
 \subsection{谁访问过我的主页的消息}
 \begin{verbatim}
-所有消息id以"VISIT"开头的单聊消息，都属于访问我的主页的提醒消息。
+该类消息的类型是"normal"，消息id以"VISIT"开头。
 该消息的id格式为“VISIT#{uid1},#{uid2}”，其中uid1是访问我的人的id，uid2是我的id。
+\end{verbatim}
+
+\subsection{有新人进入聊天室的消息}
+\begin{verbatim}
+该类消息的类型是"normal"，消息id以"CKN"开头。
+该消息的id格式为“CKN#{uid1},#{sid}”，其中uid1是新加入聊天室的人，sid是聊天室的id。
 \end{verbatim}
 
 
