@@ -10,7 +10,7 @@ class WeiboController < ApplicationController
     wb_uids = users.distinct(:wb_uid)
     to_invite = wb_users.keep_if{|k, v| !k.in?(wb_uids) && v['follow_me']}.values
     friend, to_add =[], []
-    users.each{|user| (user.id.to_s.in?(session_user.follow_ids) ? friend : to_add ) << user.safe_output}
+    users.each{|user| (user.id.to_s.in?(session_user.follow_ids) ? friend : to_add ) << user.safe_output.merge!({wb_name:user.wb_name})}
     render :json => {to_add: to_add, friend: friend, to_invite: to_invite}
   end 
 
