@@ -192,6 +192,8 @@ qq登陆的话：增加qq_token，qq_expire
 POST & \multicolumn{3}{|c|}{/user\_info/set} \\
 \hline\hline
  \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ user\_id  & 字符串 & 必填 &  登录用户的id\\
 \hline
  name  & 字符串 & 选填 &  用户的名字. 长度小于64\\
 \hline
@@ -246,6 +248,46 @@ POST & \multicolumn{3}{|c|}{/user\_info/set} \\
 
 \end{verbatim}
 \end{figure}
+
+
+\subsection{当前登录用户设置隐私／推送控制}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/user\_info/privacy} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必填 &  登录用户的id\\
+\hline
+ pvc1  & 整数 & 可选 &  那些人可以查看我的足迹，1没有人，2好友，3粉丝，4所有人，默认好友\\
+\hline
+ pvc2  & 整数 & 可选 &  是否允许别人查看我的最新5条足迹,1允许，0不允许， 默认允许\\
+\hline
+ pvc3  & 整数 & 可选 &  我的新鲜事里显示那些人的足迹，1关注 2好友, 暂时没有用到\\
+\hline
+ pvc4  & 整数 & 可选 &  那些消息不推送，默认0表示全推送\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\begin{figure}[H]
+\begin{verbatim}
+备注：pvc1／pvc2／pvc3／pvc4等参数设置了就传递，没变动就不传。
+
+pvc4是一个位向量，共5位，从高到底分别是（现场有新人来｜有人赞了我｜有人评论我 | 有人关注我｜有人看过我）。如果其中一类消息不要推送，对应位置1。
+
+比如：“现场有新人来”和 “有人看过我”两种消息不推送，那么pvc4为二进制"10001"，也就是17。
+
+返回值：{"success" : 1}
+\end{verbatim}
+\end{figure}
+
+
 
 
 \subsection{设置其它用户的备注名}
