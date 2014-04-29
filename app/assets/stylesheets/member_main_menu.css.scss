@@ -1,3 +1,6 @@
+@import 'globals/variables';
+@import 'globals/shared_mixin';
+
 @media screen and (max-width: 500px) {
   .favorite-session-cover {
     img {
@@ -15,11 +18,14 @@
 
 .main-menu{
   .recommendation{
+    font-family: 'Oswaldreg';
+    padding-top: 5px;
     padding-bottom: 5px;
     margin-bottom: 10px;
     text-align: center;
-    color: rgb(136, 8, 72);
-    font-size: 2em;
+    color: $prodygia-purple;
+    font-size: 1.3em;
+
   }
   // expert page
   .jumbotron{
