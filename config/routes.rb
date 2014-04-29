@@ -120,6 +120,9 @@ Prodygia::Application.routes.draw do
       get :contents
       get :produced_courses
       get :subscribed_courses
+      get :favorite_experts
+      get :favorite_contents
+      get :favorite_courses
     end
   end
 

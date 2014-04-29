@@ -6,8 +6,8 @@ class DashboardController < ApplicationController
 
   def settings
     respond_to do |format|
-      format.js {}
-      format.html {}
+      format.js
+      format.html
     end
   end
 
@@ -16,7 +16,7 @@ class DashboardController < ApplicationController
       format.js{
         render partial: 'dashboard/profile/edit'
       }
-      format.html {}
+      format.html
     end
   end
 
@@ -24,8 +24,8 @@ class DashboardController < ApplicationController
     @article = Article.new
     authorize! :create, Article
     respond_to do |format|
-      format.js {}
-      format.html {}
+      format.js
+      format.html
     end
   end
 
@@ -39,7 +39,7 @@ class DashboardController < ApplicationController
         render partial: 'shared/cards' , locals: { items: @items }
       }
 
-      format.html { }
+      format.html
     end
   end
 
@@ -73,6 +73,46 @@ class DashboardController < ApplicationController
     @enrolled_courses = current_user.enrolled_courses
     if @enrolled_courses.empty?
       @enrolled_courses = Course.recommend_courses(current_user)
+      @recommendation = true
+    end
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
+  def favorite_experts
+    @followed_experts = current_user.followed_users
+    if @followed_experts.empty?
+      @followed_experts = Expert.where("id != ?", current_user.id).order("RANDOM()").limit(3)
+      @recommendation = true
+    end
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
+  def favorite_contents
+    @favorite_contents = current_user.subscribed_contents
+    if @favorite_contents.empty?
+      if current_user.is_a? Expert
+        @favorite_contents = Article.where.not(draft: true, expert: current_user).order("RANDOM()").limit(3)
+      elsif current_user.is_a? Member
+        @favorite_contents = Article.where.not(draft: true, expert: Expert.staff).order("RANDOM()").limit(3)
+      end
+      @recommendation = true
+    end
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
+  def favorite_courses
+    @subscribed_courses = current_user.subscribed_courses
+    if @subscribed_courses.empty?
+      @subscribed_courses = Course.recommend_courses(current_user)
       @recommendation = true
     end
     respond_to do |format|

@@ -30,47 +30,6 @@ class MembersController < ApplicationController
     end
   end
 
-  def experts
-    @followed_experts = current_user.followed_users
-    if @followed_experts.empty?
-      @followed_experts = Expert.where("id != ?", current_user.id).order("RANDOM()").limit(3)
-      @recommendation = true
-    end
-    @from = "expert"
-    respond_to do |format|
-      format.js {render "update"}
-    end
-  end
-
-  # gecko: we should duck type that
-  def contents
-    @favorite_contents = current_user.subscribed_contents
-    if @favorite_contents.empty?
-      if current_user.is_a? Expert
-        @favorite_contents = Article.where.not(draft: true, expert: current_user).order("RANDOM()").limit(3)
-      elsif current_user.is_a? Member
-        @favorite_contents = Article.where.not(draft: true, expert: Expert.staff).order("RANDOM()").limit(3)
-      end
-      @recommendation = true
-    end
-    @from = "content"
-    respond_to do |format|
-      format.js {render "update"}
-    end
-  end
-
-  def video_on_demand
-    @subscribed_courses = current_user.subscribed_courses
-    if @subscribed_courses.empty?
-      @subscribed_courses = Course.recommend_courses(current_user)
-      @recommendation = true
-    end
-    @from = "video_on_demand"
-    respond_to do |format|
-      format.js {render "update"}
-    end
-  end
-
   private
   def set_member
     @member = Member.find params[:id]

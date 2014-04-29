@@ -57,7 +57,6 @@
           .panel-body
             %li
               = link_to 'My produced courses', dashboard_produced_courses_path, remote: true, class: "item-pjax"
-            -# %li= link_to 'My subscribed courses', vod_library_member_path(user), remote: true, class: "item-pjax"
             %li
               = link_to 'My subscribed courses', dashboard_subscribed_courses_path, remote: true, class: "item-pjax"
     - else
@@ -80,10 +79,9 @@
 
       .collapse.panel-collapse#favorite
         .panel-body
-          %li= link_to 'Experts', experts_member_path(current_user), remote: true
-          %li= link_to 'Content', contents_member_path(current_user), remote: true
-          %li= link_to 'Courses', video_on_demand_member_path(current_user), remote: true
-          -# %li Video interviews
+          %li= link_to 'Experts', dashboard_favorite_experts_path, remote: true, class: "item-pjax"
+          %li= link_to 'Content', dashboard_favorite_contents_path, remote: true, class: "item-pjax"
+          %li= link_to 'Courses', dashboard_favorite_courses_path, remote: true, class: "item-pjax"
 
     -# ----- Refer Expert -----
     - if user.is_a? Expert
