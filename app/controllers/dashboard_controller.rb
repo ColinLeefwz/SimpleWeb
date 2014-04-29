@@ -1,10 +1,10 @@
 class DashboardController < ApplicationController
   def dashboard
-    @user = current_user
-    @profile = @user.profile
+    @profile = current_user.profile
   end
 
   def settings
+    @profile = current_user.profile
     respond_to do |format|
       format.js {}
       format.html {}

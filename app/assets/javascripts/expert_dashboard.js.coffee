@@ -9,5 +9,4 @@
 
 @pjax_dashboard = ->
   $(".item-text a").on "click", ->
-    alert $(this).attr('href')
     history.pushState(null, "", $(this).attr('href'))
