@@ -740,6 +740,7 @@ overflow:hidden;zoom:1;z-index:20;}
 /**程序调试用 over**/
 
 /**城市运营商后台优化 Begin**/
+.agent_tab{ width: 98%;}
 .agent_tab tr{ text-align: center;}
 .agent_tab tr td.agent_view{}
 .agent_tab tr td.agent_view a{ position: relative; z-index: 97}
@@ -784,4 +785,15 @@ overflow:hidden;zoom:1;z-index:20;}
 .form-group span{ margin-right: 10px; float: left; width: 80px; margin-right: -110px; text-align: center; font-size: 14px; color: #5E5E5E; font-weight: normal; line-height: 30px;}
 .form-group select{ margin-right: 10px; padding:5px; margin-left: 80px; max-width: 260px;}
 .form-group .u-ipt{ border: 1px solid #d7d7d7; font-size: 14px; color: #5E5E5E; font-weight: normal; line-height: 17px; padding:5px; width: 100px; margin-left: 80px; margin-right: 20px;}
+.form-group .form-control{ margin-left: 80px; width: 150px;}
+.pagination{ width: 100%; line-height: 22px;}
+.pagination a{ float: left; display: block; margin: 0 5px;}
+.pagination span{ float: left; display: block; margin: 0 5px;}
+.pagination input{ float: left; display: block; margin: 0 5px; border: 1px solid #ddd; width: 40px; padding:3px 4px; text-align: center;}
 /**城市运营商后台优化 End**/
+/**地点报错管理**/
+.md_addr{ margin-bottom: 10px; line-height: 30px;}
+.md_addr .md_addr_lable{ float: left; width: 100px; margin-right: -100px;}
+.md_addr .md_addr_text{ margin-left: 80px;}
+.md_addr .md_addr_text input.md_addr_txt{ display: block; border: 1px solid #ddd; padding:5px 3px;}
+/**地点报错管理 End**/
