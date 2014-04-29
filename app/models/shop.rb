@@ -21,7 +21,6 @@ class Shop
   field :id2, type:String #容易记忆的商家编号，规则："区号-流水号"
   field :pass
   field :name
-  field :addr
   field :tel
   field :large, type: Boolean #用户添加的, 是否是大地点
   #field :lob, type:Array #百度地图上的经纬度
@@ -389,7 +388,7 @@ class Shop
   end
 
   def logo
-    ShopLogo.shop_logo(id)
+    ShopLogo.shop_logo(id.to_s)
   end
 
   def staffs
@@ -833,6 +832,10 @@ class Shop
 
   def type
     info.nil? ? nil : info.type
+  end
+
+  def addr 
+    info && info.addr
   end
 
   def self.node(ip)

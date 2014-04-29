@@ -396,7 +396,7 @@ function ShowDiv(){//问答系统管理：显示
 		arr[x]="flighting";
 	}
 	while(opacity){
-		n=parseInt(Math.random()*10);
+		n=parseInt(Math.random()*（num＋1）);
 		if(n<=num){
 			for(x=0;x<=num;x++){
 				if(arr[x]!=n){

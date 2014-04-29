@@ -214,9 +214,9 @@ class PhoneController < ApplicationController
   end
   
   def relation
-    to_add = session_user.address_list_to_add.map{|x| x.safe_output}
+    to_add = session_user.address_list_to_add.map{|x| x.safe_output.merge!({phone:x.phone}) }
     to_invite = session_user.address_list_to_invite
-    friend = session_user.address_list_friends.map{|x| x.safe_output}
+    friend = session_user.address_list_friends.map{|x| x.safe_output.merge!({phone:x.phone}) }
     render :json => {to_add: to_add, to_invite: to_invite, friend: friend}.to_json
   end
   
