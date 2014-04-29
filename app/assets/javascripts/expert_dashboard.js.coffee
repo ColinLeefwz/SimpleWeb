@@ -8,5 +8,5 @@
     $(this).parents(".item").find(".item-text > a").css("color", "#880848")
 
 @pjax_dashboard = ->
-  $(".item-text a").on "click", ->
+  $(".item-pjax").on "click", ->
     history.pushState(null, "", $(this).attr('href'))

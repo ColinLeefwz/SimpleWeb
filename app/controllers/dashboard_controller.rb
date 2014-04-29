@@ -43,8 +43,45 @@ class DashboardController < ApplicationController
     end
   end
 
+  def produced_courses
+    authorize! :create, Article ## member can not access this action
+    @courses = current_user.courses
+
+    respond_to do |format|
+      format.js {
+        if @courses.empty?
+          get_pending_text("video_courses")
+          @from = 'pending_page'
+          render 'experts/update'
+        else
+          render partial: 'shared/cards', locals: {items: @courses}
+        end
+      }
+
+      format.html {
+        if @courses.empty?
+          get_pending_text("video_courses")
+          @empty = true
+        else
+          @empty = false
+        end
+      }
+    end
+
+  end
+
+  def subscribed_courses
+
+  end
+
   private
   def set_profile
     @profile = current_user.profile
+  end
+
+  def get_pending_text(type)
+    all_text = YAML.load_file(File.join(Rails.root, 'config', 'pending_text.yml'))
+    text_hash = all_text[type]
+    @pending_text = [text_hash['title'], text_hash['content'], text_hash['footer']].join
   end
 end

@@ -118,6 +118,8 @@ Prodygia::Application.routes.draw do
       get :post_new_article
       get :settings
       get :contents
+      get :produced_courses
+      get :subscribed_courses
     end
   end
 

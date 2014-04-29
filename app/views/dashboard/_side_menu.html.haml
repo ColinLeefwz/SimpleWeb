@@ -13,9 +13,7 @@
       .title
         = [@profile.title, @profile.company].reject(&:blank?).join(",")
       .edit
-        %p
-          .item-text
-            = link_to 'edit profile', dashboard_edit_profile_path, remote: true
+        %p= link_to 'edit profile', dashboard_edit_profile_path, remote: true, class: "item-pjax"
 
   -# ----- Activity Stream -----
   .toolkit
@@ -33,7 +31,8 @@
       -# ----- Post New Article -----
       .item
         = render 'item_icon', item_name: 'new_content'
-        .item-text= link_to 'Post new article', dashboard_post_new_article_path, remote: true
+        .item-text
+          = link_to 'Post new article', dashboard_post_new_article_path, remote: true, class: "item-pjax"
 
   -# ------ MANAGE ------
   .block-title
@@ -45,8 +44,8 @@
     - if user.is_a? Expert
       .item
         = render 'item_icon', item_name: 'content'
-        -# .item-text= link_to 'Content', contents_expert_path, remote: true
-        .item-text= link_to 'Content', dashboard_contents_path, remote: true
+        .item-text
+          = link_to 'Content', dashboard_contents_path, remote: true, class: "item-pjax"
 
     -# ----- Video Courses -----
     - if user.is_a? Expert
@@ -56,12 +55,15 @@
           .item-text= link_to 'Video courses', '#video-courses', data: {toggle: 'collapse'}
         .collapse.panel-collapse#video-courses
           .panel-body
-            %li= link_to 'My produced courses', video_courses_expert_path(user), remote: true
-            %li= link_to 'My subscribed courses', vod_library_member_path(user), remote: true
+            %li
+              = link_to 'My produced courses', dashboard_produced_courses_path, remote: true, class: "item-pjax"
+            -# %li= link_to 'My subscribed courses', vod_library_member_path(user), remote: true, class: "item-pjax"
+            %li= link_to 'My subscribed courses', vod_library_member_path(user), remote: true, class: "item-pjax"
     - else
       .item
         = render 'item_icon', item_name: 'video_library'
-        .item-text= link_to 'Video courses', vod_library_member_path(user), remote: true
+        .item-text
+          = link_to 'Video courses', vod_library_member_path(user), remote: true, class: "item-pjax"
 
     -# ----- Private Sessions -----
     - if user.is_a? Expert
@@ -102,7 +104,8 @@
     -# ------ Settings ------
     .item
       = render 'item_icon', item_name: 'account'
-      .item-text= link_to 'Settings', dashboard_settings_path, remote: true
+      .item-text
+        = link_to 'Settings', dashboard_settings_path, remote: true, class: "item-pjax"
 
 :javascript
   side_bar()

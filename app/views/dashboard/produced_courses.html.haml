@@ -1,0 +1,18 @@
+- content_for(:title){"Expert Dashboard"}
+
+- if @user.is_a? Expert
+  = render "experts/guideline_page_modal"
+.dash-wrapper.margin-bottom
+  .container-fluid
+    .row
+      .col-lg-3.col-md-3
+        .side-menu
+          = render 'dashboard/side_menu'
+      .col-lg-9.col-md-9.main-menu
+        - if @empty
+          = render "experts/pending_page"
+        - else
+          = render partial: "shared/card", collection: @courses, as: :item
+
+:coffee
+  pjax_dashboard()

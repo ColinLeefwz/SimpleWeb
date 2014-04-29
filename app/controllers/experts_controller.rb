@@ -75,22 +75,6 @@ class ExpertsController < ApplicationController
     end
   end
 
-  def video_courses
-    courses = current_user.courses
-
-    respond_to do |format|
-      format.js {
-        if courses.empty?
-          get_pending_text("video_courses")
-          @from = 'pending_page'
-          render 'experts/update'
-        else
-          render partial: 'shared/cards', locals: {items: courses}
-        end
-      }
-    end
-  end
-
   private
   def increase_cookie
     new_val = cookies[:profile_batch_point].to_i + 1
