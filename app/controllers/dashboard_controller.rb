@@ -22,9 +22,7 @@ class DashboardController < ApplicationController
 
   def post_new_article
     @article = Article.new
-    # Peter todo:
-    # authorize article for current_user
-    # member can not post new article
+    authorize! :create, Article
     respond_to do |format|
       format.js {}
       format.html {}
