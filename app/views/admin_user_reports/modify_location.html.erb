@@ -28,7 +28,7 @@
       百度经纬度:
     </div>
     <div class="col-md-3" id="lob">
-      <% if @report.shop.lo.first.is_a?(Array)%>
+      <% if @report.shop.lo && @report.shop.lo.first.is_a?(Array)%>
         <% @report.shop.lo.each do |lo| %>
           <%= lo %>,<br>
         <% end %>
