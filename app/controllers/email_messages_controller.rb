@@ -17,6 +17,7 @@ class EmailMessagesController < ApplicationController
   end
 
   def new_refer_expert_message
+    authorize! :create, Article
     new_refer_message(User::USER_TYPE[:expert])
   end
 

@@ -67,11 +67,18 @@ class DashboardController < ApplicationController
         end
       }
     end
-
   end
 
   def subscribed_courses
-
+    @enrolled_courses = current_user.enrolled_courses
+    if @enrolled_courses.empty?
+      @enrolled_courses = Course.recommend_courses(current_user)
+      @recommendation = true
+    end
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   private

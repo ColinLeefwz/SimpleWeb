@@ -1,1 +1,1 @@
-$(".main-menu").html("<%=j render partial: "settings"%>")
+$(".main-menu").html("<%=j render partial: 'settings' %>")

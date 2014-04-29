@@ -58,12 +58,13 @@
             %li
               = link_to 'My produced courses', dashboard_produced_courses_path, remote: true, class: "item-pjax"
             -# %li= link_to 'My subscribed courses', vod_library_member_path(user), remote: true, class: "item-pjax"
-            %li= link_to 'My subscribed courses', vod_library_member_path(user), remote: true, class: "item-pjax"
+            %li
+              = link_to 'My subscribed courses', dashboard_subscribed_courses_path, remote: true, class: "item-pjax"
     - else
       .item
         = render 'dashboard/item_icon', item_name: 'video_library'
         .item-text
-          = link_to 'Video courses', vod_library_member_path(user), remote: true, class: "item-pjax"
+          = link_to 'Video courses', dashboard_subscribed_courses_path, remote: true, class: "item-pjax"
 
     -# ----- Private Sessions -----
     - if user.is_a? Expert
@@ -98,7 +99,7 @@
     - else
       .item
         = render 'dashboard/item_icon', item_name: 'refer_expert'
-        .item-text= link_to 'Refer friend', new_refer_message_path(invite_type: "member"), remote: true
+        .item-text= link_to 'Refer friend', dashboard_refer_a_friend_path, remote: true, class: "item-pjax"
 
 
     -# ------ Settings ------

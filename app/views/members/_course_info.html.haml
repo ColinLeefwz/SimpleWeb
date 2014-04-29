@@ -15,7 +15,7 @@
           .favorite-session-title
             = link_to course.title, course_path(course)
           .favorite-session-expert-name.separator.inline
-            = producer_links(course)
+            = course.decorate.producer_links
           .favorite-session-categories.inline
             = course.category_names
           .clear-fix

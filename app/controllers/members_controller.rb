@@ -71,20 +71,7 @@ class MembersController < ApplicationController
     end
   end
 
-  def vod_library
-    @enrolled_courses = current_user.enrolled_courses
-    if @enrolled_courses.empty?
-      @enrolled_courses = Course.recommend_courses(current_user)
-      @recommendation = true
-    end
-    @from = "vod_library"
-    respond_to do |format|
-      format.js {render "update"}
-    end
-  end
-
   private
-
   def set_member
     @member = Member.find params[:id]
   end
