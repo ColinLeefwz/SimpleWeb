@@ -29,6 +29,19 @@ class DashboardController < ApplicationController
     end
   end
 
+  def contents
+    @items = current_user.contents
+
+    respond_to do |format|
+      @show_shares = true
+      format.js {
+        render partial: 'shared/cards' , locals: { items: @items }
+      }
+
+      format.html { }
+    end
+  end
+
   private
   def set_profile
     @profile = current_user.profile

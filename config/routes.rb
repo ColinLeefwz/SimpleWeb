@@ -114,9 +114,10 @@ Prodygia::Application.routes.draw do
   controller :dashboard do
     get :dashboard
     scope :dashboard, as: :dashboard do
+      get :edit_profile
       get :post_new_article
       get :settings
-      get :edit_profile
+      get :contents
     end
   end
 

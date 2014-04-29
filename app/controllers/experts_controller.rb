@@ -75,17 +75,6 @@ class ExpertsController < ApplicationController
     end
   end
 
-  def contents
-    @items = current_user.contents
-
-    respond_to do |format|
-      format.js {
-        @show_shares = true
-        render partial: 'shared/cards', locals: { items: @items }
-      }
-    end
-  end
-
   def video_courses
     courses = current_user.courses
 

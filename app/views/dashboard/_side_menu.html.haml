@@ -46,7 +46,7 @@
       .item
         = render 'item_icon', item_name: 'content'
         -# .item-text= link_to 'Content', contents_expert_path, remote: true
-        .item-text= link_to 'Content', "#", remote: true
+        .item-text= link_to 'Content', dashboard_contents_path, remote: true
 
     -# ----- Video Courses -----
     - if user.is_a? Expert
