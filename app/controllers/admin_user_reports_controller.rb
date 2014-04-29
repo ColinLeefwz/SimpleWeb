@@ -28,7 +28,7 @@ class AdminUserReportsController < ApplicationController
       hash.merge!({flag: 3})
     end
 
-    hash.merge!({name: params[:name]}) if params[:name].present?
+    hash.merge!({name: /#{params[:name]}/}) if params[:name].present?
     hash.merge!({city: session[:city_code]}) if session[:city_code]
     if session[:city_code]
       @select_option = [['全部',''], ['已处理','1'], ['忽略', '2'], ['上报', 3]]
@@ -83,18 +83,45 @@ class AdminUserReportsController < ApplicationController
   def update_corrdinate
     @shop_report = ShopReport.find(params[:id])
     @shop = @shop_report.shop
-    if @shop.update_attribute(:lo, params[:lo][1..-2].split(",").map{|i| i.to_f})
+    if params[:lo] == ""
+      return render json: {"success" => false}
+    end
+
+    lobs = params[:lo].split(/[;；]/)
+    if lobs.count == 1
+      lob = lobs.first.split(/[,，]/).map{|s| s.to_f}
+    else
+      lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }}
+    end
+
+    @shop.lo = lob
+    if @shop.save
       @shop_report.update_attribute(:flag, 1)
-      render json: {"success" => true, "lo" => @shop.lo}
+      @lo = @shop.lo
+      render json: {"success" => true, "lo" => @lo.first.is_a?(Array) ? @lo.to_s[1...-1] : @lo.to_s}
     end
   end
 
   def new_corrdinate
     @shop_report = ShopReport.find(params[:id])
     @shop = @shop_report.shop
-    @shop.lo << params[:lo].split(",").map{|i| i.to_f}
+    if params[:lo] == ""
+      return render json: {"success" => false}
+    end
+
+    lo = params[:lo].split(/[,，]/).map{|i| i.to_f}
+    lobs = []
+    if @shop.lo.first.is_a?(Array)
+      @shop.lo << lo
+    else
+      lobs << @shop.lo
+      lobs << lo
+      @shop.lo = lobs
+    end
+
     if @shop.save
-      render json: {"success" => true, "lo" => @shop.lo}
+      @lo = @shop.lo
+      render json: {"success" => true, "lo" => @lo.first.is_a?(Array) ? @lo.to_s[1...-1] : @lo.to_s}
     end
   end
 
@@ -136,8 +163,8 @@ class AdminUserReportsController < ApplicationController
   end
 
   def ajax_dis
-    lob1 = params[:lob1].split(/[,，]/).map { |m| m.to_f  }.reverse
-    lob2 = params[:lob2].split(/[,，]/).map {|m| m.to_f }.reverse
+    lob1 = params[:lob1][1...-1].split(/[,，]/).map { |m| m.to_f  }
+    lob2 = params[:lob2].split(/[,，]/).map {|m| m.to_f }
     distance = Shop.new.get_distance(lob1, lob2)
     render :json => {:distance => distance}
   end

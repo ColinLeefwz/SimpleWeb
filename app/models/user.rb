@@ -684,7 +684,7 @@ class User
     if ua && ua.list
       ua.list.each do |m|
         phone = m["number"]
-        next unless phone
+        next if phone.nil? || phone.size<11
         uid = $redis.get("P:#{phone}")
         user = User.find_by_id(uid)
         if type==3 && user.nil?
@@ -695,7 +695,7 @@ class User
           adds << user if self.friend?(uid)
         elsif type==2 
           adds << user unless self.friend?(uid)
-        else
+        elsif type==0
           adds << user
         end
       end
