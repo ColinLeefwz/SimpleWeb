@@ -3,7 +3,7 @@ module Stream::ContentActivity
 
   included do
     after_save :push_activities
-    before_destroy :clean_activities
+    # before_destroy :clean_activities
   end
 
   private
@@ -22,16 +22,16 @@ module Stream::ContentActivity
 
 
   # ----- clean_activities -----
-  def clean_activities
-    activity_streams.each do |stream|
-      activities = stream.activities.where(
-        subject_type: subject.class.name,
-        subject_id: subject.id,
-        object_type: object.class.name,
-        object_id: object.id)
-      activities.destroy
-    end
-  end
+  # def clean_activities
+  #   activity_streams.each do |stream|
+  #     activities = stream.activities.where(
+  #       subject_type: subject.class.name,
+  #       subject_id: subject.id,
+  #       object_type: object.class.name,
+  #       object_id: object.id)
+  #     activities.destroy
+  #   end
+  # end
   
 
   # ----- shared helpers -----
