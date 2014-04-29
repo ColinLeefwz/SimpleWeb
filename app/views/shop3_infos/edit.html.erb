@@ -11,18 +11,18 @@
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
 		  <tr>
 			<td width="17%" align="right" valign="top" class="pr20">名&nbsp;称</td>
-			<td><%= text_field_tag :name, @shop.name, :class => "inputs2 mb10" %></td>
+			<td>
+				<%= text_field_tag "shop[name]", @shop.name, :class => "inputs2 mb10" %>
+			</td>
 			<td width="17%" align="right" valign="top" class="pr20">Logo</td>
 			<td align="left" valign="top" class="relative">
 				<a class="btn1" id="Btn1">上传图片</a>
-<!-- 				<input class="filebox1" id="shop_info_img" name="shop_info[img]" type="file" />
-				<input class="filebox2" id="shop_info_img" name="shop_info[img]" type="file" /> -->
 				<input class="filebox1" id="img" name="shop_logo[img]" type="file" />
 			</td>
 		  </tr>
 		<tr>
 			<td align="right" valign="top" class="pr20">地&nbsp;址</td>
-			<td><%= text_field_tag "shop_info[addr]", @shop.addr, :class => "inputs2 mb10" %></td>
+			<td><%= text_field_tag "shop[addr]", @shop.addr, :class => "inputs2 mb10" %></td>
 			<td width="16%">&nbsp;</td>
 			<td rowspan="3">
 			<div id="uploadPreview">
@@ -32,13 +32,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="right" valign="top" class="pr20">联系人</td>
-			<td><%= text_field_tag "shop_info[contact]", @shop.contact, :class => "inputs2 mb10" %></td>
+			<td align="right" valign="top" class="pr20">电&nbsp;话</td>
+			<td><%= text_field_tag "shop[tel]", @shop.tel, :class => "inputs2 mb10" %></td>
 			<td width="16%">&nbsp;</td>
 		</tr>
 		<tr>
-			<td align="right" valign="top" class="pr20">电&nbsp;话</td>
-			<td><%= text_field_tag "shop_info[phone]", @shop.phone, :class => "inputs2 mb10" %></td>
 			<td width="16%">&nbsp;</td>
 		</tr>
 		<tr>
