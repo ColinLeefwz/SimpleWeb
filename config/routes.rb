@@ -53,7 +53,6 @@ Prodygia::Application.routes.draw do
   resources :members do
     member do
       get :activity_stream
-      get :dashboard
       get :profile
       get :edit_profile
       patch :update_profile
@@ -68,7 +67,6 @@ Prodygia::Application.routes.draw do
   resources :experts do
     member do
       get :activity_stream
-      get :dashboard
       get :main_menu
       get :profile
       get :consultations
@@ -118,6 +116,7 @@ Prodygia::Application.routes.draw do
     scope :dashboard, as: :dashboard do
       get :post_new_article
       get :settings
+      get :edit_profile
     end
   end
 

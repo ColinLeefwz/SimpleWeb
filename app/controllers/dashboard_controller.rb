@@ -10,4 +10,13 @@ class DashboardController < ApplicationController
       format.html {}
     end
   end
+
+  def edit_profile
+    @profile = current_user.profile
+    respond_to do |format|
+      format.js{
+        render partial: 'dashboard/profile/edit'
+      }
+    end
+  end
 end

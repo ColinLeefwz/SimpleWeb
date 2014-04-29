@@ -54,25 +54,17 @@ class ExpertsController < ApplicationController
 
   end
 
-  def edit_profile
-    @profile = @expert.profile
-    respond_to do |format|
-      format.js{
-        render partial: 'dashboard/profile/edit'
-      }
-    end
-  end
-
+  ## Peter at 2014-04-29: this method and the one in MembersController can be merged together
+  # into UsersController
   def update_profile
     respond_to do |format|
       format.js{
         @expert.update_attributes(expert_params)
         @expert.profile.update_attributes(expert_profile_params)
         flash[:success] = "successfully update your profile"
-        render js: "window.location='#{dashboard_expert_path(current_user.reload)}'"
+        render js: "window.location='#{dashboard_path}'"
       }
     end
-
   end
 
   def consultations

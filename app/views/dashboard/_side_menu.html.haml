@@ -13,11 +13,9 @@
       .title
         = [@profile.title, @profile.company].reject(&:blank?).join(",")
       .edit
-        - if user.is_a? Expert
-          %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
-        - else
-          %p= link_to 'edit profile', edit_profile_member_path(current_user), remote: true
-
+        %p
+          .item-text
+            = link_to 'edit profile', dashboard_edit_profile_path, remote: true
 
   -# ----- Activity Stream -----
   .toolkit
@@ -104,7 +102,6 @@
     -# ------ Settings ------
     .item
       = render 'item_icon', item_name: 'account'
-      -# .item-text= link_to 'Settings', edit_user_registration_path, remote: true
       .item-text= link_to 'Settings', dashboard_settings_path, remote: true
 
 :javascript
