@@ -18,7 +18,7 @@
       <tr>
         <td valign="middle"><%= shop.name %></td>
         <td valign="middle"><%= shop.get_distance(@shop, shop).to_s + "m" %></td>
-        <td valign="middle">签约情况</td>
+        <td valign="middle"><%= shop.sign.nil? ? "未签约" : "签约商家" %></td>
         <td valign="middle"><%= shop.first_checkin_time %></td>
         <td valign="middle"><%= shop.creator %></td>
         <% unless session[:city] %>
@@ -40,7 +40,7 @@
       <%= link_to("确认删除", "/admin_user_reports/confirm?id=#{@shop_report.id}", class: "btn btn-danger") %>
     </div>
     <div class="col-md-1">
-      <%= link_to("返回", "/admin_user_reports/index", class: "btn btn-default") %>
+      <%= link_to("返回", "/admin_user_reports/untreated", class: "btn btn-default") %>
     </div>
   </div>
 </div>

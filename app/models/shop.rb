@@ -819,6 +819,10 @@ class Shop
     ShopInfo.find_primary(self.id) || ShopInfo.new
   end
 
+  def sign
+    ShopSign.find_primary(self.id)
+  end
+
   def phone
     info.nil? ? nil : info.phone
   end
@@ -948,7 +952,7 @@ class Shop
     end
   end
 
-  
+
   def distance_desc(lo)
     distance = self.min_distance(self,lo)
     if distance>=1000
