@@ -1,7 +1,8 @@
 <% content_for  :ahead  do %>
   <link href="/newbackstage/css/jquery.Jcrop.css" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/jquery.form.js" type="text/javascript"></script>
   <script type="text/javascript">
-    document.write("\<script src=\'\/newbackstage\/js\/jquery.Jcrop.js\'\>\<\/script\>\<script src=\'\/newbackstage\/js\/imgUploadPreview2.js\'\>\<\/script\>");
+    document.write("\<script src=\'\/newbackstage\/js\/jquery.Jcrop.js\'\>\<\/script\>\<script src=\'\/newbackstage\/js\/headpic.js\'\>\<\/script\>");
     if(/ipad/i.test(ua)){
       document.write("\<style\>.jcrop-handle{background-color:#333;border:1px #eee solid;font-size:1px;width:15px !important;height:15px !important;\}\<\/style\>");
     }
@@ -69,7 +70,7 @@
 			<span class="edit">修改图片</span>
 			<span class="del">删除图片</span>
 		</div>
-		<div class="box5img">
+		<div class="box5img" id="AddBox5Img">
 			<img src="/newbackstage/images/pic6_1.jpg" class="pointer" id="AddPic">
 		</div>
 	</div>
