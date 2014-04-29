@@ -17,6 +17,7 @@ class DashboardController < ApplicationController
       format.js{
         render partial: 'dashboard/profile/edit'
       }
+      format.html {}
     end
   end
 end
