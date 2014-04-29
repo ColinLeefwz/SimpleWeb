@@ -148,7 +148,7 @@ module Similarity
     #puts "distance: #{distance(shop1,shop2)}"  if $0=="script/rails"
     dist_score = dist_score(distance(shop1,shop2))
     w_score = weight_score(shop1,shop2)
-    puts [name_score,addr_score,type_score,dist_score,w_score] #if $0=="script/rails"
+    #puts [name_score,addr_score,type_score,dist_score,w_score] #if $0=="script/rails"
     return name_score+addr_score+type_score+dist_score+w_score
   end
 
@@ -158,7 +158,7 @@ module Similarity
   
   def similar_shops(x, min_score=60, early_exit=false)
     sames =[]
-    Shop.where({lo:{"$within" => {"$center" => [x.loc_first_of(x),0.03]}}} ).each do |y|
+    Shop.where2({lo:{"$within" => {"$center" => [x.loc_first_of(x),0.03]}}} ).each do |y|
       next if y.id==x.id
       begin
         score = Shop.similarity(x,y)
@@ -168,14 +168,15 @@ module Similarity
       return true if early_exit && score>min_score
       sames << [y,score] if score>min_score
     end
-    if x["city"] && x["lo"]
-      Shop.where({city:x["city"], name:x["name"], password:{"$exists" => true} }).each do |y|
-        next if y.id==x.id
-        next if y.del
-        return true if early_exit
-        sames << [y,MAX_SCORE]
-      end
-    end
+    #暂时取消创建地点的时候的同城同名地点匹配，因为性能不行
+    # if x["city"] && x["lo"]
+    #   Shop.where2({city:x["city"], name:x["name"] }).each do |y|
+    #     next if y.id==x.id
+    #     next if y.del
+    #     return true if early_exit
+    #     sames << [y,MAX_SCORE]
+    #   end
+    # end
     return false if early_exit
     sames.sort{|a,b| b[1]<=>a[1]}.map{|x| x[0]}
   end

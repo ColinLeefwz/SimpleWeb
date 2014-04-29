@@ -4,7 +4,7 @@ class UserInfoController < ApplicationController
   include PhoneUtil
   
   before_filter :user_login_filter, :except => [:photos, :logo ]
-  before_filter :user_is_session_user, :only => [:get_comment_names]
+  before_filter :user_is_session_user, :only => [:get_comment_names, :privacy]
   
   #deprecate
   def get
@@ -34,7 +34,7 @@ class UserInfoController < ApplicationController
     shops = user.lords[0,10].map{|id| Shop.find_by_id(id)}
     if user.ver.to_f >= 3
       if $redis.zadd("VISIT#{user.id}", Time.now.to_i, session[:user_id])
-        Xmpp.send_chat(session[:user_id], user.id,"#{user.name}访问了你的主页噢~", "VISIT#{user.id},#{session[:user_id]}", " NOLOG='1' NOPUSH='1' ")
+        Xmpp.send_chat(session[:user_id], user.id,"#{session_user.name}访问了你的主页噢~", "VISIT#{session[:user_id]},#{user.id}", " NOLOG='1' NOPUSH='1' ")
       end
     end
     render :json => shops.select{|x| x!=nil}.map{|x| x.safe_output_with_users}.to_json    
@@ -152,6 +152,21 @@ class UserInfoController < ApplicationController
       else
         render :json => {:error => "update user info failed"}.to_json
       end
+    end
+  end
+  
+  def privacy
+    user = session_user_no_cache
+    hash = {}
+    hash[:pvc1] = params[:pvc1].to_i  unless params[:pvc1].nil?
+    hash[:pvc2] = (params[:pvc2]=="1")  unless params[:pvc2].nil?
+    hash[:pvc3] = params[:pvc3].to_i  unless params[:pvc3].nil?
+    hash[:pvc4] = params[:pvc4].to_i  unless params[:pvc4].nil?    
+    if user.update_attributes! hash
+      Rails.cache.delete "UI#{user.id}"    
+      render :json => {"success" => 1}.to_json
+    else
+      render :json => {:error => "update user info failed"}.to_json
     end
   end
   

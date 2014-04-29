@@ -12,7 +12,7 @@ class Shop3CouponsController < ApplicationController
   end
 
   def list
-    hash = {:shop_id => session[:shop_id]}
+    hash = {:shop_id => session[:shop_id], :t2 => {"$in" => [1,2]}}
     sort = {:hidden => 1,:t2 => 1,  :_id => -1}
     @coupons = paginate("Coupon", params[:page], hash, sort,10)
   end

@@ -28,6 +28,7 @@ class CouponDown
 
   index({cid: 1, uid:1})
   index({dat: -1})
+  index({uid: 1})
   
   def status
     return 1 if st.nil?

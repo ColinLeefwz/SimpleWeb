@@ -1,12 +1,15 @@
-<table cellspacing="0" cellpadding="0" class="tab2 mt40 f13 agent_tab">
+<table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40 f13 agent_tab">
   <tr id="Tr0">
     <th width="150">商家ID</th>
     <th width="200">商家名称</th>
     <th width="120">报错人</th>
     <th width="150">报错类型</th>
-    <th width="120">操作结果</th>
+    <th width="150">推荐操作</th>
+    <th width="90">误报</th>
     <% unless session[:city_code] %>
       <th width="120">查看</th>
+    <% else %>
+      <th width="120">上报</th>
     <% end %>
   </tr>
 
@@ -17,27 +20,35 @@
         <% if session[:city_code].present? %>
           <%= report.shop_name %>
         <% else %>
-          <%= link_to report.shop_name, "admin_shops/show?id=#{report.shop_id}" %>
+          <%= link_to report.shop_name, "/admin_shops/show?id=#{report.shop_id}" %>
         <% end %>
       </td>
       <td valign="middle">
         <% if session[:city_code].present? %>
           <%= report.user_name %>
         <% else %>
-          <%= link_to report.user_name, "admin_users/show?id=#{report.user_id}" %>
+          <%= link_to report.user_name, "/admin_users/show?id=#{report.user_id}" %>
         <% end %>
       </td>
       <td valign="middle"><%= report.type %></td>
       <td valign="middle">
-        <% if report.flag %>
-          <%= report.report_flag %>
-        <% else %>
+        <% if report.untreated? %>
           <%= link_to report.recommend_operation[:operation], report.recommend_operation[:url], class: "#{'delete-btn' if report.recommend_operation[:operation] == '删除地点'}" %>
+        <% else %>
+          <%= report.report_flag %>
         <% end %>
       </td>
-
+      <td valign="middle" id="error_push">
+        <% if report.untreated? %>
+          <%= link_to '忽略', "/admin_user_reports/ignore?report_id=#{report.id}", class: "ignore-link" %>
+        <% else %>
+          <%= report.report_flag %>
+        <% end %>
+      </td>
       <% unless session[:city_code] %>
         <td valign="middle"><%= link_to '查看', "/admin_user_reports/show?id=#{report.id} "%></td>
+      <% else %>
+        <td valign="middle"><%= link_to '上报', "/admin_user_reports/reported?id=#{report.id} "%></td>
       <% end %>
     </tr>
   <% end %>

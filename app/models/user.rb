@@ -12,9 +12,12 @@ class User
   field :name # 昵称，最多10个字符
   field :gender, type: Integer #性别
   field :birthday #生日
-  #field :password #不再保存该密码，TODO：等稳定后删除数据库的中password
   field :psd #手机登录用户设置的密码
-  field :invisible, type: Integer #隐身模式，1对黑名单隐身，2对陌生人隐身，3对所有人隐身
+  field :invisible, type: Integer #隐身模式，1对黑名单隐身，2对陌生人隐身，3对所有人隐身。本字段取消
+  field :pvc1, type: Integer, default:2 #那些人可以查看我的足迹，1没有人，2好友，3粉丝，4所有人，默认好友
+  field :pvc2, type: Boolean, default:true #是否允许别人查看我的最新5条足迹, 默认允许
+  field :pvc3, type: Integer #我的新鲜事里显示那些人的足迹，1关注 2好友, 暂时没有用到
+  field :pvc4, type: Integer, default:0 #那些消息不推送， （现场有新人来｜有人赞了我｜有人评论我|有人关注我｜有人看过我）
   field :signature #签名
   field :job #职业说明
   field :jobtype, type: Integer #职业类别
@@ -664,15 +667,36 @@ class User
   end
 
   def address_list_friends
+    address_lists(1) 
+  end
+  
+  def address_list_to_add
+    address_lists(2) 
+  end
+  
+  def address_list_to_invite
+    address_lists(3) 
+  end
+    
+  def address_lists(type=0) 
     adds = []
     ua = UserAddr.find_or_new(self.id)
     if ua && ua.list
       ua.list.each do |m|
-        if m.select{|k,v| k=="number" && $redis.get("P:#{v}")}
-          v = m.select{|k,v| k=="number"}.map{|k,v| v}[0]
-          uid = $redis.get("P:#{v}")
-          user = User.find_by_id(uid)
-          adds << user unless user.nil?
+        phone = m["number"]
+        next if phone.nil? || phone.size<11
+        uid = $redis.get("P:#{phone}")
+        user = User.find_by_id(uid)
+        if type==3 && user.nil?
+          adds << m
+        end
+        next if user.nil?
+        if type==1
+          adds << user if self.friend?(uid)
+        elsif type==2 
+          adds << user unless self.friend?(uid)
+        elsif type==0
+          adds << user
         end
       end
     end
@@ -680,15 +704,7 @@ class User
   end
 
   def who_de_address_list_has_you
-    ua = User.find_by_id(self.id)
-    if ua
-      puser = UserAddr.where({"list.number" => ua.phone}).map {|x| User.where({phone:x.phone}).first}
-      if puser.size>0
-        user = puser.map{|m| User.find_by_id(m.id)}
-        user unless user.nil?
-      end
-    end
-    user.to_a
+    UserAddr.where({"list.number" => self.phone}).map {|x| User.find_by_phone(x.phone)}.find_all{|x| x!=nil}
   end
   
   def del_test_user

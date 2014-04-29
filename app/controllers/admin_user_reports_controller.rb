@@ -5,7 +5,8 @@ class AdminUserReportsController < ApplicationController
   layout "report"
 
   def index
-    hash, sort = {}, {}
+    hash, sort = {flag: {"$exists" => true }}, {_id: -1}
+
     case params[:type]
     when '1'
       hash.merge!({type: "地点位置错误"})
@@ -17,21 +18,24 @@ class AdminUserReportsController < ApplicationController
       hash.merge!({type: "地点重复"})
     end
 
-    # flag: 0: 未处理 1: 已处理 2: 忽略
+    # flag: 0: 未处理 1: 已处理 2: 忽略 3: 上报
     case params[:flag]
-    when '0'
-      hash.merge!({flag: {"$exists" => false}})
     when '1'
       hash.merge!({flag: 1})
     when '2'
       hash.merge!({flag: 2})
+    when '3'
+      hash.merge!({flag: 3})
     end
 
+    hash.merge!({name: /#{params[:name]}/}) if params[:name].present?
+    hash.merge!({city: session[:city_code]}) if session[:city_code]
     if session[:city_code]
+      @select_option = [['全部',''], ['已处理','1'], ['忽略', '2'], ['上报', 3]]
       hash.merge!({city: session[:city_code]})
-      @agent = session[:city_code].present?
+    else
+      @select_option = [['全部',''], ['已处理','1'], ['忽略', '2']]
     end
-
     @shop_reports = paginate3('shop_report', params[:page], hash, sort, 10)
   end
 
@@ -40,6 +44,17 @@ class AdminUserReportsController < ApplicationController
     @shop = @report.shop
   end
 
+  def untreated
+    hash, sort = {}, {_id: -1}
+
+    if session[:city_code]
+      hash.merge!({city: session[:city_code]})
+      hash.merge!({flag: {"$exists" => false }})
+    else
+      hash.merge!({ "$or" => [{flag: {"$exists" => false }}, {flag: 3}] })
+    end
+    @shop_reports = paginate3('shop_report', params[:page], hash, sort, 10)
+  end
 
   def update_shop_info
     @shop = Shop.find(params[:id])
@@ -68,25 +83,59 @@ class AdminUserReportsController < ApplicationController
   def update_corrdinate
     @shop_report = ShopReport.find(params[:id])
     @shop = @shop_report.shop
-    if @shop.update_attribute(:lo, params[:lo][1..-2].split(",").map{|i| i.to_f})
+    if params[:lo] == ""
+      return render json: {"success" => false}
+    end
+
+    lobs = params[:lo].split(/[;；]/)
+    if lobs.count == 1
+      lob = lobs.first.split(/[,，]/).map{|s| s.to_f}
+    else
+      lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }}
+    end
+
+    @shop.lo = lob
+    if @shop.save
       @shop_report.update_attribute(:flag, 1)
-      render json: {"success" => true, "lo" => @shop.lo}
+      @lo = @shop.lo
+      render json: {"success" => true, "lo" => @lo.first.is_a?(Array) ? @lo.to_s[1...-1] : @lo.to_s}
     end
   end
 
   def new_corrdinate
     @shop_report = ShopReport.find(params[:id])
     @shop = @shop_report.shop
-    @shop.lo << params[:lo].split(",").map{|i| i.to_f}
+    if params[:lo] == ""
+      return render json: {"success" => false}
+    end
+
+    lo = params[:lo].split(/[,，]/).map{|i| i.to_f}
+    lobs = []
+    if @shop.lo.first.is_a?(Array)
+      @shop.lo << lo
+    else
+      lobs << @shop.lo
+      lobs << lo
+      @shop.lo = lobs
+    end
+
     if @shop.save
-      render json: {"success" => true, "lo" => @shop.lo}
+      @lo = @shop.lo
+      render json: {"success" => true, "lo" => @lo.first.is_a?(Array) ? @lo.to_s[1...-1] : @lo.to_s}
     end
   end
 
   def ignore
     @shop_report = ShopReport.find(params[:report_id])
     if @shop_report.update_attribute(:flag, 2)
-      render json: {"success" => true}
+      redirect_to action: "index"
+    end
+  end
+
+  def reported
+    @shop_report = ShopReport.find(params[:id])
+    if @shop_report.update_attribute(:flag, 3)
+      redirect_to action: "index"
     end
   end
 
@@ -113,6 +162,13 @@ class AdminUserReportsController < ApplicationController
     render :json => {result: 1}
   end
 
+  def ajax_dis
+    lob1 = params[:lob1][1...-1].split(/[,，]/).map { |m| m.to_f  }
+    lob2 = params[:lob2].split(/[,，]/).map {|m| m.to_f }
+    distance = Shop.new.get_distance(lob1, lob2)
+    render :json => {:distance => distance}
+  end
+
   def modify_location
     @report = ShopReport.find(params[:id])
   end
@@ -133,25 +189,14 @@ class AdminUserReportsController < ApplicationController
     redirect_to action: "index"
   end
 
-  def post_chat
-    Xmpp.send_chat($dduid, params[:to_uid], params[:text])
-    render :text => "消息已发送"
-  end
-
-  def ajax_distort
-    ShopReport.where({:sid => params[:sid].to_i, :flag => nil}).each do |report|
-      report.update_attribute(:flag, 2)
-    end
-    render :json => ''
-  end
-
   def authorize
-    if params[:city_code]
-      @city_code = params[:city_code]
-      @hash = Digest::SHA256.hexdigest(@city_code.to_s + "dface")
-      session[:city_code] = @city_code if @hash == params[:agent]
+    if params[:city_code].nil? && session[:city_code].nil?
+      admin_authorize
+    else
+      city_code = params[:city_code]
+      hash = Digest::SHA256.hexdigest(city_code.to_s + "dface")
+      session[:city_code] = city_code if hash == params[:agent]
     end
-    admin_authorize unless session[:city_code]
   end
 
 end

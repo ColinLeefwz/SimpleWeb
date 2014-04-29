@@ -14,7 +14,7 @@
 
   <div class="form-group">
     <span>操作结果</span>
-    <%= select_tag :flag, options_for_select([['全部',''], ['未处理','0'], ['已处理','1'], ['忽略', '2']],params[:flag]) %>
+    <%= select_tag :flag, options_for_select(@select_option ,params[:flag]) %>
   </div>
 
   <div  class="form-group">

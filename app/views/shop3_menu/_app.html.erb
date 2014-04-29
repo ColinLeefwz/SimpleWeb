@@ -44,7 +44,7 @@
 			<span class="tit">电小二菜谱</span>
 		  </div>
 		<% end %>
-		<% if false%>
+		<% if session_shop.has_game_purview?%>
 		  <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
 			<div class="box18bg" rel='http://game.dface.cn/guaguakas'>
 			  <img src="/newbackstage/images/sign65.png"/>
@@ -52,6 +52,9 @@
 			<img src="/newbackstage/images/guaguaka.jpg"/>
 			<span class="tit">刮刮卡</span>
 		  </div>
+		<% end %>
+
+		<% if false%> 
 		  <div class="box18 box18change  p0 w260" onclick="ChangePlane(this)">
 			<div class="box18bg" rel='http://game.dface.cn/dazhuanpas'>
 			  <img src="/newbackstage/images/sign65.png"/>
@@ -61,8 +64,8 @@
 		  </div>
 		<% end %>
 		<span class="clear1"></span>
-		<input type="button" class="btn22 l mt20 ml120 mb20" value="保 存" onClick="SaveAPP()"/>
-		<input type="button" class="btn22_1 r mt20 mr120 mb20" value="取 消" onClick="Res()"/>
+		<input type="button" class="btn22 l mt20 ml140 mb20" value="保 存" onClick="SaveAPP()"/>
+		<input type="button" class="btn22_1 r mt20 mr140 mb20" value="返 回" onClick="Res()"/>
 	  </div>
 	</div>
 </div>

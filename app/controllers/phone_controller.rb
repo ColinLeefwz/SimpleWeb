@@ -213,12 +213,21 @@ class PhoneController < ApplicationController
     end
   end
   
+  def relation
+    to_add = session_user.address_list_to_add.map{|x| x.safe_output.merge!({phone:x.phone}) }
+    to_invite = session_user.address_list_to_invite
+    friend = session_user.address_list_friends.map{|x| x.safe_output.merge!({phone:x.phone}) }
+    render :json => {to_add: to_add, to_invite: to_invite, friend: friend}.to_json
+  end
+  
   def upload_address_list
     ua = UserAddr.find_or_new(session_user.id)
     Xmpp.error_notify("用户#{session_user.name}，#{ua.phone}已经有通讯录了") if ua.phone
     ua.phone = params[:phone]
     list = JSON.parse(params[:list])
-    list.delete_if {|x| x["number"].size<6}
+    list.delete_if {|x| x["number"]==nil || x["number"].size<11}
+    list.delete_if {|x| x["name"]==nil }
+    list = list.map{|x| x["number"] = phone_normalize(x["number"]); x}
     ua.list = list
     ua.save!
     session_user_no_cache.set(:pmatch, true)

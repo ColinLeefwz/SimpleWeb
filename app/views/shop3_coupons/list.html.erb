@@ -42,7 +42,7 @@
     <% @coupons.each_with_index do |coupon, index| %>
       <tr id="Tr<%= index+1 %>">
         <td>
-          <a href="<%= ["/shop3_coupons", '/shop3_share_coupons'][coupon.t2-1] %>/show?id=<%= coupon.id%>" title="查看详情">
+          <a href="<%= [nil, "/shop3_coupons", '/shop3_share_coupons'][coupon.t2.to_i] %>/show?id=<%= coupon.id%>" title="查看详情">
             <%=image_tag(coupon.img.url(:t1) && coupon.img.url(:t1) + "?t=#{Time.now}" ,:id=>"img_#{coupon.id}", :class=>"l #{coupon.hidden && 'imgfilter'}",:width => "130") %>
             <span class="l ml10"><%= coupon.name %><br/><span class="gay1"><%= coupon.show_t2  %> — <%= coupon.show_rule%></span></span>
           </a>

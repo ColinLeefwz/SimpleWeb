@@ -13,22 +13,25 @@
   </tr>
 
   <% @simaliar_shops.each do |shop| %>
-    <tr>
-      <td valign="middle"><%= shop.name %></td>
-      <td valign="middle"><%= shop.get_distance(@shop, shop).to_s + "m" %></td>
-      <td valign="middle">签约情况</td>
-      <td valign="middle"><%= shop.first_checkin_time %></td>
-      <td valign="middle"><%= shop.creator%></td>
-      <% unless session[:city] %>
-        <td valign="middle"><%= link_to("详情", "/admin_shops/show?id=#{shop._id}") %></td>
-      <% end %>
-      <td valign="middle">
-        <%= link_to '标记删除', "#", class: "mark #{'hidden' if shop.del == 1}", id: "mark_del_#{shop.id}", :onclick => "ajaxDel('#{shop.id.to_i}', $(this))" unless shop.i %>
-      </td>
-      <td valign="middle">
-        <%= link_to '撤销删除', "#", class: "cancel_mark #{'hidden' if shop.del != 1}", id: "cancel_mark_del_#{shop.id}", :onclick => "ajaxCancel('#{shop.id.to_i}', $(this))" unless shop.i %>
-      </td>
-    </tr>
+    <!-- TODO 相似商家没有做关于del的处理 -->
+    <% if shop.del.nil? %>
+      <tr>
+        <td valign="middle"><%= shop.name %></td>
+        <td valign="middle"><%= shop.get_distance(@shop, shop).to_s + "m" %></td>
+        <td valign="middle"><%= shop.sign.nil? ? "未签约" : "签约商家" %></td>
+        <td valign="middle"><%= shop.first_checkin_time %></td>
+        <td valign="middle"><%= shop.creator %></td>
+        <% unless session[:city] %>
+          <td valign="middle"><%= link_to("详情", "/admin_shops/show?id=#{shop._id}") %></td>
+        <% end %>
+        <td valign="middle">
+          <%= link_to '标记删除', "#", class: "mark #{'hidden' if shop.del == 1}", id: "mark_del_#{shop.id}", :onclick => "ajaxDel('#{shop.id.to_i}', $(this))" unless shop.i %>
+        </td>
+        <td valign="middle">
+          <%= link_to '撤销删除', "#", class: "cancel_mark #{'hidden' if shop.del != 1}", id: "cancel_mark_del_#{shop.id}", :onclick => "ajaxCancel('#{shop.id.to_i}', $(this))" unless shop.i %>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
 </table>
 <div class="container" style="padding-top: 30px;">
@@ -37,7 +40,7 @@
       <%= link_to("确认删除", "/admin_user_reports/confirm?id=#{@shop_report.id}", class: "btn btn-danger") %>
     </div>
     <div class="col-md-1">
-      <%= link_to("返回", "/admin_user_reports/index", class: "btn btn-default") %>
+      <%= link_to("返回", "/admin_user_reports/untreated", class: "btn btn-default") %>
     </div>
   </div>
 </div>

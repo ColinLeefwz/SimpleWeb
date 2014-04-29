@@ -14,8 +14,8 @@
         $("#dig").css({"display":"block"});
         $("#sid").val(hid)
         $("#res").css("background-color", "");
-        $("#boxss").css({"top":($(document).scrollTop()+high-$("#boxss").height()/2)+"px"}).fadeIn();
-		$("#boxss2").css({"top":($(document).scrollTop()+high-$("#boxss2").height()/2)+"px"}).hide();
+        $("#boxss").css({"top":($(document).scrollTop()+high-$("#boxss").height()/2-10)+"px"}).fadeIn();
+		$("#boxss2").css({"top":($(document).scrollTop()+high-$("#boxss2").height()/2-10)+"px"}).hide();
       }
       function ajaxReport(uid){
         type = $("#radio_button").val();
@@ -68,17 +68,17 @@
             <li>
               <a class="radios" id="N2" name="radio_bad" action-type="switch" rel="地点重复"></a><label for="N2">地点重复</label></li>
             <li>
-              <a class="radios" id="N3" name="radio_bad" action-type="switch" rel="地点更名"></a><label for="N3">地点更名</label></li>
+              <a class="radios" id="N3" name="radio_bad" action-type="switch" rel="地点位置错误"></a><label for="N3">地点位置错误</label></li>
             <li>
-              <a class="radios" id="N4" name="radio_bad" action-type="switch" rel="无用地点"></a><label for="N4">无用地点</label></li>
+              <a class="radios" id="N4" name="radio_bad" action-type="switch" rel="地点信息错误"></a><label for="N4">地点信息错误</label></li>
           </ul>
           <input type="hidden" name="radio_button" id="radio_button"/>
 		  <div class="clear1"></div>
-          <input class="tex" type="text" name="des" id="des" value="要不要说明一下呢？" onclick="$(this).val('')"/>
+          <!--<input class="tex" type="text" name="des" id="des" value="要不要说明一下呢？" onclick="$(this).val('')"/>-->
           <input type="hidden" name="sid" id="sid">
 
           <div class="clear1"></div>
-          <div class="line"></div>
+          <div class="line mt10"></div>
           <div class="clear"></div>
           <input class="btn7 ml20 mb20" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
           <input class="btn8 mr20 mb20" type="button" value=" " onclick="hidReport()">

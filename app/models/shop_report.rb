@@ -2,13 +2,14 @@ class ShopReport
   include Mongoid::Document
 
   field :sid, type: Integer
+  field :name #商家名称
   field :uid, type: Moped::BSON::ObjectId
   field :des
   field :flag,type: Integer
   field :type  #报错类型
   field :city
 
-  after_create :save_city_code
+  after_create :save_shop_info
 
   with_options :prefix => true, :allow_nil => true do |option|
     option.delegate :name, :id, :to => :user
@@ -36,6 +37,8 @@ class ShopReport
       @flag = "已处理"
     when 2
       @flag = "忽略"
+    when 3
+      @flag = "上报"
     end
     @flag
   end
@@ -58,7 +61,11 @@ class ShopReport
     hash = {operation: @operation, url: @url}
   end
 
-  def save_city_code
+  def untreated?
+    flag.nil? || flag == 3
+  end
+
+  def save_shop_info
     self.city = shop.city
     self.save
   end

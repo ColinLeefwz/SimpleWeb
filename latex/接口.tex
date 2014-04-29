@@ -462,7 +462,7 @@ GET & \multicolumn{3}{|c|}{/aroundme/users} \\
 本接口用于“应用安装的时候，用户上传头像的页面”。其中有8张头像，是本地存储4张／网络获取（通过本接口）4张。其中本地的4张立刻显示。
 
 
-\subsection{地点报错}
+\subsection{WebView里的地点报错列表}
 
 \begin{table}[H]
    \begin{center}
@@ -489,6 +489,32 @@ GET & \multicolumn{3}{|c|}{/aroundme/shop\_report} \\
 \end{table}
 
 本接口需要通过浏览器以URL的方式直接调用。
+
+
+
+\subsection{单个地点纠错}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/aroundme/report\_error} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ user\_id  & 字符串 & 必须 & 登录用户的uid\\
+\hline
+ sid  & 整数 & 必须 & 错误的地点的id\\
+\hline
+ type  & 字符串 & 必须 & 错误类型，如“地点重复”\\ 
+\hline
+ des  & 字符串 & 可选 & 错误描述\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
 
 
 
@@ -830,6 +856,8 @@ POST & \multicolumn{3}{|c|}{/checkins/new\_shop} \\
  addr  & 字符串 & 可选 &  商家的地址\\   
  \hline
  tel  & 字符串 & 可选 &  商家的联系电话\\    
+ \hline
+ large  & 数字 & 可选 &  设置为1代表是大地点\\     
 \hline
  altitude  &  浮点数 & 可选 & 海拔高度\\ 
 \hline

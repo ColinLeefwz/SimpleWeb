@@ -23,7 +23,7 @@
 </div>
 <div class="con">
 	<div class="title1"><h2 class="f18 l">自定义菜单</h2></div>
-	<div class="box15 orange1 f14">编辑：可创建最多 3 个一级菜单，每个一级菜单下可创建最多 5 个二级菜单。编辑中的菜单不会马上被用户看到，请放心调试。</div>
+	<div class="box15 orange1 f14">编辑：最多可创建 3 个一级菜单，每个一级菜单下最多可创建 5 个二级菜单。编辑中的菜单不会马上被用户看到，请放心调试。</div>
 
 	<!--提醒/警告框架-->	
 	<div id="Del" class="box16">
@@ -32,7 +32,7 @@
 				<div class="warms">删除确认<br/><span class="f12">删除后该菜单下设置的消息将不<br/>会被保存</span></div>
 				<div class="clear1"></div>
 				<input type="submit" value="确 认" class="btn22 l mt10" onclick="DelSubMits()"/>
-				<input type="button" value="取 消" class="btn22_1 r mt10" onclick="Close('Del')"/>
+				<input type="button" value="返 回" class="btn22_1 r mt10" onclick="Close('Del')"/>
 			</div>
 		</form>
 	</div>
@@ -126,7 +126,7 @@
 			<div class="box17con">
 				<center class="blue3 f15 mt40">请选择用户点击菜单后，脸脸做出的相应动作</center>
 				<div class="box17coninner1">
-					<center class="mt70">
+					<center class="mt60">
 					<a onClick="HttPLink()" class="links1">跳转到其他页面</a>
 					<% if @mobile_space.menu || Rails.env.development? %>
 						<a onClick="PhoneLink()" class="links2">跳转到手机网站</a>
@@ -153,11 +153,12 @@
 			<div class="box17con">
 				<div class="blue3 f15 mt20 mb20 ml20">用户点击该子菜单会跳到以下链接</div>
 				<div class="box17coninner1">
-					<textarea class="textarea5 m_auto" id="TextArea5"></textarea>
-					<div class="orange1 f12 mt10 ml30 none" id="UrlFail">请输入正确的URL</div>
+					<input class="textarea5 m_auto" id="TextArea5" placeholder="http://">
+					<div class="orange1 f12 mt10 ml30" id="UrlFail">请输入正确的URL&nbsp;&nbsp;&nbsp;例如：<span class="f14">http://jitimes.com</span></div>
 					<div class="clear1"></div>
-					<input type="button" class="btn22 l mt20 ml120" value="保 存" onClick="SaveLink()"/>
-					<input type="button" class="btn22_1 r mt20 mr120" value="取 消" onClick="Res()"/>
+					<br/><br/><br/><br/><br/><br/>
+					<input type="button" class="btn22 l ml140" value="保 存" onClick="SaveLink()"/>
+					<input type="button" class="btn22_1 r mr140" value="取 消" onClick="Res()"/>
 				</div>
 			</div>
 		 </div>

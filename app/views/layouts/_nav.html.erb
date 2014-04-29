@@ -47,6 +47,11 @@
       <span class="navline"></span>
     <% end %>
 
+    <% if session_shop.has_game_purview? %>
+      <a href="#" class="game">游戏管理</a>
+      <span class="navline"></span>
+    <% end %>
+
     <% if session_shop.has_food_purview? %>
       <a href="#" class="food">点菜管理</a>
       <span class="navline"></span>
@@ -88,6 +93,11 @@
     <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest('caitu'+session[:shop_id].to_i.to_s)[0,32] %>">
     <input type="submit" name="submit" id="submit">
   </form>
+  <form action="http://game.dface.cn/admin/login/login2" id="game" name="game" method="post" target="_blank">
+    <input type="hidden" name="id" value="<%= session[:shop_id] %>">
+    <input type="hidden" name="hash" value="<%= Digest::SHA256.hexdigest('game'+session[:shop_id].to_i.to_s)[0,32] %>">
+    <input type="submit" name="submit" id="submit">
+  </form>
 </div>
 
 <script type="text/javascript">
@@ -100,6 +110,9 @@
     });
     $(".caitu").click(function(){
       $("#caitu #submit").click();
+    });
+    $(".game").click(function(){
+      $("#game #submit").click();
     });
   });
 </script>

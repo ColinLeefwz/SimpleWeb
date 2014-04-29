@@ -32,16 +32,17 @@
 
   <br/>
   <% if @shop.cooperationer? %>
-    <p>
+    <p class='cooperatione'>
       <%= link_to "开通手机网站", "/admin_mobile_shops/create?id=#{@shop.id}" unless @shop.has_mweb_purview? %>
       <%= link_to "开通点菜", "/admin_foods/create?id=#{@shop.id}" unless @shop.has_food_purview? %>
       <%= link_to "开通猜图", "/admin_caitus/create?id=#{@shop.id}" unless @shop.has_caitu_purview? %>
+      <%= link_to "开通游戏平台", "/admin_games/create?id=#{@shop.id}" unless @shop.has_game_purview? %>
     </p>
   <% end %>
 
   <br/>
 
-<%= link_to "合并到", "javascript:void(0)" , :onclick => "showFormMerge($(this))" if !@shop.cooperationer? %>
+<%= link_to "合并到", "javascript:void(0)" , :onclick => "showFormMerge($(this))" %>
 
 <%= form_tag "/admin_shops/merge_to", :id=> "formMerge", :style => "display: none" do   %>
   <%= hidden_field_tag :id, @shop.id  %>
@@ -166,5 +167,13 @@
       $("#errspan").replaceWith("<span>"+ text +"</span>")
     })
   }
+
+  $(document).ready(function(){
+    $('.cooperatione a').click(function(){
+      if(!confirm('确定开通？')){
+        return false
+      }
+    })
+  })
 
 </script>

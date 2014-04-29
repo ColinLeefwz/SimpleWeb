@@ -1,0 +1,44 @@
+<h1>可管理游戏的商家</h1>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>名称</th>
+    <th>区号</th>
+    <th>分类</th>
+    <th>百度分类</th>
+    <th></th>
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td><%=link_to  shop.id.to_i, "/admin_shops/show?id=#{shop.id}" %></td>
+      <td><%= shop.name %></td>
+      <td><%= shop.city_fullname %></td>
+      <td><%= shop.show_t %></td>
+      <td><%= type_or_user(shop) %></td>
+      <td>
+        <%= link_to "删除", "javascript:void(0)", :class => "js_del", :rel => shop.id %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<br />
+<br />
+<%= link_to "增加", "/admin_games/new" %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".js_del").click(function(){
+      var obj = $(this);
+      if(confirm('确定删除？')){
+        $.get('/admin_games/delete', {id: obj.attr('rel')}, function(){
+          obj.parent().parent().remove();
+        })
+      }
+    });
+  })
+</script>
+
+
