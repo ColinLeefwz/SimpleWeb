@@ -63,7 +63,7 @@ class AdminUserReportsController < ApplicationController
       ShopReport.where({:sid => params[:id].to_i}).where(hash).each do |report|
         report.update_attribute(:flag, 1)
       end
-      redirect_to action: "index"
+      redirect_to "/admin_user_reports/index"
     else
       render :action => :index
     end
