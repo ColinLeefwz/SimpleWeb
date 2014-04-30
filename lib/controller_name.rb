@@ -6,7 +6,7 @@ module ControllerName
     0=>{"admin_users"=>"用户列表", "admin_kx_users"=>"可信用户","admin_co_users"=> '外部授权用户', "admin_user_logos" => '头像审核', "user_chatroom_upload_photos" => '聊天室上传图片',
       "admin_gchat_content_review" =>'聊天室内容审核',"admin_photo_censor" =>'聊天室图片审核', "admin_blacks"=>"举报用户",
       "admin_rekognitions" => "人脸识别"},
-    1=>{"admin_shops"=>"地点管理", "admin_user_add_shops"=>"用户添加地点管理", "admin_user_reports/untreated"=>"用户地点报错管理","admin_user_reports" => "用户地点报错管理查看","admin_groups" => "群组管理",
+    1=>{"admin_shops"=>"地点管理", "admin_user_add_shops"=>"用户添加地点管理", "admin_user_reports/untreated"=>"用户地点报错管理","admin_user_reports" => "用户地点报错查看","admin_groups" => "群组管理",
       "admin_shop_notices"=>"商家公告", "admin_shop_faqs"=>"商家问答", "admin_shop_logos"=>"商家logo",
       "admin_shop_coupons"=>"商家优惠券", "admin_shop_photos"=>"照片墙", "admin_shop_bans"=>"商家屏蔽用户", "admin_shop_bindwbs"=>"商家绑定微博", "admin_shop_signs"=>"合同管理",
       "admin_sina_pois"=>"微博地点", "admin_baidu"=>"百度地点", 'admin_similar_shops' => "相似地点"},
