@@ -1,3 +1,6 @@
+<div class="title1 mb30">
+  <h2 class="f18">地点报错管理</h2>
+</div>
 <table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40 f13 agent_tab">
   <tr id="Tr0">
     <th width="150">商家ID</th>
@@ -20,14 +23,14 @@
         <% if session[:city_code].present? %>
           <%= report.shop_name %>
         <% else %>
-          <%= link_to report.shop_name, "/admin_shops/show?id=#{report.shop_id}" %>
+          <%= link_to report.shop_name, "/admin_shops/show?id=#{report.shop_id}" ,class:"shopname" %>
         <% end %>
       </td>
       <td valign="middle">
         <% if session[:city_code].present? %>
           <%= report.user_name %>
         <% else %>
-          <%= link_to report.user_name, "/admin_users/show?id=#{report.user_id}" %>
+          <%= link_to report.user_name, "/admin_users/show?id=#{report.user_id}"%>
         <% end %>
       </td>
       <td valign="middle"><%= report.type %></td>
@@ -53,27 +56,59 @@
     </tr>
   <% end %>
 </table>
+<div class="filter2" id="filter2">
+  <div class="tips-d2">
+    <div class="tips-title"><span>提示</span></div>
+    <div class="m-tips-msg">
+      <p>确定忽略地点报错？</p>
+      <span>（注：忽略地点报错,此操作无法撤销!）</span>
+    </div>
+    <div class="tips-state">
+      <a href="javascript:;" class="tips-btn tips-btn-a1" id="Apply_btn">确定</a>
+      <a href="javascript:;" class="tips-btn tips-btn-a2" onclick="fil_close('filter2')">取消</a>
+    </div>
+  </div>
+</div>
 <%= generate_paginate3.html_safe %>
 <script type="text/javascript">
   $(function(){
     $(".ignore-link").click(function(event) {
-      /* Act on the event */
-      if(!confirm("确定忽略？")) {
-        event.preventDefault();
-      }
+      var flag = false;
+      $('.m-tips-msg').find('p').html('确定忽略此商家('+rename(".ignore-link")+')地点报错？');
+      $('.m-tips-msg').find('span').html('（注：忽略地点报错,此操作无法撤销!）');
+      $('#filter2').show();
+      var ahref = $(this).attr('href');
+      $('#Apply_btn').attr('href',ahref)
+      return flag;
     });
 
     $(".delete-btn").click(function(event) {
-      if(!confirm("确定删除？")) {
-        event.preventDefault();
-      }
+      var flag = false;
+      $('.m-tips-msg').find('p').html('确定删除此商家('+rename(".delete-btn")+')地点报错？');
+      $('.m-tips-msg').find('span').html('（注：删除地点报错,此操作无法撤销!）');
+      $('#filter2').show();
+      var ahref = $(this).attr('href');
+      $('#Apply_btn').attr('href',ahref)
+      return flag;
     });
 
-    $(".report-btn").click(function(event) {
-      if(!confirm("确定上报？")) {
-        event.preventDefault();
-      }
+    $(".report-btn").click(function(event) {      
+      var flag = false;
+      $('.m-tips-msg').find('p').html('确定上传此商家('+rename(".report-btn")+')地点报错？');
+      $('.m-tips-msg').find('span').html('（注：上传地点报错,此操作无法撤销!）');
+      $('#filter2').show();
+      var ahref = $(this).attr('href');
+      $('#Apply_btn').attr('href',ahref)
+      return flag;
     });
   })
-
+  /**取消**/
+  function fil_close(id){
+    var abtn = document.getElementById(id);
+    abtn.style.display = 'none';
+  }
+  function rename(obj){
+    var shopname = $(obj).parent().parent().find('.shopname').text();
+    return shopname;
+  }
 </script>
