@@ -20,8 +20,14 @@
         <td valign="middle"><%= shop.get_distance(@shop, shop).to_s + "m" %></td>
         <td valign="middle"><%= shop.sign.nil? ? "未签约" : "签约商家" %></td>
         <td valign="middle"><%= shop.first_checkin_time %></td>
-        <td valign="middle"><%= shop.creator %></td>
-        <% unless session[:city] %>
+        <td valign="middle">
+        <% if session[:city_code].nil? %>
+          <%= link_to shop.user_name, "/admin_users/show?id=#{shop.user_id}" %>
+        <% else %>
+          <%= shop.user_name %>
+        <% end %>
+        </td>
+        <% unless session[:city_code] %>
           <td valign="middle"><%= link_to("详情", "/admin_shops/show?id=#{shop._id}") %></td>
         <% end %>
         <td valign="middle">

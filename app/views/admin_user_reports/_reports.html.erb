@@ -4,6 +4,7 @@
     <th width="200">商家名称</th>
     <th width="120">报错人</th>
     <th width="150">报错类型</th>
+    <th width="200">描述信息</th>
     <th width="120">操作结果</th>
     <% unless session[:city_code] %>
       <th width="120">查看</th>
@@ -28,6 +29,7 @@
         <% end %>
       </td>
       <td valign="middle"><%= report.type %></td>
+      <td valign="middle"><%= report.des %></td>
       <td valign="middle">
         <% if report.flag %>
           <%= report.report_flag %>
