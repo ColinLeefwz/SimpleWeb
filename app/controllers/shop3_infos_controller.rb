@@ -2,7 +2,7 @@
 
 class Shop3InfosController < ApplicationController
   before_filter :shop_authorize
-  layout 'shop3'
+  layout 'setting'
 
   def index
     @shop = Shop.find_primary(session[:shop_id])
