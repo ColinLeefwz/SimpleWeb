@@ -282,6 +282,7 @@ class User
     hash.delete("wb_v") if self.wb_hidden  == 2  
     hash.delete("qq_name") if self.qq_hidden 
     hash.delete("phone") if self.phone_hidden 
+    hash.merge!({pvc2: (self.pvc2? 1:0) })
     hash
   end
   
