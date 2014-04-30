@@ -48,7 +48,7 @@
       <% unless session[:city_code] %>
         <td valign="middle"><%= link_to '查看', "/admin_user_reports/show?id=#{report.id} "%></td>
       <% else %>
-        <td valign="middle"><%= link_to '上报', "/admin_user_reports/reported?id=#{report.id} "%></td>
+        <td valign="middle"><%= link_to '上报', "/admin_user_reports/reported?id=#{report.id}", class: "report-btn" %></td>
       <% end %>
     </tr>
   <% end %>
@@ -67,7 +67,13 @@
       if(!confirm("确定删除？")) {
         event.preventDefault();
       }
-    })
+    });
+
+    $(".report-btn").click(function(event) {
+      if(!confirm("确定上报？")) {
+        event.preventDefault();
+      }
+    });
   })
 
 </script>
