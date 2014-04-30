@@ -120,7 +120,7 @@ function ImageUpload(target){// 头图管理
                     }
                     );
 
-                    $("#Btn2").click(function () {
+                    $("#Btn2").unbind('click').click(function () {
                         var result = cut.getResult() ;
 
                         var pdata = {
@@ -135,12 +135,12 @@ function ImageUpload(target){// 头图管理
                         //                                $("#UploadForm").append("<input type='hidden' name='"+ obj +"' value='" + result[obj]  +"'/>")
                         }
                         // -----------ajax 提交图片 控制器端剪裁------------------------------------------------
-                        $.post("/crop_photo/crop", pdata , function(data){
+                        $.post("/shop3_headpic/create", pdata , function(data){
                             $("#UpImg,#BG").css("display","none");
 							var num=$("div.box5img").length;
 							var obj="<div class='box5img' rel="+(num-1)+"><img src='"+data["url"]+"?t="+ (new Date())+"'><span class='edit'>修改图片</span><span class='del'>删除图片</span></div>";
 							$("#AddBox5Img").before(obj);
-							$("span.edit").live("click",function(){
+							$("span.edit").live("click",function(){ 
 								$("#AddPic").click();
 								var imgsrc=$(this).siblings("img").attr("src");
 								$("#UploadPic").attr("src",imgsrc);
