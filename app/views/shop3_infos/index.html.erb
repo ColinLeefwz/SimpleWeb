@@ -8,35 +8,35 @@
 			</div>
 			<form method="post" action="/shop3_infos/edit"/>
 				  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt50 gay3">
-                      <tr>
-                        <td width="18%" rowspan="5" align="center" valign="top">
-                        <% if @shop_logo.nil?  %>
-                        <img src="/newbackstage/images/sign4.jpg" class="imgstyle4 mt5"/>
-                        <% else %>
-                        <%=image_tag( "#{ShopLogo.img_url(@shop_logo.id, :t1)}?t=#{Time.now}", :class=>"imgstyle4 mt5", :alt => "")%>
-                        <% end %>
-                        </td>
-                        <td width="82%" align="left" valign="top" class="red1">
-                          商家ID：<%= @shop.id2.blank? ? @shop.id : "#{@shop.id2}  (#{@shop.id})" %>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td align="left" valign="top">商家名称：<%= @shop.name %></td>
-                      </tr>
-					  <tr>
-                        <td align="left" valign="top">地址：<%= @shop.addr %></td>
-                      </tr>
-					  <tr>
-                        <td align="left" valign="top">联系人：<%= @shop.contact %></td>
-                      </tr>
-					  <tr>
-                        <td align="left" valign="top">电话：<%= @shop.phone %></td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td align="left"><input type="submit" name="Submit" value="编 辑" class="btn2"/></td>
-                      </tr>
-                    </table>
+        <tr>
+          <td width="18%" rowspan="5" align="center" valign="top">
+          <% if @shop_logo.nil?  %>
+          <img src="/newbackstage/images/sign4.jpg" class="imgstyle4 mt5"/>
+          <% else %>
+          <%=image_tag( "#{ShopLogo.img_url(@shop_logo.id, :t1)}?t=#{Time.now}", :class=>"imgstyle4 mt5", :alt => "")%>
+          <% end %>
+          </td>
+          <td width="82%" align="left" valign="top" class="red1">
+            商家ID：<%= @shop.id2.blank? ? @shop.id : "#{@shop.id2}  (#{@shop.id})" %>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">商家名称：<%= @shop.name %></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">地址：<%= @shop.addr %></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">电话：<%= @shop.tel %></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td align="left"><input type="submit" name="Submit" value="编 辑" class="btn2"/></td>
+        </tr>
+      </table>
 			</form>
 	  </div>
 

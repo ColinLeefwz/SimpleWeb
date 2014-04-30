@@ -2,7 +2,7 @@
 
 class Shop3InfosController < ApplicationController
   before_filter :shop_authorize
-  layout 'shop3'
+  layout 'setting'
 
   def index
     @shop = Shop.find_primary(session[:shop_id])
@@ -21,13 +21,6 @@ class Shop3InfosController < ApplicationController
 
   def update
     @shop = Shop.find(session[:shop_id])
-    @shop.name = params[:name]
-    if params[:shop_info]
-      shop_info = @shop.info || ShopInfo.new
-      shop_info._id = @shop._id
-      shop_info.save
-      shop_info.update_attributes(params[:shop_info])
-    end 
     if params[:shop_logo]
       @shop_logo = @shop.logo || ShopLogo.new
       @shop_logo.shop_id = session[:shop_id]
@@ -35,7 +28,7 @@ class Shop3InfosController < ApplicationController
       @shop_logo.update_attributes(params[:shop_logo])
       Rails.cache.write("HAS_LOGO#{session[:shop_id]}", true)
     end
-    @shop.save
+    @shop.update_attributes(params[:shop])
     redirect_to :action => "index"
   end
 

@@ -82,7 +82,7 @@
 			<%= f.text_field :url,:class=>"inputs2 radius5 relative w300 mt10 mb20",:id=>"link1", :value => "http://", :disabled=>"disabled", :style=>"margin-left:8px;"%>
 			<div id="LinkDiv">
 				<div class="linkdivleft">
-					<%= f.text_field :head, :class=>"inputs2 radius5 relative w300 mt10 mlr8 mb20",:id => "link2", :value => "标题" %>
+					<%= f.text_field :head, :class=>"inputs2 radius5 relative w300 mt10 mlr8 mb20",:id => "link2", :value => @shop_faq.head||"标题" %>
 					<div id="link3" class="ml8">
 						<%= f.text_area :content, :id=>"myEditor" %>
 						<input type="button" class="mt10 btn15 r mr5" id="Preview" value="预览"/>

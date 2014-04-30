@@ -66,7 +66,10 @@ class Shop3LoginController < ApplicationController
     reset_session
     if Digest::SHA256.hexdigest(params[:id] + "mweb")[0,32] == params[:hash]
       session[:shop_id] = params[:id]
-      redirect_to '/shop3_login/index'
+      respond_to do |format|
+        format.html{redirect_to '/shop3_login/index'}
+        format.json{render :json => 1, :callback => params[:callback]} #ajax 跨域登录
+      end
     end
   end
 
