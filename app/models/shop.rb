@@ -60,6 +60,7 @@ class Shop
 
   with_options :allow_nil => true, :prefix => true do |option|
     option.delegate :name, :show_gender, :to => :seller
+    option.delegate :name, :id, to: :user
   end
 
   after_find do |obj|
