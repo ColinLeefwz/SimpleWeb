@@ -141,10 +141,7 @@ function ImageUpload(target){// 头图管理
 							var obj="<div class='box5img' rel="+(num-1)+"><img src='"+data["url"]+"?t="+ (new Date())+"'><span class='edit'>修改图片</span><span class='del'>删除图片</span></div>";
 							$("#AddBox5Img").before(obj);
 							$("span.edit").live("click",function(){ 
-								$("#AddPic").click();
-								var imgsrc=$(this).siblings("img").attr("src");
-								$("#UploadPic").attr("src",imgsrc);
-								$("#SmallImgDiv img").attr("src",imgsrc);															
+								$("#AddPic").click();															
 							});
 							$("span.del").live("click",function(){
 								var obj=$(this).closest("div.box5img");
