@@ -58,22 +58,10 @@ class AdminUserReportsController < ApplicationController
 
   def update_shop_info
     @shop = Shop.find(params[:id])
-    unless params[:shop_info][:addr].blank?
-      info = @shop.info || ShopInfo.new()
-      info._id = @shop.id
-      info.addr = params[:shop_info][:addr]
-      info.phone = params[:shop_info][:phone]
-      info.save
-    end
-
-    @shop.name = params[:shop][:name] if params[:shop][:name]
-    @shop.t = params[:shop][:t] if params[:shop][:t]
-
-    if @shop.save
+    if @shop.update_attributes(params[:shop])
       ShopReport.where({:sid => params[:id].to_i, :flag => nil}).each do |report|
         report.update_attribute(:flag, 1)
       end
-      @shop = Shop.find_primary(@shop._id)
       redirect_to action: "index"
     else
       render :action => :index
@@ -89,9 +77,9 @@ class AdminUserReportsController < ApplicationController
 
     lobs = params[:lo].split(/[;；]/)
     if lobs.count == 1
-      lob = lobs.first.split(/[,，]/).map{|s| s.to_f}
+      lob = lobs.first.split(/[,，]/).map{|s| s.to_f}.reverse
     else
-      lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }}
+      lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
     end
 
     @shop.lo = lob
@@ -109,7 +97,7 @@ class AdminUserReportsController < ApplicationController
       return render json: {"success" => false}
     end
 
-    lo = params[:lo].split(/[,，]/).map{|i| i.to_f}
+    lo = params[:lo].split(/[,，]/).map{|i| i.to_f}.reverse
     lobs = []
     if @shop.lo.first.is_a?(Array)
       @shop.lo << lo
@@ -163,8 +151,8 @@ class AdminUserReportsController < ApplicationController
   end
 
   def ajax_dis
-    lob1 = params[:lob1][1...-1].split(/[,，]/).map { |m| m.to_f  }
-    lob2 = params[:lob2].split(/[,，]/).map {|m| m.to_f }
+    lob1 = Shop.find(params[:shop_id]).lo_to_lob
+    lob2 = params[:lob2].split(/[,，]/).map {|m| m.to_f }.reverse
     distance = Shop.new.get_distance(lob1, lob2)
     render :json => {:distance => distance}
   end
