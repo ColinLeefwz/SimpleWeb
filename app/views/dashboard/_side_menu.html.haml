@@ -1,4 +1,5 @@
 - user = current_user
+- profile = current_user.profile
 
 .navbar.navbar-default.shadow
   .user-info.clearfix
@@ -45,7 +46,7 @@
       .item
         = render 'dashboard/item_icon', item_name: 'content'
         .item-text
-          = link_to 'Content', dashboard_contents_path, remote: true, class: "item-pjax"
+          = link_to 'Content', dashboard_content_path, remote: true, class: "item-pjax"
 
     -# ----- Video Courses -----
     - if user.is_a? Expert
@@ -80,7 +81,7 @@
       .collapse.panel-collapse#favorite
         .panel-body
           %li= link_to 'Experts', dashboard_favorite_experts_path, remote: true, class: "item-pjax"
-          %li= link_to 'Content', dashboard_favorite_contents_path, remote: true, class: "item-pjax"
+          %li= link_to 'Content', dashboard_favorite_content_path, remote: true, class: "item-pjax"
           %li= link_to 'Courses', dashboard_favorite_courses_path, remote: true, class: "item-pjax"
 
     -# ----- Refer Expert -----
