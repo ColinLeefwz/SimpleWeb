@@ -36,6 +36,9 @@
         <%= @report.shop.lo %>
       <% end %>
     </div>
+    <div class="hidden report-id">
+      <%= @report.shop.id %>
+    </div>
     <div class="col-md-2">
       <a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank">查找百度经纬度</a>
     </div>
@@ -51,9 +54,6 @@
     <div class="col-md-2">
       <a herf="javascropt:void(0);" id="calculate-distance">计算距离</a>
     </div>
-    <div class="col-md-5">
-      如: 120.108,30.28 或 120.108,30.28
-    </div>
   </div>
   <div class="row">
     <div class="col-md-2 text-right">
@@ -62,40 +62,45 @@
     <div class="col-md-3">
       <span id="distance"></span>
     </div>
-    <div class="col-md-2">
-      <a href="#">更正地点坐标</a>
-    </div>
-    <div class="col-md-2">
-      <a href="#">新增地点坐标</a>
-    </div>
   </div>
 
-  <div class="row" id="change-coordinate">
-    <div class="col-md-2 text-right">
-      更正坐标:
-    </div>
-    <div class="col-md-3">
-      <input type="text" id="change-coordinate-val" value="">
-    </div>
-    <div class="col-md-2">
-      <button type="button" id="change-corrdinate-submit" class="btn btn-primary  btn-xs">更正</button>
-    </div>
-    <div class="col-md-5">
-      <p>
-        支持多百度坐标,分号隔开.<br>例:120.108,30.28;121.108,31.28
-      </p>
-    </div>
-  </div>
-
-  <div class="row" id="new-coordinate">
-    <div class="col-md-2 text-right">
-      新增坐标:
-    </div>
-    <div class="col-md-3">
-      <input type="text" id="new-coordinate-val">
-    </div>
-    <div class="col-md-2">
-      <button type="button" id="new-corrdinate-submit" class="btn btn-primary  btn-xs">新增</button>
+  <div class="row">
+    <ul class="nav nav-tabs">
+      <li><a href="#change-coordinate" data-toggle="tab">更正地点坐标</a></li>
+      <li><a href="#new-corrdinate" data-toggle="tab">新增地点坐标</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="change-coordinate">
+        <div class="row">
+          <div class="col-md-2 text-right">
+            更正坐标:
+          </div>
+          <div class="col-md-3">
+            <input type="text" id="change-coordinate-val" value="">
+          </div>
+          <div class="col-md-2">
+            <button type="button" id="change-corrdinate-submit" class="btn btn-primary  btn-xs">更正</button>
+          </div>
+          <div class="col-md-5">
+            <p>
+              支持多百度坐标,分号隔开.<br>例:120.108,30.28;121.108,31.28
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="new-corrdinate">
+        <div class="row" id="new-coordinate">
+          <div class="col-md-2 text-right">
+            新增坐标:
+          </div>
+          <div class="col-md-3">
+            <input type="text" id="new-coordinate-val">
+          </div>
+          <div class="col-md-2">
+            <button type="button" id="new-corrdinate-submit" class="btn btn-primary  btn-xs">新增</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -109,9 +114,9 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("#calculate-distance").click(function(){
-      var lob1 = "<%= @report.shop.lo_to_lob %>"
+      var shop_id = $(".report-id").html();
       var lob2 = $('#lob2').val();
-      $.get('/admin_user_reports/ajax_dis', {lob1: lob1, lob2: lob2}, function(data){
+      $.get('/admin_user_reports/ajax_dis', {shop_id: shop_id, lob2: lob2}, function(data){
         $("#distance").text(data["distance"]+"（米）");
       });
     });

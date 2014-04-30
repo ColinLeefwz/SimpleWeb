@@ -2,8 +2,7 @@
   <h2 class="f18">地点报错管理</h2>
 </div>
 <div class="customer_info" style="width:760px; padding:40px 20px;">
-  <%= form_for(@shop, :url => "/admin_user_reports/update_shop_info") do |f| %>
-    <%= hidden_field_tag :id, @shop.id.to_i %>
+  <%= form_for(@shop, :url => "/admin_user_reports/update_shop_info?id=#{@shop.id}") do |f| %>
     <div class="row md_addr">
       <div class="col-md-2 text-right md_addr_lable">
         地点名称:
@@ -18,7 +17,7 @@
         地点地址:
       </div>
       <div class="col-md-10 md_addr_text">
-        <%= text_field :shop_info, :addr,class:"md_addr_txt"%>
+        <%= f.text_field :addr, class:"md_addr_txt"%>
       </div>
     </div>
 
@@ -27,7 +26,7 @@
         地点电话:
       </div>
       <div class="col-md-10 md_addr_text">
-        <%= text_field :shop_info, :phone ,class:"md_addr_txt"%>
+        <%= f.text_field :tel ,class:"md_addr_txt"%>
       </div>
     </div>
 
