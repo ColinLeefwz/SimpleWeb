@@ -11,7 +11,7 @@
       .name
         = user.name
       .title
-        = [profile.title, profile.company].reject(&:blank?).join(",")
+        = [profile.title, profile.company].reject(&:blank?).join(", ")
       .edit
         %p= link_to 'edit profile', dashboard_edit_profile_path, remote: true, class: "item-pjax"
 
