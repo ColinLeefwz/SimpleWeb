@@ -11,7 +11,7 @@
       .name
         = user.name
       .title
-        = [@profile.title, @profile.company].reject(&:blank?).join(",")
+        = [@profile.title, @profile.company].reject(&:blank?).join(", ")
       .edit
         - if user.is_a? Expert
           %p= link_to 'edit profile', edit_profile_expert_path(current_user), remote: true
