@@ -35,3 +35,15 @@
         $(".validation-message").text data.error_message
     )
 
+@publish_article_helper = ->
+  $("#save-draft").on "click", ->
+    draft_field = $(this).closest("form").find("#article_draft")
+    draft_field.val(true)
+  $("#publish").on "click", ->
+    draft_field = $(this).closest("form").find("#article_draft")
+    draft_field.val(true)
+  article_preview()
+  $(".modal-submit").on "click", ->
+    $("#preview-modal").modal "hide"
+  form_validation()
+  CKEDITOR.replaceAll()
