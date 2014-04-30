@@ -59,7 +59,8 @@ class AdminUserReportsController < ApplicationController
   def update_shop_info
     @shop = Shop.find(params[:id])
     if @shop.update_attributes(params[:shop])
-      ShopReport.where({:sid => params[:id].to_i, :flag => nil}).each do |report|
+      hash = { "$or" => [{flag: {"$exists" => false }}, {flag: 3}] }
+      ShopReport.where({:sid => params[:id].to_i}).where(hash).each do |report|
         report.update_attribute(:flag, 1)
       end
       redirect_to action: "index"
