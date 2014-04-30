@@ -53,7 +53,6 @@ Prodygia::Application.routes.draw do
   resources :members do
     member do
       get :activity_stream
-      get :dashboard
       get :profile
       get :edit_profile
       patch :update_profile
@@ -68,7 +67,6 @@ Prodygia::Application.routes.draw do
   resources :experts do
     member do
       get :activity_stream
-      get :dashboard
       get :main_menu
       get :profile
       get :consultations
@@ -112,6 +110,24 @@ Prodygia::Application.routes.draw do
       get :validate_invite_email
     end
   end
+
+  controller :dashboard do
+    get :dashboard
+    scope :dashboard, as: :dashboard do
+      get :edit_profile
+      get :post_new_article
+      get :settings
+      get :contents
+      get :produced_courses
+      get :subscribed_courses
+      get :favorite_experts
+      get :favorite_contents
+      get :favorite_courses
+    end
+  end
+
+  get "/dashboard/refer_new_expert", to: "email_messages#new_refer_expert_message"
+  get "/dashboard/refer_a_friend", to: "email_messages#new_refer_friend_message"
 
   resources :resources
 

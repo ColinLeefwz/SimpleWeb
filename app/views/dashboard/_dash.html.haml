@@ -3,6 +3,6 @@
     .row
       .col-lg-3.col-md-3
         .side-menu
-          = render 'dashboard/side_menu'
+          = render 'dashboard/side_menu', profile: current_user.profile
       .col-lg-9.col-md-9.main-menu
-        = render "dashboard/welcome_page"
+        = render "#{main_menu}"
