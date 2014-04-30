@@ -23,7 +23,7 @@
         <% if session[:city_code].present? %>
           <%= report.shop_name %>
         <% else %>
-          <%= link_to report.shop_name, "/admin_shops/show?id=#{report.shop_id}" ,class:"shopname" %>
+          <%= link_to report.shop_name, "/admin_shops/show?id=#{report.shop_id}" ,class: "shopname" %>
         <% end %>
       </td>
       <td valign="middle">
@@ -74,7 +74,8 @@
   $(function(){
     $(".ignore-link").click(function(event) {
       var flag = false;
-      $('.m-tips-msg').find('p').html('确定忽略此商家('+rename(".ignore-link")+')地点报错？');
+      var shopname = $(this).parent().parent().find('.shopname').text();
+      $('.m-tips-msg').find('p').html('确定忽略此商家('+shopname+')地点报错？');
       $('.m-tips-msg').find('span').html('（注：忽略地点报错,此操作无法撤销!）');
       $('#filter2').show();
       var ahref = $(this).attr('href');
@@ -84,7 +85,8 @@
 
     $(".delete-btn").click(function(event) {
       var flag = false;
-      $('.m-tips-msg').find('p').html('确定删除此商家('+rename(".delete-btn")+')地点报错？');
+      var shopname = $(this).parent().parent().find('.shopname').text();
+      $('.m-tips-msg').find('p').html('确定删除此商家('+shopname+')地点报错？');
       $('.m-tips-msg').find('span').html('（注：删除地点报错,此操作无法撤销!）');
       $('#filter2').show();
       var ahref = $(this).attr('href');
@@ -94,7 +96,8 @@
 
     $(".report-btn").click(function(event) {      
       var flag = false;
-      $('.m-tips-msg').find('p').html('确定上传此商家('+rename(".report-btn")+')地点报错？');
+      var shopname = $(this).parent().parent().find('.shopname').text();
+      $('.m-tips-msg').find('p').html('确定上传此商家('+shopname+')地点报错？');
       $('.m-tips-msg').find('span').html('（注：上传地点报错,此操作无法撤销!）');
       $('#filter2').show();
       var ahref = $(this).attr('href');
