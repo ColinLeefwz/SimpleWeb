@@ -29,7 +29,7 @@ class DashboardController < ApplicationController
     end
   end
 
-  def contents
+  def content
     authorize! :create, Article ## member can not access this action
     @items = current_user.contents
 
@@ -93,7 +93,7 @@ class DashboardController < ApplicationController
     end
   end
 
-  def favorite_contents
+  def favorite_content
     @favorite_contents = current_user.subscribed_contents
     if @favorite_contents.empty?
       if current_user.is_a? Expert
