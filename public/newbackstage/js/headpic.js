@@ -153,8 +153,19 @@ function ImageUpload(target){// 头图管理
 									$("#AddBox5Img").css("display","block");
 								});
 							});
-							if(num>=6){$("#AddBox5Img").css("display","none");}
+							if(num>=5){$("#AddBox5Img").css("display","none");}
                             WindowResizeA();
+							$("#UpImgFile").val("");
+							$("#EM").html(emObj).removeAttr("style");
+							$("#SmallImgDiv").html(sidObj);
+							if(/msie/i.test(ua)){
+								$(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css("display","block");
+							}
+							var path=$("#EM img").attr("src");
+							if(path="images/btn9.jpg"){
+								$("#Btn19").addClass("none");
+								$(".filebox14, .filebox15").addClass("none");
+							}
                         })
 
                     // --------------------------------------------------
