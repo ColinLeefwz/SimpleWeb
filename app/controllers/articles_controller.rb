@@ -12,6 +12,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = current_user.articles.create(article_params)
+
     respond_to do |format|
       format.js {
         render partial: "shared/cards", locals: {items: current_user.contents}
@@ -84,8 +85,12 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
+    if params[:commit] == "Publish"
+      params[:article][:draft] = false
+    elsif params[:commit] == "Save Draft"
+      params[:article][:draft] = true
+    end
     params.require(:article).permit(:title, {category_ids:[]}, :cover, :description, :language, :draft)
   end
-
 end
 
