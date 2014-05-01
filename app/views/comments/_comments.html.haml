@@ -1,8 +1,8 @@
 - comments = commentable.comments.visible
 
 .comments.margin-bottom
-  %h4 
-    = comment_counting(comments)
+  %h4
+    = commentable.decorate.comment_counting
   = render partial: "comments/comment", collection: comments, as: :comment
   = render partial: "comments/form", locals: {parent: commentable}
 

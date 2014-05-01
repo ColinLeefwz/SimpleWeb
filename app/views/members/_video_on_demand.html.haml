@@ -1,7 +1,7 @@
-.jumbotron.container.shadow.recommendation
+.recommendation.white-background.shadow
   -if @recommendation
     Recommended Video Courses
   -else
     Favorite Video Courses
 - @subscribed_courses.each do |course|
-  = render "course_info", course: course
+  = render "members/course_info", course: course

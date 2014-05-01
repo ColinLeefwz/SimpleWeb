@@ -21,15 +21,6 @@ class ExpertsController < ApplicationController
     end
   end
 
-  def refer_new_expert
-    @email_message = current_user.build_refer_message(User::USER_TYPE[:expert])
-
-    @from = "refer_expert"
-    respond_to do |format|
-      format.js { render "update" }
-    end
-  end
-
   def profile
     # Peter at 2014-04-07: comment them, after we fix the overlap bug
     # cookies[:profile_batch_point] = 0
@@ -63,25 +54,17 @@ class ExpertsController < ApplicationController
 
   end
 
-  def edit_profile
-    @profile = @expert.profile
-    respond_to do |format|
-      format.js{
-        render partial: 'dashboard/profile/edit'
-      }
-    end
-  end
-
+  ## Peter at 2014-04-29: this method and the one in MembersController can be merged together
+  # into UsersController
   def update_profile
     respond_to do |format|
       format.js{
         @expert.update_attributes(expert_params)
         @expert.profile.update_attributes(expert_profile_params)
         flash[:success] = "successfully update your profile"
-        render js: "window.location='#{dashboard_expert_path(current_user.reload)}'"
+        render js: "window.location='#{dashboard_path}'"
       }
     end
-
   end
 
   def consultations
@@ -89,33 +72,6 @@ class ExpertsController < ApplicationController
     respond_to do |format|
       @from = "consultations/items"
       format.js { render "experts/update" }
-    end
-  end
-
-  def contents
-    @items = current_user.contents
-
-    respond_to do |format|
-      format.js {
-        @show_shares = true
-        render partial: 'shared/cards', locals: { items: @items }
-      }
-    end
-  end
-
-  def video_courses
-    courses = current_user.courses
-
-    respond_to do |format|
-      format.js {
-        if courses.empty?
-          get_pending_text("video_courses")
-          @from = 'pending_page'
-          render 'experts/update'
-        else
-          render partial: 'shared/cards', locals: {items: courses}
-        end
-      }
     end
   end
 
@@ -140,6 +96,6 @@ class ExpertsController < ApplicationController
   end
 
   def expert_params
-    params.require(:expert).permit(:first_name, :last_name, :user_name, :time_zone, :avatar, :subscribe_newsletter, Video::Attributes)
+    params.require(:expert).permit(:first_name, :last_name, :user_name, :email,  :time_zone, :avatar, :subscribe_newsletter, Video::Attributes)
   end
 end

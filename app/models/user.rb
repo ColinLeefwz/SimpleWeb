@@ -3,7 +3,7 @@ require 'mandrill_api'
 class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
-  USER_TYPE = { member: "Member", expert: "Expert" }
+  USER_TYPE = { member: "member", expert: "expert" }
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
 
@@ -30,7 +30,9 @@ class User < ActiveRecord::Base
   has_many :enrolled_courses, through: :enrollments, source: :enrollable, source_type: "Course"
 
   has_many :orders
-  has_many :email_messages
+
+  has_many :refer_emails, -> { where email_type: "refer" }, class_name: "EmailMessage"
+  has_many :shared_emails, -> { where email_type: "share" }, class_name: "EmailMessage"
 
   # consultations
   has_many :sent_consultations, class_name: "Consultation", foreign_key: "requester_id"

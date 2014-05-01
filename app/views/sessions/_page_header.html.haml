@@ -1,26 +1,29 @@
-
-.header.shadow.clearfix
-  .user
-    .avatar
-      = link_to image_tag(item.expert.avatar.url), profile_expert_path(item.expert)
-    .name
-      = link_to item.expert.name, profile_expert_path(item.expert)
-    .title
-      = item.expert.profile.title
-    .company
-      = item.expert.profile.company
-
-  .meta
-    .title
-      = item.title
-    .date.separator
-      = item.created_at.to_date.to_formatted_s(:course_date)
-    .category
-      = item.category_names
-  .social-share-icons.favorite-star
-    = render partial: 'favorites/favorite', locals: {item: item}
-    = render 'shared/social_share', item: item 
-
+.header.shadow.clearfix.container-fluid
+  .row
+    .user.col-sm-3
+      .avatar
+        - if item.expert.is_staff
+          = image_tag(item.expert.avatar.url)
+        - else
+          = link_to image_tag(item.expert.avatar.url), profile_expert_path(item.expert)
+      .name
+        - if item.expert.is_staff
+          = item.expert.name
+        - else
+          = link_to item.expert.name, profile_expert_path(item.expert)
+      .title
+        = item.expert.profile.title
+      .company
+        = item.expert.profile.company
+    .meta.col-sm-7
+      .title
+        = item.title
+      .date.separator
+        = item.created_at.to_date.to_formatted_s(:course_date)
+      .category
+        = item.category_names
+    .social-share-icons.favorite-star.col-sm-2.text-right
+      = render partial: 'favorites/favorite', locals: {item: item}
+      = render 'shared/social_share', item: item
 :javascript
   bind_sign_in_modal($(".favorite-star"));
-

@@ -1,4 +1,7 @@
 class Landingitem < ActiveRecord::Base
+  TOOL_TIPS = {"Article" => "article", "VideoInterview" => "interview", "Course" => "course", "Announcement" => "announcement"}.freeze
+  IMAGE_TAGS = { "LiveSession" => "livestreaming.png", "Article" => "text.png", "VideoInterview" => "video_interview_icon.png", "Announcement" => "announcement.png", "Course" => "video_course_icon.png" }.freeze
+
   belongs_to :expert
 
   class << self

@@ -1,12 +1,12 @@
-%div{class: box_class(item)}
+%div{class: item.decorate.get_box_class}
 
   .box-header
     .portrait
-      = expert_image_helper(item)
+      = item.decorate.expert_image_helper
       .expert-name
-        = expert_name_helper(item)
+        = item.decorate.expert_name_helper
     .content-type
-      = image_tag(get_image_tag(item), class: "tooltips", title: get_tooltip(item), data: {placement: "bottom"})
+      = image_tag(item.decorate.get_image_tag, class: "tooltips", title: item.decorate.get_tooltip, data: {placement: "bottom"})
       %p= item.category_names
       %p= item.language.split(",")[0] if (item.respond_to? :language and item.language)
   .title
@@ -19,12 +19,8 @@
       = link_to image_tag(item.cover.url), polymorphic_path(item)
 
   .caption
-    - if (item.cover.url) && (!item.cover.url.eql?"/covers/original/missing.png")
-      .description
-        = truncate_html(item.description, length: 300, omission: '...')
-    - else
-      .description
-        = truncate_html(item.description, length: 600, omission: '...')
+    .description
+      = item.decorate.description
     - text = (item.is_a? Article) ?  'Continue reading' :  'Learn more'
     %p.learn-more= link_to text, polymorphic_path(item)
     .social-share-icons

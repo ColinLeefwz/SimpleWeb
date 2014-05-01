@@ -7,3 +7,43 @@
     $(".item").find(".item-text > a").css("color", "")
     $(this).parents(".item").find(".item-text > a").css("color", "#880848")
 
+@pjax_dashboard = ->
+  $(".item-pjax").on "click", ->
+    history.pushState(null, "", $(this).attr('href'))
+  $(window).bind "popstate", ->
+    $.getScript(location.href)
+
+
+@validate_refer_message = ->
+  $(".validation-message").hide()
+  send = $("input[value='Send']")
+  send.attr('disabled', 'disabled')
+
+  to = $("input#refer_email_form_to")
+  enable_send = false
+  to.on 'blur', ->
+    to_value = to.val()
+    get_path = "/email/validate_invite_email"
+    $.get(get_path, {to_address: to_value}, (data)=>
+      enable_send = data.status
+      if enable_send
+        send.removeAttr("disabled")
+        $(".validation-message").hide()
+      else
+        send.attr('disabled', 'disabled')
+        $(".validation-message").show()
+        $(".validation-message").text data.error_message
+    )
+
+@publish_article_helper = ->
+  $("#save-draft").on "click", ->
+    draft_field = $(this).closest("form").find("#article_draft")
+    draft_field.val(true)
+  $("#publish").on "click", ->
+    draft_field = $(this).closest("form").find("#article_draft")
+    draft_field.val(true)
+  article_preview()
+  $(".modal-submit").on "click", ->
+    $("#preview-modal").modal "hide"
+  form_validation()
+  CKEDITOR.replaceAll()

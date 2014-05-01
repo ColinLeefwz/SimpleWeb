@@ -24,11 +24,6 @@ Prodygia::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks", invitations: 'invitations', passwords: "users/passwords" }
 
-  controller :users do
-    get 'validate_invite_email'
-    get 'validate_user_name'
-  end
-
   ActiveAdmin.routes(self)
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -57,7 +52,6 @@ Prodygia::Application.routes.draw do
 
   resources :members do
     member do
-      get :dashboard
       get :profile
       get :edit_profile
       patch :update_profile
@@ -71,7 +65,6 @@ Prodygia::Application.routes.draw do
 
   resources :experts do
     member do
-      get :dashboard
       get :main_menu
       get :profile
       get :consultations
@@ -93,6 +86,13 @@ Prodygia::Application.routes.draw do
   controller :users do
     get 'following/:target_id' => :following, as: :following
     get 'favorite/:item_type/:item_id' => :favorite, as: :favorite
+
+    patch 'change_email'
+    get 'validate_user_name'
+
+    get 'relationship/:the_followed' => :relationship, as: :relationship
+    get 'subscirbe/:item_id' => :subscribe, as: :subscribe
+    get 'followers'
   end
 
   controller :mailchimp do
@@ -101,6 +101,33 @@ Prodygia::Application.routes.draw do
   end
 
   resources :activity_stream
+
+  scope "email" do
+    controller :email_messages do
+      get :new_share_message
+      post :send_share_email
+      get :new_refer_message
+      get :validate_invite_email
+    end
+  end
+
+  controller :dashboard do
+    get :dashboard
+    scope :dashboard, as: :dashboard do
+      get :edit_profile
+      get :post_new_article
+      get :settings
+      get :content
+      get :produced_courses
+      get :subscribed_courses
+      get :favorite_experts
+      get :favorite_content
+      get :favorite_courses
+    end
+  end
+
+  get "/dashboard/refer_new_expert", to: "email_messages#new_refer_expert_message"
+  get "/dashboard/refer_a_friend", to: "email_messages#new_refer_friend_message"
 
   resources :resources
 

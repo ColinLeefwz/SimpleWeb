@@ -1,8 +1,10 @@
+- profile_update_route = (current_user.is_a? Expert) ? update_profile_expert_path(current_user) : update_profile_member_path(current_user)
+
 .white-background.shadow
   .edit-profile-title
     %h3 Edit Your Profile
 
-  = form_for @expert, url: update_profile_expert_path(current_user), remote: true, :html => {:class => "form-horizontal"} do |f|
+  = form_for current_user, url: profile_update_route, remote: true, :html => {:class => "form-horizontal"} do |f|
 
     %fieldset
     .form-group
@@ -60,35 +62,36 @@
         .col-sm-12.col-xs-12
           = f.time_zone_select :time_zone
 
-      .form-group
-        .col-sm-4.col-xs-4
-          = p.label :twitter, class: "control-label"
-        .col-sm-12.col-xs-12
-          = p.text_field :twitter, class: 'form-control'
+      - if current_user.is_a? Expert
+        .form-group
+          .col-sm-4.col-xs-4
+            = p.label :twitter, class: "control-label"
+          .col-sm-12.col-xs-12
+            = p.text_field :twitter, class: 'form-control'
 
-      .form-group
-        .col-sm-4.col-xs-4
-          = p.label :web_site, class: "control-label"
-        .col-sm-12.col-xs-12
-          = p.text_field :web_site, class: 'form-control'
+        .form-group
+          .col-sm-4.col-xs-4
+            = p.label :web_site, class: "control-label"
+          .col-sm-12.col-xs-12
+            = p.text_field :web_site, class: 'form-control'
 
-      .form-group
-        .col-sm-4.col-xs-4
-          = p.label :expertise, class: "control-label"
-        .col-sm-12.col-xs-12
-          = p.cktext_area :expertise, class: 'form-control'
+        .form-group
+          .col-sm-4.col-xs-4
+            = p.label :expertise, class: "control-label"
+          .col-sm-12.col-xs-12
+            = p.cktext_area :expertise, class: 'form-control'
 
-      .form-group
-        .col-sm-4.col-xs-4
-          = p.label :career, class: "control-label"
-        .col-sm-12.col-xs-12
-          = p.cktext_area :career, class: 'form-control'
+        .form-group
+          .col-sm-4.col-xs-4
+            = p.label :career, class: "control-label"
+          .col-sm-12.col-xs-12
+            = p.cktext_area :career, class: 'form-control'
 
-      .form-group
-        .col-sm-4.col-xs-4
-          = p.label :education, class: "control-label"
-        .col-sm-12.col-xs-12
-          = p.cktext_area :education, class: 'form-control'
+        .form-group
+          .col-sm-4.col-xs-4
+            = p.label :education, class: "control-label"
+          .col-sm-12.col-xs-12
+            = p.cktext_area :education, class: 'form-control'
 
 
     .form-group

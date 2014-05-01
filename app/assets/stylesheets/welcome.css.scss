@@ -192,3 +192,17 @@ body {
     width: 250px;
   }
 }
+@media (max-width: 500px) {
+  #content {
+    margin: 10px;
+  }
+}
+
+.share-email-message {
+  width: 340px;
+  height: 180px;
+}
+
+.share-email-subject {
+  width: 340px;
+}
