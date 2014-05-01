@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
     @article = current_user.articles.create(article_params)
 
     respond_to do |format|
-      format.js
+      format.js { render "dashboard/save_content" }
     end
   end
 
@@ -33,9 +33,8 @@ class ArticlesController < ApplicationController
   def update
     @article.update_attributes(article_params)
 
-    @items = current_user.contents
     respond_to do |format|
-      format.js
+      format.js { render "dashboard/save_content" }
     end
   end
 
