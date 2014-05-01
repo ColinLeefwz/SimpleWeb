@@ -123,6 +123,10 @@ Prodygia::Application.routes.draw do
       get :favorite_experts
       get :favorite_content
       get :favorite_courses
+
+      scope :content, as: :content do
+        resources :articles, :video_interviews
+      end
     end
   end
 

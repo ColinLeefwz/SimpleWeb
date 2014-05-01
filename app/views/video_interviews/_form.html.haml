@@ -20,22 +20,3 @@
     .form-group
       .col-sm-2
         = f.submit "submit", class: "btn btn-prodygia dashboard-buttons"
-
-
-  -# note: non-SIMPLE_FORM way, please don't delete that for now
-
-  -# = form_for @video_interview, remote: true do |f|
-  -#   = f.label :title
-  -#   = f.text_field :title
-
-  -#   = f.label :categories
-  -#   - Category.all.each do |c|
-  -#     = check_box_tag "video_interview[categories][]", c.name, @video_interview.categories.include?(c.name)
-  -#     = c.name
-
-  -#   = f.label :description
-  -#   = f.text_area :description
-
-  -#   = f.label :cover
-  -#   = f.file_field :cover
-  -#   = f.submit
