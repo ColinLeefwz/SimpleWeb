@@ -22,17 +22,21 @@ class ArticlesController < ApplicationController
   def edit
     respond_to do |format|
       format.js {
-        render partial: "article_form"
+        render "dashboard/post_new_article"
+      }
+
+      format.html {
+        render "dashboard/edit_content", locals: { form_partial: "articles/form" }
       }
     end
   end
 
   def update
     @article.update_attributes(article_params)
+
+    @items = current_user.contents
     respond_to do |format|
-      format.js{
-        render partial: "shared/cards", locals: {items: current_user.contents}
-      }
+      format.js
     end
   end
 
