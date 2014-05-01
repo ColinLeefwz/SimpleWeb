@@ -20,9 +20,8 @@ class VideoInterviewsController < ApplicationController
   def update
     @video_interview.update_attributes(video_interview_params)
 
-    @items = current_user.contents
     respond_to do |format|
-      format.js
+      format.js { render "dashboard/save_content" }
     end
   end
 
