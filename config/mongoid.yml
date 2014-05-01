@@ -1,3 +1,15 @@
+production:
+  sessions:
+    default:
+      database: prodygia_production
+      hots:
+        - localhost:27017
+      options:
+
+  options:
+
+
+
 development:
   # Configure available database sessions. (required)
   sessions:
