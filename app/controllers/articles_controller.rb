@@ -14,9 +14,7 @@ class ArticlesController < ApplicationController
     @article = current_user.articles.create(article_params)
 
     respond_to do |format|
-      format.js {
-        render partial: "shared/cards", locals: {items: current_user.contents}
-      }
+      format.js
     end
   end
 
