@@ -4,6 +4,7 @@ module Landingable
   included do
     after_create :added_to_landingitems
     after_update :update_to_landingitems
+    after_destroy :remove_from_landingitems
   end
 
   def update_landing_order(order=nil)
@@ -22,5 +23,10 @@ module Landingable
 
   def update_to_landingitems
     Landingitem.update_record(self)
+  end
+
+  def remove_from_landingitems
+    landing_item = Landingitem.find_by(landingable_id: self.id, landingable_type: self.class.name)
+    Landingitem.delete landing_item
   end
 end
