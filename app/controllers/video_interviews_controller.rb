@@ -11,17 +11,17 @@ class VideoInterviewsController < ApplicationController
     @from = 'video_interviews/form'
     respond_to do |format|
       format.js{render 'experts/update'}
+      format.html {
+        render "dashboard/edit_content", locals: { form_partial: "video_interviews/form" }
+      }
     end
   end
 
   def update
     @video_interview.update_attributes(video_interview_params)
 
-    @items = current_user.contents
     respond_to do |format|
-      format.js{
-        render partial: 'shared/cards', locals: { items: @items }
-      }
+      format.js { render "dashboard/save_content" }
     end
   end
 

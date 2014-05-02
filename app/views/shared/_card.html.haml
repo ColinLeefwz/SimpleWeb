@@ -9,13 +9,12 @@
     .statistic
       = truncate_html(item.description, length: 300, omission: '...')
       %p#visits
-        -# - count = item.visit.page_views
         - visit = item.visit || Visit.create(visitable: item)
         = "Viewed by #{pluralize(visit.page_views, 'person')} "
         = "(published on #{item.created_at.to_date.to_formatted_s(:course_date)})"
 
       - if item.editable
-        = link_to "edit", edit_polymorphic_path(item), remote: true, class: "btn btn-primary"
+        = link_to "edit", edit_polymorphic_path([:dashboard, :content, item]), remote: true, class: "btn btn-primary item-pjax"
         - if item.try(:draft)
           = link_to "post it", post_a_draft_article_path(item), class: "btn btn-prodygia dashboard-buttons", remote: true
           = link_to "delete", cancel_draft_content_article_path(item), class: "btn btn-primary", remote: true

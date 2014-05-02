@@ -12,27 +12,29 @@ class ArticlesController < ApplicationController
 
   def create
     @article = current_user.articles.create(article_params)
+
     respond_to do |format|
-      format.js {
-        render partial: "shared/cards", locals: {items: current_user.contents}
-      }
+      format.js { render "dashboard/save_content" }
     end
   end
 
   def edit
     respond_to do |format|
       format.js {
-        render partial: "article_form"
+        render "dashboard/post_new_article"
+      }
+
+      format.html {
+        render "dashboard/edit_content", locals: { form_partial: "articles/form" }
       }
     end
   end
 
   def update
     @article.update_attributes(article_params)
+
     respond_to do |format|
-      format.js{
-        render partial: "shared/cards", locals: {items: current_user.contents}
-      }
+      format.js { render "dashboard/save_content" }
     end
   end
 
@@ -80,8 +82,12 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
+    if params[:commit] == "Publish"
+      params[:article][:draft] = false
+    elsif params[:commit] == "Save Draft"
+      params[:article][:draft] = true
+    end
     params.require(:article).permit(:title, {category_ids:[]}, :cover, :description, :language, :draft)
   end
-
 end
 
