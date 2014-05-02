@@ -1,6 +1,13 @@
 .avatar
-  = link_to image_tag(subject.avatar.url), polymorphic_path([:profile, subject])
+  - if current_user == subject
+    = link_to image_tag(object.avatar.url), polymorphic_path([:profile, object])
+  - else
+    = image_tag(subject.avatar.url)
+
 .content
-  = " is now connected with "
-  = link_to object.name, polymorphic_path([:profile, object])
+  - if current_user == subject
+    = "You followed"
+    = link_to object.name, polymorphic_path([:profile, object])
+  - else
+    = "You are followed by #{subject.name}"
 
