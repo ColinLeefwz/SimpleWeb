@@ -1,11 +1,18 @@
 .avatar
   = image_tag(subject.avatar.url)
 .content
-  - if current_user == subject
-    = "You commented on"
-    = link_to "\"#{object.title}\"", polymorphic_path(object)
-    = raw "by #{link_to "#{object.expert.name}", polymorphic_path([:profile, object.expert])}"
-  - else
-    = subject.name
+  - if current_user == object.expert ## content author self
+    - if current_user == subject
+      = "You"
+    - else
+      = subject.name
     = " commented on your #{object.class.name.downcase}"
     = link_to "\"#{object.title}\"", polymorphic_path(object)
+  - else
+    - if current_user == subject ## current use self
+      = "You"
+    - else ## other people
+      = subject.name
+    = " commented on "
+    = link_to "\"#{object.title}\"", polymorphic_path(object)
+    = raw "by #{link_to "#{object.expert.name}", polymorphic_path([:profile, object.expert])}"
