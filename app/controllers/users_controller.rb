@@ -6,20 +6,15 @@ class UsersController < ApplicationController
     render partial: 'dashboard/profile/validate_user_name', locals: {duplication: duplication}
   end
 
-  def relationship
+
+  def following
+    target = User.find params[:target_id]
+
+    user_following = UserFollowing.new(current_user, target)
+    user_following.toggle
     respond_to do |format|
       format.js{
-        the_followed_id = params[:the_followed]
-        followed_user = User.find the_followed_id
-
-        unless current_user.blank?
-          if current_user.try(:follow?, followed_user)
-            current_user.unfollow(followed_user)
-          else
-            current_user.follow(followed_user)
-          end
-          render "shared/update_favorite_star"
-        end
+        render partial: 'following', locals: {target: target}
       }
     end
   end
@@ -42,25 +37,15 @@ class UsersController < ApplicationController
   def following
   end
 
-  def followers
-  end
+  def favorite
+    type = params[:item_type].classify.constantize
+    target = type.find params[:item_id]
 
-  def subscribe
+    favor = UserFavorite.new(current_user, target)
+    favor.toggle
     respond_to do |format|
       format.js{
-        type = params[:type]
-
-        current_item = type.constantize.find(params[:item_id])
-
-        if current_user.blank?
-        else
-          if current_user.has_subscribed?(current_item)
-            current_user.unsubscribe(current_item)
-          else
-            current_user.subscribe(current_item)
-          end
-          render "shared/update_favorite_star"
-        end
+        render partial: 'favorite', locals: {target: target}
       }
     end
   end
@@ -69,3 +54,4 @@ class UsersController < ApplicationController
     params.require(:user).permit(:email)
   end
 end
+

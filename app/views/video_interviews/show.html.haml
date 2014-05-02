@@ -1,7 +1,7 @@
 - content_for(:title){ @video_interview.title }
 
 .detail-wrapper
-  = render "sessions/page_header", item: @video_interview, link_path: subscribe_path(@video_interview, type: @video_interview.class.name)
+  = render "sessions/page_header", item: @video_interview
 
   .detail.shadow.margin-bottom.clearfix
     .video-cover

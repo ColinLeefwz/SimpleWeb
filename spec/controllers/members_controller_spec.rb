@@ -82,9 +82,6 @@ describe MembersController do
       end
 
       it "assigns all the experts the member followed" do
-        # todo: gecko: test follow recommendation (no user followed)
-        # get :experts, id: peter.id, format: :js
-        # expect(assigns[:followed_experts].to_a).to eq peter.followed_users.to_a
         peter.follow sameer
         peter.follow alex
         get :experts, id: peter.id, format: :js

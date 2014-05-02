@@ -3,6 +3,7 @@ class Course < ActiveRecord::Base
   include ActAsCategoriable
   include Landingable
   include Searchable
+  include Stream::ContentActivity
 
   validates :title, presence: true
   validates :price, numericality: {greater_than_or_equal_to: 0}
@@ -72,6 +73,11 @@ class Course < ActiveRecord::Base
     false
   end
 
+  # gecko: change to one_to_one relationship later
+  def expert
+    experts.first
+  end
+
   private
   def create_a_video
     self.create_video
@@ -81,5 +87,10 @@ class Course < ActiveRecord::Base
     self.experts.each do |exp|
       exp.enroll self
     end
+  end
+
+  # gecko: only take one expert as the subject of activity, we may change the one_to_many relationship to one_on_one, that's simpler
+  def subject
+    experts.first
   end
 end

@@ -30,21 +30,10 @@
 
     .contact.brief-item-last.clearfix
       .contact-button#follow
-        - if current_user.blank?
-          = link_to image_tag('favorite_unselected.png'),'#sign-in-modal', data:{toggle: "modal"}, class: 'favorite hollow-star'
-        - else
-          = render 'shared/favorite_star', method: :follow?, object: @expert, link_path: relationship_path(@expert.id)
+        = link_to image_tag(follow_star @expert), following_path(@expert.id), title: follow_tooltip(@expert), class: "tooltips", data: {placement: "bottom"}, remote: true
       #follower-count
         = @expert.followers.count
-      -#   %button.btn.left-side
-      -#     - if current_user.try(:follow?, @expert)
-      -#       %i.fa.fa-star Unfollow
-      -#     - else
-      -#       %i.fa.fa-star Follow
 
-      -# %button.btn.right-side#follower-count
-      -# = link_to "follow", relationship_path(@expert.id), class: "hidden follow-link", remote: true
-    .clear-fix 
   - unless @profile.expertise.blank? && @profile.career.blank? && @profile.education.blank?
     .detail.sub-wrapper.second-sub
       %ul.nav.nav-tabs
@@ -91,3 +80,4 @@
 
 :javascript
   load_isotope()
+  bind_sign_in_modal($("#follow"))

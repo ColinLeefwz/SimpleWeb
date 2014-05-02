@@ -23,7 +23,7 @@
             = truncate_html(course.description, length: 300, omission: '...')
     .col-md-1
       .favorite-social-share
-        = render 'shared/favorite_star', method: :has_subscribed?, object: course, link_path: subscribe_path(course, type: course.class.name)
+        = render partial: 'favorites/favorite', locals: {item: course}
         = render 'shared/social_share', item: course
   .see-more
     = link_to "see more", course_path(course)

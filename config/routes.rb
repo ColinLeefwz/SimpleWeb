@@ -52,7 +52,6 @@ Prodygia::Application.routes.draw do
 
   resources :members do
     member do
-      get :activity_stream
       get :profile
       get :edit_profile
       patch :update_profile
@@ -66,7 +65,6 @@ Prodygia::Application.routes.draw do
 
   resources :experts do
     member do
-      get :activity_stream
       get :main_menu
       get :profile
       get :consultations
@@ -86,21 +84,23 @@ Prodygia::Application.routes.draw do
   end
 
   controller :users do
+    get 'following/:target_id' => :following, as: :following
+    get 'favorite/:item_type/:item_id' => :favorite, as: :favorite
+
     patch 'change_email'
-    get 'validate_invite_email'
     get 'validate_user_name'
 
     get 'relationship/:the_followed' => :relationship, as: :relationship
     get 'subscirbe/:item_id' => :subscribe, as: :subscribe
-    get 'following'
     get 'followers'
-    get :validate_user_name
   end
 
   controller :mailchimp do
     post 'subscription'
     post 'guest_subscription'
   end
+
+  resources :activity_stream
 
   scope "email" do
     controller :email_messages do

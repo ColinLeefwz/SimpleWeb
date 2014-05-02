@@ -18,12 +18,12 @@ class User < ActiveRecord::Base
   has_many :subscribed_video_interviews, through: :subscriptions, source: :subscribable, source_type: "VideoInterview"
   has_many :subscribed_announcements, through: :subscriptions, source: :subscribable, source_type: "Announcement"
 
-  # User follows User
-  has_many :be_followed, class_name: 'Relationship', foreign_key: "followed_id"
-  has_many :followers, through: :be_followed, class_name: "User"
+  # follow
+  has_many :followed_records, class_name: 'Following', foreign_key: "followed_id", dependent: :destroy   # user is followed by others
+  has_many :following_records, class_name: "Following", foreign_key: "follower_id", dependent: :destroy    # user follows someone else
 
-  has_many :following, class_name: "Relationship", foreign_key: "follower_id"
-  has_many :followed_users, through: :following, class_name: "User"
+  has_many :followers, through: :followed_records, source: "followed", class_name: "User"
+  has_many :followings, through: :following_records, source: "follower", class_name: "User"
 
   # enrollments and orders
   has_many :enrollments
@@ -57,10 +57,14 @@ class User < ActiveRecord::Base
   after_create :check_newsletter
   after_destroy :unsubscribe_newsletter
 
+  after_create :create_activity_stream
+  after_destroy :destroy_activity_stream
+
   def to_param
     user_name
   end
 
+  #todo course will have only one expert
   def self.find(input)
     if input.is_a? Array   # course has_many experts, so the form param would be: expert_ids: [1,2]
       super
@@ -104,18 +108,6 @@ class User < ActiveRecord::Base
     record.destroy if record
   end
 
-  ## methods for follow users
-  def follow? (other_user)
-    self.followed_users.include? (other_user)
-  end
-
-  def follow(followed_user)
-    self.followed_users << followed_user
-  end
-
-  def unfollow(followed_user)
-    self.followed_users.delete followed_user
-  end
 
   def enrolled?(item)
     record = Enrollment.find_by user_id: self.id, enrollable_id: item.id, enrollable_type: item.class.name
@@ -179,5 +171,14 @@ class User < ActiveRecord::Base
   def unsubscribe_newsletter
     subscription = UserSubscription.new(self, ENV['MAILCHIMP_LIST_ID'])
     subscription.toggle(:destroy) if subscription.subscribed?
+  end
+
+  def create_activity_stream
+    ActivityStream.create user_id: self.id
+  end
+
+  def destroy_activity_stream
+    activity_stream = ActivityStream.where(user_id: self.id).first
+    activity_stream.destroy if activity_stream
   end
 end

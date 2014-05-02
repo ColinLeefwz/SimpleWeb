@@ -1,0 +1,10 @@
+
+.avatar
+  = link_to image_tag(subject.avatar.url), polymorphic_path([:profile, subject])
+.content
+  = link_to subject.name, polymorphic_path([:profile, subject])
+  = " commented on "
+  = link_to "\"#{object.title}\"", polymorphic_path(object)
+  = " - from "
+  = link_to object.expert.name, polymorphic_path([:profile, object.expert])
+

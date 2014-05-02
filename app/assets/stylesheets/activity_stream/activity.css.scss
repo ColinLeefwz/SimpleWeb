@@ -1,0 +1,59 @@
+
+@import "globals/variables";
+@import "globals/shared_mixin";
+
+.activity{
+  @include center_container;
+  background-color: white;
+  padding: 7px;
+  margin-bottom: 18px;
+  box-shadow: $shadow_param;
+  position: relative;
+}
+
+
+// ---------- cover and avatar ----------
+
+.activity .cover,
+.activity .avatar{
+  width: 60px;
+  display: inline-block;
+}
+
+.avatar img{
+  border-radius: 50%;
+}
+
+
+// ---------- content of activity ----------
+
+.content{
+  margin-left: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  color: grey;
+  font-size: 16px;
+  font-family: LatoItalic;
+}
+
+.content a{
+  color: black;
+  text-transform: none;
+}
+
+.content a:hover{
+  color: black;
+}
+
+
+// --------- timestamp of activity ----------
+.activity time{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 5px;
+  margin-right: 5px;
+  font-size: 14px;
+  color: gray;
+  font-variant: small-caps;
+}

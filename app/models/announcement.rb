@@ -3,6 +3,7 @@ class Announcement < ActiveRecord::Base
   include ActAsCategoriable
   include Landingable
   include Searchable
+  include Stream::ContentActivity
 
   belongs_to :expert
   validates :expert, presence: true
@@ -19,5 +20,14 @@ class Announcement < ActiveRecord::Base
 
   def draft
     false
+  end
+
+  def experts
+    Expert.where(id: expert.id)
+  end
+
+  private
+  def user_list
+    User.all.pluck(:id)
   end
 end

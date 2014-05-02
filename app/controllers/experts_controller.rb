@@ -88,7 +88,7 @@ class ExpertsController < ApplicationController
   end
 
   def set_expert
-    @expert = Expert.find_by(user_name: params[:id])
+    @expert = Expert.find(params[:id])
   end
 
   def expert_profile_params

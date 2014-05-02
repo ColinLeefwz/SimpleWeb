@@ -15,7 +15,6 @@
         = item.expert.profile.title
       .company
         = item.expert.profile.company
-
     .meta.col-sm-7
       .title
         = item.title
@@ -23,9 +22,8 @@
         = item.created_at.to_date.to_formatted_s(:course_date)
       .category
         = item.category_names
-    .social-share-icons.col-sm-2.text-right
-      - if current_user.blank?
-        = link_to image_tag('favorite_unselected.png'),'#sign-in-modal', data:{toggle: "modal"}
-      - else
-        = render partial: "shared/favorite_star", locals: { method: :has_subscribed?, object: item, link_path: link_path }
+    .social-share-icons.favorite-star.col-sm-2.text-right
+      = render partial: 'favorites/favorite', locals: {item: item}
       = render 'shared/social_share', item: item
+:javascript
+  bind_sign_in_modal($(".favorite-star"));

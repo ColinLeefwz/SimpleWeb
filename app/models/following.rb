@@ -1,13 +1,32 @@
 class Following < ActiveRecord::Base
-  validates :the_followed, :follower, presence: true
-  validates :the_followed, :follower, numericality: { only_integer: true }
-  validate :duplicate
+  include Stream::ContentActivity
+  
+  belongs_to :follower, class_name: "User"
+  belongs_to :followed, class_name: "User"
 
-  def duplicate
-    user = User.find follower
-    if user.follow? the_followed
-      errors.add(:duplicate, "you can't follow someone you already followed")
-    end
+  def self.follow?(user, target)
+    following = Following.where(follower_id: user.id, followed_id: target.id).first
+    following ? true : false
   end
 
+  private
+  def user_list
+    follower_list = Following.where(followed_id: follower.id).pluck(:follower_id) # the follower's followers
+    followed_id = [followed.id]
+    follower_id = [follower.id]
+    (follower_list + followed_id + follower_id).uniq
+  end
+
+  def subject
+    follower
+  end
+
+  def object
+    followed
+  end
+
+  def action
+    "follow"
+  end
 end
+

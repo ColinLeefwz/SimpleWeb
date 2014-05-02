@@ -1,5 +1,6 @@
 <% commentable = @comment.commentable %>
 
 $('<%=j render partial: "comment", locals: {comment: @comment}%>').insertBefore($("form"));
-$(".comments").find("h4").html('<%= comment_counting(commentable.comments) %>');
-$("form")[0].reset();
+$(".comments").find("h4").html('<%= commentable.decorate.comment_counting %>');
+$("#new_comment")[0].reset();
+

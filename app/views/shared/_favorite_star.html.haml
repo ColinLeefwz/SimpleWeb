@@ -1,3 +1,0 @@
-%div{class: object.decorate.favorite_class(method)}
-  - class_name = object.decorate.favorite_class(method, "-icon")
-  = link_to image_tag("favorite.png", class: "#{class_name} tooltips", title: object.decorate.decide_tip_title(method), data:{placement: "bottom", type: object.decorate.get_favorite_type}), link_path, remote: true

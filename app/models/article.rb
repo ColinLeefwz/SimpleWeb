@@ -3,6 +3,7 @@ class Article < ActiveRecord::Base
   include ActAsCategoriable
   include Landingable
   include Searchable
+  include Stream::ContentActivity
 
   # ----- Associations -----
   belongs_to :expert
@@ -22,6 +23,10 @@ class Article < ActiveRecord::Base
 
   def producers
     "by " + self.expert.name
+  end
+
+  def experts
+    Expert.where(id: expert.id)
   end
 
   def editable
