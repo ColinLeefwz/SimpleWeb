@@ -1,16 +1,21 @@
 #tip-modal.modal.fade{tabindex: '-1', role: 'dialog', aria:{labelledby: 'modalLabel'}, aria:{hidden: 'true'}}
-  .col-lg-12.col-md-12.col-sm-12.col-xs-12
-    .modal-dialog
-      .modal-content
-        .rounded-box
-          .modal-body
-            %button.btn.btn-prodygia.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-            %h1#myModalLabel.modal-title Thanks for visiting!
-            %p  
-              Join the Prodygia community for free by
-              = link_to 'signing up.', new_user_registration_path
-              Subscribe to the newsletter to receive regular updates from our experts on China-related topics. You can unsubscribe at any time.
-            = form_for :guest, url: guest_subscription_path do |f|
-              .form-group.form-inline
-                = f.email_field :email, placeholder: "Your Email Address" ,class: 'form-control'
-                = f.submit "Subscribe", class: 'btn btn-prodygia'
+  .modal-dialog
+    .modal-content
+      .modal-body
+        %button.btn.btn-prodygia.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h1#myModalLabel.modal-title Welcome to Prodygia
+        .tutorial-video.text-center
+          %video{width: '320', height: '180', class: 'sublime', data: {autoresize: 'fill'}, preload: 'none', poster: "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/covers/64/original/nice_but_cliche_chinese_door.jpg"}
+            %source{ src: "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/64/sds/tutorial_expert_dashboard_no_logo_kbps600.mp4" }
+            %source{ src: "https://s3-us-west-1.amazonaws.com/prodygia-videos/videos/64/hds/tutorial_expert_dashboard_no_logo.mp4", data: {quality: 'hd'} }
+
+          = form_for :guest, url: guest_subscription_path do |f|
+            .form-group.form-inline
+              %p
+                Join the Prodygia community for free by
+                = link_to 'signing up,', new_user_registration_path
+                or enter your email below to subscribe to our newsletter to receive regular updates.
+              = f.email_field :email, placeholder: "Your Email Address" ,class: 'form-control'
+              = f.submit "Subscribe", class: 'btn btn-prodygia'
+:coffeescript
+  load_sublime()
