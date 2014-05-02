@@ -1,8 +1,5 @@
-
 .cover
   = link_to image_tag(object.cover.url), polymorphic_path(object)
 .content
-  = link_to "\"#{object.title}\"", polymorphic_path(object)
-  = " favorited by "
-  = link_to subject.name, polymorphic_path([:profile, subject])
-
+  = raw "You favorited #{link_to "\"#{object.title}\"", polymorphic_path(object)}"
+  = raw "by #{link_to subject.name, polymorphic_path([:profile, subject])}"
