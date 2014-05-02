@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     user_following.toggle
     respond_to do |format|
       format.js{
-        render partial: 'following', locals: {target: target}
+        render 'following', locals: {target: target}
       }
     end
   end
@@ -32,9 +32,6 @@ class UsersController < ApplicationController
       }
     end
 
-  end
-
-  def following
   end
 
   def favorite

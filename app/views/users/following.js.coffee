@@ -1,0 +1,4 @@
+$("#follow img").attr("src", '<%= "/assets/#{follow_star(target)}"%>')
+$("#follow .tooltips").attr("data-original-title", "<%= follow_tooltip(target) %>")
+$("#follower-count").html("<%= target.followers.count %>")
+
