@@ -2,7 +2,7 @@ production:
   sessions:
     default:
       database: prodygia_production
-      hots:
+      hosts:
         - localhost:27017
       options:
 
