@@ -3,7 +3,7 @@
 .content
   - if current_user == subject
     = raw "You favorited #{link_to "\"#{object.title}\"", polymorphic_path(object)}"
-    = raw "by #{link_to object.expert.name, polymorphic_path([:profile, subject])}"
+    = raw "by #{link_to object.expert.name, polymorphic_path([:profile, object.expert])}"
   - else
     = "#{subject.name} favorited your #{object.class.name.downcase}"
     = link_to "\"#{object.title}\"", polymorphic_path(object)
