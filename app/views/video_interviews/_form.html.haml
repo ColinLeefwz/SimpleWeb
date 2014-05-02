@@ -16,7 +16,7 @@
       .col-sm-2
         = f.label :description, class: "control-label"
       .col-sm-8
-        = f.input :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}, label: false
+        = f.cktext_area :description, input_html: { class: 'ckeditor' }, input_html: {class: 'session-description-input'}, label: false
     .form-group
       .col-sm-2
         = f.submit "submit", class: "btn btn-prodygia dashboard-buttons"
