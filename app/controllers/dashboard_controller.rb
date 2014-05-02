@@ -4,6 +4,15 @@ class DashboardController < ApplicationController
   def dashboard
   end
 
+  def activity_stream
+    stream = ActivityStream.find(current_user.id)
+    @activities = stream.activities
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
   def settings
     respond_to do |format|
       format.js

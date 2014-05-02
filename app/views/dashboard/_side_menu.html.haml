@@ -20,7 +20,8 @@
   .toolkit
     .item
       = render 'dashboard/item_icon', item_name: 'activity_stream'
-      .item-text= link_to 'My activity stream', activity_stream_path(current_user.id), remote: true
+      .item-text
+        = link_to 'My activity stream', dashboard_activity_stream_path, remote: true, class: "item-pjax"
 
   -# ----- CREATE -----
   - if user.is_a? Expert

@@ -1,7 +1,5 @@
 - content_for(:title){"Expert Dashboard"}
 
-- if @user.is_a? Expert
-  = render "experts/guideline_page_modal"
 = render partial: "dashboard/dash", locals: { main_menu: "settings" }
 
 :coffee
