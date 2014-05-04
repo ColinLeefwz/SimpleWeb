@@ -101,7 +101,7 @@ class UserInfoController < ApplicationController
     page = 1 if page==0
     pcount = 20 if pcount==0
     checkins = session_user.checkins.skip((page-1)*pcount).limit(pcount)
-    cins = Checkin.merge_same_location_half_day(checkins).map {|x| x.to_trace}
+    cins = Checkin.merge_same_location_half_day(checkins).map {|x| x.to_trace(params[:ver])}
     if params[:hash]
       ret = {:pcount => checkins.size}
       ret.merge!( {:data => cins})

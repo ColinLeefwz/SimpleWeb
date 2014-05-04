@@ -109,7 +109,7 @@ LUA
     
   end
   
-  def to_trace
+  def to_trace(ver=nil)
     $weeks = ['周一','周二','周三','周四','周五','周六','周日']
     if cat > Date.today.to_datetime
       day = "今天" 
@@ -131,7 +131,11 @@ LUA
       photos.each do |x| 
         p=Photo.find_by_id(x)
         next if p.nil?
-        ps << p.logo_thumb_hash.merge({id:p.id,desc:p.desc})
+        if ver && ver>=3
+          ps << p.output_hash_with_shopname
+        else
+          ps << p.logo_thumb_hash.merge({id:p.id,desc:p.desc})
+        end
       end
     end
     shopname = shop.nil?? "" : shop.name
