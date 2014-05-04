@@ -27,7 +27,7 @@ $(document).ready(function(){
 		$("#B17LC ul li").removeClass("hover");
 		$(this).addClass("hover");
 		var rel=$(this).attr("rel");
-		$(this).closest("div.box17right").find("div.box17coninner1").addClass("none");
+		$(this).closest("div.box17con").find("div.box17coninner1").addClass("none");
 		$("#B17C"+rel).removeClass("none");
 	});
 });
@@ -368,7 +368,7 @@ function SaveWeb(obj){
 	var indexs = Get_Menu_Map(m.id);
 	var url = $("#Box17Con6 div.jshover").attr('rel')
 	if(!url){
-		alert('没有选择文章');
+		MessageDelDiv('<br/>没有选择文章');
 		return false;
 	}
 	$.post("/shop3_menu/set_view_action",{index: indexs, button: {url: url, type:"view", type2: 'mweb'}}, function(data){
@@ -386,7 +386,7 @@ function SaveAPP(){
 	var indexs = Get_Menu_Map(m.id);
 	var url = $("#Box17Con8 div.jshover").attr('rel')
 	if(!url){
-		alert('没有选择应用')
+		MessageDelDiv('<br/>没有选择应用')
 		return false;
 	}
 	$.post("/shop3_menu/set_view_action",{index: indexs, button: {url: url, type:"view", type2: 'app'}}, function(data){
