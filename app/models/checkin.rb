@@ -131,7 +131,7 @@ LUA
       photos.each do |x| 
         p=Photo.find_by_id(x)
         next if p.nil?
-        if ver && ver>=3
+        if ver && ver.to_f>=3
           ps << p.output_hash_with_shopname
         else
           ps << p.logo_thumb_hash.merge({id:p.id,desc:p.desc})
