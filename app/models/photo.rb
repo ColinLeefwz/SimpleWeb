@@ -108,9 +108,9 @@ class Photo
     if weibo || qq || (wx && wx>0)
       send_coupon
       Lord.assign(room,user_id) if t==1 && desc && desc.index("我是地主")
-      enqueue_job(PhotoNotice, self.id) unless Os.overload?
       #Rails.cache.delete("UP#{self.user_id}-5")
     end
+    enqueue_job(PhotoNotice, self.id) unless Os.overload?
     return if ENV["RAILS_ENV"] == "test"
     enqueue_job(XmppRoomMsg2, room.to_i.to_s, user_id, "[img:#{self._id}]#{self.desc_multi}", mid ,1)
     rand_like
