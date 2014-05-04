@@ -1,5 +1,5 @@
 ﻿// JavaScript Document
-var emObj, sidObj, documentHeight, windowHeight, docwidth,top1;
+var emObj, sidObj, documentHeight, windowHeight, docwidth,top1,rel="F";
 $(document).ready(function(){
     emObj=$("#EM").html()
     sidObj=$("#SmallImgDiv").html();
@@ -136,12 +136,20 @@ function ImageUpload(target){// 头图管理
                         }
                         // -----------ajax 提交图片 控制器端剪裁------------------------------------------------
                         $.post("/shop3_headpic/create", pdata , function(data){
-                            $("#UpImg,#BG").css("display","none");
+							if(rel!="F"){
+								$("div.box5img").eq(rel).find("img").attr("src",data["url"]+"?t="+ (new Date()));
+								rel=="F";
+							}else{
+								var obj="<div class='box5img' rel="+(num-1)+"><img src='"+data["url"]+"?t="+ (new Date())+"'><span class='edit'>修改图片</span><span class='del'>删除图片</span></div>";
+								$("#AddBox5Img").before(obj);
+								
+							}
+							$("#UpImg,#BG").css("display","none");
 							var num=$("div.box5img").length;
-							var obj="<div class='box5img' rel="+(num-1)+"><img src='"+data["url"]+"?t="+ (new Date())+"'><span class='edit'>修改图片</span><span class='del'>删除图片</span></div>";
-							$("#AddBox5Img").before(obj);
+							
 							$("span.edit").live("click",function(){ 
-								$("#AddPic").click();															
+								$("#AddPic").click();
+								rel=$(this).parent().attr("rel");
 							});
 							$("span.del").live("click",function(){
 								var obj=$(this).closest("div.box5img");

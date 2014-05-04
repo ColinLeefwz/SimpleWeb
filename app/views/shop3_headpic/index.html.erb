@@ -67,7 +67,7 @@
         <span class="del">删除图片</span>
       </div>
     <% end %>
-		<div class="box5img" id="AddBox5Img">
+		<div class="box5img" id="AddBox5Img" rel="F">
 			<img src="/newbackstage/images/pic6_1.jpg" class="pointer" id="AddPic">
 		</div>
 	</div>
@@ -124,6 +124,7 @@ $(document).ready(function(){
 	//编辑图片
 	$("span.edit").click(function(){
 		$("#AddPic").click();
+		rel=$(this).parent().attr("rel");
 	});
 	$("#AddPic").click(function(){
 		var h1=$(window).height(),
@@ -137,7 +138,7 @@ $(document).ready(function(){
 		$("#UpImg").removeAttr("style").attr("src","/newbackstage/images/btn9.jpg");
 		$("#SmallImgDiv img").attr("src","/newbackstage/images/pic23.jpg");
 		$("#UpImg").slideDown(500);
-		
+		rel=$(this).parent().attr("rel");
 	});
 	
 	//动画
