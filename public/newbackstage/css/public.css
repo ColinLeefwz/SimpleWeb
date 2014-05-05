@@ -607,6 +607,9 @@ box-shadow:1px 0px 10px #fff;z-index:122;font-family: 微软雅黑;font-size: 16
 #Sort .sortcon{width:100%;margin:30px 0px 40px 0px;}
 #Sort .scbox{width:120px;height:120px;float:left;margin-right:10px;}
 #Sort .scbox img{width:100%;}
+#Sort .changeScbox{width:119px;height:119px;border:1px dotted #ccc;}
+.scopy{width:120px;height:120px;position:absolute;display:none;z-index:99;}
+.scopy img{width:100%;}
 
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
 .tab1 td{padding-bottom:20px;}

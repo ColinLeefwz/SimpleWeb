@@ -205,8 +205,7 @@ function NoCut(){
 function ImgCut(options, callback) {
     var
     _class  = ImgCut ,
-    _ops    = options
-    ;
+    _ops    = options;
 
     if (!$.isPlainObject(options)) {
         return false ;

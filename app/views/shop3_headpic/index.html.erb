@@ -10,7 +10,7 @@
 
 <% end %>
 <div id="BG"></div>
-
+<div class="scopy"><span></span></div>
 <div class="con relative mh650 visible">
 	<div class="title1 w720 m_auto"><h2 class="f18">商家主页头图管理</h2></div>
 	<div class="box5 w720">
@@ -90,12 +90,12 @@
 	<div id="Sort">
 		<h2>请用鼠标拖拽排序，保存后商家主页的头图将按此顺序轮滑</h2>
 		<div class="sortcon">
-			<div class="scbox"><img src="/newbackstage/images/pic39.jpg"></div>
-			<div class="scbox"><img src="/newbackstage/images/pic40.jpg"></div>
-			<div class="scbox"><img src="/newbackstage/images/pic39.jpg"></div>
-			<div class="scbox"><img src="/newbackstage/images/pic40.jpg"></div>
-			<div class="scbox"><img src="/newbackstage/images/pic39.jpg"></div>
-			<div class="clear1"></div>
+			<div class="scbox" rel="0"><img src="/newbackstage/images/pic39.jpg"></div>
+			<div class="scbox" rel="1"><img src="/newbackstage/images/pic40.jpg"></div>
+			<div class="scbox" rel="2"><img src="/newbackstage/images/pic39.jpg"></div>
+			<div class="scbox" rel="3"><img src="/newbackstage/images/pic40.jpg"></div>
+			<div class="scbox" rel="4"><img src="/newbackstage/images/pic39.jpg"></div>
+			<span class="clear1"></span>
 		</div>
 		<a class="btn2 l">保 存</a>
 		<a class="btn3 l ml20" onclick="$('#Sort').css('display','none')">取 消</a>
@@ -192,7 +192,54 @@ function View(obj){
 	}
 	$("#Sort").css("display","none");
 }
-function Sort(obj){	
+var mouseclick="down";
+function Sort(){	
 	$("#Sort").fadeIn();
+	var str="";
+	for(var i=0;i<=$(".box5img").length-2;i++){
+		str+="<div class='scbox'><img src='"+$(".box5img").eq(i).find("img").attr("src")+"'/></div>";
+	}
+	$("div.sortcon").html(str+"<span class='clear1'></span>");
+	$("div.sortcon div").click(function(e){
+		var obj=$(this);
+		obj.addClass("changeScbox");
+		var copy=obj.find("img");
+		$(".scopy").children().replaceWith(copy).end().css("display","block");
+		var x = parseInt(e.pageX);
+		var y = parseInt(e.pageY);
+		$(".scopy").css({"left":(x-60),"top":(y-60)});
+		x = ($(".main").width()-$("#Sort").width())/2-90;
+
+		$(document).mousemove(function(ev){
+			var x1 = parseInt(ev.pageX);
+			var y1 = parseInt(ev.pageY);
+			$(".scopy").css({"left":(x1-60),"top":(y1-60)});
+			var bj=parseInt((x1-x)/120)-1;
+			
+			if(obj.attr("rel")==0&&bj<0){return false;}
+			if(obj.attr("rel")==($("div.sortcon div").length-1)&&bj>($("div.sortcon div").length-1)){return false;}
+			if(bj<obj.attr("rel")){
+				if(bj<0){bj=0}
+				$("div.sortcon div").eq(bj).before(obj);
+			}else if(bj>obj.attr("rel")){
+				if(bj>$("div.sortcon div").length-1){bj=$("div.sortcon div").length-1}
+				$("div.sortcon div").eq(bj).after(obj);
+			}
+			for(i=0;i<$("div.sortcon div").length;i++){
+				$("div.sortcon div").eq(i).attr("rel",i);
+			}
+		});
+		$(".scopy").bind("click",function(){
+			if(mouseclick=="down"){
+				mouseclick="up";
+			}else if(mouseclick=="up"){
+				mouseclick="down";
+				obj.html(copy).removeClass("changeScbox");
+				$(".scopy").html("<span></span>").css("display","none");
+				$(document).unbind("mousemove");
+			}
+		});
+			
+	});
 }
 </script>
