@@ -1,36 +1,46 @@
-<div class="container" id="admin_user_reports">
-  <div class="row">
-    <div class="col-md-2 text-right">
+<style>
+  .md_addr{margin:10px !important; position: relative;}
+  .md_addr_lable{ width: 140px !important; margin-right: -140px !important;}
+  .md_addr_text{ margin-left: 140px !important;}
+  .md_addr_text2{ left: 200px; position: absolute;}
+  .customer_info ul li{ margin-bottom: 12px;}
+</style>
+<div class="title1 mb30">
+  <h2 class="f18">地点报错管理</h2>
+</div>
+<div class="container customer_info" id="admin_user_reports" style="width:760px; padding:40px 20px; margin-left:0px;">
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
       商家ID:
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 md_addr_text">
       <%= @report.shop_id %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-2 text-right">
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
       地点名称:
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 md_addr_text">
       <%= @report.shop_name %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-2 text-right">
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
       地点地址:
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 md_addr_text">
       <%= @report.shop_addr %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-2 text-right">
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
       百度经纬度:
     </div>
-    <div class="col-md-3" id="lob">
+    <div class="col-md-3 md_addr_text hidden" id="lob">
       <% if @report.shop.lo && @report.shop.lo.first.is_a?(Array)%>
         <% @report.shop.lo.each do |lo| %>
-          <%= lo %>,<br>
+          <%= lo %>
         <% end %>
       <% else %>
         <%= @report.shop.lo %>
@@ -39,64 +49,59 @@
     <div class="hidden report-id">
       <%= @report.shop.id %>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 md_addr_text" style="width:20%;">
       <a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank">查找百度经纬度</a>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-2 text-right">
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
       计算经纬度:
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 md_addr_text" style="float:left;">
       <input type="text" id="lob2" placeholder="输入查找到的百度经纬度"/>
       <span id="warming"></span>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 md_addr_text md_addr_text2">
       <a herf="javascropt:void(0);" id="calculate-distance">计算距离</a>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-2 text-right">
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
       偏离距离:
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 md_addr_text">
       <span id="distance"></span>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row md_addr">
     <ul class="nav nav-tabs">
-      <li><a href="#change-coordinate" data-toggle="tab">更正地点坐标</a></li>
+      <li class="active"><a href="#change-coordinate" data-toggle="tab">更正地点坐标</a></li>
       <li><a href="#new-corrdinate" data-toggle="tab">新增地点坐标</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="change-coordinate">
-        <div class="row">
-          <div class="col-md-2 text-right">
+        <div class="row" style="margin:20px 0px;">
+          <div class="col-md-2 text-right md_addr_lable">
             更正坐标:
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 md_addr_text" style="float:left">
             <input type="text" id="change-coordinate-val" value="">
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 md_addr_text md_addr_text2">
             <button type="button" id="change-corrdinate-submit" class="btn btn-primary  btn-xs">更正</button>
-          </div>
-          <div class="col-md-5">
-            <p>
-              支持多百度坐标,分号隔开.<br>例:120.108,30.28;121.108,31.28
-            </p>
           </div>
         </div>
       </div>
       <div class="tab-pane" id="new-corrdinate">
-        <div class="row" id="new-coordinate">
-          <div class="col-md-2 text-right">
+        <div class="row" id="new-coordinate" style="margin:20px 0px;">
+          <div class="col-md-2 text-right md_addr_lable">
             新增坐标:
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 md_addr_text" style="float:left">
             <input type="text" id="new-coordinate-val">
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 md_addr_text md_addr_text2">
             <button type="button" id="new-corrdinate-submit" class="btn btn-primary  btn-xs">新增</button>
           </div>
         </div>
@@ -105,7 +110,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-2 text-right">
+    <div class="col-md-2">
       <%= link_to "返回", "/admin_user_reports/untreated", class: "btn btn-default" %>
     </div>
   </div>

@@ -22,7 +22,7 @@
       <td valign="middle"><%= report.sid %></td>
       <td valign="middle">
         <% if session[:city_code].present? %>
-          <%= report.shop_name %>
+          <span class="shopname"><%= report.shop_name %></span>
         <% else %>
           <%= link_to report.shop_name, "/admin_shops/show?id=#{report.shop_id}" ,class: "shopname" %>
         <% end %>
@@ -99,8 +99,8 @@
     $(".report-btn").click(function(event) {
       var flag = false;
       var shopname = $(this).parent().parent().find('.shopname').text();
-      $('.m-tips-msg').find('p').html('确定上传此商家('+shopname+')地点报错？');
-      $('.m-tips-msg').find('span').html('（注：上传地点报错,此操作无法撤销!）');
+      $('.m-tips-msg').find('p').html('确定上报此商家('+shopname+')地点报错？');
+      $('.m-tips-msg').find('span').html('（注：上报地点报错,此操作无法撤销!）');
       $('#filter2').show();
       var ahref = $(this).attr('href');
       $('#Apply_btn').attr('href',ahref)
