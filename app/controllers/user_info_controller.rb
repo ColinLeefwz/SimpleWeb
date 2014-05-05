@@ -111,7 +111,26 @@ class UserInfoController < ApplicationController
     end
     render :json => ret.to_json
   end
+
+  def other_trace
+    page = params[:page].to_i
+    pcount = params[:pcount].to_i
+    page = 1 if page==0
+    pcount = 5 if pcount==0
+    #TODO: 根据隐私控制能看多少条
+    checkins = User.find_by_id(params[:other_id]).checkins.skip((page-1)*pcount).limit(pcount)
+    cins = checkins.map {|x| x.to_trace(params[:ver])}
+    if params[:hash]
+      ret = {:pcount => checkins.size}
+      ret.merge!( {:data => cins})
+    else
+      ret = [{:pcount => checkins.size}]
+      ret << {:data => cins}
+    end
+    render :json => ret.to_json
+  end
   
+    
   def get_self
     hash = session_user_no_cache.output_self
     wbexpire = $redis.get("wbexpire#{session[:user_id]}").to_i
