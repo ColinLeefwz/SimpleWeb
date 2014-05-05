@@ -29,9 +29,8 @@ class AdminUserReportsController < ApplicationController
     end
 
     hash.merge!({name: /#{params[:name]}/}) if params[:name].present?
-    hash.merge!({city: session[:city_code]}) if session[:city_code]
-    if session[:city_code]
-      @select_option = [['全部',''], ['已处理','1'], ['忽略', '2'], ['上报', 3]]
+    if session[:city_code].present?
+      @select_option = [['全部',''], ['已处理','1'], ['忽略', '2'], ['上报', '3']]
       hash.merge!({city: session[:city_code]})
     else
       @select_option = [['全部',''], ['已处理','1'], ['忽略', '2']]
