@@ -33,6 +33,8 @@
         <% else %>
           <%= link_to report.user_name, "/admin_users/show?id=#{report.user_id}"%>
         <% end %>
+        <%= "(可信)" if $redis.sismember('KxUsers', report.user_id)%>
+        <%= "(授权)" if $redis.sismember('CoUsers', report.user_id) %>
       </td>
       <td valign="middle"><%= report.type %></td>
       <td valign="middle"><%= report.des %></td>
