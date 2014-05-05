@@ -574,9 +574,9 @@ class Shop
     coupons = []
     partners.each do |partner|
       shop = Shop.find_by_id(partner[0])
-      coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid, :single => true) } if shop
+      coupons += shop.checkin_eday_coupons.select { |c| c.allow_send_checkin?(uid) } if shop
     end
-    return coupons
+    return coupons.sample(5)
   end
 
 
