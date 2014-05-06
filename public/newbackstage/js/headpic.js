@@ -1,5 +1,6 @@
 ﻿// JavaScript Document
 var emObj, sidObj, documentHeight, windowHeight, docwidth,top1,rel="F";
+var headpic_id;
 $(document).ready(function(){
     emObj=$("#EM").html()
     sidObj=$("#SmallImgDiv").html();
@@ -122,9 +123,42 @@ function ImageUpload(target){// 头图管理
 
                     $("#Btn2").unbind('click').click(function () {
                         var result = cut.getResult() ;
+                        var num=$("div.box5img").length;
 
                         var pdata = {
                             path: data
+                        }
+                        // ajax 完成后的扫尾
+                        var callback = function(data){
+                            $("#UpImg,#BG").css("display","none");
+                            var num=$("div.box5img").length;
+                            
+                            $("span.edit").live("click",function(){ 
+                                $("#AddPic").click();
+                                rel=$(this).parent().attr("rel");
+                                headpic_id = $(this).parent().attr('reldata')
+                            });
+
+                            $("span.del").live("click",function(){
+                                var obj=$(this).closest("div.box5img");
+                                obj.hide(function(){
+                                    obj.remove();
+                                    $("#AddBox5Img").css("display","block");
+                                });
+                            });
+                            if(num>=5){$("#AddBox5Img").css("display","none");}
+                            WindowResizeA();
+                            $("#UpImgFile").val("");
+                            $("#EM").html(emObj).removeAttr("style");
+                            $("#SmallImgDiv").html(sidObj);
+                            if(/msie/i.test(ua)){
+                                $(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css("display","block");
+                            }
+                            var path=$("#EM img").attr("src");
+                            if(path="images/btn9.jpg"){
+                                $("#Btn19").addClass("none");
+                                $(".filebox14, .filebox15").addClass("none");
+                            }
                         }
 
                         for (obj in result) {
@@ -135,44 +169,32 @@ function ImageUpload(target){// 头图管理
                         //                                $("#UploadForm").append("<input type='hidden' name='"+ obj +"' value='" + result[obj]  +"'/>")
                         }
                         // -----------ajax 提交图片 控制器端剪裁------------------------------------------------
-                        $.post("/shop3_headpic/create", pdata , function(data){
-							if(rel!="F"){
-								$("div.box5img").eq(rel).find("img").attr("src",data["url"]+"?t="+ (new Date()));
-								rel=="F";
-							}else{
-								var obj="<div class='box5img' rel="+(num-1)+"><img src='"+data["url"]+"?t="+ (new Date())+"'><span class='edit'>修改图片</span><span class='del'>删除图片</span></div>";
-								$("#AddBox5Img").before(obj);
-								
-							}
-							$("#UpImg,#BG").css("display","none");
-							var num=$("div.box5img").length;
-							
-							$("span.edit").live("click",function(){ 
-								$("#AddPic").click();
-								rel=$(this).parent().attr("rel");
-							});
-							$("span.del").live("click",function(){
-								var obj=$(this).closest("div.box5img");
-								obj.hide(function(){
-									obj.remove();
-									$("#AddBox5Img").css("display","block");
-								});
-							});
-							if(num>=5){$("#AddBox5Img").css("display","none");}
-                            WindowResizeA();
-							$("#UpImgFile").val("");
-							$("#EM").html(emObj).removeAttr("style");
-							$("#SmallImgDiv").html(sidObj);
-							if(/msie/i.test(ua)){
-								$(".filebox6, .filebox7, .filebox8, .filebox9, .filebox10, .filebox11").css("display","block");
-							}
-							var path=$("#EM img").attr("src");
-							if(path="images/btn9.jpg"){
-								$("#Btn19").addClass("none");
-								$(".filebox14, .filebox15").addClass("none");
-							}
-                        })
 
+                        if(rel!="F"){   //编辑
+                            pdata['id'] = headpic_id;
+                            $.post("/shop3_headpic/update", pdata , function(data){
+                                $("div.box5img").eq(rel).find("img").attr("src",data["url"]+"?t="+ (new Date()));
+                                rel=="F";
+                                callback(data)
+                            })
+                        }else{   //添加
+                            $.post("/shop3_headpic/create", pdata , function(data){
+                                var obj="<div class='box5img' rel="+(num-1)+"><img src='"+data["url"]+"?t="+ (new Date())+"'><span class='edit'>修改图片</span><span class='del'>删除图片</span></div>";
+                                alert(2)
+                                $("#AddBox5Img").before(obj);
+                                callback(data)
+                            })
+                        }
+
+      //                   $.post("/shop3_headpic/create", pdata , function(data){
+						// 	if(rel!="F"){
+								
+						// 	}else{
+								
+								
+						// 	}
+						// })
+                     
                     // --------------------------------------------------
 
                     });

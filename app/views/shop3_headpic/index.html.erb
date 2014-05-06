@@ -61,7 +61,7 @@
 
 	<div class="box5 box5change">
     <% @headpics.each_with_index do |headpic, index|%>
-      <div class="box5img" rel='<%= index %>'>
+      <div class="box5img" rel='<%= index %>' reldata='<%= headpic.id %>'>
         <%= image_tag headpic.img_url %>
         <span class="edit">修改图片</span>
         <span class="del">删除图片</span>
@@ -114,17 +114,25 @@ $(document).ready(function(){
     }
 	
 	//删除图片
-	$("span.del").click(function(){
-		var obj=$(this).closest("div.box5img");
-		obj.hide(function(){
-			$("#AddBox5Img").css("display","block");
-			obj.remove();
-		});
-	});
+	$("span.del").click(del);
+
+
+  function del(){
+    var obj=$(this).closest("div.box5img");
+    var id = obj.attr("reldata")
+    $.get('/shop3_headpic/delete',{id: id}, function(){
+      obj.hide(function(){
+        $("#AddBox5Img").css("display","block");
+        obj.remove();
+      });
+    });
+  }
+
 	//编辑图片
 	$("span.edit").click(function(){
 		$("#AddPic").click();
 		rel=$(this).parent().attr("rel");
+    headpic_id = $(this).parent().attr('reldata')
 	});
 	$("#AddPic").click(function(){
 		var h1=$(window).height(),
