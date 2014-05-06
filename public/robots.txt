@@ -9,4 +9,4 @@
  Disallow: /javascripts
  Disallow: /newbackstage
  Disallow: /phone*
- Disallow: /stylesheets
+ Disallow: /stylesheets 
