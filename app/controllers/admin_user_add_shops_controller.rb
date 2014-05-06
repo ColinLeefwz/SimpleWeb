@@ -122,8 +122,9 @@ class AdminUserAddShopsController < ApplicationController
   def del
     @shop = Shop.find(params[:id])
     @shop.shop_del
-    @shop.update_attribute(:i, true)
-    render :js => "rmshop('#{@shop.id.to_i}');"
+    if @shop.update_attribute(:i, true)
+      render json: {result: true}
+    end
   end
 
   def cancel_delete
