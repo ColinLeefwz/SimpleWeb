@@ -14,8 +14,8 @@
         $("#dig").css({"display":"block"});
         $("#sid").val(hid)
         $("#res").css("background-color", "");
-        $("#boxss").css({"top":($(document).scrollTop()+high-$("#boxss").height()/2-10)+"px"}).fadeIn();
-		$("#boxss2").css({"top":($(document).scrollTop()+high-$("#boxss2").height()/2-10)+"px"}).hide();
+        $("#boxss").fadeIn();
+		$("#boxss2").hide();
       }
       function ajaxReport(uid){
         type = $("#radio_button").val();
@@ -74,14 +74,11 @@
           </ul>
           <input type="hidden" name="radio_button" id="radio_button"/>
 		  <div class="clear1"></div>
-          <input class="tex" type="text" name="des" id="des" value="要不要说明一下呢？" onclick="$(this).val('')"/>
+          <input class="tex mb30" type="text" name="des" id="des" value="要不要说明一下呢？" onclick="$(this).val('')"/>
           <input type="hidden" name="sid" id="sid">
-
-          <div class="clear1"></div>
-          <div class="line mt10"></div>
           <div class="clear"></div>
-          <input class="btn7 ml20 mb20" type="submit" value=" " onclick="ajaxReport('<%= params[:uid] %>')">
-          <input class="btn8 mr20 mb20" type="button" value=" " onclick="hidReport()">
+		  <button class="btn7 ml20 mb20 l" onclick="ajaxReport('<%= params[:uid] %>')">发送</button>
+		  <button class="btn8 mr20 mb20 r" onclick="hidReport()">取消</button>
         </div>
 		<div id="boxss2">信息已发送</div>
     </div>
