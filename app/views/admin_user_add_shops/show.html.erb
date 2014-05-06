@@ -45,7 +45,7 @@
         window.close();
       })
     });
-    
+
     $('#shopFrom').submit(function()
     {
       var options = {
@@ -68,7 +68,83 @@
   }
 )
 </script>
-<h1>商家处理</h1>
+
+<div class="customer_info" style="width:760px; padding:40px 20px;">
+
+  <%= form_for(@shop, :url => "/admin_user_add_shops/update?id=#{@shop.id}") do |f| %>
+    <div class="row md_addr">
+      <div class="col-md-4 text-right md_addr_lable">
+        商家ID:
+      </div>
+      <div class="col-md-8 md_addr_text">
+        <span class="md_addr_txt"><%= @shop.id %></span>
+      </div>
+    </div>
+    <div class="row md_addr">
+      <div class="col-md-4 text-right md_addr_lable">
+        地点名称:
+      </div>
+      <div class="col-md-8 md_addr_text">
+        <%= f.text_field :name ,class:"md_addr_txt"%>
+      </div>
+    </div>
+
+    <div class="row md_addr">
+      <div class="col-md-4 text-right md_addr_lable">
+        地点地址:
+      </div>
+      <div class="col-md-8 md_addr_text">
+        <%= f.text_field :addr, class:"md_addr_txt"%>
+      </div>
+    </div>
+
+    <div class="row md_addr">
+      <div class="col-md-4 text-right md_addr_lable">
+        地点电话:
+      </div>
+      <div class="col-md-8 md_addr_text">
+        <%= f.text_field :tel ,class:"md_addr_txt" %>
+      </div>
+    </div>
+
+    <div class="row md_addr">
+      <div class="col-md-4 text-right md_addr_lable">
+        地点类型:
+      </div>
+      <div class="col-md-8 md_addr_text">
+        <%= f.select :t,options_for_select(import_t, @shop.t)  %>
+      </div>
+    </div>
+
+    <div class="row md_addr">
+      <div class="col-md-4 text-right md_addr_lable">
+        百度经纬度:
+      </div>
+      <div class="col-md-8 md_addr_text">
+        <%= f.text_field :lob, class:"md_addr_txt" %>
+      </div>
+    </div>
+
+    <div class="row md_addr">
+      <div class="col-md-4 text-right md_addr_lable" style="line-height:34px;">
+        <%= f.submit "保存", class: "btn btn-primary" %>
+      </div>
+      <div class="col-md-4 md_addr_text">
+        <%= link_to "取消", "/admin_user_add_shops/untreated", class: "btn btn-default" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <h1>商家处理</h1>
 
 <p>
   <span style="padding: 0 5px;"> <%= link_to '去百度地图查看',"http://api.map.baidu.com/lbsapi/getpoint/index.html", :target => "blan" %> </span>
@@ -99,7 +175,7 @@
   <p>
     <b>用户选择的商家类型:</b>
     <%= @shop.utype %>
-  </p>  
+  </p>
   <p>
     <b>区号:</b>
     <%= @shop.city %>
@@ -176,6 +252,6 @@
   <p>
     <%= f.submit "保存" %>
   </p>
-<% end %>
+<% end %> -->
 
 

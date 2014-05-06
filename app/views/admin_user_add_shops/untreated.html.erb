@@ -38,10 +38,10 @@
       <td valign="middle">
         <%= shop.first_checkin_time %>
       </td>
-      <td valign="middle"><%= link_to '审核', "/admin_user_add_shops/show?id=#{shop.id.to_i}" unless shop.i %></td>
-      <td valign="middle"><%= link_to '标记删除', "#", :onclick => "ajaxDel('#{shop.id.to_i}', $(this))" unless shop.i %></td>
+      <td valign="middle"><%= link_to '审核', "/admin_user_add_shops/show?id=#{shop.id.to_i}" %></td>
+      <td valign="middle"><%= link_to '标记删除', "#", :onclick => "ajaxDel('#{shop.id.to_i}', $(this))" %></td>
       <% if session[:city_code].nil? %>
-        <td valign="middle"><%= link_to '直接删除', "#", :onclick => "ajaxDes('#{shop.id.to_i}', $(this))" unless shop.i %></td>
+        <td valign="middle"><%= link_to '直接删除', "#", :onclick => "ajaxDes('#{shop.id.to_i}', $(this))" %></td>
       <% end %>
     </tr>
   <% end %>

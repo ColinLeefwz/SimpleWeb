@@ -21,7 +21,7 @@ class AdminUserAddShopsController < ApplicationController
   end
 
   def untreated
-    hash = {creator: {"$ne" => nil}, t: {"$exists" => false }}
+    hash = {creator: {"$ne" => nil}, i: {"$exists" => false }}
     @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
   end
 
@@ -57,29 +57,17 @@ class AdminUserAddShopsController < ApplicationController
 
   def update
     @shop = Shop.find(params[:id])
-    shop = Shop.new(params[:shop])
-    unless shop.lob.blank?
-      lobs = shop.lob.split(/[;；]/)
-      @shop.lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
-      @shop.lo = @shop.lob.map{|m| Shop.lob_to_lo(m)}
-      @shop.unset(:lob)
+    lobs = params[:shop][:lob].split(/[;；]/)
+    if lobs.count == 1
+      lob = lobs.first.split(/[,，]/).map{|s| s.to_f}.reverse
     else
-      shop.lob = @shop.lo_to_lob.reverse.join(',')
+      lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
     end
 
-
-    unless params[:shop][:addr].blank?
-      info = @shop.info || ShopInfo.new()
-      info._id = @shop.id
-      info.addr = params[:shop][:addr]
-      info.save
-    end
-
-    #    @shop.addr = shop.addr
-    @shop.name = shop.name
-    @shop.t = shop.t
-    @shop.i = true
-    if @shop.save
+    attrs = [:name, :addr, :tel, :t].inject({}){|_,i| _.merge({i=> params[:shop][i]})}
+    attrs[:lo] = lob
+    attrs[:i] = true
+    if @shop.update_attributes(attrs)
       Lord.assign(@shop.id,@shop.creator, true)
       pshop = Shop.find_by_id(params[:pid])
       if pshop
@@ -88,10 +76,47 @@ class AdminUserAddShopsController < ApplicationController
         pshop.merge_subshops_locations
       end
       @shop = Shop.find_primary(@shop._id)
-      render :json => {'name' => @shop.name, 'lo' => @shop.lo, 'addr' => @shop.addr, 'lob' => shop.lob, 'st' => @shop.show_t}
+      render :json => {'name' => @shop.name, 'lo' => @shop.lo, 'addr' => @shop.addr, 'lob' => @shop.lob, 'st' => @shop.show_t}
     else
       render :action => :edit
     end
+
+
+    # shop = Shop.new(params[:shop])
+    # unless shop.lob.blank?
+    #   lobs = shop.lob.split(/[;；]/)
+    #   @shop.lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
+    #   @shop.lo = @shop.lob.map{|m| Shop.lob_to_lo(m)}
+    #   @shop.unset(:lob)
+    # else
+    #   shop.lob = @shop.lo_to_lob.reverse.join(',')
+    # end
+
+
+    # unless params[:shop][:addr].blank?
+    #   info = @shop.info || ShopInfo.new()
+    #   info._id = @shop.id
+    #   info.addr = params[:shop][:addr]
+    #   info.save
+    # end
+
+    # #    @shop.addr = shop.addr
+    # @shop.name = shop.name
+    # @shop.t = shop.t
+    # @shop.i = true
+    # if @shop.save
+    #   Lord.assign(@shop.id,@shop.creator, true)
+    #   pshop = Shop.find_by_id(params[:pid])
+    #   if pshop
+    #     pshop.shops = pshop.shops.to_a << @shop.id.to_i unless pshop.shops.to_a.include?(@shop.id.to_i)
+    #     pshop.save
+    #     pshop.merge_subshops_locations
+    #   end
+    #   @shop = Shop.find_primary(@shop._id)
+    #   render :json => {'name' => @shop.name, 'lo' => @shop.lo, 'addr' => @shop.addr, 'lob' => shop.lob, 'st' => @shop.show_t}
+    # else
+    #   render :action => :edit
+    # end
   end
 
   def del
