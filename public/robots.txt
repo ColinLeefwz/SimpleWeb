@@ -5,9 +5,8 @@
 # Disallow: /
 
  User-Agent: *
+ Disallow: /public
  Disallow: /javascripts
  Disallow: /newbackstage
  Disallow: /phone*
- Disallow: /stylesheets
- Disallow: upload_photo2.html
- Disallow: upload_photo.html
+ Disallow: /stylesheets 

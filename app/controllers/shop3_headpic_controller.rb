@@ -14,6 +14,7 @@ class Shop3HeadpicController < ApplicationController
     crop(path)
     @headpic.img = File.open("public" + path)
     if @headpic.save
+      FileUtils.rm("public" + path)
       render :json => {url: @headpic.img_url}
     else
       render :json => 0

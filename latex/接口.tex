@@ -1018,6 +1018,33 @@ photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_th
 \end{figure}
 
 
+\subsection{查看其它用户的足迹}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/other\_trace} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必填 &  登录用户的id\\ 
+\hline
+ other\_id  & 字符串 & 必填 &  被查看用户的id\\ 
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为5\\ 
+  \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\
+  \hline
+ ver  & 字符串 & 可选 & 当前客户端版本\\ 
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
 
 \subsection{删除当前登录用户的一个签到足迹}
 
