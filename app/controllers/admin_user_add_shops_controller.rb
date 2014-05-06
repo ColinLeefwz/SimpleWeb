@@ -2,7 +2,7 @@
 class AdminUserAddShopsController < ApplicationController
   include Paginate
   before_filter :admin_authorize
-  layout "admin"
+  layout "agent"
 
   def index
     hash = {_id:{"$gt" => 21000000}, creator: {"$ne" => nil}}
@@ -13,14 +13,15 @@ class AdminUserAddShopsController < ApplicationController
       hash.merge!({t: {"$gte" => 0}})
     when '2'
       hash.merge!({del: 1})
-    when '3'
-      hash.merge!({i: true})
-    else
-      hash.merge!({i: nil})
     end
 
     hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
     hash.merge!({city: params[:city]}) unless params[:city].blank?
+    @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
+  end
+
+  def untreated
+    hash = {creator: {"$ne" => nil}, t: {"$exists" => false }}
     @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
   end
 

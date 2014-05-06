@@ -1,0 +1,50 @@
+<div class="title1 mb30">
+  <h2 class="f18">地点创建审核</h2>
+</div>
+<table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40 f13 agent_tab">
+  <tr id="Tr0">
+    <th width="150">商家ID</th>
+    <th width="200">商家名称</th>
+    <th width="120">行政划分</th>
+    <th width="150">创建者</th>
+    <th width="200">创建时间</th>
+    <th width="150">处理方式</th>
+    <th width="150"></th>
+    <th width="150"></th>
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td valign="middle"><%= shop.id %></td>
+      <td valign="middle">
+        <% if session[:city_code].present? %>
+          <span class="shopname"><%= shop.name %></span>
+        <% else %>
+          <%= link_to shop.name, "/admin_shops/show?id=#{shop.id}" ,class: "shopname" %>
+        <% end %>
+      </td>
+      <td valign="middle">
+        <%= shop.city_fullname %>
+      </td>
+      <td valign="middle">
+        <% if session[:city_code].present? %>
+          <%= shop.user_name %>
+        <% else %>
+          <%= link_to shop.user_name, "/admin_users/show?id=#{shop.user_id}" %>
+        <% end %>
+        <%= "(可信)" if $redis.sismember('KxUsers', shop.user_id)%>
+        <%= "(授权)" if $redis.sismember('CoUsers', shop.user_id) %>
+      </td>
+      <td valign="middle">
+        <%= shop.first_checkin_time %>
+      </td>
+      <td valign="middle"><%= link_to '审核', "/admin_user_add_shops/show?id=#{shop.id.to_i}" unless shop.i %></td>
+      <td valign="middle"><%= link_to '标记删除', "#", :onclick => "ajaxDel('#{shop.id.to_i}', $(this))" unless shop.i %></td>
+      <% if session[:city_code].nil? %>
+        <td valign="middle"><%= link_to '直接删除', "#", :onclick => "ajaxDes('#{shop.id.to_i}', $(this))" unless shop.i %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>

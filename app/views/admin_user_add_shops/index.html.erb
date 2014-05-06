@@ -1,19 +1,87 @@
-<h1>地点管理</h1>
+<div class="title1 mb30">
+  <h2 class="f18">地点报错管理</h2>
+</div>
 
-<%= javascript_include_tag "jquery-1.6.2.min.js" %>
 
-<%= form_tag '/admin_user_add_shops',:method =>:get do %>
-  <p>
-    名称:<%= text_field_tag :name, params[:name] %>
-    区号: <%= text_field_tag :city, params[:city], :size => 10 %>
-    <br/>
-    处理方式：<%= select_tag :flag,options_for_select([['所有地点','0'],['编辑地点','1'],['标记删除','2'], ['忽略','3']],params[:flag])  %>
-    <br/>
-    <%= submit_tag "查 找" %>
-  </p>
+<%= form_tag '/admin_user_add_shops',:method =>:get, class: "form-inline" do %>
+  <div class="form-group">
+    <span>商家名称:</span>
+    <%= text_field_tag :name, nil, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <span>地点类型：</span>
+    <%= select_tag :t, options_for_select(import_t, params[:t]), class: "form-control", id: nil %>
+  </div>
+  <div class="form-group">
+    <span>操作结果：</span>
+    <%= select_tag :flag, options_for_select([['全部','0'],['审核通过','1'],['标记删除','2']], params[:flag]), class: "form-control"  %>
+  </div>
+   <div  class="form-group">
+     <%= submit_tag "查 找", class: "btn9 r mr20" %>
+  </div>
 <% end %>
 
-<table border="1">
+<table cellspacing="0" cellpadding="0" class="tab2 mt40 f13 agent_tab">
+  <tr id="Tr0">
+    <th width="150">商家ID</th>
+    <th width="200">商家名称</th>
+    <th width="120">报错人ID</th>
+    <th width="150">地点类型</th>
+    <th width="200">操作结果</th>
+    <% unless session[:city_code] %>
+      <th width="120">查看</th>
+    <% end %>
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td valign="middle"><%= shop.id %></td>
+      <td valign="middle">
+        <% if session[:city_code].present? %>
+          <%= shop.name %>
+        <% else %>
+          <%= link_to shop.name, "admin_shops/show?id=#{shop.id}" %>
+        <% end %>
+      </td>
+      <td valign="middle">
+        <% if session[:city_code].present? %>
+          <%= shop.user_name %>
+        <% else %>
+          <%= link_to shop.user_name, "admin_users/show?id=#{shop.user_id}" %>
+        <% end %>
+        <%= "(可信)" if $redis.sismember('KxUsers', shop.user_id)%>
+        <%= "(授权)" if $redis.sismember('CoUsers', shop.user_id) %>
+      </td>
+      <td valign="middle"><%= shop.type %></td>
+      <td valign="middle">
+        <%= thand(shop) %>
+      </td>
+      <% unless session[:city_code] %>
+        <td valign="middle"><%= link_to '查看', "/admin_user_add_shops/show?id=#{shop.id} "%></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>
+<script type="text/javascript">
+  $(function(){
+    $(".ignore-link").click(function(event) {
+      /* Act on the event */
+      if(!confirm("确定忽略？")) {
+        event.preventDefault();
+      }
+    });
+
+    $(".delete-btn").click(function(event) {
+      if(!confirm("确定删除？")) {
+        event.preventDefault();
+      }
+    })
+  })
+
+</script>
+
+<!-- <table border="1">
   <tr>
     <th>id</th>
     <th>名称</th>
@@ -51,7 +119,7 @@
 <br />
 <br />
 <%= generate_paginate3.html_safe %>
-<br />
+<br /> -->
 
 
 
