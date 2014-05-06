@@ -67,15 +67,18 @@
         <span class="del">删除图片</span>
       </div>
     <% end %>
-		<div class="box5img" id="AddBox5Img" rel="F">
-			<img src="/newbackstage/images/pic6_1.jpg" class="pointer" id="AddPic">
-		</div>
+    <% if @headpics.length < 5 %>
+  		<div class="box5img" id="AddBox5Img" rel="F">
+  			<img src="/newbackstage/images/pic6_1.jpg" class="pointer" id="AddPic">
+  		</div>
+    <% end %>
 	</div>
 	<div id="ViewPic">
 		<div id="DHImage" class="dhimage">
 			<ul>
-				<li><a><img src="/newbackstage/images/pic40.jpg"/></a></li>
-				<li><a><img src="/newbackstage/images/pic41.jpg" /></a></li>
+        <% @headpics.each_with_index do |headpic, index|%>
+          <li><a> <%= image_tag headpic.img_url %></a></li>
+        <% end %>
 			</ul>
 		</div>
 		<a id="Prev" class="prevbtn" href="javascript:void(0)"></a>
