@@ -10,11 +10,15 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
     <script type="text/javascript">
       function showDig(hid){
-        var high=$(window).height()/2;
         $("#dig").css({"display":"block"});
         $("#sid").val(hid)
         $("#res").css("background-color", "");
-        $("#boxss").css("top",($(window).height()-320)/2+"px").fadeIn();
+		var ua=navigator.userAgent.toLowerCase();
+		if(/iphone/i.test(ua)){
+			$("#boxss").css("top",($(window).height()-320)/3+"px").fadeIn();		
+		}else{
+			$("#boxss").css("top",($(window).height()-320)/2+"px").fadeIn();		
+		}
 		$("#boxss2").hide();
       }
       function ajaxReport(uid){

@@ -8,12 +8,12 @@
     var _p = document.getElementsByTagName('p')[0];
 	
     var pointCoordinates = [
-		[40,40],
-		[[20,20],[60,60]],
-		[[20,20],[40,40],[60,60]],
-		[[20,20],[20,60],[60,20],[60,60]],
-		[[20,20],[20,60],[40,40],[60,20],[60,60]],
-		[[20,20],[20,40],[20,60],[60,20],[60,40],[60,60]]
+		[33.5,33.5],
+		[[16.75,16.75],[50.25,50.25]],
+		[[16.75,16.75],[33.5,33.5],[50.25,50.25]],
+		[[16.75,16.75],[16.75,50.25],[50.25,16.75],[50.25,50.25]],
+		[[16.75,16.75],[16.75,50.25],[33.5,33.5],[50.25,16.75],[50.25,50.25]],
+		[[16.75,16.75],[16.75,33.5],[16.75,50.25],[50.25,16.75],[50.25,33.5],[50.25,50.25]]
 	];									//单个骰子的点数
 
     var diceCoordinates = [
@@ -23,6 +23,9 @@
 		[60,120],
 		[180,120],
 	];									//骰子的坐标
+
+    var pic = document.getElementById("dice_bg");
+    var pic_num = document.getElementById("dice_num");
 
     window.onload = function(){
         can = document.getElementById('can');
@@ -43,8 +46,8 @@
     function loadCoordinates(){
         ctx.clearRect(0,0,can.width,can.height);//在给定区域内清空一个矩形
         for(var i=0,j=0;i<diceCoordinates.length;i++,j++){
-            ctx.fillStyle = '#2ea8e5';			//定义填充的颜色
-            ctx.fillRect(diceCoordinates[i][0],diceCoordinates[i][1],80,80);  //fillRect(x,y,width,height) 填充一个矩形，(x,y)对应矩形的左上坐标，width,height对应矩形的宽度和高度
+            //ctx.fillRect(diceCoordinates[i][0],diceCoordinates[i][1],80,80);  //fillRect(x,y,width,height) 填充一个矩形，(x,y)对应矩形的左上坐标，width,height对应矩形的宽度和高度
+            ctx.drawImage(pic,diceCoordinates[i][0],diceCoordinates[i][1],80,80);
 			//for循环到上面为止只是建立了矩形框。
 			if(j>5){j=0;}
             draw(diceCoordinates[i],j,pointCoordinates[j]);
@@ -53,13 +56,14 @@
 
 	//画骰子的点
     function draw(dice,ran,drowArray){//alert(dice+"    "+ran+"     "+drowArray);//[40,10]   0  [20,20]
-        ctx.fillStyle = "#fff";
+        ctx.fillStyle = "#000";
         for(var i=0;i<=ran;i++){
             var array = drowArray[i];
             ctx.beginPath();			//beginPath() 方法在一个画布中开始子路径的一个新的集合。
             if(ran==0){
                 //alert(drowArray[0]);
-                ctx.arc(drowArray[0]+dice[0],drowArray[1]+dice[1],6,0,Math.PI*2,false);
+                ctx.drawImage(pic_num,drowArray[0]+dice[0],drowArray[1]+dice[1],14,14);
+                //ctx.arc(drowArray[0]+dice[0],drowArray[1]+dice[1],6,0,Math.PI*2,false);
 				/*	
 					arc(x,y,r,sAngle,eAngle,counterclockwise);  创建一个圆
 					x 	圆的中心的 x 坐标。
@@ -70,7 +74,8 @@
 					counterclockwise 	可选。规定应该逆时针还是顺时针绘图。False = 顺时针，true = 逆时针。
 				*/
             }else{
-                ctx.arc(array[0]+dice[0],array[1]+dice[1],6,0,Math.PI*2,true);
+                //ctx.arc(array[0]+dice[0],array[1]+dice[1],6,0,Math.PI*2,true);
+                ctx.drawImage(pic_num,array[0]+dice[0],array[1]+dice[1],14,14);
             }
             ctx.closePath();			//closePath() 方法关闭一条打开的子路径。
             ctx.fill();					//fill() 方法填充路径
@@ -94,9 +99,10 @@
             ctx.clearRect(0,0,can.width,100);
             for(var i=0;i<diceCoordinates.length;i++){
                 //画笔颜色
-                ctx.fillStyle = '#2ea8e5';
+                //ctx.fillStyle = '#2ea8e5';
                 //画正方形
-                ctx.fillRect(diceCoordinates[i][0],diceCoordinates[i][1],80,80);
+                //ctx.fillRect(diceCoordinates[i][0],diceCoordinates[i][1],80,80);
+                ctx.drawImage(pic,diceCoordinates[i][0],diceCoordinates[i][1],80,80);
                 //获取随机数
                 var ran =  Math.floor(Math.random()*6);
                 ranSum+=ran+1;
