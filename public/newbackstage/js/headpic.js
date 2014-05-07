@@ -40,10 +40,13 @@ $(document).ready(function(){
     $('#Sort .btn2').click(function(){
        var idlist  = [];
        $('#Sort .scbox').each(function(){
-		 
-         idlist.push(extract_id($(this).find('img').first().attr('src')))
-       })
+         idlist.push(extract_id($(this).find('img').first().attr('src')));
+       });
        $.get("/shop3_headpic/reorder", {ids: idlist}, function(data){
+			var len=$(".scbox").length;
+			for(var i=0;i<len;i++){
+				$(".box5img").eq(i).attr("reldata",idlist[i]).find("img").attr("src",$(".scbox").eq(i).find("img").attr("src"));
+			}
 			$('#Sort').css('display','none');
        })
     });
@@ -134,8 +137,7 @@ function ImageUpload(target){// 头图管理
 							$("#BG").css({"height":h2+"px","display":"block"});
 						}
 
-                    }
-                    );
+                    });
 
                     $("#Btn2").unbind('click').click(function () {
                         var result = cut.getResult() ;
@@ -144,7 +146,7 @@ function ImageUpload(target){// 头图管理
                         var pdata = {
                             path: data
                         }
-                        // ajax 完成后的扫尾
+                        // ajax 完成
                         var callback = function(data){
                             $("#UpImg,#BG").css("display","none");
                             var num=$("div.box5img").length-1;

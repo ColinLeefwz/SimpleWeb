@@ -59,7 +59,7 @@
     </div>
   </div>
 
-	<div class="box5 box5change">
+	<div class="box5 box5change" id="Box5">
     <% @headpics.each_with_index do |headpic, index|%>
       <div class="box5img" rel='<%= index %>' reldata='<%= headpic.id %>'>
         <%= image_tag headpic.img_url %>
@@ -120,7 +120,7 @@ $(document).ready(function(){
     }
 	
 	//删除图片
-	$("span.del").click(function(){alert(2);
+	$("span.del").click(function(){
 	    var obj=$(this).closest("div.box5img");
 		var id = obj.attr("reldata")
 		$.get('/shop3_headpic/delete',{id: id}, function(){
