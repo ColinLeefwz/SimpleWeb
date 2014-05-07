@@ -4,9 +4,8 @@ class Shop3HeadpicController < ApplicationController
   layout "shop3"
 
   def index
-    @headpics = Headpic.where(sid: session[:shop_id])
+    @headpics = Headpic.where(sid: session[:shop_id]).sort({od: 1})
   end 
-
 
   def create
     @headpic = Headpic.new(sid: session[:shop_id], img: params[:img])
@@ -38,6 +37,13 @@ class Shop3HeadpicController < ApplicationController
     @headpic.delete 
     render :json => 1
   end 
+
+  def reorder
+    params[:ids].each_with_index do |id, index|
+      Headpic.find_by_id(id).set(:od, index+1)
+    end
+    render :json => 1
+  end
 
 
   private

@@ -31,7 +31,23 @@ $(document).ready(function(){
 		$("#UpImg").css({"top":top1+"px","display":"none"});
 		$("#UpImg").slideDown(600);
     });
-	
+
+    //通过url获取图片的id
+    function extract_id(url){
+        return url.split('/')[3]
+    }
+
+    $('#Sort .btn2').click(function(){
+       var idlist  = [];
+       $('#Sort .scbox').each(function(){
+        alert(extract_id($(this).find('img').first().attr('src')))
+         idlist.push(extract_id($(this).find('img').first().attr('src')))
+       })
+       $.get("/shop3_headpic/reorder", {ids: idlist}, function(data){
+
+       })
+    });
+    	
 });
 function ImageUpload(target){// 头图管理
 		
@@ -180,21 +196,10 @@ function ImageUpload(target){// 头图管理
                         }else{   //添加
                             $.post("/shop3_headpic/create", pdata , function(data){
                                 var obj="<div class='box5img' rel="+(num-1)+"><img src='"+data["url"]+"?t="+ (new Date())+"'><span class='edit'>修改图片</span><span class='del'>删除图片</span></div>";
-                                alert(2)
                                 $("#AddBox5Img").before(obj);
                                 callback(data)
                             })
                         }
-
-      //                   $.post("/shop3_headpic/create", pdata , function(data){
-						// 	if(rel!="F"){
-								
-						// 	}else{
-								
-								
-						// 	}
-						// })
-                     
                     // --------------------------------------------------
 
                     });
@@ -346,3 +351,4 @@ function ImgCut(options, callback) {
     }
     this.init() ;
 }
+
