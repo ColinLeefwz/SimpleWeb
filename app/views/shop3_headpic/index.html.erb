@@ -67,11 +67,11 @@
         <span class="del">删除图片</span>
       </div>
     <% end %>
-    <% if @headpics.length < 5 %>
-  		<div class="box5img" id="AddBox5Img" rel="F">
-  			<img src="/newbackstage/images/pic6_1.jpg" class="pointer" id="AddPic">
-  		</div>
-    <% end %>
+
+	<div class="box5img" id="AddBox5Img" rel="F" style="display: <%= @headpics.length < 5 ? 'block' : 'none' %>">
+		<img src="/newbackstage/images/pic6_1.jpg" class="pointer" id="AddPic">
+	</div>
+
 	</div>
 	<div id="ViewPic">
 		<div id="DHImage" class="dhimage">
@@ -83,11 +83,13 @@
 		</div>
 		<a id="Prev" class="prevbtn" href="javascript:void(0)"></a>
 		<div id="DHNum" class="dhnum"> 
-			<a class="def selected" href="javascript:void(0)" title="1"></a>
-			<a class="def" href="javascript:void(0)" title="2"></a>
+			<a href="javascript:void(0)" class="def selected"></a>
+			<a href="javascript:void(0)" class="def"></a>
+			<a href="javascript:void(0)" class="def"></a>
+			<a href="javascript:void(0)" class="def"></a>
+			<a href="javascript:void(0)" class="def"></a>
 		</div>
 		<a id="Next" class="nextbtn" href="javascript:void(0)"></a>
-		<a id="CloseViewPic" class="closeviewpic" href="javascript:void(0)"></a>
 	</div>
 	
 	<div id="Sort">
@@ -105,6 +107,7 @@
 	</div>
 </div>
 <script defer="defer">
+var len,index,timer=0;
 $(document).ready(function(){
     runing=$("#CB1").attr("class");
     if(runing=="checkboxs1"){
@@ -117,19 +120,17 @@ $(document).ready(function(){
     }
 	
 	//删除图片
-	$("span.del").click(del);
+	$("span.del").click(function(){alert(2);
+	    var obj=$(this).closest("div.box5img");
+		var id = obj.attr("reldata")
+		$.get('/shop3_headpic/delete',{id: id}, function(){
+		  obj.hide(function(){
+			$("#AddBox5Img").css("display","block");
+			obj.remove();
+		  });
+		});
+	});
 
-
-  function del(){
-    var obj=$(this).closest("div.box5img");
-    var id = obj.attr("reldata")
-    $.get('/shop3_headpic/delete',{id: id}, function(){
-      obj.hide(function(){
-        $("#AddBox5Img").css("display","block");
-        obj.remove();
-      });
-    });
-  }
 
 	//编辑图片
 	$("span.edit").click(function(){
@@ -153,50 +154,62 @@ $(document).ready(function(){
 	});
 	
 	//动画
-	$(function(){
-		 var len  = $("#DHImage a img").length;/**获取图片数量**/
-		 var index = 0;
-		 var timer;
-		 $("#DHImage ul").css("width",320*len);
-		 $("#DHNum .def").click(function(){
-			index = $("#DHNum .def").index(this);/** 获取$("#DHNum .def")数组中关于本元素的索引 **/
-			showImg(index);
-		 });
-		 
-		 $("#ViewPic").hover(function(){
-				 clearInterval(timer);
-			 },function(){
-				 timer = setInterval(function(){
-					index++;
-					if(index==len){index=0;}
-					showImg(index);
-				  } , 2000);
-		 }).trigger("mouseleave");
-		 /** trigger()触发被选元素的指定类型事件 **/
-		 
-		 /** hover(over , out)当鼠标移动到一个匹配元素上面时会触发指定的第一个函数，当鼠标移出这个元素时会触发指定的第二个函数。而且，会伴随着对鼠标是否仍然处在特定元素中的检测。**/
-		 
-		 $("#Prev").click(function(){/** 左箭头 **/
-			index--;
-			if(index<0){index=len-1;}
-			showImg(index);
-		 });
-		 $("#Next").click(function(){/** 右箭头 **/
-			index++;
-			if(index==len){index=0;}
-			showImg(index);
-		 });
-	});
-	function showImg(index){
-		var w = 320;
-		$("#DHImage ul").stop().animate({"margin-left" : -w*index},1000);
-		$("#DHNum .def").removeClass("selected").eq(index).addClass("selected");
-	}
+	len  = $("#DHImage a img").length;
+	 index = 0;
+	 $("#DHImage ul").css("width",320*len);
+	 $("#DHNum .def").click(function(){
+		index = $("#DHNum .def").index(this);
+		showImg(index);
+	 });
+	 
+	 $("#ViewPic").hover(function(){
+			 clearInterval(timer);
+		 },function(){
+			 timer = setInterval(function(){
+				index++;
+				if(index==len){index=0;}
+				showImg(index);
+			  } , 2000);
+	 }).trigger("mouseleave");
+	 
+	 $("#Prev").click(function(){/** 左箭头 **/
+		index--;
+		if(index<0){index=len-1;}
+		showImg(index);
+	 });
+	 $("#Next").click(function(){/** 右箭头 **/
+		index++;
+		if(index==len){index=0;}
+		showImg(index);
+	 });
 });
+
+function showImg(index){
+	var w=320;
+	$("#DHImage ul").stop().animate({"margin-left" : -w*index},1000);
+	$("#DHNum .def").removeClass("selected").eq(index).addClass("selected");
+}
 function View(obj){
 	if($(obj).html()=="预览"){
 		$(obj).html("关闭");
+
+		len=$(".box5img").length-1;
+		var str=strpoint="";
+		for(var i=0;i<len;i++){
+			str+="<li><a><img src='"+$('.box5img').find('img').attr('src')+"'/></a></li>";
+			strpoint+="<a class='def' href='javascript:void(0)'></a>";
+		}
+		$("#DHImage").html("<ul style='width:"+320*len+"px'>"+str+"</ul>");
+		$("#DHNum").html(strpoint);
+		index=0;
+		showImg(index);
 		$("#ViewPic").fadeIn();
+		
+		$("#DHNum .def").unbind("click");
+		$("#DHNum .def").bind("click",function(){
+			index = $("#DHNum .def").index(this);
+			showImg(index);
+		 });
 	}else{
 		$(obj).html("预览");
 		$("#ViewPic").fadeOut();
@@ -207,7 +220,7 @@ var mouseclick="down";
 function Sort(){	
 	$("#Sort").fadeIn();
 	var str="";
-	for(var i=0;i<=$(".box5img").length-2;i++){
+	for(var i=0;i<$(".box5img").length-1;i++){
 		str+="<div class='scbox'><img src='"+$(".box5img").eq(i).find("img").attr("src")+"'/></div>";
 	}
 	$("div.sortcon").html(str+"<span class='clear1'></span>");

@@ -40,11 +40,11 @@ $(document).ready(function(){
     $('#Sort .btn2').click(function(){
        var idlist  = [];
        $('#Sort .scbox').each(function(){
-        alert(extract_id($(this).find('img').first().attr('src')))
+		 
          idlist.push(extract_id($(this).find('img').first().attr('src')))
        })
        $.get("/shop3_headpic/reorder", {ids: idlist}, function(data){
-
+			$('#Sort').css('display','none');
        })
     });
     	
@@ -147,7 +147,7 @@ function ImageUpload(target){// 头图管理
                         // ajax 完成后的扫尾
                         var callback = function(data){
                             $("#UpImg,#BG").css("display","none");
-                            var num=$("div.box5img").length;
+                            var num=$("div.box5img").length-1;
                             
                             $("span.edit").live("click",function(){ 
                                 $("#AddPic").click();
@@ -178,8 +178,7 @@ function ImageUpload(target){// 头图管理
                         }
 
                         for (obj in result) {
-                            if(obj=='x' || obj =="y" || obj=='w' || obj=='h')
-                            {
+                            if(obj=='x' || obj =="y" || obj=='w' || obj=='h'){
                                 pdata[obj] = result[obj]
                             }
                         //                                $("#UploadForm").append("<input type='hidden' name='"+ obj +"' value='" + result[obj]  +"'/>")
