@@ -19,9 +19,8 @@ a:hover{color:#02c5ff;text-decoration:underline;}
 
 
 .con .logo{width:180px;height:300px;margin:0px auto;background: url(/help/images/logo2.jpg) center top no-repeat;position:relative;}
-.con .logo .version{text-align:center;width:100%;font-family:"黑体";font-size:24px;line-height:35px;color:#666;padding-top:200px;
-
-}
+.con .logo .version{text-align:center;width:100%;font-family:"黑体";font-size:24px;line-height:35px;color:#666;padding-top:200px;}
+.con .captiontop{border-top:1px solid #d0d0d0;}
 .con .captiontop, .con .captionmiddle, .con .captionbottom{padding:0px;color:#333;overflow: hidden;font-family:"黑体";font-size:24px;overflow:hidden;letter-spacing:1px;height:62px;line-height:30px;margin:0px 20px;border-bottom:1px solid #d0d0d0;}
 .con .captionmiddle{border-radius:0px;}
 .con .captionbottom{}
