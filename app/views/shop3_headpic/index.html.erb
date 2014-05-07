@@ -216,19 +216,21 @@ function View(obj){
 	}
 	$("#Sort").css("display","none");
 }
-var mouseclick="down";
+var mouseclick,obj1,copy;
 function Sort(){	
 	$("#Sort").fadeIn();
 	var str="";
+	mouseclick="down";
 	for(var i=0;i<$(".box5img").length-1;i++){
 		str+="<div class='scbox'><img src='"+$(".box5img").eq(i).find("img").attr("src")+"'/></div>";
 	}
 	$("div.sortcon").html(str+"<span class='clear1'></span>");
 	$("div.sortcon div").click(function(e){
-		var obj=$(this);
-		obj.addClass("changeScbox");
-		var copy=obj.find("img");
-		$(".scopy").children().replaceWith(copy).end().css("display","block");
+		obj1=$(this);
+		obj1.addClass("changeScbox");
+		copy=obj1.find("img").clone();
+		obj1.find("img").remove();
+		$(".scopy").html(copy).css("display","block");
 		var x = parseInt(e.pageX);
 		var y = parseInt(e.pageY);
 		$(".scopy").css({"left":(x-60),"top":(y-60)});
@@ -240,30 +242,29 @@ function Sort(){
 			$(".scopy").css({"left":(x1-60),"top":(y1-60)});
 			var bj=parseInt((x1-x)/120)-1;
 			
-			if(obj.attr("rel")==0&&bj<0){return false;}
-			if(obj.attr("rel")==($("div.sortcon div").length-1)&&bj>($("div.sortcon div").length-1)){return false;}
-			if(bj<obj.attr("rel")){
-				if(bj<0){bj=0}
-				$("div.sortcon div").eq(bj).before(obj);
-			}else if(bj>obj.attr("rel")){
-				if(bj>$("div.sortcon div").length-1){bj=$("div.sortcon div").length-1}
-				$("div.sortcon div").eq(bj).after(obj);
-			}
+			if(obj1.attr("rel")==0&&bj<0){return false;}
+			if(obj1.attr("rel")==($("div.sortcon div").length-1)&&bj>($("div.sortcon div").length-1)){return false;}
 			for(i=0;i<$("div.sortcon div").length;i++){
 				$("div.sortcon div").eq(i).attr("rel",i);
 			}
-		});
-		$(".scopy").bind("click",function(){
-			if(mouseclick=="down"){
-				mouseclick="up";
-			}else if(mouseclick=="up"){
-				mouseclick="down";
-				obj.html(copy).removeClass("changeScbox");
-				$(".scopy").html("<span></span>").css("display","none");
-				$(document).unbind("mousemove");
+			if(bj<obj1.attr("rel")){
+				if(bj<0){bj=0}
+				$("div.sortcon div").eq(bj).before(obj1);
+			}else if(bj>obj1.attr("rel")){
+				if(bj>$("div.sortcon div").length-1){bj=$("div.sortcon div").length-1}
+				$("div.sortcon div").eq(bj).after(obj1);
 			}
-		});
-			
+		});			
+	});
+	$(".scopy").bind("click",function(){
+		if(mouseclick=="down"){
+			mouseclick="up";
+		}else if(mouseclick=="up"){
+			mouseclick="down";
+			obj1.html(copy).removeClass("changeScbox");
+			$(".scopy").css("display","none");
+			$(document).unbind("mousemove");
+		}
 	});
 }
 </script>
