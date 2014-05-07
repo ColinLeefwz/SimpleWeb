@@ -14,7 +14,7 @@
         $("#dig").css({"display":"block"});
         $("#sid").val(hid)
         $("#res").css("background-color", "");
-        $("#boxss").fadeIn();
+        $("#boxss").css("top",($(window).height()-320)/2+"px").fadeIn();
 		$("#boxss2").hide();
       }
       function ajaxReport(uid){
@@ -28,7 +28,7 @@
           sid = $("#sid").val();
           $.get("/aroundme/report", {sid: sid, des: des, uid: uid, type: type}, function(){
 			$("#boxss").fadeOut();
-			$("#boxss2").fadeIn();
+			$("#boxss2").css("top",($(window).height()-50)/2+"px").fadeIn();
 			$("a[name='radio_bad']").removeClass("radios2");
             $("#shop"+sid).remove();
 			setTimeout(function(){$("#dig").hide();},2000);
