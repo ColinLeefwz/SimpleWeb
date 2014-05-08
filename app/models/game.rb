@@ -15,7 +15,7 @@ class Game
     option.delegate :name, :to => :shop
   end
 
-  scope :eq_sid, ->(sid){where(sid: sid)}
+
   
   index({sid: 1, gid:1, socre:1})
 
@@ -45,11 +45,12 @@ class Game
   end
   
   def add_redis
-    if Game.where({sid:self.sid,uid:self.uid}).size > 0 
-      $redis.zadd(redis_key,score,self.uid) if score > Game.where({sid:self.sid,uid:self.uid}).all.map{|m| m.score}.max
-    else
-      $redis.zadd(redis_key,score,self.uid)
-    end
+    $redis.zadd(redis_key,score,self.uid) if self.score > $redis.zscore(redis_key, self.uid.to_s).to_i
   end
-   
+
+  #清空排名
+  def self.clear_level(sid, gid)
+    $redis.del("GAME#{gid}-#{sid}")
+  end
+
 end
