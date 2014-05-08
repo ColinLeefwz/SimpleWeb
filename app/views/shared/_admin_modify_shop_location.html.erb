@@ -101,7 +101,11 @@
 
   <div class="row">
     <div class="col-md-2">
-      <%= link_to "返回", "/#{controller_name}/untreated", class: "btn btn-default" %>
+      <% if @report %>
+        <%= link_to "返回", "/admin_user_reports/untreated", class: "btn btn-default" %>
+      <% else %>
+        <%= link_to "返回", "/admin_user_add_shops/untreated", class: "btn btn-default" %>
+      <% end %>
     </div>
   </div>
 </div>
@@ -120,7 +124,7 @@
       event.preventDefault();
       var params = {lo: $("#change-coordinate-val").val()};
       $.ajax({
-        url: "/<%= controller_name %>/update_corrdinate?id=<%= @model.id %>",
+        url: "/admin_user_add_shops/update_corrdinate?id=<%= @shop.id %>&report_id=<%= @report.id if @report %>",
         type: 'POST',
         dataType: 'json',
         data: params
@@ -136,7 +140,7 @@
       event.preventDefault();
       var params = {lo: $("#new-coordinate-val").val()}
       $.ajax({
-        url: "/<%= controller_name %>/new_corrdinate?id=<%= @model.id %>",
+        url: "/admin_user_add_shops/new_corrdinate?id=<%= @shop.id %>&report_id=<%= @report.id if @report %>",
         type: "POST",
         dataType: 'json',
         data: params
