@@ -43,17 +43,21 @@
 <div class="container" style="padding-top: 30px;">
   <div class="row">
     <div class="col-md-1 col-md-offset-8" style="margin-right: 30px;">
-      <%= link_to("确认删除", "/#{controller_name}/confirm_delete?id=#{@model.id}", class: "btn btn-danger") %>
+      <%= link_to("确认删除", "/admin_user_add_shops/confirm_delete?id=#{@shop.id}&report_id=#{@report.id if @report}", class: "btn btn-danger") %>
     </div>
     <div class="col-md-1">
-      <%= link_to("返回", "/#{controller_name}/index", class: "btn btn-default") %>
+      <% if @report %>
+        <%= link_to("返回", "/admin_user_reports/index", class: "btn btn-default") %>
+      <% else %>
+        <%= link_to("返回", "/admin_user_add_shops/index", class: "btn btn-default") %>
+      <% end %>
     </div>
   </div>
 </div>
 <script type="text/javascript">
   function ajaxDel(sid, obj){
     if(confirm("确定标记删除？"))
-      $.get("/<%= controller_name %>/mark_del",{id: sid}, function(data){
+      $.get("/admin_user_add_shops/mark_del",{id: sid}, function(data){
         if(data.result == 1){
           obj.addClass('hidden');
           $("#cancel_mark_del_" + sid).removeClass('hidden');
@@ -64,7 +68,7 @@
 
   function ajaxCancel(sid, obj){
     if (confirm("确定撤销删除")) {
-      $.get("/<%= controller_name %>/cancel_mark_del",{id: sid}, function(data){
+      $.get("/admin_user_add_shops/cancel_mark_del",{id: sid}, function(data){
         if(data.result == 1){
           obj.addClass('hidden');
           $("#mark_del_" + sid).removeClass('hidden');

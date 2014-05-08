@@ -46,13 +46,13 @@
 
   <div class="row md_addr">
     <div class="col-md-2 ">
-      <%= link_to("信息修改", "/#{controller_name}/modify_info?id=#{@model.id}", class: "btn btn-default") %>
+      <%= link_to("信息修改", "/admin_user_add_shops/modify_info?id=#{@shop.id}&report_id=#{@report.id if @report}", class: "btn btn-default") %>
     </div>
     <div class="col-md-2 ">
-      <%= link_to("重复地点查看", "/#{controller_name}/repeat?id=#{@model.id}", class: "btn btn-default") %>
+      <%= link_to("重复地点查看", "/admin_user_add_shops/repeat?id=#{@shop.id}&report_id=#{@report.id if @report}", class: "btn btn-default") %>
     </div>
     <div class="col-md-2">
-      <%= link_to("删除地点", "/#{controller_name}/des?id=#{@model.id}", class: "btn btn-default delete-btn") %>
+      <%= link_to("删除地点", "/admin_user_add_shops/destroy?id=#{@shop.id}&report_id=#{@report.id if @report}", class: "btn btn-default") %>
     </div>
   </div>
 
@@ -85,7 +85,7 @@
 
   <div class="row md_addr">
     <div class="col-md-2">
-      <%= link_to "坐标修改", "/#{controller_name}/modify_location?id=#{@shop.id}", class: "btn btn-default" %>
+      <%= link_to("坐标修改", "/admin_user_add_shops/modify_location?id=#{@shop.id}&report_id=#{@report.id if @report}", class: "btn btn-default") %>
     </div>
     <div class="col-md-2">
       <%= link_to "返回", "/#{controller_name}/index", class: "btn btn-default" %>
