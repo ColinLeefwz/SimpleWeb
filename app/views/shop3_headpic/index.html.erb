@@ -89,11 +89,11 @@
 	<div id="Sort">
 		<h2>请用鼠标拖拽排序，保存后商家主页的头图将按此顺序轮滑</h2>
 		<div class="sortcon">
-			<div class="scbox" rel="0"><img src="/newbackstage/images/pic39.jpg"></div>
-			<div class="scbox" rel="1"><img src="/newbackstage/images/pic40.jpg"></div>
-			<div class="scbox" rel="2"><img src="/newbackstage/images/pic39.jpg"></div>
-			<div class="scbox" rel="3"><img src="/newbackstage/images/pic40.jpg"></div>
-			<div class="scbox" rel="4"><img src="/newbackstage/images/pic39.jpg"></div>
+			<% @headpics.each_with_index do |headpic, index|%>
+          <div class="scbox" rel="<%= index %>">
+            <%= image_tag headpic.img_url %>
+          </div>
+      <% end %>
 			<span class="clear1"></span>
 		</div>
 		<a class="btn2 l">保 存</a>

@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class Shop3HeadpicController < ApplicationController
+  before_filter :shop_authorize
   layout "shop3"
 
   def index
