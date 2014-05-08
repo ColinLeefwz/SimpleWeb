@@ -68,7 +68,9 @@
   }
 )
 </script>
-
+<style type="text/css">
+  .row{ margin-left: 0px; margin-right: 0px;}
+</style>
 <div class="customer_info container" style="width:760px; padding:40px 20px;">
   <div class="row col-md-6">
     <%= form_for(@shop, :url => "/admin_user_add_shops/update?id=#{@shop.id}") do |f| %>
