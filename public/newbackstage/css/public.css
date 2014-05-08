@@ -601,13 +601,13 @@ box-shadow:1px 0px 10px #fff;z-index:122;font-family: 微软雅黑;font-size: 16
 #ViewPic  .prevbtn{position:absolute;width:38px;height:38px;left:30px;top:50%;margin-top:-19px;background:url("../images/arrow7.png") left top no-repeat;}
 #ViewPic  .nextbtn{position:absolute;width:38px;height:38px;right:30px;top:50%;margin-top:-19px;background:url("../images/arrow6.png") left top no-repeat;}
 
-#Sort{position:absolute;left:50px;top:125px;background-color:#fff;border:1px solid #D7D7D7;width:680px;height:280px;z-index:3;padding:20px 0px 20px 40px;display:none;}
+#Sort{position:absolute;left:50px;top:125px;background-color:#fff;border:1px solid #D7D7D7;width:680px;height:280px;z-index:121;padding:20px 0px 20px 40px;display:none;}
 #Sort h2{font-family:微软雅黑;font-size:18px;margin-top:10px;color:#333;font-weight:normal;}
 #Sort .sortcon{width:100%;margin:30px 0px 40px 0px;}
 #Sort .scbox{width:120px;height:120px;float:left;margin-right:10px;background-color:#fff;}
 #Sort .scbox img{width:100%;}
 #Sort .changeScbox{width:119px;height:119px;border:1px dotted #ccc;}
-.scopy{width:120px;height:120px;position:absolute;display:none;z-index:99;background-color:#fff;}
+.scopy{width:120px;height:120px;position:absolute;display:none;z-index:122;background-color:#fff;}
 .scopy img{width:100%;}
 
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
