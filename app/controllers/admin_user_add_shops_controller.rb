@@ -1,7 +1,7 @@
 # encoding: utf-8
 class AdminUserAddShopsController < ApplicationController
   include Paginate
-  before_filter :admin_authorize
+  before_filter :agent_or_admin_authorize
   before_filter :find_shop, except: [:index, :untreated, :post_chat]
   layout "agent"
 
@@ -38,21 +38,27 @@ class AdminUserAddShopsController < ApplicationController
   end
 
   def modify_location
-    @model = @shop
+    @report = ShopReport.find_by_id(params[:report_id]) if params[:report_id]
   end
 
   def modify_info
-    @model = @shop
+    @report = ShopReport.find_by_id(params[:report_id]) if params[:report_id]
   end
 
   def repeat
     @simaliar_shops = Shop.similar_shops(@shop)
-    @model = @shop
+    @report = ShopReport.find_by_id(params[:report_id]) if params[:report_id]
   end
 
   def confirm_delete
     @shop.update_attribute(:i, true)
-    redirect_to action: "index"
+    if params[:report_id].present?
+      @report = ShopReport.find_by_id(params[:report_id])
+      @report.update_attribute(:flag, 1)
+      redirect_to "/admin_user_reports/index"
+    else
+      redirect_to action: "index"
+    end
   end
 
   def mark_del
@@ -68,9 +74,15 @@ class AdminUserAddShopsController < ApplicationController
 
   def update_shop_info
     if @shop.update_attributes(params[:shop])
-      redirect_to action: :index
+      if params[:report_id]
+        report = ShopReport.find_by_id(params[:report_id])
+        report.update_attribute(:flag, 1)
+        redirect_to "/admin_user_reports/index"
+      else
+        redirect_to action: :index
+      end
     else
-      render :action => :index
+      render :action => :modify_info
     end
   end
 
@@ -83,6 +95,10 @@ class AdminUserAddShopsController < ApplicationController
     @shop.lo = lob
     if @shop.save
       @lo = @shop.lo
+      if params[:report_id].present?
+        report = ShopReport.find_by_id(params[:report_id])
+        report.update_attribute(:flag, 1)
+      end
       render json: {"success" => true, "lo" => @lo.first.is_a?(Array) ? @lo.to_s[1...-1] : @lo.to_s}
     end
   end
@@ -109,7 +125,7 @@ class AdminUserAddShopsController < ApplicationController
   end
 
   def destroy
-    re = shop.destory_custom? ? shop.del_test_shop : nil
+    re = @shop.destory_custom? ? @shop.del_test_shop : nil
     render :json => re
   end
 
