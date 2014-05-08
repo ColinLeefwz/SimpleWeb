@@ -248,7 +248,6 @@ function OpenPlane(obj,str,sort,type2,url) {							//打开右侧面板
 		PhoneLink({no_action: true});
 		var obj = $('.box18bg[rel="'+url+'"]').parent().clone().removeClass('box18change');
 		obj.find(".box18bg").remove();
-		$('#Box17Con5 .box18').replaceWith(obj)
 		return false
 	}else if(type2=='app'){
 		APPLink({no_action: true});
@@ -331,13 +330,6 @@ function SaveLink(){
 function EditWeb(obj){									//选择跳转页面
 	$(".box17right").addClass("none");
 	$("#Box17Con6").removeClass("none");
-	var li_len=$("#B17LC ul").eq(0).find("li").length;
-	for(var i=0;i<li_len;i++){
-		ul_w+=($("#B17LC ul li").eq(i).width()+20);
-	}
-	$("#B17LC ul").css("width",ul_w+"px");
-	$('#B17LC li').first().click();
-	$(".box18bg").hide();
 }
 function EditAPP(){										//跳转到应用页面
 	$(".box17right").addClass("none");
@@ -366,7 +358,7 @@ function More(obj,n){
 function SaveWeb(obj){
 	var m = $('.selected')[0];
 	var indexs = Get_Menu_Map(m.id);
-	var url = $("#Box17Con6 div.jshover").attr('rel');
+	var url = $("#PW").contents().find("div.box17ci div.jshover").attr("rel");
 	if(!url){
 		MessageDelDiv('<br/>没有选择文章');
 		return false;
