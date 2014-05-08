@@ -364,9 +364,9 @@ function More(obj,n){
 	$(window).resize();
 }
 function SaveWeb(obj){
-	var m = $('.selected')[0]
+	var m = $('.selected')[0];
 	var indexs = Get_Menu_Map(m.id);
-	var url = $("#Box17Con6 div.jshover").attr('rel')
+	var url = $("#Box17Con6 div.jshover").attr('rel');
 	if(!url){
 		MessageDelDiv('<br/>没有选择文章');
 		return false;
@@ -378,7 +378,7 @@ function SaveWeb(obj){
 		$("#Box17Con5").removeClass("none");
 		$(window).resize();
 		$(".selected a.mlink").click();
-	})
+	});
 }
 
 function SaveAPP(){
