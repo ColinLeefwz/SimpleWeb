@@ -79,13 +79,7 @@ class AdminUserAddShopsController < ApplicationController
       return render json: {"success" => false}
     end
 
-    lobs = params[:lo].split(/[;；]/)
-    if lobs.count == 1
-      lob = lobs.first.split(/[,，]/).map{|s| s.to_f}.reverse
-    else
-      lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
-    end
-
+    lob = get_lob_from_params(params[:lo].split(/[;；]/))
     @shop.lo = lob
     if @shop.save
       @lo = @shop.lo
@@ -120,13 +114,7 @@ class AdminUserAddShopsController < ApplicationController
   end
 
   def update
-    lobs = params[:shop][:lob].split(/[;；]/)
-    if lobs.count == 1
-      lob = lobs.first.split(/[,，]/).map{|s| s.to_f}.reverse
-    else
-      lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
-    end
-
+    lob = get_lob_from_params(params[:shop][:lob].split(/[;；]/))
     attrs = [:name, :addr, :tel, :t].inject({}){|_,i| _.merge({i=> params[:shop][i]})}
     attrs[:lo] = lob
     attrs[:i] = true
@@ -142,6 +130,15 @@ class AdminUserAddShopsController < ApplicationController
     else
       render :action => :edit
     end
+  end
+
+  def get_lob_from_params(lobs)
+    if lobs.count == 1
+      lob = lobs.first.split(/[,，]/).map{|s| s.to_f}.reverse
+    else
+      lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
+    end
+    lob
   end
 
   def delete
