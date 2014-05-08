@@ -218,7 +218,7 @@ class ShopController < ApplicationController
   end
   
   def banners
-    ret = Photo.where({}).sort({_id:1}).limit(5).map {|x| x.logo_thumb_hash}
+    ret = Photo.where({room:"21828775"}).sort({_id:-1}).limit(5).map {|x| x.logo_thumb_hash}
     #TODO：Banner管理
     render :json => ret.to_json
   end
