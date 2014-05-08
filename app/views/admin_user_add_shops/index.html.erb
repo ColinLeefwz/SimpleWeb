@@ -1,5 +1,5 @@
 <div class="title1 mb30">
-  <h2 class="f18">地点报错管理</h2>
+  <h2 class="f18">地点创建查看</h2>
 </div>
 
 
@@ -28,7 +28,7 @@
     <th width="120">报错人ID</th>
     <th width="150">地点类型</th>
     <th width="200">操作结果</th>
-    <% unless session[:city_code] %>
+    <% if session[:city_code].nil? %>
       <th width="120">查看</th>
     <% end %>
   </tr>
@@ -52,11 +52,11 @@
         <%= "(可信)" if $redis.sismember('KxUsers', shop.user_id)%>
         <%= "(授权)" if $redis.sismember('CoUsers', shop.user_id) %>
       </td>
-      <td valign="middle"><%= shop.type %></td>
+      <td valign="middle"><%= shop.show_t %></td>
       <td valign="middle">
         <%= thand(shop) %>
       </td>
-      <% unless session[:city_code] %>
+      <% if session[:city_code].nil? %>
         <td valign="middle"><%= link_to '查看', "/admin_user_add_shops/show?id=#{shop.id} "%></td>
       <% end %>
     </tr>

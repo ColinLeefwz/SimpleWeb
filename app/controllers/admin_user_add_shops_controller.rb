@@ -2,11 +2,11 @@
 class AdminUserAddShopsController < ApplicationController
   include Paginate
   before_filter :admin_authorize
+  before_filter :find_shop, except: [:index, :untreated, :post_chat]
   layout "agent"
 
   def index
-    hash = {_id:{"$gt" => 21000000}, creator: {"$ne" => nil}}
-
+    hash = {_id:{"$gt" => 21000000}, creator: {"$ne" => nil}, i: {"$exists" => true }}
     case params[:flag]
     when '0'
     when '1'
@@ -17,46 +17,109 @@ class AdminUserAddShopsController < ApplicationController
 
     hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
     hash.merge!({city: params[:city]}) unless params[:city].blank?
+    hash.merge!({t: params[:t]}) if params[:t].present?
     @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
   end
 
   def untreated
-    hash = {creator: {"$ne" => nil}, i: {"$exists" => false }}
+    hash = {_id:{"$gt" => 21000000}, creator: {"$ne" => nil}, i: {"$exists" => false }}
     @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
   end
 
-  def show
-    @shop = Shop.find_by_id(params[:id])
+  def check
     @shop.lob = @shop.lo_to_lob.reverse.join(',')
     render :layout => true
   end
+  
+  def show
+    @shop.lob = @shop.lo_to_lob.reverse.join(',')
+    @model = @shop
+    render :layout => true
+  end
 
-  def ignore
-    @shop = Shop.find(params[:id])
+  def modify_location
+    @model = @shop
+  end
+
+  def modify_info
+    @model = @shop
+  end
+
+  def repeat
+    @simaliar_shops = Shop.similar_shops(@shop)
+    @model = @shop
+  end
+
+  def confirm_delete
     @shop.update_attribute(:i, true)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json {render :json => ''}
-      format.js { render :js => "window.opener.rmshop('#{@shop.id.to_i}');"}
+    redirect_to action: "index"
+  end
+
+  def mark_del
+    @shop.shop_del
+    render :json => {result: 1}
+  end
+
+  def cancel_mark_del
+    @shop.del = nil
+    @shop.save
+    render :json => {result: 1}
+  end
+
+  def update_shop_info
+    if @shop.update_attributes(params[:shop])
+      redirect_to action: :index
+    else
+      render :action => :index
     end
   end
 
-  def des
-    shop = Shop.find(params[:id])
+  def update_corrdinate
+    if params[:lo] == ""
+      return render json: {"success" => false}
+    end
+
+    lobs = params[:lo].split(/[;；]/)
+    if lobs.count == 1
+      lob = lobs.first.split(/[,，]/).map{|s| s.to_f}.reverse
+    else
+      lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
+    end
+
+    @shop.lo = lob
+    if @shop.save
+      @lo = @shop.lo
+      render json: {"success" => true, "lo" => @lo.first.is_a?(Array) ? @lo.to_s[1...-1] : @lo.to_s}
+    end
+  end
+
+  def new_corrdinate
+    if params[:lo] == ""
+      return render json: {"success" => false}
+    end
+
+    lo = params[:lo].split(/[,，]/).map{|i| i.to_f}.reverse
+    lobs = []
+    if @shop.lo.first.is_a?(Array)
+      @shop.lo << lo
+    else
+      lobs << @shop.lo
+      lobs << lo
+      @shop.lo = lobs
+    end
+
+    if @shop.save
+      @lo = @shop.lo
+      render json: {"success" => true, "lo" => @lo.first.is_a?(Array) ? @lo.to_s[1...-1] : @lo.to_s}
+    end
+  end
+
+  def destroy
     re = shop.destory_custom? ? shop.del_test_shop : nil
     render :json => re
   end
 
-  #  def baidu_map
-  #    @shop = Shop.find(params[:id])
-  #  end
-  #
-  #  def edit
-  #    @shop = Shop.find(params[:id])
-  #  end
-
   def update
-    @shop = Shop.find(params[:id])
     lobs = params[:shop][:lob].split(/[;；]/)
     if lobs.count == 1
       lob = lobs.first.split(/[,，]/).map{|s| s.to_f}.reverse
@@ -75,52 +138,13 @@ class AdminUserAddShopsController < ApplicationController
         pshop.save
         pshop.merge_subshops_locations
       end
-      @shop = Shop.find_primary(@shop._id)
       render :json => {'name' => @shop.name, 'lo' => @shop.lo, 'addr' => @shop.addr, 'lob' => @shop.lob, 'st' => @shop.show_t}
     else
       render :action => :edit
     end
-
-
-    # shop = Shop.new(params[:shop])
-    # unless shop.lob.blank?
-    #   lobs = shop.lob.split(/[;；]/)
-    #   @shop.lob = lobs.inject([]){|f,s| f << s.split(/[,，]/).map { |m| m.to_f  }.reverse}
-    #   @shop.lo = @shop.lob.map{|m| Shop.lob_to_lo(m)}
-    #   @shop.unset(:lob)
-    # else
-    #   shop.lob = @shop.lo_to_lob.reverse.join(',')
-    # end
-
-
-    # unless params[:shop][:addr].blank?
-    #   info = @shop.info || ShopInfo.new()
-    #   info._id = @shop.id
-    #   info.addr = params[:shop][:addr]
-    #   info.save
-    # end
-
-    # #    @shop.addr = shop.addr
-    # @shop.name = shop.name
-    # @shop.t = shop.t
-    # @shop.i = true
-    # if @shop.save
-    #   Lord.assign(@shop.id,@shop.creator, true)
-    #   pshop = Shop.find_by_id(params[:pid])
-    #   if pshop
-    #     pshop.shops = pshop.shops.to_a << @shop.id.to_i unless pshop.shops.to_a.include?(@shop.id.to_i)
-    #     pshop.save
-    #     pshop.merge_subshops_locations
-    #   end
-    #   @shop = Shop.find_primary(@shop._id)
-    #   render :json => {'name' => @shop.name, 'lo' => @shop.lo, 'addr' => @shop.addr, 'lob' => shop.lob, 'st' => @shop.show_t}
-    # else
-    #   render :action => :edit
-    # end
   end
 
-  def del
-    @shop = Shop.find(params[:id])
+  def delete
     @shop.shop_del
     if @shop.update_attribute(:i, true)
       render json: {result: true}
@@ -128,22 +152,7 @@ class AdminUserAddShopsController < ApplicationController
   end
 
   def cancel_delete
-    @shop = Shop.find(params[:id])
     @shop.del = nil
-    render :json => {:distance => distance}
-  end
-
-  def ajax_del
-    @shop = Shop.find(params[:id])
-    @shop.shop_del
-    @shop.update_attribute(:i, true)
-    render :js => "window.opener.rmshop('#{@shop.id.to_i}');"
-  end
-
-  def ajax_dis
-    lob1 = params[:lob1].split(/[,，]/).map { |m| m.to_f  }.reverse
-    lob2 = params[:lob2].split(/[,，]/).map {|m| m.to_f }.reverse
-    distance = Shop.new.get_distance(lob1, lob2)
     render :json => {:distance => distance}
   end
 
@@ -153,9 +162,13 @@ class AdminUserAddShopsController < ApplicationController
   end
 
   def near
-    @shop = Shop.find_by_id(params[:id])
     shops = Shop.similar_shops(@shop, 60)
     data = shops.map{|shop| [ shop.id.to_i, shop.name,  shop.addr,  shop.show_t,  shop.min_distance(shop, @shop.lo)]}
     render :json => data
+  end
+
+  private
+  def find_shop
+    @shop = Shop.find_by_id(params[:id])
   end
 end

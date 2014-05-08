@@ -56,7 +56,7 @@
 
   function ajaxDel(sid, obj){
     if(confirm("确定标记删除？"))
-      $.get("/admin_user_add_shops/del",{id: sid}, function(data){
+      $.get("/admin_user_add_shops/delete",{id: sid}, function(data){
         if(data){
           obj.parent().parent().remove()
         } else {
@@ -67,7 +67,7 @@
 
   function ajaxDes(sid, obj){
     if(confirm("确定直接删除？"))
-      $.get("/admin_user_add_shops/des",{id: sid}, function(data){
+      $.get("/admin_user_add_shops/destroy",{id: sid}, function(data){
         if(data)
           obj.parent().parent().remove()
         else
