@@ -2,7 +2,7 @@
 class AdminUserReportsController < ApplicationController
   include Paginate
   before_filter :authorize
-  layout "report"
+  layout "agent"
 
   def index
     hash, sort = {flag: {"$exists" => true }}, {_id: -1}

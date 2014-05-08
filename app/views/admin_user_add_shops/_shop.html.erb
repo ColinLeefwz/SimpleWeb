@@ -1,0 +1,30 @@
+<div>
+	创建者:<%= @shop.user_name %>
+</div>
+<div>
+	用户级别:还没实现
+</div>
+<div>
+	签到次数:<%= @shop.utotal %>
+</div>
+<div>
+	用户选择的商家类型: <%= @shop.show_t %>
+</div>
+<div>
+	区号: <%= @shop.city %>
+</div>
+<div>
+	城市: <%= @shop.city_name %>
+</div>
+<div>
+	百度经纬度:<%= @shop.lo %>
+</div>
+<div>
+	计算经纬度:<input type="text" name="lob2" id="lob2"/>
+	<a href="#" id="calculate-distance">计算距离</a>
+</div>
+
+<div>
+	附近的重复商家: <br>
+	<div id="nearShops"></div>
+</div>

@@ -19,7 +19,7 @@ module AdminShopsHelper
     end
     text
   end
-  
+
   def gchat_img2(text)
     if mat = text.match(/(\[img:(.*)\])/)
       return text if Photo.find_by_id(mat[2]).nil?
@@ -55,8 +55,8 @@ module AdminShopsHelper
 
   def thand(shop)
     return "标记删除" if shop.del
-    return "编辑" if shop.t
+    return "审核通过" if shop.t
     return "忽略" if shop.i
   end
-  
+
 end
