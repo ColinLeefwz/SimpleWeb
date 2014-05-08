@@ -245,7 +245,7 @@ function OpenPlane(obj,str,sort,type2,url) {							//打开右侧面板
 		$("#Box17Con4 .pl20").html(url);
 		return false;
 	}else if(type2=='mweb'){
-		PhoneLink({no_action: true});
+		PhoneLink({no_action: true,url: url});
 		var obj = $('.box18bg[rel="'+url+'"]').parent().clone().removeClass('box18change');
 		obj.find(".box18bg").remove();
 		return false
@@ -280,7 +280,11 @@ function PhoneLink(option){										//打开手机编辑页
 	option = option || {}
 	$(".box17right").addClass("none");
 	$("#Box17Con5").removeClass("none");
+
 	if(option.no_action){
+		var url = option.url
+		$("#PW2").attr("src", mweb_url + '?' + url.split('?')[1]);
+
 		return false;
 	}else{
 		$('#mwebbtn').click();
