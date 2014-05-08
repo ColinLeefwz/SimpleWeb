@@ -163,7 +163,7 @@ $(document).ready(function(){
 				index++;
 				if(index==len){index=0;}
 				showImg(index);
-			  } , 2000);
+			  } , 2500);
 	 }).trigger("mouseleave");
 	 
 	 $("#Prev").click(function(){/** 左箭头 **/
@@ -180,7 +180,7 @@ $(document).ready(function(){
 
 function showImg(index){
 	var w=320;
-	$("#DHImage ul").stop().animate({"margin-left" : -w*index},1000);
+	$("#DHImage ul").stop().animate({"margin-left" : -w*index},1500);
 	$("#DHNum .def").removeClass("selected").eq(index).addClass("selected");
 }
 function View(obj){

@@ -595,7 +595,7 @@ box-shadow:1px 0px 10px #fff;z-index:122;font-family: 微软雅黑;font-size: 16
 #ViewPic .dhimage ul{display:block;overflow:hidden;}
 #ViewPic .dhimage ul li{float:left;}
 #ViewPic .dhimage img {width:320px;height:320px;}
-#ViewPic .dhnum{position:absolute;width:100%;bottom:0px;height:40px;left:0px;z-index:2;text-align:center;line-height:40px;}
+#ViewPic .dhnum{position:absolute;width:100%;bottom:15px;height:40px;left:0px;z-index:2;text-align:center;line-height:40px;}
 #ViewPic .dhnum .def{background:url(../images/sign67.png) left top no-repeat;width:13px;height:13px;display:inline-block;margin:0px 3px;}
 #ViewPic .dhnum .selected{background:url(../images/sign66.png) left top no-repeat;width:13px;height:13px;display:inline-block;}
 #ViewPic  .prevbtn{position:absolute;width:38px;height:38px;left:30px;top:50%;margin-top:-19px;background:url("../images/arrow7.png") left top no-repeat;}
