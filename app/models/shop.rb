@@ -630,20 +630,12 @@ class Shop
     shop ? shop.faq(msg) : nil
   end
 
-  def find_article_by_keywords(msg)
-    MobileArticle.where({sid:self.id, kw:msg}).first
-  end
-
   def find_faqs
     faqs = self.faqs
     return faqs if faqs.size>0
     return self.pshop.faqs if self.pshop
     #return Shop.find_by_id($llshop).faqs  if self.total_user==0
     return nil
-  end
-
-  def mobile_articles
-    MobileArticle.where({sid: self.id}).sort({_id: -1})
   end
 
   def mobile_banners
@@ -684,12 +676,6 @@ class Shop
     faqs = self.find_faqs.to_a
     return "本地点未启用数字问答系统" if faqs.blank?
     "试试回复：\n" + faqs.map{|m| "#{m.od}=>#{m.title}"}.join("\n")
-  end
-
-  def weixin_answer_text(msg)
-    article = find_article_by_keywords(msg)
-    return nil if article.nil?
-    article
   end
 
   def branchs

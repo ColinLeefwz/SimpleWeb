@@ -14,6 +14,8 @@ class Game
     option.delegate :name, :to => :user
     option.delegate :name, :to => :shop
   end
+
+  scope :eq_sid, ->(sid){where(sid: sid)}
   
   index({sid: 1, gid:1, socre:1})
 
