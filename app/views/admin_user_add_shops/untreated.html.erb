@@ -10,7 +10,9 @@
     <th width="200">创建时间</th>
     <th width="150">处理方式</th>
     <th width="150"></th>
-    <th width="150"></th>
+    <% if session[:city_code].nil? %>
+      <th width="150"></th>
+    <% end %>
   </tr>
 
   <% @shops.each do |shop| %>
