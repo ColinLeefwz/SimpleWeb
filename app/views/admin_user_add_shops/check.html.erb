@@ -1,0 +1,146 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#calculate-distance").click(function(){
+      var shop_id = $(".shop-id").html();
+      var lob2 = $('#lob2').val();
+      $.get('/api_admin_shop/ajax_dis', {shop_id: shop_id, lob2: lob2}, function(data){
+        $("#distance").text(data["distance"]+"（米）");
+      });
+    });
+
+
+  $(document).ready(function()
+  {
+    $.get('/admin_user_add_shops/near?id=<%= @shop.id.to_i %>', function(data){
+      if(data=='')
+      {str = '<h3>附近没有重复的商家.</h3>'}
+      else{
+        str = "<table><tr><th>id</th><th>名称</th><th>地址</th><th>分类</th><th>距离</th></tr>"
+        data.forEach(function(s){
+          str += "<tr><td>" +s.join("</td><td>") + "</td></tr>"
+        })
+        str += "</table>"}
+      $('#nearShops').replaceWith(str)
+    })
+
+    $('#shopFrom').hide();
+
+    $('#cedit').click(function(){
+      $("#shopFrom").show();
+      $('#showShop').hide();
+    });
+
+    $('#sig').click(function(){
+      if(confirm("确定忽略？"))
+        $.ajax({url: "/admin_user_add_shops/ignore",
+          type: 'get',
+          data: {id: <%= @shop.id.to_i %>},
+          dataType:'script',
+          success: function(){window.close();}
+        })
+    });
+
+    $('#sdel').click(function(){
+      $.get("/admin_user_add_shops/ajax_del?id=<%= @shop.id.to_i %>", function(){
+        window.close();
+      })
+    });
+
+    $('#shopFrom').submit(function()
+    {
+      var options = {
+        url:'/admin_user_add_shops/update',
+        type:'POST',
+        success: function(data){
+          $('#sname').replaceWith("<span id='sname'>" + data['name'] +'</span>');
+          $('#saddr').replaceWith("<span id='saddr'>" + data['addr'] +'</span>');
+          $('#st').replaceWith("<span id= 'st' >" + data['st'] +'</span>');
+          $('#slob').replaceWith("<span id= 'slob'>" + data['lob'] +'</span>');
+          $('#slo').replaceWith("<span id='slo'>" + data['lo'] +'</span>');
+          $("#shopFrom").hide();
+          $('#showShop').show();
+          $('#wclose').show();
+        }
+      }
+      $('#shopFrom').ajaxSubmit(options);
+      return false;
+    })
+  }
+)
+</script>
+<style type="text/css">
+  .row{ margin-left: 0px; margin-right: 0px;}
+</style>
+<div class="customer_info container" style="width:760px; padding:40px 20px;">
+  <div class="row col-md-6">
+    <%= form_for(@shop, :url => "/admin_user_add_shops/update?id=#{@shop.id}") do |f| %>
+      <div class="row md_addr">
+        <div class="col-md-4 text-right md_addr_lable">
+          商家ID:
+        </div>
+        <div class="col-md-8 md_addr_text">
+          <span class="md_addr_txt"><%= @shop.id %></span>
+        </div>
+         <div class="hidden shop-id">
+          <%= @shop.id %>
+        </div>
+      </div>
+      <div class="row md_addr">
+        <div class="col-md-4 text-right md_addr_lable">
+          地点名称:
+        </div>
+        <div class="col-md-8 md_addr_text">
+          <%= f.text_field :name ,class:"md_addr_txt"%>
+        </div>
+      </div>
+
+      <div class="row md_addr">
+        <div class="col-md-4 text-right md_addr_lable">
+          地点地址:
+        </div>
+        <div class="col-md-8 md_addr_text">
+          <%= f.text_field :addr, class:"md_addr_txt"%>
+        </div>
+      </div>
+
+      <div class="row md_addr">
+        <div class="col-md-4 text-right md_addr_lable">
+          地点电话:
+        </div>
+        <div class="col-md-8 md_addr_text">
+          <%= f.text_field :tel ,class:"md_addr_txt" %>
+        </div>
+      </div>
+
+      <div class="row md_addr">
+        <div class="col-md-4 text-right md_addr_lable">
+          地点类型:
+        </div>
+        <div class="col-md-8 md_addr_text">
+          <%= f.select :t,options_for_select(import_t, @shop.t)  %>
+        </div>
+      </div>
+
+      <div class="row md_addr">
+        <div class="col-md-4 text-right md_addr_lable">
+          百度经纬度:
+        </div>
+        <div class="col-md-8 md_addr_text">
+          <%= f.text_field :lob, class:"md_addr_txt" %>
+        </div>
+      </div>
+
+      <div class="row md_addr">
+        <div class="col-md-4 text-right md_addr_lable" style="line-height:34px;">
+          <%= f.submit "保存", class: "btn btn-primary" %>
+        </div>
+        <div class="col-md-4 md_addr_text">
+          <%= link_to "取消", "/admin_user_add_shops/untreated", class: "btn btn-default" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-6 row">
+    <%= render "shop" %>
+  </div>
+</div>
