@@ -842,6 +842,8 @@ font-size:14px;overflow:hidden;line-height:20px;min-height:400px;}
 .box18change:hover{background-color:#f9f9f9;}
 .box18change2{width:252px;float:left;margin:10px 0px 10px 20px;}
 
+.box19{font-family: 微软雅黑; letter-spacing: 2px;font-size:15px;margin-top:40px;color:color:#f60;}
+
 #Phone {width:322px;height:630px;position:fixed;left:50%;top:50%;margin-left:-161px;margin-top:-315px;z-index:121;
 background:url("/newbackstage/images/phone2.png") left top no-repeat;display:none;}
 #Phone .phonetitle{color:#fff;font-weight:bold;text-align:center;font-size:12px;text-overflow:ellipsis;padding-top: 140px;white-space:nowrap;
