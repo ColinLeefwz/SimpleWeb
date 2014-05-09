@@ -795,5 +795,6 @@ overflow:hidden;zoom:1;z-index:20;}
 .md_addr{ margin-bottom: 10px; line-height: 30px;}
 .md_addr .md_addr_lable{ float: left; width: 100px; margin-right: -100px;}
 .md_addr .md_addr_text{ margin-left: 80px;}
-.md_addr .md_addr_text input.md_addr_txt{ display: block; border: 1px solid #ddd; padding:5px 3px;}
+.md_addr .md_addr_text input.md_addr_txt{ display: block; border: 1px solid #ddd; padding:5px 3px; height: 32px; line-height: 32px; width: 200px;}
+.md_addr .sp-lab{ padding-right: 10px;}
 /**地点报错管理 End**/

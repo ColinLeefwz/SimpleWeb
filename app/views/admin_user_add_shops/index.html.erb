@@ -4,21 +4,23 @@
 
 
 <%= form_tag '/admin_user_add_shops',:method =>:get, class: "form-inline" do %>
+<div style="overflow:hidden">
   <div class="form-group">
     <span>商家名称:</span>
     <%= text_field_tag :name, nil, class: "form-control" %>
   </div>
   <div class="form-group">
     <span>地点类型：</span>
-    <%= select_tag :t, options_for_select(import_t, params[:t]), class: "form-control", id: nil %>
+    <%= select_tag :t, options_for_select(import_t, params[:t]), id: nil %>
   </div>
   <div class="form-group">
     <span>操作结果：</span>
-    <%= select_tag :flag, options_for_select([['全部','0'],['审核通过','1'],['标记删除','2']], params[:flag]), class: "form-control"  %>
+    <%= select_tag :flag, options_for_select([['全部','0'],['审核通过','1'],['标记删除','2']], params[:flag])  %>
   </div>
    <div  class="form-group">
      <%= submit_tag "查 找", class: "btn9 r mr20" %>
   </div>
+</div>
 <% end %>
 
 <table cellspacing="0" cellpadding="0" class="tab2 mt40 f13 agent_tab">

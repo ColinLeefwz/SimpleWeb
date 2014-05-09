@@ -1,30 +1,29 @@
 <div class="row md_addr">
-	创建者:<%= @shop.user_name %>
+	<span class="sp-lab">创建者:</span><%= @shop.user_name %>
 </div>
 <div class="row md_addr">
-	用户级别:还没实现
+	<span class="sp-lab">用户级别:</span>还没实现
 </div>
-<div>
-	签到次数:<%= @shop.utotal %>
+<div class="row md_addr">
+	<span class="sp-lab">签到次数:</span><%= @shop.utotal %>
 </div>
-<div>
-	用户选择的商家类型: <%= @shop.show_t %>
+<div class="row md_addr">
+	<span class="sp-lab">用户选择的商家类型:</span> <%= @shop.show_t %>
 </div>
-<div>
-	区号: <%= @shop.city %>
+<div class="row md_addr">
+	<span class="sp-lab">区号: </span><%= @shop.city %>
 </div>
-<div>
-	城市: <%= @shop.city_name %>
+<div class="row md_addr">
+	<span class="sp-lab">城市: </span><%= @shop.city_name %>
 </div>
-<div>
-	百度经纬度:<%= @shop.lo %>
+<div class="row md_addr">
+	<span class="sp-lab">百度经纬度:</span><%= @shop.lo %>
 </div>
-<div>
-	计算经纬度:<input type="text" name="lob2" id="lob2"/>
+<div class="row md_addr">
+	<span class="sp-lab">计算经纬度:</span><input type="text" name="lob2" id="lob2"/>
 	<a href="#" id="calculate-distance">计算距离</a>
 </div>
-
-<div>
-	附近的重复商家: <br>
+<div class="row md_addr">
+	<span class="sp-lab">附近的重复商家: </span><br>
 	<div id="nearShops"></div>
 </div>
