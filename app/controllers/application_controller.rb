@@ -67,6 +67,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def agent_or_admin_authorize
+    if params[:city_code].nil? && session[:city_code].nil?
+      admin_authorize
+    else
+      city_code = params[:city_code]
+      hash = Digest::SHA256.hexdigest(city_code.to_s + "dface")
+      session[:city_code] = city_code if hash == params[:agent]
+    end
+  end
+  
   def shop_authorize
     if session[:shop_id].nil? || Shop.find_by_id(session[:shop_id]).nil?
       session[:o_uri_path] = request.path unless request.path =~ /\/login/

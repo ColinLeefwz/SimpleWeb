@@ -21,6 +21,22 @@ group :development do
   gem "wirble"
   gem 'xmpp4r'
   gem "selenium-webdriver"
+  gem "pry"
+  # For debugger
+  gem "pry-rails", "~> 0.3.0"
+  gem "pry-debugger", "~> 0.2.2"
+
+  # Quiet assets turn off rails assets log like:
+  # Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-11-20 17:05:52 +0800
+  gem "quiet_assets", "~> 1.0.2"
+
+  # Better error page for Rails and other Rack apps
+  # https://github.com/charliesome/better_errors
+  gem "better_errors", :git => 'git://github.com/charliesome/better_errors.git'
+
+  # Retrieve the binding of a method's caller. Can also retrieve bindings even further up the stack.
+  # better_errors use this to display local variables on error pages
+  gem "binding_of_caller"
 end
 
 group :test do

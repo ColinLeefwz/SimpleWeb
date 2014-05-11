@@ -97,7 +97,7 @@
 			<span class="clear1"></span>
 		</div>
 		<a class="btn2 l">保 存</a>
-		<a class="btn3 l ml20" onclick="$('#Sort').css('display','none')">取 消</a>
+		<a class="btn3 l ml20" onclick="$('#Sort,#BG').css('display','none')">取 消</a>
 	</div>
 </div>
 <script defer="defer">
@@ -180,7 +180,7 @@ $(document).ready(function(){
 
 function showImg(index){
 	var w=320;
-	$("#DHImage ul").stop().animate({"margin-left" : -w*index},1500);
+	$("#DHImage ul").stop().animate({"margin-left" : -w*index},1000);
 	$("#DHNum .def").removeClass("selected").eq(index).addClass("selected");
 }
 function View(obj){
@@ -190,7 +190,7 @@ function View(obj){
 		len=$(".box5img").length-1;
 		var str=strpoint="";
 		for(var i=0;i<len;i++){
-			str+="<li><a><img src='"+$('.box5img').find('img').attr('src')+"'/></a></li>";
+			str+="<li><a><img src='"+$('.box5img').eq(i).find('img').attr('src')+"'/></a></li>";
 			strpoint+="<a class='def' href='javascript:void(0)'></a>";
 		}
 		$("#DHImage").html("<ul style='width:"+320*len+"px'>"+str+"</ul>");
@@ -198,7 +198,7 @@ function View(obj){
 		index=0;
 		showImg(index);
 		$("#ViewPic").fadeIn();
-		
+
 		$("#DHNum .def").unbind("click");
 		$("#DHNum .def").bind("click",function(){
 			index = $("#DHNum .def").index(this);
@@ -211,7 +211,28 @@ function View(obj){
 	$("#Sort").css("display","none");
 }
 var mouseclick,obj1,copy;
-function Sort(){	
+function Sort(){
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if($(window).width()>1024){
+		docwidth=$(window).width();
+	}else{
+		docwidth=1024;
+	}
+	if(documentHeight<=windowHeight){
+		$("#BG").css({
+			"width":docwidth+"px",
+			"height":windowHeight+"px",
+			"display":"block"
+		});
+	}else{
+		$("#BG").css({
+			"width":docwidth+"px",
+			"height":documentHeight+"px",
+			"display":"block"
+		});
+	}
+	
 	$("#Sort").fadeIn();
 	var str="";
 	mouseclick="down";
@@ -219,7 +240,7 @@ function Sort(){
 		str+="<div class='scbox'><img src='"+$(".box5img").eq(i).find("img").attr("src")+"'/></div>";
 	}
 	$("div.sortcon").html(str+"<span class='clear1'></span>");
-	$("div.sortcon div").click(function(e){
+	$("div.sortcon div").mousedown(function(e){
 		obj1=$(this);
 		obj1.addClass("changeScbox");
 		copy=obj1.find("img").clone();
@@ -250,15 +271,10 @@ function Sort(){
 			}
 		});			
 	});
-	$(".scopy").bind("click",function(){
-		if(mouseclick=="down"){
-			mouseclick="up";
-		}else if(mouseclick=="up"){
-			mouseclick="down";
+	$(".scopy").bind("mouseup",function(){
 			obj1.html(copy).removeClass("changeScbox");
 			$(".scopy").css("display","none");
 			$(document).unbind("mousemove");
-		}
 	});
 }
 </script>

@@ -601,13 +601,13 @@ box-shadow:1px 0px 10px #fff;z-index:122;font-family: 微软雅黑;font-size: 16
 #ViewPic  .prevbtn{position:absolute;width:38px;height:38px;left:30px;top:50%;margin-top:-19px;background:url("../images/arrow7.png") left top no-repeat;}
 #ViewPic  .nextbtn{position:absolute;width:38px;height:38px;right:30px;top:50%;margin-top:-19px;background:url("../images/arrow6.png") left top no-repeat;}
 
-#Sort{position:absolute;left:50px;top:125px;background-color:#fff;border:1px solid #D7D7D7;width:680px;height:280px;z-index:3;padding:20px 0px 20px 40px;display:none;}
+#Sort{position:absolute;left:50px;top:125px;background-color:#fff;border:1px solid #D7D7D7;width:680px;height:280px;z-index:121;padding:20px 0px 20px 40px;display:none;}
 #Sort h2{font-family:微软雅黑;font-size:18px;margin-top:10px;color:#333;font-weight:normal;}
 #Sort .sortcon{width:100%;margin:30px 0px 40px 0px;}
-#Sort .scbox{width:120px;height:120px;float:left;margin-right:10px;background-color:#fff;}
+#Sort .scbox{width:120px;height:120px;float:left;margin-right:10px;background-color:#fff;cursor:pointer;}
 #Sort .scbox img{width:100%;}
 #Sort .changeScbox{width:119px;height:119px;border:1px dotted #ccc;}
-.scopy{width:120px;height:120px;position:absolute;display:none;z-index:99;background-color:#fff;}
+.scopy{width:120px;height:120px;position:absolute;display:none;z-index:122;background-color:#fff;cursor:pointer;}
 .scopy img{width:100%;}
 
 .tab1{width:100%;overflow:hidden;line-height:25px;font-size:14px;}
@@ -821,13 +821,14 @@ font-size:14px;overflow:hidden;line-height:20px;min-height:400px;}
 .box17 .links3{background-image:url("/newbackstage/images/sign63_1.png");}
 .box17 .box17coninner1{width:100%;overflow:hidden;margin:0px auto;}
 
-.box17list{width:600px;overflow:hidden;margin:0px auto;font-size:12px;color:#444;font-family:微软雅黑;}
-.box17list .box17listcon{width:558px;float:left;overflow:hidden;height:45px;line-height:45px;border:1px solid #E2E2E2;}
+.box17list{width:600px;overflow:hidden;margin:0px auto;font-size:12px;font-family:微软雅黑;}
+.box17list .box17listcon{width:558px;float:left;overflow:hidden;border:1px solid #E2E2E2;}
 .box17list ul{display:block;overflow:hidden;}
 .box17list ul li{float:left;overflow:hidden;cursor:pointer;zoom:1;border-right:1px solid #E2E2E2;padding:0px 9px 0px 10px;}
 .box17list ul li:hover, .box17list ul li.hover{background-color:#f1f1f1;text-shadow:1px 1px 1px #eee;}
 .box17list .leftarrow{width:20px;height:47px;background:url(/newbackstage/images/arrow4.png) left top no-repeat;float:left;cursor:pointer;}
 .box17list .rightarrow{width:20px;height:47px;background:url(/newbackstage/images/arrow5.png) left top no-repeat;float:right;cursor:pointer;}
+.box17list li a{width:100%;display:block;color:#444;height:45px;line-height:45px;}
 
 .box18{width:320px;margin:10px auto;overflow:hidden;padding:10px 15px;border:1px solid #ccc;border-radius:10px;font-size:12px;color:#555;box-shadow:2px 2px 4px #ccc;position:relative;}
 .box18 h2.tit{font-size:15px;font-family:微软雅黑;font-weight:normal;}
@@ -840,6 +841,8 @@ font-size:14px;overflow:hidden;line-height:20px;min-height:400px;}
 .box18change{box-shadow:none;width:245px;float:left;margin:10px 7px 10px 20px;cursor:pointer;}
 .box18change:hover{background-color:#f9f9f9;}
 .box18change2{width:252px;float:left;margin:10px 0px 10px 20px;}
+
+.box19{font-family: 微软雅黑; letter-spacing: 2px;font-size:15px;margin-top:40px;color:color:#f60;}
 
 #Phone {width:322px;height:630px;position:fixed;left:50%;top:50%;margin-left:-161px;margin-top:-315px;z-index:121;
 background:url("/newbackstage/images/phone2.png") left top no-repeat;display:none;}

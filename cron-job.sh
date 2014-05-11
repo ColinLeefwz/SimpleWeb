@@ -42,6 +42,7 @@ sleep 1
 /mnt/.rvm/bin/ruby script/rails r  'PlStat.do_count'
 /mnt/.rvm/bin/ruby script/rails r  'UserDsStat.ds_stat'
 /mnt/.rvm/bin/ruby script/rails r  /mnt/lianlian/db/mongo/internal_coupon_stat.rb
+/mnt/.rvm/bin/ruby script/rails r  "Game.clear_level(21839246 ,2)"
 
 etime=`date +"%Y-%m-%d %H:%M:%S"`
 stime_int=`date -d  "$stime" +%s`

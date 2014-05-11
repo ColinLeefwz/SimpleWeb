@@ -47,7 +47,7 @@ $(document).ready(function(){
 			for(var i=0;i<len;i++){
 				$(".box5img").eq(i).attr("reldata",idlist[i]).find("img").attr("src",$(".scbox").eq(i).find("img").attr("src"));
 			}
-			$('#Sort').css('display','none');
+			$('#Sort,#BG').css('display','none');
        })
     });
     	

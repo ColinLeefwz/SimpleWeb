@@ -7,13 +7,25 @@
 	  <div class="blue3 f15 mt20 mb20 ml20">用户点击该子菜单会跳到以下手机网站页面</div>
 	  <div class="box17coninner1">
 		<div class="mt60"></div>
-		<div class="box18"></div>
+		<iframe src="<%= Host::Mweb %>/api_menu/views.html" frameBorder=0 width="100%" height="200px" id="PW2"></iframe>
 	  </div>
 	</div>
 </div>
 
 <div class="box17right none" id="Box17Con6">
 	<div class="title5"><h2>设置动作</h2></div>
-	
-	<iframe src="<%= Host::Mweb+"/api_menu?id=#{session[:shop_id]}" %>" id="PW" frameBorder=0 width="100%" height="450px"></iframe>
+	<iframe src="<%= Host::Mweb %>/api_menu?id=<%= session[:shop_id]%>" id="PW" frameBorder=0 width="100%" height="450px"></iframe>
+	<span class="clear1"></span>
+	<input type="button" onclick="SaveWeb(this)" value="保 存" class="btn22 l mt20 ml140 mb20">
+	<!--<input type="button" class="btn22_1 r mt20 mr60 mb20" value="更 多" onClick="More(this,0)"/>-->
+	<a onclick="Res()" class="btn22_1 r mt20 mr140 mb20">返 回</a>
+	<script>
+		var mweb_url = "<%= Host::Mweb %>/api_menu/views";
+		try{
+			//document.domain="http://192.168.1.189:3002";
+			document.domain="dface.cn";
+		}catch(e){
+			//alert(e);
+		}
+	</script>
 </div>

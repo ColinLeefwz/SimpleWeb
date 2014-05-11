@@ -1,0 +1,29 @@
+<div class="row md_addr">
+	<span class="sp-lab">创建者:</span><%= @shop.user_name %>
+</div>
+<div class="row md_addr">
+	<span class="sp-lab">用户级别:</span>还没实现
+</div>
+<div class="row md_addr">
+	<span class="sp-lab">签到次数:</span><%= @shop.utotal %>
+</div>
+<div class="row md_addr">
+	<span class="sp-lab">用户选择的商家类型:</span> <%= @shop.show_t %>
+</div>
+<div class="row md_addr">
+	<span class="sp-lab">区号: </span><%= @shop.city %>
+</div>
+<div class="row md_addr">
+	<span class="sp-lab">城市: </span><%= @shop.city_name %>
+</div>
+<div class="row md_addr">
+	<span class="sp-lab">百度经纬度:</span><%= @shop.lo %>
+</div>
+<div class="row md_addr">
+	<span class="sp-lab">计算经纬度:</span><input type="text" name="lob2" id="lob2"/>
+	<a href="#" id="calculate-distance">计算距离</a>
+</div>
+<div class="row md_addr">
+	<span class="sp-lab">附近的重复商家: </span><br>
+	<div id="nearShops"></div>
+</div>

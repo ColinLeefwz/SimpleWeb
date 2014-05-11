@@ -245,10 +245,9 @@ function OpenPlane(obj,str,sort,type2,url) {							//打开右侧面板
 		$("#Box17Con4 .pl20").html(url);
 		return false;
 	}else if(type2=='mweb'){
-		PhoneLink({no_action: true});
+		PhoneLink({no_action: true,url: url});
 		var obj = $('.box18bg[rel="'+url+'"]').parent().clone().removeClass('box18change');
 		obj.find(".box18bg").remove();
-		$('#Box17Con5 .box18').replaceWith(obj)
 		return false
 	}else if(type2=='app'){
 		APPLink({no_action: true});
@@ -281,7 +280,11 @@ function PhoneLink(option){										//打开手机编辑页
 	option = option || {}
 	$(".box17right").addClass("none");
 	$("#Box17Con5").removeClass("none");
+
 	if(option.no_action){
+		var url = option.url
+		$("#PW2").attr("src", mweb_url + '?' + url.split('?')[1]);
+
 		return false;
 	}else{
 		$('#mwebbtn').click();
@@ -331,13 +334,6 @@ function SaveLink(){
 function EditWeb(obj){									//选择跳转页面
 	$(".box17right").addClass("none");
 	$("#Box17Con6").removeClass("none");
-	var li_len=$("#B17LC ul").eq(0).find("li").length;
-	for(var i=0;i<li_len;i++){
-		ul_w+=($("#B17LC ul li").eq(i).width()+20);
-	}
-	$("#B17LC ul").css("width",ul_w+"px");
-	$('#B17LC li').first().click();
-	$(".box18bg").hide();
 }
 function EditAPP(){										//跳转到应用页面
 	$(".box17right").addClass("none");
@@ -364,9 +360,9 @@ function More(obj,n){
 	$(window).resize();
 }
 function SaveWeb(obj){
-	var m = $('.selected')[0]
+	var m = $('.selected')[0];
 	var indexs = Get_Menu_Map(m.id);
-	var url = $("#Box17Con6 div.jshover").attr('rel')
+	var url = $("#PW").contents().find("div.box17ci div.jshover").attr("rel");
 	if(!url){
 		MessageDelDiv('<br/>没有选择文章');
 		return false;
@@ -378,7 +374,7 @@ function SaveWeb(obj){
 		$("#Box17Con5").removeClass("none");
 		$(window).resize();
 		$(".selected a.mlink").click();
-	})
+	});
 }
 
 function SaveAPP(){
