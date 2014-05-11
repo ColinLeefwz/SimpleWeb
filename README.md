@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Prodygia README
 ##Basic Info
 - Rails Version: 4.0.0
@@ -35,3 +36,7 @@ comment out has_many :categories, through: :categorizations in app/models/concer
 rake category:associate
 comment back the has_many statement
 ```
+=======
+SimpleWeb
+=========
+>>>>>>> 44dd7002c52eec4cd41c366ae43811cec70530fe
