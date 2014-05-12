@@ -33,7 +33,6 @@ class AdminUserAddShopsController < ApplicationController
   
   def show
     @shop.lob = @shop.lo_to_lob.reverse.join(',')
-    @model = @shop
     render :layout => true
   end
 
@@ -142,7 +141,7 @@ class AdminUserAddShopsController < ApplicationController
         pshop.save
         pshop.merge_subshops_locations
       end
-      render :json => {'name' => @shop.name, 'lo' => @shop.lo, 'addr' => @shop.addr, 'lob' => @shop.lob, 'st' => @shop.show_t}
+     redirect_to action: :index
     else
       render :action => :edit
     end
