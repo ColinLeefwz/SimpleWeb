@@ -23,6 +23,7 @@ class AdminUserAddShopsController < ApplicationController
 
   def untreated
     hash = {_id:{"$gt" => 21000000}, creator: {"$ne" => nil}, i: {"$exists" => false }}
+    hash.merge!({city: params[:city]}) unless params[:city].blank?
     @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
   end
 
@@ -98,7 +99,7 @@ class AdminUserAddShopsController < ApplicationController
         report = ShopReport.find_by_id(params[:report_id])
         report.update_attribute(:flag, 1)
       end
-      render json: {"success" => true, "lo" => @lo.first.is_a?(Array) ? @lo.to_s[1...-1] : @lo.to_s}
+      render json: {"success" => true, "lo" => format_lo(@lo) }
     end
   end
 
@@ -119,7 +120,7 @@ class AdminUserAddShopsController < ApplicationController
 
     if @shop.save
       @lo = @shop.lo
-      render json: {"success" => true, "lo" => @lo.first.is_a?(Array) ? @lo.to_s[1...-1] : @lo.to_s}
+      render json: {"success" => true, "lo" => format_lo(@lo) }
     end
   end
 
@@ -182,5 +183,17 @@ class AdminUserAddShopsController < ApplicationController
   private
   def find_shop
     @shop = Shop.find_by_id(params[:id])
+  end
+  
+  def format_lo(lob)
+    if lob.first.is_a?(Array)
+      lob.each do |item|
+        item.reverse!
+      end
+      lo = lob.to_s[1...-1]
+    else
+      lo = lob.reverse.to_s
+    end
+    lo
   end
 end

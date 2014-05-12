@@ -30,10 +30,10 @@
     <div class ="col-md-3 md_addr_text" id="lob">
       <% if @shop.lo && @shop.lo.first.is_a?(Array)%>
         <% @shop.lo.each do |lo| %>
-          <%= lo %>
+          <%= lo.reverse %>
         <% end %>
       <% else %>
-        <%= @shop.lo %>
+        <%= @shop.lo.reverse %>
       <% end %>
     </div>
     <div class="hidden shop-id">
