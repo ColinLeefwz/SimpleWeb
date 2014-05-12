@@ -16,14 +16,14 @@ class AdminUserAddShopsController < ApplicationController
     end
 
     hash.merge!( {name: /#{params[:name]}/ }  )  unless params[:name].blank?
-    hash.merge!({city: params[:city]}) unless params[:city].blank?
+    hash.merge!({city: session[:city_code]}) if session[:city_code].present?
     hash.merge!({t: params[:t]}) if params[:t].present?
     @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
   end
 
   def untreated
     hash = {_id:{"$gt" => 21000000}, creator: {"$ne" => nil}, i: {"$exists" => false }}
-    hash.merge!({city: params[:city]}) unless params[:city].blank?
+    hash.merge!({city: session[:city_code]}) if session[:city_code].present?
     @shops = paginate3('shop',params[:page], hash,{_id: -1} ,10 )
   end
 
@@ -184,7 +184,7 @@ class AdminUserAddShopsController < ApplicationController
   def find_shop
     @shop = Shop.find_by_id(params[:id])
   end
-  
+
   def format_lo(lob)
     if lob.first.is_a?(Array)
       lob.each do |item|
