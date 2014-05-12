@@ -288,6 +288,7 @@ class User
   
   def output_self
     hash = self.attr_with_id(false).merge!(self.head_logo_hash)
+    hash.merge!({join_day:self.cat_day})
     hash
   end
 
