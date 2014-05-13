@@ -15,8 +15,8 @@ class PhotoNotice
     return if $redis.sismember("UnBroadcast", shop.id.to_s)
     user.fans.each do |u|
       next if u.id.to_s == $gfuid
-      str = "[img:#{pid}]#{photo.total_str}#{photo.user.name}在#{photo.shop.name}分享了图片"
-      str += ",#{photo.desc}" unless photo.desc.nil?
+      str = "[img:#{pid}]#{photo.total_str}"
+      str += "#{photo.desc}" unless photo.desc.nil?
       shop = photo.shop
       Resque.enqueue(XmppMsg, user.id, u.id, str, "FEED#{pid}#{u.id}", " NOLOG='1' NOPUSH='1' SID='#{shop.id}' SNAME='#{shop.name}' ", "<x xmlns='dface.shop' SID='#{shop.id}' SNAME='#{shop.name}' ></x>#{photo.thumb2_urls}#{photo.photos_urls}")
     end
