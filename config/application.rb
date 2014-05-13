@@ -83,6 +83,12 @@ module Lianlian
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
     
+		Mongoid.load!("config/mongoid.yml")
+
+		config.generators do |g|
+			  g.orm :active_record
+		end
+
     config.generators do |g|  
       g.stylesheets false  
       g.assets false
