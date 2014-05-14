@@ -21,7 +21,7 @@ class AroundmeController < ApplicationController
     staffs = session_user.belong_shops
     arr = arr + staffs if staffs.size>0
     my_loc = session_user.my_loc
-    arr = arr + my_loc.shops if my_loc
+    arr = my_loc.shops + arr if my_loc
     arr.uniq!
     ret = arr.find_all{|x| x!=nil}.map do |x|  
       hash = x.safe_output_with_users
