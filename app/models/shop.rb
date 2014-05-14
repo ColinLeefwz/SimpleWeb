@@ -247,7 +247,7 @@ class Shop
       hash.merge!( {"sign"=>1, "tel"=>self.tel, "addr"=>self.addr})
       hash.merge!( self.logo.logo_thumb_hash) if self.logo
     end
-    hash.merge!( {"sub"=>"有#{self.shops.size}个子地点"} ) if self.shops && self.shops.size>0
+    hash.merge!( {"sub"=>"有#{self.shops.size}个相关地点"} ) if self.shops && self.shops.size>0
     hash
   end
 
