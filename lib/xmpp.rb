@@ -108,12 +108,12 @@ class Xmpp
     str.gsub("&", "&amp;")
   end
   
-  def self.lua_exec(func)
+  def self.lua_exec(uid,func)
     iosurl = "http://www.dface.cn/lua/ios/#{func}.lua"
     androidurl = "http://www.dface.cn/lua/android/#{func}.lua"    
     attrs = " NOLOG='1'  url='#{iosurl}' "
     ext = "<x xmlns='dface.url'>#{androidurl}</x>"
-    Xmpp.send_normal($gfuid, User.first.id, "lua","RPC#{func}",attrs, ext )
+    Xmpp.send_normal($gfuid, uid, "lua","RPC#{func}",attrs, ext )
   end
   
   def self.test
