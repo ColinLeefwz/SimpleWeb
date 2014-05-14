@@ -20,14 +20,14 @@
   <% @shop_reports.each do |report| %>
     <tr>
       <td valign="middle"><%= report.sid %></td>
-      <td valign="middle">
+      <td valign="middle" class="agent_tab_sjmc">
         <% if session[:city_code].present? %>
           <span class="shopname"><%= report.shop_name %></span>
         <% else %>
           <%= link_to report.shop_name, "/admin_shops/show?id=#{report.shop_id}" ,class: "shopname" %>
         <% end %>
       </td>
-      <td valign="middle">
+      <td valign="middle" class="agent_tab_bcr">
         <% if session[:city_code].present? %>
           <%= report.user_name %>
         <% else %>
@@ -37,7 +37,7 @@
         <%= "(授权)" if $redis.sismember('CoUsers', report.user_id) %>
       </td>
       <td valign="middle"><%= report.type %></td>
-      <td valign="middle"><%= report.des %></td>
+      <td valign="middle" class="agent_tab_msxx"><%= report.des %></td>
       <td valign="middle">
         <% if report.untreated? %>
           <%= link_to report.recommend_operation[:operation], report.recommend_operation[:url], class: "#{'delete-btn' if report.recommend_operation[:operation] == '删除地点'}" %>
@@ -108,6 +108,18 @@
       $('#Apply_btn').attr('href',ahref)
       return flag;
     });
+
+    $('.agent_tab_sjmc').each(function(){
+      $(this).text(subStr($(this).text(),8));
+    })
+
+    $('.agent_tab_bcr').each(function(){
+      $(this).text(subStr($(this).text(),4));
+    })
+
+    $('.agent_tab_msxx').each(function(){
+      $(this).text(subStr($(this).text(),7));
+    })
   })
   /**取消**/
   function fil_close(id){

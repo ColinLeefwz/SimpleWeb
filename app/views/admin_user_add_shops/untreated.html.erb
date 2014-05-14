@@ -18,7 +18,7 @@
   <% @shops.each do |shop| %>
     <tr>
       <td valign="middle"><%= shop.id %></td>
-      <td valign="middle">
+      <td valign="middle" class="agent_tab_sjmc">
         <% if session[:city_code].present? %>
           <span class="shopname"><%= shop.name %></span>
         <% else %>
@@ -86,5 +86,9 @@
         success: function(){obj.replaceWith('已忽略')}
       })
   }
-
+  $(function(){    
+    $('.agent_tab_sjmc').each(function(){
+      $(this).text(subStr($(this).text(),8));
+    })
+  })
 </script>

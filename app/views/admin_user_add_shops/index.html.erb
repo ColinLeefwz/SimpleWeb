@@ -38,7 +38,7 @@
   <% @shops.each do |shop| %>
     <tr>
       <td valign="middle"><%= shop.id %></td>
-      <td valign="middle">
+      <td valign="middle" class="agent_tab_sjmc">
         <% if session[:city_code].present? %>
           <%= shop.name %>
         <% else %>
@@ -78,6 +78,9 @@
       if(!confirm("确定删除？")) {
         event.preventDefault();
       }
+    })
+    $('.agent_tab_sjmc').each(function(){
+      $(this).text(subStr($(this).text(),8));
     })
   })
 

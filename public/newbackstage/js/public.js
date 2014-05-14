@@ -469,3 +469,13 @@ function Photo(){//照片墙动画
 		}
 	}
 }
+
+function subStr(str,num){
+  var _str = "",
+      s_str = "";
+  _str = str.replace(/\s/g,'');
+  if(_str){
+    s_str = _str.substring(0,num) + "...";
+  }
+  return s_str;
+}
