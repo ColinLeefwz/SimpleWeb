@@ -934,8 +934,10 @@ class Shop
       4
     when 10..12
       5
+    when 8,9
+      6      
     else
-      6
+      0
     end
   end
 
