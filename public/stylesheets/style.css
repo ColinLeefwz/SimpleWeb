@@ -64,7 +64,7 @@ _top:-140px;_height:68px;}
 .links a:hover{color:#f60}
 
 .article{width:100%;overflow:hidden;}
-.article h2.tit{font-size:22px;color:#333;margin:40px 0px 40px 100px;display:block;font-family:"微软雅黑";text-shadow:1px 0px 3px #c9c9c9;letter-spacing:2px;}
+.article h2.tit{font-size:22px;color:#333;margin:40px 0px 40px 0px;display:block;font-family:"微软雅黑";letter-spacing:2px;}
 .article h2.tit2{font-size:22px;color:#333;margin:40px 0px 40px 0px;text-align:center;display:block;font-family:"微软雅黑";text-shadow:1px 0px 3px #c9c9c9;letter-spacing:2px;}
 .articleinner{width:100%;position:relative;}
 .articleinner p{margin:15px 0px;padding:0px;}
@@ -74,5 +74,14 @@ _top:-140px;_height:68px;}
 .About{margin-top: 39px;margin-bottom: 5px;}
 .About a {color:#999;margin: 0 15px;}
 .About a.hover, .About a:hover{color:#0CF;}
+
+.nav-job{}
+.nav-job li{ margin-bottom: 20px;}
+.nav-job li h3{ margin-bottom: 10px;}
+.articleinner .t-job{ width: 100%; background:#ccc}
+.articleinner .t-job tr{}
+.articleinner .t-job tr td{ background:#FFF; padding: 5px 10px;}
+.articleinner .t-job p{ margin:0; line-height: 30px;}
+.code2{ position: absolute; top: -400px; right: 90px;}
 
 
