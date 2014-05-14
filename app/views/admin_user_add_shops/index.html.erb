@@ -40,12 +40,12 @@
       <td valign="middle"><%= shop.id %></td>
       <td valign="middle" class="agent_tab_sjmc">
         <% if session[:city_code].present? %>
-          <%= shop.name %>
+          <span class="shopname" data-toggle = "tooltip" title = "<%= shop.name %>"><%= shop.name %></span>
         <% else %>
-          <%= link_to shop.name, "admin_shops/show?id=#{shop.id}" %>
+          <%= link_to shop.name, "admin_shops/show?id=#{shop.id}" ,class: "shopname" ,title:"#{shop.name}", "data-toggle" => "tooltip"%>
         <% end %>
       </td>
-      <td valign="middle">
+      <td valign="middle" class="agent_tab_xzhf">
         <% if session[:city_code].present? %>
           <%= shop.user_name %>
         <% else %>
@@ -79,7 +79,7 @@
         event.preventDefault();
       }
     })
-    $('.agent_tab_sjmc').each(function(){
+    $('.agent_tab_sjmc span,.agent_tab_sjmc a').each(function(){
       $(this).text(subStr($(this).text(),8));
     })
   })

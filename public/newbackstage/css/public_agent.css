@@ -745,6 +745,7 @@ overflow:hidden;zoom:1;z-index:20;}
 .agent_tab tr td.agent_view{}
 .agent_tab tr td.agent_view a{ position: relative; z-index: 97}
 .agent_tab tr:hover{ background: #f0f0f0;}
+.agent_tab span{ cursor: pointer;}
 .filter,.filter2,.filter3,.filter4,.agnet_add_box{ width: 100%; position: absolute; left: 0px; top: 0px; z-index: 99; display: none;}
 .tips-d1{ width: 298px; border:1px solid #d7d7d7; font-family: 微软雅黑; position: fixed; z-index: 100; left: 50%; margin-left: -147px; top: 200px;}
 .tips-d2{ width: 353px; border:1px solid #d7d7d7; font-family: 微软雅黑; position: fixed; z-index: 100; left: 50%; margin-left: -175px; top: 200px;}

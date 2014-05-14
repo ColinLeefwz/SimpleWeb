@@ -474,8 +474,11 @@ function subStr(str,num){
   var _str = "",
       s_str = "";
   _str = str.replace(/\s/g,'');
-  if(_str){
+  if(_str && _str.length > num){
     s_str = _str.substring(0,num) + "...";
+
+  	return s_str;
+  }else{
+  	return _str;
   }
-  return s_str;
 }

@@ -20,13 +20,13 @@
       <td valign="middle"><%= shop.id %></td>
       <td valign="middle" class="agent_tab_sjmc">
         <% if session[:city_code].present? %>
-          <span class="shopname"><%= shop.name %></span>
+          <span class="shopname" data-toggle = "tooltip" title = "<%= shop.name %>"><%= shop.name %></span>
         <% else %>
-          <%= link_to shop.name, "/admin_shops/show?id=#{shop.id}" ,class: "shopname" %>
+          <%= link_to shop.name, "/admin_shops/show?id=#{shop.id}" ,class: "shopname" ,title:"#{shop.name}", "data-toggle" => "tooltip"%>
         <% end %>
       </td>
-      <td valign="middle">
-        <%= shop.city_fullname %>
+      <td valign="middle" class="agent_tab_xzhf">
+        <span class="shopname" data-toggle = "tooltip" title = "<%= shop.city_fullname %>"><%= shop.city_fullname %></span>
       </td>
       <td valign="middle">
         <% if session[:city_code].present? %>
@@ -87,7 +87,13 @@
       })
   }
   $(function(){    
-    $('.agent_tab_sjmc').each(function(){
+
+
+    $('.agent_tab_sjmc span,.agent_tab_sjmc a').each(function(){
+      $(this).text(subStr($(this).text(),8));
+    })
+
+    $('.agent_tab_xzhf span').each(function(){
       $(this).text(subStr($(this).text(),8));
     })
   })
