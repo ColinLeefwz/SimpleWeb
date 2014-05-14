@@ -1324,6 +1324,55 @@ dface://scheme/photo?id=XXXXXX 查看图片详情页面
 dface://scheme/user/info?id=XXXXX 查看用户信息
 \end{verbatim}
 
+\section{脸脸Lua推送接口}
+
+编程模型：
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+ \  模型  & 数据 & 代码 &  发起方  \\
+ \hline
+Web   & 服务器   &  	服务器  & 	客户端\\
+ \hline
+APP	  & 服务器   &  	本地  & 		客户端\\
+ \hline
+PUSH  & 服务器   &  	无  & 		服务器\\
+ \hline
+IM	  & 双向   &  	无  & 		双向\\
+ \hline
+LUA	  & 服务器   &  	服务器  & 	服务器\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+服务器端发送消息ID以RPC开头的normal消息，代表本消息是LUA推送消息。
+lua代码的地址包含在消息的url字段中。客户端下载lua代码文件并执行，并通过调用下面的接口把执行结果报告回服务器端。
+
+\subsection{ Lua代码执行后的回调}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/lua/callback } \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ user\_id  & 字符串 & 必须 & 登录用户的uid\\
+  \hline
+ ret  & 字符串 & 必须 & Lua代码执行后的返回值\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+
 
 \section{脸脸聊天图片上传时的压缩规则}
 
