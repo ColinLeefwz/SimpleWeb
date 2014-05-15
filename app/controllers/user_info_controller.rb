@@ -30,6 +30,7 @@ class UserInfoController < ApplicationController
   end
   
   def lords
+    lua_header('test')
     user = User.find_by_id(params[:id])
     shops = user.lords[0,10].map{|id| Shop.find_by_id(id)}
     if user.ver.to_f >= 3 && session[:user_id] != user.id

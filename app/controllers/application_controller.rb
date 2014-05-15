@@ -235,6 +235,13 @@ class ApplicationController < ActionController::Base
     $redis.del("qqexpire#{session[:user_id]}")
     reset_session
   end
+  
+  def lua_header(func)
+    iosurl = "http://www.dface.cn/lua/ios/#{func}.lua"
+    androidurl = "http://www.dface.cn/lua/android/#{func}.lua" 
+    response.headers['LUAI'] = iosurl
+    response.headers['LUAA'] = androidurl
+  end
 
 end
 
