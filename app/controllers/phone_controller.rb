@@ -209,6 +209,8 @@ class PhoneController < ApplicationController
     else
       user.set(:phone_hidden, true)
       user.set(:pmatch, false)
+      ua = UserAddr.find_by_id(session_user.id)
+      ua.delete if ua
       render :json => {unbind: true}.to_json
     end
   end
