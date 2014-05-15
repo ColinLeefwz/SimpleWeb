@@ -50,6 +50,11 @@ class AroundmeController < ApplicationController
     if is_co_user?(session[:user_id])
       $redis.smembers("CoShops").each {|id| arr << Shop.find_by_id(id)}
     end
+    if arr.size<20
+      limit = 20 - arr.size
+      shops = Shop.where({city:city, password:{"$exists" => true}}).sort({_id:1}).limit(limit)
+      shops.each {|x| arr << x}
+    end
     if city
       shop = Shop.find_by_id(21838725) # 行酷车友会
       if shop
