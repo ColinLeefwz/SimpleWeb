@@ -22,6 +22,13 @@ class AroundmeController < ApplicationController
     arr = arr + staffs if staffs.size>0
     my_loc = session_user.my_loc
     arr = my_loc.shops + arr if my_loc
+    session_user.lords.each{|id| arr << Shop.find_by_id(id)}
+    if User.is_kx?(session[:user_id])
+      $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
+    end
+    if is_co_user?(session[:user_id])
+      $redis.smembers("CoShops").each {|id| arr << Shop.find_by_id(id)}
+    end
     arr.uniq!
     ret = arr.find_all{|x| x!=nil}.map do |x|  
       hash = x.safe_output_with_users
@@ -44,17 +51,8 @@ class AroundmeController < ApplicationController
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     city = Shop.get_city(lo)
     arr = []
-    if User.is_kx?(session[:user_id])
-      $redis.smembers("FakeShops").each {|id| arr << Shop.find_by_id(id)}
-    end
-    if is_co_user?(session[:user_id])
-      $redis.smembers("CoShops").each {|id| arr << Shop.find_by_id(id)}
-    end
-    if arr.size<20
-      limit = 20 - arr.size
-      shops = Shop.where({city:city, password:{"$exists" => true}}).sort({_id:1}).limit(limit)
-      shops.each {|x| arr << x}
-    end
+    shops = Shop.where({city:city, password:{"$exists" => true}}).sort({_id:1}).limit(limit)
+    shops.each {|x| arr << x}
     if city
       shop = Shop.find_by_id(21838725) # 行酷车友会
       if shop
