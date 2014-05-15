@@ -47,12 +47,15 @@ class AroundmeController < ApplicationController
   end
   
   def hot
+    page = params[:page].to_i
+    pcount = params[:pcount].to_i
+    page = 1 if page==0
+    pcount = 20 if pcount==0
+    skip = (page-1)*pcount
     lo = [params[:lat].to_f,params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     city = Shop.get_city(lo)
-    arr = []
-    shops = Shop.where({city:city, password:{"$exists" => true}}).sort({_id:1}).limit(limit)
-    shops.each {|x| arr << x}
+    arr = Shop.where({city:city, password:{"$exists" => true}}).skip(skip).limit(pcount)
     if city
       shop = Shop.find_by_id(21838725) # 行酷车友会
       if shop
