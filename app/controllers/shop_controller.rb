@@ -227,7 +227,7 @@ class ShopController < ApplicationController
     if shop.nil? || shop.shops.nil?
       render :json => [].to_json
     else
-      render :json => shop.sub_shops.map{|x| x.safe_output}.to_json
+      render :json => shop.sub_shops.map{|x| x.safe_output_with_users}.to_json
     end
   end
   
