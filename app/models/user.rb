@@ -668,22 +668,22 @@ class User
     sina_fans.delete_if {|x| x.follows.index(self.id)!=nil }
   end
 
-  def address_list_friends
-    address_lists(1) 
+  def address_list_friends(mac)
+    address_lists(mac,1) 
   end
   
-  def address_list_to_add
-    address_lists(2) 
+  def address_list_to_add(mac)
+    address_lists(mac,2) 
   end
   
-  def address_list_to_invite
-    address_lists(3) 
+  def address_list_to_invite(mac)
+    address_lists(mac,3) 
   end
     
-  def address_lists(type=0) 
+  def address_lists(mac, type=0) 
     adds = []
     ua = UserAddr.find_or_new(self.id)
-    if ua && ua.list
+    if ua && ua.list && (ua.mac.nil? || ua.mac==mac)
       ua.list.each do |m|
         phone = m["number"]
         next if phone.nil? || phone.size<11

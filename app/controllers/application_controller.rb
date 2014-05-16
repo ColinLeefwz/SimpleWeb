@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
       err_str = err.to_s
       error_log err_str
       err.backtrace.each {|x| error_log x}
-      render :json => {:error => err_str }.to_json   
+      render :json => {:error => err_str, :debug => "1" }.to_json   
     end
   end
 
@@ -234,6 +234,13 @@ class ApplicationController < ActionController::Base
     $redis.del("wbexpire#{session[:user_id]}")
     $redis.del("qqexpire#{session[:user_id]}")
     reset_session
+  end
+  
+  def lua_header(func)
+    iosurl = "http://www.dface.cn/lua/ios/#{func}.lua"
+    androidurl = "http://www.dface.cn/lua/android/#{func}.lua" 
+    response.headers['LUAI'] = iosurl
+    response.headers['LUAA'] = androidurl
   end
 
 end

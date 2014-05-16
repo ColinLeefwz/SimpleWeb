@@ -86,10 +86,10 @@ function InfoDiv(strs,subnum){
 		str="edit";
 		if(subnum!=""){
 			sn=(subnum.toString()).split(",");
-			if((sn.length==1)&&(menujson.menu.button[subnum].sub_button.length!=0)){
+			/*if((sn.length==1)&&(menujson.menu.button[subnum].sub_button.length!=0)){
 				MessageDelDiv("<br/>已有子菜单，无法设置动作");
 				return false;
-			}
+			}*/
 		}
 	}
 	OpenBG();

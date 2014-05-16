@@ -3,6 +3,7 @@
 class UserAddr
   include Mongoid::Document
   field :phone
+  field :mac
   field :list, type:Array #通讯录
 
   index({list: 1})
