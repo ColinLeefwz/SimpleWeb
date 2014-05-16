@@ -18,6 +18,11 @@ class Headpic
   def set_od
     self.od = Headpic.eq_sid(self.sid).count + 1
   end
+  
+  def logo_thumb_hash
+    {:logo => self.img_url, :logo_thumb2 => self.img_url(:t2)  }
+  end
+
 
   def img_url(type=nil)
     if type

@@ -31,14 +31,14 @@ class Xmpp
     end
   end
   
-  def self.normal_chat(from,to,msg, id=nil)
+  def self.normal_chat(from,to,msg, id=nil, attrs="", ext="")
     msg2 = CGI.escapeHTML(msg)
     mid = id.nil?? $uuid.generate : id
-    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='normal'><body>#{msg2}</body></message>"
+    "<message id='#{mid}' to='#{to}@dface.cn' from='#{from}@dface.cn' type='normal' #{escape(attrs)}><body>#{msg2}</body>#{escape_amp(ext)}</message>"
   end
   
-  def self.send_normal(from,to,msg,id=nil)
-    post("rest", Xmpp.normal_chat(from,to,msg,id)) 
+  def self.send_normal(from,to,msg,id=nil, attrs="", ext="")
+    post("rest", Xmpp.normal_chat(from,to,msg,id,attrs,ext)) 
   end
 
   def self.chat(from,to,msg, id=nil, attrs="", ext="")
@@ -106,6 +106,14 @@ class Xmpp
   def self.escape_amp(str)
     return "" if str.nil?
     str.gsub("&", "&amp;")
+  end
+  
+  def self.lua_exec(uid,func)
+    iosurl = "http://www.dface.cn/lua/ios/#{func}.lua"
+    androidurl = "http://www.dface.cn/lua/android/#{func}.lua"    
+    attrs = " NOLOG='1'  url='#{iosurl}' "
+    ext = "<x xmlns='dface.url'>#{androidurl}</x>"
+    Xmpp.send_normal($gfuid, uid, "lua","RPC#{func}",attrs, ext )
   end
   
   def self.test

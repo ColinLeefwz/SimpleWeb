@@ -218,8 +218,7 @@ class ShopController < ApplicationController
   end
   
   def banners
-    ret = Photo.where({room:"21828775"}).sort({_id:-1}).limit(5).map {|x| x.logo_thumb_hash}
-    #TODO：Banner管理
+    ret = Headpic.where({sid: params[:id].to_i}).sort({od:1}).limit(5).map {|x| x.logo_thumb_hash}
     render :json => ret.to_json
   end
   
@@ -228,7 +227,7 @@ class ShopController < ApplicationController
     if shop.nil? || shop.shops.nil?
       render :json => [].to_json
     else
-      render :json => shop.sub_shops.map{|x| x.safe_output}.to_json
+      render :json => shop.sub_shops.map{|x| x.safe_output_with_users}.to_json
     end
   end
   

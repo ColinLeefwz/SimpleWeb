@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
       err_str = err.to_s
       error_log err_str
       err.backtrace.each {|x| error_log x}
-      render :json => {:error => err_str }.to_json   
+      render :json => {:error => err_str, :debug => "1" }.to_json   
     end
   end
 
@@ -67,6 +67,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def agent_or_admin_authorize
+    if params[:city_code].nil? && session[:city_code].nil?
+      admin_authorize
+    else
+      city_code = params[:city_code]
+      hash = Digest::SHA256.hexdigest(city_code.to_s + "dface")
+      session[:city_code] = city_code if hash == params[:agent]
+    end
+  end
+  
   def shop_authorize
     if session[:shop_id].nil? || Shop.find_by_id(session[:shop_id]).nil?
       session[:o_uri_path] = request.path unless request.path =~ /\/login/
@@ -224,6 +234,13 @@ class ApplicationController < ActionController::Base
     $redis.del("wbexpire#{session[:user_id]}")
     $redis.del("qqexpire#{session[:user_id]}")
     reset_session
+  end
+  
+  def lua_header(func)
+    iosurl = "http://www.dface.cn/lua/ios/#{func}.lua"
+    androidurl = "http://www.dface.cn/lua/android/#{func}.lua" 
+    response.headers['LUAI'] = iosurl
+    response.headers['LUAA'] = androidurl
   end
 
 end

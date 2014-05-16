@@ -32,7 +32,7 @@ class UserInfoController < ApplicationController
   def lords
     user = User.find_by_id(params[:id])
     shops = user.lords[0,10].map{|id| Shop.find_by_id(id)}
-    if user.ver.to_f >= 3
+    if user.ver.to_f >= 3 && session[:user_id] != user.id
       if $redis.zadd("VISIT#{user.id}", Time.now.to_i, session[:user_id])
         Xmpp.send_normal(session[:user_id], user.id,"#{session_user.name}访问了你的主页噢~", "VISIT#{session[:user_id]},#{user.id}")
       end

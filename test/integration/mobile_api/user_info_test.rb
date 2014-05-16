@@ -23,7 +23,9 @@ class UserInfoTest < ActionDispatch::IntegrationTest
     login(luser.id)
     get "/user_info/get_self"
     assert_response :success
-    assert_equal JSON.parse(response.body), {"gender"=>1,"hobby"=>"","invisible"=>0.0,"jobtype"=>nil,"name"=>"袁乐天","oid"=>154.0,"password"=> luser.password,"signature"=>"","wb_uid"=>"a1","pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}
+    hash = {"gender"=>1,"hobby"=>"","invisible"=>0.0,"jobtype"=>nil,"name"=>"袁乐天","oid"=>154.0,"password"=> luser.password,"signature"=>"","wb_uid"=>"a1","pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}
+    data = JSON.parse(response.body)
+    hash.each{|k,v| assert_equal(true, data.has_key?(k)) }
 
     #未登录获取他人个人信息
     logout
@@ -35,10 +37,10 @@ class UserInfoTest < ActionDispatch::IntegrationTest
     login(user1.id)
     get "/user_info/get?id=#{luser.id}"
     assert_response :success
+    hash = {"gender"=>1,"hobby"=>"","invisible"=>0.0,"jobtype"=>nil,"name"=>"袁乐天","oid"=>154.0,"signature"=>"","wb_uid"=>"a1","pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>false}
     data = JSON.parse(response.body)
-    data.delete('last')
-    data.delete('time')
-    assert_equal data, {"gender"=>1,"hobby"=>"","invisible"=>0.0,"jobtype"=>nil,"name"=>"袁乐天","oid"=>154.0,"signature"=>"","wb_uid"=>"a1","pcount"=>0,"id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>"","friend"=>false,"follower"=>false}
+    hash.each{|k,v| assert_equal(true, data.has_key?(k)) }
+
 
     #未登录设置个人信息
     logout
@@ -56,7 +58,9 @@ class UserInfoTest < ActionDispatch::IntegrationTest
     login(luser.id)
     get "/user_info/get_self"
     assert_response :success
-    assert_equal JSON.parse(response.body), {"birthday"=>"1988-08-08","gender"=>1,"hobby"=>"计算机","invisible"=>0.0,"job"=>"程序员","jobtype"=>1,"name"=>"测试name","oid"=>154.0,"password"=> luser.password,"pcount"=>0,"signature"=>"测试签名档","wb_uid"=>"a1","id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}
+    hash = {"birthday"=>"1988-08-08","gender"=>1,"hobby"=>"计算机","invisible"=>0.0,"job"=>"程序员","jobtype"=>1,"name"=>"测试name","oid"=>154.0,"password"=> luser.password,"pcount"=>0,"signature"=>"测试签名档","wb_uid"=>"a1","id"=>"502e6303421aa918ba000005","logo"=>"","logo_thumb"=>"","logo_thumb2"=>""}
+    data = JSON.parse(response.body)
+    hash.each{|k,v| assert_equal(true, data.has_key?(k)) }
 
   end
   

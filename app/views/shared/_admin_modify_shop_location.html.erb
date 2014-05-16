@@ -1,20 +1,10 @@
-<style>
-  .md_addr{margin:10px !important; position: relative;}
-  .md_addr_lable{ width: 140px !important; margin-right: -140px !important;}
-  .md_addr_text{ margin-left: 140px !important;}
-  .md_addr_text2{ left: 200px; position: absolute;}
-  .customer_info ul li{ margin-bottom: 12px;}
-</style>
-<div class="title1 mb30">
-  <h2 class="f18">地点报错管理</h2>
-</div>
 <div class="container customer_info" id="admin_user_reports" style="width:760px; padding:40px 20px; margin-left:0px;">
   <div class="row md_addr">
     <div class="col-md-2 text-right md_addr_lable">
       商家ID:
     </div>
     <div class="col-md-4 md_addr_text">
-      <%= @report.shop_id %>
+      <%= @shop.id %>
     </div>
   </div>
   <div class="row md_addr">
@@ -22,7 +12,7 @@
       地点名称:
     </div>
     <div class="col-md-4 md_addr_text">
-      <%= @report.shop_name %>
+      <%= @shop.name %>
     </div>
   </div>
   <div class="row md_addr">
@@ -30,24 +20,24 @@
       地点地址:
     </div>
     <div class="col-md-4 md_addr_text">
-      <%= @report.shop_addr %>
+      <%= @shop.addr %>
     </div>
   </div>
   <div class="row md_addr">
-    <div class="col-md-2 text-right md_addr_lable">
+    <div class ="col-md-2 text-right md_addr_lable">
       百度经纬度:
     </div>
-    <div class="col-md-3 md_addr_text hidden" id="lob">
-      <% if @report.shop.lo && @report.shop.lo.first.is_a?(Array)%>
-        <% @report.shop.lo.each do |lo| %>
-          <%= lo %>
+    <div class ="col-md-3 md_addr_text" id="lob">
+      <% if @shop.lo && @shop.lo.first.is_a?(Array)%>
+        <% @shop.lo.each do |lo| %>
+          <%= lo.reverse %>
         <% end %>
       <% else %>
-        <%= @report.shop.lo %>
+        <%= @shop.lo.reverse %>
       <% end %>
     </div>
-    <div class="hidden report-id">
-      <%= @report.shop.id %>
+    <div class="hidden shop-id">
+      <%= @shop.id %>
     </div>
     <div class="col-md-2 md_addr_text" style="width:20%;">
       <a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank">查找百度经纬度</a>
@@ -111,7 +101,11 @@
 
   <div class="row">
     <div class="col-md-2">
-      <%= link_to "返回", "/admin_user_reports/untreated", class: "btn btn-default" %>
+      <% if @report %>
+        <%= link_to "返回", "/admin_user_reports/untreated", class: "btn btn-default" %>
+      <% else %>
+        <%= link_to "返回", "/admin_user_add_shops/untreated", class: "btn btn-default" %>
+      <% end %>
     </div>
   </div>
 </div>
@@ -119,9 +113,9 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("#calculate-distance").click(function(){
-      var shop_id = $(".report-id").html();
+      var shop_id = $(".shop-id").html();
       var lob2 = $('#lob2').val();
-      $.get('/admin_user_reports/ajax_dis', {shop_id: shop_id, lob2: lob2}, function(data){
+      $.get('/api_admin_shop/ajax_dis', {shop_id: shop_id, lob2: lob2}, function(data){
         $("#distance").text(data["distance"]+"（米）");
       });
     });
@@ -130,7 +124,7 @@
       event.preventDefault();
       var params = {lo: $("#change-coordinate-val").val()};
       $.ajax({
-        url: "/admin_user_reports/update_corrdinate?id=<%= @report.id %>",
+        url: "/admin_user_add_shops/update_corrdinate?id=<%= @shop.id %>&report_id=<%= @report.id if @report %>",
         type: 'POST',
         dataType: 'json',
         data: params
@@ -146,7 +140,7 @@
       event.preventDefault();
       var params = {lo: $("#new-coordinate-val").val()}
       $.ajax({
-        url: "/admin_user_reports/new_corrdinate?id=<%= @report.id %>",
+        url: "/admin_user_add_shops/new_corrdinate?id=<%= @shop.id %>&report_id=<%= @report.id if @report %>",
         type: "POST",
         dataType: 'json',
         data: params
@@ -158,3 +152,4 @@
     });
   })
 </script>
+

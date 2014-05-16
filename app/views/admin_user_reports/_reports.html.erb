@@ -14,24 +14,26 @@
   <% @shop_reports.each do |report| %>
     <tr>
       <td valign="middle"><%= report.sid %></td>
-      <td valign="middle">
+      <td valign="middle" class="agent_tab_sjmc">
         <% if session[:city_code].present? %>
-          <%= report.shop_name %>
+          <span class="shopname" data-toggle = "tooltip" title = "<%= report.shop_name %>"><%= report.shop_name %></span>
         <% else %>
-          <%= link_to report.shop_name, "admin_shops/show?id=#{report.shop_id}" %>
+          <%= link_to report.shop_name, "admin_shops/show?id=#{report.shop_id}",class: "shopname" ,title:"#{report.shop_name}", "data-toggle" => "tooltip"%>
         <% end %>
       </td>
-      <td valign="middle">
+      <td valign="middle" class="agent_tab_bcr">
         <% if session[:city_code].present? %>
-          <%= report.user_name %>
+          <span class="shopname" data-toggle = "tooltip" title = "<%= report.user_name %>"><%= report.user_name %></span>
         <% else %>
-          <%= link_to report.user_name, "admin_users/show?id=#{report.user_id}" %>
+          <%= link_to report.user_name, "admin_users/show?id=#{report.user_id}",class: "shopname" ,title:"#{report.user_name}", "data-toggle" => "tooltip"%>
         <% end %>
         <%= "(可信)" if $redis.sismember('KxUsers', report.user_id)%>
         <%= "(授权)" if $redis.sismember('CoUsers', report.user_id) %>
       </td>
       <td valign="middle"><%= report.type %></td>
-      <td valign="middle"><%= report.des %></td>
+      <td valign="middle" class="agent_tab_msxx">
+        <span class="shopname" data-toggle = "tooltip" title = "<%= report.des %>"><%= report.des %></span>
+      </td>
       <td valign="middle">
         <% if report.flag %>
           <%= report.report_flag %>
@@ -60,6 +62,18 @@
       if(!confirm("确定删除？")) {
         event.preventDefault();
       }
+    })
+
+    $('.agent_tab_sjmc span,.agent_tab_sjmc a').each(function(){
+      $(this).text(subStr($(this).text(),12));
+    })
+
+    $('.agent_tab_bcr span,.agent_tab_bcr a').each(function(){
+      $(this).text(subStr($(this).text(),6));
+    })
+
+    $('.agent_tab_msxx span').each(function(){
+      $(this).text(subStr($(this).text(),10));
     })
   })
 

@@ -245,7 +245,7 @@ function Sort(){
 		obj1.addClass("changeScbox");
 		copy=obj1.find("img").clone();
 		obj1.find("img").remove();
-		$(".scopy").html(copy).css("display","block");
+		$(".scopy").append(copy).css("display","block");
 		var x = parseInt(e.pageX);
 		var y = parseInt(e.pageY);
 		$(".scopy").css({"left":(x-60),"top":(y-60)});

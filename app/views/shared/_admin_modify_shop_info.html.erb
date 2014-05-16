@@ -1,8 +1,5 @@
-<div class="title1 mb30">
-  <h2 class="f18">地点报错管理</h2>
-</div>
 <div class="customer_info" style="width:760px; padding:40px 20px;">
-  <%= form_for(@shop, :url => "/admin_user_reports/update_shop_info?id=#{@shop.id}") do |f| %>
+  <%= form_for(@shop, :url => "/admin_user_add_shops/update_shop_info?id=#{@shop.id}&report_id=#{@report.id if @report}") do |f| %>
     <div class="row md_addr">
       <div class="col-md-2 text-right md_addr_lable">
         地点名称:
@@ -44,7 +41,7 @@
         <%= f.submit "保存", class: "btn btn-primary" %>
       </div>
       <div class="col-md-2 md_addr_text">
-        <%= link_to "取消", "/admin_user_reports/untreated", class: "btn btn-default" %>
+        <%= link_to "取消", "/#{controller_name}/show?id=#{@shop.id}", class: "btn btn-default" %>
       </div>
     </div>
   <% end %>

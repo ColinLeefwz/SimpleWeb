@@ -47,16 +47,16 @@ class ShopReport
     case self.type
     when "地点位置错误"
       @operation = "修改地点位置"
-      @url = "/admin_user_reports/modify_location?id=#{self.id}"
+      @url = "/admin_user_add_shops/modify_location?id=#{self.shop.id}&report_id=#{self.id}"
     when "地点信息错误"
       @operation = "修改地点信息"
-      @url = "/admin_user_reports/modify_info?id=#{self.shop.id}"
+      @url = "/admin_user_add_shops/modify_info?id=#{self.shop.id}&report_id=#{self.id}"
     when "地点不存在"
       @operation = "删除地点"
-      @url = "/admin_user_reports/report_del?id=#{self.id}"
+      @url = "/admin_user_add_shops/destroy?id=#{self.shop.id}&report_id=#{self.id}"
     when "地点重复"
       @operation = "获取重复商家"
-      @url = "/admin_user_reports/repeat?id=#{self.id}"
+      @url = "/admin_user_add_shops/repeat?id=#{self.shop.id}&report_id=#{self.id}"
     end
     hash = {operation: @operation, url: @url}
   end

@@ -2,10 +2,9 @@
 class IndexController < ApplicationController
   
   before_filter :weixin_filter, :only => [:index]
+  layout false
 
-  def index
-    render :layout => false
-  end
+
   
   def ip
     render :text => real_ip
