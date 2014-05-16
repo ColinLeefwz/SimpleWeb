@@ -29,6 +29,11 @@ class Shop3InfosController < ApplicationController
       Rails.cache.write("HAS_LOGO#{session[:shop_id]}", true)
     end
     @shop.update_attributes(params[:shop])
+    begin
+      RestClient.get("#{Host::Mweb}/api_menu/del_cache?key=Shop#{@shop.id}")
+    rescue 
+    end
+    
     redirect_to :action => "index"
   end
 
