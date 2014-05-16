@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
       err_str = err.to_s
       error_log err_str
       err.backtrace.each {|x| error_log x}
-      render :json => {:error => err_str }.to_json   
+      render :json => {:error => err_str, :debug => "1" }.to_json   
     end
   end
 

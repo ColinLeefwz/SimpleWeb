@@ -189,6 +189,12 @@ class AroundmeController < ApplicationController
         arr = arr+[ shop ]
       end
     end
+    if city && city=="0377"
+      shop = Shop.find_by_id(21842049) # 约惠城市(南阳移动4G)
+      if shop
+        arr = arr[0,3]+[ shop ]+arr[3..-1]
+      end
+    end
     if city && city=="0571"
       shop = Shop.find_by_id(21831686) # 西溪印象城
       if shop
