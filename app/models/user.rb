@@ -131,6 +131,10 @@ class User
     User.is_kx?(self.id) || User.is_co?(self.id)
   end
   
+  def self.is_kx_or_co?
+    User.is_kx?(self.id) || User.is_co?(self.id)
+  end
+  
   def self.is_kx?(uid)
     $redis.sismember('KxUsers', uid)
   end
