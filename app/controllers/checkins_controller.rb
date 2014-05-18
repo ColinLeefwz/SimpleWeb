@@ -14,8 +14,8 @@ class CheckinsController < ApplicationController
       render :json => {error: "地点名称不能少于三个字"}.to_json
       return
     end
-    if params[:accuracy].to_i==0 || params[:accuracy].to_i > 500
-      str = "手机当前定位误差大于500米，不能创建地点。"
+    if params[:accuracy].to_i==0 || params[:accuracy].to_i > 1000
+      str = "手机当前定位误差大于1000米，不能创建地点。"
       str += "使用wifi可以提高定位精度" if params[:bssid]
       render :json => {error: str}.to_json
       return

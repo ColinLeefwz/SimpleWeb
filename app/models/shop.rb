@@ -264,6 +264,17 @@ class Shop
     male = total - female
     safe_output.merge!( {"user"=>total, "male"=>male, "female"=>female} )
   end
+  
+  def safe_output_with_users_distance(lo, user_kx_or_co)
+    hash = safe_output_with_users.merge!({distance:self.distance_desc(lo)})
+    distance = self.min_distance(self,lo)
+    if distance>3000 && !self.group_id && !user_kx_or_co
+      hash.merge!( {visit:1} )
+    else
+      hash.merge!( {visit:0} )
+    end
+    hash
+  end
 
   def realtime_user_count
     total,female = CheckinShopStat.get_user_count_redis(self._id)
@@ -416,7 +427,6 @@ class Shop
       lord = nil
     end
     if start==0
-      users = [[session_uid,Time.now.to_i]] + users.delete_if{|x| x[0].to_s==session_uid.to_s}
       if lord
         ld = users.find{|x| x[0].to_s==lord.uid.to_s}
         if ld

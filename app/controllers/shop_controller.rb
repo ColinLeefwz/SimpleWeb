@@ -27,7 +27,8 @@ class ShopController < ApplicationController
       hash.merge!( {t: { "$in" => ts } }  ) 
     end
     shops = Shop.where(hash).sort({utotal:-1}).skip(skip).limit(pcount)
-    ret = shops.map {|s| s.safe_output_with_users}
+    kx_or_co = User.is_kx_or_co?(session[:user_id])
+    ret = shops.map {|s| s.safe_output_with_users_distance(lo, kx_or_co)}
     coupons = $redis.smembers("ACS#{city}") 
     if coupons
       ret.each_with_index do |xx,i|
@@ -71,8 +72,9 @@ class ShopController < ApplicationController
     end
     lo = [params[:lat].to_f, params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    kx_or_co = User.is_kx_or_co?(session[:user_id])
     def output(s,lo)
-      {id:s.id,name:s.name, visit:0, distance:s.distance_desc(lo), "lat"=>s.loc_first[0], "lng"=>s.loc_first[1] }
+      s.safe_output_with_users_distance(lo, kx_or_co)
     end
     if params[:sname][0,3]=="@@@" #测试人员输入商家id模拟签到
       shop = Shop.find_by_id(params[:sname][3..-1])  
@@ -95,12 +97,6 @@ class ShopController < ApplicationController
       end
       shop1s.each do |s| 
         hash = output(s,lo).merge!(s.group_hash(session[:user_id]))
-        distance = s.min_distance(s,lo)
-        if distance>3000 && !s.group_id && s.id != 21834120 && !User.is_kx?(session[:user_id]) && !is_co_user?(session[:user_id])
-          hash.merge!( {visit:1} )
-        else
-          hash.merge!( {visit:0} )
-        end
         ret << hash
       end
       #商家查询个数小于10， 按群组的相似度查询群组
