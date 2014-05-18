@@ -73,19 +73,19 @@ class ShopController < ApplicationController
     lo = [params[:lat].to_f, params[:lng].to_f]
     lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
     kx_or_co = User.is_kx_or_co?(session[:user_id])
-    def output(s,lo)
+    def output(s,lo,kx_or_co)
       s.safe_output_with_users_distance(lo, kx_or_co)
     end
     if params[:sname][0,3]=="@@@" #测试人员输入商家id模拟签到
       shop = Shop.find_by_id(params[:sname][3..-1])  
       if shop && (session[:user_id].to_s == shop.seller_id.to_s || User.is_kx?(session[:user_id]) || User.is_fake_user?(session[:user_id]) )
-         render :json => [shop].map {|s| output(s,lo).merge!(s.group_hash(session[:user_id])) }.to_json
+         render :json => [shop].map {|s| output(s,lo,kx_or_co).merge!(s.group_hash(session[:user_id])) }.to_json
         return
       end
     end
     if params[:sname].length==1
       shops = Shop.where2({lo:{"$within" => {"$center" => [lo,0.01]}}, name:/#{params[:sname]}/, del:{"$exists" => false}}, {limit:10})
-      render :json =>  shops.map {|s| output(s,lo).merge!(s.group_hash(session[:user_id])) }.to_json
+      render :json =>  shops.map {|s| output(s,lo,kx_or_co).merge!(s.group_hash(session[:user_id])) }.to_json
     else
       ret = []
       # TODO: 默认搜索同城， 国外搜国家
@@ -96,7 +96,7 @@ class ShopController < ApplicationController
         shop1s = Shop.where2({lo:{"$within" => {"$center" => [lo,0.1]}}, name:/#{params[:sname]}/, del:{"$exists" => false}},{limit:10}) 
       end
       shop1s.each do |s| 
-        hash = output(s,lo).merge!(s.group_hash(session[:user_id]))
+        hash = output(s,lo,kx_or_co).merge!(s.group_hash(session[:user_id]))
         ret << hash
       end
       #商家查询个数小于10， 按群组的相似度查询群组
@@ -104,7 +104,7 @@ class ShopController < ApplicationController
         ids = $redis.zrange("GSN", 0, -1, withscores: true).select{|gs|  Shop.str_similar(params[:sname], gs[0]) >= (0.6+ret.size*0.04)}.map{|m| m[1]}
         ids.each do |id|
           shop = Shop.find_by_id(id)
-          hash = output(shop,lo).merge!(shop.group_hash(session[:user_id]))
+          hash = output(shop,lo,kx_or_co).merge!(shop.group_hash(session[:user_id]))
           ret << hash
         end
       end
