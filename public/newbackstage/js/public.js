@@ -482,3 +482,21 @@ function subStr(str,num){
   	return _str;
   }
 }
+function WindowResizeA(){
+	$("#Nav").removeAttr("style");
+	var w1=$(window).width(),
+		h1=$(document).height(),
+		h2=$(window).height();
+	if(w1>1300){
+		$(".con").css("margin-left","auto");
+	}else if(w1<=1300&&w1>1024){
+		$(".con").css("margin-left",200);
+	}else if(w1<=1024){
+		$(".con").css("margin-left",180);
+	}
+	if(h1>h2){
+		$("#Nav").css("height",h1+"px");
+	}else{
+		$("#Nav").css("height",h2+"px");
+	}
+}
