@@ -63,13 +63,18 @@ class AdminHotsController < ApplicationController
     end
   end
 
+	def check_shop_name
+		@shop = Shop.find(params[:id])
 
-  private
-
-  def is_dead_line?(dead_line_date)
-		dead_line_date < DateTime.now
+		if @shop
+			render :json => {:name => @shop.name}
+		else
+			render :json => {}
+		end
 	end
 
+  private
+	
   def horder
     case params[:order].to_s
     when ''
