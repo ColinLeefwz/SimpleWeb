@@ -48,12 +48,14 @@ gem "oauth2"
 #gem "will_paginate"
 gem "in_place_editing"
 gem 'bson_ext'
+gem 'mongo'
 gem 'mongoid', '~> 3.1.0'
 gem 'rails-i18n'
 gem 'redis'
 gem 'redis-store'
 gem 'redis-rails'
 gem 'uuid'
+gem 'strong_parameters'
 
 gem 'carrierwave'
 gem 'mini_magick'
