@@ -5,16 +5,21 @@ class AdminHotsController < ApplicationController
 
   def index
 
+		today_date = Date.yesterday
+		Hot.where(dead_line: today_date).delete_all
+
     hash = {}
 
     hash.merge!({shop_id: params[:shop_id]}) unless params[:shop_id].blank?
-    hash.merge!({dead_line: params[:dead_line]}) unless params[:dead_line].blank?
+    hash.merge!({dead_line: params[:dead_line]}) unless params[:dead_line].blank? 
     hash.merge!({shop_rank: params[:shop_rank]}) unless params[:shop_rank].blank?
     hash.merge!({display_range: params[:display_range]}) unless params[:display_range].blank?
 
     hash.merge!({_id: params[:id].to_i}) unless params[:id].blank?
 
-    sort = {_id: -1}
+		logger.info "#{params[:dead_line]}"
+
+    sort = {shop_rank: 1}
     @hots =  paginate3("Hot", params[:page], hash, sort)
   end
 
@@ -60,6 +65,10 @@ class AdminHotsController < ApplicationController
 
 
   private
+
+  def is_dead_line?(dead_line_date)
+		dead_line_date < DateTime.now
+	end
 
   def horder
     case params[:order].to_s
