@@ -1,0 +1,30 @@
+<%= form_for(@hot, :url => "/admin_hots/create") do |f| %>
+  <p>
+    商家ID:<br />
+    <%= f.number_field :shop_id %>
+  </p>
+  <p>
+    商家名称:<br />
+		<span class="show_shop_name"></span>
+  </p>
+  <p>
+    有效期:<br />
+    <%= f.date_select :date_array %>
+  </p>
+  <p>
+    排序:<br />
+    <%= f.number_field :shop_rank %>
+  </p>
+  <p>
+    显示范围:<br />
+    <%= f.radio_button :display_range, "全国" %>
+		<%= f.label :display_range, "全国" %>
+    <%= f.radio_button :display_range, "全城" %>
+		<%= f.label :display_range, "全城" %>
+  </p>
+
+  <p>
+    <%= f.submit "保存" %>
+  </p>
+<% end %>
+
