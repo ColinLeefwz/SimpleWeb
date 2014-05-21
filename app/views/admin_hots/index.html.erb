@@ -24,12 +24,12 @@
 	<% @hots.each do |hot| %>
 		<tr>
 			<td><%= hot.shop_id.to_i %></td>
-			<td><%= hot.shop_id.to_i %></td>
+			<td><%= hot.shop.name %></td>
 			<td><%= hot.dead_line %></td>
 			<td><%= hot.shop_rank %></td>
 			<td><%= hot.display_range %></td>
 			<td>
-				<%= link_to("删除", "/admin_hots/del?id=#{hot.id}") %>
+				<%= link_to("删除", "/admin_hots/delete?id=#{hot.id}") %>
 				<%= link_to("编辑", "/admin_hots/edit?id=#{hot.id}") %>
 			</td>
 

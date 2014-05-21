@@ -3,11 +3,13 @@
 <%= form_for(@hot, :url => "/admin_hots/update") do |f| %>
   <p>
     商家ID:<br />
-    <%= f.label_field :shop_id %>
+    <%= f.number_field :shop_id, disabled: true %>
   </p>
   <p>
     商家名称:<br />
-		<span class="show_shop_name"></span>
+		<span class="show_shop_name">
+		  <%= @hot.shop.name  %>
+		</span>
   </p>
   <p>
     有效期:<br />
