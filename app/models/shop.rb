@@ -17,6 +17,8 @@ class Shop
   extend GpsOffset
   attr_accessor :lob
 
+  has_one :hot
+
   field :_id, type: Integer
   field :id2, type:String #容易记忆的商家编号，规则："区号-流水号"
   field :pass
