@@ -27,7 +27,7 @@
   </p>
 
   <p>
-    <%= f.submit "保存" %>
+    <%= f.submit "保存", id: "hot-commit" %>
   </p>
 <% end %>
 
@@ -39,4 +39,18 @@ function check_shop_name() {
 		$("#show_shop_name").replaceWith("<div id = show_shop_name> <span><b>"+ text +"</b></span></div>")
 	});
 }
+$('#hot-commit').click(function(e) {
+	var year = $("#hot_date_array_1i").val()
+	var month = $("#hot_date_array_2i").val()
+	var day = $("#hot_date_array_3i").val()
+	var today = new Date();
+	var select_date = new Date();
+	select_date.setFullYear(year,month,day);
+	if(select_date < today){
+		alert("您的日期设置错误")
+		e.preventDefault()
+	} else {
+		return true
+	}
+});
 </script>
