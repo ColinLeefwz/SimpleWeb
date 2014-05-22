@@ -5,8 +5,7 @@ class AdminHotsController < ApplicationController
 
   def index
 
-		today_date = Date.yesterday
-		Hot.where(dead_line: today_date).delete_all
+		remove_overdue
 
     hash = {}
 
@@ -62,6 +61,15 @@ class AdminHotsController < ApplicationController
       render :action => 'new'
     end
   end
+
+	def remove_overdue
+		@hots = Hot.all
+		@hots.each do |hot|
+      if hot.dead_line < Date.today.to_date 
+				Del.insert(hot)
+			end
+		end
+	end
 
 	def check_shop_name
 
