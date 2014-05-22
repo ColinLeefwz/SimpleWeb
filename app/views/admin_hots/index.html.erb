@@ -1,9 +1,6 @@
 <h1>热门管理</h1>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
 
-<%= form_tag '/admin_hots',:method =>:get do %>
-<% end %>
-
 <%=button_to '新建', '/admin_hots/new'%>
 
 <table border="1">
@@ -24,10 +21,10 @@
 	<% @hots.each do |hot| %>
 		<tr>
 			<td><%= hot.shop_id.to_i %></td>
-			<td><%= hot.shop.name %></td>
+			<td><%= hot.show_shop_name %></td>
 			<td><%= hot.dead_line %></td>
 			<td><%= hot.shop_rank %></td>
-			<td><%= hot.display_range %></td>
+			<td><%= hot.show_display_range %></td>
 			<td>
 				<%= link_to("删除", "/admin_hots/delete?id=#{hot.id}") %>
 				<%= link_to("编辑", "/admin_hots/edit?id=#{hot.id}") %>
@@ -35,9 +32,3 @@
 
 	<% end %>
 </table>
-
-<script type="text/javascript">
-  function new_hot()
-  {
-  }
-</script>
