@@ -64,12 +64,12 @@ class AdminHotsController < ApplicationController
   end
 
 	def check_shop_name
-		@shop = Shop.find(params[:id])
 
-		if @shop
-			render :json => {:name => @shop.name}
+		if Shop.where(id: params[:id]).exists?
+			@shop = Shop.find(params[:id])
+			render :json => {:name => @shop.name, :status => "success"}
 		else
-			render :json => {}
+			render :json => {:name => "id错误", :status => "failed"}
 		end
 	end
 
