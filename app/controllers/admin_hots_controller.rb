@@ -4,21 +4,21 @@ class AdminHotsController < ApplicationController
   layout "admin"
 
   def index
-
+		
 		remove_overdue
 
     hash = {}
 
-    hash.merge!({shop_id: params[:shop_id]}) unless params[:shop_id].blank?
+    hash.merge!({sid: params[:sid]}) unless params[:sid].blank?
     hash.merge!({dead_line: params[:dead_line]}) unless params[:dead_line].blank? 
-    hash.merge!({shop_rank: params[:shop_rank]}) unless params[:shop_rank].blank?
-    hash.merge!({display_range: params[:display_range]}) unless params[:display_range].blank?
+    hash.merge!({od: params[:od]}) unless params[:od].blank?
+    hash.merge!({city: params[:city]}) unless params[:city].blank?
 
     hash.merge!({_id: params[:id].to_i}) unless params[:id].blank?
 
 		logger.info "#{params[:dead_line]}"
 
-    sort = {shop_rank: 1}
+    sort = {od: 1}
     @hots =  paginate3("Hot", params[:page], hash, sort)
   end
 
@@ -38,11 +38,13 @@ class AdminHotsController < ApplicationController
 
   def update
     @hot = Hot.find(params[:id])
+		params[:hot][:dead_line] = Date.civil(params[:hot][:"dead_line(1i)"].to_i,params[:hot][:"dead_line(2i)"].to_i,params[:hot][:"dead_line(3i)"].to_i)
     os = Hot.new(params[:hot])
 
+		@hot.sid = os.sid
     @hot.dead_line = os.dead_line
-    @hot.shop_rank = os.shop_rank
-    @hot.display_range = os.display_range
+    @hot.od = os.od
+    @hot.city = os.city
     #商家编辑不能编辑城市
 
     @hot.save
@@ -51,8 +53,8 @@ class AdminHotsController < ApplicationController
   end
 
   def create
-		@shop = Shop.find(params[:hot][:shop_id])
-		params[:hot][:dead_line] = Date.civil(params[:hot][:"date_array(1i)"].to_i,params[:hot][:"date_array(2i)"].to_i,params[:hot][:"date_array(3i)"].to_i)
+		@shop = Shop.find(params[:hot][:sid])
+		params[:hot][:dead_line] = Date.civil(params[:hot][:"dead_line(1i)"].to_i,params[:hot][:"dead_line(2i)"].to_i,params[:hot][:"dead_line(3i)"].to_i)
 		@hot = Hot.create!(params[:hot])
     if @hot.save
       redirect_to :action => "index"
