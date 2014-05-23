@@ -1,6 +1,7 @@
 <%= javascript_include_tag "jquery-1.6.2.min.js" %>
 
 <%= form_for(@hot, :url => "/admin_hots/update") do |f| %>
+  <%= hidden_field_tag :id, @hot.id %>
   <p>
     商家ID:<br />
     <%= f.number_field :shop_id, :onblur => "find_shop_name()" %>

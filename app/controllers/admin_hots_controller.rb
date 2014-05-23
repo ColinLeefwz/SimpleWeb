@@ -4,7 +4,7 @@ class AdminHotsController < ApplicationController
   layout "admin"
 
   def index
-
+		
 		remove_overdue
 
     hash = {}
@@ -38,8 +38,10 @@ class AdminHotsController < ApplicationController
 
   def update
     @hot = Hot.find(params[:id])
+		params[:hot][:dead_line] = Date.civil(params[:hot][:"dead_line(1i)"].to_i,params[:hot][:"dead_line(2i)"].to_i,params[:hot][:"dead_line(3i)"].to_i)
     os = Hot.new(params[:hot])
 
+		@hot.shop_id = os.shop_id
     @hot.dead_line = os.dead_line
     @hot.od = os.od
     @hot.display_range = os.display_range
