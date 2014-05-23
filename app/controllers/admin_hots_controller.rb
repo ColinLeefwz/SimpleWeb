@@ -11,14 +11,14 @@ class AdminHotsController < ApplicationController
 
     hash.merge!({shop_id: params[:shop_id]}) unless params[:shop_id].blank?
     hash.merge!({dead_line: params[:dead_line]}) unless params[:dead_line].blank? 
-    hash.merge!({shop_rank: params[:shop_rank]}) unless params[:shop_rank].blank?
+    hash.merge!({od: params[:od]}) unless params[:od].blank?
     hash.merge!({display_range: params[:display_range]}) unless params[:display_range].blank?
 
     hash.merge!({_id: params[:id].to_i}) unless params[:id].blank?
 
 		logger.info "#{params[:dead_line]}"
 
-    sort = {shop_rank: 1}
+    sort = {od: 1}
     @hots =  paginate3("Hot", params[:page], hash, sort)
   end
 
@@ -41,7 +41,7 @@ class AdminHotsController < ApplicationController
     os = Hot.new(params[:hot])
 
     @hot.dead_line = os.dead_line
-    @hot.shop_rank = os.shop_rank
+    @hot.od = os.od
     @hot.display_range = os.display_range
     #商家编辑不能编辑城市
 

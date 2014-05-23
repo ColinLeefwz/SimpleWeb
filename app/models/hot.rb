@@ -4,7 +4,7 @@ class Hot
 	belongs_to :shop
 
   field :dead_line, type: Date
-  field :shop_rank, type: Float 
+  field :od, type: Float #排序值 
 	field :display_range # "0571", ""
 
 	def show_shop_name
