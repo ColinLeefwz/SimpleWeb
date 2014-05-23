@@ -4,7 +4,77 @@ class AdminHotsController < ApplicationController
   layout "admin"
 
   def index
+
+    lo, pcount = nil,20
+    lo = [params[:lat].to_f , params[:lng].to_f] if !params[:lat].blank? && !params[:lng].blank?
+    hash.merge!({ lo: { "$within" => { "$center" => [lo, 0.1]} }}) if lo
 		
+    page = params[:page].to_i
+    pcount = params[:pcount].to_i
+    page = 1 if page==0
+    pcount = 20 if pcount==0
+    skip = (page-1)*pcount
+    lo = [params[:lat].to_f,params[:lng].to_f]
+    lo = Shop.lob_to_lo(lo) if params[:baidu].to_i==1
+    city = Shop.get_city(lo)
+    arr = Shop.where({city:city, password:{"$exists" => true}}).skip(skip).limit(pcount)
+    if city
+      shop = Shop.find_by_id(21838725) # 行酷车友会
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
+    if city && city=="023"
+      shop = Shop.find_by_id(21839246) # 重庆的2014我们在一起
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
+    if city && city=="023"
+      shop = Shop.find_by_id(21838424) # 铜梁安居古城
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end    
+    if city && city=="0571"
+      shop = Shop.find_by_id(21831686) # 西溪印象城
+      if shop
+        arr = arr[0,3]+[ shop ]+arr[3..-1]
+      end
+    end
+    if city && city=="023" && lo[0].to_s[0,4]=="29.8" && lo[1].to_s[0,5]=="106.0" 
+      shop = Shop.find_by_id(21839992) # 铜梁脸脸
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
+    if city && city=="023" && lo[0].to_s[0,4]=="29.3" && ( lo[1].to_s[0,5]=="105.9" || lo[1].to_s[0,5]=="105.8")
+      shop = Shop.find_by_id(21840462) # 永川脸脸 [29.348392999999998, 105.913615]
+      if shop
+	      shop.city = city
+        arr = arr+[ shop ]
+      end
+    end
+    arr.uniq!
+    ret = arr.find_all{|x| x!=nil}.map do |x|  
+      hash = x.safe_output_with_users
+      ghash = x.group_hash(session[:user_id])
+      #logger.info ghash
+      hash.merge!(ghash)
+      hash
+    end
+    coupons = $redis.smembers("ACS#{city}") 
+    if coupons
+      ret.each_with_index do |xx,i|
+        ret[i]["coupon"] = 1 if coupons.index(xx["id"].to_i.to_s)
+      end
+    end
+    # render :json =>  ret.to_json
+
 		remove_overdue
 
     hash = {}
