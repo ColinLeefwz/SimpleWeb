@@ -52,7 +52,7 @@ class AdminHotsController < ApplicationController
 
   def create
 		@shop = Shop.find(params[:hot][:shop_id])
-		params[:hot][:dead_line] = Date.civil(params[:hot][:"date_array(1i)"].to_i,params[:hot][:"date_array(2i)"].to_i,params[:hot][:"date_array(3i)"].to_i)
+		params[:hot][:dead_line] = Date.civil(params[:hot][:"dead_line(1i)"].to_i,params[:hot][:"dead_line(2i)"].to_i,params[:hot][:"dead_line(3i)"].to_i)
 		@hot = Hot.create!(params[:hot])
     if @hot.save
       redirect_to :action => "index"

@@ -4,9 +4,8 @@ class Hot
 	belongs_to :shop
 
   field :dead_line, type: Date
-  field :date_array, type: Date
-  field :shop_rank, type: Integer
-	field :display_range
+  field :shop_rank, type: Float 
+	field :display_range # "0571", ""
 
 	def show_shop_name
 		if self.shop
