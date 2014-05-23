@@ -9,10 +9,10 @@ class AdminHotsController < ApplicationController
 
     hash = {}
 
-    hash.merge!({shop_id: params[:shop_id]}) unless params[:shop_id].blank?
+    hash.merge!({sid: params[:sid]}) unless params[:sid].blank?
     hash.merge!({dead_line: params[:dead_line]}) unless params[:dead_line].blank? 
     hash.merge!({od: params[:od]}) unless params[:od].blank?
-    hash.merge!({display_range: params[:display_range]}) unless params[:display_range].blank?
+    hash.merge!({city: params[:city]}) unless params[:city].blank?
 
     hash.merge!({_id: params[:id].to_i}) unless params[:id].blank?
 
@@ -41,10 +41,10 @@ class AdminHotsController < ApplicationController
 		params[:hot][:dead_line] = Date.civil(params[:hot][:"dead_line(1i)"].to_i,params[:hot][:"dead_line(2i)"].to_i,params[:hot][:"dead_line(3i)"].to_i)
     os = Hot.new(params[:hot])
 
-		@hot.shop_id = os.shop_id
+		@hot.sid = os.sid
     @hot.dead_line = os.dead_line
     @hot.od = os.od
-    @hot.display_range = os.display_range
+    @hot.city = os.city
     #商家编辑不能编辑城市
 
     @hot.save
@@ -53,7 +53,7 @@ class AdminHotsController < ApplicationController
   end
 
   def create
-		@shop = Shop.find(params[:hot][:shop_id])
+		@shop = Shop.find(params[:hot][:sid])
 		params[:hot][:dead_line] = Date.civil(params[:hot][:"dead_line(1i)"].to_i,params[:hot][:"dead_line(2i)"].to_i,params[:hot][:"dead_line(3i)"].to_i)
 		@hot = Hot.create!(params[:hot])
     if @hot.save
