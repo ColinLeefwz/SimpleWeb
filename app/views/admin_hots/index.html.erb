@@ -20,11 +20,11 @@
 
 	<% @hots.each do |hot| %>
 		<tr>
-			<td><%=link_to hot.shop_id.to_i, "/admin_shops/show?id=#{hot.shop_id.to_i}" %></td>
+			<td><%=link_to hot.sid.to_i, "/admin_shops/show?id=#{hot.sid.to_i}" %></td>
 			<td><%= hot.show_shop_name %></td>
 			<td><%= hot.dead_line %></td>
-			<td><%= hot.shop_rank %></td>
-			<td><%= hot.show_display_range %></td>
+			<td><%= hot.od %></td>
+			<td><%= hot.show_city %></td>
 			<td>
 				<%= link_to("删除", "/admin_hots/delete?id=#{hot.id}", id: "hot-delete") %>
 				<%= link_to("编辑", "/admin_hots/edit?id=#{hot.id}") %>

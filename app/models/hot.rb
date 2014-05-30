@@ -1,12 +1,10 @@
 class Hot
   include Mongoid::Document
 
-	belongs_to :shop
-
-  field :dead_line, type: Date
-  field :date_array, type: Date
-  field :shop_rank, type: Integer
-	field :display_range
+  field :sid, type: Integer # 商家id
+  field :dead_line, type: Date # 截止日期 "yyyy-mm-dd"
+  field :od, type: Float #排序值 
+	field :city # "0571", "all", "0571, ..."
 
 	def show_shop_name
 		if self.shop
@@ -17,13 +15,17 @@ class Hot
 	end
 
 
-	def show_display_range
-		if self.display_range == "全城"
-      range = self.display_range + "(" + self.shop.city + ")"
+	def show_city
+		if self.city == "()"
+      range = "(" + self.shop.city + ")"
 		else
-			range = self.display_range
+			range = "全国"
 		end
 
 		range
 	end
+
+  def shop
+    Shop.find_by_id(sid)
+  end
 end

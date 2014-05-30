@@ -1,9 +1,10 @@
 <%= javascript_include_tag "jquery-1.6.2.min.js" %>
 
 <%= form_for(@hot, :url => "/admin_hots/update") do |f| %>
+  <%= hidden_field_tag :id, @hot.id %>
   <p>
     商家ID:<br />
-    <%= f.number_field :shop_id, :onblur => "find_shop_name()" %>
+    <%= f.number_field :sid, :onblur => "find_shop_name()" %>
   </p>
   <p>
     商家名称:<br />
@@ -16,14 +17,14 @@
   </p>
   <p>
     排序:<br />
-    <%= f.number_field :shop_rank %>
+    <%= f.number_field :od %>
   </p>
   <p>
     显示范围:<br />
-    <%= f.radio_button :display_range, "全国" %>
-		<%= f.label :display_range, "全国" %>
-    <%= f.radio_button :display_range, "全城" %>
-		<%= f.label :display_range, "全城" %>
+    <%= f.radio_button :city, "all" %>
+		<%= f.label :city, "全国" %>
+    <%= f.radio_button :city, "()" %>
+		<%= f.label :city, "全城" %>
   </p>
 
   <p>
@@ -36,8 +37,8 @@ $(document).ready(function(){
 		find_shop_name()
 });
 function find_shop_name() {
-	var shop_id = $("#hot_shop_id").val()
-	$.get("/admin_hots/check_shop_name",{id: shop_id}, function(data){
+	var sid = $("#hot_sid").val()
+	$.get("/admin_hots/check_shop_name",{id: sid}, function(data){
 		text = data ? data['name'] : "id错误"
 		$("#show_shop_name").replaceWith("<div id = show_shop_name> <span><b>"+ text +"</b></span></div>")
 	});

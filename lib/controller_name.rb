@@ -16,6 +16,7 @@ module ControllerName
         },
     1=>{
           "admin_shops"=>"地点管理",
+          "admin_hots"=>"热门管理",
           "admin_user_add_shops/untreated" => "地点创建审核",
           "admin_user_add_shops"=>"地点创建查看",
           "admin_user_reports/untreated"=>"用户地点报错管理",
