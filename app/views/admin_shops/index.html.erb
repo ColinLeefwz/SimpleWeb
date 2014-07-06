@@ -1,0 +1,200 @@
+<h1>商家管理</h1>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+
+<%= form_tag '/admin_shops',:method =>:get do %>
+  <p>
+    id: <%= text_field_tag :id, params[:id], :size => 15 %>
+    名称:<%= text_field_tag :name, params[:name] %>
+    全匹配： <%= check_box_tag :fun, true, !params[:fun].nil?   %>
+    区号: <%= text_field_tag :city, params[:city], :size => 10 %>
+    分类: <%= select_tag :t,options_for_select(import_t.unshift(['','']),params[:t].blank? ? '' : params[:t].to_i )  %>
+    <br/>
+    加权：<%= select_tag :v,options_for_select([['所有商家','0'],['加权商家','1']],params[:v])  %>
+    降权：<%= select_tag :d,options_for_select([['所有商家','0'],['降权商家','1']],params[:d])  %>
+    删除：<%= select_tag :del,options_for_select([['所有商家','0'],['删除商家','1']],params[:del])  %>
+    密码： <%= select_tag :password,options_for_select([['所有商家','0'],['开通商家','1']],params[:password])  %>
+    排序： <%= select_tag :order,options_for_select([['id从大到小',""],['id从小到大',"1"]],params[:order])  %>
+    <br/>
+    分类： <%= select_tag :type, options_for_select(import_type, params[:type].to_s) %>
+    每页显示 <%= select_tag :pcount, options_for_select([10,20, 50, 100, 200], (params[:pcount] && params[:pcount].to_i) || 20) %>
+
+    <%= submit_tag "查 找" %>
+
+  </p>
+<% end %>
+<!--
+<%= check_box_tag "", '', false, :onclick => "checked_all($(this).attr('checked'))" %> 全选
+<%= check_box_tag "", '', false, :onclick => "inverse_all()" %> 反选
+<%=  submit_tag '批量删除', :onclick => "batch_del()"%>-->
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>名称</th>
+    <th>区号</th>
+    <th>加权值</th>
+    <th>降权值</th>
+    <th>分类</th>
+    <th>百度分类</th>
+    <th>子商家</th>
+    <th>分店</th>
+    <th>合作商家</th>
+    <th>密码</th>
+
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <% if session[:admin_id].to_s == '51f77abc20f318bc2b000001' %>
+      <th></th>
+    <% end %>
+
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td><%=link_to shop.id.to_i, "/admin_shops/show?id=#{shop.id}" %></td>
+      <td><%= shop.name %></td>
+      <td><%= shop.city_fullname %></td>
+      <td><%= shop.v || '无' %></td>
+      <td><%= shop.d || '无' %></td>
+      <td><%= shop.show_t %></td>
+      <td><%= type_or_user(shop) %></td>
+      <td><%= link_to(shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{shop.id}") %></td>
+      <td><%= link_to '查看', "/admin_branchs?psid=#{shop.id}" %></td>
+      <td><%= link_to('查看', "/admin_shop_partners?id=#{shop.id}") %></td>
+      <td><%= shop.password.blank? ?  link_to('开通', "/admin_shops/set_password?id=#{shop.id}") : '' %></td>
+      <td><%= link_to('加权', "/admin_shops/upgrade_v?id=#{shop.id}") %></td>
+      <td><%= link_to("详情", "/admin_shops/show?id=#{shop.id}") %></td>
+
+      <td>
+        <% if shop.lo &&  !shop.cooperationer? %>
+          <a onclick="ajaxunsetlob($(this),<%= shop._id %>, false, '<%= shop.name %>')" >取消坐标</a>
+        <% end %>
+      </td>
+      <td>
+        <% if !shop.del && !shop.cooperationer? %>
+          <a onclick="ajaxdel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >标记删除</a>
+        <% end %>
+        <% if shop.del %>
+          <a onclick="ajaxundel($(this),<%= shop._id %>, false, '<%= shop.name %>')" >取消标记删除</a>
+        <% end %> 
+      </td>
+      <% if session[:admin_id].to_s == '51f77abc20f318bc2b000001' && shop.checkins.limit(1).only(:_id).first.nil? %>
+        <td>
+          <%= link_to '直接删除', "javascript:void(0)", :onclick => "ajaxDes($(this), '#{shop.id}','#{shop.name}')" %>
+        </td>
+      <% end %>
+    </tr>
+
+  <% end %>
+</table>
+<br />
+<br />
+<%= generate_paginate3.html_safe %>
+
+
+
+<script type="text/javascript">
+  function showe(obj){
+    obj.children("span:first").hide()
+    obj.children("span:last").show();
+  }
+
+  function ajaxupdatelevel(obj,shop_id){
+    var level = obj.parent().children("input[@type='radio']:checked").val()
+    $.post("/admin_shops/ajaxupdatelevel",{level:level, shop_id:shop_id}, function(data) {
+      obj.parent().parent().replaceWith("<td>"+data["level"]+"</td>")
+    });
+  }
+
+  function ajaxdel(obj,shop_id,no_confirm, shop_name){
+    text = "确定删除商家 "+shop_name+'？'
+    if(no_confirm || confirm(text))
+      $.post("/admin_shops/ajaxdel",{ shop_id:shop_id}, function(data) {
+        data.text ? obj.replaceWith(data.text) : obj.parent().parent().hide()
+      });
+  }
+
+  function ajaxundel(obj,shop_id,no_confirm, shop_name){
+    text = "确定还原商家 "+shop_name+'？'
+    if(no_confirm || confirm(text))
+      $.get("/admin_shops/undel",{id:shop_id}, function() {
+        obj.replaceWith('已取消') 
+      }, 'json');
+  }
+
+
+  function ajaxDes(obj,id, shop_name){
+    text = "确定直接删除商家‘"+shop_name+'’？'
+    if(confirm(text)){
+      $.get("/admin_shops/ajax_des",{id: id}, function(data){
+        if(data['text'])
+          obj.replaceWith(data['text'])
+        else
+          obj.parent().parent().hide()
+      })
+    }
+  }
+
+  function ajaxunsetlob(obj,shop_id,no_confirm, shop_name){
+    text = "确定取消"+shop_name+'的坐标？'
+    if(no_confirm || confirm(text))
+      $.post("/admin_shops/ajaxunsetlob",{ shop_id:shop_id}, function(data) {
+        obj.replaceWith(data.text || '已取消')
+      });
+  }
+
+  function showes(){
+    $('.th_level').each(function(){showe($(this))})
+    $('.td_level').each(function(){showe($(this))})
+  }
+
+  function checkall(value){
+    $('.level_'+value).each(function(){$(this).attr('checked','checked')})
+  }
+
+  function ajaxupdatelevelall(){
+    $('.th_level:first').replaceWith("<th>等级</th>")
+    $(".dhide").each(
+    function(){
+      var subobj = $(this).children("input[@type='submit']:first")
+      ajaxupdatelevel(subobj, subobj.attr('name'))
+    }
+  )
+  }
+
+
+  function batch_del()
+  {
+    if(confirm("确定需要批量删除商家？"))
+      $("table .checkbox_shops:checked").each(
+    function(){
+      ajaxdel($(this),$(this).val(), true, '')
+    }
+  )
+  }
+
+  function checked_all(checked){
+    $("table .checkbox_shops").each(
+    function() {
+      if(checked == "checked")
+        $(this).attr("checked", 'checked')
+      else
+        $(this).attr("checked", false)
+    }
+  )
+  }
+
+  function inverse_all(){
+    $("table .checkbox_shops").each(
+    function() {
+      if($(this).attr("checked") == 'checked')
+        $(this).attr("checked", false)
+      else
+        $(this).attr("checked", 'checked')
+    }
+  )
+  }
+
+</script>
+

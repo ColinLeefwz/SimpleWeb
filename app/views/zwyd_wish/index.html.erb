@@ -1,0 +1,168 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta name="viewport" content="width=100%, initial-scale=0.5, user-scalable=0.5, minimum-scale=0.5, maximum-scale=0.5" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
+<meta http-equiv="mobile-agent" content="format=xhtml; url=http://dface.cn/mini.html" />
+<title><%= @zwyd_wish.photo_user.try(:name) %>的2014心愿, 我们一起快去祝福吧！</title>
+<link rel="stylesheet" href="w/1/css/public.css" type="text/css" media="screen"/>
+<script src="w/1/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
+<script>
+	$(document).ready(function(){
+    var zwyd_total = $("#zwyd_wish_total").html()
+    var zwyd_skip = 20
+		$("#name").click(function(){
+			if($(this).val()=="祝福人"){
+				$(this).val("");
+			}
+		});
+		$("#wish").click(function(){
+			if($(this).val()=="祝福语"){
+				$(this).val("");
+			}
+		});
+		
+		$("#More").click(function(){
+      if(zwyd_skip >= zwyd_total){
+        return
+      }
+	  var libox="";
+      var id = $("#zwyd_wish_id").val()
+        $.get('/zwyd_wish/ajax_wish',{id: id, total: zwyd_total, skip: zwyd_skip }, function(data){
+            for(var i=0;i<data.length;i++){
+              libox +='<li><a>'
+              libox += data[i]
+              libox +='</a></li>';
+            }
+            $("#Mes").append(libox);
+            zwyd_skip += data.length
+            if(zwyd_skip >= zwyd_total){
+              $("#More").remove();
+            }
+        });	
+		});
+		var timer,timer2,timer3;
+		$("#Btn").click(function(){
+		   
+			var n=$("#name").val(),
+				w=$("#wish").val();
+			if(n==""||n=="祝福人"||w==""||w=="祝福语"){
+				return false;
+			}
+			var id = $("#zwyd_wish_id").val()
+			$.get("/zwyd_wish/create",{name: n, wish: w, id:id }, function(){
+					var i=0;
+					$("#Mes li").removeClass("new");
+					$("#Mes li a").removeAttr("style");
+					var mes="<li class='new'><a>"+n+"："+w+"</a></li>";
+					$("#Mes").prepend(mes);
+					$("#name").val("祝福人"); $("#wish").val("祝福语");
+					clearInterval(timer);
+					clearTimeout(timer2);
+					clearTimeout(timer3);
+					timer=setInterval(function(){
+						switch(i){
+							case 0: $("#Mes li.new a").css({"color":"#FF1E1E","font-size":"30px"});break;
+							case 1: $("#Mes li.new a").css({"color":"#3232FF","font-size":"30px"});break;
+							case 2: $("#Mes li.new a").css({"color":"#bbb","font-size":"30px"});i=-1;break;
+						}
+						i++;
+					},1000);
+					timer2=setTimeout(function(){
+						var bghigh=$(document).scrollTop()+($(window).height()-160)/2;
+						var bgleft=$(document).scrollLeft()+($(window).width()-450)/2;
+
+						$("#BG").css({"top":bghigh+"px","left":bgleft+"px"});
+						$("#BG").fadeIn(500);
+					},250);
+					timer3=setTimeout(function(){
+						$("#BG").fadeOut(500);
+					},3000);
+				})
+		});
+		$("#BG").click(function(){
+			$("#BG").fadeOut(500);
+		});
+		$("#SmallPic").click(function(){
+			$("#BigPic").fadeIn(500,function(){
+				$("#Main").css("width",$(this).width()+"px");
+			});
+		});
+		$("#BigPic").click(function(){
+			$("#BigPic").fadeOut(500,function(){
+				$("#Main").css("width","640px");
+			});
+		});
+	});
+</script>
+</head>
+
+<body>
+
+<div id="Main"><%= image_tag "http://s.dface.cn/zw#{params[:id]}.jpg" , :id=>"BigPic" %>
+<div class="con2">
+<a id="BG">谢谢<img src="/w/1/images/sign2.png"/>收到你的祝福啦<img src="/w/1/images/sign3.png"/></a>
+  <div class="header2"><img src="/w/1/images/header2.png"/></div>
+  <div class="con">
+    <div class="plane2">
+      <div class="imgsbox">
+        <%= image_tag "http://s.dface.cn/zw#{params[:id]}.jpg" , :class => "imgs pointer", :id=>"SmallPic" %>
+        <img class="imgs2" src="w/1/images/pic3.png">
+      </div>
+      <div class="content">
+        <div class="tit">
+          <%= image_tag @zwyd_wish.user_logo, :align => "absbottom" %>
+          <h2><a><%= @zwyd_wish.photo_user.try(:name) %></a>的心愿：</h2>
+        </div>
+        <p><%= @zwyd_wish.photo_desc %></p>
+        <div class="op">
+          <b class="l">收到<%= @zwyd_wish.total %>个祝福</b>
+          <!--<a class="r" href="#">祝福他</a>-->
+        </div>
+      </div>
+    </div>
+	<a name="a1"></a>
+    <div class="plane3">
+      <a class="links" target="_blank" href="/w/zwyd/explain2.html">活动详情</a>
+      <div class="l">我已经收到 <span class="red" id='zwyd_wish_total'><%= @zwyd_wish.total %></span>个祝福啦<br/>
+		<%if @zwyd_wish.total.to_i<30 %>  
+		  <span class="red">还差<%= (30- @zwyd_wish.total.to_i) < 0 ? 0: (30- @zwyd_wish.total.to_i)   %>个祝福就有机会拿到1000元新年红包啦，<br/>赶紧祝福我噢~</span>
+		<%else%>
+		  <span class="red">你的人气爆棚！30个祝福已经集满！正式加入千元红包抢夺大军啦！祝福越多，中奖几率越高噢😉</span>
+		<%end%>		  
+	  </div>
+    </div>
+    <div class="plane4">
+      <ul id="Mes">
+        <% @zwyd_wish.data.reverse[0,20].each do |da| %>
+         <li>
+          <a><%= da.join(': ') %></a>
+         </li>
+        <% end %> 
+      </ul>
+      <div class="clear1"></div>
+      <% if @zwyd_wish.data.length > 20%>
+      <a class="r mr30 pointer" id="More">查看更多</a>
+      <% end %>
+    </div>
+    <div class="plane5">
+      <div class="title1">祝福TA：</div>
+        <%= hidden_field_tag :id, params[:id], :id => "zwyd_wish_id" %>
+        <div class="inputbox1">
+          <%= text_field_tag :name, params[:name]||'祝福人', :class => "texts" %>
+        </div>
+        <div class="inputbox2">
+            <%= text_area_tag :wish, params[:wish]|| '祝福语'%>
+        </div>
+        <div class="clear1"></div>
+        <a href="#a1" class="btn r mb30" id="Btn"></a>
+    </div>
+  </div>
+  <a href="http://www.dface.cn/mini.html" target="_blank"><img src="w/1/images/ad1.jpg" width="100%" class="mt10 mb30"/></a>
+</div>
+</div>
+</body>
+</html>

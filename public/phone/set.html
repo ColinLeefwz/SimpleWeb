@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+	<meta content="no-cache" http-equiv="Pragma"/>
+	<meta content="no-cache" http-equiv="Cache-Control"/>
+	<meta content="0" http-equiv="Expires"/>	
+	<meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+	<meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+	<title>聊天  |脸脸</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8" ></script>
+<script type="text/javascript">
+function logout() {
+WB.connect.logout(function() {
+   // 跳转之前，在此通知服务器用户已退出
+   window.location.href="/phone/index.html";
+});
+}
+
+function body_load() {
+  if (WB.connect.checkLogin()) {
+  var div = document.getElementById('header');
+  var a = document.createElement('a');
+  a.href = 'javascript:;';
+  a.innerText = '退出';
+  a.setAttribute('class', 'tbtn pl15');
+  a.setAttribute('onclick', 'logout()');
+  div.appendChild(a);
+}
+}
+</script>
+</head>
+<body onload="body_load();">
+
+<div id="main">
+	<div id="header">
+		<h1>设置</h1>
+		<a href="#" class="tbtn pl15" style="display:none;">返回</a>
+		<a href="#" class="tbtn pr15" style="display:none;">16人</a>
+	</div>
+
+	<div class="set">
+  		<a href="#">个人资料</a>
+		<a href="#">隐身模式</a>
+		<a href="#">提醒设置</a>
+		<a href="#">更改密码</a>
+		<a href="#" class="nborder">邀请好友</a>
+	</div>
+
+	<div id="foot">
+		<a href="site.html"><img  src="images/foot-Site.jpg" alt="现场"></a>
+		<a href="nely.html"><img  src="images/foot-Nearby.jpg" alt="附近"></a>
+		<a href="talk.html"><img  src="images/foot-Talk.jpg" alt="对话"></a>
+		<a href="friend.html"><img  src="images/foot-Friend.jpg" alt="好友"></a>
+		<a href="set.html"><img  src="images/foot-Seth.jpg" alt="设置"></a>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+WB.core.load(['connect', 'client'], function() {
+    var cfg = {
+        key: '2054816412',
+xdpath: 'http://' + window.location.host + '/phone/xd.html'  // JS默认调用80端口，不能指定其它端口
+    };
+    WB.connect.init(cfg);
+    WB.client.init(cfg); 
+}); 
+</script>
+</html>

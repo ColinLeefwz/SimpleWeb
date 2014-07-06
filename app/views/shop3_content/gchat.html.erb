@@ -1,0 +1,64 @@
+
+<div class="clear1"></div>
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">管理聊天室</h2></div>
+
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40 f13">
+    <tr id="Tr0">
+      <th width="292">用户</th>
+      <th width="555" class="textcenter" style="padding-left:0px;">内容</th>
+	  <th width="64">状态</th>
+      <th width="94" class="textcenter" style="padding-left:0px;">&nbsp;</th>
+    </tr>
+
+    <% @chats.each_with_index do |chat, index| %>
+      <tr id="Tr<%= index+1%>">
+        <td valign="middle" width="292">
+		<%= link_to image_tag(UserLogo.img_url(chat.user.try(:head_logo_id),:t2), :class=> "imgstyle2", :align=>"left"), "/shop3_checkins/user?uid=#{chat.uid}"  %>
+          <%=link_to chat.user_name ||'', "/shop3_checkins/user?uid=#{chat.uid}" %>
+		<img src=<%= chat.user_show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>  class="ml10" align="absmiddle"/>
+		  <br/>
+          <%= chat.cat.to_time.localtime.strftime("%Y-%m-%d %H:%M") %></td>
+        <td class="img_con" width="555"><%= chat.txt.html_safe %></td>
+		<% if chat.del %>
+		    <td class="gay4" width="64">已屏蔽</td>
+		<%else%>
+			 <td class="red3" width="64">已显示</td>
+		<%end%>
+		<td align="center" valign="middle" width="64">
+          <%= link_to "", "javascript:void(0)", :class => chat.del ? "nopb" : "pb", :title => chat.del ? "显示" : "屏蔽", :onclick => "ajaxNOH($(this), '#{chat.id}','#{index+1}')"  %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <%= generate_paginate.html_safe %>
+</div>
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	$(".tab2 tr:odd").addClass("trbg");
+});
+
+function ajaxNOH (obj, id,index){
+	var title = obj.attr("title")
+	if(title=="屏蔽"){
+		$.get("/shop3_content/ajax_pb",{ id: id}, function(){
+			obj.removeClass().addClass("nopb").attr("title", "显示");
+			$("#Tr"+index+" td").eq(2).html("已屏蔽").removeClass().addClass("gay4");
+		});
+	}else{
+		$.get("/shop3_content/ajax_unpb",{id: id}, function(){
+			obj.removeClass().addClass("pb").attr("title", "屏蔽");
+			$("#Tr"+index+" td").eq(2).html("已显示").removeClass().addClass("red3");
+		});
+	}
+}
+</script>

@@ -1,0 +1,31 @@
+/* Turn off list bullets */
+ul.tree li { 
+    list-style: none; 
+}
+
+/* ul.tree, ul.tree ul, ul.tree li { margin: 0; padding: 0; } */
+
+/* Provide space for our own "bullet" inside the link */
+ul.tree li a { 
+    padding-left: 20px; 
+}
+
+/* Show "bullets" in the links, depending on the class of the
+   LI that the link's in */
+ul.tree li.open a {
+    background: url(minus.gif) center left no-repeat;
+}
+ul.tree li.closed a {
+    background: url(plus.gif) center left no-repeat;
+}
+ul.tree li.bullet a {
+    background: url(bullet.gif) center left no-repeat;
+}
+
+/* Actually show and hide sublists */
+ul.tree li.open ul { 
+    display: block; 
+}
+ul.tree li.closed ul { 
+    display: none; 
+}

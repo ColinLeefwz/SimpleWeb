@@ -1,0 +1,36 @@
+<h1>每日签到统计</h1>
+
+<table>
+  <tr>
+    <th>时间</th>
+    <th>次数</th>
+    <th>od1次数</th>
+    <th>od2次数</th>
+    <th>od3次数</th>
+    <th>前十商家</th>
+  </tr>
+  <% @checkin_days.each do |checkin_day| %>
+    <tr>
+      <td>
+        <%= checkin_day._id   %>
+      </td>
+      <td>
+        <%= checkin_day.num.to_i   %>
+      </td>
+      <td>
+        <%= checkin_day.od1.to_i   %>
+      </td>
+      <td>
+        <%= checkin_day.od2.to_i   %>
+      </td>
+      <td>
+        <%= checkin_day.od3.to_i   %>
+      </td>
+      <td>
+        <%= checkin_day.show_shops   %>
+      </td>
+
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>

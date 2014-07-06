@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes" >
+    <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="no-cache" http-equiv="Cache-Control"/>
+    <meta content="0" http-equiv="Expires"/>
+    <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+    <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+    <meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
+    <title>脸脸 | 商家管理后台</title>
+    <link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
+    <script src="/javascripts/jquery-1.6.2.min.js"></script>
+    <script src="/newbackstage/js/jquery.cookie.js"></script>
+    <!--[if IE 6]>
+    <%= javascript_include_tag "DD_belatedPNG.js" %>
+
+	<script type="text/javascript">
+		DD_belatedPNG.fix('.logo2, .logo, .nav a.hover, .nav a:hover, .nav a.index:hover, .nav .s:hover, .nav .s.hover');
+
+	</script>
+    <![endif]-->
+    <script>
+      $(document).ready(function(){
+        $("#name").focus();
+      });
+    </script>
+	<style>
+	body{background-color:#f2f2f2;background-image:none;}
+	</style>
+  </head>
+  <body>
+    <div class="area">
+      <form action="/shop_login/login" method="post">
+        <div class="logo">脸脸网</div>
+        <div id="Notice" class="notice h20"><%= notice %></div>
+        <div class="plane"><label>商家ID</label>
+          <%= text_field_tag :id, params[:id],:id => "name", :class => "txt", :autocomplete=>'off', :onblur => "find_shop($(this).val())" %>
+          <span id="shopName"></span>
+        </div>
+
+        <div class="plane"><label for="pwd">密&nbsp;&nbsp;码</label>
+          <%= password_field_tag :password, params[:password], :maxLength=>"16",:id =>'pwd', :class => 'txt1', :autocomplete=>'off'%>
+        </div>
+        <div class="plane2">
+		  <div class="plane2leftdiv"><input type="checkbox" id="rememberMe" class="l mr10 mt4"> 记住ID号</div>
+          <input type="submit" value="登 录" class="btn9 r"/>
+          <div class="plane2inner"> 2013 &nbsp;<span style="font-size:16px;">©</span>&nbsp; All Rights Reserved <a href="http://www.dface.cn" class="fn ml15">WWW.DFACE.CN</a></div>
+        </div>
+      </form>
+    </div>
+
+  </body>
+</html>
+
+<script type="text/javascript">
+  function find_shop(uid){
+    $.get("/shop_login/find_shop",{id: uid}, function(data){
+      $("#shopName").replaceWith("<span id='shopName'>" + data['text'] + "</span>")
+    })
+  }
+
+//判断之前是否有设置cookie，如果有，则设置【记住我】选择框
+  if($.cookie('absms_crm2_userName')!=undefined){
+    $("#rememberMe").attr("checked", true);
+  }else{
+    $("#rememberMe").attr("checked", false);
+  }
+  
+  //读取cookie
+  if($('#rememberMe:checked').length>0){
+    $('#name').val($.cookie('absms_crm2_userName'));
+    $('#pwd').val($.cookie('absms_crm2_password'));
+  }
+  
+  //监听【记住我】事件
+  $("#rememberMe").click(function(){
+    if($('#rememberMe:checked').length>0){//设置cookie
+      $.cookie('absms_crm2_userName', $('#name').val());
+      $.cookie('absms_crm2_password', $('#pwd').val());
+    }else{//清除cookie
+      $.removeCookie('absms_crm2_userName');
+      $.removeCookie('absms_crm2_password');
+    }
+  });
+</script>

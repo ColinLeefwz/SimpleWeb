@@ -1,0 +1,63 @@
+
+
+
+<div class="con2">
+  <div class="title1 mb30">
+    <h2 class="f18 l">优惠券管理</h2>
+  </div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_coupons/list">优惠券列表</a></li>
+      <li><a href="/shop3_coupons/newly_down">最新下载记录</a></li>
+      <li class="hover"><a href="/shop3_coupons/newly_use">最新使用记录</a></li>
+      <li><a href="/shop3_coupon_reports">统计报表</a></li>
+      <% unless session_shop.shops.blank? %>
+        <li><a href="/shop3_internal_report?type=internal">内部商家统计</a></li>
+      <% end %>
+
+      <% if session_shop.has_branch? %>
+        <li><a href="/shop3_internal_report?type=branch">分店统计</a></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0" class="tab2">
+    <tr>
+      <th width="50">编号</th>
+      <th>优惠券</th>
+      <th>用户</th>
+      <th width="95">下载时间</th>
+      <th width="95">下载地点</th>
+      <th width="95">使用时间</th>
+      <th width="70">消费数据</th>
+    </tr>
+    <% @uses.each do |use| %>
+      <tr class="change">
+        <td width="50"><%= use.download_num%></td>
+        <td><a href="show?id=<%= use.cid %>"><%= use.coupon_name %></a> <span class="gay1">（<%= use.coupon_show_t2  %>）</span></td>
+        <td><%=link_to use.user_name, "/shop3_checkins/user?uid=#{use.uid}"  %><img src=<%= use.user_show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %> class="ml10" align="absmiddle"/></td>
+        <td width="95"><%= to_local use.dat %>&nbsp;</td>
+        <td width="95"><%= to_local use.sub_shop_name %>&nbsp;</td>
+        <td width="95"><%= use.uat.since(8.hours).strftime("%Y-%m-%d %H:%M") %>&nbsp;</td>
+        <td width="70" align="center"><%= use.data %>&nbsp;</td>
+      </tr>
+    <% end %>
+  </table>
+  <%= generate_paginate.html_safe %>
+
+</div>
+<script>
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+	
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+</script>

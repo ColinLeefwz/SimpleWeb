@@ -1,0 +1,202 @@
+
+
+<div id="DelDiv">
+  <center><br/>确定删除此景点？</center>
+  <a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+  <a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
+<div id="AddDiv">
+
+  <ul>
+    <% @partners.each do |shop| %>
+      <li>
+        <a class="checkboxs1" rel="<%= shop.id %>"><%= shop.name   %></a>
+      </li>
+    <% end %>
+  </ul>
+  <div class=" m_auto w235">
+    <a class="btn13 l mb10" onclick="AddDiv_Td()">确 定</a>
+    <a class="btn14 r mb10" onclick="Close()">取 消</a>
+  </div>
+</div>
+
+
+
+<div class="con">
+  <div class="title1 mb30">
+    <h2 class="f18 l">拓展功能</h2>
+  </div>
+  <div class="submenu">
+    <ul>
+ <li class="hover"><a>线路图</a></li>
+      <li><%= link_to "旅行团", "/shop3_groups" %></li>
+      <li><%= link_to "合作商家", "/shop3_partners" %></li>
+      <li><%= link_to "合作商家评分", "/shop3_partners/mark" %></li>
+    </ul>
+  </div>
+  <%= form_tag "/shop3_lines/create" do  %>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40">
+      <tr id="Tr0">
+        <td width="50" align="right" valign="middle" class="pr20">名称</td>
+        <td><input type="text" class="inputs4" name="name"/></td>
+      </tr>
+      <tr id="Tr1">
+        <td width="50" align="right" valign="middle" class="pr20">景点</td>
+        <td>
+          到达时间:<input type="text" name="arr[time][]" class="inputs4 w140" value="第1天9:30,填 1/9:30"/>
+          离开时间:<input type="text" name="arr[time2][]" class="inputs4 w140" value="第2天18:30,填 2/18:30"/>
+          <span class="mlr10">商家ID:</span><input type="text" name="arr[id][]" class="inputs4 w70" value="脸脸商家ID" onchange="Del(1)"/>
+          <a onclick="AddCompany(1)" class="blue3 f12 ml10 pointer">添加合作商家</a>
+          <a onclick="ajaxDel(1)" class="blue3 f12 ml10 pointer">删除</a>
+        </td>
+      </tr>
+      <tr id="Ns">
+        <td width="50" align="right" valign="middle" class="pr20">&nbsp;</td>
+        <td>
+          <a onclick="NewSpot()" class="blue3 pointer">添加新景点</a>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" name="Submit" value="提 交" class="btn2 l"/>
+          <a class="btn3 l ml20" href="/shop3_lines">取 消</a></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+<script defer="defer">
+  var num,bq, sid;
+  num=$(".tab1 tr").length;
+  num-=2; bq=num;
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+
+    $(".tab2 tr:odd").addClass("trbg");
+
+    $("#AddDiv ul li a").click(function(){
+      if($(this).attr("class")=="checkboxs1"){
+        $(this).removeClass("checkboxs1").addClass("checkboxs2");
+      }else if($(this).attr("class")=="checkboxs2"){
+        $(this).removeClass("checkboxs2").addClass("checkboxs1");
+      }
+    });
+  });
+
+  function ajaxDel(index){
+    var top;
+    documentHeight=$(document).height();
+    windowHeight=$(window).height();
+    if(documentHeight<=windowHeight){
+      $("#BG").css({"height":windowHeight+"px","display":"block"});
+    }else{
+      $("#BG").css({"height":documentHeight+"px","display":"block"});
+    }
+    $("#DelDiv").css("display","block");
+    top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+    $("#DelDiv").css({"top":top+"px","display":"none"});
+    $("#DelDiv").fadeIn(600);
+
+    $("#DelBtn").click(function(){
+      $("#BG, #DelDiv").css("display","none");
+      $("#Tr"+index).fadeOut(300,function(){
+        $(this).remove();
+      });
+      num--;
+    });
+  }
+  function Close2(){
+    $("#DelDiv").animate({"top":"0px"},400,function(){
+      $("#DelDiv,#BG").css("display","none");
+    });
+  }
+  function Close(){
+    $("#AddDiv").animate({"top":"0px"},400,function(){
+      $("#AddDiv,#BG").css("display","none");
+    });
+  }
+  function NewSpot(){
+    var html="<tr id=Tr"+num+"><td width='50' align='right' valign='middle' class='pr20'>景点</td><td>"
+    html+="到达时间:<input type='text' class='inputs4 w140' name='arr[time][]'/>"
+    html+="离开时间:<input type='text' class='inputs4 w140' name='arr[time2][]'/> "
+    html+="<span class='mlr10'>商家ID:</span><input type='text' class='inputs4 w70' name='arr[id][]' onchange='Del("+num+")'/> "
+    html+="<a onclick='AddCompany("+num+")' class='blue3 f12 ml10 pointer'>添加合作商家</a> "
+    html+="<a onclick='ajaxDel("+num+")' class='blue3 f12 ml10 pointer'>删除</a></div></td></tr>";
+    num++;
+    $("#Ns").before(html);
+  }
+  function AddCompany(index){
+    $("#AddDiv,#BG").css("display","none");
+    var arr_id = $("#Tr"+index+" td").children("input[name='arr[id][]']").val()
+    if(arr_id=='')
+    {
+      alert("商家id不能是空")
+      return false;
+    }
+    var top;
+    documentHeight=$(document).height();
+    windowHeight=$(window).height();
+    if(documentHeight<=windowHeight){
+      $("#BG").css({"height":windowHeight+"px","display":"block"});
+    }else{
+      $("#BG").css({"height":documentHeight+"px","display":"block"});
+    }
+
+    $("#AddDiv").css("display","block");
+    top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+    $("#AddDiv").css({"top":top+"px","display":"none"});
+    $("#AddDiv").fadeIn(600);
+    bq=index;
+    sid= arr_id;
+    var checked =[]  // tr中的选中的合作商家
+    $("#Tr"+bq+" td").children('.box13').children("input").each(function(){checked.push($(this).val())})
+
+    for(var i=0;i<$("#AddDiv ul li a").length;i++){
+      var adula = $("#AddDiv ul li a").eq(i)
+      if($.inArray(adula.attr('rel'), checked) >-1)
+        adula.removeClass().addClass("checkboxs2");
+      else
+        adula.removeClass().addClass("checkboxs1");
+    }
+  }
+
+  function AddDiv_Td(){
+    if($("#Tr"+bq+" td").eq(1).find(".box13").html()==undefined){
+      var html="<div class='box13'>";
+      for(var i=0;i<$("#AddDiv ul li a").length;i++){
+        if($("#AddDiv ul li a").eq(i).attr("class")=="checkboxs2"){
+          html+="<span>"+$("#AddDiv ul li a").eq(i).html()+"</span>"
+          html+="<input type='hidden'  name='partners[" + sid + "][]' value='" +$("#AddDiv ul li a").eq(i).attr('rel')+ "'/>"
+        }
+      }
+      html+="<a onclick='Del("+bq+")' class='pointer blue3 ml20'>[ 取消 ]</a></div>";
+      $("#Tr"+bq+" td").eq(1).append(html);
+    }else{
+      var html="";
+      for(var i=0;i<$("#AddDiv ul li a").length;i++){
+        if($("#AddDiv ul li a").eq(i).attr("class")=="checkboxs2"){
+          html+="<span>"+$("#AddDiv ul li a").eq(i).html()+"</span>"
+        }
+      }
+      html+="<a onclick='Del("+bq+")' class='pointer blue3 ml20'>[ 取消 ]</a>"
+      $("#Tr"+bq+" td").eq(1).find(".box13").html(html);
+    }
+    $("#AddDiv,#BG").css("display","none");
+    $("#Tr"+bq+" td").eq(1).find(".box13").css("display","none");
+    $("#Tr"+bq+" td").eq(1).find(".box13").fadeIn(600);
+  }
+  function Del(index){
+    $("#Tr"+index+" td").eq(1).find(".box13").remove();
+  }
+
+
+
+
+</script>

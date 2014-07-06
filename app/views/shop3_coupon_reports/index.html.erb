@@ -1,0 +1,89 @@
+<div class="con2">
+  <div class="title1 mb30">
+    <h2 class="f18 l">优惠券管理</h2>
+  </div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_coupons/list">优惠券列表</a></li>
+      <li><a href="/shop3_coupons/newly_down">最新下载记录</a></li>
+      <li><a href="/shop3_coupons/newly_use">最新使用记录</a></li>
+      <li class="hover"><a href="/shop3_coupon_reports">统计报表</a></li>
+      <% unless session_shop.shops.blank? %>
+        <li><a href="/shop3_internal_report?type=internal">内部商家统计</a></li>
+      <% end %>
+
+      <% if session_shop.has_branch? %>
+        <li><a href="/shop3_internal_report?type=branch">分店统计</a></li>
+      <% end %>
+    </ul>
+
+  </div>
+  <div class="search textleft">
+    <%= form_tag '/shop3_coupon_reports',:method =>:get, :onsubmit => "return check_day()" do %>
+      <span class="red1 f15">搜索日期:</span><br/><br/>
+                                  开始日期<%= text_field_tag :sday, params[:sday]|| Time.now.to_date, :class => "inputs5 mlr10 w150"%>
+                                  结束日期<%= text_field_tag :eday, params[:eday]|| Time.now.to_date, :class => "inputs5 mlr10 w150"%>
+      <input type="submit" value="查 询" class="btn6 ml10"/>
+    <% end %>
+    <div class="clear1"></div>
+
+  </div>
+  <table width="100%" cellpadding="0" cellspacing="0" class="tab2">
+    <tr>
+      <th>优惠券</th>
+      <th width="150" class="textcenter pl0">时间</th>
+      <th width="100" class="textcenter pl0">下载次数</th>
+      <th width="100" class="textcenter pl0">使用次数</th>
+    </tr>
+    <% @report.each do |report| %>
+      <tr>
+        <td><a href="/shop3_coupons/show?id=<%= report[0].id %>" title="<%= report[0].name %>"><%= report[0].name %><span class="gay1"></span></a></td>
+        <td width="150" align="center"><%= params[:sday] %> ~ <%= params[:eday] %></td>
+        <td width="100" align="center"><%= link_to report[1], "/shop3_coupons/newly_down?cid=#{report[0].id}&sday=#{params[:sday]}&eday=#{params[:eday]}"%></td>
+        <td width="100" align="center"><%=link_to report[2], "/shop3_coupons/newly_use?cid=#{report[0].id}&sday=#{params[:sday]}&eday=#{params[:eday]}" %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="2"><strong>总计</strong></td>
+      <td width="100" align="center"><%= @report.sum{|r| r[1]} %>次</td>
+      <td width="100" align="center"><%= @report.sum{|r| r[2]} %>次</td>
+    </tr>
+  </table>
+  <br/><br/>
+  <span class="red1 f15">自定义导出:</span><br/><br/>
+  <%= button_to '导出昨日数据', "/shop3_coupon_reports/csv_export", :class => "btn7  r" %>
+  <%= form_tag "/shop3_coupon_reports/csv_export" do  %>
+                          开始日期<%= text_field_tag :stime,@day||Time.now.to_date, :class => "inputs5 mlr10 w150" %>
+                          结束日期<%= text_field_tag :etime,@day||Time.now.to_date, :class => "inputs5 mlr10 w150" %>
+    <%= submit_tag "导 出", :onclick => "return submit_export();",:class => "btn6 ml10" %>
+  <% end %>
+</div>
+
+<script>
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+	
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+
+  function submit_export(){
+    var patrn=/^20\d\d-(0\d|1[0-2])-(0\d|[12]\d|[3][01])$/;
+    if(!patrn.exec($('#stime').val())){alert('开始时间不是有效的日期'); return false;}
+    if(!patrn.exec($('#etime').val())){alert('结束时间不是有效的日期'); return false;}
+  }
+
+  function check_day(){
+    var patrn=/^20\d\d-(0\d|1[0-2])-(0\d|[12]\d|[3][01])$/;
+    if(!patrn.exec($('#sday').val())){alert('查询日期不是有效的日期(如:2013-01-01)'); return false;}
+    if(!patrn.exec($('#eday').val())){alert('查询日期不是有效的日期(如:2013-01-01)'); return false;}
+  }
+
+</script>

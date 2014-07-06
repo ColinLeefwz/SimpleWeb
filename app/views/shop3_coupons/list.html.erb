@@ -1,0 +1,193 @@
+<div id="BG"></div>
+<div id="MesDiv"><center><br/>不能激活，已有一张有效的同规则优惠券。</center>
+  <a onclick="Close()" class="btn11 m_auto mt10">确定</a>
+</div>
+<div id="DelDiv">
+  <center><br/>确定删除此优惠券？</center>
+  <a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+  <a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
+<div class="clear1"></div>
+<div class="con2">
+  <div class="title1 mb30">
+    <h2 class="f18 l">优惠券管理</h2>
+    <a href="/shop3_coupons" class="r btn9">发布优惠券</a>
+  </div>
+  <div class="submenu">
+    <ul>
+      <li class="hover"><a href="/shop3_coupons/list">优惠券列表</a></li>
+      <li><a href="/shop3_coupons/newly_down">最新下载记录</a></li>
+      <li><a href="/shop3_coupons/newly_use">最新使用记录</a></li>
+      <li><a href="/shop3_coupon_reports">统计报表</a></li>
+      <% unless session_shop.shops.blank? %>
+        <li><a href="/shop3_internal_report?type=internal">内部商家统计</a></li>
+      <% end %>
+
+      <% if session_shop.has_branch? %>
+        <li><a href="/shop3_internal_report?type=branch">分店统计</a></li>
+      <% end %>
+    </ul>
+    <div class="r">
+    </div>
+  </div>
+  <table width="100%" cellpadding="0" cellspacing="0" class="tab2">
+    <tr class="change" id="Tr0">
+      <th class="textleft pl15">优惠券</th>
+      <th width="80">已下载</th>
+      <th width="80">已使用</th>
+      <th width="45">状态</th>
+      <th width="100">操作</th>
+    </tr>
+
+    <% @coupons.each_with_index do |coupon, index| %>
+      <tr id="Tr<%= index+1 %>">
+        <td>
+          <a href="<%= [nil, "/shop3_coupons", '/shop3_share_coupons'][coupon.t2.to_i] %>/show?id=<%= coupon.id%>" title="查看详情">
+            <%=image_tag(coupon.img.url(:t1) && coupon.img.url(:t1) + "?t=#{Time.now}" ,:id=>"img_#{coupon.id}", :class=>"l #{coupon.hidden && 'imgfilter'}",:width => "130") %>
+            <span class="l ml10"><%= coupon.name %><br/><span class="gay1"><%= coupon.show_t2  %> — <%= coupon.show_rule%></span></span>
+          </a>
+        </td>
+        <td width="80" class="textcenter"><%= link_to coupon.down_users.to_a.count, {:action => 'newly_down', :cid => coupon.id} %></td>
+        <td width="80" class="textcenter"><%= link_to coupon.use_users.to_a.count,{:action => 'newly_use', :cid => coupon.id} %></td>
+        <% if coupon.hidden %>
+          <td width="45" class="textcenter gay4">已停用</td>
+        <% else %>
+          <td width="45" class="textcenter red2">有效</td>
+        <% end %>
+        <td width="135" valign="middle" class="textcenter">
+
+
+          <% if coupon.t2.to_i == 1 %>
+            <%=link_to '', ("edit?id=#{coupon.id}"  ), :class => "edit",:title => "编辑" if coupon.down_users.blank? && coupon.hidden !=1%>
+          <% elsif coupon.t2.to_i == 2  %>
+            <%=link_to '', ("/shop3_share_coupons/edit?id=#{coupon.id}"  ), :class => "edit",:title => "编辑" if coupon.down_users.blank? && coupon.hidden !=1%>
+          <% end %>
+
+          <% if coupon.hidden == 1 %>
+            <a onclick="ajaxCD($(this),'<%=coupon.id%>',true,'<%= index+1%>')" class="act" title="激活此优惠券"></a>
+          <% else %>
+            <a onclick="ajaxCD($(this), '<%=coupon.id%>',false,'<%= index+1%>')" class="act2" title="停用此优惠券"></a>
+          <% end %>
+          <%= (link_to '', 'javascript:void(0)', :onclick => "ajaxDel('#{coupon.id}', '#{index+1}')", :class => "del",:title => "删除") if coupon.down_users.blank?  %>
+
+        </td>
+
+      </tr>
+    <% end %>
+
+  </table>
+  <%= generate_paginate.html_safe %>
+
+</div>
+
+<script type ="text/javascript">
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+
+  function Cancel(obj,dt){
+    clearInterval(dt);
+    $(obj).removeClass().html("删除").attr("title","删除").addClass("del").attr("onclick","Del(this,$(this).attr('rel'))");
+  }
+ 
+
+
+  function ajaxCD(obj,coupon_id,allow,index){
+    if(allow==true){
+      $.get("/shop3_coupons/ajax_activate",{id: coupon_id}, function(data) {//alert(data['text']);
+        if(data['text']=="已激活."){
+          $("#img_"+coupon_id).removeClass("imgfilter");
+          $("#Tr"+index+" td").eq(3).removeClass("gay4").addClass("red2").html("有效");
+          obj.prev().attr("href","edit?id="+coupon_id).css("display","inline-block");
+          obj.removeClass().html(data['text']);
+          setTimeout(function(){
+            obj.removeAttr("onclick").unbind("click");
+			
+            obj.addClass("act2").bind("click",function(){
+              ajaxCD($(this),coupon_id,false,index);
+            }).html("");
+          },1000);
+        }else{
+          OpenDiv();
+        }
+      });
+    }else if(allow==false){
+      $.get("/shop3_coupons/ajax_deply",{id: coupon_id}, function(data) {
+        if(data['text']=="已停用"){
+          $("#img_"+coupon_id).addClass("imgfilter");
+          $("#Tr"+index+" td").eq(3).removeClass("red2").addClass("gay4").html("已停用");
+          obj.prev().attr("href","edit?id="+coupon_id).css("display","none");
+          obj.removeClass().html(data['text']);
+          setTimeout(function(){
+            obj.removeAttr("onclick").unbind("click");
+            obj.addClass("act").bind("click",function(){
+              ajaxCD($(this),coupon_id,true,index);
+            }).html("");
+          },1000);
+        }
+      });
+    }
+  }
+
+  function ajaxDel(coupon_id,index){
+    var top;
+    documentHeight=$(document).height();
+    windowHeight=$(window).height();
+    if(documentHeight<=windowHeight){
+      $("#BG").css({"height":windowHeight+"px","display":"block"});
+    }else{
+      $("#BG").css({"height":documentHeight+"px","display":"block"});
+    }
+    $("#DelDiv").css("display","block");
+    top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+    $("#DelDiv").css({"top":top+"px","display":"none"});
+    $("#DelDiv").fadeIn(600);
+
+    $("#DelBtn").click(function(){
+      $.get("/shop3_coupons/ajax_del",{id: coupon_id}, function(data) {
+        if(data['text']){
+          $("#BG, #DelDiv").css("display","none");
+          $("#Tr"+index).fadeOut(300,function(){
+            $(this).remove();
+          });
+        }
+        else{
+          alert('删除失败.')
+        }
+      });
+    });
+  }
+  function OpenDiv(){
+    var top;
+    documentHeight=$(document).height();
+    windowHeight=$(window).height();
+    if(documentHeight<=windowHeight){
+      $("#BG").css({"height":windowHeight+"px","display":"block"});
+    }else{
+      $("#BG").css({"height":documentHeight+"px","display":"block"});
+    }
+    $("#MesDiv").css("display","block");
+    top=$(document).scrollTop()+(windowHeight-$("#MesDiv").height())/2;
+    $("#MesDiv").css({"top":top+"px","display":"none"});
+    $("#MesDiv").fadeIn(600);
+  }
+  function Close(){
+    $("#MesDiv").animate({"top":"0px"},400,function(){
+      $("#MesDiv,#BG").css("display","none");
+    });
+  }
+  function Close2(){
+    $("#DelDiv").animate({"top":"0px"},400,function(){
+      $("#DelDiv,#BG").css("display","none");
+    });
+  }
+</script>

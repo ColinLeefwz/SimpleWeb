@@ -1,0 +1,97 @@
+
+		<div class="con">
+			<div class="title1"><h2 class="f18 l">用户信息</h2>
+				<a onclick="history.back();" class="r pointer btn10">返回</a>
+			</div>
+			<table width="700" cellspacing="0" cellpadding="0" class="tab3">
+			  <tr>
+				<td width="31%" rowspan="8" align="right" valign="top" class="pr20">
+				<%=link_to image_tag(@user.head_logo.try(:img).try(:url, :t2)), @user.head_logo.try(:img).try(:url), :target => "blank",:class => "imgstyle" %>
+				<!-- <img src="images/pic12.jpg" class="imgstyle"></td> -->
+				<td height="20" colspan="2" valign="top" class="red2 f14">昵 称： <%= @user.name %></td>
+			  </tr>
+			  <tr>
+				<td width="34%" height="20" valign="top">性 别： <%= @user.show_gender %></td>
+			    <td width="35%" height="20" valign="top">年 龄： <%= @user.age %></td>
+			  </tr>
+			  <tr>
+				<td height="20" valign="top">星 座： <%=@user.gonstellation %> </td>
+			    <td height="20" valign="top">爱 好： <%= @user.hobby %> </td>
+			  </tr>
+			  <tr>
+				<td height="20" valign="top">微博昵称： <%= link_to @user.wb_name || '' , @user.weibo_home, :target=>"_blank"%> </td>
+			    <td height="20" valign="top">QQ昵称：<%= @user.qq_name %></td>
+			  </tr>
+			  <tr>
+				<td height="20" valign="top">职业说明： <%= @user.job %> </td>
+				<% if @user.phone %>
+				<td height="20" valign="top" title="<%= @user.phone %>" >手机：<%= @user.phone[0,3]+"****"+@user.phone[7,10] %></td>
+				<% end %>
+			  </tr>
+			  <tr>
+				<td height="20" colspan="2" valign="top">个性签名： <%= @user.signature %></td>
+			  </tr>
+			  <tr>
+			    <!-- <td height="20" colspan="2" valign="top">签到信息：</td> -->
+	          </tr>
+			  <tr>
+			    <td valign="top">累计签到：<%= @user.total_checkin_shop(session[:shop_id])%>次</td>
+		        <td valign="top">最后签到时间：<%= @user.latest_checkin_time_shop(session[:shop_id]) %></td>
+			  </tr>
+		  </table> 
+
+			 <% if @photos.count < 9 && @photos.count>0 %>
+			 <div class="title1 mt20"><h2 class="l"><%= @user.name %>  照片墙</h2>
+             <%= link_to '查看', "/shop3_content/user_photo?uid=#{@user.id}", :class => "r"  %>
+			 <div class="box8 half">
+			 <% elsif @photos.count > 8%>
+			 <div class="title1 mt20"><h2 class="l"><%= @user.name %>  照片墙</h2>
+             <%= link_to '查看', "/shop3_content/user_photo?uid=#{@user.id}", :class => "r"  %>
+			 <div class="box8">
+			 <% else %>
+			 <div class="title1 mt20"><h2 class="l" style="display:none"><%= @user.name %>  照片墙</h2>
+             <%= link_to '查看', "/shop3_content/user_photo?uid=#{@user.id}", :class => "r",:style => "display:none"%>
+			 <div class="box8" style="display:none">
+			 <% end %>
+
+			 <% @photos.each do |photo| %>
+			   <%=link_to image_tag(photo.img.try(:url, :t2), :class=>"imgstyle2"), "/shop3_content/show_photo?id=#{photo.id}" %>
+			 <% end %>
+
+			 </div>
+			<div class="title1 mt40"><h2 class="l">优惠券下载与使用信息</h2></div>
+			<table width="100%" cellpadding="0" cellspacing="0" class="tab2">
+				<tr>
+					<th>优惠券</th>
+					<th width="95">下载时间</th>
+					<th width="95">查看时间</th>
+					<th width="95">使用时间</th>
+					<th width="70">消费数据</th>
+				</tr> 
+				<% @coupon_downs.each do |use| %>
+				<tr class="change">
+				  <td><a href="/shop3_coupons/show?id=<%= use.cid%>" title="<%= use.coupon_name %>"><%= use.coupon_name %><span class="gay1">（<%= use.coupon_show_t2 %>）</span></a></td>
+				  <td width="95"><%= to_local(use.dat) %></td>
+				  <td width="95"><%= to_local(use.vat) %></td>
+				  <td width="95"><%= to_local(use.uat) %></td>
+				  <td width="70" align="center"><%= use.data %></td>
+				</tr>
+				<% end %>
+		  </table>
+	  </div>
+
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$(".tab2 tr:odd").addClass("trbg");
+});
+</script>

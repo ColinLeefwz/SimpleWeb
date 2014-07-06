@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><%= @shop_faq.head %></title>
+<head>
+<style type="text/css">
+body{
+  margin:20px 15px;
+}
+p{
+ margin:0px;
+ padding:0px;
+ line-height:1.8;
+ font-size:16px;
+
+}
+h1{
+  margin:0px;
+  padding:0px;
+  font-size:20px;
+}
+h3{
+  margin:0px;
+  margin:5px 0 20px 0;
+  padding:0px;
+  font-size:14px;
+  color:#BEBEBE;
+}
+.frontimg{
+  margin-bottom:20px;
+}
+#content img{
+  max-width:100%;
+  display: block;
+  margin: 5px auto;
+}
+h4{
+  margin:4px 0px 0px 0px;
+  font-size:14px;
+}
+
+
+</style>
+</head>
+
+<body>
+  <h1><%= @shop_faq.head %></h1>
+  <h3><%= @shop_faq.cat.strftime("%Y-%m-%d") %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= @shop.name %></h3>
+
+<div id="content">
+<%= @shop_faq.content.html_safe %>
+</div>
+</body>
+<br><br><br>
+      <div style="float:left;width:40%">
+        <a href="http://www.dface.cn/mini.html" target="_blank"><img src="/admin/image/share_weibo/logo.png" align="left" style="width:100px;"/></a>
+      </div>
+      <div style="float:left;width:60%;">
+        <h4>此时此刻，我们在这里</h4>
+        <p style="font-size:12px;">脸脸 — 基于现场的移动社交</p>
+      </div>
+      <br><br><br>
+    <div>
+      <a href="http://dface.cn/a/down"><img src="/admin/image/share_weibo/btn6.jpg" style="width:48%"/></a>
+      <a href="https://itunes.apple.com/cn/app/lianlian/id577710538"><img src="/admin/image/share_weibo/btn7.jpg" style="width:48%"/></a>
+    </div>
+
+</html>
+
+
+

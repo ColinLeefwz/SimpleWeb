@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+    <head>
+        <title>脸脸后台管理</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <style type="text/css">
+            <!--
+            /* CSS Tabs */
+            body {
+                margin: 0;
+                font-size: 80%;
+                font-family:  "宋体"; font-size: 12px;
+            }
+            td {font-family:  "宋体"; font-size: 12px;}
+            #button {
+                cursor:pointer;
+                width: 12em;
+                padding: 0 0 1em 0;
+                margin-bottom: 1em;
+                color: #0c25a2;
+            }
+            #button ul{
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                border: none;
+            }
+            #button ul li ul{
+                margin: 0% 0% 0% 8%;
+            }
+            #button li {
+                margin: 0;
+                list-style: none;
+                list-style-image: none;
+            }
+            #button li a {
+                display: block;
+                padding: 3px 3px 2px 32px;
+                color: #000000;
+                text-decoration: none;
+                width: 100%;
+            }
+            html>body #button li a {
+                width: auto;
+            }
+            #button li a:hover {
+                background-color: #a8cef9;
+                color: #3477ff;
+            }
+            #button #current a {
+                background-color: #a8cef9;
+                color: #3477ff;
+            }
+            -->
+        </style>
+        <script language="JavaScript" src="tree.js" type=""></script>
+        <link rel="stylesheet" href="tree.css" />
+    </head>
+
+    <body>
+        <table  border=0 width="100%"  height="100%" cellpadding="0" cellspacing="0"  style="filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#c2d8f2', endColorStr='#f1f6fc', gradientType='0')">
+            <tr><td width="3" bgcolor="#366ab3"></td>
+                <td width="10" ></td>
+                <td align=left valign=top>
+                    <div id="button">
+
+
+                        <ul class="tree">
+                            <li><a onclick="current(this)"  href="#">用户管理</a>
+                                <ul>
+                                    <li id="tag5"><a href="/admin_users" onclick="current(this)" target="main">用户列表</a></li>
+                                    <li id="tag5"><a href="/admin_kx_users" onclick="current(this)" target="main">可信用户</a></li>
+                                    <li id="tag5"><a href="/admin_co_users" onclick="current(this)" target="main">外部授权用户</a></li>
+                                   <!--  <li id="tag5"><a href="/admin_w_users" onclick="current(this)" target="main">外部人员跟随地点</a></li> -->
+                                    <li id="tag5"><a href="/admin_user_logos" onclick="current(this)" target="main">头像审核</a></li>
+                                    <li id="tag5"><a href="/user_chatroom_upload_photos" onclick="current(this)" target="main">聊天室上传图片</a></li>
+                                    <li id="tag5"><a href="/admin_gchat_content_review" onclick="current(this)" target="main">聊天室内容审核</a></li>
+                                    <li id="tag5"><a href="/admin_photo_censor" onclick="current(this)" target="main">聊天室图片审核</a></li>
+                                    <li id="tag5"><a href="/admin_blacks" onclick="current(this)" target="main">举报用户</a></li>
+                                    <li id="tag5"><a href="/admin_rekognitions" onclick="current(this)" target="main">人脸识别</a></li>
+                                    <li id="tag5"><a href="/admin_faces" onclick="current(this)" target="main">face识别</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a onclick="current(this)"  href="#">地点管理</a>
+                                <ul>
+                                    <li id="tag5"><a href="/admin_shops" onclick="current(this)" target="main">地点管理</a></li>
+                                    <li id="tag5"><a href="/admin_hots" onclick="current(this)" target="main">热门管理</a></li>
+                                    <li id="tag5"><a href="/admin_user_add_shops/untreated" onclick="current(this)" target="main">地点创建审核</a></li>
+                                    <li id="tag5"><a href="/admin_user_add_shops" onclick="current(this)" target="main">地点创建查看</a></li>
+                                    <li id="tag5"><a href="/admin_user_reports/untreated" onclick="current(this)" target="main">用户地点报错管理</a></li>
+                                    <li id="tag5"><a href="/admin_user_reports" onclick="current(this)" target="main">用户地点报错查看</a></li>
+                                    <li id="tag5"><a href="/admin_similar_shops" onclick="current(this)" target="main">相似地点</a></li>
+                                    <li id="tag5"><a href="/admin_fake_shops" onclick="current(this)" target="main">可信地点</a></li>
+                                    <li id="tag5"><a href="/admin_wuser_shops" onclick="current(this)" target="main">外部人员跟随地点</a></li>
+                                    <li id="tag5"><a href="/admin_shop_notices" onclick="current(this)" target="main">商家公告</a></li>
+                                    <li id="tag5"><a href="/admin_shop_faqs" onclick="current(this)" target="main">商家问答</a></li>
+                                    <li id="tag5"><a href="/admin_shop_logos" onclick="current(this)" target="main">商家logo</a></li>
+
+                                    <li id="tag5"><a href="/admin_shops/new" onclick="current(this)" target="main">百度地点添加</a></li>
+                                    <li id="tag5"><a href="/admin_shop_photos" onclick="current(this)" target="main">照片墙</a></li>
+                                    <!-- <li id="tag5"><a href="/photo_day_stats" onclick="current(this)" target="main">每日照片统计</a></li> -->
+                                    <li id="tag5"><a href="/admin_shop_bans" onclick="current(this)" target="main">商家屏蔽用户</a></li>
+                                    <li id="tag5"><a href="/admin_shop_bindwbs" onclick="current(this)" target="main">商家绑定微博</a></li>
+                                    <li id="tag5"><a href="/admin_shop_signs" onclick="current(this)" target="main">合同管理</a></li>
+                                    <li id="tag5"><a href="http://api.map.baidu.com/lbsapi/getpoint/index.html"  target="blank">百度坐标拾取系统</a></li>
+                                    <li id="tag5"><a href="/aroundme/shop2" onclick="current(this)" target="main">地点定位测试</a></li>
+                                    <li id="tag5"><a href="/admin_baidu/lob_to_lo" onclick="current(this)" target="main">坐标转换</a></li>
+                                </ul>
+                            </li>
+                            <li><a onclick="current(this)"  href="#">群组管理</a>
+                                <ul>
+                                    <li id="tag5"><a href="/admin_groups" onclick="current(this)" target="main">群组管理</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a onclick="current(this)"  href="#">优惠券管理</a>
+                                <ul>
+                                    <li id="tag5"><a href="/admin_shop_coupons" onclick="current(this)" target="main">商家优惠券</a></li>
+                                    <li id="tag5"><a href="/admin_coupon_reports" onclick="current(this)" target="main">最新下载</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a onclick="current(this)"  href="#">签到管理</a>
+                                <ul>
+                                    <li id="tag5"><a href="/admin_checkins" onclick="current(this)" target="main">签到管理</a></li>
+                                    <li id="tag5"><a href="/checkin_days" onclick="current(this)" target="main">每日签到</a></li>
+                                    <li id="tag5"><a href="/shop_checkin_stats" onclick="current(this)" target="main">商家签到统计</a></li>
+                                    <li id="tag5"><a href="/user_checkin_stats" onclick="current(this)" target="main">用户签到统计</a></li>
+                                    <li id="tag5"><a href="/ip_checkin_stats" onclick="current(this)" target="main">ip签到统计</a></li>
+                                    <li id="tag5"><a href="/shop_checkin_alts" onclick="current(this)" target="main">签到高度统计</a></li>
+                                    <li id="tag5"><a href="/checkin_loc_accs" onclick="current(this)" target="main">经纬度误差统计</a></li>
+                                    <li id="tag5"><a href="/checkin_user_many" onclick="current(this)" target="main">多次签到</a></li>
+                                    <li id="tag5"><a href="/admin_gps_logs" onclick="current(this)" target="main">gps日志</a></li>
+                                </ul>
+                            </li>
+                            <li><a onclick="current(this)"  href="#">客户端管理</a>
+                                <ul>
+                                    <li id="tag5"><a href="/admin_crash_logs" onclick="current(this)" target="main">安卓崩溃管理</a></li>
+                                    <li id="tag5"><a href="/admin_versions" onclick="current(this)" target="main">版本管理</a></li>
+                                    <li id="tag5"><a href="/admin_versions/upload_test" onclick="current(this)" target="main">测试版上传</a></li>
+                                    <li id="tag5"><a href="/admin_guest" onclick="current(this)" target="main">渠道管理</a></li>
+                                    <li id="tag5"><a href="/admin_guest/ds_stat" onclick="current(this)" target="main">渠道下载</a></li>
+                                </ul>
+                            </li>
+                            <li><a onclick="current(this)"  href="#">点评管理</a>
+                                <ul>
+                                    <li id="tag5"><a href="http://dface.cn:3050/mshops?admin=root" onclick="current(this)" target="main">商家管理</a></li>
+                                    <li id="tag5"><a href="http://dface.cn:3050/mcities?admin=root" onclick="current(this)" target="main">城市列表</a></li>
+                                    <li id="tag5"><a href="http://dface.cn:3050/mcategories?admin=root" onclick="current(this)" target="main">分类列表</a></li>
+                                </ul>
+                            </li>
+                            <li><a onclick="current(this)"  href="#">渠道管理</a>
+                                <ul>
+                                    <li id="tag5"><a href="/admin_channels_desc" onclick="current(this)" target="main">渠道管理</a></li>
+                                </ul>
+                            </li>
+                            <li><a onclick="current(this)"  href="#">插件管理</a>
+                                <ul>
+                                    <li id="tag5"><a href="/admin_mobile_shops" onclick="current(this)" target="main">手机网站</a></li>
+                                    <li id="tag5"><a href="/admin_foods" onclick="current(this)" target="main">点菜</a></li>
+                                    <li id="tag5"><a href="/admin_caitus" onclick="current(this)" target="main">猜图</a></li>
+                                    <li id="tag5"><a href="/admin_games" onclick="current(this)" target="main">游戏</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                </td></tr>
+        </table>
+        <script>
+            function current(cur){
+                var lis=document.body.getElementsByTagName("li");
+                for(var i=0;i<lis.length;i++){
+                    lis[i].removeAttribute('id');
+                }
+                cur.parentNode.setAttribute('id','current');
+            }
+        </script>
+    </body>
+</html>
+

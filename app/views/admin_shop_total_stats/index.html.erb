@@ -1,0 +1,48 @@
+<h1>商家总体统计</h1>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+
+<%= form_tag '/admin_shop_total_stats/search',:method =>:get do %>
+  <p>
+  	日期: <%= text_field_tag :id, params[:id], :size => 15, :placeholder => "例: 2012-01-01" %>
+    区号: <%= text_field_tag :city, params[:city], :size => 15, :placeholder => "例: 0571" %>
+    <%= submit_tag "查 找" %>
+
+  </p>
+<% end %>
+
+<br>
+<table border="1">
+  <tr>
+    <th>日期</th>
+    <th>开通商家数(暂无)</th>
+    <th>签到优惠数</th>
+    <th>分享优惠数</th>
+    <th>认证商家签到总人数(暂无)</th>
+    <th>场所签到总人数</th>
+    <th>签到券下载量</th>
+    <th>分享券下载量</th>
+    <th>签到券使用量</th>
+    <th>分享券使用量</th>
+  </tr>
+
+  <% @shopdaytotalstats.each do |shopdaytotalstat| %>
+    <tr>
+      <td><%= shopdaytotalstat._id %></td>
+      <td></td>
+      <td><%= shopdaytotalstat.ctcount %></td>
+      <td><%= shopdaytotalstat.stcount %></td>
+      <td></td>
+      <td><%= shopdaytotalstat.cnum %></td>
+      <td><%= shopdaytotalstat.cdcount %></td>
+      <td><%= shopdaytotalstat.sdcount %></td>
+      <td><%= shopdaytotalstat.cucount %></td>
+      <td><%= shopdaytotalstat.sucount %></td>
+    </tr>
+
+  <% end %>
+
+</table>
+<br />
+<br />
+<%= generate_paginate3.html_safe %>
+

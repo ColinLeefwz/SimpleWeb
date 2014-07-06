@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no" />
+        <meta http-equiv="cleartype" content="on">
+        <title>俄罗斯方块_仅尾</title>
+
+        <link rel="stylesheet" type="text/css" href="http://s.dface.cn/torus/style/main.css" />
+        <!--        <script type="text/javascript" src="./script/main.js"></script>-->
+        <link rel="stylesheet" type="text/css" href="http://s.dface.cn/torus/style/torus.css" />
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+        <script src="http://s.dface.cn/torus/script/torus.js"></script>
+    </head>
+    <body>
+        <div id="benjoffe">
+            <div id="content">
+
+                <div id="loading">
+
+                </div>
+                <script>
+                    var PROMOS = [''];
+                    if (!window.CanvasRenderingContext2D)
+                    {
+                        document.getElementById('loading').innerHTML = '.';
+                    }
+                    else
+                    {
+                        document.getElementById('loading').innerHTML = '<img src="http://s.dface.cn/torus/img/torus/loading.gif" alt="" style="width:16px;height:16px;vertical-align:top;"> 游戏正在加载... ';
+                    }
+                </script>
+
+                <div style="display: none">
+                    <div id="best1"></div>
+                    <div id="best2"></div>
+                    <div id="best3"></div>
+                </div>
+
+                <div id="container">
+
+                    <div id="out"></div>
+                    <div id="playing" onclick="void(0)">
+                        <canvas id="canvas" width="200" height="400"></canvas>
+                        <div id="paused">
+                            <div id="but_resume" class="but"></div>
+                            <div id="but_quit" class="but"></div>
+                        </div>
+                        <div id="panel">
+                            <div id="title1"></div>
+                            <div id="title2"></div>
+                            <div id="title3"></div>
+                            <div id="score"></div>
+                            <div id="time"></div>
+                            <div id="next"></div>
+                            <div id="but_pause" class="but"></div>
+                        </div>
+                        <div id="promo"></div>
+                        <div id="gameover">
+                            <div id="winner">
+                            </div>
+                            <div id="newgame">
+                                <div id="sorryText"></div>
+                                <div id="but_restart2" class="but"></div>
+                                <div id="but_quit2" class="but"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="close" class="nonstick"></div>
+                </div>
+
+            </div>
+        </div>
+        <iframe src="dface://init?mode=3" style="display:none" />
+    </body></html>

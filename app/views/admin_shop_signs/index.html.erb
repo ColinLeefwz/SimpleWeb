@@ -1,0 +1,43 @@
+<h1>商家合同</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+
+<%= form_tag '/admin_shop_signs',:method =>:get do %>
+  <p>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
+  </p>
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>商家</th>
+    <th>商家名称</th>
+    <th>合同编号</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @shop_signs.each do |shop_sign| %>
+    <tr>
+      <td><%=link_to "#{shop_sign.shop_name}(#{shop_sign.sid})", "/admin_shops/show?id=#{shop_sign.sid}" %></td>
+      <td><%= shop_sign.name %></td>
+      <td><%= shop_sign.htid %></td>
+      <td><%= link_to '详情', "/admin_shop_signs/show?id=#{shop_sign.id}" %></td>
+      <td><%= link_to '编辑', "/admin_shop_signs/edit?id=#{shop_sign.id}" %></td>
+
+    </tr>
+  <% end %>
+</table>
+
+<br/>
+<%= link_to '新建合同', "/admin_shop_signs/new"  %>
+
+
+<%= generate_paginate3.html_safe %>

@@ -1,0 +1,18 @@
+<h1>版本详情</h1>
+<p>
+  <b>版本号:</b>
+  <%= @version.id  %>
+</p>
+
+<p>
+  <b>功能描述:</b>
+  <%= @version.desc %>
+</p>
+
+<p>
+  <b>强制升级:</b>
+  <%= @version.show_upgrage %>
+</p>
+
+
+<%= link_to '返回', "/admin_versions" %>

@@ -1,0 +1,19 @@
+<h1>合同详情</h1>
+
+<p>
+  <b>商家id:</b>
+  <%= @shop_sign.shop__id %>
+  (<%= @shop_sign.shop_name %>)
+</p>
+
+<p>
+  <b>商家名称：</b>
+  <%= @shop_sign.try(:name) %>
+</p>
+<p>
+  <b>合同编号：</b>
+  <%= @shop_sign.htid %>
+</p>
+
+
+<%=link_to '返回列表', "/admin_shop_signs" %>

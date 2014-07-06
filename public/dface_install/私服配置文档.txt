@@ -1,0 +1,5 @@
+1. 开启服务器: sudo apachectl start  目录:/Library/WebServer/Documents
+2. 系统偏好设置-->共享 : 开启共享
+3. 在右上角wifi图标中创建网络
+
+itms-services://?action=download-manifest&url=http://dface2.local/dface_test/versions.plist

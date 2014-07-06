@@ -1,0 +1,58 @@
+<h2>poi</h2>
+<table border="1">
+  <tr>
+    <th>poi</th>
+    <th>名称</th>
+    <th>城市</th>
+    <th>地址</th>
+    <th>分类</th>
+  </tr>
+
+  <tr>
+    <td><%= @sina_poi.id  %></td>
+    <td><%= @sina_poi.title %></td>
+    <td><%= @sina_poi.city %></td>
+    <td><%= @sina_poi.address %></td>
+    <td><%= @sina_poi.category_name %></td>
+  </tr>
+</table>
+
+<h2><%= params[:coll] == 'shop' ? '商家' : '百度' %>附近数据</h2>
+<p style="padding: 0px 0px 5px 0px; margin: 0px;">
+  <%=  link_to "附近商家" , "/admin_sina_pois/near?id=#{@sina_poi._id}&coll=shop"%>
+  <%=  link_to "附近百度商家" , "/admin_sina_pois/near?id=#{@sina_poi._id}&coll=baidu"%>
+</p>
+
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>名称</th>
+    <th>电话</th>
+    <th>城市代码</th>
+    <th>地址</th>
+    <th>距离</th>
+    <th>类型</th>
+    <th></th>
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td><%= shop.id.to_i %></td>
+      <td><%= shop.name %></td>
+      <td><%= params[:coll] == 'shop' ? shop.tel : shop.phone %></td>
+      <td><%= shop.city %></td>
+      <td><%= shop.addr %></td>
+      <td><%= shop.get_distance(shop.loc_first, @sina_poi.lo) if ENV["RAILS_ENV"] == "production"  %></td>
+      <td><%= shop.type %></td>
+      <td><%= link_to '对应',"/admin_sina_pois/add_baidu_id?id=#{@sina_poi._id}&#{params[:coll]}_id=#{shop._id}" %></td>
+    </tr>
+
+  <% end %>
+</table>
+
+
+<br/>
+<br/>
+<%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %> |
+<a href="/admin_sina_pois">返回微博商家</a>
+<br/>

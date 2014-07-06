@@ -1,0 +1,54 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">签到管理</h2></div>
+  <div class="submenu">
+    <ul>
+      <li class="hover"><a href="/shop3_checkins?page=1">最新签到</a></li>
+      <li class="<%= 'hover' if params[:flag] == 'week' %>"><a href="/shop3_checkins/rank?flag=week&page=1">周排行</a></li>
+      <li class="<%= 'hover' if params[:flag] == 'month' %>"><a href="/shop3_checkins/rank?flag=month&page=1">月排行</a></li>
+      <!-- <li><a href="/shop3_checkins/rank_list?page=1">总排行</a></li> -->
+    </ul>
+  </div>
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2">
+    <tr id="Tr0">
+      <th width="842">用户名</th>
+      <th width="303">签到时间</th>
+      <th width="227">&nbsp;</th>
+    </tr>
+    <% @checkins.each do |checkin| %>
+
+      <tr id="Tr1">
+        <td valign="middle">
+          <a href="/shop3_checkins/user?uid=<%=checkin.uid%>" >
+            <%= image_tag(UserLogo.img_url(checkin.user.try(:head_logo_id), :t1), :class => "imgstyle",:align => "left")%>
+          </a>
+          <%=link_to checkin.user.try(:name)||'', "/shop3_checkins/user?uid=#{checkin.uid}",:class => "f14"%>
+          <img align="absmiddle" class="ml10" src=<%= checkin.user.try(:show_gender)=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>><br/>
+          星座：<%= checkin.user.try(:gonstellation) %><br/>
+          年龄：<%= checkin.user.try(:age) %>岁</td>
+        <td><%= checkin.cat.strftime("%Y-%m-%d %H:%M") %><br/></td>
+        <td width="227" align="center">
+          <%= link_to '历史签到', url_for(:action => 'index', :uid => checkin.uid),:class => "mr10" %>
+          <%= shop3_ban_link(checkin.uid.to_s) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+    <%= generate_paginate %>
+</div>
+
+<script defer="defer">
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+	
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+</script>

@@ -1,0 +1,176 @@
+<%= content_for :ahead do %>
+    <script type="text/javascript">
+		var ul_w=0;
+        var menujson = {};
+        var trigger_click = true;
+        $.get('/shop3_menu.json', function(data){
+            menujson = data
+        })
+    </script>
+	<script src="/newbackstage/js/menuset.js" type="text/javascript"></script>
+    <script src="/newbackstage/js/menu_drag.js" type="text/javascript"></script>
+<% end %>
+<div id="BG"></div>
+<div id="DelDiv">
+	<center>这里放置提示信息</center>
+	<a onclick="Close2()" class="btn11 w55 mt10 m_auto">确定</a>
+</div>
+<div id="Phone">
+	<div class="phonetitle"><%= session_shop.name %></div>
+	<iframe name="IFrame"></iframe>
+	<div id="PhoneDS"></div>
+	<a class="close" onclick="Close3()"></a>
+</div>
+<div class="con">
+	<div class="title1"><h2 class="f18 l">自定义菜单</h2></div>
+	<div class="box15 orange1 f14">编辑：最多可创建 3 个一级菜单，每个一级菜单下最多可创建 5 个二级菜单。编辑中的菜单不会马上被用户看到，请放心调试。</div>
+
+	<!--提醒/警告框架-->	
+	<div id="Del" class="box16">
+		<form onsubmit="return false;" method="post">
+			<div class="box16inner">
+				<div class="warms">删除确认<br/><span class="f12">删除后该菜单下设置的消息将不<br/>会被保存</span></div>
+				<div class="clear1"></div>
+				<input type="submit" value="确 认" class="btn22 l mt10" onclick="DelSubMits()"/>
+				<input type="button" value="返 回" class="btn22_1 r mt10" onclick="Close('Del')"/>
+			</div>
+		</form>
+	</div>
+	
+	<!--菜单管理框架-->	
+	<div id="Info" class="box16">
+		<form onsubmit="return false;" method="post">
+			<p>菜单管理</p>
+			<div class="box16inner">
+				<div class="h100">
+					<p class="mt10 f12 orange1">菜单名称不能超过4个汉字或8个字母：</p>
+					<p><input type="text" class="inputs4  w230" id="Inputs"></p>
+					<div id="TS" class="orange1 f12 none"></div>
+				</div>
+				<div class="clear1"></div>
+				<input type="submit" value="确 认" class="btn22 l" onclick="SubMits()"/>
+				<input type="button" value="取 消" class="btn22_1 r" onclick="Close('Info')"/>
+			</div>
+		</form>
+	</div>
+	
+	<!--发布框架-->	
+	<div id="Message1" class="box16">
+		<form onsubmit="return false;" method="post">
+			<div class="box16inner">
+				<div class="warms">发布确认<br/><span class="f12">本次发布将在24小时内对所有用户生效。确认发布？</span></div>
+				<div class="clear1"></div>
+				<input type="submit" value="确 认" class="btn22 l mt30" onclick="FormMits()"/>
+				<input type="button" value="取 消" class="btn22_1 r mt30" onclick="Close('Message1')"/>
+			</div>
+		</form>
+	</div>
+
+	<div class="box17 mt30">            
+		<div class="box17left">                           
+			<div class="title5">                            
+				<h2>菜单管理</h2>
+				<a class="btn24 r mt5" id="orderBt">排序</a>
+				<a class="btn23 r mt5 mr10" onclick="InfoDiv('','')" id="addBt">添加</a>
+				<a style="display: none;" class="btn24 r mt5" id="cancelBt">取消</a>
+				<a style="display: none;" class="btn23 r mt5 mr10" id="finishBt">完成</a>
+			</div>
+			<div id="MenuList" class="menulist ui-sortable-disabled">
+				<% @menu && @menu.button.each_with_index do |m, index|%>
+					<dl class="ui-sortable-disabled">
+						<dt id="menu_<%= index %>">
+							<i class="downarrow"></i>
+							<a class="mlink" onClick="OpenPlane(this,'parent',sort, '<%= m['type2']%>', '<%= m['url']%>')"><%= m['name']%></a>
+							<span class="menu_opr">
+								<% if m['type'].blank? %>
+									<a class="add_gray" onclick="InfoDiv('','<%= index %>')" rel='<%= index %>'>添加</a>
+								<% end %>
+								<a class="edit_gray" onclick="InfoDiv('<%= m['name']%>','<%= index %>')" rel='<%= index %>'>编辑</a>
+								<a class="del_gray" onclick="DelDiv(<%= index %>)" rel='<%= index %>'>删除</a>
+								<a class="sort_gray" style="display:none">排序</a>
+							</span>
+						</dt>
+					<% m['sub_button'] && m['sub_button'].each_with_index do |sb, sbi| %>
+						<dd id="subMenu_menu_<%= index %>_<%= sbi %>">
+							<i class="point">●</i>
+<!-- 							<a class="mlink" onClick="OpenPlane(this,'sub',sort,'<%= m['type2']%>', '<%= m['url']%>' )"><%=  %></a> -->
+<%= link_to sb['name'], "javascript:void(0)", class: "mlink", onclick: "OpenPlane(this, 'sub', sort, '#{sb['type2']}', '#{sb['url']}')" %>
+							<span class="menu_opr">
+								<a class="edit_gray" onclick="InfoDiv('<%= sb['name'] %>','<%= "#{index},#{sbi}" %>')" rel='<%= "#{index},#{sbi}" %>'>编辑</a>
+								<a class="del_gray" onclick="DelDiv('<%= index %>,<%=sbi%>')" rel='<%= "#{index},#{sbi}" %>'>删除</a>
+								<a class="sort_gray" style="display:none">排序</a>
+							</span>
+						</dd>
+					<% end%>
+					</dl>
+				<% end %>
+			</div>
+		</div>
+
+		<div class="box17right" id="Box17Con1">
+			<div class="title5">                            
+				<h2>设置动作</h2>
+			</div>
+			<div class="box17con">
+				<center class="mt160">你可以先添加一个菜单，然后开始为其设置响应动作</center>
+			</div>
+		</div>
+		<div class="box17right none" id="Box17Con2">
+			<div class="title5"><h2>设置动作</h2></div>
+			<div class="box17con">
+				<center class="mt160 orange1">已有子菜单，无法设置动作</center>
+			</div>
+		</div>
+		<div class="box17right none" id="Box17Con3">
+			<div class="title5"><h2>设置动作</h2></div>
+			<div class="box17con">
+				<center class="blue3 f15 mt40">请选择用户点击菜单后，脸脸做出的相应动作</center>
+				<div class="box17coninner1">
+					<center class="mt60">
+					<a onClick="HttPLink()" class="links1">跳转到其他页面</a>
+					<% if @mobile_space.menu || Rails.env.development? %>
+						<a onClick="PhoneLink()" class="links2">跳转到手机网站</a>
+					<% end %>
+						<a onClick="APPLink()" class="links3">跳转到脸脸应用</a>
+					</center>
+				</div>
+			</div>
+		</div>
+		<div class="box17right none" id="Box17Con4">
+			<div class="title5">
+				<h2>设置动作</h2>
+				<a id='linkbtn' class="btn23 r mt5"/>编辑</a>
+			</div>
+			<div class="box17con">
+				<div class="blue3 f15 mt20 mb20 ml20">用户点击该子菜单会跳到以下链接</div>
+				<div class="box17coninner1">
+					<div class="pl20"></div>
+				</div>
+			</div>
+		 </div>
+		 <div class="box17right none" id="Box17Con9">
+			<div class="title5"><h2>设置动作</h2></div>
+			<div class="box17con">
+				<div class="blue3 f15 mt20 mb20 ml20">用户点击该子菜单会跳到以下链接</div>
+				<div class="box17coninner1">
+					<input class="textarea5 m_auto" id="TextArea5" placeholder="http://">
+					<div class="orange1 f12 mt10 ml30" id="UrlFail">请输入正确的URL&nbsp;&nbsp;&nbsp;例如：<span class="f14">http://jitimes.com</span></div>
+					<div class="clear1"></div>
+					<br/><br/><br/><br/><br/><br/>
+					<input type="button" class="btn22 l ml140" value="保 存" onClick="SaveLink()"/>
+					<input type="button" class="btn22_1 r mr140" value="取 消" onClick="Res()"/>
+				</div>
+			</div>
+		 </div>
+		<%= render "mobile"%>
+		<%= render 'app' %>
+
+	</div>
+	
+	<div class="st mt10 gay4 f14 lh25">发布<br/>编辑中的菜单不能直接在用户手机上生效，你需要进行发布，发布后24小时内所有的用户都将更新到新的菜单。</div>
+	<div class="line1 mt20 mb40"></div>
+    <div class="w300 m_auto">        
+		<a class="btn2 l" onclick="View()">预 览</a>
+		<a onClick="MesSubMits()" class="btn3 r">发 布</a>
+    </div>
+</div>

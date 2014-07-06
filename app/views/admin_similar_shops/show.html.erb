@@ -1,0 +1,127 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<h1>相似商家处理</h1>
+<style>
+  p span{display:  inline-block; width:  100px;  }
+  .operateSpan{width: 300px;}
+</style>
+<p>
+  <span>id</span>
+  <span  style="width: 150px;">地点名称</span>
+  <span>距离</span>
+  <span style="width: 160px">处理方式</span>
+</p>
+
+<% @similar_shop.data.each do |sd| %>
+  <p>
+    <span><%=  sd['id']%></span>
+    <span style="width: 150px;"><%= sd['name'] %></span>
+    <span><%= sd['dis'].to_i %>米</span>
+    <span style="width: 160px"><%= sd['type']|| '未处理' %></span>
+    <span class="operateSpan">
+      <% if sd['type'].nil? %>
+        <%= link_to "标记删除",'javascript:void(0)',  :onclick=> "ajax_del($(this), '#{@similar_shop.id}' ,'#{sd['id']}')" %>
+        <%= link_to "合并删除",'javascript:void(0)',  :onclick=> "ajax_merge_del($(this), '#{@similar_shop.id}' ,'#{sd['id']}', #{@similar_shop.data.map{|m| m['id']}-[sd['id']]})" %>
+        <%= link_to "它是内部地点",'javascript:void(0)', :onclick => "ajax_internal($(this), '#{@similar_shop.id}' ,'#{sd['id']}', #{@similar_shop.data.map{|m| m['id']}-[sd['id']]})"%>
+      <% end %>
+    </span>
+
+  </p>
+<% end %>
+
+
+<br/>
+
+<a rel="<%= @similar_shop.id   %>" id="pause">暂不处理</a>
+<a rel="<%= @similar_shop.id   %>" id="cancel">完成</a>
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#cancel").click(function(){
+      var ssid = $(this).attr('rel')
+      $.get('/admin_similar_shops/ajax_cancel',{ssid: ssid}, function(){
+        if(window.opener){
+          var  trobj = window.opener.document.getElementsByClassName("tr_"+ ssid)
+          $(trobj).remove()
+        }
+        window.setTimeout(function(){window.close()},800);
+      });
+    });
+
+    $("#pause").click(function(){
+      var ssid = $(this).attr('rel')
+      $.get('/admin_similar_shops/ajax_pause',{ssid: ssid}, function(){
+        if(window.opener){
+          var  trobj = window.opener.document.getElementsByClassName("tr_"+ ssid)
+          $(trobj).remove()
+        }
+        window.setTimeout(function(){window.close()},800);
+      });
+    });
+
+  })
+
+
+  function generate_select(arr, sid){
+    var html =  "<select  id='sl_"+ sid+"'>"
+    for(var i=0; i< arr.length; i++ ){
+      html += "<option value='"+ arr[i] +"'>"+arr[i]+"</option>"
+    }
+    html += "</select>"
+    return html;
+  }
+
+  function ajax_del(obj, ssid, sid){
+    $.get("/admin_similar_shops/ajax_del",{ssid: ssid, sid: sid}, function(){
+      obj.parent().html("标记删除")
+    })
+  }
+
+
+  function ajax_merge_del(obj, ssid, sid, mergearr){
+    if(mergearr.length > 1){
+      var html = generate_select(mergearr, sid)
+      html += "<a onclick=\"ajax_merge_del2($(this),'"+ ssid +"', '" + sid +"')\">确定</a>"
+      obj.parent().parent().append(html)
+      obj.parent().hide();
+    }
+    else{
+      $.get("/admin_similar_shops/ajax_merge_del",{ssid: ssid, sid: sid, msid: mergearr[0]}, function(){
+        obj.parent().html("合并删除至"+mergearr[0])
+      })
+    }
+  }
+
+
+  function ajax_merge_del2(obj, ssid, sid){
+    var msid = $("#sl_"+sid + " option:selected").text();
+    $.get("/admin_similar_shops/ajax_merge_del",{ssid: ssid, sid: sid, msid: msid}, function(){
+      obj.parent().html("合并删除至"+msid)
+    })
+  }
+
+
+
+  function ajax_internal(obj, ssid, sid, mergearr){
+    if(mergearr.length > 1){
+      var html = generate_select(mergearr, sid)
+      html += "<a onclick=\"ajax_internal2($(this),'"+ ssid +"', '" + sid +"')\">确定</a>"
+      obj.parent().parent().append(html)
+      obj.parent().hide();
+    }
+    else{
+      $.get("/admin_similar_shops/ajax_internal",{ssid: ssid, sid: sid, msid: mergearr[0]}, function(){
+        obj.parent().html(mergearr[0]+'的内部地点')
+      })
+    }
+  }
+
+  function ajax_internal2(obj, ssid, sid){
+    var msid = $("#sl_"+sid + " option:selected").text();
+    $.get("/admin_similar_shops/ajax_internal",{ssid: ssid, sid: sid, msid: msid}, function(){
+      obj.parent().html(msid+'的内部地点')
+    })
+  }
+
+</script>

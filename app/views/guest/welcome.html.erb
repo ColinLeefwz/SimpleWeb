@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!link href="image/css.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+body {margin: 0px;background:url(/guest/image/bg_left_top.gif) #D9E8F9 repeat-x bottom left;font-family:  "宋体"; font-size: 12px;text-align:center}
+td {font-family:  "宋体"; font-size: 12px;}
+</style>
+
+</HEAD>
+<body>
+
+
+<div class="welcome"><strong>欢迎 <%= @guest.name%></strong><br>
+<span id="tm">&nbsp;</span>
+
+<script language=javascript> 
+	var timeOfServer=<%=Time.now.tv_sec%>000;
+	var count=0;
+	function time(){
+		var d=new Date(timeOfServer+count*1000).toLocaleString();
+		count++;
+		document.getElementById('tm').innerHTML=d.substr(0,25);
+		window.setTimeout("time()",1000);
+	}
+	time();
+</script>
+
+</div>
+
+</body>
+</HTML>

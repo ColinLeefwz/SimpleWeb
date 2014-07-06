@@ -1,0 +1,57 @@
+<h1>商家定位查询   </h1><a href="http://api.map.baidu.com/lbsapi/getpoint/index.html">百度坐标</a>
+
+<%= form_tag '/aroundme/shop2',:method =>:get do %>
+  百度经纬度: <%= text_field_tag :loc, params[:loc], :size => 25  %>(例:120.108,30.28)
+  或者 实际经纬度: <%= text_field_tag :lo, params[:lo], :size => 25  %>(例:30.28，120.108)<br/>
+  误差（米）: <%= text_field_tag :accuracy, params[:accuracy], :size => 5  %>
+  Bssid: <%= text_field_tag :bssid, params[:bssid], :size => 20  %>
+  用户: <%= text_field_tag :user, params[:user], :size => 20  %>
+  <%= submit_tag "确 定" %>
+<% end %>
+
+<hr/>
+
+<table border="1">
+  <tr>
+    <th>序号</th>
+    <th>ID</th>
+    <th>商家</th>
+    <th>经纬度</th>
+    <th>百度经纬度</th>
+    <th>实际距离</th>
+    <th>加权后距离</th>
+    <th>加权值</th>
+    <th>是否删除</th>
+    <th></th>
+  </tr>
+
+  <% index =1 %>
+  <% @shops.each do |shop| %>
+    <tr>
+      <% s = Shop.find(shop[0]["_id"].to_i) %>
+      <td><%= index %></td>  <%index+=1%>
+      <td><%= link_to(shop[0]["_id"].to_i.to_s, "/admin_shops/show?id=#{shop[0]["_id"].to_i}") %></td>
+      <td><%= shop[0]["name"] %></td>
+      <td><%= shop[0]["lo"] %></td>
+      <td><%= shop[0]["lob"] %></td>
+      <td><%= '%.2f' %  (shop[1]-shop[2]) %></td>
+      <td><%= '%.2f' %  shop[1] %></td>
+      <td><%= '%.2f' % shop[2] %></td>
+      <td>
+        <%= s.del ? '是' : '否' %>
+      </td>
+      <td>
+        <%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{shop[0]["_id"].to_i}')" %>
+      </td>
+
+    </tr>
+  <% end %>
+</table>
+
+<script type="text/javascript">
+  function ajaxDel(obj,sid){
+    $.get("/admin_shops/ajaxdel",{shop_id: sid}, function(){
+      obj.parent().parent().remove();
+    })
+  }
+</script>

@@ -1,0 +1,20 @@
+<h1>商家签到排行</h1>
+<table>
+  <tr>
+    <th>商家</th>
+    <th>用户</th>
+    <th>签到次数</th>
+    <th>最后签到时间</th>
+  </tr>
+
+  <% @users.each do |user, value| %>
+    <tr>
+      <td><%= @checkin_shop_stat.shop.name%></td>
+      <td><%=link_to @checkin_shop_stat.user(user).name, "/admin_users/show?id=#{@checkin_shop_stat.user(user).id}" %></td>
+      <td><%=link_to value.first.to_i, {:action => 'users_list', :uid => @checkin_shop_stat.user(user).id, :sid => @checkin_shop_stat.id  }%></td>
+      <td><%= id_to_time(value.last).to_date%></td>
+
+    </tr>
+
+  <% end %>
+</table>

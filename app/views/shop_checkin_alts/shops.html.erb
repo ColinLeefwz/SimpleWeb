@@ -1,0 +1,30 @@
+<h1>商家高度统计</h1>
+<table>
+  <tr>
+    <th>月份</th>
+    <th>商家</th>
+    <th>高度平均值</th>
+    <th>高度方差</th>
+    <th>精确度平均值</th>
+    <th>精确度方差</th>
+    <th>最大高度</th>
+    <th>最小高度</th>
+
+  </tr>
+
+  <% @hshops.each do |hshop| %>
+    <tr>
+      <td><%= @checkin_shop_alt.id %></td>
+      <td><%= Shop.find_by_id(hshop["_id"]).try(:name) %>(<%= hshop["_id"].to_i %>)</td>
+      <td><%= hshop["avgalt"] %></td>
+      <td><%= hshop["fcalt"] %></td>
+      <td><%= hshop["avgaltacc"] %></td>
+      <td><%= hshop["fcaltacc"] %></td>
+      <td><%= hshop["max"].join(',') %></td>
+      <td><%= hshop["min"].join(',') %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate.html_safe %>
+

@@ -1,0 +1,50 @@
+<div class="title2"><h2>问答系统</h2></div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="10%" align="left">序号</th>
+    <th width="20%" align="left">标题</th>
+    <th width="45%" align="left">回答</th>
+    <th width="10%" align="center">图片</th>
+    <th></th>
+  </tr>
+  <% @shop_faqs.each do |faq| %>
+    <tr>
+      <td class="bold"><%= faq.od%></td>
+      <td><%= faq.title  %></td>
+      <td><%= faq.text  %></td>
+      <td align="center">
+        <% unless faq.img.blank? %>
+          <%=link_to image_tag( "#{ShopFaq.img_url(faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgs2"), faq.img.url, :target  => "_blank"  %>
+        <% end %>
+      </td>
+      <td align="center">
+        <%= link_to '编辑', "/shop_faqs/edit?id=#{faq.id}" %>
+        <%= link_to '删除', '#', :onclick => "ajaxDel($(this), '#{faq.id}')" %></td>
+    </tr>
+  <% end %>
+</table>
+<div class="pages mt15">
+  <%= link_to '新建问答', '/shop_faqs/new', :class=>'btn3 l' %>
+</div>
+
+<form action ="/">
+
+</form>
+
+<script type ="text/javascript">
+  LeftMenu(15);
+  function ajaxDel(obj, faq_id){
+    if(confirm("确定删除此问答么？"))
+    {
+      $.get("/shop_faqs/ajax_del",{id: faq_id}, function(data) {
+        if(data['text']){
+          obj.parent().parent().remove();
+        }
+        else{
+          obj.replaceWith('删除失败.')
+        }
+      });
+    }
+  }
+</script>

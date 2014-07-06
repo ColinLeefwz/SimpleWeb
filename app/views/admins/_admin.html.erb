@@ -1,0 +1,17 @@
+
+<%= form_for(@admin) do |f| %>
+
+  <p>
+    帐户名<br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    密码<br />
+    <%= f.text_field :password %>
+  </p>
+
+
+  <p>
+    <%= f.submit "保存" %>
+  </p>
+<% end %>

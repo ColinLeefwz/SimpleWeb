@@ -1,0 +1,20 @@
+<html>
+<head>
+     <meta charset="utf-8">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no" />
+       <meta http-equiv="cleartype" content="on">
+       <title>测试Js接口</title>
+<script>
+	document.addEventListener('DfaceJSBridgeReady', function() {
+	        DfaceJSBridge.call('wxmShare', {'url': 'http://www.g.cn', 'title':'测试微信分享朋友圈'})
+	}, false);
+</script>
+</head>
+<body>
+getUsername
+<span id="name"></span>
+</body>
+</html>
+

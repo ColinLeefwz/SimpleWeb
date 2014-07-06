@@ -1,0 +1,15 @@
+<p>
+  <b>STACK_TRACE:</b>
+  <%= @crash_log_hash.delete("STACK_TRACE").gsub("\n\t","<br/>").html_safe   %>
+</p>
+
+<% @crash_log_hash.each do |key, value| %>
+  <p>
+    <b><%= key %>:</b>
+    <%= value.to_s.gsub(/\n\t|\n|\t/,"<br/>").html_safe %>
+  </p>
+<% end %>
+<%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %>
+<br/>
+<br/>
+<br/>

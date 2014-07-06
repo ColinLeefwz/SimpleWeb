@@ -1,0 +1,48 @@
+<div class="customer_info" style="width:760px; padding:40px 20px;">
+  <%= form_for(@shop, :url => "/admin_user_add_shops/update_shop_info?id=#{@shop.id}&report_id=#{@report.id if @report}") do |f| %>
+    <div class="row md_addr">
+      <div class="col-md-2 text-right md_addr_lable">
+        地点名称:
+      </div>
+      <div class="col-md-10 md_addr_text">
+        <%= f.text_field :name ,class:"md_addr_txt"%>
+      </div>
+    </div>
+
+    <div class="row md_addr">
+      <div class="col-md-2 text-right md_addr_lable">
+        地点地址:
+      </div>
+      <div class="col-md-10 md_addr_text">
+        <%= f.text_field :addr, class:"md_addr_txt"%>
+      </div>
+    </div>
+
+    <div class="row md_addr">
+      <div class="col-md-2 text-right md_addr_lable">
+        地点电话:
+      </div>
+      <div class="col-md-10 md_addr_text">
+        <%= f.text_field :tel ,class:"md_addr_txt"%>
+      </div>
+    </div>
+
+    <div class="row md_addr">
+      <div class="col-md-2 text-right md_addr_lable">
+        地点类型:
+      </div>
+      <div class="col-md-10 md_addr_text">
+        <%= f.select :t,options_for_select(import_t, @shop.t)  %>
+      </div>
+    </div>
+
+    <div class="row md_addr">
+      <div class="col-md-2 text-right md_addr_lable" style="line-height:34px;">
+        <%= f.submit "保存", class: "btn btn-primary" %>
+      </div>
+      <div class="col-md-2 md_addr_text">
+        <%= link_to "取消", "/#{controller_name}/show?id=#{@shop.id}", class: "btn btn-default" %>
+      </div>
+    </div>
+  <% end %>
+</div>

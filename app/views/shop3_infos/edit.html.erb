@@ -1,0 +1,77 @@
+<div class="con2">
+	<div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+	<div class="submenu">
+		<ul>
+			<li class="hover"><a href="/shop3_infos">基本设置</a></li>
+			<li><a href="/shop3_pass">修改密码</a></li>
+		</ul>
+	</div>
+	<%= form_tag "/shop3_infos/update",  :multipart => true  do %>
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
+		  <tr>
+			<td width="17%" align="right" valign="top" class="pr20">名&nbsp;称</td>
+			<td>
+				<%= text_field_tag "shop[name]", @shop.name, :class => "inputs2 mb10" %>
+			</td>
+			<td width="17%" align="right" valign="top" class="pr20">Logo</td>
+			<td align="left" valign="top" class="relative">
+				<a class="btn1" id="Btn1">上传图片</a>
+				<input class="filebox1" id="img" name="shop_logo[img]" type="file" />
+			</td>
+		  </tr>
+		<tr>
+			<td align="right" valign="top" class="pr20">地&nbsp;址</td>
+			<td><%= text_field_tag "shop[addr]", @shop.addr, :class => "inputs2 mb10" %></td>
+			<td width="16%">&nbsp;</td>
+			<td rowspan="3">
+			<div id="uploadPreview">
+				<img id="image_view" src="/newbackstage/images/sign4.jpg" class="imgstyle2"/>
+				<img id="image_view2" src="/newbackstage/images/sign4.jpg" class="imgstyle3 ml15 mb75"/>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td align="right" valign="top" class="pr20">电&nbsp;话</td>
+			<td><%= text_field_tag "shop[tel]", @shop.tel, :class => "inputs2 mb10" %></td>
+			<td width="16%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="16%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td align="center">
+			<%= submit_tag "提交",  :class => "btn2" %>
+			</td>
+			<td>&nbsp;</td>
+			<td align="left"><a class="btn3" href="/shop3_infos">取 消</a></td>
+		</tr>
+	</table>
+	<% end %>
+</div>
+<script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
+<script src="/newbackstage/js/shop_info.js" type="text/javascript"></script>
+<script defer="defer">
+$(document).ready(function(){
+	imgUploadPreview3("input[name='shop_logo[img]']", 'uploadPreview');
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+		  MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+
+	$(".tab2 tr:odd").addClass("trbg");
+  
+	$("#Btn1").click(function(){
+		$("#img").click();
+	});
+	$("input[name='shop_logo[img]']").click(function(){
+		imgUploadPreview3(this, 'uploadPreview');
+	});
+});
+</script>

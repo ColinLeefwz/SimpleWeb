@@ -1,0 +1,1 @@
+单聊：0.查看本帮助：###help1.发送msg消息num次：dface:msg:num2.每隔time发送一条，共num条：dface:time:num3.查看或清空对方log：dface:log:(num|clean|clear)4.查看或设置本地IP：###ip[:xxx.xxx.xxx.xxx]5.查看或设置本地XMPP：###xmpp[:xxx.xxx.xxx.xxx]6.查看或清除本地log：###log[:(clear|clean)]7.查看对方信息：@@@安卓端：需要与服务器进行交互的命令做了人员限制，内部id才可使用。不需要交互的尚未限制，策略不明。群聊：0.查看当前现场在线人员：@@@1.查看当前商家id: @@@id

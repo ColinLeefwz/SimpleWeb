@@ -1,0 +1,38 @@
+<p>
+  <span class="sodd">路线:</span>
+  <span class="lsven"><%= f.select :line_id, session_shop.lines.map{|m| [m.name, m.id]} ,{}, {:style => 'padding: 2px;'} %><br/></span>
+</p>
+<p>
+  <span class="sodd">团号:</span>
+  <span class="lsven"><%= f.text_field :code,:class => "inputs"%><br/></span>
+</p>
+<p>
+  <span class="sodd">团名:</span>
+  <span class="lsven"><%= f.text_field :name,:class => "inputs"%><br/>
+  (默认为"线路名称＋团号",可修改)
+  </span>
+</p>
+<p>
+  <span class="sodd">开始日期:</span>
+  <span class="lsven"><%= f.text_field :fat,:class => "inputs", :onfocus=>"WdatePicker({dateFmt:'yyyy-MM-dd'})" %><br/></span>
+</p>
+<p>
+  <span class="sodd">结束日期:</span>
+  <span class="lsven"><%= f.text_field :tat,:class => "inputs",  :onfocus=>"WdatePicker({dateFmt:'yyyy-MM-dd'})"%><br/></span>
+</p>
+<p>
+  <span class="sodd">认证提示:</span>
+  <span class="lsven">
+    <%= f.select :hint, ['请输入电话号码', '请输入身份证号码'] ,{}, {:style => 'padding: 2px;'} %>
+    <br/>(加入此团的认证提示信息)</span>
+</p>
+<p>
+  <span class="sodd">团员:</span>
+  <span class="lsven"><%= f.text_area :users,:class => "textareas"%><br/>
+    (每一行分别填入姓名,手机, 身份证,并用逗号隔开.没有可不用填 <br/>
+    如: 张三，， 360419XXXXXX4419)
+  </span>
+</p>
+
+<input type="submit" value="提 交" class="btn3 ml50 l"/><%= link_to '返回列表', '/shop_groups', :class=>"link1" %>
+

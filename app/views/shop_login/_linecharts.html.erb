@@ -1,0 +1,101 @@
+<script type='text/javascript'>
+
+var checkin = [];
+
+$(function() {
+
+    $.getJSON('/shop_login/tojson.json', function(data) {
+        // Create the chart
+
+            for (i = 0; i < data.length; i++) {
+                checkin.push([
+                    data[i][0], // the date
+                    data[i][1] 
+                ])
+            }
+
+        $('#linecharts').highcharts('StockChart', {
+
+            rangeSelector : {
+                buttons: [{
+                    type: 'week',
+                    count: 1,
+                    text: '1周'
+                }, {
+                    type: 'month',
+                    count: 1,
+                    text: '1月'
+                }, {
+                    type: 'month',
+                    count: 3,
+                    text: '3月'
+                }, {
+                    type: 'month',
+                    count: 6,
+                    text: '6月'
+                }, {
+                    type: 'year',
+                    count: 1,
+                    text: '1年'
+                }, {
+                    type: 'all',
+                    text: '所有'
+                }],
+                selected : 5 // all
+            },
+
+            yAxis: [
+                        {
+                            title: {
+                                    text: '每日签到'
+                            },
+                            top: 80,
+                            height: 210,
+                            lineWidth: 2,
+                            gridLineDashStyle : 'Dash',
+                            showLastLabel : true
+                        }
+                    ],
+
+
+            title : {
+                text : '每日签到哦，来瞧瞧吧！'
+            },
+            
+            series : [
+                {
+                    name : '签到',
+                    data : checkin,
+                    yAxis: 0,
+                    tooltip: {
+                        valueDecimals: 2,
+                        xDateFormat: '%Y-%m-%d %H:%M %A'
+                    }
+                }
+            ]
+        });
+
+        Highcharts.setOptions({
+            lang: {
+                    loading: 'Loading...',
+                    months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                    decimalPoint: '.',
+                    numericSymbols: ['k', 'M', 'G', 'T', 'P', 'E'], // SI prefixes used in axis labels
+                    resetZoom: 'Reset zoom',
+                    resetZoomTitle: 'Reset zoom level 1:1',
+                    thousandsSep: ','
+            }
+        });
+
+    });
+
+});
+
+//]]>  
+
+</script>
+
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<div id="linecharts" style="height: 400px;"></div>

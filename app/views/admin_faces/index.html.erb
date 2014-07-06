@@ -1,0 +1,61 @@
+<h1>face人脸识别</h1>
+<%= form_tag '/admin_faces',:method =>:get do %>
+  用户id: <%= text_field_tag :uid, params[:uid] %>
+  排序: <%= select_tag :sel, options_for_select([['性别从小到大','2'],['性别从大到小','3'],
+      ['年龄从小到大','4'],['年龄从大到小','5']], params[:sel]) %>
+  <%= submit_tag "提交" %>
+<%end%>
+<br/>
+<table border="1">
+  <tr>
+    <th>用户</th>
+    <th>性别</th>
+    <th>生日</th>
+    <th>性别</th>
+    <th>年龄</th>
+    <th>微笑</th>
+    <th>人种</th>
+  </tr>
+
+  <% @faces.each do |rekognition| %>
+    <tr>
+      <td>
+        <%=link_to rekognition.user.name, "/admin_users/show?id=#{rekognition.id}" %>
+        <%= image_tag(UserLogo.img_url(rekognition.user.head_logo_id, :t1)) %>
+      </td>
+      <td>
+        <%= rekognition.user.show_gender %>
+      </td>
+      <td>
+        <%= rekognition.user.birthday %>
+      </td>
+      <% if data = rekognition.data %>
+
+        <td>
+          <%= data['attribute']['gender'] %>
+        </td>
+        <td>
+          <%= data['attribute']['age'] %>
+        </td>
+        <td>
+          <%= data['attribute']['smiling'] %>
+        </td>
+        <td>
+          <%= data['attribute']['race'] %>
+        </td>
+
+
+      <%else%>
+        <%4.times do%>
+          <td></td>
+        <% end %>
+      <% end %>
+    </tr>
+
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
+<br/>
+<br/>
+

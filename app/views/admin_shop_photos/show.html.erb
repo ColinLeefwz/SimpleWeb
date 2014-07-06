@@ -1,0 +1,88 @@
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<h2>照片详情</h2>
+<p>
+  <b>图片id:</b>
+  <%=@photo._id %>
+</p>
+<p>
+  <b>图片:</b>
+  <%=image_tag(@photo.img) %>
+</p>
+<p>
+  <b>用户:</b>
+  <%=@photo.user.try(:name) %>
+</p>
+<p>
+  <b>描述:</b>
+  <%=@photo.desc %>
+</p>
+<p>
+  <b>发布时间:</b>
+  <%=id_to_time(@photo.id) %>
+</p>
+<p>
+  <b>分享到微博:</b>
+  <%=@photo.weibo ? "是" : "否" %>
+</p>
+<p>
+  <b>分享到qq:</b>
+  <%=@photo.qq ? "是" : "否"  %>
+</p>
+<p>
+  <b>赞:</b>
+  <%=@photo.like_user_names || "空" %>
+</p>
+<% if @photo.com.to_a.blank? %>
+  <p>
+    <b>评论:</b>
+    空
+  </p>
+<% else %>
+  <% @photo.com.each_with_index do |c, index| %>
+    <% user = User.find_by_id(c["id"]) %>
+    <p style="margin: 0px">
+      <b><%= "评论:" if index==0 %></b>
+      <b class="right" style="width: 100px;"><%= user.name %></b>
+      <b class="right" style="width: 100px;"><%= truncate c['txt'], :length=> 13   %></b>
+      <b class="right" style="width: 150px;"> <%= c['t'].localtime.strftime("%Y-%m-%d %H:%M")  %></b>
+      <b class="right" style="width: 80px;"><%= c["hide"] ? "隐藏" : "显示"   %></b>
+      <b class="right" style="width: 100px;">
+        <% if c['hide'] %>
+          <%= link_to '显示', "#", :onclick => "ajaxUnhide($(this), '#{@photo.id}', '#{c['id']}','#{c['t']}')"  %>
+        <% else %>
+          <%= link_to '隐藏', "#", :onclick => "ajaxHide($(this), '#{@photo.id}', '#{c['id']}','#{c['t']}')"  %>
+        <% end %>
+      </b>
+    </p>
+  <% end %>
+
+<% end %>
+
+
+
+<script type ="text/javascript">
+  LeftMenu(19);
+  function ajaxHide(obj, id, uid, t){
+    if(confirm("确定隐藏此评论"))
+    {
+      $.get("/admin_shop_photos/hide_com",{id: id,uid: uid, t: t}, function(data) {
+        if(data['text']==0)
+          obj.replaceWith('已隐藏')
+        else
+          obj.replaceWith('隐藏失败')
+      });
+    }
+  }
+  function ajaxUnhide(obj, id, uid, t){
+    if(confirm("确定显示此评论"))
+    {
+      $.get("/admin_shop_photos/unhide_com",{id: id,uid: uid, t: t}, function(data) {
+        if(data['text']==0)
+          obj.replaceWith('已显示')
+        else
+          obj.replaceWith('显示失败')
+      });
+    }
+  }
+</script>
+<%= link_to '返回列表', "/admin_shop_photos", :class=>"btn6 r" %>

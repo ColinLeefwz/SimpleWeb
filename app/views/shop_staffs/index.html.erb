@@ -1,0 +1,38 @@
+<div class="title2"><h2>员工列表</h2></div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab mt0">
+  <tr>
+    <th width="35%" align="left">用户名</th>
+    <th width="9%">性别</th>
+    <th width="17%" align="center">生日</th>
+    <th width="20%" align="center">签到次数</th>
+    <th align="center"></th>
+  </tr>
+  <% @staffs.each do |staff| %>
+    <tr>
+      <td>
+        <%=link_to image_tag(staff.user.head_logo.try(:img).try(:url,:t1), :class => "imgs"), staff.user.head_logo.try(:img).try(:url), :target => 'blank' %>
+        <%= link_to  staff.user.try(:name)||'' , "/shop_checkins/user?uid=#{staff.user_id}" %>
+      </td>
+      <td align="center"><%= staff.user.show_gender %></td>
+      <td align="center"><%= staff.user.age %></td>
+      <td align="center"><%=link_to staff.checkin_count(staff.user_id),"/shop_checkins?uid=#{staff.user_id}" %></td>
+      <td align="center"><%=link_to '删除',  '#',:onclick => "ajaxDeleteStaff($(this), '#{staff.id}');" %></td>
+    </tr>
+  <% end %>
+</table>
+<div class="pages mt15">
+  <%= link_to '从签到人中添加', "/shop_staffs/new", :class=>"btn3 l" %>
+  <%= generate_paginate.html_safe %>
+</div>
+
+<script type="text/javascript">
+  LeftMenu(13);
+	
+  function ajaxDeleteStaff(obj, id){
+    if(confirm("确定删除该员工？"))
+      $.post("/shop_staffs/ajax_delete_staff",{id: id}, function() {
+        obj.parent().parent().remove();
+      });
+  }
+</script>

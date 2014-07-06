@@ -1,0 +1,28 @@
+<% if from_mweb? %>
+  <div class="header2">
+    <a href="<%= Host::Mweb %>/login/welcome"><img src="/newbackstage/images/logo3.png" class="logo"/></a>
+    <div class="header2_change">
+      <a class="hover" href="/shop3_login">APP管理<span class="arrow"></span></a>
+      <%= link_to '手机网站', "#{Host::Mweb}/mobile/index" %>
+      <%= link_to '微信营销', "#{Host::Mweb}/mobile_weixin" %>
+    </div>
+    <a href="/shop3_login/logout" class="r f14 mr70 mt25">退出</a>
+    <span class="r f14 mr20 mt25 sign3"><%= link_to session_shop.name, "/shop3_infos" %></span>
+    <div class="clear1"></div>
+  </div>
+<% else %>
+  <div class="header">
+    <div class="headercon">
+      <div class="toptitle">
+        <h1><%= link_to session_shop.name, "/shop3_login" %></h1>
+      </div>
+    </div>
+    <a href="http://www.dface.cn"><img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/></a>
+    <img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
+    <div id="LinkBox">
+      <a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
+      <a href="/shop3_login/logout" class="links2">退出</a>
+      <span class="linkarrow"></span>
+    </div>
+  </div>
+<% end %>

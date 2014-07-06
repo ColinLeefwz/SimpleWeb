@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>紫薇原点祈福活动</title>
+<link rel="stylesheet" href="/w/1/css/public.css" type="text/css" media="screen"/>
+<script src="/w/1/js/jquery-1.6.2.min.js" language="javascript" type="text/javascript"></script>
+<script src="/w/1/js/jquery.blocksit.min.js" language="javascript" type="text/javascript"></script>
+<script>
+// JavaScript Document
+$(document).ready(function(){
+	var zwydSkip=0
+	var zwydajax=true
+	var additemsscroll= true
+	var zwydorder= $("#zwyd_order").html()
+	
+	var windowWidth=$(window).width();
+	if(windowWidth<=1280){
+		$("#Waterfall").css({"width":"928px"});
+		num=3;
+		
+	}else{
+		$("#Waterfall").css({"width":"1236px"});
+		num=4;
+	}
+
+	var high=window.screen.height,
+		scrollheight=0;
+	/** high 存放屏幕高度， scrollTop 存放页面滚动高度。**/
+
+	$(parent.window).scroll(function(){//页面滚动时执行此函数
+		if(scrollheight<$(parent.window).scrollTop()){
+			scrollheight=$(parent.window).scrollTop();
+			ADDItems();
+		}		
+		// 另一种情况 若 scrollheight > $(parent.window).scrollTop() 表示页面向上滚动。那么页面的整体高度就不会再增加。
+	});
+
+	
+
+	
+	function ADDItems(){//增加框架函数
+		if(!additemsscroll){
+			return 
+		}	
+		additemsscroll = false
+		var row=1;
+		if(!zwydajax){
+			return
+		}
+		$.get("/zwyd_wish/list.json", {skip: zwydSkip, limit: num, order: zwydorder}, function(data){
+			while($(".box").height()<(high+scrollheight)&& row <= 1){
+				for(var i=0; i < data.length; i++){
+					var d = data[i][0]
+					var itemplane='<div class="plane">'
+								+'<div class="imgsbox">'
+									+'<a href="'+ d['wish'] +'" target="_blank"><img class="imgs" src="'+ d['photo_url'] +'"></a>'
+									+'<img class="imgs2" src="/w/1/images/pic3.png">'
+								+'</div>'
+								+'<div class="content">'
+									+'<div class="tit">'
+										+'<img src="'+d['user_logo']+'" align="absbottom"/>'
+										+'<h2><a>'+ d['user_name'] +'</a>的心愿：</h2>'
+									+'</div>'
+									+'<p>'+ d['photo_desc'] +'</p>'
+									+'<div class="op">'
+										+'<b class="l">收到'+ d['total'] +'个祝福</b>'
+										+'<a class="r" href="'+ d['wish'] +'" target="_blank">祝福他</a>'
+									+'</div>'
+								+'</div>'
+							+'</div>';
+							$("#Waterfall").append(itemplane);
+				}
+				row++;
+			}
+			$("#Waterfall img").load(function(){//添加$("#Waterfall img:last").load()在这里是为了防止火狐浏览器第一次加载页面时显示不正常。
+				$('#Waterfall').BlocksIt({
+					numOfCol: num,
+					offsetX: 10,
+					offsetY: 8,
+					blockElement:"div"
+				});
+			});
+			zwydSkip += data.length
+			additemsscroll = true
+			if(data.length != num){
+				zwydajax=false
+			}
+		});
+	}
+
+	ADDItems();
+	$("#Word").css("display","none");
+	
+	$(window).resize(function(){
+		var windowWidth=$(window).width();
+		if(windowWidth<=1280){
+			$("#Waterfall").css({"width":"928px"});
+			num=3;
+			
+		}else{
+			$("#Waterfall").css({"width":"1236px"});
+			num=4;
+		}
+		$("#Waterfall img:last").ready(function(){//添加$("#Waterfall img:last").load()在这里是为了防止火狐浏览器第一次加载页面时显示不正常。
+			$('#Waterfall').BlocksIt({
+				numOfCol: num,
+				offsetX: 10,
+				offsetY: 8,
+				blockElement:"div"
+			});
+		});
+	});
+});
+</script>
+</head>
+<body>
+
+<div class="header"><img src="/w/1/images/header.jpg"/></div>
+<div class="title">
+	<a class="ml20 mr50" title="最新" href="/zwyd_wish/list?order=default"><img src="/w/1/images/btn2.png" alt="最新"/></a>
+	<a class="mr50" title="最多祝福" href="/zwyd_wish/list?order=amount"><img src="/w/1/images/btn.png" alt="最多祝福"/></a>
+	<span style='display: none' id='zwyd_order'><%= params[:order] %></span>
+</div>
+
+<div class="box" id="Waterfall">
+	<center class="word pt20" id="Word"><img src="/w/1/images/sign4.gif" align="absmiddle" class="mr5 ">数据加载中请稍后...</center>
+
+
+
+</div>
+
+</body>
+</html>

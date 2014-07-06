@@ -1,0 +1,10 @@
+<%= form_for(@shop, :url => "/admin_shops/set_password", :html => {:method => 'post'} ) do |f| %>
+  <%= hidden_field_tag :id, @shop.id %>
+  <p>
+    流水号:<br />
+    <%= f.text_field :id2, :value => @shop.id2 || "#{@shop.city}-" %>
+  </p>
+  <p>
+    <%= f.submit "确定" %>
+  </p>
+<% end %>

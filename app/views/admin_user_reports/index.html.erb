@@ -1,0 +1,26 @@
+<div class="title1 mb30">
+  <h2 class="f18">地点报错查看</h2>
+</div>
+<%= form_tag '/admin_user_reports',:method =>:get, class: "form-inline" do %>
+
+  <div class="form-group">
+    <span>商家名称</span>
+    <%= text_field_tag :name, nil, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <span>报错类型</span>
+    <%= select_tag :type,options_for_select([['全部','0'], ['地点位置错误','1'], ['地点信息错误','2'], ['地点不存在','3'], ['地点重复', '4']],params[:type])  %>
+  </div>
+
+  <div class="form-group">
+    <span>操作结果</span>
+    <%= select_tag :flag, options_for_select(@select_option ,params[:flag]) %>
+  </div>
+
+  <div  class="form-group">
+     <%= submit_tag "查 找", class: "btn9 r mr20" %>
+  </div>
+<% end %>
+
+<div class="clear1"></div>
+<%= render 'reports'%>

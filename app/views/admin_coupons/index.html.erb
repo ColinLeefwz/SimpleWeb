@@ -1,0 +1,26 @@
+<h1>Listing coupons</h1>
+
+<table>
+  <tr>
+    <th>Shop</th>
+    <th>Name</th>
+    <th>Desc</th>
+    <th>Endt</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @coupons.each do |coupon| %>
+  <tr>
+    <td><%= coupon.shop_id %></td>
+    <td><%= coupon.name %></td>
+    <td><%= coupon.desc %></td>
+    <td><%= coupon.endt %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Coupon', '/admin_coupons/new' %>

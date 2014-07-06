@@ -1,0 +1,26 @@
+<html>
+<head>
+     <meta charset="utf-8">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0, user-scalable=no" />
+       <meta http-equiv="cleartype" content="on">
+       <title>测试Js接口</title>
+<script>
+//DfaceJSBridge.callHandler = function(name,args,callback){
+//	var ret = DfaceJSBridge.call(name, args);
+//	callback(ret);
+//}
+	document.addEventListener('DfaceJSBridgeReady', function() {
+	        DfaceJSBridge.callHandler('getUidSid', null, function(response) {
+							document.getElementById('name').innerHTML=response;
+					})
+	}, false);
+</script>
+</head>
+<body>
+getUidSid: 返回值当前用户id和当前现场id
+<span id="name"></span>
+</body>
+</html>
+

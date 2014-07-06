@@ -1,0 +1,6 @@
+<h1>用户头像</h1>
+<% @logos.each do |logo| %>
+<p>
+  <%=image_tag logo.try(:img) %>
+</p>
+<%  end %>

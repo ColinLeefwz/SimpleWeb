@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/managecelphone.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<script src="/newbackstage/js/mcp.js" type="text/javascript"></script>
+	<script>
+	var navmove="on", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+		
+		//新增
+		$("#CloseMoblie").click(function(){
+			$("#Moblie").fadeOut(500,function(){
+				$("#BG").css("display","none");
+			});
+		});
+		
+		$("#Moblie ul li a").click(function(){
+			var rel=$(this).attr("rel");
+			$("#Moblie ul li a").removeClass("hover");
+			$(this).addClass("hover");
+			$("#Moblie div.mobliecon").children(":first").removeClass().addClass(rel);
+			$("#Turn").removeClass().addClass("turn1");
+			if(rel=="blackberryframe"){
+				$("#Turn").removeClass().addClass("turn3");
+			}
+		});
+
+		$("#Turn").click(function(){
+			var cla=$(this).attr("class");
+			if(cla=="turn3"){
+				return false;
+			}else if(cla=="turn1"){
+				$("#Moblie div.mobliecon").children(":first").addClass("turn");
+				$(this).removeClass().addClass("turn2");
+			}else if(cla=="turn2"){
+				$("#Moblie div.mobliecon").children(":first").removeClass("turn");
+				$(this).removeClass().addClass("turn1");
+			}
+		});
+		
+		$("#View").click(function(){
+			var top;
+			var documentHeight=$(document).height();
+			var windowHeight=$(window).height();
+			if(documentHeight<=windowHeight){
+			  $("#BG").css({"height":windowHeight+"px","display":"block"});
+			}else{
+			  $("#BG").css({"height":documentHeight+"px","display":"block"});
+			}
+			$("#Moblie").css("display","block");
+			top=$(document).scrollTop()+(windowHeight-$("#Moblie").height())/2;
+			if(top<0){top=0;}
+			$("#Moblie").css({"top":top+"px","display":"none"});
+			$("#Moblie").fadeIn(600);
+			$("#IFrame").attr("src","/cellphone/index.html");
+			$(window).scroll(function(){
+				top=$(document).scrollTop()+($(window).height()-$("#Moblie").height())/2;
+				if(top<0){
+					top=0;
+				}else if(top>($(document).height()-$("#Moblie").height())){
+					top=$(document).height()-$(window).height()+$("#Moblie").height()/2+"px";
+				}
+				$("#Moblie").css({"top":top+"px"});
+			});
+			$(window).resize(function(){
+				documentHeight=$(document).height();
+				windowHeight=$(window).height();
+				if($("#Moblie").css("display")=="none"){return false;}
+				if(documentHeight<=windowHeight){
+				  $("#BG").css({"height":windowHeight+"px","display":"block"});
+				}else{
+				  $("#BG").css({"height":documentHeight+"px","display":"block"});
+				}
+				top=$(document).scrollTop()+(windowHeight-$("#Moblie").height())/2;
+				$("#Moblie").css({"top":top+"px"});
+			});
+		});
+	});
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<img src="/newbackstage/images/sign46.jpg" align="left" id="OpenNav" title="打开导航菜单"/>
+			<h1>脸脸茶坊</h1>
+			<a id="View" class="view">预览</a>
+			<div class="clear1"></div>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="mcp1.html">首 页</a>
+				<span class="navline"></span>
+				<a href="mcp2.html">设 置</a>
+				<span class="navline"></span>
+				<a href="#">公司介绍</a>
+				<span class="navline"></span>
+				<a href="mcp6.html">最新动态</a>
+				<span class="navline"></span>
+				<a href="#">推荐菜品</a>
+				<span class="navline"></span>
+				<a href="#">联系我们</a>
+				<span class="navline"></span>
+				<a href="#">访问统计</a>
+				<span class="navline"></span>
+				<a href="#">微信管理</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		</div>
+		<div class="clear1"></div>
+		<div id="BG"></div>
+		<div id="Moblie">
+			<ul>
+				<li><a id="Iphone" class="hover" rel="iphoneframe">iPhone</a></li>
+				<li><a id="Android" rel="androidframe">Android</a></li>
+				<li><a id="WP" rel="wpframe">Windows Phone</a></li>
+				<li><a id="Blackberry" rel="blackberryframe">Blackberry</a></li>
+			</ul>
+			<span class="write"></span>
+			<a id="CloseMoblie"></a>
+			<a id="Turn" class="turn1">翻转</a>
+			<div class="mobliecon">
+				<div class="iphoneframe">
+					<span>
+						<iframe frameborder="0" id="IFrame"></iframe>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="con">
+			<div class="box14">
+				<div class="box14left">
+					<div class="title1"><h2 class="f18 l">最新动态</h2></div>
+					<div class="submenu">
+						<ul>
+							<li class="hover"><a href="mcp6.html">发 布</a></li>
+							<li><a href="mcp7.html">管 理</a></li>
+						</ul>
+					</div>
+					<div class="clear1 pt45"></div>
+					<form method="post" action="">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
+						<tr>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">标 题</td>
+							<td>
+								<input class="inputs6 radius5 relative" size="30" type="text" value="">
+								<span class="mes">4-50个字</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">图片</td>
+							<td>
+								<div class="uploadbox2" id="uploadPreview">
+									<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/pic6.jpg">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">描 述</td>
+							<td>
+								<textarea class="textarea4 radius5 relative" cols="40" rows="20" style="word-wrap:normal"></textarea>
+								<span class="mes">选填 最多140字</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" align="right" valign="top" class="pr20 pt5">正文</td>
+							<td>
+								<img src="/newbackstage/images/pic30.jpg" width="390"/>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td>
+								<input type="submit" name="Submit" value="保 存" class="btn20 w100">
+							</td>
+						</tr>
+					</table>
+					</form>
+				</div>
+				<div class="box14right">
+					<div class="cpbox">
+						<iframe frameborder="0" src="/cellphone/index.html"></iframe>
+					<div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script>
+function ajaxDel(){
+	var top;
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if(documentHeight<=windowHeight){
+	  $("#BG").css({"height":windowHeight+"px","display":"block"});
+	}else{
+	  $("#BG").css({"height":documentHeight+"px","display":"block"});
+	}
+	$("#DelDiv").css("display","block");
+	top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+	$("#DelDiv").css({"top":top+"px","display":"none"});
+	$("#DelDiv").fadeIn(600);
+
+	$("#DelBtn").click(function(){
+	  $.get("/shop3_coupons/ajax_del",{id: coupon_id}, function(data) {
+		if(data['text']){
+		  $("#BG, #DelDiv").css("display","none");
+		  $("#Tr"+index).fadeOut(300,function(){
+			$(this).remove();
+		  });
+		}
+		else{
+		  alert('删除失败.')
+		}
+	  });
+	});
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
+</script>
+</body>
+</html>

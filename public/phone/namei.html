@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="no-cache" http-equiv="Cache-Control"/>
+    <meta content="0" http-equiv="Expires"/>	
+    <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+    <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+    <title>个人 |脸脸</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8" ></script>
+    <script type="text/javascript">
+      function user_by_id(user_id) {
+// 先清空图片列表
+var ul = document.getElementById('pic_ul');
+ul.innerHTML = null;
+        WB.client.parseCMD("/users/show.json", 
+            function(user, bStatus) {
+ console.log('show ' + user_id);
+              if(bStatus == true){           
+                console.log(user);
+                user_info(user);
+              }
+            }, 
+            {
+              id: user_id
+            },
+            {
+              method: 'get'
+            }
+       );
+       WB.client.parseCMD("/statuses/user_timeline.json",
+            function(statuses, bStatus) {
+ console.log('timeline ' + user_id);
+              if(bStatus == true){  
+var ul = document.getElementById('pic_ul');
+                for (var i=0; i < statuses.length; i++) {
+console.log(statuses[i]);
+                  if (statuses[i].thumbnail_pic) {
+var li = document.createElement('li');
+var a = document.createElement('a');
+a.href = statuses[i].original_pic;
+var img = document.createElement('img');
+img.src = statuses[i].thumbnail_pic;
+img.setAttribute('class', 'w75');
+a.appendChild(img);
+li.appendChild(a);
+ul.appendChild(li);
+}
+}
+              }
+            }, 
+            {
+              id: user_id
+            },
+            {
+              method: 'get'
+            }
+       );
+     }
+//
+function user_info(user) {
+  // document.getElementById("profile_image").src=user.profile_image_url;
+  if (user.avatar_large && user.avatar_large != '') {
+  //  document.getElementById("avatar_large").src=user.avatar_large;
+  }
+avatar_info(user.profile_image_url, user.screen_name, user.avatar_large);
+  document.getElementById("screen_name").innerText=user.screen_name;
+  document.getElementById("description").innerText="<span class=\'h\'>个性签名</span><br />"+user.description;
+if (user.status) {
+status_info(user.status);
+}
+
+}
+function avatar_info(avatar, screen_name, avatar_large) {
+var li = document.createElement('li');
+var a = document.createElement('a');
+if (avatar_large) {
+a.href = avatar_large;
+} else {
+a.href = avatar;
+}
+var img = document.createElement('img');
+img.src = avatar;
+img.alt = screen_name;
+img.setAttribute('class', 'w75');
+a.appendChild(img);
+li.appendChild(a);
+document.getElementById('pic_ul').appendChild(li);
+}
+function show_avatar_large(avatar_large) {
+
+}
+function status_info(status) {
+document.getElementById("status_text").innerText=status.text;
+// document.getElementById("status_id").value=status.id;
+// document.getElementById("status_idstr").value=status.idstr;
+// document.getElementById("status_created_at").value=status.created_at;
+}
+
+
+function body_load() {
+  user_by_id(sessionStorage.getItem("search_id"));
+}
+</script>
+</head>
+<body onload="body_load();">
+
+  <div id="main">
+	<div id="header">
+		<h1 id="screen_name"></h1>	<a href="site.html" class="tbtn pl15">返回</a>	<a href="#" class="tbtn pr15" style="display:none;">删除</a>
+	</div>
+
+      <div class="Personal">
+        <div class="Pe_top">
+          <ul class="people2" id="pic_ul">
+            <li id="avatar_li">
+			
+            </li>
+          </ul>
+        </div>
+		
+        <div class="c dashed">
+			双鱼座 19岁<span class="fr f21 lh27">距离：0.92km 1天前</span>
+        </div>
+
+        <div class="c" id="description"></div>
+		
+		<div class="pms">微博信息</div>
+		
+		<div class="c dashed" id="status_text"></div>
+      </div>
+
+	<div id="foot">
+	  <a href="chat.html"><img  src="images/send.jpg" alt="加好友"></a>
+	  <a href="friend.html"><img  src="images/add.jpg" alt="加好友"></a>
+	  <a href="#"><img  src="images/black.jpg" alt="加好友"></a>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+  WB.core.load(['connect', 'client'], function() {
+      var cfg = {
+key: '2054816412',
+xdpath: 'http://' + window.location.host + '/phone/xd.html'  // JS默认调用80端口，不能指定其它端口
+};
+WB.connect.init(cfg);
+WB.client.init(cfg); 
+}); 
+</script>
+</html>

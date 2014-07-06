@@ -1,0 +1,280 @@
+<% content_for  :ahead  do %>
+  <link href="/newbackstage/css/jquery.Jcrop.css" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/jquery.form.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    document.write("\<script src=\'\/newbackstage\/js\/jquery.Jcrop.js\'\>\<\/script\>\<script src=\'\/newbackstage\/js\/headpic.js\'\>\<\/script\>");
+    if(/ipad/i.test(ua)){
+      document.write("\<style\>.jcrop-handle{background-color:#333;border:1px #eee solid;font-size:1px;width:15px !important;height:15px !important;\}\<\/style\>");
+    }
+  </script>
+
+<% end %>
+<div id="BG"></div>
+<div class="scopy"><span></span></div>
+<div class="con relative mh650 visible">
+	<div class="title1 w720 m_auto"><h2 class="f18">商家主页头图管理</h2></div>
+	<div class="box5 w720">
+		<span class="gay6 l mt10">客户端商家主页头图，最多5张，最佳尺寸640 * 640</span>
+		<a class="btn3 r" onclick="View(this)">预览</a>
+		<a class="btn3 r mr20" onclick="Sort()">排序</a>
+		<span class="clear1"></span>
+	</div>
+
+<div id="UpImg">
+    <div class="upimgplane">
+      <div class="upimgtab">
+        <span id="EM"><img id="UploadPic" src="/newbackstage/images/btn9.jpg" onClick="ImageUpload('UpImgFile')"/></span>
+        <form id="UploadForm">
+          <input type="file" id="UpImgFile" class="filebox6" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox7" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox8" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox9" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox10" onClick="ImageUpload(this)" name="photo"/>
+          <input type="file" id="UpImgFile" class="filebox11" onClick="ImageUpload(this)" name="photo"/>
+        </form>
+        <div id="CutDiv">
+          <div id="CutArea">
+            <div class="cutarealine1"></div>
+            <div class="cutarealine2"></div>
+            <div class="cutarealine3"></div>
+            <div class="cutarealine4"></div>
+            <div id="CAMove"></div>
+          </div>
+          <div id="CutBG1"></div>
+          <div id="CutBG2"></div>
+          <div id="CutBG3"></div>
+          <div id="CutBG4"></div>
+        </div>
+      </div>
+    </div>
+    <div id="SmallImgDiv"  class="cnm">
+      <img src="/newbackstage/images/pic23.jpg" class="jcrop-preview"/>
+    </div>
+    <div class="upimgdiv">
+      <input type="file" onClick="ImageUpload(this)" class="filebox14 none" id="UpImgFile"/>
+      <input type="file" onClick="ImageUpload(this)" class="filebox15 none" id="UpImgFile"/>
+      <input type="button" onClick="ImageUpload('UpImgFile')" value="重新上传" class="btn19 l none" id="Btn19"/>
+      <a onClick="NoCut()" class="btn3 r" href="#a1">取消</a>
+      <input type="button" id="Btn2" class="btn2 r mr10" value="提 交"/>
+    </div>
+  </div>
+
+	<div class="box5 box5change" id="Box5">
+    <% @headpics.each_with_index do |headpic, index|%>
+      <div class="box5img" rel='<%= index %>' reldata='<%= headpic.id %>'>
+        <%= image_tag headpic.img_url %>
+        <span class="edit">修改图片</span>
+        <span class="del">删除图片</span>
+      </div>
+    <% end %>
+
+	<div class="box5img" id="AddBox5Img" rel="F" style="display: <%= @headpics.length < 5 ? 'block' : 'none' %>">
+		<img src="/newbackstage/images/pic6_1.jpg" class="pointer" id="AddPic">
+	</div>
+
+	</div>
+	<div id="ViewPic">
+		<div id="DHImage" class="dhimage">
+			<ul>
+        <% @headpics.each_with_index do |headpic, index|%>
+          <li><a> <%= image_tag headpic.img_url %></a></li>
+        <% end %>
+			</ul>
+		</div>
+		<a id="Prev" class="prevbtn" href="javascript:void(0)"></a>
+		<div id="DHNum" class="dhnum"></div>
+		<a id="Next" class="nextbtn" href="javascript:void(0)"></a>
+	</div>
+	
+	<div id="Sort">
+		<h2>请用鼠标拖拽排序，保存后商家主页的头图将按此顺序轮滑</h2>
+		<div class="sortcon">
+			<% @headpics.each_with_index do |headpic, index|%>
+          <div class="scbox" rel="<%= index %>">
+            <%= image_tag headpic.img_url %>
+          </div>
+      <% end %>
+			<span class="clear1"></span>
+		</div>
+		<a class="btn2 l">保 存</a>
+		<a class="btn3 l ml20" onclick="$('#Sort,#BG').css('display','none')">取 消</a>
+	</div>
+</div>
+<script defer="defer">
+var len,index,timer=0;
+$(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+	
+	//删除图片
+	$("span.del").click(function(){
+	    var obj=$(this).closest("div.box5img");
+		var id = obj.attr("reldata")
+		$.get('/shop3_headpic/delete',{id: id}, function(){
+		  obj.hide(function(){
+			$("#AddBox5Img").css("display","block");
+			obj.remove();
+		  });
+		});
+	});
+
+
+	//编辑图片
+	$("span.edit").click(function(){
+		$("#AddPic").click();
+		rel=$(this).parent().attr("rel");
+    headpic_id = $(this).parent().attr('reldata')
+	});
+	$("#AddPic").click(function(){
+		var h1=$(window).height(),
+			h2=$("#Nav").height();
+		if(h1>=h2){
+			$("#BG").css("height",h1);
+		}else{
+			$("#BG").css("height",h2);
+		}
+		$("#BG").css("display","block");
+		$("#UpImg").removeAttr("style").attr("src","/newbackstage/images/btn9.jpg");
+		$("#SmallImgDiv img").attr("src","/newbackstage/images/pic23.jpg");
+		$("#UpImg").slideDown(500);
+		rel=$(this).parent().attr("rel");
+	});
+	
+	//动画
+	len  = $("#DHImage a img").length;
+	 index = 0;
+	 $("#DHImage ul").css("width",320*len);
+	 $("#DHNum .def").click(function(){
+		index = $("#DHNum .def").index(this);
+		showImg(index);
+	 });
+	 
+	 $("#ViewPic").hover(function(){
+			 clearInterval(timer);
+		 },function(){
+			 timer = setInterval(function(){
+				index++;
+				if(index==len){index=0;}
+				showImg(index);
+			  } , 2500);
+	 }).trigger("mouseleave");
+	 
+	 $("#Prev").click(function(){/** 左箭头 **/
+		index--;
+		if(index<0){index=len-1;}
+		showImg(index);
+	 });
+	 $("#Next").click(function(){/** 右箭头 **/
+		index++;
+		if(index==len){index=0;}
+		showImg(index);
+	 });
+});
+
+function showImg(index){
+	var w=320;
+	$("#DHImage ul").stop().animate({"margin-left" : -w*index},1000);
+	$("#DHNum .def").removeClass("selected").eq(index).addClass("selected");
+}
+function View(obj){
+	if($(obj).html()=="预览"){
+		$(obj).html("关闭");
+
+		len=$(".box5img").length-1;
+		var str=strpoint="";
+		for(var i=0;i<len;i++){
+			str+="<li><a><img src='"+$('.box5img').eq(i).find('img').attr('src')+"'/></a></li>";
+			strpoint+="<a class='def' href='javascript:void(0)'></a>";
+		}
+		$("#DHImage").html("<ul style='width:"+320*len+"px'>"+str+"</ul>");
+		$("#DHNum").html(strpoint);
+		index=0;
+		showImg(index);
+		$("#ViewPic").fadeIn();
+
+		$("#DHNum .def").unbind("click");
+		$("#DHNum .def").bind("click",function(){
+			index = $("#DHNum .def").index(this);
+			showImg(index);
+		 });
+	}else{
+		$(obj).html("预览");
+		$("#ViewPic").fadeOut();
+	}
+	$("#Sort").css("display","none");
+}
+var mouseclick,obj1,copy;
+function Sort(){
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if($(window).width()>1024){
+		docwidth=$(window).width();
+	}else{
+		docwidth=1024;
+	}
+	if(documentHeight<=windowHeight){
+		$("#BG").css({
+			"width":docwidth+"px",
+			"height":windowHeight+"px",
+			"display":"block"
+		});
+	}else{
+		$("#BG").css({
+			"width":docwidth+"px",
+			"height":documentHeight+"px",
+			"display":"block"
+		});
+	}
+	
+	$("#Sort").fadeIn();
+	var str="";
+	mouseclick="down";
+	for(var i=0;i<$(".box5img").length-1;i++){
+		str+="<div class='scbox'><img src='"+$(".box5img").eq(i).find("img").attr("src")+"'/></div>";
+	}
+	$("div.sortcon").html(str+"<span class='clear1'></span>");
+	$("div.sortcon div").mousedown(function(e){
+		obj1=$(this);
+		obj1.addClass("changeScbox");
+		copy=obj1.find("img").clone();
+		obj1.find("img").remove();
+		$(".scopy").append(copy).css("display","block");
+		var x = parseInt(e.pageX);
+		var y = parseInt(e.pageY);
+		$(".scopy").css({"left":(x-60),"top":(y-60)});
+		x = ($(".main").width()-$("#Sort").width())/2-90;
+
+		$(document).mousemove(function(ev){
+			var x1 = parseInt(ev.pageX);
+			var y1 = parseInt(ev.pageY);
+			$(".scopy").css({"left":(x1-60),"top":(y1-60)});
+			var bj=parseInt((x1-x)/120)-1;
+			
+			if(obj1.attr("rel")==0&&bj<0){return false;}
+			if(obj1.attr("rel")==($("div.sortcon div").length-1)&&bj>($("div.sortcon div").length-1)){return false;}
+			for(i=0;i<$("div.sortcon div").length;i++){
+				$("div.sortcon div").eq(i).attr("rel",i);
+			}
+			if(bj<obj1.attr("rel")){
+				if(bj<0){bj=0}
+				$("div.sortcon div").eq(bj).before(obj1);
+			}else if(bj>obj1.attr("rel")){
+				if(bj>$("div.sortcon div").length-1){bj=$("div.sortcon div").length-1}
+				$("div.sortcon div").eq(bj).after(obj1);
+			}
+		});			
+	});
+	$(".scopy").bind("mouseup",function(){
+			obj1.html(copy).removeClass("changeScbox");
+			$(".scopy").css("display","none");
+			$(document).unbind("mousemove");
+	});
+}
+</script>

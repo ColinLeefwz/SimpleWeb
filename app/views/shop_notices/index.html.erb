@@ -1,0 +1,31 @@
+<h1>Listing shop_notices</h1>
+
+<table>
+  <tr>
+    <th>Shop</th>
+    <th>Title</th>
+    <th>Begin</th>
+    <th>End</th>
+    <th>Ord</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @shop_notices.each do |shop_notice| %>
+  <tr>
+    <td><%= shop_notice.shop_id %></td>
+    <td><%= shop_notice.title %></td>
+    <td><%= shop_notice.begin %></td>
+    <td><%= shop_notice.end %></td>
+    <td><%= shop_notice.ord %></td>
+    <td><%= link_to 'Show', shop_notice %></td>
+    <td><%= link_to 'Edit', edit_shop_notice_path(shop_notice) %></td>
+    <td><%= link_to 'Destroy', shop_notice, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Shop notice', new_shop_notice_path %>

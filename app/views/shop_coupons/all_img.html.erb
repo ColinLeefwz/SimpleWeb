@@ -1,0 +1,12 @@
+<div class="title2"><h2>发布优惠券</h2></div>
+<div id="Notice" class="notice"><%= notice %></div>
+<%= form_for(@coupon, :url => { :action => "update", :id => @coupon.id },:html => { :multipart => true } ) do |f| %>
+  <div class="coupon">
+    <div class="adiv">
+      <%=  image_tag(@coupon.img) %>
+    </div>
+  </div>
+  <%= render :partial => 'form1', :locals => {:f => f, :s => true}  %>
+<% end %>
+
+<%= link_to '返回列表', '/shop_coupons', :class=>"btn6 r" %>

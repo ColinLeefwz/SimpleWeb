@@ -1,0 +1,19 @@
+
+
+<table border="1">
+  <tr>
+    <th>日期</th>
+    <th>本日激活用户</th>
+
+  </tr>
+
+  <% @ds_stats.each do |user_ds_stat| %>
+    <tr>
+    	<td><%= user_ds_stat.id.to_date %></td>
+    	<td><%= user_ds_stat.data.map{|m| "#{m.first}:#{m.last}"}.join('; ')%></td>	
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
+

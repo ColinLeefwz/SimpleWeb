@@ -1,0 +1,45 @@
+<?xml version="1.0"?>  
+<!DOCTYPE tsung SYSTEM "/opt/local/share/tsung/tsung-1.0.dtd">  
+<tsung loglevel="notice" version="1.0">  
+   
+ <!-- Clients setup -->  
+ <clients>  
+  <client host="localhost" use_controller_vm="true" maxusers="6000"></client>  
+ </clients>  
+   
+ <!-- Servers setup -->  
+ <servers>  
+  <server host="www.dface.cn" port="5222" type="tcp"></server>  
+ </servers>  
+   
+ <!-- Load User -->  
+ <load>  
+  <arrivalphase phase="1" duration="60" unit="minute">  
+   <users arrivalrate="50" unit="second"></users>  
+  </arrivalphase>  
+ </load>  
+   
+ <!-- Jabber parameters -->  
+ <options>  
+  <option type="ts_jabber" name="global_number" value="10"></option>  
+  <option type="ts_jabber" name="userid_max" value="1000"></option>  
+  <option type="ts_jabber" name="domain" value="dface.cn"></option>  
+  <option type="ts_jabber" name="username" value="1"></option>  
+  <option type="ts_jabber" name="passwd" value="1"></option>  
+ </options>  
+   
+ <!-- Session TODO -->  
+ <sessions>  
+  <session probability="100" name="jabber-example" type="ts_jabber">  
+   <request><jabber type="connect" ack="no_ack"></jabber></request>  
+   <transaction name="authenticate">  
+    <request><jabber type="auth_sasl" ack="local"/></request>  
+    <request><jabber type="auth_sasl_bind" ack="local"></jabber></request>  
+    <request><jabber type="auth_sasl_session" ack="local"></jabber></request>  
+   </transaction>  
+   <request><jabber type="presence:initial" ack="no_ack"/></request>  
+     
+   <thinktime value="3000"></thinktime>  
+  </session>  
+ </sessions>  
+</tsung>

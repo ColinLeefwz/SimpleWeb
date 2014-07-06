@@ -1,0 +1,130 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">拓展功能</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_lines">线路图</a></li>
+      <li class="hover"><a>旅行团</a></li>
+      <li><%= link_to "合作商家", "/shop3_partners" %></li>
+      <li><%= link_to "合作商家评分", "/shop3_partners/mark" %></li>
+    </ul>
+    <div class="r wordstyle">
+      <a href="/shop3_groups/new" class="btn9">新建旅行团</a>
+    </div>
+  </div>
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40">
+    <tr>
+      <th width="80">ID</th>
+      <th width="150">路线</th>
+      <th width="75">团号</th>
+      <th width="120">团名</th>
+      <th width="65">开始时间</th>
+      <th width="65">结束时间</th>
+      <th width="180">操作</th>
+    </tr>
+
+    <% @groups.each do |group| %>
+
+      <tr>
+        <td>
+          <%=link_to group.sid||'', "/shop3_login/branch_login?id=#{group.sid}", :class => "f14", :title => "登录'#{group.name }'" %>
+        </td>
+        <td>
+          <%= link_to group.line_name||'', "/shop3_lines/show?id=#{group.line_id}"  %>
+        </td>
+        <td><%= group.code %></td>
+        <td><%=link_to group.name, "/shop3_groups/show?id=#{group.id}" , :title => "详情"%> </td>
+        <td><%= group.fat.try(:to_date) %> </td>
+        <td> <%= group.tat.try(:to_date) %></td>
+        <td class="f14">
+          <%= link_to "编辑", "/shop3_groups/edit?id=#{group.id}", :class =>"mr5"%>
+          <%= link_to "签到", "/shop3_groups/checkins?id=#{group.id}" ,:class=>"mr5"%>
+          <%= link_to "二维码", "/shop_groups/twocode?id=#{group.id}", :class =>"mr5 pointer", :target => "blank" %>
+         <%= link_to "删除", "javascript:void(0)", :class => "mr5", :onclick => "ajaxDel($(this), '#{group.id}')" %>
+        </td>
+      </tr>
+
+    <% end %>
+
+  </table>
+
+  <%= generate_paginate %>
+</div>
+
+
+<script defer="defer">
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+  function Del(obj,n){
+    var delTimer,i=3;
+    $(obj).removeAttr("onclick").removeClass().attr("title","").addClass("cancel").html("取消&nbsp;"+i);
+    delTimer=setInterval(function(){
+      if(i>0){
+        i--;
+        $(obj).css("display","none");
+        $(obj).html("取消&nbsp;"+i);
+        $(obj).fadeIn(500);
+      }else if(i<=0){
+        clearInterval(delTimer);
+        $("#Tr"+n).hide(200,function(){
+          $(this).remove();
+        });
+      }
+    },700);
+
+    $(obj).attr("onclick","Cancel(this,"+delTimer+")");
+  }
+  function Cancel(obj,dt){
+    clearInterval(dt);
+    $(obj).removeClass().html("删除").attr("title","删除").addClass("del").attr("onclick","Del(this,$(this).attr('rel'))");
+  }
+  function ajaxRWM(){
+    var top;
+    documentHeight=$(document).height();
+    windowHeight=$(window).height();
+    if(documentHeight<=windowHeight){
+      $("#BG").css({"height":windowHeight+"px","display":"block"});
+    }else{
+      $("#BG").css({"height":documentHeight+"px","display":"block"});
+    }
+    $("#RWM").css("display","block");
+    top=$(document).scrollTop()+(windowHeight-$("#RWM").height())/2;
+    $("#RWM").css({"top":top+"px","display":"none"});
+    $("#RWM").fadeIn(600);
+
+    $("#DelBtn").click(function(){
+      $.get("/shop3_coupons/ajax_del",{id: coupon_id}, function(data) {
+        if(data['text']){
+          $("#BG, #RWM").css("display","none");
+          $("#Tr"+index).fadeOut(300,function(){
+            $(this).remove();
+          });
+        }
+        else{
+          alert('删除失败.')
+        }
+      });
+    });
+  }
+
+  function Close2(){
+    $("#RWM").animate({"top":"-340px"},400,function(){
+      $("#RWM,#BG").css("display","none");
+    });
+  }
+
+  function ajaxDel(obj, id){
+    if(confirm("确定删除？"))
+      $.get("/shop_groups/del", {id: id}, function(){obj.parent().parent().remove()})
+  }
+</script>

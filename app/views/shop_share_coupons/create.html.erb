@@ -1,0 +1,41 @@
+<div class="title2"><h2>发布分享优惠券</h2></div>
+<div id="Notice" class="notice"><%= notice %></div>
+<script type="text/javascript">
+  LeftMenu("6");
+  function imgText(){
+    $('#couponForm').show();
+    $('#Sele').remove();
+    $('#allImg').remove()
+  }
+  function allText(){
+    $('#imgText').remove();
+    $('#Sele').remove();
+    $('#couponForm').show()
+  }
+  $(document).ready(function(){
+    $("#Btn1").click(function(){
+      $("#File1").click();
+    });
+    $("#Btns").click(function(){
+      $("#Files").click();
+    });
+    $("#coupon_name").click(function(){
+      if($(this).val()=="点此输入名称"){
+        $(this).val("");
+      }
+    });
+    $("#coupon_desc").click(function(){
+      if($(this).val()=="点此输入描述"){
+        $(this).val("");
+      }
+    });
+  });
+</script>
+
+<%= form_for(@coupon, :url => '/shop_share_coupons/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+  <% if @coupon.t.to_i ==1  %>
+    <%=  render :partial => 'imgtext', :locals => {:f => f} %>
+  <% elsif @coupon.t.to_i ==2 %>
+    <%=  render :partial => 'allimg', :locals => {:f => f}  %>
+  <%end%>
+<%  end %>

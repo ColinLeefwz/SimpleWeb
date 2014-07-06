@@ -1,0 +1,41 @@
+<div class="con">
+  <div class="title1 mb30">
+    <h2 class="f18 l">拓展功能</h2>
+    <a class="r btn10" href="#">返回</a>
+  </div>
+  <div class="submenu">
+    <ul>
+ <li class="hover"><a>线路图</a></li>
+      <li><%= link_to "旅行团", "/shop3_groups" %></li>
+      <li><%= link_to "合作商家", "/shop3_partners" %></li>
+      <li><%= link_to "合作商家评分", "/shop3_partners/mark" %></li>
+    </ul>
+  </div>
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2">
+    <caption><%= @line.name %></caption>
+    <tr>
+      <th width="110" class="pl0 textcenter">到达时间</th>
+      <th width="110" class="pl0 textcenter">离开时间</th>
+      <th width="110">地点</th>
+      <th width="500">合作商家</th>
+    </tr>
+
+    <% @line.arr.each do |arr| %>
+      <tr>
+        <td align="middle"><%= show_time(arr['time'])  %></td>
+        <td align="middle"><%= show_time(arr['time2'])  %></td>
+        <td><%= Shop.find_by_id(arr['sid']).try(:name) %> </td>
+        <td>
+          <%= Shop.find_by_id(@line.place_partners(arr['sid'])).to_a.map{|m| m.name}.join(' / ')   %>
+        </td>
+      </tr>
+    <% end %>
+
+
+  </table>
+
+  <div class="box7plane1 pt30 mb50">
+    <a class="btn2" href="/shop3_lines">返 回</a>
+  </div>
+
+</div>

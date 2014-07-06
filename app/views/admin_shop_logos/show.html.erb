@@ -1,0 +1,22 @@
+<h1>商家logo详情</h1>
+
+<p>
+  <b>商家id:</b>
+  <%= @shop.id.to_i %>
+</p>
+
+<p>
+  <b>区号:</b>
+  <%= @shop.city %>
+</p>
+
+<p>
+  <b>商家名称:</b>
+  <%= @shop.name %>
+</p>
+
+<p>
+  <b>logo:</b>
+  <br/><br/>
+  <%=  image_tag @shop.logo && @shop.logo.img %>
+</p>

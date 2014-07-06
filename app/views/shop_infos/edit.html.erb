@@ -1,0 +1,28 @@
+<div class="title2"><h2>编辑基本信息</h2></div>
+<%= form_tag "/shop_infos/update"   do %>
+  <ul class="formlist" class="mt0">
+    <li>
+      <label style='width: 120px;'>名&nbsp;&nbsp;&nbsp;称:&nbsp;&nbsp;</label>
+      <%= text_field_tag :name, @shop.name, :class => "txt l" %>
+    </li>
+    <li>
+      <label style='width: 120px;'>地&nbsp;&nbsp;&nbsp;址:&nbsp;&nbsp;</label>
+      <%= text_field_tag "shop_info[addr]", @shop.addr, :class => "txt l" %>
+    </li>
+    <li>
+      <label style='width: 120px;'>联系人:&nbsp;&nbsp;</label>
+      <%= text_field_tag "shop_info[contact]", @shop.contact, :class => "txt l" %>
+    </li>
+    <li>
+      <label style='width: 120px;'>电&nbsp;&nbsp;&nbsp;话:&nbsp;&nbsp;</label>
+      <%= text_field_tag "shop_info[phone]", @shop.phone, :class => "txt l" %>
+    </li>
+    <li>
+      <label style='width: 120px;'></label>
+      <%= submit_tag "提交",  :class => "btn1 ml20 l" %>
+    </li>
+  </ul>
+<% end %>
+<script type ="text/javascript">
+  LeftMenu(25);
+</script>

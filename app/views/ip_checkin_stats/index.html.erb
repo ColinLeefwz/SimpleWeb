@@ -1,0 +1,51 @@
+<%= form_tag '/ip_checkin_stats',:method =>:get do %>
+  ip: <%= text_field_tag :ip, params[:ip], :size => 10  %>
+
+  <span style="margin-left:15px;">排序方式：</span> <%= select_tag :order,options_for_select([['签到次数从多到少',""],['签到次数从少到多',"1"],['ip从大到小', '2'],['ip从小到大','3'],['商家总数从多到少','4'],['商家总数从少到多', '5'],['用户总数从多到少', '6'], ['用户总数从少到多', '7']],params[:order])  %>
+  <%= submit_tag "确 定" %>
+<% end %>
+
+<h1>ip签到统计</h1>
+<table>
+  <tr>
+    <th>ip</th>
+    <th>城市</th>
+    <th>运营商</th>
+    <th>截止日期</th>
+    <th>商家总数</th>
+    <th>用户总数</th>
+    <th>签到次数</th>
+  </tr>
+
+  <% @checkin_ip_stats.each do |checkin_ip_stat| %>
+    <tr>
+      <td>
+        <%= checkin_ip_stat.id %>
+      </td>
+      <td>
+        <%= checkin_ip_stat.data && checkin_ip_stat.data['city'] %>
+      </td>
+      <td>
+        <%= checkin_ip_stat.data && checkin_ip_stat.data['isp'] %>
+      </td>
+      <td>
+        <%= 1.days.ago.to_date %>
+      </td>
+      <td>
+        <%= link_to checkin_ip_stat.stotal.to_i, "/ip_checkin_stats/show_shops?id=#{checkin_ip_stat.id}" %>
+      </td>
+      <td>
+        <%= link_to checkin_ip_stat.utotal.to_i, "/ip_checkin_stats/show_users?id=#{checkin_ip_stat.id}" %>
+      </td>
+      <td>
+        <%= link_to checkin_ip_stat.ctotal.to_i, "/ip_checkin_stats/checkin_list?id=#{checkin_ip_stat.id}" %>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+
+
+
+<%= generate_paginate3.html_safe %>
+

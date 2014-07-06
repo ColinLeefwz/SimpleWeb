@@ -1,0 +1,29 @@
+<div class="title2"><h2>商家LOGO</h2>在脸脸内显示的官方头像</div>
+<div class="notice" id="Notice"><%= notice %></div>
+
+<%= form_for(:shop_logo, :url => { :action => "create" } ,:html => { :multipart => true }) do |f| %>
+  <table width="50%" border="0" cellspacing="0" cellpadding="0" class="shopLogo">
+    <tr>
+      <td align="left" valign="top" width="23%"><img src="<%=  @shop_logo ?  @shop_logo.img : '/images/img-150.jpg'%>" width="150" height="150" class="ml5"/><p class="pl55">150*150px</p></td>
+      <td align="left" valign="top" width="13%"><img src="<%=  @shop_logo ?  @shop_logo.img.url(:t1) : '/images/img-75.jpg'%>" width="75" height="75" class="ml5"/><p class="pl25">75*75px</p></td>
+      <td align="left" valign="top">
+        <input type="button" value="修改头像" class="btn1 ml15" id="Btn1"/>
+        <%= f.file_field :img, :class => "none", :id => 'UpLoad' %>
+      </td>
+    </tr>
+    <tr>
+	<td align="left" valign="top"><input type="submit" value="上 传" class="btn3 mt15"/></td>
+    </tr>
+  </table>
+<% end %>
+
+<%#= "还没有logo,现在就来" if !@shop_logo  %>
+<%#= link_to '上传', {:action => :new} %>
+
+<script>
+  LeftMenu("11");
+
+  $("#Btn1").click(function(){
+    $("#UpLoad").click();
+  });
+</script>

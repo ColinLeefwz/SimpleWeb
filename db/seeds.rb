@@ -3,6 +3,7 @@
 #
 # Examples:
 #
+<<<<<<< HEAD
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
@@ -165,3 +166,7 @@ Session.create(title: 'Rails',
 																																													catalog: "business",
 																					video_url: "movie.ogg")
 =end
+=======
+#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
+#   Mayor.create(:name => 'Daley', :city => cities.first)
+>>>>>>> b8c272e31d97492bb030400d7034cb2d7a03ce34

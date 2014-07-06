@@ -1,0 +1,42 @@
+<h1>聊天室内容审核</h1>
+<table border="1">
+  <tr>
+    <th>商家</th>
+    <th>用户</th>
+    <th>时间</th>
+    <th>屏蔽</th>
+    <th>内容</th> 	
+
+  </tr>
+
+  <% @gchat_review.each do |gchat_review| %>
+    <% if !$redis.sismember('KxUsers', gchat_review.uid) %>
+    <tr>
+      <td><%= Shop.find_by_id(gchat_review.sid).try(:name) %></td>
+      <td><%= link_to gchat_review.uid, "/admin_users/show?id=#{gchat_review.uid}" %></td>
+      <td><%= gchat_review.cat.strftime("%Y-%m-%d %H:%M") %></td>
+      <% if gchat_review.txt[0] == '[' %>
+      <td><%= link_to '屏蔽', "javascript:void(0)", :onclick => "ajaxPb2($(this), '#{gchat_review.id}')"%></td>
+      <td><%= image_tag(Photo.img_url(Gchat.find_by_id(gchat_review.id).txt.slice(5,24),1), :size => "50x50") %><%= gchat_review.txt %></td>
+      <% else %>
+      <td><%= link_to '屏蔽', "javascript:void(0)", :onclick => "ajaxPb($(this), '#{gchat_review.id}')"%></td>
+      <td><%= gchat_review.txt %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script type="text/javascript">
+
+  function ajaxPb(obj, id){
+    $.get("/admin_gchat_content_review/ajax_pb", {id: id}, function(){ obj.replaceWith("已屏蔽")})
+  }
+
+  function ajaxPb2(obj, id){
+    $.get("/admin_gchat_content_review/ajax_pb_and_photo", {id: id}, function(){ obj.replaceWith("已屏蔽")})
+  }
+</script>

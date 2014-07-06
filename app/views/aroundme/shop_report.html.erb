@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes">
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="no-cache" http-equiv="Cache-Control"/>
+    <meta content="0" http-equiv="Expires"/>
+    <title>地点纠错|脸脸</title>
+    <link href="/stylesheets/mini.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript">
+      function showDig(hid){
+        $("#dig").css({"display":"block"});
+        $("#sid").val(hid)
+        $("#res").css("background-color", "");
+		var ua=navigator.userAgent.toLowerCase();
+		if(/iphone/i.test(ua)){
+			$("#boxss").css("top",($(window).height()-320)/3+"px").fadeIn();		
+		}else{
+			$("#boxss").css("top",($(window).height()-320)/2+"px").fadeIn();		
+		}
+		$("#boxss2").hide();
+      }
+      function ajaxReport(uid){
+        type = $("#radio_button").val();
+        des = $('#des').val();
+        if(des=="要不要说明一下呢"){
+          des="";
+        }
+
+        if(type!=""){
+          sid = $("#sid").val();
+          $.get("/aroundme/report", {sid: sid, des: des, uid: uid, type: type}, function(){
+			$("#boxss").fadeOut();
+			$("#boxss2").css("top",($(window).height()-50)/2+"px").fadeIn();
+			$("a[name='radio_bad']").removeClass("radios2");
+            $("#shop"+sid).remove();
+			setTimeout(function(){$("#dig").hide();},2000);
+          });
+		  $("#radio_button").val("")
+        }else{
+          $('#res').css('background-color', '#f00');
+		}
+      }
+      function hidReport(){
+        $('#dig').hide();
+		$("a[name='radio_bad']").removeClass("radios2");
+      }
+      $(document).ready(function(){
+        $("a[name='radio_bad']").click(function(){
+          $("a[name='radio_bad']").removeClass("radios2");
+          $(this).addClass("radios2");
+          $("#radio_button").val($(this).attr("rel"));
+        });
+		$("label").click(function(){
+			var va=$(this).attr("for");
+			$("a[id="+va+"]").click();
+		});
+		$("#dig").css({"height":$("#Main2").height()+"px","display":"block"});
+		$("#dig").css("display","none");
+      });
+
+    </script>
+  </head>
+  <body>
+    <div id="Main2">
+      <div id="dig">
+        <div id="boxss">
+          <ul class="list">
+            <li>
+              <a class="radios" id="N1" name="radio_bad" action-type="switch" rel="地点不存在"></a><label for="N1">地点不存在</label></li>
+            <li>
+              <a class="radios" id="N2" name="radio_bad" action-type="switch" rel="地点重复"></a><label for="N2">地点重复</label></li>
+            <li>
+              <a class="radios" id="N3" name="radio_bad" action-type="switch" rel="地点位置错误"></a><label for="N3">地点位置错误</label></li>
+            <li>
+              <a class="radios" id="N4" name="radio_bad" action-type="switch" rel="地点信息错误"></a><label for="N4">地点信息错误</label></li>
+          </ul>
+          <input type="hidden" name="radio_button" id="radio_button"/>
+		  <div class="clear1"></div>
+          <input class="tex mb30" type="text" name="des" id="des" value="要不要说明一下呢？" onclick="$(this).val('')"/>
+          <input type="hidden" name="sid" id="sid">
+          <div class="clear"></div>
+		  <button class="btn7 ml20 mb20 l" onclick="ajaxReport('<%= params[:uid] %>')">发送</button>
+		  <button class="btn8 mr20 mb20 r" onclick="hidReport()">取消</button>
+        </div>
+		<div id="boxss2">信息已发送</div>
+    </div>
+
+    <div class="con2">
+      <div class="set">
+          <% @shops.each do |shop| %>
+			  <div class="shop" id="shop<%=shop[1]%>">
+				<span class="shopName"> <%= shop[0]  %> </span>
+				<span class="ff" onclick ="showDig('<%=shop[1] %>')" > 报错  </span>
+			  </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

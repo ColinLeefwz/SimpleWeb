@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalabe=yes"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>第四关</title>
+        <link rel="stylesheet" href="/guesspic/css/public.css" />
+		<link rel="stylesheet" href="/guesspic/css/main.css" />
+		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
+    </head>
+    <body>
+		<div class="mainbox">
+		<div id="BG"></div>
+        <div class="main">
+			<div id="Share">
+				<span>分享给小伙伴们，赢iPad、iPhone。</span>
+				<ul>
+					<li><a href="#"><img src="images/pic6.jpg"/><br/>发给微信好友</a></li>
+					<li><a href="#"><img src="images/pic7.jpg"/><br/>发给QQ好友</a></li>
+					<li><a href="#"><img src="images/pic8.jpg"/><br/>分享到QQ空间</a></li>
+					<li><a href="#"><img src="images/pic9.jpg"/><br/>分享到朋友圈</a></li>
+					<li><a href="#"><img src="images/pic10.jpg"/><br/>分享到微博</a></li>
+					<li><a href="#"><img src="images/pic11.jpg"/><br/>短信</a></li>
+				</ul>
+			</div>
+				<div class="title2"><h2>猜店名</h2></div>
+				<div id="Img">
+					<img src="images/pic13.jpg" width="100%"/>
+					<span>斐克迪思</span>
+				</div>
+				<span class="names texts">
+					<span class="white">你的智慧为你赢得</span><br/>
+					<span class="yellow f16">一条斐克迪思牛仔裤（价值1200元）</span>
+				</span>
+				<a href="guess.html" class="btn1 mt8 box1animation">查看奖品</a>
+				<a href="#" class="btn2 mt12 mb10 box1animation" id="Btn2">分享赢大奖</a>
+				<div class="plane">每天只能参加一次，请明天再来吧~</div>
+			</div>
+		</div>
+    </body>
+	<script>
+	$(document).ready(function(){
+		var h0=$(window).height(),
+			h1=$(".main").height();
+		if(h0>h1){
+			$(".mainbox").css("padding-top",(h0-h1)/2+"px");
+		}
+		var h=$("#Img span").height();
+		$("#Img span").css({"top":(190-h)/2+"px"});
+		$("#Btn2").click(function(){
+			var top;
+			var documentHeight=$(document).height();
+			var windowHeight=$(window).height();
+			if(documentHeight<=windowHeight){
+			  $("#BG").css({"height":windowHeight+"px","display":"block"});
+			}else{
+			  $("#BG").css({"height":documentHeight+"px","display":"block"});
+			}
+			$("#Share").css("display","block");
+			top=$(document).scrollTop()+(windowHeight-$("#Share").height())/2;
+			
+			if(top<0){top=0;}
+			$("#Share").animate({"top":top-16+"px"},450);
+		});
+		$("#BG").click(function(){
+			$("#Share").fadeOut(500,function(){
+				$("#Share").css("top","-240px");
+				$("#Share,#BG").css("display","none");
+			});
+		});
+		/*var i=0;
+		setInterval(function(){
+			switch(i){
+				case 0: $(".plane").css("color","#F26521");break;
+				case 1: $(".plane").css("color","#23B668");break;
+				case 2: $(".plane").css("color","#2E3092");i=-1;break;
+			}
+			i++;
+		},1000);*/
+	});
+	</script>
+</html>

@@ -1,0 +1,155 @@
+<div class="container customer_info" id="admin_user_reports" style="width:760px; padding:40px 20px; margin-left:0px;">
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
+      商家ID:
+    </div>
+    <div class="col-md-4 md_addr_text">
+      <%= @shop.id %>
+    </div>
+  </div>
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
+      地点名称:
+    </div>
+    <div class="col-md-4 md_addr_text">
+      <%= @shop.name %>
+    </div>
+  </div>
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
+      地点地址:
+    </div>
+    <div class="col-md-4 md_addr_text">
+      <%= @shop.addr %>
+    </div>
+  </div>
+  <div class="row md_addr">
+    <div class ="col-md-2 text-right md_addr_lable">
+      百度经纬度:
+    </div>
+    <div class ="col-md-3 md_addr_text" id="lob">
+      <% if @shop.lo && @shop.lo.first.is_a?(Array)%>
+        <% @shop.lo.each do |lo| %>
+          <%= lo.reverse %>
+        <% end %>
+      <% else %>
+        <%= @shop.lo.reverse %>
+      <% end %>
+    </div>
+    <div class="hidden shop-id">
+      <%= @shop.id %>
+    </div>
+    <div class="col-md-2 md_addr_text" style="width:20%;">
+      <a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank">查找百度经纬度</a>
+    </div>
+  </div>
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
+      计算经纬度:
+    </div>
+    <div class="col-md-3 md_addr_text" style="float:left;">
+      <input type="text" id="lob2" placeholder="输入查找到的百度经纬度"/>
+      <span id="warming"></span>
+    </div>
+    <div class="col-md-2 md_addr_text md_addr_text2">
+      <a herf="javascropt:void(0);" id="calculate-distance">计算距离</a>
+    </div>
+  </div>
+  <div class="row md_addr">
+    <div class="col-md-2 text-right md_addr_lable">
+      偏离距离:
+    </div>
+    <div class="col-md-3 md_addr_text">
+      <span id="distance"></span>
+    </div>
+  </div>
+
+  <div class="row md_addr">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#change-coordinate" data-toggle="tab">更正地点坐标</a></li>
+      <li><a href="#new-corrdinate" data-toggle="tab">新增地点坐标</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="change-coordinate">
+        <div class="row" style="margin:20px 0px;">
+          <div class="col-md-2 text-right md_addr_lable">
+            更正坐标:
+          </div>
+          <div class="col-md-3 md_addr_text" style="float:left">
+            <input type="text" id="change-coordinate-val" value="">
+          </div>
+          <div class="col-md-2 md_addr_text md_addr_text2">
+            <button type="button" id="change-corrdinate-submit" class="btn btn-primary  btn-xs">更正</button>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="new-corrdinate">
+        <div class="row" id="new-coordinate" style="margin:20px 0px;">
+          <div class="col-md-2 text-right md_addr_lable">
+            新增坐标:
+          </div>
+          <div class="col-md-3 md_addr_text" style="float:left">
+            <input type="text" id="new-coordinate-val">
+          </div>
+          <div class="col-md-2 md_addr_text md_addr_text2">
+            <button type="button" id="new-corrdinate-submit" class="btn btn-primary  btn-xs">新增</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <% if @report %>
+        <%= link_to "返回", "/admin_user_reports/untreated", class: "btn btn-default" %>
+      <% else %>
+        <%= link_to "返回", "/admin_user_add_shops/untreated", class: "btn btn-default" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#calculate-distance").click(function(){
+      var shop_id = $(".shop-id").html();
+      var lob2 = $('#lob2').val();
+      $.get('/api_admin_shop/ajax_dis', {shop_id: shop_id, lob2: lob2}, function(data){
+        $("#distance").text(data["distance"]+"（米）");
+      });
+    });
+
+    $("#change-corrdinate-submit").click(function(event) {
+      event.preventDefault();
+      var params = {lo: $("#change-coordinate-val").val()};
+      $.ajax({
+        url: "/admin_user_add_shops/update_corrdinate?id=<%= @shop.id %>&report_id=<%= @report.id if @report %>",
+        type: 'POST',
+        dataType: 'json',
+        data: params
+      })
+      .success(function(data) {
+        if(data.success) {
+          $("#lob").text(data.lo);
+        }
+      });
+    });
+
+    $("#new-corrdinate-submit").click(function(event) {
+      event.preventDefault();
+      var params = {lo: $("#new-coordinate-val").val()}
+      $.ajax({
+        url: "/admin_user_add_shops/new_corrdinate?id=<%= @shop.id %>&report_id=<%= @report.id if @report %>",
+        type: "POST",
+        dataType: 'json',
+        data: params
+      }).success(function(data){
+        if (data.success) {
+          $("#lob").text(data.lo);
+        }
+      })
+    });
+  })
+</script>
+

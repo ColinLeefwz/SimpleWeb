@@ -1,0 +1,48 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_staffs">员工管理</a></li>
+      <li><a href="/shop3_bindwbs">绑定微博</a></li>
+      <li><a href="/shop3_bans">屏蔽用户</a></li>
+      <li><a href="/shop3_marks">用户评分</a></li>
+      <li><a href="/shop3_notice">公告管理</a></li>
+      <% if session_shop.has_branch? %><li class="hover"><a href="/shop3_branchs">分店列表</a></li><%end%>
+    </ul>
+  </div>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab2">
+    <tr>
+      <th width="12%">ID</th>
+      <th width="28%">商店名称</th>
+      <th width="33%">地址</th>
+      <th width="16%">电话</th>
+      <th width="10%">电话</th>
+    </tr>
+    <% @shops.each do |shop|  %>
+      <tr>
+        <td><%= link_to shop.id.to_i, "/shop3_login/branch_login?id=#{shop.id}" %></td>
+        <td ><%= shop.name %></td>
+        <td ><%= shop.addr %></td>
+        <td ><%= shop.phone %></td>
+        <td><%= link_to "分店管理", "/shop3_login/branch_login?id=#{shop.id}" %></td>
+      </tr>
+    <% end %>
+
+  </table>
+  <%= generate_paginate %>
+</div>
+<script defer="defer">
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+</script>

@@ -1,0 +1,76 @@
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<script type="text/javascript" src="/javascripts/jquery.shiftcheckbox.js"></script>
+<script type="text/javascript">
+  $(document).ready (
+  function () {
+    $('.checkbox_shops').shiftcheckbox();
+  });
+</script>
+
+<%= form_tag "/admin_shops/find_shops",:method =>:get do %>
+  <p>
+    <%= hidden_field_tag :pid, @shop.id  %>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    经纬度:<%= text_field_tag :loc, params[:loc],:size => 20 %>
+    地址: <%= text_field_tag :addr, params[:addr],:size => 20 %>
+  </p>
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+<%  unless @shops.blank? %>
+  <p>
+    <%= check_box_tag "", '', false, :onclick => "checked_all($(this).attr('checked'))" %> 全选
+  </p>
+<% end %>
+<%= form_tag "/admin_shops/bat_add_sub" do %>
+  <%= hidden_field_tag :pid, @shop.id  %>
+  <table border="1">
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>名称</th>
+      <th>电话</th>
+      <th>区号</th>
+      <th>地址</th>
+      <th>距离</th>
+      <th>分类</th>
+    </tr>
+
+    <% @shops.each do |shop| %>
+      <tr>
+        <%= hidden_field_tag "ids[]", shop._id %>
+        <td><%= check_box_tag "shop_ids[]", shop._id, @shop.shops.to_a.include?(shop._id),:class => 'checkbox_shops' %></td>
+        <td><%= shop.id.to_i %></td>
+        <td><%= shop.name %></td>
+        <td><%= shop.tel %></td>
+        <td><%= shop.city %></td>
+        <td><%= shop.addr %></td>
+        <td><%= shop.get_distance(shop.loc_first, @shop.loc_first) if ENV["RAILS_ENV"] == "production" %>米</td>
+        <td><%= shop.show_t %></td>
+      </tr>
+
+    <% end %>
+  </table>
+  <br/>
+  <%= submit_tag "确定" unless @shops.blank? %>
+<% end %>
+<br />
+
+
+<script>
+  function checked_all(checked){
+    $("table .checkbox_shops").each(
+    function() {
+      if(checked == "checked")
+        $(this).attr("checked", 'checked')
+      else
+        $(this).attr("checked", false)
+    }
+  )
+  }
+</script>

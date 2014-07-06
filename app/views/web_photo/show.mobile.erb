@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=yes">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>
+		<% if @photo.desc.blank? %>
+			<%= @user.name %>在<%= @photo.shop.name %>的分享
+		<% else%>
+			<%=truncate @photo.desc.gsub(/[^\d\s\w\u4e00-\u9fa5.|()；;,，]/, ''), :length => 25 %>
+		<% end %>
+	</title>
+	<link href="/web/stylesheets/share_photo.mobile.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="main2">
+		<div class="con">
+			<center class="relative">
+				<%=image_tag Photo.img_url(@photo.id),:class=>"width100p block" %>
+				
+				<% if @photo.is_multi? %>
+				<% @photo.multi_photos[:photos].each_with_index do |url, index| %>
+					<br>
+						<%=image_tag url,:class=>"width100p block" %>
+				<% end %>
+				<% end %> 				
+				
+			</center>
+			<% if !@photo.desc.blank? %>
+				<div class="plane7">
+					<%= text_to_html @photo.desc%>
+				</div>
+			<% end %> 
+			<div class="plane8">
+				<div class="plane8left">
+				    <%= image_tag UserLogo.img_url(@user.head_logo_id, :t1), size: "96x96" %>
+				</div>
+				<div class="plane8left2">
+					<span class="wordstyle2"><%= @user.name %></span>
+					<span class="l"><%= @photo.cat.strftime("%m-%d %H:%M") %></span>
+					<span class="r"><img src="/admin/image/share_weibo/pic8.png" class="mr5"/><%= @photo.shop.name %></span>
+				</div>
+			</div>
+		</div>
+		<a href=<%= "http://www.dface.cn/a/webdown?v=#{@photo.id}"%> target="_blank">
+		<div class="footer">
+			
+			<div class="fl">
+				<img src="/admin/image/share_weibo/logo.png" align="left"/>
+			</div>
+			<div class="fr">
+				<h2>此时此刻，我们在这里</h2>
+				<p>脸脸 — 基于现场的移动社交</p>
+				<p>点击立即下载</p>
+			</div>
+			<div class="clear1"></div>
+			
+		</div>
+		</a>
+
+	</div>
+</body>
+</html>

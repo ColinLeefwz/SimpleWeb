@@ -1,0 +1,343 @@
+脸脸网架构文档
+=============
+
+##脸脸网总体架构
+
+脸脸网总体上分为三大部分：
+
+* 基于Http协议的web服务器
+* 基于Xmpp协议的及时通讯服务器
+* 此外再加上移动客户端。
+
+移动客户端首先通过<http://42.121.79.210/init/init>接口获得web服务器和及时通讯服务器的ip地址。客户端随后根据返回的两个ip地址访问两个服务器集群。客户端和服务器端的接口见"**latex/接口.pdf**"文件。
+
+服务器端之间通过标准的HTTP接口开放API。Web服务器端API包括：
+
+* /oauth/auth?name=&pass=， 提供给Xmpp端实现用户认证。所有的用户信息都保存在Web端。
+* /oauth/push_msg_info?from=&to=， 提供给push消息使用。获得from用户的姓名和to用户的push token。
+* /answer/shop?sid=&uid=&msg=， 提供给商家的问答系统。用户uid发送消息msg到商家sid的现场聊天室，然后按照预先设置的规则给用户发送响应。
+* /answer/admin?uid=&msg=， 管理员帐号的问答系统。用户uid发送消息msg给管理员帐号“脸脸网络”。
+
+
+
+Xmpp端提供的API包括：
+
+* /rest，模拟xmpp客户端发送xml消息，使用的是mod_rest模块。
+* /api/room?roomid=&message=&uid=，以给定uid的身份在roomid聊天室发送消息message
+* /api/block?uid=&bid=，用户uid屏蔽bid的消息
+* /api/unblock?uid=&bid=，用户uid取消屏蔽用户bid
+* /api/chat?uid=，获得用户uid的聊天历史
+* /api/chat?uid1=&uid2=，获得用户uid1和uid2之间的聊天记录
+
+
+##Web项目的配置
+
+
+| 项目      | 数据库        | 缓存  | Redis   | http server | 部署 |
+| -------- |:-------------:| -----|:-------:| ---------:|---:|
+| 脸脸API | mongodb/lian | memcache | redis/0 | unicorn/8082 | web1|
+| 脸脸后台 | mongodb/lian | memcache | redis/0 | puma/9291 | web2|
+| 猜图    | mongodb/caitu| memcache| redis/0  | puma/9292 | web2|
+| 即立方  | mongodb/mweb |    OCS | redis/2   |    puma/9293 | web2|
+| 游戏 | mongodb/dface   | memcache |  redis/2   |    puma/9294 | web2|
+| 点菜 | RDS/foods  |   OCS | redis/2  |    puma/9295 | web4|
+| 购物 | RDS/trade  |   OCS | 无  |    puma/9296 | web4|
+
+
+表格二
+
+| 项目      | 域名       | 代码库地址 | Rails版本|
+| -------- |:-----------:| ------|:-------:|
+| 脸脸API | www.dface.cn | lian2.git | 3.2 |
+| 脸脸管理后台 | admin.dface.cn | 同上 | 3.2 |
+| 脸脸商家后台 | shop.dface.cn | 同上 | 3.2 |
+| 猜图    | caitu.dface.cn| caitu.git| 3.2 |
+| 即立方  | w.dface.cn |    mweb.git | 3.2 |
+| 游戏 | game.dface.cn   | game.git | 3.2  |
+| 点菜 | food.dface.cn |   food.git | 4.0  |
+| 购物 | trade.dface.cn | trade.git | 4.0  |
+
+###代码服务器的配置
+代码库地址前缀：ssh://git@code.dface.cn/
+
+代码服务器使用的是gitosis。目录是/mnt/gitosis-admin。要增加人员，先把公钥加入到keydir，然后编辑gitosis.conf分配权限，最后git提交代码并push就生效了。
+
+###产品原型服务器的配置
+通过smaba提供共享文件夹服务，地址是“smb://demo.dface.cn”。产品人员把产品原型拷贝的该share文件夹中。smaba的配置文件是“/etc/samba/smb.conf“。
+
+samba认证的用户名： new， 
+samba认证的密码： lianlian123
+
+要通过浏览器查看原型，访问http://demo.dface.cn。
+http访问时的用户名／密码都是"lian"
+
+
+##脸脸网Web服务器集群
+
+脸脸网的Web服务器集群目前有两台服务器web1和web2。Web服务器集群主要包括：基于Nginx的Web接入层、基于Ror的应用层，以及基于Mongodb的数据库层。
+
+目前resque/resque-schedule跑在web1上, redis则跑在web2上。
+每分钟监测图片处理错误的程序Photo.fix_error_of_all_type_image跑在web1上。
+ 
+###Nginx
+
+Nginx使用默认安装，启动在80端口。
+
+ * 路径:默认路径
+ * 配置文件: /etc/nginx/nginx.conf
+ * 启动:sbin/nginx
+ * 重启:sbin/nginx -s reload
+
+
+###Redis
+
+缓存系统采用Redis，需要2.6以上版本，因为使用了Redis Lua scripting特性。使用源代码编译安装。运行版本的Redis目前在web2服务器的eth0接口上启动，。此外，web1/web2都有一个测试用的redis跑在localhost上。
+
+ this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+
+
+ * 源代码路径:/mnt/redis-2.6.4/
+ * 启动:redis-server
+ 
+ sudo utils/install_server.sh
+ sudo rm /etc/redis/6379.conf 
+ sudo ln -s /mnt/lianlian/redis.conf /etc/redis/6379.conf 
+ sudo /etc/init.d/redis_6379 start
+ redis-cli -h 10.200.141.172 shutdown 
+ 
+redis主要用于保存一些需要长期在内存中的信息，当作内存数据库而不是缓存。保存在redis中的数据有：
+ 
+1. 每个商家当天的签到数据。类型为zset，key为“ckin商家id"，值为用户id，排序值为时间。见checkin.add_to_redis方法。通过cronjob清空昨天的签到数据。用于当天实时评分，当天首次签到欢迎消息。
+2. 每个商家累计的用户数据。类型为zset，key为“UA商家id"，值为用户id，排序值为时间。
+2. 每个商家累计的用户总数／女性用户总数。用户总数的key为“suac商家id”。用户总数的计算方法为：昨天累计用户总数（来自mongodb）＋今天新增用户数（来自redis实时统计）。见CheckinShopStat.rb中的相关方法。
+3. Resque的异步任务。
+4. 登录用户的新浪微博/QQ的token。
+5. 经纬度到城市的映射数据, 见gen_gps_city.rb。
+6. 百度经纬度纠偏数据，见migrate_offsetbaidu.rb，key前缀为OF。
+7. GCJ经纬度纠偏数据，数据类型为hash，key前缀为GCJ。
+6. Rails框架的session数据
+7. 每个城市分性别最新用户签到有序集合："HOT#{x}U#{self.city}"。用于热点用户列表展示。
+8. 每个Wifi签到过的商家id的集合，"BSSID#{bssid}", 用于定位时提供可选商家，类型为zset，score为签到的次数。
+9. 每个城市有活跃优惠券的商家，“ACS#{city}”
+10. 每个城市有问答系统的商家，“FaqS#{city}”
+11. 每个用户的好友的集合，“Frd#{uid}”, 类型为zset, 排序值为加入的顺序。
+12. 每个用户的关注的集合，“Fol#{uid}”, 类型为zset, 排序值为加入的顺序。
+13. 每个用户的粉丝的集合，“Fan#{uid}”, 类型为zset, 排序值为加入的顺序。
+14. 每个用户的领主地点集合,“LORD#{uid}”, 类型为zset, 排序值为加入的顺序。
+15. 每个用户创建的地点审核通过的，“LORD2#{uid}”, 类型为set
+16. 每个用户的黑名单集合,“BLACK#{uid}”, 类型为zset, 排序值为加入的顺序。
+17. 照片的赞,“Like#{photo.id}”, 类型为zset, 排序值为Time.now.to_i的顺序。
+18. 用户加入的群组的集合，“GROUP#{uid}”,类型为set。
+19. 海外经纬度到国家的映射，"oversea#{xx},#{xx}",见gen_gps_oversea.rb
+20. 可信用户的集合 "KxUsers",类型set, 见 KxUser.init_kx_users_redis
+21. 每个用户的个人相关信息，"UF#{uid}", 类型为HASH，键值包括:os/ver等。
+22. 每张优惠券的下载数量，"CPD#{coupon_id}", 类型为整数字符串。
+23. 每日陪聊用户统计, "PL#{date}#{uid}", 类型为set，值为新用户id。
+24. 城市／国家code到名称的映射，CityName#{code}"和"CountryName#{code}"。
+25. 用户的qq到用户id的映射，"Q:#{openid}"
+26. 用户的手机号码到用户id的映射，"P:#{phone}"
+27. 用户的微博uid到用户id的映射，"W:#{wb_uid}"
+28. 可信用户能随时定位到的地点: "FakeShops", 类型为set. 取代 $fake_shops
+29. 群组对应的商家存到redis, 用于查询地点时查找群组: "GSN", 类型为zset
+30. 员工与加入的商家: "STAFF#{uid},#{sid}", 类型为set。
+30. 用户进入，但不在热点中显示的地点："UnBroadcast",类型为set
+31. 游戏地点排名,“Game#{gid}#{sid}”, 类型为zset, 排序值为用户的分数。
+32. 内部用户地点漫游,“FCITY#{uid}”, 类型为string, 保存漫游到的城市编码。
+33. 可创建手机网站的地点: "MobileShops", 类型为set
+34. 授权用户的集合 "CoUsers",类型set
+35. 用户最近去过的4个地点： "LL3#{uid}",类型zset
+36. 外部人员跟随地点 "CoShops",类型set
+37. 需要修改密码的商家，"WeakPassword", 类型sadd
+38. 开通点菜的商家，"FOODSHOPS", 类型zadd
+39. 开通猜图的商家，"CAITUSHOPS", 类型zadd
+40. 是否禁止陪聊，“no_fake_talk“，类型是String
+41. 每个用户的访问列表,“VISIT#{uid}”, 类型为zset, 排序值为时间。
+42. 开通猜图的商家，"GameShops", 类型zadd
+
+
+
+
+其中，保存在session中的数据有：
+ 
+1. user_id, 当前登录用户的id
+2. shop_id, 当前登录用户的id
+3. admin_id, 当前登录管理员的id
+4. o_uri_path, 当在网站上点击需要登录的链接时，保存此链接并跳转到登录界面。
+5. new_user_flag, 是否是新用户的首次登录, 首次签到后删除。
+6. os, 当前用户os类型
+7. user_dev，用户首次使用脸脸时，暂存的设备信息。当用户成功注册后删除。
+8. guest_id, 下载渠道登录用户的id
+
+
+###Memcache
+
+	使用默认安装： apt-get install memcache
+	配置文件：/etc/memcached.conf 
+	需要修改的设置： -m 512 -l 10.200.141.172
+	
+Memcache在web1和web2中都启动，通过客户端实现负载均衡。Memcache中保存的数据：
+
+1. 所有对象的单个find_by_id缓存: "#{self.class.name}#{_id}"
+2. 注册流程中查看附近的用户缓存：:cache_path => Proc.new { |c| c.params }
+3. 查看热点用户缓存："HOTU#{city}#{sex}#{skip}#{pcount}", :expires_in => 60.minutes
+4. 查看个人信息时的缓存："UI#{uid}#{vid}", :expires_in => 12.hours， 待取消（user_info/get接口替换为user_info/basic接口后）
+4. 个人照片墙缓存："UP#{uid}-#{pcount}"
+5. 用户头像列表缓存："ULOGOS#{uid}"
+6. 用户最后出现的地点缓存："LASTL:#{self.id}"
+7. 用户最后一次定位的经纬度："LLOC:#{self.id}"
+7. 照片墙第一页的缓存："SP#{sid}-#{pcount}"
+8. 商家的员工："STF#{sid}"
+9. 商家的分享优惠券的文案："SCPT#{sid}"
+9. 用户是否在24小时内创建过地点："ADDSHOP#{user_id}"
+10. 用户在1小时内发送过好友距离提醒：“Notify#{id}”
+11. 用户在12小时内获得过脸脸全部帮助菜单：“HELP#{uid}”
+12. 用户在8小时内发图通知过粉丝：“PhotoFan#{uid}”
+13. 用户在聊天室发图2个小时内通知一次现场的人：“PhotoRoom#{uid}”
+14. 登录商家后台出错，根据首次登录ip判断容许错误的次数：“LE#{错误次数};#{容许错误的次数}” （黄）
+15. 优惠券重发: "CD#{coupon_down.id}"（黄）
+16. 用户在最近6小时是否参与了抢地主活动："JOIN-LORD#{uid}"。
+17. 签到微博的转发并评论次数"SINAADVT" （黄）
+18. 新用户用手机号码注册"PHONEREG#{user.id}", 用于路行团带来的用户，首次定位时旅行团排第一位。
+19. 新用户"NEWUSER#{user.id}", 用于新用户陪聊的判断，防止一个用户在不同的地点收到重复的陪聊信息。
+20. 预置图片的出现次数和时间 “preset_value” => {0;Time.now.to_i}。 预置图片没7天更新一次
+
+
+ 
+ 
+###Ruby和Rails
+
+脸脸网使用的是Ruby1.9.3和rails3.2，脸脸网使用了RVM。
+
+ * 安装RVM: curl -L https://get.rvm.io | bash -s stable --ruby
+ 
+项目代码位于/mnt/lianlian。
+
+####Unicorn
+
+Unicorn是Rails的Http服务器，启动在8081端口，作为nginx的up-stream服务器。
+
+ * 安装：gem install unicorn
+ * 配置文件: unicorn.conf.rb
+ * 启动:unicorn -D -E production -c unicorn.conf.rb
+ * 重启:kill -HUP \`cat log/unicorn.pid`
+
+unicorn只适合运行短任务。所有耗时的任务，以及调用第三方API的任务，都需要异步执行。异步执行有两种办法：1、使用resque后台执行，2、换用puma作为rake服务器。
+
+####Resque
+
+Resque是基于redis的ruby后台任务库。
+
+ * 安装：gem install resque
+ * 启动:INTERVAL=1 PIDFILE=./resque.pid BACKGROUND=yes QUEUE='*' rake environment resque:work
+
+ * 停止:kill -QUIT \`cat ./resque.pid`
+ 
+ 
+ 后台运行的任务：
+ 
+ * 发图时同时分享到微博
+ * 拉黑用户时，通知xmpp服务器阻塞黑名单
+ 
+ 异步延时任务则采用resque-scheduler，启动：
+ * rake resque:scheduler
+ 
+resque和resque-scheduler都采用god进行监控和启动。
+ 
+ 
+####缓存系统设计
+所有的model对象都增加了一个按id缓存单个查询结果的缓存层。
+按主键查询对象有两个方法：
+
+ * find, mongoid库默认提供的方法，找不到报错，不使用缓存。建议在更新操作时调用。比如find后要立即修改的场合，此时不要用find_by_id。
+ * find_by_id, 利用缓存，找不到返回nil，建议只读操作时调用。
+ * 删除对象要调用destory， 这样才能清除对象的缓存。调用delete时不会清除缓存。
+ 
+
+依赖的库：ghostscript,imagemagick，	
+###God
+进程监控和管理
+
+god -c god/all.god 
+
+###Mongodb
+Mongodb数据库采用了replca set，目前是一主三从配置。
+注意在服务器上建索引必须都要后台执行，也就是加background:true属性。
+
+初始建立索引：rake db:mongoid:create_indexes
+
+
+##Xmpp集群
+Xmpp服务器采用ejabberd-2.1.11，erlang的版本是Erlang R15B01, 采用riak保存聊天记录。这几个系统全部使用源代码编译安装，可以使用“head config.log”命令查看configure时的参数。
+
+
+###Erlang
+源代码目录为：/mnt/otp_src_R15B01
+安装: ./configure && make && sudo make install
+
+
+###Ejabberd
+源代码目录为：/mnt/ejabberd-2.1.11/
+安装：./configure --prefix=/mnt/ejabber --enable-user=lian && make && make install
+然后要将src子目录替换为git版本控制。
+
+ejabberd安装时存在一个bug：如果指定用户，要求用户和组名字一样。在mac下创建和用户ylt一样的组并将ylt加入该组的命令如下：
+
+	sudo dscl . create /groups/ylt gid 1000
+	dscl
+	> list Local/Default/Groups
+	dseditgroup -o read ylt
+	dseditgroup -o edit -a ylt -u ylt -t user ylt
+	dscacheutil -q group
+
+
+
+####聊天记录
+
+Xmpp聊天时的消息保存在Riak数据库中。其中，单聊的消息的格式：
+
+ * bucket：“chat”
+ * key: 	[日期'yymmdd',发送者]
+ * value: [接收者,内容,时间,消息ID]
+ 
+聊天室消息格式：
+
+ * bucket：“gchat”
+ * key: 	[日期'yymmdd',聊天室id]
+ * value: [发送者,内容,时间,消息ID]
+ 
+由于管理困难，2013-11以后，聊天室消息保存在mongodb中，单聊消息保存在阿里云的RDS中。
+ 
+关于聊天消息的Log方式：
+
+ * 手机客户端直接通过xmpp协议发送的消息，通过钩子函数user_send_packet实现自动的Log记录。其中发送到个人的0-9？等单个字符的消息被直接过滤掉了，而发送到聊天室的0开头的数字消息也被过滤掉了。
+ * WEB服务器端通过mod_rest接口发送的消息，目前只有内容以"["开头的才保存到riak中。如果消息中带属性NOLOG，那么也不保存到riak中。
+ * WEB服务器端通过/api/room接口发送的聊天室消息，也全部保存到riak中。
+
+关于在WEB服务器端发送聊天消息有四种，其中三种是聊天室消息：
+
+ * XmppNotice：聊天室的通知消息，发送者是聊天室本身，单人可见。
+ * XmppRoomMsg: 以个人身份在聊天室给另外一个人发消息，单人可见。
+ * XmppRoomMsg2: 以个人身份在聊天室发消息，所有人可见。
+ * XmppMsg : 个人之间发送消息
+  
+
+###Tsung
+
+
+
+
+
+
+##系统更新
+###WEB系统更新
+1. 所有操作在~/lianlian目录下执行。更新前保证在服务器上测试通过：rake test
+2. 如果gem file有变更，必须停止整个unicorn和resque再启动，不能简单reload。
+3. 如果rake test通过，更新后却报500错误，检查unicorn的日志。
+4. web app重启运行./restart.sh; 后台任务队列重启./restart_resque.sh
+
+
+###XMPP系统更新
+1. 所有操作在/mnt/ejabberd-2.1.11/src目录下执行。
+2. 代码更新：git pull origin master && ./install.sh
+3. 重启：ejabberdctl restart
+

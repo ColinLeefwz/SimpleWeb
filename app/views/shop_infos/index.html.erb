@@ -1,0 +1,35 @@
+<div class="title2"><h2>基本信息</h2></div>
+<style>
+  p{ font-size: 15px; margin: 10px 0;}
+  p b{width: 80px; text-align: right;display: inline-block;}
+  p a{color: #0B99D7;}
+</style>
+<p>
+  <b>id：</b>
+  <span><%= @shop.id %></span>
+</p>
+<p>
+  <b>名&nbsp;&nbsp;&nbsp;称：</b>
+  <span><%= @shop.name %></span>
+</p>
+<p>
+  <b>地&nbsp;&nbsp;&nbsp;址：</b>
+  <span><%= @shop.addr %></span>
+</p>
+<p>
+  <b>联系人：</b>
+  <span><%= @shop.contact %></span>
+</p>
+<p>
+  <b>电&nbsp;&nbsp;&nbsp;话：</b>
+  <span><%= @shop.phone %></span>
+</p>
+<p>
+  <b></b>
+  <%= link_to "编辑", "/shop_infos/edit"  %>
+</p>
+
+
+<script type ="text/javascript">
+  LeftMenu(25);
+</script>

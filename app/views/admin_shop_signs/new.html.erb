@@ -1,0 +1,48 @@
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
+<h2>
+  新建商家合同
+</h2>
+<% if @shop_sign.errors.any? %>
+  <div id="error_explanation">
+    <h4>新建合同出错</h4>
+    <ul>
+      <% @shop_sign.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_for(@shop_sign, :url => '/admin_shop_signs/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+
+  <p>
+    <label>商家id：</label>
+    <%= f.text_field :sid, :class => "inputs l", :onblur=> "find_shop($(this).val())" %>
+    <span id='shopName'></span>
+  </p>
+  <p>
+    <label>合同编号：</label>
+    <%= f.text_field :htid, :class => "inputs l" %>
+  </p>
+  <p>
+    <label>商家名称：</label>
+    <%= f.text_field :name, :class => "inputs l" %>
+  </p>
+  <p>
+    <label>合同附件：</label>
+    <%= f.file_field :attch, :class => "inputs l" %>
+  </p>
+  <p>
+    <input type="submit" value="发 布" class="btn1 ml20 l"/>
+  </p>
+
+<% end %>
+
+<script type="text/javascript">
+  function find_shop(sid){
+    $.get("/shop_login/find_shop",{id: sid}, function(data){
+      $("#shopName").replaceWith("<span id='shopName'>" + data['text'] + "</span>")
+    })
+  } 
+</script>

@@ -1,0 +1,131 @@
+﻿<html>
+<head>
+<meta name="viewport" content="width = 320,initial-scale=1,user-scalable=no" />
+<link rel="apple-touch-icon-precomposed" href="/stack/i/icon.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link rel="apple-touch-icon-precomposed" href="/stack/i/icon.png"/>
+<link rel="apple-touch-startup-image" href="/stack/i/loader.png">
+<meta name="description" content="XWUZ Stack the log! is a simple but beautiful game for the iPhone. Stack the logs as precisely as you can! Push the button when you feel the log is exactly above the stack. Also works on Safari and Firefox." />
+
+<title>堆木头!</title>
+
+<style type="text/css">
+<!--
+  *{padding:0px;margin:0px;}
+  .main{width:320px;background-color:#00A0E9;position:absolute;left:0px;padding-top:10px;font-family:"微软雅黑";font-size:15px;color:#fff;z-index:99999;min-height:360px;}
+  #Close{position:absolute;right:0px;top:0px;background:url(/stack/i/close.png);width:47px;height:46px;}
+  .mt20{margin-top:20px;}
+  .mr50{margin-right:50px;}
+  .tab1{border:none;margin:0px auto 0px auto;}
+  .tab1 th{text-align:left;font-weight:normal;padding:8px 0px;color:#fff;}
+  .tab1 th.r{text-align:right !important;}
+  .tab1 td{border-bottom:1px solid #fff;padding:8px;text-align:left;color:#fff;font-size:100%;}
+    .tab1 td.r{text-align:right !important;}
+  .tab1 td.bottom{border-bottom:none;text-align:center;}
+  .btn1{background:transparent url(/stack/i/btn1.png);width:77px;height:30px;text-align:center;border:none;color:#00A0E9;cursor:pointer;}
+  .btn2{background:transparent url(/stack/i/close.png);width:23px;height:23px;cursor:pointer;display:block;right:10px;top:10px;position:absolute;}
+  .yellow{color:#FCFF00;}
+  .relative{position:relative;}
+-->
+</style>
+
+
+<style type="text/css">
+ body { font-family: helvetica, arial; background-color: #000000; color: #a3b3c3; border:0; padding:0;margin:80px 0 0 0; font-size:90%; overflow:hidden;}
+ h1 {margin:.4em;}
+ h3 { font-size:120%; margin:12px; padding-left:0;margin-bottom:.5em; color: #ffffff;}
+ p {margin:0; margin:12px; margin-top:.5em; margin-bottom:.5em; font-size:84%;}
+ a { color: #ffffff; }
+
+ td{text-align:center; font-size: 70%;}
+ 
+ .ibox {width:320px; height:315px; overflow:hidden; background-color: #000000; margin:auto;}
+ .iboxcontent {width:320px; height:315px; float:left; overflow:hidden;}
+ .ibc1 {background-color: #3b4859; background-image:url(/stack/i/bg1.png);}
+ .ibc2 {background-color: #404d5e; background-image:url(/stack/i/bg2.png);}
+ 
+ #alertbox {display:none;position:absolute; z-index:200;}
+ #alertbox_flekk {position:absolute; width:320px; height: 456px; background-color:#000000; opacity: .8;}
+ #alertbox_content {position:absolute; width:320px; height:286px; margin-top:70px; text-align:center; color:#ffffff;}
+ #alertbox_content .fontostext {color:#a3b3c3;}
+ #alertbox a {margin:10px; width:114px; height:54px; }
+ img {border:0;}
+ 
+ #imenu {width:320px;height:41px; margin:auto; text-align:center; background-image:url(/stack/i/menu.png); background-position:0 0px;}
+ #imenu a:hover {opacity:.5;}
+ #button_game {background-image:url(/stack/i/menu.png); display:block; float:left; width:72px; height:41px; background-position:0 0;}
+ #button_highscore {background-image:url(/stack/i/menu.png); display:block; float:left; width:110px; height:41px;background-position: -72px -41px;}
+ #button_about {background-image:url(/stack/i/menu.png); display:block; float:left; width:70px; height:41px; background-position: -182px -41px;
+
+ #score,#combo,#level {color:#ffffff;} 
+
+ #button_xwuz {position:absolute; display:block; width:48px; height:57px; margin: 5px 0 0 267px; background-image:url(/stack/i/xwuz.png);z-index:1; cursor:pointer;}
+
+ #yourbest { text-align:center; font-weight:bold; color:#ffffff;font-size: 300%; margin: .5em auto .5em auto; background-image:url(/stack/i/flekk.png); width:296px; height:65px; padding-top:15px;}
+ .fontostext {color: #ffffff;}
+
+ #preload {width:320px;position:absolute; visibility:hidden; overflow:hidden;}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/stack/standard.js"></script>
+<script type="text/javascript" src="/stack/stack.js"></script>
+<link rel="stylesheet" type="text/css" href="/stylesheets/dface_game.css?id=0sdfasd9" />
+</head>
+<body><div style="width:320px; height: 500px;">
+<div style="position: absolute; margin-top: 356px;width: 320px; height: 48px;">
+<script type="text/javascript">
+var admob_vars = {
+ pubid: 'a14aa4185781b27', // publisher id
+ bgcolor: '000000', // background color (hex)
+ text: 'FFFFFF', // font-color (hex)
+ test: false // test mode, set to false if non-test mode
+};
+</script>
+</div>
+
+<div style="position: absolute;margin-top: 400px; width: 320px; heigth: 48px; background: #ffffff"></div>
+
+<div id="alertbox"><div id="alertbox_flekk"></div><div id="alertbox_content"></div></div>
+ <!-- <a id="button_xwuz" onclick="return menuswitch(document.getElementById('button_about'));" ontouchstart="return menuswitch(document.getElementById('button_about'));"></a> -->
+
+<div id="imenu">
+ <a id="button_game" href="#game" class="active" onclick="return menuswitch(this);" ontouchstart="return menuswitch(this);"><span style="display:none">Game</span></a>
+ <a id="button_highscore" href="#highscore" onclick="return menuswitch(this);" ontouchstart="return menuswitch(this);"><span style="display:none">Highscores</span></a>
+ <a id="button_about" href="#about" onclick="return menuswitch(this);" ontouchstart="return menuswitch(this);"><span style="display:none">About</span></a>
+<a id="button_close" onclick="dface_close()" style="font-size:30px;">X</a>
+</div>
+
+<div class="ibox" id="container"><div style="width:10000px;" id="container_scroller">
+ <div id="ibox_game" class="iboxcontent ibc1" style="position: relative;">
+  <div style="width: 237px; height:15px; overflow:hidden;margin-left: 13px;padding-top:10px; font-size:90%; position:absolute; z-index:20;">
+  <div style="float:left"><div style="float:left" id="score_title">Score:&nbsp;</div><div id="score" style="float:left;  width:2em;">0</div></div>
+  <div style="float:right"><div style="float:left">StMa:&nbsp;</div><div id="combo" style="float:left; width:1.5em;">0</div></div>
+  <div style="text-align:center">Level: <span id="level">1</span></div>
+  </div>
+  <div style="width:320px;height:316px; overflow:hidden; position: relative;" id="st_outerarea">
+  </div>
+ </div>
+ <div id="ibox_highscore" class="iboxcontent ibc2">
+ <br><br><br>
+  <h3>您的当前得分:<div id="yourbest"></div></h3>
+  <p><span id="gamesplayed" class="fontostext"></span></p>
+ </div>
+ <div id="ibox_about" class="iboxcontent ibc1">
+  <br><br><br>
+  <h3>当你发现上方移动的木头对准下方的木头时，点击堆叠按钮，go！</h3>  
+  <div style="text-align:center; margin:10px;">
+  </div>
+  <h3>试试看吧！</h3>
+
+ </div>
+</div></div>
+<script type="text/javascript">
+firstinit();
+ialert('<a onclick="dface_close()" style="margin-left:280px;text-align:right;font-size:30px;">X</a><h1>堆木头!</h1><p style="margin: 0 20px 0 120px; text-align:left;"><img src="/stack/i/icon.png" alt="Stack the log!" style="width:64px; height:64px;float:left; margin-right:5px;"/></p>'+
+'<div style="width:110px; margin:30px auto -30px auto;"></div>','restartgame()');
+
+</script>
+</div>
+<iframe src="dface://init?mode=0" style="display:none" />
+</body>
+</html>

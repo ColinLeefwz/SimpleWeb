@@ -1,0 +1,73 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">拓展功能</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_lines">线路图</a></li>
+      <li class="hover"><a>旅行团</a></li>
+      <li><%= link_to "合作商家", "/shop3_partners" %></li>
+      <li><%= link_to "合作商家评分", "/shop3_partners/mark" %></li>
+    </ul>
+  </div>
+  <%=  form_for @group, :url => "/shop3_groups/create" do |f|  %>
+
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="tab1 mt40">
+      <tr>
+        <td valign="middle" align="right" class="pr20">路 线</td>
+        <td>
+          <%= f.select :line_id, session_shop.lines.map{|m| [m.name, m.id]} ,{}, {:class => 'ptb2 plr3'} %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="middle" align="right" class="pr20">团 号</td>
+        <td>
+          <%= f.text_field :code, :class => "inputs4"  %>
+        </td>
+      </tr>
+      <tr>
+        <td valign="middle" align="right" class="pr20">团 名</td>
+        <td>
+          <%= f.text_field :name, :class => "inputs4"  %>
+          <span class="gay1 f12 ml10">默认为"线路名称＋团号",可修改</span></td>
+      </tr>
+      <tr>
+        <td valign="middle" align="right" class="pr20">开始日期</td>
+        <td><%= f.text_field :fat, :class => "inputs4"  %></td>
+      </tr>
+      <tr>
+        <td valign="middle" align="right" class="pr20">结束日期</td>
+        <td><%= f.text_field :tat, :class => "inputs4"  %></td>
+      </tr>
+      <tr>
+        <td valign="middle" align="right" class="pr20">认证提示</td>
+        <td>
+          <%= f.select :hint, ['请输入电话号码', '请输入身份证号码'] ,{}, {:class=>"ptb2 plr3"} %>
+          <span class="gay1 f12 ml10">加入此团的认证提示信息</span></td>
+      </tr>
+      <tr>
+        <td valign="top" align="right" class="pr20">团 员</td>
+        <td>
+          <%= f.text_area :users,:class => "textarea3 w400"%><br/>
+          <span class="gay1 f12 ml10">每一行分别填入姓名,手机, 身份证,并用逗号隔开.没有可不用填。如: 张三，， 360419XXXXXX4419</span>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" class="btn2 l" value="提 交" name="Submit">
+          <a href="/shop3_groups" class="btn3 l ml20">取 消</a></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+  });
+</script>

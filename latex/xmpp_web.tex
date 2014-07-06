@@ -1,0 +1,244 @@
+
+
+\section{XMPP服务器的Web接口}
+
+
+
+
+\subsection{获得聊天室的消息历史记录}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/gchat} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  room  & 字符串 & 必填 &  聊天室的房间id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+返回值的数据结构：
+[发送者ID,消息内容,以秒表示的时间,消息ID]
+
+
+\subsection{获得聊天室的消息历史记录2}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/gchat2} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  room  & 字符串 & 必填 &  聊天室的房间id  \\
+\hline
+ \  skip  & 数字 & 必填 &  跳过多少条  \\
+\hline
+ \  count  & 数字 & 必填 &  取多少条  \\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+注意：skip＝0时，消息历史用ejabberd的内存中获取；skip大于0时，从数据库取。
+
+返回值的数据结构：
+[发送者ID,消息内容,以秒表示的时间,消息ID]
+
+
+
+
+\subsection{获得个人聊天的历史记录}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/chat} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid  & 字符串 & 必填 &  用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+返回值的数据结构：
+[接受者ID,消息内容,以秒表示的时间,消息ID]
+
+
+\subsection{获得两人之间的聊天历史记录}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/chat2} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid1  & 字符串 & 必填 &  用户1的id  \\
+\hline
+ \  uid2  & 字符串 & 必填 &  用户2的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值的数据结构：
+[发送者ID, 接受者ID,消息内容,以秒表示的时间,消息ID]
+
+
+\subsection{其它内部接口}
+仅用于服务器端的后台内部调用。
+
+\subsubsection{以给定用户身份给指定的聊天室发送消息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/room} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  roomid  & 字符串 & 必填 &  聊天室的房间id  \\
+\hline
+ \  message  & 字符串 & 必填 &  需要发送的消息  \\
+\hline
+ \  uid  & 字符串 & 必填 &  发送此消息的用户id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+这条消息会发送给聊天室的所有人，比如用户进入聊天室时的打招呼。
+如果是给聊天室的某个人发消息，比如优惠券中奖／公告消息，则通过rest接口发送groupchat类型的消息。
+
+\subsubsection{用户屏蔽通讯}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/block} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid  & 字符串 & 必填 &  发起屏蔽请求的用户的id  \\
+\hline
+ \  bid  & 字符串 & 必填 &  被屏蔽的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsubsection{用户解除屏蔽}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/unblock} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid  & 字符串 & 必填 &  发起解除屏蔽请求的用户的id  \\
+\hline
+ \  bid  & 字符串 & 必填 &  被屏蔽的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsubsection{获取用户屏蔽列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/blocklist} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  uid  & 字符串 & 必填 &  发起解除屏蔽请求的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsubsection{杀掉用户会话}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/kill} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  user  & 字符串 & 必填 &  被封杀的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsubsection{禁止用户在聊天室发言}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/room\_ban} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  roomid  & 字符串 & 必填 & 聊天室id \\
+ \hline
+ \  uid  & 字符串 & 必填 &  被封杀的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsubsection{解除禁止用户在聊天室发言}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/api/room\_unban} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  roomid  & 字符串 & 必填 & 聊天室id \\
+ \hline
+ \  uid  & 字符串 & 必填 &  被封杀的用户的id  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsubsection{发送任意XMPP消息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{http://xmpp\_ip:5280/rest} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+通过POST提交任意类型的XMPP文本消息。

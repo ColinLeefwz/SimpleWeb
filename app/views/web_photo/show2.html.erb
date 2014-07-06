@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=yes">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title><%= @user.name %>在<%= @photo.shop.name %>的分享</title>
+	<link href="/web/stylesheets/share_photo.css" rel="stylesheet" type="text/css">
+	<script src="/web/js/jquery-1.6.2.min.js"></script>
+	<script src="/web/js/public.js"></script>
+</head>
+<body>
+	<div id="Main">
+		<div id="BG1"><%=image_tag Photo.img_url(@photo.id), :id=>"BigPic", :style=>"top:0px;left:0px;"%></div>
+		<div class="mainleft" id="MainLeft">
+			<center><%=image_tag Photo.img_url(@photo.id), :id=>"SmallPic"%></center>
+			<div class="plane">
+				<% if !@photo.desc.blank? %>
+					<%= @photo.desc%>
+				<% end %> 
+			</div>
+			<div class="plane2">
+				<div class="plane2left">
+					<%= image_tag UserLogo.img_url(@user.head_logo_id, :t1), size: "38x38", align:"left" %><span class="wordstyle"><%= @user.name %></span><br/><%= @photo.cat.strftime("%m-%d %H:%M") %>
+				</div>
+				<div class="plane2right">
+					<%= @photo.shop.name %>
+				</div>
+			</div>
+			<div class="shareto_toolbox plane2">
+				<span class="mt5 l">分享到&nbsp;&nbsp;</span>
+				<a class="shareto_button_tsina"></a>
+				<a class="shareto_button_fav"></a>
+				<a class="shareto_button_qzone"></a> 
+				<a class="shareto_button_renren"></a>
+				<script type="text/javascript" src="/web/js/shareto_button.js" charset="utf-8"></script>
+			</div>
+		</div>
+		<div class="mainright">
+			<a href="http://www.dface.cn" target="_blank"><img src="/admin/image/share_weibo/logo.png" alt="" width="202" height="80"/></a>
+			<div class="plane3">
+				<div class="wordstyle mb10 bold">此时此刻，我们在这里</div>
+				脸脸--基于现场的移动社交
+			</div>
+			<div class="plane4">
+				<div class="w127 l">
+					<a href="https://itunes.apple.com/cn/app/lianlian/id577710538" alt="iPhone版" class="btn5 l">下载 iPhone版</a>
+					<a href="http://dface.cn/a/down" alt="android版" class="btn5 l mt15">下载 Android版</a>
+				</div>
+				<img src="/admin/image/share_weibo/btn_code3.png" alt="" align="right"/>
+				<div class="clear1"></div><br/><br/>
+			</div>
+		</div>
+		<div class="footer2"><a href="http://www.dface.cn">脸脸 @2013</a></div>
+		<div class="clear1"></div>
+	</div>
+</body>
+</html>

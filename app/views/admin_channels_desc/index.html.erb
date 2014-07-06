@@ -1,0 +1,50 @@
+<h1>渠道管理   <h2><a href="http://dface.cn/web_channel_search" target="blank">渠道查询</a></h2> </h1>
+<h3 style="color:red">注意：</h3>
+<!-- <h3>规则一：手机扫描二维码直接跳转到市场（ios到apple市场，android直接下载）;<br>
+规则二：手机扫描二维码先跳转到我们自己设计的页面（比如先跳到婚庆页面，然后可以点击页面里的下载按钮下载）。
+<br><br>
+######如果按照规则一,渠道号使用5位数字，例如，10001，为餐饮类的第1个渠道；80023，为楼宇/小区/学校的第23个渠道;
+<br>
+######如果按照规则二,渠道号使用5位数字后面加上x，例如，婚庆，60001x
+</h3>
+<p> -->
+<h3>渠道号使用5位数字，例如，10001，为餐饮类的第1个渠道；80023，为楼宇/小区/学校的第23个渠道;如果有中间页，可在添加时勾选上，这样不会直接下载</h3>
+<h4>分类如下：1.餐饮  2.咖啡/酒吧/茶馆 3.景点/设施 4.购物  5.休闲/娱乐/运动  6.活动/会议  7.酒店  8.楼宇/小区/学校  9.其他</h4>
+<br>
+<%= form_tag '/admin_channels_desc',:method =>:get do %>
+  渠道号：<%= text_field_tag :num, params[:num], :size => 10 %>
+  <%= submit_tag "查 找" %>
+<% end %>
+<h2><%= link_to '添加新的渠道', "/admin_channels_desc/new" %></h2>
+<br/>
+
+
+<table border="1">
+  <tr>
+    <th>渠道号：</th>
+    <th>使用者：</th>
+    <th>用途：</th>
+    <th>二维码&网址：</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @channels.each do |ch| %>
+    <tr>
+      <td><%= ch.num %></td>
+      <td><%= ch.who %></td>
+      <td><%= ch.where %></td>
+      <td>
+        <%= link_to '查看', "/admin_channels_desc/s?id=#{ch.id}", :target => "_blank" %>
+      </td>
+      <td>
+        <%= link_to '编辑', "/admin_channels_desc/edit?id=#{ch.id}" %>
+      </td>
+      <td>
+        <%= link_to '删除', "/admin_channels_desc/destory?id=#{ch.id}" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>

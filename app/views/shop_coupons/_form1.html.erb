@@ -1,0 +1,57 @@
+<ul class="formlist" class="mt0">
+
+  <% if s %>
+    <li>
+      <label style='width: 160px;'>标题&nbsp;&nbsp;</label>
+      <%= f.text_field :name, :class => 'txt l'  %>
+    </li>
+  <% end %>
+  <li>
+    <label style='width: 160px;'>发放规则&nbsp;&nbsp;</label>
+    <%= f.select :rule, [['每日签到优惠', 0],['每日前几名签到优惠',1],['新用户首次签到优惠', 2],["累计签到优惠", 3]],{}, {:class => "p2 l", :onchange => "show_rulev($(this).val())"} %>
+  </li>
+
+  <li id="rulev" style="display:<%= [1,3].include?(@coupon.rule.to_i) ? '' : 'none' %>">
+    <label id="lt" style='width: 160px;'><%= rulev_lable(@coupon.rule.to_i) %></label>
+    <%= f.text_field :rulev, :class => "txt l"%>
+  </li>
+
+  <li>
+    <label id="lt" style='width: 160px;'>使用流程&nbsp;&nbsp;</label>
+    <%=  select_tag :hintv,options_for_select([['展示优惠券，点击后既代表使用了', 0],['展示优惠券，点击后按要求输入内容，然后确定使用',1]], @coupon.hint ? 1 : 0) , {:class => "p2 l", :onchange => "show_hint($(this).val())"} %>
+    <%= f.submit "发 布", :class => "btn1 ml20 l", :style => "display: #{@coupon.hint.blank? ? '' : 'none'}"  %>
+  </li>
+  <li id='hint1' style="display: <%= @coupon.hint.blank? ? 'none' : '' %>">
+    <label id='lt' style='width: 160px;'>使用时输入内容的提示&nbsp;&nbsp;</label>
+    <%= f.text_field :hint,  :class => "txt l"  %>
+    <br/><br/>(例: 请输入此次消费的金额/请输入您的桌号/请输入您的手机号码)
+    <br/><input type='submit' value='发 布' class='btn1 ml20 l'/>
+  </li>
+</ul>
+
+<script type="text/javascript">
+  function show_rulev(rv){
+    if(rv == '1' || rv == '3')
+    { 
+      $('#rulev').css("display","block");
+      lt = rv == '1' ? '前几名&nbsp;&nbsp;' : "累计次数&nbsp;&nbsp;";
+      $('#lt').replaceWith('<label id="lt" style="width: 160px;">' + lt + '</label>');
+      $("#btnn3").css("display","none");
+    }
+    else{
+      $('#rulev').css("display","none");
+      $("#btnn3").css("display","block");
+    }
+  }
+
+  function show_hint(rv){
+    if(rv == '1'){
+      $("input[type='submit']:first").hide()
+      $('#hint1').show()
+    }
+    else{
+      $('#hint1').hide()
+      $("input[type='submit']").show()
+    }
+  }
+</script>

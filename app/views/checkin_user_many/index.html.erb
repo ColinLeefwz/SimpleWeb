@@ -1,0 +1,16 @@
+<h1>三分钟内多次签到每日统计</h1>
+<table>
+  <tr>
+    <th>日期</th>
+    <th>次数</th>
+  </tr>
+
+  <% @checkin_user_manies.each do |checkin_user_many| %>
+    <tr>
+      <td><%= checkin_user_many._id %></td>
+      <td><%=link_to checkin_user_many.data.length, "/checkin_user_many/show_user?id=#{checkin_user_many._id}" %></td>
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>
+

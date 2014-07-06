@@ -1,0 +1,44 @@
+<p>
+  <b>群组名称:</b>
+  <%= @group.name %>
+</p>
+
+<p>
+  <b>对应的地点:</b>
+  <%= @group.shop_name %>
+</p>
+
+<p>
+  <b>认证提示信息:</b>
+  <%= @group.hint %>
+</p>
+
+
+<p>
+  <b>密码：</b>
+  <%= @group.pass %>
+</p>
+
+<p>
+  <b>开始时间:</b>
+  <%= @group.fat %>
+</p>
+
+<p>
+  <b>结束时间:</b>
+  <%= @group.tat %>
+</p>
+
+<p>
+  <b>过期类型:</b>
+  <%= @group.show_invaildt %>
+</p>
+
+<p>
+  <b>已加入群组用户:</b>
+  <% @group.add_users.each do |user| %>
+  <br/>
+  <b></b>
+  <%= user.id %>,<%=link_to user.name, "/admin_users/show?id=#{user.id}", :target => "_blank" %>
+  <% end %>
+</p>

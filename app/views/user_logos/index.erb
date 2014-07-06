@@ -1,0 +1,16 @@
+<div id="myindex_left">
+  <h1>修改头像</h1>
+
+
+
+  <div id="cols_comments">
+    <b>提示消息</b>：请选择一张图片上传为您的头像，推荐尺寸96X96像素。
+  </div>
+  <div id="user_pass_g">
+    <div class="myhard">
+      <%= image_tag @user_logo.img.url %>
+    </div>
+    <%= link_to '上传新头像', {:action => 'new', :menu_id => params[:menu_id]} ,:class=>"button"%>
+  </div>
+</div>
+

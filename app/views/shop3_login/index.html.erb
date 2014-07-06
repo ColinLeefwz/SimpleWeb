@@ -1,0 +1,250 @@
+ <script type="text/javascript">
+
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		Dn2_divplane();
+		NavDiv();
+		Menus();
+		$(window).load(function(){
+			MessageDiv();
+		});	
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+});
+
+ </script>
+		<div class="con">
+			<div class="box1">
+				<div class="menus">
+					<span class="box1dot1"></span>
+					<span class="box1dot2"></span>
+					<span class="box1dot3"></span>
+					<span class="box1dot4"></span>
+					<span class="box1dot5"></span>
+					<span class="box1dot6"></span>
+					<span class="box1line1"></span>
+					<span class="box1line2"></span>
+					<span class="box1line3"></span>
+					<span class="box1line4"></span>
+					<span class="box1line5"></span>
+					<span class="box1line6"></span>
+					<a href="/shop3_content/user_photo" class="menu1">照片墙管理</a>
+					<a href="/shop3_faqs" class="menu2">问答系统</a>
+					<a href="/shop3_coupons/list" class="menu3">优惠券管理</a>
+					<a href="/shop3_infos" class="menu4">商家设置</a>
+					<a href="/shop3_content/gchat" class="menu5">聊天内容</a>
+					<a href="/shop3_data" class="menu6">数据统计</a>
+				</div>
+				<div class="phone">
+					<div class="title3"><h2><%= link_to session_shop.name, "/shop3_login" %></h2></div>
+					<div class="imgbox"><a href="/shop3_content/user_photo">
+
+                        <% @photos.each do |photo| %>
+                        <%= image_tag(photo.img.try(:url, :t2),:size => "45x45") || image_tag("/newbackstage/images/pic9.jpg") %>
+                        <% end %>
+                        <img src="/newbackstage/images/pic9.png"/>
+
+						</a>
+					</div>
+					<div class="qa">
+						<div id="QAC">
+							<% if @shop_notice.nil? %>
+								<div class="mes"><a href="/shop3_notice">还没有公告，立即发布</a></div>
+							<% elsif @shop_notice.text? %>
+								<div class="mes"><a href="/shop3_notice"><%= @shop_notice.title %></a></div>
+							<% else %>
+								<div class="mes" style='background: none'>&nbsp;</div>
+							<% end %>
+							<div class="shopanswer">
+								<img src="/newbackstage/images/sign8.png" class="head"/>
+								<div class="cons">
+									<img src="/newbackstage/images/sign9.png" class="small_arrow"/>
+									<a href="/shop3_faqs">
+		<% if @shop_faqs.blank? %>
+		还没有设置问答系统?<br/>请创建
+		例如：<br/>01 => 脸脸茶坊介绍<br/>02 => 茶与春季养生<br/>03 => 茶坊WIFI密码<br/>04 => 今日特价茶饮<br/>
+		<% elsif %>
+		<%= "试试回复：</br>".html_safe%> 
+		<% @shop_faqs.each do |faq| %>
+			 
+				<%= faq.od%>&nbsp;=>&nbsp;
+				<% if faq.title.length < 9 %>
+				<%= faq.title %><br/>
+				<% else %>
+				<%= faq.title[0,9]%>...<br/>
+				<% end %>
+		<% end %>
+		<% end %>
+									</a>
+								</div>
+							</div>
+							<% if @shop_coupons.blank? %>
+							<div class="mes"><a href="/shop3_coupons">还没有优惠信息，立即发布</a></div>
+							<% else %>
+							<div class="mes"><a href="/shop3_coupons/list">点击右下角“+”拍照并分享到微博，文字中带指定关键字,即可获得'<%= session_shop.name %>折扣券'。</a></div>
+							<% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+ 			<div class="box2" style="display:none;">
+				<div class="title1"><h2>最新数据</h2></div>
+				<div class="box2inner" id="Dn2">
+					<div class="box2plane" style="top:0px;left:0px;" id="Dn2_b0">
+						<a href="/newbackstage/data_statistics1.html#md0">
+						<span class="uparrow">234</span>
+						<span class="ws">今日签到</span>
+						<ul class="list">
+							<li><span class="l">赵海斌</span><span class="r gay1">10:20</span></li>
+							<li><span class="l">袁乐天</span><span class="r gay1">9:23</span></li>
+							<li><span class="l">jojo</span><span class="r gay1">6:30</span></li>
+							<li><span class="l">涂白了的记忆</span><span class="r gay1">5:56</span></li>
+							<li><span class="l">安卓的安卓</span><span class="r gay1">5:23</span></li>
+						</ul>
+						</a>
+					</div>
+					
+					<div class="box2plane" style="top:0px;left:209px;" id="Dn2_b1">
+						<a href="/newbackstage/data_statistics1.html#md2">
+						<span class="downarrow">112</span>
+						<span class="ws">今日分享</span>
+						<ul class="list">
+							<li><span class="l">赵海斌</span><span class="r gay1">10:20</span></li>
+							<li><span class="l">袁乐天</span><span class="r gay1">9:23</span></li>
+							<li><span class="l">jojo</span><span class="r gay1">6:30</span></li>
+							<li><span class="l">涂白了的记忆</span><span class="r gay1">5:56</span></li>
+							<li><span class="l">安卓的安卓</span><span class="r gay1">5:23</span></li>
+						</ul>
+						</a>
+					</div>
+					
+					<div class="box2plane" style="top:0px;left:418px;" id="Dn2_b2">
+						<a href="/newbackstage/data_statistics1.html#md1">
+						<span class="uparrow">234</span>
+						<span class="ws">今日优惠券下载量</span>
+						<ul class="list">
+							<li><span class="l">赵海斌</span><span class="r gay1">10:20</span></li>
+							<li><span class="l">袁乐天</span><span class="r gay1">9:23</span></li>
+							<li><span class="l">jojo</span><span class="r gay1">6:30</span></li>
+							<li><span class="l">涂白了的记忆</span><span class="r gay1">5:56</span></li>
+							<li><span class="l">安卓的安卓</span><span class="r gay1">5:23</span></li>
+						</ul>
+						</a>
+					</div>
+					
+					<div class="box2plane" style="top:0px;left:628px;" id="Dn2_b3">
+						<a href="/newbackstage/data_statistics1.html#md1">
+						<span class="downarrow">234</span>
+						<span class="ws">今日优惠券使用量</span>
+						<ul class="list">
+							<li><span class="l">赵海斌</span><span class="r gay1">10:20</span></li>
+							<li><span class="l">袁乐天</span><span class="r gay1">9:23</span></li>
+							<li><span class="l">jojo</span><span class="r gay1">6:30</span></li>
+							<li><span class="l">涂白了的记忆</span><span class="r gay1">5:56</span></li>
+							<li><span class="l">安卓的安卓</span><span class="r gay1">5:23</span></li>
+						</ul>
+						</a>
+					</div>
+				</div>
+			</div>
+			
+ 			<div class="box2" style="display:none;">
+				<div class="title1"><h2>最近24小时数据统计</h2></div>
+				<div class="box2inner2">
+					<ul class="list">
+						<li class="hover" onClick="Tag(this)">签到统计</li>
+						<li onClick="Tag(this)">优惠券下载 / 使用统计</li>
+						<li onClick="Tag(this)">分享统计</li>
+					</ul>
+					<div class="data" id="gvChartDiv1">
+						<table id='MyTable1' style="display:none;">
+							<caption></caption>
+							<thead>
+								 <tr>
+									<th></th>
+									<th>0时</th>
+									<th>1时</th>
+									<th>2时</th>
+									<th>3时</th>
+									<th>4时</th>
+									<th>5时</th>
+									<th>6时</th>
+									<th>7时</th>
+									<th>8时</th>
+									<th>9时</th>
+									<th>10时</th>
+									<th>11时</th>
+									<th>12时</th>
+									<th>13时</th>
+									<th>14时</th>
+									<th>15时</th>
+									<th>16时</th>
+									<th>17时</th>
+									<th>18时</th>
+									<th>19时</th>
+									<th>20时</th>
+									<th>21时</th>
+									<th>22时</th>
+									<th>23时</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>人数/每时</th>
+									<td>900</td>
+									<td>600</td>
+									<td>327</td>
+									<td>359</td>
+									<td>376</td>
+									<td>398</td>
+									<td>60</td>
+									<td>50</td>
+									<td>404</td>
+									<td>700</td>
+									<td>200</td>
+									<td>500</td>
+									<td>600</td>
+									<td>327</td>
+									<td>359</td>
+									<td>376</td>
+									<td>398</td>
+									<td>60</td>
+									<td>50</td>
+									<td>404</td>
+									<td>700</td>
+									<td>200</td>
+									<td>500</td>
+									<td>700</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+	<div class="box2">
+		<div class="title1"><h2><a class="gay2" href="shop3_data">数据统计</a></h2></div>
+		<div class="box2right1">
+			<div class="box2inner4 h423">
+					<ul class="list">
+						<li class="hover" onClick="SlideDoor(this,6)">签到统计</li>
+						<li onClick="SlideDoor(this,7)">优惠券下载量</li>
+						<li class="noneborder" onClick="SlideDoor(this,8)">优惠券使用量</li>
+					</ul>
+					<ul class="list2" id="Door6">
+						<%= render :partial => "shop3_login/linecharts" %>
+					</ul>
+					<ul class="list2" id="Door7" style="display:none;">
+						<%= render :partial => "shop3_data/downcharts" %>
+					</ul>
+					<ul class="list2" id="Door8" style="display:none;">
+						<%= render :partial => "shop3_data/usecharts" %>
+					</ul>
+			</div>
+		</div>
+	</div>
+		</div>

@@ -1,0 +1,153 @@
+<% content_for :ahead do %>
+  <script src="/newbackstage/js/jquery.blocksit.min.js"></script>
+  <style>
+	.box9 .box9plane .m{cursor:pointer;}
+  </style>
+<% end %>
+<div id="BG"></div>
+<div id="DelDiv">
+  <center><br/>确定删除这张图片？</center>
+  <a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+  <a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
+<div class="clear1"></div>
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_staffs">员工管理</a></li>
+      <li><a href="/shop3_bindwbs">绑定微博</a></li>
+      <li><a href="/shop3_bans">屏蔽用户</a></li>
+      <li><a href="/shop3_marks">用户评分</a></li>
+      <li  class="hover"><a href="/shop3_notice">公告管理</a></li>
+      <% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
+    </ul>
+
+    <div class="r">
+
+    </div>
+  </div>
+  <div class="notice_submenu">
+  	<%= link_to "文本模式", "/shop3_notice/text",:class=>"linkbtn"%>
+  	<a href="/shop3_notice/photo" class="linkbtn2">从商家图片中选择</a>
+  	<a href="/shop3_notice/faqs" class="linkbtn">从商家问答中选择</a>
+  	<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
+  </div>
+
+  <% if @shop_notice && @shop_notice.photo && !params[:e]%>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab3 mt20 pt10">
+      <tr>
+        <td width="158"><%= image_tag @shop_notice.photo.img.url, :alt=>"0", :class => "imgstyle2" %></td>
+        <td valign="top"><%= @shop_notice.photo_desc %></td>
+      </tr>
+      <tr>
+        <td width="158"><%= link_to '重新选择图片', "/shop3_notice/photo?e=1" %></td>
+        <td valign="top"></td>
+      </tr>
+    </table>
+  <% else %>
+    <div class="clear1"></div>
+    <div class="box9" id="Waterfall">
+      <% @photos.each_with_index do |photo, index| %>
+        <div class="box9plane">
+          <a href="<%= "/shop3_notice/update?photo_id=#{photo.id}" %>">
+            <%= image_tag photo.img.url %>
+            <div class="m"><span><%=photo.desc.to_s.truncate(20) %></span></div>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= generate_paginate.html_safe %>
+</div>
+<script defer="defer">
+  var noing="run";
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    ua=navigator.userAgent.toLowerCase();
+
+    $('#Waterfall').BlocksIt({
+      numOfCol: 5,
+      offsetX: 5,
+      offsetY: 5,
+      blockElement: 'div'
+    });
+
+    if(runing=="checkboxs1"){
+      NavDiv();
+      Photo();
+      $(window).load(function(){
+        MessageDiv();
+      });
+      noing="norun";
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+
+    if(/ipad/i.test(ua)){
+      $("div.box9plane").click(function(){
+        var obj=$(this);
+        obj.find("div.m").fadeIn(300);
+        obj.find("div.bj").animate({"bottom":"0px"},300);
+        setTimeout(function(){
+          obj.find("div.m").fadeOut(300);
+          obj.find("div.bj").animate({"bottom":"-25px"},300);
+        },3000);
+      });
+    }else{
+      $("div.box9plane").hover(
+      function(){
+        $(this).find("div.m").fadeIn(300);
+        $(this).find("div.bj").animate({"bottom":"0px"},300);
+      },
+      function(){
+        $(this).find("div.m").fadeOut(300);
+        $(this).find("div.bj").animate({"bottom":"-25px"},300);
+      }
+    );
+    }
+
+    $("div.bj a.n5").parents("div.box9plane").addClass("opacity_55");
+    $("div.bj a.n5").parents("div.box9plane").find(".photolinkcon").hide()
+
+
+    $("div.box9plane a.n6").click(function(){
+      var top;
+      documentHeight=$(document).height();
+      windowHeight=$(window).height();
+      if(documentHeight<=windowHeight){
+        $("#BG").css({"height":windowHeight+"px","display":"block"});
+      }else{
+        $("#BG").css({"height":documentHeight+"px","display":"block"});
+      }
+      $("#DelDiv").css("display","block");
+      top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+      $("#DelDiv").css({"top":top+"px","display":"none"});
+      $("#DelDiv").fadeIn(600);
+
+      $("div.box9plane").stop(true,true);
+
+      var photo_id = $(this).attr("photo_id");
+      var x,y,rel;
+      rel=parseInt($(this).attr("rel"));
+
+      $("#DelBtn").click(function(){
+        $("#DelDiv,#BG").css("display","none");
+        $.get("/shop3_content/delete_photo.json", {id: photo_id}, function(){
+          x=$("div.box9plane").eq(rel).css("left"); y=$("div.box9plane").eq(rel).css("top");
+          $("div.box9plane").eq(rel).remove();
+          for(i=rel;i<$("div.box9plane").length;i++){
+            $("div.box9plane").eq(i).animate({"left":x,"top":y},300);
+            x=$("div.box9plane").eq(i).css("left");
+            y=$("div.box9plane").eq(i).css("top");
+          }
+          for(i=0; i<$("a.link_ns").length; i++){
+            $("a.link_ns").eq(i).attr("rel",i);
+          }
+        });
+      });
+    });
+  });
+
+</script>

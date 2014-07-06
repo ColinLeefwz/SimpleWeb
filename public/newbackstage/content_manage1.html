@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/public.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/jquery.blocksit.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="main">
+		<!--<div id="BG"></div>
+		<div id="PhotoPlane">
+			<span id="Close"></span>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td width="50%" rowspan="10"><img src="images/pic15.jpg" class="imgstyle"/></td>
+				<td width="19%" height="30" class="pl20">用 户：</td>
+			    <td width="31%" height="30">脸脸合一</td>
+			  </tr>
+			  <tr>
+				<td height="30" class="pl20">发布时间：</td>
+			    <td height="30">2012-05-12</td>
+			  </tr>
+			  <tr>
+				<td height="30" class="pl20">分享到微博：</td>
+			    <td height="30">是</td>
+			  </tr>
+			  <tr>
+				<td height="30" class="pl20">分享到QQ：</td>
+			    <td height="30">是</td>
+			  </tr>
+			  <tr>
+				<td height="30" class="pl20">赞：</td>
+			    <td height="30">赵海斌, 天真独朗</td>
+			  </tr>
+			  <tr>
+			    <td height="30" class="blue1 pl20">操&nbsp;作：</td>
+			    <td height="30">
+					<a href="#" class="n2" title="已置顶"></a>
+					<a class="n4" onclick="OC(this)" title="隐藏"></a>
+					<a class="n6" title="删除"></a>
+				</td>
+		      </tr>
+			  <tr>
+			    <td height="30" class="pl20">描&nbsp;述：</td>
+		        <td height="30">很诱人</td>
+			  </tr>
+			  <tr>
+			    <td height="30" class="pl20">评&nbsp;论：</td>
+		        <td height="30">真的吗？</td>
+			  </tr>
+			</table>
+		</div>-->
+		<div class="header">
+			<div class="headercon">
+				<div id="Message">赵海斌刚刚使用了一张分享优惠券惠券</div>
+				<div class="toptitle"><h1>脸脸茶坊</h1></div>
+			</div>
+			<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
+			<img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
+			<div id="LinkBox">
+				<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
+				<a  class="links2">退出</a>
+				<span class="linkarrow"></span>
+			</div>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="index.html">首页</a>
+				<span class="navline"></span>
+				<a href="coupon_data_stistics4.html">优惠券管理</a>
+				<span class="navline"></span>
+				<a href="data_statistics1.html">数据统计</a>
+				<span class="navline"></span>
+				<a href="content_manage1.html">内容管理</a>
+				<span class="navline"></span>
+				<a href="sign_manage1.html">签到管理</a>
+				<span class="navline"></span>
+				<a href="seller_set1.html">商家设置</a>
+				<span class="navline"></span>
+				<a href="questions_answers1.html">问答系统</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		<div class="clear1"></div>
+		<div class="con">
+			<div class="title1 mb30"><h2 class="f18">内容管理</h2></div>
+			<div class="submenu">
+				<ul>
+					<li class="hover"><a href="content_manage1.html">管理照片墙</a></li>
+					<li><a href="content_manage2.html">管理聊天室</a></li>
+				</ul>
+				<div class="r wordstyle">
+					<form action="" method="post">
+						<select name="select" class="p3 r mr10">
+							<option value="显示全部图片">显示全部图片</option>
+							<option value="只显示用户图片">只显示用户图片</option>
+							<option value="只显示商家图片">只显示商家图片</option>
+						</select>
+						<a href="content_manage3.html" class="btn8 r mr10">上传照片</a>
+					</form>
+				</div>
+			</div>
+			<div class="clear1"></div>				
+			<div class="box9" id="Waterfall">
+				<div class="box9plane">
+					<img src="images/pic5.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="QXZD(this)" class="n2_1" title="已置顶"></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="0"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic6.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="QXZD(this)" class="n2_1" title="已置顶"></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="1" ></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic15.jpg"/>
+					<div class="m"><span>描述文本描述文本描述文本描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="QXZD(this)" class="n2_1" title="已置顶"></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="2" ></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic14.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="QXZD(this)" class="n2_1" title="已置顶"></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="3" ></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic5.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="QXZD(this)" class="n2_1" title="已置顶"></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="4"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic6.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="5"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic15.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="6"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic14.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="7" ></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic5.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="8" ></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic6.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="9" ></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic15.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="10"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic5.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n6 link_ns" title="删除" rel="11"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic6.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n4 link_ns" onclick="OC(this)" title="隐藏" rel="12"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic15.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n4 link_ns" onclick="OC(this)" title="隐藏" rel="13"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic5.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n5 link_ns" onclick="OC(this)" title="显示" rel="14"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic6.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n5 link_ns" onclick="OC(this)" title="显示" rel="15"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic15.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n4 link_ns" onclick="OC(this)" title="隐藏" rel="16"></a>
+					</div>
+				</div>
+				<div class="box9plane">
+					<img src="images/pic14.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n4 link_ns" onclick="OC(this)" title="隐藏" rel="17"></a>
+					</div>
+				</div>
+				<div class="box9plane" style="border:1px solid #f00;">
+					<img src="images/pic5.jpg"/>
+					<div class="m"><span><a href="content_manage4.html">描述文本</a></span></div>
+					<div class="bj">
+						<a onclick="OpenDiv()" class="n1" title="详情"></a>
+						<a onclick="ZD(this)" class="n2" title="置顶" ></a>
+						<a href="content_manage3.html" class="n3" title="编辑"></a>
+						<a class="n4 link_ns" onclick="OC(this)" title="隐藏" rel="18"></a>
+					</div>
+				</div>
+			</div>
+			<div class="pagination">
+				<ul>
+					<li class="disabled"><a href="#" class="pre">&lt;&lt;</a></li>
+					<li class="hover"><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#" class="next">&gt;&gt;</a></li>
+				</ul>
+		   </div>
+	  </div>
+	</div>
+<script defer="defer">
+var navmove="off", runing, noing="run";
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	ua=navigator.userAgent.toLowerCase();
+	
+	$('#Waterfall').BlocksIt({
+		numOfCol: 5,
+		offsetX: 5,
+		offsetY: 5,
+		blockElement: 'div'
+	});
+	
+	if(runing=="checkboxs1"){
+		NavDiv();
+		Photo();
+		$(window).load(function(){
+			MessageDiv();
+		});
+		noing="norun"; 
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	if(/ipad/i.test(ua)){
+		$("div.box9plane").click(function(){
+			var obj=$(this);
+			obj.find("div.m").fadeIn(300);
+			obj.find("div.bj").animate({"bottom":"0px"},300);
+			setTimeout(function(){
+				obj.find("div.m").fadeOut(300);
+				obj.find("div.bj").animate({"bottom":"-25px"},300);
+			},3000);
+		});
+	}else{
+		$("div.box9plane").hover(
+			function(){
+				$(this).find("div.m").fadeIn(300);
+				$(this).find("div.bj").animate({"bottom":"0px"},300);
+			},
+			function(){
+				$(this).find("div.m").fadeOut(300);
+				$(this).find("div.bj").animate({"bottom":"-25px"},300);
+			}
+		);
+	}
+	
+	$("div.bj a.n5").parents("div.box9plane").addClass("opacity_55");
+/*	$("#Close").click(function(){
+		$("#PhotoPlane,#BG").css("display","none");
+	});*/
+});
+
+$(window).load(function(){
+	$("div.box9plane a.n6").click(function(){
+		$("div.box9plane").stop(true,true);
+		var x,y,rel;
+		rel=parseInt($(this).attr("rel"));
+		x=$("div.box9plane").eq(rel).css("left"); y=$("div.box9plane").eq(rel).css("top");
+		$("div.box9plane").eq(rel).remove();
+		
+		for(i=rel;i<$("div.box9plane").length;i++){
+			$("div.box9plane").eq(i).animate({"left":x,"top":y},300);
+				x=$("div.box9plane").eq(i).css("left");
+				y=$("div.box9plane").eq(i).css("top");
+		}
+		for(i=0; i<$("a.link_ns").length; i++){
+			$("a.link_ns").eq(i).attr("rel",i);
+		}
+	});
+});
+
+function QXZD(obj){
+	var x,y,a,b,rel,i;
+	var num=$("div.box9plane").length;
+
+	x=$("div.box9plane").eq(num-1).css("left"); y=$("div.box9plane").eq(num-1).css("top");
+	a=$(obj).parents("div.box9plane").css("left");
+	b=$(obj).parents("div.box9plane").css("top");
+	rel=parseInt($(obj).parents("div.box9plane").find("a.link_ns").attr("rel"));
+	$("div.box9plane").eq(rel).fadeOut(0);
+	for(i=(rel+1);i<=num;i++){
+		if(i<num){
+			$("div.box9plane").eq(i).animate({"left":a,"top":b},500);
+			a=$("div.box9plane").eq(i-1).next().css("left");
+			b=$("div.box9plane").eq(i-1).next().css("top");
+		}else if(i==num){
+			$("div.box9plane").eq(rel).css({"left":x,"top":y}).fadeIn(750,function(){
+				$("div.box9plane").eq(rel).find("a.n2_1").removeClass("n2_1").addClass("n2").attr("onclick","ZD(this)");;
+				var obj=$("div.box9plane").eq(rel);
+				$("div.box9plane").eq(num-1).after(obj);
+				for(i=0; i<$("div.box9plane a.link_ns").length; i++){
+					$("div.box9plane a.link_ns").eq(i).attr("rel",i);
+				}
+			});
+		}
+	}
+}
+
+
+function ZD(obj){
+	var x,y,a,b,rel,rel2,i;
+	x=$("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("left")? $("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("left"):0; 
+	y=$("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("top")? $("div.box9plane a.n2_1").parents("div.box9plane:last").next().css("top"):5;
+	rel=parseInt($("div.box9plane a.n2_1").parents("div.box9plane:last").next().find("a.link_ns").attr("rel"))?parseInt($("div.box9plane a.n2_1").parents("div.box9plane:last").next().find("a.link_ns").attr("rel")):0;
+
+	a=$("div.box9plane").eq(rel+1).css("left");
+	b=$("div.box9plane").eq(rel+1).css("top");
+	rel2=parseInt($(obj).siblings("a.link_ns").attr("rel"));
+	if(rel==rel2){
+		$("div.box9plane").eq(rel2).find("a.n2").removeClass("n2").addClass("n2_1");return false;
+	}
+
+	for(i=rel;i<=rel2;i++){
+		if(i<rel2){
+			$("div.box9plane").eq(i).animate({"left":a,"top":b},500);
+			a=$("div.box9plane").eq(i+1).next().css("left");
+			b=$("div.box9plane").eq(i+1).next().css("top");
+		}else if(i==rel2){
+			$("div.box9plane").eq(rel2).animate({"left":x,"top":y},500,function(){
+				$("div.box9plane").eq(rel2).find("a.n2").removeClass("n2").addClass("n2_1").attr("onclick","QXZD(this)");
+				var obj=$("div.box9plane").eq(rel2);
+				$("div.box9plane").eq(rel).before(obj);
+				for(i=0; i<$("div.box9plane a.link_ns").length; i++){
+					$("div.box9plane a.link_ns").eq(i).attr("rel",i);
+				}
+			});
+		}
+	}
+}
+
+function OC(obj){
+	if($(obj).attr("class")=="n4"){
+		$(obj).removeClass().addClass("n5").attr("title","显示");
+		$(obj).parent().addClass("bbj");
+		$(obj).parent().siblings().addClass("bm");
+		$(obj).parents("div.box9plane").addClass("opacity_55");
+	}else{
+		$(obj).removeClass().addClass("n4").attr("title","隐藏");
+		$(obj).parent().removeClass("bbj");
+		$(obj).parent().siblings().removeClass("bm");
+		$(obj).parents("div.box9plane").removeClass("opacity_55");
+	}
+}
+</script>
+</body>
+</html>

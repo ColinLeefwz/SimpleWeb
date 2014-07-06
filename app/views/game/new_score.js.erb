@@ -1,0 +1,6 @@
+html = "<div class='main' id='Main'><a onClick='close_window()' class='btn2'></a><center><img src='/stack/i/pic1.jpg'/></center><table width='93%' cellpadding='0' cellspacing='0' class='tab1'><tr><th width='70%'>Game Over 得分：<%= @game.score %></th><th class='r' width='30%'>最高排名：<%= @rank %></th></tr>"
+			<% @data.each_with_index do  |data, index| %>
+			  html += "<tr><td align='left'><%= index+1 %>.<%= data[:uname] %></td><td class='r'><%= data[:score] %></td></tr>"
+			<% end %>
+  html += "<tr><td align='middle' class='bottom' colspan='2'><input type='button' class='btn1 mt20 mr50' onclick='rank_close()' value='再来一局'/><input type='button' class='btn1 mt20' onclick='dface_close();' value='退出游戏'/></td></tr></table></div>"
+$('body').prepend(html);

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		 <% if params[:reload] %>
+    <script>
+      window.parent.parent.parent.location.replace("/guest")
+    </script>
+  <% end  %>
+	<head>
+	<body>
+		
+
+
+
+  <div id="main">
+  
+    <div class="box">
+      <h2>登录</h2>
+
+      <div id="notice" class="red1">
+        
+      </div>
+
+
+      <form action="/guest/login" method="post" >
+
+        <table width="200" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="45"></td>
+          </tr>
+          <tr>
+            <td height="35">
+              <p>
+                <label for="user_name">登录名</label>
+                <input id="name" name="name" type="text" />
+              </p>
+            <td>
+          </tr>
+          <tr>
+            <td height="35">
+              <p>
+                <label for="user_password">密码</label>
+                <input id="pass" name="pass" type="password" />
+              </p>
+            <td>
+          </tr>
+          <tr>
+            <td height="35">
+              <div style="padding-left:75px;">
+                <p class="act">
+                  <input class="submit" name="commit" type="submit" value="登 录" />
+                </p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div class="bottom"></div>
+  </div>
+
+
+  <script>
+    //Event.observe(window, 'load', bodyonload)
+    function bodyonload() {
+      //	$('name').focus();
+    }
+
+    
+  </script>
+	</body>
+</html>

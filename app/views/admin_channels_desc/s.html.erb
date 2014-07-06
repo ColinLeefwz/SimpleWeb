@@ -1,0 +1,8 @@
+
+<% unless @channel.type %>
+<%=  image_tag("http://qr.liantu.com/api.php?text=http://www.dface.cn/a?v=#{@channel.num}",:style => "width:300px;height:300px",:align => "left") %><br><br><br>
+<h2>网址：<%= "http://www.dface.cn/a?v=#{@channel.num}" %></h2>
+<% else %>
+<%=  image_tag("http://qr.liantu.com/api.php?text=http://www.dface.cn/a?v=#{@channel.num}%26x=1",:style => "width:300px;height:300px",:align => "left") %><br><br><br>
+<h2>网址：<%= "http://www.dface.cn/a?v=#{@channel.num}&x=1" %></h2>
+<% end %>

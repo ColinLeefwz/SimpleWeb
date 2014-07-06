@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+	<meta content="no-cache" http-equiv="Pragma"/>
+	<meta content="no-cache" http-equiv="Cache-Control"/>
+	<meta content="0" http-equiv="Expires"/>	
+	<meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+	<meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+	<title>脸脸|手机站</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+	<script src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8" ></script>
+ <script type="text/javascript">
+ function user_friends(user_id) {
+  WB.client.parseCMD("/statuses/followers.json", 
+            function(users, bStatus) {
+              console.log(bStatus);
+              if(bStatus == true){           
+                console.log(users);
+var ul = document.getElementById('friends');
+                for (var i=0; i < users.length; i++) {
+                  if (users[i].profile_image_url) {
+var li = document.createElement('li');
+var a = document.createElement('a');
+a.href = "javascript:;";
+var img = document.createElement('img');
+img.src = users[i].profile_image_url;
+img.setAttribute('class', 'w75');
+img.setAttribute('onclick', 'show_user(' + users[i].id + ')');
+a.appendChild(img);
+li.appendChild(a);
+ul.appendChild(li);
+}
+}
+              }
+            }, 
+            {
+              uid: user_id
+            },
+            {
+              method: 'get'
+            }
+       );
+     }
+
+function body_load() {
+  user_friends(sessionStorage.getItem("search_id"));
+}
+</script>
+</head>
+<body onload="body_load();">
+
+<div id="main">
+	<div id="header">
+			<h1>现场</h1>
+			<a href="chat2.html" class="tbtn1 pl15" title="聊天室"></a>
+			<a href="#" class="tbtn2 pr15" title="聊天室" id="show_droplist"></a>
+			<div id="droplist">
+				<div class="top"></div>
+				<ul>
+					<li><a href="#">定位当前位置</a></li>
+					<li><a href="#">88保俶路店</a></li>
+					<li><a href="#">QUEEN保俶路店</a></li>
+					<li><a href="#">卜家黑鱼馆</a></li>
+				</ul>
+				<div class="bottom"></div>
+			</div>
+		<script>
+			$(document).ready(function(){
+				$("#show_droplist").toggle(function(){
+					$("#droplist").fadeIn(250);
+				},
+				function(){
+					$("#droplist").fadeOut(250);
+				});
+			});
+		</script>
+	</div>
+	
+	
+
+			<div class="site">
+				<h2><a href="#">G+酒吧保俶路店</a></h2>
+				<div class="Shake"><a href="chat2.html"><img src="images/shake1.gif" alt="摇一摇"><img src="images/shake_pic.jpg"></a></div>
+			</div>
+			
+使用粉丝列表测试，实际应根据当前位置算出周围用户
+			<ul class="people" id="friends">
+			</ul>
+
+	<div id="foot">
+		<a href="site.html"><img  src="images/foot-Siteh.jpg" alt="现场"></a>
+		<a href="nely.html"><img  src="images/foot-Nearby.jpg" alt="附近"></a>
+		<a href="talk.html"><img  src="images/foot-Talk.jpg" alt="对话"></a>
+		<a href="friend.html"><img  src="images/foot-Friend.jpg" alt="好友"></a>
+		<a href="set.html"><img  src="images/foot-Set.jpg" alt="设置"></a>
+	</div>
+</div>
+
+<script type="text/javascript">
+function show_user(user_id) {
+sessionStorage.setItem("search_id", user_id);
+window.location.href="/phone/namei.html";
+}
+</script>
+</body>
+<script type="text/javascript">
+WB.core.load(['connect', 'client'], function() {
+    var cfg = {
+        key: '2054816412',
+xdpath: 'http://' + window.location.host + '/phone/xd.html'  // JS默认调用80端口，不能指定其它端口
+    };
+    WB.connect.init(cfg);
+    WB.client.init(cfg); 
+}); 
+</script>
+</html>

@@ -1,0 +1,104 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes, target-densitydpi=device-dpi">
+    <meta content="application/xhtml+xml; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="no-cache" http-equiv="Cache-Control"/>
+    <meta content="0" http-equiv="Expires"/>
+    <meta name="keywords" content="脸脸，玩乐，娱乐，休闲" />
+    <meta name="description" content="脸脸，玩乐，娱乐，休闲"  />
+    <title>脸脸 | 商家管理后台</title>
+    <link href="/stylesheets/backstage.css" rel="stylesheet" type="text/css">
+    <%= javascript_include_tag "jquery-1.6.2.min.js" %>
+    <script>
+      $(document).ready(function(){
+        if($("#Notice").html()==""){
+          $("#Notice").addClass("none");
+        }
+      });
+      function LeftMenu(obj){
+        $("#Nav a[name=n"+obj+"]").addClass("hover");
+      }
+    </script>
+    <!--[if IE 6]>
+    <%= javascript_include_tag "DD_belatedPNG.js" %>
+    <%= csrf_meta_tag %>
+
+	<script type="text/javascript">
+		DD_belatedPNG.fix('.logo2, .logo');
+	</script>
+    <![endif]-->
+
+    <%= yield :ahead %>
+
+  </head>
+  <body>
+    <div class="header">
+      <div class="headerinner">
+        <img src="../images/logo4.png" align="absbottom"/><span><%= session_shop.name %></span>
+      </div>
+      <a href="/shop_login/logout" class="uExit">退出</a>   </div>
+
+    <div class="con">
+      <div class="conleft">
+        <div class="clear1"></div>
+        <div id="Nav" class="nav">
+          <a href="/shop_login/index" class="index" name="n0">脸脸首页
+            <span class="sign"></span>
+          </a>
+          <% if session[:shop_id].in?($travel) ||  ENV["RAILS_ENV"] != "production"%>
+            <span class="tit">拓展功能</span>
+            <a href="/shop_lines" name="n26" class="s arrow">路线图</a>
+            <a href="/shop_groups" name="n27" class="s arrow">旅行团</a>
+            <a href="/shop_partners" name="n28" class="s arrow">合作商家</a>
+            <a href="/shop_partner_marks" name="n31" class="s arrow">合作商家评分</a>
+            <span class="borderstyle"></span>
+          <% end %>
+          <span class="tit">优惠券管理</span>
+          <a href="/shop_coupons" class="s arrow" name="n6">列表</a>
+          <a href="/shop_coupons/newly_down" class="s arrow" name="n17">最新下载记录</a>
+          <a href="/shop_coupons/newly_use" class="s arrow" name="n16">最新使用记录</a>
+          <% unless session_shop.shops.blank? %> <a href="/shop_internal_coupons" class="s arrow" name="n29">内部商家优惠券使用</a><% end %>
+          <a href="/shop_coupon_reports" class="s arrow" name="n23">统计报表</a>
+
+          <span class="borderstyle"></span>
+
+          <span class="tit">内容管理</span>
+          <a href="/shop_faqs" name="n15"  class="s arrow">问答系统</a>
+          <a href="/shop_shop_notices" name="n9" class="s arrow">公告管理</a>
+          <a href="/shop_photos" name="n19" class="s arrow">照片墙</a>
+          <a href="/shop_login/gchat" name="n24" class="s arrow">聊天室内容</a>
+          <span class="borderstyle"></span>
+
+          <span class="tit">签到管理</span>
+          <a href="/shop_checkins" class="s arrow" name="n1">最新签到</a>
+          <a href="/shop_checkins/rank?flag=week" class="s arrow" name="n22">排行榜</a>
+          <span class="borderstyle"></span>
+
+          <span class="tit">商家设置</span>
+          <%= link_to "基本信息", "/shop_infos", :class =>'s arrow' ,:name=>'n25' %>
+          <%= link_to "商家logo", "/shop_logos", :class =>'s arrow' ,:name=>'n11' %>
+          <%= link_to "修改密码", "/shop_pass/index" , :class => 's arrow' , :name=>'n12'%>
+          <a href="/shop_staffs" name="n13" class="s arrow">员工管理</a>
+          <a href="/shop_bindwbs" name="n18" class="s arrow">绑定微博</a>
+          <a href="/shop_bans" name="n21" class="s arrow">屏蔽用户</a>
+          <a href="/shop_marks" name="n30" class="s arrow">用户评分</a>
+          <% unless session_shop.shops.blank? %> <a href="/shop_subshops" name="n14" class="s arrow">内部商家管理</a> <% end %>
+          <% if session_shop.has_branch? %><a href="/shop_branchs" name="n20" class="s arrow">分店管理</a> <% end %>
+          <span class="borderstyle"></span>
+
+
+        </div>
+
+      </div>
+      <div class="conright">
+        <%= yield  %>
+      </div>
+    </div>
+    <div id="footer">
+      <div class="footerinner">&copy; 2012 dface 浙ICP备11027288号<a href="http://www.dface.cn" class="fn ml15">WWW.DFACE.CN</a></div>
+    </div>
+  </body>
+</html>
+

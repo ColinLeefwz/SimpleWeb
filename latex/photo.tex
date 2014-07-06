@@ -1,0 +1,559 @@
+
+\section{在聊天室发图}
+聊天发图主要流程是：客户端选择（拍摄）一张照片，通过http上传到服务器。上传完成后在xmpp里发送一个特定格式的消息。其它客户端收到消息后获取图片显示并发送回执消息。
+
+\subsection{上传图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ photo[img]  & file & 必须 &  头像文件\\
+ \hline
+ photo[room]  & 字符串 & 必须  &  聊天室的id\\
+ \hline
+ photo[weibo]  & 0/1 & 必须  &  是否同步发送到微博\\
+  \hline
+ photo[qq]  & 0/1 & 可选  &  是否同步发送到QQ空间\\
+   \hline
+ photo[wx]  & 0/1/2/3 & 可选  &  分享到微信: 1个人,2朋友圈, 3都分享了\\
+   \hline
+ photo[desc]  & 字符串 & 可选  &  图像的说明文字\\
+ \hline
+  photo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
+ \hline
+  filter1  & 整数 & 可选 &  使用的滤镜编号, 从1开始。0代表未使用滤镜，缺省0\\
+ \hline
+  filter2  & 整数 & 可选 &  使用的图像合成编号, 从1开始。0代表未使用合成，缺省0\\  
+ \hline
+ wbtoken  & 字符串 & 可选  &  如果分享到微博，该用户的微博token\\
+  \hline
+ qqtoken  & 字符串 & 可选  &  如果分享到QQ空间，该用户的QQtoken\\
+ \hline
+  total  & 整数 & 可选  &  如果多张图分享，图片的总数\\
+ \hline
+  time  & 整数 & 可选  &  多张图上传时客户端时间，unix时间1970到秒\\  
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：
+
+\begin{enumerate}
+\item 该请求必须是POST请求，enctype="multipart/form-data"。
+\item 所上传文件的type必须是image/jpeg', 'image/gif' 或者'image/png'。
+\item 图片文件要在客户端先压缩到640*640。
+\item 图片名为logo；缩略图分logo\_thumb2为200*200的png。
+\item 分享到新浪微博和QQ空间由服务器执行，客户端只需要传递标志位即可；而分享到微信则由客户端实现，然后报告服务器分享的结果。
+\end{enumerate}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "photo[img]=@firefox.png;type=image/png" 
+/photos
+
+{"_id":"509a1ffcbe4b1982a4000002",
+"mid":"ckn509a1ffcbe4b1982a4000002",
+"weibo":false,"room":"1",
+"user_id":"502e61bfbe4b1921da000005",
+"logo":"/uploads/tmp/20121107-1646-42114-4251/111.jpg",
+"logo_thumb2":null,"id":"509a1ffcbe4b1982a4000002"}
+
+[2014-01-03] 图片上传成功返回值中增加mid字段，表示该图片发送到聊天室的消息id。
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{多图上传时，非第一张图的上传}
+
+\subsubsection{获取七牛云存储的图片上传token}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/uptoken} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必须 &  当前登录用户的id\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsubsection{上传图片}
+
+调用七牛的API上传文件，其中包含的参数有：
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{七牛的上传模式2：高级上传（带回调）} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ uptoken  & 字符串 & 必须 &  上一步获得的token\\
+ \hline
+ file  & 文件 & 必须 &  要上传的文件\\
+ \hline
+ bucket  & 字符串 & 必须 & 必须是"dphoto"\\
+ \hline
+ key  & 字符串 & 必须 &  上传时的主健，格式见下面的说明\\
+  \hline
+ callback\_params  & 字符串 & 必须 &  回调参数\\
+ \hline    
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+key的格式为：“uid/time-seq”，其中hid就是发图者的id，time就是第一张图里带的time参数，seq表示第几张图。
+
+回调参数的格式："from=&room=&id=&key=$(etag)&size=$(fsize)"
+其中from是发送者的uid，
+room是聊天室编号,
+id是上面的主键key,
+"key=$(etag)&size=$(fsize)"这一段则不做改变。
+
+
+\end{verbatim}
+
+
+\subsection{发送消息}
+当图片发送完成后，服务器端发送一个xmpp消息，其中的body内容格式为：
+
+\begin{verbatim}
+[img:$id]$desc
+
+比如上面的图片发送成功后，发送消息"[img:502fd10abe4b19ed48000002]"。其中$desc是可选的图片说明文字。
+
+如果一次上传了多张图片,那么xmpp消息格式为：
+[img:$id]$total:$desc
+其中total是上传图片的总数。
+\end{verbatim}
+
+\subsection{在聊天室收到消息后获取图片}
+
+接收端收到消息后，判断body的内容是否符合图片消息的格式。如果符合就调用下面的接口获取图片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photos/show} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；2代表thumb2缩略图，大小为200*200。默认为2。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+聊天室里发图不需要发送已读回执消息。
+在现场收到图片时，如果图片id以“faq”开头，不添加到照片墙上。18:02:24
+
+如果是多图上传，其它的图直接通过url拿，不需要调用本接口。
+
+
+\subsection{在聊天室收点击图片获取图片详细信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photos/detail} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+如果是多图上传，新增两个参数photos和thumb2s，分别表示多图的原图和缩略图的url，类型是数组，不包含第一张图。
+
+
+
+\section{照片墙}
+
+\subsection{删除聊天室图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+个人只能删除自己发布的照片。
+商家和商家的员工（也就是在聊天室加V的用户）可以删除本商家的图片。
+
+\subsection{删除聊天室消息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/shop/del\_gchat} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 聊天室消息的ID\\
+\hline
+ sid  & 字符串 & 必须 & 商家ID\\
+\hline
+user\_ id  & 字符串 & 必须 & 当前登录用户id\\
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+只有商家和商家的员工（也就是在聊天室加V的用户）删除聊天室消息时才调用本接口、以及个人删除自己发的消息时调用。其它用户删除聊天室消息只是删除自己本地的消息。
+
+
+\subsection{对聊天室图片点赞}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/like} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsection{对聊天室图片取消赞}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/dislike} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+个人只能取消自己给的赞。
+
+
+\subsection{对聊天室图片点评}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/comment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+   \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+  \hline
+ sid  & 字符串 & 可选 & 当前用户所在现场的id\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+[2013－9－24] 新增sid，表示发表评论的用户所在现场的id。同时，如果评论者的sid和图片的商家id一致，那么会在聊天室中发布一条动态消息，消息id以COMMENT开头。评论消息的格式和普通图片消息一致。
+
+\begin{figure}[H]
+\begin{verbatim}
+返回的数据结构是评论的数组：
+ id: 评论人的id
+ name: 评论人的名字
+ txt:评论的内容
+ t:时间
+ rid:被回复者的id
+ rname: 被回复者的名字
+\end{verbatim}
+\end{figure}
+
+\subsection{对聊天室图片点评进行回复}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/recomment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+ \hline
+ rid  & 字符串 & 必须 & 被回复者的id\\
+   \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+  \hline
+ sid  & 字符串 & 可选 & 当前用户所在现场的id\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+这里的rid是被回复者的id，而发布回复者的id是从session中自动获取的。
+
+这里的回复其实是针对人的，如果一个人在一张图片下发布了多个评论，那么这里的回复不针对特定的那条评论。
+
+[2013－9－24] 新增sid，表示发表评论的用户所在现场的id。
+
+
+\subsection{对聊天室图片删除点评}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/delcomment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+  \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+个人只能删除自己发的点评。
+
+评论的删除是区分两种情况：删除／隐藏，评论的发布人可以删除，图片的发布人可以隐藏。
+对第三方来说都是删除。
+
+如果一个评论是我发的，同时图也是我发的，那么此时对评论操作就是删除，不需要隐藏。
+
+
+\subsection{对聊天室图片隐藏点评}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photos/hidecomment} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+  \hline
+ uid  & 字符串 & 必须 & 评论的发布者id\\
+   \hline
+ text  & 字符串 & 必须 & 评论的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+只有图片的发布者才能隐藏他人给自己图片发的点评。调用本接口的必须是图片的发布人。
+点评隐藏后只有点评的发布者一人能够看到。
+
+
+\subsection{我的照片墙}
+用户的照片墙由其本人在各个现场照片墙发布的照片组成。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photos/me} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出格式参见：\ref{photowall} 。唯一不同点在于：
+商家照片墙中包含user\_name，指明该照片是谁发的。
+用户照片墙中包含shop\_name，指明该照片是在哪儿拍摄的。
+
+
+\subsection{我的评论}
+获得当前登录用户的评论的照片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photos/my\_comments} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出格式同上。
+
+
+\subsection{查看其它用户的照片墙}
+其它用户的照片墙由其该在各个现场照片墙发布并分享到微博／qq的照片组成。没有分享过的图片看成只在该现场才能看到的图片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photos/users} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ uid  & 整数 & 必须 & 被查看用户的id\\ 
+\hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出格式同上。
+
+
+
+\subsection{其它用户分享到微信}
+看到别人发的照片/问答，分享到自己的微信朋友圈或者微信好友，在客户端完成分享后，调用本接口。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photos/re\_share} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ user\_id  & 字符串 & 必须 & 分享者的用户id\\ 
+  \hline
+ photo\_id  & 字符串 & 必须 & 被分享的图片id\\ 
+ \hline
+ weibo  & 0/1 & 可选  &  是否同步发送到微博\\
+  \hline
+ qq  & 0/1 & 可选  &  是否同步发送到QQ空间\\
+  \hline
+ wx  & 0/1/2/3 & 可选  &  分享到微信: 1个人,2朋友圈, 3都分享了\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+本接口主要用于统计用户和照片的分享数量。分享到微信时，采用url类型，url地址为“http://www.dface.cn/web_photo/show?id=图片id&uid=用户id”。
+\end{verbatim}
+
+
+
+\section{个人聊天时发图}
+
+\subsection{个人聊天时上传图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/photo2s/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ photo[img]  & file & 必须 &  头像文件\\
+ \hline
+ photo[to\_uid]  & 字符串 & 必须 &  接收人的id\\
+\hline
+  photo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+[2014-01-03] 图片上传成功返回值中增加mid字段，表示该图片发送到会话的消息id。
+
+
+
+\subsection{发送消息}
+当图片发送完成后，服务器端发送一个xmpp消息，其中的body内容格式为：
+
+\begin{verbatim}
+[img:$id]
+
+\end{verbatim}
+
+\subsection{在个人聊天时收到消息后获取图片}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photo2s/show} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图；2代表thumb2缩略图，大小为200*200。默认为2。\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：聊天时发图，取消的100*100大小的缩略图。［2012-11-7］
+
+
+\subsection{消息状态}
+和普通的文字消息一样，接收者收到图片后发送状态更新消息（收到／已读）给发送者。发送者将状态显示在图片旁边。
+
+
+\subsection{收到个人聊天图片后转发给好友}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/photo2s/forward} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 & 图片id\\
+\hline
+ user\_id  & 字符串 & 必须 & 转发者的id\\
+\hline
+ to\_uid  & 字符串 & 必须 & 接收者的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+图片转发成功返回值中包含mid字段，表示该图片转发到会话的消息id。
+

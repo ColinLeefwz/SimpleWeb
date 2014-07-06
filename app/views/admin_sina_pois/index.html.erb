@@ -1,0 +1,87 @@
+<h1>sina商家</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<style>
+  p{margin: 7px auto}
+</style>
+
+<%= form_tag '/admin_sina_pois',:method =>:get do %>
+  <p>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :title, params[:title], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    微博大类：
+    <%= select_tag :dt,options_for_select(dt_selector,params[:dt].to_i)  %>
+    poi:<%= text_field_tag :id, params[:id],:size => 20 %>
+  </p>
+  <p>
+    排序：
+    <%= select_tag :sort,options_for_select([['签到用户从多到少',1],['签到用户从少到多',2], ['iso用户从多到少', 3], ['iso用户从少到多', 4]],params[:sort].to_i)  %>
+    每页显示:
+    <%= select_tag :num,options_for_select([20,50, 100, 200],params[:num].to_i)  %>
+  </p>
+  <p>
+    对应商家数据：
+    <%= select_tag :correspond,options_for_select([['所有poi', ''],['所有对应','0'],['只对应商家','1'],['只对应百度商家','2'],['没有对应', '3']],params[:correspond])  %>
+  </p>
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>poi</th>
+    <th>名称</th>
+    <th>城市</th>
+    <th>地址</th>
+    <th>微博大类</th>
+    <th>签到用户</th>
+    <th>iso用户</th>
+    <th>对应商家</th>
+    <th>查看附近</th>
+    <th>添加对应</th>
+
+  </tr>
+
+  <% @sina_pois.each do |poi| %>
+    <tr>
+      <td><%= poi.id  %></td>
+      <td><%= poi.title %></td>
+      <td><%= poi.city %></td>
+      <td><%= poi.address %></td>
+      <td><%= poi.show_dt %></td>
+      <td><%= poi.checkin_user_num %></td>
+      <td><%= poi.iso_num if poi.respond_to?(:iso_num) %></td>
+      <td id="bdn_<%= poi.id %>"><%=  link_correspond_shop(poi) %></td>
+      <td><%=  link_to "附近商家" , "/admin_sina_pois/near?id=#{poi._id}&coll=shop"%></td>
+      <td><a onclick="showAdd($(this),'<%= poi._id %>')" >更改</a></td>
+
+    </tr>
+  <% end %>
+
+
+</table>
+<br/>
+<%= generate_paginate3.html_safe %>
+
+<br/>
+<br/>
+<br/>
+
+<script>
+  function showAdd(obj, poi_id){
+    str = "<input type='text' size='12' id='in_"+ poi_id +"' />"
+    str += "<br/>"
+    str += "<a onclick='ajaxAddBaiduId($(this),\""+ poi_id +"\")'>添加</a>"
+    obj.replaceWith(str)
+  }
+
+  function ajaxAddBaiduId(obj,poi_id){
+    $.post('/admin_sina_pois/ajax_add_baidu_id',{id: poi_id, baidu_id: $("#in_"+poi_id).val()}, function(data){
+      $("#bdn_"+poi_id).replaceWith("<td id='bdn_"+poi_id+"'>"+data['text']+"</td>")
+      obj.parent().replaceWith("<td><a onclick='showAdd($(this),\""+poi_id+"\")' >更改</a></td>")
+    } )
+  }
+</script>

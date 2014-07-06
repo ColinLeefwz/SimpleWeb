@@ -1,0 +1,43 @@
+<script type='text/javascript'>
+
+var user = [];
+
+$(function () {
+    $.getJSON('/shop3_data/user_statistics', function(data) {
+
+            for (i = 0; i < data.length; i++) {
+                user.push([
+                    data[i]
+                ])
+            }
+
+        $('#garcharts').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '用户统计'
+            },
+            xAxis: {
+                categories: ['男',"女",'90后','85后','80后','75后','70后','其他年龄','回头客数','客户总数']
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: '用户统计',
+                data: [user[0],user[1],user[6],user[5],user[4],user[3],user[2],user[7],user[8],user[9]]
+            }]
+        });
+    });
+});
+
+</script>
+
+<!-- <script src="http://code.highcharts.com/stock/highstock.js"></script> -->
+<div id="garcharts" style="height: 400px;width: 800px"></div>

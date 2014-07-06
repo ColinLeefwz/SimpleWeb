@@ -1,0 +1,56 @@
+<h1>新建热点商家</h1>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<%= form_for(@hot, :url => "/admin_hots/create", :remote => true) do |f| %>
+  <p>
+    商家ID:<br />
+		<%= f.number_field :sid, :onblur => "check_shop_name()" %>
+  </p>
+  <p>
+    商家名称:<br />
+		<div id="show_shop_name"></div>
+  </p>
+  <p>
+    有效期:<br />
+    <%= f.date_select :dead_line, selected: Date.today %>
+  </p>
+  <p>
+    排序:<br />
+    <%= f.number_field :od %>
+  </p>
+  <p>
+    显示范围:<br />
+    <%= f.radio_button :city, "all" %>
+		<%= f.label :city, "全国" %>
+    <%= f.radio_button :city, "()" %>
+		<%= f.label :city, "全城" %>
+  </p>
+
+  <p>
+    <%= f.submit "保存", id: "hot-commit" %>
+  </p>
+<% end %>
+
+<script type="text/javascript">
+function check_shop_name() {
+	var sid = $("#hot_sid").val()
+	$.get("/admin_hots/check_shop_name",{id: sid}, function(data){
+		text = data ? data['name'] : "id错误"
+		$("#show_shop_name").replaceWith("<div id = show_shop_name> <span><b>"+ text +"</b></span></div>")
+	});
+}
+$('#hot-commit').click(function(e) {
+	var year = $("#hot_date_array_1i").val()
+	var month = $("#hot_date_array_2i").val()
+	var day = $("#hot_date_array_3i").val()
+	var today = new Date();
+	var select_date = new Date();
+	select_date.setFullYear(year,month,day);
+	if(select_date < today){
+		alert("您的日期设置错误")
+		e.preventDefault()
+	} else {
+		return true
+	}
+});
+</script>

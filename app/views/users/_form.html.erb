@@ -1,0 +1,44 @@
+
+<%= form_for(@user) do |f| %>
+
+  <p>
+    UID<br />
+    <%= f.text_field :wb_uid %>
+  </p>
+  <p>
+    昵称 <br />
+    <%= f.text_field :screen_name  %>
+  </p>
+  <p>
+    友好显示名称<br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    性别<br />
+    <%= f.radio_button :gender, "男" %>男
+    <%= f.radio_button :gender, "女" %>女
+  </p>
+
+  <p>
+    所在地<br />
+    <%= f.text_field :location %>
+  </p>
+  <p>
+    博客地址 <br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    个性化域名 <br />
+    <%= f.text_field :domain %>
+  </p>
+  <p>
+    创建时间<br />
+    <%= f.datetime_select :created_at %>
+  </p>
+  <p>
+    <%= f.submit "提交" %>
+  </p>
+<% end %>
+
+<%= link_to '返回列表', users_path %>

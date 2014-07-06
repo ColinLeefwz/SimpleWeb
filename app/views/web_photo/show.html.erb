@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		<% if @photo.desc.blank? %>
+			<%= @user.name %>在<%= @photo.shop.name %>的分享
+		<% else%>
+			<%=truncate @photo.desc.gsub(/[^\d\s\w\u4e00-\u9fa5.|()；;,，]/, ''), :length => 25 %>
+		<% end %> 
+	</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<meta name="keywords" content="脸脸 现场社交 聊天 签到 交友 APP 关于脸脸" />
+	<meta name="description" content="脸脸是一款基于现场的移动社交产品。通过脸脸，您可以进入您所在场所的虚拟现场，认识与您同在这里的人，与熟悉的或陌生的朋友打招呼、聊天。可以让你在酒吧、机场、车站、校园、楼宇、餐厅、会议、大型活动上认识在同一个现场的TA。" />	
+	<meta name="author" content="www.dface.cn" />
+	<meta name="copyright"  content="Copyright &copy;www.dface.cn 版权所有" />
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<link href="/web/stylesheets/share_photo.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="/web/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+	<div id="Main">
+		<div class="mainleft" id="MainLeft">
+			<%=image_tag Photo.img_url(@photo.id),:class=>"width100p block" %>
+			<% if @photo.is_multi? %>
+			<% @photo.multi_photos[:photos].each_with_index do |url, index| %>
+				<br>
+					<%=image_tag url,:class=>"width100p block" %>
+			<% end %>
+			<% end %> 
+			<% if !@photo.desc.blank? %>
+			<div class="plane">
+				<%= text_to_html @photo.desc%>
+			</div>
+			<% end %> 
+			<div class="plane2">
+				<div class="plane2left">
+					<%= image_tag UserLogo.img_url(@user.head_logo_id, :t1), size: "38x38" %>
+					<span class="wordstyle"><%= @user.name %></span>
+					<span class="wordstyle_time"><%= @photo.cat.strftime("%m-%d %H:%M") %></span>
+				</div>
+				<div class="plane2right">
+					<%= @photo.shop.name %>
+				</div>
+			</div>
+		</div>        
+		<div class="mainright">
+			<a href="http://www.dface.cn" target="_blank"><img src="/images/share_logo.png" alt="" class="logo"/></a>
+			<div class="plane3">
+				<div class="wordstyle mb10 bold">此时此刻，我们在这里</div>
+				脸脸--基于现场的移动社交
+			</div>
+			<div class="plane4">
+				<a href="https://itunes.apple.com/cn/app/lianlian/id577710538" alt="iPhone版" class="btn1">iPhone版下载</a>
+				<a href="http://dface.cn/a/down" alt="android版" class="btn1">android版下载</a>
+				<img src="/images/code2.png" alt="" height="122" class="code2" />
+			</div>
+		</div>	
+	</div>
+	<script type="text/javascript" src="/web/js/public.js"></script>
+</body>
+</html>

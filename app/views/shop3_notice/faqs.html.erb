@@ -1,0 +1,64 @@
+<div class="con2">
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_staffs">员工管理</a></li>
+      <li><a href="/shop3_bindwbs">绑定微博</a></li>
+      <li><a href="/shop3_bans">屏蔽用户</a></li>
+      <li><a href="/shop3_marks">用户评分</a></li>
+      <li  class="hover"><a href="/shop3_notice">公告管理</a></li>
+      <% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
+    </ul>
+  </div>
+	<div class="notice_submenu">
+		<%= link_to "文本模式", "/shop3_notice/text",:class=>"linkbtn"%>
+		<a href="/shop3_notice/photo" class="linkbtn">从商家图片中选择</a>
+		<a href="/shop3_notice/faqs" class="linkbtn2">从商家问答中选择</a>
+		<a href="/shop3_notice/del" class="btn17 l">取消公告</a>
+	</div>
+  <% if @shop_notice && @shop_notice.faq && !params[:e]%>
+    <div class="box4plane2">
+      <div class="box4con1">
+        <%=image_tag( "#{ShopFaq.img_url(@shop_notice.faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgstyle l", :align => "left") unless @shop_notice.faq.img.blank? %>
+        <br/><br/>
+        <div class="box4plane3"><%= @shop_notice.faq.text%></div>
+        <br/><br/>
+        <%= link_to '重新选择问答', "/shop3_notice/faqs?e=1" %>
+      </div>
+    </div>
+  <% else %>
+		<table width="100%" cellspacing="0" cellpadding="0" class="tab2">
+			<tr>
+				<th class="textcenter pl0" width="50">编号</th>
+				<th>标题</th>
+				<th width="100">&nbsp;</th>
+			</tr>
+			<% @shop_faqs.each_with_index do |faq, index| %>
+					<tr>
+						<td align="center"><%= faq.od%></td>
+						<td>
+							<%= faq.title%>
+						</td>
+						<td align="center"><%= link_to "选择", "/shop3_notice/update?faq_id=#{faq.id}" %></td>
+					</tr>
+			<% end %>
+		</table>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }   
+  });
+  $(".tab2 tr:odd").addClass("trbg");
+</script>
+
+
+

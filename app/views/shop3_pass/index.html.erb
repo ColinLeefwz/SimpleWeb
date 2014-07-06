@@ -1,0 +1,58 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_infos">基本设置</a></li>
+      <li class="hover"><a href="/shop3_pass">修改密码</a></li>
+    </ul>
+  </div>
+  <%= form_for(@shop, :url => "/shop3_pass", :html => {:method => 'post'} ) do |f| %>
+    <%if  session_shop.errors.any? %>
+      <% session_shop.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    <%end%>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt40 pt10">
+      <tr>
+        <td width="17%" align="right" valign="top" class="pr20">旧密码</td>
+        <td><%= password_field_tag 'oldpass','',:class => "inputs2 mb10"%>
+			<span class="err"></span>
+		</td>
+      </tr>
+      <tr>
+        <td align="right" valign="top" class="pr20">新密码</td>
+        <td><%= f.password_field :password, :class => "inputs2 mb10"%>
+		<span class="err"></span>
+		</td>
+      </tr>
+      <tr>
+        <td align="right" valign="top" class="pr20">确认密码</td>
+        <td><%= f.password_field :password_confirmation, :class => "inputs2 mb10"%>
+			<span class="err"></span>
+		</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" name="Submit" value="提 交" class="btn2 l"/>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+<script src="/newbackstage/js/shop_info.js" type="text/javascript"></script>
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+  
+	$(".tab2 tr:odd").addClass("trbg");
+});
+</script>

@@ -1,0 +1,33 @@
+<h1>每日注册用户机型统计</h1>
+<table>
+  <tr>
+    <th>日期</th>
+    <th>iso</th>
+    <th>安卓</th>
+  </tr>
+
+  <% @user_device_stats.each do |user_device_stat| %>
+    <tr>
+      <td><%= user_device_stat._id %></td>
+      <td>
+        今日新增:  <%= user_device_stat.cios %>
+        <br />
+        增长最快:
+         <%= user_device_stat.ios.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:   #{k[1].to_i}"}.take(3).join(';')  if user_device_stat.ios %>
+      </td>
+      <td>
+        今日新增:  <%= user_device_stat.card %>
+        <br />
+        增长最快:        
+         <%= user_device_stat.ard.sort{|s,f| f.last <=> s.last}.map{|k| "#{k[0]}:   #{k[1].to_i}"}.take(3).join(';') if user_device_stat.ard %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
+
+
+
+<%= generate_paginate3.html_safe %>
+

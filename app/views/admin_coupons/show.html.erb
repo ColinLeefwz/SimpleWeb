@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Shop:</b>
+  <%= @coupon.shop_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @coupon.name %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @coupon.desc %>
+</p>
+
+<p>
+  <b>Endt:</b>
+  <%= @coupon.endt %>
+</p>
+
+<form method="post" action="./sendto">
+	输入用户id：
+	<input type="hidden" name="coupon_id" value="<%= @coupon.id %>">
+	<input type="text" name="user_id" size="25">
+	<input type="submit" name="submit" value="发送优惠券">	
+</form>
+
+
+<%= link_to 'Edit', edit_coupon_path(@coupon) %> |
+<%= link_to 'Back', coupons_path %>
+
+

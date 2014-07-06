@@ -1,0 +1,31 @@
+
+<table>
+  <tr>
+    <th>ip</th>
+    <th>截止日期</th>
+    <th>商家</th>
+    <th>最后签到时间</th>
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td>
+        <%= @checkin_ip_stat.id %>
+      </td>
+      <td>
+        <%= 1.days.ago.to_date %>
+      </td>
+      <td>
+        <%= Shop.find_by_id(shop["sid"]).name %>
+      </td>
+      <td>
+        <%= id_to_time(shop['time']).to_date %>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+
+
+
+<%= generate_paginate.html_safe %>

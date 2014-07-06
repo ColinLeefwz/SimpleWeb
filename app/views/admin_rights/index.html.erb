@@ -1,0 +1,21 @@
+<h1>权限管理</h1>
+<table border="1">
+  <tr>
+    <th>管理员</th>
+    <th>权限</th>
+    <th></th>
+  </tr>
+
+  <% @rights.each do |right| %>
+    <tr>
+      <td><%= right.admin.name%></td>
+      <td><%= show_right(right.data) %></td>
+      <td><%= link_to "编辑", "/admin_rights/edit?id=#{right.id}" %></td>
+    </tr>
+
+  <% end %>
+</table>
+<br />
+<br />
+<%= generate_paginate3.html_safe %>
+<%= link_to "新建权限", "/admin_rights/new" %>

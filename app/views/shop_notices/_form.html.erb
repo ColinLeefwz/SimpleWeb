@@ -1,0 +1,30 @@
+<%= form_for(@shop_notice) do |f| %>
+  <% if @shop_notice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shop_notice.errors.count, "error") %> prohibited this shop_notice from being saved:</h2>
+
+      <ul>
+      <% @shop_notice.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :shop_id %><br />
+    <%= f.number_field :shop_id %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ord %><br />
+    <%= f.text_field :ord %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

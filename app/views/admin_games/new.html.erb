@@ -1,0 +1,13 @@
+<br/>
+<br/>
+<h2>
+  配置游戏后台
+</h2>
+
+<%= form_tag "/admin_games/create" do  %>
+  商家id <%= text_field_tag :id %>
+  <br/>
+  <br/>
+  <%= submit_tag "增加"  %>
+
+<% end %>

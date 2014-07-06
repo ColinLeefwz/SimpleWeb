@@ -1,0 +1,22 @@
+<h1>用户每日活跃度分析</h1>
+
+<br/>
+<table border="1">
+  <tr>
+    <th>日期</th>
+    <th>男性平均头像数</th>
+    <th>男性平均关注数</th>
+    <th>女性平均头像数</th>
+    <th>女性平均关注数</th>
+  </tr>
+  <% @user_days_active.each do |user_days_active| %>
+    <tr>
+      <td><%= user_days_active._id if user_days_active._id %></td>
+      <td><%= user_days_active.mulogo.round(3) if user_days_active.mulogo %></td>
+      <td><%= user_days_active.mufollow.round(3) if user_days_active.mufollow %></td>
+      <td><%= user_days_active.fulogo.round(3) if user_days_active.fulogo %></td>
+      <td><%= user_days_active.fufollow.round(3) if user_days_active.fufollow%></td>
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>

@@ -1,0 +1,71 @@
+<div class="title2"><h2><%= @day||'今日' %>优惠券使用/下载统计</h2></div>
+<%= form_tag '/shop_coupon_reports',:method =>:get, :onsubmit => "return check_day()" do %>
+  <ul class="formlist" class="mt0">
+    <li>
+      <label>日期&nbsp;</label>
+      <%= text_field_tag :day, params[:day]|| Time.now.to_date, :class => "txt l"%>
+      <input type="submit" value="查 询" class="btn1 l ml20 mt5"/>
+    </li>
+  </ul>
+<% end %>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="30%" align="left">优惠券</th>
+    <th width="30%" align="left">优惠券名称</th>
+    <th width="20%" align="center">下载</th>
+    <th width="20%" align="center">使用</th>
+  </tr>
+  <tr>
+    <% @report.each do |report|   %>
+      <td>
+        <%=link_to image_tag(report[0].img.url(:t1), :class=>"imgs4"), report[0].img.url, :target => "blank" %>
+      </td>
+      <td>
+        <%= report[0].name %>
+      </td>
+      <td align="center">
+        <%= link_to report[1], "/shop_coupons/newly_down?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}"%>
+      </td>
+      <td align="center">
+        <%=link_to report[2], "/shop_coupons/newly_use?cid=#{report[0].id}&date=#{@day|| Time.now.to_date}" %>
+      </td>
+    </tr>
+  <% end %>
+
+  <% if (dcount = @report.sum{|r| r[1]}) > 0  %>
+    <tr>
+      <td colspan="2">累计</td>
+      <td align="center">
+        <%=link_to dcount, "/shop_coupons/newly_down?date=#{@day|| Time.now.to_date}"%>
+      </td>
+      <td align="center">
+        <%=link_to @report.sum{|r| r[2]}, "/shop_coupons/newly_use?date=#{@day|| Time.now.to_date}"%>
+      </td>
+    </tr>
+  <% end  %>
+</table>
+
+<br/>
+
+<%= button_to '快速导出今日统计数据', "/shop_coupon_reports/csv_export" %>
+定制导出
+<%= form_tag "/shop_coupon_reports/csv_export" do  %>
+  开始日期:<%= text_field_tag :stime,@day||Time.now.to_date, :size => 10  %>
+  结束日期:<%= text_field_tag :etime,@day||Time.now.to_date, :size => 10  %>
+  优惠券全称:<%= text_field_tag :cname  %>
+  <%= submit_tag "导出", :onclick => "return submit_export();" %>
+<% end %>
+
+<script>
+  function submit_export(){
+    var patrn=/^20\d\d-(0\d|1[0-2])-(0\d|[12]\d|[3][01])$/;
+    if(!patrn.exec($('#stime').val())){alert('开始时间不是有效的日期'); return false;}
+    if(!patrn.exec($('#etime').val())){alert('结束时间不是有效的日期'); return false;}
+  }
+
+  function check_day(){
+    var patrn=/^20\d\d-(0\d|1[0-2])-(0\d|[12]\d|[3][01])$/;
+    if(!patrn.exec($('#day').val())){alert('查询日期不是有效的日期(如:2013-01-01)'); return false;}
+  }
+  LeftMenu(23);
+</script>

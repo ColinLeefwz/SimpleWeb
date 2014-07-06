@@ -1,0 +1,39 @@
+<h1>每日用户新增统计  <a href="/admin_user_days/charts">查看图表</a></h1>
+
+<table>
+  <tr>
+    <th>时间</th>
+    <th>男性用户数</th>
+    <th>女性用户数</th>
+    <th>新浪微博</th>
+    <th>QQ</th>	
+    <th>手机</th>
+    <th>总用户数</th>
+  </tr>
+  <% @user_days.each do |user_day| %>
+    <tr>
+      <td>
+        <%= user_day._id   %>
+      </td>
+      <td>
+        <%=link_to user_day.mtotal.to_i, "/admin_user_days/users?id=#{user_day.id}&gender=1"   %>
+      </td>
+      <td>
+        <%=link_to user_day.ftotal.to_i,"/admin_user_days/users?id=#{user_day.id}&gender=2"   %>
+      </td>
+      <td>
+        <%= user_day.wb %>
+      </td>
+      <td>
+        <%= user_day["qq"].to_i  %>    （ <%= user_day.qq_ratio %> ） 
+      </td>
+      <td>
+        <%= user_day.phone %>
+      </td>
+      <td>
+        <%=link_to user_day.total.to_i, "/admin_user_days/users?id=#{user_day.id}"   %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>

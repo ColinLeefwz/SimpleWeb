@@ -1,0 +1,45 @@
+<h1>热门管理</h1>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+
+<%=button_to '新建', '/admin_hots/new'%>
+
+<table border="1">
+  <tr>
+    <th>商家id</th>
+    <th>商家名称</th>
+    <th>有效期</th>
+    <th>排序值</th>
+    <th>显示区域</th>
+    <th>操作</th>
+
+    <% if session[:admin_id].to_s == '51f77abc20f318bc2b000001' %>
+      <th></th>
+    <% end %>
+
+  </tr>
+
+	<% @hots.each do |hot| %>
+		<tr>
+			<td><%=link_to hot.sid.to_i, "/admin_shops/show?id=#{hot.sid.to_i}" %></td>
+			<td><%= hot.show_shop_name %></td>
+			<td><%= hot.dead_line %></td>
+			<td><%= hot.od %></td>
+			<td><%= hot.show_city %></td>
+			<td>
+				<%= link_to("删除", "/admin_hots/delete?id=#{hot.id}", id: "hot-delete") %>
+				<%= link_to("编辑", "/admin_hots/edit?id=#{hot.id}") %>
+			</td>
+
+	<% end %>
+</table>
+
+<script type="text/javascript">
+$('a#hot-delete').click(function(e) {
+	var answer = confirm("确定要将该商店从热点推荐中删除?")
+	if (answer){
+	  return true;
+	} else {
+		e.preventDefault();
+	}
+});
+</script>

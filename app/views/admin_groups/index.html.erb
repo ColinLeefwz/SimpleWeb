@@ -1,0 +1,55 @@
+<h1>群组</h1>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<table border="1">
+  <tr>
+    <th>名称</th>
+    <th>对应商家</th>
+    <th>认证提示信息</th>
+    <th>密码</th>
+    <th>开始时间</th>
+    <th>结束时间</th>
+    <th>所属旅行社</th>
+    <th>所属路线</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+
+
+  <% @groups.each do |group| %>
+    <tr>
+      <td><%= group.name %></td>
+      <td><%=link_to group.shop_name||'', "/admin_shops/show?id=#{group.sid}", :target => "_blank" %></td>
+      <td><%= group.hint %></td>
+      <td><%= group.pass %></td>
+      <td><%= group.fat %></td>
+      <td><%= group.tat %></td>
+      <td><%= group.admin_shop_name %></td>
+      <td><%= group.line_name %></td>
+      <td><%= link_to "详情", "/admin_groups/show?id=#{group.id}"%></td>
+      <td><%= link_to "编辑", "/admin_groups/edit?id=#{group.id}"%></td>
+      <td>
+        <%= link_to('过期', "javascript:void(0)", :gid => group.id, :class => "aValid")  unless group.invaildt %>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+<br />
+<%= link_to "新建群组", "/admin_groups/new" %>
+<br />
+<%= generate_paginate3.html_safe %>
+
+
+
+<script>
+  $(document).ready(function(){
+    $("td .aValid").click(function(){
+      var obj = $(this)
+      $.get("/admin_groups/invaild", {id: obj.attr('gid')}, function(){
+        obj.replaceWith("已过期")
+      })
+    })
+  })
+</script>

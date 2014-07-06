@@ -1,0 +1,80 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">拓展功能</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_lines">线路图</a></li>
+      <li><%= link_to "旅行团", "/shop3_groups" %></li>
+      <li class="hover"><a>合作商家</a></li>
+      <li><%= link_to "合作商家评分", "/shop3_partners/mark" %></li>
+    </ul>
+  </div>
+  <%= form_tag  '/shop3_partners/create'  do  %>
+
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="tab1 mt40">
+      <tr>
+        <td valign="middle" align="right" class="pr20"></td>
+        <td >
+
+        </td>
+        <td  width='300'></td>
+      </tr>
+
+      <tr>
+        <td valign="middle" align="right" class="pr20">商家id</td>
+        <td >
+          <%= text_field_tag "ids[]",'', :class => "inputs4", :onblur => "find_shop($(this))" %>
+        </td>
+        <td  width='300'></td>
+      </tr>
+
+      <tr>
+        <td valign="middle" align="right" class="pr20">
+          <a  class="blue3 pointer" id="aAddShop">增加商家</a>
+        </td>
+      </tr>
+
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" class="btn2 l" value="提 交" name="Submit">
+          <a href="/shop3_partners" class="btn3 l ml20">取 消</a></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+
+
+<script>
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+  });
+  function find_shop(obj)
+  {
+    $.get('/shop_partners/find_shop', {id:  obj.val()}, function(data){
+      if(data['text']){
+        str="<td><span style='margin-right: 10px;' >"+data['text']+"</span><a href='javascript:void(0)' onclick='$(this).parent().parent().remove()' >删除</a>"
+        str += "<input type='hidden' name='errids[]'  value='"+ obj.val() +"'/></td>"}
+      else{
+        str="<td width='300'><span>"+data['name'] + "</span>"
+        str+="<span style='margin-left: 10px;' >"+data['city'] + "</span></td>"
+      }
+      obj.parent().next().replaceWith(str);
+    })
+  }
+
+  $(document).ready(function(){
+    $("#aAddShop").click(function(){
+      str='<tr><td class="pr20" align="right" valign="middle">商家id</td><td>'
+      str+='<input class="inputs4" type="text"  onblur="find_shop($(this))" name="ids[]"></td><td></td></tr>'
+      $(this).parent().parent().before(str)
+    })
+  })
+
+</script>

@@ -1,0 +1,85 @@
+<h1>举报用户</h1>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<%= form_tag '/admin_blacks',:method =>:get do %>
+  <p>
+    处理：<%= select_tag :flag,options_for_select([['未处理', 0],['已处理',1],['所有',2]], params[:flag].to_i)  %>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>用户</th>
+    <th>黑名单</th>
+    <th>是否举报</th>
+    <th>聊天记录</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @user_blacks.each do |user_black| %>
+    <tr>
+      <td>
+        <%=image_tag(user_black.user.head_logo.img.url(:t1), :size => "50x50") if user_black.user && user_black.user.head_logo%>
+        <%= link_to user_black.user.try(:name), "/admin_users/show?id=#{user_black.uid}" %>
+        <%= user_black.user.try(:show_gender) %>
+      </td>
+      <td>
+        <%=image_tag(user_black.buser.head_logo.img.url(:t1), :size => "50x50") if user_black.buser && user_black.buser.head_logo%>
+        <%= link_to user_black.buser.try(:name), "/admin_users/show?id=#{user_black.bid}" %>
+        <%= user_black.buser.try(:show_gender) %>
+      </td>
+      <td>
+        <%= link_to user_black.report.to_i ==1 ? "是" : "否" %>
+      </td>
+      <td>
+        <%= link_to " 聊天纪录 ", "/admin_users/human_chat?id=#{user_black.uid.to_s}&uid=#{user_black.bid.to_s}" %>
+      </td>
+      <td>
+        <%= button_to(" 封杀'#{user_black.buser.try(:name)}'",{}, {:onclick => "return kill($(this), {id: '#{user_black.bid}', ubid: '#{user_black.id}', name: '#{user_black.buser.try(:name)}'})"}) unless user_black.buser.try("forbidden?") %>
+        <%= button_to(" 解封'#{user_black.buser.try(:name)}'",{}, {:onclick => "return unkill($(this), {id: '#{user_black.bid}', ubid: '#{user_black.id}', name: '#{user_black.buser.try(:name)}'})"}) if user_black.buser.try("forbidden?") %>
+      </td>
+      <td>
+        <%= button_to("忽略",{}, :onclick => "return ignore($(this), '#{user_black.id}')") unless user_black.flag  %>
+      </td>
+    </tr>
+
+
+  <% end %>
+</table>
+<br />
+<%= generate_paginate3.html_safe %>
+
+
+<script>
+  function kill(obj, param){
+    if(confirm("确定封杀么？")){
+      $.get("/admin_users/kill",param, function() {
+        str = "<input type='submit' value=' 解封\""+ param.name +"\"' onclick='return unkill($(this),"+ JSON.stringify(param) + ")'>"
+        obj.parent().replaceWith(str)
+      });
+    }
+    return false;
+  }
+
+  function unkill(obj, param){
+    if(confirm("确定解封么？")){
+      $.get("/admin_users/unkill",{id: param.id}, function() {
+        str = "<input type='submit' value=\" 封杀'" + param.name + "'\" onclick='return kill($(this), " + JSON.stringify(param) +  ")'>"
+        obj.parent().replaceWith(str)
+      });
+      return false
+    }
+  }
+
+  function ignore(obj,id){
+    if(confirm("确定忽略么？")){
+      $.get("/admin_blacks/ignore",{id: id}, function() {
+        obj.parent().parent().parent().parent().remove()
+      });
+      return false
+    }
+  }
+  
+</script>
+

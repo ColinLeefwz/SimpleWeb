@@ -1,0 +1,116 @@
+<div id="BG"></div>
+<div id="DelDiv">
+	<center><br/>确定删除这名员工？</center>
+	<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+	<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li class="hover"><a href="/shop3_staffs">员工管理</a></li>
+      <li><a href="/shop3_bindwbs">绑定微博</a></li>
+      <li><a href="/shop3_bans">屏蔽用户</a></li>
+      <li><a href="/shop3_marks">用户评分</a></li>
+      <li><a href="/shop3_notice">公告管理</a></li>
+	 <% if session_shop.has_branch? %> <li><a href="/shop3_branchs">分店列表</a></li><%end%>
+    </ul>
+    <div class="r wordstyle">
+      <!--           <form method="post" action="">
+                  显示&nbsp;
+                  <select class="p3" name="select">
+                    <option value="10">10</option>
+                    <option value="10">20</option>
+                    <option value="10">30</option>
+                  </select>
+                  &nbsp;条/记录
+                </form> -->
+      <a href="/shop3_staffs/new" class="btn12 r mr10">从签到中添加</a>
+    </div>
+  </div>
+  <form method="post" action=""/>
+  <!--           <div class="search">
+            搜索
+            <select class="p3 mlr10" name="select">
+              <option value="全部">全部</option>
+              <option value="用户名">用户名</option>
+              <option value="时间">时间</option>
+            </select>
+            <input type="text" class="inputs5">
+            <input type="submit" class="btn6 ml10" value="提 交">
+          </div> -->
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2">
+    <tr id="Tr0">
+      <th width="842">用户名</th>
+      <th width="303">最近签到</th>
+      <th width="227">&nbsp;</th>
+    </tr>
+    <% @staffs.each_with_index do |staff, index| %>
+      <tr id="Tr<%= index+1%>">
+        <td valign="middle">
+          <%= link_to image_tag(UserLogo.img_url(staff.user.head_logo_id, :t1),:class=>"imgstyle", :align => "left"),"/shop3_checkins/user?uid=#{staff.user_id}"  %>
+          <%= link_to  staff.user.try(:name)||'' , "/shop3_checkins/user?uid=#{staff.user_id}",:class => "f14" %>
+          <img align="absmiddle" class="ml10" src=<%= staff.user.gender.to_i==1?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %> /><br/>
+
+          年龄：<%= staff.user.age %><br/>
+          签到次数：<%=link_to staff.checkin_count(staff.user_id),"/shop3_checkins?uid=#{staff.user_id}" %>次
+		  </td>
+        <td>
+          <%= staff.user.last_checkin(session[:shop_id]).cat.strftime("%Y-%m-%d %H:%M:%S") %>
+        </td>
+        <td width="227" align="center">
+          <%= link_to "历史签到", "/shop3_checkins?uid=#{staff.user_id}",:class => "ns1" %>
+          <%=link_to '',  'javascript:void(0)',:onclick => "ajaxDel('#{staff.id}','#{index+1}');" ,:class => "del"%>
+        </td>
+      </tr>
+
+    <% end %>
+  </table>
+  <%= generate_paginate.html_safe %>
+</div>
+
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	$(".tab2 tr:odd").addClass("trbg");
+});
+
+function ajaxDel(id,index){
+	var top;
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if(documentHeight<=windowHeight){
+		$("#BG").css({"height":windowHeight+"px","display":"block"});
+	}else{
+		$("#BG").css({"height":documentHeight+"px","display":"block"});
+	}
+	$("#DelDiv").css("display","block");
+	top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+	$("#DelDiv").css({"top":top+"px","display":"none"});
+	$("#DelDiv").fadeIn(600);
+
+	$("#DelBtn").click(function(){
+		$.post("/shop_staffs/ajax_delete_staff",{id: id}, function() {
+			$("#BG, #DelDiv").css("display","none");
+			$("#Tr"+index).fadeOut(300,function(){
+				$(this).remove();
+			});
+		});
+	});
+}
+
+
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
+</script>

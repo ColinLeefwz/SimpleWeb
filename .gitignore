@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /db/.seeds.rb.swo
 /app/views/layouts/.application.html.haml.swp
 /app/views/shared/._header.html.haml.swp
@@ -28,3 +29,51 @@ coverage
 
 # Ignore mina config file
 /config/deploy.rb
+=======
+Thumbs.db
+dump.rdb
+build
+/tmp
+.DS_Store
+*.apk
+*.ipa
+*.xcuserstate
+*.rails2
+*.pyc
+database.yml
+db/schema.rb
+# git update-index --assume-unchanged /home/dooo/bodu_server/config/environment.rb
+*.log
+log/
+*.bak
+*.swp
+*.lock
+DFace/DerivedData/*
+DFace/DFace.xcodeproj/xcuserdata/*
+DFace/DFace.xcodeproj/project.xcworkspace/xcuserdata/*
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/en.js
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/zh-cn.js
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/lang/zh-tw.js
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/readme.txt
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/datePicker.gif
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/default/datepicker.css
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/default/img.gif
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/WdatePicker.css
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/bg.jpg
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/datepicker.css
+public/javascripts/My97DatePicker/%BF%AA%B7%A2%B0%FC/skin/whyGreen/img.gif
+
+nbproject/*
+tmp/*
+public/system/*
+public/coupon/*
+public/uploads/*
+public/*.mp3
+ShopsNearby2/ShopsNearby2.xcodeproj/project.xcworkspace/
+ShopsNearby2/ShopsNearby2.xcodeproj/xcuserdata/
+latex/*.aux
+latex/*.out
+latex/*.toc
+latex/*.synctex.gz
+
+>>>>>>> b8c272e31d97492bb030400d7034cb2d7a03ce34

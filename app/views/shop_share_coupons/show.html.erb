@@ -1,0 +1,68 @@
+<div class="title2"><h2>优惠券详情</h2></div>
+<style>
+  li span {margin-left: 10px}
+</style>
+<div id="Notice" class="notice none"></div>
+<% if @coupon.img.blank? %>
+  <div id="imgText">
+    <div class="coupon">
+      <div class="btns" style="background: url('/images/btn/coupon.png') repeat scroll left top transparent;"></div>
+      <div class="rdiv" >
+        <div class = 'txt' style="border: none"><%= @coupon.name %></div>
+        <div class = 'atxt' style="border: none"><%= @coupon.desc.gsub("\r\n","<br/>").html_safe %></div>
+      </div>
+    </div>
+    <ul class="formlist">
+      <li>
+        <label style="width: 160px;">发放规则:</label><span class="right" style="width: 120px"><%= @coupon.show_rule %></span>
+      </li>
+      <li>
+        <label style="width: 160px;">关键字:</label><span class="right"><%= @coupon.text %></span>
+      </li>
+      <li>
+        <label style="width: 160px;">使用流程:</label>
+        <span class="right" style="width: 400px;"><%= ['展示优惠券，点击后既代表使用了','展示优惠券，点击后按要求输入内容，然后确定使用'][@coupon.hint.blank? ? 0 : 1] %></span>
+      </li>
+      <% unless @coupon.hint.blank? %>
+        <li>
+          <label style="width: 160px;">使用时输入内容的提示:</label>
+          <span class="right" style="width: 300px;"><%= @coupon.hint%></span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<%else%>
+  <div class="coupon">
+    <div class="adiv" style="background:url('<%= @coupon.img%>') center center no-repeat;"></div>
+  </div>
+  <ul class="formlist">
+    <% if @coupon.t == 2 %>
+      <li>
+        <label style="width: 160px;">标题:</label>
+        <span class="right" style="width: 300px;"><%= @coupon.name%></span>
+      </li>
+    <% end  %>
+
+    <li>
+      <label style="width: 160px;">发放规则:</label>
+      <span class="right" style="width: 120px"><%= @coupon.show_rule %></span>
+    </li>
+    <li>
+      <label style="width: 160px;">关键字:</label>
+      <span class="right"><%= @coupon.text %></span>
+    </li>
+    <li>
+      <label style="width: 160px;">使用流程:</label>
+      <span class="right" style="width: 400px;"><%= ['展示优惠券，点击后既代表使用了','展示优惠券，点击后按要求输入内容，然后确定使用'][@coupon.hint.blank? ? 0 : 1] %></span>
+    </li>
+    <% unless @coupon.hint.blank? %>
+      <li>
+        <label style="width: 160px;">使用时输入内容的提示:</label>
+        <span class="right" style="width: 300px;"><%= @coupon.hint%></span>
+      </li>
+    <% end %>
+  </ul>
+  <div class="clear1"></div>
+<% end %>
+<%= link_to '返回列表', "/shop_share_coupons", :class=>"btn6 r" %>
+<script>LeftMenu(6);</script>

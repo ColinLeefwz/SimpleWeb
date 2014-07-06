@@ -1,0 +1,25 @@
+
+<%= form_for(@channel, {:url => "/admin_channels_desc/update"} ) do |f| %>
+<%= hidden_field_tag :id, @channel.id %>
+  <div class="field">
+    渠道号：<br />
+    <%= f.text_field :num %>
+  </div>
+
+  <br/>
+  <div class="field">
+    使用者：<br />
+    <%= f.text_field :who %>
+  </div>
+  <br/>
+  <div class="field">
+    用途：<br />
+    <%= f.text_field :where %>
+  </div>
+  <div class="field">
+    <%= f.check_box :type %>是否有中间页
+  </div>
+  <br/>
+  <%= f.submit '提交' %>
+  <button href="/admin_channels_desc">取消</button>
+<% end %>

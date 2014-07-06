@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1, maximum-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-itunes-app" content="app-id=577710538,app-argument=dface://login/" />
+<meta http-equiv="mobile-agent" content="format=xhtml; url=http://dface.cn/mini.html" />
+<title>亿络E500 行车记录仪</title>
+<link rel="stylesheet" href="/xcy/css/public.css" type="text/css" media="screen"/>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js" language="javascript" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="main">
+	<img src="/xcy/images/pic1.jpg"/>
+	<div class="box1">
+		<h1>亿络E500 行车记录仪 1080P全高清 超广角</h1>
+		<table>
+			<tr>
+				<td class="gray f14">价格： <span class="ws">¥618</span></td>
+				<td colspan="2"><span class="bg">购买时请输入优惠码才能享受该价格</span></td>
+			</tr>
+			<tr>
+				<td width="30%">原价： <span class="ws2">¥818</span></td>
+				<td width="30%">邮费：¥0</td>
+				<td>已售989笔</td>
+			</tr>
+			<tr>
+				<td colspan="3"><span class="bg2">价格比较：京东 818元，天猫亿络旗舰店 811元</span></td>
+			</tr>
+		</table>
+	</div>
+	<ul class="menu mt10">
+		<li onclick="OpenWindow(0)" class="hover">产品信息</li><li onclick="OpenWindow(1)">规格参数</li>
+	</ul>
+	<div class="plane" id="Box0">
+		<div class="line"></div>
+		<center><a href="/xcy/images/pic2_big.jpg" target="_blank"><img src="/xcy/images/pic2.jpg"/></a></center>
+		<center class="mb10"><a href="/xcy/images/pic11_big.jpg" target="_blank"><img src="/xcy/images/pic11.jpg"/></a></center>
+		<center class="mb10"><a href="/xcy/images/pic9_big.jpg" target="_blank"><img src="/xcy/images/pic9.jpg"/></a></center>
+		<center class="mb20"><a href="/xcy/images/pic10_big.jpg" target="_blank"><img src="/xcy/images/pic10.jpg"/></a></center>
+	</div>
+	<div class="plane none" id="Box1">
+		<div class="line"></div>
+		<table border="0" cellspacing="0" cellpadding="0" width="100%" class="tab1">
+			<tr>
+				<td align="right" valign="middle" width="80"><b>主控芯片：</b></td>
+				<td>安霸A2芯片</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><b>拍摄像素：</b></td>
+				<td>300万</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><b>LCD液晶屏：</b></td>
+				<td>2.7寸</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><b>广 角：</b></td>
+				<td>140</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><b>CMOS传感器：</b></td>
+				<td>宽动态低照度AR0330</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><b>高清夜视：</b></td>
+				<td>支持</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><b>CMOS传感器：</b></td>
+				<td colspan="3">宽动态低照度AR0330</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><b>移动侦测&nbsp;&nbsp;<br/>
+			  [停车监控]：</b></td>
+				<td colspan="3">支 持</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><b>分辨率/&nbsp;&nbsp;<br/>
+			  拍摄帧率：</b></td>
+				<td colspan="3">全高清：1920 * 1080 30帧/每秒<br/>
+				高清：1280 * 720 60帧/每秒
+				</td>
+			</tr>
+			</table>
+	</div>
+	<div class="plane2">
+		<form action="./buy.html" method="get">
+			<input type="text" class="texts" value="输入200元优惠码"/>
+			<button class="ml5 submits">立即购买</button>
+		</form>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	$("input.texts").click(function(){
+		if($(this).val()=="输入200元优惠码"){
+			$(this).val("");
+		}
+	}).blur(function(){
+		if($(this).val()==""){
+			$(this).val("输入200元优惠码");
+		}
+	});
+});
+function OpenWindow(id){
+	$("ul.menu li").removeClass("hover");
+	$("div.plane").addClass("none");
+	$("ul.menu li").eq(id).addClass("hover");
+	$("div.plane").eq(id).removeClass("none");
+}
+</script>
+</body>
+</html>

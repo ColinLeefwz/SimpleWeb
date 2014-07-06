@@ -1,0 +1,118 @@
+<div id="BG"></div>
+<div id="DelDiv">
+	<center><br/>确定删除这个账号？</center>
+	<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+	<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_staffs">员工管理</a></li>
+      <li class="hover"><a href="/shop3_bindwbs">绑定微博</a></li>
+      <li><a href="/shop3_bans">屏蔽用户</a></li>
+      <li><a href="/shop3_marks">用户评分</a></li>
+      <li><a href="/shop3_notice">公告管理</a></li>
+	 <% if session_shop.has_branch? %> <li><a href="/shop3_branchs">分店列表</a></li><% end %>
+    </ul>
+  </div>
+  <% if @bind_wb.new_record? %>
+    <%= form_for(@bind_wb, :url => '/shop3_bindwbs/create',:html => {  :id => 'cform' } ) do |f| %>
+      <table width="750" border="0" cellspacing="0" cellpadding="0" class="tab1 mt20">
+	    <tr id="MesTr1" class="none">
+          <td colspan="2" align="center" class="orange1"><%= flash[:notice] %></td>
+        </tr>
+        <tr id="MesTr2">
+          <td colspan="2" align="center" class="green1">您还没有绑定微博,现在就来绑定吧</td>
+        </tr>
+        <tr>
+          <td width="17%" align="right" valign="top" class="pr20">微博登录名</td>
+          <td><%= f.text_field :login_name, :class => "inputs2 mb10 l"%>
+		       <span class="gay4 ml10 l">如:lianlian@126.com</span>
+		  </td>
+        </tr>
+
+        <tr>
+          <td width="17%" align="right" valign="top" class="pr20">微博UID</td>
+          <td><%= f.text_field :wb_uid, :class => "inputs2 mb10 l"%>
+		  <span class="gay4 ml10 l">如:123456. 来自:http://weibo.com/u/123456</span>
+		  </td>
+        </tr>
+
+        <tr>
+          <td width="17%" align="right" valign="top" class="pr20">微博昵称</td>
+          <td><%= f.text_field :name, :class => "inputs2 mb10 l"%><span class="gay4 ml10 l">如: 脸脸</span></td>
+        </tr>
+
+        <tr>
+          <td>&nbsp;</td>
+          <td><input type="submit" name="Submit" value="提 交" class="btn2 l"/> </td>
+        </tr>
+      </table>
+    <%  end %>
+
+  <%  else %>
+    <table width="100%" cellspacing="0" cellpadding="0" class="tab2">
+      <tr id="Tr0">
+        <th width="487">微博ID</th>
+        <th width="377">登录名</th>
+        <th width="244">微博昵称</th>
+        <th width="264">&nbsp;</th>
+      </tr>
+      <tr id="Tr1">
+        <td valign="middle"><%= @bind_wb.wb_uid %></td>
+        <td><%= @bind_wb.login_name %></td>
+        <td width="244" align="center"><%= @bind_wb.name %></td>
+        <td width="264" align="center">
+          <%= link_to "微博", @bind_wb.weibo_home, :target => "_blank", :class=>"ns1"%>
+			<a onclick="Del();" class="del" href="javascript:void(0)" title="解除"></a>
+		  </td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+
+<script src="/newbackstage/js/shop_info.js" type="text/javascript"></script>
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+  
+	$(".tab2 tr:odd").addClass("trbg");
+
+	if($("#MesTr1 td").html()!=""){
+		$("#MesTr1").removeClass();
+		$("#MesTr2").addClass("none");
+	}
+});
+function Del(){
+	var top;
+	documentHeight=$(document).height();
+	windowHeight=$(window).height();
+	if(documentHeight<=windowHeight){
+		$("#BG").css({"height":windowHeight+"px","display":"block"});
+	}else{
+		$("#BG").css({"height":documentHeight+"px","display":"block"});
+	}
+	$("#DelDiv").css("display","block");
+	top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+	$("#DelDiv").css({"top":top+"px","display":"none"});
+	$("#DelDiv").fadeIn(600);
+
+	$("#DelBtn").click(function(){
+		window.location.href="/shop3_bindwbs/del";
+	});
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
+</script>

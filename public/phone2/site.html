@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=yes, target-densitydpi=device-dpi">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+	<script src="js/jquery-1.6.2.min.js"></script>
+	<script src="js/public.js"></script>
+</head>
+<body>
+<div id="main">
+	<div id="header">
+		<h1>现场</h1>	<a href="chat2.html" class="tbtn1 pl15" title="聊天室"></a>	<a href="#" class="tbtn2 pr15" title="聊天室" id="show_droplist"></a>
+		
+		<div id="droplist">
+			<div class="top"></div>
+			<ul>
+				<li><a href="#">定位当前位置</a></li>
+				<li><a href="#">88保俶路店</a></li>
+				<li><a href="#">QUEEN保俶路店</a></li>
+				<li><a href="#">卜家黑鱼馆</a></li>
+				
+			</ul>
+			<div class="bottom"></div>
+		</div>
+	<script>
+		$(document).ready(function(){
+			$("#show_droplist").toggle(function(){
+				$("#droplist").fadeIn(250);
+			},
+			function(){
+				$("#droplist").fadeOut(250);
+			});
+			
+			var i=0;
+			var start=setInterval(function(){
+						$("#Address span").addClass("css1");
+						if(i==0||i==3||i==6){
+							$("#Address span").text("定位中 .");
+						}else if(i==1||i==4||i==7){
+							$("#Address span").text("定位中 . .");
+						}else if(i==2||i==5||i==8){
+							$("#Address span").text("定位中 . . .");
+						}
+						if(i==9){i=0;$("#Address span").removeClass("css1");clearInterval(start);$("#Address span").text("G+酒吧保俶路店");}
+						i++;
+					},500);
+			
+		});
+	</script>
+	</div>
+	
+	<div id="con">
+		<div class="site">
+			<h2 id="Address"><span></span></h2>
+			<div class="Shake"><a href="chat2.html"><img src="images/shake1.gif" alt="摇一摇"><img src="images/shake_pic.png" align="top" style="margin-top:35px;"></a></div>
+		</div>
+		
+		<ul class="people">
+			<li><a href="namei.html"><span><img src="images/namei2.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/girl2.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/girl3.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/man1.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/girl4.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/man2.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/namei7.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/namei2.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/girl2.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/girl3.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/man1.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/girl4.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/man2.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/namei7.gif" alt="娜美"></span></a></li>
+			<li><a href="namei.html"><span><img src="images/namei2.gif" alt="娜美"></span></a></li>
+		</ul>
+	</div>
+	
+	<div id="foot">
+		<div class="inner_foot">
+			<span class="num">22</span>
+			<a href="site.html"><img  src="images/foot-Siteh.png" alt="现场"></a>
+			<a href="nely.html"><img  src="images/foot-Nearby.png" alt="附近"></a>
+			<a href="talk.html"><img  src="images/foot-Talk.png" alt="对话"></a>
+			<a href="friend.html"><img  src="images/foot-Friend.png" alt="好友"></a>
+			<a href="set.html"><img  src="images/foot-Set.png" alt="设置"></a>
+		</div>
+	</div>
+</div>
+</body>
+</html>

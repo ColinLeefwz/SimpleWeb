@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta content="no-cache" http-equiv="Cache-Control">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <title>银泰猜图</title>
+        <link rel="stylesheet" href="/guesspic/css/public.css" />
+		<link rel="stylesheet" href="/guesspic/css/index.css" />
+		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
+    </head>
+    <body>
+		<div class="mainbox">
+		<div id="BG"></div>
+		<div class="main">
+			<div id="Rule">
+				<h2 class="tit">游戏规则</h2>
+				<p>只要抢先猜中图片内容，就能赢得相应大奖。每道题有三次猜图机会，每错一次，就会延长答题间隔时间；三次全错时，该题被别人猜中后才能进入下一关。</p>
+			</div>
+			<div id="Share">
+				<span>分享给小伙伴们，赢iPad、iPhone。</span>
+				<ul>
+					<li><a href="#"><img src="/guesspic/images/pic6.jpg"/><br/>发给微信好友</a></li>
+					<li><a href="#"><img src="/guesspic/images/pic7.jpg"/><br/>发给QQ好友</a></li>
+					<li><a href="#"><img src="/guesspic/images/pic8.jpg"/><br/>分享到QQ空间</a></li>
+					<li><a href="#"><img src="/guesspic/images/pic9.jpg"/><br/>分享到朋友圈</a></li>
+					<li><a href="#"><img src="/guesspic/images/pic10.jpg"/><br/>分享到微博</a></li>
+					<li><a href="#"><img src="/guesspic/images/pic11.jpg"/><br/>短信</a></li>
+				</ul>
+			</div>
+			<div class="plane"><img src="/guesspic/images/pic1.png"/></div>
+			<div class="title1 ls3 mt157"><h2>参与游戏赢大奖</h2></div>
+			<center class="wordstyle">
+				优惠券、免单机会、iPad……<br/>
+				10000份价值1000000元奖品<br/>
+				参与就有奖<br/>
+			</center>
+			<a href="guess.html" class="btn1 mt2">开始猜图</a>
+			<a class="btn2 mt7 " id="Btn2">分享赢大奖</a>
+			<a onclick="Rule()" class="wordstyle2">游戏规则</a>
+		</div>
+		</div>
+<script>
+$(document).ready(function(){
+	var h0=$(window).height(),
+		h1=$(".main").height();
+	if(h0>h1){
+		$(".mainbox").css("padding-top",(h0-h1)/2+"px");
+	}
+	$("#Btn2").click(function(){
+		var top;
+		var documentHeight=$(document).height();
+		var windowHeight=$(window).height();
+		if(documentHeight<=windowHeight){
+		  $("#BG").css({"height":windowHeight+"px","display":"block"});
+		}else{
+		  $("#BG").css({"height":documentHeight+"px","display":"block"});
+		}
+		$("#Share").addClass("animatebottom");
+	});
+	$("#BG").click(function(){
+		$("#Share").removeClass("animatebottom");
+		$("#Rule").removeClass("animatetop");
+		$("#BG").css("display","none");
+	});
+});
+function Rule(){
+	var top;
+	var documentHeight=$(document).height();
+	var windowHeight=$(window).height();
+	if(documentHeight<=windowHeight){
+	  $("#BG").css({"height":windowHeight+"px","display":"block"});
+	}else{
+	  $("#BG").css({"height":documentHeight+"px","display":"block"});
+	}
+	$("#Rule").addClass("animatetop");
+}
+</script>
+    </body>
+</html>

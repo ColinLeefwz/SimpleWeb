@@ -1,0 +1,27 @@
+<h1>个人聊天记录</h1>
+<table border="1">
+  <tr>
+    <th>时间</th>
+    <th>发送给</th>
+    <th>内容</th>
+    <th></th>
+  </tr>
+
+  <% @chats.each do |chat| %>
+    <tr>
+      <td><%=Time.at(chat[2]).strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td><%=link_to chat[0], "/admin_users/show?id=#{chat[0]}" %><%= User.find_by_id(chat[0]).try(:name) %></td>
+      <td><%=to_emoji(chat_img(chat[1])) %></td>
+      <td><%=link_to '相互间记录', "/admin_users/human_chat?id=#{@user.id.to_s}&uid=#{chat[0]}"  %></td>
+    </tr>
+
+  <% end %>
+</table>
+
+
+<br />
+<br />
+<%= generate_paginate.html_safe %>
+
+<br />
+<br />

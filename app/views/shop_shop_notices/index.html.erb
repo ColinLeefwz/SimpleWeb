@@ -1,0 +1,54 @@
+<div class="title2"><h2>公告</h2></div>
+
+<div class="showtitle" id="ShowTitle">
+  <%=  @shop_notice.try(:title) %>
+</div>
+<div class="showtitle" style="display:none;" id="Edit">
+  <textarea id="noticeTitle"><%= @shop_notice.try(:title)%></textarea>
+</div>
+<div class="boxs1">
+  <a class="btn1 l" id="Edit2">发 布</a>
+  <%= (link_to '删除', "/shop_shop_notices/del?id=#{@shop_notice.try(:id)}", :class => "btn1 r", :id => "Del") if @shop_notice   %>
+</div>
+
+<div class="boxs2" style="display:none;">
+  <a class="btn1 l" id="Edit2" onclick="ajaxCreateNotice('<%= @shop_notice.try(:id) %>')">保 存</a>
+  <a class="btn1 r" id="Res">取 消</a>
+</div>
+
+<script>
+  function ajaxCreateNotice(notice_id){
+    var title = $("#noticeTitle").val()
+    $.get('/shop_shop_notices/ajax_release', {id: notice_id, title: title}, function(data){
+      $('#ShowTitle').show();
+      $('#ShowTitle').text(data['title'])
+      $('#Edit').hide();
+      $(".boxs1").show();
+      $('.boxs2').hide();
+    });
+  }
+
+
+
+  $("#ShowTitle, #Edit2").click(function(){
+    $("#ShowTitle").css("display","none");
+    $("#Edit").css("display","block");
+    $("#Edit textarea").focus();
+    $(".boxs1").css("display","none");
+    $(".boxs2").css("display","block");
+  });
+  $("#Edit textarea").keyup(function(){
+    var str=$(this).val();
+    str=str.slice(0,100);
+    $(this).val(str);
+  });
+	
+  $("#Res").click(function(){
+    $("#ShowTitle").css("display","block");
+    $("#Edit").css("display","none");
+    $("#Edit textarea").blur();
+    $(".boxs1").css("display","block");
+    $(".boxs2").css("display","none");
+  });
+  LeftMenu(9);
+</script>

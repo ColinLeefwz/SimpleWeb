@@ -1,0 +1,63 @@
+<% content_for(:header_js)  do %>
+  <script defer="defer">
+    $(document).ready(function(){
+      function showScd (val){
+        if(val==0){
+          $("#dctext").show();
+          $("#dcfaq").hide();
+        }
+        else if(val==1){
+          $("#dcfaq").show();
+          $("#dctext").hide();
+        }
+      }
+
+      showScd($("#coupon_scd").val())
+
+      $("#coupon_scd").change(function(){
+        showScd($("#coupon_scd").val())
+      })
+    })
+  </script>
+<% end %>
+
+
+
+<div class="box7">
+  <div class="box7plane1">
+    <label>发放规则</label>
+    <%= f.select :rule, [['首次分享优惠',1],['每日分享优惠', 0]] %>
+  </div>
+  <div class="box7plane1">
+    <label>触发条件</label>
+    <%= f.select :scd, [['个人拍照分享 ',0],['分享指定问答', 1]] %>
+  </div>
+
+
+  <div class="box7plane1" id="dctext" style="display: none">
+    <label>关键字</label>
+    <%= f.text_field :text, :class => "inputs4"%>
+  </div>
+
+  <div class="box7plane1" id="dcfaq" style="display: none">
+    <label>问答</label>
+    <%= f.select :faq_id, session_shop.faqs.map{|m| ["#{m.od} => #{m.title}", m.id]}  %>
+  </div>
+
+  <div class="box7plane1">
+    <label>使用流程</label>
+    <%=  select_tag :hintv,options_for_select([['展示优惠券，点击后既代表使用了', 0],['展示优惠券，点击后按要求输入内容，然后确定使用',1]], @coupon.hint ? 1 : 0) , {:class => "ptb2 plr3", :onchange => "show_hint($(this).val())"} %>
+  </div>
+
+  <div id='hint1' class="box7plane1" style="display: <%= @coupon.hint.blank? ? 'none' : '' %>">
+    <label>使用时输入内容的提示</label>
+    <%= f.text_field :hint,  :class => "inputs4 w235"  %>
+    <span class="f13 green2 ml10">例: 请输入此次消费的金额/请输入您的桌号/请输入您的手机号码</span>
+  </div>
+
+  <div class="box7plane1 pt30 mb50">
+    <%= f.submit "保 存", :class => "btn2 l" %>
+    <a class="btn3 l ml20" href="/shop3_coupons/list">取 消</a>
+  </div>
+</div>
+

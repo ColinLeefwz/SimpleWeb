@@ -1,0 +1,50 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<h1>商家问答系统</h1>
+<%= form_tag '/admin_shop_faqs',:method =>:get do %>
+  <p>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
+  </p>
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>商家id</th>
+    <th>商家名称</th>
+    <th>序号</th>
+    <th>标题</th>
+    <th>答案</th>
+    <th></th>
+  </tr>
+
+  <% @shop_faqs.each do |faq| %>
+    <tr>
+      <td><%= faq.sid.to_i %></td>
+      <td><%=link_to faq.shop_name, "/admin_shops/show?id=#{faq.sid}" %></td>
+      <td><%= faq.od %></td>
+      <td><%= faq.title %></td>
+      <td><%= faq.img && image_tag(faq.img.url(:t2)) %><%= faq.text %></td>
+      <td><%= link_to '删除', "#", :onclick => "ajaxDel($(this), '#{faq.id}')" %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
+
+<script type="text/javascript">
+  function ajaxDel(obj, faq_id){
+    if(confirm("确定删除？"))
+    {
+      $.get("/admin_shop_faqs/ajax_del", {id: faq_id}, function(){
+        obj.parent().parent().remove();
+      })
+    }
+  }
+</script>

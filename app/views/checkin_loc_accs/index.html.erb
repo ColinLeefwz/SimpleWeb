@@ -1,0 +1,24 @@
+<h1>经纬度误差统计</h1>
+<table>
+  <tr>
+    <th>日期</th>
+    <th>最大误差</th>
+    <th>最小误差</th>
+    <th>误差平均值</th>
+    <th>方差</th>
+
+  </tr>
+
+  <% @checkin_loc_accs.each do |checkin_loc_acc| %>
+    <tr>
+      <td><%= checkin_loc_acc.id %></td>
+      <td><%= checkin_loc_acc.max %></td>
+      <td><%= checkin_loc_acc.min %></td>
+      <td><%= checkin_loc_acc.avg %></td>
+      <td><%= checkin_loc_acc.fc %></td>
+
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>
+

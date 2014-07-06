@@ -1,0 +1,64 @@
+<h1><%= @pshop.name %>分店</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+
+
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>名称</th>
+    <th>电话</th>
+    <th>区号</th>
+    <th>地址</th>
+    <th>分类</th>
+    <th></th>
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td><%= shop.id.to_i %></td>
+      <td><%= shop.name %></td>
+
+      <td><%= shop.tel %></td>
+      <td><%= shop.city %></td>
+      <td><%= shop.addr %></td>
+      <td><%= shop.show_t %></td>
+      <td>
+        <%= link_to '移除', '#' , :onclick => "ajaxDelSub($(this),'#{shop.id.to_i}')"%>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+<br />
+
+<%= generate_paginate3.html_safe %>
+<%= link_to '返回',request.env["HTTP_REFERER"] if request && request.env %> |
+<%= link_to '添加分店', "#", :onclick => "addTr('#{@pshop.id}')" %>
+|<%= link_to '批量添加分店',"/admin_branchs/find_shops?psid=#{@pshop.id}" %>
+
+<script type="text/javascript">
+  function addTr(pid){
+    inp = "<input type='text' onchange='ajaxAddBranch($(this),\"" +pid+ "\")'/>"
+    $('table:first').append(
+    "<tr><td>"+inp+"</td><td></td><td></td><td></td><td></td><td></td><td><a onclick='cancel($(this))'>取消</a></td></tr>"
+  )
+  }
+
+  function ajaxAddBranch(obj,pid){
+    $.get("/admin_branchs/ajax_add_branch",{id:obj.val(),psid:pid}, function(data){
+      obj.parent().parent().replaceWith(data['text'])
+    })
+  }
+
+  function cancel(obj){
+    obj.parent().parent().remove()
+  }
+
+  function ajaxDelSub(obj, id){
+    if(confirm("确定要从分店中移除？"))
+      $.get("/admin_branchs/ajax_del_branch",{id: id}, function(){
+        obj.parent().parent().remove();
+      })
+  }
+
+</script>

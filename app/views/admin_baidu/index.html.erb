@@ -1,0 +1,51 @@
+<h1>百度商家数据</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+
+<%= form_tag '/admin_baidu',:method =>:get do %>
+  <p>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :name, params[:name], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    id:<%= text_field_tag :id, params[:id],:size => 20 %>
+  </p>
+
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>名称</th>
+    <th>电话</th>
+    <th>城市代码</th>
+    <th>地址</th>
+    <th>坐标</th>
+    <th>类型</th>
+
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td><%= shop.id.to_i %></td>
+      <td><%= shop.name %></td>
+      <td><%= shop.phone %></td>
+      <td><%= shop.city %></td>
+      <td><%= shop.addr %></td>
+      <td><%= shop.lob if shop.respond_to?(:lob) %></td>
+      <td><%= shop.type %></td>
+    </tr>
+
+  <% end %>
+</table>
+<br />
+<br />
+<br />
+<%= generate_paginate3.html_safe %>
+<br />
+<br />
+
+

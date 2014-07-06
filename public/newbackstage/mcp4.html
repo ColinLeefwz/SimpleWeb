@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/managecelphone.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<script src="/newbackstage/js/mcp.js" type="text/javascript"></script>
+	<script>
+	var navmove="on", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+	//新增
+	$("div.pass5 input.texts").each(function(){
+		if($(this).val()==""){
+			$(this).val("输入连接地址");
+		}
+		$(this).click(function(){
+			$(this).css("color","#000");
+			var str=$(this).val();
+			if(str=="输入连接地址"){
+				$(this).val("");
+			}
+		}).blur(function(){
+			var str=$(this).val();
+			var v1=new RegExp("^(\\s+)$");
+			if(v1.test(str)||str==""){
+				$(this).val("输入连接地址").removeAttr("style");
+				return false;
+			}else{
+				var top;
+				documentHeight=$(document).height();
+				windowHeight=$(window).height();
+				if(documentHeight<=windowHeight){
+				  $("#BG").css({"height":windowHeight+"px","display":"block"});
+				}else{
+				  $("#BG").css({"height":documentHeight+"px","display":"block"});
+				}
+				$("#DelDiv").css("display","block");
+				top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+				$("#DelDiv").css({"top":top+"px","display":"none"});
+				$("#DelDiv").fadeIn(600);
+			}
+		});
+	});	
+	});
+
+
+function DELETE(e){
+	var ex,ey;
+	var w=$("#DeleteBox").width();
+	var h=$("#DeleteBox").height();
+	if(isNaN(e.pageX)==false){
+		ex=e.pageX; ey=e.pageY;
+	}else{
+		ex=e.clientX; ey=e.clientY;
+	}
+	$("#DeleteBox").css({"right":"-50px","top":(ey-h-127)+"px"}).slideDown(250);
+}
+function OpenBtn(){
+	$("#AddPicture").click();
+}
+function CloseDeleteBox(){
+	$("#DeleteBox").fadeOut(200);
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<img src="/newbackstage/images/sign46.jpg" align="left" id="OpenNav" title="打开导航菜单"/>
+			<h1>脸脸茶坊</h1>
+			<a href="#" class="view">预览</a>
+			<div class="clear1"></div>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="mcp1.html">首 页</a>
+				<span class="navline"></span>
+				<a href="mcp2.html">设 置</a>
+				<span class="navline"></span>
+				<a href="#">公司介绍</a>
+				<span class="navline"></span>
+				<a href="mcp6.html">最新动态</a>
+				<span class="navline"></span>
+				<a href="#">推荐菜品</a>
+				<span class="navline"></span>
+				<a href="#">联系我们</a>
+				<span class="navline"></span>
+				<a href="#">访问统计</a>
+				<span class="navline"></span>
+				<a href="#">微信管理</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		</div>
+		<div class="clear1"></div>
+		<div id="BG"></div>
+		<div id="DelDiv">
+			<center class="pt15">链接已保存成功</center>
+			<center><a onclick="Close2()" class="btn11 w55 mt10">确定</a></center>
+		</div>
+		<div class="con">
+			<div class="box14">
+				<div class="box14left relative">
+					<div class="deletebox" id="DeleteBox">
+						<form action="" method="post" onsubmit="return false;">
+							<center>确认要删除吗？</center>
+							<input type="submit" class="btn19 l mt5" value="确定"/>
+							<input type="button" onclick="CloseDeleteBox()" class="btn4 r mt5" value="取消"/>
+						</form>
+					</div>
+
+					<div class="title1"><h2 class="f18 l">设置</h2></div>
+					<div class="submenu">
+						<ul>
+							<li><a href="mcp2.html">基本信息</a></li>
+							<li><a href="mcp3.html">菜单和功能</a></li>
+							<li class="hover"><a href="mcp4.html">Banner</a></li>
+							<li><a href="mcp5.html">设计风格</a></li>
+						</ul>
+					</div>
+					<div class="clear1"></div>
+					<form id="cform" method="post" action="">
+						<div class="pass4">
+							<input type="button" class="btn20 w100 l f16" id="Open" onClick="OpenBtn()" value="+ 添加图片"/>
+							<input type="file" class="none" id="AddPicture"/>
+							<p class="l gray ml20 f12 lh20">可以添加 jpg, gif, jpeg, png, 图片格式，<br/>最佳尺寸720*400， 请保持图片大小一致。</p>
+						</div>
+						<div id="Contain">
+						<div class="pass5">
+							<a class="up" title="上"></a>
+							<a class="down" title="下"></a>
+							<a class="del" title="删除"  onClick="DELETE(event)"></a>
+							<img src="images/pic3.jpg" class="imgs"> <input type="text" value="" class="texts">
+						</div>
+						<div class="pass5">
+							<a class="up" title="上"></a>
+							<a class="down" title="下"></a>
+							<a class="del" title="删除" onClick="DELETE(event)"></a>
+							<img src="images/pic3.jpg" class="imgs"> <input type="text" value="" class="texts">
+						</div>
+						<div class="pass5">
+							<a class="up" title="上"></a>
+							<a class="down" title="下"></a>
+							<a class="del" title="删除"  onClick="DELETE(event)"></a>
+							<img src="images/pic3.jpg" class="imgs"> <input type="text" value="" class="texts">
+						</div>
+						<div class="pass5">
+							<a class="up" title="上"></a>
+							<a class="down" title="下"></a>
+							<a class="del" title="删除" onClick="DELETE(event)"></a>
+							<img src="images/pic3.jpg" class="imgs"> <input type="text" value="" class="texts">
+						</div>
+						</div>
+					</form>
+				</div>
+				<div class="box14right">
+					<div class="cpbox">
+						<iframe frameborder="0" src="/cellphone/index.html"></iframe>
+					<div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

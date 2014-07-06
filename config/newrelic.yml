@@ -3,9 +3,15 @@
 # Ruby, Java, .NET, PHP, and Python applications with deep visibility and low overhead.
 # For more information, visit www.newrelic.com.
 #
+<<<<<<< HEAD
 # Generated December 09, 2013
 #
 # This configuration file is custom generated for OriginateChina
+=======
+# Generated July 20, 2013
+#
+# This configuration file is custom generated for Lianlian
+>>>>>>> b8c272e31d97492bb030400d7034cb2d7a03ce34
 
 
 # Here are the settings that are common to all environments
@@ -15,7 +21,11 @@ common: &default_settings
   # You must specify the license key associated with your New Relic
   # account.  This key binds your Agent's data to your account in the
   # New Relic service.
+<<<<<<< HEAD
   license_key: 'fa5b64c504c8e9243b832e656ecfc48205721924'
+=======
+  license_key: '15af890d2a1bd87ebb60ad9e6727e8db4aca0a33'
+>>>>>>> b8c272e31d97492bb030400d7034cb2d7a03ce34
 
   # Agent Enabled (Ruby/Rails Only)
   # Use this setting to force the agent to run or not run.
@@ -42,7 +52,11 @@ common: &default_settings
   #       - Ajax Service
   #       - All Services
   #
+<<<<<<< HEAD
   app_name: "Prodygia_dev"
+=======
+  app_name: Lianlian
+>>>>>>> b8c272e31d97492bb030400d7034cb2d7a03ce34
 
   # When "true", the agent collects performance data about your
   # application and reports this data to the New Relic service at
@@ -57,7 +71,11 @@ common: &default_settings
   # The newrelic agent generates its own log file to keep its logging
   # information separate from that of your application. Specify its
   # log level here.
+<<<<<<< HEAD
   log_level: info
+=======
+  log_level: debug
+>>>>>>> b8c272e31d97492bb030400d7034cb2d7a03ce34
 
   # Optionally set the path to the log file This is expanded from the
   # root directory (may be relative or absolute, e.g. 'log/' or
@@ -83,7 +101,11 @@ common: &default_settings
   browser_monitoring:
       # By default the agent automatically injects the monitoring JavaScript
       # into web pages. Set this attribute to false to turn off this behavior.
+<<<<<<< HEAD
       auto_instrument: true
+=======
+      auto_instrument: false
+>>>>>>> b8c272e31d97492bb030400d7034cb2d7a03ce34
 
   # Proxy settings for connecting to the New Relic server.
   #
@@ -100,7 +122,11 @@ common: &default_settings
   # feature, change 'enabled' below to true.
   # See: https://newrelic.com/docs/ruby/audit-log
   audit_log:
+<<<<<<< HEAD
     enabled: false
+=======
+    enabled: true
+>>>>>>> b8c272e31d97492bb030400d7034cb2d7a03ce34
 
   # Tells transaction tracer and error collector (when enabled)
   # whether or not to capture HTTP params.  When true, frameworks can

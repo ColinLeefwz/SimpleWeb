@@ -1,0 +1,46 @@
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+
+<%= form_for(@shop, :url => "/admin_shops/update") do |f| %>
+  <%= hidden_field_tag :id, @shop.id.to_i %>
+  <p>
+    名称:<br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    地址:<br />
+    <%= text_field :shop_info, :addr, :size => "60"  %>
+  </p>
+  <p>
+    电话:<br />
+    <%= text_field :shop_info, :tel  %>
+  </p>
+  <p>
+    坐标:<br />
+
+      <%= edit_lo(@shop.lo).html_safe %>
+    <a href="#" id ="aAdd" onclick ="add_lo($(this))">添加坐标</a>
+  </p>
+  <p>
+    类型:<br />
+    <%= f.select :t,options_for_select(import_t, @shop.t)  %>
+  </p>
+
+
+  <p>
+    <%= f.submit "保存" %>
+  </p>
+<% end %>
+<script type="text/javascript">
+  function add_lo(obj){
+    str = "<span id='splo' style='margin-top: 20px;'>实际经纬度：<input type='text' name='lo' size='15' id='vlo'><a href='#' onclick='wlo()'>确定</a></span></br>"
+    obj.before(str)
+    $('#aAdd').hide()
+  }
+
+  function wlo(){
+    lo = $('#vlo').val()
+    str = "<input  type='checkbox' value='"+ lo +"' name='shop[lo][]' checked='checked'>" + lo
+    $("#splo").replaceWith(str)
+    $('#aAdd').show()
+  }
+</script>

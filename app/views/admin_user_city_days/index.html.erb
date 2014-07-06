@@ -1,0 +1,20 @@
+<h1>每日新增用户城市统计</h1>
+
+<table>
+  <tr>
+    <th>时间</th>
+    <th>统计结果</th>
+  </tr>
+  <% @user_city_days.each do |user_city_day| %>
+    <tr>
+      <td>
+        <%= user_city_day._id   %>
+      </td>
+      <td>
+        <%= user_city_day.datas.sort{|s,f| f.last <=> s.last}.map{|k| "#{City.gname(k[0])}:#{k[1].to_i}"}.join(';    ')  %>
+      </td>
+      
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>

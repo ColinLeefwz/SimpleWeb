@@ -1,0 +1,30 @@
+<div class="title2"><h2>聊天室</h2></div>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="20%" align="left">时间</th>
+    <th width="20%" align="left">用户</th>
+    <th width="8%" align="left">性别</th>
+    <th width="45%" align="center">内容</th>
+    <th></th>
+  </tr>
+  <% @chats.each do |chat| %>
+
+    <% user =   User.find_by_id(chat[0]) %>
+    <tr>
+      <td class="bold"><%= Time.at(chat[2]).strftime("%Y-%m-%d %H:%M:%S")%></td>
+      <td class="bold">
+        <%=link_to image_tag(user.try(:head_logo).try(:img).try(:url,:t1), :class => "imgs"), user.try(:head_logo).try(:img).try(:url), :target => 'blank' %>
+        <%= link_to user.try(:name)|| '', "/shop_checkins/user?uid=#{chat[0]}" %></td>
+      <td class="bold"><%= user.try(:show_gender) %></td>
+      <td align="bold"><%=gchat_img2(chat[1]).html_safe %></td>
+    </tr>
+  <% end %>
+</table>
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+</div>
+
+<script type ="text/javascript">
+  LeftMenu(24);
+</script>

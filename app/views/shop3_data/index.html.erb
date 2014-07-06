@@ -1,0 +1,111 @@
+<div class="con">
+	<div class="title1"><h2 class="f18">数据统计</h2></div>
+	<div class="box2 mt0">
+		<div class="box2inner3" id="Dn2">
+
+			<div class="box2plane3" style="top:0px;left:0px;" id="Dn2_b0">
+				<span class="uparrow nobg"><%= link_to @shop_checkin_week_num, "/shop3_checkins/rank?flag=week&page=1"%></span>
+				<span class="ws">本周签到</span>
+				<ul class="list">
+					<% @shop_checkin_week.each do |checkin| %>
+					<li><span class="l"><%= link_to User.find_by_id(checkin.uid).name, "/shop3_checkins/user?uid=#{checkin.uid}"%></span><span class="r gay1"><%= Time.at(checkin.id.to_s[0,8].to_i(16)).strftime("%m-%d %H:%M")%></span></li>
+					<% end %>
+				</ul>
+			</div>
+
+			<div class="box2plane3" style="top:0px;left:284px;" id="Dn2_b1">
+				<span class="uparrow nobg"><%= link_to @shop_downed_week_num, "/shop3_coupons/newly_down" %></span>
+				<span class="ws">本周优惠券下载</span>
+				<ul class="list">
+					<% @shop_downed_week.each do |down| %>
+					<li><span class="l"><%= link_to User.find_by_id(down.uid).name, "/shop3_checkins/user?uid=#{down.uid}"%></span><span class="r gay1"><%= down.dat.strftime("%m-%d %H:%M")%></span></li>
+					<% end %>
+				</ul>
+			</div>
+
+			<div class="box2plane3" style="top:0px;left:568px;" id="Dn2_b2">
+				<span class="downarrow nobg"><%= link_to @shop_use_week_num, "shop3_coupons/newly_use" %></span>
+				<span class="ws">本周优惠券使用</span>
+				<ul class="list">
+					<% @shop_use_week.each do |use| %>
+					<li><span class="l"><%= link_to User.find_by_id(use.uid).name, "/shop3_checkins/user?uid=#{use.uid}" %></span><span class="r gay1"><%= use.dat.strftime("%m-%d %H:%M") %></span></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="box2">
+		<!-- <div class="title1"><h2><a name="md0">每日统计</a></h2></div> -->
+		<div class="box2right1">
+			
+			<div class="box2inner4 h423">
+					<ul class="list">
+						<li class="hover">签到统计</li>
+					</ul>
+					<ul class="list2">
+						<%= render :partial => "shop3_login/linecharts" %>
+					</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="box2">
+		<div class="box2right1">
+			
+			<div class="box2inner4 h423">
+					<ul class="list">
+						<li class="hover">优惠券下载量</li>
+					</ul>
+					<ul class="list2">
+						<%= render :partial => "downcharts" %>
+					</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="box2">
+		<div class="box2right1">
+			
+			<div class="box2inner4 h423">
+					<ul class="list">
+						<li class="hover">优惠券使用量</li>
+					</ul>
+					<ul class="list2">
+						<%= render :partial => "usecharts" %>
+					</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="box2">
+		<div class="box2right1">
+			
+			<div class="box2inner4 h423">
+					<ul class="list">
+						<li class="hover">用户统计</li>
+					</ul>
+					<ul class="list2">
+						<%= render :partial => "gar" %>
+					</ul>
+			</div>
+		</div>
+	</div>
+	<br/><br/><br/><br/>
+</div>
+<script type="text/javascript" src="/newbackstage/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="/newbackstage/js/jquery.easing.compatibility.js"></script>
+<script >
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			DH();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+	});
+</script>

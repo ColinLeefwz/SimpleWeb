@@ -1,0 +1,43 @@
+<h1>商家公告</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<style>
+  p{margin: 7px auto}
+</style>
+
+<%= form_tag '/admin_shop_notices',:method =>:get do %>
+  <p>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
+    <!-- 有效: <%= select_tag :effect,options_for_select([['所有',''],['是',1],['否',2]],params[:effect].to_i)  %> -->
+  </p>
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>商家id</th>
+    <th>商家名称</th>
+    <th>文本</th>
+    <th>发布时间</th>
+  </tr>
+
+  <% @shop_notices.each do |shop_notice| %>
+    <tr>
+
+      <td><%= shop_notice.id.to_i %></td>
+      <td><%=link_to shop_notice.shop.try(:name)||'',  "/admin_shops/show?id=#{shop_notice.id}" %></td>
+      <td><%= shop_notice.title %></td>
+      <td><%= shop_notice.id.generation_time.getlocal.strftime("%Y-%m-%d %H:%M:%S") %></td>
+    </tr>
+
+  <% end %>
+
+
+</table>
+<%= generate_paginate3.html_safe %>

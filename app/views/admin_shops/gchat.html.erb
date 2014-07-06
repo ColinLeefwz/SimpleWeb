@@ -1,0 +1,27 @@
+<h1>商家聊天记录</h1>
+<table border="1">
+  <tr>
+    <th>时间</th>
+    <th>用户</th>
+    <th>内容</th>
+  </tr>
+
+
+  <% @chats.each do |chat| %>
+
+    <tr>
+      <td><%= chat.cat.to_time.localtime.strftime("%Y-%m-%d %H:%M:%S")%></td>
+      <td><%=link_to chat.uid, "/admin_users/show?id=#{chat.uid}" %><%= chat.user_name %></td>
+      <td><%=to_emoji gchat_img(chat.txt) %></td>
+    </tr>
+
+  <% end %>
+</table>
+
+
+<br />
+<br />
+<%= generate_paginate.html_safe %>
+
+<br />
+<br />

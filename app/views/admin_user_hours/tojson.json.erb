@@ -1,0 +1,1 @@
+[<%= raw @user_hours.map { |b| %{[#{DateTime.parse(b._id.delete("时")).to_time.to_i*1000},#{b.wb.nil? ? 0 : b.wb},#{b.qq.nil? ? 0 : b.qq}, #{b.mtotal}, #{b.ftotal}, #{b.total}]} }.join(',') %>]

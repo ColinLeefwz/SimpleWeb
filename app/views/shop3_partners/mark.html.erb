@@ -1,0 +1,49 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">拓展功能</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_lines">线路图</a></li>
+      <li><%= link_to "旅行团", "/shop3_groups" %></li>
+      <li ><%= link_to "合作商家", "/shop3_partners" %></li>
+      <li class="hover"><a>合作商家评分</a></li>
+    </ul>
+    <div class="r wordstyle">
+    </div>
+  </div>
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40">
+    <tr>
+      <th width="110">用户</th>
+      <th width="150">商家</th>
+      <th width="70">时间</th>
+      <th width="45" style="padding-left:0px;text-align:center;">评分</th>
+      <th width="230">评语</th>
+      <th width="150">旅行团</th>
+    </tr>
+
+    <% @shop_marks.each do |mark| %>
+      <tr>
+        <td><%=  link_to mark.user_name || "", "/shop3_checkins/user?uid=#{mark.uid}"  %></td>
+        <td><%= mark.shop_name   %></td>
+        <td> <%= mark.cat.strftime("%Y-%m-%d %H:%M:%S")   %></td>
+        <td class="p0 textcenter"><%= mark.mark.to_i   %>分</td>
+        <td> <%=truncate mark.com, :length => 20   %></td>
+        <td><%=link_to mark.group_name||'', "shop_groups/show?id=#{mark.gid}"   %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= generate_paginate %>
+</div>
+<script>
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+  });
+</script>

@@ -1,0 +1,37 @@
+<h1>每日照片统计</h1>
+<table>
+  <tr>
+    <th>日期</th>
+    <th>分享微博</th>
+    <th>分享到qq</th>
+    <th>照片总数</th>
+    <th>现场拍照</th>
+    <th>相册选取</th>
+    <th>前十商家</th>
+  </tr>
+
+  <% @photo_day_stats.each do |photo_day_stat| %>
+    <tr>
+      <td><%= photo_day_stat._id %></td>
+      <td><%= photo_day_stat.wb.to_i %></td>
+      <td><%= photo_day_stat.qq.to_i %></td>
+      <td><%= photo_day_stat.total.to_i %></td>
+      <td><%= photo_day_stat.pic.to_i %></td>
+      <td><%= photo_day_stat.album.to_i %></td>
+      <td>
+        <%  photo_day_stat.shops.each do |s| %>
+          <%= link_to  "#{Shop.find_by_id(s[0]).try(:name)}(#{s[0]})", "/admin_shops/show?id=#{s[0]}"  %>
+          <%= s[1].to_i %>
+          <br/>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
+
+
+
+<%= generate_paginate3.html_safe %>
+

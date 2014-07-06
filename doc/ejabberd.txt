@@ -1,0 +1,52 @@
+#sudo dscl . -create /Users/staff
+./configure --prefix=/Users/ylt/ejabber
+make
+sudo make install
+
+ln -s ~/ejabber/etc ~/lianlian/ejabberd/etc
+sudo chown -RvL ylt:staff etc
+
+
+启动：sudo ejabberdctl start
+查看状态 sudo ejabberdctl status
+
+创建用户
+sudo sbin/ejabberdctl register admin1 localhost pass
+登陆web控制台
+http://localhost:5280/admin
+
+sudo sbin/ejabberdctl  connected_users
+sudo sbin/ejabberdctl  connected_users_number
+sudo sbin/ejabberdctl  registered_users localhost
+
+默认配置文件： /etc/ejabberd/ejabberd.cfg
+
+	{loglevel, 4}.
+	{hosts, ["localhost"]}.
+配置管理员
+	{acl, admin, {user, "admin1", "localhost"}}.
+	{access, configure, [{allow, admin}]}.
+
+最大离线消息数量
+{access, max_user_offline_messages, [{5000, admin}, {100, all}]}.
+
+
+配置第三方认证：
+	{auth_method, external}.
+	{extauth_program, "/Users/ylt/lianlian/ejabberd_auth.rb"}.
+
+安装mongodb-erlang
+
+mod_announce和mod_adhoc如何使用？ 
+使用oneteam客户端，然后用管理员身份登陆，通过server commands就可以访问。
+
+mod_muc的使用，如何创建聊天室、如何查看聊天室的历史消息。
+
+用户加入聊天室的限制条件：nickname=id, 取消匿名提醒
+取消聊天室中的Presence广播消息
+个人聊天记录如何存储和获取。
+如何屏蔽用户？ command"end user session"可以中断一个用户的xmpp的连接。
+
+如何动态升级？
+mongodb连接池？
+mod_rest, mod_archive

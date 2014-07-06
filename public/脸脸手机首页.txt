@@ -1,0 +1,3 @@
+mini.html 手机浏览器
+
+download.html 针对微信 安卓版本下载页。

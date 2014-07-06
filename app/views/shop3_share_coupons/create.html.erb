@@ -1,0 +1,13 @@
+<div class="con">
+<div class="title1"><h2 class="f18">优惠券</h2></div>
+<%= form_for(@coupon, :url => '/shop3_coupons/create',:html => { :multipart => true } ) do |f| %>
+
+
+  <% case @coupon.t.to_i  %>
+  <% when 1 %>
+    <%= render :partial => 'imgtext', :locals => {:f => f}  %>
+  <% when 2 %>
+    <%= render :partial => 'allimg', :locals => {:f => f}  %>
+  <% end  %>
+<%  end %>
+</div>

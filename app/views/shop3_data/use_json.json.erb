@@ -1,0 +1,3 @@
+<%= a = @uses.map { |b| [DateTime.parse(b.uat.strftime("%Y-%m-%d")).to_time.to_i*1000, 1] if b.uat }.group_by{|m| m[0] if m}.map{|f,s| [f, s.count] }.reverse  
+a[0,a.size-1].sort
+%>

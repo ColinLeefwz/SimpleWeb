@@ -1,0 +1,591 @@
+
+\section{用户帐号系统}
+\subsection{新浪微博相关接口}
+
+\subsubsection{网页登录接口：oauth2}
+
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/sina\_callback} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ code  & 字符串 & 必须 &  新浪返回的code\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/oauth2/sina_callback?code=...
+该访问由新浪微博通过302转向发起。
+返回值：
+
+{
+"id":1,
+"password":"15c663b8ff620502",
+"logo":"",
+"name" : "name"
+"gender" : 1
+"wb_uid":"1884834632",
+"expires_in":75693,
+"token":"2.00aaZYDCMcnDPCb4dc439e06i2m_GC",
+"expires_at":1338431259
+}
+
+其中，id和password是该用户在脸脸网的id和密码，在首次新浪授权时创建。该id加上"@dface.cn"就是openfire的jid。（目前还没有和jid关联上。）
+
+后面几个字段都是新浪提供的，其中wb_uid是该用户的新浪微博的uid，token是授权的access_token，其它几个是授权有效期信息。
+
+在首次登录获得用户的id和password以后，可以缓存到本地。以后用户每次登录，返回的id和password是不会改变的，除非服务器端重置密码（比如出现密码泄漏等安全情况）。
+
+logo可以得知用户是否成功上传头像。对于第一次登录的用户，其logo为空，此时需要引导用户上传头像。
+
+本接口不再需要，登录逻辑为：如果客户端安装了支持SSO的微博客户端，那么使用SSO的接口登录；否则使用xauth的接口登录。
+
+
+\end{verbatim}
+\end{figure}
+
+\subsubsection{客户端登录接口：xauth}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/login} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ name  & 字符串 & 必须 &  用户名\\
+ \hline
+ pass  & 字符串 & 必须 &  密码\\
+  \hline
+ mac  & 字符串 & 必须 &  网卡Mac地址\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+\hline
+ bind  & 整数 & 可选 &  bind为0表示正常登录，1表示绑定微博帐户，2表示已经绑定过微博且已经用qq登录时，同时登录微博。默认为0\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+本接口的输出和oauth2登录接口的输出相同。
+
+\begin{verbatim}
+hash的计算方式为：name+pass+mac+"dface"进行SHA1算法后取前32位。
+比如用户名为name，密码为pa，mac地址为ss
+那么待hash的字符串为"namepassdface"，
+其hash码为"11f4004a73a65117071bc4a7d3dfdf07"。
+\end{verbatim}
+
+新的登录方式不需要调用新浪的Xauth API，直接调用本API即可以登录。客户端应该不需要保存AppSecret。通过预先保存的AppKey和本调用输出中包含的token应该就可以访问新浪微博的API了。
+
+
+
+
+\subsubsection{客户端SSO接口}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/sso} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ remind\_in  & 字符串 & 必须 &  过期时间\\
+ \hline
+ expires\_in  & 字符串 & 必须 &  过期时间\\
+  \hline
+ uid  & 字符串 & 必须 &  微博的uid\\
+  \hline
+ access\_token  & 字符串 & 必须 &  微博的token\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+\hline
+ bind  & 整数 & 可选 &  bind为0表示正常登录，1表示绑定微博帐户，2表示已经绑定过微博且已经用qq登录时，同时登录微博。默认为0\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+当手机客户端安装有新浪官方微博客户端，使用微博SSO登录，调用本接口。
+hash的计算方式为：uid+access\_token+"dface"进行SHA1算法后取前32位。
+
+\subsubsection{解除新浪微博绑定}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/unbind\_sina} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    uid  & 字符串 & 必须 &  当前用户的id\\
+\hline
+    wb\_uid  & 字符串 & 必须 &  新浪微博的uid\\    
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+解除成功返回{unbind: true}，否则返回error信息。
+
+
+\subsubsection{新浪微博的好友匹配}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/weibo/relation} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    user\_id  & 字符串 & 必须 &  当前用户的id\\
+\hline
+    wb\_uid  & 字符串 & 必须 &  新浪微博的uid\\    
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+返回值格式：
+{
+to_add: [脸脸用户信息列表]   ；表示我关注微博用户也加入了脸脸的但是我还没有关注的，可以直接关注
+to_invite:[微博用户信息列表]  ；表示我的微博好友还没有加入脸脸的，可以发微博邀请其加入脸脸
+friend: [脸脸用户信息列表]   ；表示我关注微博用户在脸脸上我已经关注他了，仅用于显示
+}
+
+\end{verbatim}
+
+
+
+\subsection{QQ相关接口}
+\subsubsection{QQ登录接口}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/qq\_client} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ expires\_in  & 字符串 & 必须 &  过期时间\\
+  \hline
+ openid  & 字符串 & 必须 &  QQ的openid\\
+  \hline
+ access\_token  & 字符串 & 必须 &  QQ授权的token\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+ \hline
+ bind  & 整数 & 可选 &  bind为0表示正常登录，1表示绑定qq帐户，2表示已经绑定过qq且已经用微博登录时，同时登录qq。默认为0\\
+
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+手机客户端使用QQ提供的SDK登录后，调用本接口。
+hash的计算方式为：openid+access\_token+"dface"进行SHA1算法后取前32位。
+
+\subsubsection{解除QQ绑定}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/unbind\_qq} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    uid  & 字符串 & 必须 &  当前用户的id\\
+\hline
+    qq  & 字符串 & 必须 &  QQ分配的openid\\    
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+解除成功返回{unbind: true}，否则返回error信息。
+新浪微博和QQ只有都处在有效登录状态时，才能解除其中的一个的绑定。
+
+
+
+\subsection{手机注册接口}
+
+\subsubsection{手机号码获取验证码}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/init} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+ type  & 整数 & 可选 &  1代表注册，2代表绑定，3代表忘记密码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+调用成功返回{"code":HASH后的验证码}，如果有错误，错误信息保存在error中。
+同时验证码通过短信的方式发送到使用者的手机。
+
+手机号码注册／忘记密码／绑定手机号码都要先调用本接口获取验证码。
+
+[3013-08-11] 增加type参数，表示请求手机验证码的类型。同时取消客户端对验证码的HASH是否正确的判断
+
+\subsubsection{手机号码注册}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/register} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+ code  & 字符串 & 必须 &  验证码\\
+\hline
+ password  & 字符串 & 选填 &  用户设置的密码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+调用成功返回生成的用户id，如果有错误，错误信息保存在error中。
+
+[3014-4-2] 手机号码注册时，密码变为选填。
+
+\subsubsection{忘记密码}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/forgot\_password} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+ code  & 字符串 & 必须 &  验证码\\
+\hline
+ password  & 字符串 & 必须 &  用户设置的密码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+本接口和手机号码注册接口参数一样，要求相反。手机号码注册要求该手机号码不存在，忘记密码要求该手机号码已注册。
+
+
+\subsubsection{修改密码}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/change\_password} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ oldpass  & 字符串 & 必须 &  原来的密码\\
+\hline
+ password  & 字符串 & 必须 &  用户设置的密码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsubsection{手机号码登录}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/login} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+ password  & 字符串 & 必须 &  用户设置的密码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+调用成功返回用户的信息，格式和user\_info\/get\_self相同。如果有错误，错误信息保存在error中。
+
+
+
+\subsubsection{绑定手机号码}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/bind} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+ code  & 字符串 & 必须 &  验证码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+绑定手机号码要先调用phone\/init获取验证码。
+调用成功返回{bind: true}，如果有错误，错误信息保存在error中。
+
+[2013-8-15] 取消参数password, 绑定手机号码时可以不用输入手机号码。
+
+
+\subsubsection{绑定手机后设置密码}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/set\_password} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ password  & 字符串 & 必须 &  用户设置的密码\\
+ \hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+如果已经设置了密码后要修改密码，不能调用本接口。
+
+
+\subsubsection{解除手机号码绑定}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/unbind} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+至少有一种以上的绑定关系才能解绑。
+
+
+\subsubsection{上传手机通讯录}
+\label{hash_algorithm}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/phone/upload\_address\_list} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+ \hline
+ mac  & 字符串 & 必须 &  无线网卡MAC地址的MD5\\
+ \hline
+ list  & json字符串 & 必须 &  通讯录\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\begin{verbatim}
+list是一个json字符串表示的数组，其中每一个条目是一个hash, 格式如下：
+[{"id":323,"number":"(0571)28996083","name":"***"},...]
+
+返回值为“{imported: 导入的通讯录的条数}”。
+\end{verbatim}
+
+
+
+\subsubsection{通讯录好友匹配}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/phone/relation} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    user\_id  & 字符串 & 必须 &  当前用户的id\\
+\hline
+    phone  & 字符串 & 必须 &  绑定的手机号码\\    
+ \hline
+ mac  & 字符串 & 必须 &  无线网卡MAC地址的MD5\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+返回值格式：
+{
+to_add: [脸脸用户信息列表]   ；表示我的通讯录上的人也加入了脸脸的但是我还没有关注的，可以直接加好友的
+to_invite:[通讯录列表]  ；表示我的通讯录上的人还没有加入脸脸的，可以发短信邀请其加入脸脸
+friend: [脸脸用户信息列表]   ；表示我通讯录上的人在脸脸上已经成为好友的，仅用于显示
+}
+
+\end{verbatim}
+
+
+
+
+\subsection{短信上传注册接口}
+
+
+\subsubsection{获取短信发送号码和内容}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/phone/sms\_up} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+注意：本接口只支持自己手机号码的注册，也就是发送短信的号码必须是接口中填写的号码。
+
+
+\begin{verbatim}
+返回值为“{phone: 发送到的手机号码, txt:要发送的内容}”。
+
+然后客户端调用本机器的短信发送程序，把目标号码和短信内容设置好。
+
+
+\end{verbatim}
+
+
+\subsubsection{用户是否短信注册通过}
+当用户点击本机的短信发送按钮后，调用本接口。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/phone/do\_register} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ phone  & 字符串 & 必须 &  用户的手机号码\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注册成功时，本接口的返回值和register接口一致。短信未收到则返回error信息。
+
+
+
+\subsection{退出}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/logout} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+    pushtoken  & 浮点数 & 可选 &  当前设备的push消息token\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+当用户主动退出时，调用本接口并断开XMPP的连接。
+[2012-12-30] 新增pushtoken参数。
+
+
+
+\subsection{登录与绑定的状态判断}
+目前，脸脸帐号登录相关方有四个：脸脸web服务器、脸脸xmpp服务器，新浪微博，QQ。
+
+\begin{enumerate}
+
+\item 当访问web接口时，如果返回的error信息是"not login"，此时代表要登录脸脸web服务器。但是脸脸不提供独立的帐户体系，要登陆脸脸Web服务器，必须登陆新浪微博或者QQ或者手机号码中的一个。当脸脸登录时，如果客户端缓存有未过期的新浪微博或者QQ认证信息，要丢弃。Web服务器认证信息保存在\_session\_id中。\_session\_id默认没有过期时间。
+\item 如果脸脸\_session\_id包含登录信息（没返回not login）：
+\begin{enumerate}
+
+\item 如果新浪微博或者QQ中的一个处于有效登录状态(wb\_token/qq\_token处在有效期内)，需要使用另外一个服务时：
+\begin{enumerate}
+\item 如果以前绑定过另外一个的帐号，使用bind=2参数登录。
+\item 如果没有，此时要绑定帐号。要使用bind=1参数登录。此时会绑定帐号并登录。
+\end{enumerate}
+
+\item 如果新浪微博和QQ都没有登录，此时要返回到登录界面。
+\item 绑定操作（bind=1）只需要执行一次，
+\item 当用户的个人信息中有wb\_uid，代表绑定过微博；有qq\_openid，代表绑定过QQ。
+\item 当用户的个人信息中有wb\_token，代表登录了微博；有qq\_token，代表登录了QQ。
+\item 绑定操作可以取消。而对于登录操作，如果新浪微博或者QQ都没有登录，则不能取消。
+\end{enumerate}
+
+\item 关于\_session\_id：
+\begin{enumerate}
+\item 首次安装应用调用init接口时，生成\_session\_id。以后所有的调用包括后来的init调用也要带上\_session\_id。
+\item 即使没有登录也分配\_session\_id。
+\item 调用logout时会变更\_session\_id。
+\item 任何调用，如果没带\_session\_id，会生成新的\_session\_id。这样用户原来的所有状态信息会丢失，这是不建议的。
+
+\end{enumerate}
+
+\item 总的来说就是：没有\_session\_id通过init调用获得\_session\_id；每次调用总是带上\_session\_id，logout时更新\_session\_id。
+
+
+\item xmpp服务器是单独登录的。每次应用打开的时候登录，退出或切换到后台时退出。
+
+
+\end{enumerate}
+
+
+\subsection{关于首次登录的判断}
+以前，脸脸判断用户是否首次登录是看TA是否有头像。如果没有头像，则走注册流程。
+
+现在更改为：每种登录接口（sina xauth/sso, qq）都会在用户首次登录时返回字段：{newuser:1}。当有newuser时，走注册流程。

@@ -1,0 +1,82 @@
+<h1>签到列表</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+<%= form_tag '/admin_checkins',:method =>:get do %>
+  <p>
+    开始时间: <%= text_field_tag :start_at,params[:start_at], :size => 15 %>
+    截止时间: <%= text_field_tag :end_at, params[:end_at]||Time.now.to_date,:size => 15  %>
+    <br/>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+
+    <br/>
+    用户: <%= text_field_tag :user, params[:user], :size => 10 %>
+    经纬度: <%= text_field_tag :loc, params[:loc], :size => 30  %>
+    ip： <%= text_field_tag :ip, params[:ip], :size => 20  %>
+    <br/>
+    排名： <%= text_field_tag :od, params[:od], :size => 10  %>
+    误差： <%= text_field_tag :acc, params[:acc], :size => 10  %>
+    <br/>
+    商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
+    用户id:<%= text_field_tag :uid, params[:uid],:size => 20 %>
+    <br/>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>ID</th>	  
+    <th>时间</th>
+    <th>用户</th>
+    <th>商家</th>
+    <th>经纬度</th>
+    <th>bssid</th>
+    <th>排名</th>
+    <th>误差</th>
+    <th>百度</th>	
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @checkins.each do |checkin| %>
+    <tr>
+      <td><%= checkin.id %></td>		
+      <td><%= checkin.cat.strftime("%m-%d %H:%M:%S")%></td>
+      <td><%=link_to checkin.uid, "/admin_users/show?id=#{checkin.uid}" %> , <%=link_to checkin.user.name, "/admin_users/show?id=#{checkin.uid}" %> </td>
+      <td><%=link_to checkin.sid, "/admin_shops/show?id=#{checkin.sid}" %> ,
+        <%=link_to checkin.shop.try(:name), "/admin_shops/show?id=#{checkin.sid}" %>,
+        <%= checkin.shop.try(:city) %>
+      </td>
+      <td><%= checkin.loc %></td>
+      <td><%= checkin.bssid %></td>
+      <td><%= checkin.od.to_i %></td>
+      <td><%= checkin.acc %></td>
+      <td><%= checkin.bd %></td>
+      <td>
+        <%= (link_to '绑定wifi', '#', :onclick => "ajaxbind($(this), '#{checkin.id}');")  unless CheckinBssidStat.bind?(checkin.bssid)  %>
+        </td>
+        <td>
+          <%= link_to '删除', '#', :onclick => "ajaxdel($(this), '#{checkin.id}');" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= generate_paginate3.html_safe %>
+
+  <script type="text/javascript">
+    function ajaxdel(obj, cid){
+      if(confirm("确定删除签到？"))
+        $.post("/admin_checkins/ajaxdel",{id: cid}, function() {
+          obj.parent().parent().hide()
+        });
+    }
+
+    function ajaxbind(obj, cid){
+      if(confirm("确定绑定wifi？"))
+        $.post("/admin_checkins/ajaxbind",{id: cid}, function() {
+          obj.replaceWith('已绑定')
+        });
+    }
+  </script>

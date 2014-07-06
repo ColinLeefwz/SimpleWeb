@@ -1,0 +1,36 @@
+<div class="title2"><h2><%= {'week' => '周', 'month' => '月'}[params[:flag]] %>排行</h2>统计来访用户，看看谁最爱你们</div>
+<div class="items" id="Items">
+  <a class ="<%= 'hover' if params[:flag] == 'week' %>" href="/shop_checkins/rank?flag=week" >周排行</a>
+  <a class ="<%= 'hover' if params[:flag] == 'month' %>" href="/shop_checkins/rank?flag=month" >月排行</a>
+  <a href="/shop_checkins/rank_list">总排行</a>
+</div>
+<div class="lists" style="display:block;">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+    <tr>
+      <th width="12%" class="bold" align="left">No</th>
+      <th width="33%" align="left">用户</th>
+      <th width="20%" align="center">性别</th>
+      <th width="15%" align="center">签到次数</th>
+    </tr>
+    <% @banks.each_with_index do |bank, index| %>
+      <tr>
+        <% user = User.find(bank[0])  %>
+        <td class="bold"><%= (index+1).to_s.rjust(3, '0') %></td>
+        <td>
+          <%=link_to image_tag(user.head_logo.try(:img).try(:url,:t1), :class => "imgs"), user.head_logo.try(:img).try(:url), :target => 'blank' %>
+          <%=link_to user.name, "/shop_checkins/user?uid=#{user.id}" %></td>
+        <td align="center"><%= user.show_gender%></td>
+        <td align="center"><%= bank[1] %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="pages mt15">
+    <%= generate_paginate.html_safe %>
+  </div>
+</div>
+
+<script>
+  LeftMenu(22);
+</script>
+

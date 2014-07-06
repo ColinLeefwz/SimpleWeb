@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 production:
   sessions:
     default:
@@ -79,3 +80,43 @@ test:
         # low amounts for fast failures.
         max_retries: 1
         retry_interval: 0
+=======
+development:
+  sessions:
+    default:
+      database: dface
+      hosts:
+        - localhost:27017
+      options:
+        safe: true
+        consistency: :eventual
+      
+    # allow_dynamic_fields: true
+    # protect_sensitive_fields: true
+    # raise_not_found_error: true
+    # scope_overwrite_exception: false
+    # skip_version_check: false
+    # use_activesupport_time_zone: true
+    # use_utc: false
+production:
+  sessions:
+    default:
+      database: dface
+      hosts:
+        - 10.135.44.107:27017
+        - 10.161.240.181:27017		
+      options:
+        safe: true
+        consistency: :eventual
+
+test:
+  sessions:
+    default:
+      database: dface_test
+      hosts:
+        - localhost:27017
+      options:
+        safe: true
+        consistency: :strong
+
+>>>>>>> b8c272e31d97492bb030400d7034cb2d7a03ce34

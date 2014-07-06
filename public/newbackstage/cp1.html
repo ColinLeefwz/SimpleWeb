@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/public.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<script>
+	var navmove="on", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+	});
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<div class="headercon">
+				<div id="Message">赵海斌刚刚使用了一张分享优惠券惠券</div>
+				<div class="toptitle"><h1>脸脸茶坊</h1></div>
+			</div>
+			<img src="/newbackstage/images/pic1.png" class="logo" id="OpenLinkBox"/>
+			<img src="/newbackstage/images/line.png" class="sign" id="OpenNav" title="打开导航菜单"/>
+			<div id="LinkBox">
+				<a href="http://www.dface.cn" class="links1" target="_blank">脸脸首页</a>
+				<a  class="links2">退出</a>
+				<span class="linkarrow"></span>
+			</div>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="/newbackstage/index.html">首页</a>
+				<span class="navline"></span>
+				<a href="coupon_data_stistics4.html">优惠券管理</a>
+				<span class="navline"></span>
+				<a href="/newbackstage/data_statistics1.html">数据统计</a>
+				<span class="navline"></span>
+				<a href="content_manage1.html">内容管理</a>
+				<span class="navline"></span>
+				<a href="sign_manage1.html">签到管理</a>
+				<span class="navline"></span>
+				<a href="seller_set1.html">商家设置</a>
+				<span class="navline"></span>
+				<a href="/newbackstage/questions_answers1.html">问答系统</a>
+				<span class="navline"></span>
+				<a href="/newbackstage/cp1.html">手机网站</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		</div>
+		<div class="clear1"></div>
+		<div class="con">
+			<div class="title1 mt20"><h2 class="f36 normal">移动营销，从手机网站开始</h2></div>
+			<div class="box4 mt10">
+				<p class="gay6">
+				中国手机网民已接近5亿，网站流量有33%来自移动互联网并持续上升中<br/>
+				相比电脑版网站，手机网站更符合移动阅读体验<br/>
+				与脸脸app无缝融合，与微信互通信息<br/>
+				即时的信息发布和传播，随时随地的客户沟通<br/><br/>
+				</p>
+				<a href="cp2.html" class="btn20">创建手机网站</a>
+				
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

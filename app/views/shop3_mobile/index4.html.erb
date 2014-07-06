@@ -1,0 +1,25 @@
+<div class="con"> 
+<div class="title1 mt20"><h2 class="f36 normal">移动营销，从手机网站开始</h2></div>
+<div class="box4 mt10">
+	<p class="gay6">
+	中国手机网民已接近5亿，网站流量有33%来自移动互联网并持续上升中<br/>
+	相比电脑版网站，手机网站更符合移动阅读体验<br/>
+	与脸脸app无缝融合，与微信互通信息<br/>
+	即时的信息发布和传播，随时随地的客户沟通<br/><br/>
+	</p>
+	<a href=<%= "http://w.dface.cn/login/index2?sid=#{session_shop.id}&hash=#{Digest::SHA256.hexdigest(session_shop.id.to_s + "12191008")[0,32]}" %> class="btn20" target="blank">管理手机网站</a>
+</div>
+</div>
+<script>
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+  });
+</script>

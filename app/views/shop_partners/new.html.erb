@@ -1,0 +1,43 @@
+<% content_for :ahead  do %>
+  <link href="/stylesheets/form.css" rel="stylesheet" type="text/css" />
+<% end %>
+<div class="title2"><h2>添加合作商家</h2></div>
+<%= form_tag  '/shop_partners/create'  do  %>
+
+  <p>
+    <span class="sodd">合作商家:</span>
+    <span class="sven"><%= text_field_tag "ids[]",'', :class => "inputs", :onblur => "find_shop($(this))"%></span>
+  </p>
+
+  <p>
+    <a  href="javascript:void(0)" id="aAddShop">增加商家</a>
+  </p>
+  <input type="submit" value="提 交" class="btn3 ml50 l"/>
+<% end %>
+
+<script>
+
+  function find_shop(obj)
+  {
+    $.get('/shop_partners/find_shop', {id:  obj.val()}, function(data){
+      obj.parent().parent().children('.fw').remove();
+      if(data['text']){
+        str="<span class='sven fw'>"+data['text']+"</span><a href='javascript:void(0)' onclick='$(this).parent().remove()' class='fw'>删除</a>"
+        str += "<input type='hidden' name='errids[]' class='fw' value='"+ obj.val() +"'/>"}
+      else{
+        str="<span class='sven fw' >"+data['name'] + "</span>"
+        str+="<span class='sven fw'>"+data['city'] + "</span>"
+      }
+      obj.parent().after(str)
+    })
+  }
+
+  $(document).ready(function(){
+    $("form p a#aAddShop").click(function(){
+      str = "<p><span class='sodd'>合作商家:</span><span class='sven'><input class='inputs' type='text'  \n\
+  onblur='find_shop($(this))' name='ids[]'></span><a href='javascript:void(0)' onclick='$(this).parent().remove()' class='fw'>删除</a></p>"
+      $(this).parent().before(str)
+    })
+  })
+
+</script>

@@ -1,0 +1,42 @@
+<div class="title2"><h2><%= params[:date] || '' %><%= params[:cid].blank? ? "" : "'#{Coupon.find_by_id(params[:cid]).try(:name)}'" %>下载记录</h2></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="25%" align="left" colspan="2">优惠券</th>
+    <th width="20%" align="left">用户</th>
+    <th width="10%" align="center">性别</th>
+    <th width="10%" align="center">编号</th>
+    <th width="10%" align="center">下载时间</th>
+    <th width="10%" align="center">收到时间</th>
+    <th width="10%" align="center"></th>
+  </tr>
+
+  <%  @downs.each do |down| %>
+    <tr>
+      <td width="10%"><%=link_to image_tag(down.coupon_img.try(:url,:t1), :class=>"imgs4"), down.coupon_img.try(:url), :target => "blank" %></td>
+      <td valign="center"><%= down.coupon_name %>
+        <span class="gray f12">（<%= down.coupon_show_t2 %>）</span>
+      </td>
+      <td>
+        <%=link_to down.user_name, "/shop_checkins/user?uid=#{down.uid}"  %></td>
+      <td align="center"><%= (down.user_show_gender)  %></td>
+      <td align="center"><%= down.download_num%></td>
+      <td align="center"><%=to_local down.dat%></td>
+      <td align="center"><%=to_local down.sat%></td>
+      <td align="center"><%= link_to '重发', "#", :onclick => "resend($(this), '#{down.id}')"  if down.sat.blank? && down.uat.blank? && Rails.cache.fetch("CD#{down.id}").nil?%></td>
+    </tr>
+  <% end %>
+</table>
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+</div>
+
+<script>
+  LeftMenu(17);
+  function resend(obj, down_id){
+    $.get("/shop_coupons/resend", {id: down_id}, function(){
+      obj.replaceWith("已发送")
+    })
+    
+  }
+
+</script>

@@ -1,0 +1,9 @@
+test:
+  sessions:
+    default:
+      database: dface_test2
+      hosts:
+        - 10.135.44.107:27017
+      options:
+        safe: true
+        consistency: :eventual

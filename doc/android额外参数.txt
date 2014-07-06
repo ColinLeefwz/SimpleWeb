@@ -1,0 +1,43 @@
+-------------------------------------------------------------------
+/init/init 接口增加如下参数
+
+
+screen_h 安卓客户端屏幕高度
+screen_w 安卓客户端屏幕宽度
+id	 安卓客户端设备ID
+imei	 客户端的IMEI
+imsi     客户端的IMSI
+verCode  安卓客户端的 VersionCode
+channel  安卓客户端安装程序的渠道标识，每个安装包分别打包生成
+
+-------------------------------------------------------------------
+"/aroundme/shops" 接口增加如下4个参数
+
+gps     标准GPS信息
+wifi	附近扫描到的WIFI信息
+cell	手机连接的基站信息
+cellNeighboring  附近的基站信息
+
+例如：
+wifi=[
+{"frequency":2412,"level":-65,"capabilities":"[WPA-PSK-CCMP][WPA2-PSK-CCMP-preauth][ESS]","BSSID":"00:27:19:7c:e3:a4","SSID":"Android Dface Network"},{"frequency":2437,"level":-78,"capabilities":"[WPA2-PSK-CCMP][ESS]","BSSID":"60:d8:19:c9:74:21","SSID":"LexPC"},
+{"frequency":2437,"level":-80,"capabilities":"[WPA-PSK-CCMP][WPA2-PSK-CCMP][WPS][ESS]","BSSID":"5c:63:bf:b9:b1:b8","SSID":"5sing"},
+{"frequency":2412,"level":-89,"capabilities":"[WPA-PSK-CCMP][WPA2-PSK-CCMP][WPS][ESS]","BSSID":"1c:fa:68:fe:86:fb","SSID":"TP-LINK_2.4GHz_FE86FB"},
+{"frequency":2447,"level":-93,"capabilities":"[WPA-PSK-CCMP][ESS]","BSSID":"78:52:62:01:9d:3b","SSID":"TR950_9d3b"},
+{"frequency":2462,"level":-95,"capabilities":"[WPA2-PSK-CCMP][ESS]","BSSID":"78:44:76:0a:1e:80","SSID":"Office"},
+{"frequency":2462,"level":-91,"capabilities":"[WPA-PSK-CCMP][WPA2-PSK-CCMP][WPS][ESS]","BSSID":"1c:fa:68:fe:76:c3","SSID":"Bokee_192_168_3"},
+{"frequency":2462,"level":-90,"capabilities":"[WPA-PSK-CCMP][ESS]","BSSID":"04:5f:a7:00:38:10","SSID":"ouou998"},
+{"frequency":2437,"level":-90,"capabilities":"[WPA-PSK-CCMP][WPA2-PSK-CCMP][WPS][ESS]","BSSID":"ec:17:2f:5d:f6:68","SSID":"xc5sing"},{"frequency":2437,"level":-76,"capabilities":"[ESS]","BSSID":"3c:e5:a6:e8:f7:50","SSID":"CMCC"},
+{"frequency":2462,"level":-88,"capabilities":"[ESS]","BSSID":"3c:e5:a6:e7:a5:c0","SSID":"CMCC"},
+{"frequency":2412,"level":-93,"capabilities":"[WPA-PSK-TKIP+CCMP][WPA2-PSK-TKIP+CCMP][WPS][ESS]","BSSID":"00:07:26:19:86:16","SSID":"newone"},
+{"frequency":2462,"level":-97,"capabilities":"[WPA2-PSK-CCMP][ESS]","BSSID":"18:f4:6a:b1:2b:67","SSID":"mywifi"},
+{"frequency":2412,"level":-95,"capabilities":"[WPA-PSK-TKIP+CCMP][WPA2-PSK-TKIP+CCMP][WPS][ESS]","BSSID":"38:83:45:cd:ba:de","SSID":"yesq_202"},{"frequency":2412,"level":-92,"capabilities":"[WPA-PSK-CCMP][WPA2-PSK-CCMP][ESS]","BSSID":"38:83:45:39:fb:34","SSID":"meeting"},
+{"frequency":2437,"level":-94,"capabilities":"[WPA-PSK-CCMP][WPA2-PSK-CCMP][ESS]","BSSID":"6c:e8:73:d5:78:aa","SSID":"bokee"},
+{"frequency":2412,"level":-95,"capabilities":"[WPA2-PSK-CCMP][WPS][ESS]","BSSID":"14:e6:e4:42:65:96","SSID":"xiuxiu-leping"},
+{"frequency":2412,"level":-96,"capabilities":"[WPA-PSK-CCMP][WPA2-PSK-CCMP][ESS]","BSSID":"0c:37:dc:cf:9f:54","SSID":"zj"}],
+
+cell={"mobile_network_code":1,"location_area_code":55050,"cell_id":151668675,"mobile_country_code":460}, 
+
+gps={"Speed":0.25,"Altitude":45.5,"Time":1373016350000,"Accuracy":51,"Latitude":30.28225521,"Longitude":120.11642032,"Bearing":59.599998474121094,"Provider":"gps"}, 
+
+cellNeighboring=[{"mobile_network_code":8,"location_area_code":-1,"cell_rssi":-94,"cell_psc":303,"cell_id":-1}], accuracy=149.0, lat=30.28631}

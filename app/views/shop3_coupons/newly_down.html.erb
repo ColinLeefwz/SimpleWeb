@@ -1,0 +1,90 @@
+<div class="con2">
+  <div class="title1 mb30"><h2 class="f18 l">优惠券管理</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_coupons/list">优惠券列表</a></li>
+      <li class="hover"><a href="/shop3_coupons/newly_down">最新下载记录</a></li>
+      <li><a href="/shop3_coupons/newly_use">最新使用记录</a></li>
+      <li><a href="/shop3_coupon_reports">统计报表</a></li>
+      <% unless session_shop.shops.blank? %>
+        <li><a href="/shop3_internal_report?type=internal">内部商家统计</a></li>
+      <% end %>
+
+      <% if session_shop.has_branch? %>
+        <li><a href="/shop3_internal_report?type=branch">分店统计</a></li>
+      <% end %>
+    </ul>
+    <!--<div class="r">
+			<form action="" method="post">
+				显示&nbsp;
+				<select name="select" class="p3">
+					<option value="10">10</option>
+					<option value="10">20</option>
+					<option value="10">30</option>
+				</select>
+				&nbsp;条/记录
+			</form> 
+			</div>-->
+  </div>
+  <!--<div class="search">
+			搜索
+			<select name="select" class="p3 mlr10">
+				<option value="全部">全部</option>
+				<option value="编号">编号</option>
+				<option value="用户">用户</option>
+				<option value="优惠券">优惠券</option>
+				<option value="下载时间">下载时间</option>
+				<option value="收到时间">收到时间</option>
+			</select>
+			<input type="text" class="inputs5"/>
+			<input type="submit" value="提 交" class="btn6 ml10"/>
+		</div>-->
+
+
+  <table width="100%" cellpadding="0" cellspacing="0" class="tab2">
+    <tr>
+      <th width="55">编号</th>
+      <th>优惠券</th>
+      <th>用户</th>
+      <th width="105">下载时间</th>
+      <th width="105">下载地点</th>
+      <th width="45">&nbsp;</th>
+    </tr>
+    <% @downs.each do |down| %>
+      <tr>
+        <td><%= down.download_num%></td>
+        <td><a href="show?id=<%= down.cid %>"><%= down.coupon_name %><span class="gay1">（<%= down.coupon_show_t2 %>）</span></a></td>
+        <td><%=link_to down.user_name, "/shop3_checkins/user?uid=#{down.uid}"  %><img src=<%= down.user_show_gender=='男'?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %>  class="ml10" align="absmiddle"/></td>
+        <td width="105"><%=to_local down.dat%>&nbsp;</td>
+        <td width="105"><%= down.sub_shop_name %>&nbsp;</td>
+        <td width="45" align="center"><%= link_to '', "#", :onclick => "Send(this, '#{down.id}')",:class => "sign1",:title => '重发'  if down.sat.blank? && down.uat.blank? && Rails.cache.fetch("CD#{down.id}").nil?%></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= generate_paginate.html_safe %>
+</div>
+
+<script defer="defer">
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+
+
+  function Send(obj,down_id){
+    $(obj).attr("title","发送中").removeClass().addClass("sign2");
+    setTimeout(function(){
+      $.get("/shop_coupons/resend", {id: down_id}, function(){
+        $(obj).replaceWith("重发完成");
+      });
+    },3000);
+  }
+</script>

@@ -1,0 +1,92 @@
+<% content_for :ahead do    %>
+  <script src="/javascripts/imgUploadPreview.js" type="text/javascript" />
+<% end %>
+
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">照片墙管理</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="user_photo">用户图片</a></li>
+      <li class="hover"><a href="shop_photo">商家图片</a></li>
+    </ul>
+    <div class="r wordstyle">
+    </div>
+  </div>
+  <div class="clear1"></div>
+  <div class="box9">
+    <%= form_for :photo, :url => "/shop3_content/update_photo",:html =>{:id=>"Forms"} do |f| %>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt20">
+        <%= hidden_field_tag  :id,  @photo.id %>
+        <tr>
+          <td width="9%" height="30" align="right" class="pr20">图&nbsp;片：</td>
+          <td width="91%" height="30" class="relative"><a class="btn1 l" id="Btn1">上传图片</a>
+            <span style="display: none;" class="l pt10 orange1 ml10">请上传图片</span>
+			<input class="filebox1" id="shop_photo_img" name="photo[img]" type="file" />
+			<input class="filebox2" id="shop_photo_img" name="photo[img]" type="file" />
+          </td>
+        </tr>
+
+        <tr>
+          <td height="30" rowspan="2" align="right" class="pr20">&nbsp;</td>
+          <td height="15">
+            <div class='uploadbox2' id="uploadPreview">
+              <%= image_tag Photo.img_url(@photo.id)+"?time=#{Time.now}",:id=>"image_view", :style=>"width:100%;height:100%;" %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td height="15" class="gay1 f12">(可以添加店内菜单、最新活动、宣传海报等图片<br>
+            图片支持格式:jpg jpeg gif png)</td>
+        </tr>
+        <tr>
+          <td height="30" align="right" valign="top" class="pr20">描&nbsp;述：</td>
+          <td height="30">
+
+            <%= f.text_area :desc, :class => "textarea3"  %>
+            <br/>
+
+            <span class="gay1 f12">(3-140个字,例如：好吃)</span></td>
+        </tr>
+        <tr>
+          <td height="30" class="pl20">&nbsp;</td>
+          <td height="30"><span class="pl20">
+              <input type="submit" name="Submit" value="提 交" class="btn2 l"/>
+            </span></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+
+</div>
+<script src="/javascripts/imgUploadPreview.js" type="text/javascript" /></script>
+<script defer="defer">
+$(document).ready(function(){
+    imgUploadPreview("input[name='photo[img]']", 'uploadPreview')
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+      noing="norun"
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+
+	$("#Btn1").click(function(){
+		$("#shop_photo_img").click();
+	});
+	$("input[name='photo[img]']").click(function(){
+		imgUploadPreview2(this, 'uploadPreview');
+	});
+	$("#Forms").submit(function(){
+		var str=$("#image_view").attr("src");
+
+		if(str==""||str=="/newbackstage/images/pic16.jpg"){
+			$("#Btn1").focus();
+			$("#Btn1").next().css("display","block");
+			return false;
+		}
+	});
+});
+</script>

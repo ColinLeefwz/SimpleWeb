@@ -1,0 +1,73 @@
+<h1><%= @shop.name %>子商家</h1>
+<%= javascript_include_tag "jquery-1.6.2.min.js" %>
+
+
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>名称</th>
+    <th>电话</th>
+    <th>区号</th>
+    <th>地址</th>
+    <th>距离</th>
+    <th>分类</th>
+    <th></th>
+  </tr>
+
+  <% @shops.each do |shop| %>
+    <tr>
+      <td><%= shop.id.to_i %></td>
+      <td><%= shop.name %></td>
+
+      <td><%= shop.tel %></td>
+      <td><%= shop.city %></td>
+      <td><%= shop.addr %></td>
+      <td><%= shop.get_distance(shop.loc_first, @shop.loc_first) if ENV["RAILS_ENV"] == "production" %></td>
+      <td><%= shop.show_t %></td>
+      <td>
+        <%= link_to '移除', '#' , :onclick => "ajaxDelSub($(this),'#{shop.id.to_i}', '#{@shop.id.to_i}')"%>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+<br />
+
+<%= generate_paginate.html_safe %>
+<%= link_to '返回',request.env["HTTP_REFERER"] if request && request.env %> | 
+<%= link_to '添加子商家', "#", :onclick => "addTr('#{@shop.id}')" %>
+|<%= link_to '批量添加子商家',"/admin_shops/find_shops?pid=#{@shop.id}" %>
+|<%= link_to '附近商家',"/admin_shops/near?id=#{@shop.id}" %>
+
+<script type="text/javascript">
+  function addTr(pid){
+    inp = "<input type='text' onchange='ajaxFindShop($(this),\"" +pid+ "\")'/>"
+    $('table:first').append(
+    "<tr><td>"+inp+"</td><td></td><td></td><td></td><td></td><td></td><td></td><td><a onclick='cancel($(this))'>取消</a></td></tr>"
+  )
+  }
+
+  function ajaxFindShop(obj,pid){
+    $.get("/admin_shops/ajax_find_shop",{id:obj.val(),pid:pid}, function(data){
+      obj.parent().parent().replaceWith(data['text'])
+    })
+  }
+
+  function ajaxAddSub(obj,shop_id,pid){
+    $.get("/admin_shops/ajax_add_sub",{id:shop_id, pid: pid}, function(data){
+      obj.parent().parent().replaceWith(data['text'])
+    })
+  }
+
+  function cancel(obj){
+    obj.parent().parent().remove()
+  }
+  
+  function ajaxDelSub(obj, shop_id, pid){
+    if(confirm("确定要从子商家中移除？"))
+      $.get("/admin_shops/ajax_del_sub",{id:shop_id, pid:pid}, function(){
+        obj.parent().parent().remove();
+      })
+  }
+  
+</script>

@@ -1,0 +1,85 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<h1>商家照片墙</h1>
+<%= form_tag '/admin_shop_photos',:method =>:get do %>
+  <p>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
+  </p>
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>商家</th>
+    <th>用户</th>
+    <th>时间</th>
+    <th>缩略图</th>
+    <th>描述</th>
+    <th>分享到微博</th>
+    <th>分享到qq</th>
+    <th>是否隐藏</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @photos.each do |photo| %>
+    <tr>
+      <td><%= link_to photo.shop.try(:name)||'' , "/admin_shops/show?id=#{photo.room}" %></td>
+      <td><%= link_to photo.user.try(:name) || '', "/admin_users/show?id=#{photo.user_id}" %></td>
+      <td><%= photo.id.generation_time.localtime.strftime("%Y-%m-%d %H:%M")  %></td>
+      <td><%= image_tag photo.img.url(:t2) %></td>
+      <td title="<%= photo.desc %>"><%=truncate photo.desc, :length => 10 %></td>
+      <td><%= photo.weibo ? '是' : '否' %></td>
+      <td><%= photo.qq ? '是' : '否' %></td>
+      <td><%= photo.hide ? '是' : '否' %></td>
+      <td>
+        <%= link_to '详情', "/admin_shop_photos/show?id=#{photo.id}" %>
+      </td>
+      <td>
+        <% if photo.hide.nil? %>
+          <%= link_to '隐藏', "#",:onclick => "ajaxDel($(this), '#{photo.id}')"  %>
+        <%  else %>
+          <%= link_to '显示', "#",:onclick => "ajaxUnDel($(this), '#{photo.id}')"  %>
+        <%  end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>
+
+<script type="text/javascript">
+  function ajaxDel(obj, photo_id){
+    if(confirm("确定隐藏此照片"))
+    {
+      $.get("/admin_shop_photos/ajax_del",{id: photo_id}, function(data) {
+        if(data['text']){
+          obj.replaceWith('已隐藏');
+        }
+        else{
+          obj.replaceWith('删除失败.')
+        }
+      });
+    }
+  }
+  
+  function ajaxUnDel(obj, photo_id){
+    if(confirm("确定显示此照片"))
+    {
+      $.get("/admin_shop_photos/ajax_undel",{id: photo_id}, function(data) {
+        if(data['text']){
+          obj.replaceWith('已显示');
+        }
+        else{
+          obj.replaceWith('删除失败.')
+        }
+      });
+    }
+  }
+</script>

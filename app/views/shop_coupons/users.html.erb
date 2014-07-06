@@ -1,0 +1,22 @@
+<div class="title2"><h2><%={'down' => "下载", "use"=> '使用'}[params[:flag]]%>用户</h2></div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="20%">姓名</th>
+    <th width="20%">性别</th>
+    <th width="20%">生日</th>
+    <th width="20%" align="center"><%= {'down'=> "下载", "use"=> '使用'}[params[:flag]]%>时间</th>
+  </tr>
+  <% @users.each do |u| %>
+    <tr>
+      <% user = User.find(u["id"])   %>
+      <td><%= user.name %></td>
+      <td align="center" class="gray"><%= user.show_gender %></td>
+      <td align="center" class="gray"><%= user.birthday.try(:to_date)   %></td>
+      <td align="center" class="gray"><%= (u[{'down'=> "dat", "use"=> 'uat'}[params[:flag]]].to_datetime+8.hours).strftime("%Y-%m-%d %H:%M:%S") %></td>
+    </tr>
+  <% end %>
+</table>
+<div class="pages mt15">
+<%= link_to "返回", '/shop_coupons' ,:class=>"btn3 l"%>
+<%= generate_paginate2.html_safe %>
+</div>

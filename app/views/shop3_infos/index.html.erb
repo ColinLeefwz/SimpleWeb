@@ -1,0 +1,59 @@
+		<div class="con">
+			<div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+			<div class="submenu">
+				<ul>
+					<li class="hover"><a href="/shop3_infos">基本设置</a></li>
+					<li><a href="/shop3_pass">修改密码</a></li>
+				</ul>
+			</div>
+			<form method="post" action="/shop3_infos/edit"/>
+				  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt50 gay3">
+        <tr>
+          <td width="18%" rowspan="5" align="center" valign="top">
+          <div class="imgsbg mt5">
+			  <% if @shop_logo.nil?  %>
+			  	
+			  <% else %>
+			  	<%=image_tag( "#{ShopLogo.img_url(@shop_logo.id, :t1)}?t=#{Time.now}", :alt => "")%>
+			  <% end %>
+		  </div>
+          </td>
+          <td width="82%" align="left" valign="top" class="red1">
+            商家ID：<%= @shop.id2.blank? ? @shop.id : "#{@shop.id2}  (#{@shop.id})" %>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">商家名称：<%= @shop.name %></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">地址：<%= @shop.addr %></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top">电话：<%= @shop.tel %></td>
+        </tr>
+        <tr>
+          <td align="left" valign="top"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td align="left"><input type="submit" name="Submit" value="编 辑" class="btn2"/></td>
+        </tr>
+      </table>
+			</form>
+	  </div>
+
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$(".tab2 tr:odd").addClass("trbg");
+});
+</script>

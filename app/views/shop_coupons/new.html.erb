@@ -1,0 +1,33 @@
+<div class="title2"><h2>发布优惠券</h2></div>
+
+<div id="Sele" style="height: 250px;width: 670px;margin-top: 40px;margin-left: 10px;">
+  <div class="l"><center><a onclick = "imgText()" class="pointer" id="img_text">
+        <img src="../images/pic7.jpg" /><br/>图文模式</a></center></div>
+  <div class="r"><center><a onclick = "allText()" class="pointer">
+        <img src="../images/pic8.jpg" /><br/>全图模式</a></center></div>
+</div>
+
+<div id="couponForm" style="display: <%= params[:action]=='new' ? 'none' : '' %>;">
+  <%= form_for(@coupon, :url => '/shop_coupons/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+    <%= render :partial => 'imgtext', :locals => {:f => f}  %>
+    <%= render :partial => 'allimg', :locals => {:f => f}  %>
+  <%  end %>
+</div>
+<%= link_to '返回列表', '/shop_coupons', :class=>"btn6 r" %>
+<script type="text/javascript">
+  LeftMenu("6");
+  $(document).ready(function(){
+    $("#img_text").click()
+  })
+  function imgText(){
+    $('#couponForm').show();
+    $('#Sele').remove();
+    $('#allImg').remove()
+  }
+  function allText(){
+    $('#imgText').remove();
+    $('#Sele').remove();
+    $('#couponForm').show()
+  }
+</script>
+

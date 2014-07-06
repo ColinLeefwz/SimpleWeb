@@ -1,0 +1,10 @@
+
+#gameRank {position: absolute; width: 90%; height: 400px; left: 5%; top: 5%; background-color: #666666; z-index: 999; text-align: left; text-shadow: 0 1px 1px #FFFFFF;font-size: 16px; margin: 0px; padding: 0px;}
+#gameRank .tc {text-align: center;}
+
+#gameRank p{height: 4%;}
+#gameRank .fr{float: right}
+#gameRank ul {list-style:  none; height: 52%; width: 95%; padding-bottom: 5px; }
+#gameRank ul  li {height: 15%; padding-top: 10px;   line-height: 75%; border-bottom: 2px solid #000}
+
+#gameRank span  {font-size: 26px; margin: 0 13px;}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=yes">
+	<title>脸脸网帮助</title>
+	<link href="/help/css/help.css" rel="stylesheet"  type="text/css" media="screen"/>
+  </head>
+
+  <body>
+    <div class="main" id="Main">
+      <div class="con" id="Con">
+        <div class="logo"><div class="version">脸脸<br/><%= params[:ver] %></div></div>
+        <div class="captiontop"><a href="/help/question1.html">脸脸是什么？</a></div>
+		<div class="captionmiddle"><a href="/help/question5.html">脸脸可以做什么？</a></div>
+        <div class="captionmiddle"><a href="/help/question2.html">脸脸怎么玩？</a></div>
+        <div class="captionbottom"><a href="/help/question4.html">我是商户，如何与脸脸合作？</a></div>
+      </div>
+    </div>
+	<script>
+	var h0=document.getElementById("Con").scrollHeight;
+	var h1=document.documentElement.clientHeight;
+	if(h0>h1){
+		document.getElementById("Con").style.position="relative";
+		document.getElementById("Con").style.top="0px";
+		document.getElementById("Con").style.marginTop="0px";
+		document.getElementById("Main").className="main2";
+	}
+</script>
+  </body>
+</html>

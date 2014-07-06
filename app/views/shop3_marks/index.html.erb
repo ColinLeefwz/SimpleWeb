@@ -1,0 +1,51 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_staffs">员工管理</a></li>
+      <li><a href="/shop3_bindwbs">绑定微博</a></li>
+      <li><a href="/shop3_bans">屏蔽用户</a></li>
+      <li class="hover"><a href="/shop3_marks">用户评分</a></li>
+      <li><a href="/shop3_notice">公告管理</a></li>
+	  <% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><% end %>
+    </ul>
+  </div>
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40">
+    <tr>
+      <th width="269">用户</th>
+      <th width="150">时间</th>
+      <th width="69">评分</th>
+      <th width="674">评语</th>
+      <th width="210">旅行团</th>
+    </tr>
+
+
+    <% @shop_marks.each do |mark| %>
+      <tr>
+        <td width="269"><%= link_to mark.user_name, "/shop3_checkins/user?uid=#{mark.uid}" %><br/></td>
+        <td width="150"><%= mark.cat.strftime("%Y-%m-%d %H:%M:%S")   %> </td>
+        <td width="69" class="p0 textcenter"><%= mark.mark.to_i %>分</td>
+        <td width="674"><%= mark.com   %></td>
+        <td width="210"> <%= mark.group_name   %></td>
+      </tr>
+    <% end %>
+
+  </table>
+  <%= generate_paginate.html_safe %>
+</div>
+
+<script defer="defer">
+$(document).ready(function(){
+  runing=$("#CB1").attr("class");
+  if(runing=="checkboxs1"){
+    NavDiv();
+    $(window).load(function(){
+      MessageDiv();
+    });
+  }else if(runing=="checkboxs2"){
+    AllNoDH();
+  }
+  
+  $(".tab2 tr:odd").addClass("trbg");
+});
+</script>

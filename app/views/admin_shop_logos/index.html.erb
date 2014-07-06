@@ -1,0 +1,39 @@
+<h1>商家logo</h1>
+<%= form_tag '/admin_shop_logos',:method =>:get do %>
+  <p>
+    区号: <%= text_field_tag :city, params[:city], :size => 5  %>
+    商家名称: <%= text_field_tag :shop, params[:shop], :size => 20  %>
+    (*区号和商家必须同时查询,否则无效,可以不填)
+  </p>
+  <p>
+    商家id:<%= text_field_tag :sid, params[:sid],:size => 10 %>
+  </p>
+  <p>
+    <%= submit_tag "查 找" %>
+  </p>
+<% end %>
+
+<table border="1">
+  <tr>
+    <th>商家id</th>
+    <th>区号</th>
+    <th>商家名称</th>
+
+    <th>商家地址</th>
+    <th>缩略图</th>
+    <th></th>
+  </tr>
+
+  <% @shop_logos.each do |shop_logo| %>
+    <tr>
+      <td><%= shop_logo.shop_id.to_i %></td>
+      <td><%= shop_logo.shop.city %></td>
+      <td><%=link_to shop_logo.shop.name, "/admin_shops/show?id=#{shop_logo.shop_id}" %></td>
+      <td><%= shop_logo.shop.addr %></td>
+      <td><%=image_tag shop_logo.img.url(:t2) %></td>
+      <td><%= link_to '详情', "/admin_shop_logos/show?id=#{shop_logo.shop.id}" %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate3.html_safe %>

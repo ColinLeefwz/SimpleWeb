@@ -1,0 +1,65 @@
+<div class="title2"><h2>发布分享优惠券</h2></div>
+<div id="Notice" class="notice"><%= notice %></div>
+
+<div id="Sele" style="height: 250px;width: 670px;margin-top: 40px;margin-left: 10px;">
+  <div class="l"><center><a onclick = "imgText()" class="pointer" id="img_text">
+        <img src="../images/pic7.jpg" /><br/>图文模式</a></center></div>
+  <div class="r"><center><a onclick = "allText()" class="pointer">
+        <img src="../images/pic8.jpg" /><br/>全图模式</a></center></div>
+</div>
+
+
+<script type="text/javascript">
+  LeftMenu("6");
+  $(document).ready(function(){
+    $("#img_text").click()
+  })
+  function imgText(){
+    $('#couponForm').show();
+    $('#Sele').remove();
+    $('#allImg').remove()
+  }
+  function allText(){
+    $('#imgText').remove();
+    $('#Sele').remove();
+    $('#couponForm').show()
+  }
+  $(document).ready(function(){
+    $("#Btn1").click(function(){
+      $("#File1").click();
+    });
+    $("#Btns").click(function(){
+      $("#Files").click();
+    });
+    $("#coupon_name").click(function(){
+      if($(this).val()=="点此输入名称"){
+        $(this).val("");
+      }
+    });
+    $("#coupon_desc").click(function(){
+      if($(this).val()=="点此输入描述"){
+        $(this).val("");
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+<div id="couponForm" style="display: <%= params[:action]=='new' ? 'none' : '' %>;">
+  <%= form_for(@coupon, :url => '/shop_share_coupons/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+    <%= render :partial => 'imgtext', :locals => {:f => f}  %>
+    <%= render :partial => 'allimg', :locals => {:f => f}  %>
+  <%  end %>
+</div>
+
+
+
+
+
+
+
+

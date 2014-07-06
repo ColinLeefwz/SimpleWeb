@@ -1,0 +1,22 @@
+<h1><%=@shop.name%>的公告</h1>
+
+<table border="1">
+  <tr>
+    <th>文本</th>
+    <th>排序</th>
+    <th>有效</th>
+  </tr>
+
+  <% @shop_notices.each do |shop_notice| %>
+    <tr>
+      <td><%= shop_notice.title %></td>
+      <td><%= shop_notice.ord %></td>
+      <td><%= shop_notice.effect ? "是": "否" %></td>
+    </tr>
+
+  <% end %>
+
+
+</table>
+
+<%= link_to '返回',request.env["HTTP_REFERER"] if request && request.env %>

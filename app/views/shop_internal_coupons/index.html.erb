@@ -1,0 +1,53 @@
+<div class="title2"><h2><%= params[:date] || '' %><%= params[:cid].blank? ? "" : "'#{Coupon.find_by_id(params[:cid]).try(:name)}'" %>内部商家下载记录</h2></div>
+
+<%= form_tag '/shop_internal_coupons',:method =>:get, :onsubmit => "return check_day()" do %>
+  <ul class="formlist" class="mt0">
+    <li>
+      <label>商家&nbsp;&nbsp;</label>
+      <%= text_field_tag :name, params[:name]|| '', :class => "txt l" %>
+      <label>下载日期&nbsp;&nbsp;</label>
+      <%= text_field_tag :day, params[:day]|| Time.now.to_date, :class => "txt l"%>
+      <input type="submit" value="查 询" class="btn1 l ml20 mt5"/>
+    </li>
+  </ul>
+<% end %>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="10%" align="left">商家</th>
+    <th width="25%" align="left" colspan="2">优惠券</th>
+    <th width="10%" align="left">用户</th>
+    <th width="8%" align="center">编号</th>
+    <th width="18%" align="center">下载时间</th>
+    <th width="18%" align="center">使用时间</th>
+  </tr>
+
+  <%  @downs.each do |down| %>
+    <tr>
+      <td align="center"><%= down.shop_name%></td>
+      <td width="10%"><%=link_to image_tag(down.coupon_img.try(:url,:t1), :class=>"imgs4"), down.coupon_img.try(:url), :target => "blank" %></td>
+      <td valign="center"><%= down.coupon_name %>
+        <span class="gray f12">（<%= down.coupon_show_t2 %>）</span>
+      </td>
+      <td>
+        <%=link_to down.user_name, "/shop_checkins/user?uid=#{down.uid}"  %></td>
+      <td align="center"><%= down.download_num%></td>
+      <td align="center"><%=to_local down.dat%></td>
+      <td align="center"><%=to_local down.uat%></td>
+    </tr>
+  <% end %>
+</table>
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+</div>
+
+<script>
+  LeftMenu(29);
+  function resend(obj, down_id){
+    $.get("/shop_coupons/resend", {id: down_id}, function(){
+      obj.replaceWith("已发送")
+    })
+
+  }
+
+</script>

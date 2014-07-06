@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Shop:</b>
+  <%= @shop_notice.shop_id %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @shop_notice.title %>
+</p>
+
+<p>
+  <b>Begin:</b>
+  <%= @shop_notice.begin %>
+</p>
+
+<p>
+  <b>End:</b>
+  <%= @shop_notice.end %>
+</p>
+
+<p>
+  <b>Ord:</b>
+  <%= @shop_notice.ord %>
+</p>
+
+
+<%= link_to 'Edit', edit_shop_notice_path(@shop_notice) %> |
+<%= link_to 'Back', shop_notices_path %>

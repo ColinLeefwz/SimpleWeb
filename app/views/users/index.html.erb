@@ -1,0 +1,54 @@
+
+
+<h1>用户列表</h1>
+<%= link_to '添加用户', new_user_path %>
+<% form_tag users_path,:method =>:get do %>
+  <p>
+    用户ID:<%= text_field_tag :id, params[:id] %>
+    手机号码:<%= text_field_tag :phone, params[:phone] %>
+    注册名:<%= text_field_tag :name, params[:name] %>
+    积分:<%= text_field_tag :score, params[:score] %>
+    Email:<%= text_field_tag :email, params[:email] %>
+    性别:<%= text_field_tag :sex, params[:sex] %>
+    职业:<%= text_field_tag :occupation, params[:occupation] %>
+
+    <%= submit_tag "查 找", :name => nil %>
+  </p>
+<% end %>
+<table border="1">
+  <tr>
+    <th>UID</th>
+    <th>昵称</th>
+    <th>友好显示名称</th>
+    <th>性别</th>
+    <th>所在地</th>
+    <th>描述</th>
+    <th>博客地址</th>
+    <th>个性化域名</th>
+    <th>创建日期</th>
+    <th>浏览</th>
+    <th>编辑</th>
+    <!--<th>删除</th>-->
+  </tr>
+
+<% for user in @users %>
+  <tr>
+    <td><%=h user.wb_uid %></td>
+    <td><%=h user.screen_name  %></td>
+    <td><%=h user.name %></td>
+    <td><%=h user.gender %></td>
+    <td><%=h user.location %></td>
+    <td><%=h user.description %></td>
+    <td><%=h user.url %></td>
+    <td><%=h user.domain %></td>
+    <td><%=h user.created_at %></td>
+    <td><%= link_to '浏览', user %></td>
+    <td><%= link_to '编辑', edit_user_path(user) %></td>
+  </tr>
+<% end %>
+</table>
+<hr />
+
+<div id="paginate" style="text-align: center">
+  <%= generate_paginate @users %>
+</div>

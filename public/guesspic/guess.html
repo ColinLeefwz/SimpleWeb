@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maxmum-scale=1.0, user-scalabe=yes"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>第一关</title>
+        <link rel="stylesheet" href="/guesspic/css/public.css" />
+		<link rel="stylesheet" href="/guesspic/css/main.css" />
+		<script src="/guesspic/js/jquery-1.10.2.min.js"></script>
+    </head>
+    <body>
+		<div class="mainbox">
+        <div class="main">
+			<div class="title2"><h2>猜店名</h2></div>
+			<div id="Img">
+				<img src="images/pic12.jpg" width="100%"/></div>
+			
+			<span class="names">猜中获得8折优惠券</span>
+			<article class="plane2">
+				<ul id="ZF">
+					<li data-num=""></li>
+					<li data-num=""></li>
+					<li data-num=""></li>
+					<li data-num=""></li>
+				</ul>
+			</article>
+			<aside id="WP" class="visible">
+				<ul class="ds visible top0 box1animation2" rel="0">
+					<li data-key="银" data-num="0">银</li>
+                    <li data-key="月" data-num="1">月</li>
+                    <li data-key="泰" data-num="2">泰</li>
+                    <li data-key="斯" data-num="3">斯</li>
+                    <li data-key="尔" data-num="4">尔</li>
+                    <li data-key="米" data-num="5">米</li>
+                    <li data-key="爱" data-num="6">爱</li>
+                    <li data-key="额" data-num="7">额</li>
+                    <li data-key="纳" data-num="8">纳</li>
+                    <li data-key="与" data-num="9">与</li>
+                    <li data-key="坦" data-num="10">坦</li>
+                    <li data-key="艾" data-num="11">艾</li>
+                    <li data-key="英" data-num="12">英</li>
+                    <li data-key="摩" data-num="13">摩</li>
+                    <li data-key="里" data-num="14">里</li>
+                    <li data-key="居" data-num="15">居</li>
+                    <li data-key="测" data-num="16">测</li>
+                    <li data-key="是" data-num="17">是</li>
+                    <li data-key="奇" data-num="18">奇</li>
+                    <li data-key="因" data-num="19">因</li>
+                    <li data-key="姆" data-num="20">姆</li>
+                    <li data-key="耐" data-num="21">耐</li>
+                    <li data-key="百" data-num="22">百</li>
+                    <li data-key="货" data-num="23">货</li>
+				</ul>
+			</aside>
+			</div>
+	</div>
+    </body>
+	<script>
+		$(document).ready(function(){
+			var h0=$(window).height(),
+				h1=$(".main").height();
+				if(h0>h1){
+					$(".mainbox").css("padding-top",(h0-h1)/2+"px");
+				}
+			var len=$("#ZF li").length;
+			
+			$(".ds li").click(function(){
+				var zf=$(this).attr("data-key");
+				var i=0,j=0;
+				for(i=0;i<len;i++){
+					if($("#ZF li").eq(i).html()!=""){
+						j++;
+					}
+					if(j==len){
+						return false;
+					}
+				}
+
+				$(this).css("visibility","hidden");
+				for(i=0;i<len;i++){
+					if($("#ZF li").eq(i).html()==""){
+						$("#ZF li").eq(i).removeClass("bg1").html(zf).attr("data-num",$(this).attr("data-num"));
+						break;
+					}
+				}
+				for(i=0;i<len;i++){
+					if($("#ZF li").eq(i).next().html()==""){
+						$("#ZF li").eq(i).next().addClass("bg1");
+						return false;
+					}
+				}
+
+				var str="";
+				for(j=0;j<len;j++){
+					str=str+$("#ZF li").eq(j).html();
+				}
+				if(str!="银泰百货"){
+					$("#ZF li").addClass("shake orange");
+					return false;
+				}else{
+					setTimeout(function(){window.location.href="http://shop.dface.cn/guesspic/next.html"},500);
+				}
+			});
+
+			$("#ZF li").click(function(){
+				$("#ZF li").removeClass("shake orange");
+				if($(this).html()=="") return false;
+				$("#ZF li").removeClass("bg1");
+				var num=$(this).attr("data-num");
+				$(".ds li").eq(num).removeAttr("style");
+				$(this).html("").addClass("bg1").attr("data-num","");
+			});
+			$(".ds").eq(0).css("display","table");
+			$("#ZF li").eq(0).addClass("bg1");
+		});
+	</script>
+</html>

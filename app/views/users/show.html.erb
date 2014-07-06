@@ -1,0 +1,48 @@
+<p>
+  <b>UID:</b>
+  <%=h @user.wb_uid %>
+</p>
+
+<p>
+  <b>昵称:</b>
+  <%=h @user.screen_name %>
+</p>
+
+<p>
+  <b>友好显示名称:</b>
+  <%=h @user.name %>
+</p>
+
+<p>
+  <b>性别:</b>
+  <%=h @user.gender %>
+</p>
+
+<p>
+  <b>所在地:</b>
+  <%=h @user.location %>
+</p>
+
+<p>
+  <b>描述:</b>
+  <%=h @user.description %>
+</p>
+
+<p>
+  <b>博客地址:</b>
+  <%=h @user.url %>
+</p>
+
+<p>
+  <b>个性化域名:</b>
+  <%=h @user.domain %>
+</p>
+
+<p>
+  <b>注册时间:</b>
+  <%=h @user.created_at %>
+</p>
+
+
+<%= link_to '编辑', edit_user_path(@user) %> |
+<%= link_to '返回列表', users_path %>

@@ -1,0 +1,63 @@
+关于XMPP协议的消息状态和确认的几个规范：
+
+XEP-0022: Message Events：最初的规范，很简单，脸脸现在采用的就是这套规范，目前被XMPP官方标记为过时了obsoleted。其定义了四种消息事件：Offline、Delivered、Displayed、Composing。脸脸只用到其中的两种Delivered、Displayed。
+
+XMPP官方建议用下面两个协议代替XEP-0022。More modern protocol extensions for this functionality have been defined in Chat State Notifications [1] for the composing and offline events and in Message Delivery Receipts [2] for the delivered and displayed events; those specifications supersede this one. 但其实这两个规范设计很不成功。
+
+XEP-0085: Chat State Notifications 聊天状态定义了active／inactive／gone／composing／paused等状态，完全是PC聊天软件的思路，脸脸用不上。
+
+XEP-0184: Message Delivery Receipts 误解了Delivered、Displayed，并且消息Receipts没有任何用处。本来要用消息Receipts是为了保证消息不丢失，结果这个规范却只说如何发送和响应Receipts。
+
+XEP-0198: Stream Management 这个协议设计也有问题，它把两个事情'消息回执'与'断开快速重连'混合在了一起。消息回执这部分，它设计的比0022/0184都复杂，我初略看一边都无法准确理解其流程，也不清楚如何利用回执保证消息不丢。断开快速重连节省的是roster获取／presence状态广播这块。（It can happen that an XML stream is terminated unexpectedly (e.g., because of network outages). In this case, it is desirable to quickly resume the former stream rather than complete the tedious process of stream establishment, roster retrieval, and presence broadcast）。而脸脸本来就没有使用Xmpp的roster／presence这部分，所以'断开快速重连'对脸脸没有价值。
+
+脸脸消息可靠性的初步解决思路：
+分两阶段解决，
+分两阶段解决:
+第一阶段
+1.语音／图片类消息，客户端也要和文本消息一样存储处理。客户端处理语音／图片类消息的重发，重发时的消息id就是语音／图片的id。
+2.当对方发新消息给本方时，对所有没有收到Delivered、Displayed两种状态消息的任何一个的发给对方的消息，要重发消息。本方所有Delivered未Displayed消息则把消息状态显示为已读。
+第一阶段能保证消息的最终送达。
+
+第二阶段
+1. 增加XEP-0022的Offline消息提醒。客户端发送消息时增加
+  <x xmlns='jabber:x:event'>
+    <offline/>
+  </x>
+  这样如果接受方不在线，服务器端把消息暂时缓存的时候，会发送<offline/>消息通知发送方。
+2. 当30秒内Xmpp没有收到服务器端的任何数据包时，发送ping消息。两次ping没有响应，则表明Xmpp断线了。
+3. 消息状态变更：当Xmpp断线，则状态为发送失败，当没收到Offline、Delivered、Displayed回执，不显示送达；收到Offline、Delivered则显示送达；Displayed则显示已读。
+4. 客户端经历网络断开又再次确定在线时，对所有没有没送达和发送失败的，重发消息。
+第二阶段保证消息的尽早送达。
+
+以上只保证单聊消息的状态通知，其它消息如iq／presense／event回执消息／聊天室消息仍然不可靠。
+
+event回执消息丢失的处理分析：
+ 5.1 Offline消息丢失，客户端会重发；
+ 5.2 Delivered消息丢失，Displayed消息未丢失，无需处理，因为已读消息必然送达；
+ 5.3 Delivered消息未丢失，Displayed消息丢失。当对方发新消息时，本方所有Delivered消息显示已读。
+ 5.4 Delivered／Displayed消息都丢失，客户端会重发；
+
+
+
+
+消息可靠性解决方案最终版本
+消息可靠性：
+1. 客户端
+1.1发送单聊消息启动定时器接收Offline、Delivered、Displayed回执，如果没有收到则发送失败。
+1.2收到Offline、Delivered显示送达，收到Displayed显示已读。
+1.3当收到对方发新消息时，本方所有Delivered消息显示已读。
+
+
+2.服务器端：
+2.1当服务器端收到单聊消息时，总是给客户端发送offline回执。
+2.2当服务器端收到消息时，如果presence为unavailable，presence设置为active。
+2.3发送单聊消息设置临时队列，收到回执删除，超时移动到offline表。
+
+3.服务器Web端推送消息的可靠性
+/api/rest接口发送消息
+
+
+链接检测
+服务器端ping：29秒／32秒，超时presence设置为unavailable。
+客户端ping：30秒／33秒，超时断开xmpp连接。
+

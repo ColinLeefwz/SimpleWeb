@@ -1,0 +1,35 @@
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>注册时间</th>
+    <th>名称</th>
+    <th>出生日期</th>
+    <th>wb_uid</th>
+    <th>性别</th>
+    <th>关注数</th>
+    <th>黑名单数</th>
+    <th>头像数</th>
+    <th>签到数/照片数</th>
+    <th></th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user._id %></td>
+      <td><%= user.cat.strftime("%Y-%m-%d %H:%M") %></td>
+      <td><%= user.name %></td>
+      <td><%= user.birthday %></td>
+      <td><%=link_to(user.wb_uid.to_s, user.weibo_home, :target => '_blank') %></td>
+      <td><%= user.show_gender %></td>
+      <td><%= user.follows.count %></td>
+      <td><%= user.blacks_s.count %></td>
+      <td><%= user.user_logos.size %></td>
+      <td><%= user.checkins.size %>／<%= user.photos.size %></td>
+      <td>
+        <%= link_to '详情', "/admin_users/show?id=#{user.id}" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate.html_safe %>

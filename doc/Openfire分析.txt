@@ -1,0 +1,17 @@
+Openfire分析
+
+1、所有的消息都存储在ofMessageArchive表中，由Monitoring Service  Plugin来实现的，有性能问题，不采用。
+
+2、聊天室的聊天纪录，似乎不应该保存在ofMucConversationLog中，因为表中无纪录，那么如何获取聊天室的历史消息？
+似乎保存在内存中，见HistoryStrategy.java中的字段ConcurrentLinkedQueue<Message> history。
+经过测试，确实只有在不重启的时候，才能获得聊天室的最近历史纪录。
+管理控制台的"分组聊天历史记录设置"，应该设置的是HistoryStrateg.Type {defaulType, none, all, number};
+
+MUCPersistenceManager.saveConversationLogEntry保存到ofMucConversationLog，那么这里的log是什么用处呢？
+
+无法获得房间列表时，清空emptyDate，重启openfire。
+
+进入聊天室后无法发言，<message type="error" id="purple51d431be" to="1@dface.cn/ylt" from="6@conference.dface.cn"><body>hello, from adium</body><error code="403" type="auth"><forbidden xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/></error></message>，解决办法是设置conference的管理员。
+
+
+个人离线消息ofOffline，由openfire核心实现。

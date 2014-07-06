@@ -1,0 +1,33 @@
+<h1></h1>
+<style>
+  div.t{display:inline-block; width:150px; margin:0px;padding:3px;}
+</style>
+<table>
+  <tr>
+    <th>日期</th>
+    <th>详情</th>
+  </tr>
+
+  <% @datas.each do |data| %>
+    <tr>
+      <td><%=User.find(data.first).name %></td>
+      <td>
+        <div class="t">时间</div>
+        <div class="t">商家</div>
+        <div class="t">经纬度</div>
+        <div class="t">排名</div>
+        <div class="t">误差</div>
+        <br/>
+        <% data.last.flatten.each do |c| %>
+          <div class="t"><%= id_to_time(c).strftime("%Y-%m-%d %H:%M:%S")   %></div>
+          <div class="t"><%= Checkin.find_by_id(c).try(:shop).try(:name) %></div>
+          <div class="t"> <%= Checkin.find_by_id(c).try(:loc) %></div>
+          <div class="t"><%= Checkin.find_by_id(c).try(:od).try(:to_i) %></div>
+          <div class="t"><%= Checkin.find_by_id(c).try(:acc).try(:to_i) %></div>
+          <br/>
+        <% end %>
+  <%#=data.last.map{|m| m.map{|c| id_to_time(c).strftime("%Y-%m-%d %H:%M:%S")}.join(', ')}.join("<span style='color:orange;margin: 3px;'> | </span>").html_safe %></td>
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate.html_safe %>

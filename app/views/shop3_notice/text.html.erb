@@ -1,0 +1,80 @@
+<div class="clear1"></div>
+<div class="con2">
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_staffs">员工管理</a></li>
+      <li><a href="/shop3_bindwbs">绑定微博</a></li>
+      <li><a href="/shop3_bans">屏蔽用户</a></li>
+      <li><a href="/shop3_marks">用户评分</a></li>
+      <li  class="hover"><a href="/shop3_notice">公告管理</a></li>
+      <% if session_shop.has_branch? %><li><a href="/shop3_branchs">分店列表</a></li><%end%>
+    </ul>
+  </div>
+  <div class="notice_submenu">
+    <%= link_to "文本模式", "",:class=>"linkbtn2"%>
+    <%= link_to "从商家图片中选择", '/shop3_notice/photo',:class => "linkbtn" %>
+    <%= link_to "从商家问答中选择", '/shop3_notice/faqs',:class => "linkbtn" %>
+    <a href="/shop3_notice/del" class="btn17 l">取消公告</a>
+  </div>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 mt20 pt10">
+    <tr>
+      <td valign="top" align="right" class="pr20">&nbsp;</td>
+      <td colspan="3">
+        <%= text_area_tag :text,@shop_notice.try(:title) , :class =>  "textarea3 w700 h220", :id => "noticeTitle",:placeholder => "用于在脸脸客户端显示公告" %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td align="left">
+        <%= submit_tag "提交", :class => "btn2", :onclick => "ajaxCreateNotice('#{@shop_notice.try(:id)||''}')", :style=>"display:none" %>
+      </td>
+      <td>&nbsp;</td>
+      <td align="left">&nbsp;</td>
+    </tr>
+  </table>
+</div>
+
+<script defer="defer">
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+
+  $("textarea").click(function(){
+    $(this).addClass("onfocs");
+    $(".btn2").show();
+    if($(this).val()=="用于在脸脸客户端显示公告"){
+      $(this).val("");
+    }
+  }).blur(function(){
+    $(this).removeClass("onfocs");
+  });
+
+  // $('.jsl').click(function(){
+  //   $('.jsl').removeClass('linkbtn2')
+  //   $(this).removeClass('linkbtn').addClass('linkbtn2')
+  // });
+
+  function ajaxCreateNotice(notice_id){
+    var title = $("#noticeTitle").val();
+    // if(title==""){
+    //  title="用于在脸脸客户端显示公告";
+    // }
+    $.get("/shop3_notice/ajax_release", {id: notice_id, title: title}, function(data){
+      $("#ShowTitle").show();
+      $("#ShowTitle").text(data["title"]);
+      $(".btn2").hide();
+    });
+  }
+</script>

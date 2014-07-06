@@ -1,0 +1,17 @@
+<h1>签到列表</h1>
+<table>
+  <tr>
+    <th>月份</th>
+    <th>签到商家数</th>
+
+  </tr>
+
+  <% @shop_checkin_alts.each do |shop_checkin_alt| %>
+    <tr>
+      <td><%= shop_checkin_alt.id %></td>
+      <td><%=link_to shop_checkin_alt.datas.to_a.length, "/shop_checkin_alts/shops?id=#{shop_checkin_alt.id}" %></td>
+    </tr>
+  <% end %>
+</table>
+<%= generate_paginate3.html_safe %>
+

@@ -1,0 +1,26 @@
+<h1>签到列表</h1>
+<table>
+  <tr>
+    <th>商家</th>
+    <th>用户</th>
+    <th>性别</th>
+    <th>签到时间</th>
+    <th>经纬度</th>
+    <th>ip</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @checkins.each do |checkin| %>
+    <tr>
+      <td><%= checkin.shop.name %></td>
+      <td><%= checkin.user.name %></td>
+      <td><%= checkin.sex %></td>
+      <td><%= checkin.cat.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td><%= checkin.loc %></td>
+      <td><%= checkin.ip %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= generate_paginate.html_safe %>

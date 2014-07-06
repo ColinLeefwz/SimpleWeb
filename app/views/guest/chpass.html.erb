@@ -1,0 +1,16 @@
+<div id="notice" class="red1">
+</div>
+
+<%= form_tag  "/guest/chpass" do |f| %>
+  <p>
+    原始密码:<br />
+    <%= password_field_tag :opass, params[:opass] %>
+  </p>
+   <p>
+    新密码:<br />
+    <%= password_field_tag :npass, params[:npass] %>
+  </p>
+  <p>
+    <%= submit_tag "确定" %>
+  </p>
+<% end %>

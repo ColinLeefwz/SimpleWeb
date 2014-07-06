@@ -1,0 +1,411 @@
+\section{XMPP协议接口}
+
+
+\subsection{与Xmpp协议的不同}
+
+\begin{enumerate}
+\item 脸脸中的关注和粉丝关系是单向的，和xmpp中的好友roster关系无关。
+\item 只要用户登录，其xmpp协议中的presence就是在线，没有其它状态。
+\item 脸脸中的隐身也和xmpp中的隐身状态无关。
+\item 脸脸中的任意两个用户可以发送消息，不管对方是否隐身，只要对方未设置黑名单即可。如果对方未登录，那么就是离线消息。
+\end{enumerate}
+
+\subsection{脸脸Xmpp的JID}
+\begin{enumerate}
+\item 脸脸网的用户id加上"@dface.cn"就是Xmpp的jid。
+登录时的resource格式为: '操作系统脸脸版本-月日'，其中操作系统为i或者a。
+\item 商家的id加上"@c.dface.cn"就是现场聊天室的jid。Xmpp协议允许用户在加入聊天室时取一个名字，脸脸的聊天室应该忽略该名字。脸脸用户加入聊天室的时候，其jid格式为"roomid@c.dface.cn/uid"。
+\end{enumerate}
+例如：个人登录Xmpp服务器后的完整JID如“502e6303421aa918ba000005@dface.cn/i2.3.4-0927-09:34”，进入聊天室的完整JID如"1234@c.dface.cn/502e6303421aa918ba000005"。
+
+
+\subsection{脸脸中的聊天用户的三种类型}
+
+\begin{enumerate}
+\item管理员，其jid固定为"502e6303421aa918ba000001@dface.cn";
+\item商家，其jid为's+商家id@dface.cn';
+\item个人，其jid为'个人id@dface.cn'。
+\end{enumerate}
+如果一个jid以字母s开头，那么它一定是商家。
+
+
+
+\subsection{脸脸中的聊天消息的三种类型}
+
+\begin{enumerate}
+\item chat：个人之间的单聊消息，需要发送送达／已读回执。客户端未收到任何回执，则客户端重发; 服务器端未收到送达／已读回执，则服务器会重发消息。
+\item groupchat：聊天室消息，没有回执。客户端未收到自己发出的消息，则重发。
+\item normal：服务器推送的通知消息，没有回执，不重发。
+\end{enumerate}
+
+
+
+\subsection{消息ID}
+所有的消息（包括单聊和聊天室），要保证消息id的唯一性，建议使用uuid生成消息的id。客户端发送的消息，由客户端生成这个id；服务器端发送的消息，由服务器端生成这个id。
+
+目前，在发图的时候，存在同时收到两张一样的图片的消息的BUG。为了处理这个BUG，客户端在收到图片消息时，如果消息的图片ID一样，不重复显示图片。但是图片id以faq开头的图片消息不需要判断图片id重复的问题。
+
+
+
+\subsection{聊天室的特定格式消息}
+\begin{enumerate}
+\item 聊天室中，消息id以ckn开头的消息代表是用户首次进入聊天室发送的通知类消息，客户端根据这个ckn头确定是否有新的人进入了聊天室。
+\item 聊天室中，消息id以FAQ开头的是问答消息。
+\item 聊天室中，消息id以COMMENT开头的是图片的评论消息。聊天室评论消息带楼数的格式：[img:id]楼数:评论内容。
+\item 在聊天室收到的id以“coupon”开头的消息时，点击该消息要能跳转到优惠券文件夹。
+\end{enumerate}
+
+
+\subsection{摇一摇及其消息格式}
+
+\begin{verbatim}
+摇一摇的消息格式为：
+ [摇一摇:$name]
+
+其它客户端收到摇一摇的消息后，再将其转换为文字描述: “$name摇了摇手机和大家say hello~”
+\end{verbatim}
+
+
+
+\subsection{个人之间聊天的消息发送状态确认}
+XMPP协议的消息发送状态确认参考规范“\href{http://xmpp.org/extensions/xep-0022.html}{XEP-0022: Message Events}”。其定义了四种消息事件：Offline、Delivered、Displayed、Composing。Dface只需要其中的两种。
+
+\begin{verbatim}
+当接收端收到消息时，发送delivered确认消息，例如：
+<message id="Kk98S-16" to="s6@dface.cn/ylt">
+<x xmlns="jabber:x:event"><delivered/><id>purplea5e6669c</id></x>
+</message>
+
+当接收端展示消息时，发送displayed确认消息，例如：
+<message id="Kk98S-17" to="s6@dface.cn/ylt">
+<x xmlns="jabber:x:event"><displayed/><id>purplea5e6669c</id></x>
+</message>
+
+发送端根据从接收端获得的状态通知更改单条消息的发送状态。
+
+只有类型是message,且body不为空的消息需要确认状态。照片提醒消息（发送人是"sphoto@dface.cn"）不需要确认状态。
+
+当本地无法发送消息时（比如无网络、或者连接不上xmpp服务器），消息的状态为“发送失败”。发送失败的消息让用户手动重发。没有收到回执的消息，则自动重发。
+
+对于服务器端发送的消息，比如图片／语音／名片等，客户端先保存消息到数据库，而服务器端发消息的ID客户端不知道。所以当客户端发送回执时。
+
+\end{verbatim}
+
+\subsection{消息提醒}
+\begin{enumerate}
+\item 当不在现场的界面收到现场聊天室的消息时，在现场按钮旁边加红点提醒;
+\item 已发／已读类状态确认类消息不需要提醒。
+\item 好友动态（新鲜事）消息以红点的方式提醒。
+\item 好友评论消息以数字计数的方式提醒。
+\item 其它个人之间聊天的消息以数字计数的方式提醒。
+\end{enumerate}
+
+
+\subsection{关于照片的类型}
+聊天相关的照片本来分为两种：单聊的照片和聊天室的照片。分别通过photos和photo2s接口获取。但是后来增加了问答类的图片消息和单聊时的群聊照片提醒/个人头像推送。所以为了区分这几种照片，规定如下：
+\begin{enumerate}
+\item 在聊天室收到id以“faq”开头的图片消息，说明是问答类的图片消息 ，查看调用photos/show接口；
+\item在单聊时收到id以“U”开头的图片消息，说明是个人单聊的图片消息，查看调用photo2s/show接口;
+\item在单聊时收到id以“Logo”开头的图片消息，说明是个人头像消息，查看调用photo2s/show接口;
+\item收到的其它图片消息都是聊天室的照片，包括在聊天室发的照片以及将该照片转发给个人。这类消息查看可以调用photos/show接口，也可以调用photo2s/show接口。但是这类照片还可以点评。点评时获取照片详情的接口则必须是photo/detail接口。
+\end{enumerate}
+
+不管是在单聊和群聊时，图片消息仅仅根据图片id即可判断出类别。
+
+\section{好友动态等服务器端推送的消息}
+\subsection{好友动态消息}
+所有消息id以"FEED"开头的，都属于好友动态消息。好友动态消息以红点的方式提醒，不计数。
+好友动态消息增加地点，IOS通过属性实现，Android通过扩展实现，如下：
+\begin{verbatim}
+"<x xmlns='dface.shop' SID='#{shop.id}' SNAME='#{shop.name}' ></x>"
+\end{verbatim}
+
+如果是多图的动态，那么在图片的描述信息开始是数字加":"开始，在扩展属性中有"dface.thumb2s"字段，内容是第二张图到最后一张图的缩略图的url，以“,”号分割。
+
+
+\subsection{好友动态中的评论消息}
+所有消息id以"COMMENT"开头的，都属于好友评论消息。评论消息以数字计数。
+\begin{verbatim}
+
+评论消息提醒的消息id格式："COMMENT#{图片id},#{时间}"。
+\end{verbatim}
+
+当同时有动态消息和评论消息时，优先显示评论消息的数字。
+
+好友动态在会话列表中按最新的动态的时间自然排序。
+
+\subsection{对方加我时的单聊提醒消息}
+\begin{verbatim}
+所有消息id以"FOLLOW"开头的单聊消息，都属于加关注的提醒消息。
+该消息的id格式为“FOLLOW#{uid1},#{uid2}”，其中uid1是加我的人的id，uid2是我的id。
+\end{verbatim}
+
+
+\subsection{谁访问过我的主页的消息}
+\begin{verbatim}
+该类消息的类型是"normal"，消息id以"VISIT"开头。
+该消息的id格式为“VISIT#{uid1},#{uid2}”，其中uid1是访问我的人的id，uid2是我的id。
+\end{verbatim}
+
+\subsection{有新人进入聊天室的消息}
+\begin{verbatim}
+该类消息的类型是"normal"，消息id以"CKN"开头。
+该消息的id格式为“CKN#{uid1},#{sid}”，其中uid1是新加入聊天室的人，sid是聊天室的id。
+\end{verbatim}
+
+
+\input{./photo.tex}
+\input{./sound.tex}
+
+
+\section{用户推荐}
+\subsection{ 将个人推荐给好友}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/follows/recommend} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ fid  & 字符串 & 必填 &  好友的用户id\\
+ \hline
+ uid  & 字符串 & 必填 &  被推荐的用户id\\
+\hline
+ mid  & 字符串 & 必填 &  客户端生成的UUID格式的消息ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+当前登录用户给自己的好友fid推荐一个用户uid。
+服务器端收到请求后，会发送下一节格式的Xmpp消息给好友。
+
+\begin{figure}[H]
+\begin{verbatim}
+返回值：{"success" : mid}
+\end{verbatim}
+\end{figure}
+
+
+\subsection{接收个人名片消息}
+在单聊时，可以接收个人名片消息。该消息的格式如下：
+\begin{verbatim}
+[img:Logo$id:$uid]
+其中id是个人头像的id，uid是个人的id.
+\end{verbatim}
+该消息格式兼容单聊时的图片消息的格式。
+
+
+\section{优惠券}
+
+\subsection{商家推送优惠券}
+当用户使用脸脸时，比如签到／摇一摇等，可以收到商家推送过来的优惠券。优惠券也是一个xmpp消息，其中的body内容格式为：
+
+\begin{verbatim}
+[优惠券:$name:$shop:$id:$time:$hint]
+
+ 其中，name是优惠券的名称、shop是商家的名称，id是该优惠券的id，time是该张优惠券的下发时间。
+ 
+ hint是可选的，表示使用优惠券时的提示语言，比如“请输入此次的消费金额”。有hint的优惠券使用时要求用户输入内容才能使用优惠券。内容默认是数字。
+ 
+ ［2013-11-13］优惠券消息增加一个seq属性，代表优惠券的编号。
+ 
+优惠券id不重复。如果有重复的优惠券id时代表消息重发了，此时要忽略这条消息。
+ 
+ 所有优惠券都统一显示在会话中的“优惠券”文件夹中。优惠券的消息状态和其他消息同样处理。
+\end{verbatim}
+
+
+\subsection{获取优惠券列表}
+当用户收到优惠券以后，先根据优惠券的Xmpp消息显示“优惠券生成中...”的效果，然后起http请求拿到优惠券列表。
+优惠券Xmpp消息给的是优惠券的基本信息，本接口给的是优惠券的详细信息。
+
+关于优惠券的排序，默认按时间排序，最新的在最前面。
+相同时间同一批收到的优惠券，按距离排序。
+当前所在商家的优惠券自动置顶。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/list} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  user\_id  & 字符串 & 必填 &  用户的id  \\
+\hline
+ \  status  & 数字 & 必填 &  优惠券的状态 ，1代表未使用的，2代表已使用的，4代表已过期的，8代表未激活的，0代表未使用和未激活的，默认为0\\
+\hline
+ lat  & 浮点数 & 可选 & 经度\\
+\hline
+ lng  &  浮点数 & 可选 & 纬度\\ 
+ \hline
+ \ sid  &  整数 & 可选 & 当前现场的商家id\\ 
+  \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为10\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/coupons/list?
+返回值：
+
+[
+{"id":"518de040c90d8be6840000b5","loc":[30.2425077887959,120.15320074395899]},
+{"id":"5171d8d7c90d8b3c2900004a","loc":[30.282349,120.117012]}]
+
+id是该优惠券的id, name是优惠券的名称、shop是商家的名称，dat是该张优惠券的下发时间, status是状态， hint是优惠券使用提示, seq是优惠券的流水号。
+ 
+\end{verbatim}
+\end{figure}
+
+
+
+
+
+ 
+
+\subsection{优惠券展示}
+优惠券以图片的方式展示，由服务器端生成该图片。当用户进入优惠券文件夹查看优惠券时，调用下面的接口获得优惠券的图片。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/img} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  id  & 字符串 & 必填 &  该优惠券的id  \\
+\hline
+ size  & 整数 & 可选 &  目前0代表原图(580, 224)；1代表缩略图，大小为(290,112)。默认为1。\\ 
+ \hline
+ \  seq  & 整数 & 可选 &  0代码客户端没有seq，1代表客户端支持显示seq，默认为0 \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+2.4以后的版本，都要传递seq=1，这样服务器端才不会重复生成seq.
+
+
+\subsection{优惠券使用}
+目前，所有优惠券都只支持单次使用，使用后即过期。当用户确认使用优惠券时，调用如下的接口：
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/coupons/use} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  id  & 字符串 & 必填 &  该优惠券的id  \\
+ \hline
+ \ sid  &  整数 & 可选 & 当前现场的商家id\\  
+ \hline
+ \  data  & 字符串 & 可选 &  优惠券使用时填写的信息  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+优惠券的使用要保证只能点击一次，使用后就灰掉，不需要等待服务器端的返回结果。如果网络不通或者服务器端失败，要以一定的策略重试。
+
+当优惠券有hint字段时，使用时带上消费者输入的data。
+
+优惠券使用时，增加一个可选的参数sid，代表当前现场的商家id。如果用户没有摇入任何商家，sid不传。
+
+\subsection{优惠券删除}
+
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  id  & 字符串 & 必填 &  该优惠券的id  \\
+\hline
+ \  user\_id  & 字符串 & 必填 &  用户的id  \\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsection{优惠券批量使用}
+本接口用于数据同步。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/batch\_use} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  infos  & 字符串 & 必填 &  批量使用信息 \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+不同的优惠券以,分割，同一张优惠券内发送三个参数id-sid-data。
+
+
+
+\subsection{优惠券批量删除}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/coupons/batch\_delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  ids  & 字符串 & 必填 &  该优惠券的id,以“,”分割  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\input{./xmpp_web.tex}
+
+
+\section{关于Push消息}
+
+\subsection{登录Xmpp服务器时，报告设备的Push消息token}
+登录Xmpp服务器，发送的密码格式变更为：
+
+\begin{verbatim}
+“用户密码”+《状态码》+token
+
+状态码为：1代表ios开发设备，2代表实际的ios发布设备, 3代表android个推的clientid, 4代表百度云推送.
+对于iOS设备，token是一个64位的字符串。对于android设备，如果token小于64，以0填充尾部到64位。百度云推送的token格式为：channel_id,user_id,补齐0到64位）
+
+比如某用户的密码是“c53b2f16a24c61d9”，
+token是“ea6e4f05b48f4a057816956e567c6feacf14ee28cbbbab67993e263c3dfa2c27”，
+目前是进行开发测试，那么登录Xmpp服务器时的密码为：
+“c53b2f16a24c61d91ea6e4f05b48f4a057816956e567c6feacf14ee28cbbbab67993e263c3dfa2c27”。
+\end{verbatim}
+
+服务器端解析出状态码和token并保存。
+
+
+\subsection{退出时，报告设备的Push消息token}
+
+用户退出的API接口新增pushtoken参数，以取消Push消息token绑定。
+如果是个推，退出时要接触和个推的绑定。
+
+\subsection{Push消息的发送}
+当有离线消息产生时，xmpp服务器获得用户的状态码以决定给那个Apple Push服务器发消息，以及获得和该用户绑定的token。一个用户只能绑定一个token。

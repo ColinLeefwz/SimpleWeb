@@ -1,0 +1,97 @@
+<div class="title2"><h2>签到类优惠券管理</h2></div>
+<div class="items" id="Items">
+  <a href="/shop_coupons" style="margin-top: 10px;">签到类</a>
+  <a class ="hover" href="/shop_share_coupons" style="margin-top: 10px;">分享类</a>
+  <a href="/shop_share_coupons/new" class="btn5" style="float: right; padding-right: 0px; border-width: 0px; width: 95px;">分享类发布</a>
+</div>
+<style>
+  .imgfilter{filter: Alpha(opacity=50);-moz-opacity:.1;opacity:0.5;}
+</style>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+  <tr>
+    <th width="25%" align="left">图片</th>
+    <th width="25%" align="left">标题</th>
+    <th width="10%">类型</th>
+    <th width="9%" align="center">已下载</th>
+    <th width="9%" align="center">已使用</th>
+    <th align="center" colspan="4">操作</th>
+  </tr>
+
+  <% @coupons.each do |coupon| %>
+
+    <tr>
+      <td><%=image_tag coupon.img.url(:t1), :class=>"imgs4 #{coupon.hidden && 'imgfilter'}" %></td>
+      <td valign="center"><%= coupon.name %></td>
+      <td class="gray" align="center"><%= coupon.show_t2  %></td>
+      <td align="center"><%= link_to coupon.down_users.to_a.count, {:controller => 'shop_coupons', :action => 'newly_down', :cid => coupon.id} %></td>
+      <td align="center"><%= link_to coupon.use_users.to_a.count,{:controller => 'shop_coupons', :action => 'newly_use', :cid => coupon.id} %></td>
+      <td align="center" class="plr0">
+        <%= link_to '详情', "/shop_share_coupons/show?id=#{coupon.id}" %>
+      </td>
+      <td align="center" class="plr0">
+        <%=link_to '编辑', "/shop_share_coupons/edit?id=#{coupon.id}" if coupon.down_users.blank? && coupon.hidden !=1 %>
+      </td>
+      <td align="center" class="plr0">
+        <% if coupon.hidden == 1 %>
+          <%= link_to '激活', '#', :onclick => "ajaxActivate($(this), '#{coupon.id}', #{coupon.allow_activate?})" %>
+        <% else %>
+          <%= link_to '停用', '#', :onclick => "ajaxDeply($(this), '#{coupon.id}')" %>
+        <% end %>
+      </td>
+      <td align="center" class="plr0">
+        <%= (link_to '删除', '#', :onclick => "ajaxDel($(this), '#{coupon.id}')") if coupon.down_users.blank? %>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+<div class="pages mt15">
+  <%= generate_paginate.html_safe %>
+</div>
+
+
+<script type ="text/javascript">
+  LeftMenu(6);
+  function ajaxDeply(obj, coupon_id){
+    if(confirm("确定停用此优惠券么？"))
+    {
+      $.get("/shop_coupons/ajax_deply",{id: coupon_id}, function(data) {
+        obj.replaceWith(data['text'])
+      });
+    }
+  }
+
+  function ajaxDel(obj, coupon_id){
+    if(confirm("确定删除此优惠券么？"))
+    {
+      $.get("/shop_coupons/ajax_del",{id: coupon_id}, function(data) {
+        if(data['text']){
+          obj.parent().parent().remove();
+        }
+        else{
+          obj.replaceWith('删除失败.')
+        }
+      });
+    }
+  }
+
+
+  function ajaxActivate(obj, coupon_id, allow){
+    if(allow){
+      if(confirm("确定激活此优惠券么？"))
+      {
+        $.get("/shop_share_coupons/ajax_activate",{id: coupon_id}, function(data) {
+          obj.replaceWith(data['text'])
+        });
+      }
+    }
+    else
+    {
+      alert('不能激活,已有一张有效的分享类优惠券。')
+    }
+  }
+</script>
+
+
+
+

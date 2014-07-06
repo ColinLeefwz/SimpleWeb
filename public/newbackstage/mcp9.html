@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>脸脸茶坊欢迎您</title>
+	<link href="/newbackstage/css/managecelphone.css" rel="stylesheet" type="text/css">
+	<script src="/newbackstage/js/jquery-1.6.2.min.js"></script>
+	<script src="/newbackstage/js/public.js" type="text/javascript"></script>
+	<script src="/newbackstage/js/mcp.js" type="text/javascript"></script>
+	<script>
+	var navmove="on", runing;
+	$(document).ready(function(){
+		runing=$("#CB1").attr("class");
+		if(runing=="checkboxs1"){
+			NavDiv();
+			$(window).load(function(){
+				MessageDiv();
+			});	
+		}else if(runing=="checkboxs2"){
+			AllNoDH();
+		}
+		var changes=0;
+		$("#OpenHelpBox").click(function(){
+			var i=0,j=0;
+			if(changes==0){
+				for(i=$(".helpbox").length-1;i>=0;i--){
+					$(".helpbox").eq(i).delay(500*j).slideDown(500);
+					j++;
+				}
+				changes=1;
+				j=0;
+			}else if(changes==1){
+				for(i=0;i<$(".helpbox").length;i++){
+					$(".helpbox").eq(i).delay(500*i).slideUp(500);
+				}
+				changes=0;
+			}			
+		});
+		$("#CloseHelpBox").click(function(){
+			var i=0,j=0;
+			for(i=$(".helpbox").length-1;i>=0;i--){
+				$(".helpbox").eq(i).delay(500*j).slideUp(500);
+				j++;
+			}
+			changes=0;
+		});
+		
+	});
+	</script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<img src="/newbackstage/images/sign46.jpg" align="left" id="OpenNav" title="打开导航菜单"/>
+			<h1>脸脸茶坊</h1>
+			<a href="#" class="view">预览</a>
+			<div class="clear1"></div>
+		</div>
+		<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Nav">
+			<a class="sign" id="CloseNav"></a>
+			<div id="Navcon">
+				<a href="mcp1.html">首 页</a>
+				<span class="navline"></span>
+				<a href="mcp2.html">设 置</a>
+				<span class="navline"></span>
+				<a href="#">公司介绍</a>
+				<span class="navline"></span>
+				<a href="mcp6.html">最新动态</a>
+				<span class="navline"></span>
+				<a href="#">推荐菜品</a>
+				<span class="navline"></span>
+				<a href="#">联系我们</a>
+				<span class="navline"></span>
+				<a href="#">访问统计</a>
+				<span class="navline"></span>
+				<a href="mcp8.html">微信管理</a>
+				<span class="navline"></span>
+				<label id="CB1" class="checkboxs1" style="display:none">取消动画</label>
+				<span class="navline"></span>
+				<a id="Btn"><img src="/newbackstage/images/sign1.png" align="absmiddle"/> 固定左侧导航</a>
+			</div>
+		</div>
+		</div>
+		<div class="clear1"></div>
+
+		<div class="con">
+			<div class="box14">
+				<div class="title1"><h2 class="f18 l">微信管理</h2></div>
+				<div class="submenu w500">
+					<ul>
+						<li class="hover"><a>微信接口设置</a></li>
+						<li><a href="mcp10.html">微信自动回复管理</a></li>
+					</ul>
+				</div>
+				<div class="clear1"></div>
+				<form method="post" action="">
+					<div class="mt40 mb40 gray2"><img src="images/sign55.png" align="absmiddle" class="scaleanimation"/>&nbsp;&nbsp;<a href="https://mp.weixin.qq.com/" class="gray2"><b>微信接口配置已验证</b></a>，<a href="mpc10.html" class="blue"><b>请进入管理互动信息</b></a></div>
+					<div class="pass3 w700">
+						<table cellpadding="0" cellspacing="0" class="tab3">
+							<tr>
+								<td colspan="3">微信接口配置信息：</td>
+								<td width="128" align="right"><a href="mcp8.html" class="green" title="单击取消验证">已验证</a></td>
+							</tr>
+							<tr>
+								<td width="67" align="right" valign="middle">URL</td>
+								<td width="477" valign="middle"><input type="text" class="inputs8 w475"/></td>
+								<td width="26">&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td align="right" valign="middle">Token</td>
+								<td valign="middle"><input type="text" class="inputs8 w130"/></td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+						</table>
+					</div>
+					<div class="mt40 gray">
+						微信接口配置帮助：<br/>
+						
+						1、登陆微信公众平台（https://mp.weixin.qq.com）;<br/>
+						
+						2、进入"高级功能"；<br/>
+						
+						3、先关闭“编辑模式”，再开启“开发模式”，然后进入开发模式；<br/>
+						
+						4、复制上列的Token和URL，填写到微信开发模式管理页面的相应配置项中，并提交；<br/>
+						
+						5、当提示"你已成为开发者"字样，表明配置已成功；<br/><br/><br/>
+						<a id="OpenHelpBox" class="pointer blue">更详细的图文帮助-&gt;</a>
+						<br/>
+						<br/>
+					</div>
+					
+					<div class="helpbox">
+						1、登陆微信公众平台（<a target="_blank" class="blue" href="https://mp.weixin.qq.com">https://mp.weixin.qq.com</a>）
+						<img width="780" height="392" border="0" alt="" src="images/help01.jpg"/>
+					</div>
+					
+					<div class="helpbox">
+						2、进入"高级功能"，先关闭“编辑模式”；
+						<img width="780" height="534" border="0" alt="" src="images/help02.jpg">
+						<img width="780" height="159" border="0" alt="" src="images/help03.jpg">
+					</div>
+					
+					<div class="helpbox">
+						3、再开启“开发模式”，然后进入开发模式；
+						<img width="780" height="159" border="0" alt="" src="images/help04.jpg">
+						<img width="780" height="534" border="0" alt="" src="images/help05.jpg">
+					</div>
+					
+					<div class="helpbox">
+						4、复制上列的Token和URL，填写到相应配置项中，并提交；
+						<img width="780" height="374" border="0" alt="" src="images/help06.jpg">
+					</div>
+					
+					<div class="helpbox">
+						5、当提示"你已成为开发者"字样，表明配置已成功；
+						<img width="780" height="220" border="0" alt="" src="images/help07.jpg">
+						6、你就可以在企博网上管理与微信的互通信息了。
+						<br><br>
+						<a id="CloseHelpBox" class="blue pointer">收起</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+<script>
+
+</script>
+</body>
+</html>

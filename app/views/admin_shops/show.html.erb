@@ -1,0 +1,179 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<h1>商家详情</h1>
+<style>
+  p a{padding-left: 15px;  }
+</style>
+<p>
+
+  <b></b>
+  <%= link_to '开通密码', "/admin_shops/set_password?id=#{@shop.id}"  if @shop.password.blank? %>
+  <%= link_to '设置流水号', "/admin_shops/set_id2?id=#{@shop.id}"  unless @shop.password.blank? %>
+  <%= link_to('加权', "/admin_shops/upgrade_v?id=#{@shop.id}") %>
+  <%= link_to('编辑', "/admin_shops/edit?id=#{@shop.id}") %>
+  <%= link_to('标记删除', "/admin_shops/del?id=#{@shop.id}")  if !@shop.cooperationer? && @shop.del.blank? %>
+  <%= link_to('取消标记删除', "/admin_shops/undel?id=#{@shop.id}")  if @shop.del %>
+  <br/>
+
+  <%  if @shop.seller  %>
+    <%= "已绑定销售人员: #{@shop.seller_name} #{@shop.seller_show_gender}" %>
+    <%= link_to('重新绑定销售人员', 'javascript:void(0)', :onclick => 'show_sell();', :class => "aSeller") %>
+  <% end %>
+  <br/>
+
+
+<div id="sellContainer" style="display: <%= @shop.seller ? "none" : '' %>">
+  <%= link_to('绑定销售人员', "#", :onclick => 'show_sell();', :class => "aSeller") %>
+  <span id="seller" style="display: none ">
+    用户id: <%= text_field_tag :uid, '', :id => "uid", :onblur => 'user_info($(this).val())'  %>
+    <span id="show_info"></span>
+    <input type="button" value="提交" onclick ="submitSell('<%=@shop.id %>')" />
+  </span>
+</div>
+
+  <br/>
+  <% if @shop.cooperationer? %>
+    <p class='cooperatione'>
+      <%= link_to "开通手机网站", "/admin_mobile_shops/create?id=#{@shop.id}" unless @shop.has_mweb_purview? %>
+      <%= link_to "开通点菜", "/admin_foods/create?id=#{@shop.id}" unless @shop.has_food_purview? %>
+      <%= link_to "开通猜图", "/admin_caitus/create?id=#{@shop.id}" unless @shop.has_caitu_purview? %>
+      <%= link_to "开通游戏平台", "/admin_games/create?id=#{@shop.id}" unless @shop.has_game_purview? %>
+    </p>
+  <% end %>
+
+  <br/>
+
+<%= link_to "合并到", "javascript:void(0)" , :onclick => "showFormMerge($(this))" %>
+
+<%= form_tag "/admin_shops/merge_to", :id=> "formMerge", :style => "display: none" do   %>
+  <%= hidden_field_tag :id, @shop.id  %>
+  <%= hidden_field_tag :back_to, request.env['HTTP_REFERER'] %>
+<span>当前地点的坐标/签到/照片墙都会合并到填入的id中，并且当前地点会直接删除。</span>
+<br/>
+  要合并到的id：<%= text_field_tag :mid, '', :onchange => "ajaxGetShop($(this))" %>
+  <span id="errspan"></span>
+  <%= submit_tag "确定"  %>
+<% end %>
+
+
+</p>
+<p>
+  <b>商家id:</b>
+  <%=link_to @shop.id.to_i, "/admin_shops/show?id=#{@shop.id}" %>
+</p>
+<p>
+  <b>商家名称:</b>
+  <%= @shop.name %>
+</p>
+<p>
+  <b>登录帐号:</b>
+  <%= @shop.id2 || "未设置" %>
+</p>
+<p>
+  <b>密码:</b>
+  <%= @shop.password || '未开通' %>
+</p>
+
+<p>
+  <b>logo:</b>
+  <br/><br/>
+  <%=  image_tag @shop.logo && @shop.logo.img %>
+</p>
+
+<p>
+  <b>区号:</b>
+  <%= @shop.city %>
+</p>
+<p>
+  <b>电话:</b>
+  <%= @shop.tel %>
+</p>
+<p>
+  <b>加权值:</b>
+  <%= @shop.v ? @shop.v.to_i : '无' %>
+</p>
+<p>
+  <b>降权值:</b>
+  <%= @shop.d ? @shop.d.to_i : '无' %>
+</p>
+<p>
+  <b>百度经纬度:</b>
+  <%= @shop.lob %>
+</p>
+<p>
+  <b>实际经纬度:</b>
+  <%= @shop.lo %>
+</p>
+<p>
+  <b>地址:</b>
+  <%= @shop.addr %>
+</p>
+<p>
+  <b>分类:</b>
+  <%= @shop.show_t %>
+</p>
+<p>
+  <b>子商家:</b>
+  <%= link_to(@shop.shops.to_a.count, "/admin_shops/subshops?shop_id=#{@shop.id}") %>
+</p>
+<p>
+  <b>公告:</b>
+  <%= link_to '查看', "/admin_shop_notices?sid=#{@shop.id.to_i}" %>
+</p>
+<p>
+  <b>优惠券:</b>
+  <%= link_to '查看', "/admin_shop_coupons?sid=#{@shop.id.to_i}" %>
+</p>
+<p>
+  <b>照片墙:</b>
+  <%= link_to '查看', "/admin_shop_photos?sid=#{@shop.id.to_i}" %>
+</p>
+<p>
+  <b>签到：</b>
+  <%= link_to '查看', "/admin_checkins?sid=#{@shop.id.to_i}"  %>
+</p>
+<p>
+  <b>聊天记录：</b>
+  <%= link_to '查看', "/admin_shops/gchat?sid=#{@shop.id.to_i}"  %>
+</p>
+
+
+<script type="text/javascript">
+  function show_sell(){
+    $('.aSeller').css("display","none")
+    $('#seller').css("display","inline")
+    $('#sellContainer').css("display","block")
+  }
+
+  function user_info(uid){
+    $.get("/admin_users/get_info", {id : uid}, function(data){
+      str = "<span id='show_info'>" + data['info'] +"</span>"
+      $('#show_info').replaceWith(str)
+    })
+  }
+  function submitSell(sid){
+    $.get('/admin_shops/bindsell', {sid: sid, uid: $('#uid').val()}, function(data){
+      $('#sellContainer').replaceWith(data['text'])
+    })
+  }
+
+  function showFormMerge(obj){
+    $("#formMerge").show();
+    obj.hide();
+  }
+
+  function ajaxGetShop(obj){
+    $.get("/admin_shops/get_shop.json", {id: obj.val(), back: ["name"]}, function(data){
+      text = data ? data['name'] : "id错误"
+      $("#errspan").replaceWith("<span>"+ text +"</span>")
+    })
+  }
+
+  $(document).ready(function(){
+    $('.cooperatione a').click(function(){
+      if(!confirm('确定开通？')){
+        return false
+      }
+    })
+  })
+
+</script>

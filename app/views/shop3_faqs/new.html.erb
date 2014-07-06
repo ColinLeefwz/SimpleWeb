@@ -1,0 +1,176 @@
+<style>
+	#edui1_bottombar{display:none;}
+</style>
+<div class="con2">
+	<div class="title1"><h2 class="f18">问答系统</h2></div>
+	<div class="box4 w950">
+	<%= form_for(@shop_faq, :url => '/shop3_faqs/create',:html => { :multipart => true, :id => 'cform' } ) do |f| %>
+		<div class="box4left" id="B4L">
+			<% if @shop_faqs.blank? %>
+				还没有设置问答系统，请创建 ===》
+			<% end %>
+			<% @shop_faqs.each do |faq| %>
+				<%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
+				<a href="/shop3_faqs/edit?id=<%=faq.id%>" rel="<%= faq.od%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
+			<% end %>
+			<span class="blue3">
+				<span id="NewNum"></span>
+				<span id="NewTitle"></span>
+			</span>
+		</div>
+<div class="box4right w400 pl20 zindex99 relative bg">
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
+    <tr>
+      <td width="20%" align="right" valign="middle" class="pr20 pt10">回复数字</td>
+      <td width="86%" class="pt10">
+		<%= f.text_field :od, :class =>"inputs8 radius5 relative", :id=>"Inputs3", :value=>"请输入数字" %>
+		<div id="Mes3"></div>
+	  </td>
+    </tr>
+    <tr>
+      <td width="20%" align="right" valign="middle" class="pr20">问题</td>
+      <td>
+		<%= f.text_field :title, :class =>"inputs6 radius5 relative", :id=>"Inputs1", :value=>"3-12个字,如:获取wifi密码" %>
+		<div id="Mes1"></div>
+	  </td>
+    </tr>
+
+    <tr>
+      <td width="20%" align="right" valign="middle" class="pr20">配图</td>
+      <td class="relative"><a class="btn1" id="Btn1">上传图片</a>
+		  <input class="filebox1" id="shop_faq_img" name="shop_faq[img]" type="file" />
+		  <input class="filebox2" id="shop_faq_img" name="shop_faq[img]" type="file" />
+	  </td>
+    </tr>
+
+    <tr>
+        <td width="20%" align="right" valign="middle" class="pr20">&nbsp;</td>
+        <td><div class='uploadbox' id="uploadPreview">
+				<img id="image_view" style="width:100%;height:100%;" src="/newbackstage/images/sign4.jpg"/>
+			</div>
+		</td>
+    </tr>
+    
+    <tr>
+	  <td width="20%" align="right" valign="top" class="pr20">简述</td>
+	  <td>
+		<%= f.text_area :text, :class => "textarea4 radius5 relative", :style=>"word-wrap : normal", :id=>"Inputs2",:value=>"例如：本店wifi密码：321123"%>
+		<div id="Mes2"></div>
+	  </td>
+	</tr>
+    <tr>
+		<td>&nbsp;</td>
+		<td><input type="submit" name="Submit" value="提 交" class="btn2 l"/>
+		<%= link_to '取 消', '/shop3_faqs', :class=>"btn3 l ml20" %>
+		<input type="reset" class="none" id="Reset">
+    </tr>
+
+  </table>
+
+				</div>
+<div class="box4right2">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1 visible pt10">
+	<tr>
+		<td align="left" class="pb10">详细内容</td>
+	</tr>
+	<tr>
+		<td class="pb8">
+			<span class="l ml8 mr20"><%= f.radio_button :link_rule, '0',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;链接到一个网页</span>
+			<span class="l"><%= f.radio_button :link_rule, '1',:onclick=>"select_radio($(this).val())"%>&nbsp;&nbsp;创建详情页</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="relative hidden">
+			<%= f.text_field :url,:class=>"inputs2 radius5 relative w300 mt10 mb20",:id=>"link1", :value => "http://", :disabled=>"disabled",:style=>"margin-left:8px;"%>
+			<div id="LinkDiv">
+				<div class="linkdivleft">
+					<%= f.text_field :head, :class=>"inputs2 radius5 relative w300 mt10 mlr8 mb20",:id => "link2", :value => "标题" %>
+					<div id="link3" class="ml8">
+						<%= f.text_area :content, :id=>"myEditor" %>
+						<input type="button" class="mt10 btn15 r mr5" id="Preview" value="预览"/>
+					</div>
+				</div>
+				<div id="CellPhone">
+					<iframe src="" id="previewIframe" scrolling="no" frameborder="0"></iframe>
+					<input type="button" class="mt10 btn16 ml100" id="Edit" value="编辑"/>
+				</div>
+			</div>
+		</td>
+    </tr> 
+  </table>
+</div>
+<%  end %>
+			</div>
+		</div>
+<script type="text/javascript" src="/javascripts/imgUploadPreview.js"></script>
+<script src="/newbackstage/js/qa.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+	if(!/MSIE/i.test(ua)){
+		$("input[name='shop_faq[img]']").not(":first").remove();
+	}
+	$("#Btn1").click(function(){
+		$("#shop_faq_img").click();
+	});
+	$("input[name='shop_faq[img]']").click(function(){
+		imgUploadPreview2(this, 'uploadPreview');
+	});
+
+	if($("#link1").attr("disabled")=="disabled"){
+		$("#link1").css("background-color","#efefef");
+	}
+	Lianlian.Blog.init();
+});
+
+
+$(document).keyup(function(e){
+	if(e.which==116){$("#Reset").click();}
+});
+Lianlian = window.Lianlian = {};
+
+(function() {
+
+  Lianlian.Blog = {
+    init: function() {
+      var me;
+      me = this;
+      return me.newBlog();
+    },
+    newBlog: function() {
+
+      var editor_a;
+      editor_a = new baidu.editor.ui.Editor({
+        autoHeightEnabled:false,
+        initialFrameWidth:320,
+        initialFrameHeight:200,
+        imageUrl:"/shop3_faqs/article_image_upload/<%= @shop_faq.id%>",
+        imagePath:"",
+        initialContent: ""
+      });
+      editor_a.render('myEditor');
+      return $('.new_blog_form .submit').click(function() {
+        var content, title;
+        editor_a.sync();
+        title = $('#blog_title').val();
+        content = editor_a.getContent();
+        if (title.length === 0) {
+          $('#blog_title').addClass('error_border');
+        }
+        if (title.length > 0 && content !== '<p><br /></p>') {
+          return $(this).parents('form').submit();
+        }
+      });
+    }
+  };
+}).call(this);
+</script>

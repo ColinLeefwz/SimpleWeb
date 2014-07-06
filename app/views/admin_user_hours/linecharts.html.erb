@@ -1,0 +1,179 @@
+<script type='text/javascript' src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js'></script>
+<script type='text/javascript'>
+
+var wb = [];
+var qq = [];
+var mtotal = [];
+var ftotal = [];
+var total = [];
+
+$(function() {
+
+    $.getJSON('tojson.json', function(data) {
+        // Create the chart
+
+            for (i = 0; i < data.length; i++) {
+                wb.push([
+                    data[i][0], // the date
+                    data[i][1] // wb
+                ])
+
+                qq.push([
+                    data[i][0], // the date
+                    data[i][2] // qq
+                ])
+
+                mtotal.push([
+                    data[i][0],
+                    data[i][3]
+                ])
+
+                ftotal.push([
+                    data[i][0],
+                    data[i][4]
+                ])
+
+                total.push([
+                    data[i][0],
+                    data[i][5]
+                ])
+            }
+
+        $('#container').highcharts('StockChart', {
+
+            rangeSelector : {
+                buttons: [{
+                    type: 'day',
+                    count: 1,
+                    text: '1天'
+                }, {
+                    type: 'week',
+                    count: 1,
+                    text: '1周'
+                }, {
+                    type: 'month',
+                    count: 1,
+                    text: '1月'
+                }, {
+                    type: 'month',
+                    count: 3,
+                    text: '3月'
+                }, {
+                    type: 'month',
+                    count: 6,
+                    text: '6月'
+                },  {
+                    type: 'all',
+                    text: '所有'
+                }],
+                selected : 0 // 1天
+            },
+
+            yAxis: [
+                        {
+                            title: {
+                                    text: '男性用户 / 女性用户 /总用户数'
+                            },
+                            top: 80,
+                            height: 210,
+                            lineWidth: 2,
+                            gridLineDashStyle : 'Dash',
+                            showLastLabel : true
+                        },
+                        {
+                            title: {
+                                    text: '微博 / qq'
+                            },
+                            top: 300,
+                            height: 210,
+                            offset: 0,
+                            lineWidth: 2,
+                            gridLineDashStyle : 'Dash',
+                            showLastLabel : true
+                        }
+                    ],
+
+
+            title : {
+                text : '用户每小时新增'
+            },
+            
+            series : [
+                {
+                    name : '男性用户数',
+                    data : mtotal,
+                    yAxis: 0,
+                    tooltip: {
+                        valueDecimals: 2,
+                        xDateFormat: '%Y-%m-%d %H:%M %A'
+                    }
+                }, {
+                    name : '女性用户数',
+                    data : ftotal,
+                    yAxis: 0,
+                    tooltip: {
+                        valueDecimals: 2,
+                        xDateFormat: '%Y-%m-%d %H:%M %A'
+                    }
+                }, {
+                    name : '用户总数',
+                    data : total,
+                    yAxis: 0,
+                    tooltip: {
+                        valueDecimals: 2,
+                        xDateFormat: '%Y-%m-%d %H:%M %A'
+                    }
+                }, {
+                    name : '微博',
+                    data : wb,
+                    yAxis: 1,
+                    tooltip: {
+                        valueDecimals: 2,
+                        xDateFormat: '%Y-%m-%d %H:%M %A'
+                    }
+                }, {
+                    name : 'qq',
+                    data : qq,
+                    yAxis: 1,
+                    tooltip: {
+                        valueDecimals: 2,
+                        xDateFormat: '%Y-%m-%d %H:%M %A'
+                    }
+                }
+            ]
+        });
+
+        Highcharts.setOptions({
+            lang: {
+                    loading: 'Loading...',
+                    months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                    decimalPoint: '.',
+                    numericSymbols: ['k', 'M', 'G', 'T', 'P', 'E'], // SI prefixes used in axis labels
+                    resetZoom: 'Reset zoom',
+                    resetZoomTitle: 'Reset zoom level 1:1',
+                    thousandsSep: ','
+            }
+        });
+
+    });
+
+});
+
+//]]>  
+
+</script>
+
+
+</head>
+<body>
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<div id="container" style="height: 580px; width: 98%"></div>
+  
+</body>
+</html>
+
+<%= link_to '后退',request.env["HTTP_REFERER"] if request && request.env %>
+
+

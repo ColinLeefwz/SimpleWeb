@@ -1,0 +1,59 @@
+<div class="con">
+	<div class="title1 mb30"><h2 class="f18">签到管理</h2></div>
+	<div class="submenu">
+		<ul>
+			<li><a href="/shop3_checkins?page=1">最新签到</a></li>
+			<li class="<%= 'hover' if params[:flag] == 'week' %>"><a href="rank?flag=week&page=1">周排行</a></li>
+			<li class="<%= 'hover' if params[:flag] == 'month' %>"><a href="rank?flag=month&page=1">月排行</a></li>
+			<!-- <li><a href="rank_list?page=1">总排行</a></li> -->
+		</ul>
+	</div>
+	<table width="100%" cellspacing="0" cellpadding="0" class="tab2 mt40">
+		<tr>
+			<th width="991">用户名</th>
+			<th width="199" class="textcenter" style="padding-left:0px;">签到次数</th>
+			<th width="182" class="textcenter" style="padding-left:0px;">No.</th>
+		</tr> 
+
+		<% @banks.each_with_index do |bank, index| %>
+		<tr>
+			<% user = User.find(bank[0])  %>
+			<td valign="middle">
+				<a href="/shop3_checkins/user?uid=<%=user.id%>">
+					<%=image_tag(user.head_logo.try(:img).try(:url,:t1), :class => "imgstyle2",:align => "left")%>
+				</a>
+				<%=link_to user.name, "/shop3_checkins/user?uid=#{user.id}", :class => "f14" %><img align="absmiddle" class="ml10" src=<%= user.gender.to_i==1?('/newbackstage/images/man.png'):('/newbackstage/images/woman.png') %> ><br/>
+				<span class="pr10">星座：<%= user.gonstellation %></span> 年龄：<%= user.age %>岁
+		  </td>
+		  <td align="center"><%= bank[1] %></td>
+		  <td width="182" align="center" class="
+		  <% case index+1+(params[:page].to_i-1)*15 %>
+		  <% when 1 %>
+		  <%= 'red2 f13'%>
+		  <% when 2 %>
+		  <%= 'green1 f13' %>
+		  <% when 3 %>
+		  <%= 'blue1 f13' %>
+		  <% end %>
+		  "><span>第<%= (index+1+(params[:page].to_i-1)*15).to_s %>名</span></td>
+		</tr>
+		<% end %>
+	</table>
+	<%= generate_paginate.html_safe %>
+</div>
+
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$(".tab2 tr:odd").addClass("trbg");
+});
+</script>

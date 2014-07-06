@@ -1,0 +1,56 @@
+<link href="/admin/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+<h3 style="text-align:center;">用户详情</h3><br>
+<div class="container-fluid">
+  <div class="offset1 span12">
+    <div class="row-fluid">
+      <div class="span4">
+        <%=image_tag @user.head_logo.try(:img), size:"250x250" %>
+        <h5>用户名:&nbsp;&nbsp;<%= to_emoji @user.name %><br></h5>
+        <h5>用户id:&nbsp;&nbsp;<%= @user.id %><br></h5><br>
+        <% if session[:admin_id].to_s == '520ddb9b20f3184b43000031' %>
+            <%= link_to '修改性别',"/admin_users/change_gender?id=#{@user.id}" %><br/>
+          <% end %>
+        <<< <%= link_to '返回用户列表','index/' %>
+      </div>
+      <div class="span3">
+
+        <h5>密码:&nbsp;&nbsp;<%= @user.password %><br></h5>
+        <h5>wb_uid:&nbsp;&nbsp;<%=link_to(@user.wb_uid.to_s, @user.weibo_home, :target => '_blank') %><br></h5>
+        <h5>性别:&nbsp;&nbsp;<%= @user.show_gender %><br></h5>
+        <h5>生日:&nbsp;&nbsp;<%= @user.birthday %><br></h5>
+        <h5>invisible:&nbsp;&nbsp;<%= @user.invisible %><br></h5>
+        <h5>signature:&nbsp;&nbsp;<%= @user.signature %><br></h5>
+        <h5>job:&nbsp;&nbsp;<%= @user.job %><br></h5>
+        <h5>jobtype:&nbsp;&nbsp;<%= @user.jobtype %><br></h5>
+        <h5>脸脸版本:&nbsp;&nbsp;<%= @user.ver %><br></h5>
+        <h5>os:&nbsp;&nbsp;<%= @user.os %><br></h5>
+        <h5>头像数:&nbsp;&nbsp;<%=link_to @user.user_logos.size, "/admin_users/logos?id=#{@user.id}" %><br></h5>
+
+      </div>
+      <div class="span4">
+
+
+        <h5>签到:&nbsp;&nbsp;<%=link_to "查看", "/admin_checkins?uid=#{@user.id}" %><br></h5>
+        <h5>关注:&nbsp;&nbsp;<%=link_to "查看", "/admin_users/follows?user_id=#{@user.id}" %><br></h5>
+        <h5>黑名单:&nbsp;&nbsp;<%=link_to "查看", "/admin_users/blacks?user_id=#{@user.id}" %><br></h5>
+        <h5>用户照片:&nbsp;&nbsp;<%=link_to "查看", "/admin_shop_photos?user_id=#{@user.id}" %><br></h5>
+        <h5>优惠券下载:&nbsp;&nbsp;<%=link_to "查看", "/admin_coupon_reports?uid=#{@user.id}" %><br></h5>
+        <h5>聊天记录:&nbsp;&nbsp;<%=link_to "查看", "/admin_users/chat?id=#{@user.id}" %><br></h5><br>
+
+        <h5>头像提醒/屏蔽:&nbsp;&nbsp;</h5>
+
+        <%= button_to "发送提醒文案", {:action => "prompt", :id => @user.id}, {:onclick => "return confirm('确定发送欢迎来到脸脸，我们建议您上传真实头像，完善资料，以方便其他人便捷及时的发现您。点击菜单栏我的就可以编辑您的个人资料啦~快去试试吧😊么？')"} %>
+
+        <%= button_to "发送屏蔽文案", {:action => "warn", :id => @user.id}, {:onclick => "return confirm('确定发送您好！你的头像容易引起脸脸用户的反感，请换一张头像，烦请谅解。多谢你对脸脸的支持😊么？')"} %>
+
+
+        <h5>用户封杀:&nbsp;&nbsp;</h5>
+        <%= button_to "封杀", {:action => "kill2", :id => @user.id}, {:onclick => "return confirm('确定封杀么？')"} %>
+
+        <div>
+        </div>
+      </div>
+    </div>
+
+
+

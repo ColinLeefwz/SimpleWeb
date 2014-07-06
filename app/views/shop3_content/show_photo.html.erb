@@ -1,0 +1,202 @@
+<div id="BG"></div>
+<div id="DelDiv">
+	<center><br/>确定删除这张图片？</center>
+	<a id="DelBtn"class="btn11 w55 mt10 l ml20">确定</a>
+	<a onclick="Close2()" class="btn11 w55 mt10 r mr20">取消</a>
+</div>
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">照片墙管理</h2><a onclick="history.back();" class="r pointer btn10">返回</a></div>
+  <div class="submenu">
+    <ul>
+      <li <%= @photo.user_id == "s#{session[:shop_id]}" ||  "class=hover" %>><a href="user_photo">用户图片</a></li>
+      <li <%= @photo.user_id == "s#{session[:shop_id]}" && "class=hover"  %>><a href="shop_photo">商家图片</a></li>
+    </ul>
+  </div>
+  <div class="clear1"></div>
+  <div class="box11">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="28%" rowspan="9">
+          <%=link_to(image_tag(Photo.img_url(@photo.id), :width => "280", :height=> "280", :class => "imgstyle"), Photo.img_url(@photo.id), :target => "_blank"  ) %>
+        </td>
+        <td width="14%" height="40" class="pl20">用 户：</td>
+
+        <td width="58%" height="40">
+          <% if @photo.from_shop? %>
+            <a><%= @photo.user.try(:name) %></a>
+          <% else %>
+            <%=link_to  @photo.user.try(:name)||'', "/shop3_checkins/user?uid=#{@photo.user_id}" %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td height="40" class="pl20">发布时间：</td>
+        <td height="40"><%= @photo.cat.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      </tr>
+      <tr>
+        <td height="40" class="pl20">分享到微博：</td>
+        <td height="40"><%=@photo.weibo ? "是" : "否" %></td>
+      </tr>
+      <tr>
+        <td height="40" class="pl20">分享到QQ：</td>
+        <td height="40"><%=@photo.qq ? "是" : "否"  %></td>
+      </tr>
+      <tr>
+        <td height="40" class="pl20">赞：</td>
+        <td height="40"><%=@photo.like_user_names || "空" %></td>
+      </tr>
+      <tr>
+        <td height="40" class="blue1 pl20">操&nbsp;作：</td>
+        <td height="40">
+          <% if @photo.od %>
+            <a  class="n2_1" onclick="ajaxUOT(this, '<%= @photo.id %>' )" title="取消置顶"></a>
+          <% else %>
+            <a  class="n2 " onclick="ajaxUOT(this, '<%= @photo.id %>' )" title="置顶"></a>
+          <% end %>
+
+          <% if @photo.user_id == "s#{session[:shop_id]}" %>
+            <%= link_to "", "/shop3_content/edit_photo?id=#{@photo.id}", :class => "n3", :title => "编辑" %>
+            <%= link_to "", "javascript:void(0)", :class => "n6", :title => "删除", :rel=> @photo.id %>
+          <% else %>
+            <% if @photo.hide %>
+              <a class="n5" onclick="OC(this, '<%= @photo.id %>')" title="显示"></a>
+            <%else%>
+              <a class="n4" onclick="OC(this, '<%= @photo.id %>')" title="隐藏"></a>
+            <% end %>
+          <% end %>
+
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" class="pl20 pt5">描&nbsp;述：</td>
+        <td valign="top" class="pt5"><%=@photo.desc %></td>
+      </tr>
+    </table>
+    <% unless  @photo.com.blank? %>
+      <div class="title1 mt40"><h2>评论&nbsp;&nbsp;<span class="noraml f12 gay1">(共 <span class="blue1"><%= @photo.com.count %></span>条)</span></h2></div>
+      <div class="comment">
+        <% @photo.com.each do |c| %>
+          <% user = User.find_by_id(c["id"]) %>
+          <dl>
+            <dt class="gay4">
+              <%= link_to "#{user.name}:", "/shop3_checkins/user?uid=#{c["id"]}" %>
+              <%= c['txt'] %>
+              <% if c['hide'] %>
+                <%= link_to "显示", "javascript:void(0)", :onclick => "ajaxUOH($(this), '#{@photo.id}', '#{c['id']}','#{c['txt']}')", :class => "n1" %>
+              <% else %>
+                <%= link_to "隐藏", "javascript:void(0)", :onclick => "ajaxUOH($(this), '#{@photo.id}', '#{c['id']}','#{c['txt']}')", :class => "n2" %>
+              <% end %>
+            </dt>
+            <dd class="dd_img">
+              <a href="#">
+                <%= image_tag UserLogo.img_url(user.try(:head_logo_id))||"/newbackstage/images/pic19.jpg", :border=> "0"  %>
+              </a>
+            </dd>
+          </dl>
+
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+<script defer="defer">
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+
+	if(runing=="checkboxs1"){
+		NavDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$("div.box11 table a.n6").click(function(){
+		var top;
+		var id=$(this).attr("rel");
+		documentHeight=$(document).height();
+		windowHeight=$(window).height();
+		if(documentHeight<=windowHeight){
+			$("#BG").css({"height":windowHeight+"px","display":"block"});
+		}else{
+			$("#BG").css({"height":documentHeight+"px","display":"block"});
+		}
+		$("#DelDiv").css("display","block");
+		top=$(document).scrollTop()+(windowHeight-$("#DelDiv").height())/2;
+		$("#DelDiv").css({"top":top+"px","display":"none"});
+		$("#DelDiv").fadeIn(600);
+
+
+		$("#DelBtn").click(function(){
+			$("#DelDiv,#BG").css("display","none");
+			$.get("/shop3_content/delete_photo.json", {id: id}, function(){
+				window.location.href="/shop3_content/shop_photo";
+			});
+		});
+    });
+});
+function OC(obj, id){
+  if($(obj).attr("class")=="n4"){
+	$.get("/shop3_content/ajax_del", {id: id}, function(){
+		$(obj).removeClass().addClass("ns").html("已隐藏");
+		setTimeout(function(){
+			$(obj).html("").removeClass().addClass('n5').attr("title","显示");
+		},1000);
+	});
+  }else{
+	$.get("/shop3_content/ajax_undel", {id: id}, function(){
+		$(obj).removeClass().addClass("ns").html("已显示");
+		setTimeout(function(){
+			$(obj).html("").removeClass().addClass('n4').attr("title","隐藏");
+		},1000);
+	})
+  }
+}
+
+function ajaxUOT(obj, id){
+var text = $(obj).attr("title")
+  if(text == "置顶")
+	$.get("/shop_photos/ajax_top", {id: id}, function(){
+		$(obj).removeClass().addClass("ns").html("已取消");
+		setTimeout(function(){
+			$(obj).html("").removeClass().addClass('n2_1').attr("title","取消置顶");
+		},1000);
+	});
+  else
+	$.get("/shop_photos/ajax_untop", {id: id}, function(){
+		$(obj).removeClass().addClass('ns').html("已置顶");
+		setTimeout(function(){
+			$(obj).html("").removeClass().addClass('n2').attr("title","置顶");
+		},1000);
+	});
+}
+
+function ajaxUOH(obj, id, uid, txt){
+	var text = $(obj).html()
+  if(text=="显示"){
+	$.get("/shop3_content/unhide_com",{id: id,uid: uid, txt: txt}, function(data) {
+	  if(data['text'])
+		obj.replaceWith(data['text'])
+	  else
+		obj.html("隐藏")
+	  obj.removeClass("n1").addClass('n2');
+	});
+  }
+  else{
+	$.get("/shop3_content/hide_com",{id: id,uid: uid, txt: txt}, function(data) {
+	  if(data['text'])
+		obj.replaceWith(data['text'])
+	  else
+		obj.html("显示")
+	  obj.removeClass("n2").addClass('n1');
+	});
+  }
+}
+function Close2(){
+	$("#DelDiv").animate({"top":"0px"},400,function(){
+		$("#DelDiv,#BG").css("display","none");
+	});
+}
+</script>

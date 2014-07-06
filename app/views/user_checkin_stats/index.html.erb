@@ -1,0 +1,33 @@
+<h1>签到高度每月统计</h1>
+<table>
+  <tr>
+    <th>用户</th>
+    <th>截止日期</th>
+    <th>总签到数</th>
+    <th>城市</th>
+    <th>最后三次签到</th>
+  </tr>
+
+  <% @checkin_user_stats.each do |checkin_user_stat| %>
+    <tr>
+      <td><%=link_to checkin_user_stat.id, "/admin_users/show?id=#{checkin_user_stat.id}"%>
+        <span style="padding: 0 5px;"></span>
+      <%= checkin_user_stat.user.try(:name)%></td>
+      <td><%= 1.days.ago.to_date %></td>
+      <td><%=link_to checkin_user_stat.all.to_i, "/admin_checkins?uid=#{checkin_user_stat.id}" %></td>
+      <td><%= checkin_user_stat.cities.join(', ') %></td>
+      <td>
+        <%=  checkin_user_stat.l3.map{|m| m.generation_time.localtime.strftime("%Y-%m-%d %H:%M")}.join(', ') %>
+      </td>
+
+    </tr>
+
+  <% end %>
+</table>
+
+
+
+
+
+<%= generate_paginate3.html_safe %>
+

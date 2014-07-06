@@ -1,0 +1,13 @@
+db.sp2.ensureIndex({t:1})
+db.sp2.update({type:/^餐饮;休闲餐饮;酒吧/},{$set:{t:1}},false,true)
+db.sp2.update({type:/^餐饮;休闲餐饮;咖啡厅/},{$set:{t:2}},false,true)
+db.sp2.update({type:/^餐饮;休闲餐饮;茶座/},{$set:{t:2}},false,true)
+db.sp2.update({type:/^餐饮;/,t:{$exists:false}},{$set:{t:3}},false,true)
+db.sp2.update({type:/^宾馆/},{$set:{t:3}},false,true)
+db.sp2.update({type:/^休闲娱乐/},{$set:{t:4}},false,true)
+db.sp2.update({type:/^购物/},{$set:{t:5}},false,true)
+db.sp2.update({type:"行政地标"},{$set:{t:5}},false,true)
+db.sp2.update({type:"行政地标;商圈;强商圈"},{$set:{t:5}},false,true)
+db.sp2.update({type:/^商务大厦/},{$set:{t:6}},false,true)
+db.sp2.update({type:/^地产小区/},{$set:{t:6}},false,true)
+

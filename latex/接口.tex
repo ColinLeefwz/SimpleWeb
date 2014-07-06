@@ -1,0 +1,1521 @@
+\documentclass[cs4size]{ctexartutf8} 
+\usepackage[unicode={true}]{hyperref}
+\hypersetup{colorlinks,%
+                 citecolor=black,%
+                 filecolor=black,%
+                 linkcolor=black,%
+                 urlcolor=blue,%
+                 pdftex}
+
+\usepackage{graphicx}
+\usepackage{float}
+
+				
+\author{YXY}
+\title{脸脸网服务器与手机端的开发接口API}
+
+\begin{document} 
+\maketitle
+\tableofcontents
+
+\newpage
+
+\textbf{注意事项}：
+\begin{enumerate}
+\item 所有的链接，如果要获得json格式的数据，最好带上".json"的后缀。因为同一个链接以后可能返回多种格式的数据，比如xml/html/json等。
+\item 当调用出错时，会在返回的json中包含"error"信息。
+\item 只有开发调试时调用http的接口，发布时全部使用https接口。
+\end{enumerate}
+
+\newpage
+
+\section{初始化与升级}
+\subsection{初始化}
+
+手机应用启动后，初次访问时调用此API。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{https://42.121.79.210/init/init} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ model  & 字符串 & 必须 &  硬件型号\\
+\hline
+ os  & 字符串 & 必须 &  手机操作系统版本\\
+ \hline
+ mac  & 字符串 & 必须 &  无线网卡MAC地址的MD5\\
+ \hline
+ hash  & 字符串 & 必须 &  hash验证码\\
+ \hline
+ bssid  & 字符串 & 可选 &  所连接的wifi的bssid\\ 
+  \hline
+ ver  & 字符串 & 可选 &  软件版本,如"2.1.3"\\
+  \hline
+ city  & 数字 & 可选 &  如果为1代表要在响应的header中的location字段中包含根据ip获得的城市信息\\ 
+\hline
+ channel  & 字符串 & 可选 &  代表渠道号\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：本API直接通过IP地址“42.121.79.210”访问，不通过DNS。而后续所有API调用的IP地址根据本调用的返回的IP地址确定。当以ip调用失败时，也就是42.121.79.210服务器当机了的时候，改用域名的方式调用init接口，也就是“https://www.dface.cn/init/init”。如果使用域名的方式也失败，且上次正确的配置也失败，那么最后使用"www.dface.cn"和"xmpp.dface.cn"来访问ip和xmpp。
+
+调用init接口不能阻塞应用的启动和后续网络请求。当init调用未返回时，直接使用上次正确的配置连接web和xmpp服务器。
+
+hash的计算方式为：model+os+mac+"init"进行SHA1算法后取前32位，和登录时的hash算法［\ref{hash_algorithm}］类似。
+
+\begin{verbatim}
+返回值：
+{
+"ip": "42.121.79.210",
+"xmpp": "42.121.79.210",
+"ver":2.2
+"version": "2.2.1"
+}
+
+后续的http访问使用返回的ip地址，xmpp协议的访问使用xmpp地址。
+
+[2012-12-27] 新增ver，表示脸脸当前线上的最新版本，是一个浮点数。客户端根据这个版本号可以判断是否需要升级。如果需要升级，提醒用户一次，不要每次启动重复提醒。比如1.1版本时提醒一次，如果用户忽略了，那么只有当版本升级到了1.2时再提醒一次。
+
+
+[2013-8-1] 新增version，表示脸脸当前线上的最新的具体版本，是一个字符串。当用户手动检查升级时，可以使用这个字段。
+
+
+[2014-4-21] 新增time，表示脸脸服务器的当前时间，从1970年开始到现在的秒数。
+
+\end{verbatim}
+
+本API的作用一个是给客户端推荐IP地址，一个是统计应用的开机情况和操作系统分布。
+
+\subsection{获得服务器的时间}
+
+用于安卓手机校准时间。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/init/time} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ time  & 数字 & 可选 &  手机本地时间\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值：{time: long}，long表示从1970年开始到现在的秒数。
+
+
+\subsection{获得最新的升级信息}
+
+如果客户端判断出版本不是最新的，调用本接口获得最新的升级信息。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/init/upgrade} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ os  & 字符串 & 必须 &  手机操作系统版本\\
+ \hline
+ ver  & 字符串 & 必须 &  客户端软件版本\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+返回值：
+["2.0.1","聊天室发图增加了分享到微信朋友圈和微信好友功能\n界面美化，更美观更清新",true]
+
+分别代表：最新的软件版本、功能介绍、是否强制升级。
+
+如果不强制升级，那么弹出升级对话框时有两个选择：立即升级／暂不升级。
+
+如果强制升级，那么弹出升级对话框时只有一个选择：立即升级。强制升级用于发生不兼容改动时。强制升级也只应该提示一次，防止升级失败导致死循环。
+\end{verbatim}
+
+
+
+\section{调试时发送Xmpp断言信息}
+
+客户端在一些关键逻辑部分，可以加入Xmpp信息发送。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/init/debug} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ uid1  & 字符串 & 必须 &  发送者id\\
+ \hline
+ uid2  & 字符串 & 必须 &  接受者id\\ 
+ \hline
+ str  & 字符串 & 必须 &  要发送的内容\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+其中，接受者id必须是开发者在脸脸的uid。
+
+\begin{verbatim}
+本接口的调用场景如：
+
+1. if(必须成立的条件) {
+       ...
+    }else{
+       发送Xmpp信息
+    }
+
+2. try {
+       ...
+    }catch{
+       发送Xmpp信息
+    }
+
+3. 函数入口处的参数检查
+    if(arg==null) 发送Xmpp信息
+    
+\end{verbatim}
+
+
+
+\input{./login.tex}
+
+
+
+\section{QQ登录用户看他人微博}
+由于看他人微博需要微博登陆，所以使用QQ登陆而没有绑定微博的用户无法直接查看他人的微博。获取他人微博的接口是：
+\begin{verbatim}
+https://api.weibo.com/2/statuses/user_timeline.json
+\end{verbatim}
+
+把上面的域名api.weibo.com替换为www.dface.cn，且不传递access\_token 参数，就可以通过脸脸查看他人的微博了。比如：
+\begin{verbatim}
+http://www.dface.cn/2/statuses/user_timeline.json?uid=1884834632
+\end{verbatim}
+其中uid指的是新浪微博的wb\_uid，其他参数和新浪的接口完全一致。
+参见：http://open.weibo.com/wiki/2/statuses/user\_timeline
+
+
+
+\section{首次使用脸脸时发送分享信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/oauth2/share} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+   ver  & 浮点数 & 可选 &  当前安装的版本\\
+\hline
+   t  & 整数 & 可选 &  分享类型：0代表微博，1代表qq空间，默认为0\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+首次使用脸脸／或者以后重大版本更新时，以登陆用户个人的名义发送使用脸脸的分享微博，微博由服务器端发送。
+
+
+\section{现场与附近}
+
+\subsection{首页：我最近去过的四个地点}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/aroundme/my4} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必须 & 用户ID\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+提供最后签到时间，｛time：字符串时间，timei: 整数时间｝
+
+
+\subsection{定位：根据经纬度获得可能的现场商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/aroundme/shops} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+\hline
+ speed  & 浮点数 & 可选 & 速度 m/s\\   
+\hline
+ bssid  & 字符串 & 可选 & wifi上网时的bssid，如果不是wifi上网则忽略\\  
+\hline
+ baidu  & 整数 & 可选 & 如果是百度坐标，则baidu=1，否则忽略\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：一定要在accuracy小于200m或者调用获取GPS的API超过三次后才能调用本接口。
+
+Gps获取位置是一个逐步精确的过程。很多时候首次获取的误差超过1000米。此时显然无法准确获得商家列表。此时建议等待0.5秒再次获取gps。要保证gps的精确度小于200m，或则定位三次以上确实不能更准确了。宁可等待的时间久一些，也要保证定位的准确性。
+
+最多返回30条数据，最少返回3-5条。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/aroundme/shops.json
+返回值：
+
+[
+	{
+	"name":"新紫轩花店",
+	"address":"文一路266号",
+	"lng":120.12763,
+	"id":40056,
+	"phone":"",
+	"lat":30.28691,
+	"lo":[30.297,120.1288],
+	"t":1,
+	"user":0,
+	"male",0,
+	"female",0
+	}
+]
+
+除了返回商家的id、名称、电话、经纬度以后，增加了在该商家的用户总数“user”、男“male”、女“female”数量。
+
+[2012－8－7] 新增lo字段。这是商家的实际经纬度，以前的lat/lng是地图上显示的经纬度，两者有几百米的误差。计算商家和自己的距离时，要采用lo来计算。
+
+[2012－8－8] 新增t字段，表示商家的类型。
+
+[2013－5－6] 新增coupon字段，表示商家是否由优惠券。
+
+[2013－6－20] 新增city字段，商家所在的城市的名称。只有排名第一的商家才返回city字段。city字段的用途是用于显示热点的城市名称。
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{搜索：根据经纬度获得附近的商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/nearby} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+ \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+  \hline
+ name  & 字符串 & 可选 & 商家的名称\\ 
+  \hline
+ type  & 整数 & 可选 & 商家类型\\  
+\hline
+ baidu  & 整数 & 可选 & 如果是百度坐标，则baidu=1，否则忽略\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+商家类型：
+\begin{enumerate}
+\item 餐饮
+\item 酒店
+\item 酒吧• 咖啡• 茶馆   
+\item 休闲• 娱乐• KTV
+\item 楼宇• 社区 • 学校
+\item 购物• 广场 • 其它
+\end{enumerate}
+
+
+用户当前所在的现场只有一个，但是由于定位有误差，所以服务器返回最有可能的几个商家让用户选择；而附近的商家有很多，按距离由近到远排序，且支持查询、分类筛选和分页。
+
+
+\subsection{搜索：热点商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/aroundme/hot} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+ \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+ baidu  & 整数 & 可选 & 如果是百度坐标，则baidu=1，否则忽略\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{搜索：我的地点}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/aroundme/my\_shops} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必须 & 用户ID\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+
+
+\subsection{根据经纬度获得附近的热点用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/aroundme/hot\_users} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+  \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+ baidu  & 整数 & 可选 & 如果是百度坐标，则baidu=1，否则忽略\\  
+ \hline
+ gender  & 整数 & 可选 & gender=1代表查看男性，gender=2代表查看女性。不传默认查看异性\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出格式参考“根据商家ID获得商家用户”的接口。唯一的不同点是：“根据商家ID获得商家用户”返回该用户在商家出现的time, 而本接口返回用户当前的location。
+
+
+
+
+\subsection{获得附近的用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/aroundme/users} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ gender  & 数字 & 必填 &  用户的性别，未设置0男1女2\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出格式和“根据商家ID获得商家用户”的接口一样。
+
+本接口用于“应用安装的时候，用户上传头像的页面”。其中有8张头像，是本地存储4张／网络获取（通过本接口）4张。其中本地的4张立刻显示。
+
+
+\subsection{WebView里的地点报错列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/aroundme/shop\_report} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ uid  & 字符串 & 必须 & 登录用户的uid\\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+\hline
+ bssid  & 字符串 & 可选 & wifi上网时的bssid，如果不是wifi上网则忽略\\  
+\hline
+ baidu  & 整数 & 可选 & 如果是百度坐标，则baidu=1，否则忽略\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+本接口需要通过浏览器以URL的方式直接调用。
+
+
+
+\subsection{单个地点纠错}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/aroundme/report\_error} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ user\_id  & 字符串 & 必须 & 登录用户的uid\\
+\hline
+ sid  & 整数 & 必须 & 错误的地点的id\\
+\hline
+ type  & 字符串 & 必须 & 错误类型，如“地点重复”\\ 
+\hline
+ des  & 字符串 & 可选 & 错误描述\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+
+
+\section{根据商家ID获得商家的信息}
+
+\subsection{根据商家ID获得商家的基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/basic} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+本接口用于不在现场聊天室获得商家基本信息。
+
+[2014-04-17] 增加五个参数：是否签约 sign，地址 addr，电话 tel，商标 logo , 子地点 sub）
+
+\subsection{在聊天室获得商家的信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/info} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+
+{
+    "name": "浙江科技产业大厦",
+    "t": 6,
+    "lat": 30.280254,
+    "lng": 120.121824,
+    "address": "古翠路80",
+    "id": 4928288,
+    "staffs": [
+        "502e6303421aa918ba000001"
+    ],
+    "notice":"",
+    "text":"",    
+    "photos": []
+}
+
+staffs是该商家的员工数组。在商家聊天室，商家和商家的员工发言时都加V并加黄色背景。只有该商家在商家聊天室才加V，其它商家不做特殊处理。
+
+notice是该商家发布的公告，已取消。
+
+新增photos字段，表示该商家最热的图片，最多4张。
+
+[2013-04-09] 新增字段text，表示用户在分享图片时，默认带上的文字。
+
+[2013-12-05] 新增字段filters，表示图片合成滤镜。其中filters是图片URL的数组, filter_name是图片合成的名称, filter_size是图片合成后图片的大小。
+
+[2014-01-03] photos中排名第一且od值大于0的图片，显示为（包含赞／3个评论）的卡片。
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{根据商家ID获得商家的图片墙}
+商家的图片来自个人在聊天室的发图。\label{photowall}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/photos} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+[{"id":"509a061fbe4b197297000002",
+"room":"1",
+"desc":"图片说明",  
+"updated_at":"2013-01-13T10:11:42Z",
+"user_id":"502e61bfbe4b1921da000005",
+"weibo":false,
+"logo":"http://oss.aliyuncs.com/dface_test/509a061fbe4b197297000002/0.jpg",
+"logo_thumb2":"http://oss.aliyuncs.com/dface_test/509a061fbe4b197297000002/t2_0.jpg",
+"id":"509a061fbe4b197297000002"}]
+
+\end{verbatim}
+\end{figure}
+
+
+\subsection{根据商家ID获得当前在该商家的所有用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/users} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+  \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+
+[
+{"id":1,
+"logo":"/phone2/images/namei2.gif",
+"name":"name23",
+"wb_uid":1884834632,
+"gender":0,
+"friend":true,
+"follower":false,
+"birthday":null}
+]
+
+"friend"表示该用户是否是当前用户的朋友；"follower"代表该用户是否关注了当前用户。
+
+[2012－8－8] 新增time字段，表示用户在该商家的最后活跃时间。
+[2012－10－30] 新增分页参数。
+[2013－5－322] 新增lord，lord=1表示某个用户是这里的地主。
+
+
+\end{verbatim}
+\end{figure}
+
+在商家的用户的统计数据根据签到来统计，而签到则是当用户进入商家聊天室时自动后台发送。
+
+
+
+\subsection{根据商家ID获得最新的6个用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/user6s} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+ \hline
+ total  & 整数 & 可选 & 是否返回商家总人数，新客户端都要设置total=1\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+只有当商家用户数大于3时，这个接口才返回数据；否则返回空数组。
+客户端自行控制是显示5个还是6个用户头像。
+
+当total=1时，返回值的格式为：
+\begin{verbatim}
+{total:总人数, users:[用户信息,...]}
+\end{verbatim}
+
+
+\subsection{根据商家ID获得商家的聊天室历史}
+商家的图片来自个人在聊天室的发图。\label{photowall}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/history} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+   \hline
+ skip  & 整数 & 必须 & 跳过多少条消息\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为5\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+skip的大小应该是聊天室当前最新显示的消息的总数(但是不包括评论通知消息、问答消息)。这样传递的skip获得的历史消息才不会和聊天室当前的消息重复。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+以前每次进聊天室，总是用下面的Xmpp接口获得最新的10条消息
+  <x xmlns='http://jabber.org/protocol/muc'>
+    <history maxstanzas='10'/>
+  </x>
+现在全部用本接口获得历史消息。
+  
+[["5160f00fc90d8be23000007c", "茉莉", 1367575501, "q9d8G-8"], 
+["5160f00fc90d8be23000007c", "哦你家", 1367575499, "q9d8G-7"]]
+返回的是历史消息的数据，其中每个字段的含义是：
+［发送者、消息内容、发送时间、消息ID ］。
+\end{verbatim}
+\end{figure}
+
+\subsection{根据商家ID获得商家的顶部5张banner}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/banners} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{根据商家ID获得商家的子地点信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/subs} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 商家的ID\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\section{签到与足迹}
+
+\subsection{进入现场签到}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/checkins} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+\hline
+ shop\_id  & 整数 & 必须 &  现场商家id\\ 
+\hline
+ user\_id  & 整数 & 必须 &  签到用户id\\ 
+\hline
+ od  & 整数 & 必须 &  实际签到的商家的排序\\  
+\hline
+ altitude  &  浮点数 & 可选 & 海拔高度\\ 
+\hline
+ altacc  & 整数 & 可选 & 海拔高度的精确度\\  
+\hline
+ speed  & 浮点数 & 可选 & 速度 m/s\\   
+\hline
+ bssid  & 字符串 & 可选 & wifi上网时的bssid，如果不是wifi上网则忽略\\  
+\hline
+ ssid  & 字符串 & 可选 & wifi上网时的ssid，如果不是wifi上网则忽略\\  
+\hline
+ baidu  & 整数 & 可选 & 如果是百度坐标，则baidu=1，否则忽略\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。如果是GET请求，获得的是签到列表。
+
+[2012－8－10] 新增od字段，表示用户实际签到的商家在现场商家列表中的顺序位置，从1开始，也就是从/aroundme/shops中获得的商家列表中，那个被用户选中了。
+
+
+
+\subsection{输入商家的全称创建商家并签到}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/checkins/new\_shop} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+\hline
+ user\_id  & 整数 & 必须 &  签到用户id\\ 
+\hline
+ sname  & 字符串 & 必须 &  商家的全称\\  
+\hline
+ t  & 整数 & 可选 &  商家的内部类别\\    
+\hline
+ addr  & 字符串 & 可选 &  商家的地址\\   
+ \hline
+ tel  & 字符串 & 可选 &  商家的联系电话\\    
+ \hline
+ large  & 数字 & 可选 &  设置为1代表是大地点\\     
+\hline
+ altitude  &  浮点数 & 可选 & 海拔高度\\ 
+\hline
+ altacc  & 整数 & 可选 & 海拔高度的精确度\\  
+ \hline
+ speed  & 浮点数 & 可选 & 速度 m/s\\   
+\hline
+ bssid  & 字符串 & 可选 & wifi上网时的bssid，如果不是wifi上网则忽略\\  
+ \hline
+ baidu  & 整数 & 可选 & 如果是百度坐标，则baidu=1，否则忽略\\  
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+定位时，当用户当前的商家不存在时，可以通过输入商家的全称进入该商家的现场并签到。
+
+本API接口和签到接口类似，不同之处在于：
+
+1）定位时找到了商家，客户端签到（报告商家id／商家的排名od），客户端同时进入该商家的聊天室。
+2）定位时找不到商家，用户输入商家的全称（sname），客户端调用本接口并获得新建立的商家的id，然后进入该商家的聊天室。
+
+
+[2014-04-17] 增加三个参数：商家内部的整数类型 t，地址 addr，电话 tel ， 取消一个参数type。
+
+商家内部的整数类型 t的值如下：
+		0 活动
+		1 酒吧
+		2 咖啡
+		3 茶馆
+		4 餐饮
+		5 酒店
+		6 休闲娱乐
+		7 运动
+		8 购物
+		9 广场
+		10 写字楼
+		11 住宅
+		12 学校
+		13 交通
+		14 大型医院
+		15 景点
+		51 美容美发
+		52 公司
+		53 其他
+		
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+返回值：
+
+{"name":"asdf","lo":[1,2],"lat":1,"lng":2,"address":null,"id":92264}
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{签到时输入地点名称查找地点}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/shop/add\_search} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+ accuracy  & 整数 & 必须 & 经纬度的精确度\\ 
+\hline
+ sname  & 字符串 & 必须 &  商家的名称\\  
+  \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+定位时，如果在滚轮中找不到商家，在输入商家名称时查询本接口给用户提供实时匹配的可选择地点。
+
+[2013-05-15] 新增参数visit，表示该地点是否仅仅可以围观。距离在误差范围内的地点，可以进入聊天室聊天。距离超过误差范围的地点，不能聊天，只能围观，也就是可以看照片墙和现场的人。默认visit为0，也就是可以进入聊天。
+
+[2013-09-27] 新增参数distance，表示该地点的距离。
+
+[2013-12-21] 在响应的头部增加属性“GCJOFFSET”，内容格式“纬度偏移,经度偏移”。用于在国内的谷歌地图、soso地图上显示地点时，进行坐标偏移。这些地图都使用GCJ坐标系；而脸脸中所有的坐标都是真实坐标。要获得GCJ坐标，将真实坐标的经纬度加上GCJOFFSET的经纬度即可。如果没有GCJOFFSET，则忽略。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+
+curl /shop/add_search?lat=30.28&lng=120.108&accuracy=100&sname=新村
+
+返回值：
+
+[{"id":10443603,"name":"高教新村","visit":0},{"id":10428968,"name":"古荡新村","visit":1}]
+
+\end{verbatim}
+\end{figure}
+
+
+\subsection{获得当前登录用户的足迹}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/trace} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+  \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\
+  \hline
+ ver  & 字符串 & 可选 & 当前客户端版本\\ 
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/trace
+返回值：
+{"pcount":20,"data":
+[{"id":"50b71b73c90d8b3c73000019","time":["09.22","14:24"],
+"shop":"(下沙服务区)书报百货","shop_id":1,
+"photos":[{"logo":"http://oss.aliyuncs.com/dface_test/5044301dbe4b192a30000002/0.jpg",
+"logo_thumb2":"http://oss.aliyuncs.com/dface_test/5044301dbe4b192a30000002/t2_0.jpg",
+"id":"5044301dbe4b192a30000002","desc":null}]},
+{"time":["07.21","00:02"],"shop":"海洋二所","shop_id":60775,"photos":[]}]
+}
+
+其中pcount代表数据库中查询到的足迹的数量，如果该pcount等于客户端请求的数量，那么代表还会有更多的足迹。否则代表该用户没有足迹了。
+而data中保存的实际返回的足迹，其数量可能少于数据库中查询到的足迹。比如一个人在一天内在同一个地方的签到会被合并。
+
+data中的字段说明：
+｛
+id：签到id
+time: ［签到日期，签到时间］
+shop：商家
+shop_id:商家id
+photos ：［｛desc：图片描述，id：图片id，logo：原图URL，logo_thumb2：缩略图｝］
+｝
+
+\end{verbatim}
+\end{figure}
+
+
+\subsection{查看其它用户的足迹}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/other\_trace} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必填 &  登录用户的id\\ 
+\hline
+ other\_id  & 字符串 & 必填 &  被查看用户的id\\ 
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为5\\ 
+  \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\
+  \hline
+ ver  & 字符串 & 可选 & 当前客户端版本\\ 
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{删除当前登录用户的一个签到足迹}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/checkins/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+   \hline
+ id  & 字符串 & 必须 & 签到的id\\ 
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+
+\section{群组与认证}
+脸脸中的现场有两种：聊天室和群组。聊天室和地点绑定，在这儿的人可以加入，不在这儿的人不能加入。群组则是需要权限控制的。群组也分为两种：1.预先设置固定用户的（一般为商业活动相关的，需要预缴费的），实时确定能否加入，2.申请加入，等待群主审核的（一般的QQ群／陌陌群这类）。
+
+\subsection{加入群组的标示}
+在定位时（aroundme/shops）和搜索地点（shop/add\_search）时，如果是有权限控制的群，会有“group\_hint”字段。当用户进入该地点时，需要弹出一个输入框，提示文字为“group\_hint”的内容。当用户输入完成后，调用下面“群组的认证”功能确定能否进入。
+
+
+\subsection{群组的认证}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/shop/auth} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+   \hline
+ shop\_id  & 整数 & 必须 & 商家id\\ 
+  \hline
+ txt  & 字符串 & 必须 & 加入时输入的认证信息\\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值：
+\begin{figure}[H]
+\begin{verbatim}
+{ret:0} 代表认证失败
+{ret:1} 代表通过认证
+{ret:2} 代表等待审核
+如果返回值为1，代表可以进入这个地点。进入一个地点时，后台有两个操作：1.加入Xmpp的聊天室，2.发送签到纪录。
+\end{verbatim}
+\end{figure}
+
+当一个用户认证通过后，下次定位时，该地点不带group\_hint”字段，也就不需要重复认证了。
+
+
+\input{user.tex}
+
+\input{xmpp.tex}
+
+
+
+\section{帮助链接}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/help/index} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ ver  & 字符串 & 必须 & 软件版本\\
+\hline
+ os  & 浮点数 & 必须 & 操作系统\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+本接口需要通过浏览器以URL的方式直接调用。
+
+
+\section{自定义菜单}
+脸脸的自定义菜单兼容微信的自定义菜单。
+如果获得商家信息时有"has\_menu"字段，并且值大于0，代表该商家有自定义菜单。 "has\_menu"值等于1时默认显示聊天工具栏，2默认是菜单栏。
+
+\subsection{获取菜单}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/menu/get} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+   \hline
+ id  & 整数 & 必须 & 商家id\\ 
+  \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值：
+\begin{figure}[H]
+\begin{verbatim}
+{
+    "menu": {
+        "button": [
+            {
+                "type": "click",
+                "name": "今日歌曲",
+                "key": "V1001_TODAY_MUSIC",
+                "sub_button": []
+            },
+            {
+                "type": "click",
+                "name": "歌手简介",
+                "key": "V1001_TODAY_SINGER",
+                "sub_button": []
+            },
+            {
+                "name": "菜单",
+                "sub_button": [
+                    {
+                        "type": "view",
+                        "name": "搜索",
+                        "url": "http://www.soso.com/",
+                        "sub_button": []
+                    },
+                    {
+                        "type": "view",
+                        "name": "视频",
+                        "url": "http://v.qq.com/",
+                        "sub_button": []
+                    },
+                    {
+                        "type": "click",
+                        "name": "赞一下我们",
+                        "key": "V1001_GOOD",
+                        "sub_button": []
+                    }
+                ]
+            }
+        ]
+    }
+}
+\end{verbatim}
+\end{figure}
+
+
+\subsection{点击菜单}
+自定义菜单有两种类型：view和click。
+
+当点击view类型时，判断url的类型进行处理。如果url是http链接，那么打开一个新的webview显示这个url。如果url是dface链接，那么按照脸脸应用内跳转规范处理。
+
+当点击click类型时，访问下面的接口并显示提示“消息收取中...”。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/menu/click} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+   \hline
+ sid  & 整数 & 必须 & 商家id\\ 
+  \hline
+ user\_id  & 字符串 & 必须 & 用户id\\ 
+  \hline
+ key  & 字符串 & 必须 & 点击菜单的KEY\\ 
+  \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+执行成功后，脸脸会发送回一条消息。
+
+\section{脸脸WEB应用嵌入接口}
+
+本章所有的功能只对域名以dface.cn结尾的网址有效。
+
+\subsection{加载和退出}
+
+\begin{verbatim}
+
+启动时：
+第一步：WEB应用中嵌入链接“dface://init?mode=”，
+第二步：脸脸客户端监测到链接“dface://init”，回调WEB应用中的js方法：dface_init(sid,uid)，其中sid是摇入的现场的id，uid是当前用户的id，都是字符串。mode定义浏览器的展现，0全屏，1标准，2只有头部，3只有底部。默认为0。
+
+关闭时：
+第一步：WEB应用退出时，触发链接“dface://close”，
+第二步：脸脸客户端监测到链接“dface://close”，关闭WebView浏览器。
+\end{verbatim}
+
+\subsection{脸脸客户端Js API}
+
+\subsubsection{隐藏脸脸右上角的选择项按钮}
+DfaceJSBridge.call('hideOptionMenu');
+
+\subsubsection{设置脸脸的标题}
+setTitle
+
+\subsubsection{获得当前用户名}
+getUsername
+
+\subsubsection{获得当前用户名的session id}
+getSessionID
+
+\subsubsection{获得当前用户id和商家id}
+getUidSid
+
+\subsubsection{获得当前经纬度}
+getLoc
+
+\subsubsection{分享到微信好友}
+wxShare
+
+\subsubsection{分享到微信朋友圈}
+wxmShare
+
+
+\section{脸脸应用内跳转规范}
+\begin{verbatim}
+
+首页
+dface://scheme/main
+商家现场（如果没进入过现场，等价于定位）
+dface://scheme/scene
+定位
+dface://scheme/seek
+dface://scheme/seek/relocate
+附近的人
+dface://scheme/near/user
+推荐商家
+dface://scheme/near/shop
+对话
+dface://scheme/record
+我的优惠券
+dface://scheme/record/coupon
+和XXX的对话
+dface://scheme/record/user/XXidXXX?name=张三
+通讯录
+好友
+dface://scheme/friend/good
+关注
+dface://scheme/friend/follow
+粉丝
+dface://scheme/friend/fan
+设置
+dface://scheme/setting
+设置－帮助
+dface://scheme/setting/help
+设置－黑名单
+dface://scheme/setting/blacklist
+我的
+dface://scheme/atme
+我的照片墙到我的足迹
+dface://scheme/atme/gallery
+我的足迹
+dface://scheme/atme/footmark
+上传图片（判断在单聊／还是在群聊里）
+用户自选
+dface://scheme/getphoto 
+相机
+dface://scheme/getphoto/camera 
+本地相册
+dface://scheme/getphoto/gallery 
+图片
+dface://scheme/photo?id=XXXXXX 查看图片详情页面
+用户信息
+dface://scheme/user/info?id=XXXXX 查看用户信息
+\end{verbatim}
+
+\section{脸脸Lua推送接口}
+
+编程模型：
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+ \  模型  & 数据 & 代码 &  发起方  \\
+ \hline
+Web   & 服务器   &  	服务器  & 	客户端\\
+ \hline
+APP	  & 服务器   &  	本地  & 		客户端\\
+ \hline
+PUSH  & 服务器   &  	无  & 		服务器\\
+ \hline
+IM	  & 双向   &  	无  & 		双向\\
+ \hline
+LUA	  & 服务器   &  	服务器  & 	服务器\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+服务器端发送消息ID以RPC开头的normal消息，代表本消息是LUA推送消息。
+lua代码的地址包含在消息的url字段中。客户端下载lua代码文件并执行，并通过调用下面的接口把执行结果报告回服务器端。
+
+\subsection{ Lua代码执行后的回调}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/lua/callback } \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ user\_id  & 字符串 & 必须 & 登录用户的uid\\
+  \hline
+ ret  & 字符串 & 可选 & Lua代码执行后的返回值\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+
+
+\section{脸脸聊天图片上传时的压缩规则}
+
+1. 图片压缩时的质量控制：
+图片压缩时的质量控制在0.95-0.8之间。
+当图片宽乘以高小于等于40万时，质量为0.95；当图片大于400万时，质量为0.8；当图片的大小（设为x）在40-400万之间时，质量为0.95-(x-40)*0.15/360。
+
+2.图片尺寸控制：
+当图片的最短边小于640时，不处理；否则，设短边为x，长边为y，压缩前尺寸(x，y)，压缩后的尺寸为（640，y*640/x）
+
+3. 上述规则只使用于聊天图片，个人头像还是采用原来的压缩到640*640的规则。
+
+
+\section{坐标转换接口}
+
+\subsection{实际经纬度坐标转GCJ坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/real2gcj} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回转换后的坐标｛lat:, lng:｝
+
+\subsection{实际经纬度坐标转Baidu坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/real2bd09} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\subsection{GCJ坐标转实际坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/gcj2real} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{百度坐标转实际经纬度坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/bd092real} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\subsection{百度坐标转GCJ坐标}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/loc/bd092gcj} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+\section{关于程序各页面之间的切换规则}
+
+程序的首页是选择现场页面。现场则是一个聊天室页面。
+
+1、程序干净启动时，要判断用户是否处于登录状态。
+
+1.1如果已经登录，进入定位页面，并从服务器端获取新的商家列表。
+
+1.2如果没有登录，进入登录页面。
+
+
+2、程序从睡眠状态被激活时，要判断距离上次的运行时间。
+
+2.1 如果不足12个小时，上次被任务切换时停留在那个页面就仍然停留在该页面。
+
+2.2 如果超过12个小时，进入定位页面，并从服务器端获取新的商家列表。
+
+
+
+4、从其它tab点击现场时，判断用户是否摇进过现场
+
+4.1 如果摇进过某个现场，直接进入该现场聊天室。
+
+4.2 如果没有摇，那么就是定位页面。
+
+
+
+
+\newpage
+
+
+\end{document}

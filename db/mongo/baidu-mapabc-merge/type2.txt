@@ -1,0 +1,71 @@
+0 活动
+1 酒吧
+2 咖啡
+3 茶馆
+4 餐饮
+5 酒店
+6 休闲娱乐
+7 运动
+8 购物
+9 广场
+10 写字楼
+11 住宅
+12 学校
+13 交通
+14 大型医院
+15 景点
+51 美容美发
+52 公司
+53 其他
+
+db.shops.update({type:/^交通设施;飞机场/},{$set:{t:13}},false,true)
+db.shops.update({type:/^交通设施;长途汽车站/},{$set:{t:13}},false,true)
+db.shops.update({type:/^交通设施;火车站/},{$set:{t:13}},false,true)
+db.shops.update({type:/^交通设施;港口/},{$set:{t:13}},false,true)
+
+db.shops.update({type:/^教育/},{$set:{t:12}},false,true)
+db.shops.update({type:"教育"},{$unset:{t:1}},false,true)
+db.shops.update({type:/^教育;科研机构/},{$unset:{t:1}},false,true)
+
+db.shops.update({type:/^地产小区/},{$set:{t:11}},false,true)
+db.shops.update({t:11,name:/写字楼/},{$set:{t:10}},false,true)
+db.shops.update({type:/^商务住宅/},{$set:{t:10}},false,true)
+db.shops.update({type:/^商务大厦/},{$set:{t:10}},false,true)
+
+db.shops.update({type:"行政地标"},{$set:{t:9}},false,true)
+db.shops.update({type:"行政地标;商圈;强商圈"},{$set:{t:9}},false,true)
+
+db.shops.update({type:/^购物;电器商场/},{$set:{t:8}},false,true)
+db.shops.update({type:/^购物;综合商场/},{$set:{t:8}},false,true)
+db.shops.update({type:/^购物;超市/},{$set:{t:8}},false,true)
+db.shops.update({t:5},{$unset:{t:1}},false,true)
+db.shops.update({t:4},{$set:{t:6}},false,true)
+db.shops.update({type:/^宾馆/},{$set:{t:5}},false,true)
+db.shops.update({t:11,name:/酒店/},{$set:{t:5}},false,true)
+
+db.shops.update({t:3},{$set:{t:4}},false,true)
+db.shops.update({type:"餐饮;休闲餐饮;茶座"},{$set:{t:3}},false,true)
+db.shops.update({type:"餐饮;休闲餐饮;咖啡厅"},{$set:{t:2}},false,true)
+
+
+db.shops.remove({t:9})
+db.shops.update({type:/^休闲娱乐;休闲广场/},{$set:{t:9}},false,true)
+
+db.shops.update({type:/^休闲娱乐;体育场馆/},{$set:{t:7}},false,true)
+db.shops.update({type:/^休闲娱乐;健身中心/},{$set:{t:7}},false,true)
+
+
+db.shops.remove({type:"行政地标"})
+db.shops.remove({type:"行政地标;商圈;强商圈"})
+db.shops.update({"t" : 5, "type" : "购物"},{$unset:{t:1}},false,true)
+
+db.shops.find({"t" : 5, "type" : "购物"}
+
+db.shops.update({name:/博物馆$/},{$set:{t:6}},false,true)
+
+db.shops.update({type:"生活服务;美容美发"},{$set:{t:51}},false,true)
+
+db.shops.update({type:/^餐饮/, t:{$exists:false}},{$set:{t:5}},false,true)
+db.shops.update({type:/^餐饮/, t:5},{$set:{t:4}},false,true)
+
+

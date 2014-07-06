@@ -1,0 +1,121 @@
+<div class="con">
+	<div class="title1"><h2 class="f18">问答系统</h2></div>
+	<div class="box4">
+		<div class="box4left">
+		<% if @shop_faqs.blank? %>
+			还没有设置问答系统，请创建 ===》
+		<% end %>
+		<% st=0 %>
+		<% @shop_faqs.each do |faq| %>
+			 <%= "试试回复：</br>".html_safe if faq.od.to_i == 01%> 
+				<a href="/shop3_faqs/edit?id=<%=faq.id%>" id="Link<%= st+=1%>"><%= faq.od%>&nbsp;=>&nbsp;<%= faq.title%></a><br/>
+		<% end %>
+		</div>
+		<div class="box4right changebox4right" id="Waterfall" >
+			<div class="box4plane1" rel="0" id="Div0"><a class="wordpoistion" href="/shop3_faqs/new">创建问答</a></div>
+			<% st=0 %>
+			<% @shop_faqs.each do |faq| %>
+			<div class="box4plane2" rel="<%= st+=1 %>" id="Div<%= st%>">
+				<div class="title2">
+					<h2><%= faq.od%></h2>
+					<a onclick="ajaxDel($(this), '<%= faq.id%>', '<%= st%>')" class="pointer del2">删除</a>
+					<%= link_to '编辑', "/shop3_faqs/edit?id=#{faq.id}",:class => "pointer" %>
+				</div>
+				<div class="box4con1">
+					<% unless faq.img.blank? %>
+					<%=image_tag( "#{ShopFaq.img_url(faq.id, :t2)}?time=#{Time.now.to_i}", :class=>"imgstyle l", :align => "left")%>
+					<% end %>
+					<div class="box4plane3"><%= faq.text%></div>
+				</div>
+			</div>
+		<% end %>
+			
+		</div>
+	</div>
+	
+</div>
+
+<script src="/newbackstage/js/jquery.blocksit.min.js"></script>
+<script>
+function ajaxDel(obj, faq_id, rel_id){//问答系统管理：删除
+	var div=$("#Div"+rel_id);
+	var height=div.height();
+	var size;
+	var rel=parseInt(div.attr("rel"));
+	$("a.del2").css("display","none");
+	if(height>300){
+		size=300;
+	}else{
+		size=height;
+	}
+	var i=5;
+	div.append("<div class='shade' style='height:"+height+"px;line-height:"+height+"px;'><span style='opacity:0.5;font-size:"+size+"px;'>"+i+"</span></div>");
+	
+	$(".shade").click(function(){
+		clearInterval(timer);
+		$(this).remove();
+		$("a.del2").css("display","block");
+	});
+	
+	var timer=setInterval(function(){
+		div.children("div.shade").find("span").animate({"font-size":(size/2)+"px","opacity":"1"},650,function(){
+			if(i==1){
+				clearInterval(timer);
+				var top=height+parseInt(17);
+				var left=parseInt(div.css("left"));
+				var delay=1;
+				div.animate({"height":"0px","padding-top":"0px"},500,function(){div.css("display","none");});
+				for(rel=rel;rel<=num;rel++){
+					if(parseInt($("#Div"+rel).css("left"))==left){
+						$("#Div"+rel).animate({"top":parseInt($("div.box4plane2[rel="+rel+"]").css("top"))-top+"px"},700*delay);
+						delay+=0.4;
+					}
+				}
+				$("div.box4left a#Link"+rel_id).next().remove().end().remove();
+				$("div.box4plane1 a").removeClass().addClass("wordpoistion").html("创建问答").attr("href","/shop3_faqs/new");
+				$.get("/shop3_faqs/ajax_del",{id: faq_id}, function(data) {
+					if(data['text']){
+					  div.remove();
+					  $("a.del2").css("display","block");
+					}
+					else{
+					  alert('删除失败.');
+					}
+				});
+			}else{
+				div.children("div.shade").find("span").html(--i).css({"font-size":size+"px","opacity":"0.5"});
+			}
+		});
+	},670);
+}
+
+
+var num;
+$(document).ready(function(){
+	runing=$("#CB1").attr("class");
+	num=$("#Waterfall div.box4plane2").length;
+
+	if(runing=="checkboxs1"){
+		NavDiv();
+		ShowDiv();
+		$(window).load(function(){
+			MessageDiv();
+		});
+	}else if(runing=="checkboxs2"){
+		AllNoDH();
+	}
+	
+	$('#Waterfall').BlocksIt({
+		numOfCol: 2,
+		offsetX: 10,
+		offsetY: 8,
+		blockElement: 'div'
+	});
+	for(var div_i=0;div_i<num;div_i++){
+		if(!$("div.box4plane2").eq(div_i).find("img").length){//如果没有图片
+			$("div.box4plane2").eq(div_i).find(".box4plane3").css("width","100%");
+		}
+	}
+	//if($("div.box4plane2:last").attr("rel")==9){$("div.box4plane1 a").removeClass().addClass("wordpoistion2").html("只能创建9个，请删除一个再创建").removeAttr("href");}
+});
+</script>

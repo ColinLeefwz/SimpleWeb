@@ -1,0 +1,58 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">动态案例</h2></div>
+
+  	<div class="box7plane1">
+  	<%= form_for(@case, :url => '/shop3_case/create',:html => { :multipart => true} ) do |f| %>
+
+		<%= f.select :type, [['动态', 0],['案例',1]],{}, {:class => "ptb2 plr3"} %>
+		<%= f.text_field :title, :class=> "inputs2 mb10", :placeholder => "请在这里填写标题" %>
+		<%= f.text_area :content, :id=>"myEditor" %><br>
+		<input type="submit" name="Submit" value="提 交" class="btn2 l"/>
+		<%= link_to '取 消', '/shop3_faqs', :class=>"btn3 l ml20" %>
+	<% end %>
+	</div>
+
+</div>
+<script type="text/javascript">
+Lianlian = window.Lianlian = {};
+
+(function() {
+
+  Lianlian.Blog = {
+    init: function() {
+      var me;
+      me = this;
+      return me.newBlog();
+    },
+    newBlog: function() {
+
+      var editor_a;
+      editor_a = new baidu.editor.ui.Editor({
+        autoHeightEnabled:false,
+        initialFrameWidth:360,
+        initialFrameHeight:300,
+        imageUrl:"",
+        imagePath:"",
+        initialContent: ""
+      });
+      editor_a.render('myEditor');
+      return $('.new_blog_form .submit').click(function() {
+        var content, title;
+        editor_a.sync();
+        title = $('#blog_title').val();
+        content = editor_a.getContent();
+        if (title.length === 0) {
+          $('#blog_title').addClass('error_border');
+        }
+        if (title.length > 0 && content !== '<p><br /></p>') {
+          return $(this).parents('form').submit();
+        }
+      });
+    }
+  };
+
+  $(document).ready(function() {
+    return Lianlian.Blog.init();
+  });
+}).call(this);
+</script>

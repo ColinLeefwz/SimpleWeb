@@ -1,0 +1,302 @@
+\documentclass[cs4size]{ctexartutf8} 
+\usepackage[unicode={true}]{hyperref}
+\hypersetup{colorlinks,%
+                 citecolor=black,%
+                 filecolor=black,%
+                 linkcolor=black,%
+                 urlcolor=blue,%
+                 pdftex}
+
+\usepackage{graphicx}
+\usepackage{float}
+
+				
+\author{YXY}
+\title{脸脸网旅游相关接口API}
+
+\begin{document} 
+\maketitle
+\tableofcontents
+
+\newpage
+
+\textbf{注意事项}：
+\begin{enumerate}
+\item 本接口API采用WEB协议，输入输出采用json格式。
+\item 只有开发调试时可用http的接口，正式发布时全部使用https接口。
+\item 接口统一采用UTF-8编码。
+\item 提交数据统一用POST请求，查询数据统一用GET请求。
+\item 当调用出错时，会在返回的json中包含"error"信息。
+\item 服务提供方采用固定的IP地址：42.121.79.210。
+\item 调用方要绑定IP地址，只有绑定的IP地址才能调用本接口。
+\end{enumerate}
+
+\newpage
+
+\section{基础数据库}
+
+在建立旅行线路／旅行团之前，先要建立景点／商家的基础数据库。网格保证不同的景点／商家，发给脸脸的时候id不同。脸脸负责保证网格发过来的景点／商家在脸脸库的唯一性，不与已有数据冲突。
+
+\subsection{创建地点}
+商家／景点统一建库，都归类为地点。这样在定义旅行线路时，可以混合景点与商家。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{https://42.121.79.210/api/xshop/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ id  & 字符串 & 必须 &  地点编号\\
+ \hline
+ name  & 字符串 & 必须 &  景点名称\\
+\hline
+ addr  & 字符串 & 可选 &  地址\\
+\hline
+ type  & 字符串 & 可选 &  如果是商家，商家的类型\\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+商家的类型指餐饮／酒店／酒吧／购物等类型。
+经纬度都是实际经纬度，不是国内地图加偏后的经纬度。
+
+\begin{verbatim}
+成功返回值：
+{"ok":"id"}
+
+若有错误，返回值：
+{"error":"错误原因"}
+\end{verbatim}
+
+
+
+\subsection{查询地点}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{https://42.121.79.210/api/xshop/find} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ id  & 字符串 & 必须 &  编号\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+成功返回值：
+{
+"id" : id,
+"dface_id":"该地点在脸脸中的id" ,
+"name" : name,
+"addr" : 地址
+...
+}
+
+
+\end{verbatim}
+
+
+\section{旅行线路}
+
+\subsection{创建旅行线路}
+
+创建旅行线路涉及到的景点／商家需要提前先建立基本数据库。
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{https://42.121.79.210/api/xline/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ id  & 字符串 & 必须 &  旅行线路编号\\
+\hline
+ data  & json字符串 & 必须 &  旅行线路的具体描述\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+data的格式如下：
+{
+"name": "线路名称"
+"arr": [
+  {shopid: "地点编号1", time:"时间1"},
+  ...
+  {shopid: "地点编号n", time:"时间n"}
+ ]
+}
+
+其中的time格式需要讨论，基本按照网格的原有格式提供。
+
+成功返回值：
+{"ok":"id"}
+\end{verbatim}
+
+
+
+\subsection{查询旅行线路}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{https://42.121.79.210/api/xline/find} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ id  & 字符串 & 必须 &  旅行线路编号\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值和对应创建接口的data结构相同。
+
+
+
+\section{旅行团}
+
+\subsection{创建旅行团}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{https://42.121.79.210/api/xgroup/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ id  & 字符串 & 必须 &  旅行团编号\\
+\hline
+ data  & json字符串 & 必须 &  旅行团的具体描述\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+data的格式如下：
+{
+  "name" : "西湖二日游",
+  "tid":"团号001"
+  "line_id" : "线路编号",
+  "fat" : "开始日期",
+  "tat" : "结束日期",
+   "users": [
+        {"name":"张三"
+        "phone":"15868870000"
+        "sfz":"1234567890xxxxxxxxx"},
+        {"name":"李四"
+        "phone":"15868870001"
+        "sfz":"1234567890xxxxxxxx1"}
+  ]
+  "user_count": 2
+}
+
+其中的fat/tat格式需要讨论，基本按照网格的原有格式提供。
+
+注意：旅行团编号id要求所有旅行团唯一，而团号tid则保证在同一线路里唯一即可。
+
+成功返回值：
+{"ok":"id"}
+\end{verbatim}
+
+
+
+\subsection{查询旅行线路}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{https://42.121.79.210/api/xgroup/find} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ id  & 字符串 & 必须 &  旅行线路编号\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+返回值和对应创建接口的data结构相同。
+
+
+\section{旅行线路合作商家}
+
+\subsection{创建旅行线路的合作商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{https://42.121.79.210/api/xpartner/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ id  & 字符串 & 必须 &  旅行线路编号\\
+\hline
+ data  & json字符串 & 必须 &  合作商家\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{verbatim}
+data的格式如下：
+{
+"线路景点编号1": ["合作商家编号1", "合作商家编号2"},
+  ...
+"线路景点编号n": ["合作商家编号m",..., "合作商家编号mn"}
+}
+
+其中线路景点编号必须是给定id的旅行线路中的一个景点。
+
+成功返回值：
+{"ok":"id"}
+\end{verbatim}
+
+
+
+\subsection{查询旅行线路的合作商家}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{https://42.121.79.210/api/xpartner/find} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ id  & 字符串 & 必须 &  旅行线路编号\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+返回值和对应创建接口的data结构相同。
+
+
+
+
+\section{脸脸网产生的数据的接口}
+在整个系统的使用过程中，会在脸脸上产生大量的数据，包括：优惠券发布／下载／使用情况、商家点评、游客发布的图片等。这些数据脸脸全部开放管理后台，可以管理和查询。
+
+
+
+\newpage
+
+
+\end{document}

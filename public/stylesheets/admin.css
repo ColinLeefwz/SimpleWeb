@@ -1,0 +1,52 @@
+body{margin:0;padding:0;}
+
+body, p, ol, ul, td {font:12px arial,sans-serif;}
+
+a{color: #13729B;}
+a:hover{color:#f40;}
+
+#header{background:#13729B;padding:0 20px;color:#fff;border-bottom:3px #75BAD7 solid;min-height:10px;_height:10px;}
+#header h1{float:left;width:50%;margin:0;padding:0;font-size:20px;font-family:微软雅黑,黑体;line-height:240%;}
+#header span{float:right;width:40%;font-size:12px;text-align:right;padding-top:18px;}
+#header span a{color:#fff}
+
+div#wrapper{float:left;width:100%}
+div#content{margin-left:10px;}
+div#navigation{float:left;width:170px;background:#F0F6F9;border-right:1px #DBE8EE solid;margin-left:-100%;}
+
+div#navigation ul{margin:0;padding:0;list-style:none}
+div#navigation ul li{padding:8px 0 8px 20px;font-size:14px;border-bottom:1px #fff solid}
+div#navigation ul li a{text-decoration:none;color:#000}
+div#navigation ul li a:hover{text-decoration:underline}
+div#navigation .ha{background:#DBE8EE;font-weight:bold;}
+
+div#content h1{font-size:18px;font-family:微软雅黑,黑体;margin:0;padding:10px 0}
+div#content table{width:98%}
+div#content table th{background:#eee;border-bottom:1px #ddd solid;padding:3px}
+div#content table td{border-bottom:1px #eee solid;padding:3px}
+
+#footer{clear:both;background:#fff;border-top:1px #DBE8EE  solid;text-align:center;padding:10px 0;line-height:180%}
+
+#header:after{content:"";display:block;height:0;overflow:hidden;visibility:hidden;clear:both;}
+#admin_xiazai{
+font-size:14px;
+margin:0 0 0 8px;
+}
+#showdate ul{
+margin:0 0 0 10px;
+padding:0;
+list-style:none;
+}
+#showdate ul li{
+float:left;
+margin:5px 10px 5px 0;
+}
+
+
+
+#admin_nav .admin_my,#dis_nav .admin_my,#index_nav .admin_my,#comm_nav .admin_my,#region_nav .admin_my,#sms_nav .admin_my,#user_nav .admin_my,#shop_nav .admin_my,
+#order_nav .admin_my,#role_nav .admin_my,#account_nav .admin_my,#log_nav .admin_my,#report_nav .admin_my,#space_nav .admin_my{
+color:#13729b;
+padding-left:12px;
+font-size:12px;
+}

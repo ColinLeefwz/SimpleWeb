@@ -1,0 +1,1048 @@
+
+
+\section{用户基本信息}
+
+
+\subsection{获得用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/basic} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/basic?id=50bec2c1c90d8bd12f000086
+返回值：
+
+{"name":"amanda林","signature":"","wb_v":false,"wb_vs":"","gender":2,"birthday":"1986-2-15","job":"","jobtype":5,"pcount":5,"wb_uid":"1735512691","id":"50bec2c1c90d8bd12f000086","logo":"http://oss.aliyuncs.com/logo/50fe370ec90d8b173a00023c/0.jpg","logo_thumb":"http://oss.aliyuncs.com/logo/50fe370ec90d8b173a00023c/t1_0.jpg","logo_thumb2":"http://oss.aliyuncs.com/logo/50fe370ec90d8b173a00023c/t2_0.jpg"}
+
+如果是微博认证用户，有如下信息
+   :wb_v,  #是否是微博认证用户
+   :wb_vs # 微博认证说明
+  
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{获得用户和当前登录用户的关系}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/relation} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+获得信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是当前登录用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/friend?id=502e6303421aa918ba000001
+返回值：
+{"id":"502e6303421aa918ba000001","friend":true,"follower":true}
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{获得用户最后出现的位置信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/last\_loc} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/last_loc?id=1
+返回值：
+
+{
+"time":1天以前,
+"last": "1天以前 顺旺基(益乐路店)" 
+"id":1
+}
+
+last字段，表示用户最后在脸脸上的时间和地点，一个以空格分割的字符串。
+\end{verbatim}
+\end{figure}
+
+
+\subsection{获得用户的地主地点列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/lords} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/lords?id=502e6303421aa918ba000001
+返回值：
+
+[{"name":"千粥汇华星路店","lo":[30.281387,120.11969],"t":4,"lat":30.281387,"lng":120.11969,
+"address":"","phone":"","id":21829233,"user":0,"male":0,"female":0},
+{"name":"浦东国际人才城","lo":[31.189001,121.586937],"t":"10","lat":31.189001,"lng":121.586937,
+"address":"","phone":"","id":21830801,"user":0,"male":0,"female":0}]
+
+\end{verbatim}
+\end{figure}
+
+
+\subsection{获得当前登录用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/get\_self} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get_self
+返回值：
+
+{
+"name":null,
+wb_uid:1884834632
+"gender":null,
+"birthday":null,
+"invisible":0,
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
+"password":"c84dad462d5b7282",
+"id":1
+}
+
+[2013-03-12]  新增
+微博登陆的话：增加wb_token，wb_expire
+qq登陆的话：增加qq_token，qq_expire
+
+[2013-06-28]  新增wb_hidden,  1代表对他人隐藏自己的微博，2代表解除微博绑定.
+
+[2013-08-26]  新增psd字段，代表设置过密码；新增pmatch字段代表启用了通讯录匹配.
+
+\end{verbatim}
+\end{figure}
+
+
+
+
+\subsection{设置当前登录用户基本信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/user\_info/set} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+ \hline
+ user\_id  & 字符串 & 必填 &  登录用户的id\\
+\hline
+ name  & 字符串 & 选填 &  用户的名字. 长度小于64\\
+\hline
+ gender  & 数字 & 选填 &  用户的性别，未设置0男1女2\\
+\hline
+ birthday  & 字符串 & 选填 &  用户的生日,格式如2012-06-01\\
+ \hline
+ signature  & 字符串 & 选填 &  签名档. 长度小于255\\
+ \hline
+ job  & 字符串 & 选填 &  职业\\
+ \hline
+ jobtype  & 整数 & 选填 &  职业类别\\
+ \hline
+ hobby  & 字符串 & 选填 &  爱好. 长度小于255\\
+ \hline
+ invisible  & 数字 & 选填 &  0：不隐身,1：对黑名单隐身,2：陌生人隐身, 3：全部隐身\\
+ \hline
+ wb\_hidden  & 数字 & 选填 &  0：不隐藏微博, 1代表对他人隐藏自己的微博\\ 
+\hline
+ no\_push  & 数字 & 选填 &  0：默认可以push, 1代表不接收push消息提醒。只有android客户端需要设置这个参数\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+用户初次登录时获取新浪微博的名称／性别／出生日期等信息并提交到服务端。以后更新时可以只更新其中的某个字段。
+
+隐身的效果是：
+1、在商家的用户列表中不在出现该用户
+2、不更新自己的位置信息
+3、用户进入商家时，不发打招呼的信息。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=ead9ac4f6291c55bb467ad4138eca2ed" 
+        -F "name=newname" /user_info/set
+
+返回值：
+
+{
+"name":newname,
+"gender":null,
+"birthday":null,
+"logo":"/system/imgs/1/original/clojure.png?1339398140",
+"logo_thumb":"/system/imgs/1/thumb/clojure.png?1339398140"
+"id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+\subsection{当前登录用户设置隐私／推送控制}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/user\_info/privacy} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必填 &  登录用户的id\\
+\hline
+ pvc1  & 整数 & 可选 &  那些人可以查看我的足迹，1没有人，2好友，3粉丝，4所有人，默认好友\\
+\hline
+ pvc2  & 整数 & 可选 &  是否允许别人查看我的最新5条足迹,1允许，0不允许， 默认允许\\
+\hline
+ pvc3  & 整数 & 可选 &  我的新鲜事里显示那些人的足迹，1关注 2好友, 暂时没有用到\\
+\hline
+ pvc4  & 整数 & 可选 &  那些消息不推送，默认0表示全推送\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+\begin{figure}[H]
+\begin{verbatim}
+备注：pvc1／pvc2／pvc3／pvc4等参数设置了就传递，没变动就不传。
+
+pvc4是一个位向量，共5位，从高到底分别是（现场有新人来｜有人赞了我｜有人评论我 | 有人关注我｜有人看过我）。如果其中一类消息不要推送，对应位置1。
+
+比如：“现场有新人来”和 “有人看过我”两种消息不推送，那么pvc4为二进制"10001"，也就是17。
+
+返回值：{"success" : 1}
+\end{verbatim}
+\end{figure}
+
+
+
+
+\subsection{设置其它用户的备注名}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/user\_info/set\_comment\_name} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 字符串 & 必填 &  被设置备注名的用户的id\\
+\hline
+ name  & 字符串 & 必填 &  用户的名字. 长度小于64\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+当前登录用户给其它用户设置备注名，方便记忆。
+
+\begin{figure}[H]
+\begin{verbatim}
+返回值：{"success" : 1}
+\end{verbatim}
+\end{figure}
+
+
+\subsection{获得当前登录用户设置的所有备注名}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/get\_comment\_names} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 字符串 & 必填 &  当前登录用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+当前登录用户给其它用户设置备注名，方便记忆。
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/get_comment_names?user_id=502e6303421aa918ba000005
+返回值：
+[{"id":"502e6303421aa918ba000001","s":"yxy"}]
+id是被设置备注名的用户的id，s是备注名。
+\end{verbatim}
+\end{figure}
+
+
+\subsection{根据用户名查找脸脸用户}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/search} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+  \hline
+ name  & 字符串 & 必须 & 用户的脸脸名字、微博／qq昵称、手机号码等\\ 
+\hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+根据用户的脸脸名字、微博／qq昵称、手机号码等查找脸脸用户。其中手机号码是精确查询，其它是模糊查询。
+
+
+\begin{figure}[H]
+\begin{verbatim}
+返回用户的基本信息，该用户和当前用户的关系信息，距离等。如果是黑名单用户，则有“black:1”。
+
+[{"name":"袁乐天","signature":"","gender":1,"birthday":"","jobtype":null,"pcount":0,"wb_uid":"a1","id":"502e6303421aa918ba00007c","logo":"","logo_thumb":"","logo_thumb2":"","wb_name":null,"qq_name":null,
+"friend":false,"follower":false,"distance":99999999}]
+\end{verbatim}
+\end{figure}
+
+
+
+\section{用户相册与头像}
+用户相册中的第一张图片就是头像。
+
+\subsection{当前登录用户上传图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/user\_logos/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_logo[img]  & file & 必须 &  头像文件\\
+ \hline
+ user\_logo[t]  & 整数 & 可选 &  图片类型：1拍照；2选自相册\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：
+
+\begin{enumerate}
+\item 该请求必须是POST请求，enctype="multipart/form-data"。
+\item 所上传文件的type必须是image/jpeg', 'image/gif' 或者'image/png'。
+\item 图片文件要在客户端先压缩到640*640。
+\item 图片名为logo；缩略图分为两种大小，logo\_thumb为100*100的png，logo\_thumb2为200*200的png。
+\end{enumerate}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "user_logo[img]=@firefox.png;type=image/png" 
+/user_logos
+
+
+{"logo_thumb2":null, "logo_thumb1":null
+,"id":6,
+"logo":"",
+"user_id":3,
+"img_tmp":"/system/imgs/6/thumb/csky2.png?1340779488"}
+
+\end{verbatim}
+
+用户上传图片更改为异步操作。图片上传完成后返回图片的id，但是此时图片还没有实际的阿里云链接。客户端上传完成后，可以用下面的“根据图片id获得用户相册里的图片”接口尝试获得实际的上传图片和缩略图。
+
+\end{figure}
+
+
+
+\subsection{获得用户的图片列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/user\_info/photos} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/user_info/photos?id=1
+返回值：
+
+[
+{"logo_thumb2":"/system/imgs/2/thumb2/2.png.png?1340616951","updated_at":"2012-06-25T09:35:51Z",
+"id":2,"logo":"/system/imgs/2/original/2.png.png?1340616951","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/2/thumb/2.png.png?1340616951"},
+{"logo_thumb2":"/system/imgs/4/thumb2/2.png.png?1340617039","updated_at":"2012-06-25T09:37:20Z",
+"id":4,"logo":"/system/imgs/4/original/2.png.png?1340617039","img_file_size":81881,"user_id":1,"logo_thumb":"/system/imgs/4/thumb/2.png.png?1340617039"}
+]
+
+图片列表中的第一张图片就是用户的头像。
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{当前登录用户批量调整所有图片的位置}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/user\_logos/change\_all\_position} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ ids  & 逗号分割的整数 & 必须 &  所有图片的id按新的循序排列\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+说明：
+
+比如原有图片的循序是2468，新的循序是8642，此时需要调用本接口，传递ids=8,6,4,2。此时服务器会更新所有图片的排序，而客户端只需要发送一个请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "ids=3,1,4" 
+/user_logos/position
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{当前登录用户删除图片}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/user\_logos/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  图片的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -F "id=2" 
+/user_logos/delete
+
+输出：
+{"deleted":"2"}
+
+\end{verbatim}
+\end{figure}
+
+
+\section{关注和粉丝}
+\subsection{添加我关注的人}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/follows/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ follow\_id  & 整数 & 必须 &  关注用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&follow_id=1" /follows
+
+返回值：
+
+{
+"id":1,
+"user_id":2,
+"follow_id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{删除我的关注的人}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/follows/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ follow\_id  & 整数 & 必须 &  关注用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+注意：该请求必须是POST请求。
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&follow_id=3" /follows/delete
+
+返回值：
+
+{
+"deleted":3
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{粉丝列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/followers} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 & 用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+    \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+    \hline    
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/follow_info/followers?id=2
+
+返回值：
+
+[
+{"count":1}
+{"data":
+{"id":1,
+"name":"name23",
+"wb_uid":1884834632,
+"gender":0,
+"friend":true,
+"follower":true,
+"birthday":null,
+"last":"1 hour 浙江科技产业大厦"}
+}
+]
+
+其中count是符合条件的粉丝的总数。
+
+获得用户基本信息里有两个关系字段：friend和follower。这里的关系都是针对我的，这里的我就是给定ID的用户。如果我关注了该用户，那么该用户就是我的friend; 如果该用户关注了我，那么他就是我的follower。
+
+这里返回的所有用户，其"follower"值一定为true。
+
+[2013-2-20] 新增last，表示用户最后一次出现的时间和地点。
+
+
+\end{verbatim}
+\end{figure}
+
+
+\subsection{关注列表}
+本接口以后将不再支持。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/friends} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+     \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+     \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的内容格式同粉丝列表一样
+
+在1.5版本以前，本接口返回所有我关注的用户。
+在1.5版本以后，本接口返回所有我关注的且对方没有关注我的用户。双向关注的则由新增的good\_friends接口提供。
+
+
+\subsection{双向好友列表}
+本接口以后将不再支持。
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/good\_friends} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+     \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+     \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的内容格式同粉丝列表一样
+
+这里返回的所有用户，都和当前登录用户互相关注。
+
+
+\subsection{批量获取所有我关注用户的信息}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/friend\_infos} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的用户基本信息的一个数组。
+
+
+
+\subsection{关注列表ID}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/friend\_ids} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsection{双向好友列表ID}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/good\_friend\_ids} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+\hline
+
+\end{tabular}
+   \end{center}
+\end{table}
+
+\subsection{批量获取关注者的位置信息}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/friend\_locs} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  ids  & 字符串 & 必填 &  要获取的用户的id，多个id以英文","分割  \\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：/follow_info/friend_ids?ids=502e6303421aa918ba000001,502e6303421aa918ba000003
+返回值：
+
+[{"id":"502e6303421aa918ba000001","last":"","time":""},
+{"id":"502e6303421aa918ba000003","last":"","time":""}]
+
+
+\end{verbatim}
+\end{figure}
+
+\subsection{批量获取好友位置信息}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/good\_friend\_locs} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  ids  & 字符串 & 必填 &  要获取的用户的id，多个id以英文","分割  \\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出同上
+
+
+\subsection{批量获取粉丝位置信息}
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/follow\_info/fan\_locs} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ \  ids  & 字符串 & 必填 &  要获取的用户的id，多个id以英文","分割  \\
+ \hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+输出同上
+
+
+\subsection{关于关注／好友接口的说明}
+\begin{enumerate}
+\item 关注信息要在客户端单独建表，本地完整保存。好友信息是关注信息的子集合。
+\item 当关注信息为空时，调用friend\_infos接口初始化关注信息，然后调用good\_friend\_ids初始化好友信息。
+\item 当用户手动刷新关注／好友列表时，调用friend\_ids／good\_friend\_ids获取最新的关注／好友列表。对于新增的id，调用user\_info/basic接口获得用户信息，对于减少的id，取消关注／好友标志。
+\item 用户最后出现的地点信息，单独一个接口，每次按需获取。
+\item 原有的friends和good\_friends接口只是为了兼容性而存在，以后不要再调用。
+\item 粉丝接口followers接口不变，每次只缓存最新的20条，手动刷新和加载更多。
+\end{enumerate}
+
+
+
+\section{黑名单}
+\subsection{黑名单列表}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/blacklists} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ id  & 整数 & 必须 &  用户的id\\
+   \hline
+ page  & 整数 & 可选 & 分页，缺省值为1\\ 
+ \hline
+ pcount  & 整数 & 可选 & 每页的数量，缺省为20\\ 
+     \hline
+ name  & 字符串 & 可选 & 用户的名字\\ 
+     \hline
+ hash  & 整数 & 可选 & 是否返回hash，缺省值为0\\ 
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回的内容格式和好友列表一样。
+
+
+\subsection{添加黑名单}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/blacklists/create} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ block\_id  & 整数 & 必须 &  加黑阻止的用户的id\\
+ \hline
+ report  & 整数 & 可选 &  是否同时举报被加黑的用户，0不举报1举报\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+\begin{figure}[H]
+\begin{verbatim}
+
+返回值：
+
+{
+"id":1,
+"user_id":2,
+"report":false,
+"block_id":1
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{删除黑名单}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/blacklists/delete} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+ user\_id  & 整数 & 必须 &  当前登录用户的id\\
+\hline
+ block\_id  & 整数 & 必须 &  加黑用户的id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+例子：
+
+\begin{figure}[H]
+\begin{verbatim}
+访问：curl -b "_session_id=f03bef9371c119b6fcecbeefdaaac1b2"
+       -d "user_id=2&block_id=3" /blacklists/delete
+
+返回值：
+
+{
+"deleted":3
+}
+
+\end{verbatim}
+\end{figure}
+
+
+
+\section{我的地点}
+
+
+\subsection{获得我的地点}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+GET & \multicolumn{3}{|c|}{/my\_loc/get\_locs} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+user\_ id  & 整数 & 必须 &  用户id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+返回值：
+\begin{figure}[H]
+\begin{verbatim}
+
+"{\"home_id\":10434569,\"home_name\":\"某小区\"}"
+"{\"school_id\":10434569,\"school_name\":\"某学校\"}"
+"{\"building_id\":10434569,\"building_name\":\"某楼宇\"}"
+
+
+\end{verbatim}
+\end{figure}
+
+
+
+\subsection{设置我的地点}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/my\_loc/set\_loc} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+user\_ id  & 整数 & 必须 &  用户id\\
+\hline
+type  & 字符串 & 必须 &  “home/school/building”三选一\\
+\hline
+sid  & 整数 & 必须 &  地点id\\
+\hline
+\end{tabular}
+   \end{center}
+\end{table}
+
+执行成功返回{ok:1}。
+
+
+\subsection{设置我的地点时选择地点}
+
+\begin{table}[H]
+   \begin{center}
+\begin{tabular}{|c|c|c|p{12cm}|}
+\hline
+POST & \multicolumn{3}{|c|}{/my\_loc/select\_loc} \\
+\hline\hline
+ \  参数  & 类型 & 必填 &  说明  \\
+\hline
+user\_ id  & 整数 & 必须 &  用户id\\
+\hline
+type  & 字符串 & 必须 &  “home/school/building”三选一\\
+\hline
+ lat  & 浮点数 & 必须 & 经度\\
+\hline
+ lng  &  浮点数 & 必须 & 纬度\\  
+\hline
+ baidu  & 整数 & 可选 & 如果是百度坐标，则baidu=1，否则忽略\\  
+ \hline
+ name  & 字符串 & 可选 & 名字\\  
+ \hline 
+\end{tabular}
+   \end{center}
+\end{table}
+

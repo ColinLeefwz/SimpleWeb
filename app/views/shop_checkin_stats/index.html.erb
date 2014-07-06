@@ -1,0 +1,44 @@
+<%= form_tag '/shop_checkin_stats',:method =>:get do %>
+  区号: <%= text_field_tag :city, params[:city], :size => 10  %>
+  商家: <%= text_field_tag :name, params[:name], :size => 10  %>
+  (*区号和商家必须同时查询,否则无效,可以不填)
+  <br/>
+  <br/>
+  <%= submit_tag "确 定" %>
+<% end %>
+<h1>商家签到统计</h1>
+<table>
+  <tr>
+    <th>商家</th>
+    <th>截止日期</th>
+    <th>用户总数(女)</th>
+    <th>用户签到总数</th>
+    <th>ip总数</th>
+  </tr>
+
+  <% @checkin_shop_stats.each do |checkin_shop_stat| %>
+    <tr>
+      <td><%= checkin_shop_stat.shop.try(:id).try(:to_i)%>
+         <span style="padding: 0 5px;"></span>
+         <%= checkin_shop_stat.shop.try(:name)%></td>
+      <td><%= 1.days.ago.to_date %></td>
+      <td>
+        <%= link_to checkin_shop_stat.utotal.to_i, "/shop_checkin_stats/show_users?id=#{checkin_shop_stat.id}" %> (<%= link_to checkin_shop_stat.uftotal.to_i%>)
+      </td>
+      <td>
+        <%= link_to checkin_shop_stat.ctotal.to_i, "/shop_checkin_stats/users_list?sid=#{checkin_shop_stat.id}" %>
+      </td>
+      <td>
+        <%= link_to checkin_shop_stat.ips.to_a.length, "/shop_checkin_stats/show_ips?id=#{checkin_shop_stat.id}" %>
+      </td>
+    </tr>
+
+  <% end %>
+</table>
+
+
+
+
+
+<%= generate_paginate3.html_safe %>
+

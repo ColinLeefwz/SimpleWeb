@@ -1,0 +1,31 @@
+<div class="title2"><h2>问答系统</h2></div>
+<% content_for :ahead do %>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+<% end %>
+<div class="box2">
+  <h2 class="tit"><%= @shop_faq.shop.name %></h2>
+  <div class="headers1">
+    <div><%= "0#{@shop_faq.od.to_i}" %></div>
+  </div>
+  <% unless @shop_faq.img.blank? %>
+    <div class="headers2">
+      <image src="<%= @shop_faq.shop.logo.try(:img) || '/images/smalllogo.png' %>" class="imgs"/>
+      <div><image src="<%= "#{ShopFaq.img_url(@shop_faq.id)}?time=#{Time.now.to_i}" %>" class="imgs2"/></div>
+    </div>
+  <% end %>
+  <div class="headers3">
+    <image src="<%= @shop_faq.shop.logo.try(:img) || '/images/smalllogo.png'%>" class="imgs"/>
+    <div><%= @shop_faq.text %></div>
+  </div>
+  <div class="submit01"></div>
+</div>
+<div class="plane3 pl100 pt20">
+  <%= link_to "重新编辑", "/shop_faqs/edit?id=#{@shop_faq.id}" , :class => 'l' %>
+  <span class="l plr20">|</span><a href="/shop_faqs" class="btn6 pl0 mt0">返回列表</a>
+</div>
+<script>
+  LeftMenu("15");
+
+</script>

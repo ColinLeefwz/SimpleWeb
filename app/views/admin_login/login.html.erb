@@ -1,0 +1,70 @@
+
+
+<% content_for :body_tag do %>
+  <body onload="$('name').focus();">
+  <% end %>
+
+
+  <div id="main">
+    <div class="step-nav">
+      <a href="/">首页</a> &gt; <a href="/admin_login/login">管理员登录</a>
+    </div>
+    <div class="box">
+      <h2>管理员登录</h2>
+
+      <div id="notice" class="red1">
+        <%= flash.now[:notice] if flash.now[:notice] %>
+      </div>
+
+
+      <form action="/admin_login/login" method="post" >
+
+        <table width="200" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="45"></td>
+          </tr>
+          <tr>
+            <td height="35">
+              <p>
+                <label for="user_name">登录名</label>
+                <%= text_field_tag :name, params[:name] %>
+              </p>
+            <td>
+          </tr>
+          <tr>
+            <td height="35">
+              <p>
+                <label for="user_password">密码</label>
+                <%= password_field_tag :password, params[:password] %>
+              </p>
+            <td>
+          </tr>
+          <tr>
+            <td height="35">
+              <div style="padding-left:75px;">
+                <p class="act">
+                  <%= submit_tag "登 录", :class => "submit" %>
+                </p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div class="bottom"></div>
+  </div>
+
+  <% if params[:reload] %>
+    <script>
+      window.parent.parent.parent.location.replace("/admin_login/login")
+    </script>
+  <% end  %>
+
+  <script>
+    //Event.observe(window, 'load', bodyonload)
+    function bodyonload() {
+      //	$('name').focus();
+    }
+
+    
+  </script>

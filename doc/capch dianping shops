@@ -1,0 +1,43 @@
+点评网商家抓取。
+
+   设计思路： 首先抓取的是城市, 每个城市先抓取的是分类, 再抓取城市的区域. 最后根据分类和区域抓取的是商家列表页。 最后进去商家的详情页去抓取商家的经纬度。
+
+   主要的API
+
+        抓取城市列表： Spider.cities
+
+        抓取城市分类： Spider.dp_cs_by_mcity_id(city_id)
+
+        抓取城市区域： Spider.dp_ds_by_mcity_id(city_id)
+
+        抓取城市列表： Spider.dp_shop(city_category_url, mcity_id)
+
+        抓取商家经纬度： Spider.dp_shop_latlng(shop_id)
+
+        纠正城市分类嵌套的问题： Spider.categroies_capch(city_id)
+
+
+   抓取的执行
+
+    抓取商家(不包括抓经纬度)
+
+      eg: 如抓取杭州的商家,mcity_id =3
+
+          老版本是： rails r app/spider.rb 3 . 存在的问题,会重复抓取列表，抓取的速度慢,抓取的不全。
+
+          新版本是： rails r app/spider.rb cate_shop 3  它是根据分类和区域的遍历组合url来抓取的,所有不存在重复抓取的问题。 它还支持指定的分类抓取。
+
+       如：   如抓取杭州的商家,mcity_id =3. 指定抓取的分类有美食(id=10) 和酒店下面的五星级酒店分类（id=25382）
+
+                   rails r app/spider.rb cate_shop 3 10 25382
+
+    抓取经纬度
+
+       以上两种都不能抓取经纬度. 因此抓取完后还要执行： rails r app/spider.rb latlng
+
+    纠正城市分类嵌套的问题.
+
+      老版本的城市抓取时，抓取分类的时候没有嵌套。  可以执行 rails r app/spider.rb cate 3 来纠正杭州的城市分类
+
+
+

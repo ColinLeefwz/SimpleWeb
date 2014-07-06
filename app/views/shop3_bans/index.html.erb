@@ -1,0 +1,78 @@
+<div class="con">
+  <div class="title1 mb30"><h2 class="f18">商家设置</h2></div>
+  <div class="submenu">
+    <ul>
+      <li><a href="/shop3_staffs">员工管理</a></li>
+      <li><a href="/shop3_bindwbs">绑定微博</a></li>
+      <li class="hover"><a href="/shop3_bans">屏蔽用户</a></li>
+      <li><a href="/shop3_marks">用户评分</a></li>
+      <li><a href="/shop3_notice">公告管理</a></li>
+	<% if session_shop.has_branch? %>  <li><a href="/shop3_branchs">分店列表</a></li><% end %>
+    </ul>
+  </div>
+
+  <table width="100%" cellspacing="0" cellpadding="0" class="tab2">
+    <tr id="Tr0">
+      <th width="770">用户名</th>
+      <th width="157">&nbsp;</th>
+    </tr>
+    <% @users.each_with_index do |user, index| %>
+
+      <tr id="Tr<%= index+1 %>">
+        <td valign="middle">
+          <%= link_to image_tag(UserLogo.img_url(user.head_logo_id, :t1), :align => "left", :class => "imgstyle"), "/shop3_checkins/user?uid=#{user.id}",:title=>"查看详情"  %>
+          <%= link_to user.name, "/shop3_checkins/user?uid=#{user.id}", :class=>"f14"  %><br/>
+          年龄：<%= user.age %>岁<br/>
+
+        </td>
+
+        <td width="157" align="center">
+          <a onclick="Del(this,$(this).attr('rel'), '<%= user.id %>')" class="del" rel="<%= index+1 %>" title="删除"></a></td>
+      </tr>
+
+    <% end %>
+  </table>
+  <%= generate_paginate %>
+</div>
+
+<script defer="defer">
+  $(document).ready(function(){
+    runing=$("#CB1").attr("class");
+    if(runing=="checkboxs1"){
+      NavDiv();
+      $(window).load(function(){
+        MessageDiv();
+      });
+    }else if(runing=="checkboxs2"){
+      AllNoDH();
+    }
+
+    $(".tab2 tr:odd").addClass("trbg");
+  });
+  function Del(obj,n, id){
+    var delTimer,i=3;
+    $(obj).removeAttr("onclick").removeClass().attr("title","").addClass("cancel").html("取消&nbsp;"+i);
+    delTimer=setInterval(function(){
+      if(i>0){
+        i--;
+        $(obj).css("display","none");
+        $(obj).html("取消&nbsp;"+i);
+        $(obj).fadeIn(500);
+      }else if(i<=0){
+        clearInterval(delTimer);
+        $.get("/shop3_bans/unban",{id: id},  function(){
+          $("#Tr"+n).hide(200,function(){
+            $(this).remove();
+          });
+        });
+
+      }
+    },700);
+
+    $(obj).attr("onclick","Cancel(this,"+delTimer+")");
+  }
+  function Cancel(obj,dt){
+    clearInterval(dt);
+    $(obj).removeClass().html("删除").attr("title","删除").addClass("del").attr("onclick","Del(this,$(this).attr('rel'))");
+  }
+</script>

@@ -1,0 +1,46 @@
+一渡网总体架构
+
+Nginx
+
+和脸脸网共用Nginx，启动在60.191.119.190:80。
+路径:/home/dooo/nginx-1.2.3/build/
+启动:sbin/nginx
+
+nginx version: nginx/1.2.3
+built by gcc 4.3.2 (Debian 4.3.2-1.1) 
+TLS SNI support enabled
+configure arguments: --with-http_ssl_module --prefix=/home/dooo/nginx-1.2.3/build
+
+
+
+rails环境
+ruby使用ruby-enterprise-1.8.7-2010.01版本，路径为/opt/REE/
+rails版本2.3.11
+rails进程通过unicorn启动在8081端口，配置文件见unicorn.conf.rb
+项目代码位于/home/dooo/bodu_server
+
+Memcached
+启动 /usr/bin/memcached -m 64 -p 11211 -u nobody -l 127.0.0.1
+rails中的配置
+./environments/production.rb:config.action_controller.session_store = :mem_cache_store
+./environments/production.rb:config.cache_store = :mem_cache_store, '127.0.0.1:11211'
+
+Mysql
+查看状态/etc/init.d/mysql status
+Server version		5.0.51a-24+lenny2+spu1-log
+配置文件/home/dooo/config/database.yml
+
+短信服务：
+短信分为两类：移动短信和电信短信。移动短信通过信息机收发，编程的接口是数据库。电信短信通过java代理程序收发。
+
+对于移动短信：
+在config/database.yml文件中的sqlserver节配置的就是移动的信息机。
+发送短信调用SmsOutH.send_sms
+app/check_sms.rb 定时从数据库检查新接收的短信
+
+对于电信短信：
+只能发短信。java代理程序启动脚本/home/dooo/bodu_server/qxt/bin/start_qxt.sh。ruby端通过数据库和其交互。
+
+
+
+

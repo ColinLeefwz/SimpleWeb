@@ -1,0 +1,8 @@
+<div class="subtitle">发布新公告</div><br/>
+
+
+<%= form_for(@shop_notice, :url => { :action => :create}) do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f}%>
+<% end  %>
+
+<%= link_to '返回列表', shop_shop_notices_path %>

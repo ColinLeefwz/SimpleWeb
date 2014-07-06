@@ -1,0 +1,82 @@
+<link href="/admin/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+<style>
+input[type="submit"]{
+	/*background:#fba847;*/
+	background: rgba(0,153,255,0.75);
+	border:none;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomright: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	position:relative;
+	left:5px;
+	height:40px;
+	width: 100px;
+	font-size:19px;
+	margin:0px;
+	font-family:"Source Sans Pro", sans-serif;
+	font-weight:700;
+	color:#fff;
+}
+input[type="text"]{
+	padding:9px;
+	background:#fff;
+	width: 370px;
+	background: none repeat scroll 0 0 #FAFAFA;
+    border: 1px solid #ddd;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+.centered {
+text-align: center;
+}
+.right {
+	color: right;
+}
+</style>
+<br>
+<br>
+<h2 style="text-align:center;">脸脸商家查询</h2>
+<br>
+<br>
+
+  
+<div class="container">
+    <div class="row-fluid">
+        <div class="span12">
+           <div class="centered">
+			<%= form_tag '/web_shop_search',:method =>:post do %>
+			  <p>
+			  	<%= text_field_tag :city, params[:city]||'0571', :style => "width: 50px;"%>
+			    <%= text_field_tag :name, params[:name], :placeholder => "试试商家名称 ~.~"%>
+			    <%= submit_tag "搜一下吧", :style => "margin:-10px 0 0 0" %>
+			  </p>
+			<% end %>
+			<br>
+			</div>
+		    <div class="row-fluid">
+
+		    <div class="offset1 span10">
+		        
+		        <div class="row-fluid">
+		        	<% @shops.each do |shop|%>
+		        		<%= shop.id%>
+		        		<%= shop.name%>
+		        		<br><br>
+		        	<% end %> 
+
+
+		      
+                
+
+		        </div>
+		    
+            </div>
+		    </div>
+        </div>
+  </div>
+</div>
+  

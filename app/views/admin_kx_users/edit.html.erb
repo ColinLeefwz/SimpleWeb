@@ -1,0 +1,18 @@
+<h2>
+  <%= @kx_user.user_name %>
+</h2>
+<%= form_for(@kx_user, {:url => "/admin_kx_users/update"} ) do |f| %>
+<%= hidden_field_tag :id, @kx_user.id %>
+  <div class="field">
+    姓名:<br />
+    <%= f.text_field :name %>
+  </div>
+
+  <br/>
+  <div class="field">
+    来源:<br />
+    <%= f.select :type, ['脸脸', '企博', '马甲'] %>
+  </div>
+  <br/>
+  <%= f.submit '提交' %>
+<% end %>

@@ -1,0 +1,34 @@
+<h1>管理员列表</h1>
+<%= link_to '添加新的管理员', new_admin_path %>
+<% form_tag admins_path,:method =>:get do %>
+  <p>
+    登录名:<%= text_field_tag :name, params[:name] %>
+    创建日期: <%= text_field_tag :created_at, params[:created_at] %>
+    <%= submit_tag "查 找", :name => nil %>
+  </p>
+<% end %>
+<table border="1">
+  <tr>
+    <th>登录名</th>
+    <th>密码</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% for admin in @admins %>
+    <tr>
+      <td><%=h admin.name %></td>
+      <td><%=h admin.pass2 %></td>
+      <td><%= link_to '浏览', {:action => :show, :id => admin.id} %></td>
+      <td><%= link_to '编辑', edit_admin_path(admin) %></td>
+      <td><%= link_to '分配权限',"/admin_rights/new?id=#{admin.id}"%></td>
+      <td><%= link_to '删除', dest_admin_path(admin.id) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+<div id="paginate" style="text-align: center">
+</div>

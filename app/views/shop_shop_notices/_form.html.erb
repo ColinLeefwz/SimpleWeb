@@ -1,0 +1,30 @@
+
+
+<% if @shop_notice.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@shop_notice.errors.count, "error") %> prohibited this shop_notice from being saved:</h2>
+
+    <ul>
+      <% @shop_notice.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<ul class="formlist">
+  <li>
+    <label for="pwd1">文本：</label>
+    <%= f.text_field :title, :class => "txt" %>
+  </li>
+
+  <li>
+    <label for="pwd1">排序：</label>
+    <%= f.text_field :ord, :value => @shop_notice.ord.blank? ? 1 : @shop_notice.ord, :class => "txt" %>
+  </li>
+  
+  <li><input type="submit" value="提 交" class="btn"/></li>
+</ul>
+
+ 
+

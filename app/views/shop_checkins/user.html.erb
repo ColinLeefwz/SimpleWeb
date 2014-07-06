@@ -1,0 +1,93 @@
+<div class="title2"><h2>用户详情</h2></div>
+
+<style>
+  .martop{margin-top: 20px; margin-bottom: 10px;}
+  .martop span{display: inline-block;font-size: 14px; color: #505050; margin: 3px; width: 90px;}
+  .martop a{color: #0B99D7;}
+</style>
+<div  style="height: 220px;" id="userInfo" class ="martop">
+  <h3 style="margin-bottom:  10px;">个人信息</h3>
+  <div style="float: left; width: 200px;">
+<%#*<img src="http://oss.aliyuncs.com/logo/507b5ac0421aa9cf3200000b/t2_0.jpg" />%>
+    <%=link_to image_tag(@user.head_logo.try(:img).try(:url, :t2)), @user.head_logo.try(:img).try(:url), :target => "blank"  %>
+  </div>
+  <div style="float: right; width: 500px" >
+    <span >昵  称：</span>
+    <span style="width: 140px;"><%= @user.name %></span>
+    <span>性  别：</span>
+    <span style="width: 140px;"><%= @user.show_gender %></span>
+    <br/>
+    <span>年  龄：</span>
+    <span style="width: 140px;"><%= @user.age %></span>
+    <span>星 座：</span>
+    <span style="width: 140px;"><%=@user.gonstellation %></span>
+    <br/>
+    <span>爱  好：</span>
+    <span style="width: 380px;"><%= @user.hobby %></span>
+    <br/>
+    <span  >微博昵称：</span>
+    <span style="width: 380px;"><%= link_to @user.wb_name || '' , @user.weibo_home%></span>
+    <br/>
+    <span>qq昵称：</span>
+    <span style="width: 380px;"><%= @user.qq_name %></span>
+    <br/>
+    <span>职业说明：</span>
+    <span style="width: 380px;"><%= @user.job %></span>
+    <br/>
+    <span>个性签名：</span>
+    <span style="width: 380px;"><%= @user.signature %></span>
+  </div>
+</div>
+
+<div style="height:  50px; " class ="martop">
+  <h3>照片信息</h3>
+  <span>
+    所有照片:
+  </span>
+  <span style="width: 480px;">
+    <%= link_to '查看', "/shop_photos?uid=#{@user.id}"  %>
+  </span>
+</div>
+
+<div style="height:  70px; " class ="martop">
+  <h3>签到信息</h3>
+  <span >
+    最后签到时间:
+  </span>
+  <span style="width: 480px;">
+    <%= @user.latest_checkin_time_shop(session[:shop_id]) %>
+  </span>
+  <br/>
+  <span>
+    累计签到次数:
+  </span>
+  <span style="width: 480px;">
+    <%= link_to "#{@user.total_checkin_shop(session[:shop_id])}", "/shop_checkins?uid=#{@user.id}"  %>
+  </span>
+</div>
+
+<div  class ="martop">
+  <h3> 优惠信息</h3>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab">
+    <tr>
+      <th width="20%" align="left" colspan="2">优惠券</th>
+      <th width="15%" align="center">下载时间</th>
+      <th width="15%" align="center">查看时间</th>
+      <th width="15%" align="center">使用时间</th>
+      <th width="10%" align="center">消费数据</th>
+    </tr>
+
+    <% @coupon_downs.each do |use| %>
+      <tr>
+        <td width="10%"><%=link_to image_tag(use.coupon_img.try(:url,:t1), :class=>"imgs4"), use.coupon_img.try(:url), :target => 'blank' %></td>
+        <td valign="center"><%= use.coupon_name %>
+          <span class="gray f12">（<%= use.coupon_show_t2  %>）</span>
+        </td>
+        <td align="center"><%= to_local(use.dat) %></td>
+        <td align="center"><%= to_local(use.vat)  %></td>
+        <td align="center"><%= to_local(use.uat)%></td>
+        <td align="center"><%= use.data %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
